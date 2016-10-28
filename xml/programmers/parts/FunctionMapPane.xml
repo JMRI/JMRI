@@ -4,6 +4,7 @@
   <name xml:lang="ca">Mapejat de funcions</name>
   <name xml:lang="it">Mappa Funzioni</name>
   <name xml:lang="de">Funktionszuordnung</name>
+  <name xml:lang="da">Funktions Indstillinger</name>
   <column>
     <row>
       <column>
@@ -11,6 +12,7 @@
           <text>Use this sheet to determine which functions will control which outputs</text>
           <text xml:lang="de">Hier einstellen, welche Funktion welchen Ausgang steuert</text>
           <text xml:lang="it">Usa questo foglio per programmare quale Funzione contolla quale uscita</text>
+		  <text xml:lang="ca">Usa aquesta pestanya per establir quina funció controla cada sortida</text>
         </label>
         <label>
           <text> </text>

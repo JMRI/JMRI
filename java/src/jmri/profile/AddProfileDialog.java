@@ -11,6 +11,7 @@
  *============================================================================*/
 package jmri.profile;
 
+import java.awt.Cursor;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -45,10 +46,6 @@ import org.slf4j.LoggerFactory;
  */
 public class AddProfileDialog extends javax.swing.JDialog {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2838864019793309792L;
     private String profileId;
     private boolean setNextProfile = false;
     private Profile source = null;
@@ -107,14 +104,14 @@ public class AddProfileDialog extends javax.swing.JDialog {
                 profileNameActionPerformed(null);
             }
         });
-        profileName.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                profileNameActionPerformed(evt);
-            }
-        });
         profileName.addFocusListener(new FocusAdapter() {
             public void focusLost(FocusEvent evt) {
                 profileNameFocusLost(evt);
+            }
+        });
+        profileName.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                profileNameActionPerformed(evt);
             }
         });
         profileName.addKeyListener(new KeyAdapter() {
@@ -127,7 +124,7 @@ public class AddProfileDialog extends javax.swing.JDialog {
 
         lblProfileLocation.setText(bundle.getString("AddProfileDialog.lblProfileLocation.text")); // NOI18N
 
-        profileLocation.setText(ProfileManager.defaultManager().getDefaultSearchPath().getPath());
+        profileLocation.setText(ProfileManager.getDefault().getDefaultSearchPath().getPath());
         profileLocation.setMinimumSize(new Dimension(14, 128));
         profileLocation.addFocusListener(new FocusAdapter() {
             public void focusLost(FocusEvent evt) {
@@ -145,7 +142,7 @@ public class AddProfileDialog extends javax.swing.JDialog {
             }
         });
 
-        profileFolder.setText(ProfileManager.defaultManager().getDefaultSearchPath().getPath());
+        profileFolder.setText(ProfileManager.getDefault().getDefaultSearchPath().getPath());
         profileFolder.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 profileFolderActionPerformed(evt);
@@ -278,21 +275,31 @@ public class AddProfileDialog extends javax.swing.JDialog {
 
     private void btnOkActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
         try {
+            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             Profile p = new Profile(this.profileName.getText(), this.profileId, new File(this.profileFolder.getText()));
-            ProfileManager.defaultManager().addProfile(p);
+            ProfileManager.getDefault().addProfile(p);
             if (this.source != null) {
-                // TODO: if source is active profile, save source first
-                FileUtil.copy(source.getPath(), p.getPath());
-                p.save();
+                //if (this.source.equals(ProfileManager.getDefault().getActiveProfile())) {
+                //    // TODO: if source is active profile, prompt user to save source
+                //    InstanceManager.getDefault(ConfigureManager.class).storePrefs();
+                //}
+                ProfileUtils.copy(source, p);
             }
             if (this.setNextProfile) {
-                ProfileManager.defaultManager().setNextActiveProfile(p);
+                ProfileManager.getDefault().setNextActiveProfile(p);
             } else {
-                ProfileManager.defaultManager().setActiveProfile(p);
+                ProfileManager.getDefault().setActiveProfile(p);
             }
-            ProfileManager.defaultManager().saveActiveProfile(p, ProfileManager.defaultManager().isAutoStartActiveProfile());
+            ProfileManager.getDefault().saveActiveProfile(p, ProfileManager.getDefault().isAutoStartActiveProfile());
+            if (this.source != null) {
+                log.info("Created profile \"{}\" by copying profile \"{}\"", p.getName(), this.source.getName());
+            } else {
+                log.info("Created new profile \"{}\"", p.getName());
+            }
+            this.setCursor(Cursor.getDefaultCursor());
             this.dispose();
         } catch (IOException | IllegalArgumentException ex) {
+            this.setCursor(Cursor.getDefaultCursor());
             JOptionPane.showMessageDialog(this, ex.getLocalizedMessage(), "Error Creating Profile", JOptionPane.ERROR_MESSAGE);
             log.error("Error saving profile", ex);
         }

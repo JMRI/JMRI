@@ -1,6 +1,6 @@
 package jmri.jmrix.loconet;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -15,7 +15,6 @@ import junit.framework.TestSuite;
  * Copyright: Copyright (c) 2002</p>
  *
  * @author Bob Jacobsen
- * @version $Revision$
  */
 public class LnTrafficRouterTest extends TestCase {
 
@@ -87,7 +86,7 @@ public class LnTrafficRouterTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {LnTrafficRouterTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

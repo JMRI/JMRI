@@ -1,4 +1,3 @@
-// StatusFrameTest.java
 package jmri.jmrix.pricom.pockettester;
 
 import junit.framework.Test;
@@ -9,8 +8,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the StatusFrame class
  *
  * @author	Bob Jacobsen Copyright 2005
- * @version	$Revision$
- */
+  */
 public class StatusFrameTest extends TestCase {
 
     public void testCreate() {
@@ -23,10 +21,6 @@ public class StatusFrameTest extends TestCase {
         f.initComponents();
         f.setVisible(true);
         f.setSource(new DataSource() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 8224674918425447491L;
 
             void sendBytes(byte[] bytes) {
             }
@@ -49,11 +43,6 @@ public class StatusFrameTest extends TestCase {
         f.initComponents();
         f.setVisible(true);
         f.setSource(new DataSource() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 5500463612432095595L;
-
             void sendBytes(byte[] bytes) {
             }
         });
@@ -74,7 +63,7 @@ public class StatusFrameTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {StatusFrameTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

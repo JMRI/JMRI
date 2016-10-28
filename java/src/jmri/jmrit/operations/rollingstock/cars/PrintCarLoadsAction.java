@@ -22,14 +22,9 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2011
- * @version $Revision$
  */
 public class PrintCarLoadsAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7822254186432763396L;
     CarManager manager = CarManager.instance();
 
     public PrintCarLoadsAction(String actionName, boolean preview, Component pWho) {
@@ -45,6 +40,7 @@ public class PrintCarLoadsAction extends AbstractAction {
      */
     boolean isPreview;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         new CarLoadPrintOption();
     }
@@ -111,11 +107,11 @@ public class PrintCarLoadsAction extends AbstractAction {
                         writer.write(buf.toString() + NEW_LINE);
                     }
                 }
-                // and force completion of the printing
-                writer.close();
             } catch (IOException we) {
                 log.error("Error printing car roster");
             }
+            // and force completion of the printing
+            writer.close();
         }
     }
 
@@ -130,5 +126,5 @@ public class PrintCarLoadsAction extends AbstractAction {
         return buf.toString();
     }
 
-    static Logger log = LoggerFactory.getLogger(PrintCarLoadsAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintCarLoadsAction.class.getName());
 }

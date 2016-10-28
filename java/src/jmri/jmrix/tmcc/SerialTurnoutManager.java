@@ -1,4 +1,3 @@
-// SerialTurnoutManager.java
 package jmri.jmrix.tmcc;
 
 import jmri.JmriException;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * System names are "TTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006
- * @version	$Revision$
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -28,7 +26,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
         String sName = SerialAddress.normalizeSystemName(systemName);
-        if (sName == "") {
+        if (sName.equals("")) {
             // system name is not valid
             return null;
         }
@@ -56,12 +54,20 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return t;
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public SerialTurnoutManager instance() {
         if (_instance == null) {
             _instance = new SerialTurnoutManager();
         }
         return _instance;
     }
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static SerialTurnoutManager _instance = null;
 
     //Turnout address format is more than a simple number.
@@ -156,8 +162,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());
 
 }
-
-/* @(#)SerialTurnoutManager.java */

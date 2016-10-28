@@ -4,14 +4,13 @@
  * Description:	JUnit tests for the EasyDccProgrammer class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 package jmri.jmrix.easydcc;
 
 import java.util.Vector;
 import jmri.JmriException;
 import jmri.managers.DefaultProgrammerManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -26,6 +25,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
         EasyDccProgrammer p = new EasyDccProgrammer();
+        p.setMode(DefaultProgrammerManager.PAGEMODE);
 
         // and do the write
         p.writeCV(10, 20, l);
@@ -46,6 +46,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
         EasyDccProgrammer p = new EasyDccProgrammer();
+        p.setMode(DefaultProgrammerManager.PAGEMODE);
 
         // and do the write
         p.writeCV("10", 20, l);
@@ -100,6 +101,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
         EasyDccProgrammer p = new EasyDccProgrammer();
+        p.setMode(DefaultProgrammerManager.PAGEMODE);
 
         // and do the read
         p.readCV(10, l);
@@ -128,6 +130,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
         EasyDccProgrammer p = new EasyDccProgrammer();
+        p.setMode(DefaultProgrammerManager.PAGEMODE);
 
         // and do the read
         p.readCV("10", l);
@@ -220,6 +223,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
         EasyDccProgrammer p = new EasyDccProgrammer();
+        p.setMode(DefaultProgrammerManager.PAGEMODE);
 
         // and do the read
         p.readCV(10, l);
@@ -326,7 +330,7 @@ public class EasyDccProgrammerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", EasyDccProgrammerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -335,7 +339,7 @@ public class EasyDccProgrammerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(EasyDccProgrammerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccProgrammerTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

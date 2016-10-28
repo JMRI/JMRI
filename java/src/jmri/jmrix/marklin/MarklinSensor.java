@@ -2,8 +2,6 @@
 package jmri.jmrix.marklin;
 
 import jmri.implementation.AbstractSensor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implement a Sensor via Marklin communications.
@@ -15,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * in one location.
  *
  * @author Kevin Dickerson (C) 2009
- * @version	$Revision: 20842 $
+ * 
  */
 public class MarklinSensor extends AbstractSensor {
 
@@ -42,8 +40,6 @@ public class MarklinSensor extends AbstractSensor {
 
     static String[] modeNames = null;
     static int[] modeValues = null;
-
-    static Logger log = LoggerFactory.getLogger(MarklinSensor.class.getName());
 }
 
 /* @(#)MarklinSensor.java */

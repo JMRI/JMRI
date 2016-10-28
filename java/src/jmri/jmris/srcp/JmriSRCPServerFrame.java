@@ -7,15 +7,12 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying start/stop buttons for the JMRI server.
  *
  * @author	Paul Bender Copyright (C) 2009
- * @version	$Revision$
- */
+  */
 public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
 
     /**
@@ -90,7 +87,5 @@ public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
     public void stopSRCPServer() {
         JmriSRCPServer.instance().stop();
     }
-
-    static Logger log = LoggerFactory.getLogger(JmriSRCPServerFrame.class.getName());
 
 }

@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Based in part on SerialTurnout.java
  *
  * @author Dave Duchamp Copyright (C) 2004, 2009, 2010
- * @version $Revision$
  */
 public class SerialLight extends AbstractLight {
 
@@ -76,7 +75,7 @@ public class SerialLight extends AbstractLight {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialLight.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialLight.class.getName());
 }
 
 /* @(#)SerialLight.java */

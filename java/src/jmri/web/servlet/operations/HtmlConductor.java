@@ -38,14 +38,15 @@ public class HtmlConductor extends HtmlTrainCommon {
                     "ConductorSnippet.html"))), train.getIconName(), StringEscapeUtils.escapeHtml4(train
                             .getDescription()), StringEscapeUtils.escapeHtml4(train.getComment()), Setup
                     .isPrintRouteCommentsEnabled() ? train.getRoute().getComment() : "", strings
-                    .getProperty("Terminated"), "", // NOI18N terminated train has nothing to do
+                    .getProperty("Terminated"), "", // terminated train has nothing to do // NOI18N
                     "", // engines in separate section
                     "", // pickup=true, local=false
                     "", // pickup=false, local=false
                     "", // pickup=false, local=true
                     "", // engines in separate section
                     "", // terminate with null string, use empty string to indicate terminated
-                    strings.getProperty("Terminated"));  // NOI18N
+                    strings.getProperty("Terminated"),  // NOI18N
+                    train.getStatusCode());
         }
 
         List<Engine> engineList = EngineManager.instance().getByTrainBlockingList(train);
@@ -65,7 +66,8 @@ public class HtmlConductor extends HtmlTrainCommon {
                 pickups, setouts, localMoves,
                 dropEngines(engineList, location), // engines in separate section
                 (train.getNextLocation(train.getCurrentLocation()) != null) ? train.getNextLocationName() : null,
-                getMoveButton());
+                getMoveButton(),
+                train.getStatusCode());
     }
 
     private String getCurrentAndNextLocation() {

@@ -10,8 +10,7 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a LnHexFileFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public class LnHexFileAction extends AbstractAction {
 
     /**
@@ -37,7 +36,7 @@ public class LnHexFileAction extends AbstractAction {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(LnHexFileAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnHexFileAction.class.getName());
 
 }
 

@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Updated by Andrew Crosland February 2012 to enable 28 step speed packets</P>
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public class SprogThrottle extends AbstractThrottle {
 
@@ -25,6 +24,7 @@ public class SprogThrottle extends AbstractThrottle {
      */
     public SprogThrottle(SprogSystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
+        station = memo.getCommandStation();
 
         // cache settings.
         this.speedSetting = 0;
@@ -46,7 +46,7 @@ public class SprogThrottle extends AbstractThrottle {
 
     }
 
-    SprogCommandStation station = new SprogCommandStation();
+    SprogCommandStation station = null;
 
     DccLocoAddress address;
 
@@ -127,10 +127,10 @@ public class SprogThrottle extends AbstractThrottle {
         int mode = address.isLongAddress()
                 ? SprogConstants.LONG_ADD : 0;
         try {
-            mode |= (InstanceManager.powerManagerInstance().getPower() == SprogPowerManager.ON)
+            mode |= (InstanceManager.getDefault(jmri.PowerManager.class).getPower() == SprogPowerManager.ON)
                     ? SprogConstants.POWER_BIT : 0;
         } catch (Exception e) {
-            log.error("Exception from InstanceManager.powerManagerInstance(): " + e);
+            log.error("Exception from InstanceManager.getDefault(jmri.PowerManager.class): " + e);
         }
         if (log.isDebugEnabled()) {
             log.debug("Speed Step Mode Change to Mode: " + Mode
@@ -151,7 +151,7 @@ public class SprogThrottle extends AbstractThrottle {
             speedIncrement = SPEED_STEP_128_INCREMENT;
         }
         m = new SprogMessage("M h" + Integer.toHexString(mode));
-        SprogTrafficController.instance().sendSprogMessage(m, null);
+        ((SprogSystemConnectionMemo)adapterMemo).getSprogTrafficController().sendSprogMessage(m, null);
         if ((speedStepMode != Mode) && (Mode != DccThrottle.SpeedStepMode27)) {
             notifyPropertyChangeListener("SpeedSteps", this.speedStepMode,
                     this.speedStepMode = Mode);
@@ -159,7 +159,7 @@ public class SprogThrottle extends AbstractThrottle {
     }
 
     /**
-     * Set the speed & direction.
+     * Set the speed {@literal &} direction.
      * <P>
      * This intentionally skips the emergency stop value of 1 in 128 step mode
      * and the stop and estop values 1-3 in 28 step mode.
@@ -200,7 +200,7 @@ public class SprogThrottle extends AbstractThrottle {
                 m.setElement(i++, step.charAt(j));
             }
 
-            SprogTrafficController.instance().sendSprogMessage(m, null);
+            ((SprogSystemConnectionMemo)adapterMemo).getSprogTrafficController().sendSprogMessage(m, null);
             if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
                 notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
             }
@@ -233,7 +233,7 @@ public class SprogThrottle extends AbstractThrottle {
                 m.setElement(i++, step.charAt(j));
             }
 
-            SprogTrafficController.instance().sendSprogMessage(m, null);
+            ((SprogSystemConnectionMemo)adapterMemo).getSprogTrafficController().sendSprogMessage(m, null);
             if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
                 notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
             }
@@ -255,6 +255,6 @@ public class SprogThrottle extends AbstractThrottle {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(SprogThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogThrottle.class.getName());
 
 }

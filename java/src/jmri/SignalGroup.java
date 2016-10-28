@@ -1,8 +1,5 @@
 package jmri;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * SignalGroup.java
  *
@@ -30,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Pete Cressman Copyright (C) 2009
- * @version	$Revision 1.0 $
  */
 public interface SignalGroup extends NamedBean {
 
@@ -347,6 +343,4 @@ public interface SignalGroup extends NamedBean {
 
     static final int ONCLOSED = 2;    // route fires if turnout goes closed
     static final int ONTHROWN = 4;  // route fires if turnout goes thrown
-
-    static Logger log = LoggerFactory.getLogger(SignalGroup.class.getName());
 }

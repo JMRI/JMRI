@@ -1,4 +1,3 @@
-// JavaSoundAudioFactory.java
 package jmri.jmrit.audio;
 
 import java.util.List;
@@ -38,7 +37,6 @@ import org.slf4j.LoggerFactory;
  * <p>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class JavaSoundAudioFactory extends AbstractAudioFactory {
 
@@ -91,14 +89,14 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
-    // OK to write to static variable mixer as we are cleaning up
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "OK to write to static variable mixer as we are cleaning up")
     public void cleanup() {
         // Stop the command thread
         super.cleanup();
 
         // Get the active AudioManager
-        AudioManager am = InstanceManager.audioManagerInstance();
+        AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
 
         // Retrieve list of Audio Objects and remove the sources
         List<String> audios = am.getSystemNameList();
@@ -177,5 +175,3 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
     private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioFactory.class.getName());
 
 }
-
-/* $(#)JavaSoundAudioFactory.java */

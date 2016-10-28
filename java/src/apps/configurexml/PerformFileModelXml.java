@@ -1,7 +1,9 @@
 package apps.configurexml;
 
 import apps.PerformFileModel;
+import apps.StartupActionsManager;
 import java.io.File;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.util.FileUtil;
@@ -14,8 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Ken Cameron Copyright: 2014(c)
- * @version $Revision$
- * @see apps.PerformFilePanel
+ * @see apps.startup.PerformFileModelFactory
  */
 public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
@@ -50,26 +51,25 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
         return true;
     }
 
-    /**
-     * Create object from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element e) throws JmriException {
+    @Override
+    public boolean load(Element shared, Element perNode) throws JmriException {
         boolean result = true;
-        String fileName = FileUtil.getAbsoluteFilename(e.getAttribute("name").getValue());
+        String fileName = FileUtil.getAbsoluteFilename(shared.getAttribute("name").getValue());
         log.info("Load file " + fileName);
 
         // load the file
         File file = new File(fileName);
-        result = InstanceManager.configureManagerInstance().load(file);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            result = cm.load(file);
+        } else {
+            result = false;
+        }
 
         // leave an updated object around
         PerformFileModel m = new PerformFileModel();
         m.setFileName(fileName);
-        PerformFileModel.rememberObject(m);
-        jmri.InstanceManager.configureManagerInstance().registerPref(new apps.PerformFilePanel());
+        InstanceManager.getDefault(StartupActionsManager.class).addAction(m);
         return result;
     }
 
@@ -83,6 +83,6 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(PerformFileModelXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PerformFileModelXml.class.getName());
 
 }

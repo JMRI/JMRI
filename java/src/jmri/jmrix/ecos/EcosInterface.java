@@ -6,8 +6,7 @@ package jmri.jmrix.ecos;
  * station.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision$
- */
+  */
 public interface EcosInterface {
 
     public void addEcosListener(EcosListener l);

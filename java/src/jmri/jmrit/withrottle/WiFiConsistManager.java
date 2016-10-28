@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010, 2011
- * @version $Revision: 18416 $
+ * 
  */
 public class WiFiConsistManager extends AbstractConsistManager {
 
@@ -64,7 +64,6 @@ public class WiFiConsistManager extends AbstractConsistManager {
     /**
      * Add a listener to handle: listener.sendPacketToDevice(message);
      *
-     * @param listener
      */
     public void addControllerListener(ControllerInterface listener) {
         if (listeners == null) {
@@ -84,6 +83,6 @@ public class WiFiConsistManager extends AbstractConsistManager {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(WiFiConsistManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WiFiConsistManager.class.getName());
 
 }

@@ -1,9 +1,9 @@
 // XBeeReply.java
 package jmri.jmrix.ieee802154.xbee;
 
-import com.rapplogic.xbee.api.XBeeResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.digi.xbee.api.packet.XBeePacket;
+import com.digi.xbee.api.packet.GenericXBeePacket;
+import com.digi.xbee.api.packet.UnknownXBeePacket;
 
 /**
  * Contains the data payload of a serial reply packet. Note that its _only_ the
@@ -13,72 +13,65 @@ import org.slf4j.LoggerFactory;
  * multiple connection
  * @author kcameron Copyright (C) 2011 Modified for IEEE 802.15.4 connection
  * @author Paul Bender Copyright (C) 2013
- * @version $Revision$
  */
 public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
 
-    XBeeTrafficController tc = null;
-
-    XBeeResponse xbresponse = null;
+    XBeePacket xbresponse = null;
 
     // create a new one
-    public XBeeReply(XBeeTrafficController tc) {
-        super(tc);
-        this.tc = tc;
+    public XBeeReply() {
+        super();
         setBinary(true);
     }
 
-    public XBeeReply(XBeeTrafficController tc, String s) {
-        super(tc, s);
-        this.tc = tc;
+    public XBeeReply(String s) {
+        super(s);
         setBinary(true);
-        xbresponse = new com.rapplogic.xbee.api.GenericResponse();
         byte ba[] = jmri.util.StringUtil.bytesFromHexString(s);
-        int ia[] = new int[ba.length];
-        for (int i = 0; i < ba.length; i++) {
-            ia[i] = ba[i];
+        for(int i=0;i<ba.length;i++) {
+           _dataChars[i] = (int) ba[i];
         }
-        xbresponse.setRawPacketBytes(ia);
+        _nDataChars=ba.length;
+        xbresponse = UnknownXBeePacket.createPacket(ba);
     }
 
-    public XBeeReply(XBeeTrafficController tc, XBeeReply l) {
-        super(tc, l);
-        this.tc = tc;
+    public XBeeReply(XBeeReply l) {
+        super(l);
         xbresponse = l.xbresponse;
-        _dataChars = xbresponse.getRawPacketBytes();
+        byte data[] = xbresponse.getPacketData();
+        for(int i=0;i<data.length;i++) {
+           _dataChars[i] = (int) data[i];
+        }
+        _nDataChars=data.length;
         setBinary(true);
     }
 
-    public XBeeReply(XBeeTrafficController tc, XBeeResponse xbr) {
-        super(tc);
-        this.tc = tc;
+    public XBeeReply(XBeePacket xbr) {
+        super();
         xbresponse = xbr;
-        _dataChars = xbr.getRawPacketBytes();
+        byte data[] = xbr.getPacketData();
+        for(int i=0;i<data.length;i++) {
+           _dataChars[i] = (int) data[i];
+        }
+        _nDataChars=data.length;
         setBinary(true);
     }
 
     public String toMonitorString() {
-        return xbresponse.toString();
+        return xbresponse.toPrettyString();
     }
 
     public String toString() {
-        String s = "";
-        int packet[] = xbresponse.getProcessedPacketBytes();
-        for (int i = 0; i < packet.length; i++) {
-            s = s + jmri.util.StringUtil.twoHexFromInt(packet[i]);
-        }
-        return s;
+        return xbresponse.toString();
     }
 
-    public XBeeResponse getXBeeResponse() {
+    public XBeePacket getXBeeResponse() {
         return xbresponse;
     }
 
-    public void setXBeeResponse(XBeeResponse xbr) {
+    public void setXBeeResponse(XBeePacket xbr) {
         xbresponse = xbr;
     }
-
-    final static Logger log = LoggerFactory.getLogger(XBeeReply.class);
 
 }
 

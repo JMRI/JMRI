@@ -1,4 +1,3 @@
-// DefaultSignalAppearanceMap.java
 package jmri.implementation;
 
 import java.net.URL;
@@ -19,14 +18,8 @@ import org.slf4j.LoggerFactory;
  * makes creation a little more heavy-weight, but speeds operation.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmri.SignalAppearanceMap {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1448362198557086500L;
 
     public DefaultSignalAppearanceMap(String systemName, String userName) {
         super(systemName, userName);
@@ -41,11 +34,10 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     }
 
     static public DefaultSignalAppearanceMap getMap(String signalSystemName, String aspectMapName) {
-        if (log.isDebugEnabled()) {
-            log.debug("getMap signalSystem= \"" + signalSystemName + "\", aspectMap= \"" + aspectMapName + "\"");
-        }
+        log.debug("getMap signalSystem= \"{}\", aspectMap= \"{}\"", signalSystemName, aspectMapName);
         DefaultSignalAppearanceMap map = maps.get("map:" + signalSystemName + ":" + aspectMapName);
         if (map == null) {
+            log.debug("not located, request loadMap signalSystem= \"{}\", aspectMap= \"{}\"", signalSystemName, aspectMapName);
             map = loadMap(signalSystemName, aspectMapName);
         }
         return map;
@@ -82,6 +74,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
             List<Element> l = root.getChild("appearances").getChildren("appearance");
 
             // find all appearances, include them by aspect name, 
+            log.debug("   reading {} aspectname elements", l.size());
             for (int i = 0; i < l.size(); i++) {
                 String name = l.get(i).getChild("aspectname").getText();
                 if (log.isDebugEnabled()) {
@@ -115,6 +108,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
                     } else if (sval.equals("DARK")) {
                         ival = SignalHead.DARK;
                     } else {
+                        log.error("found invalid content: {}", sval);
                         throw new JDOMException("invalid content: " + sval);
                     }
 
@@ -140,8 +134,9 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
             }
             loadSpecificMap(signalSystemName, aspectMapName, map, root);
             loadAspectRelationMap(signalSystemName, aspectMapName, map, root);
+            log.debug("loading complete");
         } catch (java.io.IOException | org.jdom2.JDOMException e) {
-            log.error("error reading file {}", file.getPath(), e);
+            log.error("error reading file "+file.getPath(), e);
             return null;
         }
 
@@ -411,7 +406,5 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     }
 
     protected java.util.Hashtable<String, int[]> table = new jmri.util.OrderedHashtable<String, int[]>();
-    static Logger log = LoggerFactory.getLogger(DefaultSignalAppearanceMap.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalAppearanceMap.class.getName());
 }
-
-/* @(#)DefaultSignalAppearanceMap.java */

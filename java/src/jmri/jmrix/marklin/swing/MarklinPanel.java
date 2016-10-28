@@ -11,7 +11,6 @@ import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.11.3
- * @version $Revision: 17977 $
  */
 abstract public class MarklinPanel extends jmri.util.swing.JmriPanel implements MarklinPanelInterface {
 

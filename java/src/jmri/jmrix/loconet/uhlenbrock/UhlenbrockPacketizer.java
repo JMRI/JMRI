@@ -1,4 +1,3 @@
-// UhlenbrockPacketizer.java
 package jmri.jmrix.loconet.uhlenbrock;
 
 import java.util.Calendar;
@@ -21,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <P>
  * <UL>
  * <LI> RcvHandler - at highest available priority
  * <LI> XmtHandler - down one, which is assumed to be above the GUI
@@ -35,12 +33,11 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2010
- * @version $Revision: 17977 $
  *
  */
 public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterface {
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization")
     public UhlenbrockPacketizer() {
         super();
@@ -51,10 +48,6 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
     public static final int WAITMSGREPLYSTATE = 25;  // xmt has sent, await reply to message
 
     static int defaultWaitTimer = 2000;
-
-    final static boolean fulldebug = false;
-
-    boolean debug = false;
 
     /**
      * Forward a preformatted LocoNetMessage to the actual interface.
@@ -79,8 +72,8 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
             msg[i] = (byte) m.getElement(i);
         }
 
-        if (debug) {
-            log.debug("queue LocoNet packet: " + m.toString());
+        if (log.isDebugEnabled()) {
+            log.debug("queue LocoNet packet: {}", m.toString());
         }
         // in an atomic operation, queue the request and wake the xmit thread
         try {
@@ -119,7 +112,6 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
         }
 
         public void run() {
-            boolean debug = true;//log.isDebugEnabled();
 
             int opCode;
             while (true) {   // loop permanently, program close will exit
@@ -127,48 +119,48 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                     // start by looking for command -  skip if bit not set
                     int inbyte = readByteProtected(istream) & 0xFF;
                     while (((opCode = (inbyte)) & 0x80) == 0) {
-                        if (debug) {
-                            log.debug("Skipping: " + Integer.toHexString(opCode));
-                        }
+                        log.debug("Skipping: {}", Integer.toHexString(opCode));
                         inbyte = readByteProtected(istream) & 0xFF;
                     }
                     // here opCode is OK. Create output message
-                    if (debug) {
-                        log.debug("Start message with opcode: " + Integer.toHexString(opCode));
-                    }
+                    log.debug("Start message with opcode: {}", Integer.toHexString(opCode));
                     LocoNetMessage msg = null;
                     while (msg == null) {
                         try {
                             // Capture 2nd byte, always present
                             int byte2 = readByteProtected(istream) & 0xFF;
                             //log.debug("Byte2: "+Integer.toHexString(byte2));
-                            if ( (byte2&0x80) != 0) {
-                               log.warn("LocoNet message with opCode: "
-                                        +Integer.toHexString(opCode)
-                                        +" ended early. Byte2 is also an opcode: "
-                                        +Integer.toHexString(byte2));
-                               opCode = byte2;
-                               throw new LocoNetMessageException();
+                            if ((byte2 & 0x80) != 0) {
+                                log.warn("LocoNet message with opCode: "
+                                        + Integer.toHexString(opCode)
+                                        + " ended early. Byte2 is also an opcode: "
+                                        + Integer.toHexString(byte2));
+                                opCode = byte2;
+                                throw new LocoNetMessageException();
                             }
 
                             // Decide length
                             switch ((opCode & 0x60) >> 5) {
-                                case 0:     /* 2 byte message */
+                                case 0:
+                                    /* 2 byte message */
 
                                     msg = new LocoNetMessage(2);
                                     break;
 
-                                case 1:     /* 4 byte message */
+                                case 1:
+                                    /* 4 byte message */
 
                                     msg = new LocoNetMessage(4);
                                     break;
 
-                                case 2:     /* 6 byte message */
+                                case 2:
+                                    /* 6 byte message */
 
                                     msg = new LocoNetMessage(6);
                                     break;
 
-                                case 3:     /* N byte message */
+                                case 3:
+                                    /* N byte message */
 
                                     if (byte2 < 2) {
                                         log.error("LocoNet message length invalid: " + byte2
@@ -223,9 +215,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
 
                     // message is complete, dispatch it !!
                     {
-                        if (debug) {
-                            log.debug("queue message for notification");
-                        }
+                        log.debug("queue message for notification");
 //log.info("-------------------Uhlenbrock IB-COM Loconet message RECEIVED: "+msg.toString());
                         final LocoNetMessage thisMsg = msg;
                         final LnPacketizer thisTC = trafficController;
@@ -247,14 +237,10 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                     log.warn("run: unexpected LocoNetMessageException: " + e);
                 } catch (java.io.EOFException e) {
                     // posted from idle port when enableReceiveTimeout used
-                    if (debug) {
-                        log.debug("EOFException, is LocoNet serial I/O using timeouts?");
-                    }
+                    log.debug("EOFException, is LocoNet serial I/O using timeouts?");
                 } catch (java.io.IOException e) {
                     // fired when write-end of HexFile reaches end
-                    if (debug) {
-                        log.debug("IOException, should only happen with HexFIle: " + e);
-                    }
+                    log.debug("IOException, should only happen with HexFile: {}", e);
                     log.debug("End of file");
                     disconnectPort(controller);
                     return;
@@ -276,15 +262,12 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
     class XmtHandler implements Runnable {
 
         public void run() {
-            boolean debug = true; //log.isDebugEnabled();
 
             while (true) {   // loop permanently
                 // any input?
                 try {
                     // get content; failure is a NoSuchElementException
-                    if (debug) {
-                        log.debug("check for input");
-                    }
+                    log.debug("check for input");
                     byte msg[] = null;
                     lastMessage = null;
                     synchronized (this) {
@@ -299,17 +282,13 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                             if (!controller.okToSend()) {
                                 log.debug("LocoNet port not ready to receive");
                             }
-                            if (debug) {
-                                log.debug("start write to stream");
+                            log.debug("start write to stream");
+                            while (!controller.okToSend()) {
+                                Thread.yield();
                             }
-                                while (!controller.okToSend()) {
-                                    Thread.yield();
-                                }
                             ostream.write(msg);
-                                ostream.flush();
-                            if (debug) {
-                                log.debug("end write to stream");
-                            }
+                            ostream.flush();
+                            log.debug("end write to stream");
                             messageTransmited(msg);
                             mCurrentState = WAITMSGREPLYSTATE;
                             transmitWait(defaultWaitTimer, WAITMSGREPLYSTATE);
@@ -322,15 +301,11 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                     }
                 } catch (NoSuchElementException e) {
                     // message queue was empty, wait for input
-                    if (debug) {
-                        log.debug("start wait");
-                    }
+                    log.debug("start wait");
 
                     new jmri.util.WaitHandler(this);  // handle synchronization, spurious wake, interruption
 
-                    if (debug) {
-                        log.debug("end wait");
-                    }
+                    log.debug("end wait");
                 }
             }
         }
@@ -395,7 +370,5 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
 
     }
 
-    static Logger log = LoggerFactory.getLogger(UhlenbrockPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(UhlenbrockPacketizer.class.getName());
 }
-
-/* @(#)LnPacketizer.java */

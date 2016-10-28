@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
  * Class to hold SPROG type and firmware version
  *
  * @author	Andrew crosland Copyright (C) 2012
- * @version	$Revision: $
+ * 
  */
 public class SprogVersion {
 
@@ -160,7 +160,7 @@ public class SprogVersion {
         return (s.sprogType.toString() +" v"+ sprogVersion);
     }
 
-    static Logger log = LoggerFactory.getLogger(SprogVersion.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogVersion.class.getName());
 }
 
 /* @(#)SprogVersion.java */

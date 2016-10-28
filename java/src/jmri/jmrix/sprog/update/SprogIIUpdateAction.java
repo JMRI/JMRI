@@ -1,26 +1,20 @@
-//SprogIIUpdateAction.java
 package jmri.jmrix.sprog.update;
 
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
  * Swing action to create and register a SprogIIUpdateFrame object
  *
  * @author	Andrew crosland Copyright (C) 2004
- * @version	$Revision$
  */
 public class SprogIIUpdateAction extends SprogUpdateAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6594875472044292274L;
-
-    public SprogIIUpdateAction(String s) {
-        super(s);
+    public SprogIIUpdateAction(String s,SprogSystemConnectionMemo memo) {
+        super(s,memo);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -32,7 +26,7 @@ public class SprogIIUpdateAction extends SprogUpdateAction {
                 "SPROG II Firmware Update", JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[0])) {
             // create a SprogIIUpdateFrame
-            SprogIIUpdateFrame f = new SprogIIUpdateFrame();
+            SprogIIUpdateFrame f = new SprogIIUpdateFrame(_memo);
             try {
                 f.initComponents();
             } catch (Exception ex) {
@@ -42,9 +36,6 @@ public class SprogIIUpdateAction extends SprogUpdateAction {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SprogIIUpdateAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogIIUpdateAction.class.getName());
 
 }
-
-
-/* @(#)SprogIIUpdateAction.java */

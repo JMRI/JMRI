@@ -5,7 +5,7 @@
 # directory.
 #
 # See 
-#    <http://jmri.sourceforge.net/help/en/html/doc/Technical/I8N.shtml>
+#    <http://jmri.org/help/en/html/doc/Technical/I8N.shtml>
 #    <http://www.geocities.com/harry_robinson_testing/klingon.htm>
 # 
 # Assumes that the program is being run from the "java" build directory.

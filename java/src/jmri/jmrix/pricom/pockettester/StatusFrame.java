@@ -14,8 +14,7 @@ import org.slf4j.LoggerFactory;
  * For more info on the product, see http://www.pricom.com
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version	$Revision$
- */
+  */
 public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
 
     /**
@@ -176,6 +175,6 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(StatusFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StatusFrame.class.getName());
 
 }

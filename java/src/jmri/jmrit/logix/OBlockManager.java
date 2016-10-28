@@ -1,9 +1,10 @@
-// OBlockManager.java
 package jmri.jmrit.logix;
 
 import jmri.managers.AbstractManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import javax.annotation.CheckReturnValue;
 
 /**
  * Basic Implementation of a OBlockManager.
@@ -29,7 +30,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2006
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision$
  */
 public class OBlockManager extends AbstractManager
         implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
@@ -42,7 +42,7 @@ public class OBlockManager extends AbstractManager
         return jmri.Manager.OBLOCKS;
     }
 
-    public String getSystemPrefix() {
+    public @Nonnull String getSystemPrefix() {
         return "O";
     }
 
@@ -110,13 +110,18 @@ public class OBlockManager extends AbstractManager
         return (OBlock) _tuser.get(key);
     }
 
-    public OBlock provideOBlock(String name) {
+    public @Nonnull OBlock provideOBlock(String name) throws IllegalArgumentException {
         if (name == null || name.length() == 0) {
-            return null;
+            throw new IllegalArgumentException("name \""+name+"\" invalid");
         }
         OBlock ob = getByUserName(name);
         if (ob == null) {
             ob = getBySystemName(name);
+        }
+        if (ob == null) {
+            ob = createNewOBlock(name, null);
+            if (ob == null) throw new IllegalArgumentException("could not create OBlock \""+name+"\"");
+            register(ob);
         }
         return ob;
     }
@@ -133,8 +138,4 @@ public class OBlockManager extends AbstractManager
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameOBlock");
     }
-
-    static Logger log = LoggerFactory.getLogger(OBlockManager.class.getName());
 }
-
-/* @(#)OBlockManager.java */

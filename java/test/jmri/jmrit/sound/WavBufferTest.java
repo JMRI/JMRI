@@ -1,10 +1,7 @@
-// WavBufferTest.java
 package jmri.jmrit.sound;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Tests for the WavBuffer class.
@@ -12,19 +9,25 @@ import junit.framework.TestSuite;
  * Note: This makes noise!
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version $Revision$
+ * @author Randall Wood (C) 2016
  */
-public class WavBufferTest extends TestCase {
+public class WavBufferTest {
 
+    @Test
     public void testCtor() {
         byte[] data = new byte[idata.length];
         for (int i = 0; i < idata.length; i++) {
             data[i] = (byte) idata[i];
         }
 
-        new WavBuffer(data);
+        try {
+            new WavBuffer(data);
+        } catch (Exception ex) {
+            Assert.fail("Unexpected exception thrown");
+        }
     }
 
+    @Test
     public void testSizes() {
         byte[] data = new byte[idata.length];
         for (int i = 0; i < idata.length; i++) {
@@ -38,6 +41,7 @@ public class WavBufferTest extends TestCase {
         Assert.assertEquals("channels   ", 1, w.getChannels());
     }
 
+    @Test
     public void testLocations() {
         byte[] data = new byte[idata.length];
         for (int i = 0; i < idata.length; i++) {
@@ -51,23 +55,6 @@ public class WavBufferTest extends TestCase {
         Assert.assertEquals("data size            ", 32, w.getDataSize());
         Assert.assertEquals("data end offset      ", 56 + 32 - 1, w.getDataEnd());
 
-    }
-
-    // from here down is testing infrastructure
-    public WavBufferTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {WavBufferTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(WavBufferTest.class);
-        return suite;
     }
 
     int[] idata = new int[]{

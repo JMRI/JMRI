@@ -2,4 +2,4 @@ ProgDebugger is a dummy implementation of the Programmer interface.  It doesn't
 do very much, and is intended only to let you develop without access to a layout.
 
 
-The JMRI web page is located at http://jmri.sourceforge.net/
+The JMRI web page is located at http://jmri.org/

@@ -5,15 +5,12 @@ package jmri.jmris;
 
 import java.util.ResourceBundle;
 import javax.swing.JMenu;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Create a "Server" menu containing the Server interface to the JMRI
  * system-independent tools
  *
  * @author	Paul Bender Copyright 2010
- * @version $Revision$
  */
 public class ServerMenu extends JMenu {
 
@@ -41,6 +38,4 @@ public class ServerMenu extends JMenu {
         add(new jmri.jmris.srcp.JmriSRCPServerMenu());
 
     }
-
-    static Logger log = LoggerFactory.getLogger(ServerMenu.class.getName());
 }

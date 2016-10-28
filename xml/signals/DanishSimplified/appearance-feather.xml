@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Nigel</firstname><surname>Cliffe</surname></personname>
+
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2013-04-30</date>
+        <authorinitials>NC</authorinitials>
+        <revremark>Initial Version.  Not linked to Layout Editor automatic routing, so to control Feather use manually constructed 
+				 Logix associated with turnout settings.
+		           The Feather was intended for use with Signal Accessory Decoders such as the Harman SC1. </revremark>
+    </revision>
+    
+  </revhistory>
+  
+  <aspecttable>DanishSimplified</aspecttable>
+
+  <name>Feather</name>
+  
+  <description>Intended for use with Signal Accessory Decoders, eg. Harman SC1</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Ligeud</aspectname>
+      <show>dark</show>
+      <imagelink type="large">../../../resources/icons/DanishSignals/Large/junction-right-dark.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/DanishSignals/Aspects/junction-right-dark.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sidespor</aspectname>
+      <show>green</show>
+      <imagelink type="large">../../../resources/icons/DanishSignals/Large/junction-right-green.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/DanishSignals/Aspects/junction-right-green.gif</imagelink>
+    </appearance>
+
+  </appearances>
+  
+  <specificappearances>
+  
+  </specificappearances>
+  
+</appearancetable>  

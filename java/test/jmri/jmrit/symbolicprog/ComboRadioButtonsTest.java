@@ -1,10 +1,9 @@
-// ComboRadioButtonsTest.java
 package jmri.jmrit.symbolicprog;
 
 import java.util.HashMap;
 import javax.swing.JComboBox;
 import jmri.progdebugger.ProgDebugger;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -13,7 +12,6 @@ import junit.framework.TestSuite;
  * ComboRadioButtonsTest.java
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version $Release:$
  */
 public class ComboRadioButtonsTest extends TestCase {
 
@@ -131,7 +129,7 @@ public class ComboRadioButtonsTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {ComboRadioButtonsTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

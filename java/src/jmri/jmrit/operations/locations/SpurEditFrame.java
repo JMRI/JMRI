@@ -1,12 +1,21 @@
 // SpurEditFrame.java
 package jmri.jmrit.operations.locations;
 
+import java.awt.Color;
 import java.awt.GridBagLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import jmri.jmrit.operations.locations.schedules.Schedule;
+import jmri.jmrit.operations.locations.schedules.ScheduleEditFrame;
+import jmri.jmrit.operations.locations.schedules.ScheduleManager;
+import jmri.jmrit.operations.locations.tools.AlternateTrackAction;
+import jmri.jmrit.operations.locations.tools.ChangeTrackTypeAction;
+import jmri.jmrit.operations.locations.tools.IgnoreUsedTrackAction;
+import jmri.jmrit.operations.locations.tools.ShowCarsByLocationAction;
+import jmri.jmrit.operations.locations.tools.ShowTrainsServingLocationAction;
 import jmri.jmrit.operations.setup.Control;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,14 +24,9 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of a spur.
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision$
  */
 public class SpurEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9021321721517947715L;
     // labels, buttons, etc. for spurs
     JLabel textSchedule = new JLabel(Bundle.getMessage("DeliverySchedule"));
     JLabel textSchError = new JLabel();
@@ -35,6 +39,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         super();
     }
 
+    @Override
     public void initComponents(Location location, Track track) {
         _type = Track.SPUR;
 
@@ -45,6 +50,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         addItem(panelSchedule, comboBoxSchedules, 0, 0);
         addItem(panelSchedule, editScheduleButton, 1, 0);
         addItem(panelSchedule, textSchError, 2, 0);
+        textSchError.setForeground(Color.RED);
 
         super.initComponents(location, track);
 
@@ -77,6 +83,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         setVisible(true);
     }
 
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == editScheduleButton) {
             editAddSchedule();
@@ -84,6 +91,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         super.buttonActionPerformed(ae);
     }
     
+    @Override
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         updateScheduleButtonText();
     }
@@ -92,7 +100,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         if (comboBoxSchedules.getSelectedItem() == null) {
             editScheduleButton.setText(Bundle.getMessage("Add"));
         } else {
-            editScheduleButton.setText(Bundle.getMessage("Edit"));
+            editScheduleButton.setText(Bundle.getMessage("ButtonEdit"));
         }
     }
 
@@ -107,6 +115,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         sef = new ScheduleEditFrame(schedule, _track);
     }
 
+    @Override
     protected void enableButtons(boolean enabled) {
         editScheduleButton.setEnabled(enabled);
         comboBoxSchedules.setEnabled(enabled);
@@ -116,6 +125,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         super.enableButtons(enabled);
     }
 
+    @Override
     protected void saveTrack(Track track) {
         // save the schedule
         Object selected = comboBoxSchedules.getSelectedItem();
@@ -130,6 +140,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         super.saveTrack(track);
     }
 
+    @Override
     protected void addNewTrack() {
         super.addNewTrack();
         updateScheduleComboBox(); // reset schedule and error text
@@ -148,6 +159,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         }
     }
 
+    @Override
     public void dispose() {
         ScheduleManager.instance().removePropertyChangeListener(this);
         if (_track != null) {
@@ -158,8 +170,9 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -173,5 +186,5 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         super.propertyChange(e);
     }
 
-    static Logger log = LoggerFactory.getLogger(SpurEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpurEditFrame.class.getName());
 }

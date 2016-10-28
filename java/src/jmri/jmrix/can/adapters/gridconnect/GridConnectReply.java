@@ -19,8 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrew Crosland Copyright (C) 2008, 2009
  * @author Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
- */
+  */
 public class GridConnectReply extends AbstractMRReply {
 
     static final int MAXLEN = 27;
@@ -198,7 +197,7 @@ public class GridConnectReply extends AbstractMRReply {
         return (byte) b;
     }
 
-    static Logger log = LoggerFactory.getLogger(GridConnectReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(GridConnectReply.class.getName());
 }
 
 /* @(#)GridConnectReply.java */

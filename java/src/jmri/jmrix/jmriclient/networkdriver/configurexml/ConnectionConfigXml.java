@@ -1,13 +1,10 @@
 package jmri.jmrix.jmriclient.networkdriver.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
 import jmri.jmrix.jmriclient.networkdriver.ConnectionConfig;
 import jmri.jmrix.jmriclient.networkdriver.NetworkDriverAdapter;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persistening the
@@ -22,7 +19,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Paul Bender Copyright: Copyright (c) 2010
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
@@ -44,7 +40,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     /**
@@ -59,19 +55,11 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         }
     }
 
-    /**
-     * Customizable method if you need to add anything more
-     *
-     * @param e Element being created, update as needed
-     */
     @Override
-    protected void unpackElement(Element e) {
-        if (e.getAttribute("transmitPrefix") != null) {
-            ((JMRIClientSystemConnectionMemo) adapter.getSystemConnectionMemo()).setTransmitPrefix(e.getAttribute("transmitPrefix").getValue());
+    protected void unpackElement(Element shared, Element perNode) {
+        if (shared.getAttribute("transmitPrefix") != null) {
+            ((JMRIClientSystemConnectionMemo) adapter.getSystemConnectionMemo()).setTransmitPrefix(shared.getAttribute("transmitPrefix").getValue());
         }
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

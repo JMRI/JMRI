@@ -1,26 +1,17 @@
-// DecoderIndexCreateAction.java
 package jmri.jmrit.decoderdefn;
 
 import java.awt.event.ActionEvent;
 import javax.swing.Icon;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Update the decoder index and store
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2011
- * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  */
 public class DecoderIndexCreateAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4750974443596415652L;
 
     public DecoderIndexCreateAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -50,6 +41,4 @@ public class DecoderIndexCreateAction extends JmriAbstractAction {
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(DecoderIndexCreateAction.class.getName());
 }

@@ -1,4 +1,3 @@
-// TrafficController.java
 package jmri.jmrix.direct;
 
 import java.io.DataInputStream;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * particular, note that transmission is not a threaded operation.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class TrafficController implements jmri.CommandStation {
 
@@ -34,7 +32,9 @@ public class TrafficController implements jmri.CommandStation {
      * static function returning the instance to use.
      *
      * @return The registered instance for general use, if need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public TrafficController instance() {
         if (self == null) {
             if (log.isDebugEnabled()) {
@@ -45,9 +45,13 @@ public class TrafficController implements jmri.CommandStation {
         return self;
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static TrafficController self = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
     protected void setInstance() {
         self = this;
@@ -61,7 +65,7 @@ public class TrafficController implements jmri.CommandStation {
      * @param repeats Number of times to repeat the transmission, but is ignored
      *                in the current implementation
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void sendPacket(byte[] packet, int repeats) {
@@ -112,7 +116,7 @@ public class TrafficController implements jmri.CommandStation {
     private AbstractSerialPortController controller = null;
 
     public boolean status() {
-        return (ostream != null & istream != null);
+        return (ostream != null && istream != null);
     }
 
     /**
@@ -154,8 +158,5 @@ public class TrafficController implements jmri.CommandStation {
         return "N";
     }
 
-    static Logger log = LoggerFactory.getLogger(TrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrafficController.class.getName());
 }
-
-
-/* @(#)TrafficController.java */

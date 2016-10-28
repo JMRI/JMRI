@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Alex Shepherd Copyright (c) 2002
  * @author Bob Jacobsen
- * @version $Revision$
  */
 public class LnMessageClient extends LnTrafficRouter {
 
@@ -110,8 +109,6 @@ public class LnMessageClient extends LnTrafficRouter {
 
         // the serial connections (LocoBuffer et al) start
         // various threads here.
-        jmri.jmrix.loconet.ActiveFlag.setActive();
-
     }
 
     LocoNetSystemConnectionMemo clientMemo;
@@ -120,5 +117,5 @@ public class LnMessageClient extends LnTrafficRouter {
         return clientMemo;
     }
 
-    static Logger log = LoggerFactory.getLogger(LnMessageClient.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnMessageClient.class.getName());
 }

@@ -2,15 +2,8 @@ package jmri.jmrit.beantable;
 
 import jmri.InstanceManager;
 import jmri.Manager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class LightTableTabAction extends AbstractTableTabAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2814960247992024318L;
 
     public LightTableTabAction(String s) {
         super(s);
@@ -36,6 +29,4 @@ public class LightTableTabAction extends AbstractTableTabAction {
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.LightTable";
     }
-
-    static Logger log = LoggerFactory.getLogger(LightTableTabAction.class.getName());
 }

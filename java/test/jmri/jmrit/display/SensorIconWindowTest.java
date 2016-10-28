@@ -1,4 +1,3 @@
-// SensorIconWindowTest.java
 package jmri.jmrit.display;
 
 import java.util.List;
@@ -7,12 +6,13 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.util.JUnitUtil;
 import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.EventDataConstants;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.AbstractButtonFinder;
 import junit.extensions.jfcunit.finder.DialogFinder;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -20,7 +20,6 @@ import junit.framework.TestSuite;
  * Swing jfcUnit tests for the SensorIcon
  *
  * @author	Bob Jacobsen Copyright 2009, 2010
- * @version $Revision$
  */
 public class SensorIconWindowTest extends jmri.util.SwingTestCase {
 
@@ -181,8 +180,8 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {SensorIconWindowTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        String[] testCaseName = {"-noloading", SensorIconWindowTest.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -195,9 +194,10 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initShutDownManager();
     }
 
     protected void tearDown() throws Exception {

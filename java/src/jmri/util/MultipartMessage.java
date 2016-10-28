@@ -1,4 +1,3 @@
-// MultipartMessage.java
 package jmri.util;
 
 import java.io.BufferedReader;
@@ -35,7 +34,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris Copyright (C) 2014
- * @version $Revision:$
  */
 public class MultipartMessage {
 
@@ -54,7 +52,7 @@ public class MultipartMessage {
      *
      * @param requestURL URL to which this request should be sent
      * @param charSet    character set encoding of this message
-     * @throws IOException
+     * @throws IOException if {@link OutputStream} cannot be created
      */
     public MultipartMessage(String requestURL, String charSet) throws IOException {
         this.charSet = charSet;
@@ -98,7 +96,7 @@ public class MultipartMessage {
      * @param fieldName  name attribute in form &lt;input name="{fieldName}"
      *                   type="file" /&gt;
      * @param uploadFile file to be uploaded
-     * @throws IOException
+     * @throws IOException if problem adding file to request
      */
     public void addFilePart(String fieldName, File uploadFile) throws IOException {
         addFilePart(fieldName, uploadFile, URLConnection.guessContentTypeFromName(uploadFile.getName()));
@@ -112,7 +110,7 @@ public class MultipartMessage {
      *                   type="file" /&gt;
      * @param uploadFile file to be uploaded
      * @param fileType   MIME type of file
-     * @throws IOException
+     * @throws IOException if problem adding file to request
      */
     public void addFilePart(String fieldName, File uploadFile, String fileType) throws IOException {
         log.debug("add file field: " + fieldName + "; file: " + uploadFile + "; type: " + fileType);
@@ -129,15 +127,18 @@ public class MultipartMessage {
         writer.flush();
 
         FileInputStream inStream = new FileInputStream(uploadFile);
-        byte[] buffer = new byte[4096];
-        @SuppressWarnings("UnusedAssignment")
-        int bytesRead = -1;
-        while ((bytesRead = inStream.read(buffer)) != -1) {
-            outStream.write(buffer, 0, bytesRead);
+        try {
+            byte[] buffer = new byte[4096];
+            @SuppressWarnings("UnusedAssignment")
+            int bytesRead = -1;
+            while ((bytesRead = inStream.read(buffer)) != -1) {
+                outStream.write(buffer, 0, bytesRead);
+            }
+            outStream.flush();
+        } finally {
+            inStream.close();
         }
-        outStream.flush();
-        inStream.close();
-
+        
         writer.append(LINE_FEED);
         writer.flush();
     }
@@ -154,8 +155,14 @@ public class MultipartMessage {
         writer.flush();
     }
 
+    /**
+     * Finalise and send MultipartMessage to end-point.
+     *
+     * @return Responses from end-point as a List of Strings
+     * @throws IOException if problem sending MultipartMessage to end-point
+     */
     public List<String> finish() throws IOException {
-        List<String> response = new ArrayList<String>();
+        List<String> response = new ArrayList<>();
 
         writer.append(LINE_FEED).flush();
         writer.append("--" + boundary + "--").append(LINE_FEED);
@@ -182,5 +189,3 @@ public class MultipartMessage {
     private static final Logger log = LoggerFactory.getLogger(MultipartMessage.class.getName());
 
 }
-
-/* @(#)MultipartMessage.java */

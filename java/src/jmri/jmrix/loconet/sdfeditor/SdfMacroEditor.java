@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * Common base for all the SDF macro editors.
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
  */
 public abstract class SdfMacroEditor extends JPanel {
 
@@ -132,7 +131,7 @@ public abstract class SdfMacroEditor extends JPanel {
         return null;
     }
 
-    static Logger log = LoggerFactory.getLogger(SdfMacroEditor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SdfMacroEditor.class.getName());
 
 }
 /* @(#)SdfMacroEditor.java */

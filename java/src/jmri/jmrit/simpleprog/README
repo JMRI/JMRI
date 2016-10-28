@@ -1,7 +1,7 @@
 The jmri.simpleprog package contains a _very_ simple programmer for use 
 with DCC command stations.
 
-The JMRI web page is located at http://jmri.sourceforge.net/
+The JMRI web page is located at http://jmri.org/
 
 Note that initial development, testing, etc was done with a DCS100 "Chief" 
 command station via LocoNet.

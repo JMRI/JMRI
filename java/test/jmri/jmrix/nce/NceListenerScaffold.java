@@ -4,12 +4,9 @@
  * Description:	Stands in for the NceTrafficController class
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 package jmri.jmrix.nce;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 class NceListenerScaffold implements jmri.jmrix.nce.NceListener {
 
@@ -28,7 +25,5 @@ class NceListenerScaffold implements jmri.jmrix.nce.NceListener {
 
     NceReply rcvdReply;
     NceMessage rcvdMsg;
-
-    static Logger log = LoggerFactory.getLogger(NceListenerScaffold.class.getName());
 
 }

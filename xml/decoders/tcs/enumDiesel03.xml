@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file for TCS diesel version 3 sound set -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<enumChoiceGroup>
+		<name>Air Compressor</name>
+		<enumChoice choice="ALCO 251 compressor #503" value="0"/>
+		<enumChoice choice="GE Whooping Air Compressor" value="1"/>
+		<enumChoice choice="Air Compressor" value="2"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Air Spitter</name>
+		<enumChoice choice="Air Spitter 1" value="3"/>
+		<enumChoice choice="Air Spitter 2" value="4"/>
+		<enumChoice choice="Air Spitter 3" value="5"/>
+		<enumChoice choice="Air Spitter 4" value="6"/>
+		<enumChoice choice="Air Spitter 5" value="7"/>
+		<enumChoice choice="Air Spitter 6" value="8"/>
+	</enumChoiceGroup>
+	<enumChoice choice="Bell" value="9"/>
+	<enumChoiceGroup>
+		<name>Brake Release</name>
+		<enumChoice choice="Brake Release 1" value="44"/>
+		<enumChoice choice="Brake Release 2" value="45"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Brake Squeal</name>
+		<enumChoice choice="Brake Squeal" value="46"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Coupler Clank</name>
+		<enumChoice choice="Coupling" value="76"/>
+		<enumChoice choice="Uncoupling" value="77"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Crew Alert</name>
+		<enumChoice choice="Crew Alert" value="78"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Dynamic Brake</name>
+		<enumChoice choice="Dynamic brakes" value="79"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Exhaust Fan</name>
+		<enumChoice choice="Exhaust Fan" value="82"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Horn</name>
+		<enumChoice choice="Horn Forward" value="83"/>
+		<enumChoice choice="Horn Long" value="115"/>
+		<enumChoice choice="Horn Quill" value="147"/>
+		<enumChoice choice="Horn Reverse" value="964"/>
+		<enumChoice choice="Horn Short" value="243"/>
+		<enumChoice choice="Horn Stop" value="1028"/>
+		<enumChoice choice="Rotate Horn" value="996"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Manual Notch</name>
+		<enumChoice choice="Manual Notch Down 1" value="275"/>
+		<enumChoice choice="Manual Notch Up 1" value="276"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Momentum</name>
+		<enumChoice choice="Switching/Mainline Momentum" value="277"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Mute</name>
+		<enumChoice choice="Mute" value="279"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Prime Mover Ignition</name>
+		<enumChoice choice="Prime Mover Ignition 1" value="946"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Windshield Wipers</name>
+		<enumChoice choice="Windshield Wiper" value="1060"/>
+	</enumChoiceGroup>
+	<enumChoice choice="None" value="1227"/>
+</enumVal>

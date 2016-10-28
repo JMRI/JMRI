@@ -4,7 +4,6 @@ package jmri.jmrix.loconet.locormi;
  * Title: Description: Copyright: Copyright (c) 2002 Company:
  *
  * @author Alex Shepherd
- * @version $Revision$
  */
  // -Djava.security.policy=lib/security.policy
 import java.rmi.Naming;
@@ -22,7 +21,7 @@ public class LnMessageServer extends UnicastRemoteObject implements LnMessageSer
 
     private static LnMessageServer self = null;
     static final String serviceName = "LocoNetServer";
-    static Logger log = LoggerFactory.getLogger(LnMessageServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnMessageServer.class.getName());
 
     private LnMessageServer() throws RemoteException {
         super();

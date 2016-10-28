@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * Based on Glen Oberhauser's original LnThrottle implementation
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 19946 $
+ * 
  */
 public class MarklinThrottle extends AbstractThrottle implements MarklinListener {
 
@@ -112,13 +112,13 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     }
 
     /**
-     * Set the speed & direction.
+     * Set the speed {@literal &} direction.
      * <P>
      * This intentionally skips the emergency stop value of 1.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
@@ -248,7 +248,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
             if (m.getCommand() == MarklinConstants.LOCOSPEED) {
                 int speed = m.getElement(9);
                 speed = (speed << 8) + (m.getElement(10));
-                Float newSpeed = new Float(floatSpeed(speed));
+                Float newSpeed = Float.valueOf(floatSpeed(speed));
                 if (log.isDebugEnabled()) {
                     log.debug("Speed raw " + speed + " float " + newSpeed);
                 }
@@ -460,6 +460,6 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(MarklinThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinThrottle.class.getName());
 
 }

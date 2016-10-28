@@ -1,7 +1,6 @@
-// SerialMessageTest.java
 package jmri.jmrix.maple;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,8 +9,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the SerialMessage class.
  *
  * @author	Bob Jacobsen Copyright 2003, 2008
- * @version	$Revision$
- */
+  */
 public class SerialMessageTest extends TestCase {
 
     public void testCreate() {
@@ -58,7 +56,7 @@ public class SerialMessageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SerialMessageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

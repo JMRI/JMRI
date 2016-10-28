@@ -21,8 +21,6 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import jmri.jmrix.loconet.sdf.SdfBuffer;
 import jmri.jmrix.loconet.sdf.SdfMacro;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Pane for editing Digitrax SDF files.
@@ -32,8 +30,7 @@ import org.slf4j.LoggerFactory;
  * a larger detailed view.
  *
  * @author	Bob Jacobsen Copyright (C) 2007, 2008
- * @version	$Revision$
- */
+  */
 public class EditorPane extends javax.swing.JPanel implements TreeSelectionListener {
 
     /**
@@ -206,7 +203,5 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
      */
     void dispose() {
     }
-
-    static Logger log = LoggerFactory.getLogger(EditorPane.class.getName());
 
 }

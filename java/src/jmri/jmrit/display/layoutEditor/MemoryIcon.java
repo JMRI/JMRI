@@ -1,8 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-/**
- * An icon to display a status of a Memory.<P>
- */
 import java.awt.event.ActionListener;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JOptionPane;
@@ -12,18 +9,18 @@ import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// This is the same name as display.MemoryIcon, but a very
-// separate class. That's not good. Unfortunately, it's too 
-// hard to disentangle that now because it's resident in the
-// panel file that have been written out, so we just annote 
-// the fact.
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+/**
+ * An icon to display a status of a Memory.
+ *
+ * This is the same name as display.MemoryIcon, but a very
+ * separate class. That's not good. Unfortunately, it's too 
+ * hard to disentangle that now because it's resident in the
+ * panel file that have been written out, so we just annoted 
+ * the fact, but now we want to leave it on the list to fix.
+ */
+//@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 446165214555001212L;
     String defaultText = " ";
 
     public MemoryIcon(String s, LayoutEditor panel) {
@@ -224,15 +221,5 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         }
     }
 
-    protected boolean updateBlockValue = false;
-
-    public void updateBlockValueOnChange(boolean boo) {
-        updateBlockValue = boo;
-    }
-
-    public boolean updateBlockValueOnChange() {
-        return updateBlockValue;
-    }
-
-    static Logger log = LoggerFactory.getLogger(MemoryIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryIcon.class.getName());
 }

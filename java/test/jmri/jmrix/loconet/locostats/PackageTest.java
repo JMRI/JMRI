@@ -3,14 +3,11 @@ package jmri.jmrix.loconet.locostats;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.locostats package.
  *
  * @author	Bob Jacobsen Copyright 2001, 2003, 2006, 2008
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -22,16 +19,17 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.loconet.locostats.LocoStatsTest");  // no tests in this class itself
-        suite.addTest(LocoStatsFrameTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+           suite.addTest(LocoStatsFrameTest.suite());
+        }
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
 
 }

@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  * @author Petr Koud'a Copyright: Copyright (c) 2007
- * @version $Revision$
  */
 public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -76,14 +75,9 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
         return el;
     }
 
-    /**
-     * Create a LsDecSignalHead
-     *
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
-        List<Element> l = element.getChildren("turnout");
+    @Override
+    public boolean load(Element shared, Element perNode) {
+        List<Element> l = shared.getChildren("turnout");
         NamedBeanHandle<Turnout> green = loadTurnout(l.get(0));
         NamedBeanHandle<Turnout> yellow = loadTurnout(l.get(1));
         NamedBeanHandle<Turnout> red = loadTurnout(l.get(2));
@@ -100,8 +94,8 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
         int darkstatus = loadTurnoutStatus(l.get(6));
 
         // put it together
-        String sys = getSystemName(element);
-        String uname = getUserName(element);
+        String sys = getSystemName(shared);
+        String uname = getUserName(shared);
         SignalHead h;
         if (uname == null) {
             h = new LsDecSignalHead(sys, green, greenstatus, yellow, yellowstatus, red, redstatus, flashgreen, flashgreenstatus, flashyellow, flashyellowstatus, flashred, flashredstatus, dark, darkstatus);
@@ -109,9 +103,9 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
             h = new LsDecSignalHead(sys, uname, green, greenstatus, yellow, yellowstatus, red, redstatus, flashgreen, flashgreenstatus, flashyellow, flashyellowstatus, flashred, flashredstatus, dark, darkstatus);
         }
 
-        loadCommon(h, element);
+        loadCommon(h, shared);
 
-        InstanceManager.signalHeadManagerInstance().register(h);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         return true;
     }
 
@@ -136,5 +130,5 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(LsDecSignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LsDecSignalHeadXml.class.getName());
 }

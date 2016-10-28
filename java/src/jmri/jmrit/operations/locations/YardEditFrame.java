@@ -2,26 +2,22 @@
 package jmri.jmrit.operations.locations;
 
 import javax.swing.BorderFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrit.operations.locations.tools.ChangeTrackTypeAction;
+import jmri.jmrit.operations.locations.tools.ShowCarsByLocationAction;
+import jmri.jmrit.operations.locations.tools.ShowTrainsServingLocationAction;
 
 /**
  * Frame for user edit of a yard
  *
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class YardEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3353058611424628644L;
 
     public YardEditFrame() {
         super();
     }
 
+    @Override
     public void initComponents(Location location, Track track) {
         _type = Track.YARD;
         super.initComponents(location, track);
@@ -44,6 +40,5 @@ public class YardEditFrame extends TrackEditFrame implements java.beans.Property
         setVisible(true);
     }
 
-    static Logger log = LoggerFactory.getLogger(YardEditFrame.class
-            .getName());
+//    private final static Logger log = LoggerFactory.getLogger(YardEditFrame.class.getName());
 }

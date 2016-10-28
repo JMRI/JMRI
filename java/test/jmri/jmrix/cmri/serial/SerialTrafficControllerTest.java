@@ -1,4 +1,3 @@
-// SerialTrafficControllerTest.java
 package jmri.jmrix.cmri.serial;
 
 import java.io.DataInputStream;
@@ -7,7 +6,7 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.Vector;
 import jmri.util.JUnitAppender;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * Description:	JUnit tests for the SerialTrafficController class
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version $Revision$
  */
 public class SerialTrafficControllerTest extends TestCase {
 
@@ -29,10 +27,10 @@ public class SerialTrafficControllerTest extends TestCase {
 
     public void testSerialNodeEnumeration() {
         SerialTrafficController c = new SerialTrafficController();
-        SerialNode b = new SerialNode(1, SerialNode.USIC_SUSIC);
-        SerialNode f = new SerialNode(3, SerialNode.SMINI);
-        SerialNode d = new SerialNode(2, SerialNode.SMINI);
-        SerialNode e = new SerialNode(6, SerialNode.USIC_SUSIC);
+        SerialNode b = new SerialNode(1, SerialNode.USIC_SUSIC,c);
+        SerialNode f = new SerialNode(3, SerialNode.SMINI,c);
+        SerialNode d = new SerialNode(2, SerialNode.SMINI,c);
+        SerialNode e = new SerialNode(6, SerialNode.USIC_SUSIC,c);
         Assert.assertEquals("1st Node", b, c.getNode(0));
         Assert.assertEquals("2nd Node", f, c.getNode(1));
         Assert.assertEquals("3rd Node", d, c.getNode(2));
@@ -157,7 +155,7 @@ public class SerialTrafficControllerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SerialTrafficControllerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -175,6 +173,6 @@ public class SerialTrafficControllerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class.getName());
 
 }

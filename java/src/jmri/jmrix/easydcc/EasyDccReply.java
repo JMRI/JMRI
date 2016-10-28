@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
  * Carries the reply to an EasyDccMessage.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2004
- * @version $Revision$
  */
 public class EasyDccReply extends jmri.jmrix.AbstractMRReply {
 
@@ -64,7 +63,7 @@ public class EasyDccReply extends jmri.jmrix.AbstractMRReply {
         return val;
     }
 
-    static Logger log = LoggerFactory.getLogger(EasyDccReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccReply.class.getName());
 
 }
 

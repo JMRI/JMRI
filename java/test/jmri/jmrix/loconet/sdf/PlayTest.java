@@ -1,19 +1,15 @@
-// PlayTest.java
 package jmri.jmrix.loconet.sdf;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.sdf.Play class.
  *
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision$
- */
+  */
 public class PlayTest extends TestCase {
 
     public void testCtor() {
@@ -89,7 +85,7 @@ public class PlayTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PlayTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -97,7 +93,5 @@ public class PlayTest extends TestCase {
         TestSuite suite = new TestSuite(PlayTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(PlayTest.class.getName());
 
 }

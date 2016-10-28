@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.MemorySpinnerIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision$
  */
 public class MemoryInputIconXml extends PositionableLabelXml {
 
@@ -39,11 +38,6 @@ public class MemoryInputIconXml extends PositionableLabelXml {
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.MemoryInputIconXml");
         return element;
-    }
-
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
     }
 
     /**
@@ -90,7 +84,16 @@ public class MemoryInputIconXml extends PositionableLabelXml {
         p.putItem(l);
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.MEMORIES, element);
+        
+        javax.swing.JComponent textField = l.getTextComponent();
+        jmri.jmrit.display.PositionablePopupUtil util = l.getPopupUtility();
+        if (util.hasBackground()) {
+            textField.setBackground(util.getBackground());            
+        } else {
+            textField.setBackground(null);
+            textField.setOpaque(false);
+        }
     }
 
-    static Logger log = LoggerFactory.getLogger(MemoryInputIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryInputIconXml.class.getName());
 }

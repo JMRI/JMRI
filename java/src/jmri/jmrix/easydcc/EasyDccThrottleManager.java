@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2005
  * @author Modified by Kelly Loyd
- * @version $Revision$
  */
 public class EasyDccThrottleManager extends AbstractThrottleManager {
 
@@ -118,6 +117,6 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(EasyDccThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccThrottleManager.class.getName());
 
 }

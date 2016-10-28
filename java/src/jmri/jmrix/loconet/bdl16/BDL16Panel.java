@@ -1,4 +1,3 @@
-// BDL16Panel.java
 package jmri.jmrix.loconet.bdl16;
 
 import javax.swing.JCheckBox;
@@ -22,14 +21,8 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2004, 2007, 2010
- * @version	$Revision$
  */
 public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -287798661310758892L;
 
     public BDL16Panel() {
         this(1);
@@ -72,7 +65,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     public String getTitle() {
-        return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemBDL16Programmer"));
+        return getTitle(Bundle.getMessage("MenuItemBDL16Programmer"));
     }
 
     /**
@@ -202,6 +195,6 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     JCheckBox antichatsens = new JCheckBox("OpSw 44: Anti-chatter filter sensitivity (BDL168 only)");  // opsw 44
     JCheckBox setdefault = new JCheckBox("OpSw 40: Restore factory default, including address");  // opsw 40
 
-    static Logger log = LoggerFactory.getLogger(BDL16Panel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BDL16Panel.class.getName());
 
 }

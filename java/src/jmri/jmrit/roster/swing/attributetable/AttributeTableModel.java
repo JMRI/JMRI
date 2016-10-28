@@ -1,10 +1,7 @@
-// AttributeTableModel.java
 package jmri.jmrit.roster.swing.attributetable;
 
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Table data model for display of Roster attribute values.
@@ -16,26 +13,20 @@ import org.slf4j.LoggerFactory;
  * fields. But it's a start....
  *
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  * @since 2.7.5
  */
 public class AttributeTableModel extends javax.swing.table.AbstractTableModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 59936474957867177L;
-
     public int getRowCount() {
-        return Roster.instance().numEntries();
+        return Roster.getDefault().numEntries();
     }
 
     public int getColumnCount() {
-        return Roster.instance().getAllAttributeKeys().size();
+        return Roster.getDefault().getAllAttributeKeys().size();
     }
 
     public String getColumnName(int col) {
-        return (String) Roster.instance().getAllAttributeKeys().toArray()[col];
+        return (String) Roster.getDefault().getAllAttributeKeys().toArray()[col];
     }
 
     public Class<?> getColumnClass(int col) {
@@ -56,10 +47,7 @@ public class AttributeTableModel extends javax.swing.table.AbstractTableModel {
         // get column key
         String key = getColumnName(col);
         // get roster entry for row
-        RosterEntry re = Roster.instance().getEntry(row);
-        if (re == null) {
-            return "";
-        }
+        RosterEntry re = Roster.getDefault().getEntry(row);
         String retval = re.getAttribute(key);
         if (retval != null) {
             return retval;
@@ -69,6 +57,4 @@ public class AttributeTableModel extends javax.swing.table.AbstractTableModel {
 
     public void setValueAt(Object value, int row, int col) {
     }
-
-    static final Logger log = LoggerFactory.getLogger(AttributeTableModel.class.getName());
 }

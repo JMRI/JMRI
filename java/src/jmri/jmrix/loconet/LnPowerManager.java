@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  */
 public class LnPowerManager
         extends jmri.managers.AbstractPowerManager
@@ -136,8 +135,9 @@ public class LnPowerManager
 
         /**
          * Constructs the thread
-         * <param> tc - LocoNetTrafficController which can be used to send the
-         * LocoNet message.
+         *
+         * @param tc LocoNetTrafficController which can be used to send the
+         *           LocoNet message.
          */
         public LnTrackStatusUpdateThread(LnTrafficController tc) {
             this.tc = tc;
@@ -146,13 +146,13 @@ public class LnPowerManager
         /**
          * Runs the thread - Waits a while (to allow the managers to initialize)
          * then sends a query of slot 0 so that the power manager can inspect
-         * the "<trk>" byte.
+         * the {@code "<trk>"} byte.
          */
         public void run() {
             // wait a little bit to allow power manager to be initialized
             try {
-                // Delay 200 mSec to allow init of traffic controller, listeners.
-                Thread.sleep(200);
+                // Delay 500 mSec to allow init of traffic controller, listeners.
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
             }
@@ -163,7 +163,7 @@ public class LnPowerManager
             tc.sendLocoNetMessage(msg);
         }
     }
-    static Logger log = LoggerFactory.getLogger(LnPowerManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnPowerManager.class.getName());
 }
 
 /* @(#)LnPowerManager.java */

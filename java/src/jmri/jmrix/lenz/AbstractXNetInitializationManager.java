@@ -10,8 +10,7 @@ import org.slf4j.LoggerFactory;
  * the Initialization Manager based on the Command Station Type.
  *
  * @author	Paul Bender Copyright (C) 2003-2010
- * @version	$Revision$
- */
+  */
 abstract public class AbstractXNetInitializationManager {
 
     protected Thread initThread = null;
@@ -102,6 +101,7 @@ abstract public class AbstractXNetInitializationManager {
         public void run() {
         }
 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NO_NOTIFY_NOT_NOTIFYALL", justification = "There should only ever be one thread waiting for this method (the designated parent, which started the thread).")
         private void finish() {
             initTimer.stop();
             // Notify the parent
@@ -153,6 +153,6 @@ abstract public class AbstractXNetInitializationManager {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractXNetInitializationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractXNetInitializationManager.class.getName());
 
 }

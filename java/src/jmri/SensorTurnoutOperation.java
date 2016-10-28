@@ -1,19 +1,13 @@
-/**
- *
- */
 package jmri;
 
 import jmri.implementation.AbstractTurnout;
 import jmri.implementation.SensorTurnoutOperator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * SensorTurnoutOperation class - specialization of TurnoutOperation to provide
  * automatic retry for a turnout with explicit feedback from sensor(s)
  *
  * @author John Harper	Copyright 2005
- * @version $Revision$
  */
 public class SensorTurnoutOperation extends CommonTurnoutOperation {
 
@@ -62,6 +56,4 @@ public class SensorTurnoutOperation extends CommonTurnoutOperation {
     public TurnoutOperator getOperator(AbstractTurnout t) {
         return new SensorTurnoutOperator(t, interval, maxTries);
     }
-
-    static Logger log = LoggerFactory.getLogger(SensorTurnoutOperation.class.getName());
 }

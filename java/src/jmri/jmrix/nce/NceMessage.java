@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
  * @author kcameron Copyright (C) 2014
- * @version $Revision$
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -156,7 +155,6 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * enter programming track mode
      *
-     * @param tc
      */
     public static NceMessage getProgMode(NceTrafficController tc) {
         // test if supported on current connection
@@ -220,8 +218,6 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Read Paged mode CV on programming track
      *
-     * @param tc
-     * @param cv
      */
     public static NceMessage getReadPagedCV(NceTrafficController tc, int cv) {
         // test if supported on current connection
@@ -254,9 +250,6 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * write paged mode CV to programming track
      *
-     * @param tc
-     * @param cv
-     * @param val
      */
     public static NceMessage getWritePagedCV(NceTrafficController tc, int cv, int val) {
         // test if supported on current connection
@@ -544,7 +537,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static Logger log = LoggerFactory.getLogger(NceMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceMessage.class.getName());
 }
 
 /* @(#)NceMessage.java */

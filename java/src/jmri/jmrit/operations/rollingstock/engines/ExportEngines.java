@@ -1,4 +1,3 @@
-// ExportEngines.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.io.BufferedWriter;
@@ -21,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * Exports the Engine roster into a comma delimitated file (CSV).
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision$
  *
  */
 public class ExportEngines extends XmlFile {
@@ -63,10 +61,10 @@ public class ExportEngines extends XmlFile {
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+            justification = "EngineManager only provides Engine Objects")
     public void writeFile(String name) {
-        if (log.isDebugEnabled()) {
-            log.debug("writeFile {}", name);
-        }
+        log.debug("writeFile {}", name);
         // This is taken in large part from "Java and XML" page 368
         File file = findFile(name);
         if (file == null) {
@@ -95,11 +93,31 @@ public class ExportEngines extends XmlFile {
         String comment;
 
         // create header
-        String header = Bundle.getMessage("Number") + del + Bundle.getMessage("Road") + del
-                + Bundle.getMessage("Model") + del + Bundle.getMessage("Length") + del + Bundle.getMessage("Owner")
-                + del + Bundle.getMessage("Built") + del + Bundle.getMessage("Location") + del + "-" + del
-                + Bundle.getMessage("Track") + del + Bundle.getMessage("Moves") + del + Setup.getValueLabel()
-                 + del + Bundle.getMessage("Comment");
+        String header = Bundle.getMessage("Number") +
+                del +
+                Bundle.getMessage("Road") +
+                del +
+                Bundle.getMessage("Model") +
+                del +
+                Bundle.getMessage("Length") +
+                del +
+                Bundle.getMessage("Owner") +
+                del +
+                Bundle.getMessage("Built") +
+                del +
+                Bundle.getMessage("Location") +
+                del +
+                "-" +
+                del +
+                Bundle.getMessage("Track") +
+                del +
+                Bundle.getMessage("Moves") +
+                del +
+                Setup.getValueLabel() +
+                del +
+                Bundle.getMessage("Comment") +
+                del +
+                Bundle.getMessage("Miscellaneous");
         fileOut.println(header);
 
         // store engine number, road, model, length, owner, built date, location and track
@@ -107,34 +125,48 @@ public class ExportEngines extends XmlFile {
             Engine engine = (Engine) rs;
             engineModel = engine.getModel();
             if (engineModel.contains(del)) {
-//				log.debug("Engine (" + engine.getRoadName() + " " + engine.getNumber()
-//						+ ") has delimiter in model field: " + engineModel); // NOI18N
                 engineModel = ESC + engine.getModel() + ESC;
             }
             engineLocationName = engine.getLocationName();
             if (engineLocationName.contains(del)) {
-//				log.debug("Engine (" + engine.getRoadName() + " " + engine.getNumber()
-//						+ ") has delimiter in location field: " + engineLocationName); // NOI18N
                 engineLocationName = ESC + engine.getLocationName() + ESC;
             }
             engineTrackName = engine.getTrackName();
             if (engineTrackName.contains(del)) {
-//				log.debug("Engine (" + engine.getRoadName() + " " + engine.getNumber()
-//						+ ") has delimiter in track field: " + engineTrackName); // NOI18N
                 engineTrackName = ESC + engine.getTrackName() + ESC;
             }
-            // only export value field if value has been set.
-            value = "";
-            if (!engine.getValue().equals(Engine.NONE)) {
+            value = engine.getValue();
+            if (value.contains(del)) {
                 value = ESC + engine.getValue() + ESC;
             }
-            comment = "";
-            if (!engine.getComment().equals(Engine.NONE)) {
+            comment = engine.getComment();
+            if (comment.contains(del)) {
                 comment = ESC + engine.getComment() + ESC;
             }
-            line = engine.getNumber() + del + engine.getRoadName() + del + engineModel + del + engine.getLength() + del
-                    + engine.getOwner() + del + engine.getBuilt() + del + engineLocationName + ",-," + engineTrackName // NOI18N
-                    + del + engine.getMoves() + del + value + del + comment;
+            line = engine.getNumber() +
+                    del +
+                    engine.getRoadName() +
+                    del +
+                    engineModel +
+                    del +
+                    engine.getLength() +
+                    del +
+                    engine.getOwner() +
+                    del +
+                    engine.getBuilt() +
+                    del +
+                    engineLocationName +
+                    ",-," +
+                    engineTrackName // NOI18N
+                    +
+                    del +
+                    engine.getMoves() +
+                    del +
+                    value +
+                    del +
+                    comment +
+                    del +
+                    (engine.isOutOfService() ? Bundle.getMessage("OutOfService") : "");
             fileOut.println(line);
         }
         fileOut.flush();
@@ -147,8 +179,10 @@ public class ExportEngines extends XmlFile {
 
     // Operation files always use the same directory
     public static String defaultOperationsFilename() {
-        return OperationsSetupXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName() + File.separator
-                + getOperationsFileName();
+        return OperationsSetupXml.getFileLocation() +
+                OperationsSetupXml.getOperationsDirectoryName() +
+                File.separator +
+                getOperationsFileName();
     }
 
     public static void setOperationsFileName(String name) {
@@ -161,6 +195,6 @@ public class ExportEngines extends XmlFile {
 
     private static String OperationsFileName = "ExportOperationsEngineRoster.csv"; // NOI18N
 
-    static Logger log = LoggerFactory.getLogger(ExportEngines.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ExportEngines.class.getName());
 
 }

@@ -5,10 +5,10 @@ import java.util.List;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Schedule;
-import jmri.jmrit.operations.locations.ScheduleItem;
-import jmri.jmrit.operations.locations.ScheduleManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.schedules.Schedule;
+import jmri.jmrit.operations.locations.schedules.ScheduleItem;
+import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarColors;
 import jmri.jmrit.operations.rollingstock.cars.CarLengths;
@@ -29,9 +29,9 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations Trains class Last manually cross-checked on 20090131
@@ -69,7 +69,6 @@ import junit.framework.TestSuite;
  * TrainBuilder: Everything. TrainSwitchLists: Everything.
  *
  * @author Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision$
  */
 public class TrainTest extends OperationsTestCase {
 
@@ -146,7 +145,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Train Road Option EXCLUDEROADS", "EXCLUDEROADS", train1.getRoadOption());
         train1.setRoadOption("ALLROADS");
         Assert.assertEquals("Train Road Option ALLROADS", "ALLROADS", train1.getRoadOption());
-        train1.setStatus(Train.CODE_UNKNOWN);
+        train1.setStatusCode(Train.CODE_UNKNOWN);
         Assert.assertEquals("Train Status", Train.UNKNOWN, train1.getStatus());
         train1.setRequirements(Train.CABOOSE);
         Assert.assertEquals("Train Requirements CABOOSE", 1, train1.getRequirements());
@@ -341,13 +340,8 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertTrue("Train now accepts (EXCLUDELOADS) Load name WOOD", train1.acceptsLoadName("WOOD"));
     }
 
-    public void noRouteBuildTest(){
+    public void testNoRouteBuild(){
         TrainManager tmanager = TrainManager.instance();
-
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
         Train train = tmanager.newTrain("Test");
 
         // build train without a route, should fail
@@ -357,15 +351,9 @@ public class TrainTest extends OperationsTestCase {
 
     }
 
-    public void noRouteLocationBuildTest() {
+    public void testRouteLocationBuild() {
         TrainManager tmanager = TrainManager.instance();
         RouteManager rmanager = RouteManager.instance();
-//        LocationManager lmanager = LocationManager.instance();
-
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
 
         Train train = tmanager.newTrain("Test");
 
@@ -385,11 +373,6 @@ public class TrainTest extends OperationsTestCase {
         TrainManager tmanager = TrainManager.instance();
         RouteManager rmanager = RouteManager.instance();
         LocationManager lmanager = LocationManager.instance();
-
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
 
         Train train = tmanager.newTrain("Test");
 
@@ -472,11 +455,6 @@ public class TrainTest extends OperationsTestCase {
         RouteManager rmanager = RouteManager.instance();
         LocationManager lmanager = LocationManager.instance();
 
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
-
         Train train = tmanager.newTrain("Test");
 
         // exercise manifest build
@@ -513,12 +491,7 @@ public class TrainTest extends OperationsTestCase {
         TrainManager tmanager = TrainManager.instance();
         RouteManager rmanager = RouteManager.instance();
         LocationManager lmanager = LocationManager.instance();
-//        EngineManager emanager = EngineManager.instance();
 
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
         // This test uses the maximum length of a train in route
         Setup.setMaxTrainLength(1000);
 
@@ -557,10 +530,6 @@ public class TrainTest extends OperationsTestCase {
         LocationManager lmanager = LocationManager.instance();
         EngineManager emanager = EngineManager.instance();
 
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
         // This test uses the maximum length of a train in route
         Setup.setMaxTrainLength(1000);
 
@@ -612,10 +581,6 @@ public class TrainTest extends OperationsTestCase {
         LocationManager lmanager = LocationManager.instance();
         EngineManager emanager = EngineManager.instance();
 
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
         // This test uses the maximum length of a train in route
         Setup.setMaxTrainLength(1000);
 
@@ -684,10 +649,6 @@ public class TrainTest extends OperationsTestCase {
         LocationManager lmanager = LocationManager.instance();
         EngineManager emanager = EngineManager.instance();
 
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
         // This test uses the maximum length of a train in route
         Setup.setMaxTrainLength(1000);
         Setup.setMaxNumberEngines(6);
@@ -757,10 +718,6 @@ public class TrainTest extends OperationsTestCase {
         LocationManager lmanager = LocationManager.instance();
         EngineManager emanager = EngineManager.instance();
 
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
         // This test uses the maximum length of a train in route
         Setup.setMaxTrainLength(1000);
 
@@ -965,9 +922,6 @@ public class TrainTest extends OperationsTestCase {
         rl5.setTrainIconX(225); // set the train icon coordinates
         rl5.setTrainIconY(225);
         rl5.setPickUpAllowed(false); // don't include cars at destination
-
-        // turn off build fail messages
-        tmanager.setBuildMessagesEnabled(false);
 
         // define the train
         Train t1 = tmanager.newTrain("FF");
@@ -1795,11 +1749,6 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Train 2 Next Location Name", "", train2.getNextLocationName());
         Assert.assertEquals("Train 2 Route Name", "Southbound Main Route", train2.getRoute().getName());
 
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
-
         // Try building without engines
         train1.build();
         train2.build();
@@ -2178,7 +2127,7 @@ public class TrainTest extends OperationsTestCase {
                 .getNextLocationName());
 
         // Is the train in route?
-        Assert.assertEquals("Train 1 in route after 1st", true, train1.isTrainInRoute());
+        Assert.assertEquals("Train 1 in route after 1st", true, train1.isTrainEnRoute());
 
         // Try and reset the train
         Assert.assertEquals("Train 1 Reset should be false", false, train1.reset());
@@ -2217,7 +2166,7 @@ public class TrainTest extends OperationsTestCase {
                 .getCurrentLocationName());
         Assert.assertEquals("Train 1 After 2nd Move Next Location Name", "", train1.getNextLocationName());
         // Is the train in route?
-        Assert.assertEquals("Train 1 in route after 2nd", true, train1.isTrainInRoute());
+        Assert.assertEquals("Train 1 in route after 2nd", true, train1.isTrainEnRoute());
 
         // Are the engine and car locations correct?
         Assert.assertEquals("Engine e1 After After 2nd Move", "South End", e1.getLocationName());
@@ -2260,7 +2209,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Train 1 After 3rd Move Next Location Name", "", train1.getNextLocationName());
         Assert.assertEquals("Train 1 After 3rd Move Status", Train.TERMINATED, getTrainStatus(train1));
         // Is the train in route?
-        Assert.assertEquals("Train 1 in route after 3rd", false, train1.isTrainInRoute());
+        Assert.assertEquals("Train 1 in route after 3rd", false, train1.isTrainEnRoute());
 
         // Are the engine and car destinations correct?
         Assert.assertEquals("Engine e1 After 3rd Move", "", e1.getDestinationTrackName());
@@ -2316,7 +2265,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Train 1 After 4th Move Next Location Name", "", train1.getNextLocationName());
         Assert.assertEquals("Train 1 After 4th Move Status", Train.TERMINATED, getTrainStatus(train1));
         // Is the train in route?
-        Assert.assertEquals("Train 1 sould not be in route", false, train1.isTrainInRoute());
+        Assert.assertEquals("Train 1 sould not be in route", false, train1.isTrainEnRoute());
 
         // Are the engines and cars released from train 1?
         Assert.assertEquals("Engine e1 After Terminate should NOT be assigned to Train 1", null, e1
@@ -2471,13 +2420,13 @@ public class TrainTest extends OperationsTestCase {
         // move the train #1
         train2.move();
         // Is the train in route?
-        Assert.assertEquals("Train 2 in route after 1st", true, train2.isTrainInRoute());
+        Assert.assertEquals("Train 2 in route after 1st", true, train2.isTrainEnRoute());
         train2.move(); // #2
         // Is the train in route?
-        Assert.assertEquals("Train 2 in route after 2nd", true, train2.isTrainInRoute());
+        Assert.assertEquals("Train 2 in route after 2nd", true, train2.isTrainEnRoute());
         train2.move(); // #3
         // Is the train in route?
-        Assert.assertEquals("Train 2 in route after 3rd", false, train2.isTrainInRoute());
+        Assert.assertEquals("Train 2 in route after 3rd", false, train2.isTrainEnRoute());
 
         // Are the engine and car final tracks correct?
         Assert.assertEquals("Engine e1 After Terminate track", "South End 2", e1.getTrackName());
@@ -3078,8 +3027,6 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Bob Test Train train2 Terminates Name", "Westend", train2
                 .getTrainTerminatesName());
 
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
         // Build trains
         train1.build();
         train2.build();
@@ -3266,11 +3213,6 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Car c8 load should be E", "E", c8.getLoadName());
         Assert.assertEquals("Car c9 load should be E", "E", c9.getLoadName());
 
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
-
         // Build train
         train1.build();
 
@@ -3334,7 +3276,7 @@ public class TrainTest extends OperationsTestCase {
 
         train1.move();
         // Train should not be in route since there's only one location
-        Assert.assertEquals("Train 1 not in route", false, train1.isTrainInRoute());
+        Assert.assertEquals("Train 1 not in route", false, train1.isTrainEnRoute());
         // check train status
         Assert.assertEquals("Train 1 not en route", Train.TERMINATED, getTrainStatus(train1));
         Assert.assertEquals("Train 1 not en route", Train.CODE_TERMINATED, train1.getStatusCode());
@@ -3540,7 +3482,7 @@ public class TrainTest extends OperationsTestCase {
 
         train1.move();
         // Train in route since there's two locations
-        Assert.assertEquals("Train 1 in route to Chelmsford", true, train1.isTrainInRoute());
+        Assert.assertEquals("Train 1 in route to Chelmsford", true, train1.isTrainEnRoute());
         Assert.assertEquals("Train 1 in route to Chelmsford", Train.CODE_TRAIN_EN_ROUTE, train1.getStatusCode());
         train1.move();
         // 7 cars should in Chelmsford, the other 2 in Westford
@@ -3880,11 +3822,6 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Place c12", Track.OKAY, c12.setLocation(loc1, loc1trk1));
         Assert.assertEquals("Place c13", Track.OKAY, c13.setLocation(loc1, loc1trk2));
 
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
-
         train1.build();
 
         // Schedule sch1 should cause c2 to be delivered to Chelmsford Freight 2
@@ -4188,22 +4125,22 @@ public class TrainTest extends OperationsTestCase {
 
         // Create trains
         Train train1;
-        train1 = tmanager.newTrain("T1OWOB");
+        train1 = tmanager.newTrain("TT1OWOB");
         train1.setRoute(rte1);
 
         Train train2;
-        train2 = tmanager.newTrain("T2OWOB");
+        train2 = tmanager.newTrain("TT2OWOB");
         train2.setRoute(rte1);
 
         Train train3;
-        train3 = tmanager.newTrain("T3OWOB");
+        train3 = tmanager.newTrain("TT3OWOB");
         train3.setRoute(rte1);
 
         // Set up 7 box cars and 2 flat cars
         Car c1 = new Car("BM", "Q1");
         c1.setTypeName("Gon");
         c1.setLength("90");
-        c1.setMoves(19);
+        c1.setMoves(20);
         c1.setLoadName("L");
         c1.setWeightTons("10");
         cmanager.register(c1);
@@ -4315,15 +4252,15 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Place c12", Track.OKAY, c12.setLocation(loc1, loc1trk1));
         Assert.assertEquals("Place c13", Track.OKAY, c13.setLocation(loc1, loc1trk1));
 
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
-
         train1.build();
         train2.build();
 
         // now check to where cars are going to be delivered
+        Assert.assertEquals("c1 destination", "", c1.getDestinationTrackName());
+        Assert.assertEquals("c2 destination", "", c2.getDestinationTrackName());
+        Assert.assertEquals("c3 destination", "", c3.getDestinationTrackName());
+        Assert.assertEquals("c4 destination", "", c4.getDestinationTrackName());
+        
         Assert.assertEquals("c9 destination", "Chelmsford Interchange 1", c9.getDestinationTrackName());
         Assert.assertEquals("c10 destination", "Bedford Yard 1", c10.getDestinationTrackName());
         Assert.assertEquals("c11 destination", "Chelmsford Interchange 2", c11.getDestinationTrackName());
@@ -4355,6 +4292,11 @@ public class TrainTest extends OperationsTestCase {
         train2.build();
 
         // now check to where cars are going to be delivered
+        Assert.assertEquals("c1 destination", "", c1.getDestinationTrackName());
+        Assert.assertEquals("c2 destination", "", c2.getDestinationTrackName());
+        Assert.assertEquals("c3 destination", "", c3.getDestinationTrackName());
+        Assert.assertEquals("c5 destination", "", c5.getDestinationTrackName());
+        
         Assert.assertEquals("c9 destination 2", "Chelmsford Interchange 1", c9.getDestinationTrackName());
         Assert.assertEquals("c10 destination 2", "Bedford Yard 1", c10.getDestinationTrackName());
         Assert.assertEquals("c11 destination 2", "Bedford Yard 1", c11.getDestinationTrackName());
@@ -4422,6 +4364,15 @@ public class TrainTest extends OperationsTestCase {
         // Change the route to 2, should be able to pickup c4, c7, c9
         train3.reset();
         train3.setRoute(rte2);
+        
+        // confirm that c2 and c3 have the same move counts
+        Assert.assertEquals("c2 move count", 18, c2.getMoves());
+        Assert.assertEquals("c3 move count", 18, c3.getMoves());
+        Assert.assertEquals("c4 move count", 17, c4.getMoves());
+        
+        // bias c2
+        c2.setMoves(19);
+
         train3.build();
 
         Assert.assertEquals("c1 destination 4", "", c1.getDestinationTrackName());
@@ -4434,7 +4385,10 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("c8 destination 4", "", c8.getDestinationTrackName());
         Assert.assertEquals("c9 destination 4", "Bedford Yard 1", c9.getDestinationTrackName());
         Assert.assertEquals("c12 destination 4", "Bedford Yard 1", c12.getDestinationTrackName());
-
+        
+        // bias c3
+        c3.setMoves(20);
+       
         // Change back to route to 1, should be able to pickup c4, c7
         train3.reset();
         train3.setRoute(rte1);
@@ -4452,7 +4406,21 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("c8 destination 5", "", c8.getDestinationTrackName());
         Assert.assertEquals("c9 destination 5", "", c9.getDestinationTrackName());
         Assert.assertEquals("c12 destination 5", "Bedford Yard 1", c12.getDestinationTrackName());
-
+        
+        // check car move counts
+        Assert.assertEquals("c1 move count", 20, c1.getMoves());
+        Assert.assertEquals("c2 move count", 19, c2.getMoves());
+        Assert.assertEquals("c3 move count", 21, c3.getMoves());
+        Assert.assertEquals("c4 move count", 18, c4.getMoves());
+        Assert.assertEquals("c5 move count", 18, c5.getMoves());
+        Assert.assertEquals("c6 move count", 16, c6.getMoves());
+        Assert.assertEquals("c7 move count", 16, c7.getMoves());
+        Assert.assertEquals("c8 move count", 14, c8.getMoves());
+        Assert.assertEquals("c9 move count", 14, c9.getMoves());
+        Assert.assertEquals("c12 move count", 14, c12.getMoves());
+        
+        c1.setMoves(19);
+        
         // Change back to route to 1, should be able to pickup c4, c7, and c9
         train3.reset();
         train3.setRoute(rte1);
@@ -4462,9 +4430,9 @@ public class TrainTest extends OperationsTestCase {
 
         Assert.assertEquals("c1 destination 6", "Bedford Yard 1", c1.getDestinationTrackName());
         Assert.assertEquals("c2 destination 6", "", c2.getDestinationTrackName());
-        Assert.assertEquals("c3 destination 6", "Bedford Yard 1", c3.getDestinationTrackName());
+        Assert.assertEquals("c3 destination 6", "", c3.getDestinationTrackName());
         Assert.assertEquals("c4 destination 6", "Bedford Yard 1", c4.getDestinationTrackName());
-        Assert.assertEquals("c5 destination 6", "", c5.getDestinationTrackName());
+        Assert.assertEquals("c5 destination 6", "Bedford Yard 1", c5.getDestinationTrackName());
         Assert.assertEquals("c6 destination 6", "", c6.getDestinationTrackName());
         Assert.assertEquals("c7 destination 6", "Bedford Yard 1", c7.getDestinationTrackName());
         Assert.assertEquals("c8 destination 6", "", c8.getDestinationTrackName());
@@ -4472,11 +4440,15 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("c10 destination 6", "", c10.getDestinationTrackName());
         Assert.assertEquals("c11 destination 6", "", c11.getDestinationTrackName());
         Assert.assertEquals("c12 destination 6", "Bedford Yard 1", c12.getDestinationTrackName());
-
+        
         // now allow train 3 to drop
         train3.reset();
         loc2trk1.setDropOption(Track.ROUTES);
         loc2trk1.addDropId(rte1.getId());
+        
+        c5.setMoves(19);
+        c2.setMoves(20);
+        c1.setMoves(21);
         train3.build();
 
         Assert.assertEquals("c1 destination 7", "", c1.getDestinationTrackName());
@@ -4518,10 +4490,15 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Depart Old Westford tonnage", 56, r1l1.getTrainWeight());
         // In train 5 cars, c4 E, c5 L, c7 E, c9 L, c12 L = 40/3 + 50 + 70/3 + 90 + 120 = 296
         Assert.assertEquals("Depart Old Chelmsford tonnage", 296, r1l2.getTrainWeight());
+        
+ 
 
         // test route pickup and drop controls
         train3.setRequirements(Train.CABOOSE);
         r1l1.setPickUpAllowed(false);
+                
+        c1.setMoves(10);
+        c3.setMoves(21);
         train3.build();
 
         Assert.assertEquals("c1 destination 8", "", c1.getDestinationTrackName());
@@ -4533,9 +4510,9 @@ public class TrainTest extends OperationsTestCase {
         r1l2.setPickUpAllowed(false);
         train3.build();
 
-        Assert.assertEquals("c1 destination 9", "", c1.getDestinationTrackName());
+        Assert.assertEquals("c1 destination 9", "Chelmsford Interchange 1", c1.getDestinationTrackName());
         Assert.assertEquals("c5 destination 9", "", c5.getDestinationTrackName());
-        Assert.assertEquals("c3 destination 9", "Chelmsford Interchange 1", c3.getDestinationTrackName());
+        Assert.assertEquals("c3 destination 9", "", c3.getDestinationTrackName());
         Assert.assertEquals("c13 destination 9", "Bedford Yard 1", c13.getDestinationTrackName());
 
         r1l2.setPickUpAllowed(true);
@@ -4547,6 +4524,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("c3 destination 10", "", c3.getDestinationTrackName());
         Assert.assertEquals("c13 destination 10", "Bedford Yard 1", c13.getDestinationTrackName());
 
+        train3.reset();
         // try forcing c1 to Chelmsford
         c1.setDestination(loc2, null);
         train3.build();
@@ -4822,7 +4800,6 @@ public class TrainTest extends OperationsTestCase {
         loc3trk2.deleteTypeName("Caboose");
 
         // Create route with 3 location
-        Setup.setCarMoves(7); // set default to 7 moves per location
         Route rte1 = rmanager.newRoute("Route 2 Boston");
         RouteLocation rl1 = rte1.addLocation(loc1);
         RouteLocation rl2 = rte1.addLocation(loc2);
@@ -4835,9 +4812,6 @@ public class TrainTest extends OperationsTestCase {
         // Create train
         Train train1 = tmanager.newTrain("HTB");
         train1.setRoute(rte1);
-
-        // turn off build fail messages
-        tmanager.setBuildMessagesEnabled(false);
 
         // Place cars
         Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(loc1, loc1trk1));
@@ -5161,8 +5135,7 @@ public class TrainTest extends OperationsTestCase {
 
         // Reduce Arlington to only two moves, this should cause train build to fail
         rl2.setMaxCarMoves(2);
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
+
         train1.build();
         Assert.assertEquals("Train 1 After Build 13", false, train1.isBuilt());
 
@@ -5545,9 +5518,6 @@ public class TrainTest extends OperationsTestCase {
         // train skips Boston
         train1.addTrainSkipsLocation(rl3.getId());
 
-        // turn off build fail messages
-        tmanager.setBuildMessagesEnabled(false);
-
         // Place cars
         Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(loc1, loc1trk1));
         Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(loc1, loc1trk2));
@@ -5579,11 +5549,6 @@ public class TrainTest extends OperationsTestCase {
         train1.setRequirements(Train.CABOOSE);
         train1.setNumberEngines("2");
         train1.setOwnerOption(Train.ALL_OWNERS);
-
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
 
         train1.build();
         Assert.assertEquals("Train 1 After Build 1", true, train1.isBuilt());
@@ -5916,7 +5881,6 @@ public class TrainTest extends OperationsTestCase {
         loc5trk2.setLength(1000);
 
         // Create route with 5 location
-        Setup.setCarMoves(7); // set default to 7 moves per location
         Route rte1 = rmanager.newRoute("Route 3 Westford");
         rte1.addLocation(loc1);
         rte1.addLocation(loc2);
@@ -5927,9 +5891,6 @@ public class TrainTest extends OperationsTestCase {
         // Create train
         Train train1 = tmanager.newTrain("Harvard to Westford Aggressive");
         train1.setRoute(rte1);
-
-        // turn off build fail messages
-        tmanager.setBuildMessagesEnabled(false);
 
         // Place cars
         Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(loc1, loc1trk1));
@@ -5959,11 +5920,6 @@ public class TrainTest extends OperationsTestCase {
         train1.setRequirements(Train.CABOOSE);
         train1.setNumberEngines("3");
         train1.setOwnerOption(Train.ALL_OWNERS);
-
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
 
         train1.build();
         Assert.assertEquals("Train 1 After Build 1", true, train1.isBuilt());
@@ -6136,6 +6092,7 @@ public class TrainTest extends OperationsTestCase {
         train2.move(); // terminate train
 
         // now test train returning to staging
+        Setup.setStagingTrackImmediatelyAvail(false);
         rte1.addLocation(loc1);
         train1.build();
         // should fail, can't return to staging track
@@ -6170,8 +6127,6 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("e7 location", "Harvard Yard 1", e7.getTrackName());
         Assert.assertEquals("e8 location", "Harvard Yard 1", e8.getTrackName());
 
-        Setup.setBuildAggressive(false);
-
     }
 
     // from here down is testing infrastructure
@@ -6187,6 +6142,13 @@ public class TrainTest extends OperationsTestCase {
         Setup.setLocalInterchangeMovesEnabled(false);
         Setup.setLocalSpurMovesEnabled(false);
         Setup.setLocalYardMovesEnabled(false);
+        Setup.setCarMoves(7); // set default to 7 moves per location
+        
+        // turn off build fail messages
+        TrainManager.instance().setBuildMessagesEnabled(false);
+        // disable build reports
+        TrainManager.instance().setBuildReportEnabled(false);
+        
     }
 
     public TrainTest(String s) {
@@ -6196,7 +6158,7 @@ public class TrainTest extends OperationsTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", TrainTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

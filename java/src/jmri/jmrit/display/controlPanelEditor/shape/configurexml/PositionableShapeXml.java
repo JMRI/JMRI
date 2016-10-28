@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.PositionableShape objects
  *
  * @author Pete Cressman Copyright: Copyright (c) 2012
- * @version $Revision: 1 $
  */
 public class PositionableShapeXml extends AbstractXmlAdapter {
 
@@ -97,7 +96,8 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
         return elem;
     }
 
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         log.error("Invalid method called");
         return false;
     }
@@ -248,5 +248,5 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
         return 0;
     }
 
-    static Logger log = LoggerFactory.getLogger(PositionableShapeXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableShapeXml.class.getName());
 }

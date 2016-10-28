@@ -1,19 +1,15 @@
-// MonitoringPaneTest.java
 package jmri.jmrix.loconet.sdfeditor;
 
 import javax.swing.JFrame;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.sdfeditor.MonitoringLabel class.
  *
  * @author	Bob Jacobsen Copyright 2007
- * @version $Revision$
  */
 public class MonitoringLabelTest extends TestCase {
 
@@ -37,7 +33,7 @@ public class MonitoringLabelTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {MonitoringLabelTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -45,8 +41,6 @@ public class MonitoringLabelTest extends TestCase {
         TestSuite suite = new TestSuite(MonitoringLabelTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(MonitoringLabelTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a JMRIClientMonFrame object
  *
  * @author Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public class JMRIClientMonAction extends AbstractAction {
 
@@ -40,7 +39,7 @@ public class JMRIClientMonAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    static Logger log = LoggerFactory.getLogger(JMRIClientMonAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientMonAction.class.getName());
 
 }
 

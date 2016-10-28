@@ -1,4 +1,3 @@
-// FunctionEntryPane.java
 package jmri.jmrit.roster;
 
 import java.awt.Color;
@@ -25,11 +24,6 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood Copyright (C) 2014
  */
 public class FunctionLabelPane extends javax.swing.JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4374849205711874964L;
 
     RosterEntry re;
 
@@ -163,7 +157,6 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     /**
      * Do the GUI contents agree with a RosterEntry?
      *
-     * @param r
      * @return true if GUI differs from RosterEntry
      */
     public boolean guiChanged(RosterEntry r) {
@@ -232,7 +225,6 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     /**
      * Fill a RosterEntry object from GUI contents
      *
-     * @param r
      *
      */
     public void update(RosterEntry r) {
@@ -274,7 +266,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     }
     boolean print = false;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void printPane(HardcopyWriter w) {
@@ -399,6 +391,6 @@ public class FunctionLabelPane extends javax.swing.JPanel {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(FunctionLabelPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FunctionLabelPane.class.getName());
 
 }

@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
  * A specialization of the LocoNet Throttle for Intellibox-I foibles
  * <P>
  * @author Bob Jacobsen Copyright (C) 2014
- * @version $Revision$
  */
 public class Ib1Throttle extends LocoNetThrottle {
 
@@ -116,6 +115,6 @@ public class Ib1Throttle extends LocoNetThrottle {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(Ib1Throttle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Ib1Throttle.class.getName());
 
 }

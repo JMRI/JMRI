@@ -2,6 +2,7 @@ package apps.configurexml;
 
 import apps.FileLocationPane;
 import java.util.List;
+import jmri.ConfigureManager;
 import jmri.util.FileUtil;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -12,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2010
- * @version $Revision$
  */
 public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
 
@@ -49,30 +49,27 @@ public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         locations.addContent(userLocation);
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
     @Override
-    public boolean load(Element e) {
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
-        //Attribute scriptLocation = e.getAttribute("defaultScriptLocation");
+        //Attribute scriptLocation = shared.getAttribute("defaultScriptLocation");
         //if (scriptLocation!=null)
         //FileUtil.setPythonScriptsPath(scriptLocation.getValue());
-        /*Attribute userLocation = e.getAttribute("defaultUserLocation");
+        /*Attribute userLocation = shared.getAttribute("defaultUserLocation");
          if (userLocation!=null)
          FileUtil.setUserFilesPath(userLocation.getValue());*/
-        String value = loadUserLocations(e, "defaultUserLocation");
+        String value = loadUserLocations(shared, "defaultUserLocation");
         if (value != null) {
             FileUtil.setUserFilesPath(value);
         }
-        value = loadUserLocations(e, "defaultScriptLocation");
+        value = loadUserLocations(shared, "defaultScriptLocation");
         if (value != null) {
             FileUtil.setScriptsPath(value);
         }
-        jmri.InstanceManager.configureManagerInstance().registerPref(new FileLocationPane());
+        ConfigureManager cm = jmri.InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerPref(new FileLocationPane());
+        }
         return result;
     }
 
@@ -98,6 +95,6 @@ public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(FileLocationPaneXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FileLocationPaneXml.class.getName());
 
 }

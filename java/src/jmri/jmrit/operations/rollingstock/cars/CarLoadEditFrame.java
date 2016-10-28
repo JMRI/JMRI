@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.ScheduleManager;
+import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -29,14 +29,8 @@ import org.slf4j.LoggerFactory;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2009, 2010, 2011
- * @version $Revision$
  */
 public class CarLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8066884161999922218L;
 
     public static final String NONE = "";
 
@@ -48,9 +42,9 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 
     // major buttons
     JButton addButton = new JButton(Bundle.getMessage("Add"));
-    JButton deleteButton = new JButton(Bundle.getMessage("Delete"));
+    JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
     JButton replaceButton = new JButton(Bundle.getMessage("Replace"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // combo boxes
     JComboBox<String> loadComboBox;
@@ -151,8 +145,8 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
-        toolMenu.add(new CarLoadAttributeAction(Bundle.getMessage("CarQuanity"), this));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
+        toolMenu.add(new CarLoadAttributeAction(Bundle.getMessage("CarQuantity"), this));
         toolMenu.add(new PrintCarLoadsAction(Bundle.getMessage("MenuItemPreview"), true, this));
         toolMenu.add(new PrintCarLoadsAction(Bundle.getMessage("MenuItemPrint"), false, this));
         menuBar.add(toolMenu);
@@ -164,6 +158,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
     }
 
     // add, delete, replace, and save buttons
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == addButton) {
             String addLoad = addTextBox.getText().trim();
@@ -259,6 +254,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         }
     }
 
+    @Override
     protected void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("Combo box action");
         updateCarQuanity();
@@ -349,13 +345,15 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         dropCommentTextField.setText(carLoads.getDropComment(_type, (String) loadComboBox.getSelectedItem()));
     }
 
+    @Override
     public void dispose() {
         carLoads.removePropertyChangeListener(this);
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -373,5 +371,5 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 //	public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
 //		pcs.removePropertyChangeListener(l);
 //	}
-    static Logger log = LoggerFactory.getLogger(CarLoadEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarLoadEditFrame.class.getName());
 }

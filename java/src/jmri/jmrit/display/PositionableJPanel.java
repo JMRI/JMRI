@@ -1,4 +1,3 @@
-// PositionableJPanel.java
 package jmri.jmrit.display;
 
 import java.awt.Container;
@@ -15,20 +14,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p>
- * </p>
- *
  * @author Bob Jacobsen copyright (C) 2009
- * @version $Revision$
  */
 public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3059313202546618168L;
     protected Editor _editor = null;
-    protected boolean debug = false;
 
     private ToolTip _tooltip;
     protected boolean _showTooltip = true;
@@ -45,16 +35,15 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
 
     public PositionableJPanel(Editor editor) {
         _editor = editor;
-        debug = log.isDebugEnabled();
     }
 
+    @Override
     public Positionable deepClone() {
         PositionableJPanel pos = new PositionableJPanel(_editor);
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        PositionableJPanel pos = (PositionableJPanel) p;
+    protected Positionable finishClone(PositionableJPanel pos) {
         pos.setLocation(getX(), getY());
         pos._displayLevel = _displayLevel;
         pos._controlling = _controlling;
@@ -170,10 +159,6 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
 
     public int getDegrees() {
         return 0;
-    }
-
-    public boolean getSaveOpaque() {
-        return isOpaque();
     }
 
     public JComponent getTextComponent() {
@@ -376,11 +361,12 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     public void updateSize() {
         invalidate();
         setSize(maxWidth(), maxHeight());
-        if (debug) {
+        if (log.isDebugEnabled()) {
 //            javax.swing.JTextField text = (javax.swing.JTextField)_popupUtil._textComponent;
-            log.debug("updateSize: " + _popupUtil.toString()
-                    + ", text: w=" + getFontMetrics(_popupUtil.getFont()).stringWidth(_popupUtil.getText())
-                    + "h=" + getFontMetrics(_popupUtil.getFont()).getHeight());
+            log.debug("updateSize: {}, text: w={} h={}",
+                    _popupUtil.toString(),
+                    getFontMetrics(_popupUtil.getFont()).stringWidth(_popupUtil.getText()),
+                    getFontMetrics(_popupUtil.getFont()).getHeight());
         }
         validate();
         repaint();
@@ -409,9 +395,7 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
                 }
             }
         }
-        if (debug) {
-            log.debug("maxWidth= " + max + " preferred width= " + getPreferredSize().width);
-        }
+        log.debug("maxWidth= {} preferred width= {}", max, getPreferredSize().width);
         return max;
     }
 
@@ -439,9 +423,7 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
                 }
             }
         }
-        if (debug) {
-            log.debug("maxHeight= " + max + " preferred height= " + getPreferredSize().height);
-        }
+        log.debug("maxHeight= {} preferred width= {}", max, getPreferredSize().height);
         return max;
     }
 
@@ -449,5 +431,5 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
         return null;
     }
 
-    static Logger log = LoggerFactory.getLogger(PositionableJPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableJPanel.class.getName());
 }

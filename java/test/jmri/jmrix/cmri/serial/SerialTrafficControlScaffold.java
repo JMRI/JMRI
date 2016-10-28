@@ -1,4 +1,3 @@
-// SerialInterfaceScaffold.java
 package jmri.jmrix.cmri.serial;
 
 import java.util.Vector;
@@ -9,7 +8,6 @@ import org.slf4j.LoggerFactory;
  * Description:	Stands in for the SerialTrafficController class
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision$
  */
 public class SerialTrafficControlScaffold extends SerialTrafficController {
 
@@ -60,6 +58,6 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
         return cmdListeners.size();
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialTrafficControlScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControlScaffold.class.getName());
 
 }

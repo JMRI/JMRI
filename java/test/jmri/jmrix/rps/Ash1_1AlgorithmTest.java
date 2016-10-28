@@ -1,8 +1,7 @@
-// Ash1_0AlgorithmTest.java
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -16,8 +15,7 @@ import junit.framework.TestSuite;
  * The default transmitter location is (3,2,1)
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision$
- */
+  */
 public class Ash1_1AlgorithmTest extends TestCase {
 
     double vs = 0.0344;  // SI default for testing
@@ -116,7 +114,7 @@ public class Ash1_1AlgorithmTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {Ash1_1AlgorithmTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

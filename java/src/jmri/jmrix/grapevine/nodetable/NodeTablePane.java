@@ -1,4 +1,3 @@
-// NodeTableFrame.java
 package jmri.jmrix.grapevine.nodetable;
 
 import java.awt.Dimension;
@@ -12,16 +11,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SortOrder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableRowSorter;
 import jmri.jmrix.grapevine.SerialMessage;
 import jmri.jmrix.grapevine.SerialReply;
 import jmri.jmrix.grapevine.SerialTrafficController;
 import jmri.jmrix.grapevine.nodeconfig.NodeConfigFrame;
+import jmri.swing.RowSorterUtil;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Pane for user management of serial nodes. Contains a table that does the real
@@ -36,14 +36,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2007, 2008
  * @author	Dave Duchamp Copyright (C) 2004, 2006
- * @version	$Revision$
  */
 public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grapevine.SerialListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1719197383229554709L;
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.grapevine.nodetable.NodeTableBundle");
 
     /**
@@ -65,7 +60,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
 
         nodesModel = new NodesModel();
 
-        JTable nodesTable = jmri.util.JTableUtil.sortableDataModel(nodesModel);
+        JTable nodesTable = new JTable(nodesModel);
 
         // install a button renderer & editor
         ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -73,11 +68,9 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
         TableCellEditor buttonEditor = new ButtonEditor(new JButton());
         nodesTable.setDefaultEditor(JButton.class, buttonEditor);
 
-        try {
-            jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter) nodesTable.getModel());
-            tmodel.setSortingStatus(NodeTablePane.NodesModel.STATUSCOL, jmri.util.com.sun.TableSorter.DESCENDING);
-        } catch (ClassCastException e3) {
-        }  // if not a sortable table model
+        TableRowSorter<NodesModel> sorter = new TableRowSorter<>(nodesModel);
+        RowSorterUtil.setSortOrder(sorter, NodesModel.STATUSCOL, SortOrder.DESCENDING);
+        nodesTable.setRowSorter(sorter);
         nodesTable.setRowSelectionAllowed(false);
         nodesTable.setPreferredScrollableViewportSize(new java.awt.Dimension(580, 80));
 
@@ -86,11 +79,6 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
 
         // status info on bottom
         JPanel p = new JPanel() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2856738173612573500L;
-
             public Dimension getMaximumSize() {
                 int height = getPreferredSize().height;
                 int width = super.getMaximumSize().width;
@@ -220,11 +208,6 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
      * </ol>
      */
     public class NodesModel extends AbstractTableModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -5628722202249990632L;
         static private final int ADDRCOL = 0;
         static private final int STATUSCOL = 1;
         static private final int EDITCOL = 2;
@@ -324,7 +307,5 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
             }
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(NodeTableFrame.class.getName());
 
 }

@@ -1,4 +1,3 @@
-// NewLocoSelPane.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionListener;
@@ -13,10 +12,10 @@ import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.decoderdefn.IdentifyDecoder;
+import jmri.jmrit.progsupport.ProgModeSelector;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
-import jmri.jmrit.progsupport.ProgModeSelector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,16 +32,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Howard G. Penny Copyright (C) 2005
- * @version $Revision$
  * @see jmri.jmrit.decoderdefn.IdentifyDecoder
  * @see jmri.jmrit.roster.IdentifyLoco
  */
 public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3220976963077803055L;
 
     public NewLocoSelPane(JLabel s, ProgModeSelector selector) {
         _statusLabel = s;
@@ -116,7 +109,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
         if (selector != null && selector.isSelected()) p = selector.getProgrammer();
         if (p == null) {
             log.warn("Selector did not provide a programmer, use default");
-            p = jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+            p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
         }
         IdentifyDecoder id = new IdentifyDecoder(p) {
             private NewLocoSelPane who = me;
@@ -174,7 +167,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
         if (((String) locoBox.getSelectedItem()).equals("<none>")) {
             return;
         }
-        RosterEntry r = Roster.instance().entryFromTitle((String) locoBox.getSelectedItem());
+        RosterEntry r = Roster.getDefault().entryFromTitle((String) locoBox.getSelectedItem());
         String decoderModel = r.getDecoderModel();
         String decoderFamily = r.getDecoderFamily();
         if (log.isDebugEnabled()) {
@@ -223,7 +216,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
         re.setId(Bundle.getMessage("LabelNewDecoder"));
         // note we're leaving the filename information as null
         // add the new roster entry to the in-memory roster
-        Roster.instance().addEntry(re);
+        Roster.getDefault().addEntry(re);
 
         startProgrammer(decoderFile, re);
     }
@@ -239,6 +232,6 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
         log.error("startProgrammer method in NewLocoSelPane should have been overridden");
     }
 
-    static Logger log = LoggerFactory.getLogger(NewLocoSelPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NewLocoSelPane.class.getName());
 
 }

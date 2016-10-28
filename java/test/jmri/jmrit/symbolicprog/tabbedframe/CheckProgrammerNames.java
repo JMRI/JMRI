@@ -1,19 +1,15 @@
-// CheckProgrammerNames.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.io.File;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Check the names in an XML programmer file against the names.xml definitions
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2007, 2008
- * @version	$Revision$
- * @see jmri.jmrit.XmlFile
+  * @see jmri.jmrit.XmlFile
  */
 public class CheckProgrammerNames extends jmri.util.swing.GuiUtilBaseTest {
 
@@ -86,7 +82,7 @@ public class CheckProgrammerNames extends jmri.util.swing.GuiUtilBaseTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", CheckProgrammerNames.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -105,8 +101,5 @@ public class CheckProgrammerNames extends jmri.util.swing.GuiUtilBaseTest {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(CheckProgrammerNames.class.getName());
 
 }

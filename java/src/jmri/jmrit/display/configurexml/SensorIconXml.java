@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision$
  */
 public class SensorIconXml extends PositionableLabelXml {
 
@@ -150,11 +149,6 @@ public class SensorIconXml extends PositionableLabelXml {
         element.addContent(elem);
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     boolean _icon;
 
     /**
@@ -234,6 +228,9 @@ public class SensorIconXml extends PositionableLabelXml {
         ed.putItem(l);
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.SENSORS, element);
+        if (l.isIcon() && l.getText()!=null) {
+            l.setOpaque(false);            
+        }
     }
 
     private NamedIcon loadSensorIcon(String state, int rotation, SensorIcon l,
@@ -276,6 +273,7 @@ public class SensorIconXml extends PositionableLabelXml {
         loadSensorTextState("Unknown", l, element);
         loadSensorTextState("Inconsistent", l, element);
         if (element.getAttribute("text") != null) {
+            l.setOriginalText(element.getAttribute("text").getValue());
             l.setText(element.getAttribute("text").getValue());
         }
     }
@@ -379,6 +377,6 @@ public class SensorIconXml extends PositionableLabelXml {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SensorIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorIconXml.class.getName());
 
 }

@@ -4,8 +4,7 @@
  * Description:	Stands in for the SerialTrafficController class
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 package jmri.jmrix.oaktree;
 
 import java.util.Vector;
@@ -61,6 +60,6 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
         return cmdListeners.size();
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialTrafficControlScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControlScaffold.class.getName());
 
 }

@@ -1,4 +1,3 @@
-// SerialMonAction.java
 package jmri.jmrix.secsi.serialmon;
 
 import java.awt.event.ActionEvent;
@@ -10,8 +9,7 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a SerialMonFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
- * @version	$Revision$
- */
+  */
 public class SerialMonAction extends AbstractAction {
 
     /**
@@ -38,9 +36,6 @@ public class SerialMonAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialMonAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialMonAction.class.getName());
 
 }
-
-
-/* @(#)SerialMonAction.java */

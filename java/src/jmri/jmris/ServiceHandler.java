@@ -6,7 +6,6 @@ package jmri.jmris;
  * types which can be passed to a parser visitor object.
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  *
  */
 public class ServiceHandler {
@@ -18,6 +17,7 @@ public class ServiceHandler {
     private AbstractSensorServer sensorServer = null;
     private AbstractProgrammerServer programmerServer = null;
     private AbstractTimeServer timeServer = null;
+    private AbstractThrottleServer throttleServer = null;
 
     /*
      *  set the powerServer instance
@@ -125,6 +125,24 @@ public class ServiceHandler {
      */
     public AbstractTimeServer getTimeServer() {
         return timeServer;
+    }
+
+    /*
+     *  set the throttleServer instance
+     *  @param ts is an instance of an AbstractThrottleServer 
+     *            derived class.
+     */
+    public void setThrottleServer(AbstractThrottleServer ts) {
+        throttleServer = ts;
+    }
+
+    /*
+     *  get the throttleServer instance
+     *  @return an instance of an AbstractThrottleServer 
+     *            derived class.
+     */
+    public AbstractThrottleServer getThrottleServer() {
+        return throttleServer;
     }
 
 }

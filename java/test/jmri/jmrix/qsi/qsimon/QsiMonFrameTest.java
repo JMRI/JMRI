@@ -4,7 +4,6 @@
  * Description:	JUnit tests for the QsiProgrammer class
  *
  * @author	Bob Jacobsen
- * @version
  */
 package jmri.jmrix.qsi.qsimon;
 
@@ -13,7 +12,7 @@ import jmri.jmrix.qsi.QsiListener;
 import jmri.jmrix.qsi.QsiMessage;
 import jmri.jmrix.qsi.QsiReply;
 import jmri.jmrix.qsi.QsiTrafficController;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -23,7 +22,7 @@ import org.slf4j.LoggerFactory;
 public class QsiMonFrameTest extends TestCase {
 
     public void testCreate() {
-        QsiMonFrame f = new QsiMonFrame();
+        QsiMonFrame f = new QsiMonFrame(new jmri.jmrix.qsi.QsiSystemConnectionMemo());
         Assert.assertNotNull("exists", f);
     }
 
@@ -124,7 +123,7 @@ public class QsiMonFrameTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {QsiMonFrameTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -133,6 +132,6 @@ public class QsiMonFrameTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(QsiMonFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QsiMonFrameTest.class.getName());
 
 }

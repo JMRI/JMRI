@@ -6,7 +6,7 @@
  *
  * @author Paul Bender Copyright (C) 2011
  * @author Daniel Boudreau Copyright (C) 2012
- * @version $Revision: 19142 $
+ * 
  */
 package jmri.jmrix.nce;
 
@@ -54,6 +54,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
             DccLocoAddress locoAddress = ConsistList.get(0);
             killConsist(locoAddress.getNumber(), locoAddress.isLongAddress());
         }
+        stopReadNCEconsistThread();
         super.dispose();
     }
 
@@ -168,14 +169,23 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
         startReadNCEconsistThread(true);
     }
 
+    private NceReadConsist mb=null;
+
     private void startReadNCEconsistThread(boolean check) {
         // read command station memory to get the current consist (can't be a USB, only PH)
         if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
-            NceReadConsist mb = new NceReadConsist();
+            mb = new NceReadConsist();
             mb.setName("Read Consist " + _consistNum);
             mb.setConsist(_consistNum);
             mb.setCheck(check);
             mb.start();
+        }
+    }
+
+    private void stopReadNCEconsistThread(){
+        if(mb!=null){
+           mb.stop();
+           mb=null;
         }
     }
 
@@ -371,7 +381,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
             // not used
         }
 
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NN_NAKED_NOTIFY") // notify not naked
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY") // notify not naked
         public void reply(NceReply r) {
             if (_busy == 0) {
                 log.debug("Consist " + _consistNum + " read reply not for this consist");
@@ -478,6 +488,6 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(NceConsist.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceConsist.class.getName());
 
 }

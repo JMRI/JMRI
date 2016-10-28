@@ -1,4 +1,3 @@
-// AbstractStreamConnectionConfig.java
 package jmri.jmrix;
 
 import java.awt.Color;
@@ -23,9 +22,7 @@ import org.slf4j.LoggerFactory;
  * ConnectionConfig 
  *
  * @author Kevin Dickerson Copyright (C) 2001, 2003
- * @version	$Revision$
  */
-//
 abstract public class AbstractStreamConnectionConfig extends AbstractConnectionConfig {
 
     /**
@@ -260,12 +257,14 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
         adapter.setDisabled(disabled);
     }
 
+    @Override
     public void dispose() {
+        super.dispose();
         if (adapter != null) {
             adapter.dispose();
             adapter = null;
         }
     }
 
-    final static protected Logger log = LoggerFactory.getLogger(AbstractStreamConnectionConfig.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractStreamConnectionConfig.class.getName());
 }

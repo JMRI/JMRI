@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <name>Function Map</name>
+    <column>
+        <display item="F0 Output Function"/>
+        <display item="F1 Output Function"/>
+        <display item="F2 Output Function"/>
+        <display item="F3 Output Function"/>
+        <display item="F4 Output Function"/>
+        <display item="F5 Output Function"/>
+        <display item="F6 Output Function"/>
+        <display item="F7 Output Function"/>
+        <display item="F8 Output Function"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="F9 Output Function"/>
+        <display item="F10 Output Function"/>
+        <display item="F11 Output Function"/>
+        <display item="F12 Output Function"/>
+    </column>
+    <column>
+        <display item="F13 Output Function"/>
+        <display item="F14 Output Function"/>
+        <display item="F15 Output Function"/>
+        <display item="F16 Output Function"/>
+        <display item="F17 Output Function"/>
+        <display item="F18 Output Function"/>
+        <display item="F19 Output Function"/>
+        <display item="F20 Output Function"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="F21 Output Function"/>
+        <display item="F22 Output Function"/>
+        <display item="F23 Output Function"/>
+        <display item="F24 Output Function"/>
+        <display item="F25 Output Function"/>
+        <display item="F26 Output Function"/>
+        <display item="F27 Output Function"/>
+        <display item="F28 Output Function"/>
+    </column>
+</pane>

@@ -1,8 +1,7 @@
-// CatalogTreeIndexTest.java
 package jmri.jmrit.catalog;
 
 import jmri.NamedBean;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the CatalogTreeIndex class
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  */
 public class CatalogTreeIndexTest extends TestCase {
 
@@ -19,11 +17,6 @@ public class CatalogTreeIndexTest extends TestCase {
     // get/set parameter code, so we test that here
     public void testSetProperty() {
         NamedBean n = new CatalogTreeIndex("sys", "usr") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 7694055913118415520L;
-
             public int getState() {
                 return 0;
             }
@@ -37,11 +30,6 @@ public class CatalogTreeIndexTest extends TestCase {
 
     public void testGetParameter() {
         NamedBean n = new CatalogTreeIndex("sys", "usr") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 690755160053953145L;
-
             public int getState() {
                 return 0;
             }
@@ -56,11 +44,6 @@ public class CatalogTreeIndexTest extends TestCase {
 
     public void testGetSetNull() {
         NamedBean n = new CatalogTreeIndex("sys", "usr") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 7945346563033351123L;
-
             public int getState() {
                 return 0;
             }
@@ -83,7 +66,7 @@ public class CatalogTreeIndexTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {CatalogTreeIndexTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

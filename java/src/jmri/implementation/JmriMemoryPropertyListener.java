@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Pete Cressman Copyright (C) 2009
- * @version	$Revision 1.0 $
  * @since 2.5.1
  */
 public class JmriMemoryPropertyListener extends JmriSimplePropertyListener {
@@ -53,5 +52,5 @@ public class JmriMemoryPropertyListener extends JmriSimplePropertyListener {
             }
         }
     }
-    static final Logger log = LoggerFactory.getLogger(JmriMemoryPropertyListener.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriMemoryPropertyListener.class.getName());
 }

@@ -1,40 +1,41 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
- <TITLE>
-      JMRI: Adding/Editing Memories
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Memory Add Edit">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!--#include virtual="/Style" -->
+  <title>JMRI: Adding/Editing Memory Variables</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI help Memory Add Edit">
+  <!--#include virtual="/Style" -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Adding/Editing Memory Variables</h1>To create a Memory
+      Variable, click the "Add..." button on the <a href=
+      "MemoryTable.shtml">Memory Variable Table</a>. This will open
+      a new pane with space to enter a System Name and User Name
+      for the new Memory Variable, plus and "Add" button.
 
-<H1>Adding/Editing Memories</H1>
-    
-To create a memory variable, click the 
-"Add..." button on the 
-<a href="MemoryTable.shtml">Memory Table</a>.
-This will open a small new window with space to enter
-a system name and user name for the new memory, plus
-and "Add" button.
-<p>
-You must enter a unique system name.  System names for memories have
-no set pattern.  You can all them whatever you want.  There's a weak
-convention of starting them with "IM" for "Internal Memory", but that's not
-required.
+      <p>You must enter a unique System Name. System Names for
+      Memory Variables have no set pattern. You can call them
+      whatever you want. There's a weak convention of starting them
+      with "IM" for "Internal Memory", but that's not required.</p>
 
-<p>
-The user name is optional, but if given has to be unique.
+      <p>The User Name is optional, but if given has to be
+      unique.</p>
 
-<!--#include virtual="/Footer" -->
+      <p>Back to the <a href="MemoryTable.shtml">Memory Variable
+      Table help page</a>.</p><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-

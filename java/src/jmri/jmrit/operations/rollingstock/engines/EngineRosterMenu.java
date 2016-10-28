@@ -1,7 +1,6 @@
 // EngineRosterMenu.java
 package jmri.jmrit.operations.rollingstock.engines;
 
-import java.awt.Component;
 import java.awt.Frame;
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
@@ -15,15 +14,9 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2007, 2012
- * @version $Revision$
  *
  */
 public class EngineRosterMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2345195873048319343L;
 
     /**
      * Ctor argument defining that the menu object will be used as part of the
@@ -45,7 +38,7 @@ public class EngineRosterMenu extends JMenu {
     static public final int ENTRYMENU = 3;
 
     /**
-     * Create a
+     * Creates a roster menu for locomotives.
      *
      * @param pMenuName Name for the menu
      * @param pMenuType Select where the menu will be used, hence the right set
@@ -53,7 +46,7 @@ public class EngineRosterMenu extends JMenu {
      * @param pWho      The Component using this menu, used to ensure that
      *                  dialog boxes will pop in the right place.
      */
-    public EngineRosterMenu(String pMenuName, int pMenuType, Component pWho) {
+    public EngineRosterMenu(String pMenuName, int pMenuType, EnginesTableFrame pWho) {
         super(pMenuName);
 
         // create the menu
@@ -101,9 +94,6 @@ public class EngineRosterMenu extends JMenu {
                 previewAction.setEnabled(true);
                 break;
             case SELECTMENU:
-                printAction.setEnabled(true);
-                previewAction.setEnabled(true);
-                break;
             case ENTRYMENU:
                 printAction.setEnabled(true);
                 previewAction.setEnabled(true);
@@ -114,7 +104,7 @@ public class EngineRosterMenu extends JMenu {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(EngineRosterMenu.class
+    private final static Logger log = LoggerFactory.getLogger(EngineRosterMenu.class
             .getName());
 
 }

@@ -1,11 +1,11 @@
-// OperationsTestCase.java
 package jmri.jmrit.operations;
 
 import java.io.File;
 import java.util.Locale;
+import jmri.jmrit.operations.automation.AutomationManager;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
-import jmri.jmrit.operations.locations.ScheduleManager;
+import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.rollingstock.cars.CarColors;
 import jmri.jmrit.operations.rollingstock.cars.CarLengths;
@@ -31,7 +31,7 @@ import junit.framework.TestCase;
  * Common setup and tear down for operation tests.
  *
  * @author Dan Boudreau Copyright (C) 2015
- * @version $Revision: 28746 $
+ * 
  */
 public class OperationsTestCase extends TestCase {
 
@@ -42,8 +42,8 @@ public class OperationsTestCase extends TestCase {
     // Ensure minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
         super.setUp();
+        apps.tests.Log4JFixture.setUp();
 
         // set the locale to US English
         Locale.setDefault(Locale.ENGLISH);
@@ -55,13 +55,7 @@ public class OperationsTestCase extends TestCase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initIdTagManager();
-        jmri.InstanceManager.setShutDownManager(new
-                jmri.managers.DefaultShutDownManager() {
-                    @Override
-                    public void register(jmri.ShutDownTask s) {
-                        // do nothing with registered shutdown tasks for testing.
-                    }
-                });
+        JUnitUtil.initShutDownManager();
 
         // set the file location to temp (in the root of the build directory).
         OperationsSetupXml.setFileLocation("temp" + File.separator);
@@ -105,6 +99,7 @@ public class OperationsTestCase extends TestCase {
         CarLoads.instance().dispose();
         CarRoads.instance().dispose();
         CarManager.instance().dispose();
+        AutomationManager.instance().dispose();
 
         // delete file and log directory before testing
         file = new File(RollingStockLogger.instance().getFullLoggerFileName());

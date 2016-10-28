@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * A Kernel is a group of cars that is managed as one car.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision$
  */
 public class Kernel extends RollingStockGroup {
 
@@ -21,6 +20,7 @@ public class Kernel extends RollingStockGroup {
         log.debug("New Kernel ({})", name);
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "getGroup() only provides Car Objects")
     public List<Car> getCars() {
         List<Car> cars = new ArrayList<Car>();
         for (RollingStock rs : getGroup()) {
@@ -29,6 +29,7 @@ public class Kernel extends RollingStockGroup {
         return cars;
     }
 
+    @Override
     public void dispose() {
         while (getGroup().size() > 0) {
             Car car = (Car) getGroup().get(0);
@@ -39,5 +40,5 @@ public class Kernel extends RollingStockGroup {
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(Kernel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Kernel.class.getName());
 }

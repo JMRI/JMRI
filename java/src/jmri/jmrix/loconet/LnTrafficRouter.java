@@ -14,12 +14,11 @@ import org.slf4j.LoggerFactory;
  * be done without traffic over the connection.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version $Revision$
  *
  */
 public class LnTrafficRouter extends LnTrafficController implements LocoNetListener {
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization")
     public LnTrafficRouter() {
         // set the instance to point here
@@ -96,7 +95,7 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(LnTrafficRouter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnTrafficRouter.class.getName());
 }
 
 

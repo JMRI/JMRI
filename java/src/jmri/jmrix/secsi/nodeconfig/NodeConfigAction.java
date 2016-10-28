@@ -1,4 +1,3 @@
-// NodeConfigAction.java
 package jmri.jmrix.secsi.nodeconfig;
 
 import java.awt.event.ActionEvent;
@@ -10,14 +9,8 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a NodeConfigFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2008
- * @version	$Revision$
  */
 public class NodeConfigAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5110730322384604465L;
 
     public NodeConfigAction(String s) {
         super(s);
@@ -37,8 +30,5 @@ public class NodeConfigAction extends AbstractAction {
         f.setLocation(100, 30);
         f.setVisible(true);
     }
-    static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
 }
-
-
-/* @(#)NodeConfigAction.java */

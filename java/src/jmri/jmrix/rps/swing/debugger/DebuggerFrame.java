@@ -1,4 +1,3 @@
-// DebuggerFrame.java
 package jmri.jmrix.rps.swing.debugger;
 
 import java.awt.FlowLayout;
@@ -26,15 +25,9 @@ import org.slf4j.LoggerFactory;
  * Frame for manual operation and debugging of the RPS system
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public class DebuggerFrame extends jmri.util.JmriJFrame
         implements ReadingListener, MeasurementListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4663988863071182111L;
 
     public DebuggerFrame() {
         super();
@@ -358,5 +351,5 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
     com.csvreader.CsvReader measurementInput = null;
     final javax.swing.JFileChooser measurementFileChooser = new JFileChooser("rps/positions.csv");
 
-    static Logger log = LoggerFactory.getLogger(DebuggerFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DebuggerFrame.class.getName());
 }

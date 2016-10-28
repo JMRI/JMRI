@@ -1,20 +1,21 @@
-// XNetPortControllerScaffold.java
 package jmri.jmrix.lenz;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * XNetPortControllerScaffold.java
- *
- * Description:	test implementation of XNetPortController
- *
- * @author	Bob Jacobsen Copyright (C) 2006
- * @version $Revision$
+ * Implementation of XNetPortController that eases
+ * checking whether data was forwarded or not
+ * 
+ * @author	Bob Jacobsen Copyright (C) 2006, 2015
  */
 class XNetPortControllerScaffold extends XNetSimulatorPortController {
+
+    private final static Logger log = LoggerFactory.getLogger(XNetPortControllerScaffold.class);
 
     public java.util.Vector<String> getPortNames() {
         return null;
@@ -31,16 +32,39 @@ class XNetPortControllerScaffold extends XNetSimulatorPortController {
         return null;
     }
 
+    PipedInputStream otempIPipe;
+    PipedOutputStream otempOPipe;
+    
+    PipedInputStream itempIPipe;
+    PipedOutputStream itempOPipe;
+    
     protected XNetPortControllerScaffold() throws Exception {
-        PipedInputStream tempPipe;
-        tempPipe = new PipedInputStream();
-        tostream = new DataInputStream(tempPipe);
-        ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
-        tempPipe = new PipedInputStream();
-        istream = new DataInputStream(tempPipe);
-        tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
+        otempIPipe = new PipedInputStream(200);
+        tostream = new DataInputStream(otempIPipe);
+        otempOPipe = new PipedOutputStream(otempIPipe);
+        ostream = new DataOutputStream(otempOPipe);
+
+        itempIPipe = new PipedInputStream(200);
+        istream = new DataInputStream(itempIPipe);
+        itempOPipe = new PipedOutputStream(itempIPipe);
+        tistream = new DataOutputStream(itempOPipe);
     }
 
+    public void flush() {
+        try { 
+            ostream.flush();
+            otempOPipe.flush();
+        
+            tistream.flush();
+            itempOPipe.flush();
+
+            jmri.util.JUnitUtil.releaseThread(this);
+
+        } catch (Exception e) {
+            log.error("Exception during flush", e);
+        }
+    }
+    
     /**
      * Returns the InputStream from the port.
      */

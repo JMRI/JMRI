@@ -1,21 +1,19 @@
-//JmriSRCPTurnoutServerTest.java
 package jmri.jmris.srcp;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPTurnoutServer class
  *
- * @author Paul Bender
- * @version $Revision$
+ * @author Paul Bender Copyright (C) 2012,2016
  */
-public class JmriSRCPTurnoutServerTest extends TestCase {
+public class JmriSRCPTurnoutServerTest {
 
+    @Test
     public void testCtor() {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -30,24 +28,5 @@ public class JmriSRCPTurnoutServerTest extends TestCase {
         Assert.assertNotNull(a);
     }
 
-    // from here down is testing infrastructure
-    public JmriSRCPTurnoutServerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SRCPTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(jmri.jmris.srcp.JmriSRCPTurnoutServerTest.class);
-
-        return suite;
-    }
-
-    static Logger log = LoggerFactory.getLogger(JmriSRCPTurnoutServerTest.class.getName());
 
 }

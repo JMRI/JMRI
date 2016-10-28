@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * Provides common routes for importing cars and locomotives
  *
  * @author Dan Boudreau Copyright (C) 2013
- * @version $Revision: 24463 $
+ * 
  */
 public class ImportRollingStock extends Thread {
 
@@ -75,6 +75,10 @@ public class ImportRollingStock extends Thread {
 
     protected String[] parseCommaLine(String line, int arraySize) {
         String[] outLine = new String[arraySize];
+        // load output array to prevent NPE
+        for (int i = 0; i < outLine.length; i++) {
+            outLine[i] = "";
+        }
         if (line.contains("\"")) { // NOI18N
             // log.debug("line number "+lineNum+" has escape char \"");
             String[] parseLine = line.split(",");
@@ -113,6 +117,7 @@ public class ImportRollingStock extends Thread {
 
     public static class ImportFilter extends javax.swing.filechooser.FileFilter {
 
+        @Override
         public boolean accept(File f) {
             if (f.isDirectory()) {
                 return true;
@@ -130,10 +135,11 @@ public class ImportRollingStock extends Thread {
             }
         }
 
+        @Override
         public String getDescription() {
             return Bundle.getMessage("Text&CSV");
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(ImportRollingStock.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ImportRollingStock.class.getName());
 }

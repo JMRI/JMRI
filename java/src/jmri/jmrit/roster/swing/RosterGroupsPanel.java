@@ -67,15 +67,6 @@ import org.slf4j.LoggerFactory;
  */
 public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4617322485702894536L;
-    /**
-     * Property change listeners can listen for property changes with this name
-     * from this object to take action when a user selects a roster group.
-     */
-    public final static String SELECTED_ROSTER_GROUP = "selectedRosterGroup";
     private static int GROUPS_MENU = 1;
     private static int ALL_ENTRIES_MENU = 2;
     private JScrollPane scrollPane;
@@ -100,7 +91,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
     /**
      * Create a RosterGroupTreePane with the defaultRosterGroup selected.
      *
-     * @param defaultRosterGroup
+     * @param defaultRosterGroup the name of the default selection
      */
     public RosterGroupsPanel(String defaultRosterGroup) {
         this.scrollPane = new JScrollPane(getTree());
@@ -345,7 +336,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
             _tree.setTransferHandler(new TransferHandler());
             _tree.addMouseListener(new MouseAdapter());
             setSelectionToGroup(selectedRosterGroup);
-            Roster.instance().addPropertyChangeListener(new PropertyChangeListener());
+            Roster.getDefault().addPropertyChangeListener(new PropertyChangeListener());
         }
         return _tree;
     }
@@ -403,7 +394,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
     private void setRosterGroups(DefaultMutableTreeNode root) {
         root.removeAllChildren();
         root.add(new DefaultMutableTreeNode(Roster.ALLENTRIES));
-        for (String g : Roster.instance().getRosterGroupList()) {
+        for (String g : Roster.getDefault().getRosterGroupList()) {
             root.add(new DefaultMutableTreeNode(g));
         }
     }
@@ -508,11 +499,6 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
     class TransferHandler extends javax.swing.TransferHandler {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 4224992650668284315L;
-
         @Override
         public boolean canImport(JComponent c, DataFlavor[] transferFlavors) {
             for (DataFlavor flavor : transferFlavors) {
@@ -544,7 +530,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
                             re.putAttribute(Roster.getRosterGroupProperty(p.getLastPathComponent().toString()), "yes");
                             re.updateFile();
                         }
-                        Roster.writeRosterFile();
+                        Roster.getDefault().writeRoster();
                         setSelectedRosterGroup(p.getLastPathComponent().toString());
                     } catch (Exception e) {
                         log.warn("Exception dragging RosterEntries onto RosterGroups: " + e);
@@ -565,10 +551,6 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
     static public class TreeCellRenderer extends DefaultTreeCellRenderer {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 6470385455791687641L;
     }
 
     public class TreeSelectionListener implements javax.swing.event.TreeSelectionListener {
@@ -579,7 +561,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
             String oldGroup = selectedRosterGroup;
             if (e.getNewLeadSelectionPath() == null) {
                 // if there are no Roster Groups set selection to "All Entries"
-                if (Roster.instance().getRosterGroupList().isEmpty()) {
+                if (Roster.getDefault().getRosterGroupList().isEmpty()) {
                     _tree.setSelectionPath(new TreePath(_model.getPathToRoot(_groups.getFirstChild())));
                 }
             } else if (e.getNewLeadSelectionPath().isDescendant(g)) {
@@ -650,5 +632,5 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         }
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(RosterGroupsPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterGroupsPanel.class.getName());
 }

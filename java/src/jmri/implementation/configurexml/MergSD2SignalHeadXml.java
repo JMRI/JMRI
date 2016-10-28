@@ -1,4 +1,3 @@
-// MergSD2SignalHeadXml.java
 package jmri.implementation.configurexml;
 
 import java.util.List;
@@ -26,7 +25,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  * @author Kevin Dickerson Copyright: Copyright (c) 2009
- * @version $Revision$
  */
 public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -99,17 +97,12 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
         return el;
     }
 
-    /**
-     * Create a MergSD2SignalHead
-     *
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         int aspects = 2;
-        List<Element> l = element.getChildren("turnoutname");
+        List<Element> l = shared.getChildren("turnoutname");
         if (l.size() == 0) {
-            l = element.getChildren("turnout");
+            l = shared.getChildren("turnout");
             aspects = l.size() + 1;
         }
         NamedBeanHandle<Turnout> input1 = null;
@@ -120,11 +113,11 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
         boolean home = true;
 
         // put it together
-        String sys = getSystemName(element);
-        String uname = getUserName(element);
+        String sys = getSystemName(shared);
+        String uname = getUserName(shared);
 
-        if (element.getAttribute("feather") != null) {
-            yesno = element.getAttribute("feather").getValue();
+        if (shared.getAttribute("feather") != null) {
+            yesno = shared.getAttribute("feather").getValue();
         }
         if ((yesno != null) && (!yesno.equals(""))) {
             if (yesno.equals("yes")) {
@@ -134,8 +127,8 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
             }
         }
 
-        if (element.getAttribute("home") != null) {
-            yesno = element.getAttribute("home").getValue();
+        if (shared.getAttribute("home") != null) {
+            yesno = shared.getAttribute("home").getValue();
         }
         if ((yesno != null) && (!yesno.equals(""))) {
             if (yesno.equals("yes")) {
@@ -145,7 +138,7 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
             }
         }
         try {
-            aspects = element.getAttribute("aspects").getIntValue();
+            aspects = shared.getAttribute("aspects").getIntValue();
         } catch (org.jdom2.DataConversionException e) {
             log.warn("Could not parse level attribute!");
         } catch (NullPointerException e) {  // considered normal if the attribute not present
@@ -176,9 +169,9 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
             h = new MergSD2SignalHead(sys, uname, aspects, input1, input2, input3, feather, home);
         }
 
-        loadCommon(h, element);
+        loadCommon(h, shared);
 
-        InstanceManager.signalHeadManagerInstance().register(h);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         return true;
     }
 
@@ -198,8 +191,13 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
             return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
         } else {
             String name = e.getText();
-            Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(name);
-            return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
+            try {
+                Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(name);
+                return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
+            } catch (IllegalArgumentException ex) {
+                log.warn("Failed to provide Turnout \"{}\" in loadTurnout", name);
+                return null;
+            }
         }
     }
 
@@ -207,5 +205,5 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(MergSD2SignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MergSD2SignalHeadXml.class.getName());
 }

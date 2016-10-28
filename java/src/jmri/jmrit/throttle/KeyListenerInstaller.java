@@ -9,7 +9,6 @@ import java.awt.event.KeyListener;
  * subcomponents.
  *
  * @author glen
- * @version $Revision$
  */
 public class KeyListenerInstaller {
 

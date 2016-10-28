@@ -28,8 +28,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Paul Bender Copyright (C) 2005-2010
- * @version	$Revision$
- */
+  */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 
     /**
@@ -237,6 +236,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
      * Request the status of the current address
      */
     @SuppressWarnings("unused")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification = "This is part of work in progress code to allow display of all information about the locomotives in the stack.")
     private void requestStatus() {
         int address = 0;
         if (!adrTextField.getText().equals("")) {
@@ -251,6 +251,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
      * current address.
      */
     @SuppressWarnings("unused")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification = "This is part of work in progress code to allow display of all information about the locomotives in the stack.")
     private void requestFunctionStatus() {
         int address = 0;
         if (!adrTextField.getText().equals("")) {
@@ -340,6 +341,6 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
     }
 
     // Register for logging
-    static Logger log = LoggerFactory.getLogger(StackMonFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StackMonFrame.class.getName());
 
 }

@@ -15,14 +15,8 @@ import org.slf4j.LoggerFactory;
  * Load throttles from XML
  *
  * @author Glen Oberhauser 2004
- * @version $Revision$
  */
 public class LoadXmlThrottlesLayoutAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 447922874340812542L;
 
     /**
      * Constructor
@@ -32,7 +26,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
     public LoadXmlThrottlesLayoutAction(String s) {
         super(s);
         // disable the ourselves if there is no throttle Manager
-        if (jmri.InstanceManager.throttleManagerInstance() == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -125,12 +119,11 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
      * An extension of the abstract XmlFile. No changes made to that class.
      *
      * @author glen
-     * @version $Revision$
      */
     static class ThrottlePrefs extends XmlFile {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(LoadXmlThrottlesLayoutAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LoadXmlThrottlesLayoutAction.class.getName());
 
 }

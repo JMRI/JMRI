@@ -1,8 +1,6 @@
 // IEEE802154Reply.java
 package jmri.jmrix.ieee802154;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Contains the data payload of a serial reply packet. Note that its _only_ the
@@ -12,28 +10,22 @@ import org.slf4j.LoggerFactory;
  * multiple connection
  * @author kcameron Copyright (C) 2011 Modified for IEEE 802.15.4 connection
  * @author Paul Bender Copyright (C) 2013
- * @version $Revision$
  */
 public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
 
-    IEEE802154TrafficController tc = null;
-
     // create a new one
-    public IEEE802154Reply(IEEE802154TrafficController tc) {
+    public IEEE802154Reply() {
         super();
-        this.tc = tc;
         setBinary(true);
     }
 
-    public IEEE802154Reply(IEEE802154TrafficController tc, String s) {
+    public IEEE802154Reply(String s) {
         super(s);
-        this.tc = tc;
         setBinary(true);
     }
 
-    public IEEE802154Reply(IEEE802154TrafficController tc, IEEE802154Reply l) {
+    public IEEE802154Reply(IEEE802154Reply l) {
         super(l);
-        this.tc = tc;
         setBinary(true);
     }
 
@@ -62,6 +54,8 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
             case 0x11:
                 length += 8; // 64 bit address
                 break;
+            default:
+                return null; // this should never actually happen.
         }
 
         if (!isIntraPanFrame()) {
@@ -105,6 +99,8 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
             case 0x11:
                 offset += 8; // 64 bit address
                 break;
+            default:
+                return null; // this should never actually happen.
         }
         switch (sourceMode) {
             case 0x00:
@@ -117,6 +113,8 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
             case 0x11:
                 length += 8; // 64 bit address
                 break;
+            default:
+                return null; // this should never actually happen.
         }
 
         if (!isIntraPanFrame()) {
@@ -158,6 +156,8 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
             case 0x11:
                 offset += 8; // 64 bit address
                 break;
+            default:
+                return null; // this should never actually happen.
         }
         switch (sourceMode) {
             case 0x00:
@@ -170,6 +170,8 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
             case 0x11:
                 offset += 8; // 64 bit address
                 break;
+            default:
+                return null; // this should never actually happen.
         }
 
         if (!isIntraPanFrame()) {
@@ -276,8 +278,6 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
     public String toMonitorString() {
         return toString();
     }
-
-    static Logger log = LoggerFactory.getLogger(IEEE802154Reply.class);
 
 }
 

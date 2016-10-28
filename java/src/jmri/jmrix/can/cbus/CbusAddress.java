@@ -1,12 +1,9 @@
-// CbusAddress.java
 package jmri.jmrix.can.cbus;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Utilities for handling CBUS addresses.
@@ -26,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008
  * @author	Andrew Crosland Copyright (C) 2011
- * @version $Revision$
  */
 public class CbusAddress {
 
@@ -271,9 +267,4 @@ public class CbusAddress {
         return retval;
     }
 
-    static Logger log = LoggerFactory.getLogger(CbusAddress.class.getName());
-
 }
-
-
-/* @(#)CbusAddress.java */

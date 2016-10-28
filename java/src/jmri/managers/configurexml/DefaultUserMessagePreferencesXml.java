@@ -1,11 +1,23 @@
 package jmri.managers.configurexml;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Set;
+import javax.swing.SortOrder;
+import jmri.util.com.sun.TableSorter;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Provide XML persistence for the
+ * {@link jmri.managers.DefaultUserMessagePreferences}.
+ *
+ * @deprecated since 4.5.4 because the
+ * {@link jmri.managers.DefaultUserMessagePreferences} is deprecated.
+ */
+@Deprecated
 public class DefaultUserMessagePreferencesXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public DefaultUserMessagePreferencesXml() {
@@ -26,7 +38,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         Element messages = new Element("UserMessagePreferences");
         setStoreElementClass(messages);
 
-        java.util.ArrayList<String> preferenceList = ((jmri.managers.DefaultUserMessagePreferences) p).getSimplePreferenceStateList();
+        java.util.ArrayList<String> preferenceList = p.getSimplePreferenceStateList();
         for (int i = 0; i < preferenceList.size(); i++) {
             Element pref = new Element("setting");
             pref.addContent(preferenceList.get(i));
@@ -135,17 +147,17 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                         //Considered normal if the window hasn't been closed
                     }
                 }
-                java.util.Set<Object> s = p.getPropertyKeys(strClass);
+                Set<String> s = p.getPropertyKeys(strClass);
                 if (s != null && s.size() != 0) {
                     Element ret = new Element("properties");
                     windowElement.addContent(ret);
-                    for (Object key : s) {
+                    for (String key : s) {
                         Object value = p.getProperty(strClass, key);
                         Element prop = new Element("property");
                         ret.addContent(prop);
                         prop.addContent(new Element("key")
                                 .setAttribute("class", key.getClass().getName())
-                                .setText(key.toString())
+                                .setText(key)
                         );
                         if (value != null) {
                             prop.addContent(new Element("value")
@@ -177,8 +189,14 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                     if (p.getTableColumnWidth(table, column) != -1) {
                         columnElement.addContent(new Element("width").addContent(Integer.toString(p.getTableColumnWidth(table, column))));
                     }
-                    if (p.getTableColumnSort(table, column) != 0) {
-                        columnElement.addContent(new Element("sort").addContent(Integer.toString(p.getTableColumnSort(table, column))));
+                    if (p.getTableColumnSort(table, column) != SortOrder.UNSORTED) {
+                        columnElement.addContent(
+                                new Element("sortOrder").addContent(p.getTableColumnSort(table, column).name()));
+                        // TODO for backwards compatibility with releases before 4.3.5, can be removed after 2016
+                        columnElement.addContent(new Element("sort")
+                                .addContent(p.getTableColumnSort(table, column) == SortOrder.ASCENDING
+                                        ? Integer.toString(TableSorter.ASCENDING)
+                                        : Integer.toString(TableSorter.DESCENDING)));
                     }
                     if (p.getTableColumnHidden(table, column)) {
                         columnElement.addContent(new Element("hidden").addContent("yes"));
@@ -200,26 +218,20 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         log.error("Invalid method called");
     }
 
-    /**
-     * Create a MemoryManager object of the correct class, then register and
-     * fill it.
-     *
-     * @param messages Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element messages) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // ensure the master object exists
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         p.setLoading();
 
-        List<Element> settingList = messages.getChildren("setting");
+        List<Element> settingList = shared.getChildren("setting");
 
         for (int i = 0; i < settingList.size(); i++) {
             String name = settingList.get(i).getText();
             p.setSimplePreferenceState(name, true);
         }
 
-        List<Element> comboList = messages.getChildren("comboBoxLastValue");
+        List<Element> comboList = shared.getChildren("comboBoxLastValue");
 
         for (int i = 0; i < comboList.size(); i++) {
             List<Element> comboItem = comboList.get(i).getChildren("comboBox");
@@ -230,7 +242,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
             }
         }
 
-        List<Element> classList = messages.getChildren("classPreferences");
+        List<Element> classList = shared.getChildren("classPreferences");
         for (int k = 0; k < classList.size(); k++) {
             List<Element> multipleList = classList.get(k).getChildren("multipleChoice");
             String strClass = classList.get(k).getAttribute("class").getValue();
@@ -258,7 +270,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
             }
         }
 
-        List<Element> windowList = messages.getChildren("windowDetails");
+        List<Element> windowList = shared.getChildren("windowDetails");
         for (int k = 0; k < windowList.size(); k++) {
             String strClass = windowList.get(k).getAttribute("class").getValue();
             List<Element> locListX = windowList.get(k).getChildren("locX");
@@ -310,9 +322,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                         Class<?> cl;
                         Constructor<?> ctor;
                         // create key object
-                        cl = Class.forName(e.getChild("key").getAttributeValue("class"));
-                        ctor = cl.getConstructor(new Class<?>[]{String.class});
-                        Object key = ctor.newInstance(new Object[]{e.getChild("key").getText()});
+                        String key = e.getChild("key").getText();
 
                         // create value object
                         Object value = null;
@@ -324,15 +334,14 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
 
                         // store
                         p.setProperty(strClass, key, value);
-                    } catch (Exception ex) {
+                    } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                         log.error("Error loading properties", ex);
                     }
                 }
             }
-
         }
 
-        List<Element> tablesList = messages.getChildren("tableDetails");
+        List<Element> tablesList = shared.getChildren("tableDetails");
         for (Element tables : tablesList) {
             List<Element> tableList = tables.getChildren("table");
             for (Element table : tableList) {
@@ -342,7 +351,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                     String strColumnName = column.getAttribute("name").getValue();
                     int order = -1;
                     int width = -1;
-                    int sort = 0;
+                    SortOrder sort = SortOrder.UNSORTED;
                     boolean hidden = false;
                     if (column.getChild("order") != null) {
                         order = Integer.parseInt(column.getChild("order").getText());
@@ -350,8 +359,20 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                     if (column.getChild("width") != null) {
                         width = Integer.parseInt(column.getChild("width").getText());
                     }
-                    if (column.getChild("sort") != null) {
-                        sort = Integer.parseInt(column.getChild("sort").getText());
+                    if (column.getChild("sortOrder") != null) {
+                        sort = SortOrder.valueOf(column.getChild("sortOrder").getText());
+                        // before 4.3.5 we used "sort" save column sort state
+                    } else if (column.getChild("sort") != null) {
+                        switch (Integer.parseInt(column.getChild("sort").getText())) {
+                            case TableSorter.ASCENDING:
+                                sort = SortOrder.ASCENDING;
+                                break;
+                            case TableSorter.DESCENDING:
+                                sort = SortOrder.DESCENDING;
+                                break;
+                            default:
+                                break;
+                        }
                     }
                     if (column.getChild("hidden") != null && column.getChild("hidden").getText().equals("yes")) {
                         hidden = true;
@@ -360,11 +381,10 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                     p.setTableColumnPreferences(strTableName, strColumnName, order, width, sort, hidden);
                 }
             }
-
         }
         p.finishLoading();
         return true;
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferencesXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferencesXml.class.getName());
 }

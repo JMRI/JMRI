@@ -1,4 +1,3 @@
-// OsIndicator.java
 package jmri.jmrit.ussctc;
 
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import jmri.implementation.DefaultConditionalAction;
  * turnout has been unlocked.
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
  */
 public class OsIndicator implements Constants {
 
@@ -49,18 +47,18 @@ public class OsIndicator implements Constants {
     public void instantiate() {
         // find/create Logix
         String nameP = namePrefix + output;
-        Logix l = InstanceManager.logixManagerInstance().
+        Logix l = InstanceManager.getDefault(jmri.LogixManager.class).
                 getLogix(nameP);
         if (l == null) {
-            l = InstanceManager.logixManagerInstance().
+            l = InstanceManager.getDefault(jmri.LogixManager.class).
                     createNewLogix(nameP, "");
         }
         l.deActivateLogix();
         // Find/create conditional and add
-        Conditional c = InstanceManager.conditionalManagerInstance()
+        Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class)
                 .getConditional(l, nameP + "C1");
         if (c == null) {
-            c = InstanceManager.conditionalManagerInstance()
+            c = InstanceManager.getDefault(jmri.ConditionalManager.class)
                     .createNewConditional(nameP + "C1", "");
             l.addConditional(nameP + "C1", -1);
         }
@@ -103,14 +101,14 @@ public class OsIndicator implements Constants {
 
         // findLogix
         String nameP = namePrefix + output;
-        Logix l = InstanceManager.logixManagerInstance().
+        Logix l = InstanceManager.getDefault(jmri.LogixManager.class).
                 getLogix(nameP);
         if (l == null) {
             throw new jmri.JmriException("Logix does not exist");
         }
 
         // Find/create conditional and add
-        Conditional c = InstanceManager.conditionalManagerInstance()
+        Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class)
                 .getConditional(l, nameP + "C1");
         if (c == null) {
             throw new jmri.JmriException("Conditional does not exist");
@@ -143,5 +141,3 @@ public class OsIndicator implements Constants {
     String lock;
 
 }
-
-/* @(#)OsIndicator.java */

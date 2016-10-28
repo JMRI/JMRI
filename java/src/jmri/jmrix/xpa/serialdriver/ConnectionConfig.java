@@ -6,8 +6,7 @@ package jmri.jmrix.xpa.serialdriver;
  * XPA+Modem SerialDriverAdapter object.
  *
  * @author Paul Bender Copyright (C) 2004
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
@@ -30,6 +29,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     protected void setInstance() {
-        adapter = SerialDriverAdapter.instance();
+        if(adapter == null) {
+           adapter = new SerialDriverAdapter();
+        }
     }
 }

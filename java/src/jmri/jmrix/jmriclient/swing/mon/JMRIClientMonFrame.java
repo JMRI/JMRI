@@ -5,15 +5,12 @@ import jmri.jmrix.jmriclient.JMRIClientListener;
 import jmri.jmrix.jmriclient.JMRIClientMessage;
 import jmri.jmrix.jmriclient.JMRIClientReply;
 import jmri.jmrix.jmriclient.JMRIClientTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying (and logging) JMRIClient command messages
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
- */
+  */
 public class JMRIClientMonFrame extends jmri.jmrix.AbstractMonFrame implements JMRIClientListener {
 
     /**
@@ -49,7 +46,5 @@ public class JMRIClientMonFrame extends jmri.jmrix.AbstractMonFrame implements J
     public synchronized void reply(JMRIClientReply l) {  // receive a reply message and log it
         nextLine("rep: " + l.toString(), "");
     }
-
-    static Logger log = LoggerFactory.getLogger(JMRIClientMonFrame.class.getName());
 
 }

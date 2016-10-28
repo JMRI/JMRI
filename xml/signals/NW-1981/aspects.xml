@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<aspecttable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+>
+  <name>N&amp;W 1981</name>
+  <date>1981</date>
+  <reference>As described in the March 1, 1981 edition of The Norfolk and Western Operating Rules.</reference>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook" >
+    <author>
+        <personname><firstname>Greg</firstname><surname>McCartney</surname></personname>
+        <email>gpmccartney@gmail.com</email>
+    </author>
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+
+    <revision>
+
+        <revnumber>1</revnumber>
+        <date>2015-10-19</date>
+        <authorinitials>GPM</authorinitials>
+        <revremark>Initial version of the signal set.</revremark>
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2016-01-26</date>
+        <authorinitials>GPM</authorinitials>
+        <revremark>Corrected the aspect mapping and added the NW color, search, and semaphore signals.</revremark>
+
+    </revision>
+
+  </revhistory>
+
+  <aspects>
+
+    <aspect>
+      <name>Clear</name>
+      <rule>Rule 281</rule>
+      <indication>Proceed at prescribed speed</indication>
+      <reference>Page 60</reference>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Approach Diverging</name>
+      <rule>Rule 282</rule>
+      <indication>Proceed preparing to take diverging route beyond next signal at prescribed speed.</indication>
+      <reference>Page 61</reference>
+      <speed>Normal</speed>
+      <speed2>Medium</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Advance Approach</name>
+      <rule>Rule 282A</rule>
+      <indication>Proceed preparing to stop at the second signal</indication>
+      <reference>Page 61</reference>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Diverging Clear</name>
+      <rule>Rule 283</rule>
+      <indication>Proceed through turnout or turnouts at prescribed speed.</indication>
+      <reference>Page 62</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Diverging Approach Diverging</name>
+      <rule>Rule 283B</rule>
+      <indication>Proceed through turnout or turnouts at prescribed speed preparing to take diverging route beyond next signal at prescribed speed.</indication>
+      <reference>Page 62</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Approach</name>
+      <rule>Rule 285</rule>
+      <indication>Proceed preparing to stop at next signal.</indication>
+      <reference>Page 63</reference>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Diverging Approach</name>
+      <rule>Rule 286</rule>
+      <indication>Proceed through turnout or turnouts at prescribed speed preparing to stop at next signal.</indication>
+      <reference>Page 64</reference>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Slow Clear</name>
+      <rule>Rule 287</rule>
+      <indication>Proceed; Slow speed within interlocking limits or through turnout or turnouts.</indication>
+      <reference>Page 64</reference>
+      <speed>Slow</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Slow Approach</name>
+      <rule>Rule 288</rule>
+      <indication>Proceed preparing to stop at next signal; Slow speed within interlocking limits or through turnout or turnouts.</indication>
+      <reference>Page 65</reference>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Restricting</name>
+      <rule>Rule 290</rule>
+      <indication>Proceed at restricted speed.</indication>
+      <reference>Page 65</reference>
+      <speed>Restricting</speed>
+      <speed2>Restricting</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Stop and Proceed</name>
+      <rule>Rule 291</rule>
+      <indication>Stop; then proceed at restricted speed.</indication>
+      <reference>Page 66</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Stop and Stay</name>
+      <rule>Rule 292</rule>
+      <indication>Stop and stay.</indication>
+      <reference>Page 66</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+
+  </aspects>
+
+  <appearancefiles>
+    <appearancefile href="appearance-CPL-2-arm-absolute.xml"/>
+    <appearancefile href="appearance-CPL-2-arm-permissive.xml"/>
+    <appearancefile href="appearance-CPL-1-arm-absolute.xml"/>
+    <appearancefile href="appearance-CPL-1-arm-permissive.xml"/>
+    <appearancefile href="appearance-CPL-Dwarf-absolute.xml"/>
+    <appearancefile href="appearance-CPL-Dwarf-permissive.xml"/>
+    <appearancefile href="appearance-SL-3-high-absolute.xml"/>
+    <appearancefile href="appearance-SL-2-high-permissive.xml"/>
+    <appearancefile href="appearance-SL-2-high-absolute.xml"/>
+    <appearancefile href="appearance-SL-2-low-absolute.xml"/>
+    <appearancefile href="appearance-Wab-2-high-absolute.xml"/>
+    <appearancefile href="appearance-Wab-2-low-absolute.xml"/>
+    <appearancefile href="appearance-SL-1-high-absolute.xml"/>
+    <appearancefile href="appearance-SL-1-high-permissive.xml"/>
+    <appearancefile href="appearance-SL-1-low-permissive.xml"/>
+    <appearancefile href="appearance-SL-1-low-absolute.xml"/>
+  </appearancefiles>
+
+</aspecttable>
+

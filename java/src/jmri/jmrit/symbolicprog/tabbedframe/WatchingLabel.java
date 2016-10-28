@@ -1,4 +1,3 @@
-// WatchingLabel.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 /**
@@ -6,15 +5,8 @@ package jmri.jmrit.symbolicprog.tabbedframe;
  * other component is
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
- *
  */
 public class WatchingLabel extends javax.swing.JLabel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1571754037047065268L;
 
     public WatchingLabel(String name, javax.swing.JComponent c) {
         super(name);

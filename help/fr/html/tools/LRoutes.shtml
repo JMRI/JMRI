@@ -64,7 +64,7 @@ Tête Signal contiennent toutes les entit&#233;s impliqu&#233;es dans le LItin&#
 et cliquez sur <b>Ajouter ...</b> au bas du tableau pour
 faire appara&#238;tre la fen&#234;tre Ajouter/Modifier LItin&#233;raire.</p>
 
-<a name="additin&#233;raire"><H3>Pour ajouter un Nouvel LItin&#233;raire:</H3></a>
+<a name="additin&#233;raire"></a><h3>Pour ajouter un Nouvel LItin&#233;raire:</h3>
 
 <ol>
 	<li><p>Entrez un nom syst&#232;me, tels que "RTX100". tout
@@ -157,7 +157,7 @@ message indiquant "LRoute updated.." sera affich&#233; dans la bo&#238;te de not
 
 <p>Les LItin&#233;raires sont enregistr&#233;s dans votre fichier de configuration de r&#233;seau, avec les aiguillages, les capteurs, les Têtes signal, les lumi&#232;res, etc. Pour stocker ces informations sur le disque, utilisez <b>Stocker Configuration...</b> dans le menu <b>fichier</b> en haut du Tableau LItin&#233;raire (ou d'autres tableaux &#224; partir du menu Outils), ou s&#233;lectionnez <b>Stocker Configuration ...</b> dans le menu <b>Panneau</b>. Notez que l'&#233;tat activ&#233;/d&#233;sactiv&#233; de chaque LItin&#233;raire n'est pas enregistr&#233; dans le fichier de configuration. Lorsque les LItin&#233;raires sont charg&#233;s &#224; partir du fichier de configuration, ils sont tous activ&#233;s.
 
-<a name="sensorlogic"><H3>Commander des LItin&#233;raires depuis des Entit&#233;s de Commande/D&#233;clenchement</H3></a>
+<a name="sensorlogic"></a><h3>Commander des LItin&#233;raires depuis des Entit&#233;s de Commande/D&#233;clenchement</h3>
 
 Le fonctionnement d'un LItin&#233;raire peut &#234;tre command&#233; par de nombreux moyens: des capteurs reli&#233;s &#224; des d&#233;tecteurs d'occupation ou des commutateurs sur le r&#233;seau, ou les feux dans le cas du C/MRI. M&#234;me les apparences des Têtes Signaux peuvent commander l'itin&#233;raire. Les capteurs et les aiguillages peuvent &#234;tre des entit&#233;s r&#233;elles ou internes.
 <P>
@@ -211,7 +211,7 @@ elle est: <DL>
 Un seul "veto" aiguillage, "veto" capteur," veto" de lumi&#232;re  ou l'apparition de "veto" signaux " permettra d'&#233;viter &#224; LItin&#233;raire d'&#234;tre d&#233;clench&#233;. L'expression logique d&#233;finie par LItin&#233;raire est que le "non-droit de veto des entit&#233;s sont relier par des OR' comme une clause et les " veto" des entit&#233;s sont associ&#233;es par des ET comme une clause. Les deux clauses sont alors rejoints par un op&#233;rateur ET.
 </p>
 
-<a name="setroutebehavior"><H3>D&#233;finition des Pr&#233;f&#233;rences pour Correspondre &#224; Celles des Itin&#233;raires</H3></a>
+<a name="setroutebehavior"></a><h3>D&#233;finition des Pr&#233;f&#233;rences pour Correspondre &#224; Celles des Itin&#233;raires</h3>
   
 <p>Dans Itin&#233;raires, les "v&#233;to" des entit&#233;s sont passifs. C'est, bien que l'&#233;tat du "v&#233;to"
  emp&#234;che l'Itin&#233;raire de d&#233;clencher, quand l'Etat du "v&#233;to"  est &#224; gauche, il ne d&#233;clenche pas l'Itin&#233;raire. D'autre part, en g&#233;n&#233;ral une condition Logix &#224; tous les &#233;tat de ses variables qui d&#233;clenchent les actions quand ils changent. Les boutons radio sur l'onglet "LItin&#233;raire base"<b>Route Logix Type</b> </p> donne des option. Si vous voulez que le LItin&#233;raire s'effectue de  mani&#232;re passive comme le fait un Itin&#233;raire , appuyez sur le bouton <b>Old</b>. Si vous voulez que le LItin&#233;raire d&#233;clenche ses actions quand tout les ""droit de veto" sont retir&#233;s, appuyez sur le bouton <b>New</b>  .

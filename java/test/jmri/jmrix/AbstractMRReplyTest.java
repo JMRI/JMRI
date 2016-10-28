@@ -1,7 +1,6 @@
-// AbstractMRReplyTest.java
 package jmri.jmrix;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,8 +9,7 @@ import junit.framework.TestSuite;
  * Tests for AbstractMRReply
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class AbstractMRReplyTest extends TestCase {
 
     AbstractMRReply testMsg;
@@ -83,7 +81,7 @@ public class AbstractMRReplyTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {AbstractMRReplyTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

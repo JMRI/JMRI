@@ -8,8 +8,6 @@ import jmri.ProgrammerManager;
 import jmri.RailComManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.managers.DefaultRailComManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -19,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * activate their particular system.
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 18322 $
  */
 public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -171,7 +168,7 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
                 return null;
             }
             List<SystemConnectionMemo> connList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
-            if (connList == null) {
+            if (connList.isEmpty()) {
                 return null;
             }
             for (int i = 0; i < connList.size(); i++) {
@@ -211,7 +208,6 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
     public void setDefaultProgrammer(String prog) {
         progManager = prog;
     }
-    static Logger log = LoggerFactory.getLogger(Dcc4PcSystemConnectionMemo.class.getName());
 }
 
 

@@ -1,9 +1,8 @@
-// DecoderIndexFileTest.java
 package jmri.jmrit.decoderdefn;
 
 import java.util.List;
 import javax.swing.JComboBox;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -15,8 +14,7 @@ import org.jdom2.Element;
  * Tests for DecoderIndexFile class
  *
  * @author	Bob Jacobsen, Copyright (c) 2001, 2002
- * @version	$Revision$
- */
+  */
 public class DecoderIndexFileTest extends TestCase {
 
     public void testLoading() {
@@ -245,7 +243,7 @@ public class DecoderIndexFileTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", DecoderIndexFileTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

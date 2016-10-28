@@ -1,37 +1,32 @@
-/**
- * AbstractTurnoutMgrTest.java
- *
- * Description:	AbsBaseClass for TurnoutManager tests in specific jmrix.
- * packages
- *
- * @author	Bob Jacobsen
- * @version
- */
-/**
- * This is not itself a test class, e.g. should not be added to a suite.
- * Instead, this forms the base for test classes, including providing some
- * common tests
- */
 package jmri.managers;
 
 import java.beans.PropertyChangeListener;
 import jmri.Turnout;
-import jmri.TurnoutAddress;
 import jmri.TurnoutManager;
-import junit.framework.Assert;
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public abstract class AbstractTurnoutMgrTest extends TestCase {
+/**
+ * Base for TurnoutManager tests in specific jmrix.packages
+ * <p>
+ * This is not itself a test class, e.g. should not be added to a suite.
+ * Instead, this forms the base for test classes, including providing some
+ * common tests
+ *
+ * @author	Bob Jacobsen
+ */
+public abstract class AbstractTurnoutMgrTest {
 
-    // implementing classes must provide these abstract members:
-    //
-    abstract protected void setUp();    	// load t with actual object; create scaffolds as needed
-
+    // implementing classes must implement to convert integer (count) to a system name
     abstract public String getSystemName(int i);
 
-    public AbstractTurnoutMgrTest(String s) {
-        super(s);
-    }
+    /**
+     * Overload to load l with actual object; create scaffolds as needed
+     */
+    @Before
+    abstract public void setUp(); 
 
     protected TurnoutManager l = null;	// holds objects under test
 
@@ -46,15 +41,29 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
 
     // start of common tests
     // test creation - real work is in the setup() routine
+    @Test
     public void testCreate() {
     }
 
+
+    @Test
     public void testDispose() {
         if (l != null) {
             l.dispose();  // all we're really doing here is making sure the method exists
         }
     }
 
+    @Test(expected=IllegalArgumentException.class)
+    public void testProvideFailure() {
+        try {
+            Turnout t = l.provideTurnout("");
+        } catch (IllegalArgumentException ex) {
+          jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for turnout: "+l.getSystemPrefix()+l.typeLetter()+" needed "+l.getSystemPrefix()+l.typeLetter());
+          throw ex;
+        }
+    }
+    
+    @Test
     public void testTurnoutPutGet() {
         // create
         Turnout t = l.newTurnout(getSystemName(getNumToTest1()), "mine");
@@ -64,6 +73,7 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
         Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
+    @Test
     public void testDefaultSystemName() {
         // create
         Turnout t = l.provideTurnout("" + getNumToTest1());
@@ -72,6 +82,7 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
+    @Test
     public void testSingleObject() {
         // test that you always get the same representation
         Turnout t1 = l.newTurnout(getSystemName(getNumToTest1()), "mine");
@@ -85,26 +96,21 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
         Assert.assertTrue("same new ", t1 == t2);
     }
 
+    @Test
     public void testMisses() {
-        // sample address object
-        TurnoutAddress a = new TurnoutAddress(getSystemName(getNumToTest2()), "user");
-
-        Assert.assertNotNull("real object returned ", a);
         // try to get nonexistant turnouts
         Assert.assertTrue(null == l.getByUserName("foo"));
         Assert.assertTrue(null == l.getBySystemName("bar"));
     }
 
+    @Test
     public void testUpperLower() {
-        // sample address object
-        TurnoutAddress a = new TurnoutAddress(getSystemName(31), "user");
-        Assert.assertNotNull("real object returned ", a);
-
         Turnout t = l.provideTurnout("" + getNumToTest2());
 
         Assert.assertNull(l.getTurnout(t.getSystemName().toLowerCase()));
     }
 
+    @Test
     public void testRename() {
         // get turnout
         Turnout t1 = l.newTurnout(getSystemName(getNumToTest1()), "before");

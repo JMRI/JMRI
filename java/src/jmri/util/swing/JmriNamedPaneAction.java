@@ -1,4 +1,3 @@
-// JmriNamedPaneAction.java
 package jmri.util.swing;
 
 import javax.swing.Icon;
@@ -9,17 +8,15 @@ import org.slf4j.LoggerFactory;
  * Action to create and load a JmriPanel from just its name.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
  */
 public class JmriNamedPaneAction extends JmriAbstractAction {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -16587323774213371L;
-
-    /**
      * Enhanced constructor for placing the pane in various GUIs
+     *
+     * @param s         panel name
+     * @param wi        window associated with pane
+     * @param paneClass class of the pane
      */
     public JmriNamedPaneAction(String s, WindowInterface wi, String paneClass) {
         super(s, wi);
@@ -33,6 +30,9 @@ public class JmriNamedPaneAction extends JmriAbstractAction {
 
     /**
      * Original constructor for compatibility with older menus. Assumes SDI GUI.
+     *
+     * @param s the panel name
+     * @param p the panel class
      */
     public JmriNamedPaneAction(String s, String p) {
         this(s, new jmri.util.swing.sdi.JmriJFrameInterface(), p);
@@ -40,6 +40,7 @@ public class JmriNamedPaneAction extends JmriAbstractAction {
 
     protected String paneClass;
 
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         try {
             JmriPanel p = (JmriPanel) Class.forName(paneClass).newInstance();
@@ -55,7 +56,5 @@ public class JmriNamedPaneAction extends JmriAbstractAction {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(JmriNamedPaneAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriNamedPaneAction.class.getName());
 }
-
-/* @(#)JmriAbstractAction.java */

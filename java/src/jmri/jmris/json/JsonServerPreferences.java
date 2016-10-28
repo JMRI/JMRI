@@ -5,11 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import jmri.InstanceManager;
 import jmri.beans.Bean;
 import jmri.jmrit.XmlFile;
 import jmri.profile.ProfileManager;
+import jmri.profile.ProfileUtils;
 import jmri.util.FileUtil;
-import jmri.util.prefs.JmriPreferencesProvider;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
@@ -29,11 +30,23 @@ public class JsonServerPreferences extends Bean {
     // as loaded prefences
     private int asLoadedHeartbeatInterval = 15000;
     private int asLoadedPort = DEFAULT_PORT;
-    private static Logger log = LoggerFactory.getLogger(JsonServerPreferences.class);
+    private final static Logger log = LoggerFactory.getLogger(JsonServerPreferences.class);
 
+    public static JsonServerPreferences getDefault() {
+        if (InstanceManager.getNullableDefault(JsonServerPreferences.class) == null) {
+            String fileName = FileUtil.getUserFilesPath() + "networkServices" + File.separator + "JsonServerPreferences.xml"; // NOI18N
+            if ((new File(fileName)).exists()) {
+                InstanceManager.store(new JsonServerPreferences(fileName), JsonServerPreferences.class);
+            } else {
+                InstanceManager.store(new JsonServerPreferences(), JsonServerPreferences.class);
+            }
+        }
+        return InstanceManager.getDefault(JsonServerPreferences.class);
+    }
+    
     public JsonServerPreferences(String fileName) {
         boolean migrate = false;
-        Preferences sharedPreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+        Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
         try {
             if (sharedPreferences.keys().length == 0) {
                 log.info("No JsonServer preferences exist.");
@@ -57,7 +70,7 @@ public class JsonServerPreferences extends Bean {
         this.readPreferences(sharedPreferences);
         if (migrate) {
             try {
-                log.info("Migrating from old JsonServer preferences in {} to new format in {}.", fileName, FileUtil.getAbsoluteFilename("profile:preferences"));
+                log.info("Migrating from old JsonServer preferences in {} to new format in {}.", fileName, FileUtil.getAbsoluteFilename("profile:profile"));
                 sharedPreferences.sync();
             } catch (BackingStoreException ex) {
                 log.error("Unable to write JsonServer preferences.", ex);
@@ -66,7 +79,7 @@ public class JsonServerPreferences extends Bean {
     }
 
     public JsonServerPreferences() {
-        Preferences sharedPreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+        Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
         this.readPreferences(sharedPreferences);
     }
 
@@ -79,7 +92,8 @@ public class JsonServerPreferences extends Bean {
 
     public void load(Element child) {
         Attribute a;
-        if ((a = child.getAttribute(HEARTBEAT_INTERVAL)) != null) {
+        a = child.getAttribute(HEARTBEAT_INTERVAL);
+        if (a != null) {
             try {
                 this.setHeartbeatInterval(a.getIntValue());
                 this.asLoadedHeartbeatInterval = this.getHeartbeatInterval();
@@ -88,7 +102,8 @@ public class JsonServerPreferences extends Bean {
                 log.error("Unable to read heartbeat interval. Setting to default value.", e);
             }
         }
-        if ((a = child.getAttribute(PORT)) != null) {
+        a = child.getAttribute(PORT);
+        if (a != null) {
             try {
                 this.setPort(a.getIntValue());
                 this.asLoadedPort = this.getPort();
@@ -117,9 +132,8 @@ public class JsonServerPreferences extends Bean {
         Element root;
         try {
             root = prefsXml.rootFromFile(file);
-        } catch (java.io.FileNotFoundException ea) {
+        } catch (FileNotFoundException ea) {
             log.info("Could not find JSON Server preferences file.  Normal if preferences have not been saved before.");
-            root = null;
             throw ea;
         } catch (IOException | JDOMException eb) {
             log.error("Exception while loading JSON server preferences: {}", eb.getLocalizedMessage());
@@ -131,7 +145,7 @@ public class JsonServerPreferences extends Bean {
     }
 
     public void save() {
-        Preferences sharedPreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+        Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
         sharedPreferences.putInt(HEARTBEAT_INTERVAL, this.heartbeatInterval);
         sharedPreferences.putInt(PORT, this.port);
     }
@@ -164,6 +178,6 @@ public class JsonServerPreferences extends Bean {
         this.port = value;
     }
 
-    public static class JsonServerPreferencesXml extends XmlFile {
+    private static class JsonServerPreferencesXml extends XmlFile {
     }
 }

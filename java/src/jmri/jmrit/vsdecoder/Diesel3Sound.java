@@ -16,7 +16,6 @@ package jmri.jmrit.vsdecoder;
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision: 18481 $
  */
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -511,7 +510,7 @@ class Diesel3Sound extends EngineSound {
 
         static public AudioBuffer getBuffer(VSDFile vf, String filename, String sname, String uname) {
             AudioBuffer buf = null;
-            AudioManager am = jmri.InstanceManager.audioManagerInstance();
+            AudioManager am = jmri.InstanceManager.getDefault(jmri.AudioManager.class);
             try {
                 buf = (AudioBuffer) am.provideAudio(VSDSound.BufSysNamePrefix + filename);
                 buf.setUserName(VSDSound.BufUserNamePrefix + uname);
@@ -529,7 +528,7 @@ class Diesel3Sound extends EngineSound {
                         return (null);
                     }
                 }
-            } catch (AudioException ex) {
+            } catch (AudioException | IllegalArgumentException ex) {
                 log.error("Problem creating SoundBite: " + ex);
                 return (null);
             }

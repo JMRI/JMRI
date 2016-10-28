@@ -1,6 +1,6 @@
-// AbstractSerialConnectionConfig.java
 package jmri.jmrix;
 
+import apps.startup.StartupActionModelUtil;
 import gnu.io.CommPortIdentifier;
 import java.awt.Color;
 import java.awt.Component;
@@ -25,6 +25,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
+import jmri.InstanceManager;
 import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
 import org.slf4j.Logger;
@@ -34,9 +35,7 @@ import org.slf4j.LoggerFactory;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @version	$Revision$
  */
-//
 abstract public class AbstractSerialConnectionConfig extends AbstractConnectionConfig {
 
     /**
@@ -537,6 +536,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
     @Override
     public void dispose() {
+        super.dispose();
         if (adapter != null) {
             adapter.dispose();
             adapter = null;
@@ -546,11 +546,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
     class ComboBoxRenderer extends JLabel
             implements ListCellRenderer<String> {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3617752100442828216L;
 
         public ComboBoxRenderer() {
             setHorizontalAlignment(LEFT);
@@ -570,7 +565,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 boolean isSelected,
                 boolean cellHasFocus) {
 
-            String displayName = name.toString();
+            String displayName = name;
             setOpaque(index > -1);
             setForeground(Color.black);
             list.setSelectionForeground(Color.black);
@@ -644,8 +639,8 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
     /**
      * This is purely here for systems that do not implement the
-     * SystemConnectionMemo Acela, CAN BUS, CMRI, Grapevine, QSI, Zimo & RPS and
-     * can be removed one they have been migrated
+     * SystemConnectionMemo Acela, CAN BUS, CMRI, Grapevine, QSI, Zimo
+     * {@literal &} RPS and can be removed one they have been migrated
      *
      * @return Resource bundle for action model
      */
@@ -654,38 +649,38 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     }
 
     protected final void addToActionList() {
-        apps.CreateButtonModel bm = jmri.InstanceManager.getDefault(apps.CreateButtonModel.class);
-        ResourceBundle rb = getActionModelResourceBundle();
-        if (rb == null || bm == null) {
+        StartupActionModelUtil util = InstanceManager.getNullableDefault(StartupActionModelUtil.class);
+        ResourceBundle bundle = getActionModelResourceBundle();
+        if (bundle == null || util == null) {
             return;
         }
-        Enumeration<String> e = rb.getKeys();
+        Enumeration<String> e = bundle.getKeys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
             try {
-                bm.addAction(key, rb.getString(key));
+                util.addAction(key, bundle.getString(key));
             } catch (ClassNotFoundException ex) {
-                log.error("Did not find class " + key);
+                log.error("Did not find class \"{}\"", key);
             }
         }
     }
 
     protected void removeFromActionList() {
-        apps.CreateButtonModel bm = jmri.InstanceManager.getDefault(apps.CreateButtonModel.class);
-        ResourceBundle rb = getActionModelResourceBundle();
-        if (rb == null || bm == null) {
+        StartupActionModelUtil util = InstanceManager.getNullableDefault(StartupActionModelUtil.class);
+        ResourceBundle bundle = getActionModelResourceBundle();
+        if (bundle == null || util == null) {
             return;
         }
-        Enumeration<String> e = rb.getKeys();
+        Enumeration<String> e = bundle.getKeys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
             try {
-                bm.removeAction(key);
+                util.removeAction(key);
             } catch (ClassNotFoundException ex) {
-                log.error("Did not find class " + key);
+                log.error("Did not find class \"{}\"", key);
             }
         }
     }
 
-    final static protected Logger log = LoggerFactory.getLogger(AbstractSerialConnectionConfig.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractSerialConnectionConfig.class.getName());
 }

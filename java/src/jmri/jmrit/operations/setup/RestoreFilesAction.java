@@ -4,6 +4,7 @@ package jmri.jmrit.operations.setup;
 import apps.Apps;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.IOException;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -11,29 +12,22 @@ import jmri.jmrit.operations.ExceptionContext;
 import jmri.jmrit.operations.ExceptionDisplayFrame;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to backup operation files to a directory selected by the user.
  *
  * @author Daniel Boudreau Copyright (C) 2011
  * @author Gregory Madsen Copyright (C) 2012
- * @version $Revision$
  */
 public class RestoreFilesAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4848726844188320052L;
-    static Logger log = LoggerFactory
-            .getLogger(RestoreFilesAction.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(RestoreFilesAction.class.getName());
 
     public RestoreFilesAction(String s) {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         restore();
     }
@@ -93,7 +87,7 @@ public class RestoreFilesAction extends AbstractAction {
 
             Apps.handleRestart();
 
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             ExceptionContext context = new ExceptionContext(ex,
                     Bundle.getMessage("RestoreDialog.restore.files"),
                     Bundle.getMessage("RestoreDialog.makeSure"));
@@ -103,6 +97,7 @@ public class RestoreFilesAction extends AbstractAction {
 
     private static class fileFilter extends javax.swing.filechooser.FileFilter {
 
+        @Override
         public boolean accept(File f) {
             if (f.isDirectory()) {
                 return true;
@@ -116,6 +111,7 @@ public class RestoreFilesAction extends AbstractAction {
             }
         }
 
+        @Override
         public String getDescription() {
             return Bundle.getMessage("BackupFolders");
         }

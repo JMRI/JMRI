@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.operations.rollingstock package
  *
  * @author	Bob Coleman
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -20,8 +18,8 @@ public class PackageTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -34,6 +32,7 @@ public class PackageTest extends TestCase {
         suite.addTest(NceConsistEnginesTest.suite());
         suite.addTest(EngineManagerTest.suite());
         suite.addTest(XmlTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
 
         // GUI tests start here
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {

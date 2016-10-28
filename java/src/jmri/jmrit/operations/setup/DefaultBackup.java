@@ -1,8 +1,6 @@
 // DefaultBackup.java
 package jmri.jmrit.operations.setup;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Specific Backup class for backing up and restoring Operations working files
@@ -12,8 +10,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultBackup extends BackupBase {
 
-    static Logger log = LoggerFactory
-            .getLogger(DefaultBackup.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(DefaultBackup.class.getName());
 
     /**
      * Creates a DefaultBackup instance and initializes the root directory to

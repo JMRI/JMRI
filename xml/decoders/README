@@ -1,7 +1,7 @@
 The xml/decoders directory contains files defining various model railroad 
 DCC decoders.  The naming convention is <vendor>_<model>.xml
 
-The JMRI web page is located at http://jmri.sourceforge.net/
+The JMRI web page is located at http://jmri.org/
 
 See the COPYING file for the license.
 

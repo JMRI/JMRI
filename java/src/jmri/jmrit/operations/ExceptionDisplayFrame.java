@@ -26,11 +26,6 @@ import javax.swing.border.EmptyBorder;
  */
 public class ExceptionDisplayFrame extends JDialog {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6188978764804662351L;
-
     private ExceptionContext context;
 
     // This needs MAJOR clean-up to better organize the controls and their
@@ -75,6 +70,7 @@ public class ExceptionDisplayFrame extends JDialog {
 
     /**
      * Create the frame.
+     * @param context The ExceptionContext.
      *
      */
     public ExceptionDisplayFrame(ExceptionContext context) {
@@ -89,8 +85,8 @@ public class ExceptionDisplayFrame extends JDialog {
 
     /**
      * Constructor that takes just an Exception and defaults everything else.
+     * @param ex The Exception.
      *
-     * @param ex
      */
     public ExceptionDisplayFrame(Exception ex) {
         this.context = new ExceptionContext(ex, "Operation unavailable", // NOI18N
@@ -126,6 +122,7 @@ public class ExceptionDisplayFrame extends JDialog {
         showDetailsButton = new JButton("Show details"); // NOI18N
         showDetailsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         showDetailsButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 detailsPanel.setVisible(true);
                 pack();
@@ -213,6 +210,7 @@ public class ExceptionDisplayFrame extends JDialog {
 
         closeButton = new JButton("Close"); // NOI18N
         closeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 dispose();
             }

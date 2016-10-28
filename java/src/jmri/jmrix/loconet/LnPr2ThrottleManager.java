@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  *
  * @see AbstractThrottleManager
  * @author	Bob Jacobsen Copyright (C) 2001, 2006
- * @version $Revision$
  */
 public class LnPr2ThrottleManager extends AbstractThrottleManager {
 
@@ -97,5 +96,5 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(LnPr2ThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnPr2ThrottleManager.class.getName());
 }

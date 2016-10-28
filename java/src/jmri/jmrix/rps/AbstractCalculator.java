@@ -1,4 +1,3 @@
-// AbstractCalculator.java
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
@@ -9,7 +8,6 @@ import org.slf4j.LoggerFactory;
  * Some helpful implementations and values for Calculators.
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2008
- * @version	$Revision$
  */
 public abstract class AbstractCalculator implements Calculator {
 
@@ -69,14 +67,12 @@ public abstract class AbstractCalculator implements Calculator {
     }
 
     void summarize() {
-        System.out.println("nr is " + nr);
+        log.debug("nr is " + nr);
         for (int j = 0; j < nr; j++) {
-            System.out.println(" t: " + Tr[j] + " to " + Xr[j] + "," + Yr[j] + "," + Zr[j]);
+            log.debug(" t: " + Tr[j] + " to " + Xr[j] + "," + Yr[j] + "," + Zr[j]);
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractCalculator.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractCalculator.class.getName());
 
 }
-
-/* @(#)AbstractCalculator.java */

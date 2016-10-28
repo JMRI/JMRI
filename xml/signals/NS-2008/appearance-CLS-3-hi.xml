@@ -34,6 +34,12 @@
         <authorinitials>DB</authorinitials>
         <revremark>Added Dark</revremark>
     </revision>    
+    <revision>
+        <revnumber>1.2</revnumber>
+        <date>2015-10-16</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Correction to mapping</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>NS</aspecttable>
@@ -131,10 +137,12 @@
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Advance Approach</ourAspect>
+      <ourAspect>Clear</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Medium Approach</advancedAspect>
+      <ourAspect>Advance Approach</ourAspect>
       <ourAspect>Clear</ourAspect>
     </aspectMapping>
 
@@ -145,6 +153,7 @@
 
     <aspectMapping>
       <advancedAspect>Slow Approach</advancedAspect>
+      <ourAspect>Advance Approach</ourAspect>
       <ourAspect>Clear</ourAspect>
     </aspectMapping>
 

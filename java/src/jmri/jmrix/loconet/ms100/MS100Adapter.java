@@ -1,4 +1,3 @@
-// MS100Adapter.java
 package jmri.jmrix.loconet.ms100;
 
 import Serialio.SerInputStream;
@@ -30,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * used.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -232,13 +230,9 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
             }
 
             // port is open, regardless of method, start work on the stream
+
             // purge contents, if any
-            int count = serialInStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialInStream.skip(count);
-                count = serialInStream.available();
-            }
+            purgeStream(serialInStream);
 
             opened = true;
 
@@ -270,9 +264,6 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
 
         // start operation
         packets.startThreads();
-
-        jmri.jmrix.loconet.ActiveFlag.setActive();
-
     }
 
     // base class methods for the LnPortController interface
@@ -319,6 +310,6 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
     InputStream serialInStream = null;
     OutputStream serialOutStream = null;
 
-    static Logger log = LoggerFactory.getLogger(MS100Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MS100Adapter.class.getName());
 
 }

@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.MultiSensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision$
  */
 public class MultiSensorIconXml extends PositionableLabelXml {
 
@@ -48,11 +47,6 @@ public class MultiSensorIconXml extends PositionableLabelXml {
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.MultiSensorIconXml");
         return element;
-    }
-
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
     }
 
     /**
@@ -184,6 +178,6 @@ public class MultiSensorIconXml extends PositionableLabelXml {
         return icon;
     }
 
-    static Logger log = LoggerFactory.getLogger(MultiSensorIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MultiSensorIconXml.class.getName());
 
 }

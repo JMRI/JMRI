@@ -1,9 +1,10 @@
-// LoadStoreBaseAction.java
 package jmri.configurexml;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.implementation.JmriConfigurationManager;
 import jmri.util.FileChooserFilter;
 import jmri.util.FileUtil;
 
@@ -18,18 +19,15 @@ import jmri.util.FileUtil;
  * each time an action is invoked.
  *
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  */
 abstract public class LoadStoreBaseAction extends AbstractAction {
 
-    private static final long serialVersionUID = -5757646065294988765L;
-
     public LoadStoreBaseAction(String s) {
         super(s);
         // ensure that an XML config manager exists
-        if (InstanceManager.configureManagerInstance() == null) {
-            InstanceManager.setConfigureManager(new ConfigXmlManager());
+        if (!InstanceManager.getOptionalDefault(ConfigureManager.class).isPresent()) {
+            InstanceManager.setDefault(ConfigureManager.class, new JmriConfigurationManager());
         }
     }
 
@@ -38,11 +36,11 @@ abstract public class LoadStoreBaseAction extends AbstractAction {
      * the JFileChoosers at the last used location for the context that the
      * action supports.
      */
-    private static JFileChooser allFileChooser = null;
-    private static JFileChooser configFileChooser = null;
-    private static JFileChooser userFileChooser = null;
+    static private JFileChooser allFileChooser = null;
+    static private JFileChooser configFileChooser = null;
+    static private JFileChooser userFileChooser = null;
 
-    private JFileChooser getXmlFileChooser(String path) {
+    static private JFileChooser getXmlFileChooser(String path) {
         FileChooserFilter xmlFilter = new FileChooserFilter("XML files");
         xmlFilter.addExtension("xml"); // NOI18N
         JFileChooser chooser = new JFileChooser(path);
@@ -50,21 +48,21 @@ abstract public class LoadStoreBaseAction extends AbstractAction {
         return chooser;
     }
 
-    protected JFileChooser getAllFileChooser() {
+    static protected JFileChooser getAllFileChooser() {
         if (allFileChooser == null) {
             allFileChooser = getXmlFileChooser(FileUtil.getUserFilesPath());
         }
         return allFileChooser;
     }
 
-    protected JFileChooser getConfigFileChooser() {
+    static protected JFileChooser getConfigFileChooser() {
         if (configFileChooser == null) {
             configFileChooser = getXmlFileChooser(FileUtil.getUserFilesPath());
         }
         return configFileChooser;
     }
 
-    protected JFileChooser getUserFileChooser() {
+    static protected JFileChooser getUserFileChooser() {
         if (userFileChooser == null) {
             userFileChooser = getXmlFileChooser(FileUtil.getUserFilesPath());
         }

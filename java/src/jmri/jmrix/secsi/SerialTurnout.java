@@ -17,8 +17,7 @@ import org.slf4j.LoggerFactory;
  * Description:	extend jmri.AbstractTurnout for SECSI serial layouts
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007
- * @version	$Revision$
- */
+  */
 public class SerialTurnout extends AbstractTurnout {
 
     /**
@@ -51,9 +50,9 @@ public class SerialTurnout extends AbstractTurnout {
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states
-        if ((s & Turnout.CLOSED) > 0) {
+        if ((s & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) > 0) {
+            if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both CLOSED and THROWN " + s);
                 return;
@@ -91,7 +90,7 @@ public class SerialTurnout extends AbstractTurnout {
         tNode.setOutputBit(tBit, closed);
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
 }
 
 /* @(#)SerialTurnout.java */

@@ -1,22 +1,18 @@
-// AddSignalMastPanelTest.java
 package jmri.jmrit.beantable.signalmast;
 
 import jmri.implementation.SignalSystemTestUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
  * @author	Bob Jacobsen Copyright 2014
- * @version	$Revision$
- */
+  */
 public class AddSignalMastPanelTest extends TestCase {
 
     public void testDefaultSystems() {
         AddSignalMastPanel a = new AddSignalMastPanel();
-
-        jmri.util.JUnitAppender.assertWarnMessage("Won't protect preferences at shutdown without registered ShutDownManager");
 
         // check that "Basic Model Signals" (basic directory) system is present
         boolean found = false;
@@ -33,8 +29,6 @@ public class AddSignalMastPanelTest extends TestCase {
             SignalSystemTestUtil.createMockSystem();
 
             AddSignalMastPanel a = new AddSignalMastPanel();
-
-            jmri.util.JUnitAppender.assertWarnMessage("Won't protect preferences at shutdown without registered ShutDownManager");
 
             // check that mock (test) system is present
             boolean found = false;
@@ -57,7 +51,7 @@ public class AddSignalMastPanelTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", AddSignalMastPanelTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -73,11 +67,10 @@ public class AddSignalMastPanelTest extends TestCase {
         super.setUp();
 
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.managers.DefaultUserMessagePreferences.resetInstance();
-        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
     }
 
     protected void tearDown() throws Exception {

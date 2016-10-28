@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz.configurexml;
 
+import jmri.configurexml.JmriConfigureXmlException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Paul Bender Copyright (c) 2003
- * @version $Revision$
  */
 public class XNetSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -27,11 +27,12 @@ public class XNetSensorManagerXml extends jmri.managers.configurexml.AbstractSen
         log.error("Invalid method called");
     }
 
-    public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
+    @Override
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         // load individual sensors
-        return loadSensors(sensors);
+        return loadSensors(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(XNetTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetTurnoutManagerXml.class.getName());
 
 }

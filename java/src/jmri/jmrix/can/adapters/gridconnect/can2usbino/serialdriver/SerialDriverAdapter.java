@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Andrew Crosland Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2009, 2012
- * @version	$Revision: 19969 $
+ * 
  */
 public class SerialDriverAdapter extends GcSerialDriverAdapter implements jmri.jmrix.SerialPortAdapter {
 
@@ -64,6 +64,6 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter implements jmri.j
         };
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
  * Carries the reply to an JMRIClientMessage.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2004, 2008
- * @version $Revision$
  */
 public class JMRIClientReply extends jmri.jmrix.AbstractMRReply {
 
@@ -77,7 +76,7 @@ public class JMRIClientReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(JMRIClientReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientReply.class.getName());
 
 }
 

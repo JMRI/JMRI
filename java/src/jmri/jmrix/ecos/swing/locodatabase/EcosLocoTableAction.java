@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.Hashtable;
 import java.util.List;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
@@ -18,9 +20,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowSorter;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.jmrit.beantable.AbstractTableAction;
@@ -52,7 +57,6 @@ public class EcosLocoTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
      */
     public EcosLocoTableAction(String s) {
         super(s);
@@ -72,17 +76,10 @@ public class EcosLocoTableAction extends AbstractTableAction {
     public void actionPerformed(ActionEvent e) {
         // create the JTable model, with changes for specific NamedBean
         createModel();
-        TableSorter sorter = new TableSorter(m);
-        JTable dataTable = m.makeJTable(sorter);
-        sorter.setTableHeader(dataTable.getTableHeader());
+        TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter<>(m);
+        JTable dataTable = m.makeJTable(getClassName(), m, sorter);
         // create the frame
         f = new jmri.jmrit.beantable.BeanTableFrame(m, helpTarget(), dataTable) {
-
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1165304149219668666L;
-
         };
         setMenuBar(f);
         setTitle();
@@ -198,36 +195,34 @@ public class EcosLocoTableAction extends AbstractTableAction {
                     String ecosObjectNo = ecosObjectIdList.get(row);
                     if (value == null) {
                         return;
-                    } else {
-                        if (value instanceof RosterEntry) {
-                            re = (RosterEntry) value;
-                            if ((re.getAttribute(getRosterAttribute()) != null && !re.getAttribute(getRosterAttribute()).equals(""))) {
-                                JOptionPane.showMessageDialog(f, ecosObjectNo + " This roster entry already has an ECOS loco assigned to it ");
-                                log.error(ecosObjectNo + " This roster entry already has an ECOS loco assigned to it ");
-                                return;
-                            }
-                            String oldRoster = getByEcosObject(ecosObjectNo).getRosterId();
-                            RosterEntry oldre;
-                            if (oldRoster != null) {
-                                oldre = Roster.instance().getEntryForId(oldRoster);
-                                if (oldre != null) {
-                                    oldre.deleteAttribute(getRosterAttribute());
-                                }
-                            }
-                            re.putAttribute(getRosterAttribute(), ecosObjectNo);
-                            getByEcosObject(ecosObjectNo).setRosterId(re.getId());
-                            re.updateFile();
-                        } else if (value instanceof String) {
-                            List<RosterEntry> r = Roster.instance().getEntriesWithAttributeKeyValue(getRosterAttribute(), ecosObjectNo);
-                            if (r.isEmpty()) {
-                                r.get(0).deleteAttribute(getRosterAttribute());
-                                getByEcosObject(ecosObjectNo).setRosterId(null);
-                                r.get(0).updateFile();
-                            }
-
+                    } else if (value instanceof RosterEntry) {
+                        re = (RosterEntry) value;
+                        if ((re.getAttribute(getRosterAttribute()) != null && !re.getAttribute(getRosterAttribute()).equals(""))) {
+                            JOptionPane.showMessageDialog(f, ecosObjectNo + " This roster entry already has an ECOS loco assigned to it ");
+                            log.error(ecosObjectNo + " This roster entry already has an ECOS loco assigned to it ");
+                            return;
                         }
+                        String oldRoster = getByEcosObject(ecosObjectNo).getRosterId();
+                        RosterEntry oldre;
+                        if (oldRoster != null) {
+                            oldre = Roster.getDefault().getEntryForId(oldRoster);
+                            if (oldre != null) {
+                                oldre.deleteAttribute(getRosterAttribute());
+                            }
+                        }
+                        re.putAttribute(getRosterAttribute(), ecosObjectNo);
+                        getByEcosObject(ecosObjectNo).setRosterId(re.getId());
+                        re.updateFile();
+                    } else if (value instanceof String) {
+                        List<RosterEntry> r = Roster.getDefault().getEntriesWithAttributeKeyValue(getRosterAttribute(), ecosObjectNo);
+                        if (r.isEmpty()) {
+                            r.get(0).deleteAttribute(getRosterAttribute());
+                            getByEcosObject(ecosObjectNo).setRosterId(null);
+                            r.get(0).updateFile();
+                        }
+
                     }
-                    Roster.writeRosterFile();
+                    Roster.getDefault().writeRoster();
                 } else if (col == ADDTOROSTERCOL) {
                     addToRoster(row, col);
                 } else if (col == STOP) {
@@ -246,14 +241,25 @@ public class EcosLocoTableAction extends AbstractTableAction {
                 }
             }
 
+            /**
+             * {@inheritDoc }
+             */
             @Override
-            public JTable makeJTable(TableSorter srtr) {
-                JTable table = new JTable(srtr) {
+            @Deprecated
+            public JTable makeJTable(TableSorter sorter) {
+                return this.makeJTable((TableModel) sorter);
+            }
 
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -3389761480752952913L;
+            @Override
+            public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @Nullable RowSorter sorter) {
+                JTable table = this.makeJTable(model);
+                table.setName(name);
+                table.setRowSorter(sorter);
+                return table;
+            }
+
+            private JTable makeJTable(@Nonnull TableModel model) {
+                JTable table = new JTable(model) {
 
                     @Override
                     public TableCellRenderer getCellRenderer(int row, int column) {
@@ -279,14 +285,14 @@ public class EcosLocoTableAction extends AbstractTableAction {
                             jmri.jmrix.ecos.EcosLocoAddress b = getByEcosObject(ecosObjectIdList.get(row));
                             RosterEntry re = null;
                             if (b != null) {
-                                re = Roster.instance().getEntryForId(b.getRosterId());
+                                re = Roster.getDefault().getEntryForId(b.getRosterId());
                             }
                             retval = new RosterBoxRenderer(re);
                             rendererMap.put(ecosObjectIdList.get(row), retval);
                         }
                         return retval;
                     }
-                    Hashtable<Object, TableCellRenderer> rendererMap = new Hashtable<Object, TableCellRenderer>();
+                    Hashtable<Object, TableCellRenderer> rendererMap = new Hashtable<>();
 
                     TableCellEditor getEditor(int row) {
                         TableCellEditor retval = editorMap.get(ecosObjectIdList.get(row));
@@ -294,7 +300,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
                             jmri.jmrix.ecos.EcosLocoAddress b = getByEcosObject(ecosObjectIdList.get(row));
                             RosterEntry re = null;
                             if (b != null) {
-                                re = Roster.instance().getEntryForId(b.getRosterId());
+                                re = Roster.getDefault().getEntryForId(b.getRosterId());
                             }
                             GlobalRosterEntryComboBox cb = new GlobalRosterEntryComboBox();
                             cb.setNonSelectedItem(" ");
@@ -309,7 +315,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
                         }
                         return retval;
                     }
-                    Hashtable<Object, TableCellEditor> editorMap = new Hashtable<Object, TableCellEditor>();
+                    Hashtable<Object, TableCellEditor> editorMap = new Hashtable<>();
                 };
                 table.getTableHeader().setReorderingAllowed(true);
                 table.setColumnModel(new XTableColumnModel());
@@ -540,7 +546,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
                         b = getByEcosObject(ecosObjectIdList.get(row));
                         RosterEntry re = null;
                         if (b != null) {
-                            re = Roster.instance().getEntryForId(b.getRosterId());
+                            re = Roster.getDefault().getEntryForId(b.getRosterId());
                         }
                         GlobalRosterEntryComboBox cb = (GlobalRosterEntryComboBox) table.getCellRenderer(row, col);
                         if (re == null) {
@@ -565,7 +571,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
                         b = getByEcosObject(ecosObjectIdList.get(row));
                         return (b != null) ? (b.getDirectionAsString() + " : " + b.getSpeed()) : null;
                     case DELETECOL:  //
-                        return AbstractTableAction.rb.getString("ButtonDelete");
+                        return Bundle.getMessage("ButtonDelete");
                     default:
                         //log.error("internal state inconsistent with table requst for "+row+" "+col);
                         return null;
@@ -713,5 +719,5 @@ public class EcosLocoTableAction extends AbstractTableAction {
         return EcosLocoTableAction.class.getName();
     }
 
-    static final Logger log = LoggerFactory.getLogger(EcosLocoTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosLocoTableAction.class.getName());
 }

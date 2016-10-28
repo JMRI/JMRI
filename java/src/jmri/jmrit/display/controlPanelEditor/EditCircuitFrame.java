@@ -29,16 +29,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <P>
  * @author Pete Cressman Copyright: Copyright (c) 2011
  *
  */
 public class EditCircuitFrame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6144223447231259664L;
     private OBlock _block;
     private CircuitBuilder _parent;
 
@@ -142,10 +137,10 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
 //        pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
         _length.setText(Float.toString(_block.getLengthIn()));
         pp.add(CircuitBuilder.makeTextBoxPanel(
-                false, _length, "length", true, "TooltipBlockLength"));
+                false, _length, "Length", true, "TooltipBlockLength"));
         _length.setPreferredSize(new Dimension(100, _length.getPreferredSize().height));
         _units = new JToggleButton("foo", !_block.isMetric());
-        _units.setToolTipText(Bundle.getMessage("TooltipBlockLength"));
+        _units.setToolTipText(Bundle.getMessage("TooltipPathUnitButton"));
         _units.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 changeUnits();
@@ -204,8 +199,8 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(Bundle.getMessage("DragOccupancyName")));
-        blurb.add(new JLabel(Bundle.getMessage("DragErrorName")));
+        blurb.add(new JLabel(Bundle.getMessage("DragOccupancyName", Bundle.getMessage("DetectionSensor"))));
+        blurb.add(new JLabel(Bundle.getMessage("DragErrorName", Bundle.getMessage("ErrorSensor"))));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);
@@ -359,31 +354,31 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
 
         int state = _block.getState();
         StringBuffer stateText = new StringBuffer();
-        if ((state & OBlock.UNKNOWN) > 0) {
+        if ((state & OBlock.UNKNOWN) != 0) {
             stateText.append("Unknown ");
         }
-        if ((state & OBlock.OCCUPIED) > 0) {
+        if ((state & OBlock.OCCUPIED) != 0) {
             stateText.append("Occupied ");
         }
-        if ((state & OBlock.UNOCCUPIED) > 0) {
+        if ((state & OBlock.UNOCCUPIED) != 0) {
             stateText.append("Unoccupied ");
         }
-        if ((state & OBlock.INCONSISTENT) > 0) {
+        if ((state & OBlock.INCONSISTENT) != 0) {
             stateText.append("Inconsistent ");
         }
-        if ((state & OBlock.ALLOCATED) > 0) {
+        if ((state & OBlock.ALLOCATED) != 0) {
             stateText.append("Allocated ");
         }
-        if ((state & OBlock.RUNNING) > 0) {
+        if ((state & OBlock.RUNNING) != 0) {
             stateText.append("Positioned ");
         }
-        if ((state & OBlock.OUT_OF_SERVICE) > 0) {
+        if ((state & OBlock.OUT_OF_SERVICE) != 0) {
             stateText.append("OutOf Service ");
         }
-        if ((state & OBlock.DARK) > 0) {
+        if ((state & OBlock.DARK) != 0) {
             stateText.append("Dark ");
         }
-        if ((state & OBlock.TRACK_ERROR) > 0) {
+        if ((state & OBlock.TRACK_ERROR) != 0) {
             stateText.append("TrackError ");
         }
         if (state == 0) {
@@ -480,5 +475,5 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         _numTurnouts.setText(String.valueOf(turnouts));
     }
 
-    static Logger log = LoggerFactory.getLogger(EditCircuitFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EditCircuitFrame.class.getName());
 }

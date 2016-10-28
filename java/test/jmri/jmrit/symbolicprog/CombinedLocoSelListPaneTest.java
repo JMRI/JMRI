@@ -1,14 +1,14 @@
 package jmri.jmrit.symbolicprog;
 
 import javax.swing.JLabel;
-import jmri.jmrit.progsupport.ProgModeSelector;
 import jmri.Programmer;
-import junit.framework.Assert;
+import jmri.jmrit.progsupport.ProgModeSelector;
+import jmri.util.JUnitUtil;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-// Revision: $Revision$
 public class CombinedLocoSelListPaneTest extends TestCase {
 
     public CombinedLocoSelListPaneTest(String s) {
@@ -55,7 +55,7 @@ public class CombinedLocoSelListPaneTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", CombinedLocoSelListPaneTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -68,7 +68,8 @@ public class CombinedLocoSelListPaneTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initConfigureManager();
     }
 
     protected void tearDown() {

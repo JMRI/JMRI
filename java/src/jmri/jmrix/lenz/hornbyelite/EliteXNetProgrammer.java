@@ -1,7 +1,3 @@
-/*
- * EliteXNetProgrammer.java
- */
- // Convert the jmri.Programmer interface into commands for the Lenz XpressNet
 package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.lenz.XNetConstants;
@@ -30,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * </UL>
  *
  * @author Paul Bender Copyright (c) 2008
- * @version $Revision$
  */
 public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener {
 
@@ -94,7 +89,7 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
         controller().sendXNetMessage(resultMsg, this);
     }
 
-    synchronized public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
@@ -160,7 +155,7 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
                 // message can trigger a request for service mode
                 // results if progrstate is REQUESTSENT.
                 _service_mode = true;
-            } else if (_service_mode == true) {
+            } else {  // _service_mode == true
                 // Since we get this message as both a broadcast and
                 // a directed message, ignore the message if we're
                 //already in the indicated mode
@@ -174,7 +169,7 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
                 // "OK" message can not trigger a request for service
                 // mode results if progrstate is REQUESTSENT.
                 _service_mode = false;
-            } else if (_service_mode == false) {
+            } else { // _service_mode == false
                 // Since we get this message as both a broadcast and
                 // a directed message, ignore the message if we're
                 //already in the indicated mode
@@ -353,9 +348,6 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
     synchronized public void message(XNetMessage l) {
     }
 
-    static Logger log = LoggerFactory.getLogger(EliteXNetProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EliteXNetProgrammer.class.getName());
 
 }
-
-
-/* @(#)XNetProgrammer.java */

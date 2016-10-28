@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * PowerManager implementation for controlling layout power.
  *
  * @author	Kevin Dickerson (C) 2012
- * @version	$Revision: 17977 $
  */
 public class MarklinPowerManager implements PowerManager, MarklinListener {
 
@@ -99,7 +98,7 @@ public class MarklinPowerManager implements PowerManager, MarklinListener {
     public void message(MarklinMessage m) {
         // messages are ignored
     }
-    static Logger log = LoggerFactory.getLogger(MarklinPowerManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinPowerManager.class.getName());
 }
 
 

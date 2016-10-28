@@ -45,6 +45,7 @@
         <xs:element name="icons"             type="EditorIconsType"             minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="positionablelabel" type="EditorPositionableLabelType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="positionablepoint" type="EditorPositionablePointType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="positionableRectangle" type="EditorPositionableRectangleType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="turnouticon"       type="EditorTurnoutIconType"       minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="sensoricon"        type="EditorSensorIconType"        minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="memoryicon"        type="EditorMemoryIconType"        minOccurs="0" maxOccurs="unbounded" />

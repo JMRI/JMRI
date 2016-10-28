@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * commands; right now it only sends the first group of function packets.
  *
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version $Revision$
  */
 public class ThrottleManager extends AbstractThrottleManager {
 
@@ -32,8 +31,16 @@ public class ThrottleManager extends AbstractThrottleManager {
         mInstance = this;
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static private ThrottleManager mInstance = null;
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public ThrottleManager instance() {
         return mInstance;
     }
@@ -78,6 +85,6 @@ public class ThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(ThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ThrottleManager.class.getName());
 
 }

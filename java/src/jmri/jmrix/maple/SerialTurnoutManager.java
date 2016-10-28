@@ -12,8 +12,7 @@ import org.slf4j.LoggerFactory;
  * System names are "KTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
- * @version	$Revision$
- */
+  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     public SerialTurnoutManager() {
@@ -45,7 +44,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         }
         String conflict = "";
         conflict = SerialAddress.isOutputBitFree(bitNum);
-        if ((conflict != "") && (!conflict.equals(sName))) {
+        if ((!conflict.equals("")) && (!conflict.equals(sName))) {
             log.error(sName + " assignment conflict with " + conflict + ".");
             notifyTurnoutCreationError(conflict, bitNum);
             return (null);
@@ -159,7 +158,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
     static SerialTurnoutManager _instance = null;
 
-    static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());
 
 }
 

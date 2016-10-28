@@ -1,4 +1,3 @@
-// RfidProtocol.java
 package jmri.jmrix.rfid;
 
 import jmri.jmrix.AbstractMRReply;
@@ -9,7 +8,6 @@ import org.slf4j.LoggerFactory;
  * Basic interface to be implemented for each tag protocol.
  *
  * @author Matthew Harris Copyright (C) 2014
- * @version $Revision$
  * @since 3.9.2
  */
 abstract public class RfidProtocol {
@@ -214,5 +212,3 @@ abstract public class RfidProtocol {
     private static final Logger log = LoggerFactory.getLogger(RfidProtocol.class.getName());
 
 }
-
-/* @(#)RfidProtocol.java */

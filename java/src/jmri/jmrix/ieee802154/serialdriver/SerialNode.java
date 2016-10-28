@@ -1,6 +1,7 @@
 // SerialNode.java
 package jmri.jmrix.ieee802154.serialdriver;
 
+import java.util.Arrays;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.ieee802154.IEEE802154Node;
@@ -22,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * All nodes in a given network must have the same PAN ID
  *
  * @author Paul Bender Copyright 2013
- * @version $Revision$
  */
 public class SerialNode extends IEEE802154Node {
 
@@ -36,7 +36,7 @@ public class SerialNode extends IEEE802154Node {
         super(pan, user, global);
         if (log.isDebugEnabled()) {
             log.debug("Created new node with panId: "
-                    + pan + " userId: " + user + " and GUID: " + global);
+                    + Arrays.toString(pan) + " userId: " + Arrays.toString(user) + " and GUID: " + Arrays.toString(global));
         }
     }
 

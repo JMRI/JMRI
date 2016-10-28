@@ -1,10 +1,9 @@
-// DispatcherFrameTest.java
 package jmri.jmrit.dispatcher;
 
 import jmri.Scale;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.TestHelper;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -12,7 +11,6 @@ import junit.framework.TestSuite;
  * Swing jfcUnit tests for dispatcher options
  *
  * @author	Dave Duchamp
- * @version $Revision$
  */
 public class DispatcherFrameTest extends jmri.util.SwingTestCase {
 
@@ -80,7 +78,7 @@ public class DispatcherFrameTest extends jmri.util.SwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", DispatcherFrameTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

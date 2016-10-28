@@ -190,7 +190,8 @@ public class OBlockManagerXml // extends XmlFile
         }
         elem.setAttribute("fromDirection", "" + path.getFromBlockDirection());
         elem.setAttribute("toDirection", "" + path.getToBlockDirection());
-        elem.setAttribute("length", "" + path.getLengthMm());
+        // get actual object stored length.
+        elem.setAttribute("length", "" + path.getLength());
         return elem;
     }
 
@@ -208,15 +209,14 @@ public class OBlockManagerXml // extends XmlFile
     OBlock getBlock(String sysName) {
         OBlock block = _blockMap.get(sysName);
         if (block == null) {
-            block = _manager.provideOBlock(sysName);
-            if (block == null) {
+            try {
+                block = _manager.provideOBlock(sysName);
+                log.debug("found OBlock: ({}) {}", sysName, block);
+            } catch (IllegalArgumentException ex) {
                 block = _manager.createNewOBlock(sysName, null);
-                if (log.isDebugEnabled()) {
-                    log.debug("create OBlock: (" + sysName + ")");
-                }
-            } else {
-                _blockMap.put(sysName, block);
+                log.debug("create OBlock: ({})", sysName);
             }
+            _blockMap.put(sysName, block);
         }
         return block;
     }
@@ -245,18 +245,13 @@ public class OBlockManagerXml // extends XmlFile
         return path;
     }
 
-    /**
-     * Create a OBlock object of the correct class, then register and fill it.
-     *
-     * @param blocks Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element blocks) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         _blockMap = new HashMap<String, OBlock>();
         _pathMap = new HashMap<String, OPath>();
         _manager = InstanceManager.getDefault(OBlockManager.class);
         _portalMgr = InstanceManager.getDefault(PortalManager.class);
-        List<Element> blockList = blocks.getChildren("oblock");
+        List<Element> blockList = shared.getChildren("oblock");
         if (log.isDebugEnabled()) {
             log.debug("Found " + blockList.size() + " OBlock objects");
         }
@@ -324,16 +319,14 @@ public class OBlockManagerXml // extends XmlFile
         if (errSensor != null) {
             // sensor
             String name = errSensor.getAttribute("systemName").getValue();
-            //Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(name);
             block.setErrorSensor(name);
         }
         Element reporter = elem.getChild("reporter");
         if (reporter != null) {
             // sensor
             String name = reporter.getAttribute("systemName").getValue();
-            //Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(name);
             try {
-                Reporter rep = InstanceManager.reporterManagerInstance().getReporter(name);
+                Reporter rep = InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(name);
                 if (rep != null) {
                     block.setReporter(rep);
                 }
@@ -573,5 +566,5 @@ public class OBlockManagerXml // extends XmlFile
         return InstanceManager.getDefault(OBlockManager.class).getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(OBlockManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OBlockManagerXml.class.getName());
 }

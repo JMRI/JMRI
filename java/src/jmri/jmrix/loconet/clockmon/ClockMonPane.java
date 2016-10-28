@@ -1,4 +1,3 @@
-// ClockMonPane.java
 package jmri.jmrix.loconet.clockmon;
 
 import java.awt.FlowLayout;
@@ -10,7 +9,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LocoNetBundle;
 import jmri.jmrix.loconet.LocoNetSlot;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.SlotListener;
@@ -31,21 +29,15 @@ import org.slf4j.LoggerFactory;
  * active items (Dave Duchamp 2007-2008).
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2004, 2010
- * @version	$Revision$
  */
 public class ClockMonPane extends LnPanel implements SlotListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6741586521030027827L;
 
     public String getHelpTarget() {
         return "package.jmri.jmrix.loconet.clockmon.ClockMonFrame";
     }
 
     public String getTitle() {
-        return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemClockMon"));
+        return getTitle(Bundle.getMessage("MenuItemClockMon"));
     }
 
     public ClockMonPane() {
@@ -102,7 +94,6 @@ public class ClockMonPane extends LnPanel implements SlotListener {
     /**
      * Handle changed slot contents, due to clock changes.
      *
-     * @param s
      */
     public void notifyChangedSlot(LocoNetSlot s) {
         if (s.getSlot() != LnConstants.FC_SLOT) {
@@ -150,13 +141,13 @@ public class ClockMonPane extends LnPanel implements SlotListener {
         private static final long serialVersionUID = 2901473960804245354L;
 
         public Default() {
-            super(LocoNetBundle.bundle().getString("MenuItemClockMon"),
+            super(Bundle.getMessage("MenuItemClockMon"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     ClockMonPane.class.getName(),
                     jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(ClockMonPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ClockMonPane.class.getName());
 
 }

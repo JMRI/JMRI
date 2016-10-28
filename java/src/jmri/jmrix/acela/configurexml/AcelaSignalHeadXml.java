@@ -6,6 +6,7 @@ import jmri.SignalHead;
 import jmri.jmrix.acela.AcelaAddress;
 import jmri.jmrix.acela.AcelaNode;
 import jmri.jmrix.acela.AcelaSignalHead;
+import jmri.jmrix.acela.AcelaSystemConnectionMemo;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -19,7 +20,10 @@ import org.slf4j.LoggerFactory;
  */
 public class AcelaSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
+    AcelaSystemConnectionMemo _memo = null;
+
     public AcelaSignalHeadXml() {
+       _memo = InstanceManager.getDefault(AcelaSystemConnectionMemo.class);
     }
 
     /**
@@ -42,7 +46,7 @@ public class AcelaSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
         if (tu != null) {
             element.setAttribute("userName", tu);
         }
-        AcelaNode sh = AcelaAddress.getNodeFromSystemName(p.getSystemName());
+        AcelaNode sh = AcelaAddress.getNodeFromSystemName(p.getSystemName(), _memo);
         int rawaddr = AcelaAddress.getBitFromSystemName(p.getSystemName());
         String shtype = sh.getOutputSignalHeadTypeString(rawaddr);
         element.setAttribute("signalheadType", shtype);
@@ -52,23 +56,18 @@ public class AcelaSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
         return element;
     }
 
-    /**
-     * Create an AcelaSignalHead
-     *
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
-        String sys = element.getAttribute("systemName").getValue();
-        Attribute a = element.getAttribute("userName");
+    @Override
+    public boolean load(Element shared, Element perNode) {
+        String sys = shared.getAttribute("systemName").getValue();
+        Attribute a = shared.getAttribute("userName");
         SignalHead h;
         if (a == null) {
-            h = new AcelaSignalHead(sys);
+            h = new AcelaSignalHead(sys, _memo);
         } else {
-            h = new AcelaSignalHead(sys, a.getValue());
+            h = new AcelaSignalHead(sys, a.getValue(), _memo);
         }
 
-        Attribute t = element.getAttribute("signalheadType");
+        Attribute t = shared.getAttribute("signalheadType");
         String shtype;
         if (t == null) {
             shtype = "UKNOWN";
@@ -76,11 +75,11 @@ public class AcelaSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
             shtype = t.getValue();
         }
 
-        loadCommon(h, element);
+        loadCommon(h, shared);
 
-        InstanceManager.signalHeadManagerInstance().register(h);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
 
-        AcelaNode sh = AcelaAddress.getNodeFromSystemName(sys);
+        AcelaNode sh = AcelaAddress.getNodeFromSystemName(sys, _memo);
         int rawaddr = AcelaAddress.getBitFromSystemName(sys);
         sh.setOutputSignalHeadTypeString(rawaddr, shtype);
 
@@ -91,5 +90,5 @@ public class AcelaSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(AcelaSignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaSignalHeadXml.class.getName());
 }

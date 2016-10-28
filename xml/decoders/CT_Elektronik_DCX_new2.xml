@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="ronald@wirkuhns.de" version="1.8" lastUpdated="2016/5/12"/>
   <version author="ncliffe@btinternet.com" version="1.7" lastUpdated="2009/9/01"/>
   <version author="ncliffe@btinternet.com" version="1.6" lastUpdated="2009/4/02"/>
   <version author="ncliffe@btinternet.com" version="1.5" lastUpdated="2009/3/12"/>
@@ -33,7 +34,7 @@
   <!--     Modified CV9 so appears in motor panel, and extended comment range -->
   <!--     CV137 added for 32kHz mode. Using similar technique to Zimo MX620 definition, -->
   <!--     unused "item" labels to put items on correct panels of comprehensive programmer  -->
-  <!--	   CV137 bit 7 uses [item="DC Brake Momentum"] to force to motor panel -->
+  <!--       CV137 bit 7 uses [item="DC Brake Momentum"] to force to motor panel -->
   <!--     Added Decoder Reset option (CV1 = 0) -->
   <!--     CV's sorted to numeric order -->
   <!--     CV's 163-166 added for "shunt mode", for completeness of shunt mode options -->
@@ -48,39 +49,97 @@
   <!-- Version 1.7, Nigel Cliffe, 2009/09/01  -->
   <!--    Improved function mapping, in line with Tran (CT) documentation  -->
   <!--    Subsequent changes to a few screens to move features to function map -->
+  <!-- Version 1.8, Ronald Kuhn, 2016/05/12  -->
+  <!--    translation to german  -->
   <decoder>
     <family name="DCX Series (v.27 and higher)" mfg="CT Elektronik" lowVersionID="27" highVersionID="59" comment="DCX74, DCX75, with variants">
       <model model="DCX74D" numOuts="2" numFns="10" maxMotorCurrent="1.6 A" maxTotalCurrent="0.8 A">
-        <output name="Ra" label="Yard Mode"/>
+        <output name="1" label="White">
+          <label xml:lang="de">Weiß</label>
+        </output>
+        <output name="2" label="Yellow">
+          <label xml:lang="de">Gelb</label>
+        </output>
+        <output name="Ra" label="Yard Mode">
+          <label xml:lang="de">Rangiermodus</label>
+        </output>
       </model>
       <model model="DCX74DV" numOuts="4" numFns="10" maxMotorCurrent="1.6 A" maxTotalCurrent="0.8 A">
-        <output name="1" label="White"/>
-        <output name="2" label="Yellow"/>
-        <output name="3" label="Brown"/>
-        <output name="4" label="Brown"/>
-        <output name="Ra" label="Yard Mode"/>
+        <output name="1" label="White">
+          <label xml:lang="de">Weiß</label>
+        </output>
+        <output name="2" label="Yellow">
+          <label xml:lang="de">Gelb</label>
+        </output>
+        <output name="3" label="Brown">
+          <label xml:lang="de">Braun</label>
+        </output>
+        <output name="4" label="Brown">
+          <label xml:lang="de">Braun</label>
+        </output>
+        <output name="Ra" label="Yard Mode">
+          <label xml:lang="de">Rangiermodus</label>
+        </output>
       </model>
       <model model="DCX74z" numOuts="4" numFns="10" maxMotorCurrent="1 A" maxTotalCurrent="1 A">
-        <output name="1" label="White"/>
-        <output name="2" label="Yellow"/>
-        <output name="3" label="Green"/>
-        <output name="4" label="Violet"/>
-        <output name="Ra" label="Yard Mode"/>
+        <output name="1" label="White">
+          <label xml:lang="de">Weiß</label>
+        </output>
+        <output name="2" label="Yellow">
+          <label xml:lang="de">Gelb</label>
+        </output>
+        <output name="3" label="Green">
+          <label xml:lang="de">Grün</label>
+        </output>
+        <output name="4" label="Violet">
+          <label xml:lang="de">Violett</label>
+        </output>
+        <output name="Ra" label="Yard Mode">
+          <label xml:lang="de">Rangiermodus</label>
+        </output>
       </model>
       <model model="DCX75" numOuts="2" numFns="10" maxMotorCurrent="1.0A, peak=2A for 3 sec." maxTotalCurrent="1.0A">
-        <output name="Ra" label="Yard Mode"/>
+        <output name="Ra" label="Yard Mode">
+          <label xml:lang="de">Rangiermodus</label>
+        </output>
+      </model>
+      <model model="DCX76" numOuts="4" numFns="10" maxMotorCurrent="0.8 A" maxTotalCurrent="0.8 A">
+        <output name="1" label="White">
+          <label xml:lang="de">Weiß</label>
+        </output>
+        <output name="2" label="Yellow">
+          <label xml:lang="de">Gelb</label>
+        </output>
+        <output name="3" label="Pad F1"/>
+        <output name="4" label="Pad F2"/>
+        <output name="Ra" label="Yard Mode">
+          <label xml:lang="de">Rangiermodus</label>
+        </output>
+      </model>
+      <model model="DCX76Z" numOuts="4" numFns="10" maxMotorCurrent="0.8 A" maxTotalCurrent="0.8 A">
+        <output name="1" label="White">
+          <label xml:lang="de">Weiß</label>
+        </output>
+        <output name="2" label="Yellow">
+          <label xml:lang="de">Gelb</label>
+        </output>
+        <output name="3" label="Pad F1"/>
+        <output name="4" label="Pad F2"/>
+        <output name="Ra" label="Yard Mode">
+          <label xml:lang="de">Rangiermodus</label>
+        </output>
       </model>
     </family>
     <programming direct="yes" paged="no" register="no" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable item="Vstart" CV="2" default="2" comment="Range 0-252">
-        <decVal max="252"/>
+      <variable CV="2" item="Vstart" default="2" comment="Range 0-255">
+        <decVal max="255"/>
         <label>Vstart</label>
         <label xml:lang="it">Volt Partenza</label>
         <label xml:lang="fr">V démarr.</label>
-        <label xml:lang="de">Startspannung</label>
-        <comment>Range 0-252</comment>
+        <label xml:lang="de">Anfahrspannung</label>
+        <comment>Range 0-255</comment>
       </variable>
       <variable CV="3" default="1" item="Accel" comment="Range 0-255">
         <decVal max="255"/>
@@ -98,15 +157,19 @@
         <label xml:lang="de">Bremszeit (0-255)</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable item="Vhigh" CV="5" default="252" comment="Range 0-252">
-        <decVal max="252"/>
+      <variable CV="5" item="Vhigh" default="255" comment="Range 0-255">
+        <decVal max="255"/>
         <label>Vhigh</label>
-        <comment>Range 0-252</comment>
+        <label xml:lang="it">Volt Massimi (0-255):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
+        <comment>Range 0-255</comment>
       </variable>
-      <variable item="Vmid" CV="6" default="75" comment="Range 0-252">
-        <decVal max="252"/>
+      <variable CV="6" item="Vmid" default="75" comment="Range 0-255">
+        <decVal max="255"/>
         <label>Vmid</label>
-        <comment>Range 0-252</comment>
+        <label xml:lang="it">Volts intermedi (0-255)</label>
+        <label xml:lang="de">Mittengeschwindigkeit</label>
+        <comment>Range 0-255</comment>
       </variable>
       <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
@@ -118,117 +181,106 @@
       <variable CV="8" readOnly="yes" item="Manufacturer" default="117">
         <decVal/>
         <label>Manufacturer ID</label>
-         <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="it">ID Costruttore: </label>
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
       </variable>
-      <variable CV="9" default="150" item="Motor PWM Frequency" tooltip="13-63=30-150Hz, 134-191=16kHz" comment="Range 13-63/134-191">
-        <decVal/>
-        <label>CV9 Motor PWM Period</label>
+      <variable CV="9" default="134" item="Motor PWM Frequency">
+        <decVal max="191"/>
+        <label>Motor PWM Frequency</label>
+        <label xml:lang="de">Motoransteuerungsperiode</label>
         <comment>Range 13-63/134-191</comment>
+        <tooltip>Value 13 - 63 = 30 - 150 Hz, Value 134 - 191 = 16 kHz"</tooltip>
+        <tooltip xml:lang="de">Werte 13 - 63 stufenlos = 30 - 150 Hz, Werte 134 - 191 = 16 kHz</tooltip>
       </variable>
-      <variable CV="13" default="0" mask="XXXXXXXV" item="Analog Mode Function Status - FL(f)">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="13" mask="XXXXXXXV" default="0" item="Analog Mode Function Status - FL(f)">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output FL(f) ON in analog mode</label>
+        <label xml:lang="it">Stato Funzioni in analogico - FL(f)</label>
+        <label xml:lang="fr">État de la fonction en analogique - FL(f)</label>
+        <label xml:lang="de">Funktion ein im Analogbetrieb - FL(f)</label>
+        <tooltip>Check to enable function FL(f) when the unit is operating in analog power mode</tooltip>
+        <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn FL(f) im Analogbetrieb eingeschaltet sein soll.</tooltip>
       </variable>
-      <variable CV="13" default="0" mask="XXXXXXVX" item="Analog Mode Function Status - FL(r)">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="13" mask="XXXXXXVX" default="0" item="Analog Mode Function Status - FL(r)">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output FL(r) ON in analog mode</label>
+        <label xml:lang="it">Stato Funzioni in analogico - FL(r)</label>
+        <label xml:lang="fr">État de la fonction en analogique - FL(r)</label>
+        <label xml:lang="de">Funktion ein im Analogbetrieb - FL(r)</label>
+        <tooltip>Check to enable function FL(r) when the unit is operating in analog power mode</tooltip>
+        <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn FL(r) im Analogbetrieb eingeschaltet sein soll.</tooltip>
       </variable>
-      <variable CV="13" default="0" mask="XXXXXVXX" item="Analog Mode Function Status - F1">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="13" mask="XXXXXVXX" default="0" item="Analog Mode Function Status - F1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output F 1 ON in analog mode</label>
+        <label xml:lang="it">Stato Funzioni in analogico - F 1</label>
+        <label xml:lang="fr">État de la fonction en analogique - F 1</label>
+        <label xml:lang="de">Funktion ein im Analogbetrieb - F 1</label>
+        <tooltip>Check to enable function F 1 when the unit is operating in analog power mode</tooltip>
+        <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F 1 im Analogbetrieb eingeschaltet sein soll.</tooltip>
       </variable>
-      <variable CV="13" default="0" mask="XXXXVXXX" item="Analog Mode Function Status - F2">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="13" mask="XXXXVXXX" default="0" item="Analog Mode Function Status - F2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output F 2 ON in analog mode</label>
+        <label xml:lang="it">Stato Funzioni in analogico - F 2</label>
+        <label xml:lang="fr">État de la fonction en analogique - F 2</label>
+        <label xml:lang="de">Funktion ein im Analogbetrieb - F 2</label>
+        <tooltip>Check to enable function F 2 when the unit is operating in analog power mode</tooltip>
+        <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F 2 im Analogbetrieb eingeschaltet sein soll.</tooltip>
       </variable>
-      <variable CV="13" default="0" mask="XXXVXXXX" item="Analog Mode Function Status - F3">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="13" mask="XXXVXXXX" default="0" item="Analog Mode Function Status - F3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output F 3 ON in analog mode</label>
+        <label xml:lang="it">Stato Funzioni in analogico - F 3</label>
+        <label xml:lang="fr">État de la fonction en analogique - F 3</label>
+        <label xml:lang="de">Funktion ein im Analogbetrieb - F 3</label>
+        <tooltip>Check to enable function F 3 when the unit is operating in analog power mode</tooltip>
+        <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F 3 im Analogbetrieb eingeschaltet sein soll.</tooltip>
       </variable>
-      <variable CV="13" default="0" mask="XXVXXXXX" item="Analog Mode Function Status - F4">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="13" mask="XXVXXXXX" default="0" item="Analog Mode Function Status - F4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output F 4 ON in analog mode</label>
+        <label xml:lang="it">Stato Funzioni in analogico - F 4</label>
+        <label xml:lang="fr">État de la fonction en analogique - F 4</label>
+        <label xml:lang="de">Funktion ein im Analogbetrieb - F 4</label>
+        <tooltip>Check to enable function F 4 when the unit is operating in analog power mode</tooltip>
+        <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F 4 im Analogbetrieb eingeschaltet sein soll.</tooltip>
       </variable>
-      <variable CV="13" default="0" mask="XVXXXXXX" item="Analog Mode Function Status - F5">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="13" mask="XVXXXXXX" default="0" item="Analog Mode Function Status - F5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output F 5 ON in analog mode</label>
+        <label xml:lang="it">Stato Funzioni in analogico - F 5</label>
+        <label xml:lang="fr">État de la fonction en analogique - F 5</label>
+        <label xml:lang="de">Funktion ein im Analogbetrieb - F 5</label>
+        <tooltip>Check to enable function F 5 when the unit is operating in analog power mode</tooltip>
+        <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F 5 im Analogbetrieb eingeschaltet sein soll.</tooltip>
       </variable>
-      <variable CV="13" default="0" mask="VXXXXXXX" item="Analog Mode Function Status - F6">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="13" mask="VXXXXXXX" default="0" item="Analog Mode Function Status - F6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output F 6 ON in analog mode</label>
+        <label xml:lang="it">Stato Funzioni in analogico - F 6</label>
+        <label xml:lang="fr">État de la fonction en analogique - F 6</label>
+        <label xml:lang="de">Funktion ein im Analogbetrieb - F 6</label>
+        <tooltip>Check to enable function F 6 when the unit is operating in analog power mode</tooltip>
+        <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F 6 im Analogbetrieb eingeschaltet sein soll.</tooltip>
       </variable>
       <!-- CV=19 -->
-<xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <!-- CV=29 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
-      <variable item="Error Diagnosis" CV="30" readOnly="yes" default="0">
+      <variable CV="30" item="Error Diagnosis" readOnly="yes" default="0">
         <decVal min="0" max="3"/>
         <label>Error Diagnosis</label>
+        <label xml:lang="de">Fehleranalyse</label>
+        <tooltip xml:lang="de">&lt;html&gt;Diese Werte können nur ausgelesen werden und geben darüber Informationen&lt;br&gt;warum ein Decoder während des Betriebes die Ausgänge abschaltet.&lt;br&gt;1 = Motor&lt;br&gt;2 = Licht&lt;br&gt;3 = Licht und Motor haben einen Kurzschluss&lt;/html&gt;</tooltip>
       </variable>
       <!-- Define the Function-Output mapping based on NMRA definitions -->
       <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
-       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 1</label>
       </variable>
       <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2">
@@ -520,7 +572,7 @@
         <label>F8 controls output 4</label>
       </variable>
       <variable item="F8 controls output 5" CV="42" mask="XXXXXXVX" minOut="5" minFn="8">
-       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output 5</label>
       </variable>
       <variable item="F8 controls output 6" CV="42" mask="XXXXXVXX" minOut="6" minFn="8">
@@ -675,162 +727,222 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output 14</label>
       </variable>
-      <variable CV="50" default="255" item="EMF Feedback Cutout" tooltip="BEMF Pull" comment="Controls how much BEMF (0-no BEMF to 255-max)">
+      <variable CV="50" default="255" item="EMF Feedback Cutout">
         <decVal min="0" max="255"/>
-        <label>BEMF Pull</label>
-        <comment>Controls how much BEMF (0-no BEMF to 255-max)</comment>
+        <label>BEMF Influence</label>
+        <label xml:lang="de">Regeleinfluss</label>
+        <tooltip>Controls how much BEMF (0-no BEMF to 255-max)</tooltip>
+        <tooltip xml:lang="de">Ausmaß der EMK, Lastregelung (0=kein EMK bis 255=max)</tooltip>
       </variable>
-      <variable CV="51" default="80" item="EMF Static Config" tooltip="P adjustment, 0-255" comment="Range 0-255">
+      <variable CV="51" default="80" item="EMF Static Config">
         <decVal max="255"/>
         <label>P adjustment</label>
+        <label xml:lang="de">P – Regler</label>
         <comment>Range 0-255</comment>
+        <tooltip>P adjustment, 0-255</tooltip>
+        <tooltip xml:lang="de">beeinflusst Regeleigenschaft des Motors</tooltip>
       </variable>
-      <variable CV="52" default="35" item="EMF Dynamic Config" tooltip="I adjustment, 0-255" comment="Range 0-255">
+      <variable CV="52" default="40" item="EMF Dynamic Config">
         <decVal max="255"/>
         <label>I adjustment</label>
+        <label xml:lang="de">I – Regler</label>
         <comment>Range 0-255</comment>
+        <tooltip>I adjustment, 0-255</tooltip>
+        <tooltip xml:lang="de">beeinflusst Regeleigenschaft des Motors</tooltip>
       </variable>
-      <variable item="PWM Function Outputs" CV="54" default="50" tooltip="Dimming Outputs 0 - 100%">
+      <variable CV="54" item="Dimming Output" default="50">
         <decVal min="0" max="100"/>
-        <label>PWM Function Outputs</label>
+        <label>Dimming in %</label>
+        <label xml:lang="de">Dimmwert in %</label>
+        <tooltip>PWM for Dimming Function Outputs : 0 - 100%</tooltip>
+        <tooltip xml:lang="de">Funktionen dimmen, Reduktion der Helligkeit der Lampen: 0 - 100%</tooltip>
       </variable>
-      <variable item="Uncoupler Holding Current" CV="55" default="32" comment="Range 0-100">
+      <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/lockDecoder-CV53.xml"/>
+      <variable CV="55" item="Uncoupler Holding Current" default="32" comment="Range 0-100">
         <decVal min="0" max="100"/>
         <label>Uncoupler Holding Current</label>
+        <label xml:lang="de">Dimmen der Kupplungsausgänge</label>
+        <tooltip>Reduced current value during holding time after uncoupling pulse (0-100)</tooltip>
+        <tooltip xml:lang="de">Kupplungen dimmen, Reduktion der Ziehkraft der Kupplungen (0-100)</tooltip>
         <comment>Range 0-100</comment>
       </variable>
-      <variable item="Uncoupler Pulse Time" CV="56" default="60">
+      <variable CV="56" item="Uncoupler Pulse Time" default="60">
         <decVal/>
         <label>Uncoupler Pulse Time</label>
+        <label xml:lang="de">Schaltzeit der Kupplungsausgänge</label>
+        <tooltip>Time during which the uncoupling impulse is applied with full power (in 1/10s sec)</tooltip>
+        <tooltip xml:lang="de">Einschaltzeit für digitale Kupplung (Einheit 0,1 sek d.h. 60 = 6 sek)</tooltip>
       </variable>
-      <variable item="Dimming Output FL(f)" CV="57" mask="XXXXXXXV" default="0" minOut="2">
+      <variable CV="57" mask="XXXXXXXV" default="0" minOut="2" item="Dimming Output FL(f)">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Dimming Output FL(f)</label>
+        <label xml:lang="de">Dimmen Ausgang FL(f)</label>
       </variable>
-      <variable item="Dimming Output FL(r)" CV="57" mask="XXXXXXVX" default="0" minOut="2">
+      <variable CV="57" mask="XXXXXXVX" default="0" minOut="2" item="Dimming Output FL(r)">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Dimming Output FL(r)</label>
+        <label xml:lang="de">Dimmen Ausgang FL(r)</label>
       </variable>
-      <variable item="Dimming Output F 1" CV="57" mask="XXXXXVXX" default="0" minOut="3">
+      <variable CV="57" mask="XXXXXVXX" default="0" minOut="3" item="Dimming Output F 1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Dimming Output F 1</label>
+        <label xml:lang="de">Dimmen Ausgang F 1</label>
       </variable>
-      <variable item="Dimming Output F 2" CV="57" mask="XXXXVXXX" default="0" minOut="4">
+      <variable CV="57" mask="XXXXVXXX" default="0" minOut="4" item="Dimming Output F 2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Dimming Output F 2</label>
+        <label xml:lang="de">Dimmen Ausgang F 2</label>
       </variable>
-      <variable item="Dimming Output F 3" CV="57" mask="XXXVXXXX" default="0" minOut="5">
+      <variable CV="57" mask="XXXVXXXX" default="0" minOut="5" item="Dimming Output F 3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Dimming Output F 3</label>
+        <label xml:lang="de">Dimmen Ausgang F 3</label>
       </variable>
-      <variable item="Dimming Output F 4" CV="57" mask="XXVXXXXX" default="0" minOut="6">
+      <variable CV="57" mask="XXVXXXXX" default="0" minOut="6" item="Dimming Output F 4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Dimming Output F 4</label>
+        <label xml:lang="de">Dimmen Ausgang F 4</label>
       </variable>
-      <variable item="Dimming Output F 5" CV="57" mask="XVXXXXXX" default="0" minOut="7">
+      <variable CV="57" mask="XVXXXXXX" default="0" minOut="7" item="Dimming Output F 5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Dimming Output F 5</label>
+        <label xml:lang="de">Dimmen Ausgang F 5</label>
       </variable>
-      <variable item="Dimming Output F 6" CV="57" mask="VXXXXXXX" default="0" minOut="8">
+      <variable CV="57" mask="VXXXXXXX" default="0" minOut="8" item="Dimming Output F 6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Dimming Output F 6</label>
+        <label xml:lang="de">Dimmen Ausgang F 6</label>
       </variable>
-      <variable item="Output Uncoupler FL(f)" CV="58" mask="XXXXXXXV" default="0" comment="F1 Output" minOut="2">
+      <variable CV="58" mask="XXXXXXXV" default="0" minOut="1" item="Output Uncoupler FL(f)">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output Uncoupler FL(f)</label>
+        <label xml:lang="de">Kupplungsfunktion an FL(f)</label>
         <comment>F1 Output</comment>
       </variable>
-      <variable item="Output Uncoupler FL(r)" CV="58" mask="XXXXXXVX" default="0" comment="F2 Output" minOut="2">
+      <variable CV="58" mask="XXXXXXVX" default="0" minOut="2" item="Output Uncoupler FL(r)">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output Uncoupler FL(r)</label>
+        <label xml:lang="de">Kupplungsfunktion an FL(r)</label>
         <comment>F2 Output</comment>
       </variable>
-      <variable item="Output Uncoupler F 1" CV="58" mask="XXXXXVXX" default="0" comment="F3 Output" minOut="3">
+      <variable CV="58" mask="XXXXXVXX" default="0" minOut="3" item="Output Uncoupler F 1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output Uncoupler F 1</label>
+        <label xml:lang="de">Kupplungsfunktion an F 1</label>
         <comment>F3 Output</comment>
       </variable>
-      <variable item="Output Uncoupler F 2" CV="58" mask="XXXXVXXX" default="0" comment="F4 Output" minOut="4">
+      <variable CV="58" mask="XXXXVXXX" default="0" minOut="4" item="Output Uncoupler F 2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output Uncoupler F 2</label>
+        <label xml:lang="de">Kupplungsfunktion an F 2</label>
         <comment>F4 Output</comment>
       </variable>
-      <variable item="Output Uncoupler F 3" CV="58" mask="XXXVXXXX" default="0" comment="F5 Output" minOut="5">
+      <variable CV="58" mask="XXXVXXXX" default="0" minOut="5" item="Output Uncoupler F 3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output Uncoupler F 3</label>
+        <label xml:lang="de">Kupplungsfunktion an F 3</label>
         <comment>F5 Output</comment>
       </variable>
-      <variable item="Output Uncoupler F 4" CV="58" mask="XXVXXXXX" default="0" comment="F6 Output" minOut="6">
+      <variable CV="58" mask="XXVXXXXX" default="0" minOut="6" item="Output Uncoupler F 4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output Uncoupler F 4</label>
+        <label xml:lang="de">Kupplungsfunktion an F 4</label>
         <comment>F6 Output</comment>
       </variable>
-      <variable item="Output Uncoupler F 5" CV="58" mask="XVXXXXXX" default="0" comment="F7 Output" minOut="7">
+      <variable CV="58" mask="XVXXXXXX" default="0" minOut="7" item="Output Uncoupler F 5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output Uncoupler F 5</label>
+        <label xml:lang="de">Kupplungsfunktion an F 5</label>
         <comment>F7 Output</comment>
       </variable>
-      <variable item="Output Uncoupler F 6" CV="58" mask="VXXXXXXX" default="0" comment="F8 Output" minOut="8">
+      <variable CV="58" mask="VXXXXXXX" default="0" minOut="8" item="Output Uncoupler F 6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Output Uncoupler F 6</label>
+        <label xml:lang="de">Kupplungsfunktion an F 6</label>
         <comment>F8 Output</comment>
       </variable>
-      <variable item="ZIMO Signal Controlled Speed L" CV="59" default="168" comment="Zimo Only">
+      <variable CV="59" item="ZIMO Signal Controlled Speed L" default="168" comment="Zimo Only">
         <decVal/>
         <label>ZIMO Signal Controlled Speed L</label>
-        <comment>Zimo Only</comment>
+        <label xml:lang="de">ZIMO Zugsbeeinflussung L</label>
+        <tooltip>Zimo Only</tooltip>
+        <tooltip xml:lang="de">nur Zimo</tooltip>
       </variable>
-      <variable item="ZIMO Signal Controlled Speed U" CV="60" default="84" comment="Zimo Only">
+      <variable CV="60" item="ZIMO Signal Controlled Speed U" default="84" comment="Zimo Only">
         <decVal/>
         <label>ZIMO Signal Controlled Speed U</label>
-        <comment>Zimo Only</comment>
+        <label xml:lang="de">ZIMO Zugsbeeinflussung U</label>
+        <tooltip>Zimo Only</tooltip>
+        <tooltip xml:lang="de">nur Zimo</tooltip>
       </variable>
-      <variable item="ZIMO Signal Controlled Acc Reaction" CV="61">
+      <variable CV="61" item="ZIMO Signal Controlled Acc Reaction" default="1">
         <decVal/>
         <label>ZIMO Signal Controlled Acc Reaction</label>
+        <label xml:lang="de">ZIMO Anfahrverzögerungszeit</label>
+        <tooltip>Zimo Only. Time to wait after the stop information was cleared in HLU mode. Unit = 1/20 sec</tooltip>
+        <tooltip xml:lang="de">nur Zimo. Zeit zwischen Freigabe und Fahrteintritt im HLU Betrieb. Teil = 1/20 sec</tooltip>
       </variable>
       <variable CV="64" default="160" item="EMF Droop Config" comment="160=16v track volts">
         <decVal/>
         <label>Track Voltage Reference</label>
-        <comment>160=16v track volts</comment>
+        <label xml:lang="de">Regelungsreferenz:</label>
+        <tooltip>160=16v track volts</tooltip>
+        <tooltip xml:lang="de">Fahreigenschaft in Abhängigkeit der Schienenspannung (160=16v)</tooltip>
       </variable>
-      <variable item="Speed Table" CV="67">
+      <variable CV="67" item="Speed Table">
         <speedTableVal/>
         <label>Speed Table</label>
+        <label xml:lang="de">Geschwindigkeitskennlinie</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
-      <variable item="Select CV Set 1 or 2" CV="109" mask="XXXXXXXV" default="0">
-       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <variable CV="109" mask="XXXXXXXV" default="0" item="Select CV Set 1 or 2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Select CV Set 1 or 2</label>
+        <label xml:lang="de">Auswahl der CVs Spezialgruppe</label>
+        <tooltip>&lt;html&gt;Offers a second CV set to allow an alternative configuration stored in the decoder.&lt;br&gt; Reset does not modify this CV&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Aus=Standardgruppe, Ein=Spezialgruppe für div. Anwendungen.&lt;br&gt;Hardreset wirkt nur auf die aktuelle CV-Gruppe, CV109 bleibt unverändert beim Hardreset&lt;/html&gt;</tooltip>
       </variable>
-      <variable item="ACK Pulse" CV="111" default="255" tooltip="ACK Pulse Intensity">
+      <variable CV="111" default="255" item="ACK Pulse" tooltip="ACK Pulse Intensity">
         <decVal/>
-        <label>ACK Pulse</label>
+        <label>ACK Pulse Intensity</label>
+        <label xml:lang="de">Intensität der ACK impulse</label>
+        <tooltip>might be modified if the loco draws too less or too much current on the programming track.</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;verbessert die Programmierbarkeit&lt;br&gt;128 = ca. 50% des max. Quittierungsstromes (Motor abhängig)&lt;br&gt;150 = allg. gut verträglich</tooltip>
       </variable>
-      <variable item="PWM Light Effects Outputs" CV="114" default="0" tooltip="Dimming Light Effects Outputs 0 - 100%">
+      <variable CV="114" default="0" item="PWM Light Effects Outputs">
         <decVal min="0" max="100"/>
         <label>PWM Light Effects Outputs</label>
+        <label xml:lang="de">Dimmwert der Effekte</label>
+        <tooltip>Dimming Light Effects Outputs 0 - 100%</tooltip>
+        <tooltip xml:lang="de">unterer Helligkeitswert für Licht-Effekte</tooltip>
       </variable>
-      <variable item="Time Between Effects" CV="115" default="0" tooltip="Time Between Effects">
+      <variable CV="115" default="0" item="Time Between Effects">
         <decVal/>
         <label>Time Between Effects</label>
+        <label xml:lang="de">Pausendauer der Effekte</label>
+        <tooltip>Time Between Effects</tooltip>
+        <tooltip xml:lang="de">definiert die Zeit (Dauer) zwischen 2 Effekten</tooltip>
       </variable>
-      <variable item="Switching 1" CV="116" mask="XXXXXXXV" default="0">
+      <variable CV="116" mask="XXXXXXXV" item="Switching 1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Switching 1</label>
+        <label xml:lang="de">CV3 und CV4 wird ausgeschaltet</label>
       </variable>
-      <variable item="Switching 2" CV="116" mask="XXXXXXVX" default="0">
+      <variable CV="116" mask="XXXXXXVX" default="0" item="Switching 2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Switching 2</label>
+        <label xml:lang="de">max. Geschwindigkeit wird vorwärts und rückwärts halbiert</label>
       </variable>
-      <variable item="Switching 3" CV="116" mask="XXXXXVXX" default="0">
+      <variable CV="116" mask="XXXXXVXX" default="0" item="Switching 3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Switching 3</label>
+        <label xml:lang="de">rückwärts 65% der max. Geschw.keit (unabhängig vom Rang.)</label>
       </variable>
-      <variable item="F-Button Used For Dimming" CV="117" default="0" tooltip="F-Button Used For Dimming">
+      <variable CV="117" default="0" item="F-Button Used For Dimming">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
+            <choice xml:lang="de">keine</choice>
           </enumChoice>
           <enumChoice choice="F1">
             <choice>F1</choice>
@@ -870,76 +982,65 @@
           </enumChoice>
         </enumVal>
         <label>F-Button Used For Dimming</label>
+        <label xml:lang="de">F-Taste für Dimmen</label>
+        <tooltip>F-Button Used For Dimming</tooltip>
+        <tooltip xml:lang="de">F-Taste für Dimmmen</tooltip>
       </variable>
-      <variable item="Dim FL(f)" CV="118" mask="XXXXXXXV" default="0">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Dim">
-            <choice>Dim</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="118" mask="XXXXXXXV" default="0" item="Dim FL(f)">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Dim FL(f)</label>
+        <label xml:lang="de">F-Taste dimmt FL(f)</label>
       </variable>
-      <variable item="Dim FL(r)" CV="118" mask="XXXXXXVX" default="0">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Dim">
-            <choice>Dim</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="118" mask="XXXXXXVX" default="0" item="Dim FL(r)">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Dim FL(r)</label>
+        <label xml:lang="de">F-Taste dimmt FL(r)</label>
       </variable>
-      <variable item="Dim F 1" CV="118" minOut="3" mask="XXXXXVXX" default="0">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Dim">
-            <choice>Dim</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="118" mask="XXXXXVXX" default="0" minOut="3" item="Dim F 1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Dim F 1</label>
+        <label xml:lang="de">F-Taste dimmt F 1</label>
       </variable>
-      <variable item="Dim F 2" CV="118" minOut="4" mask="XXXXVXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Dim">
-            <choice>Dim</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="118" mask="XXXXVXXX" default="0" minOut="4" item="Dim F 2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Dim F 2</label>
+        <label xml:lang="de">F-Taste dimmt F 2</label>
       </variable>
-      <variable item="Dim F 3" CV="118" minOut="5" mask="XXXVXXXX" default="0">
+      <variable CV="118" mask="XXXVXXXX" default="0" minOut="5" item="Dim F 3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Dim F 3</label>
+        <label xml:lang="de">F-Taste dimmt F 3</label>
       </variable>
-      <variable item="Dim F 4" CV="118" minOut="6" mask="XXVXXXXX" default="0">
+      <variable CV="118" mask="XXVXXXXX" default="0" minOut="6" item="Dim F 4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Dim F 4</label>
+        <label xml:lang="de">F-Taste dimmt F 4</label>
       </variable>
-      <variable item="Dim F 5" CV="118" minOut="7" mask="XVXXXXXX" default="0">
+      <variable CV="118" mask="XVXXXXXX" default="0" minOut="7" item="Dim F 5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Dim F 5</label>
+        <label xml:lang="de">F-Taste dimmt F 5</label>
       </variable>
-      <variable item="Dim F 6" CV="118" minOut="8" mask="VXXXXXXX" default="0">
+      <variable CV="118" mask="VXXXXXXX" default="0" minOut="8" item="Dim F 6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Dim F 6</label>
+        <label xml:lang="de">F-Taste dimmt F 6</label>
       </variable>
-      <variable item="PWM Dimming" CV="119" default="0" tooltip="PWM Dimming 0 - 100%">
+      <variable CV="119" default="0" item="PWM Dimming">
         <decVal min="0" max="100"/>
         <label>PWM Dimming</label>
+        <label xml:lang="de">Dimmwert in %</label>
+        <tooltip>PWM Dimming 0 - 100%</tooltip>
+        <tooltip xml:lang="de">Dimmwert für Abblendfunktion</tooltip>
       </variable>
-      <variable item="Time Effect ON" CV="120" default="0" tooltip="Time Effect ON">
+      <variable CV="120" default="0" item="Time Effect ON">
         <decVal/>
         <label>Time Effect ON</label>
+        <label xml:lang="de">Zyklusdauer der Effekte</label>
+        <tooltip>Time Effect ON</tooltip>
+        <tooltip xml:lang="de">definiert wie lange ein Effekt dauern soll</tooltip>
       </variable>
-      <variable item="Function selection 8 or 14/MAN Bit" CV="137" default="0" mask="XXXXXXXV">
+      <variable CV="137" mask="XXXXXXXV" default="0" item="Function selection 8 or 14/MAN Bit">
         <enumVal>
           <enumChoice choice="8/std">
             <choice>8/std</choice>
@@ -949,14 +1050,22 @@
           </enumChoice>
         </enumVal>
         <label>Function selection 8 or 14/MAN Bit</label>
+        <label xml:lang="de">Umschaltung 8 oder 14/MAN Funktionenmodus</label>
+        <tooltip>Zimo Only</tooltip>
+        <tooltip xml:lang="de">nur Zimo</tooltip>
       </variable>
-      <variable item="Zimo speed control HLU" CV="137" default="0" mask="XXXVXXXX">
+      <variable CV="137" mask="XXXVXXXX" default="0" item="Zimo speed control HLU">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Zimo speed control HLU</label>
+        <label xml:lang="de">Zimo Zugnummernimpulse</label>
+        <tooltip>Zimo Only</tooltip>
+        <tooltip xml:lang="de">nur Zimo</tooltip>
       </variable>
-      <variable item="LGB F4 Impulse" CV="137" default="0" mask="XVXXXXXX">
+      <variable CV="137" mask="XVXXXXXX" default="0" item="LGB F4 Impulse">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>LGB F4 Impulse</label>
+        <tooltip>Zimo Only</tooltip>
+        <tooltip xml:lang="de">nur Zimo</tooltip>
       </variable>
       <variable CV="137" item="DC Brake Momentum" default="0" mask="VXXXXXXX">
         <enumVal>
@@ -967,58 +1076,86 @@
             <choice>32Khz</choice>
           </enumChoice>
         </enumVal>
-        <label>CV137 Motor frequency</label>
+        <label>Motor frequency</label>
+        <label xml:lang="de">Motoransteuerungsfrequenz</label>
+        <tooltip xml:lang="de">wenn "Std 150Hz/16kHz" ausgewählt ist wird CV#9 verwendet</tooltip>
       </variable>
-      <variable item="Direct Cut Off Function Outputs" CV="139" default="35">
+      <variable CV="139" default="15" item="Direct Cut Off Function Outputs">
         <decVal/>
         <label>Direct Cut Off Function Outputs</label>
+        <label xml:lang="de">sofortige Abschaltung Funktionen</label>
+        <tooltip xml:lang="de">sofortige Abschaltung bei Überlastung der Zusatzfunktionen</tooltip>
       </variable>
-      <variable item="Fast Cut Off Function Outputs" CV="140" default="30" comment="Fast Cut off Functions">
+      <variable CV="140" default="12" item="Fast Cut Off Function Outputs" comment="Fast Cut off Functions">
         <decVal/>
         <label>Fast Cut Off Function Outputs</label>
+        <label xml:lang="de">rasche Abschaltung Funktionen</label>
+        <tooltip>Rapid shutdown in case of overload of the function outputs</tooltip>
+        <tooltip xml:lang="de">rasche Abschaltung bei Überlastung der Zusatzfunktionen</tooltip>
         <comment>Fast Cut off Functions</comment>
       </variable>
-      <variable item="Slow Cut Off Function Outputs" CV="141" default="25" comment="Slow Cut off Functions">
+      <variable CV="141" default="10" item="Slow Cut Off Function Outputs" comment="Slow Cut off Functions">
         <decVal/>
         <label>Slow Cut Off Function Outputs</label>
+        <label xml:lang="de">langsame Abschaltung Funktionen</label>
+        <tooltip>Slow shutdown in case of overload of the function outputs</tooltip>
+        <tooltip xml:lang="de">langsame Abschaltung bei Überlastung der Zusatzfunktionen</tooltip>
         <comment>Slow Cut off Functions</comment>
       </variable>
-      <variable item="Direct Cut Off Motor" CV="142" default="150" comment="Direct Cut off Motor">
+      <variable CV="142" default="90" item="Direct Cut Off Motor" comment="Direct Cut off Motor">
         <decVal/>
         <label>Direct Cut Off Motor</label>
+        <label xml:lang="de">sofortige Abschaltung Motor</label>
+        <tooltip>Immediate shutdown in case of overload of the motor</tooltip>
+        <tooltip xml:lang="de">sofortige Abschaltung bei Überlastung (Motor)</tooltip>
         <comment>Direct Cut off Motor</comment>
       </variable>
-      <variable item="Fast Cut Off Motor" CV="143" default="130" comment="Fast Cut Off Motor">
+      <variable CV="143" default="80" item="Fast Cut Off Motor" comment="Fast Cut Off Motor">
         <decVal/>
         <label>Fast Cut Off Motor</label>
+        <label xml:lang="de">rasche Abschaltung Motor</label>
+        <tooltip>Rapid shutdown in case of overload of the motor</tooltip>
+        <tooltip xml:lang="de">rasche Abschaltung bei Überlastung (Motor)</tooltip>
         <comment>Fast Cut Off Motor</comment>
       </variable>
-      <variable item="Slow Cut Off Motor" CV="144" default="120" comment="Slow Cut off Motor">
+      <variable CV="144" default="70" item="Slow Cut Off Motor" comment="Slow Cut off Motor">
         <decVal/>
         <label>Slow Cut Off Motor</label>
+        <label xml:lang="de">langsame Abschaltung Motor</label>
+        <tooltip>Slow shutdown in case of overload of the motor</tooltip>
+        <tooltip xml:lang="de">langsame Abschaltung bei Überlastung (Motor)</tooltip>
         <comment>Slow Cut off Motor</comment>
       </variable>
       <!-- Special CVs for automatically uncoupling, available from version 33 -->
-      <variable item="Speed Step Coupling Release" CV="147" default="20">
+      <variable CV="147" default="20" item="Speed Step Coupling Release">
         <decVal max="127"/>
         <label>Speed Step Coupling Release</label>
+        <label xml:lang="de">Tempo beim Zurückdrücken</label>
       </variable>
-      <variable item="Speed Step Uncoupled" CV="148" default="50">
+      <variable CV="148" default="50" item="Speed Step Uncoupled">
         <decVal max="127"/>
         <label>Speed Step Uncoupled</label>
+        <label xml:lang="de">Tempo beim Wegfahren</label>
       </variable>
-      <variable item="Time Driving Backwards" CV="149" default="5" tooltip="Unit 0.1 sec">
+      <variable CV="149" default="5" item="Time Driving Backwards">
         <decVal/>
         <label>Time Driving Backwards</label>
+        <label xml:lang="de">Entlastungszeit</label>
+        <tooltip>Unit 0.1 sec</tooltip>
+        <tooltip xml:lang="de">die Zeit fürs Zurückdrücken (Einheit 0,1 sek d.h. 10 = 1 sek)</tooltip>
       </variable>
-      <variable item="Time Driving Forwards" CV="150" default="10" tooltip="Unit 0.1 sec">
+      <variable CV="150" default="10" item="Time Driving Forwards">
         <decVal/>
         <label>Time Driving Forwards</label>
+        <label xml:lang="de">Wegfahrzeit</label>
+        <tooltip>Unit 0.1 sec</tooltip>
+        <tooltip xml:lang="de">die Zeit fürs Wegfahren (Einheit 0,1 sek d.h. 30 = 3 sek)</tooltip>
       </variable>
-      <variable item="F-Button Used For Auto-Uncoupling" CV="151" default="2" tooltip="Functions 1 to 12 possible">
+      <variable CV="151" default="0" item="F-Button Used For Auto-Uncoupling">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
+            <choice xml:lang="de">keine</choice>
           </enumChoice>
           <enumChoice choice="F1">
             <choice>F1</choice>
@@ -1058,148 +1195,199 @@
           </enumChoice>
         </enumVal>
         <label>F-Button Used For Auto-Uncoupling</label>
+        <label xml:lang="de">F-Taste für den Kupplungswalzer</label>
+        <tooltip>Functions 1 to 12 possible</tooltip>
+        <tooltip xml:lang="de">Auswahl der Taste für die Abkuppel-Automatik</tooltip>
       </variable>
       <!--  NC comment, version 56 and version 66 decoders seem different.  
-	In Version 56 and documentation, the increments in values appear to be 2, 4, etc.. 
-	In Version 66, the increments appear to be 1, 2 (and presumably 3, 4)
--->
-      <variable item="Engine FWD, Uncoupling BWD" CV="152" default="4" tooltip="Engine FWD, Uncoupling BWD, bitwise output wire">
+      In Version 56 and documentation, the increments in values appear to be 2, 4, etc.. 
+      In Version 66, the increments appear to be 1, 2 (and presumably 3, 4)  -->
+      <variable CV="152" default="8" item="Engine FWD, Uncoupling BWD">
         <decVal/>
         <label>Engine FWD, Uncoupling BWD</label>
+        <tooltip>Engine FWD, Uncoupling BWD, bitwise output wire</tooltip>
       </variable>
-      <variable item="Loco travel FWD, rear coupler" CV="152" tooltip="select output wire for uncoupler action">
+      <variable CV="152" item="Loco travel FWD, rear coupler">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
+            <choice xml:lang="de">keine</choice>
           </enumChoice>
-          <enumChoice choice="2 White" value="2">
-            <choice>2 White</choice>
+          <enumChoice choice="F 2" value="4">
+            <choice>F 2</choice>
           </enumChoice>
-          <enumChoice choice="1 Yellow" value="1">
-            <choice>1 Yellow</choice>
+          <enumChoice choice="F 3" value="8">
+            <choice>F 3</choice>
           </enumChoice>
-          <enumChoice choice="4 ??" value="4">
-            <choice>4 ??</choice>
+          <enumChoice choice="F 4" value="16">
+            <choice>F 4</choice>
           </enumChoice>
-          <enumChoice choice="8 Green" value="8">
-            <choice>8 Green</choice>
+          <enumChoice choice="F 5" value="32">
+            <choice>F 5</choice>
           </enumChoice>
-          <enumChoice choice="16 Purple" value="16">
-            <choice>16 Purple</choice>
+          <enumChoice choice="F 6" value="64">
+            <choice>F 6</choice>
+          </enumChoice>
+          <enumChoice choice="F 7" value="128">
+            <choice>F 7</choice>
           </enumChoice>
         </enumVal>
         <label>Loco travel FWD, rear coupler</label>
+        <label xml:lang="de">Abkuppeln-Maske vorwärts</label>
+        <tooltip>select output wire for uncoupler action</tooltip>
+        <tooltip xml:lang="de">Auswahl der zu verwendenden Funktion</tooltip>
       </variable>
-      <variable item="V66 Loco travel FWD, rear coupler" CV="152" tooltip="select output wire for uncoupler action">
+      <variable CV="152" item="V66 Loco travel FWD, rear coupler">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
+            <choice xml:lang="de">keine</choice>
           </enumChoice>
-          <enumChoice choice="1 White" value="1">
-            <choice>1 White</choice>
+          <enumChoice choice="F 2" value="4">
+            <choice>F 2</choice>
           </enumChoice>
-          <enumChoice choice="2 Yellow" value="2">
-            <choice>2 Yellow</choice>
+          <enumChoice choice="F 3" value="8">
+            <choice>F 3</choice>
           </enumChoice>
-          <enumChoice choice="3 ??" value="3">
-            <choice>3 ??</choice>
+          <enumChoice choice="F 4" value="16">
+            <choice>F 4</choice>
           </enumChoice>
-          <enumChoice choice="4 ??" value="4">
-            <choice>4 ??</choice>
+          <enumChoice choice="F 5" value="32">
+            <choice>F 5</choice>
+          </enumChoice>
+          <enumChoice choice="F 6" value="64">
+            <choice>F 6</choice>
+          </enumChoice>
+          <enumChoice choice="F 7" value="128">
+            <choice>F 7</choice>
           </enumChoice>
         </enumVal>
-        <label>V66 Loco travel FWD, rear coupler</label>
+        <label>v66 Loco travel FWD, rear coupler</label>
+        <label xml:lang="de">v66 Abkuppeln-Maske vorwärts</label>
+        <tooltip>select output wire for uncoupler action</tooltip>
+        <tooltip xml:lang="de">Auswahl der zu verwendenden Funktion</tooltip>
       </variable>
-      <variable item="Engine BWD, Uncoupling FWD" CV="153" default="8" tooltip="Engine BWD, Uncoupling FWD, bitwise output wire">
+      <variable CV="153" default="8" item="Engine BWD, Uncoupling FWD">
         <decVal/>
         <label>Engine BWD, Uncoupling FWD</label>
+        <tooltip>Engine BWD, Uncoupling FWD, bitwise output wire</tooltip>
       </variable>
-      <variable item="Loco travel BWD, front coupler" CV="153" tooltip="select output wire for uncoupler action">
+      <variable CV="153" item="Loco travel BWD, front coupler">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
+            <choice xml:lang="de">keine</choice>
           </enumChoice>
-          <enumChoice choice="2 White" value="2">
-            <choice>2 White</choice>
+          <enumChoice choice="F 2" value="4">
+            <choice>F 2</choice>
           </enumChoice>
-          <enumChoice choice="1 Yellow" value="1">
-            <choice>1 Yellow</choice>
+          <enumChoice choice="F 3" value="8">
+            <choice>F 3</choice>
           </enumChoice>
-          <enumChoice choice="4 ??" value="4">
-            <choice>4 ??</choice>
+          <enumChoice choice="F 4" value="16">
+            <choice>F 4</choice>
           </enumChoice>
-          <enumChoice choice="8 Green" value="8">
-            <choice>8 Green</choice>
+          <enumChoice choice="F 5" value="32">
+            <choice>F 5</choice>
           </enumChoice>
-          <enumChoice choice="16 Purple" value="16">
-            <choice>16 Purple</choice>
+          <enumChoice choice="F 6" value="64">
+            <choice>F 6</choice>
+          </enumChoice>
+          <enumChoice choice="F 7" value="128">
+            <choice>F 7</choice>
           </enumChoice>
         </enumVal>
         <label>Loco travel BWD, front coupler</label>
+        <label xml:lang="de">Abkuppeln-Maske rückwärts</label>
+        <tooltip>select output wire for uncoupler action</tooltip>
+        <tooltip xml:lang="de">Auswahl der zu verwendenden Funktion</tooltip>
       </variable>
-      <variable item="V66 Loco travel BWD, front coupler" CV="153" tooltip="select output wire for uncoupler action">
+      <variable CV="153" item="V66 Loco travel BWD, front coupler">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
+            <choice xml:lang="de">keine</choice>
           </enumChoice>
-          <enumChoice choice="1 White" value="1">
-            <choice>1 White</choice>
+          <enumChoice choice="F 2" value="4">
+            <choice>F 2</choice>
           </enumChoice>
-          <enumChoice choice="2 Yellow" value="2">
-            <choice>2 Yellow</choice>
+          <enumChoice choice="F 3" value="8">
+            <choice>F 3</choice>
           </enumChoice>
-          <enumChoice choice="3 ??" value="3">
-            <choice>3 ??</choice>
+          <enumChoice choice="F 4" value="16">
+            <choice>F 4</choice>
           </enumChoice>
-          <enumChoice choice="4 ??" value="4">
-            <choice>4 ??</choice>
+          <enumChoice choice="F 5" value="32">
+            <choice>F 5</choice>
+          </enumChoice>
+          <enumChoice choice="F 6" value="64">
+            <choice>F 6</choice>
+          </enumChoice>
+          <enumChoice choice="F 7" value="128">
+            <choice>F 7</choice>
           </enumChoice>
         </enumVal>
-        <label>V66 Loco travel BWD, front coupler</label>
+        <label>v66 Loco travel BWD, front coupler</label>
+        <label xml:lang="de">v66 Abkuppeln-Maske vorwärts</label>
+        <tooltip>select output wire for uncoupler action</tooltip>
+        <tooltip xml:lang="de">Auswahl der zu verwendenden Funktion</tooltip>
       </variable>
       <!-- Tran Light Effects  -->
-      <variable item="Light Effects FL(f)" CV="154" default="0" tooltip="Light Effects FL(f), see manual">
+      <variable CV="154" default="0" item="Light Effects FL(f)">
         <decVal/>
         <label>Light Effects FL(f)</label>
+        <label xml:lang="de">Lichteffekte FL(f)</label>
+        <tooltip>Light Effects FL(f), see manual</tooltip>
+        <tooltip xml:lang="de">Licheffekte FL(f), siehe Handbuch</tooltip>
       </variable>
-      <variable item="Light Effects FL(r)" CV="155" default="0" tooltip="Light Effects FL(r), see manual">
+      <variable CV="155" default="0" item="Light Effects FL(r)">
         <decVal/>
         <label>Light Effects FL(r)</label>
+        <tooltip>Light Effects FL(r), see manual</tooltip>
       </variable>
-      <variable item="Light Effects F 1" CV="156" default="0" tooltip="Light Effects F 1, see manual">
+      <variable CV="156" default="0" item="Light Effects F 1">
         <decVal/>
         <label>Light Effects F 1</label>
+        <tooltip>Light Effects F 1, see manual</tooltip>
       </variable>
-      <variable item="Light Effects F 2" CV="157" default="0" tooltip="Light Effects F 2, see manual">
+      <variable CV="157" default="0" item="Light Effects F 2">
         <decVal/>
         <label>Light Effects F 2</label>
+        <tooltip>Light Effects F 2, see manual</tooltip>
       </variable>
-      <variable item="Light Effects F 3" CV="158" default="0" tooltip="Light Effects F 3, see manual">
+      <variable CV="158" default="0" item="Light Effects F 3">
         <decVal/>
         <label>Light Effects F 3</label>
+        <tooltip>Light Effects F 3, see manual</tooltip>
       </variable>
-      <variable item="Light Effects F 4" CV="159" default="0" tooltip="Light Effects F 4, see manual">
+      <variable CV="159" default="0" item="Light Effects F 4">
         <decVal/>
         <label>Light Effects F 4</label>
+        <tooltip>Light Effects F 4, see manual</tooltip>
       </variable>
-      <variable item="Light Effects F 5" CV="160" default="0" tooltip="Light Effects F 5, see manual">
+      <variable CV="160" default="0" item="Light Effects F 5">
         <decVal/>
         <label>Light Effects F 5</label>
+        <tooltip>Light Effects F 5, see manual</tooltip>
       </variable>
-      <variable item="Light Effects F 6" CV="161" default="0" tooltip="Light Effects F 6, see manual">
+      <variable CV="161" default="0" item="Light Effects F 6">
         <decVal/>
         <label>Light Effects F 6</label>
+        <tooltip>Light Effects F 6, see manual</tooltip>
       </variable>
-      <variable item="Light Effects F0F" CV="154" mask="XXXVVVVV" default="0" tooltip="Effects on F0F">
+      <variable CV="154" mask="XXXVVVVV" default="0" item="Light Effects F0F">
         <enumVal>
           <enumChoice choice="No effect">
             <choice>No effect</choice>
+            <choice xml:lang="de">kein Effekt</choice>
           </enumChoice>
           <enumChoice choice="Flashing">
             <choice>Flashing</choice>
+            <choice xml:lang="de">Blinken</choice>
           </enumChoice>
           <enumChoice choice="Blinking">
             <choice>Blinking</choice>
+            <choice xml:lang="de">Blinken im Gegentakt</choice>
           </enumChoice>
           <enumChoice choice="Single Pulse Strobe">
             <choice>Single Pulse Strobe</choice>
@@ -1212,9 +1400,11 @@
           </enumChoice>
           <enumChoice choice="Ditch Light Left">
             <choice>Ditch Light Left</choice>
+            <choice xml:lang="de">Ditch Light links</choice>
           </enumChoice>
           <enumChoice choice="Ditch Light Right">
             <choice>Ditch Light Right</choice>
+            <choice xml:lang="de">Ditch Light rechts</choice>
           </enumChoice>
           <enumChoice choice="Rotary Beacon">
             <choice>Rotary Beacon</choice>
@@ -1230,31 +1420,28 @@
           </enumChoice>
         </enumVal>
         <label>Light Effects F0F</label>
+        <label xml:lang="de">Lichteffekte F0F</label>
+        <tooltip>Effects on F0F</tooltip>
+        <tooltip xml:lang="de">Effekte an F0F</tooltip>
       </variable>
-      <variable item="Light Effects Direction F0F" CV="154" mask="VVXXXXXX">
-        <enumVal>
-          <enumChoice choice="Both">
-            <choice>Both</choice>
-          </enumChoice>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse">
-            <choice>Reverse</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="154" mask="VVXXXXXX" item="Light Effects Direction F0F">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>Light Effects Direction F0F</label>
+        <label xml:lang="de">Richtung Lichteffekt für F0F</label>
       </variable>
-      <variable item="Light Effects F0R" CV="155" mask="XXXVVVVV" default="0" tooltip="Effects on F0R">
+      <variable CV="155" mask="XXXVVVVV" default="0" item="Light Effects F0R">
         <enumVal>
           <enumChoice choice="No effect">
             <choice>No effect</choice>
+            <choice xml:lang="de">kein Effekt</choice>
           </enumChoice>
           <enumChoice choice="Flashing">
             <choice>Flashing</choice>
+            <choice xml:lang="de">Blinken</choice>
           </enumChoice>
           <enumChoice choice="Blinking">
             <choice>Blinking</choice>
+            <choice xml:lang="de">Blinken im Gegentakt</choice>
           </enumChoice>
           <enumChoice choice="Single Pulse Strobe">
             <choice>Single Pulse Strobe</choice>
@@ -1267,9 +1454,11 @@
           </enumChoice>
           <enumChoice choice="Ditch Light Left">
             <choice>Ditch Light Left</choice>
+            <choice xml:lang="de">Ditch Light links</choice>
           </enumChoice>
           <enumChoice choice="Ditch Light Right">
             <choice>Ditch Light Right</choice>
+            <choice xml:lang="de">Ditch Light rechts</choice>
           </enumChoice>
           <enumChoice choice="Rotary Beacon">
             <choice>Rotary Beacon</choice>
@@ -1285,12 +1474,16 @@
           </enumChoice>
         </enumVal>
         <label>Light Effects F0R</label>
+        <label xml:lang="de">Lichteffekte F0R</label>
+        <tooltip>Effects on F0R</tooltip>
+        <tooltip xml:lang="de">Effekte an F0R</tooltip>
       </variable>
-      <variable item="Light Effects Direction F0R" CV="155" mask="VVXXXXXX">
+      <variable CV="155" mask="VVXXXXXX" item="Light Effects Direction F0R">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>Light Effects Direction F0R</label>
+        <label xml:lang="de">Richtung Lichteffekt für F0R</label>
       </variable>
-      <variable item="Light Effects F1" CV="156" mask="XXXVVVVV" default="0" tooltip="Effects on F1" minOut="3">
+      <variable CV="156" mask="XXXVVVVV" minOut="3" default="0" item="Light Effects F1">
         <enumVal>
           <enumChoice choice="No effect">
             <choice>No effect</choice>
@@ -1330,12 +1523,13 @@
           </enumChoice>
         </enumVal>
         <label>Light Effects F1</label>
+        <tooltip>Effects on F1</tooltip>
       </variable>
-      <variable item="Light Effects Direction F1" CV="156" mask="VVXXXXXX" minOut="3">
+      <variable CV="156" mask="VVXXXXXX" minOut="3" item="Light Effects Direction F1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>Light Effects Direction F1</label>
       </variable>
-      <variable item="Light Effects F2" CV="157" mask="XXXVVVVV" default="0" minOut="4" tooltip="Effects on F2">
+      <variable CV="157" mask="XXXVVVVV" minOut="4" default="0" item="Light Effects F2">
         <enumVal>
           <enumChoice choice="No effect">
             <choice>No effect</choice>
@@ -1375,30 +1569,31 @@
           </enumChoice>
         </enumVal>
         <label>Light Effects F2</label>
+        <tooltip>Effects on F2</tooltip>
       </variable>
-      <variable item="Light Effects Direction F2" CV="157" mask="VVXXXXXX" minOut="4">
+      <variable CV="157" mask="VVXXXXXX" minOut="4" item="Light Effects Direction F2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
         <label>Light Effects Direction F2</label>
       </variable>
       <!-- Yard mode function keys, part of extended function mapping (incomplete) -->
       <!-- see also CV's 38 through 42 -->
-      <variable item="FL(f) controls output Ra" CV="163" mask="XXXXXXXV">
+      <variable CV="163" mask="XXXXXXXV" item="FL(f) controls output Ra">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output Ra</label>
       </variable>
-      <variable item="FL(r) controls output Ra" CV="164" mask="XXXXXXXV">
+      <variable CV="164" mask="XXXXXXXV" item="FL(r) controls output Ra">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output Ra</label>
       </variable>
-      <variable item="F1 controls output Ra" CV="165" mask="XXXXXXXV">
+      <variable CV="165" mask="XXXXXXXV" item="F1 controls output Ra">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output Ra</label>
       </variable>
-      <variable item="F2 controls output Ra" CV="166" mask="XXXXXXXV">
+      <variable CV="166" mask="XXXXXXXV" item="F2 controls output Ra">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output Ra</label>
       </variable>
-      <variable item="F3 controls output Ra" CV="167" default="1" mask="XXXXXXXV">
+      <variable CV="167" mask="XXXXXXXV" default="1" item="F3 controls output Ra">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output Ra</label>
       </variable>
@@ -1409,20 +1604,17 @@
     </resets>
   </decoder>
   <pane>
+    <name>Yard mode and Auto Uncoupling</name>
+    <name xml:lang="de">Rangiermodus/Kupplung</name>
     <column>
       <label>
         <text>Yard Mode (set function key with function map)</text>
+        <text xml:lang="de">Rangiermodus (F-Taste im Funktionsmapping festlegen)</text>
       </label>
       <separator/>
-      <display item="Switching 1" label="Shunting CV3 and CV4 disabled" format="checkbox">
-        <label>Shunting CV3 and CV4 disabled</label>
-      </display>
-      <display item="Switching 2" label="Shunting max.half speed forw+rev" format="checkbox">
-        <label>Shunting max.half speed forw+rev</label>
-      </display>
-      <display item="Switching 3" label="Rev.max.speed 65% indep. of Yard mode " format="checkbox">
-        <label>Rev.max.speed 65% indep. of Yard mode </label>
-      </display>
+      <display item="Switching 1"/>
+      <display item="Switching 2"/>
+      <display item="Switching 3"/>
       <label>
         <text>  </text>
       </label>
@@ -1437,30 +1629,30 @@
       </label>
       <label>
         <text>Uncoupler Assignment</text>
+        <text xml:lang="de">Kupplungsparameter</text>
       </label>
       <separator/>
       <label>
         <text>Defines how long coupling is active.</text>
+        <text xml:lang="de">Festlegen, wie lange die Kupplung aktiv ist.</text>
       </label>
       <label>
         <text>Use Function Map or 'Automatic</text>
+        <text xml:lang="de">Funktionsmapping verwenden oder Automatik.</text>
       </label>
       <label>
-        <text>Uncoupling Loco Movement' to set</text>
+        <text>Uncoupling Loco Movement' to set Function Key</text>
+        <text xml:lang="de">Kupplungswalzer legen auf F-Taste.</text>
       </label>
       <label>
-        <text>Function Key</text>
+        <text>  </text>
       </label>
       <separator/>
-      <display item="Uncoupler Holding Current" tooltip="reduced current or off if 0"/>
-      <display item="Uncoupler Pulse Time" tooltip="in 1/20 sec"/>
+      <display item="Uncoupler Holding Current"/>
+      <display item="Uncoupler Pulse Time"/>
       <separator/>
-      <display item="Output Uncoupler FL(f)" label="Output FL(f) (white)" format="checkbox">
-        <label>Output FL(f) (white)</label>
-      </display>
-      <display item="Output Uncoupler FL(r)" label="Output FL(r) (yellow)" format="checkbox">
-        <label>Output FL(r) (yellow)</label>
-      </display>
+      <display item="Output Uncoupler FL(f)"/>
+      <display item="Output Uncoupler FL(r)"/>
       <display item="Output Uncoupler F 1" format="checkbox"/>
       <display item="Output Uncoupler F 2" format="checkbox"/>
       <display item="Output Uncoupler F 3" format="checkbox"/>
@@ -1471,64 +1663,56 @@
     <column>
       <label>
         <text>Automatic Uncoupling Loco Movement</text>
+        <text xml:lang="de">Kupplungswalzer einstellen</text>
       </label>
       <separator/>
       <label>
         <text>Note works on function key-off,</text>
+        <text xml:lang="de">Hinweis: Wird ausgeführt, wenn die Funktion ausgeschaltet wird.</text>
       </label>
       <label>
         <text>non-locking key on throttle suggested</text>
+        <text xml:lang="de">Die F-Taste sollte als Momentauslösung eingestellt sein</text>
       </label>
       <label>
         <text>  </text>
       </label>
-      <display item="Speed Step Coupling Release" label="Speed Step Backup (tension release)">
-        <label>Speed Step Backup (tension release)</label>
-      </display>
-      <display item="Speed Step Uncoupled" label="Speed Step Driving Away">
-        <label>Speed Step Driving Away</label>
-      </display>
-      <display item="Time Driving Backwards" label="Time Backup Release">
-        <label>Time Backup Release</label>
-      </display>
-      <display item="Time Driving Forwards" label="Time Driving Away">
-        <label>Time Driving Away</label>
-      </display>
-      <display item="F-Button Used For Auto-Uncoupling" label="Fn Key to start movement">
-        <label>Fn Key to start movement</label>
-      </display>
+      <display item="Speed Step Coupling Release"/>
+      <display item="Speed Step Uncoupled"/>
+      <display item="Time Driving Backwards"/>
+      <display item="Time Driving Forwards"/>
+      <display item="F-Button Used For Auto-Uncoupling"/>
       <label>
         <text>  </text>
       </label>
       <label>
         <text>Uncoupler outputs with movement</text>
+        <text xml:lang="de">Kupplungsfunktion auslösen mit F-Taste</text>
       </label>
       <separator/>
       <label>
-        <text>Decoder Version V40-V59 movement</text>
+        <text>Decoder Version v40-v59 movement</text>
+        <text xml:lang="de">Decoder Version v40-v59 Kupplungsfunktion</text>
       </label>
-      <display item="Loco travel FWD, rear coupler" label="Loco forward, rear coupler">
-        <label>Loco forward, rear coupler</label>
-      </display>
-      <display item="Loco travel BWD, front coupler" label="Loco reversing, front coupler">
-        <label>Loco reversing, front coupler</label>
-      </display>
+      <display item="Loco travel FWD, rear coupler"/>
+      <display item="Loco travel BWD, front coupler"/>
       <label>
         <text>  </text>
       </label>
       <label>
         <text>Read Only information</text>
+        <text xml:lang="de">nur lesend</text>
       </label>
-      <display item="Decoder Version" label="Decoder Version">
-        <label>Decoder Version</label>
-      </display>
+      <display item="Decoder Version"/>
     </column>
-    <name>Yard mode and Auto Uncoupling</name>
   </pane>
   <pane>
+    <name>Output Dimming and Light Effects</name>
+    <name xml:lang="de">Dimmoptionen/Lichteffekte</name>
     <column>
       <label>
         <text>Output Dimming</text>
+        <text xml:lang="de">Dimmen der Funktionsausgänge</text>
       </label>
       <label>
         <text>CV 54/57</text>
@@ -1537,9 +1721,7 @@
       <label>
         <text>  </text>
       </label>
-      <display item="PWM Function Outputs" label="Output Level (0-100)">
-        <label>Output Level (0-100)</label>
-      </display>
+      <display item="Dimming Output"/>
       <label>
         <text>  </text>
       </label>
@@ -1555,38 +1737,33 @@
     <column>
       <label>
         <text>Function Key Controlled Dimming</text>
+        <text xml:lang="de">Dimmen mit F-Taste</text>
       </label>
       <label>
-        <text>CV 116-118</text>
+        <text>CV 117-119</text>
       </label>
       <separator/>
       <label>
         <text>Note, Function Key 'on' will remove</text>
+        <text xml:lang="de">Hinweis: Wenn eine F-Taste definiert ist</text>
       </label>
       <label>
         <text>the dimming from a lamp.</text>
+        <text xml:lang="de">wird die Dimmung (CV 54/57) abgeschaltet.</text>
       </label>
       <label>
         <text>  </text>
       </label>
-      <display item="F-Button Used For Dimming" label="F-Key For Dimming">
-        <label>F-Key For Dimming</label>
-      </display>
+      <display item="F-Button Used For Dimming"/>
       <label>
         <text>  </text>
       </label>
-      <display item="PWM Dimming" label="Dimming level (0-100)">
-        <label>Dimming level (0-100)</label>
-      </display>
+      <display item="PWM Dimming"/>
       <label>
         <text>  </text>
       </label>
-      <display item="Dim FL(f)" label="F-Key Dims FL(f)" format="checkbox">
-        <label>F-Key Dims FL(f)</label>
-      </display>
-      <display item="Dim FL(r)" label="F-Key Dims FL(r)" format="checkbox">
-        <label>F-Key Dims FL(r)</label>
-      </display>
+      <display item="Dim FL(f)" format="checkbox"/>
+      <display item="Dim FL(r)" format="checkbox"/>
       <display item="Dim F 1" label="F-Key Dims F1" format="checkbox">
         <label>F-Key Dims F1</label>
       </display>
@@ -1597,79 +1774,62 @@
     <column>
       <label>
         <text>Light Effects</text>
+        <text xml:lang="de">Lichteffekte</text>
       </label>
       <label>
         <text>CV 114/115 and CV 154-157</text>
       </label>
       <separator/>
       <!--  NC replaces text entry with drop-downs, v1.5
-			<display item="Light Effects FL(f)" />
-			<display item="Light Effects FL(r)" />
-			<display item="Light Effects F 1" />
-			<display item="Light Effects F 2" />
-			<display item="Light Effects F 3" />
-			<display item="Light Effects F 4" />
-			<display item="Light Effects F 5" />
-			<display item="Light Effects F 6" />
-			<label label="  "/>
-			<label label="  "/>
-			<display item="Sound/Function Assignment"/>
-			<label label="  "/>
-			-->
+      <display item="Light Effects FL(f)" />
+      <display item="Light Effects FL(r)" />
+      <display item="Light Effects F 1" />
+      <display item="Light Effects F 2" />
+      <display item="Light Effects F 3" />
+      <display item="Light Effects F 4" />
+      <display item="Light Effects F 5" />
+      <display item="Light Effects F 6" />
+      <label label="  "/>
+      <label label="  "/>
+      <display item="Sound/Function Assignment"/>
+      <label label="  "/>
+      -->
       <label>
         <text>  </text>
       </label>
-      <display item="PWM Light Effects Outputs" label="Dimming of Effect (0-100)">
-        <label>Dimming of Effect (0-100)</label>
-      </display>
-      <display item="Time Between Effects" label="Time Between Effects (0-255)">
-        <label>Time Between Effects (0-255)</label>
-      </display>
+      <display item="PWM Light Effects Outputs"/>
+      <display item="Time Between Effects"/>
+      <display item="Time Effect ON"/>
       <label>
         <text>  </text>
       </label>
-      <display item="Light Effects F0F" label="Effect FL(f) (white)">
-        <label>Effect FL(f) (white)</label>
-      </display>
-      <display item="Light Effects Direction F0F" label="Direction">
-        <label>Direction</label>
-      </display>
+      <display item="Light Effects F0F"/>
+      <display item="Light Effects Direction F0F"/>
       <label>
         <text>  </text>
       </label>
-      <display item="Light Effects F0R" label="Effect FL(r) (yellow)">
-        <label>Effect FL(r) (yellow)</label>
-      </display>
-      <display item="Light Effects Direction F0R" label="Direction">
-        <label>Direction</label>
-      </display>
+      <display item="Light Effects F0R"/>
+      <display item="Light Effects Direction F0R"/>
       <label>
         <text>  </text>
       </label>
-      <display item="Light Effects F1" label="Effect F1 (green)">
-        <label>Effect F1 (green)</label>
-      </display>
-      <display item="Light Effects Direction F1" label="Direction">
-        <label>Direction</label>
-      </display>
+      <display item="Light Effects F1"/>
+      <display item="Light Effects Direction F1"/>
       <label>
         <text>  </text>
       </label>
-      <display item="Light Effects F2" label="Effect F2 (purple)">
-        <label>Effect F2 (purple)</label>
-      </display>
-      <display item="Light Effects Direction F2" label="Direction">
-        <label>Direction</label>
-      </display>
+      <display item="Light Effects F2"/>
+      <display item="Light Effects Direction F2"/>
     </column>
-    <name>Output Dimming and Light Effects</name>
   </pane>
   <pane>
+    <name>Lock and Shortcircuit Threshholds</name>
+    <name xml:lang="de">Decoder Lock / Kurzschluß</name>
     <column>
       <label>
         <text>  </text>
       </label>
-      <display item="Decoder Lock"/>
+      <display item="Advanced Group 1 Option 12"/>
       <label>
         <text>  </text>
       </label>
@@ -1694,13 +1854,14 @@
         <text>  </text>
       </label>
     </column>
-    <name>Lock and Shortcircuit Threshholds</name>
   </pane>
   <pane>
+    <name>Roco/LGB/Zimo/CT</name>
     <column>
       <label>
-        <text>Zimo features</text>
+        <text>Zimo Funktionen</text>
       </label>
+      <separator/>
       <display item="ZIMO Signal Controlled Speed L"/>
       <display item="ZIMO Signal Controlled Speed U"/>
       <display item="ZIMO Signal Controlled Acc Reaction"/>
@@ -1718,6 +1879,7 @@
       <label>
         <text>LGB</text>
       </label>
+      <separator/>
       <display item="LGB F4 Impulse"/>
       <!-- NC v1.5 comment - CV108 appears incorrect according to CT documentation -->
       <display item="LGB Continuous Manual Sound Bitmask"/>
@@ -1725,13 +1887,13 @@
     <column>
       <label>
         <text>Alternate CV Set</text>
+        <text xml:lang="de">Alternatives CV Set</text>
       </label>
-      <display item="Select CV Set 1 or 2" tooltip=" Selects CV Set 1(OFF) or 2(ON)"/>
+      <display item="Select CV Set 1 or 2"/>
     </column>
     <column>
       <display item="ACK Pulse"/>
       <display item="Error Diagnosis"/>
     </column>
-    <name>Roco LGB Zimo CT</name>
   </pane>
 </decoder-config>

@@ -1,4 +1,3 @@
-// NodeConfigFrame.java
 package jmri.jmrix.maple.nodeconfig;
 
 import java.awt.Container;
@@ -25,15 +24,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2008
  * @author	Dave Duchamp Copyright (C) 2004, 2009
- * @version	$Revision$
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1694906139287195915L;
-
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.maple.nodeconfig.NodeConfigBundle");
 
     protected javax.swing.JTextField nodeAddrField = new javax.swing.JTextField(3);
@@ -283,14 +275,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         }
         // all ready, create the new node
         curNode = new SerialNode(nodeAddress, 0);
-        if (curNode == null) {
-            statusText1.setText(rb.getString("Error3"));
-            statusText1.setVisible(true);
-            log.error("Error creating Maple Serial Node, constructor returned null");
-            errorInStatus1 = true;
-            resetNotes2();
-            return;
-        }
         // configure the new node
         setNodeParameters();
 //        // register any orphan sensors that this node may have
@@ -752,6 +736,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 //        // successful
 //        return true;
 //    }
-    static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class.getName());
 
 }

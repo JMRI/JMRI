@@ -1,4 +1,3 @@
-// AbstractLightMgrTest.java
 /**
  * This is not itself a test class, e.g. should not be added to a suite.
  * Instead, this forms the base for test classes, including providing some
@@ -9,8 +8,11 @@ package jmri.managers;
 import java.beans.PropertyChangeListener;
 import jmri.Light;
 import jmri.LightManager;
-import junit.framework.Assert;
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 
 /**
  * Abstract Base Class for LightManager tests in specific jmrix packages. This
@@ -18,19 +20,16 @@ import junit.framework.TestCase;
  * this forms the base for test classes, including providing some common tests
  *
  * @author	Bob Jacobsen 2003, 2006, 2008
- * @version	$Revision$
+ * @author      Paul Bender Copyright (C) 2016
  */
-public abstract class AbstractLightMgrTest extends TestCase {
+public abstract class AbstractLightMgrTest {
 
     // implementing classes must provide these abstract members:
     //
-    abstract protected void setUp();    	// load t with actual object; create scaffolds as needed
+    @Before
+    abstract public void setUp();    	// load t with actual object; create scaffolds as needed
 
     abstract public String getSystemName(int i);
-
-    public AbstractLightMgrTest(String s) {
-        super(s);
-    }
 
     protected LightManager l = null;	// holds objects under test
 
@@ -45,13 +44,16 @@ public abstract class AbstractLightMgrTest extends TestCase {
 
     // start of common tests
     // test creation - real work is in the setup() routine
+    @Test
     public void testCreate() {
     }
 
+    @Test
     public void testDispose() {
         l.dispose();  // all we're really doing here is making sure the method exists
     }
 
+    @Test
     public void testLightPutGet() {
         // create
         Light t = l.newLight(getSystemName(getNumToTest1()), "mine");
@@ -61,6 +63,7 @@ public abstract class AbstractLightMgrTest extends TestCase {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
+    @Test
     public void testDefaultSystemName() {
         // create
         Light t = l.provideLight("" + getNumToTest1());
@@ -69,6 +72,19 @@ public abstract class AbstractLightMgrTest extends TestCase {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
+    @Test
+    public void testProvideFailure() {
+        boolean correct = false;
+        try {
+            Light t = l.provideLight("");
+            Assert.fail("didn't throw");
+        } catch (IllegalArgumentException ex) {
+            correct = true;
+        }
+        Assert.assertTrue("Exception thrown properly", correct);        
+    }
+    
+    @Test
     public void testSingleObject() {
         // test that you always get the same representation
         Light t1 = l.newLight(getSystemName(getNumToTest1()), "mine");
@@ -82,18 +98,21 @@ public abstract class AbstractLightMgrTest extends TestCase {
         Assert.assertTrue("same new ", t1 == t2);
     }
 
+    @Test
     public void testMisses() {
         // try to get nonexistant lights
         Assert.assertTrue(null == l.getByUserName("foo"));
         Assert.assertTrue(null == l.getBySystemName("bar"));
     }
 
+    @Test
     public void testUpperLower() {
         Light t = l.provideLight("" + getNumToTest2());
         String name = t.getSystemName();
         Assert.assertNull(l.getLight(name.toLowerCase()));
     }
 
+    @Test
     public void testRename() {
         // get light
         Light t1 = l.newLight(getSystemName(getNumToTest1()), "before");

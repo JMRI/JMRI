@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2002, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
- * @version $Revision$
  */
 abstract public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
@@ -52,7 +51,7 @@ abstract public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
     abstract public String toMonitorString();
 
-    static Logger log = LoggerFactory.getLogger(SerialReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialReply.class.getName());
 
 }
 

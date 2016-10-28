@@ -1,4 +1,3 @@
-// ConfigToolPane.java
 package jmri.jmrix.can.cbus.swing.configtool;
 
 import java.awt.GridBagConstraints;
@@ -19,23 +18,15 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Pane to ease creation of Sensor, Turnouts and Lights that are linked to CBUS
  * events.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  * @since 2.3.1
  */
 public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6189931385951469812L;
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.can.cbus.swing.configtool.ConfigToolBundle");
 
@@ -102,14 +93,6 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         tc.addCanListener(this);
     }
 
-    /*
-     * @deprecated 2.99.2
-     */
-    /*@Deprecated
-     public void initComponents() {
-     tc = TrafficController.instance();
-     tc.addCanListener(this);
-     }*/
     public String getTitle() {
         if (memo != null) {
             return (memo.getUserName() + " Event Capture Tool");
@@ -149,8 +132,6 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         // disconnect from the CBUS
         tc.removeCanListener(this);
     }
-
-    static Logger log = LoggerFactory.getLogger(ConfigToolPane.class.getName());
 
     /**
      * Class to build one NamedBean

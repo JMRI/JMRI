@@ -1,18 +1,14 @@
-// PackageTest.java
 package jmri.jmrix.ieee802154;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.ieee802154 package
  *
  * @author	Paul Bender
- * @version	$Revision$
- */
+  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
@@ -23,19 +19,32 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.ieee802154.IEEE802154Test");  // no tests in this class itself
         suite.addTest(new TestSuite(IEEE802154MessageTest.class));
+        suite.addTest(new TestSuite(IEEE802154ReplyTest.class));
         suite.addTest(new TestSuite(IEEE802154SystemConnectionMemoTest.class));
-        suite.addTest(jmri.jmrix.ieee802154.xbee.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IEEE802154TrafficControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ieee802154.xbee.PackageTest.class));
         suite.addTest(jmri.jmrix.ieee802154.serialdriver.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IEEE802154NodeTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ieee802154.swing.PackageTest.class));
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    // The minimal setup for log4J
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
+
 
 }

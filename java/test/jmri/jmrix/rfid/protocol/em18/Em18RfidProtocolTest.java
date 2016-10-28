@@ -4,8 +4,6 @@ import jmri.jmrix.AbstractMRReply;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the Em18RfidProtocol class
@@ -62,7 +60,7 @@ public class Em18RfidProtocolTest extends TestCase {
     public void testIsValid() {
         Em18RfidProtocol instance = new Em18RfidProtocol();
         assertEquals(true, instance.isValid(msgStandalone));
-        assertEquals(true, instance.isValid(msgBadChkSumStandalone));
+        assertEquals(false, instance.isValid(msgBadChkSumStandalone));
     }
 
     /**
@@ -125,7 +123,7 @@ public class Em18RfidProtocolTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", Em18RfidProtocolTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -144,7 +142,5 @@ public class Em18RfidProtocolTest extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(Em18RfidProtocolTest.class.getName());
 
 }

@@ -1,4 +1,3 @@
-// NodeConfigFrame.java
 package jmri.jmrix.cmri.serial.nodeconfig;
 
 import java.awt.BorderLayout;
@@ -18,6 +17,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialSensorManager;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
@@ -29,14 +29,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2004
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4237332984381047586L;
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.cmri.serial.nodeconfig.NodeConfigBundle");
 
@@ -84,11 +78,16 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     protected String editStatus2 = rb.getString("NotesEdit2");
     protected String editStatus3 = rb.getString("NotesEdit3");
 
+    private CMRISystemConnectionMemo _memo = null;
+
     /**
      * Constructor method
      */
-    public NodeConfigFrame() {
+    public NodeConfigFrame(CMRISystemConnectionMemo memo) {
         super();
+
+        _memo = memo;
+
         // Clear information arrays
         for (int i = 0; i < 64; i++) {
             cardType[i] = rb.getString("CardTypeNone");
@@ -121,7 +120,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         panel11.add(nodeAddrStatic);
         nodeAddrStatic.setVisible(false);
         panel11.add(new JLabel("   " + rb.getString("LabelNodeType") + " "));
-        nodeTypeBox = new JComboBox<String>();
+        nodeTypeBox = new JComboBox<>();
         panel11.add(nodeTypeBox);
         nodeTypeBox.addItem("SMINI");
         nodeTypeBox.addItem("USIC_SUSIC");
@@ -155,7 +154,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         receiveDelayField.setToolTipText(rb.getString("TipDelay"));
         receiveDelayField.setText("0");
         panel12.add(cardSizeText);
-        cardSizeBox = new JComboBox<String>();
+        cardSizeBox = new JComboBox<>();
         panel12.add(cardSizeBox);
         cardSizeBox.addItem(rb.getString("CardSize24"));
         cardSizeBox.addItem(rb.getString("CardSize32"));
@@ -203,7 +202,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         cardConfigTable.setRowSelectionAllowed(false);
         cardConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180, 100));
 
-        JComboBox<String> cardTypeCombo = new JComboBox<String>();
+        JComboBox<String> cardTypeCombo = new JComboBox<>();
         cardTypeCombo.addItem(rb.getString("CardTypeOutput"));
         cardTypeCombo.addItem(rb.getString("CardTypeInput"));
         cardTypeCombo.addItem(rb.getString("CardTypeNone"));
@@ -352,7 +351,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             return;
         }
         // get a SerialNode corresponding to this node address if one exists
-        curNode = (SerialNode) SerialTrafficController.instance().getNodeFromAddress(nodeAddress);
+        curNode = (SerialNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
         if (curNode != null) {
             statusText1.setText(rb.getString("Error1") + Integer.toString(nodeAddress)
                     + rb.getString("Error2"));
@@ -373,19 +372,12 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             return;
         }
         // all ready, create the new node
-        curNode = new SerialNode(nodeAddress, nodeType);
-        if (curNode == null) {
-            statusText1.setText(rb.getString("Error3"));
-            statusText1.setVisible(true);
-            log.error("Error creating Serial Node, constructor returned null");
-            errorInStatus1 = true;
-            resetNotes2();
-            return;
-        }
+        curNode = new SerialNode(nodeAddress, nodeType,_memo.getTrafficController());
+
         // configure the new node
         setNodeParameters();
         // register any orphan sensors that this node may have
-        SerialSensorManager.instance().registerSensorsForNode(curNode);
+        ((SerialSensorManager)_memo.getSensorManager()).registerSensorsForNode(curNode);
         // reset after succefully adding node
         resetNotes();
         changedNode = true;
@@ -405,7 +397,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             return;
         }
         // get the SerialNode corresponding to this node address
-        curNode = (SerialNode) SerialTrafficController.instance().getNodeFromAddress(nodeAddress);
+        curNode = (SerialNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
             statusText1.setText(rb.getString("Error4"));
             statusText1.setVisible(true);
@@ -502,7 +494,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             return;
         }
         // get the SerialNode corresponding to this node address
-        curNode = (SerialNode) SerialTrafficController.instance().getNodeFromAddress(nodeAddress);
+        curNode = (SerialNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
             statusText1.setText(rb.getString("Error4"));
             statusText1.setVisible(true);
@@ -517,7 +509,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                 javax.swing.JOptionPane.OK_CANCEL_OPTION,
                 javax.swing.JOptionPane.WARNING_MESSAGE)) {
             // delete this node
-            SerialTrafficController.instance().deleteNode(nodeAddress);
+            _memo.getTrafficController().deleteNode(nodeAddress);
             // provide user feedback
             resetNotes();
             statusText1.setText(rb.getString("FeedBackDelete") + " "
@@ -710,7 +702,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                 break;
         }
         // Cause reinitialization of this Node to reflect these parameters
-        SerialTrafficController.instance().initializeSerialNode(curNode);
+        _memo.getTrafficController().initializeSerialNode(curNode);
     }
 
     /**
@@ -942,11 +934,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */
     public class CardConfigModel extends AbstractTableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8613368713011269394L;
-
         public String getColumnName(int c) {
             return cardConfigColumnNames[c];
         }
@@ -994,11 +981,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      * searchlights
      */
     public class SearchlightConfigModel extends AbstractTableModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -8050347332422090157L;
 
         public String getColumnName(int c) {
             return searchlightConfigColumnNames[c];
@@ -1091,6 +1073,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     private boolean[] searchlightBits = new boolean[48];   // true if this bit is a searchlight bit
     private boolean[] firstSearchlight = new boolean[48];  // true if first of a pair of searchlight bits
 
-    static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class.getName());
 
 }

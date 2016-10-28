@@ -1,11 +1,9 @@
 package jmri.jmrix.lenz;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * XNetSystemConnectionMemoTest.java
@@ -13,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Description:	tests for the jmri.jmrix.lenz.XNetSystemConnectionMemo class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class XNetSystemConnectionMemoTest extends TestCase {
 
@@ -53,7 +50,7 @@ public class XNetSystemConnectionMemoTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", XNetSystemConnectionMemoTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -70,7 +67,5 @@ public class XNetSystemConnectionMemoTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(XNetSystemConnectionMemoTest.class.getName());
 
 }

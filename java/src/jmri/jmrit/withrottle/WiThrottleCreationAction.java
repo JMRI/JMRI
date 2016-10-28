@@ -1,26 +1,18 @@
 package jmri.jmrit.withrottle;
 
-/**
- * WiThrottle GUI
- *
- * @author Brett Hoffman Copyright (C) 2009
- * @version $Revision$
- *
- */
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import javax.swing.Icon;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+/**
+ * WiThrottle GUI
+ *
+ * @author Brett Hoffman Copyright (C) 2009
+ *
+ */
 public class WiThrottleCreationAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6107790829195111275L;
 
     public WiThrottleCreationAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -39,7 +31,7 @@ public class WiThrottleCreationAction extends JmriAbstractAction {
      */
     public WiThrottleCreationAction(String name) {
         super(name);
-        if (jmri.InstanceManager.throttleManagerInstance() == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -48,7 +40,7 @@ public class WiThrottleCreationAction extends JmriAbstractAction {
      * Create a new network server.
      */
     public WiThrottleCreationAction() {
-        this("Start WiThrottle");
+        this(Bundle.getMessage("MenuStartWiThrottleServer"));
     }
 
     /**
@@ -76,6 +68,5 @@ public class WiThrottleCreationAction extends JmriAbstractAction {
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
-    static Logger log = LoggerFactory.getLogger(WiThrottleCreationAction.class.getName());
 
 }

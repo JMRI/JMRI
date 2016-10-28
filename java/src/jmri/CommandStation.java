@@ -1,7 +1,6 @@
-// CommandStation.java
 package jmri;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import javax.annotation.Nonnull;
 
 /**
  * Provide a DCC command station's basic ability: Sending DCC packets to the
@@ -29,7 +28,6 @@ import edu.umd.cs.findbugs.annotations.NonNull;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public interface CommandStation {
 
@@ -40,12 +38,10 @@ public interface CommandStation {
      *                error-correction byte.
      * @param repeats Number of times to repeat the transmission.
      */
-    public void sendPacket(@NonNull byte[] packet, int repeats);
+    public void sendPacket(@Nonnull byte[] packet, int repeats);
 
     public String getUserName();
 
     public String getSystemPrefix();
 
 }
-
-/* @(#)CommandStation.java */

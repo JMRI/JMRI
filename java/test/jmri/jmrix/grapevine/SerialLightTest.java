@@ -1,19 +1,15 @@
-// SerialLightTest.java
 package jmri.jmrix.grapevine;
 
 import jmri.implementation.AbstractLightTest;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.grapevine.SerialLight class, low address.
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class SerialLightTest extends AbstractLightTest {
 
     private SerialTrafficControlScaffold tcis = null;
@@ -48,7 +44,7 @@ public class SerialLightTest extends AbstractLightTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SerialLightTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -56,7 +52,5 @@ public class SerialLightTest extends AbstractLightTest {
         TestSuite suite = new TestSuite(SerialLightTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(SerialLightTest.class.getName());
 
 }

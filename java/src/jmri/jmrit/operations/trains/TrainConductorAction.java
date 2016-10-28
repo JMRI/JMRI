@@ -10,14 +10,9 @@ import javax.swing.AbstractAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2011
- * @version $Revision: 17977 $
  */
 public class TrainConductorAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6897376422747877387L;
     Train train;
     TrainConductorFrame f = null;
 

@@ -27,8 +27,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Paul Bender Copyright (C) 2003-2010
  * @author	Giorgio Terdina Copyright (C) 2007
- * @version	$Revision$
- */
+  */
 public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListener {
 
     /**
@@ -213,6 +212,6 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(SystemInfoFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SystemInfoFrame.class.getName());
 
 }

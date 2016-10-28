@@ -36,7 +36,7 @@
         <label xml:lang="de">Startspannung</label>
         <comment>A value of 255 corresponds to 100%</comment>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_254.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <variable CV="9" item="Total PWM Period" comment="1-255 PWM drive freq in 128us increments" default="195">
         <decVal/>

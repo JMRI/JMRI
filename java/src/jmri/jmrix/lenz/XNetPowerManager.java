@@ -5,8 +5,7 @@
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author	Paul Bender Copyright (C) 2003-2010
- * @version	$Revision$
- */
+  */
 package jmri.jmrix.lenz;
 
 import jmri.JmriException;
@@ -152,7 +151,7 @@ public class XNetPowerManager implements PowerManager, XNetListener {
     }
 
     // Initialize logging information
-    static Logger log = LoggerFactory.getLogger(XNetPowerManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetPowerManager.class.getName());
 
 }
 

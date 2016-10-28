@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Handle XML configuration for DoubleTurnoutSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008
- * @version $Revision$
  */
 public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -66,22 +65,17 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
         return el;
     }
 
-    /**
-     * Create a DoubleTurnoutSignalHead
-     *
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
-        List<Element> l = element.getChildren("turnoutname");
+    @Override
+    public boolean load(Element shared, Element perNode) {
+        List<Element> l = shared.getChildren("turnoutname");
         if (l.size() == 0) {
-            l = element.getChildren("turnout");
+            l = shared.getChildren("turnout");
         }
         NamedBeanHandle<Turnout> green = loadTurnout(l.get(0));
         NamedBeanHandle<Turnout> red = loadTurnout(l.get(1));
         // put it together
-        String sys = getSystemName(element);
-        String uname = getUserName(element);
+        String sys = getSystemName(shared);
+        String uname = getUserName(shared);
         SignalHead h;
         if (uname == null) {
             h = new DoubleTurnoutSignalHead(sys, green, red);
@@ -89,9 +83,9 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
             h = new DoubleTurnoutSignalHead(sys, uname, green, red);
         }
 
-        loadCommon(h, element);
+        loadCommon(h, shared);
 
-        InstanceManager.signalHeadManagerInstance().register(h);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         return true;
     }
 
@@ -115,8 +109,13 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
             return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
         } else {
             String name = e.getText();
-            Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(name);
-            return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
+            try {
+                Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(name);
+                return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
+            } catch (IllegalArgumentException ex) {
+                log.warn("Failed to provide Turnout \"{}\" in sendStatus", name);
+                return null;
+            }            
         }
     }
 
@@ -124,5 +123,5 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(DoubleTurnoutSignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DoubleTurnoutSignalHeadXml.class.getName());
 }

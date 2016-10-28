@@ -1,4 +1,3 @@
-// QsiTrafficController.java
 package jmri.jmrix.qsi;
 
 import gnu.io.SerialPort;
@@ -21,24 +20,17 @@ import org.slf4j.LoggerFactory;
  * content.
  *
  * @author	Bob Jacobsen Copyright (C) 2007, 2008
- * @version	$Revision$
  */
 public class QsiTrafficController implements QsiInterface, Runnable {
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
     public QsiTrafficController() {
-        if (log.isDebugEnabled()) {
-            log.debug("setting instance: " + this);
-        }
-        self = this;
     }
 
 // The methods to implement the QsiInterface
     protected Vector<QsiListener> cmdListeners = new Vector<QsiListener>();
 
     public boolean status() {
-        return (ostream != null & istream != null);
+        return (ostream != null && istream != null);
     }
 
     public synchronized void addQsiListener(QsiListener l) {
@@ -72,9 +64,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
         for (int i = 0; i < cnt; i++) {
             QsiListener client = v.elementAt(i);
             if (notMe != client) {
-                if (log.isDebugEnabled()) {
-                    log.debug("notify client: " + client);
-                }
+                log.debug("notify client: {}", client);
                 try {
                     client.message(m);
                 } catch (Exception e) {
@@ -99,18 +89,18 @@ public class QsiTrafficController implements QsiInterface, Runnable {
 
     public void setQsiState(int s) {
         qsiState = s;
-        if (s == V4BOOTMODE) {
-            // enable flow control - required for QSI v4 bootloader
-            SerialDriverAdapter.instance().setHandshake(SerialPort.FLOWCONTROL_RTSCTS_IN
-                    | SerialPort.FLOWCONTROL_RTSCTS_OUT);
+        if(controller instanceof SerialDriverAdapter) {
+           if (s == V4BOOTMODE) {
+               // enable flow control - required for QSI v4 bootloader
+               ((SerialDriverAdapter)controller).setHandshake(SerialPort.FLOWCONTROL_RTSCTS_IN
+                       | SerialPort.FLOWCONTROL_RTSCTS_OUT);
 
-        } else {
-            // disable flow control
-            SerialDriverAdapter.instance().setHandshake(0);
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("Setting qsiState " + s);
-        }
+           } else {
+               // disable flow control
+               ((SerialDriverAdapter)controller).setHandshake(0);
+           }
+           log.debug("Setting qsiState {}", s);
+       }
     }
 
     public boolean isNormalMode() {
@@ -136,9 +126,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
         int cnt = v.size();
         for (int i = 0; i < cnt; i++) {
             QsiListener client = v.elementAt(i);
-            if (log.isDebugEnabled()) {
-                log.debug("notify client: " + client);
-            }
+            log.debug("notify client: {}", client);
             try {
                 // skip forwarding to the last sender for now, we'll get them later
                 if (lastSender != client) {
@@ -161,9 +149,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
      * Forward a preformatted message to the actual interface.
      */
     public void sendQsiMessage(QsiMessage m, QsiListener reply) {
-        if (log.isDebugEnabled()) {
-            log.debug("sendQsiMessage message: [" + m + "]");
-        }
+        log.debug("sendQsiMessage message: [{}]", m);
         // remember who sent this
         lastSender = reply;
 
@@ -204,7 +190,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
         try {
             if (ostream != null) {
                 if (log.isDebugEnabled()) {
-                    log.debug("write message: " + jmri.util.StringUtil.hexStringFromBytes(msg));
+                    log.debug("write message: {}", jmri.util.StringUtil.hexStringFromBytes(msg));
                 }
                 ostream.write(msg);
             } else {
@@ -249,18 +235,12 @@ public class QsiTrafficController implements QsiInterface, Runnable {
      *
      * @return The registered QsiTrafficController instance for general use, if
      *         need be creating one.
+     * deprecated since 4.5.1
      */
+    @Deprecated
     static public QsiTrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new QsiTrafficController object");
-            }
-            self = new QsiTrafficController();
-        }
-        return self;
+        return null;
     }
-
-    static volatile protected QsiTrafficController self = null;
 
     // data members to hold the streams
     DataInputStream istream = null;
@@ -293,7 +273,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
         for (i = 0; i < QsiReply.MAXSIZE; i++) {
             byte char1 = istream.readByte();
             if (log.isDebugEnabled()) {
-                log.debug("   Rcv char: " + jmri.util.StringUtil.twoHexFromInt(char1));
+                log.debug("   Rcv char: {}", jmri.util.StringUtil.twoHexFromInt(char1));
             }
             msg.setElement(i, char1);
             if (endReply(msg)) {
@@ -302,9 +282,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
         }
 
         // message is complete, dispatch it !!
-        if (log.isDebugEnabled()) {
-            log.debug("dispatch reply of length " + i);
-        }
+        log.debug("dispatch reply of length {}",i);
         {
             final QsiReply thisMsg = msg;
             final QsiTrafficController thisTC = this;
@@ -348,8 +326,5 @@ public class QsiTrafficController implements QsiInterface, Runnable {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(QsiTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QsiTrafficController.class.getName());
 }
-
-
-/* @(#)QsiTrafficController.java */

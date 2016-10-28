@@ -18,27 +18,26 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version $Revision$
  */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.ParseException;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import jmri.InstanceManager;
-import jmri.jmrit.beantable.AbstractTableAction;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.PortalManager;
+import jmri.util.IntlUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class BlockPathTableModel extends AbstractTableModel implements PropertyChangeListener {
 
-    private static final long serialVersionUID = -2472819814795605641L;
     public static final int FROM_PORTAL_COLUMN = 0;
     public static final int NAME_COLUMN = 1;
     public static final int TO_PORTAL_COLUMN = 2;
@@ -122,7 +121,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
             case TO_PORTAL_COLUMN:
                 return Bundle.getMessage("ToPortal");
             case LENGTHCOL:
-                return AbstractTableAction.rb.getString("BlockLengthColName");
+                return Bundle.getMessage("BlockLengthColName");
             case UNITSCOL:
                 return "  ";
         }
@@ -211,8 +210,8 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                             OPath path = new OPath(strValue, _block, fromPortal, toPortal, null);                            
                             float len = 0.0f;
                             try {
-                                len = Float.valueOf(tempRow[LENGTHCOL]).floatValue();
-                            } catch (java.lang.NumberFormatException nfe) {
+                                len = IntlUtilities.floatValue(tempRow[LENGTHCOL]);
+                            } catch (ParseException e) {
                                 JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]),
                                         Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
                             }
@@ -237,13 +236,13 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                     break;
                 case LENGTHCOL:
                     try {
-                        _tempLen = Float.valueOf((String)value).floatValue();
+                        _tempLen = IntlUtilities.floatValue(value.toString());
                         if (tempRow[UNITSCOL].equals(Bundle.getMessage("cm"))) {
                             _tempLen *= 10f;
                         } else {
                             _tempLen *= 25.4f;                            
                         }
-                    } catch (java.lang.NumberFormatException nfe) {
+                    } catch (ParseException e) {
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]),
                                 Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
                     }
@@ -362,14 +361,14 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                 break;
             case LENGTHCOL:
                 try {
-                    float len = Float.valueOf((String)value).floatValue();
+                    float len = IntlUtilities.floatValue(value.toString());
                     if (_units.get(row)) {
                         path.setLength(len * 10.0f);
                     } else {
                         path.setLength(len * 25.4f);
                     }
                     fireTableRowsUpdated(row, row);                    
-                } catch (java.lang.NumberFormatException nfe) {
+                } catch (ParseException e) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", value),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
                 }
@@ -451,5 +450,5 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(BlockPathTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockPathTableModel.class.getName());
 }

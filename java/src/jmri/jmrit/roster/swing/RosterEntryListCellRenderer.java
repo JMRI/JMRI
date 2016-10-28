@@ -15,17 +15,13 @@ import jmri.jmrit.roster.RosterEntry;
  */
 public class RosterEntryListCellRenderer extends JLabel implements ListCellRenderer<Object> {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1256109351736867211L;
-
     public RosterEntryListCellRenderer() {
         super();
         setOpaque(true);
     }
 
-    public Component getListCellRendererComponent(JList list, Object value,
+    // FIXME: JList needs typed
+    public Component getListCellRendererComponent(@SuppressWarnings("rawtypes") JList list, Object value,
             int index, boolean isSelected, boolean cellHasFocus) {
         if (value != null) {
             if (value instanceof RosterEntry) {

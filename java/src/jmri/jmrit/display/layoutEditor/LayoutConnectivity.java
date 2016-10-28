@@ -1,4 +1,3 @@
-// jmri.jmrit.display.LayoutConnectivity.java
 package jmri.jmrit.display.layoutEditor;
 
 import jmri.Path;
@@ -43,7 +42,6 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor panels.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007-2008
- * @version $Revision$
  */
 public class LayoutConnectivity {
 
@@ -180,6 +178,6 @@ public class LayoutConnectivity {
         return anchor;
     }
 
-    static Logger log = LoggerFactory.getLogger(LayoutConnectivity.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutConnectivity.class.getName());
 
 }

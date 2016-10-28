@@ -1,4 +1,3 @@
-// LnClockControl.java
 package jmri.jmrix.loconet;
 
 import java.util.Date;
@@ -41,7 +40,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2007
  * @author	Bob Jacobsen, Alex Shepherd
- * @version $Revision$
  */
 public class LnClockControl extends DefaultClockControl implements SlotListener {
 
@@ -61,7 +59,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         }
 
         // Get internal timebase
-        clock = jmri.InstanceManager.timebaseInstance();
+        clock = jmri.InstanceManager.getDefault(jmri.Timebase.class);
         // Create a Timebase listener for Minute change events from the internal clock
         minuteChangeListener = new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -239,7 +237,6 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
      * responding to a read from this module 3) a slot not involving the clock
      * changing
      *
-     * @param s
      */
     @SuppressWarnings("deprecation")
     public void notifyChangedSlot(LocoNetSlot s) {
@@ -324,7 +321,6 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LnClockControl.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnClockControl.class.getName());
 }
 
-/* @(#)LnClockControl.java */

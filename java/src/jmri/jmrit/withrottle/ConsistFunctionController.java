@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * @author Brett Hoffman Copyright (C) 2010, 2011
- * @version $Revision$
  */
 public class ConsistFunctionController implements ThrottleListener {
 
@@ -60,6 +59,6 @@ public class ConsistFunctionController implements ThrottleListener {
         return jmri.InstanceManager.throttleManagerInstance().requestThrottle(loco.getNumber(), loco.isLongAddress(), this);
     }
 
-    static Logger log = LoggerFactory.getLogger(ConsistFunctionController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConsistFunctionController.class.getName());
 
 }

@@ -1,4 +1,3 @@
-// IdentifyDecoder.java
 package jmri.jmrit.decoderdefn;
 
 import org.slf4j.Logger;
@@ -15,16 +14,16 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Contains manufacturer-specific code to generate a 3rd "productID" identifier,
  * in addition to the manufacturer ID and model ID:<ul>
- * <li>QSI: (mfgID == 113) write 254=>CV49, write 4=>CV50, then CV56 is high
- * byte, write 5=>CV50, then CV56 is low byte of ID
+ * <li>QSI: (mfgID == 113) write {@literal 254=>CV49}, write {@literal 4=>CV50},
+ * then CV56 is high byte, write {@literal 5=>CV50}, then CV56 is low byte of ID
  * <li>Harman: (mfgID = 98) CV112 is high byte, CV113 is low byte of ID
+ * <li>Hornby: (mfgID == 48) CV159 is ID
  * <li>TCS: (mfgID == 153) CV249 is ID
  * <li>Zimo: (mfgID == 145) CV250 is ID
  * </ul>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2010
  * @author Howard G. Penny Copyright (C) 2005
- * @version $Revision$
  * @see jmri.jmrit.symbolicprog.CombinedLocoSelPane
  * @see jmri.jmrit.symbolicprog.NewLocoSelPane
  */
@@ -65,9 +64,17 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read decoder ID CV 249");
             readCV(249);
             return false;
+        } else if (mfgID == 48) {  // Hornby
+            statusUpdate("Read decoder ID CV 159");
+            readCV(159);
+            return false;
         } else if (mfgID == 145) {  // Zimo
             statusUpdate("Read decoder ID CV 250");
             readCV(250);
+            return false;
+        } else if (mfgID == 141 && (modelID == 70 || modelID == 71)) {  // SoundTraxx
+            statusUpdate("Read productID CV256");
+            readCV(256);
             return false;
         } else if (mfgID == 98) {  // Harman
             statusUpdate("Read decoder ID high CV 112");
@@ -89,8 +96,15 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         } else if (mfgID == 153) {  // TCS
             productID = value;
             return true;
+        } else if (mfgID == 48) {  // Hornby
+            productID = value;
+            return true;
         } else if (mfgID == 145) {  // Zimo
             productID = value;
+            return true;
+        } else if (mfgID == 141 && (modelID == 70 || modelID == 71)) {  // SoundTraxx
+            productID = value;
+            log.info("Decoder returns mfgID:" + mfgID + ";modelID:" + modelID + ";productID:" + productID);
             return true;
         } else if (mfgID == 98) {  // Harman
             productIDhigh = value;
@@ -200,6 +214,6 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     abstract protected void message(String m);
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(IdentifyDecoder.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IdentifyDecoder.class.getName());
 
 }

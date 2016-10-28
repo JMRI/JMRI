@@ -13,14 +13,13 @@ import org.slf4j.LoggerFactory;
  *
  *
  * @author Brett Hoffman Copyright (C) 2010
- * @version $Revision$
  */
 public class TurnoutController extends AbstractController implements PropertyChangeListener {
 
     private TurnoutManager manager = null;
 
     public TurnoutController() {
-        manager = InstanceManager.turnoutManagerInstance();
+        manager = InstanceManager.getNullableDefault(jmri.TurnoutManager.class);
         if (manager == null) {
             log.info("No turnout manager instance.");
             isValid = false;
@@ -142,7 +141,6 @@ public class TurnoutController extends AbstractController implements PropertyCha
 
     /**
      *
-     * @param evt
      */
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("KnownState")) {
@@ -192,5 +190,5 @@ public class TurnoutController extends AbstractController implements PropertyCha
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TurnoutController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutController.class.getName());
 }

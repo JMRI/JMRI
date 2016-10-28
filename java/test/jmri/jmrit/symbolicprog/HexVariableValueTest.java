@@ -1,20 +1,16 @@
-// HexVariableValueTest.java
 package jmri.jmrit.symbolicprog;
 
 import java.util.HashMap;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test the HexVariableValue class
  *
  * @author	Bob Jacobsen Copyright 2001
- * @version $Revision$
  */
 public class HexVariableValueTest extends VariableValueTest {
 
@@ -55,7 +51,7 @@ public class HexVariableValueTest extends VariableValueTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", HexVariableValueTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -63,7 +59,5 @@ public class HexVariableValueTest extends VariableValueTest {
         TestSuite suite = new TestSuite(HexVariableValueTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(HexVariableValueTest.class.getName());
 
 }

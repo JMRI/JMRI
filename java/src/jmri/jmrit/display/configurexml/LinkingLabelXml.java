@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.LinkingLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2013
- * @version $Revision$
  */
 public class LinkingLabelXml extends PositionableLabelXml {
 
@@ -141,5 +140,5 @@ public class LinkingLabelXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.LABELS, element);
     }
 
-    static Logger log = LoggerFactory.getLogger(LinkingLabelXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LinkingLabelXml.class.getName());
 }

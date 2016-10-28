@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 17977 $
  */
 public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implements MarklinListener {
 
@@ -108,5 +107,5 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
     public void reply(MarklinReply r) {
         packetReplyField.setText(r.toHexString());
     } // ignore replies
-    static Logger log = LoggerFactory.getLogger(PacketGenPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PacketGenPanel.class.getName());
 }

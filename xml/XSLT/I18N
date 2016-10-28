@@ -1,6 +1,6 @@
 README for Internationalization (I18N) scripts
 
-For more information on JMRI I18N, see http://jmri.sourceforge.net/help/en/html/doc/Technical/I8N.shtml
+For more information on JMRI I18N, see http://jmri.org/help/en/html/doc/Technical/I8N.shtml
 
 There are transforms that can create I18N'd XML elements in decoder and 
 programmer files:

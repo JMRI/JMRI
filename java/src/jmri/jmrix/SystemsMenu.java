@@ -1,4 +1,3 @@
-// SystemsMenu.java
 package jmri.jmrix;
 
 import java.util.ResourceBundle;
@@ -17,14 +16,8 @@ import org.slf4j.LoggerFactory;
  *
  * @see ActiveSystemsMenu
  * @author	Bob Jacobsen Copyright 2003
- * @version $Revision$
  */
 public class SystemsMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4380492272339103766L;
 
     public SystemsMenu(String name) {
         this();
@@ -43,15 +36,14 @@ public class SystemsMenu extends JMenu {
         // get ComponentFactory object(s) and create menus
         java.util.List<ComponentFactory> list
                 = jmri.InstanceManager.getList(ComponentFactory.class);
-        if (list != null) {
-            for (ComponentFactory memo : list) {
-                JMenu menu = memo.getMenu();
-                if (menu != null) {
-                    add(menu);
-                }
+
+        for (ComponentFactory memo : list) {
+            JMenu menu = memo.getMenu();
+            if (menu != null) {
+                add(menu);
             }
-            add(new javax.swing.JSeparator());
         }
+        add(new javax.swing.JSeparator());
 
         addMenu("jmri.jmrix.acela.AcelaMenu");
         addMenu("jmri.jmrix.bachrus.SpeedoMenu");
@@ -62,6 +54,7 @@ public class SystemsMenu extends JMenu {
         add(new jmri.jmrix.can.cbus.swing.CbusMenu(null));
 
         addMenu("jmri.jmrix.cmri.CMRIMenu");
+        add(new jmri.jmrix.dccpp.swing.DCCppMenu(null));
         addMenu("jmri.jmrix.easydcc.EasyDCCMenu");
         addMenu("jmri.jmrix.grapevine.GrapevineMenu");
 
@@ -87,7 +80,7 @@ public class SystemsMenu extends JMenu {
         addMenu("jmri.jmrix.wangrow.WangrowMenu");
         // XPressNet Allows Multiple Connections now
         add(new jmri.jmrix.lenz.swing.XNetMenu(null));
-        addMenu("jmri.jmrix.xpa.XpaMenu");
+        add(new jmri.jmrix.xpa.swing.XpaMenu(null));
         addMenu("jmri.jmrix.zimo.Mx1Menu");
         add(new javax.swing.JSeparator());
         addMenu("jmri.jmrix.direct.DirectMenu");
@@ -121,5 +114,5 @@ public class SystemsMenu extends JMenu {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SystemsMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SystemsMenu.class.getName());
 }

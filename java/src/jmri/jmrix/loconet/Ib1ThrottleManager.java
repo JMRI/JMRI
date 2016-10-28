@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
  * Specialization of a ThrottleManager for the Intellibox.
  *
  * @author	Bob Jacobsen Copyright (C) 2014
- * @version $Revision$
  */
 public class Ib1ThrottleManager extends jmri.jmrix.loconet.LnThrottleManager {
 
@@ -24,5 +23,5 @@ public class Ib1ThrottleManager extends jmri.jmrix.loconet.LnThrottleManager {
         return new Ib1Throttle(memo, s);
     }
 
-    static Logger log = LoggerFactory.getLogger(Ib1ThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Ib1ThrottleManager.class.getName());
 }

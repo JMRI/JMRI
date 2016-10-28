@@ -1,7 +1,6 @@
-// XNetTurnoutTest.java
 package jmri.jmrix.lenz;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.slf4j.Logger;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the {@link jmri.jmrix.lenz.XNetTurnout} class.
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 
@@ -121,6 +119,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
         // prepare an interface
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
         t = new XNetTurnout("XT", 21, lnis);
 
         // set thrown
@@ -145,7 +144,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
             log.error("TO exception: " + x);
         }
         // check to see if the turnout state changes.
-        Assert.assertTrue(t.getKnownState() == jmri.Turnout.THROWN);
+        jmri.util.JUnitUtil.waitFor(()->{return t.getKnownState() == jmri.Turnout.THROWN;}, "Turnout goes THROWN");
     }
 
     @Override
@@ -165,7 +164,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", XNetTurnoutTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -177,6 +176,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        
         // prepare an interface
         lnis = new XNetInterfaceScaffold(new LenzCommandStation());
 
@@ -188,6 +188,6 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(XNetTurnoutTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetTurnoutTest.class.getName());
 
 }

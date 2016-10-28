@@ -1,4 +1,3 @@
-// SdfMacro.java
 package jmri.jmrix.loconet.sdf;
 
 import java.util.ArrayList;
@@ -32,7 +31,6 @@ import org.slf4j.LoggerFactory;
  * editing (to avoid another dependency), but that's a project for another day)
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
  */
 public abstract class SdfMacro implements SdfConstants {
 
@@ -196,7 +194,7 @@ public abstract class SdfMacro implements SdfConstants {
      *               corresponding label is returned
      * @return "+" separated list of labels, or "&lt;ERROR&gt;" if none matched
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     String decodeFlags(int input, int[] values, int[] masks, String[] labels) {
@@ -226,4 +224,3 @@ public abstract class SdfMacro implements SdfConstants {
     private static Logger log = LoggerFactory.getLogger(SdfMacro.class.getName());
 
 }
-/* @(#)SdfMacro.java */

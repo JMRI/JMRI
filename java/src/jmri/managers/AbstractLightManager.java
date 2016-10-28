@@ -1,4 +1,3 @@
-// AbstractLightManager.java
 package jmri.managers;
 
 import jmri.Light;
@@ -13,15 +12,9 @@ import org.slf4j.LoggerFactory;
  * Based on AbstractSignalHeadManager.java and AbstractSensorManager.java
  *
  * @author Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
  */
 public abstract class AbstractLightManager extends AbstractManager
         implements LightManager, java.beans.PropertyChangeListener, java.io.Serializable {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7463899324548206482L;
 
     public AbstractLightManager() {
         super();
@@ -44,7 +37,6 @@ public abstract class AbstractLightManager extends AbstractManager
      * new Light. Otherwise, the makeSystemName method will attempt to turn it
      * into a valid system name.
      *
-     * @param name
      * @return Never null unless valid systemName cannot be found
      */
     public Light provideLight(String name) {
@@ -54,8 +46,10 @@ public abstract class AbstractLightManager extends AbstractManager
         }
         if (name.startsWith(getSystemPrefix() + typeLetter())) {
             return newLight(name, null);
-        } else {
+        } else if (name.length() > 0) {
             return newLight(makeSystemName(name), null);
+        } else {
+            throw new IllegalArgumentException("\""+name+"\" is invalid");
         }
     }
 
@@ -63,7 +57,6 @@ public abstract class AbstractLightManager extends AbstractManager
      * Locate via user name, then system name if needed. Does not create a new
      * one if nothing found
      *
-     * @param name
      * @return null if no match found
      */
     public Light getLight(String name) {
@@ -119,15 +112,10 @@ public abstract class AbstractLightManager extends AbstractManager
                     + ((systemName == null) ? "null" : systemName)
                     + ";" + ((userName == null) ? "null" : userName));
         }
-        if (systemName == null) {
-            log.error("SystemName cannot be null. UserName was "
-                    + ((userName == null) ? "null" : userName));
-            return null;
-        }
         // is system name in correct format?
         if (!validSystemNameFormat(systemName)) {
             log.error("Invalid system name for newLight: " + systemName);
-            return null;
+            throw new IllegalArgumentException("\""+systemName+"\" is invalid");
         }
 
         // return existing if there is one
@@ -187,7 +175,12 @@ public abstract class AbstractLightManager extends AbstractManager
                 log.error("System name null during activation of Lights");
             } else {
                 log.debug("Activated Light system name is " + systemName);
-                getBySystemName(systemName).activateLight();
+                Light l = getBySystemName(systemName);
+                if (l == null) {
+                    log.error("light null during activation of lights");
+                } else {
+                    l.activateLight();
+                }
             }
         }
     }
@@ -242,7 +235,5 @@ public abstract class AbstractLightManager extends AbstractManager
         return Bundle.getMessage("BeanNameLight");
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractLightManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractLightManager.class.getName());
 }
-
-/* @(#)AbstractLightManager.java */

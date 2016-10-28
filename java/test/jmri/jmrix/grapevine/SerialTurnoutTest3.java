@@ -1,20 +1,16 @@
-// SerialTurnoutTest3.java
 package jmri.jmrix.grapevine;
 
 import jmri.implementation.AbstractTurnoutTest;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.grapevine.SerialTurnout class, high card and high
  * port on card
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class SerialTurnoutTest3 extends AbstractTurnoutTest {
 
     private SerialTrafficControlScaffold tcis = null;
@@ -49,7 +45,7 @@ public class SerialTurnoutTest3 extends AbstractTurnoutTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SerialTurnoutTest3.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -57,7 +53,5 @@ public class SerialTurnoutTest3 extends AbstractTurnoutTest {
         TestSuite suite = new TestSuite(SerialTurnoutTest3.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(SerialTurnoutTest3.class.getName());
 
 }

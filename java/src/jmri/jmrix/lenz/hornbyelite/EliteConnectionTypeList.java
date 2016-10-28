@@ -6,11 +6,13 @@ package jmri.jmrix.lenz.hornbyelite;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
- *
+  *
  */
 public class EliteConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String HORNBY = "Hornby";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         String[] masterList = new jmri.jmrix.lenz.LenzConnectionTypeList().getAvailableProtocolClasses();
 
@@ -22,6 +24,11 @@ public class EliteConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
             x++;
         }
         return tempList;
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{HORNBY};
     }
 
 }

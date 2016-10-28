@@ -1,4 +1,3 @@
-// QsiInterfaceScaffold.java
 package jmri.jmrix.qsi;
 
 import java.util.Vector;
@@ -10,15 +9,10 @@ import org.slf4j.LoggerFactory;
  * Description:	Stands in for the QsiTrafficController class
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version
  */
 public class QsiTrafficControlScaffold extends QsiTrafficController {
 
     public QsiTrafficControlScaffold() {
-        if (log.isDebugEnabled()) {
-            log.debug("setting instance: " + this);
-        }
-        self = this;
     }
 
     // override some QsiTrafficController methods for test purposes
@@ -61,6 +55,6 @@ public class QsiTrafficControlScaffold extends QsiTrafficController {
         return cmdListeners.size();
     }
 
-    static Logger log = LoggerFactory.getLogger(QsiTrafficControlScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QsiTrafficControlScaffold.class.getName());
 
 }

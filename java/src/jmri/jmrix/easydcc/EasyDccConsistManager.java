@@ -5,7 +5,6 @@
  * consists it builds
  *
  * @author Paul Bender Copyright (C) 2006
- * @version $Revision$
  */
 package jmri.jmrix.easydcc;
 
@@ -185,5 +184,5 @@ public class EasyDccConsistManager extends AbstractConsistManager {
         public void message(EasyDccMessage m) {
         }
     }
-    static Logger log = LoggerFactory.getLogger(EasyDccConsistManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccConsistManager.class.getName());
 }

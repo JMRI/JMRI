@@ -1,4 +1,3 @@
-// CatalogTreeLeaf.java
 package jmri.jmrit.catalog;
 
 /**

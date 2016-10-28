@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.IndicatorTrackIconXml objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2010
- * @version $Revision$
  */
 public class IndicatorTrackIconXml extends PositionableLabelXml {
 
@@ -106,11 +105,6 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         return elem;
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Create a IndicatorTrackIcon, then add to a target JLayeredPane
      *
@@ -179,5 +173,5 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.TURNOUTS, element);
     }
 
-    static Logger log = LoggerFactory.getLogger(IndicatorTrackIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndicatorTrackIconXml.class.getName());
 }

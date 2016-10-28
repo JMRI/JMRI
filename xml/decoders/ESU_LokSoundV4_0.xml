@@ -152,8 +152,12 @@
   </decoder>
 <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
   <xi:include href="http://jmri.org/xml/decoders/esu/v4speedTablePane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4advancedPane.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4lightsPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4soundPane.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4soundLevelsPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v4extraPane.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4fnSetPane.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4readMePane.xml"/>
 </decoder-config>

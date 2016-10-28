@@ -1,4 +1,3 @@
-// QsiTrafficControllerTest.java
 package jmri.jmrix.qsi;
 
 import java.io.DataInputStream;
@@ -6,7 +5,7 @@ import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.Vector;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Description:	JUnit tests for the QsiTrafficController class
  *
  * @author	Bob Jacobsen
- * @version
  */
 public class QsiTrafficControllerTest extends TestCase {
 
@@ -231,7 +229,7 @@ public class QsiTrafficControllerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {QsiTrafficControllerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -240,6 +238,6 @@ public class QsiTrafficControllerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(QsiTrafficControllerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QsiTrafficControllerTest.class.getName());
 
 }

@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Paul Bender Copyright: Copyright (c) 2008
- * @version $Revision$
  */
 public class EliteXNetTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -27,11 +26,12 @@ public class EliteXNetTurnoutManagerXml extends jmri.managers.configurexml.Abstr
         log.error("Invalid method called");
     }
 
-    public boolean load(Element turnouts) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // load individual turnouts
-        return loadTurnouts(turnouts);
+        return loadTurnouts(shared, perNode);
     }
 
-    static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManagerXml.class.getName());
 
 }

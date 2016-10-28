@@ -1,49 +1,67 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-<!-- $Id$ -->
-<Title>How to Create an XPressNet Log File</Title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
+  <title>JMRI Hardware Support - Creating an XPressNet Log
+  File</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
 
-<BODY>
-<!--#include virtual="/Header" -->
+<body>
+  <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Hardware Support: XPressNet - Creating an Log File</h1>
 
-<H2>How to Create an XPressNet Log File</H2>
-<P>
- Start Decoder Pro (or the JMRI demo)
- Open the XpressNet Monitor (this is in the XPressNet submenu of the 
- "Systems" menu)
-<P>
- You will see a window like the following:
- <img src="images/XPressNetTrafficMonitor.jpg" alt="XPressNet Traffic Monitor Image">
- <BR> 
- Next Click the "Choose log file" button, and choose a log file to use
- (you can use the default name, the important thing is to know where the
- file is)
- <Br>
- After you click save in the dialog box, click the "Start Logging" button
- on the monitor.
- <Br> 
- Now you can perform whatever actions you want to perform.
-  <Br>
- Finally, go back to the XPressNet Monitor window, and click the "Stop
- Logging" button.
-  <Br>
- You can now quit the application, or continue working.
+      <p>Start Decoder Pro.</p>
 
-<!--#include virtual="/Footer" -->
+      <p>Open the <strong>XpressNet Monitor</strong> (this is in
+      the XPressNet submenu of the "Systems" menu)</p>
+
+      <p>The following panel will open:<br>
+      <img src="images/XPressNetTrafficMonitor.jpg" alt=
+      "XPressNet Traffic Monitor Image"></p>
+
+      <h4>Buttons</h4>
+
+      <ul>
+        <li>"Clear screen" removes all history from the pane</li>
+
+        <li>"Freeze screen" stops logging new data to help you
+        study the present contents of the display</li>
+
+        <li>Click the "Choose log file" button, and choose a log
+        file name to use (you can keep the default name; the
+        important thing is to know where the file is stored.)</li>
+
+        <li>After you click "Save" in the file dialog box, click
+        the "Start logging" button on the pane.<br>
+        Now you can perform whatever actions you want to perform in
+        JMRI. A log is kept of all traffic on the XPressNet
+        connection.</li>
+
+        <li>Click the "Stop Logging" button on the XPressNet
+        Monitor pane to - well - stop logging.</li>
+      </ul>
+
+      <p>Back to the <a href="index.shtml">XPressNet Help</a>
+      page</p>
+      <hr>
+      Paul Bender<br>
+      paul.bender@acm.org <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

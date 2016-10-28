@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * Handle XML configuration for a DefaultSignalMastManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 18102 $
+ * 
  */
 public class VirtualSignalMastXml
         extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -54,24 +54,19 @@ public class VirtualSignalMastXml
         return e;
     }
 
-    /**
-     * Create a DefaultSignalMastManager
-     *
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         VirtualSignalMast m;
-        String sys = getSystemName(element);
+        String sys = getSystemName(shared);
         m = new jmri.implementation.VirtualSignalMast(sys);
 
-        if (getUserName(element) != null) {
-            m.setUserName(getUserName(element));
+        if (getUserName(shared) != null) {
+            m.setUserName(getUserName(shared));
         }
 
-        loadCommon(m, element);
-        if (element.getChild("unlit") != null) {
-            Element unlit = element.getChild("unlit");
+        loadCommon(m, shared);
+        if (shared.getChild("unlit") != null) {
+            Element unlit = shared.getChild("unlit");
             if (unlit.getAttribute("allowed") != null) {
                 if (unlit.getAttribute("allowed").getValue().equals("no")) {
                     m.setAllowUnLit(false);
@@ -80,7 +75,7 @@ public class VirtualSignalMastXml
                 }
             }
         }
-        Element e = element.getChild("disabledAspects");
+        Element e = shared.getChild("disabledAspects");
         if (e != null) {
             List<Element> list = e.getChildren("disabledAspect");
             for (Element aspect : list) {
@@ -88,7 +83,7 @@ public class VirtualSignalMastXml
             }
         }
 
-        InstanceManager.signalMastManagerInstance()
+        InstanceManager.getDefault(jmri.SignalMastManager.class)
                 .register(m);
 
         return true;
@@ -98,5 +93,5 @@ public class VirtualSignalMastXml
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(VirtualSignalMastXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VirtualSignalMastXml.class.getName());
 }

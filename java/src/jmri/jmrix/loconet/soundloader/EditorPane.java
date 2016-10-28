@@ -1,4 +1,3 @@
-// EditorPane.java
 package jmri.jmrix.loconet.soundloader;
 
 import java.awt.FlowLayout;
@@ -12,7 +11,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import jmri.jmrix.loconet.LocoNetBundle;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 /**
@@ -23,14 +21,8 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  * This handles file read/write.
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2010
- * @version $Revision$
  */
 public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4382326277234572738L;
 
     // GUI member declarations
     EditorFilePane pane;
@@ -45,7 +37,7 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
     }
 
     public String getTitle() {
-        return getTitle(LocoNetBundle.bundle().getString("MenuItemSoundEditor"));
+        return getTitle(Bundle.getMessage("MenuItemSoundEditor"));
     }
 
     public EditorPane() {

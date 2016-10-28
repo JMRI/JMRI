@@ -1,4 +1,3 @@
-// SRCPListener.java
 package jmri.jmrix.srcp;
 
 /**
@@ -6,7 +5,6 @@ package jmri.jmrix.srcp;
  * link.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2004, 2008
- * @version	$Revision$
  */
 public interface SRCPListener extends jmri.jmrix.AbstractMRListener {
 

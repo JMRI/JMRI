@@ -5,7 +5,7 @@ import org.w3c.dom.Element;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood
  */
 class ProfileConfiguration implements AuxiliaryConfiguration {
 

@@ -1,4 +1,3 @@
-// HubPane.java
 package jmri.jmrix.openlcb.swing.hub;
 
 import java.net.InetAddress;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * Frame displaying,and more importantly starting, an OpenLCB TCP/IP hub
  *
  * @author	Bob Jacobsen Copyright (C) 2009, 2010, 2012
- * @version $Revision: 17977 $
  */
 public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, CanPanelInterface {
 
@@ -192,6 +190,6 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(HubPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(HubPane.class.getName());
 
 }

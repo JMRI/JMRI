@@ -15,21 +15,17 @@ import jmri.jmrit.operations.trains.TrainSwitchListText;
  * Frame for user edit of switch list text strings
  *
  * @author Dan Boudreau Copyright (C) 2013
- * @version $Revision: 21846 $
+ * 
  */
 public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1972541065567773705L;
 //    private static final Logger log = LoggerFactory.getLogger(EditSwitchListTextPanel.class);
 
     protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     JButton resetButton = new JButton(rb.getString("Reset"));
 
     // text fields
@@ -95,6 +91,7 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
                 .setBorder(BorderFactory.createTitledBorder(rb.getString("DepartsAtExpectedArrival")));
         pDepartsAtExpectedArrivalTextField.add(departsAtExpectedArrivalTextField);
         departsAtExpectedArrivalTextField.setText(TrainSwitchListText.getStringDepartsAtExpectedArrival());
+        departsAtExpectedArrivalTextField.setToolTipText(rb.getString("ToolTipArrives"));
         pSwitchList.add(pDepartsAtExpectedArrivalTextField);
 
         JPanel pDepartedExpectedTextField = new JPanel();
@@ -102,6 +99,7 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
                 .getString("DepartedExpected")));
         pDepartedExpectedTextField.add(departedExpectedTextField);
         departedExpectedTextField.setText(TrainSwitchListText.getStringDepartedExpected());
+        departedExpectedTextField.setToolTipText(rb.getString("ToolTipDeparted"));
         pSwitchList.add(pDepartedExpectedTextField);
 
         JPanel pVisitNumber = new JPanel();
@@ -122,6 +120,7 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
         pVisitNumberTerminates.setBorder(BorderFactory.createTitledBorder(rb.getString("VisitNumberTerminates")));
         pVisitNumberTerminates.add(visitNumberTerminatesTextField);
         visitNumberTerminatesTextField.setText(TrainSwitchListText.getStringVisitNumberTerminates());
+        visitNumberTerminatesTextField.setToolTipText(rb.getString("ToolTipVisitNumberTerminates"));
         pSwitchList.add(pVisitNumberTerminates);
 
         JPanel pVisitNumberTerminatesDepartedTextField = new JPanel();
@@ -129,12 +128,14 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
                 .getString("VisitNumberTerminatesDeparted")));
         pVisitNumberTerminatesDepartedTextField.add(visitNumberTerminatesDepartedTextField);
         visitNumberTerminatesDepartedTextField.setText(TrainSwitchListText.getStringVisitNumberTerminatesDeparted());
+        visitNumberTerminatesDepartedTextField.setToolTipText(rb.getString("ToolTipVisitNumberTerminates"));
         pSwitchList.add(pVisitNumberTerminatesDepartedTextField);
 
         JPanel pVisitNumberDone = new JPanel();
         pVisitNumberDone.setBorder(BorderFactory.createTitledBorder(rb.getString("VisitNumberDone")));
         pVisitNumberDone.add(visitNumberDoneTextField);
         visitNumberDoneTextField.setText(TrainSwitchListText.getStringVisitNumberDone());
+        visitNumberDoneTextField.setToolTipText(rb.getString("ToolTipVisitNumberDone"));
         pSwitchList.add(pVisitNumberDone);
 
         JPanel pTrainDirectionChange = new JPanel();

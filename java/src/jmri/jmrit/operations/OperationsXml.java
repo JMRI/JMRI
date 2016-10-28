@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * Loads and stores the operation setup using xml files.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public abstract class OperationsXml extends XmlFile {
 
@@ -71,17 +70,14 @@ public abstract class OperationsXml extends XmlFile {
         return file;
     }
 
-    /**
-     * @throws FileNotFoundException
-     * @throws IOException
-     */
     protected void writeFile(String filename) throws FileNotFoundException, IOException {
         log.error("writeFile not overridden");
     }
 
     /**
-     * @throws org.jdom2.JDOMException
-     * @throws java.io.IOException
+     * @param filename The string file name.
+     * @throws org.jdom2.JDOMException Due to XML parsing error
+     * @throws java.io.IOException Due to trouble accessing named file
      */
     abstract public void readFile(String filename) throws org.jdom2.JDOMException, java.io.IOException;
 
@@ -123,12 +119,13 @@ public abstract class OperationsXml extends XmlFile {
         return operationsFileName;
     }
 
-    private String operationsFileName = "DefaultOperations.xml"; // NOI18N should be overridden
+    private String operationsFileName = "DefaultOperations.xml"; // should be overridden // NOI18N
 
     /**
      * Absolute path to location of Operations files.
      * <P>
      * Default is in the user's files path, but can be set to anything.
+     * @return The string path name.
      *
      * @see jmri.util.FileUtil#getUserFilesPath()
      */
@@ -151,7 +148,7 @@ public abstract class OperationsXml extends XmlFile {
 
     /**
      * Convert standard string to xml string one character at a time expect when
-     * a \n is found. In that case, insert a "<?p?>".
+     * a \n is found. In that case, insert a {@literal "<?p?>"}.
      *
      * @param comment standard string
      * @return string converted to xml format.
@@ -171,7 +168,7 @@ public abstract class OperationsXml extends XmlFile {
 
     /**
      * Convert xml string comment to standard string format one character at a
-     * time, except when <?p?> is found. In that case, insert a \n and skip over
+     * time, except when {@literal <?p?>} is found. In that case, insert a \n and skip over
      * those characters.
      *
      * @param comment input xml comment string
@@ -189,6 +186,21 @@ public abstract class OperationsXml extends XmlFile {
             }
         }
         return buf.toString();
+    }
+    
+    /**
+     * Checks name for the file control characters:
+     * @param name The string to check for a valid file name.
+     * @return true if name is okay, false if name contains a control character.
+     */
+    public static boolean checkFileName(String name) {
+        if (name.contains(".") || name.contains("<") || name.contains(">") // NOI18N
+                || name.contains(":") || name.contains("\"") || name.contains("\\") // NOI18N
+                || name.contains("/") || name.contains("|") || name.contains("?") // NOI18N
+                || name.contains("*")) { // NOI18N
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -217,6 +229,6 @@ public abstract class OperationsXml extends XmlFile {
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(OperationsXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OperationsXml.class.getName());
 
 }

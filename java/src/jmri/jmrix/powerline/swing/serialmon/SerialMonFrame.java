@@ -5,8 +5,6 @@ import jmri.jmrix.powerline.SerialListener;
 import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying (and logging) serial command messages
@@ -14,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
- * @version $Revision$
  */
 @Deprecated
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
@@ -53,7 +50,5 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     public synchronized void reply(SerialReply l) {  // receive a reply message and log it
         nextLine(l.toMonitorString(), l.toString());
     }
-
-    static Logger log = LoggerFactory.getLogger(SerialMonFrame.class.getName());
 
 }

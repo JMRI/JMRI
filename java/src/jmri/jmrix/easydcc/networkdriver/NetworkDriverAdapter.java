@@ -15,13 +15,12 @@ import org.slf4j.LoggerFactory;
  * controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003
- * @version	$Revision$
- */
+  */
 public class NetworkDriverAdapter extends EasyDccNetworkPortController {
 
     public NetworkDriverAdapter() {
         super(new jmri.jmrix.easydcc.EasyDccSystemConnectionMemo("E", "EasyDCC via Network"));
-        setManufacturer(jmri.jmrix.DCCManufacturerList.EASYDCC);
+        setManufacturer(jmri.jmrix.easydcc.EasyDccConnectionTypeList.EASYDCC);
     }
 
     /**
@@ -75,6 +74,6 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
         return null;
     }
 
-    static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
 
 }

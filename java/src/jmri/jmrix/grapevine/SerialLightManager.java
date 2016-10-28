@@ -15,8 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Bob Jacobsen Copyright (C) 2006, 2007
- * @version	$Revision$
- */
+  */
 public class SerialLightManager extends AbstractLightManager {
 
     /**
@@ -105,7 +104,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
     static SerialLightManager _instance = null;
 
-    static Logger log = LoggerFactory.getLogger(SerialLightManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class.getName());
 
 }
 

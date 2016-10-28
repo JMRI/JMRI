@@ -1,7 +1,6 @@
 // LocoMonPane.java
 package jmri.jmrix.loconet.locomon;
 
-import jmri.jmrix.loconet.LocoNetBundle;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * LocoNet Monitor pane displaying (and logging) LocoNet messages
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2010
- * @version $Revision$
  */
 public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetListener, LnPanelInterface {
 
@@ -40,11 +38,11 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
                 uName = "";
             }
         }
-        return uName + LocoNetBundle.bundle().getString("MenuItemLocoNetMonitor");
+        return uName + Bundle.getMessage("MenuItemLocoNetMonitor");
     }
 
     public void dispose() {
-        if (memo.getLnTrafficController() != null) {
+        if (memo!= null && memo.getLnTrafficController() != null) {
             // disconnect from the LnTrafficController
             memo.getLnTrafficController().removeLocoNetListener(~0, this);
         }
@@ -85,13 +83,29 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
     public synchronized void message(LocoNetMessage l) {  // receive a LocoNet message and log it
         // send the raw data, to display if requested
         String raw = l.toString();
+        //format the message text, expect it to provide consistent \n after each line
+        String formatted = llnmon.displayMessage(l); 
 
-        // display the decoded data
-        // we use Llnmon to format, expect it to provide consistent \n after each line
-        nextLine(llnmon.displayMessage(l), raw);
+        // display the formatted data in the monitor pane
+        nextLine(formatted, raw);
+        
+        //include loconet monitoring in session.log if TRACE enabled
+        log.trace(formatted.substring(0, formatted.length()-1)); 
+
     }
 
     jmri.jmrix.loconet.locomon.Llnmon llnmon = new jmri.jmrix.loconet.locomon.Llnmon();
+
+    /** 
+     * Get hex opcode for filtering
+     */
+    @Override
+    protected String getOpCodeForFilter(String raw) {
+        //note: Loconet raw is formatted like "BB 01 00 45", so extract the correct bytes from it (BB) for comparison
+        if (raw != null && raw.length() >= 2) {
+            return raw.substring(0,2);
+        } else return null;
+    }
 
     /**
      * Nested class to create one of these using old-style defaults
@@ -104,12 +118,12 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
         private static final long serialVersionUID = -3893647635865243864L;
 
         public Default() {
-            super(LocoNetBundle.bundle().getString("MenuItemLocoNetMonitor"),
+            super(Bundle.getMessage("MenuItemLocoNetMonitor"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     LocoMonPane.class.getName(),
                     jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LocoMonPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoMonPane.class.getName());
 }

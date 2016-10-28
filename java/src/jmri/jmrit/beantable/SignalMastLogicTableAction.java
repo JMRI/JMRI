@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.SignalMast;
@@ -25,16 +26,10 @@ import jmri.SignalMastLogic;
 import jmri.SignalMastLogicManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.JmriJFrame;
-import jmri.util.com.sun.TableSorter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SignalMastLogicTableAction extends AbstractTableAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6334687600293911353L;
 
     /**
      * Create an action with a specific title.
@@ -42,32 +37,24 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
+     * @param s title of the action
      */
     public SignalMastLogicTableAction(String s) {
         super(s);
     }
 
     public SignalMastLogicTableAction() {
-        this(AbstractTableAction.rb.getString("TitleSignalMastLogicTable"));
+        this(Bundle.getMessage("TitleSignalMastLogicTable"));
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         // create the JTable model, with changes for specific NamedBean
         createModel();
-        TableSorter sorter = new TableSorter(m);
-        JTable dataTable = m.makeJTable(sorter);
-        sorter.setTableHeader(dataTable.getTableHeader());
+        TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter<>(m);
+        JTable dataTable = m.makeJTable(m.getMasterClassName(), m, sorter);
         // create the frame
-        f = new jmri.jmrit.beantable.BeanTableFrame(m, helpTarget(), dataTable) {
-
-            /**
-             *
-             */
-            private static final long serialVersionUID = -4359437797962676692L;
-
-        };
+        f = new jmri.jmrit.beantable.BeanTableFrame(m, helpTarget(), dataTable) {};
         setMenuBar(f);
         setTitle();
         addToFrame(f);
@@ -78,7 +65,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
     public void setMenuBar(BeanTableFrame f) {
         final jmri.util.JmriJFrame finalF = f;			// needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
-        JMenu pathMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu pathMenu = new JMenu(Bundle.getMessage("MenuTools"));
         menuBar.add(pathMenu);
         JMenuItem item = new JMenuItem(Bundle.getMessage("MenuItemAutoGen"));
         pathMenu.add(item);
@@ -91,7 +78,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
         pathMenu.add(item);
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ((jmri.managers.DefaultSignalMastLogicManager) InstanceManager.signalMastLogicManagerInstance()).generateSection();
+                ((jmri.managers.DefaultSignalMastLogicManager) InstanceManager.getDefault(jmri.SignalMastLogicManager.class)).generateSection();
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("SectionGenerationComplete"));
             }
         });
@@ -102,11 +89,6 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
 
     protected void createModel() {
         m = new BeanTableDataModel() {
-
-            /**
-             *
-             */
-            private static final long serialVersionUID = 4691632819840510353L;
             static public final int SOURCECOL = 0;
             static public final int SOURCEAPPCOL = 1;
             static public final int DESTCOL = 2;
@@ -118,7 +100,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
 
             //We have to set a manager first off, but this gets replaced.
             protected SignalMastLogicManager getManager() {
-                return InstanceManager.signalMastLogicManagerInstance();
+                return InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
             }
 
             /*public EcosLocoAddress getByDccAddress(int address) {return getManager().getByDccAddress(address);}*/
@@ -237,7 +219,6 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                         }
 
                         public void run() {
-                            //Thread.yield();
                             editLogic(row, 0);
                         }
                     }
@@ -261,21 +242,21 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
             public String getColumnName(int col) {
                 switch (col) {
                     case SOURCECOL:
-                        return AbstractTableAction.rb.getString("Source");
+                        return Bundle.getMessage("Source");
                     case DESTCOL:
-                        return AbstractTableAction.rb.getString("Destination");
+                        return Bundle.getMessage("Destination");
                     case SOURCEAPPCOL:
-                        return AbstractTableAction.rb.getString("SignalMastAppearance");
+                        return Bundle.getMessage("LabelAspectType");
                     case DESTAPPCOL:
-                        return AbstractTableAction.rb.getString("SignalMastAppearance");
+                        return Bundle.getMessage("LabelAspectType");
                     case COMCOL:
-                        return AbstractTableAction.rb.getString("Comment");
+                        return Bundle.getMessage("Comment");
                     case DELCOL:
-                        return AbstractTableAction.rb.getString("ButtonDelete");
+                        return ""; // override default, no title for Delete column
                     case EDITLOGICCOL:
-                        return AbstractTableAction.rb.getString("ButtonEdit");
+                        return ""; // override default, no title for Edit column
                     case ENABLECOL:
-                        return AbstractTableAction.rb.getString("ColumnHeadEnabled");
+                        return Bundle.getMessage("ColumnHeadEnabled");
                     default:
                         return "unknown";
                 }
@@ -320,7 +301,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
 
             void deleteLogic(int row, int col) {
                 //This needs to be looked at
-                InstanceManager.signalMastLogicManagerInstance().removeSignalMastLogic(getLogicFromRow(row), getDestMastFromRow(row));
+                InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removeSignalMastLogic(getLogicFromRow(row), getDestMastFromRow(row));
             }
 
             public SignalMast getDestMastFromRow(int row) {
@@ -352,7 +333,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                     case DESTCOL:
                         return new JTextField(10).getPreferredSize().width;
                     case EDITLOGICCOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
-                        return new JTextField(5).getPreferredSize().width;
+                        return new JTextField(6).getPreferredSize().width;
                     case DELCOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
                         return new JTextField(5).getPreferredSize().width;
                     case DESTAPPCOL:
@@ -369,7 +350,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
 
             public void configureTable(JTable table) {
                 setColumnToHoldButton(table, EDITLOGICCOL,
-                        new JButton("Edit"));
+                        new JButton(Bundle.getMessage("ButtonEdit")));
                 table.getTableHeader().setReorderingAllowed(true);
 
                 // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
@@ -432,9 +413,9 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                     case COMCOL:
                         return (b != null) ? b.getComment(getDestMastFromRow(row)) : null;
                     case DELCOL:
-                        return AbstractTableAction.rb.getString("ButtonDelete");
-                    case EDITLOGICCOL:  //
-                        return AbstractTableAction.rb.getString("ButtonEdit");
+                        return Bundle.getMessage("ButtonDelete");
+                    case EDITLOGICCOL:
+                        return Bundle.getMessage("ButtonEdit");
                     case ENABLECOL:
                         return (b != null) ? b.isEnabled(getDestMastFromRow(row)) : null;
                     default:
@@ -446,7 +427,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
             protected void configDeleteColumn(JTable table) {
                 // have the delete column hold a button
                 setColumnToHoldButton(table, DELCOL,
-                        new JButton(AbstractTableAction.rb.getString("ButtonDelete")));
+                        new JButton(Bundle.getMessage("ButtonDelete")));
             }
 
             protected String getBeanType() {
@@ -461,7 +442,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
     }
 
     protected void setTitle() {
-        f.setTitle(AbstractTableAction.rb.getString("TitleSignalMastLogicTable"));
+        f.setTitle(Bundle.getMessage("TitleSignalMastLogicTable"));
     }
 
     @Override
@@ -505,24 +486,44 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                 JOptionPane.YES_NO_OPTION);
 
         if (retval == 0) {
-            InstanceManager.signalMastLogicManagerInstance().addPropertyChangeListener(propertyGenerateListener);
-            //This process can take some time, so we do not want to hog the GUI thread
+            InstanceManager.getDefault(jmri.SignalMastLogicManager.class).addPropertyChangeListener(propertyGenerateListener);
+            // This process can take some time, so we do split it off then return to Swing/AWT
             Runnable r = new Runnable() {
                 public void run() {
                     //While the global discovery is taking place we remove the listener as this can result in a race condition.
                     suppressUpdate = true;
                     try {
-                        InstanceManager.signalMastLogicManagerInstance().automaticallyDiscoverSignallingPairs();
+                        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).automaticallyDiscoverSignallingPairs();
                     } catch (jmri.JmriException e) {
-                        InstanceManager.signalMastLogicManagerInstance().removePropertyChangeListener(propertyGenerateListener);
-                        JOptionPane.showMessageDialog(null, e.toString());
-                        signalMastLogicFrame.setVisible(false);
+                        // Notify of problem
+                        try {
+                            javax.swing.SwingUtilities.invokeAndWait(()->{
+                                InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removePropertyChangeListener(propertyGenerateListener);
+                                JOptionPane.showMessageDialog(null, e.toString());
+                                signalMastLogicFrame.setVisible(false);
+                            });
+                        } catch (java.lang.reflect.InvocationTargetException ex) {
+                            log.error("failed to notify of problem with automaticallyDiscoverSignallingPairs", ex );
+                        } catch (InterruptedException ex) {
+                            log.error("interrupted while notifying of problem with automaticallyDiscoverSignallingPairs", ex );
+                        }
                     }
-                    m.updateNameList();
-                    suppressUpdate = false;
-                    m.fireTableDataChanged();
-                    if (genSect.isSelected()) {
-                        ((jmri.managers.DefaultSignalMastLogicManager) InstanceManager.signalMastLogicManagerInstance()).generateSection();
+                    
+                    // process complete, update GUI
+                    try {
+                        javax.swing.SwingUtilities.invokeAndWait(()->{
+                            m.updateNameList();
+                            suppressUpdate = false;
+                            m.fireTableDataChanged();
+                            if (genSect.isSelected()) {
+                                ((jmri.managers.DefaultSignalMastLogicManager) 
+                                    InstanceManager.getDefault(jmri.SignalMastLogicManager.class)).generateSection();
+                            }
+                        });
+                    } catch (java.lang.reflect.InvocationTargetException ex) {
+                        log.error("failed to update at end of automaticallyDiscoverSignallingPairs", ex );
+                    } catch (InterruptedException ex) {
+                        log.error("interrupted during update at end of automaticallyDiscoverSignallingPairs", ex );
                     }
                 }
             };
@@ -540,7 +541,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                 if (signalMastLogicFrame != null) {
                     signalMastLogicFrame.setVisible(false);
                 }
-                InstanceManager.signalMastLogicManagerInstance().removePropertyChangeListener(this);
+                InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removePropertyChangeListener(this);
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("SignalMastPairGenerationComplete"));
             } else if (evt.getPropertyName().equals("autoGenerateUpdate")) {// NOI18N
                 sourceLabel.setText((String) evt.getNewValue());
@@ -556,5 +557,5 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
         return SignalMastLogicTableAction.class.getName();
     }
 
-    static final Logger log = LoggerFactory.getLogger(SignalMastLogicTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalMastLogicTableAction.class.getName());
 }

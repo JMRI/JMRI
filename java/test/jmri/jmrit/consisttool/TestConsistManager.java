@@ -1,4 +1,3 @@
-// TestConsistManager.java
 package jmri.jmrit.consisttool;
 
 import jmri.Consist;
@@ -8,7 +7,6 @@ import jmri.DccLocoAddress;
  * Consist Manager used for consist tool tests.
  *
  * @author Paul Bender Copyright (C) 2015
- * @version $Revision$
  */
 public class TestConsistManager extends jmri.implementation.AbstractConsistManager {
 

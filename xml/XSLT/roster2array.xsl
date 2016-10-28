@@ -61,8 +61,8 @@
 				</table>
 				<hr />
 				This page was produced by
-				<A href="http://jmri.sf.net">
-					<IMG src="http://jmri.sourceforge.net/images/logo-jmri.gif"
+				<A href="http://jmri.org">
+					<IMG src="http://jmri.org/images/logo-jmri.gif"
 						height="31" border="0" alt="JMRI project" />
 				</A>
 				<A href="http://sourceforge.net">

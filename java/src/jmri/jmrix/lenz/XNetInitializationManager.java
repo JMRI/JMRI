@@ -11,8 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Paul Bender Copyright (C) 2003-2010
  * @author	Giorgio Terdina Copyright (C) 2007
- * @version	$Revision$
- */
+  */
 public class XNetInitializationManager extends AbstractXNetInitializationManager {
 
     public XNetInitializationManager(XNetSystemConnectionMemo memo) {
@@ -32,7 +31,7 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
 
         if (CSSoftwareVersion < 0) {
             log.warn("Command Station disconnected, or powered down assuming LZ100/LZV100 V3.x");
-            jmri.InstanceManager.setPowerManager(systemMemo.getPowerManager());
+            jmri.InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
             jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
             systemMemo.setProgrammerManager(new XNetProgrammerManager(new XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
             jmri.InstanceManager.setProgrammerManager(systemMemo.getProgrammerManager());
@@ -54,7 +53,7 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
             log.error("Command Station does not support XPressNet Version 3 Command Set");
         } else {
             /* First, we load things that should work on all systems */
-            jmri.InstanceManager.setPowerManager(systemMemo.getPowerManager());
+            jmri.InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
             jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
             /* Next we check the command station type, and add the 
              apropriate managers */
@@ -140,6 +139,6 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(XNetInitializationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetInitializationManager.class.getName());
 
 }

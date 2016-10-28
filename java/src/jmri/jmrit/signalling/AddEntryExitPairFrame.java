@@ -1,4 +1,3 @@
-// StatusFrame.java
 package jmri.jmrit.signalling;
 
 import java.awt.event.ActionEvent;
@@ -13,14 +12,8 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
  * Frame Entry Exit Frames
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version $Revision: 1.5 $
  */
 public class AddEntryExitPairFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1133603057019255324L;
 
     public AddEntryExitPairFrame() {
         super(false, true);
@@ -34,13 +27,13 @@ public class AddEntryExitPairFrame extends jmri.util.JmriJFrame {
 
         nxPanel = new AddEntryExitPairPanel(panel);
 
-        setTitle("Add Entry Exit Points");
+        setTitle(Bundle.getMessage("AddEntryExitPoints"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         getContentPane().add(nxPanel);
 
         JMenuBar menuBar = new JMenuBar();//getJMenuBar();
-        JMenuItem options = new JMenuItem(Bundle.getMessage("MenuItemOptions"));
+        JMenuItem options = new JMenuItem(Bundle.getMessage("MenuOptions")); // reuse existing key in jmrit.Bundle
         menuBar.add(options);
         options.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {

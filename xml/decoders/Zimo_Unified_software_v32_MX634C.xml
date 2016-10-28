@@ -19,9 +19,10 @@
   <!-- Continued the practice of using unrelated "item" names to place Zimo unique           -->
   <!-- variables on the proper pane of the Comprehensive programmer.                         -->
   <!-- V 1 new file - Mark Waters - 7 Feb 2015-->
+  <!-- V 1.1 updated file - Mark Waters - 28 Dec 2015 - superceeded by Zimo_Unified_software_MX634Cv31 file, Hidden in decoder tree  -->
   <decoder>
     <family name="Zimo Unified software (version 32+)" mfg="Zimo">
-      <model model="MX634C version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="240">
+      <model show="no" model="MX634C version 32+" replacementModel="MX634C version 25+" replacementFamily="Zimo Unified software (version 25+)" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="240">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -46,21 +47,6 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
       </variable>
-      <variable item="Decoder ID 2" CV="251" readOnly="yes">
-        <decVal/>
-        <label>Decoder ID 2</label>
-        <label xml:lang="it">ID 2 Decoder: </label>
-      </variable>
-      <variable item="Decoder ID 3" CV="252" readOnly="yes">
-        <decVal/>
-        <label>Decoder ID 3</label>
-        <label xml:lang="it">ID 3 Decoder: </label>
-      </variable>
-      <variable item="Decoder ID 4" CV="253" readOnly="yes">
-        <decVal/>
-        <label>Decoder ID 4</label>
-        <label xml:lang="it">ID 4 Decoder: </label>
-      </variable>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV400-CV428.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV430-CV489.xml"/>
     </variables>
@@ -79,4 +65,5 @@
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneServos2.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneDecoderlock.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneInputMapping.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneLoadCode.xml"/>
 </decoder-config>

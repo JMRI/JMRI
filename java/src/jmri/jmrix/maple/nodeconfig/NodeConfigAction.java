@@ -10,8 +10,7 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a NodeConfigFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public class NodeConfigAction extends AbstractAction {
 
     /**
@@ -38,8 +37,5 @@ public class NodeConfigAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
 }
-
-
-/* @(#)SerialPacketGenAction.java */

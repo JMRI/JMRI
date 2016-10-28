@@ -7,9 +7,9 @@
 # parallel port.  Note that JMRI must be set up to have a valid
 # turnout table; if you're not using some other DCC connection, 
 # configure JMRI to use LocoNet Simulator
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
+
+import jmri
+import java
 
 name = "LPT1" 
 #name = "/dev/cu.usbmodem3d11" # debug

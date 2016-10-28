@@ -1,6 +1,6 @@
 package jmri.jmrit.roster;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -11,8 +11,7 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmrit.roster.IdentifyLoco class
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class IdentifyLocoTest extends TestCase {
 
     static int cvRead = -1;
@@ -120,7 +119,7 @@ public class IdentifyLocoTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {IdentifyLocoTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

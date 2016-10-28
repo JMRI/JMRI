@@ -5,8 +5,7 @@ package jmri.jmrix.jmriclient;
  * Layout interface, similar to command station
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public interface JMRIClientInterface {
 
     public void addJMRIClientListener(JMRIClientListener l);

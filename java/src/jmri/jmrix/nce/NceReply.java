@@ -1,8 +1,6 @@
 // NceReply.java
 package jmri.jmrix.nce;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Carries the reply to an NceMessage.
@@ -11,7 +9,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision$
  */
 public class NceReply extends jmri.jmrix.AbstractMRReply {
 
@@ -93,8 +90,6 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
             return false;
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(NceReply.class.getName());
 
 }
 

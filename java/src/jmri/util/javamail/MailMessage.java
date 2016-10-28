@@ -1,4 +1,3 @@
-// MailMessage.java
 package jmri.util.javamail;
 
 /**
@@ -16,7 +15,6 @@ package jmri.util.javamail;
  *
  * @author Bob Jacobsen Copyright 2008, 2009
  * @author kcameron Copyright 2015
- * @version $Revision$
  *
  */
 
@@ -57,6 +55,7 @@ import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.Folder;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Store;
@@ -121,7 +120,7 @@ public class MailMessage {
     /**
      * sets the protocol to be used connecting to the mailhost default smtp
      *
-     * @param p
+     * @param p the protocol
      */
     public void setProtocol(String p) {
         this.pProtocol = p;
@@ -130,7 +129,7 @@ public class MailMessage {
     /**
      * shows the protocol to be used connecting to the mailhost
      *
-     * @return
+     * @return the protocol
      */
     public String getProtocol() {
         return (this.pProtocol);
@@ -140,7 +139,7 @@ public class MailMessage {
      * sets if encryption will used when connecting to the mailhost default is
      * true
      *
-     * @param t
+     * @param t true if message should be sent in encrypted channels
      */
     public void setTls(boolean t) {
         if (t) {
@@ -153,16 +152,16 @@ public class MailMessage {
     /**
      * shows if encryption will be used when connecting to the mailhost
      *
-     * @return
+     * @return true if message will be sent encrypted
      */
     public boolean isTls() {
-        return ((this.pTls.equals("true") ? true : false));
+        return this.pTls.equals("true");
     }
 
     /**
      * sets if authorization will be used to the mailhost default is true
      *
-     * @param t
+     * @param t true if authorization should be used
      */
     public void setAuth(boolean t) {
         if (t) {
@@ -175,10 +174,10 @@ public class MailMessage {
     /**
      * shows if authorization will be used to the mailhost
      *
-     * @return
+     * @return true if authorization will be used
      */
     public boolean isAuth() {
-        return ((this.pAuth.equals("true") ? true : false));
+        return this.pAuth.equals("true");
     }
 
     Session session;
@@ -227,7 +226,7 @@ public class MailMessage {
             // We need a multipart message to hold attachment.
             mp = new MimeMultipart();
 
-        } catch (Exception e) {
+        } catch (MessagingException e) {
             log.warn("Exception in prepare", e);
         }
     }
@@ -235,14 +234,14 @@ public class MailMessage {
     /**
      * Adds the text to the message as a separate Mime part
      *
-     * @param text
+     * @param text the text to add
      */
     public void setText(String text) {
         try {
             MimeBodyPart mbp1 = new MimeBodyPart();
             mbp1.setText(text);
             mp.addBodyPart(mbp1);
-        } catch (Exception e) {
+        } catch (MessagingException e) {
             log.warn("Exception in setText", e);
         }
     }
@@ -250,7 +249,7 @@ public class MailMessage {
     /**
      * Adds the provided file to the message as a separate Mime part.
      *
-     * @param file
+     * @param file the file path to attach
      */
     public void setFileAttachment(String file) {
         try {
@@ -259,7 +258,7 @@ public class MailMessage {
             mbp2.attachFile(file);
             mp.addBodyPart(mbp2);
 
-        } catch (Exception e) {
+        } catch (java.io.IOException | MessagingException e) {
             log.error("Exception in setAttachment", e);
         }
     }
@@ -319,7 +318,7 @@ public class MailMessage {
                 }
             }
 
-        } catch (Exception e) {
+        } catch (MessagingException e) {
             e.printStackTrace();
         }
     }
@@ -330,10 +329,11 @@ public class MailMessage {
      */
     private class SMTPAuthenticator extends javax.mail.Authenticator {
 
+        @Override
         public PasswordAuthentication getPasswordAuthentication() {
             return new PasswordAuthentication(user, password);
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(MailMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MailMessage.class.getName());
 }

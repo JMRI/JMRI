@@ -54,7 +54,6 @@ import org.slf4j.LoggerFactory;
  * placed here by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision$
  */
 public class LevelXing {
 
@@ -205,7 +204,7 @@ public class LevelXing {
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalAHeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -226,7 +225,7 @@ public class LevelXing {
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalBHeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -247,7 +246,7 @@ public class LevelXing {
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalCHeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -268,7 +267,7 @@ public class LevelXing {
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalDHeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -356,10 +355,10 @@ public class LevelXing {
             return;
         }
 
-        SignalMast mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
-        if (mast != null) {
+        try {
+            SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMast);
             signalAMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
-        } else {
+        } catch (IllegalArgumentException ex) {
             signalAMastNamed = null;
         }
     }
@@ -384,10 +383,10 @@ public class LevelXing {
             return;
         }
 
-        SignalMast mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
-        if (mast != null) {
+        try {
+            SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMast);
             signalBMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
-        } else {
+        } catch (IllegalArgumentException ex) {
             signalBMastNamed = null;
         }
     }
@@ -412,10 +411,10 @@ public class LevelXing {
             return;
         }
 
-        SignalMast mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
-        if (mast != null) {
+        try {
+            SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMast);
             signalCMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
-        } else {
+        } catch (IllegalArgumentException ex) {
             signalCMastNamed = null;
         }
     }
@@ -440,10 +439,10 @@ public class LevelXing {
             return;
         }
 
-        SignalMast mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
-        if (mast != null) {
+        try {
+            SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMast);
             signalDMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
-        } else {
+        } catch (IllegalArgumentException ex) {
             signalDMastNamed = null;
         }
     }
@@ -468,10 +467,10 @@ public class LevelXing {
             return;
         }
 
-        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-        if (sensor != null) {
+        try {
+            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
             sensorANamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
-        } else {
+        } catch (IllegalArgumentException ex) {
             sensorANamed = null;
         }
     }
@@ -496,10 +495,10 @@ public class LevelXing {
             return;
         }
 
-        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-        if (sensor != null) {
+        try {
+            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
             sensorBNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
-        } else {
+        } catch (IllegalArgumentException ex) {
             sensorBNamed = null;
         }
     }
@@ -524,10 +523,10 @@ public class LevelXing {
             return;
         }
 
-        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-        if (sensor != null) {
+        try {
+            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
             sensorCNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
-        } else {
+        } catch (IllegalArgumentException ex) {
             sensorCNamed = null;
         }
     }
@@ -552,10 +551,10 @@ public class LevelXing {
             return;
         }
 
-        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-        if (sensor != null) {
+        try {
+            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
             sensorDNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
-        } else {
+        } catch (IllegalArgumentException ex) {
             sensorDNamed = null;
         }
     }
@@ -825,7 +824,7 @@ public class LevelXing {
         if (signalMast == null) {
             return;
         }
-        if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(signalMast)) {
+        if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.getDefault(jmri.SignalMastLogicManager.class).isSignalMastUsed(signalMast)) {
             SignallingGuiTools.removeSignalMastLogic(null, signalMast);
         }
     }
@@ -885,20 +884,15 @@ public class LevelXing {
     }
 
     public void scaleCoords(float xFactor, float yFactor) {
-        Point2D pt = new Point2D.Double(round(center.getX() * xFactor),
-                round(center.getY() * yFactor));
+        Point2D pt = new Point2D.Double(Math.round(center.getX() * xFactor),
+                Math.round(center.getY() * yFactor));
         center = pt;
-        pt = new Point2D.Double(round(dispA.getX() * xFactor),
-                round(dispA.getY() * yFactor));
+        pt = new Point2D.Double(Math.round(dispA.getX() * xFactor),
+                Math.round(dispA.getY() * yFactor));
         dispA = pt;
-        pt = new Point2D.Double(round(dispB.getX() * xFactor),
-                round(dispB.getY() * yFactor));
+        pt = new Point2D.Double(Math.round(dispB.getX() * xFactor),
+                Math.round(dispB.getY() * yFactor));
         dispB = pt;
-    }
-
-    double round(double x) {
-        int i = (int) (x + 0.5);
-        return i;
     }
 
     // initialization instance variables (used when loading a LayoutEditor)
@@ -960,19 +954,19 @@ public class LevelXing {
             boolean blockACAssigned = false;
             boolean blockBDAssigned = false;
             if ((blockNameAC == null) || (blockNameAC.equals(""))) {
-                popup.add(rb.getString("NoBlock1"));
+                popup.add(Bundle.getMessage("NoBlockX", 1));
             } else {
-                popup.add(rb.getString("Block1ID") + ": " + getLayoutBlockAC().getID());
+                popup.add(Bundle.getMessage("Block_ID", 1) + ": " + getLayoutBlockAC().getID());
                 blockACAssigned = true;
             }
             if ((blockNameBD == null) || (blockNameBD.equals(""))) {
-                popup.add(rb.getString("NoBlock2"));
+                popup.add(Bundle.getMessage("NoBlockX", 2));
             } else {
-                popup.add(rb.getString("Block2ID") + ": " + getLayoutBlockBD().getID());
+                popup.add(Bundle.getMessage("Block_ID", 2) + ": " + getLayoutBlockBD().getID());
                 blockBDAssigned = true;
             }
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
-            popup.add(new AbstractAction(rb.getString("Edit")) {
+            popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 /**
                  *
                  */
@@ -982,7 +976,7 @@ public class LevelXing {
                     editLevelXing(instance);
                 }
             });
-            popup.add(new AbstractAction(rb.getString("Remove")) {
+            popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 /**
                  *
                  */
@@ -1187,7 +1181,7 @@ public class LevelXing {
             // setup block 1 name
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
-            JLabel block1NameLabel = new JLabel(rb.getString("Block1ID"));
+            JLabel block1NameLabel = new JLabel(Bundle.getMessage("Block_ID", 1));
             panel1.add(block1NameLabel);
             panel1.add(block1Name);
             block1Name.setToolTipText(rb.getString("EditBlockNameHint"));
@@ -1195,7 +1189,7 @@ public class LevelXing {
             // setup block 2 name
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
-            JLabel block2NameLabel = new JLabel(rb.getString("Block2ID"));
+            JLabel block2NameLabel = new JLabel(Bundle.getMessage("Block_ID", 2));
             panel2.add(block2NameLabel);
             panel2.add(block2Name);
             block2Name.setToolTipText(rb.getString("EditBlockNameHint"));
@@ -1204,40 +1198,40 @@ public class LevelXing {
             JPanel panel4 = new JPanel();
             panel4.setLayout(new FlowLayout());
             // Edit 1 Block
-            panel4.add(xingEdit1Block = new JButton(rb.getString("EditBlock1")));
+            panel4.add(xingEdit1Block = new JButton(Bundle.getMessage("EditBlock", 1)));
             xingEdit1Block.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     xingEdit1BlockPressed(e);
                 }
             });
-            xingEdit1Block.setToolTipText(rb.getString("EditBlockHint"));
+            xingEdit1Block.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
             // Edit 2 Block
-            panel4.add(xingEdit2Block = new JButton(rb.getString("EditBlock2")));
+            panel4.add(xingEdit2Block = new JButton(Bundle.getMessage("EditBlock", 2)));
             xingEdit2Block.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     xingEdit2BlockPressed(e);
                 }
             });
-            xingEdit2Block.setToolTipText(rb.getString("EditBlockHint"));
+            xingEdit2Block.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
             contentPane.add(panel4);
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
-            panel5.add(xingEditDone = new JButton(rb.getString("Done")));
+            panel5.add(xingEditDone = new JButton(Bundle.getMessage("ButtonDone")));
             xingEditDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     xingEditDonePressed(e);
                 }
             });
-            xingEditDone.setToolTipText(rb.getString("DoneHint"));
+            xingEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             // Cancel
-            panel5.add(xingEditCancel = new JButton(rb.getString("Cancel")));
+            panel5.add(xingEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             xingEditCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     xingEditCancelPressed(e);
                 }
             });
-            xingEditCancel.setToolTipText(rb.getString("CancelHint"));
+            xingEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
         }
         // Set up for Edit
@@ -1263,14 +1257,14 @@ public class LevelXing {
             }
             // get new block, or null if block has been removed
             blockNameAC = block1Name.getText().trim();
-            if ((blockNameAC != null) && (blockNameAC.length() > 0)) {
-                blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
-                if (blockAC != null) {
+            if (blockNameAC.length() > 0) {
+                try {
+                    blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
                     // decrement use if block was previously counted
                     if ((blockAC != null) && (blockAC == blockBD)) {
                         blockAC.decrementUse();
                     }
-                } else {
+                } catch (IllegalArgumentException ex) {
                     blockNameAC = "";
                     block1Name.setText("");
                 }
@@ -1286,7 +1280,7 @@ public class LevelXing {
         if (blockAC == null) {
             JOptionPane.showMessageDialog(editLevelXingFrame,
                     rb.getString("Error1"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         blockAC.editLayoutBlock(editLevelXingFrame);
@@ -1302,14 +1296,14 @@ public class LevelXing {
             }
             // get new block, or null if block has been removed
             blockNameBD = block2Name.getText().trim();
-            if ((blockNameBD != null) && (blockNameBD.length() > 0)) {
-                blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
-                if (blockBD != null) {
+            if (blockNameBD.length() > 0) {
+                try {
+                    blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
                     // decrement use if block was previously counted
                     if ((blockBD != null) && (blockAC == blockBD)) {
                         blockBD.decrementUse();
                     }
-                } else {
+                } catch (IllegalArgumentException ex) {
                     blockNameBD = "";
                     block2Name.setText("");
                 }
@@ -1325,7 +1319,7 @@ public class LevelXing {
         if (blockBD == null) {
             JOptionPane.showMessageDialog(editLevelXingFrame,
                     rb.getString("Error1"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         blockBD.editLayoutBlock(editLevelXingFrame);
@@ -1341,14 +1335,14 @@ public class LevelXing {
             }
             // get new block, or null if block has been removed
             blockNameAC = block1Name.getText().trim();
-            if ((blockNameAC != null) && (blockNameAC.length() > 0)) {
-                blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
-                if (blockAC != null) {
+            if (blockNameAC.length() > 0) {
+                try {
+                    blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
                     // decrement use if block was previously counted
                     if ((blockAC != null) && (blockAC == blockBD)) {
                         blockAC.decrementUse();
                     }
-                } else {
+                } catch (IllegalArgumentException ex) {
                     blockNameAC = "";
                     block1Name.setText("");
                 }
@@ -1367,14 +1361,14 @@ public class LevelXing {
             }
             // get new block, or null if block has been removed
             blockNameBD = block2Name.getText().trim();
-            if ((blockNameBD != null) && (blockNameBD.length() > 0)) {
-                blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
-                if (blockBD != null) {
+            if (blockNameBD.length() > 0) {
+                try {
+                    blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
                     // decrement use if block was previously counted
                     if ((blockBD != null) && (blockAC == blockBD)) {
                         blockBD.decrementUse();
                     }
-                } else {
+                } catch (IllegalArgumentException ex) {
                     blockNameBD = "";
                     block2Name.setText("");
                 }
@@ -1451,9 +1445,9 @@ public class LevelXing {
             sml.add(sm);
             return;
         }
-        SignalMastLogic sl = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sm);
+        SignalMastLogic sl = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sm);
         for (int i = 0; i < sml.size(); i++) {
-            SignalMastLogic s = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sml.get(i));
+            SignalMastLogic s = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sml.get(i));
             if (s != null) {
                 s.setConflictingLogic(sm, this);
             }
@@ -1471,7 +1465,7 @@ public class LevelXing {
             return;
         }
         for (int i = 0; i < sml.size(); i++) {
-            SignalMastLogic s = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sm);
+            SignalMastLogic s = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sm);
             if (s != null) {
                 s.removeConflictingLogic(sm, this);
             }
@@ -1513,6 +1507,6 @@ public class LevelXing {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LevelXing.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LevelXing.class.getName());
 
 }

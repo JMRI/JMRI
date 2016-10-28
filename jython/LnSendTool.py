@@ -13,9 +13,8 @@
 # The original PM4 button and action are not used
 #
 # version 1.3 - 2/6/13 Changed DCC Signal packet to match JMRI definition
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
+
+import jmri
 
 import java
 import javax.swing

@@ -16,21 +16,17 @@ import jmri.jmrit.operations.trains.TrainManifestText;
  * Frame for user edit of manifest text strings
  *
  * @author Dan Boudreau Copyright (C) 2013
- * @version $Revision: 21846 $
+ * 
  */
 public class EditManifestTextPanel extends OperationsPreferencesPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4953082330888903645L;
 //    private static final Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);
 
     protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     JButton resetButton = new JButton(Bundle.getMessage("Reset"));
 
     // text field
@@ -80,6 +76,7 @@ public class EditManifestTextPanel extends OperationsPreferencesPanel {
         pValidTextField.setBorder(BorderFactory.createTitledBorder(rb.getString("Valid")));
         pValidTextField.add(validTextField);
         validTextField.setText(TrainManifestText.getStringValid());
+        validTextField.setToolTipText(rb.getString("ToolTipValid"));
         pManifest.add(pValidTextField);
 
         JPanel pScheduledWorkAtTextField = new JPanel();

@@ -1,12 +1,15 @@
 package apps.configurexml;
 
 import apps.GuiLafConfigPane;
+import apps.gui.GuiLafPreferencesManager;
 import java.awt.Font;
 import java.util.Enumeration;
 import java.util.Locale;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.FontUIResource;
+import jmri.ConfigureManager;
+import jmri.InstanceManager;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -20,8 +23,7 @@ import org.slf4j.LoggerFactory;
  * Instead, this interacts directly with Swing and the default Locale.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2010
- * @version $Revision$
- * @see jmri.GuiLafConfigPane
+ * @see apps.GuiLafConfigPane
  * @since 2.9.5
  */
 public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
@@ -35,6 +37,7 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
      * @param o Object to store, of type GuiLafConfigPane
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element e = new Element("gui");
         GuiLafConfigPane g = (GuiLafConfigPane) o;
@@ -48,8 +51,9 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         e.setAttribute("LocaleCountry", l.getCountry());
         e.setAttribute("LocaleVariant", l.getVariant());
 
-        if (GuiLafConfigPane.getFontSize() != 0) {
-            e.setAttribute("fontsize", Integer.toString(GuiLafConfigPane.getFontSize()));
+        GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
+        if (manager.getFontSize() != manager.getDefaultFontSize()) {
+            e.setAttribute("fontsize", Integer.toString(manager.getFontSize()));
         }
 
         e.setAttribute("nonStandardMouseEvent",
@@ -57,24 +61,20 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         return e;
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element e) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         UIManager.LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
         java.util.Hashtable<String, String> installedLAFs = new java.util.Hashtable<String, String>(plafs.length);
         for (int i = 0; i < plafs.length; i++) {
             installedLAFs.put(plafs[i].getName(), plafs[i].getClassName());
         }
-        String name = e.getAttribute("LAFclass").getValue();
+        String name = shared.getAttribute("LAFclass").getValue();
         String className = installedLAFs.get(name);
         log.debug("GUI selection: " + name + " class name: " + className);
         // set the GUI
         if (className != null) {
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setLookAndFeel(name);
             try {
                 if (!className.equals(UIManager.getLookAndFeel().getClass().getName())) {
                     log.debug("set GUI to " + name + "," + className);
@@ -87,25 +87,31 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
                 result = false;
             }
         }
-        Attribute langAttr = e.getAttribute("LocaleLanguage");
-        Attribute countryAttr = e.getAttribute("LocaleCountry");
-        Attribute varAttr = e.getAttribute("LocaleVariant");
+        Attribute langAttr = shared.getAttribute("LocaleLanguage");
+        Attribute countryAttr = shared.getAttribute("LocaleCountry");
+        Attribute varAttr = shared.getAttribute("LocaleVariant");
         if (countryAttr != null && langAttr != null && varAttr != null) {
-            Locale.setDefault(new Locale(langAttr.getValue(), countryAttr.getValue(),
-                    varAttr.getValue()));
+            Locale locale = new Locale(langAttr.getValue(), countryAttr.getValue(), varAttr.getValue());
+            Locale.setDefault(locale);
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setLocale(locale);
         }
 
-        Attribute clickAttr = e.getAttribute("nonStandardMouseEvent");
+        Attribute clickAttr = shared.getAttribute("nonStandardMouseEvent");
         if (clickAttr != null) {
-            jmri.util.swing.SwingSettings.setNonStandardMouseEvent(clickAttr.getValue().equals("yes"));
+            boolean nonStandardMouseEvent = clickAttr.getValue().equals("yes");
+            jmri.util.swing.SwingSettings.setNonStandardMouseEvent(nonStandardMouseEvent);
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setNonStandardMouseEvent(nonStandardMouseEvent);
         }
         GuiLafConfigPane g = new GuiLafConfigPane();
-        jmri.InstanceManager.configureManagerInstance().registerPref(g);
+        ConfigureManager cm = jmri.InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerPref(g);
+        }
 
-        Attribute fontsize = e.getAttribute("fontsize");
+        Attribute fontsize = shared.getAttribute("fontsize");
         if (fontsize != null) {
             int size = Integer.parseInt(fontsize.getValue());
-            GuiLafConfigPane.setFontSize(size);
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setFontSize(size);
             this.setUIFontSize(size);
         }
         return result;
@@ -143,11 +149,12 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @param o       ignored
      */
+    @Override
     public void load(Element element, Object o) {
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(GuiLafConfigPaneXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(GuiLafConfigPaneXml.class.getName());
 
     public void setUIFontSize(float size) {
         Enumeration<Object> keys = UIManager.getDefaults().keys();

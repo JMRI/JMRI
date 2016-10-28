@@ -1,26 +1,26 @@
-// PipeListener.java
 package jmri.util;
 
 import java.io.IOException;
 import java.io.PipedReader;
+import javax.swing.JTextArea;
 
 /**
  * Small service class to read characters from a pipe and post them to a
  * JTextArea for display
  *
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version $Revision$
  */
-class PipeListener extends Thread {
+public class PipeListener extends Thread {
 
-    private PipedReader pr;
-    private javax.swing.JTextArea ta;
+    private final PipedReader pr;
+    private final JTextArea ta;
 
     public PipeListener(PipedReader pr, javax.swing.JTextArea ta) {
         this.pr = pr;
         this.ta = ta;
     }
 
+    @Override
     public void run() {
         try {
             char[] c = new char[1];

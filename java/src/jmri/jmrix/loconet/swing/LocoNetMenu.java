@@ -1,16 +1,13 @@
 // LocoNetMenu.java
 package jmri.jmrix.loconet.swing;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
-import jmri.jmrix.loconet.LocoNetBundle;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 /**
  * Create a "Systems" menu containing the Jmri LocoNet-specific tools.
  *
  * @author	Bob Jacobsen Copyright 2003, 2010
- * @version $Revision$
  */
 public class LocoNetMenu extends JMenu {
 
@@ -27,12 +24,10 @@ public class LocoNetMenu extends JMenu {
     public LocoNetMenu(LocoNetSystemConnectionMemo memo) {
         super();
 
-        ResourceBundle rb = LocoNetBundle.bundle();
-
         if (memo != null) {
             setText(memo.getUserName());
         } else {
-            setText(rb.getString("MenuLocoNet"));
+            setText(Bundle.getMessage("MenuLocoNet"));
         }
 
         jmri.util.swing.WindowInterface wi = new jmri.util.swing.sdi.JmriJFrameInterface();
@@ -41,12 +36,12 @@ public class LocoNetMenu extends JMenu {
             if (item == null) {
                 add(new javax.swing.JSeparator());
             } else {
-                add(new LnNamedPaneAction(rb.getString(item.name), wi, item.load, memo));
+                add(new LnNamedPaneAction(Bundle.getMessage(item.name), wi, item.load, memo));
             }
         }
         add(new javax.swing.JSeparator());
-        add(new jmri.jmrix.loconet.locormi.LnMessageServerAction(rb.getString("MenuItemStartLocoNetServer")));
-        add(new jmri.jmrix.loconet.loconetovertcp.ServerAction(rb.getString("MenuItemLocoNetOverTCPServer")));
+        add(new jmri.jmrix.loconet.locormi.LnMessageServerAction(Bundle.getMessage("MenuItemStartLocoNetServer")));
+        add(new jmri.jmrix.loconet.loconetovertcp.ServerAction(Bundle.getMessage("MenuItemLocoNetOverTCPServer")));
     }
 
     Item[] panelItems = new Item[]{

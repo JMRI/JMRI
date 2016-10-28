@@ -1,412 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <name>Read Me - IMPORTANT</name>
+  <name>Information</name>
   <column>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>&lt;html&gt;&lt;strong&gt;JMRI 3.11.6 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;</text>
-      <text xml:lang="it">"&lt;html&gt;&lt;strong&gt;Richiesto JMRI 3.11.6 o seguenti per poter utilizzare queste definizioni.&lt;/strong&gt;&lt;/html&gt;"</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>&lt;html&gt;&lt;h1&gt;ESU V4/Select Decoders Important Information&lt;/h1&gt;&lt;/html&gt;</text>
-      <text xml:lang="it">="&lt;html&gt;&lt;h1&gt;Decoders ESU V4/Select Informazioni Importanti&lt;/h1&gt;&lt;/html&gt;"</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <separator/>
     <separator/>
     <label>
-      <text>&lt;html&gt;&lt;h2&gt;Factory Reset&lt;/h2&gt;&lt;/html&gt;</text>
-      <text xml:lang="it">="&lt;html&gt;&lt;h2&gt;RESET a valori di Fabbrica&lt;/h2&gt;&lt;/html&gt;"</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>&lt;html&gt;&lt;em&gt;Occasionally Factory Reset has rendered the sound project apparently inoperable.&lt;/em&gt;&lt;/html&gt;</text>
-<!--       <text xml:lang="it">="&lt;html&gt;&lt;em&gt;L'esecuzione di un reset ai valori  di fabbrica sui decoder sonori ESU può rendere il progetto sonoro inutilizzabile!&lt;/em&gt;&lt;/html&gt;"</text> -->
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>ESU sound decoders are manufactured blank and the sound project is loaded</text>
-<!--       <text xml:lang="it">="I decoder sonori ESU sono prodotti senza progetto sonoro e il progetto sonoro è caricato, spesso"</text> -->
-    </label>
-    <label>
-      <text>by an OEM, dealer or other party. Part of the procedure involves writing new</text>
-<!--       <text xml:lang="it">="da un distributore. Se nell'installazione viene dimenticato di selezionare"</text> -->
-    </label>
-    <label>
-      <text>'factory' defaults suited to the project. If this has not been done correctly, a</text>
-<!--       <text xml:lang="it">="alcuni parametri optional per i "nuovi settagi di fabbrica" appropriati al progetto"</text> -->
-    </label>
-    <label>
-      <text>subsequent reset will most likely render the sounds apparently inoperable due to</text>
-<!--       <text xml:lang="it">="un successivo reset potrebbe rendere non utilizzabili i suoni a causa dei valori"</text> -->
-    </label>
-    <label>
-      <text>incorrect CV defaults.</text>
-<!--       <text xml:lang="it">="di alcune CV."</text> -->
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>If this happens, all is not lost. The correct CV settings can be restored.</text>
-    </label>
-    <label>
-      <text>Contact your dealer, the LokSound Yahoo® group or ESU LLC USA and request an</text>
-    </label>
-    <label>
-      <text>"Export CV List" file (from the LokProgrammer® software "Tools" menu) for your</text>
-    </label>
-    <label>
-      <text>sound project. (If you know the project number, that will be very helpful). Then</text>
-    </label>
-    <label>
-      <text>use the "File->Import->LokProgrammer CV list file" menu item to import this file</text>
-    </label>
-    <label>
-      <text>into your Roster Entry. Then "Write full sheet" from the "CVs" pane to restore</text>
-    </label>
-    <label>
-      <text>your decoder settings.</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <separator/>
-    <label>
-      <text>&lt;html&gt;&lt;h2&gt;News and Warnings&lt;/h2&gt;&lt;/html&gt;</text>
-      <text xml:lang="it">="&lt;html&gt;&lt;h2&gt;Novità e Avvertenze&lt;/h2&gt;&lt;/html&gt;"</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text></text>
-    </label>
-    <label>
-      <text>The Function Map pane has been rewritten to be more like the one used by the</text>
-    </label>
-    <label>
-      <text>ESU LokProgrammer® software and now also includes Row Move buttons. For help</text>
-    </label>
-    <label>
-      <text>&lt;html&gt;with use of this pane see the &lt;strong&gt;Function Map&lt;/strong&gt; section below.&lt;/html&gt;</text>
-    </label>
-    <label>
-      <text></text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>There is now an option to import CV value list files created by LokProgrammer.</text>
-      <text xml:lang="it">="Nuova opzione per importare i valori delle CV da file creato da LokProgrammer."</text>
-    </label>
-    <label>
-      <text>(File menu when a roster entry is open.)</text>
-      <text xml:lang="it">="(Menu File quando si apre un decoder dal Roster.)"</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>These decoders are probably the most complex (and versatile) DCC decoders</text>
-      <text xml:lang="it">="Questi decoders sono probabilmente i più complessi (e versatili) decoders DCC"</text>
-    </label>
-    <label>
-      <text>manufactured to date. Each decoder implements ~1,200 CVs and this poses</text>
-      <text xml:lang="it">="fino ad oggi. Comprendono circa 1.200 CV e questo impone"</text>
-    </label>
-    <label>
-      <text>extra challenges for JMRI coding. These defintions are a work in progress.</text>
-      <text xml:lang="it">="molto lavoro nella codifica. Queste definizioni sono in evoluzione."</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>If you have an NCE Power Pro system, there is now a workaround in JMRI for the</text>
-      <text xml:lang="it">="Se avete un NCE Power Pro, è stata corretto un errore che preveniva"</text>
-    </label>
-    <label>
-      <text>firmware issue that prevents the Power Pro from correctly writing Indexed CVs on</text>
-      <text xml:lang="it">="la corretta scrittura delle CV indicizzate usando il Binario di Programmazione"</text>
-    </label>
-    <label>
-      <text>the Programming Track. You can now safely use the the Programming Track to read</text>
-      <text xml:lang="it">="Ora potete usare tranquillamente il Binario di Programmazione"</text>
-    </label>
-    <label>
-      <text>or write any CVs in this definition.</text>
-      <text xml:lang="it">="per leggere e scrivere qualsiasi CV."</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <separator/>
-    <label>
-      <text>&lt;html&gt;&lt;h2&gt;Acceleration and Deceleration Rate&lt;/h2&gt;&lt;/html&gt;</text>
-      <text xml:lang="it">="&lt;html&gt;&lt;h2&gt;Tasso Accellerazione e Decellerazione&lt;/h2&gt;&lt;/html&gt;"</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>The ESU V4/Select decoders use a multiplier factor of 0.25 rather than the NMRA standard</text>
-      <text xml:lang="it">="I decoders ESU V4 e Select usano un fattore di moltiplica di 0.25 al posto dello standard NMRA"</text>
-    </label>
-    <label>
-      <text>factor of 0.896 for the values of Acceleration (CV 3) and Deceleration (CV 4) rates.</text>
-      <text xml:lang="it">="di 0.896 per i valori di Accellerazione (CV 3) e Decellerazione (CV 4)."</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>This means that you will need to enter a value nearly 4 times as great (3.6) in</text>
-      <text xml:lang="it">="Questo significa che dovete introdurre un valore di circa 4 volte più grande (3.6)"</text>
-    </label>
-    <label>
-      <text>the Acceleration and Deceleration CVs to achieve the same rate as in a LokSound</text>
-      <text xml:lang="it">="nelle CV Accellerazione e Decellerazione per ottenere lo stesso risultato di un LokSound"</text>
-    </label>
-    <label>
-      <text>V3.5 or almost any other brand of decoder. This can be a particular problem</text>
-      <text xml:lang="it">="V3.5 o altre marche di decoders. Questo potrebbe creare un problema"</text>
-    </label>
-    <label>
-      <text>if have V4/Select and other model decoders in the same consist.</text>
-      <text xml:lang="it">="se avete dei V4 o Select nello stesso consist con altri decoder diversi"</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <separator/>
-    <label>
-      <text>&lt;html&gt;&lt;h2&gt;The Function Map&lt;/h2&gt;&lt;/html&gt;</text>
-      <text xml:lang="it">="&lt;html&gt;&lt;h2&gt;Mappa Funzioni&lt;/h2&gt;&lt;/html&gt;"</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>The ESU Function Map has 40 lines and these lines are not sequentially mapped to</text>
-    </label>
-    <label>
-      <text>functions. Instead, any line can be set to be activated by any one (or</text>
-    </label>
-    <label>
-      <text>combination of) function buttons.</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>Function mapping is explained in the ESU LokSound V4 manual (pages 51 onwards).</text>
-    </label>
-    <label>
-      <text>The information in the ESU LokSound Select manual is oversimplified and may not give.</text>
-    </label>
-    <label>
-      <text>satisfactory results. Use the V4 manual for Select decoders as well..</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>This version of JMRI now uses a very similar layout to the ESU LokProgrammer®</text>
-    </label>
-    <label>
-      <text>software. A good guide to the Function Map pane is available at pages 14 and 15</text>
-    </label>
-    <label>
-      <text>of the LokProgrammer® V4.0 manual. This manual can be downloaded from the</text>
-    </label>
-    <label>
-      <text>LokSound Yahoo® group at https://groups.yahoo.com/neo/groups/loksound/files</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>There are 640 CVs involved in the Function Map pane and it will take quite a</text>
-    </label>
-    <label>
-      <text>long while to read or write them all.</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>If you have difficulty understanding the Function Map pane, ask for assistance</text>
-    </label>
-    <label>
-      <text>on the JMRI or (preferably) LokSound Yahoo® group.</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>P.S. (Not described in the manual are the Row Move buttons/arrows. These are for</text>
-    </label>
-    <label>
-      <text>advanced users and allow the row order to be reorganised by moving the selected</text>
-    </label>
-    <label>
-      <text>row up or down in the table. Reorganising rows is purely for cosmetic</text>
-    </label>
-    <label>
-      <text>organisational purposes and makes no difference to the way the function map is</text>
-    </label>
-    <label>
-      <text>interpreted. To select a row for moving, click on the Radio Button at the</text>
-    </label>
-    <label>
-      <text>beginning of the row you wish to move and then use the arrow buttons above the</text>
-    </label>
-    <label>
-      <text>top row or below the bottom row. If you move rows, you will then need to Write</text>
-    </label>
-    <label>
-      <text>Changes on Sheet to rewrite the CVs in the decoder. Row moving should only be</text>
-    </label>
-    <label>
-      <text>done if you are very familiar with the use of the Function Map pane.)</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <separator/>
-    <label>
-      <text>&lt;html&gt;&lt;h2&gt;The Speed Table&lt;/h2&gt;&lt;/html&gt;</text>
-      <text xml:lang="it">="&lt;html&gt;&lt;h2&gt;Tabella Velocità&lt;/h2&gt;&lt;/html&gt;"</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>The ESU V4/Select Decoders implement the mfx® style speed table rather than</text>
-      <text xml:lang="it">="I decoder ESU V4 e Select implementano una tabella stile ® mfx"</text>
-    </label>
-    <label>
-      <text>the NMRA version. This style can do everything the NMRA stlye does and is every</text>
-      <text xml:lang="it">="invece della versione NMRA. Questo stile fà tutto quello che permette la tabella NMRA"</text>
-    </label>
-    <label>
-      <text>bit as versatile and easy to use.</text>
-      <text xml:lang="it">="ed è altrettanto versatile e facile da usare"</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>The difference is that Vstart (CV 2) and Vhigh (CV 5) are ALWAYS used as well</text>
-      <text xml:lang="it">="La differenza è che Vstart (CV 2) e Vhigh (CV 5) sono SEMPRE utilizzate come Inizio e Fine valori"</text>
-    </label>
-    <label>
-      <text> as the speed table CVs. The curve shape defined in the speed table CVs is</text>
-      <text xml:lang="it">="nella Tabella. La forma della curva è definita dai valori delle CV in Tabella"</text>
-    </label>
-    <label>
-      <text> squeezed to fit between Vstart and Vhigh.</text>
-      <text xml:lang="it">="ed è ridimensionata per stare tra Vstart e Vhigh."</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>The procedure to set up a speed curve is to pick the curve shape you desire on</text>
-      <text xml:lang="it">="La procedura per programmare una particolare curva è quella di disegnare la curva che desiderate"</text>
-    </label>
-    <label>
-      <text>the speed table AND use Vstart (CV 2) and Vhigh (CV 5) to set the Minimum and</text>
-      <text xml:lang="it">="nella Tabella E usare Vstart (CV 2) e Vhigh (CV 5) per stabilire il valore Minimo"</text>
-    </label>
-    <label>
-      <text>Maximum speeds.</text>
-      <text xml:lang="it">="e massimo delle velocità"</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>When speed matching to a loco the Minimum and Maximum speeds MUST be matched</text>
-      <text xml:lang="it">="Se dovete accopiare due loco i valori di Vstart (CV 2) e Vhigh (CV 5) devono essere uguali"</text>
-    </label>
-    <label>
-      <text>first using CVs 2 and 5 ONLY on the LokSound decoder. Then use CVs 68 to 93</text>
-      <text xml:lang="it">="usate prima CV 2 e CV 5 DA SOLE sul decoder LokSound. Poi usate le CV da 68 a 93"</text>
-    </label>
-    <label>
-      <text>to match the remaining 26 speed steps. CVs 2 and 5 MUST be set first when speed</text>
-      <text xml:lang="it">="per far corrispondere i rimanenti 26 step. CV 2 e CV 5 devono essere programmati per primi"</text>
-    </label>
-    <label>
-      <text>matching to another loco.</text>
-      <text xml:lang="it">="quando accopiate due loco."</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>The Minimum and Maximum speeds cannot be set by using the speed table steps 1</text>
-      <text xml:lang="it">="La velocità Minima e Massima non si possono programmare sulla Tabella per gli step 1 e 28"</text>
-    </label>
-    <label>
-      <text>and 28 (CVs 67 and 94). The values of these two CVs are fixed in the decoder at</text>
-      <text xml:lang="it">="(CV 67 e 94). I valori di queste due CV sono fissati nel decoder"</text>
-    </label>
-    <label>
-      <text>1 and 255 respectively.</text>
-      <text xml:lang="it">="rispettivamente a 1 e 255."</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <separator/>
-    <label>
-      <text>&lt;html&gt;&lt;h2&gt;Further Assistance&lt;/h2&gt;&lt;/html&gt;</text>
-      <text xml:lang="it">="&lt;html&gt;&lt;h2&gt;Ulteriore Assistenza&lt;/h2&gt;&lt;/html&gt;"</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>For help with programming these decoders, the LokSound Yahoo® group is recommended.</text>
-      <text xml:lang="it">="Per aiuto nella programmazione di questi Decoder si raccomanda il Gruppo di Yahoo® dedicato a LokSound"</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <label>
-      <text>If you think there is a problem with this decoder definition, please report back to us by</text>
-      <text xml:lang="it">="Se pensate ci siano problemi con questa definizione del Decoder in JMRI"</text>
-    </label>
-    <label>
-      <text>posting to either the JMRI or LokSound Yahoo® groups or by logging a bug report on</text>
-      <text xml:lang="it">="Mettendo un post sul Gruppo di Yahoo® o inserendo un report"</text>
-    </label>
-    <label>
-      <text>the JMRI SourceForge page at http://sourceforge.net/p/jmri/bugs/</text>
-      <text xml:lang="it">="sulla pagina di SourceForge di JMRI http://sourceforge.net/p/jmri/bugs/"</text>
-    </label>
-    <label>
-      <text> </text>
-    </label>
-    <separator/>
-    <label>
-      <text>&lt;html&gt;&lt;h2&gt;Decoder Information&lt;/h2&gt;&lt;/html&gt;</text>
-      <text xml:lang="it">"&lt;html&gt;&lt;h2&gt;Informazioni Decoder&lt;/h2&gt;&lt;/html&gt;"</text>
+      <text>Decoder Information</text>
+      <text xml:lang="it">Informazioni Decoder</text>
     </label>
     <label>
       <text> </text>
@@ -414,9 +13,32 @@
     <display item="Firmware Major Version"/>
     <display item="Firmware Minor Version"/>
     <display item="Firmware Build Number"/>
+<!--     <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoDisplay.xml"/> -->
+  </column>
+  <column>
+    <separator/>
+    <label>
+      <text>Locomotive Information</text>
+      <text xml:lang="it">Informazioni Locomotiva</text>
+    </label>
     <label>
       <text> </text>
     </label>
+    <label>
+      <text>(coming soon)</text>
+      <text xml:lang="it">in arrivo</text>
+    </label>
     <separator/>
+    <label>
+      <text>Project Information</text>
+      <text xml:lang="it">Informazioni Progetto</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text>(coming soon)</text>
+      <text xml:lang="it">in arrivo</text>
+    </label>
   </column>
 </pane>

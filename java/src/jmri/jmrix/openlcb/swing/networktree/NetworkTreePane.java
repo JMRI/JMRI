@@ -1,4 +1,3 @@
-// NetworkTreePane.java
 package jmri.jmrix.openlcb.swing.networktree;
 
 import java.awt.Dimension;
@@ -25,6 +24,7 @@ import org.openlcb.Connection;
 import org.openlcb.MimicNodeStore;
 import org.openlcb.NodeID;
 import org.openlcb.cdi.jdom.CdiMemConfigReader;
+import org.openlcb.cdi.jdom.JdomCdiReader;
 import org.openlcb.cdi.swing.CdiPanel;
 import org.openlcb.implementations.MemoryConfigurationService;
 import org.openlcb.swing.memconfig.MemConfigDescriptionPane;
@@ -38,7 +38,6 @@ import org.slf4j.LoggerFactory;
  * Frame displaying tree of OpenLCB nodes
  *
  * @author	Bob Jacobsen Copyright (C) 2009, 2010, 2012
- * @version $Revision: 17977 $
  */
 public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanListener, CanPanelInterface {
 
@@ -133,7 +132,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(NetworkTreePane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetworkTreePane.class.getName());
 
     /**
      * Nested class to open specific windows when proper tree element is picked
@@ -194,6 +193,11 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
             CdiMemConfigReader cmcr = new CdiMemConfigReader(destNode, store, mcs);
 
             CdiMemConfigReader.ReaderAccess rdr = new CdiMemConfigReader.ReaderAccess() {
+                @Override
+                public void progressNotify(long bytesRead, long totalBytes) {
+                    // TODO: 7/14/16 add user-visible feedback for loading the CDI.
+                }
+
                 public void provideReader(java.io.Reader r) {
                     JmriJFrame f = new JmriJFrame();
                     f.setTitle("Configure " + destNode);
@@ -295,14 +299,32 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                     // create an adapter for reading and writing
                     CdiPanel.ReadWriteAccess accessor = new CdiPanel.ReadWriteAccess() {
                         public void doWrite(long address, int space, byte[] data) {
-                            mcs.request(new MemoryConfigurationService.McsWriteMemo(destNode, space, address, data));
+                            mcs.requestWrite(destNode, space, address, data, new MemoryConfigurationService.McsWriteHandler() {
+                                @Override
+                                public void handleSuccess() {
+                                    // TODO: 7/14/16 color background of editbox that's being
+                                    // written.
+                                }
+
+                                @Override
+                                public void handleFailure(int errorCode) {
+                                    // TODO: 7/14/16 color background of editbox being written.
+                                }
+                            });
                         }
 
                         public void doRead(long address, int space, int length, final CdiPanel.ReadReturn handler) {
-                            mcs.request(new MemoryConfigurationService.McsReadMemo(destNode, space, address, length) {
-                                public void handleReadData(NodeID dest, int space, long address, byte[] data) {
+                            mcs.requestRead(destNode, space, address, length, new MemoryConfigurationService.McsReadHandler() {
+                                @Override
+                                public void handleReadData(NodeID dest, int space, long address,
+                                                           byte[] data) {
                                     log.debug("Read data received " + data.length + " bytes");
                                     handler.returnData(data);
+                                }
+
+                                @Override
+                                public void handleFailure(int errorCode) {
+                                    // TODO: 7/14/16 color background of editbox being written.
                                 }
                             });
                         }
@@ -313,7 +335,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                     try {
                         m.loadCDI(
                                 new org.openlcb.cdi.jdom.JdomCdiRep(
-                                        (new org.openlcb.cdi.jdom.JdomCdiReader()).getHeadFromReader(r)
+                                        JdomCdiReader.getHeadFromReader(r)
                                 )
                         );
                     } catch (Exception e) {

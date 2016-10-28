@@ -88,7 +88,6 @@
       <variable CV="19" mask="XVVVVVVV" item="Consist Address" tooltip="Stores consist address,.Range 1-127">
         <decVal/>
         <label>Advanced consist address</label>
-        <label>Advanced consist address</label>
         <label xml:lang="it">Indirizzo Consist</label>
         <label xml:lang="fr">Addresse UM</label>
         <label xml:lang="de">Verbundadresse</label>

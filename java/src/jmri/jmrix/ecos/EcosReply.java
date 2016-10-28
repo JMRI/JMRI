@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision$
  */
 public class EcosReply extends jmri.jmrix.AbstractMRReply {
 
@@ -52,7 +51,7 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
     int endAtElement = -1;
 
     /**
-     * Check for last line starts with "<END "
+     * Check for last line starts with {@code "<END "}
      */
     public boolean containsEnd() {
         for (int i = 0; i < getNumDataElements() - 6; i++) {
@@ -94,7 +93,7 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * Is this EcosReply actually an independ <EVENT message?
+     * Is this EcosReply actually an independent {@code <EVENT} message?
      */
     boolean isEvent() {
         if (getNumDataElements() < 8) {
@@ -261,7 +260,7 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
         return line.substring(startval, endval);
     }
 
-    static Logger log = LoggerFactory.getLogger(EcosReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosReply.class.getName());
 }
 
 /* @(#)EcosReply.java */

@@ -26,14 +26,11 @@ import javax.swing.event.ChangeListener;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.jmrit.display.Editor.TargetPane;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 //import javax.swing.JRadioButton;
 /**
  * <P>
  * @author Pete Cressman Copyright: Copyright (c) 2012
- * @version $Revision: 1 $
  *
  */
 public abstract class DrawFrame extends jmri.util.JmriJFrame {
@@ -84,7 +81,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
             JLabel l = new JLabel(Bundle.getMessage("drawInstructions1"));
             l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
             p.add(l);
-            if (title.equals("polygon")) {
+            if (title.equals("Polygon")) {
                 l = new JLabel(Bundle.getMessage("drawInstructions2a"));
                 l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
                 p.add(l);
@@ -99,7 +96,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         JLabel l = new JLabel(Bundle.getMessage("drawInstructions3a"));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         p.add(l);
-        l = new JLabel(Bundle.getMessage("drawInstructions3b"));
+        l = new JLabel(Bundle.getMessage("drawInstructions3b", Bundle.getMessage("VisibleSensor")));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         p.add(l);
 
@@ -190,7 +187,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JPanel p = new JPanel();
-        p.add(new JLabel(Bundle.getMessage("VisibleSensor")));
+        p.add(new JLabel(Bundle.getMessage("VisibleSensor") + ":"));
         p.add(_sensorName);
         panel.add(p);
         JPanel p0 = new JPanel();
@@ -284,7 +281,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         if (_lineColorButon.isSelected()) {
             _chooser.getSelectionModel().setSelectedColor(_lineColor);
             _alphaSlider.setValue(_lineColor.getAlpha());
-        } else {
+        } else if (_fillColor!=null){
             _chooser.getSelectionModel().setSelectedColor(_fillColor);
             _alphaSlider.setValue(_fillColor.getAlpha());
         }
@@ -298,7 +295,13 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
             _lineColor = new Color(c.getRed(), c.getGreen(), c.getBlue(), _lineColor.getAlpha());
         } else {
             Color c = _chooser.getColor();
-            _fillColor = new Color(c.getRed(), c.getGreen(), c.getBlue(), _fillColor.getAlpha());
+            int alpha;
+            if (_fillColor!=null) {
+                alpha = _fillColor.getAlpha();
+            } else {
+                alpha = _alphaSlider.getValue();
+            }
+            _fillColor = new Color(c.getRed(), c.getGreen(), c.getBlue(), alpha);
         }
     }
 
@@ -306,7 +309,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         int alpha = _alphaSlider.getValue();
         if (_lineColorButon.isSelected()) {
             _lineColor = new Color(_lineColor.getRed(), _lineColor.getGreen(), _lineColor.getBlue(), alpha);
-        } else if (_fillColorButon.isSelected()) {
+        } else if (_fillColorButon.isSelected() && _fillColor!=null) {
             _fillColor = new Color(_fillColor.getRed(), _fillColor.getGreen(), _fillColor.getBlue(), alpha);
         }
     }
@@ -358,7 +361,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
             return i;
         } catch (NumberFormatException nfe) {
             JOptionPane.showMessageDialog(this, nfe,
-                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return value;
         }
     }
@@ -366,6 +369,4 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
     abstract protected boolean makeFigure(MouseEvent event);
 
     abstract protected void updateFigure(PositionableShape pos);
-
-    static Logger log = LoggerFactory.getLogger(DrawFrame.class.getName());
 }

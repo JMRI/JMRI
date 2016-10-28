@@ -1,4 +1,3 @@
-// SE8cSignalHead.java
 package jmri.jmrix.loconet;
 
 import jmri.implementation.DefaultSignalHead;
@@ -34,14 +33,8 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision$
  */
 public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6855220608807175722L;
 
     public SE8cSignalHead(int pNumber, String userName) {
         // create systemname
@@ -248,9 +241,6 @@ public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener
         // the "+ 1" in the following converts to throttle-visible numbering
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1) == mNumber + 1;
     }
-    static Logger log = LoggerFactory.getLogger(SE8cSignalHead.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SE8cSignalHead.class.getName());
 
 }
-
-
-/* @(#)SE8cSignalHead.java */

@@ -1,4 +1,3 @@
-// BlockValueFile.java
 package jmri.jmrit.display.layoutEditor;
 
 import java.io.File;
@@ -18,13 +17,12 @@ import org.slf4j.LoggerFactory;
  * manipulates files conforming to the block_value DTD.
  *
  * @author Dave Duchamp Copyright (C) 2008
- * @version $Revision$
  */
 public class BlockValueFile extends XmlFile {
 
     public BlockValueFile() {
         super();
-        blockManager = jmri.InstanceManager.blockManagerInstance();
+        blockManager = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
     }
 
     // operational variables
@@ -46,7 +44,7 @@ public class BlockValueFile extends XmlFile {
         if (checkFile(defaultFileName)) {
             // file is present, 
             root = rootFromName(defaultFileName);
-            if ((root != null) && (blocks != null) && (blocks.size() > 0)) {
+            if ((root != null) && (blocks.size() > 0)) {
                 // there is a file and there are Blocks defined
                 Element blockvalues = root.getChild("blockvalues");
                 if (blockvalues != null) {
@@ -69,7 +67,7 @@ public class BlockValueFile extends XmlFile {
                                     getAttribute("value").getValue();
                             if (blockList.get(i).getAttribute("valueClass") != null) {
                                 if (blockList.get(i).getAttribute("valueClass").getValue().equals("jmri.jmrit.roster.RosterEntry")) {
-                                    jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.Roster.instance().getEntryForId(((String) v));
+                                    jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.Roster.getDefault().getEntryForId(((String) v));
                                     if (re != null) {
                                         v = re;
                                     }
@@ -168,6 +166,6 @@ public class BlockValueFile extends XmlFile {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(BlockValueFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockValueFile.class.getName());
 
 }

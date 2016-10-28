@@ -4,6 +4,7 @@ import java.util.List;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.configurexml.JmriConfigureXmlException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision$
  */
 public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -56,9 +56,6 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         // store the sensors
         while (iter.hasNext()) {
             String sname = iter.next();
-            if (sname == null) {
-                log.error("System name null during store");
-            }
             log.debug("system name is " + sname);
             Sensor s = tm.getBySystemName(sname);
 
@@ -101,9 +98,13 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
      * Create a SensorManager object of the correct class, then register and
      * fill it.
      *
-     * @param sensors Top level Element to unpack.
+     * @param sharedSensors  Shared top level Element to unpack.
+     * @param perNodeSensors Per-node top level Element to unpack.
+     * @return true if successful
+     * @throws jmri.configurexml.JmriConfigureXmlException if error during load
      */
-    abstract public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException;
+    @Override
+    abstract public boolean load(Element sharedSensors, Element perNodeSensors) throws JmriConfigureXmlException;
 
     /**
      * Utility method to load the individual Sensor objects. If there's no
@@ -168,9 +169,12 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             if (log.isDebugEnabled()) {
                 log.debug("create sensor: (" + sysName + ")");
             }
-            Sensor s = tm.newSensor(sysName, userName);
 
-            if (s == null) {
+            Sensor s;
+            
+            try {
+                s = tm.newSensor(sysName, userName);
+            } catch (IllegalArgumentException e) {
                 creationErrorEncountered("Could not create sensor",
                         sysName, userName, null);
                 result = false;
@@ -215,5 +219,5 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         return InstanceManager.sensorManagerInstance().getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractSensorManagerConfigXML.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractSensorManagerConfigXML.class.getName());
 }

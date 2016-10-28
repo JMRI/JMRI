@@ -17,8 +17,7 @@ import org.slf4j.LoggerFactory;
  * property status of this algorithm. Use it at your own risk.
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version	$Revision$
- */
+  */
 public class InitialAlgorithm implements Calculator {
 
     public InitialAlgorithm(Point3d[] sensors, double vsound) {
@@ -354,7 +353,7 @@ public class InitialAlgorithm implements Calculator {
         return true;//     r0 = range offset (rel)
     }
 
-    static Logger log = LoggerFactory.getLogger(InitialAlgorithm.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InitialAlgorithm.class.getName());
 
 }
 

@@ -1,4 +1,3 @@
-// SpecificTrafficController.java
 package jmri.jmrix.powerline.simulator;
 
 import java.io.DataInputStream;
@@ -27,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005, 2006, 2008, 2009
  * @author	Ken Cameron Copyright (C) 2010 Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision$
  */
 public class SpecificTrafficController extends SerialTrafficController {
 
@@ -243,9 +241,9 @@ public class SpecificTrafficController extends SerialTrafficController {
                 msg.setElement(1, char2);
                 byte rawX10data = readByteProtected(istream);
                 msg.setElement(2, rawX10data);
-                byte X10Flag = readByteProtected(istream);
-                msg.setElement(3, X10Flag);
-                if (X10Flag == Constants.FLAG_X10_RECV_CMD) {
+                byte x10Flag = readByteProtected(istream);
+                msg.setElement(3, x10Flag);
+                if ((x10Flag&0xFF) == Constants.FLAG_X10_RECV_CMD) {
                     if (logDebug) {
                         log.debug("loadChars: X10 Command Poll Received " + X10Sequence.houseValueToText((rawX10data & 0xF0) >> 4) + " " + X10Sequence.functionName((rawX10data & 0x0F)));
                     }
@@ -268,8 +266,5 @@ public class SpecificTrafficController extends SerialTrafficController {
             }
         }
     }
-    static Logger log = LoggerFactory.getLogger(SpecificTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpecificTrafficController.class.getName());
 }
-
-
-/* @(#)SpecificTrafficController.java */

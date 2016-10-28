@@ -1,13 +1,5 @@
 package jmri.jmrit.withrottle;
 
-/**
- * UserInterface.java Create a window for WiThrottle information, advertise
- * service, and create a thread for it to run in.
- *
- * @author Brett Hoffman Copyright (C) 2009, 2010
- * @author Randall Wood Copyright (C) 2013
- * @version $Revision$
- */
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
@@ -49,14 +41,18 @@ import jmri.util.zeroconf.ZeroConfServiceListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//	listen() has to run in a separate thread.
+/**
+ * UserInterface.java Create a window for WiThrottle information, advertise
+ * service, and create a thread for it to run in.
+ *
+ *	listen() has to run in a separate thread.
+ *
+ * @author Brett Hoffman Copyright (C) 2009, 2010
+ * @author Randall Wood Copyright (C) 2013
+ */
 public class UserInterface extends JmriJFrame implements DeviceListener, DeviceManager, ZeroConfServiceListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8012190396840569066L;
-    static Logger log = LoggerFactory.getLogger(UserInterface.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(UserInterface.class.getName());
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
 
     JMenuBar menuBar;
@@ -204,6 +200,10 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
             @Override
             public void actionPerformed(ActionEvent e) {
                 userPreferences.addComboBoxLastSelection(rosterGroupSelectorPreferencesName, (String) ((JComboBox<String>) e.getSource()).getSelectedItem());
+//              Send new selected roster group to all devices
+                for (DeviceServer device : deviceList) {
+                    device.sendPacketToDevice(device.sendRoster());
+                }
             }
         });
     }
@@ -252,10 +252,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
     }
 
     public void listen() {
-        int socketPort = 0;
-        if (WiThrottleManager.withrottlePreferencesInstance().isUseFixedPort()) {
-            socketPort = Integer.parseInt(WiThrottleManager.withrottlePreferencesInstance().getPort());
-        }
+        int socketPort = WiThrottleManager.withrottlePreferencesInstance().getPort();
 
         try {	//Create socket on available port
             socket = new ServerSocket(socketPort);
@@ -327,7 +324,6 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
     /**
      * Received an UDID, filter out any duplicate.
      *
-     * @param device
      */
     @Override
     public void notifyDeviceInfoChanged(DeviceServer device) {
@@ -376,7 +372,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
 
     @Override
     protected void setShutDownTask() {
-        if (jmri.InstanceManager.shutDownManagerInstance() != null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
             task = new jmri.implementation.AbstractShutDownTask(getTitle()) {
                 @Override
                 public boolean execute() {
@@ -384,7 +380,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
                     return true;
                 }
             };
-            jmri.InstanceManager.shutDownManagerInstance().register(task);
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(task);
         }
     }
 
@@ -415,24 +411,22 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
     public void servicePublished(ZeroConfServiceEvent se) {
         try {
             try {
-                InetAddress addr = se.getAddress();
-                // most addresses are Inet6Address objects, 
-                if (addr instanceof Inet4Address && !addr.isLoopbackAddress()) {
+                InetAddress addr = se.getDNS().getInetAddress();
+                //output last good ipV4 address to the window to support manual entry
+                if (addr instanceof Inet4Address) {
                     this.portLabel.setText(addr.getHostName());
                     this.manualPortLabel.setText(addr.getHostAddress() + ":" + port); // NOI18N
-                    log.debug("Published IPv4 ZeroConf service for {} on {}:{}", se.getService().key(), addr.getHostAddress(), port); // NOI18N
+                    log.debug("Published IPv4 ZeroConf service for '{}' on {}:{}", se.getService().key(), addr.getHostAddress(), port); // NOI18N
                 } else {
-                    this.portLabel.setText(Inet4Address.getLocalHost().getHostName());
-                    this.manualPortLabel.setText(Inet4Address.getLocalHost().getHostAddress() + ":" + port); // NOI18N
-                    log.debug("Published IPv6 ZeroConf service for {} on {}:{}", se.getService().key(), addr.getHostAddress(), port); // NOI18N
+                    log.debug("Published IPv6 ZeroConf service for '{}' on {}:{}", se.getService().key(), addr.getHostAddress(), port); // NOI18N
                 }
-            } catch (NullPointerException ex) {
+            } catch (NullPointerException | IOException ex) {
                 log.error("Address is invalid: {}", ex.getLocalizedMessage());
                 this.portLabel.setText(Inet4Address.getLocalHost().getHostName());
                 this.manualPortLabel.setText(Inet4Address.getLocalHost().getHostAddress() + ":" + port); // NOI18N
             }
         } catch (UnknownHostException ex) {
-            log.error("Failed to determine this system's IP address: {}" + ex.getLocalizedMessage());
+            log.error("Failed to determine this system's IP address: {}", ex.getLocalizedMessage());
             this.portLabel.setText(rb.getString("LabelUnknown")); // NOI18N
             this.manualPortLabel.setText(null);
         }
@@ -459,6 +453,6 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
             log.debug("Leaving serverThread.run()");
         }
 
-        static Logger log = LoggerFactory.getLogger(ServerThread.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ServerThread.class.getName());
     }
 }

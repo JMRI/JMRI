@@ -2,6 +2,8 @@
 package jmri.beans;
 
 import java.util.Set;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Simple interface for basic methods that implement JMRI Bean handling methods.
@@ -35,7 +37,7 @@ public interface BeanInterface {
      * @param index index of the property element to change
      * @param value the value to set the property to
      */
-    public void setIndexedProperty(String key, int index, Object value);
+    public void setIndexedProperty(@Nonnull String key, int index, @Nullable Object value);
 
     /**
      * Get the value of an element in an indexed property.
@@ -49,7 +51,8 @@ public interface BeanInterface {
      * @param index index of the property element to change
      * @return value of the property or null
      */
-    public Object getIndexedProperty(String key, int index);
+    @Nullable
+    public Object getIndexedProperty(@Nonnull String key, int index);
 
     /**
      * Set the value of a property.
@@ -62,7 +65,7 @@ public interface BeanInterface {
      * @param key   name of the property
      * @param value the value to set the property to
      */
-    public void setProperty(String key, Object value);
+    public void setProperty(@Nonnull String key, @Nullable Object value);
 
     /**
      * Get the value of a property.
@@ -75,7 +78,8 @@ public interface BeanInterface {
      * @param key name of the property
      * @return The value of the property or null
      */
-    public Object getProperty(String key);
+    @Nullable
+    public Object getProperty(@Nonnull String key);
 
     /**
      * Test that a property exists.
@@ -88,7 +92,7 @@ public interface BeanInterface {
      * @param key name of the property
      * @return true is property <i>key</i> exists
      */
-    public boolean hasProperty(String key);
+    public boolean hasProperty(@Nonnull String key);
 
     /**
      * Test that a property exists and is indexed.
@@ -101,7 +105,7 @@ public interface BeanInterface {
      * @param key name of the property
      * @return true is property <i>key</i> exists and is indexed
      */
-    public boolean hasIndexedProperty(String key);
+    public boolean hasIndexedProperty(@Nonnull String key);
 
     /**
      * List all property names or keys.
@@ -115,5 +119,6 @@ public interface BeanInterface {
      *
      * @return property names or an empty Set.
      */
+    @Nonnull
     public Set<String> getPropertyNames();
 }

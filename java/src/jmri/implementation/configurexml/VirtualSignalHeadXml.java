@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Handle XML configuration for VirtualSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2005, 2008
- * @version $Revision$
  */
 public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -39,16 +38,11 @@ public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNam
         return element;
     }
 
-    /**
-     * Create a VirtualSignalHead
-     *
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // put it together
-        String sys = getSystemName(element);
-        String uname = getUserName(element);
+        String sys = getSystemName(shared);
+        String uname = getUserName(shared);
         SignalHead h;
         if (uname == null) {
             h = new VirtualSignalHead(sys);
@@ -56,9 +50,9 @@ public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNam
             h = new VirtualSignalHead(sys, uname);
         }
 
-        loadCommon(h, element);
+        loadCommon(h, shared);
 
-        InstanceManager.signalHeadManagerInstance().register(h);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         return true;
     }
 
@@ -66,5 +60,5 @@ public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNam
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(VirtualSignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VirtualSignalHeadXml.class.getName());
 }

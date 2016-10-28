@@ -1,4 +1,3 @@
-// CbusProgrammerTest.java
 package jmri.jmrix.can.cbus;
 
 import jmri.ProgListener;
@@ -6,18 +5,15 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.TestTrafficController;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.managers.DefaultProgrammerManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusProgrammer class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class CbusProgrammerTest extends TestCase {
 
@@ -112,7 +108,7 @@ public class CbusProgrammerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {CbusProgrammerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -120,8 +116,6 @@ public class CbusProgrammerTest extends TestCase {
         TestSuite suite = new TestSuite(CbusProgrammerTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(CbusProgrammerTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

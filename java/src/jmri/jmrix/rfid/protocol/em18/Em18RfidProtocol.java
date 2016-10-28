@@ -1,4 +1,3 @@
-// Em18RfidProtocol.java
 package jmri.jmrix.rfid.protocol.em18;
 
 import jmri.jmrix.AbstractMRReply;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Matthew Harris Copyright (C) 2014
  * @author Oscar A. Pruitt Copyright (C) 2015
- * @version $Revision$
  * @since 4.1.2
  */
 public class Em18RfidProtocol extends RfidProtocol {
@@ -89,12 +87,13 @@ public class Em18RfidProtocol extends RfidProtocol {
 
     @Override
     public boolean isValid(AbstractMRReply msg) {
-        return ((!isConcentrator && msg.getElement(0) != 0x02
+        return (((!isConcentrator && msg.getElement(0) != 0x02
                 && (msg.getElement(SPECIFICMAXSIZE - 1) & 0xFF) != 0x03)
                 || (isConcentrator
                 && msg.getElement(portPosition) >= concentratorFirst
                 && msg.getElement(portPosition) <= concentratorLast
-                && (msg.getElement(SPECIFICMAXSIZE - 1) & 0xFF) != 0x3E));
+                && (msg.getElement(SPECIFICMAXSIZE - 1) & 0xFF) != 0x3E))
+                && isCheckSumValid(msg));
     }
 
     public boolean isCheckSumValid(AbstractMRReply msg) {
@@ -150,5 +149,3 @@ public class Em18RfidProtocol extends RfidProtocol {
     private static final Logger log = LoggerFactory.getLogger(Em18RfidProtocol.class.getName());
 
 }
-
-/* @(#)Em18RfidProtocol.java */

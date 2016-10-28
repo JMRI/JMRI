@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * jmri is running in headless mode.
  *
  * @author	Steve Todd Copyright 2012
- * @version $Revision: 18841 $
  */
 public class HexFileServer {
 
@@ -63,9 +62,6 @@ public class HexFileServer {
         packets.startThreads();
         sourceThread = new Thread(port);
         sourceThread.start();
-
-        jmri.jmrix.loconet.ActiveFlag.setActive();
-
     }
 
     private Thread sourceThread;
@@ -80,6 +76,6 @@ public class HexFileServer {
     }
     private LnHexFilePort port = null;
 
-    static Logger log = LoggerFactory.getLogger(HexFileServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(HexFileServer.class.getName());
 
 }

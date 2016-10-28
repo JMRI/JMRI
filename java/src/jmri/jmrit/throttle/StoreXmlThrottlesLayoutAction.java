@@ -22,14 +22,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Glen Oberhauser
  * @author Daniel Boudreau (C) Copyright 2008
- * @version $Revision$
  */
 public class StoreXmlThrottlesLayoutAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7344068917325110367L;
 
     /**
      * Constructor
@@ -39,7 +33,7 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
     public StoreXmlThrottlesLayoutAction(String s) {
         super(s);
         // disable this ourselves if there is no throttle Manager
-        if (jmri.InstanceManager.throttleManagerInstance() == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -111,6 +105,6 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(StoreXmlThrottlesLayoutAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StoreXmlThrottlesLayoutAction.class.getName());
 
 }

@@ -11,11 +11,6 @@ import org.slf4j.LoggerFactory;
 
 public class JmriBeanComboBox extends JComboBox<String> implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7690075595407232375L;
-
     /*
      * Create a default Jmri Combo box for the given bean manager
      * @param manager the jmri manager that is used to populate the combo box
@@ -85,21 +80,22 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                 nBean = _manager.getBeanBySystemName(name);
 
                 if (nBean != null) {
+                    String uname = nBean.getUserName();
                     switch (_displayOrder) {
                         case DISPLAYNAME:
                             displayList[i] = nBean.getDisplayName();
                             break;
 
                         case USERNAME:
-                            if (nBean.getUserName() != null && !nBean.getUserName().equals("")) {
-                                displayList[i] = nBean.getUserName();
+                            if (uname != null && !uname.equals("")) {
+                                displayList[i] = uname;
                             } else {
                                 displayList[i] = name;
                             }
                             break;
 
                         case USERNAMESYSTEMNAME:
-                            if (nBean.getUserName() != null && !nBean.getUserName().equals("")) {
+                            if (uname != null && !uname.equals("")) {
                                 displayList[i] = nBean.getUserName() + " - " + name;
                             } else {
                                 displayList[i] = name;
@@ -107,7 +103,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                             break;
 
                         case SYSTEMNAMEUSERNAME:
-                            if (nBean.getUserName() != null && !nBean.getUserName().equals("")) {
+                            if (uname != null && !uname.equals("")) {
                                 displayList[i] = name + " - " + nBean.getUserName();
                             } else {
                                 displayList[i] = name;
@@ -211,6 +207,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     public void setSelectedBean(NamedBean nBean) {
         String selectedItem = "";
         if (nBean != null) {
+            String uname = nBean.getUserName();
             switch (_displayOrder) {
                 case DISPLAYNAME:
                     selectedItem = nBean.getDisplayName();
@@ -225,16 +222,16 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                     break;
 
                 case USERNAMESYSTEMNAME:
-                    if (nBean.getUserName() != null && !nBean.getUserName().equals("")) {
-                        selectedItem = nBean.getUserName() + " - " + nBean.getSystemName();
+                    if (uname != null && !uname.equals("")) {
+                        selectedItem = uname + " - " + nBean.getSystemName();
                     } else {
                         selectedItem = nBean.getSystemName();
                     }
                     break;
 
                 case SYSTEMNAMEUSERNAME:
-                    if (nBean.getUserName() != null && !nBean.getUserName().equals("")) {
-                        selectedItem = nBean.getSystemName() + " - " + nBean.getUserName();
+                    if (uname != null && !uname.equals("")) {
+                        selectedItem = nBean.getSystemName() + " - " + uname;
                     } else {
                         selectedItem = nBean.getSystemName();
                     }
@@ -303,7 +300,8 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         long lastKeyTime = 0;
         String pattern = "";
 
-        public int selectionForKey(char aKey, javax.swing.ComboBoxModel model) {
+        // FIXME: What is the correct type for the combo model here? This class may need refactored significantly to fix this?
+        public int selectionForKey(char aKey, @SuppressWarnings("rawtypes") javax.swing.ComboBoxModel model) {
             // Find index of selected item
             int selIx = 01;
             Object sel = model.getSelectedItem();
@@ -350,5 +348,5 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(JmriBeanComboBox.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriBeanComboBox.class.getName());
 }

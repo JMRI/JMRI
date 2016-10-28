@@ -1,4 +1,3 @@
-// TrainInfoFile.java
 package jmri.jmrit.dispatcher;
 
 import java.io.File;
@@ -31,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Dave Duchamp Copyright (C) 2009
- * @version	$Revision$
  */
 public class TrainInfoFile extends jmri.jmrit.XmlFile {
 
@@ -57,7 +55,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
      *  "name" is assumed to have the .xml or .XML extension already included
      */
     public TrainInfo readTrainInfo(String name) throws org.jdom2.JDOMException, java.io.IOException {
-        log.debug("entered readTrainInfo");
+        log.debug("entered readTrainInfo for {}", name);
         TrainInfo tInfo = null;
         // check if file exists
         if (checkFile(fileLocation + name)) {
@@ -125,7 +123,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                         }
                     }
                     if (traininfo.getAttribute("priority") != null) {
-                        tInfo.setPriority(traininfo.getAttribute("priority").getValue());
+                        tInfo.setPriority(Integer.parseInt(traininfo.getAttribute("priority").getValue()));
                     } else {
                         log.error("Priority missing when reading TrainInfoFile " + name);
                     }
@@ -140,12 +138,12 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                             } else if (traininfo.getAttribute("delayedrestart").getValue().equals("sensor")) {
                                 tInfo.setDelayedRestart(ActiveTrain.SENSORDELAY);
                                 if (traininfo.getAttribute("delayedrestartsensor") != null) {
-                                    tInfo.setRestartDelaySensor(traininfo.getAttribute("delayedrestartsensor").getValue());
+                                    tInfo.setRestartSensorName(traininfo.getAttribute("delayedrestartsensor").getValue());
                                 }
                             } else if (traininfo.getAttribute("delayedrestart").getValue().equals("timed")) {
                                 tInfo.setDelayedRestart(ActiveTrain.TIMEDDELAY);
                                 if (traininfo.getAttribute("delayedrestarttime") != null) {
-                                    tInfo.setRestartDelayTime(traininfo.getAttribute("delayedrestarttime").getValue());
+                                    tInfo.setRestartDelayMin((int) traininfo.getAttribute("delayedrestarttime").getLongValue());
                                 }
                             }
                         }
@@ -166,29 +164,35 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                         }
                     }
                     if (traininfo.getAttribute("departuretimehr") != null) {
-                        tInfo.setDepartureTimeHr(traininfo.getAttribute("departuretimehr").getValue());
+                        tInfo.setDepartureTimeHr(Integer.parseInt(traininfo.getAttribute("departuretimehr").getValue()));
                     }
                     if (traininfo.getAttribute("departuretimemin") != null) {
-                        tInfo.setDepartureTimeMin(traininfo.getAttribute("departuretimemin").getValue());
+                        tInfo.setDepartureTimeMin(Integer.parseInt(traininfo.getAttribute("departuretimemin").getValue()));
                     }
                     if (traininfo.getAttribute("delayedSensor") != null) {
-                        tInfo.setDelaySensor(traininfo.getAttribute("delayedSensor").getValue());
+                        tInfo.setDelaySensorName(traininfo.getAttribute("delayedSensor").getValue());
                     }
                     if (traininfo.getAttribute("traintype") != null) {
                         tInfo.setTrainType(traininfo.getAttribute("traintype").getValue());
                     }
                     if (traininfo.getAttribute("autorun") != null) {
-                        tInfo.setRunAuto(true);
+                        tInfo.setAutoRun(true);
                         if (traininfo.getAttribute("autorun").getValue().equals("no")) {
-                            tInfo.setRunAuto(false);
+                            tInfo.setAutoRun(false);
+                        }
+                    }
+                    if (traininfo.getAttribute("loadatstartup") != null) {
+                        tInfo.setLoadAtStartup(true);
+                        if (traininfo.getAttribute("loadatstartup").getValue().equals("no")) {
+                            tInfo.setLoadAtStartup(false);
                         }
                     }
                     // here retrieve items related only to automatically run trains if present
                     if (traininfo.getAttribute("speedfactor") != null) {
-                        tInfo.setSpeedFactor(traininfo.getAttribute("speedfactor").getValue());
+                        tInfo.setSpeedFactor(Float.parseFloat(traininfo.getAttribute("speedfactor").getValue()));
                     }
                     if (traininfo.getAttribute("maxspeed") != null) {
-                        tInfo.setMaxSpeed(traininfo.getAttribute("maxspeed").getValue());
+                        tInfo.setMaxSpeed(Float.parseFloat(traininfo.getAttribute("maxspeed").getValue()));
                     }
                     if (traininfo.getAttribute("ramprate") != null) {
                         tInfo.setRampRate(traininfo.getAttribute("ramprate").getValue());
@@ -212,7 +216,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                         }
                     }
                     if (traininfo.getAttribute("maxtrainlength") != null) {
-                        tInfo.setMaxTrainLength(traininfo.getAttribute("maxtrainlength").getValue());
+                        tInfo.setMaxTrainLength(Float.parseFloat(traininfo.getAttribute("maxtrainlength").getValue()));
                     }
                     if (traininfo.getAttribute("terminatewhendone") != null) {
                         tInfo.setTerminateWhenDone(false);
@@ -252,14 +256,14 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         traininfo.setAttribute("trainfromroster", "" + (tf.getTrainFromRoster() ? "yes" : "no"));
         traininfo.setAttribute("trainfromtrains", "" + (tf.getTrainFromTrains() ? "yes" : "no"));
         traininfo.setAttribute("trainfromuser", "" + (tf.getTrainFromUser() ? "yes" : "no"));
-        traininfo.setAttribute("priority", tf.getPriority());
+        traininfo.setAttribute("priority", Integer.toString(tf.getPriority()));
         traininfo.setAttribute("resetwhendone", "" + (tf.getResetWhenDone() ? "yes" : "no"));
         if (tf.getDelayedRestart() == ActiveTrain.SENSORDELAY) {
             traininfo.setAttribute("delayedrestart", "sensor");
-            traininfo.setAttribute("delayedrestartsensor", tf.getRestartDelaySensor());
+            traininfo.setAttribute("delayedrestartsensor", tf.getRestartSensorName());
         } else if (tf.getDelayedRestart() == ActiveTrain.TIMEDDELAY) {
             traininfo.setAttribute("delayedrestart", "timed");
-            traininfo.setAttribute("delayedrestarttime", tf.getRestartDelayTime());
+            traininfo.setAttribute("delayedrestarttime", Integer.toString(tf.getRestartDelayMin()));
         } else {
             traininfo.setAttribute("delayedrestart", "no");
         }
@@ -269,24 +273,25 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
             traininfo.setAttribute("delayedstart", "timed");
         } else if (tf.getDelayedStart() == ActiveTrain.SENSORDELAY) {
             traininfo.setAttribute("delayedstart", "sensor");
-            if (tf.getDelaySensor() != null) {
-                traininfo.setAttribute("delayedSensor", tf.getDelaySensor());
+            if (tf.getDelaySensorName() != null) {
+                traininfo.setAttribute("delayedSensor", tf.getDelaySensorName());
             }
         }
 
         traininfo.setAttribute("terminatewhendone", (tf.getTerminateWhenDone() ? "yes" : "no"));
-        traininfo.setAttribute("departuretimehr", tf.getDepartureTimeHr());
-        traininfo.setAttribute("departuretimemin", tf.getDepartureTimeMin());
+        traininfo.setAttribute("departuretimehr", Integer.toString(tf.getDepartureTimeHr()));
+        traininfo.setAttribute("departuretimemin", Integer.toString(tf.getDepartureTimeMin()));
         traininfo.setAttribute("traintype", tf.getTrainType());
-        traininfo.setAttribute("autorun", "" + (tf.getRunAuto() ? "yes" : "no"));
+        traininfo.setAttribute("autorun", "" + (tf.getAutoRun() ? "yes" : "no"));
+        traininfo.setAttribute("loadatstartup", "" + (tf.getLoadAtStartup() ? "yes" : "no"));
         // here save items related to automatically running active trains
-        traininfo.setAttribute("speedfactor", tf.getSpeedFactor());
-        traininfo.setAttribute("maxspeed", tf.getMaxSpeed());
+        traininfo.setAttribute("speedfactor", Float.toString(tf.getSpeedFactor()));
+        traininfo.setAttribute("maxspeed", Float.toString(tf.getMaxSpeed()));
         traininfo.setAttribute("ramprate", tf.getRampRate());
         traininfo.setAttribute("resistancewheels", "" + (tf.getResistanceWheels() ? "yes" : "no"));
         traininfo.setAttribute("runinreverse", "" + (tf.getRunInReverse() ? "yes" : "no"));
         traininfo.setAttribute("sounddecoder", "" + (tf.getSoundDecoder() ? "yes" : "no"));
-        traininfo.setAttribute("maxtrainlength", tf.getMaxTrainLength());
+        traininfo.setAttribute("maxtrainlength", Float.toString(tf.getMaxTrainLength()));
 
         root.addContent(traininfo);
 
@@ -366,7 +371,5 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
             log.error("failed to delete TrainInfo file - " + name);
         }
     }
-    static Logger log = LoggerFactory.getLogger(TrainInfoFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainInfoFile.class.getName());
 }
-
-/* @(#)TrainInfoFile.java */

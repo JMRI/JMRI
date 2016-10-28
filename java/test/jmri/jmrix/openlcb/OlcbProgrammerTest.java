@@ -1,11 +1,9 @@
 package jmri.jmrix.openlcb;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * OlcbProgrammerTest.java
@@ -13,12 +11,11 @@ import org.slf4j.LoggerFactory;
  * Description:	tests for the jmri.jmrix.openlcb.OlcbProgrammer class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class OlcbProgrammerTest extends TestCase {
 
     public void testCtor() {
-        OlcbSystemConnectionMemo sm = new OlcbSystemConnectionMemo();
+        new OlcbSystemConnectionMemo();
         OlcbProgrammer s = new OlcbProgrammer();
         Assert.assertNotNull(s);
     }
@@ -31,7 +28,7 @@ public class OlcbProgrammerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", OlcbProgrammerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -50,5 +47,4 @@ public class OlcbProgrammerTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-    static Logger log = LoggerFactory.getLogger(OlcbProgrammerTest.class.getName());
 }

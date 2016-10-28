@@ -6,11 +6,11 @@ package jmri.jmrix.loconet.Intellibox;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
- *
+  *
  */
 public class IbxConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    @Override
     public String[] getAvailableProtocolClasses() {
         String[] masterList = new jmri.jmrix.loconet.LnConnectionTypeList().getAvailableProtocolClasses();
 
@@ -22,6 +22,12 @@ public class IbxConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
             x++;
         }
         return tempList;
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        // does not appear to be used, so return class name as placeholder
+        return new String[]{IbxConnectionTypeList.class.getCanonicalName()};
     }
 
 }

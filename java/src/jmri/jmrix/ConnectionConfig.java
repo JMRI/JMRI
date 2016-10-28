@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix;
 
 import javax.swing.JPanel;
@@ -7,7 +6,6 @@ import javax.swing.JPanel;
  * Definition of objects to handle configuring a layout connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @version	$Revision$
  * @see JmrixConfigPane
  * @see AbstractSerialPortController
  */
@@ -27,6 +25,11 @@ public interface ConnectionConfig {
 
     public void setManufacturer(String Manufacturer);
 
+    /**
+     * Register the ConnectionConfig with the running JMRI process.
+     */
+    public void register();
+    
     public void dispose();
 
     public boolean getDisabled();

@@ -2,12 +2,11 @@
 #
 #This script will issue the DS54 interrogate commands 
 #
-# $Revision$ please don't update this line
-#
 # Created by Phil Klein  copyright 2010
 
 import java
 import javax.swing
+import jmri
 
 class LocoNetSensorInit(jmri.jmrit.automat.AbstractAutomaton) :
 	

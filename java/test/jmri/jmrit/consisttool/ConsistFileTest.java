@@ -1,43 +1,36 @@
-// ConsistFileTest.java
 package jmri.jmrit.consisttool;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import apps.tests.Log4JFixture;
+import jmri.ConsistManager;
+import jmri.InstanceManager;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test simple functioning of ConsistFile
  *
  * @author	Paul Bender Copyright (C) 2015
- * @version	$Revision$
  */
-public class ConsistFileTest extends TestCase {
+public class ConsistFileTest {
 
+    @Test
     public void testCtor() {
         ConsistFile file = new ConsistFile();
         Assert.assertNotNull("exists", file);
     }
 
-    // from here down is testing infrastructure
-    public ConsistFileTest(String s) {
-        super(s);
+    @Before
+    public void setUp() {
+        Log4JFixture.setUp();
+        InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", ConsistFileTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+    @After
+    public void tearDown() {
+        JUnitUtil.resetInstanceManager();
+        Log4JFixture.tearDown();
     }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(ConsistFileTest.class);
-        return suite;
-    }
-
-    static Logger log = LoggerFactory.getLogger(ConsistFileTest.class.getName());
-
 }

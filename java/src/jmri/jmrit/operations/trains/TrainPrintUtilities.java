@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * Train print utilities. Used for train manifests and build reports.
  *
  * @author Daniel Boudreau (C) 2010
- * @version $Revision$
  *
  */
 public class TrainPrintUtilities {
@@ -60,17 +59,16 @@ public class TrainPrintUtilities {
         boolean isLandScape = false;
         boolean printHeader = true;
         double margin = .5;
-        Dimension pagesize = null;
+        Dimension pagesize = null; // HardcopyWritter provides default page sizes for portrait and landscape
         if (orientation.equals(Setup.LANDSCAPE)) {
             margin = .65;
             isLandScape = true;
         }
         if (orientation.equals(Setup.HANDHELD) || orientation.equals(Setup.HALFPAGE)) {
             printHeader = false;
-            pagesize = new Dimension(290, 792);
-            if (orientation.equals(Setup.HALFPAGE)) {
-                pagesize = new Dimension(345, 792);
-            }
+            // add margins to page size
+            pagesize = new Dimension(TrainCommon.getPageSize(orientation).width + TrainCommon.PAPER_MARGINS.width,
+                    TrainCommon.getPageSize(orientation).height + TrainCommon.PAPER_MARGINS.height);
         }
         try {
             writer = new HardcopyWriter(mFrame, name, fontSize, margin, margin, .5, .5,
@@ -99,7 +97,7 @@ public class TrainPrintUtilities {
         }
         String line;
 
-        if (!isBuildReport && logoURL != null && !logoURL.equals("")) {
+        if (!isBuildReport && logoURL != null && !logoURL.equals(Setup.NONE)) {
             ImageIcon icon = new ImageIcon(logoURL);
             if (icon.getIconWidth() == -1) {
                 log.error("Logo not found: " + logoURL);
@@ -116,6 +114,13 @@ public class TrainPrintUtilities {
                 break;
             }
             if (line == null) {
+                if (isPreview) {
+                    try {
+                        writer.write(" "); // need to do this in case the input file was empty to create preview
+                    } catch (IOException e) {
+                        log.debug("Print write failed for null line");
+                    }
+                }
                 break;
             }
             //			log.debug("Line: {}", line.toString());
@@ -332,6 +337,7 @@ public class TrainPrintUtilities {
 
     /**
      * This method uses Desktop which is supported in Java 1.6.
+     * @param file The File to be opened using an editor.
      */
     public static void openDesktopEditor(File file) {
         if (!java.awt.Desktop.isDesktopSupported()) {
@@ -376,5 +382,5 @@ public class TrainPrintUtilities {
         return ""; // no default printer specified
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainPrintUtilities.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainPrintUtilities.class.getName());
 }

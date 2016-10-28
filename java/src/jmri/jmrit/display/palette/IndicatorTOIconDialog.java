@@ -155,5 +155,5 @@ public class IndicatorTOIconDialog extends IconDialog {
         return true;
     }
 
-    static Logger log = LoggerFactory.getLogger(IndicatorTOIconDialog.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndicatorTOIconDialog.class.getName());
 }

@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Auto Save. When enabled will automatically save operation files.
  *
  * @author Daniel Boudreau Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 public class AutoSave {
 
@@ -21,6 +20,7 @@ public class AutoSave {
         synchronized (this) {
             if (Setup.isAutoSaveEnabled() && autoSave == null) {
                 autoSave = new Thread(new Runnable() {
+                    @Override
                     public void run() {
                         saveFiles();
                     }
@@ -59,5 +59,5 @@ public class AutoSave {
         autoSave = null;	// done
     }
 
-    static Logger log = LoggerFactory.getLogger(AutoSave.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutoSave.class.getName());
 }

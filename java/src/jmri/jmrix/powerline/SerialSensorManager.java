@@ -15,8 +15,7 @@ import org.slf4j.LoggerFactory;
  * @author	Ken Cameron, (C) 2009, sensors from poll replies Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision$
- */
+  */
 abstract public class SerialSensorManager extends jmri.managers.AbstractSensorManager implements SerialListener {
 
     SerialTrafficController tc = null;
@@ -43,11 +42,12 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
      * Create a new sensor if all checks are passed System name is normalized to
      * ensure uniqueness.
      */
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Override
+    protected Sensor createNewSensor(String systemName, String userName) {
         Sensor s;
         // validate the system name, and normalize it
         String sName = tc.getAdapterMemo().getSerialAddress().normalizeSystemName(systemName);
-        if (sName == "") {
+        if (sName.equals("")) {
             // system name is not valid
             log.error("Invalid Sensor system name - " + systemName);
             return null;
@@ -124,7 +124,7 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class.getName());
 }
 
 /* @(#)SerialSensorManager.java */

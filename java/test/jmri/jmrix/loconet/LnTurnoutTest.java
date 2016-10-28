@@ -1,7 +1,7 @@
 //LnTurnoutTest.java
 package jmri.jmrix.loconet;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.slf4j.Logger;
@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the jmri.jmrix.loconet.LnTurnout class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 
@@ -279,7 +278,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {LnTurnoutTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -288,6 +287,6 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(LnTurnoutTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnTurnoutTest.class.getName());
 
 }

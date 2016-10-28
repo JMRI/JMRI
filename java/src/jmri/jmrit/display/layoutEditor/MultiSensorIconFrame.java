@@ -8,14 +8,13 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import jmri.jmrit.display.MultiSensorIcon;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides a simple editor for creating a MultiSensorIcon object
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * but this is not enforced here. It should be.
  *
  * @author Bob Jacobsen Copyright (c) 2007
- * @version $Revision$
  */
 public class MultiSensorIconFrame extends JmriJFrame {
 
@@ -36,8 +34,8 @@ public class MultiSensorIconFrame extends JmriJFrame {
     JmriJFrame defaultsFrame;
     MultiIconEditor defaultIcons;
     LayoutEditor layoutEditor = null;
-    JRadioButton updown = new JRadioButton("Up - Down");
-    JRadioButton rightleft = new JRadioButton("Right - Left");
+    JRadioButton updown = new JRadioButton(Bundle.getMessage("UpDown"));
+    JRadioButton rightleft = new JRadioButton(Bundle.getMessage("RightLeft"));
     ButtonGroup group = new ButtonGroup();
 
     MultiSensorIconFrame(LayoutEditor p) {
@@ -47,12 +45,15 @@ public class MultiSensorIconFrame extends JmriJFrame {
         addHelpMenu("package.jmri.jmrit.display.MultiSensorIconFrame", true);
     }
 
+    int isEmpty = 0; // check for empty Fields in panel
+    int _numberOfPositions = 3; // add an index to Sensor label
+
     public void initComponents() {
         this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-        p.add(new JLabel("Icon checks click: "));
+        p.add(new JLabel(Bundle.getMessage("IconChecksClickLabel")));
         group.add(updown);
         group.add(rightleft);
         rightleft.setSelected(true);
@@ -63,16 +64,17 @@ public class MultiSensorIconFrame extends JmriJFrame {
         this.getContentPane().add(content);
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
         // start with three Entrys; there's no reason to have less
-        content.add(new Entry(content, this, "resources/icons/USS/plate/levers/l-left.gif"));
-        content.add(new Entry(content, this, "resources/icons/USS/plate/levers/l-vertical.gif"));
-        content.add(new Entry(content, this, "resources/icons/USS/plate/levers/l-right.gif"));
+        content.add(new Entry(content, this, "resources/icons/USS/plate/levers/l-left.gif", 1));
+        content.add(new Entry(content, this, "resources/icons/USS/plate/levers/l-vertical.gif", 2));
+        content.add(new Entry(content, this, "resources/icons/USS/plate/levers/l-right.gif", 3));
 
         this.getContentPane().add(new JSeparator());
-        JButton b = new JButton("Add Additional Sensor to Icon");
+        JButton b = new JButton(Bundle.getMessage("ButtonAddAdditionalSensor"));
         ActionListener a = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
-                // remove this entry
-                self.add(new Entry(self, frame, "resources/icons/USSpanels/Plates/lever-v.gif"));
+                // add another entry
+                _numberOfPositions++;
+                self.add(new Entry(self, frame, "resources/icons/USSpanels/Plates/lever-v.gif", _numberOfPositions));
                 frame.pack();
             }
             JPanel self;
@@ -88,14 +90,17 @@ public class MultiSensorIconFrame extends JmriJFrame {
         this.getContentPane().add(b);
 
         this.getContentPane().add(new JSeparator());
-        b = new JButton("Set icons for inactive, ...");
+        b = new JButton(Bundle.getMessage("SetStateIcons"));
         defaultIcons = new MultiIconEditor(3);
-        defaultIcons.setIcon(0, "Unknown:", "resources/icons/USS/plate/levers/l-inactive.gif");
-        defaultIcons.setIcon(1, "Inconsistent:", "resources/icons/USS/plate/levers/l-unknown.gif");
-        defaultIcons.setIcon(2, "Inactive:", "resources/icons/USS/plate/levers/l-inconsistent.gif");
+        defaultIcons.setIcon(0, Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanStateUnknown")),
+                "resources/icons/USS/plate/levers/l-inactive.gif");
+        defaultIcons.setIcon(1, Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanStateInconsistent")),
+                "resources/icons/USS/plate/levers/l-unknown.gif");
+        defaultIcons.setIcon(2, Bundle.getMessage("MakeLabel", Bundle.getMessage("SensorStateInactive")),
+                "resources/icons/USS/plate/levers/l-inconsistent.gif");
         defaultIcons.complete();
         defaultsFrame = new JmriJFrame("", false, true);
-        defaultsFrame.getContentPane().add(new JLabel("  Select new file, then click on icon to change  "), BorderLayout.NORTH);
+        defaultsFrame.getContentPane().add(new JLabel(Bundle.getMessage("IconChangeInfo")), BorderLayout.NORTH);
         defaultsFrame.getContentPane().add(defaultIcons);
         defaultsFrame.pack();
         defaultsFrame.addHelpMenu("package.jmri.jmrit.display.MultiSensorIconDefaultsFrame", true);
@@ -107,11 +112,13 @@ public class MultiSensorIconFrame extends JmriJFrame {
         this.getContentPane().add(b);
 
         this.getContentPane().add(new JSeparator());
-        b = new JButton("Create and Add Icon To Panel");
+        b = new JButton(Bundle.getMessage("ButtonCreateIcon"));
         b.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 make();
-                removeWindows();
+                if (isEmpty != 1){
+                    removeWindows();
+                }
             }
         });
         this.getContentPane().add(b);
@@ -132,6 +139,13 @@ public class MultiSensorIconFrame extends JmriJFrame {
 
         for (int i = 0; i < content.getComponentCount(); i++) {
             Entry e = (Entry) content.getComponent(i);
+            if (e.sensor.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("Error19", i+1),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                isEmpty = 1;
+                return; // Keep Panel open to edit entry
+            }
             m.addEntry(e.sensor.getText(), e.ed.getIcon(0));
         }
         m.setUpDown(updown.isSelected());
@@ -164,20 +178,20 @@ public class MultiSensorIconFrame extends JmriJFrame {
             return ed.getIcon(0).toString();
         }
 
-        Entry(JPanel self, JmriJFrame frame, String name) {
+        Entry(JPanel self, JmriJFrame frame, String name, int position) {
             this.self = self;
             this.setLayout(new FlowLayout());
-            this.add(new JLabel("Sensor:"));
+            this.add(new JLabel(Bundle.getMessage("MakeLabel", (Bundle.getMessage("BeanNameSensor") + " "  + Bundle.getMessage("MultiSensorPosition", position)))));
 
             this.add(sensor);
 
-            ed.setIcon(0, "Active:", name);
+            ed.setIcon(0, Bundle.getMessage("MakeLabel", (Bundle.getMessage("SensorStateActive") + " "  + Bundle.getMessage("MultiSensorPosition", position))), name);
             ed.complete();
-            edf.getContentPane().add(new JLabel("  Select new file, then click on icon to change  "), BorderLayout.NORTH);
+            edf.getContentPane().add(new JLabel(Bundle.getMessage("IconChangeInfo")), BorderLayout.NORTH);
             edf.getContentPane().add(ed);
             edf.pack();
 
-            JButton b = new JButton("Set Icon...");
+            JButton b = new JButton(Bundle.getMessage("SetIconButton"));
             b.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     edf.setVisible(true);
@@ -186,11 +200,12 @@ public class MultiSensorIconFrame extends JmriJFrame {
             this.add(b);
 
             // button to remove this entry from it's parent 
-            b = new JButton("Delete");
+            b = new JButton(Bundle.getMessage("ButtonDelete"));
             ActionListener a = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     // remove this entry
                     self.remove(entry);
+                    _numberOfPositions--;
                     frame.pack();
                 }
                 Entry entry;
@@ -213,7 +228,4 @@ public class MultiSensorIconFrame extends JmriJFrame {
             edf.dispose();
         }
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(MultiSensorIconFrame.class.getName());
 }

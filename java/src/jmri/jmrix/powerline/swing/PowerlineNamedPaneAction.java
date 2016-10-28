@@ -14,8 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2010 Copied from NCE Converted to multiple
  * connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision$
- */
+  */
 public class PowerlineNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**
@@ -55,7 +54,7 @@ public class PowerlineNamedPaneAction extends jmri.util.swing.JmriNamedPaneActio
         return p;
     }
 
-    static Logger log = LoggerFactory.getLogger(PowerlineNamedPaneAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PowerlineNamedPaneAction.class.getName());
 }
 
 /* @(#)PowerlineNamedPaneAction.java */

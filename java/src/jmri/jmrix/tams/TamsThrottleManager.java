@@ -11,11 +11,11 @@ import org.slf4j.LoggerFactory;
  * TamsDCC implementation of a ThrottleManager.
  * <P>
  * Based on early NCE code.
+ * 
+ * Based on work by Bob Jacobsen 
  *
- * Based on work by Bob Jacobsen
- *
- * @author	Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 19121 $
+ * @author	Kevin Dickerson
+ * 
  */
 public class TamsThrottleManager extends AbstractThrottleManager implements TamsListener {
 
@@ -44,7 +44,7 @@ public class TamsThrottleManager extends AbstractThrottleManager implements Tams
         /*Here we do not set notifythrottle, we simply create a new Tams throttle.
          The Tams throttle in turn will notify the throttle manager of a successful or
          unsuccessful throttle connection. */
-        log.debug("new TamsThrottle for " + address);
+        log.info("new TamsThrottle for " + address);
         notifyThrottleKnown(new TamsThrottle((TamsSystemConnectionMemo) adapterMemo, (DccLocoAddress) address), address);
     }
 
@@ -102,6 +102,6 @@ public class TamsThrottleManager extends AbstractThrottleManager implements Tams
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(TamsThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TamsThrottleManager.class.getName());
 
 }

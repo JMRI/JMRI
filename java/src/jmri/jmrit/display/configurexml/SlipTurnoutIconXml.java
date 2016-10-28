@@ -5,8 +5,6 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SlipTurnoutIcon;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for display.TurnoutIcon objects.
@@ -14,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Based upon the TurnoutIconXml by Bob Jacobsen
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2010
- * @version $Revision$
  */
 public class SlipTurnoutIconXml extends PositionableLabelXml {
 
@@ -88,11 +85,6 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
         return element;
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Create a PositionableLabel, then add to a target JLayeredPane
      *
@@ -135,7 +127,7 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
             } else if (a.getValue().equals("singleSlip")) {
                 l.setTurnoutType(SlipTurnoutIcon.SINGLESLIP);
                 a = element.getAttribute("singleSlipRoute");
-                if ((a == null) || ((a != null) && a.getValue().equals("upperWestToUpperEast"))) {
+                if ((a == null) || a.getValue().equals("upperWestToUpperEast")) {
                     l.setSingleSlipRoute(true);
                 } else {
                     l.setSingleSlipRoute(false);
@@ -143,7 +135,7 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
             } else if (a.getValue().equals("threeWay")) {
                 l.setTurnoutType(SlipTurnoutIcon.THREEWAY);
                 a = element.getAttribute("firstTurnoutExit");
-                if ((a == null) || ((a != null) && a.getValue().equals("lower"))) {
+                if ((a == null) || a.getValue().equals("lower")) {
                     l.setSingleSlipRoute(false);
                 } else {
                     l.setSingleSlipRoute(true);
@@ -177,7 +169,7 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
         loadTurnoutIcon("inconsistent", rotation, l, element, p);
 
         a = element.getAttribute("tristate");
-        if ((a == null) || ((a != null) && a.getValue().equals("true"))) {
+        if ((a == null) || a.getValue().equals("true")) {
             l.setTristate(true);
         } else {
             l.setTristate(false);
@@ -242,6 +234,4 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
             }
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(SlipTurnoutIconXml.class.getName());
 }

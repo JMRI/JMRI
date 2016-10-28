@@ -1,4 +1,3 @@
-// Mx1TrafficController.java
 package jmri.jmrix.zimo;
 
 import java.util.Vector;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * locating the local implementation.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version $Revision$
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -133,8 +131,5 @@ public abstract class Mx1TrafficController implements Mx1Interface {
         return adaptermemo.getSystemPrefix();
     }
 
-    static Logger log = LoggerFactory.getLogger(Mx1TrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1TrafficController.class.getName());
 }
-
-
-/* @(#)Mx1TrafficController.java */

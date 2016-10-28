@@ -6,8 +6,7 @@ package jmri.jmrix.acela;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2001,2003
- * @version	$Revision$
- *
+  *
  * @author	Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
@@ -34,7 +33,6 @@ public class AcelaMessage extends jmri.jmrix.AbstractMRMessage {
      * This ctor interprets the String as the exact sequence to send,
      * byte-for-byte.
      *
-     * @param m
      */
     public AcelaMessage(String m) {
         super(m);
@@ -49,7 +47,7 @@ public class AcelaMessage extends jmri.jmrix.AbstractMRMessage {
         super(String.valueOf(a));
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public String toString() {

@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2004, 2007, 2015 All rights reserved -->
+<!-- $Id: Public_Domain_FREDi_LNSV2.xml 1810 2015-11-24 12:12:00Z martin $ -->
+<!--                                                                         -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under   -->
+<!-- the terms of version 2 of the GNU General Public License as published   -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy      -->
+<!-- of this license.                                                        -->
+<!--                                                                         -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT     -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or   -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License    -->
+<!-- for more details. -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" 
+                showEmptyPanes="no">
+
+    <version author="Knut Schwichtenberg" version="1" lastUpdated="20151122" />
+
+    <decoder>
+
+        <family name="FREDi" mfg="Public-domain and DIY">
+            <model model="FREDi using LNSV2" productID="11" developerID="1" />
+        </family>
+
+        <programming direct="no" paged="no" register="no" ops="no">
+            <mode>LOCONETSV2MODE</mode>
+        </programming>
+
+        <variables>
+
+            <variable CV="9998" item="Long Address" 
+                      comment="Board SV address" 
+                      infoOnly="yes" mask="VVVVVVVV" default="1024"
+                      tooltip="Device address MUST be unique across all SV2 devices on the LocoNet connection">
+                <splitVal highCV="9999" upperMask="XVVVVVVV" min="1024" max="32383" />
+                <label>Device Address/Throttle Id as decimal value (1024-32383, 0x0400-0x7E7F)</label>
+                <label xml:lang="de">Geräte Adresse/Throttle ID als Dezimalwert (1024-32383, 0x0400-0x7E7F)</label>
+            </variable>
+
+            <variable CV="1" item="Advanced Group 1 Option 1"
+                      readOnly="yes" 
+                      comment="Size of memory in bytes">
+                <enumVal>
+                    <enumChoice value="0">
+                        <choice>256 bytes</choice>
+                    </enumChoice>
+                    <enumChoice value="1">
+                        <choice>512 bytes</choice>
+                    </enumChoice>
+                    <enumChoice value="2">
+                        <choice>1024 bytes</choice>
+                    </enumChoice>
+                    <enumChoice value="3">
+                        <choice>2048 bytes</choice>
+                    </enumChoice>
+                    <enumChoice value="4">
+                        <choice>4096 bytes</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>EEPROM Size</label>
+                <label xml:lang="de">EEPROM Größe</label>
+                <tooltip>&lt;html&gt;
+                         This is &lt;strong&gt;SV1&lt;/strong&gt; as defined 
+                         by the LocoNet SV programming protocol.&lt;br/&gt;
+                         It reflects the size of the EEPROM memory.&lt;br/&gt;
+                         (Defined to be read only)
+                         &lt;/html&gt;
+                </tooltip>
+            </variable>
+
+            <variable CV="2" item="SV2:Software Version"
+                      readOnly="yes">
+                <decVal />
+                <label>Software Version</label>
+                <label xml:lang="de">Softwareversion</label>
+                <tooltip>&lt;html&gt;
+                         This is &lt;strong&gt;SV2&lt;/strong&gt; as defined 
+                         by the LocoNet SV programming protocol.&lt;br/&gt;
+                         It's the software version as defined by SV programming 
+                         or IPL protocol.&lt;br/&gt;
+                         (Defined to be read only)
+                         &lt;/html&gt;
+                </tooltip>
+            </variable>
+
+            <variable CV="5" item="SV5:Hardware Version (from makefile)"
+                      readOnly="yes">
+                <decVal />
+                <label>Hardware Version (from makefile)</label>
+                <label xml:lang="de">Hardwareversion (aus dem Makefile)</label>
+                <tooltip>&lt;html&gt;
+                         &lt;strong&gt;SV5&lt;/strong&gt;:&lt;br/&gt;
+                         This the Hardware Version defined in the Makefile &lt;br/&gt;
+                         while compiling the FREDI program. For FREDI this &lt;br/&gt;
+                         is the MCU used. The values are: 1=ATmega8, 2=ATmega88, &lt;br/&gt;
+                         3=ATmega168, 4=ATmega328P&lt;br/&gt;
+                         (Defined to be read only)
+                         &lt;/html&gt;
+                </tooltip>
+            </variable>
+
+            <variable CV="6" item="SV6:Hardware Version (from bootloader)"
+                      readOnly="yes">
+                <decVal />
+                <label>Hardware Version (from bootloader)</label>
+                <label xml:lang="de">Hardwareversion (aus dem Bootloader)</label>
+                <tooltip>&lt;html&gt;
+                         &lt;strong&gt;SV6&lt;/strong&gt;:&lt;br/&gt;
+                         This the Hardware Version defined by the Programmer &lt;br/&gt;
+                         in the Makefile while compiling the bootloader. For &lt;br/&gt;
+                         FREDI this is the MCU used. The values are: 1=ATmega8, &lt;br/&gt;
+                         2=ATmega88, 3=ATmega168, 4=ATmega328P. The values is &lt;br/&gt;
+                         stored at address (FLASHEND-1).&lt;br/&gt;
+                         (Defined to be read only)
+                         &lt;/html&gt;
+                </tooltip>
+            </variable>
+
+            <variable CV="7" item="SV7:Bootloader Version (from flash)"
+                      readOnly="yes">
+                <decVal />
+                <label>Bootloader Version (from flash)</label>
+                <label xml:lang="de">Versionsnummer des Bootloader (aus Flashspeicher)</label>
+                <tooltip>&lt;html&gt;
+                         &lt;strong&gt;SV7&lt;/strong&gt;:&lt;br/&gt;
+                         This the Software Version of the Bootloader defined &lt;br/&gt;
+                         while compiling the bootloader. The values is stored &lt;br/&gt;
+                         at address FLASHEND.&lt;br/&gt;
+                         (Defined to be read only)
+                         &lt;/html&gt;
+                </tooltip>
+            </variable>
+
+            <variable CV="9" item="Advanced Group 1 Option 6"
+                      readOnly="no" mask="XVVVVVVV"
+                      comment="Loco address">
+                <splitVal highCV="8" upperMask="XVVVVVVV" />
+                <!-- TODO: limit values from 0 to 10239 -->
+                <label>Controlled Loco address (mobile decoder address)</label>
+                <label xml:lang="de">Adresse der zugewiesen Lokomotive</label>
+                <tooltip>&lt;html&gt;
+                         &lt;strong&gt;SV8/9&lt;/strong&gt;:&lt;br/&gt;
+                         This the DCC address of the currently controlled &lt;br/&gt;
+                         locomotive as decimal value. Valid values are 0 to 10239.&lt;br/&gt;
+                         The meaning of value 0 is that no locomotive is assigned.&lt;br/&gt;
+                         (Requires a reconnect of FREDi to be activated after change)
+                         &lt;/html&gt;
+                </tooltip>
+            </variable>
+
+            <variable CV="10" item="Advanced Group 1 Option 7">
+                <enumVal>
+                    <enumChoice value="0">
+                        <choice>28 Speed Steps</choice>
+                        <choice xml:lang="de">28 Fahrstufen</choice>
+                    </enumChoice>
+                    <enumChoice value="1">
+                        <choice>28 Motorola</choice>
+                        <choice xml:lang="de">28 Motorola</choice>
+                    </enumChoice>
+                    <enumChoice value="2">
+                        <choice>14 Speed Steps</choice>
+                        <choice xml:lang="de">14 Fahrstufen</choice>
+                    </enumChoice>
+                    <enumChoice value="3">
+                        <choice>128 Speed Steps</choice>
+                        <choice xml:lang="de">128 Fahrstufen</choice>
+                    </enumChoice>
+                    <enumChoice value="4">
+                        <choice>28 Speed Steps DAC</choice>
+                        <choice xml:lang="de">28 Fahrstufen DAC</choice>
+                    </enumChoice>
+                    <enumChoice value="7">
+                        <choice>128 Speed Steps DAC</choice>
+                        <choice xml:lang="de">128 Fahrstufen DAC</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Number of speed steps </label>
+                <label xml:lang="de">Anzahl der Fahrstufen</label>
+                <tooltip>&lt;html&gt;
+                         &lt;strong&gt;SV10&lt;/strong&gt;:&lt;br/&gt;
+                         Speed Step mode of currently controlled locomtive.&lt;br/&gt;
+                         (Requires a reconnect of FREDi to be activated after change)
+                         &lt;/html&gt;
+                </tooltip>
+            </variable>
+
+            <variable CV="11" item="Advanced Group 1 Option 8">
+                <enumVal>
+                    <enumChoice value="85">
+                        <choice>Operation mode (0x55)</choice>
+                        <choice xml:lang="de">Betrieb (0x55)</choice>
+                    </enumChoice>
+                    <enumChoice value="255">
+                        <choice>Selftest (0xff)</choice>
+                        <choice xml:lang="de">Selbsttest (0xff)</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Operation or Selftest</label>
+                <label xml:lang="de">Betrieb oder Selbsttest</label>
+                <tooltip>&lt;html&gt;
+                         &lt;strong&gt;SV11&lt;/strong&gt;:&lt;br/&gt;
+                         (Requires a reconnect of FREDi to be activated after change)
+                         &lt;/html&gt;
+                </tooltip>
+            </variable>
+
+            <variable CV="12" item="Advanced Group 1 Option 9"
+                      readOnly="no" mask="VXXXXXXX">
+                <enumVal>
+                    <enumChoice value="0">
+                        <choice>Forward-Reverse-Switch</choice>
+                        <choice xml:lang="de">Vorwärts-Rückwärts Schalter</choice>
+                    </enumChoice>
+                    <enumChoice value="1">
+                        <choice>Forward-Off-Reverse-Switch</choice>
+                        <choice xml:lang="de">Vorwärts-Aus-Rückwärts Schalter</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Direction switch as detected by the selftest</label>
+                <label xml:lang="de">Fahrtrichtungsschalter (wie vom Selbstest erkannt)</label>
+                <tooltip>SV12, Bit7</tooltip>
+            </variable>
+
+            <variable CV="12" item="Advanced Group 1 Option 11"
+                      readOnly="no" mask="XVXXXXXX">
+                <enumVal>
+                    <enumChoice value="0">
+                        <choice>One Shift only</choice>
+                        <choice xml:lang="de">Ein Shift Knopf</choice>
+                    </enumChoice>
+                    <enumChoice value="1">
+                        <choice>Two shift buttons</choice>
+                        <choice xml:lang="de">Zwei Shift Knöpfe</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Number of Shift buttons as detected by the selftest</label>
+                <label xml:lang="de">Anzahl der Shift Knöpfe (wie vom Selbstest erkannt)</label>
+                <tooltip>SV12, Bit6</tooltip>
+            </variable>
+
+            <variable CV="12" item="Advanced Group 1 Option 12"
+                      readOnly="no" mask="XXXXXXVV">
+                <enumVal>
+                    <enumChoice value="0">
+                        <choice>Undefined</choice>
+                        <choice xml:lang="de">Undefiniert</choice>
+                    </enumChoice>
+                    <enumChoice value="1">
+                        <choice>Increment Encoder</choice>
+                        <choice xml:lang="de">Inkremental-Geber</choice>
+                    </enumChoice>
+                    <enumChoice value="3">
+                        <choice>Analogue Poti</choice>
+                        <choice xml:lang="de">Analoges Poti</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>FREDi type as detected by the selftest</label>
+                <label xml:lang="de">FREDi Variante (wie vom Selbstest erkannt)</label>
+                <tooltip>SV12, Bit0 and Bit1</tooltip>
+            </variable>
+
+            <variable CV="13" item="SV13:High part of Software Version No."
+                      readOnly="yes">
+                <decVal />
+                <label>High part of Software Version No.</label>
+                <label xml:lang="de">Versionsnummer der Software (höherwertiger Teil)</label>
+                <tooltip>SV13 as decimal value.</tooltip>
+            </variable>
+
+            <variable CV="14" item="SV14:Low part of Software Version No."
+                      readOnly="yes">
+                <decVal />
+                <label>Low part of Software Version No.</label>
+                <label xml:lang="de">Versionsnummer der Software (niederwertiger Teil)</label>
+                <tooltip>SV14 as decimal value.</tooltip>
+            </variable>
+
+            <variable CV="15" item="SV15:Day of Software Compilation"
+                      readOnly="yes">
+                <hexVal />
+                <label>Day of Software Compilation</label>
+                <label xml:lang="de">Tag der Software Übersetzung</label>
+                <tooltip>SV15 as hexadecimal value.</tooltip>
+            </variable>
+
+            <variable CV="16" item="SV16:Month of Software Compilation"
+                      readOnly="yes">
+                <hexVal />
+                <label>Month of Software Compilation</label>
+                <label xml:lang="de">Monat der Software Übersetzung</label>
+                <tooltip>SV16 as hexadecimal value.</tooltip>
+            </variable>
+
+            <variable CV="17" item="SV17:Year of Software Compilation"
+                      readOnly="yes">
+                <hexVal />
+                <label>Year of Software Compilation</label>
+                <label xml:lang="de">Jahr der Software Übersetzung</label>
+                <tooltip>SV17 as hexadecimal value.</tooltip>
+            </variable>
+
+            <variable CV="18" item="SV18:Function Mode F0" comment="F0">
+                <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-FREDiFunctionKeyMode.xml" />
+                <label>Function F00</label>
+                <label xml:lang="de">Funktion F00</label>
+                <tooltip>SV18</tooltip>
+            </variable>
+
+            <variable CV="19" item="SV19:Function Mode F1" comment="F1">
+                <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-FREDiFunctionKeyMode.xml" />
+                <label>Function F01</label>
+                <label xml:lang="de">Funktion F01</label>
+                <tooltip>SV19</tooltip>
+            </variable>
+
+            <variable CV="20" item="SV20:Function Mode F2" comment="F2">
+                <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-FREDiFunctionKeyMode.xml" />
+                <label>Function F02</label>
+                <label xml:lang="de">Funktion F02</label>
+                <tooltip>SV20</tooltip>
+            </variable>
+
+            <variable CV="21" item="SV21:Function Mode F3" comment="F3">
+                <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-FREDiFunctionKeyMode.xml" />
+                <label>Function F03</label>
+                <label xml:lang="de">Funktion F03</label>
+                <tooltip>SV21</tooltip>
+            </variable>
+
+            <variable CV="22" item="SV22:Function Mode F4" comment="F4">
+                <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-FREDiFunctionKeyMode.xml" />
+                <label>Function F04</label>
+                <label xml:lang="de">Funktion F04</label>
+                <tooltip>SV22</tooltip>
+            </variable>
+
+            <variable CV="23" item="SV23:Function Mode F5" comment="F5">
+                <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-FREDiFunctionKeyMode.xml" />
+                <label>Function F05</label>
+                <label xml:lang="de">Funktion F05</label>
+                <tooltip>SV23</tooltip>
+            </variable>
+
+            <variable CV="24" item="SV24:Function Mode F6" comment="F6">
+                <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-FREDiFunctionKeyMode.xml" />
+                <label>Function F06</label>
+                <label xml:lang="de">Funktion F06</label>
+                <tooltip>SV24</tooltip>
+            </variable>
+
+            <variable CV="25" item="SV25:Function Mode F7" comment="F7">
+                <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-FREDiFunctionKeyMode.xml" />
+                <label>Function F07</label>
+                <label xml:lang="de">Funktion F07</label>
+                <tooltip>SV25</tooltip>
+            </variable>
+
+            <variable CV="26" item="SV26:Function Mode F8" comment="F8">
+                <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-FREDiFunctionKeyMode.xml" />
+                <label>Function F08</label>
+                <label xml:lang="de">Funktion F08</label>
+                <tooltip>SV26</tooltip>
+            </variable>
+
+            <variable CV="27" item="SV27:Function Mode F9" comment="F9">
+                <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-FREDiFunctionKeyMode.xml" />
+                <label>Function F09</label>
+                <label xml:lang="de">Funktion F09</label>
+                <tooltip>SV27</tooltip>
+            </variable>
+
+            <variable CV="28" item="SV28:Function Mode F10" comment="F10">
+                <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-FREDiFunctionKeyMode.xml" />
+                <label>Function F10</label>
+                <label xml:lang="de">Funktion F10</label>
+                <tooltip>SV28</tooltip>
+            </variable>
+
+            <variable CV="29" item="SV29:Function Mode F11" comment="F11">
+                <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-FREDiFunctionKeyMode.xml" />
+                <label>Function F11</label>
+                <label xml:lang="de">Funktion F11</label>
+                <tooltip>SV29</tooltip>
+            </variable>
+
+            <variable CV="30" item="SV30:Function Mode F12" comment="F12">
+                <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-FREDiFunctionKeyMode.xml" />
+                <label>Function F12</label>
+                <label xml:lang="de">Funktion F12</label>
+                <tooltip>SV30</tooltip>
+            </variable>
+
+        </variables>
+    </decoder>
+
+    <xi:include href="http://jmri.org/xml/decoders/public_domain/pane-FREDiFunctionMap.xml" />
+    <xi:include href="http://jmri.org/xml/decoders/public_domain/pane-FREDiVersionMap.xml" />
+
+</decoder-config>

@@ -1,4 +1,3 @@
-// RpsTrackingControlPane.java
 package jmri.jmrix.rps.trackingpanel;
 
 import java.awt.FlowLayout;
@@ -9,22 +8,15 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  * Panel to control the scaling of a RpsTrackingPane
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public class RpsTrackingControlPane extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1526969572941516857L;
     RpsTrackingPanel panel;
 
     public RpsTrackingControlPane(RpsTrackingPanel panel) {
@@ -88,6 +80,4 @@ public class RpsTrackingControlPane extends JPanel {
     public JTextField blXf;
     public JTextField blYf;
     double trX, trY, blX, blY;
-
-    static Logger log = LoggerFactory.getLogger(RpsTrackingControlPane.class.getName());
 }

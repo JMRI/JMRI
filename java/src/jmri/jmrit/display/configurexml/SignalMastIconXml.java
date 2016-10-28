@@ -1,4 +1,3 @@
-// SignalMastIconXml.java
 package jmri.jmrit.display.configurexml;
 
 import jmri.SignalMast;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.SignalMastIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
- * @version $Revision$
  */
 public class SignalMastIconXml extends PositionableLabelXml {
 
@@ -43,11 +41,6 @@ public class SignalMastIconXml extends PositionableLabelXml {
         element.setAttribute("class", "jmri.jmrit.display.configurexml.SignalMastIconXml");
         //storeIconInfo(p, element);
         return element;
-    }
-
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
     }
 
     /**
@@ -106,7 +99,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
             }
         }
 
-        SignalMast sh = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(name);
+        SignalMast sh = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
 
         if (sh != null) {
             l.setSignalMast(name);
@@ -150,6 +143,6 @@ public class SignalMastIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.SIGNALS, element);
     }
 
-    static Logger log = LoggerFactory.getLogger(SignalMastIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalMastIconXml.class.getName());
 
 }

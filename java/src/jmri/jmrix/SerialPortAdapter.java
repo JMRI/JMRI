@@ -1,4 +1,3 @@
-// SerialPortAdapter.java
 package jmri.jmrix;
 
 import org.slf4j.Logger;
@@ -8,7 +7,6 @@ import org.slf4j.Logger;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2008
- * @version	$Revision$
  * @see jmri.jmrix.SerialConfigException
  */
 public interface SerialPortAdapter extends PortAdapter {
@@ -38,7 +36,6 @@ public interface SerialPortAdapter extends PortAdapter {
     /**
      * Remember the associated port name
      *
-     * @param s
      */
     public void setPort(String s);
 
@@ -70,13 +67,13 @@ public interface SerialPortAdapter extends PortAdapter {
     public void configureOption2(String value);
 
     /**
-     * Set the second port option. Only to be used after construction, but
-     * before the openPort call
+     * Set the third port option. Only to be used after construction, but before
+     * the openPort call
      */
     public void configureOption3(String value);
 
     /**
-     * Set the second port option. Only to be used after construction, but
+     * Set the fourth port option. Only to be used after construction, but
      * before the openPort call
      */
     public void configureOption4(String value);
@@ -86,9 +83,7 @@ public interface SerialPortAdapter extends PortAdapter {
      *
      * @see jmri.jmrix.AbstractSerialPortController
      */
-    public String handlePortBusy(gnu.io.PortInUseException p,
-            String portName,
-            Logger log);
+    public String handlePortBusy(gnu.io.PortInUseException p, String portName, Logger log);
 
     /**
      * Return the System Manufacturers Name

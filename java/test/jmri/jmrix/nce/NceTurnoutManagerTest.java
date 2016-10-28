@@ -4,13 +4,14 @@
  * Description:	tests for the jmri.jmrix.nce.NceTurnoutManager class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 package jmri.jmrix.nce;
 
 import jmri.Turnout;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +19,16 @@ public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest 
 
     private NceInterfaceScaffold nis = null;
 
+    @After 
+    public void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
+
+    @Override
+    @Before
     public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+
         // prepare an interface, register
         nis = new NceInterfaceScaffold();
         // create and register the manager object
@@ -37,7 +47,7 @@ public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest 
         if (log.isDebugEnabled()) {
             log.debug("received turnout value " + o);
         }
-        assertTrue(null != (NceTurnout) o);
+        Assert.assertTrue(null != (NceTurnout) o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
@@ -47,29 +57,12 @@ public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest 
             log.debug("by user name:   " + l.getByUserName("my name"));
         }
 
-        assertTrue(null != l.getBySystemName("NT21"));
-        assertTrue(null != l.getByUserName("my name"));
+        Assert.assertTrue(null != l.getBySystemName("NT21"));
+        Assert.assertTrue(null != l.getByUserName("my name"));
 
     }
 
-    // from here down is testing infrastructure
-    public NceTurnoutManagerTest(String s) {
-        super(s);
-    }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {NceTurnoutManager.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite(NceTurnoutManagerTest.class);
-        return suite;
-    }
-
-    static Logger log = LoggerFactory.getLogger(NceTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceTurnoutManagerTest.class.getName());
 
 }

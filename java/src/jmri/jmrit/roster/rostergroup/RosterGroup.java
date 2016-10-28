@@ -12,7 +12,7 @@ import jmri.jmrit.roster.RosterObject;
  *
  * This object allows groups to be manipulated as Java beans.
  *
- * @author Randall Wood <randall.h.wood@alexandriasoftware.com>
+ * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
 public class RosterGroup extends Bean implements RosterObject {
 
@@ -23,7 +23,6 @@ public class RosterGroup extends Bean implements RosterObject {
      *
      * This sets the name without calling {@link #setName(java.lang.String) }.
      *
-     * @param name
      */
     public RosterGroup(String name) {
         this.name = name;
@@ -35,7 +34,7 @@ public class RosterGroup extends Bean implements RosterObject {
      * @return the list of entries or an empty list.
      */
     public List<RosterEntry> getEntries() {
-        return Roster.instance().getEntriesInGroup(this.getName());
+        return Roster.getDefault().getEntriesInGroup(this.getName());
     }
 
     /**
@@ -57,19 +56,19 @@ public class RosterGroup extends Bean implements RosterObject {
      * @param newName the new name
      */
     public void setName(String newName) {
-        if (Roster.instance().getRosterGroups().containsKey(newName)) {
+        if (Roster.getDefault().getRosterGroups().containsKey(newName)) {
             return;
         }
         String oldName = this.name;
         String oldGroup = Roster.getRosterGroupProperty(oldName);
         String newGroup = Roster.getRosterGroupProperty(newName);
-        Roster.instance().getRosterGroups().put(newName, Roster.instance().getRosterGroups().remove(oldName));
+        Roster.getDefault().remapRosterGroup(this, newName);
         for (RosterEntry re : this.getEntries()) {
             re.putAttribute(newGroup, "yes"); // NOI18N
             re.deleteAttribute(oldGroup);
         }
         this.name = newName;
-        Roster.instance().rosterGroupRenamed(oldName, newName);
+        Roster.getDefault().rosterGroupRenamed(oldName, newName);
     }
 
     @Override

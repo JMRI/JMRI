@@ -6,7 +6,6 @@ package jmri.jmrix.loconet.sdf;
  * language
  *
  * @author	Bob Jacobsen Copyright (C) 2007, 2008
- * @version $Revision$
  */
 public class SkipOnTrigger extends SdfMacro {
 

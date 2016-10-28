@@ -1,0 +1,292 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id$				-->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- no need to translate the following, as it generally only appears -->
+<!-- in the function map selection pane --> 
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2015</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2015-10-14</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Creation</revremark>
+    </revision>
+   </revhistory>
+  <variable item="F1 precludes AUX 3" CV="125" mask="XXXXXXXV" tooltip="CV125 Bit 0" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F1 precludes AUX 3</label>
+    <label xml:lang="it">F1 blocca AUX 3</label>
+    <label xml:lang="fr">F1 empêche AUX 3</label>
+    <label xml:lang="de">F1 schaltet AUX 3 aus</label>
+  </variable>
+  <variable item="F2 precludes AUX 3" CV="125" mask="XXXXXXVX" tooltip="CV125 Bit 1" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F2 precludes AUX 3</label>
+    <label xml:lang="it">F2 blocca AUX 3</label>
+    <label xml:lang="fr">F2 empêche AUX 3</label>
+    <label xml:lang="de">F2 schaltet AUX 3 aus</label>
+  </variable>
+  <variable item="F3 precludes AUX 3" CV="125" mask="XXXXXVXX" tooltip="CV125 Bit 2" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F3 precludes AUX 3</label>
+    <label xml:lang="it">F3 blocca AUX 3</label>
+    <label xml:lang="fr">F3 empêche AUX 3</label>
+    <label xml:lang="de">F3 schaltet AUX 3 aus</label>
+  </variable>
+  <variable item="F4 precludes AUX 3" CV="125" mask="XXXXVXXX" tooltip="CV125 Bit 3" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F4 precludes AUX 3</label>
+    <label xml:lang="it">F4 blocca AUX 3</label>
+    <label xml:lang="fr">F4 empêche AUX 3</label>
+    <label xml:lang="de">F4 schaltet AUX 3 aus</label>
+  </variable>
+  <variable item="F5 precludes AUX 3" CV="125" mask="XXXVXXXX" tooltip="CV125 Bit 4" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F5 precludes AUX 3</label>
+    <label xml:lang="it">F5 blocca AUX 3</label>
+    <label xml:lang="fr">F5 empêche AUX 3</label>
+    <label xml:lang="de">F5 schaltet AUX 3 aus</label>
+  </variable>
+  <variable item="F6 precludes AUX 3" CV="125" mask="XXVXXXXX" tooltip="CV125 Bit 5" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F6 precludes AUX 3</label>
+    <label xml:lang="it">F6 blocca AUX 3</label>
+    <label xml:lang="fr">F6 empêche AUX 3</label>
+    <label xml:lang="de">F6 schaltet AUX 3 aus</label>
+  </variable>
+  <variable item="F7 precludes AUX 3" CV="125" mask="XVXXXXXX" tooltip="CV125 Bit 6" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F7 precludes AUX 3</label>
+    <label xml:lang="it">F7 blocca AUX 3</label>
+    <label xml:lang="fr">F7 empêche AUX 3</label>
+    <label xml:lang="de">F7 schaltet AUX 3 aus</label>
+  </variable>
+  <variable item="F8 precludes AUX 3" CV="125" mask="VXXXXXXX" tooltip="CV125 Bit 7" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F8 precludes AUX 3</label>
+    <label xml:lang="it">F8 blocca AUX 3</label>
+    <label xml:lang="fr">F8 empêche AUX 3</label>
+    <label xml:lang="de">F8 schaltet AUX 3 aus</label>
+  </variable>
+  <variable item="F1 precludes AUX 4" CV="126" mask="XXXXXXXV" tooltip="CV126 Bit 0" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F1 precludes AUX 4</label>
+    <label xml:lang="it">F1 blocca AUX 4</label>
+    <label xml:lang="fr">F1 empêche AUX 4</label>
+    <label xml:lang="de">F1 schaltet AUX 4 aus</label>
+  </variable>
+  <variable item="F2 precludes AUX 4" CV="126" mask="XXXXXXVX" tooltip="CV126 Bit 1" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F2 precludes AUX 4</label>
+    <label xml:lang="it">F2 blocca AUX 4</label>
+    <label xml:lang="fr">F2 empêche AUX 4</label>
+    <label xml:lang="de">F2 schaltet AUX 4 aus</label>
+  </variable>
+  <variable item="F3 precludes AUX 4" CV="126" mask="XXXXXVXX" tooltip="CV126 Bit 2" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F3 precludes AUX 4</label>
+    <label xml:lang="it">F3 blocca AUX 4</label>
+    <label xml:lang="fr">F3 empêche AUX 4</label>
+    <label xml:lang="de">F3 schaltet AUX 4 aus</label>
+  </variable>
+  <variable item="F4 precludes AUX 4" CV="126" mask="XXXXVXXX" tooltip="CV126 Bit 3" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F4 precludes AUX 4</label>
+    <label xml:lang="it">F4 blocca AUX 4</label>
+    <label xml:lang="fr">F4 empêche AUX 4</label>
+    <label xml:lang="de">F4 schaltet AUX 4 aus</label>
+  </variable>
+  <variable item="F5 precludes AUX 4" CV="126" mask="XXXVXXXX" tooltip="CV126 Bit 4" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F5 precludes AUX 4</label>
+    <label xml:lang="it">F5 blocca AUX 4</label>
+    <label xml:lang="fr">F5 empêche AUX 4</label>
+    <label xml:lang="de">F5 schaltet AUX 4 aus</label>
+  </variable>
+  <variable item="F6 precludes AUX 4" CV="126" mask="XXVXXXXX" tooltip="CV126 Bit 5" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F6 precludes AUX 4</label>
+    <label xml:lang="it">F6 blocca AUX 4</label>
+    <label xml:lang="fr">F6 empêche AUX 4</label>
+    <label xml:lang="de">F6 schaltet AUX 4 aus</label>
+  </variable>
+  <variable item="F7 precludes AUX 4" CV="126" mask="XVXXXXXX" tooltip="CV126 Bit 6" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F7 precludes AUX 4</label>
+    <label xml:lang="it">F7 blocca AUX 4</label>
+    <label xml:lang="fr">F7 empêche AUX 4</label>
+    <label xml:lang="de">F7 schaltet AUX 4 aus</label>
+  </variable>
+  <variable item="F8 precludes AUX 4" CV="126" mask="VXXXXXXX" tooltip="CV126 Bit 7" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F8 precludes AUX 4</label>
+    <label xml:lang="it">F8 blocca AUX 4</label>
+    <label xml:lang="fr">F8 empêche AUX 4</label>
+    <label xml:lang="de">F8 schaltet AUX 4 aus</label>
+  </variable>
+  <variable item="F1 precludes AUX 5" CV="127" mask="XXXXXXXV" tooltip="CV127 Bit 0" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F1 precludes AUX 5</label>
+    <label xml:lang="it">F1 blocca AUX 5</label>
+    <label xml:lang="fr">F1 empêche AUX 5</label>
+    <label xml:lang="de">F1 schaltet AUX 5 aus</label>
+  </variable>
+  <variable item="F2 precludes AUX 5" CV="127" mask="XXXXXXVX" tooltip="CV127 Bit 1" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F2 precludes AUX 5</label>
+    <label xml:lang="it">F2 blocca AUX 5</label>
+    <label xml:lang="fr">F2 empêche AUX 5</label>
+    <label xml:lang="de">F2 schaltet AUX 5 aus</label>
+  </variable>
+  <variable item="F3 precludes AUX 5" CV="127" mask="XXXXXVXX" tooltip="CV127 Bit 2" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F3 precludes AUX 5</label>
+    <label xml:lang="it">F3 blocca AUX 5</label>
+    <label xml:lang="fr">F3 empêche AUX 5</label>
+    <label xml:lang="de">F3 schaltet AUX 5 aus</label>
+  </variable>
+  <variable item="F4 precludes AUX 5" CV="127" mask="XXXXVXXX" tooltip="CV127 Bit 3" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F4 precludes AUX 5</label>
+    <label xml:lang="it">F4 blocca AUX 5</label>
+    <label xml:lang="fr">F4 empêche AUX 5</label>
+    <label xml:lang="de">F4 schaltet AUX 5 aus</label>
+  </variable>
+  <variable item="F5 precludes AUX 5" CV="127" mask="XXXVXXXX" tooltip="CV127 Bit 4" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F5 precludes AUX 5</label>
+    <label xml:lang="it">F5 blocca AUX 5</label>
+    <label xml:lang="fr">F5 empêche AUX 5</label>
+    <label xml:lang="de">F5 schaltet AUX 5 aus</label>
+  </variable>
+  <variable item="F6 precludes AUX 5" CV="127" mask="XXVXXXXX" tooltip="CV127 Bit 5" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F6 precludes AUX 5</label>
+    <label xml:lang="it">F6 blocca AUX 5</label>
+    <label xml:lang="fr">F6 empêche AUX 5</label>
+    <label xml:lang="de">F6 schaltet AUX 5 aus</label>
+  </variable>
+  <variable item="F7 precludes AUX 5" CV="127" mask="XVXXXXXX" tooltip="CV127 Bit 6" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F7 precludes AUX 5</label>
+    <label xml:lang="it">F7 blocca AUX 5</label>
+    <label xml:lang="fr">F7 empêche AUX 5</label>
+    <label xml:lang="de">F7 schaltet AUX 5 aus</label>
+  </variable>
+  <variable item="F8 precludes AUX 5" CV="127" mask="VXXXXXXX" tooltip="CV127 Bit 7" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F8 precludes AUX 5</label>
+    <label xml:lang="it">F8 blocca AUX 5</label>
+    <label xml:lang="fr">F8 empêche AUX 5</label>
+    <label xml:lang="de">F8 schaltet AUX 5 aus</label>
+  </variable>
+  <variable item="F1 precludes AUX 6" CV="128" mask="XXXXXXXV" tooltip="CV128 Bit 0" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F1 precludes AUX 6</label>
+    <label xml:lang="it">F1 blocca AUX 6</label>
+    <label xml:lang="fr">F1 empêche AUX 6</label>
+    <label xml:lang="de">F1 schaltet AUX 6 aus</label>
+  </variable>
+  <variable item="F2 precludes AUX 6" CV="128" mask="XXXXXXVX" tooltip="CV128 Bit 1" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F2 precludes AUX 6</label>
+    <label xml:lang="it">F2 blocca AUX 6</label>
+    <label xml:lang="fr">F2 empêche AUX 6</label>
+    <label xml:lang="de">F2 schaltet AUX 6 aus</label>
+  </variable>
+  <variable item="F3 precludes AUX 6" CV="128" mask="XXXXXVXX" tooltip="CV128 Bit 2" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F3 precludes AUX 6</label>
+    <label xml:lang="it">F3 blocca AUX 6</label>
+    <label xml:lang="fr">F3 empêche AUX 6</label>
+    <label xml:lang="de">F3 schaltet AUX 6 aus</label>
+  </variable>
+  <variable item="F4 precludes AUX 6" CV="128" mask="XXXXVXXX" tooltip="CV128 Bit 3" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F4 precludes AUX 6</label>
+    <label xml:lang="it">F4 blocca AUX 6</label>
+    <label xml:lang="fr">F4 empêche AUX 6</label>
+    <label xml:lang="de">F4 schaltet AUX 6 aus</label>
+  </variable>
+  <variable item="F5 precludes AUX 6" CV="128" mask="XXXVXXXX" tooltip="CV128 Bit 4" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F5 precludes AUX 6</label>
+    <label xml:lang="it">F5 blocca AUX 6</label>
+    <label xml:lang="fr">F5 empêche AUX 6</label>
+    <label xml:lang="de">F5 schaltet AUX 6 aus</label>
+  </variable>
+  <variable item="F6 precludes AUX 6" CV="128" mask="XXVXXXXX" tooltip="CV128 Bit 5" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F6 precludes AUX 6</label>
+    <label xml:lang="it">F6 blocca AUX 6</label>
+    <label xml:lang="fr">F6 empêche AUX 6</label>
+    <label xml:lang="de">F6 schaltet AUX 6 aus</label>
+  </variable>
+  <variable item="F7 precludes AUX 6" CV="128" mask="XVXXXXXX" tooltip="CV128 Bit 6" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F7 precludes AUX 6</label>
+    <label xml:lang="it">F7 blocca AUX 6</label>
+    <label xml:lang="fr">F7 empêche AUX 6</label>
+    <label xml:lang="de">F7 schaltet AUX 6 aus</label>
+  </variable>
+  <variable item="F8 precludes AUX 6" CV="128" mask="VXXXXXXX" tooltip="CV128 Bit 7" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F8 precludes AUX 6</label>
+    <label xml:lang="it">F8 blocca AUX 6</label>
+    <label xml:lang="fr">F8 empêche AUX 6</label>
+    <label xml:lang="de">F8 schaltet AUX 6 aus</label>
+  </variable>
+  <variable item="AUX 5 Auto-off timer" CV="129" default="0" tooltip="CV129 (0-250, 1=100ms)" minOut="5" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <decVal min="0" max="250"/>
+    <label>AUX 5 Auto-off timer</label>
+    <label xml:lang="it">AUX 5 tempo auto-spegnimento</label>
+    <label xml:lang="fr">AUX 5 minuteur (off)</label>
+    <label xml:lang="de">AUX 5 Timer für Ausschlaten</label>
+  </variable>
+  <variable item="AUX 6 Auto-off timer" CV="130" default="0" tooltip="CV130 (0-250, 1=100ms)" minOut="6" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <decVal min="0" max="250"/>
+    <label>AUX 6 Auto-off timer</label>
+    <label xml:lang="it">AUX 6 tempo auto-spegnimento</label>
+    <label xml:lang="fr">AUX 6 minuteur (off)</label>
+    <label xml:lang="de">AUX 6 Timer für Ausschlaten</label>
+  </variable>
+  <variable item="Function for dimmed lights" CV="131" default="1" tooltip="CV131: 0=>Off, 1-28=>F1-F8, 29=>F0" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+		<label xml:lang="fr">Fonction pour feux réduits</label>
+		<label xml:lang="de">Funktionszuordnung Abblendlicht</label>
+  </variable>
+  <variable item="Function for shunting speed" CV="132" default="1" tooltip="CV132: 0=>Off, 1-28=>F1-F8, 29=>F0" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+		<label xml:lang="fr">Fonction pour marche réduite</label>
+		<label xml:lang="de">Funktionszuordnung Rangiergang</label>
+  </variable>
+  <variable item="Function to deactivate start delay" CV="133" default="1" tooltip="CV133: 0=>Off, 1-28=>F1-F8, 29=>F0" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+		<label xml:lang="fr">Fonction pour désactiver délai de départ</label>
+		<label xml:lang="de">Funktionszuordnung Verzögerung ausschalten</label>
+  </variable>
+
+</variables>

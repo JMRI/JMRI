@@ -28,9 +28,7 @@
 # xprop -root -remove _MOTIF_DEFAULT_BINDINGS
 #
 # For more information, please see
-# http://jmri.sourceforge.net/install/ShellScripts.shtml
-#
-# $Revision$ (CVS maintains this line, do not edit please)
+# http://jmri.org/install/ShellScripts.shtml
 
 # runs from usual program directory
 cd ..

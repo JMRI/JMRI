@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
  */
 public class RpsBlock implements java.beans.PropertyChangeListener, jmri.ThrottleListener {
 
@@ -30,7 +29,7 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
 
     public RpsBlock(String sensorname, String signalname, float slow, float fast) {
         this((RpsSensor) jmri.InstanceManager.sensorManagerInstance().getSensor(sensorname),
-                jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(signalname),
+                jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalname),
                 slow, fast);
     }
 
@@ -134,7 +133,7 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
 
     static java.util.Hashtable<Integer, DccThrottle> throttleTable = new java.util.Hashtable<Integer, DccThrottle>();
 
-    static Logger log = LoggerFactory.getLogger(RpsBlock.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RpsBlock.class.getName());
 
 }
 

@@ -1,4 +1,3 @@
-// EngineLengths.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Represents the lengths that engines can have.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2014
- * @version $Revision$
  */
 public class EngineLengths extends RollingStockAttribute {
 
@@ -29,32 +27,34 @@ public class EngineLengths extends RollingStockAttribute {
 
     public static synchronized EngineLengths instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("EngineLengths creating instance");
-            }
+            log.debug("EngineLengths creating instance");
             // create and load
             _instance = new EngineLengths();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("EngineLengths returns instance {}", _instance);
         }
         return _instance;
     }
 
+    @Override
     protected String getDefaultNames() {
         return LENGTHS;
     }
 
     // override, need to perform a number sort
+    @Override
     public void setNames(String[] lengths) {
         setValues(lengths);
     }
 
+    @Override
     public void addName(String length) {
         super.addName(length);
         setDirtyAndFirePropertyChange(ENGINELENGTHS_CHANGED_PROPERTY, null, length);
     }
 
+    @Override
     public void deleteName(String length) {
         super.deleteName(length);
         setDirtyAndFirePropertyChange(ENGINELENGTHS_CHANGED_PROPERTY, length, null);
@@ -70,6 +70,7 @@ public class EngineLengths extends RollingStockAttribute {
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-engines.dtd.
+     * @param root The common Element for operations-engines.dtd.
      *
      */
     public void store(Element root) {
@@ -86,6 +87,6 @@ public class EngineLengths extends RollingStockAttribute {
         super.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(EngineLengths.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EngineLengths.class.getName());
 
 }

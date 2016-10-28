@@ -1,4 +1,3 @@
-// JmriJFrameInterface.java
 package jmri.util.swing.sdi;
 
 import java.awt.Frame;
@@ -19,7 +18,6 @@ import jmri.util.swing.JmriPanel;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
- * @version $Revision$
  */
 public class JmriJFrameInterface implements jmri.util.swing.WindowInterface {
 
@@ -49,16 +47,14 @@ public class JmriJFrameInterface implements jmri.util.swing.WindowInterface {
 
         // add menus if requested
         List<JMenu> list = child.getMenus();
-        if (list != null) {
-            JMenuBar bar = frame.getJMenuBar();
-            if (bar == null) {
-                bar = new JMenuBar();
-            }
-            for (JMenu menu : list) {
-                bar.add(menu);
-            }
-            frame.setJMenuBar(bar);
+        JMenuBar bar = frame.getJMenuBar();
+        if (bar == null) {
+            bar = new JMenuBar();
         }
+        for (JMenu menu : list) {
+            bar.add(menu);
+        }
+        frame.setJMenuBar(bar);
 
         // add help menu if requested
         if (child.getHelpTarget() != null) {

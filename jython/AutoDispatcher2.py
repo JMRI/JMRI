@@ -525,13 +525,13 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
         # If we didn't get a valid name, use "AutoDispatcher"
         if baseName == "" :
             baseName = "AutoDispatcher"
-        self.settingsFile = (Roster.instance().getFileLocation() + 
+        self.settingsFile = (Roster.getDefault().getFileLocation() + 
           baseName + "_AdP.bin")
-        self.trainFile = (Roster.instance().getFileLocation() + 
+        self.trainFile = (Roster.getDefault().getFileLocation() + 
           baseName + "_AdT.bin")
         # Locomotive settings are not based on panel title, since there is
         # only one JMRI roster
-        self.locoFile = (Roster.instance().getFileLocation() + 
+        self.locoFile = (Roster.getDefault().getFileLocation() + 
           "AutoDispatcher_Loc.bin")
         # Now try loading files
         self.loadSettings()
@@ -776,7 +776,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
         # Retrieve info from JMRI roster and create locomotives with 
         # standard speeds
         AutoDispatcher.log("Getting JMRI locomotives roster")           
-        jmriRoster = Roster.instance().matchingList(None, None, None, None,
+        jmriRoster = Roster.getDefault().matchingList(None, None, None, None,
           None, None, None)
         for i in range(jmriRoster.size()) :
             name = jmriRoster.get(i).getId()

@@ -1,4 +1,3 @@
-// DiagnosticFrame.java
 package jmri.jmrix.cmri.serial.diagnostic;
 
 import java.awt.Container;
@@ -12,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.border.Border;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialReply;
@@ -21,14 +21,9 @@ import jmri.jmrix.cmri.serial.SerialTrafficController;
  * Frame for running CMRI diagnostics
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
  */
 public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.cmri.serial.SerialListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6464613055016868125L;
     // member declarations
     protected boolean outTest = true;
     protected boolean wrapTest = false;
@@ -59,7 +54,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     protected int nInBytes = 3;    // number of input bytes for all cards of this node
     protected int begInByte = 0;   // numbering from zero, subscript in inBytes
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "unsync access only during initialization")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "unsync access only during initialization")
     protected int endInByte = 2;
 
     protected int numErrors = 0;
@@ -67,7 +62,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     protected javax.swing.Timer outTimer;
     protected javax.swing.Timer wrapTimer;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "unsync access only during initialization")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "unsync access only during initialization")
     protected boolean waitingOnInput = false;
 
     protected boolean needInputTest = false;
@@ -92,9 +87,12 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 
     DiagnosticFrame curFrame;
 
-    public DiagnosticFrame() {
+    private CMRISystemConnectionMemo _memo = null;
+
+    public DiagnosticFrame(CMRISystemConnectionMemo memo) {
         super();
         curFrame = this;
+        _memo=memo;
     }
 
     public void initComponents() throws Exception {
@@ -264,7 +262,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             return (false);
         }
         // get the SerialNode corresponding to this node address
-        node = (SerialNode) SerialTrafficController.instance().getNodeFromAddress(ua);
+        node = (SerialNode) _memo.getTrafficController().getNodeFromAddress(ua);
         if (node == null) {
             statusText1.setText("Error - Unknown address in Node(UA) field, please try again.");
             statusText1.setVisible(true);
@@ -421,7 +419,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         curOutByte = begOutByte;
         curOutBit = 0;
         // Send initialization message                
-        SerialTrafficController.instance().sendSerialMessage((SerialMessage) node.createInitPacket(), curFrame);
+        _memo.getTrafficController().sendSerialMessage((SerialMessage) node.createInitPacket(), curFrame);
         try {
             // Wait for initialization to complete
             wait(1000);
@@ -437,7 +435,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     /**
      * Local Method to run an Output Test
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     protected void runOutputTest() {
@@ -452,7 +450,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                     // send new pattern
                     SerialMessage m = createOutPacket();
                     m.setTimeout(50);
-                    SerialTrafficController.instance().sendSerialMessage(m, curFrame);
+                    _memo.getTrafficController().sendSerialMessage(m, curFrame);
                     // update status panel to show bit that is on
                     statusText1.setText("Port " + portID[curOutByte - begOutByte] + " Bit "
                             + Integer.toString(curOutBit)
@@ -524,7 +522,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         curOutValue = 0;
 
         // Send initialization message                
-        SerialTrafficController.instance().sendSerialMessage((SerialMessage) node.createInitPacket(), curFrame);
+        _memo.getTrafficController().sendSerialMessage((SerialMessage) node.createInitPacket(), curFrame);
         try {
             // Wait for initialization to complete
             wait(1000);
@@ -547,7 +545,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     /**
      * Local Method to run a Wraparound Test
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     protected void runWraparoundTest() {
@@ -612,7 +610,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                         SerialMessage m = createOutPacket();
                         // wait for signal to settle down if filter delay
                         m.setTimeout(50 + filterDelay);
-                        SerialTrafficController.instance().sendSerialMessage(m, curFrame);
+                        _memo.getTrafficController().sendSerialMessage(m, curFrame);
 
                         // update Status area
                         short[] outBitPattern = {0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80};
@@ -639,7 +637,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                         needInputTest = true;
                         count = 50;
                         // send poll
-                        SerialTrafficController.instance().sendSerialMessage(
+                        _memo.getTrafficController().sendSerialMessage(
                                 SerialMessage.getPoll(ua), curFrame);
 
                         // update output pattern for next entry

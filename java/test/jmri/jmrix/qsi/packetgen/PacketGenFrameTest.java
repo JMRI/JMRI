@@ -4,20 +4,17 @@
  * Description:	tests for the jmri.jmrix.qsi.packetgen.PacketGenFrame class
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 package jmri.jmrix.qsi.packetgen;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class PacketGenFrameTest extends TestCase {
 
     public void testFrameCreate() {
-        new PacketGenFrame();
+        new PacketGenFrame(new jmri.jmrix.qsi.QsiSystemConnectionMemo());
     }
 
     // from here down is testing infrastructure
@@ -28,7 +25,7 @@ public class PacketGenFrameTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PacketGenFrameTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -36,7 +33,5 @@ public class PacketGenFrameTest extends TestCase {
         TestSuite suite = new TestSuite(PacketGenFrameTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(PacketGenFrameTest.class.getName());
 
 }

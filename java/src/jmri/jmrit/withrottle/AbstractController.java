@@ -9,7 +9,6 @@ import java.util.List;
  *
  *
  * @author Brett Hoffman Copyright (C) 2010
- * @version $Revision$
  */
 abstract public class AbstractController {
 
@@ -30,7 +29,6 @@ abstract public class AbstractController {
     /**
      * Break down a message and use it.
      *
-     * @param message
      */
     abstract void handleMessage(String message);
 
@@ -49,7 +47,6 @@ abstract public class AbstractController {
      * is not changed while in use. This should only be called by a subclass of
      * jmri.Manager *Manager can implement specifics in register().
      *
-     * @param manager
      */
     public void buildList(jmri.Manager manager) {
         if (sysNameList == null) {
@@ -82,7 +79,6 @@ abstract public class AbstractController {
     /**
      * Add a listener to handle: listener.sendPacketToDevice(message);
      *
-     * @param listener
      */
     public void addControllerListener(ControllerInterface listener) {
         if (listeners == null) {

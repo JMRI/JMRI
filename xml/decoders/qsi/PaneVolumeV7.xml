@@ -141,6 +141,13 @@
           <text> </text>
         </label>
         <row>
+          <display item="CV52.20" layout="above" label=""/>
+          <display item="CV52.20" layout="above" format="hslider-percent"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
           <display item="CV52.21" layout="above" label=""/>
           <display item="CV52.21" layout="above" format="hslider-percent"/>
         </row>
@@ -225,8 +232,22 @@
           <text> </text>
         </label>
         <row>
+          <display item="CV52.39" layout="above" label=""/>
+          <display item="CV52.39" layout="above" format="hslider-percent"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
           <display item="CV52.40" layout="above" label=""/>
           <display item="CV52.40" layout="above" format="hslider-percent"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="CV52.41" layout="above" label=""/>
+          <display item="CV52.41" layout="above" format="hslider-percent"/>
         </row>
         <label>
           <text> </text>

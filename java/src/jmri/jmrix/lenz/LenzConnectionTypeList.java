@@ -6,11 +6,14 @@ package jmri.jmrix.lenz;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
- *
+  *
  */
 public class LenzConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String ATLAS = "Atlas";
+    public static final String LENZ = "Lenz";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.lenz.li100.ConnectionConfig",
@@ -23,6 +26,11 @@ public class LenzConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
             "jmri.jmrix.lenz.liusbserver.ConnectionConfig",
             "jmri.jmrix.lenz.liusbethernet.ConnectionConfig" // experimental
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{ATLAS, LENZ};
     }
 
 }

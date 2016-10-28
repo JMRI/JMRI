@@ -1,7 +1,6 @@
-// RevHistoryTest.java
 package jmri.util.docbook;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.util.docbook.RevHistory class.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
  */
 public class RevHistoryTest extends TestCase {
 
@@ -52,7 +50,7 @@ public class RevHistoryTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", RevHistoryTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

@@ -7,22 +7,14 @@ import javax.swing.JOptionPane;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockSetFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user to place engine on the layout
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision$
  */
 public class EngineSetFrame extends RollingStockSetFrame implements
         java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7608591085014836578L;
 
     protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
@@ -36,6 +28,7 @@ public class EngineSetFrame extends RollingStockSetFrame implements
         super(Bundle.getMessage("TitleEngineSet"));
     }
 
+    @Override
     public void initComponents() {
         super.initComponents();
 
@@ -59,10 +52,12 @@ public class EngineSetFrame extends RollingStockSetFrame implements
         load(engine);
     }
 
+    @Override
     protected ResourceBundle getRb() {
         return rb;
     }
 
+    @Override
     protected boolean save() {
         if (!super.save()) {
             return false;
@@ -84,6 +79,5 @@ public class EngineSetFrame extends RollingStockSetFrame implements
         return true;
     }
 
-    static Logger log = LoggerFactory.getLogger(EngineSetFrame.class
-            .getName());
+//    private final static Logger log = LoggerFactory.getLogger(EngineSetFrame.class.getName());
 }

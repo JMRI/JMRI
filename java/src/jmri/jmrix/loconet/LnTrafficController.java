@@ -1,4 +1,3 @@
-// LnTrafficController.java
 package jmri.jmrix.loconet;
 
 import java.util.Vector;
@@ -12,8 +11,6 @@ import org.slf4j.LoggerFactory;
  * locating the local implementation and some statistics support.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
- *
  */
 public abstract class LnTrafficController implements LocoNetInterface {
 
@@ -22,14 +19,14 @@ public abstract class LnTrafficController implements LocoNetInterface {
      *
      * @return The registered LnTrafficController instance for general use, if
      *         need be creating one.
-     * @deprecated 2.13.4
+     * @deprecated 2.13.4 - does not work with multi-system support, needs to have other classes migrated and then be removed
      */
     @Deprecated
     static public LnTrafficController instance() {
         return self;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_PKGPROTECT")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT")
     // FindBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     static protected LnTrafficController self = null;
@@ -142,8 +139,5 @@ public abstract class LnTrafficController implements LocoNetInterface {
     }
     protected int transmittedMsgCount = 0;
 
-    static Logger log = LoggerFactory.getLogger(LnTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnTrafficController.class.getName());
 }
-
-
-/* @(#)LnTrafficController.java */

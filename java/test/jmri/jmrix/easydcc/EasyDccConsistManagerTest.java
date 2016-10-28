@@ -4,12 +4,11 @@
  * Description:	tests for the jmri.jmrix.nce.EasyDccConsistManager class
  *
  * @author	Paul Bender
- * @version
  */
 package jmri.jmrix.easydcc;
 
 import java.util.Vector;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -111,8 +110,8 @@ public class EasyDccConsistManagerTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {EasyDccConsistManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        String[] testCaseName = {"-noloading", EasyDccConsistManagerTest.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -188,6 +187,6 @@ public class EasyDccConsistManagerTest extends TestCase {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(EasyDccConsistManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccConsistManagerTest.class.getName());
 
 }

@@ -18,14 +18,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision$
  */
 public class RouteCopyFrame extends OperationsFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4478401682355496019L;
 
     RouteManager routeManager = RouteManager.instance();
 
@@ -40,7 +34,7 @@ public class RouteCopyFrame extends OperationsFrame {
     javax.swing.JCheckBox invertCheckBox = new javax.swing.JCheckBox(Bundle.getMessage("Invert"));
 
     // major buttons
-    javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("Copy"));
+    javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("ButtonCopy"));
 
     // combo boxes
     JComboBox<Route> routeBox = RouteManager.instance().getComboBox();
@@ -83,6 +77,7 @@ public class RouteCopyFrame extends OperationsFrame {
         routeBox.setSelectedItem(routeManager.getRouteByName(routeName));
     }
 
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == copyButton) {
             log.debug("copy route button activated");
@@ -147,10 +142,11 @@ public class RouteCopyFrame extends OperationsFrame {
         return true;
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(RouteCopyFrame.class
+    private final static Logger log = LoggerFactory.getLogger(RouteCopyFrame.class
             .getName());
 }

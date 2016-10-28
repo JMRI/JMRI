@@ -1,4 +1,3 @@
-// PortalIcon.java
 package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.event.ActionEvent;
@@ -19,15 +18,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author PeteCressman Copyright (C) 2011
- * @version $Revision$
+ * @author Pete Cressman Copyright (C) 2011
  */
 public class PortalIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4299340063847211257L;
     public static final String HIDDEN = "hidden";
     public static final String VISIBLE = "block";
     public static final String PATH = "path";
@@ -66,18 +60,18 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
         setIcon(_iconMap.get(HIDDEN));
     }
 
+    @Override
     public Positionable deepClone() {
         PortalIcon pos = new PortalIcon(_editor, getPortal());
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        PortalIcon pos = (PortalIcon) p;
+    protected Positionable finishClone(PortalIcon pos) {
         pos._iconMap = cloneMap(_iconMap, pos);
         pos._regular = _regular;
         pos._hide = _hide;
         pos._status = _status;
-        return super.finishClone(p);
+        return super.finishClone(pos);
     }
 
     /**
@@ -255,8 +249,8 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
 
     private void setShowCoordinatesMenu(JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditLocation"));
-        edit.add("x= " + getX());
-        edit.add("y= " + getY());
+        edit.add("x = " + getX());
+        edit.add("y = " + getY());
         edit.add(CoordinateEdit.getCoordinateEditAction(this));
         popup.add(edit);
     }
@@ -312,5 +306,5 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(PortalIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PortalIcon.class.getName());
 }

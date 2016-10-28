@@ -1,29 +1,10 @@
 package jmri.jmrit.vsdecoder;
 
-/*
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
- * <P>
- *
- * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
- */
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import jmri.configurexml.StoreXmlConfigAction;
@@ -39,13 +20,11 @@ import org.slf4j.LoggerFactory;
  * Save throttles to XML
  *
  * @author	Glen Oberhauser
+ * @author	Mark Underwood Copyright (C) 2011
  * @author Daniel Boudreau (C) Copyright 2008
- * @version $Revision$
  */
 @SuppressWarnings("serial")
 public class StoreXmlVSDecoderAction extends AbstractAction {
-
-    static final ResourceBundle rb = VSDecoderBundle.bundle();
 
     /**
      * Constructor
@@ -56,7 +35,7 @@ public class StoreXmlVSDecoderAction extends AbstractAction {
         super(s);
         // disable this ourselves if there is no throttle Manager
 	/*
-         if (jmri.InstanceManager.throttleManagerInstance() == null) {
+         if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
          setEnabled(false);
          }
          */
@@ -73,7 +52,7 @@ public class StoreXmlVSDecoderAction extends AbstractAction {
      * @param e The event causing the action.
      */
     public void actionPerformed(ActionEvent e) {
-        JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(rb.getString("PromptXmlFileTypes"), "xml");
+        JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
         fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
         fileChooser.setCurrentDirectory(new File(VSDecoderPane.getDefaultVSDecoderFolder()));
         java.io.File file = StoreXmlConfigAction.getFileName(fileChooser);
@@ -139,6 +118,6 @@ public class StoreXmlVSDecoderAction extends AbstractAction {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(StoreXmlVSDecoderAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StoreXmlVSDecoderAction.class.getName());
 
 }

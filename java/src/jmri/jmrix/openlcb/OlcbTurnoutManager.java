@@ -5,8 +5,6 @@ import jmri.JmriException;
 import jmri.Turnout;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.managers.AbstractTurnoutManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * OpenLCB implementation of a TurnoutManager.
@@ -14,8 +12,7 @@ import org.slf4j.LoggerFactory;
  * Turnouts must be manually created.
  *
  * @author	Bob Jacobsen Copyright (C) 2008, 2010
- * @version	$Revision$
- * @since 2.3.1
+  * @since 2.3.1
  */
 public class OlcbTurnoutManager extends AbstractTurnoutManager {
 
@@ -101,8 +98,6 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
         }
         return range;
     }
-
-    static Logger log = LoggerFactory.getLogger(OlcbTurnoutManager.class.getName());
 }
 
 /* @(#)OlcbTurnoutManager.java */

@@ -15,6 +15,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import jmri.ConfigureManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmrit.roster.Roster;
@@ -30,7 +31,6 @@ import org.slf4j.LoggerFactory;
  * Managers the Ecos Loco entries within JMRI.
  *
  * @author Kevin Dickerson
- * @version $Revision$
  */
 public class EcosLocoAddressManager extends jmri.managers.AbstractManager implements java.beans.PropertyChangeListener, EcosListener, jmri.Manager {
 
@@ -45,7 +45,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         rosterAttribute = p.getRosterAttribute();
         prefix = adaptermemo.getSystemPrefix();
         loadEcosData();
-        if (jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
             new jmri.jmrit.beantable.ListedTableFrame();
         }
         jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class).addTable("jmri.jmrix.ecos.swing.locodatabase.EcosLocoTableTabAction", "ECoS Loco Database", false);
@@ -203,7 +203,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
     private void loadData() {
         tc.addEcosListener(this);
 
-        Roster.instance().addPropertyChangeListener(this);
+        Roster.getDefault().addPropertyChangeListener(this);
 
         EcosMessage m = new EcosMessage("request(10, view)");
         tc.sendWaitMessage(m, this);
@@ -216,13 +216,13 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         if (ecosLocoShutDownTask == null) {
             ecosLocoShutDownTask = new QuietShutDownTask("Ecos Loco Database Shutdown") {
                 @Override
-                public boolean doAction() {
+                public boolean execute() {
                     return shutdownDispose();
                 }
             };
         }
-        if (jmri.InstanceManager.shutDownManagerInstance() != null) {
-            jmri.InstanceManager.shutDownManagerInstance().register(ecosLocoShutDownTask);
+        if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(ecosLocoShutDownTask);
         }
     }
 
@@ -286,8 +286,8 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
     }
 
     private boolean disposefinal() {
-        if (jmri.InstanceManager.configureManagerInstance() != null) {
-            jmri.InstanceManager.configureManagerInstance().deregister(this);
+        if (jmri.InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).deregister(this);
         }
         _tecos.clear();
         _tdcc.clear();
@@ -610,7 +610,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                                 if ((1000 <= object) && (object < 2000)) {
                                     tmploco = provideByEcosObject(strde);
                                 }
-                                decodeLocoDetails(tmploco, line);
+                                decodeLocoDetails(tmploco, line, true);
                             }
                             locoToRoster.processQueue();
                             processLocoToRosterQueue = true;
@@ -619,21 +619,22 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                 } else if (replyType.equals("get")) {
                     EcosLocoAddress tmploco = provideByEcosObject(Integer.toString(ecosObjectId));
                     for (String line : msgDetails) {
-                        decodeLocoDetails(tmploco, line);
+                        decodeLocoDetails(tmploco, line, false);
                     }
                 }
             }
         }
     }
 
-    void decodeLocoDetails(EcosLocoAddress tmploco, String line) {
+    void decodeLocoDetails(EcosLocoAddress tmploco, String line, boolean addToRoster) {
         if (tmploco == null) {
             return;
         }
         if (line.contains("cv")) {
             String cv = EcosReply.getContentDetails(line, "cv");
+            cv = cv.replaceAll("\\s","");  //remove all white spaces, as 4.1.0 version removed the space after the ,
             int cvnum = Integer.parseInt(cv.substring(0, cv.indexOf(",")));
-            int cvval = Integer.parseInt(cv.substring(cv.indexOf(", ") + 2, cv.length()));
+            int cvval = Integer.parseInt(cv.substring(cv.indexOf(",") + 1, cv.length()));
             tmploco.setCV(cvnum, cvval);
             if (cvnum == 8 && processLocoToRosterQueue) {
                 locoToRoster.processQueue();
@@ -666,7 +667,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
             tmploco.setDirection(newDirection);
         }
         register(tmploco);
-        if (p.getAddLocoToJMRI() != EcosPreferences.NO) {
+        if (p.getAddLocoToJMRI() != EcosPreferences.NO && addToRoster) {
             locoToRoster.addToQueue(tmploco);
         }
     }
@@ -706,14 +707,14 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                 log.debug("Loco not found so need to remove from register");
                 if (getByEcosObject(jmrilist[i]).getRosterId() != null) {
                     final String rosterid = getByEcosObject(jmrilist[i]).getRosterId();
-                    final Roster _roster = Roster.instance();
+                    final Roster _roster = Roster.getDefault();
                     final RosterEntry re = _roster.entryFromTitle(rosterid);
                     re.deleteAttribute(p.getRosterAttribute());
                     re.writeFile(null, null, null);
-                    Roster.writeRosterFile();
+                    Roster.getDefault().writeRoster();
                     if (p.getRemoveLocoFromJMRI() == EcosPreferences.YES) {
                         _roster.removeEntry(re);
-                        Roster.writeRosterFile();
+                        Roster.getDefault().writeRoster();
                     } else if (p.getRemoveLocoFromJMRI() == EcosPreferences.ASK) {
                         try {
                             final JDialog dialog = new JDialog();
@@ -757,7 +758,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                                     }
                                     setLocoToRoster();
                                     _roster.removeEntry(re);
-                                    Roster.writeRosterFile();
+                                    Roster.getDefault().writeRoster();
                                     dialog.dispose();
                                 }
                             });
@@ -865,5 +866,5 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         return "Ecos Loco Addresses";
     }
 
-    static Logger log = LoggerFactory.getLogger(EcosLocoAddressManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosLocoAddressManager.class.getName());
 }

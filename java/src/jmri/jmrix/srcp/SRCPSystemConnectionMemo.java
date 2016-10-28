@@ -1,4 +1,3 @@
-// SRCPSystemConnectionMemo.java
 package jmri.jmrix.srcp;
 
 import java.util.ResourceBundle;
@@ -12,7 +11,7 @@ import jmri.InstanceManager;
  * activate their particular system.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
+ * @author	Paul Bender Copyright (C) 2015-2016
  */
 public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -21,8 +20,9 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         this.et = et;
         this.et.setSystemConnectionMemo(this);
         register();
-        /*InstanceManager.store(cf = new jmri.jmrix.srcp.swing.ComponentFactory(this), 
-         jmri.jmrix.swing.ComponentFactory.class);*/
+        InstanceManager.store(this, SRCPSystemConnectionMemo.class); // also register as specific type
+        InstanceManager.store(cf = new jmri.jmrix.srcp.swing.SRCPComponentFactory(this), 
+         jmri.jmrix.swing.ComponentFactory.class);
     }
 
     public SRCPSystemConnectionMemo(SRCPTrafficController et) {
@@ -30,17 +30,17 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         this.et = et;
         this.et.setSystemConnectionMemo(this);
         register();
-        /*InstanceManager.store(cf = new jmri.jmrix.srcp.swing.ComponentFactory(this), 
-         jmri.jmrix.swing.ComponentFactory.class);*/
+        InstanceManager.store(this, SRCPSystemConnectionMemo.class); // also register as specific type
+        InstanceManager.store(cf = new jmri.jmrix.srcp.swing.SRCPComponentFactory(this), 
+         jmri.jmrix.swing.ComponentFactory.class);
     }
 
     public SRCPSystemConnectionMemo() {
         super("D", "SRCP");
         register(); // registers general type
         InstanceManager.store(this, SRCPSystemConnectionMemo.class); // also register as specific type
-        //Needs to be implemented
-        /*InstanceManager.store(cf = new jmri.jmrix.srcp.swing.ComponentFactory(this), 
-         jmri.jmrix.swing.ComponentFactory.class);*/
+        InstanceManager.store(cf = new jmri.jmrix.srcp.swing.SRCPComponentFactory(this), 
+         jmri.jmrix.swing.ComponentFactory.class);
     }
 
     jmri.jmrix.swing.ComponentFactory cf = null;

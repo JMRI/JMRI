@@ -3,8 +3,9 @@ package jmri.jmrit.roster;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import jmri.InstanceManager;
 import jmri.util.FileUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -13,8 +14,7 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.roster.RosterEntry class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
- */
+  */
 public class RosterEntryTest extends TestCase {
 
     public void testCreate() {
@@ -362,7 +362,7 @@ public class RosterEntryTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", RosterEntryTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -374,6 +374,7 @@ public class RosterEntryTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        InstanceManager.setDefault(RosterConfigManager.class, new RosterConfigManager());
     }
 
     protected void tearDown() {

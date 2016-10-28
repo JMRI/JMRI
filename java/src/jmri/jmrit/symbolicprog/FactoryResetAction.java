@@ -2,6 +2,7 @@
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -13,14 +14,9 @@ import org.slf4j.LoggerFactory;
  * execute. The user can cancel this dialog skipping any resets
  *
  * @author Howard G. Penny Copyright (C) 2005
- * @version $Revision$
  */
 public class FactoryResetAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -458358692285847216L;
     ResetTableModel rModel;
     JFrame mParent;
 
@@ -41,7 +37,7 @@ public class FactoryResetAction extends AbstractAction {
         String s = (String) JOptionPane.showInputDialog(
                 mParent,
                 "Factory Reset" + (options.length > 1 ? "s" : ""),
-                "Caution: Factory Reset",
+                ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FactoryResetTitle"),
                 JOptionPane.WARNING_MESSAGE,
                 null,
                 options,
@@ -58,5 +54,5 @@ public class FactoryResetAction extends AbstractAction {
         }
 
     }
-    static Logger log = LoggerFactory.getLogger(FactoryResetAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FactoryResetAction.class.getName());
 }

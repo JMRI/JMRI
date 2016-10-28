@@ -1,8 +1,16 @@
 package jmri.jmrit.beantable.oblock;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Arrays;
+import java.util.List;
+import javax.swing.JTextField;
+import javax.swing.table.AbstractTableModel;
+import jmri.NamedBean;
+import jmri.jmrit.logix.OBlock;
+
 /**
  * GUI to define OBlocks
- * <P>
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -13,34 +21,14 @@ package jmri.jmrit.beantable.oblock;
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version $Revision$
  */
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
-import javax.swing.JTextField;
-import javax.swing.table.AbstractTableModel;
-import jmri.NamedBean;
-import jmri.jmrit.logix.OBlock;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 class BlockPortalTableModel extends AbstractTableModel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6547843920072979055L;
     public static final int BLOCK_NAME_COLUMN = 0;
     public static final int PORTAL_NAME_COLUMN = 1;
     public static final int NUMCOLS = 2;
-
-    static final ResourceBundle rbo = ResourceBundle.getBundle("jmri.jmrit.beantable.OBlockTableBundle");
 
     OBlockTableModel _oBlockModel;
 
@@ -65,9 +53,9 @@ class BlockPortalTableModel extends AbstractTableModel implements PropertyChange
     public String getColumnName(int col) {
         switch (col) {
             case BLOCK_NAME_COLUMN:
-                return rbo.getString("BlockName");
+                return Bundle.getMessage("BlockName");
             case PORTAL_NAME_COLUMN:
-                return rbo.getString("PortalName");
+                return Bundle.getMessage("PortalName");
         }
         return "";
     }
@@ -132,6 +120,4 @@ class BlockPortalTableModel extends AbstractTableModel implements PropertyChange
             fireTableDataChanged();
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(BlockPortalTableModel.class.getName());
 }

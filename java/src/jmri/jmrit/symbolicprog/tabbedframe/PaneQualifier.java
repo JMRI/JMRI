@@ -1,4 +1,3 @@
-// PaneQualifier.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import javax.swing.JTabbedPane;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * the tab
  *
  * @author	Bob Jacobsen Copyright (C) 2010, 2014
- * @version	$Revision$
  *
  */
 public class PaneQualifier extends ArithmeticQualifier {
@@ -40,6 +38,6 @@ public class PaneQualifier extends ArithmeticQualifier {
         return tabs.isEnabledAt(index);
     }
 
-    static Logger log = LoggerFactory.getLogger(PaneQualifier.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PaneQualifier.class.getName());
 
 }

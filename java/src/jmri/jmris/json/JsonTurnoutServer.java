@@ -1,5 +1,9 @@
-//JsonTurnoutServer.java
 package jmri.jmris.json;
+
+import static jmri.server.json.JSON.METHOD;
+import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.PUT;
+import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUT;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,12 +12,7 @@ import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.AbstractTurnoutServer;
 import jmri.jmris.JmriConnection;
-import static jmri.jmris.json.JSON.METHOD;
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.PUT;
-import static jmri.jmris.json.JSON.TURNOUT;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.server.json.JsonException;
 
 /**
  * JSON Server interface between the JMRI turnout manager and a network
@@ -26,14 +25,13 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2010
  * @author Randall Wood Copyright (C) 2012, 2013
- * @version $Revision: 21327 $
+ * @deprecated 4.3.4
  */
+@Deprecated
 public class JsonTurnoutServer extends AbstractTurnoutServer {
 
     private final JmriConnection connection;
     private final ObjectMapper mapper;
-    static Logger log = LoggerFactory.getLogger(JsonTurnoutServer.class.getName());
-
     public JsonTurnoutServer(JmriConnection connection) {
         this.connection = connection;
         this.mapper = new ObjectMapper();

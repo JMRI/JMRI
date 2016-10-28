@@ -6,26 +6,27 @@ import java.io.FileInputStream;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 import org.openlcb.cdi.swing.CdiPanel;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import java.awt.GraphicsEnvironment;
 
 /**
  * @author Bob Jacobsen Copyright 2012
- * @version $Revision: 2175 $
+ * 
  */
-public class CdiPanelDemo extends TestCase {
+public class CdiPanelDemo {
 
-    // from here down is testing infrastructure
-    public CdiPanelDemo(String s) {
-        super(s);
-    }
-
+    @Test
     public void testDisplay() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame f = new JFrame();
         f.setTitle("Configuration Demonstration");
         CdiPanel m = new CdiPanel();
@@ -64,19 +65,25 @@ public class CdiPanelDemo extends TestCase {
         f.setVisible(true);
     }
 
+    @Test
     public void testDisplaySample1() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame f = makeFrame(getRootFromFile("java/test/jmri/jmrix/openlcb/sample1.xml"));
         f.setTitle("Sample1 XML");
         f.setVisible(true);
     }
 
+    @Test
     public void testDisplaySample2() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame f = makeFrame(getRootFromFile("java/test/jmri/jmrix/openlcb/sample2.xml"));
         f.setTitle("Sample 2 XML");
         f.setVisible(true);
     }
 
+    @Test
     public void testLocoCdiDisplay() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame f = makeFrame(getRootFromFile("java/test/jmri/jmrix/openlcb/NMRAnetDatabaseTrainNode.xml"));
         f.setTitle("Locomotive CDI Demonstration");
         f.setVisible(true);
@@ -130,15 +137,16 @@ public class CdiPanelDemo extends TestCase {
         return f;
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {CdiPanelDemo.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+    @Before
+    public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(CdiPanelDemo.class);
-        return suite;
+    @After
+    public  void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
+        apps.tests.Log4JFixture.tearDown();
     }
+
 }

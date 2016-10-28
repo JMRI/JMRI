@@ -14,7 +14,7 @@ import jmri.ProgrammerManager;
  *
  * @author Ken Cameron Copyright (C) 2014
  * @author	Kevin Dickerson Copyright (C) 2014
- * @version $Revision: 23001 $
+ * 
  */
 public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -159,7 +159,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     @SuppressWarnings("deprecation")
     public void configureManagers() {
         powerManager = new jmri.jmrix.mrc.MrcPowerManager(this);
-        InstanceManager.setPowerManager(powerManager);
+        InstanceManager.store(powerManager, jmri.PowerManager.class);
 
         turnoutManager = new jmri.jmrix.mrc.MrcTurnoutManager(getMrcTrafficController(), getSystemPrefix());
         InstanceManager.setTurnoutManager(turnoutManager);
@@ -195,7 +195,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     /*public MrcConsistManager  getConsistManager() { return consistManager; }*/
 
     protected ResourceBundle getActionModelResourceBundle() {
-        return ResourceBundle.getBundle("jmri.jmrix.mrc.MrcActionListBundle"); //IN18N
+        return ResourceBundle.getBundle("jmri.jmrix.mrc.MrcBundle"); //IN18N
     }
 
     public void dispose() {

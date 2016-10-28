@@ -8,7 +8,6 @@ package jmri.jmrix.oaktree;
  * DLE characters are included. These are added during transmission.
  *
  * @author Bob Jacobsen Copyright (C) 2001,2003, 2006
- * @version $Revision$
  */
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     // is this logically an abstract class?
@@ -38,7 +37,6 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
      * This ctor interprets the String as the exact sequence to send,
      * byte-for-byte.
      *
-     * @param m
      */
     public SerialMessage(String m, int l) {
         super(m);

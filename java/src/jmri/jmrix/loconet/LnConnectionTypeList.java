@@ -6,11 +6,13 @@ package jmri.jmrix.loconet;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
- *
+  *
  */
 public class LnConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String DIGITRAX = "Digitrax";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.loconet.locobufferusb.ConnectionConfig",
@@ -24,6 +26,11 @@ public class LnConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
             "jmri.jmrix.loconet.ms100.ConnectionConfig",
             "jmri.jmrix.loconet.bluetooth.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{DIGITRAX};
     }
 
 }

@@ -1,11 +1,9 @@
 package jmri.managers;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.managers.DefaultUserMessagePreferencesTest class.
@@ -41,7 +39,7 @@ public class DefaultUserMessagePreferencesTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", DefaultUserMessagePreferencesTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -53,13 +51,13 @@ public class DefaultUserMessagePreferencesTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
         System.setProperty("org.jmri.Apps.configFilename", "jmriconfig2.xml");
     }
 
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
-
-    static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferencesTest.class.getName());
 
 }

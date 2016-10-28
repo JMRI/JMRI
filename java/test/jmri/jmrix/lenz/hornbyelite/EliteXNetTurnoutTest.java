@@ -1,9 +1,8 @@
-// EliteXNetTurnoutTest.java
 package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.slf4j.Logger;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the {@link jmri.jmrix.lenz.hornbyelite.EliteXNetTurnout} class.
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class EliteXNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 
@@ -108,7 +106,7 @@ public class EliteXNetTurnoutTest extends jmri.implementation.AbstractTurnoutTes
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", EliteXNetTurnoutTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -131,6 +129,6 @@ public class EliteXNetTurnoutTest extends jmri.implementation.AbstractTurnoutTes
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutTest.class.getName());
 
 }

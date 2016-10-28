@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2006 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version version="6" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20151018"/>
+  <!--  Merged DH05C, DH10C, DH12A, DH16A, DH18A, DH21A, DH22A def files (same CV characteristics) -->
+  <version version="5" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20150223"/>
+  <!--  Moved dimmed lights/shunting mode from Adv. Mapping tab to standard mapping table.
+		Removed link to doehler_haass/Pane_map_adv.xml (F1(r), F2(r), as well as dimming/shuting now in std JMRI map pane)
+		Added separate SUSI pane.
+		-->
+  <version version="4" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20141013"/>
+  <!-- 4 2014/10/13 Added trim options (CVs 66+95)
+		-->
+  <version version="3" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20140603"/>
+  <!-- 3 2014/06/03 2 changes for new firmware from May 31st:
+  		1) Changed how CV7 indicates Fw version. CV7 is now the revision date (previously version number), as "MMY".
+  		This means Selectrix (SX) is no longuer required to detect the exact Fw version. Example: 054 is revision from May 2014.
+  		Adapted low/high ID variables for automatic detection.
+  		2) Added CV12 (support for Motoral old and new formats). 
+		-->
+  <version version="2" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20140220"/>
+  <!-- 2 2014/02/20 Update: future proofing
+		This is a complete rewrite of my original submission for many D&H decoders.
+		This updates ensure a cleaner, more future proof organisation (despite more files). 
+		FIRMWARE INFORMATION: from http://doehler-haass.de/cms/pages/haeufige-fragen/decoder-cv-tabelle.php
+		DECODER VERSION INFORMATION: from the changelog files, downloaded through the D&H Update program.
+		Please note that the "firmware" and "decoder" versions differ in their numbering, despite a common
+		software platform for most D&H decoders. Each decoder version is incremented individually, whereas the
+		global firmware version as published on the website is numbered as an absolute number.
+		These definitions include both numbers (Firmware version & Decoder version).
+		-->
+  <version version="1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20130731"/>
+  <!-- 1 2013/07/31 Creation 
+		First decoder template for the Doehler & Haass decoder range.
+		This LOCOMOTIVE decoder file creates the corresponding family, and 
+		includes all decoders defs & specs. 
+		It requires variables and panes as defined in the doehler_hass/ folder.
+  -->
+  <decoder>
+    <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass">
+      <model model="DH05C v3.04 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="16" productID="DH05C_3.04" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from 31 May 2014" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+        <output name="1" label="Front|Light" maxcurrent="150mA"/>
+        <output name="2" label="Rear|Light" maxcurrent="150mA"/>
+        <output name="3" label="AUX|1" maxcurrent="300mA"/>
+        <output name="4" label="AUX|2" maxcurrent="300mA"/>
+        <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA"/>
+        <!-- New from fw3.03  -->
+        <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA"/>
+        <!-- New from fw3.03  -->
+        <output name="7" label="Dimmed|Lights"/>
+        <output name="8" label="Shunting|Speed"/>
+        <size length="13.2" width="6.8" height="1.4" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+	  <model model="DH10C v3.04 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="16" productID="DH10C_3.04" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from 31 May 2014" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
+        <output name="1" label="Front|Light" maxcurrent="150mA"/>
+        <output name="2" label="Rear|Light" maxcurrent="150mA"/>
+        <output name="3" label="AUX|1" maxcurrent="300mA"/>
+        <output name="4" label="AUX|2" maxcurrent="300mA"/>
+        <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA"/>
+        <!-- New from fw3.03  -->
+        <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA"/>
+        <!-- New from fw3.03  -->
+        <output name="7" label="Dimmed|Lights"/>
+        <output name="8" label="Shunting|Speed"/>
+        <size length="14.2" width="9.3" height="1.5" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+	  <model model="DH12A v3.04 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="16" productID="DH12A_3.04" comment="DH12A with update from 31 May 2014" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX12">
+        <output name="1" label="Front|Light" maxcurrent="150mA"/>
+        <output name="2" label="Rear|Light" maxcurrent="150mA"/>
+        <output name="3" label="AUX|1" maxcurrent="300mA"/>
+        <output name="4" label="AUX|2" maxcurrent="300mA"/>
+        <output name="5" label="AUX|3" maxcurrent="NC - Logic Level"/>
+        <output name="6" label="AUX|4" maxcurrent="NC - Logic Level"/>
+        <output name="7" label="Dimmed|Lights"/>
+        <output name="8" label="Shunting|Speed"/>
+        <size length="14.5" width="8" height="2.8" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+	  <model model="DH16A v3.04 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="16" productID="DH16A_3.04" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3 with update from 31 May 2014" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX16">
+        <output name="1" label="Front|Light" maxcurrent="150mA"/>
+        <output name="2" label="Rear|Light" maxcurrent="150mA"/>
+        <output name="3" label="AUX|1" maxcurrent="300mA"/>
+        <output name="4" label="AUX|2" maxcurrent="300mA"/>
+        <output name="5" label="AUX|3" maxcurrent="1.0A"/>
+        <output name="6" label="AUX|4" maxcurrent="1.0A"/>
+        <output name="7" label="Dimmed|Lights"/>
+        <output name="8" label="Shunting|Speed"/>
+        <size length="16.7" width="10.9" height="2.8" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+	  <model model="DH18A v3.04 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="16" productID="DH18A_3.04" comment="DH18A with update from 31 May 2014" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Next18">
+        <output name="1" label="Front|Light" maxcurrent="150mA"/>
+		<output name="2" label="Rear|Light" maxcurrent="150mA"/>
+		<output name="3" label="AUX|1" maxcurrent="300mA"/>
+		<output name="4" label="AUX|2" maxcurrent="300mA"/>
+		<output name="5" label="AUX|3" maxcurrent="NC - Logic Level"/>
+		<output name="6" label="AUX|4" maxcurrent="NC - Logic Level"/>
+        <output name="7" label="Dimmed|Lights"/>
+        <output name="8" label="Shunting|Speed"/>
+        <size length="13.5" width="9.0" height="2.8" units="mm"/>
+		<protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+        </protocols>
+      </model>
+	  <model model="DH21A v3.04 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="16" productID="DH21A_3.04" comment="DH21A with update from 31 May 2014" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
+        <output name="1" label="Front|Light" maxcurrent="150mA"/>
+        <output name="2" label="Rear|Light" maxcurrent="150mA"/>
+        <output name="3" label="AUX|1" maxcurrent="300mA"/>
+        <output name="4" label="AUX|2" maxcurrent="300mA"/>
+        <output name="5" label="AUX|3" maxcurrent="1A"/>
+        <output name="6" label="AUX|4" maxcurrent="1A"/>
+        <output name="7" label="Dimmed|Lights"/>
+        <output name="8" label="Shunting|Speed"/>
+        <size length="20.7" width="15.8" height="5.2" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+	  <model model="DH22A v3.04 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="16" productID="DH22A_3.04" comment="DH22A with update from 31 May 2014" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="PluX22">
+        <output name="1" label="Front|Light" maxcurrent="150mA"/>
+        <output name="2" label="Rear|Light" maxcurrent="150mA"/>
+        <output name="3" label="AUX|1" maxcurrent="300mA"/>
+        <output name="4" label="AUX|2" maxcurrent="300mA"/>
+        <output name="5" label="AUX|3" maxcurrent="1A"/>
+        <output name="6" label="AUX|4" maxcurrent="1A"/>
+        <output name="7" label="Dimmed|Lights"/>
+        <output name="8" label="Shunting|Speed"/>
+        <size length="20.7" width="15.8" height="5.2" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <!-- Common D&H variable files -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common.xml"/>
+      <!-- NON common D&H variable files. Deactivate or Activate depending on decoder model and firmware version -->
+      <!-- SECTION 1a - Standard variables with defaults for regular decoders  -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common_pwr_normal.xml"/>
+      <!-- SECTION 1b - Standard variables with defaults for low current decoder FH06  -->
+      <!--  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common_pwr_low.xml"/> -->
+      <!-- SECTION 2 - Standard variables for decoders released after around 2012  -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_base.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_dc.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
+	  <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
+      <!-- SECTION 3	- Analog functions  -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv29_analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_analogModeFunction.xml"/>
+      <!-- SECTION 4	- Basic Railcom feedback  -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv28-29_railcom_base.xml"/>
+      <!-- SECTION 5	- Extra Railcom feedback options as of fw3.03 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv135-136_railcom_fw3.03.xml"/>
+      <!-- SECTION 6	- Extra general options as of fw3.03 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_energysaving_fw3.03.xml"/>
+      <!-- SECTION 7	- Extra SUSI options as of fw3.03 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_susi_fw3.03.xml"/>
+      <!-- SECTION 8	- Motorola format as of fw3.04 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv12_motorola.xml"/>
+    </variables>
+    <resets>
+		<factReset label="Reset All CVs" CV="8" default="8">
+			<label xml:lang="fr">Reset - retour aux valeurs d'usine pour tous les CVs</label>
+			<label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+		</factReset>
+    </resets>
+  </decoder>
+  <!-- Common pane(s) for all Doehler und Haass decoders  -->
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_StartBrakeShunt.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_common.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_firmware.xml"/>
+  <!-- Pane(s) valid for some decoders only  -->
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_motorola.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_susi.xml"/>
+</decoder-config>

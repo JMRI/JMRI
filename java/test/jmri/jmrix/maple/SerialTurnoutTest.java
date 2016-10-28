@@ -1,19 +1,15 @@
-// SerialTurnoutTest.java
 package jmri.jmrix.maple;
 
 import jmri.implementation.AbstractTurnoutTest;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.maple.SerialTurnout class
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 
     private SerialTrafficControlScaffold tcis = null;
@@ -53,7 +49,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SerialTurnoutTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -61,7 +57,5 @@ public class SerialTurnoutTest extends AbstractTurnoutTest {
         TestSuite suite = new TestSuite(SerialTurnoutTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(SerialTurnoutTest.class.getName());
 
 }

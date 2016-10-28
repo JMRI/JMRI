@@ -12,20 +12,16 @@ import org.slf4j.LoggerFactory;
  * This routine will remove all engines from the operation database.
  *
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision$
  */
 public class DeleteEngineRosterAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 361439686459687524L;
     EngineManager manager = EngineManager.instance();
 
     public DeleteEngineRosterAction(String actionName, Component frame) {
         super(actionName);
     }
 
+    @Override
     public void actionPerformed(ActionEvent ae) {
         if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("engineSureDelete"),
                 Bundle.getMessage("engineDeleteAll"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
@@ -34,6 +30,6 @@ public class DeleteEngineRosterAction extends AbstractAction {
         }
     }
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(DeleteEngineRosterAction.class.getName());
 }

@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * {@link jmri.ConfigureManager} since the ConfigureManager's configuration is
  * influenced by this manager.
  *
- * @author Randall Wood
+ * @author Randall Wood (C) 2014, 2015, 2016
  */
 public class ProfileManager extends Bean {
 
@@ -46,7 +46,6 @@ public class ProfileManager extends Bean {
     private boolean autoStartActiveProfile = false;
     private File defaultSearchPath = new File(FileUtil.getPreferencesPath());
     private int autoStartActiveProfileTimeout = 10;
-    private static ProfileManager instance = null;
     public static final String ACTIVE_PROFILE = "activeProfile"; // NOI18N
     public static final String NEXT_PROFILE = "nextProfile"; // NOI18N
     private static final String AUTO_START = "autoStart"; // NOI18N
@@ -73,7 +72,7 @@ public class ProfileManager extends Bean {
      * Create a new ProfileManager. In almost all cases, the use of
      * {@link #getDefault()} is preferred.
      *
-     * @param catalog
+     * @param catalog the list of know profiles as an XML file
      */
     // TODO: write Test cases using this.
     public ProfileManager(File catalog) {
@@ -94,7 +93,7 @@ public class ProfileManager extends Bean {
      * InstanceManager is configured.
      *
      * @return the default ProfileManager.
-     * @deprecated Use {@link #getDefault() }.
+     * @deprecated since 3.11.8. Use {@link #getDefault()} instead.
      */
     @Deprecated
     public static ProfileManager defaultManager() {
@@ -112,10 +111,7 @@ public class ProfileManager extends Bean {
      * @since 3.11.8
      */
     public static ProfileManager getDefault() {
-        if (instance == null) {
-            instance = new ProfileManager();
-        }
-        return instance;
+        return ProfileManagerHolder.manager;
     }
 
     /**
@@ -131,18 +127,19 @@ public class ProfileManager extends Bean {
      * Set the {@link Profile} to use. This method finds the Profile by Id and
      * calls {@link #setActiveProfile(jmri.profile.Profile)}.
      *
-     * @param id
+     * @param id the profile id
      */
     public void setActiveProfile(String id) {
         if (id == null) {
             Profile old = activeProfile;
             activeProfile = null;
             FileUtil.setProfilePath(null);
-            this.propertyChangeSupport.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, null);
+            this.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, null);
             log.debug("Setting active profile to null");
             return;
         }
         for (Profile p : profiles) {
+            log.debug("Looking for profile {}, found {}", id, p.getId());
             if (p.getId().equals(id)) {
                 this.setActiveProfile(p);
                 return;
@@ -157,20 +154,20 @@ public class ProfileManager extends Bean {
      * Once the {@link jmri.ConfigureManager} is loaded, this only sets the
      * Profile used at next application start.
      *
-     * @param profile
+     * @param profile the profile to activate
      */
     public void setActiveProfile(Profile profile) {
         Profile old = activeProfile;
         if (profile == null) {
             activeProfile = null;
             FileUtil.setProfilePath(null);
-            this.propertyChangeSupport.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, null);
+            this.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, null);
             log.debug("Setting active profile to null");
             return;
         }
         activeProfile = profile;
         FileUtil.setProfilePath(profile.getPath().toString());
-        this.propertyChangeSupport.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, profile);
+        this.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, profile);
         log.debug("Setting active profile to {}", profile.getId());
     }
 
@@ -182,19 +179,19 @@ public class ProfileManager extends Bean {
         Profile old = this.nextActiveProfile;
         if (profile == null) {
             this.nextActiveProfile = null;
-            this.propertyChangeSupport.firePropertyChange(ProfileManager.NEXT_PROFILE, old, null);
+            this.firePropertyChange(ProfileManager.NEXT_PROFILE, old, null);
             log.debug("Setting next active profile to null");
             return;
         }
         this.nextActiveProfile = profile;
-        this.propertyChangeSupport.firePropertyChange(ProfileManager.NEXT_PROFILE, old, profile);
+        this.firePropertyChange(ProfileManager.NEXT_PROFILE, old, profile);
         log.debug("Setting next active profile to {}", profile.getId());
     }
 
     /**
      * Save the active {@link Profile} and automatic start setting.
      *
-     * @throws IOException
+     * @throws java.io.IOException if unable to save the profile
      */
     public void saveActiveProfile() throws IOException {
         this.saveActiveProfile(this.getActiveProfile(), this.autoStartActiveProfile);
@@ -229,9 +226,9 @@ public class ProfileManager extends Bean {
      * Read the active {@link Profile} and automatic start setting from the
      * ProfileManager config file.
      *
+     * @throws java.io.IOException if unable to read the profile
      * @see #getConfigFile()
      * @see #setConfigFile(java.io.File)
-     * @throws IOException
      */
     public void readActiveProfile() throws IOException {
         Properties p = new Properties();
@@ -278,7 +275,7 @@ public class ProfileManager extends Bean {
     /**
      * Get the enabled {@link Profile} at index.
      *
-     * @param index
+     * @param index the index of the desired Profile
      * @return A Profile
      */
     public Profile getProfiles(int index) {
@@ -291,14 +288,14 @@ public class ProfileManager extends Bean {
     /**
      * Set the enabled {@link Profile} at index.
      *
-     * @param profile
-     * @param index
+     * @param profile the Profile to set
+     * @param index   the index to set; any existing profile at index is removed
      */
     public void setProfiles(Profile profile, int index) {
         Profile oldProfile = profiles.get(index);
         if (!this.readingProfiles) {
             profiles.set(index, profile);
-            this.propertyChangeSupport.fireIndexedPropertyChange(PROFILES, index, oldProfile, profile);
+            this.fireIndexedPropertyChange(PROFILES, index, oldProfile, profile);
         }
     }
 
@@ -306,8 +303,15 @@ public class ProfileManager extends Bean {
         if (!profiles.contains(profile)) {
             profiles.add(profile);
             if (!this.readingProfiles) {
+                profiles.sort(null);
                 int index = profiles.indexOf(profile);
-                this.propertyChangeSupport.fireIndexedPropertyChange(PROFILES, index, null, profile);
+                this.fireIndexedPropertyChange(PROFILES, index, null, profile);
+                if (index != profiles.size() - 1) {
+                    for (int i = index + 1; i < profiles.size() - 1; i++) {
+                        this.fireIndexedPropertyChange(PROFILES, i, profiles.get(i + 1), profiles.get(i));
+                    }
+                    this.fireIndexedPropertyChange(PROFILES, profiles.size() - 1, null, profiles.get(profiles.size() - 1));
+                }
                 try {
                     this.writeProfiles();
                 } catch (IOException ex) {
@@ -322,7 +326,7 @@ public class ProfileManager extends Bean {
             int index = profiles.indexOf(profile);
             if (index >= 0) {
                 if (profiles.remove(profile)) {
-                    this.propertyChangeSupport.fireIndexedPropertyChange(PROFILES, index, profile, null);
+                    this.fireIndexedPropertyChange(PROFILES, index, profile, null);
                     this.writeProfiles();
                 }
                 if (profile.equals(this.getNextActiveProfile())) {
@@ -340,7 +344,7 @@ public class ProfileManager extends Bean {
      * with a list of Profiles. Profiles that are discovered in these paths are
      * automatically added to the catalog.
      *
-     * @return Paths that may contain profiles.
+     * @return Paths that may contain profiles
      */
     public File[] getSearchPaths() {
         return searchPaths.toArray(new File[searchPaths.size()]);
@@ -353,8 +357,8 @@ public class ProfileManager extends Bean {
     /**
      * Get the search path at index.
      *
-     * @param index
-     * @return A path that may contain profiles.
+     * @param index the index of the search path
+     * @return A path that may contain profiles
      */
     public File getSearchPaths(int index) {
         if (index >= 0 && index < searchPaths.size()) {
@@ -368,7 +372,7 @@ public class ProfileManager extends Bean {
             searchPaths.add(path);
             if (!this.readingProfiles) {
                 int index = searchPaths.indexOf(path);
-                this.propertyChangeSupport.fireIndexedPropertyChange(SEARCH_PATHS, index, null, path);
+                this.fireIndexedPropertyChange(SEARCH_PATHS, index, null, path);
                 this.writeProfiles();
             }
             this.findProfiles(path);
@@ -379,7 +383,7 @@ public class ProfileManager extends Bean {
         if (searchPaths.contains(path)) {
             int index = searchPaths.indexOf(path);
             searchPaths.remove(path);
-            this.propertyChangeSupport.fireIndexedPropertyChange(SEARCH_PATHS, index, path, null);
+            this.fireIndexedPropertyChange(SEARCH_PATHS, index, path, null);
             this.writeProfiles();
             if (this.getDefaultSearchPath().equals(path)) {
                 this.setDefaultSearchPath(new File(FileUtil.getPreferencesPath()));
@@ -399,7 +403,7 @@ public class ProfileManager extends Bean {
         if (!defaultSearchPath.equals(this.defaultSearchPath)) {
             File oldDefault = this.defaultSearchPath;
             this.defaultSearchPath = defaultSearchPath;
-            this.propertyChangeSupport.firePropertyChange(DEFAULT_SEARCH_PATH, oldDefault, this.defaultSearchPath);
+            this.firePropertyChange(DEFAULT_SEARCH_PATH, oldDefault, this.defaultSearchPath);
             this.writeProfiles();
         }
     }
@@ -445,6 +449,7 @@ public class ProfileManager extends Bean {
             if (reWrite) {
                 this.writeProfiles();
             }
+            this.profiles.sort(null);
         } catch (JDOMException | IOException ex) {
             this.readingProfiles = false;
             throw ex;
@@ -452,23 +457,30 @@ public class ProfileManager extends Bean {
     }
 
     private void writeProfiles() throws IOException {
+        if (!(new File(FileUtil.getPreferencesPath()).canWrite())) {
+            return;
+        }
         FileWriter fw = null;
         Document doc = new Document();
         doc.setRootElement(new Element(PROFILECONFIG));
         Element profilesElement = new Element(PROFILES);
         Element pathsElement = new Element(SEARCH_PATHS);
-        for (Profile p : this.profiles) {
+        this.profiles.stream().map((p) -> {
             Element e = new Element(PROFILE);
             e.setAttribute(Profile.ID, p.getId());
             e.setAttribute(Profile.PATH, FileUtil.getPortableFilename(p.getPath(), true, true));
+            return e;
+        }).forEach((e) -> {
             profilesElement.addContent(e);
-        }
-        for (File f : this.searchPaths) {
+        });
+        this.searchPaths.stream().map((f) -> {
             Element e = new Element(Profile.PATH);
             e.setAttribute(Profile.PATH, FileUtil.getPortableFilename(f.getPath(), true, true));
             e.setAttribute(DEFAULT, Boolean.toString(f.equals(this.defaultSearchPath)));
+            return e;
+        }).forEach((e) -> {
             pathsElement.addContent(e);
-        }
+        });
         doc.getRootElement().addContent(profilesElement);
         doc.getRootElement().addContent(pathsElement);
         try {
@@ -476,7 +488,7 @@ public class ProfileManager extends Bean {
             XMLOutputter fmt = new XMLOutputter();
             fmt.setFormat(Format.getPrettyFormat()
                     .setLineSeparator(System.getProperty("line.separator"))
-                    .setTextMode(Format.TextMode.PRESERVE));
+                    .setTextMode(Format.TextMode.NORMALIZE));
             fmt.output(doc, fw);
             fw.close();
         } catch (IOException ex) {
@@ -554,8 +566,8 @@ public class ProfileManager extends Bean {
     /**
      * Create a default profile if no profiles exist.
      *
-     * @return A new profile or null if profiles already exist.
-     * @throws IOException
+     * @return A new profile or null if profiles already exist
+     * @throws java.io.IOException if unable to create a Profile
      */
     public Profile createDefaultProfile() throws IllegalArgumentException, IOException {
         if (this.getAllProfiles().isEmpty()) {
@@ -576,11 +588,10 @@ public class ProfileManager extends Bean {
      * Copy a JMRI configuration not in a profile and its user preferences to a
      * profile.
      *
-     * @param config
-     * @param name
-     * @return The profile with the migrated configuration.
-     * @throws IllegalArgumentException
-     * @throws IOException
+     * @param config the configuration file
+     * @param name   the name of the configuration
+     * @return The profile with the migrated configuration
+     * @throws java.io.IOException if unable to create a Profile
      */
     public Profile migrateConfigToProfile(File config, String name) throws IllegalArgumentException, IOException {
         String pid = FileUtil.sanitizeFilename(name);
@@ -604,6 +615,7 @@ public class ProfileManager extends Bean {
      * When a JMRI application is starting there are eight potential
      * Profile-related states requiring preparation to use profiles:
      * <table>
+     * <caption>Matrix of states determining if migration required.</caption>
      * <tr><th>Profile Catalog</th><th>Profile Config</th><th>App
      * Config</th><th>Action</th></tr>
      * <tr><td>YES</td><td>YES</td><td>YES</td><td>No preparation required -
@@ -628,10 +640,9 @@ public class ProfileManager extends Bean {
      * This method returns true if a migration occurred, and false in all other
      * circumstances.
      *
-     * @param configFilename
+     * @param configFilename the name of the app config file
      * @return true if a user's existing config was migrated, false otherwise
-     * @throws IllegalArgumentException
-     * @throws IOException
+     * @throws java.io.IOException if unable to to create a Profile
      */
     public boolean migrateToProfiles(String configFilename) throws IllegalArgumentException, IOException {
         File appConfigFile = new File(configFilename);
@@ -669,7 +680,7 @@ public class ProfileManager extends Bean {
     }
 
     /**
-     * Export the {@link jmri.profile.Profile} to a JAR file.
+     * Export the {@link jmri.profile.Profile} to a zip file.
      *
      * @param profile                 The profile to export
      * @param target                  The file to export the profile into
@@ -678,12 +689,15 @@ public class ProfileManager extends Bean {
      *                                included?
      * @param exportExternalRoster    It the roster is not within the profile
      *                                directory, should it be included?
-     * @throws IOException
-     * @throws org.jdom2.JDOMException
+     * @throws java.io.IOException     if unable to write a file during the
+     *                                 export
+     * @throws org.jdom2.JDOMException if unable to create a new profile
+     *                                 configuration file in the exported
+     *                                 Profile
      */
     public void export(Profile profile, File target, boolean exportExternalUserFiles, boolean exportExternalRoster) throws IOException, JDOMException {
-        if (!target.exists()) {
-            target.createNewFile();
+        if (!target.exists() && !target.createNewFile()) {
+            throw new IOException("Unable to create file " + target);
         }
         String tempDirPath = System.getProperty("java.io.tmpdir") + File.separator + "JMRI" + System.currentTimeMillis(); // NOI18N
         FileUtil.createDirectory(tempDirPath);
@@ -716,26 +730,27 @@ public class ProfileManager extends Bean {
                 fmt.output(doc, fw);
             }
         }
-        try (FileOutputStream out = new FileOutputStream(target)) {
-            ZipOutputStream zip = new ZipOutputStream(out);
+        try (FileOutputStream out = new FileOutputStream(target); ZipOutputStream zip = new ZipOutputStream(out)) {
             this.exportDirectory(zip, tempProfilePath, tempProfilePath.getPath());
-            zip.close();
         }
         FileUtil.delete(tempDir);
     }
 
     private void exportDirectory(ZipOutputStream zip, File source, String root) throws IOException {
-        for (File file : source.listFiles()) {
-            if (file.isDirectory()) {
-                if (!Profile.isProfile(file)) {
-                    ZipEntry entry = new ZipEntry(this.relativeName(file, root));
-                    entry.setTime(file.lastModified());
-                    zip.putNextEntry(entry);
-                    this.exportDirectory(zip, file, root);
+        File[] files = source.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    if (!Profile.isProfile(file)) {
+                        ZipEntry entry = new ZipEntry(this.relativeName(file, root));
+                        entry.setTime(file.lastModified());
+                        zip.putNextEntry(entry);
+                        this.exportDirectory(zip, file, root);
+                    }
+                    continue;
                 }
-                continue;
+                this.exportFile(zip, file, root);
             }
-            this.exportFile(zip, file, root);
         }
     }
 
@@ -762,7 +777,7 @@ public class ProfileManager extends Bean {
         if (file.isDirectory() && !path.endsWith("/")) {
             path = path + "/";
         }
-        return path.replaceAll(File.separator, "/");
+        return path.replace(File.separator, "/");
     }
 
     /**
@@ -772,7 +787,7 @@ public class ProfileManager extends Bean {
      * headless app launches.
      *
      * @return The active {@link Profile}
-     * @throws IOException
+     * @throws java.io.IOException if unable to read the current active profile
      * @see ProfileManagerDialog#getStartingProfile(java.awt.Frame)
      */
     public static Profile getStartingProfile() throws IOException {
@@ -804,7 +819,7 @@ public class ProfileManager extends Bean {
     }
 
     void profileNameChange(Profile profile, String oldName) {
-        this.propertyChangeSupport.firePropertyChange(new PropertyChangeEvent(profile, Profile.NAME, oldName, profile.getName()));
+        this.firePropertyChange(new PropertyChangeEvent(profile, Profile.NAME, oldName, profile.getName()));
     }
 
     /**
@@ -837,7 +852,15 @@ public class ProfileManager extends Bean {
         }
         if (old != autoStartActiveProfileTimeout) {
             this.autoStartActiveProfileTimeout = autoStartActiveProfileTimeout;
-            this.propertyChangeSupport.firePropertyChange(AUTO_START_TIMEOUT, old, this.autoStartActiveProfileTimeout);
+            this.firePropertyChange(AUTO_START_TIMEOUT, old, this.autoStartActiveProfileTimeout);
         }
+    }
+
+    private static class ProfileManagerHolder {
+
+        /**
+         * Default instance of the ProfileManager
+         */
+        public static ProfileManager manager = new ProfileManager();
     }
 }

@@ -1,4 +1,3 @@
-// PanelProPane.java
 package apps.PanelPro;
 
 import apps.Apps;
@@ -10,8 +9,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The JMRI main pane for creating control panels.
@@ -28,14 +25,8 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright 2003, 2014
- * @version $Revision$
  */
 public class PanelProPane extends apps.AppsLaunchPane {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5742354704602024439L;
 
     PanelProPane() {
         super();
@@ -68,11 +59,6 @@ public class PanelProPane extends apps.AppsLaunchPane {
 
         // Buttons
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -9134833676932931297L;
-
             public void actionPerformed(ActionEvent e) {
                 Apps.handleQuit();
             }
@@ -92,6 +78,4 @@ public class PanelProPane extends apps.AppsLaunchPane {
 
         return j;
     }
-
-    static Logger log = LoggerFactory.getLogger(PanelProPane.class.getName());
 }

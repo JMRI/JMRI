@@ -28,10 +28,7 @@ import org.slf4j.LoggerFactory;
 public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
     public DefaultSignalMastLogicManagerXml() {
-        debug = log.isDebugEnabled();
     }
-
-    private boolean debug;
 
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
@@ -171,9 +168,10 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         log.error("Invalid method called");
     }
 
-    public boolean load(Element signalMastLogic) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // load individual Transits
-        return loadSignalMastLogic(signalMastLogic);
+        return loadSignalMastLogic(shared);
     }
 
     public boolean loadSignalMastLogic(Element signalMastLogic) {
@@ -182,8 +180,8 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
             log.debug("Found " + logicList.size() + " signal mast logics");
         }
 
-        SignalMastManager sm = InstanceManager.signalMastManagerInstance();
-        SignalMastLogicManager sml = InstanceManager.signalMastLogicManagerInstance();
+        SignalMastManager sm = InstanceManager.getDefault(jmri.SignalMastManager.class);
+        SignalMastLogicManager sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
         try {
             String logicDelay = signalMastLogic.getChild("logicDelay").getText();
             sml.setSignalLogicDelay(Long.parseLong(logicDelay));
@@ -253,7 +251,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                         }
 
                         if (s.getChild("associatedSection") != null) {
-                            Section sect = InstanceManager.sectionManagerInstance().getSection(s.getChild("associatedSection").getText());
+                            Section sect = InstanceManager.getDefault(jmri.SectionManager.class).getSection(s.getChild("associatedSection").getText());
                             logic.setAssociatedSection(sect, dest);
                         }
 
@@ -273,10 +271,8 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                     if (turn != null) {
                                         NamedBeanHandle<Turnout> namedTurnout = nbhm.getNamedBeanHandle(turnout, turn);
                                         list.put(namedTurnout, value);
-                                    } else if (debug) {
-                                        log.debug("Unable to add Turnout " + turnout + " as it does not exist in the panel file");
                                     }
-
+                                    log.debug("Unable to add Turnout {} as it does not exist in the panel file", turnout);
                                 }
                                 logic.setTurnouts(list, dest);
                             }
@@ -298,10 +294,8 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                     if (sen != null) {
                                         NamedBeanHandle<Sensor> namedSensor = nbhm.getNamedBeanHandle(sensorName, sen);
                                         list.put(namedSensor, value);
-                                    } else if (debug) {
-                                        log.debug("Unable to add sensor " + sensorName + " as it does not exist in the panel file");
                                     }
-
+                                    log.debug("Unable to add sensor {} as it does not exist in the panel file", sensorName);
                                 }
                                 logic.setSensors(list, dest);
                             }
@@ -321,12 +315,11 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                         value = Block.UNOCCUPIED;
                                     }
 
-                                    Block blk = InstanceManager.blockManagerInstance().getBlock(block);
+                                    Block blk = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(block);
                                     if (blk != null) {
                                         list.put(blk, value);
-                                    } else if (debug) {
-                                        log.debug("Unable to add Block " + block + " as it does not exist in the panel file");
                                     }
+                                    log.debug("Unable to add Block {} as it does not exist in the panel file", block);
                                 }
                                 logic.setBlocks(list, dest);
                             }
@@ -339,13 +332,11 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                 for (Element m : mastList) {
                                     String mast = m.getChild("mastName").getText();
                                     String state = m.getChild("mastState").getText();
-                                    SignalMast mst = InstanceManager.signalMastManagerInstance().getSignalMast(mast);
+                                    SignalMast mst = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(mast);
                                     if (mst != null) {
                                         list.put(mst, state);
-                                    } else if (debug) {
-                                        log.debug("Unable to add Signal Mast  " + mast + " as it does not exist in the panel file");
                                     }
-
+                                    log.debug("Unable to add Signal Mast {} as it does not exist in the panel file", mast);
                                 }
                                 logic.setMasts(list, dest);
                             }
@@ -365,8 +356,8 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
     }
 
     public int loadOrder() {
-        return InstanceManager.signalMastLogicManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManagerXml.class.getName());
 }

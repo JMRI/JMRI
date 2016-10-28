@@ -15,7 +15,6 @@ package jmri.jmrit.vsdecoder;
  * <p>
  *
  * @author Mark Underwood copyright (c) 2009, 2013
- * @version $Revision$
  */
 import com.jogamp.openal.AL;
 import com.jogamp.openal.ALException;
@@ -106,7 +105,7 @@ public class AudioUtil {
      * @param prefix : prefix to use when generating AudioBuffer system names.
      * @param blist  : list of AudioByteBuffers to convert.
      *
-     * @return (List<AudioBuffer>) List of AudioBuffers
+     * @return List of AudioBuffers
      */
     static public List<AudioBuffer> getAudioBufferList(String prefix, List<AudioByteBuffer> blist) {
         // Sanity check the prefix, since if it's wrong we'll get a casting error below.
@@ -120,7 +119,7 @@ public class AudioUtil {
         int i = 0; // Index used for the sub-buffer system names
         for (AudioByteBuffer b : blist) {
             try {
-                AudioBuffer buf = (AudioBuffer) jmri.InstanceManager.audioManagerInstance().provideAudio(prefix + "_sbuf" + i);
+                AudioBuffer buf = (AudioBuffer) jmri.InstanceManager.getDefault(jmri.AudioManager.class).provideAudio(prefix + "_sbuf" + i);
                 i++;
                 if (buf == null) {
                     log.debug("provideAudio returned null!");
@@ -139,10 +138,10 @@ public class AudioUtil {
                 }
 
                 rlist.add(buf);
-            } catch (AudioException e) {
+            } catch (AudioException | IllegalArgumentException e) {
                 log.warn("Error on provideAudio! " + e.toString());
                 if (log.isDebugEnabled()) {
-                    jmri.InstanceManager.audioManagerInstance().getSystemNameList(Audio.BUFFER).stream().forEach((s) -> {
+                    jmri.InstanceManager.getDefault(jmri.AudioManager.class).getSystemNameList(Audio.BUFFER).stream().forEach((s) -> {
                         log.debug("\tBuffer: " + s);
                     });
                 }

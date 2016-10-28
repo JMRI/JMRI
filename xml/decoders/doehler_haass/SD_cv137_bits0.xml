@@ -32,17 +32,17 @@
       <revremark>Creation. Valid for most decoders after Oct 2014.</revremark>
     </revision>
   </revhistory>
-  <variable CV="137" mask="XXXXXXXV" tooltip="CV137 bit 0" exclude="SD18A_1.00,SD18A_1.01,SD18A_1.02">
+  <variable item="SUSI mode" CV="137" mask="XXXXXXXV" tooltip="CV137 bit 0" exclude="SD18A_1.00,SD18A_1.01,SD18A_1.02">
     <enumVal>
       <enumChoice choice="Activated" value="0">
         <choice>Activated</choice>
         <choice xml:lang="fr">Activé</choice>
         <choice xml:lang="de">Aktiviert</choice>
       </enumChoice>
-      <enumChoice choice="Deactivated (Use ZCLK and ZDAT as AUX 3 and AUX 4 instead)" value="1">
-        <choice>Deactivated (Use ZCLK and ZDAT as AUX 3 and AUX 4 instead)</choice>
-        <choice xml:lang="fr">Désactivé (Utiliser ZCLK et ZDAT comme AUX 3 et AUX 4)</choice>
-        <choice xml:lang="de">Deaktiviert (ZCLK und ZDAT als AUX 3 und AUX 4 nutzen)</choice>
+      <enumChoice choice="Deactivated (Use ZCLK and ZDAT as AUX ouptuts)" value="1">
+        <choice>Deactivated (Use ZCLK and ZDAT as AUX ouptuts)</choice>
+        <choice xml:lang="fr">Désactivé (Utiliser ZCLK et ZDAT comme sorties AUX)</choice>
+        <choice xml:lang="de">Deaktiviert (ZCLK und ZDAT als AUX Ausgänge nutzen)</choice>
       </enumChoice>
     </enumVal>
     <label>SUSI mode</label>

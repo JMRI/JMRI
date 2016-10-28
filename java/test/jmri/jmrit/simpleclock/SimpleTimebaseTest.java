@@ -1,9 +1,8 @@
-// SimpleTimebaseTest.java
 package jmri.jmrit.simpleclock;
 
 import java.util.Date;
 import java.time.Instant;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -12,7 +11,6 @@ import junit.framework.TestSuite;
  * Tests for the SimpleTimebase class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class SimpleTimebaseTest extends TestCase {
 
@@ -42,6 +40,8 @@ public class SimpleTimebaseTest extends TestCase {
 
     public void testSetStartTime() {
         SimpleTimebase p = new SimpleTimebase();
+        p.setRun(false); // prevent clock ticking during test
+
         Date now = new Date();
 
         p.setStartSetTime(true, now);
@@ -62,10 +62,12 @@ public class SimpleTimebaseTest extends TestCase {
     // set the time based on a date.
     public void testSetTimeDate() {
         SimpleTimebase p = new SimpleTimebase();
+        p.setRun(false); // prevent clock ticking during test
+
         Date now = new Date();
 
         p.setTime(now);
-        Assert.assertEquals("Time Set",now,p.getTime());
+        Assert.assertEquals("Time Set",now.toString(),p.getTime().toString());
     }
 
     // set the time based on an instant.
@@ -74,7 +76,7 @@ public class SimpleTimebaseTest extends TestCase {
         Instant now = Instant.now();
         
         p.setTime(now);
-        Assert.assertEquals("Time Set",Date.from(now),p.getTime());
+        Assert.assertEquals("Time Set",Date.from(now).toString(),p.getTime().toString());
     }
 
     /* 	public void testShortDelay() { */
@@ -96,7 +98,7 @@ public class SimpleTimebaseTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SimpleTimebaseTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

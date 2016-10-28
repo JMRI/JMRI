@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * received.
  *
  * @author	Paul Bender, Copyright (C) 2011
- * @version $Revision$
  *
  */
 public class LIUSBEthernetXNetPacketizer extends jmri.jmrix.lenz.liusb.LIUSBXNetPacketizer {
@@ -103,7 +102,7 @@ public class LIUSBEthernetXNetPacketizer extends jmri.jmrix.lenz.liusb.LIUSBXNet
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LIUSBEthernetXNetPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LIUSBEthernetXNetPacketizer.class.getName());
 }
 
 /* @(#)LIUSBEthernetXNetPacketizer.java */

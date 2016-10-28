@@ -9,14 +9,13 @@ import jmri.PowerManager;
  * connected to an XPressNet based system.
  *
  * @author	Paul Bender Copyright (C) 2004
- * @version	$Revision$
- *
+  *
  */
 public class XpaPowerManager implements PowerManager, XpaListener {
 
-    public XpaPowerManager() {
+    public XpaPowerManager(XpaTrafficController t) {
         // connect to the TrafficManager
-        tc = XpaTrafficController.instance();
+        tc = t;
         tc.addXpaListener(this);
     }
 

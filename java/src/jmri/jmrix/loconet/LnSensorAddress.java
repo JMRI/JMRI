@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision$
  */
 public class LnSensorAddress {
 
@@ -45,28 +44,6 @@ public class LnSensorAddress {
         _low = sw1 & 0x7F;
         _valid = true;
         this.prefix = prefix;
-    }
-
-    /**
-     * Old style ctor for e.g. CATS migration. Cannot handle multiple system
-     * connections.
-     *
-     * @deprecated 2.9.4
-     */
-    @Deprecated
-    public LnSensorAddress(int sw1, int sw2) {
-        this(sw1, sw2, "L");
-    }
-
-    /**
-     * Old style ctor for e.g. CATS migration. Cannot handle multiple system
-     * connections.
-     *
-     * @deprecated 2.9.4
-     */
-    @Deprecated
-    public LnSensorAddress(String s) {
-        this(s, "L");  // assume one connection
     }
 
     public LnSensorAddress(String s, String prefix) {
@@ -138,7 +115,6 @@ public class LnSensorAddress {
     /**
      * Update a LocoNet message to have this address.
      *
-     * @param m
      */
     public void insertAddress(LocoNetMessage m) {
         m.setElement(1, getLowBits());
@@ -263,7 +239,7 @@ public class LnSensorAddress {
         return prefix + "S" + (asInt() / 16) + letter + digit;
     }
 
-    static Logger log = LoggerFactory.getLogger(LnSensorAddress.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnSensorAddress.class.getName());
 
 }
 

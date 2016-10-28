@@ -11,8 +11,6 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrix.rps.Distributor;
 import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.MeasurementListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display the position of an RPS input.
@@ -20,14 +18,8 @@ import org.slf4j.LoggerFactory;
  * In this initial version, it ignores the ID, so there's only one icon.
  *
  * @author Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
  */
 public class RpsPositionIcon extends PositionableLabel implements MeasurementListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2764090638708108310L;
 
     public RpsPositionIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
@@ -94,23 +86,13 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         popup.add(showIdItem);
 
         popup.add(new AbstractAction("Set Origin") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -3391746152957428043L;
-
             public void actionPerformed(ActionEvent e) {
                 setRpsOrigin();
             }
         });
 
         popup.add(new AbstractAction("Set Current Location") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -9079038426378006086L;
-
-            public void actionPerformed(ActionEvent e) {
+              public void actionPerformed(ActionEvent e) {
                 setRpsCurrentLocation();
             }
         });
@@ -119,11 +101,6 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         popup.add(notify);
 
         popup.add(new AbstractAction("Set Filter") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 3157524767064527041L;
-
             public void actionPerformed(ActionEvent e) {
                 setFilterPopup();
             }
@@ -170,11 +147,6 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
      * This is updated before the menu is shown, and then appears in the menu.
      */
     class Notifier extends AbstractAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5902446945220035813L;
 
         public Notifier() {
             super();
@@ -406,6 +378,4 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
 
     double sxScale, syScale;
     int sxOrigin, syOrigin;
-
-    static Logger log = LoggerFactory.getLogger(SensorIcon.class.getName());
 }

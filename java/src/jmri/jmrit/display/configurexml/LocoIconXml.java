@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.LocoIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision$
  */
 public class LocoIconXml extends PositionableLabelXml {
 
@@ -51,11 +50,6 @@ public class LocoIconXml extends PositionableLabelXml {
         element.setAttribute("class", "jmri.jmrit.display.configurexml.LocoIconXml");
 
         return element;
-    }
-
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
     }
 
     /**
@@ -108,7 +102,7 @@ public class LocoIconXml extends PositionableLabelXml {
         String rosterId = null;
         try {
             rosterId = element.getAttribute("rosterentry").getValue();
-            RosterEntry entry = Roster.instance().entryFromTitle(rosterId);
+            RosterEntry entry = Roster.getDefault().entryFromTitle(rosterId);
             l.setRosterEntry(entry);
         } catch (Exception e) {
             log.debug("no roster entry for " + rosterId + ", ex= " + e);
@@ -121,5 +115,5 @@ public class LocoIconXml extends PositionableLabelXml {
         l.init();		// to detect "background" color for use in Tracker, examine icon file 
     }
 
-    static Logger log = LoggerFactory.getLogger(LocoIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoIconXml.class.getName());
 }

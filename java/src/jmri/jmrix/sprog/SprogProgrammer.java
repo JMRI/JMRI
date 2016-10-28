@@ -15,11 +15,13 @@ import jmri.managers.DefaultProgrammerManager;
  * programmer. This provides a service mode programmer.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public class SprogProgrammer extends AbstractProgrammer implements SprogListener {
 
-    public SprogProgrammer() {
+    private SprogSystemConnectionMemo _memo = null;
+
+    public SprogProgrammer(SprogSystemConnectionMemo memo) {
+         _memo = memo;
     }
 
     /**
@@ -28,8 +30,8 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.PAGEMODE);
         ret.add(DefaultProgrammerManager.DIRECTBITMODE);
+        ret.add(DefaultProgrammerManager.PAGEMODE);
         return ret;
     }
 
@@ -73,7 +75,8 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         controller().sendSprogMessage(SprogMessage.getProgMode(), this);
     }
 
-    synchronized public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    @Override
+    synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
@@ -169,12 +172,20 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
             // check for errors
             if (reply.match("No Ack") >= 0) {
                 if (log.isDebugEnabled()) {
-                    log.debug("handle error reply " + reply);
+                    log.debug("handle No Ack reply " + reply);
                 }
                 // perhaps no loco present? Fail back to end of programming
                 progState = NOTPROGRAMMING;
                 controller().sendSprogMessage(SprogMessage.getExitProgMode(), this);
                 notifyProgListenerEnd(-1, jmri.ProgListener.NoLocoDetected);
+            } else if (reply.match("!O") >= 0) {
+                if (log.isDebugEnabled()) {
+                    log.debug("handle !O reply " + reply);
+                }
+                // Overload. Fail back to end of programming
+                progState = NOTPROGRAMMING;
+                controller().sendSprogMessage(SprogMessage.getExitProgMode(), this);
+                notifyProgListenerEnd(-1, jmri.ProgListener.ProgrammingShort);
             } else {
                 // see why waiting
                 if (_progRead) {
@@ -247,12 +258,12 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     protected SprogTrafficController controller() {
         // connect the first time
         if (_controller == null) {
-            _controller = SprogTrafficController.instance();
+            _controller = _memo.getSprogTrafficController();
         }
         return _controller;
     }
 
-    static Logger log = LoggerFactory.getLogger(SprogProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogProgrammer.class.getName());
 
 }
 

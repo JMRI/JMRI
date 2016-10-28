@@ -1,4 +1,3 @@
-// Pr1ImporterTest.java
 package jmri.jmrit.symbolicprog;
 
 import java.io.File;
@@ -6,18 +5,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import jmri.util.FileUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for Pr1Importer class.
  *
  * @author	Bob Jacobsen Copyright 2003
- * @version $Revision$
  */
 public class Pr1ImporterTest extends TestCase {
 
@@ -104,7 +100,7 @@ public class Pr1ImporterTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", Pr1ImporterTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -112,8 +108,6 @@ public class Pr1ImporterTest extends TestCase {
         TestSuite suite = new TestSuite(Pr1ImporterTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(Pr1ImporterTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

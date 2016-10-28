@@ -1,22 +1,13 @@
-// SerialSensor.java
 package jmri.jmrix.cmri.serial;
 
 import jmri.implementation.AbstractSensor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Extend jmri.AbstractSensor for C/MRI serial systems
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public class SerialSensor extends AbstractSensor {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7109954914253152537L;
 
     public SerialSensor(String systemName) {
         super(systemName);
@@ -38,8 +29,4 @@ public class SerialSensor extends AbstractSensor {
     public void requestUpdateFromLayout() {
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialSensor.class.getName());
-
 }
-
-/* @(#)SerialSensor.java */

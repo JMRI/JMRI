@@ -6,14 +6,11 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.JPopupMenu;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * PositionableRoundRect.
  * <P>
  * @author Pete cresman Copyright (c) 2012
- * @version $Revision: 1 $
  */
 public class PositionableRectangle extends PositionableShape {
 
@@ -42,15 +39,14 @@ public class PositionableRectangle extends PositionableShape {
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        PositionableRectangle pos = (PositionableRectangle) p;
+    protected Positionable finishClone(PositionableRectangle pos) {
         pos._width = _width;
         pos._height = _height;
         return super.finishClone(pos);
     }
 
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = Bundle.getMessage("editShape", Bundle.getMessage("rectangle"));
+        String txt = Bundle.getMessage("editShape", Bundle.getMessage("Rectangle"));
         popup.add(new javax.swing.AbstractAction(txt) {
             /**
              *
@@ -59,13 +55,11 @@ public class PositionableRectangle extends PositionableShape {
 
             public void actionPerformed(ActionEvent e) {
                 if (_editFrame == null) {
-                    _editFrame = new DrawRectangle("editShape", "rectangle", null);
+                    _editFrame = new DrawRectangle("editShape", "Rectangle", null);
                     setEditParams();
                 }
             }
         });
         return true;
     }
-
-    static Logger log = LoggerFactory.getLogger(PositionableRectangle.class.getName());
 }

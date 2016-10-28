@@ -4,7 +4,6 @@
  * Description:	JUnit tests for the EasyDccProgrammer class
  *
  * @author	Bob Jacobsen
- * @version
  */
 package jmri.jmrix.easydcc.easydccmon;
 
@@ -13,7 +12,7 @@ import jmri.jmrix.easydcc.EasyDccListener;
 import jmri.jmrix.easydcc.EasyDccMessage;
 import jmri.jmrix.easydcc.EasyDccReply;
 import jmri.jmrix.easydcc.EasyDccTrafficController;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -126,7 +125,7 @@ public class EasyDccMonFrameTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {EasyDccMonFrameTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -135,6 +134,6 @@ public class EasyDccMonFrameTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(EasyDccMonFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccMonFrameTest.class.getName());
 
 }

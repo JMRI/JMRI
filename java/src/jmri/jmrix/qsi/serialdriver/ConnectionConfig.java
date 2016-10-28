@@ -8,8 +8,7 @@ import java.util.ResourceBundle;
  * SerialDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2007
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
@@ -37,6 +36,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     protected void setInstance() {
-        adapter = SerialDriverAdapter.instance();
+        if(adapter == null) {
+           adapter = new SerialDriverAdapter();
+        }
     }
 }

@@ -8,7 +8,6 @@ package jmri.jmrix.ieee802154;
  * multiple connection
  * @author kcameron Copyright (C) 2011 Modified for IEEE 802.15.4 connection
  * @author Paul Bender Copyright (C) 2013
- * @version $Revision$
  */
 public class IEEE802154Message extends jmri.jmrix.AbstractMRMessage {
 
@@ -29,7 +28,6 @@ public class IEEE802154Message extends jmri.jmrix.AbstractMRMessage {
      * This ctor interprets the String as the exact sequence to send,
      * byte-for-byte.
      *
-     * @param m
      */
     public IEEE802154Message(String m, int l) {
         super(m);

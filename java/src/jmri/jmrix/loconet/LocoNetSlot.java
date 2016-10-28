@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author	Stephen Williams Copyright (C) 2008
- * @version $Revision$
  */
 public class LocoNetSlot {
 
@@ -262,7 +261,7 @@ public class LocoNetSlot {
 
     // methods to interact with LocoNet
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     public void setSlot(LocoNetMessage l) throws LocoNetException { // exception if message can't be parsed
         // sort out valid messages, handle
         switch (l.getOpCode()) {
@@ -606,7 +605,7 @@ public class LocoNetSlot {
         stat = val & 0x7F;
     }
 
-    static Logger log = LoggerFactory.getLogger(LocoNetSlot.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoNetSlot.class.getName());
 }
 
 

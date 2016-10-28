@@ -28,17 +28,18 @@ public class TurnoutOperationManagerXml extends jmri.configurexml.AbstractXmlAda
         log.error("Invalid method called");
     }
 
-    public boolean load(Element operationsElement) {
+    @Override
+    public boolean load(Element sharedOperations, Element perNodeOperations) {
         boolean result = true;
         TurnoutOperationManager manager = TurnoutOperationManager.getInstance();
-        if (operationsElement.getAttribute("automate") != null) {
+        if (sharedOperations.getAttribute("automate") != null) {
             try {
-                manager.setDoOperations(operationsElement.getAttribute("automate").getValue().equals("true"));
+                manager.setDoOperations(sharedOperations.getAttribute("automate").getValue().equals("true"));
             } catch (NumberFormatException ex) {
                 result = false;
             }
         }
-        List<Element> operationsList = operationsElement.getChildren("operation");
+        List<Element> operationsList = sharedOperations.getChildren("operation");
         if (log.isDebugEnabled()) {
             log.debug("Found " + operationsList.size() + " operations");
         }
@@ -70,5 +71,5 @@ public class TurnoutOperationManagerXml extends jmri.configurexml.AbstractXmlAda
         return elem;
     }
 
-    static Logger log = LoggerFactory.getLogger(TurnoutOperationManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutOperationManagerXml.class.getName());
 }

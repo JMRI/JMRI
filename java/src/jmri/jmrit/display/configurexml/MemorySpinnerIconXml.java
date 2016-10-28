@@ -3,14 +3,11 @@ package jmri.jmrit.display.configurexml;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MemorySpinnerIcon;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for display.MemorySpinnerIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision$
  */
 public class MemorySpinnerIconXml extends PositionableLabelXml {
 
@@ -38,11 +35,6 @@ public class MemorySpinnerIconXml extends PositionableLabelXml {
         return element;
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Load, starting with the memoryicon element, then all the value-icon pairs
      *
@@ -61,6 +53,4 @@ public class MemorySpinnerIconXml extends PositionableLabelXml {
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.MEMORIES, element);
     }
-
-    static Logger log = LoggerFactory.getLogger(MemorySpinnerIconXml.class.getName());
 }

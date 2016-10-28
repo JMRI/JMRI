@@ -13,20 +13,16 @@ import org.slf4j.LoggerFactory;
  * database.
  *
  * @author Dan Boudreau Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 public class ResetCarMovesAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -583218206426311128L;
     CarManager manager = CarManager.instance();
 
     public ResetCarMovesAction(String actionName, Component frame) {
         super(actionName);
     }
 
+    @Override
     public void actionPerformed(ActionEvent ae) {
         if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("carSureResetMoves"),
                 Bundle.getMessage("carResetMovesAll"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
@@ -35,6 +31,6 @@ public class ResetCarMovesAction extends AbstractAction {
         }
     }
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(ResetCarMovesAction.class.getName());
 }

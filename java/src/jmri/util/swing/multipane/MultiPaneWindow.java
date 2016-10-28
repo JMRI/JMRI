@@ -1,4 +1,3 @@
-// MultiPaneWindow.java
 package jmri.util.swing.multipane;
 
 import java.awt.BorderLayout;
@@ -27,17 +26,16 @@ import jmri.util.swing.JTreeUtil;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
- * @version $Revision$
  */
 public class MultiPaneWindow extends jmri.util.JmriJFrame {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = 5755650275380388253L;
-
-    /**
      * Create and initialize a multi-pane GUI window.
+     *
+     * @param name        the name and title of the window
+     * @param treeFile path to the XML file for the navigation tree
+     * @param menubarFile path to the XML file for the menubar
+     * @param toolbarFile path to the XML file for the toolbar
      */
     public MultiPaneWindow(String name, String treeFile, String menubarFile, String toolbarFile) {
         super(name);

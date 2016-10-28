@@ -2,16 +2,13 @@
 package jmri.jmrix.loconet.locobufferii;
 
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it refers to the
  * switch settings on the new LocoBuffer II
  *
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version	$Revision$
- */
+  */
 public class LocoBufferIIAdapter extends LocoBufferAdapter {
 
     public LocoBufferIIAdapter() {
@@ -31,6 +28,4 @@ public class LocoBufferIIAdapter extends LocoBufferAdapter {
     public String option1Name() {
         return "LocoBuffer-II connection uses ";
     }
-
-    static Logger log = LoggerFactory.getLogger(LocoBufferIIAdapter.class.getName());
 }

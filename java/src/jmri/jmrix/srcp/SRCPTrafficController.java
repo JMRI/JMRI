@@ -1,4 +1,3 @@
-// SRCPTrafficController.java
 package jmri.jmrix.srcp;
 
 import java.util.Vector;
@@ -25,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * message.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  */
 public class SRCPTrafficController extends AbstractMRTrafficController
         implements SRCPInterface, jmri.ShutDownTask {
@@ -34,9 +32,9 @@ public class SRCPTrafficController extends AbstractMRTrafficController
 
     public SRCPTrafficController() {
         super();
-        try {
-            jmri.InstanceManager.shutDownManagerInstance().register(this);
-        } catch (java.lang.NullPointerException npe) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(this);
+        } else {
             if (log.isDebugEnabled()) {
                 log.debug("attempted to register shutdown task, but shutdown manager is null");
             }
@@ -188,9 +186,6 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                 rcvException = true;
                 reportReceiveLoopException(pe);
                 break;
-            } catch (Exception e1) {
-                log.error("Exception in receive loop: " + e1);
-                e1.printStackTrace();
             }
         }
     }
@@ -249,7 +244,9 @@ public class SRCPTrafficController extends AbstractMRTrafficController
      *
      * @return The registered SRCPTrafficController instance for general use, if
      *         need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public SRCPTrafficController instance() {
         if (self == null) {
             if (log.isDebugEnabled()) {
@@ -262,8 +259,9 @@ public class SRCPTrafficController extends AbstractMRTrafficController
 
     static volatile protected SRCPTrafficController self = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
+    @Override
     protected void setInstance() {
         self = this;
     }
@@ -329,6 +327,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
      *
      * @return true if the shutdown should continue, false to abort.
      */
+    @Override
     public boolean execute() {
         // notify the server we are exiting.
         sendSRCPMessage(new SRCPMessage("TERM 0 SESSION"), null);
@@ -337,12 +336,25 @@ public class SRCPTrafficController extends AbstractMRTrafficController
         return true;
     }
 
-    /**
-     * Name to be provided to the user when information about this task is
-     * presented.
-     */
+    @Override
+    @SuppressWarnings("deprecation")
     public String name() {
+        return this.getName();
+    }
+
+    @Override
+    public String getName() {
         return SRCPTrafficController.class.getName();
+    }
+
+    @Override
+    public boolean isParallel() {
+        return false;
+    }
+
+    @Override
+    public boolean isComplete() {
+        return !this.isParallel();
     }
 
     /**
@@ -370,7 +382,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
         }
     } // SRCPRcvNotifier
 
-    static Logger log = LoggerFactory.getLogger(SRCPTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPTrafficController.class.getName());
 }
 
 

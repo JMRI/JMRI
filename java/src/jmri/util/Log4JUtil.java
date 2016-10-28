@@ -1,4 +1,3 @@
-// Log4JUtil.java
 package jmri.util;
 
 import apps.SystemConsole;
@@ -7,7 +6,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
-import jmri.util.exceptionhandler.AwtHandler;
 import jmri.util.exceptionhandler.UncaughtExceptionHandler;
 import org.apache.log4j.Appender;
 import org.apache.log4j.BasicConfigurator;
@@ -38,7 +36,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2009, 2010
  * @author Randall Wood Copyright 2014
- * @version $Revision$
  */
 public class Log4JUtil {
 
@@ -47,17 +44,45 @@ public class Log4JUtil {
     private static final Logger log = LoggerFactory.getLogger(Log4JUtil.class.getName());
 
     /**
+     * Initialize logging from a default control file.
+     * <p>
+     * Primary functions:
+     * <ul>
+     * <li>Initialize the JMRI system console
+     * <li>Set up the slf4j j.u.logging to log4J bridge
+     * <li>Start log4j
+     * <li>Initialize some default exception handlers (to feed the logs?)
+     * </ul>
+     */
+    static public void initLogging() {
+        initLogging(System.getProperty("jmri.log", "default.lcf"));
+    }
+
+    /**
+     * Initialize logging, specifying a control file.
+     * <p>
+     * Generally, only used for unit testing. Much better to use allow this
+     * class to find the control file using a set of conventions.
+     *
+     * @param controlfile the logging control file
+     */
+    static public void initLogging(String controlfile) {
+        initLog4J(controlfile);
+    }
+
+    /**
      * Initialize Log4J.
      * <p>
-     * Use the logging control file <i>default.lcf</i> or the file specified in
-     * the <i>jmri.log</i> property. If the file cannot be found in the current
-     * directory, look for the file first in the settings directory and then in
-     * the installation directory.
+     * Use the logging control file specified in the <i>jmri.log</i> property
+     * or, if none, the default.lcf file. If the file cannot be found in the
+     * current directory, look for the file first in the settings directory and
+     * then in the installation directory.
      *
+     * @param logFile the logging control file
      * @see jmri.util.FileUtil#getPreferencesPath()
      * @see jmri.util.FileUtil#getProgramPath()
      */
-    static public void initLog4J() {
+    static void initLog4J(String logFile) {
         if (log4JSetUp) {
             log.debug("initLog4J already initialized!");
             return;
@@ -67,8 +92,11 @@ public class Log4JUtil {
         // stdout and stderr streams are set-up and usable by the ConsoleAppender
         SystemConsole.create();
         log4JSetUp = true;
+
+        // initialize the java.util.logging to log4j bridge
+        initializeJavaUtilLogging();
+
         // initialize log4j - from logging control file (lcf) only
-        String logFile = System.getProperty("jmri.log", "default.lcf");
         try {
             if (new File(logFile).canRead()) {
                 configureLogging(logFile);
@@ -86,9 +114,17 @@ public class Log4JUtil {
             BasicConfigurator.configure();
             org.apache.log4j.Logger.getRootLogger().setLevel(Level.WARN);
         }
-        // install default exception handlers
-        System.setProperty("sun.awt.exception.handler", AwtHandler.class.getName());
+        // install default exception handler so uncaught exceptions are logged, not printed
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler());
+    }
+
+    static void initializeJavaUtilLogging() {
+        // Optionally remove existing handlers attached to j.u.l root logger
+        org.slf4j.bridge.SLF4JBridgeHandler.removeHandlersForRootLogger();  // (since SLF4J 1.6.5)
+
+        // add SLF4JBridgeHandler to j.u.l's root logger, should be done once during
+        // the initialization phase of your application
+        org.slf4j.bridge.SLF4JBridgeHandler.install();
     }
 
     @SuppressWarnings("unchecked")
@@ -105,6 +141,9 @@ public class Log4JUtil {
         }
         return (program + " version " + jmri.Version.name()
                 + " starts under Java " + System.getProperty("java.version", "<unknown>")
+                + " on " + System.getProperty("os.name", "<unknown>")
+                + " " + System.getProperty("os.arch", "<unknown>")
+                + " v" + System.getProperty("os.version", "<unknown>")
                 + " at " + (new java.util.Date()));
     }
 
@@ -114,15 +153,16 @@ public class Log4JUtil {
      * This method sets the system property <i>jmri.log.path</i> to the JMRI
      * settings directory if not specified.
      *
-     * @param config
-     * @throws IOException
      * @see jmri.util.FileUtil#getPreferencesPath()
      */
     static private void configureLogging(String config) throws IOException {
         Properties p = new Properties();
         FileInputStream f = new FileInputStream(config);
-        p.load(new FileInputStream(config));
-        f.close();
+        try {
+            p.load(f);
+        } finally {
+            f.close();
+        }
 
         if (System.getProperty("jmri.log.path") == null || p.getProperty("jmri.log.path") == null) {
             System.setProperty("jmri.log.path", FileUtil.getPreferencesPath() + "log" + File.separator);

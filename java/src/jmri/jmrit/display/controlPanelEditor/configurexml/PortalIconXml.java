@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.PortalIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision$
  */
 public class PortalIconXml extends PositionableLabelXml {
 
@@ -56,11 +55,6 @@ public class PortalIconXml extends PositionableLabelXml {
 
         element.setAttribute("class", "jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml");
         return element;
-    }
-
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
     }
 
     /**
@@ -133,5 +127,5 @@ public class PortalIconXml extends PositionableLabelXml {
         l.setHideArrows(value);
     }
 
-    static Logger log = LoggerFactory.getLogger(PortalIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PortalIconXml.class.getName());
 }

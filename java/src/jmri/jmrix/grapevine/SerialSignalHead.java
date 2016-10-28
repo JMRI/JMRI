@@ -14,8 +14,7 @@ import org.slf4j.LoggerFactory;
  * Description:	extend jmri.AbstractSignalHead for grapevine serial signals
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007
- * @version	$Revision$
- */
+  */
 public class SerialSignalHead extends DefaultSignalHead {
 
     /**
@@ -140,7 +139,7 @@ public class SerialSignalHead extends DefaultSignalHead {
     int output;         // output connector number, 0-23
     int bank;           // bank number, 0-3
 
-    static Logger log = LoggerFactory.getLogger(SerialSignalHead.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialSignalHead.class.getName());
 }
 
 /* @(#)SerialSignalHead.java */

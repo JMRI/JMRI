@@ -6,8 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying the LZ100 configuration utility
@@ -16,8 +14,7 @@ import org.slf4j.LoggerFactory;
  * defined in {@link LZ100InternalFrame}
  *
  * @author	Paul Bender Copyright (C) 2005
- * @version	$Revision$
- */
+  */
 public class LZ100Frame extends jmri.util.JmriJFrame {
 
     //private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lz100.LZ100Bundle");
@@ -64,7 +61,5 @@ public class LZ100Frame extends jmri.util.JmriJFrame {
         // take apart the JFrame
         super.dispose();
     }
-
-    static Logger log = LoggerFactory.getLogger(LZ100Frame.class.getName());
 
 }

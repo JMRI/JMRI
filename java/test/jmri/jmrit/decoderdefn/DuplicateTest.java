@@ -1,4 +1,3 @@
-// DuplicateTest.java
 package jmri.jmrit.decoderdefn;
 
 import java.io.File;
@@ -6,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import jmri.jmrit.XmlFile;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -21,7 +20,6 @@ import org.jdom2.filter.ElementFilter;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.3
- * @version $Revision$
  */
 public class DuplicateTest extends TestCase {
 
@@ -84,7 +82,7 @@ public class DuplicateTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", DuplicateTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -93,5 +91,5 @@ public class DuplicateTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(DuplicateTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DuplicateTest.class.getName());
 }

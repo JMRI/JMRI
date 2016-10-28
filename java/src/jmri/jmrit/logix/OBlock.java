@@ -1,4 +1,4 @@
-package jmri.jmrit.logix;
+ package jmri.jmrit.logix;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -12,6 +12,7 @@ import jmri.NamedBeanHandle;
 import jmri.Path;
 import jmri.Sensor;
 import jmri.Turnout;
+import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,29 +46,23 @@ import org.slf4j.LoggerFactory;
  * the block. Paths are contained within the Block boundaries. Names of OPath
  * objects only need be unique within an OBlock.
  *
- * <P>
- *
+ * <BR>
  * <hr>
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * </P>
  *
- * @version $Revision$
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8683807989230088682L;
     /*
      * Block states.
      * NamedBean.UNKNOWN                 = 0x01;
@@ -75,7 +70,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * Block.UNOCCUPIED = Sensor.INACTIVE= 0x04;
      * NamedBean.INCONSISTENT            = 0x08;
      * Add the following to the 4 sensor states.
-     * States are OR'ed to show combination.  e.g. ALLOCATED | OCCUPIED = allocated block is occupied by rouge
+     * States are OR'ed to show combination.  e.g. ALLOCATED | OCCUPIED = allocated block is occupied
      */
     static final public int ALLOCATED = 0x10;   // reserve the block for subsequent use by a train
     static final public int RUNNING = 0x20;     // Block that running train has reached 
@@ -83,9 +78,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     static final public int DARK = 0x01;        // Block has no Sensor, same as UNKNOWN
     static final public int TRACK_ERROR = 0x80; // Block has Error
 
-    static final HashMap<String, Integer> _oldstatusMap = new HashMap<String, Integer>();
-    static final HashMap<String, Integer> _statusMap = new HashMap<String, Integer>();
-    static final HashMap<String, String> _statusNameMap = new HashMap<String, String>();
+//    static final HashMap<String, Integer> _oldstatusMap = new HashMap<String, Integer>();
+    private static final HashMap<String, Integer> _statusMap = new HashMap<String, Integer>();
+    private static final HashMap<String, String> _statusNameMap = new HashMap<String, String>();
 
     static final Color DEFAULT_FILL_COLOR = new Color(200, 0, 200);
 
@@ -97,6 +92,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         _statusMap.put("outOfService", Integer.valueOf(OUT_OF_SERVICE));
         _statusMap.put("dark", Integer.valueOf(DARK));
         _statusMap.put("powerError", Integer.valueOf(TRACK_ERROR));
+        /* I can't see any reason for this - peteC
         _oldstatusMap.put(Bundle.getMessage("unoccupied"), Integer.valueOf(UNOCCUPIED));
         _oldstatusMap.put(Bundle.getMessage("occupied"), Integer.valueOf(OCCUPIED));
         _oldstatusMap.put(Bundle.getMessage("allocated"), Integer.valueOf(ALLOCATED));
@@ -104,6 +100,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         _oldstatusMap.put(Bundle.getMessage("outOfService"), Integer.valueOf(OUT_OF_SERVICE));
         _oldstatusMap.put(Bundle.getMessage("dark"), Integer.valueOf(DARK));
         _oldstatusMap.put(Bundle.getMessage("powerError"), Integer.valueOf(TRACK_ERROR));
+        */
     }
 
     static void loadStatusNameMap() {
@@ -137,10 +134,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         }
         return _statusNameMap.get(str);
     }
-    /* maybe show fast clock time later
-     protected static Timebase 	_clock = InstanceManager.timebaseInstance();
-     private java.util.Date	_entryTime;		// time when block became occupied
-     */
     ArrayList<Portal> _portals = new ArrayList<Portal>();     // portals to this block
 
     private Warrant _warrant;       // when not null, block is allocated to this warrant
@@ -165,6 +158,27 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     public OBlock(String systemName, String userName) {
         super(systemName, userName);
         setState(DARK);
+    }
+
+
+    /** 
+     * Note: equality consists of the underlying (superclass) Block implementation
+     * being the same.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+
+        if (!(getClass() == obj.getClass())) {
+            return false;
+        }
+
+        return super.equals(obj);
     }
 
     /**
@@ -215,7 +229,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
     /*
-     * retuen true if successful
+     * return true if successful
      */
     public boolean setErrorSensor(String pName) {
         if (getErrorSensor() != null) {
@@ -238,8 +252,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         sensor = jmri.InstanceManager.sensorManagerInstance().getSensor(pName);
         if (sensor != null) {
             _errNamedSensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor);
-            getErrorSensor().addPropertyChangeListener(this, _errNamedSensor.getName(), "OBlock Error Sensor " + getDisplayName());
-            return true;
+            if (_errNamedSensor!=null) {
+                getErrorSensor().addPropertyChangeListener(this, _errNamedSensor.getName(), "OBlock Error Sensor " + getDisplayName());
+                return true;                
+            }
         }
         return false;
     }
@@ -335,7 +351,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * Called from setPath. looking for other warrants that may have allocated
      * blocks that share TO's with this block.
      *
-     * @return
      */
     private String checkSharedTO() {
         List<HashMap<OBlock, List<OPath>>> blockList = _sharedTO.get(_pathName);
@@ -405,6 +420,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     protected Warrant getWarrant() {
         return _warrant;
     }
+    
+    public boolean isAllocatedTo(Warrant warrant) {
+        return (warrant == _warrant);
+    }
 
     public String getAllocatedPathName() {
         return _pathName;
@@ -464,9 +483,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             loadStatusMap();
         }
         Integer i = _statusMap.get(statusName);
-        if (i == null) {
+/*        if (i == null) {
             i = _oldstatusMap.get(statusName);
-        }
+        }*/
         if (i != null) {
             return ((getState() & i.intValue()) != 0);
         }
@@ -489,7 +508,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * Note the block may be OCCUPIED by a non-warranted train, but the
      * allocation is permitted.
      *
-     * @param warrant
      * @return name of block if block is already allocated to another warrant or
      *         block is OUT_OF_SERVICE
      */
@@ -520,7 +538,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 
     /**
      * Note path name may be set if block is not allocated to a warrant. For use
-     * by Circuitbuilder Only.
+     * by CircuitBuilder Only.
      *
      * @return error message
      */
@@ -565,6 +583,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 removePropertyChangeListener(_warrant);
             } catch (Exception ex) {
                 // disposed warrant may throw null pointer - continue deallocation
+                log.warn("Perhaps normal? Code not clear.", ex);
             }
         }
         if (_pathName != null) {
@@ -839,7 +858,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         setState((getState() & ~(OCCUPIED | RUNNING)) | UNOCCUPIED);
         setValue(null);
         if (_warrant != null) {
-            _warrant.goingInactive(this);
+            ThreadingUtil.runOnLayout(()->{
+                _warrant.goingInactive(this);
+            });
         }
     }
 
@@ -853,7 +874,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 //        if (log.isDebugEnabled()) log.debug("Allocated OBlock \""+getSystemName()+
 //                                            "\" goes OCCUPIED. state= "+getState());
         if (_warrant != null) {
-            _warrant.goingActive(this);
+            ThreadingUtil.runOnLayout(()->{
+                _warrant.goingActive(this);
+            });
         }
         if (log.isDebugEnabled()) {
             log.debug("Block \"" + getSystemName() + " went active, path= "
@@ -893,5 +916,5 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return Bundle.getMessage("BeanNameOBlock");
     }
 
-    static Logger log = LoggerFactory.getLogger(OBlock.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OBlock.class.getName());
 }

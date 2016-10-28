@@ -1,9 +1,9 @@
-// StoreXmlAllAction.java
 package jmri.configurexml;
 
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,15 +15,10 @@ import org.slf4j.LoggerFactory;
  * information stored in configuration files.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  */
 public class StoreXmlAllAction extends StoreXmlConfigAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2662912096519480927L;
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
     public StoreXmlAllAction() {
@@ -35,23 +30,28 @@ public class StoreXmlAllAction extends StoreXmlConfigAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        java.io.File file = getFileName(this.getAllFileChooser());
+        java.io.File file = getFileName(getAllFileChooser());
         if (file == null) {
             return;
         }
         
         // and finally store
-        boolean results = InstanceManager.configureManagerInstance().storeAll(file);
-        log.debug(results ? "store was successful" : "store failed");
-        if (!results) {
-            JOptionPane.showMessageDialog(null,
-                    rb.getString("PanelStoreHasErrors") + "\n"
-                    + rb.getString("PanelStoreIncomplete") + "\n"
-                    + rb.getString("ConsoleWindowHasInfo"),
-                    rb.getString("PanelStoreError"), JOptionPane.ERROR_MESSAGE);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm == null) {
+            log.error("Failed to get default configure manager");
+        } else {
+            boolean results = cm.storeAll(file);
+            log.debug(results ? "store was successful" : "store failed");
+            if (!results) {
+                JOptionPane.showMessageDialog(null,
+                        rb.getString("PanelStoreHasErrors") + "\n"
+                        + rb.getString("PanelStoreIncomplete") + "\n"
+                        + rb.getString("ConsoleWindowHasInfo"),
+                        rb.getString("PanelStoreError"), JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(StoreXmlAllAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StoreXmlAllAction.class.getName());
 }

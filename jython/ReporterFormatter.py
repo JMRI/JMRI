@@ -4,13 +4,12 @@
 # Author: Bob Jacobsen, copyright 2006
 # Part of the JMRI distribution
 #
-# The next line is maintained by CVS, please don't change it
-# $Revision$
-#
 # The Reporter and Memory names are hardcoded in the example
 # near the bottom.  Change those to something that makes
 # sense for your layout
-#
+
+import jmri
+import java
 
 # First, define the listener class.  This gets messages
 # from the reporter, uses them to keep track of the decoders

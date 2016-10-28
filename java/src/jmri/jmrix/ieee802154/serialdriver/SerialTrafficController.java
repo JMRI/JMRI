@@ -11,7 +11,6 @@ import jmri.jmrix.ieee802154.IEEE802154TrafficController;
  * directly using IEEE 802.15.4 formated messages.
  *
  * @author Paul Bender Copyright (C) 2013
- * @version $Revision$
  */
 public class SerialTrafficController extends IEEE802154TrafficController {
 
@@ -31,7 +30,7 @@ public class SerialTrafficController extends IEEE802154TrafficController {
      * adapter-specific subclass.
      */
     protected AbstractMRReply newReply() {
-        return new IEEE802154Reply(this);
+        return new IEEE802154Reply();
     }
 
     /*

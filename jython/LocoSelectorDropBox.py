@@ -11,9 +11,6 @@
 #
 # Components based on Bob Jacobsen's scripts in JMRI distribution, 
 # and comments on JMRI-Users group 
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 
 import javax.swing
 import jmri
@@ -70,7 +67,7 @@ class LocoSelector(jmri.jmrit.automat.AbstractAutomaton) :
 
         # create the drop-box from the roster, 
 		# getEntriesWithAttributeKeyValue(String key, String value) 
-        self.roster = jmri.jmrit.roster.Roster.instance()
+        self.roster = jmri.jmrit.roster.Roster.getDefault()
         self.box = jmri.jmrit.roster.swing.GlobalRosterEntryComboBox()
         self.box.itemStateChanged = self.rosterBoxChange
 

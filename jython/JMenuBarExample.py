@@ -5,6 +5,7 @@
 # Part of the JMRI distribution
 
 import java
+import jmri
 import apps
 import javax
 import javax.swing

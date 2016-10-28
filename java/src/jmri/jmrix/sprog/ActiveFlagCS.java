@@ -1,8 +1,6 @@
 // ActiveFlag.java
 package jmri.jmrix.sprog;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide a flag to indicate that the subsystem provided by this package is
@@ -12,8 +10,9 @@ import org.slf4j.LoggerFactory;
  * number of unneeded class loading.
  *
  * @author	Andrew Crosland Copyright (C) 2006
- * @version $Revision$
+ * @deprecated since 4.5.1
  */
+@Deprecated
 abstract public class ActiveFlagCS {
 
     static private boolean flag = false;
@@ -25,8 +24,6 @@ abstract public class ActiveFlagCS {
     static public boolean isActive() {
         return flag;
     }
-
-    static Logger log = LoggerFactory.getLogger(ActiveFlagCS.class.getName());
 
 }
 

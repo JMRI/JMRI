@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.qsi.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -24,13 +23,12 @@ import org.slf4j.LoggerFactory;
  * use any other options at configuration time.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix.SerialPortAdapter {
 
     public SerialDriverAdapter() {
         super(new QsiSystemConnectionMemo());
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.QSI;
+        this.manufacturerName = jmri.jmrix.qsi.QSIConnectionTypeList.QSI;
     }
 
     SerialPort activeSerialPort = null;
@@ -70,12 +68,7 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -119,14 +112,13 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
      */
     public void configure() {
 
-        this.getSystemConnectionMemo().setQsiTrafficController(QsiTrafficController.instance());
+        this.getSystemConnectionMemo().setQsiTrafficController(new QsiTrafficController());
         // connect to the traffic controller
-        QsiTrafficController.instance().connectPort(this);
+        this.getSystemConnectionMemo().getQsiTrafficController().connectPort(this);
 
-        //jmri.jmrix.qsi.QsiProgrammer.instance();  // create Programmer in InstanceManager
         this.getSystemConnectionMemo().configureManagers();
 
-        sinkThread = new Thread(QsiTrafficController.instance());
+        sinkThread = new Thread(this.getSystemConnectionMemo().getQsiTrafficController());
         sinkThread.start();
 
         // jmri.InstanceManager.setThrottleManager(new jmri.jmrix.qsi.QsiThrottleManager());
@@ -171,14 +163,18 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
     private boolean opened = false;
     InputStream serialStream = null;
 
-    static public SerialDriverAdapter instance() {
+    /*
+     * @deprecated since 4.5.1
+     */
+    @Deprecated
+    public SerialDriverAdapter instance() {
         if (mInstance == null) {
             mInstance = new SerialDriverAdapter();
         }
         return mInstance;
     }
-    static SerialDriverAdapter mInstance = null;
+    SerialDriverAdapter mInstance = null;
 
-    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

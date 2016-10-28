@@ -1,16 +1,12 @@
 package jmri.jmrix.srcp;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import junit.framework.Assert;
+import java.io.StringReader;
+import jmri.jmrix.srcp.parser.ParseException;
+import jmri.jmrix.srcp.parser.SRCPClientParser;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.jmrix.srcp.parser.SRCPClientParser;
-import jmri.jmrix.srcp.parser.ParseException;
-
-import java.io.StringReader;
 
 /**
  * SRCPReplyTest.java
@@ -18,7 +14,6 @@ import java.io.StringReader;
  * Description:	tests for the jmri.jmrix.srcp.SRCPReply class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class SRCPReplyTest extends TestCase {
 
@@ -58,7 +53,7 @@ public class SRCPReplyTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SRCPReplyTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -77,5 +72,4 @@ public class SRCPReplyTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-    static Logger log = LoggerFactory.getLogger(SRCPReplyTest.class.getName());
 }

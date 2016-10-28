@@ -4,15 +4,14 @@
  * Description:	AbsBaseClass for PowerManager tests in specific jmrix. packages
  *
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision$
- */
+  */
 package jmri.jmrix;
 
 //import jmri.*;
 import java.beans.PropertyChangeListener;
 import jmri.JmriException;
 import jmri.PowerManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.TestCase;
 
 public abstract class AbstractPowerManagerTest extends TestCase {

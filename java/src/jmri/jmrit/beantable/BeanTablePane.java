@@ -1,13 +1,14 @@
-// BeanTablePane.java
 package jmri.jmrit.beantable;
 
 import java.awt.Component;
-import java.util.ResourceBundle;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
+import javax.swing.SortOrder;
+import javax.swing.table.TableRowSorter;
+import jmri.swing.RowSorterUtil;
+import jmri.util.SystemNameComparator;
 import jmri.util.com.sun.TableSorter;
 
 /**
@@ -23,14 +24,9 @@ import jmri.util.com.sun.TableSorter;
  * invoke {@link #addToBottomBox} as needed.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision$
  */
 public class BeanTablePane extends jmri.util.swing.JmriPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1172856759033682216L;
     BeanTableDataModel dataModel;
     JTable dataTable;
     JScrollPane dataScroll;
@@ -38,24 +34,18 @@ public class BeanTablePane extends jmri.util.swing.JmriPanel {
     int bottomBoxIndex;	// index to insert extra stuff
     static final int bottomStrutWidth = 20;
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
-
     public void init(BeanTableDataModel model) {
 
         dataModel = model;
 
-        TableSorter sorter = new TableSorter(dataModel);
-        dataTable = makeJTable(sorter);
-        sorter.setTableHeader(dataTable.getTableHeader());
+        TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter<>(dataModel);
+        dataTable = dataModel.makeJTable(dataModel.getMasterClassName(), dataModel, sorter);
         dataScroll = new JScrollPane(dataTable);
 
         // give system name column as smarter sorter and use it initially
-        try {
-            TableSorter tmodel = ((TableSorter) dataTable.getModel());
-            tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            tmodel.setSortingStatus(BeanTableDataModel.SYSNAMECOL, TableSorter.ASCENDING);
-        } catch (java.lang.ClassCastException e) {
-        }  // happens if not sortable table
+        sorter.setComparator(BeanTableDataModel.SYSNAMECOL, new SystemNameComparator());
+        RowSorterUtil.setSortOrder(sorter, BeanTableDataModel.SYSNAMECOL, SortOrder.ASCENDING);
+        this.dataTable.setRowSorter(sorter);
 
         // configure items for GUI
         dataModel.configureTable(dataTable);
@@ -95,23 +85,15 @@ public class BeanTablePane extends jmri.util.swing.JmriPanel {
 
     /**
      * Hook to allow sub-typing of JTable created
+     *
+     * @param sorter the sorter model
+     * @deprecated since 4.5.4; use
+     * {@link jmri.jmrit.beantable.BeanTableDataModel#makeJTable(java.lang.String, javax.swing.table.TableModel, javax.swing.RowSorter)}
+     * instead.
      */
+    @Deprecated
     protected JTable makeJTable(TableSorter sorter) {
-        return new JTable(sorter) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 5236037575632515212L;
-
-            public boolean editCellAt(int row, int column, java.util.EventObject e) {
-                boolean res = super.editCellAt(row, column, e);
-                java.awt.Component c = this.getEditorComponent();
-                if (c instanceof javax.swing.JTextField) {
-                    ((JTextField) c).selectAll();
-                }
-                return res;
-            }
-        };
+        return new JTable(sorter);
     }
 
     protected Box getBottomBox() {
@@ -122,7 +104,7 @@ public class BeanTablePane extends jmri.util.swing.JmriPanel {
      * Add a component to the bottom box. Takes care of organising glue, struts
      * etc
      *
-     * @param comp
+     * @param comp {@link Component} to add
      */
     protected void addToBottomBox(Component comp) {
         bottomBox.add(Box.createHorizontalStrut(bottomStrutWidth), bottomBoxIndex);

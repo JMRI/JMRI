@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * is not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision$
  */
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
@@ -59,13 +58,13 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
 
     ArrayList<Entry> entries = new ArrayList<Entry>();
 
+    @Override
     public Positionable deepClone() {
         MultiSensorIcon pos = new MultiSensorIcon(_editor);
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        MultiSensorIcon pos = (MultiSensorIcon) p;
+    protected Positionable finishClone(MultiSensorIcon pos) {
         pos.setInactiveIcon(cloneIcon(getInactiveIcon(), pos));
         pos.setInconsistentIcon(cloneIcon(getInconsistentIcon(), pos));
         pos.setUnknownIcon(cloneIcon(getUnknownIcon(), pos));
@@ -93,8 +92,9 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
 
     public void addEntry(String pName, NamedIcon icon) {
         NamedBeanHandle<Sensor> sensor;
-        if (InstanceManager.sensorManagerInstance() != null) {
-            sensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, InstanceManager.sensorManagerInstance().provideSensor(pName));
+        if (InstanceManager.getNullableDefault(jmri.SensorManager.class) != null) {
+            sensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class)
+                        .getNamedBeanHandle(pName, InstanceManager.sensorManagerInstance().provideSensor(pName));
             addEntry(sensor, icon);
         } else {
             log.error("No SensorManager for this protocol, icon won't see changes");
@@ -171,9 +171,6 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     public String getNameString() {
         String name = "";
         if ((entries == null) || (entries.size() < 1)) {
@@ -243,7 +240,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     MultiSensorItemPanel _itemPanel;
 
     protected void editItem() {
-        makePalettteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("MultiSensor")));
+        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("MultiSensor")));
         _itemPanel = new MultiSensorItemPanel(_paletteFrame, "MultiSensor", _iconFamily,
                 PickListModel.multiSensorPickModelInstance(), _editor);
         ActionListener updateAction = new ActionListener() {
@@ -276,7 +273,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         if (selections == null || selections.size() < positions.length) {
             JOptionPane.showMessageDialog(_paletteFrame,
                     Bundle.getMessage("NeedPosition", positions.length),
-                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return;
         }
         if (iconMap != null) {
@@ -379,7 +376,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
             switch (state) {
                 case Sensor.ACTIVE:
                     if (isText()) {
-                        super.setText(Bundle.getMessage("Active"));
+                        super.setText(Bundle.getMessage("SensorStateActive"));
                     }
                     if (isIcon()) {
                         super.setIcon(e.icon);
@@ -389,7 +386,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
                     break;  // look at the next ones too
                 case Sensor.UNKNOWN:
                     if (isText()) {
-                        super.setText(Bundle.getMessage("UnKnown"));
+                        super.setText(Bundle.getMessage("BeanStateUnknown"));
                     }
                     if (isIcon()) {
                         super.setIcon(unknown);
@@ -397,7 +394,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
                     return;  // this trumps all others
                 case Sensor.INCONSISTENT:
                     if (isText()) {
-                        super.setText(Bundle.getMessage("Inconsistent"));
+                        super.setText(Bundle.getMessage("BeanStateInconsistent"));
                     }
                     if (isIcon()) {
                         super.setIcon(inconsistent);
@@ -412,7 +409,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
             return;  // set active
         }        // only case left is all inactive
         if (isText()) {
-            super.setText(Bundle.getMessage("Inactive"));
+            super.setText(Bundle.getMessage("SensorStateInactive"));
         }
         if (isIcon()) {
             super.setIcon(inactive);
@@ -532,5 +529,5 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         NamedIcon icon;
     }
 
-    static Logger log = LoggerFactory.getLogger(MultiSensorIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MultiSensorIcon.class.getName());
 }

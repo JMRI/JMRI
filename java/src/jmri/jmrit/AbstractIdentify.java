@@ -1,10 +1,10 @@
-// AbstractIdentify.java
 package jmri.jmrit;
 
+import jmri.Programmer;
+import jmri.ProgrammingMode;
+import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import jmri.Programmer;
 
 /**
  * Abstract base for common code of {@link jmri.jmrit.roster.IdentifyLoco} and
@@ -16,7 +16,6 @@ import jmri.Programmer;
  * <p>
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2015
- * @version	$Revision$
  * @see jmri.jmrit.symbolicprog.CombinedLocoSelPane
  * @see jmri.jmrit.symbolicprog.NewLocoSelPane
  */
@@ -46,7 +45,8 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
         this.programmer = p;
     }
     Programmer programmer;
-    
+    ProgrammingMode savedMode;
+
     /**
      * Update the status field (if any). Invoked with "Done" when the results
      * are in.
@@ -63,6 +63,10 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
         // must be idle, or something quite bad has happened
         if (state != 0) {
             log.error("start with state " + state + ", should have been zero");
+        }
+
+        if (programmer != null) {
+            savedMode = programmer.getMode(); // In case we need to change modes
         }
 
         // The first test is invoked here; the rest are handled in the programmingOpReply callback
@@ -90,25 +94,48 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
      * decoders, and starts the next step.
      */
     public void programmingOpReply(int value, int status) {
+        // we abort if there's no programmer
+        //  (doing this now to simplify later)
+        if (programmer == null ) {
+            log.warn("No programmer connected");
+            statusUpdate("No programmer connected");
+            
+            state = 0;
+            retry = 0;
+            error();
+            return;
+        }
+        
         // we abort if the status isn't normal
         if (status != jmri.ProgListener.OK) {
             if ( retry < RETRY_COUNT) {
                 statusUpdate("Programmer error: "
-                    + jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().decodeErrorCode(status));
+                    + programmer.decodeErrorCode(status));
                 state--;
                 retry++;
+            } else if (programmer.getMode() != DefaultProgrammerManager.PAGEMODE &&
+                        programmer.getSupportedModes().contains(DefaultProgrammerManager.PAGEMODE)) {
+                programmer.setMode(DefaultProgrammerManager.PAGEMODE);
+                retry = 0;
+                state--;
+                log.warn(programmer.decodeErrorCode(status) +
+                        ", trying " + programmer.getMode().toString() + " mode");
             } else {
                 log.warn("Stopping due to error: "
-                    + jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().decodeErrorCode(status));
+                    + programmer.decodeErrorCode(status));
                 statusUpdate("Stopping due to error: "
-                    + jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().decodeErrorCode(status));
+                    + programmer.decodeErrorCode(status));
+                if (programmer.getMode() != savedMode) {  // restore original mode
+                    log.warn("Restoring " + savedMode.toString() + " mode");
+                    programmer.setMode(savedMode);
+                }
             state = 0;
             retry = 0;
             error();
             return;
             }
         } else {
-            retry = 0;            
+            retry = 0;
         }
         // continuing for normal operation
         // this should eventually be something smarter, maybe using reflection,
@@ -224,6 +251,6 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(AbstractIdentify.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractIdentify.class.getName());
 
 }

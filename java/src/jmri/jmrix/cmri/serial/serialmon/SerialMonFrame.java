@@ -1,28 +1,23 @@
-// SerialMonFrame.java
 package jmri.jmrix.cmri.serial.serialmon;
 
 import jmri.jmrix.cmri.serial.SerialListener;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialReply;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Frame displaying (and logging) CMRI serial command messages
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4519092521835268245L;
+    private CMRISystemConnectionMemo _memo = null;
 
-    public SerialMonFrame() {
+    public SerialMonFrame(CMRISystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
     protected String title() {
@@ -31,11 +26,11 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
     protected void init() {
         // connect to TrafficController
-        SerialTrafficController.instance().addSerialListener(this);
+        _memo.getTrafficController().addSerialListener(this);
     }
 
     public void dispose() {
-        SerialTrafficController.instance().removeSerialListener(this);
+        _memo.getTrafficController().removeSerialListener(this);
         super.dispose();
     }
 
@@ -103,7 +98,5 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             nextLine("unrecognized rep: \"" + l.toString() + "\"\n", "");
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(SerialMonFrame.class.getName());
 
 }

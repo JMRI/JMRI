@@ -5,8 +5,7 @@ package jmri.jmrix.secsi;
  * Interface to send/receive serial information
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
- * @version	$Revision$
- */
+  */
 public interface SerialInterface {
 
     public void addSerialListener(SerialListener l);

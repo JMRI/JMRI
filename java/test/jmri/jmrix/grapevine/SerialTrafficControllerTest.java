@@ -1,4 +1,3 @@
-// SerialTrafficControllerTest.java
 package jmri.jmrix.grapevine;
 
 import java.io.ByteArrayInputStream;
@@ -8,7 +7,7 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -19,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * JUnit tests for the SerialTrafficController class
  *
  * @author	Bob Jacobsen Copyright 2005, 2007, 2008
- * @version $Revision$
  */
 public class SerialTrafficControllerTest extends TestCase {
 
@@ -524,7 +522,7 @@ public class SerialTrafficControllerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SerialTrafficControllerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -542,6 +540,6 @@ public class SerialTrafficControllerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class.getName());
 
 }

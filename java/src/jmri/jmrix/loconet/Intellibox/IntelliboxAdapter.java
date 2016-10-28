@@ -3,8 +3,6 @@ package jmri.jmrix.loconet.Intellibox;
 
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it operates
@@ -15,8 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Alex Shepherd Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2005, 2010
- * @version	$Revision$
- */
+  */
 public class IntelliboxAdapter extends LocoBufferAdapter {
 
     public IntelliboxAdapter() {
@@ -51,13 +48,12 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
 
         // start operation
         packets.startThreads();
-        jmri.jmrix.loconet.ActiveFlag.setActive();
     }
 
     /**
      * Get an array of valid baud rates.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validBaudRates() {
         return validSpeeds;
     }
@@ -65,7 +61,7 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
     /**
      * Get an array of valid baud rates as integers.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public int[] validBaudNumber() {
         return validSpeedValues;
     }
@@ -86,7 +82,5 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
         };
         return retval;
     }
-
-    static Logger log = LoggerFactory.getLogger(IntelliboxAdapter.class.getName());
 
 }

@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.can.adapters;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.adapters package.
  *
  * @author Bob Jacobsen Copyright 2009
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -25,7 +23,7 @@ public class PackageTest extends TestCase {
     static public void main(String[] args) {
         apps.tests.AllTest.initLogging();
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -33,6 +31,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.can.adapters.AdapterTest");
         suite.addTest(jmri.jmrix.can.adapters.lawicell.LawicellTest.suite());
         suite.addTest(jmri.jmrix.can.adapters.gridconnect.GridConnectTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.can.adapters.loopback.PackageTest.class));
         return suite;
     }
 

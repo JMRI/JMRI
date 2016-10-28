@@ -1,11 +1,9 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * XBeeConnectionMemoTest.java
@@ -13,42 +11,25 @@ import org.slf4j.LoggerFactory;
  * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo
  * class
  *
- * @author	Paul Bender
- * @version $Revision$
+ * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class XBeeConnectionMemoTest extends TestCase {
+public class XBeeConnectionMemoTest {
 
+    @Test
     public void testCtor() {
         XBeeConnectionMemo m = new XBeeConnectionMemo();
         Assert.assertNotNull("exists", m);
     }
 
-    // from here down is testing infrastructure
-    public XBeeConnectionMemoTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XBeeConnectionMemoTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XBeeConnectionMemoTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(XBeeConnectionMemoTest.class.getName());
 
 }

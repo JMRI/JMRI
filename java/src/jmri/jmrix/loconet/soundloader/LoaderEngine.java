@@ -1,4 +1,3 @@
-// LoaderEngine.java
 package jmri.jmrix.loconet.soundloader;
 
 import jmri.jmrix.loconet.LnTrafficController;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * decoder.
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version	$Revision$
  */
 public class LoaderEngine {
 
@@ -370,6 +368,6 @@ public class LoaderEngine {
     public void dispose() {
     }
 
-    static Logger log = LoggerFactory.getLogger(LoaderEngine.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LoaderEngine.class.getName());
 
 }

@@ -1,4 +1,3 @@
-// SpecificDriverAdapter.java
 package jmri.jmrix.powerline.cm11;
 
 import gnu.io.CommPortIdentifier;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * @author	Ken Cameron, (C) 2009, sensors from poll replies Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision$
  */
 public class SpecificDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -70,12 +68,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -192,15 +185,12 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
         tc.connectPort(this);
         // Configure the form of serial address validation for this connection
         this.getSystemConnectionMemo().setSerialAddress(new jmri.jmrix.powerline.SerialAddress(this.getSystemConnectionMemo()));
-
-        // declare up
-        jmri.jmrix.powerline.ActiveFlag.setActive();
     }
 
     /**
      * Get an array of valid baud rates.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP")
     public String[] validBaudRates() {
         return validSpeeds;
     }
@@ -256,6 +246,6 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
     protected int[] validSpeedValues = new int[]{4800};
     protected String selectedSpeed = validSpeeds[0];
 
-    static Logger log = LoggerFactory.getLogger(SpecificDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpecificDriverAdapter.class.getName());
 
 }

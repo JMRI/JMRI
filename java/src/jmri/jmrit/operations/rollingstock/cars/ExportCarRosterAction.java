@@ -1,34 +1,28 @@
 // ExportCarRosterAction.java
 package jmri.jmrit.operations.rollingstock.cars;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Starts the ImportCars thread
  *
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class ExportCarRosterAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4463124347780716468L;
+    CarsTableFrame _carsTableFrame;
 
-    public ExportCarRosterAction(String actionName, Component frame) {
+    public ExportCarRosterAction(String actionName, CarsTableFrame carsTableFrame) {
         super(actionName);
+        _carsTableFrame = carsTableFrame;
     }
 
+    @Override
     public void actionPerformed(ActionEvent ae) {
-        ExportCars ex = new ExportCars();
-        ex.writeOperationsCarFile();
+        ExportCars exportCars = new ExportCars(_carsTableFrame.carsTableModel.getSelectedCarList());
+        exportCars.writeOperationsCarFile();
     }
 
-    static Logger log = LoggerFactory
-            .getLogger(ExportCarRosterAction.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(ExportCarRosterAction.class.getName());
 }

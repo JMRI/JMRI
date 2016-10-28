@@ -4,7 +4,6 @@
  * Description:	Swing action to create and register a MonFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version
  */
 package jmri.jmrix.marklin.swing.monitor;
 
@@ -13,8 +12,6 @@ import jmri.jmrix.marklin.MarklinMessage;
 import jmri.jmrix.marklin.MarklinReply;
 import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
 import jmri.jmrix.marklin.swing.MarklinPanelInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class MarklinMonPane extends jmri.jmrix.AbstractMonPane implements MarklinListener, MarklinPanelInterface {
 
@@ -103,8 +100,6 @@ public class MarklinMonPane extends jmri.jmrix.AbstractMonPane implements Markli
                     jmri.InstanceManager.getDefault(MarklinSystemConnectionMemo.class));
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(MarklinMonPane.class.getName());
 
 }
 

@@ -9,10 +9,6 @@ import jmri.LocoAddress;
 
 public class ThrottlesTableModel extends AbstractTableModel implements AddressListener, java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2173804644663235326L;
     private ArrayList<ThrottleFrame> throttleFrames = new ArrayList<ThrottleFrame>(5);
 
     public int getRowCount() {

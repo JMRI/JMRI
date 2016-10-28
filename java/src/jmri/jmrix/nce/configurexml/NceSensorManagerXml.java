@@ -1,5 +1,6 @@
 package jmri.jmrix.nce.configurexml;
 
+import jmri.configurexml.JmriConfigureXmlException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision$
  */
 public class NceSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -27,10 +27,11 @@ public class NceSensorManagerXml extends jmri.managers.configurexml.AbstractSens
         log.error("Invalid method called");
     }
 
-    public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
+    @Override
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         // load individual sensors
-        return loadSensors(sensors);
+        return loadSensors(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(NceSensorManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceSensorManagerXml.class.getName());
 }

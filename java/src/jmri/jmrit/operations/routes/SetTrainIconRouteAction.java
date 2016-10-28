@@ -10,14 +10,8 @@ import javax.swing.AbstractAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision$
  */
 public class SetTrainIconRouteAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -9152117316952301773L;
 
     public SetTrainIconRouteAction(String s) {
         super(s);
@@ -32,6 +26,7 @@ public class SetTrainIconRouteAction extends AbstractAction {
 
     SetTrainIconRouteFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a copy route frame
         if (f == null || !f.isVisible()) {

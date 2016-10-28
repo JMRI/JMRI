@@ -1,4 +1,3 @@
-// SerialTurnout.java
 package jmri.jmrix.tmcc;
 
 import jmri.Turnout;
@@ -16,14 +15,8 @@ import org.slf4j.LoggerFactory;
  * Description:	extend jmri.AbstractTurnout for TMCC serial layouts
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006
- * @version	$Revision$
- */
+  */
 public class SerialTurnout extends AbstractTurnout {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5339532021030123183L;
 
     public SerialTurnout(int number) {
         super("TT" + number);
@@ -37,9 +30,9 @@ public class SerialTurnout extends AbstractTurnout {
     protected void forwardCommandChangeToLayout(int s) {
 
         // sort out states
-        if ((s & Turnout.CLOSED) > 0) {
+        if ((s & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) > 0) {
+            if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both CLOSED and THROWN " + s);
                 return;
@@ -73,7 +66,5 @@ public class SerialTurnout extends AbstractTurnout {
         SerialTrafficController.instance().sendSerialMessage(m, null);
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
 }
-
-/* @(#)SerialTurnout.java */

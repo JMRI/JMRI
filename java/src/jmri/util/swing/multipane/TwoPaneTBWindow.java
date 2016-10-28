@@ -1,6 +1,6 @@
-// TwoPaneTBWindow.java
 package jmri.util.swing.multipane;
 
+import apps.gui.GuiLafPreferencesManager;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -16,6 +16,7 @@ import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 import javax.swing.border.BevelBorder;
+import jmri.InstanceManager;
 import jmri.util.swing.JMenuUtil;
 import jmri.util.swing.JToolBarUtil;
 
@@ -25,17 +26,15 @@ import jmri.util.swing.JToolBarUtil;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.13.1
- * @version $Revision: 17977 $
  */
 abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = 6864603332029202076L;
-
-    /**
      * Create and initialize a multi-pane GUI window.
+     *
+     * @param name        the name and title of the window
+     * @param menubarFile path to the XML file for the menubar
+     * @param toolbarFile path to the XML file for the toolbar
      */
     public TwoPaneTBWindow(String name, String menubarFile, String toolbarFile) {
         super(name);
@@ -155,7 +154,7 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
         JPanel statusItemPanel = new JPanel();
         statusItemPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
         //Set the font size of the status bar text to be 1points less than the default configured, also set as plain
-        int fontSize = apps.GuiLafConfigPane.getFontSize() - 1;
+        int fontSize = InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize() - 1;
         if (title != null) {
             if (fontSize <= 4) {
                 fontSize = title.getFont().getSize() - 1;

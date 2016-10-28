@@ -25,6 +25,7 @@ import org.openlcb.can.OpenLcbCanFrame;
 import org.openlcb.implementations.DatagramMeteringBuffer;
 import org.openlcb.implementations.DatagramService;
 import org.openlcb.implementations.MemoryConfigurationService;
+import org.openlcb.LoaderClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * Does configuration for OpenLCB communications implementations.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision: 19643 $
+ * 
  */
 public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManager {
 
@@ -85,9 +86,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         dmb = new DatagramMeteringBuffer(connection);
         dcs = new DatagramService(nodeID, dmb);
         mcs = new MemoryConfigurationService(nodeID, dcs);
-
-        // show active
-        ActiveFlag.setActive();
+        loaderClient = new LoaderClient(connection,mcs,dcs);
     }
 
     AliasMap aliasMap;
@@ -99,6 +98,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     DatagramMeteringBuffer dmb;
     DatagramService dcs;
     MemoryConfigurationService mcs;
+    LoaderClient loaderClient;
 
     /**
      * Tells which managers this provides by class
@@ -171,6 +171,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
         if (T.equals(DatagramService.class)) {
             return (T) dcs;
+        }
+        if (T.equals(LoaderClient.class)) {
+            return (T) loaderClient;
         }
         if (T.equals(NodeID.class)) {
             return (T) nodeID;
@@ -393,6 +396,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
                 nodeStore.put(m, null);
                 dmb.connectionForRepliesFromDownstream().put(m, null);
                 dcs.put(m, null);
+                loaderClient.put(m,null);
             }
         }
     }
@@ -476,8 +480,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             timer.stop();
 
             // map our nodeID
-            log.debug("mapping own alias {} to own NodeID {}", (int) nidaa.getNIDa(), n);
-            aliasMap.insert((int) nidaa.getNIDa(), n);
+            int myAlias = nidaa.getNIDa();
+            log.debug("mapping own alias {} to own NodeID {}", myAlias, n);
+            aliasMap.insert(myAlias, n);
 
             // insert our protocol info
             updateSimpleNodeInfo();
@@ -494,7 +499,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
     }
 
-    static Logger log = LoggerFactory.getLogger(OlcbConfigurationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbConfigurationManager.class.getName());
 }
 
 /* @(#)OlcbConfigurationManager.java */

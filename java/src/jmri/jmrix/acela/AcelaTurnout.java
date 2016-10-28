@@ -1,4 +1,3 @@
-// AcelaTurnout.java
 package jmri.jmrix.acela;
 
 import jmri.Turnout;
@@ -14,26 +13,23 @@ import org.slf4j.LoggerFactory;
  * Based in part on SerialTurnout.java
  *
  * @author Dave Duchamp Copyright (C) 2004
- * @version $Revision$
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
 public class AcelaTurnout extends AbstractTurnout {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -635023458091077051L;
-    final String prefix = "AT";
+    private AcelaSystemConnectionMemo _memo = null;
+    private String prefix = null;
 
     /**
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in AcelaLightManager
      */
-    public AcelaTurnout(String systemName) {
+    public AcelaTurnout(String systemName,AcelaSystemConnectionMemo memo) {
         super(systemName);
+        _memo = memo;
         initializeTurnout(systemName);
     }
 
@@ -42,20 +38,13 @@ public class AcelaTurnout extends AbstractTurnout {
      * <P>
      * 'systemName' was previously validated in AcelaLightManager
      */
-    public AcelaTurnout(String systemName, String userName) {
+    public AcelaTurnout(String systemName, String userName,AcelaSystemConnectionMemo memo) {
         super(systemName, userName);
+        _memo = memo;
+        prefix = _memo.getSystemPrefix() + "T";
         initializeTurnout(systemName);
     }
 
-// Added to get rid of errors.
-    /**
-     * State value indicating output intensity is at or above maxIntensity
-     */
-//    public static final int ON          = 0x01;
-    /**
-     * State value indicating output intensity is at or below minIntensity
-     */
-//    public static final int OFF         = 0x00;
     /**
      * Sets up system dependent instance variables and sets system independent
      * instance variables to default values Note: most instance variables are in
@@ -102,7 +91,7 @@ public class AcelaTurnout extends AbstractTurnout {
      */
     /*
      public void setState(int newState) {
-     AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName);
+     AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName,_memo);
 
      if (mNode!=null) {
      if (newState==ON) {
@@ -125,9 +114,9 @@ public class AcelaTurnout extends AbstractTurnout {
      */
     // Handle a request to change state by sending a turnout command
     protected void forwardCommandChangeToLayout(int s) {
-        if ((s & Turnout.CLOSED) > 0) {
+        if ((s & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) > 0) {
+            if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both CLOSED and THROWN " + s);
                 return;
@@ -189,7 +178,7 @@ public class AcelaTurnout extends AbstractTurnout {
             newState = adjustStateForInversion(THROWN);
         }
 
-        AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName);
+        AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName,_memo);
 
         if (mNode != null) {
 //            if (newState==ON) {
@@ -212,7 +201,5 @@ public class AcelaTurnout extends AbstractTurnout {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AcelaTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaTurnout.class.getName());
 }
-
-/* @(#)AcelaTurnout.java */

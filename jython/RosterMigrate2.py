@@ -3,17 +3,15 @@
 #
 # Author: Bob Jacobsen, copyright 2008
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 
+import jmri
 import jmri.jmrit.roster
 import java
 import javax.swing
 
 # define a routine that looks for a specific model, and offers to change to a list
 def checkForEntries(model, chooseList) :
-    rosterlist = jmri.jmrit.roster.Roster.instance().matchingList(None, None, None, None, None, None, None)
+    rosterlist = jmri.jmrit.roster.Roster.getDefault().matchingList(None, None, None, None, None, None, None)
     # Loop through the list of all Roster entries, checking each one
     for entry in rosterlist.toArray() :
         if (entry.getDecoderModel() == model) :

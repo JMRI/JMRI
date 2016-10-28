@@ -3,10 +3,8 @@
 #
 # Author: Bob Jacobsen, copyright 2008
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 
+import jmri
 import jmri.jmrit.roster
 import java
 
@@ -14,7 +12,7 @@ import java
 entry = jmri.jmrit.roster.RosterEntry()
 
 # first, include it in the Roster
-jmri.jmrit.roster.Roster.instance().addEntry(entry)
+jmri.jmrit.roster.Roster.getDefault().addEntry(entry)
 
 # need to set the ID to something
 entry.setId("New empty entry")

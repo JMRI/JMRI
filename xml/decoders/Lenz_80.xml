@@ -101,19 +101,19 @@
           </enumChoice>
         </enumVal>
         <label>Locomotive Direction in Consist</label>
-        <label>Direzione Loco nel Consist</label>
+        <label xml:lang="it">Direzione Loco nel Consist</label>
+        <label xml:lang="de">Consist Direction</label>
         <comment>A consist address over 127 will also set this bit</comment>
         <comment xml:lang="it">Anche un Indirizzo Consist oltre il 127 setterà questo bit</comment>
-        <label xml:lang="de">Consist Direction</label>
         <comment xml:lang="de">A consist address over 127 will also set this bit</comment>
       </variable>
       <variable CV="23" mask="XVVVVVVV" item="Consist Acceleration Adjustment" default="127" comment="Additional Accel rate applied to CV3  (Range 0-127)">
         <decVal max="127"/>
         <label>Acceleration Trim (0-127)</label>
         <label xml:lang="it">Grado di Accellerazione (0-127)</label>
+        <label xml:lang="de">Consist Acceleration Adjustment</label>
         <comment>Additional Accel rate applied to CV3  (Range 0-127)</comment>
         <comment xml:lang="it">Grado di accellerazione addizionale applicato a CV3 (valori da 0 a 127)</comment>
-        <label xml:lang="de">Consist Acceleration Adjustment</label>
         <comment xml:lang="de">Additional Accel rate applied to CV3  (Range 0-127)</comment>
       </variable>
       <variable CV="23" mask="VXXXXXXX" item="Consist Acceleration Adjustment Sign" default="1">

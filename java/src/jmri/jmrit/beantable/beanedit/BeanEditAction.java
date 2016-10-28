@@ -1,4 +1,3 @@
-// BeanEditAction.java
 package jmri.jmrit.beantable.beanedit;
 
 import java.awt.BorderLayout;
@@ -40,14 +39,8 @@ import org.slf4j.LoggerFactory;
  * a bean object
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision: 17977 $
  */
 abstract class BeanEditAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8002894695517110179L;
 
     public BeanEditAction(String s) {
         super(s);
@@ -90,7 +83,7 @@ abstract class BeanEditAction extends AbstractAction {
     BeanItemPanel basicDetails() {
         BeanItemPanel basic = new BeanItemPanel();
 
-        basic.setName("Basic");
+        basic.setName(Bundle.getMessage("Basic"));
         basic.setLayout(new BoxLayout(basic, BoxLayout.Y_AXIS));
 
         basic.addItem(new BeanEditItem(new JLabel(bean.getSystemName()), Bundle.getMessage("ColumnSystemName"), null));
@@ -126,7 +119,7 @@ abstract class BeanEditAction extends AbstractAction {
     BeanItemPanel usageDetails() {
         BeanItemPanel usage = new BeanItemPanel();
 
-        usage.setName("Usage");
+        usage.setName(Bundle.getMessage("Usage"));
         usage.setLayout(new BoxLayout(usage, BoxLayout.Y_AXIS));
 
         usage.addItem(new BeanEditItem(null, null, Bundle.getMessage("UsageText", bean.getDisplayName())));
@@ -147,7 +140,7 @@ abstract class BeanEditAction extends AbstractAction {
         JScrollPane listScroller = new JScrollPane(list);
         listScroller.setPreferredSize(new Dimension(250, 80));
         listScroller.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black)));
-        usage.addItem(new BeanEditItem(listScroller, "Location", null));
+        usage.addItem(new BeanEditItem(listScroller, Bundle.getMessage("ColumnLocation"), null));
 
         bei.add(usage);
         return usage;
@@ -194,9 +187,10 @@ abstract class BeanEditAction extends AbstractAction {
     }
 
     protected void saveBasicItems(ActionEvent e) {
-        if (bean.getUserName() == null && !userNameField.getText().equals("")) {
+        String uname = bean.getUserName();
+        if (uname == null && !userNameField.getText().equals("")) {
             renameBean(userNameField.getText());
-        } else if (bean.getUserName() != null && !bean.getUserName().equals(userNameField.getText())) {
+        } else if (uname != null && !uname.equals(userNameField.getText())) {
             if (userNameField.getText().equals("")) {
                 removeName();
             } else {
@@ -462,11 +456,12 @@ abstract class BeanEditAction extends AbstractAction {
 
         private static class KeyValueModel {
 
-            public KeyValueModel(Object k, Object v) {
+            public KeyValueModel(String k, Object v) {
                 key = k;
                 value = v;
             }
-            public Object key, value;
+            public String key;
+            public Object value;
         }
 
         public BeanPropertiesTableModel() {
@@ -476,16 +471,12 @@ abstract class BeanEditAction extends AbstractAction {
         }
 
         public void setModel(NamedBean nb) {
-            if (nb.getPropertyKeys() != null) {
-                attributes = new Vector<KeyValueModel>(nb.getPropertyKeys().size());
-                Iterator<Object> ite = nb.getPropertyKeys().iterator();
-                while (ite.hasNext()) {
-                    Object key = ite.next();
-                    KeyValueModel kv = new KeyValueModel(key, nb.getProperty(key));
-                    attributes.add(kv);
-                }
-            } else {
-                attributes = new Vector<KeyValueModel>(0);
+            attributes = new Vector<KeyValueModel>(nb.getPropertyKeys().size());
+            Iterator<String> ite = nb.getPropertyKeys().iterator();
+            while (ite.hasNext()) {
+                String key = ite.next();
+                KeyValueModel kv = new KeyValueModel(key, nb.getProperty(key));
+                attributes.add(kv);
             }
             wasModified = false;
         }
@@ -497,18 +488,17 @@ abstract class BeanEditAction extends AbstractAction {
             for (int i = 0; i < attributes.size(); i++) {
                 KeyValueModel kv = attributes.get(i);
                 if ((kv.key != null) && // only update if key value defined, will do the remove to
-                        ((nb.getPropertyKeys() == null) || (nb.getProperty(kv.key) == null) || (!kv.value.equals(nb.getProperty(kv.key))))) {
+                        ((nb.getProperty(kv.key) == null) || (!kv.value.equals(nb.getProperty(kv.key))))) {
                     nb.setProperty(kv.key, kv.value);
                 }
             }
             //remove undefined keys
-            if (nb.getPropertyKeys() != null) {
-                Iterator<Object> ite = nb.getPropertyKeys().iterator();
-                while (ite.hasNext()) {
-                    if (!keyExist(ite.next())) // not very efficient algorithm!
-                    {
-                        ite.remove();
-                    }
+
+            Iterator<String> ite = nb.getPropertyKeys().iterator();
+            while (ite.hasNext()) {
+                if (!keyExist(ite.next())) // not very efficient algorithm!
+                {
+                    ite.remove();
                 }
             }
             wasModified = false;
@@ -598,5 +588,5 @@ abstract class BeanEditAction extends AbstractAction {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(BeanEditAction.class);
+    private final static Logger log = LoggerFactory.getLogger(BeanEditAction.class);
 }

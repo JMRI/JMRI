@@ -1,4 +1,3 @@
-// WarrantManager.java
 package jmri.jmrit.logix;
 
 import java.io.File;
@@ -25,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision$
  */
 public class WarrantManager extends AbstractManager
         implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
@@ -54,7 +52,8 @@ public class WarrantManager extends AbstractManager
      * Warrant with the same systemName or userName already exists, or if there
      * is trouble creating a new Warrant.
      */
-    public Warrant createNewWarrant(String systemName, String userName) {
+    public Warrant createNewWarrant(String systemName, String userName, boolean SCWa, long TTP) {
+        log.debug("createNewWarrant "+systemName+" SCWa="+SCWa);
         // Check that Warrant does not already exist
         Warrant r;
         if (userName != null && userName.trim().length() > 0) {
@@ -73,7 +72,11 @@ public class WarrantManager extends AbstractManager
             return null;
         }
         // Warrant does not exist, create a new Warrant
-        r = new Warrant(sName, userName);
+        if (SCWa) {
+            r = new SCWarrant(sName, userName, TTP);
+        } else {
+            r = new Warrant(sName, userName);
+        }
         // save in the maps
         register(r);
         return r;
@@ -116,7 +119,7 @@ public class WarrantManager extends AbstractManager
             w = getBySystemName(name);
         }
         if (w == null) {
-            w = createNewWarrant(name, null);
+            w = createNewWarrant(name, null, false, 0);
         }
         return w;
     }
@@ -132,7 +135,7 @@ public class WarrantManager extends AbstractManager
 
     static public WarrantPreferences warrantPreferencesInstance() {
         if (warrantPreferences == null) {
-            if (jmri.InstanceManager.getDefault(jmri.jmrit.logix.WarrantPreferences.class) == null) {
+            if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.logix.WarrantPreferences.class) == null) {
                 jmri.InstanceManager.store(new jmri.jmrit.logix.WarrantPreferences(FileUtil.getUserFilesPath()
                         + "signal" + File.separator + "WarrantPreferences.xml"), jmri.jmrit.logix.WarrantPreferences.class);
             }
@@ -146,7 +149,5 @@ public class WarrantManager extends AbstractManager
         return Bundle.getMessage("BeanNameWarrant");
     }
 
-    static Logger log = LoggerFactory.getLogger(WarrantManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantManager.class.getName());
 }
-
-/* @(#)WarrantManager.java */

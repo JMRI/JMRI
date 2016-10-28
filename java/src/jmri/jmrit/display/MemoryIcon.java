@@ -24,22 +24,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An icon to display a status of a Memory.<P>
+ * An icon to display a status of a Memory.
  * <P>
  * The value of the memory can't be changed with this icon.
  * <P>
  * @author Bob Jacobsen Copyright (c) 2004
- * @version $Revision$
  */
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener/*, DropTargetListener*/ {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5188156981152521812L;
     NamedIcon defaultIcon = null;
-    // the associated Memory object
-    //protected Memory memory = null;
     // the map of icons
     java.util.HashMap<String, NamedIcon> map = null;
     private NamedBeanHandle<Memory> namedMemory;
@@ -47,9 +40,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     public MemoryIcon(String s, Editor editor) {
         super(s, editor);
         resetDefaultIcon();
-        //setIcon(defaultIcon);
         _namedIcon = defaultIcon;
-        //updateSize();
         //By default all memory is left justified
         _popupUtil.setJustification(LEFT);
         this.setTransferHandler(new TransferHandler());
@@ -59,25 +50,24 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         super(s, editor);
         setDisplayLevel(Editor.LABELS);
         defaultIcon = s;
-        //updateSize();
         _popupUtil.setJustification(LEFT);
         log.debug("MemoryIcon ctor= " + MemoryIcon.class.getName());
         this.setTransferHandler(new TransferHandler());
     }
 
+    @Override
     public Positionable deepClone() {
         MemoryIcon pos = new MemoryIcon("", _editor);
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        MemoryIcon pos = (MemoryIcon) p;
+    protected Positionable finishClone(MemoryIcon pos) {
         pos.setMemory(namedMemory.getName());
         pos.setOriginalLocation(getOriginalX(), getOriginalY());
         if (map != null) {
             java.util.Iterator<String> iterator = map.keySet().iterator();
             while (iterator.hasNext()) {
-                String key = iterator.next().toString();
+                String key = iterator.next();
                 String url = map.get(key).getName();
                 pos.addKeyAndIcon(NamedIcon.getIconByName(url), key);
             }
@@ -110,12 +100,11 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
      * @param pName Used as a system/user name to lookup the Memory object
      */
     public void setMemory(String pName) {
-        if (InstanceManager.memoryManagerInstance() != null) {
-            Memory memory = InstanceManager.memoryManagerInstance().
-                    provideMemory(pName);
-            if (memory != null) {
+        if (InstanceManager.getNullableDefault(jmri.MemoryManager.class) != null) {
+            try {
+                Memory memory = InstanceManager.memoryManagerInstance().provideMemory(pName);
                 setMemory(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, memory));
-            } else {
+            } catch (IllegalArgumentException e) {
                 log.error("Memory '" + pName + "' not available, icon won't see changes");
             }
         } else {
@@ -221,13 +210,9 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
             java.util.Iterator<String> iterator = map.keySet().iterator();
             while (iterator.hasNext()) {
-                String key = iterator.next().toString();
+                String key = iterator.next();
                 //String value = ((NamedIcon)map.get(key)).getName();
                 popup.add(new AbstractAction(key) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 8228751338976484794L;
 
                     public void actionPerformed(ActionEvent e) {
                         String key = e.getActionCommand();
@@ -239,10 +224,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         }  // end of selectable
         if (re != null) {
             popup.add(new AbstractAction(Bundle.getMessage("OpenThrottle")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -1747046428922716090L;
 
                 public void actionPerformed(ActionEvent e) {
                     ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
@@ -251,26 +232,18 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                 }
             });
             //don't like the idea of refering specifically to the layout block manager for this, but it has to be done if we are to allow the panel editor to also assign trains to block, when used with a layouteditor
-            if ((InstanceManager.sectionManagerInstance().getSystemNameList().size()) > 0 && jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getBlockWithMemoryAssigned(getMemory()) != null) {
-                final jmri.jmrit.dispatcher.DispatcherFrame df = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
+            if ((InstanceManager.getDefault(jmri.SectionManager.class).getSystemNameList().size()) > 0 && jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getBlockWithMemoryAssigned(getMemory()) != null) {
+                final jmri.jmrit.dispatcher.DispatcherFrame df = jmri.InstanceManager.getNullableDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
                 if (df != null) {
                     final jmri.jmrit.dispatcher.ActiveTrain at = df.getActiveTrainForRoster(re);
                     if (at != null) {
                         popup.add(new AbstractAction(Bundle.getMessage("MenuTerminateTrain")) {
-                            /**
-                             *
-                             */
-                            private static final long serialVersionUID = 7567050494629070812L;
 
                             public void actionPerformed(ActionEvent e) {
                                 df.terminateActiveTrain(at);
                             }
                         });
                         popup.add(new AbstractAction(Bundle.getMessage("MenuAllocateExtra")) {
-                            /**
-                             *
-                             */
-                            private static final long serialVersionUID = 1179666702674214743L;
 
                             public void actionPerformed(ActionEvent e) {
                                 //Just brings up the standard allocate extra frame, this could be expanded in the future 
@@ -280,10 +253,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                         });
                         if (at.getStatus() == jmri.jmrit.dispatcher.ActiveTrain.DONE) {
                             popup.add(new AbstractAction(Bundle.getMessage("MenuRestartTrain")) {
-                                /**
-                                 *
-                                 */
-                                private static final long serialVersionUID = -6796040644749115017L;
 
                                 public void actionPerformed(ActionEvent e) {
                                     at.allocateAFresh();
@@ -292,10 +261,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                         }
                     } else {
                         popup.add(new AbstractAction(Bundle.getMessage("MenuNewTrain")) {
-                            /**
-                             *
-                             */
-                            private static final long serialVersionUID = -5264943430258540552L;
 
                             public void actionPerformed(ActionEvent e) {
                                 if (!df.getNewTrainActive()) {
@@ -320,10 +285,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
      */
     public boolean setTextEditMenu(JPopupMenu popup) {
         popup.add(new AbstractAction(Bundle.getMessage("EditMemoryValue")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -2220596646271191216L;
 
             public void actionPerformed(ActionEvent e) {
                 editMemoryValue();
@@ -343,9 +304,8 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
      * Drive the current state of the display from the state of the Memory.
      */
     public void displayState() {
-        if (log.isDebugEnabled()) {
-            log.debug("displayState");
-        }
+        log.debug("displayState()");
+
         if (namedMemory == null) {  // use default if not connected yet
             setIcon(defaultIcon);
             updateSize();
@@ -360,6 +320,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     }
 
     protected void displayState(Object key) {
+        log.debug("displayState({})", key);
         if (key != null) {
             if (map == null) {
                 Object val = key;
@@ -377,28 +338,18 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     _icon = false;
                     _text = true;
                     setText(str);
-                    setIcon(null);
+                    updateIcon(null);
                     if (log.isDebugEnabled()) {
-                        log.debug("String str= \"" + str + "\" str.trim().length()= " + str.trim().length()
-                                + ", maxWidth()= " + maxWidth() + ", maxHeight()= " + maxHeight());
+                        log.debug("String str= \"" + str + "\" str.trim().length()= " + str.trim().length());
+                        log.debug("  maxWidth()= " + maxWidth() + ", maxHeight()= " + maxHeight());
+                        log.debug("  getBackground(): {}", getBackground());
+                        log.debug("  _editor.getTargetPanel().getBackground(): {}", _editor.getTargetPanel().getBackground());
+                        log.debug("  setAttributes to getPopupUtility({}) with", getPopupUtility());
+                        log.debug("     hasBackground() {}", getPopupUtility().hasBackground());
+                        log.debug("     getBackground() {}", getPopupUtility().getBackground());
+                        log.debug("    on editor {}", _editor);
                     }
-                    /*  MemoryIconTest says empty strings should show blank */
-                    if (str.trim().length() == 0) {
-                        if (getBackground().equals(_editor.getTargetPanel().getBackground())) {
-                            _saveColor = getPopupUtility().getBackground();
-                            if (_editor.getTargetPanel().getBackground().equals(Color.white)) {
-                                getPopupUtility().setBackgroundColor(Color.gray);
-                            } else {
-                                getPopupUtility().setBackgroundColor(Color.white);
-                            }
-                        }
-                    } else {
-                        if (_saveColor != null) {
-                            getPopupUtility().setBackgroundColor(_saveColor);
-                            _saveColor = null;
-                        }
-                    }
-                    _editor.setAttributes(getPopupUtility(), this, false);
+                    _editor.setAttributes(getPopupUtility(), this);
                 } else if (val instanceof javax.swing.ImageIcon) {
                     _icon = true;
                     _text = false;
@@ -491,7 +442,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
             setSize(maxWidth(), maxHeight());
         } else {
             super.updateSize();
-            if (_icon) {
+            if (_icon && _namedIcon != null) {
                 _namedIcon.reduceTo(maxWidthTrue(), maxHeightTrue(), 0.2);
             }
         }
@@ -525,13 +476,8 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     }
 
     public boolean setEditIconMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Memory"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameMemory"));
         popup.add(new AbstractAction(txt) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -5704253266576765964L;
-
             public void actionPerformed(ActionEvent e) {
                 edit();
             }
@@ -583,7 +529,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         if (getMemory().getValue() != null) {
             newMemory.setText(getMemory().getValue().toString());
         }
-        Object[] options = {"Cancel", "OK", newMemory};
+        Object[] options = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), newMemory};
         int retval = JOptionPane.showOptionDialog(this,
                 "Edit Current Memory Value", namedMemory.getName(),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
@@ -649,12 +595,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     }
 
     class TransferHandler extends javax.swing.TransferHandler {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -8026244689657101578L;
-
         @Override
         public boolean canImport(JComponent c, DataFlavor[] transferFlavors) {
             for (DataFlavor flavor : transferFlavors) {
@@ -682,5 +622,5 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
     }
 
-    static Logger log = LoggerFactory.getLogger(MemoryIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryIcon.class.getName());
 }

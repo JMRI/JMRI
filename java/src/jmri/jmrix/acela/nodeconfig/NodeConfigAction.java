@@ -10,25 +10,22 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a NodeConfigFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  */
 public class NodeConfigAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7203874000123098625L;
+    private jmri.jmrix.acela.AcelaSystemConnectionMemo _memo = null;
 
-    public NodeConfigAction(String s) {
+    public NodeConfigAction(String s,jmri.jmrix.acela.AcelaSystemConnectionMemo memo) {
         super(s);
+        _memo = memo;
     }
 
     public NodeConfigAction() {
-        this("Configure Acela Nodes");
+        this("Configure Acela Nodes",jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
     }
 
     public void actionPerformed(ActionEvent e) {
-        NodeConfigFrame f = new NodeConfigFrame();
+        NodeConfigFrame f = new NodeConfigFrame(_memo);
         try {
             f.initComponents();
         } catch (Exception ex) {
@@ -37,7 +34,7 @@ public class NodeConfigAction extends AbstractAction {
         f.setLocation(100, 30);
         f.setVisible(true);
     }
-    static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
 }
 
 

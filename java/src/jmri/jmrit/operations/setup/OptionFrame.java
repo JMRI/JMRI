@@ -7,14 +7,8 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of setup options
  *
  * @author Dan Boudreau Copyright (C) 2010, 2011, 2012, 2013
- * @version $Revision$
  */
 public class OptionFrame extends OperationsFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6966221440054475425L;
 
     public OptionFrame() {
         super(Bundle.getMessage("TitleOptions"), new OptionPanel());

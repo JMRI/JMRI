@@ -10,14 +10,8 @@ import javax.swing.AbstractAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class RouteCopyAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8588935081117079361L;
 
     public RouteCopyAction(String s) {
         super(s);
@@ -32,6 +26,7 @@ public class RouteCopyAction extends AbstractAction {
 
     RouteCopyFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a copy route frame
         if (f == null || !f.isVisible()) {

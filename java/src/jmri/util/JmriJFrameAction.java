@@ -1,4 +1,3 @@
-// JmriJFrameAction.java
 package jmri.util;
 
 import java.awt.event.ActionEvent;
@@ -12,14 +11,8 @@ import org.slf4j.LoggerFactory;
  * loaded class.
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version	$Revision$
  */
 public class JmriJFrameAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8529364887679643165L;
 
     public JmriJFrameAction(String s) {
         super(s);
@@ -28,11 +21,15 @@ public class JmriJFrameAction extends AbstractAction {
     /**
      * Method to be overridden to make this work. Provide a completely qualified
      * class name, must be castable to JmriJFrame
+     *
+     * @return the default implementation returns an empty String
      */
+    // why isn't this abstract?
     public String getName() {
         return "";
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         String name = getName();
         JmriJFrame j = null;
@@ -50,7 +47,5 @@ public class JmriJFrameAction extends AbstractAction {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(JmriJFrameAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriJFrameAction.class.getName());
 }
-
-/* @(#)JmriJFrameAction.java */

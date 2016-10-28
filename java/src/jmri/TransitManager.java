@@ -1,12 +1,9 @@
-// TransitManager.java
 package jmri;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.managers.AbstractManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of a Transit Manager
@@ -18,27 +15,26 @@ import org.slf4j.LoggerFactory;
  * string, usually, but not always, a number. All alphabetic characters in a
  * Transit system name must be upper case. This is enforced when a Transit is
  * created.
- * <P>
+ * <BR>
  * <hr>
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * </P>
  * @author Dave Duchamp Copyright (C) 2008, 2011
- * @version	$Revision$
  */
 public class TransitManager extends AbstractManager
         implements java.beans.PropertyChangeListener {
 
     public TransitManager() {
         super();
-        InstanceManager.sectionManagerInstance().addVetoableChangeListener(this);
+        InstanceManager.getDefault(jmri.SectionManager.class).addVetoableChangeListener(this);
     }
 
     public int getXMLOrder() {
@@ -123,7 +119,7 @@ public class TransitManager extends AbstractManager
      * User Name. If this fails looks up assuming that name is a System Name. If
      * both fail, returns null.
      *
-     * @param name
+     * @param name User name or system name to match
      * @return null if no match found
      */
     public Transit getTransit(String name) {
@@ -222,9 +218,4 @@ public class TransitManager extends AbstractManager
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameTransit");
     }
-
-    static Logger log = LoggerFactory.getLogger(TransitManager.class.getName());
 }
-
-
-/* @(#)TransitManager.java */

@@ -1,22 +1,13 @@
-// SensorTablePanel.java
 package jmri.jmrit.beantable.sensor;
 
 import java.awt.event.ActionEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a SensorTable GUI in a JPanel
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2009, 2010
- * @version $Revision$
  */
 public class SensorTablePanel extends jmri.jmrit.beantable.BeanTablePane {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5518659429484806029L;
 
     public SensorTablePanel() {
     }
@@ -50,9 +41,4 @@ public class SensorTablePanel extends jmri.jmrit.beantable.BeanTablePane {
         }
         addFrame.setVisible(true);
     }
-
-    static final Logger log = LoggerFactory.getLogger(SensorTablePanel.class.getName());
 }
-
-
-/* @(#)SensorTablePanel.java */

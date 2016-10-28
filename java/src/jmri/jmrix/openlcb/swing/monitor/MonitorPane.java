@@ -1,4 +1,3 @@
-// MonitorPane.java
 package jmri.jmrix.openlcb.swing.monitor;
 
 import jmri.jmrix.can.CanListener;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Frame displaying (and logging) OpenLCB (CAN) frames
  *
  * @author	Bob Jacobsen Copyright (C) 2009, 2010
- * @version $Revision: 17977 $
  */
 public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListener, CanPanelInterface {
 
@@ -175,6 +173,6 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(MonitorPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MonitorPane.class.getName());
 
 }

@@ -1,4 +1,3 @@
-// Server.java
 package jmri.jmrix.loconet.loconetovertcp;
 
 import java.io.FileInputStream;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author Alex Shepherd Copyright (C) 2006
- * @version	$Revision$
  */
 public class Server {
 
@@ -168,8 +166,8 @@ public class Server {
                     }
                 };
             }
-            if (this.shutDownTask != null && InstanceManager.shutDownManagerInstance() != null) {
-                InstanceManager.shutDownManagerInstance().register(this.shutDownTask);
+            if (InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
+                InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
             }
         }
     }
@@ -198,8 +196,8 @@ public class Server {
             }
         }
         this.service.stop();
-        if (this.shutDownTask != null && InstanceManager.shutDownManagerInstance() != null) {
-            InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
+        if (this.shutDownTask != null && InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
+            InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
         }
     }
 
@@ -258,5 +256,5 @@ public class Server {
             return clients.size();
         }
     }
-    static Logger log = LoggerFactory.getLogger(Server.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Server.class.getName());
 }

@@ -1,20 +1,17 @@
-/**
- * ValueRenderer.java
- *
- * Description:	Renders enum table cells
- *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @version
- */
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+/**
+ * ValueRenderer.java
+ *
+ * Description:	Renders enum table cells
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001
+ */
 public class ValueRenderer implements TableCellRenderer {
 
     public ValueRenderer() {
@@ -36,6 +33,4 @@ public class ValueRenderer implements TableCellRenderer {
             return new JLabel("Unknown value type!");
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(ValueEditor.class.getName());
 }

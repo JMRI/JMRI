@@ -1,41 +1,37 @@
-// InstanceManagerTest.java
 package jmri;
 
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.managers.TurnoutManagerScaffold;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test InstanceManager
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class InstanceManagerTest extends TestCase implements InstanceManagerAutoDefault {
 
     public void testDefaultPowerManager() {
         PowerManager m = new PowerManagerScaffold();
 
-        InstanceManager.setPowerManager(m);
+        InstanceManager.store(m, jmri.PowerManager.class);
 
-        Assert.assertTrue("power manager present", InstanceManager.powerManagerInstance() == m);
+        Assert.assertTrue("power manager present", InstanceManager.getDefault(jmri.PowerManager.class) == m);
     }
 
     public void testSecondDefaultPowerManager() {
         PowerManager m1 = new PowerManagerScaffold();
         PowerManager m2 = new PowerManagerScaffold();
 
-        InstanceManager.setPowerManager(m1);
-        InstanceManager.setPowerManager(m2);
+        InstanceManager.store(m1, jmri.PowerManager.class);
+        InstanceManager.store(m2, jmri.PowerManager.class);
 
-        Assert.assertTrue("power manager present", InstanceManager.powerManagerInstance() == m2);
+        Assert.assertTrue("power manager present", InstanceManager.getDefault(jmri.PowerManager.class) == m2);
     }
 
     public void testDefaultProgrammerManagers() {
@@ -133,8 +129,12 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
     }
 
     public void testAutoCreateNotOK() {
+        try {
         NoAutoCreate obj = InstanceManager.getDefault(NoAutoCreate.class);
-        Assert.assertNull(obj);
+            Assert.fail("Expected NullPointerException not thrown");
+        } catch (NullPointerException ex) {
+            // passes
+        }
     }
 
     /**
@@ -144,26 +144,26 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         Assert.assertNotNull(InstanceManager.sensorManagerInstance());
         Assert.assertNotNull(InstanceManager.turnoutManagerInstance());
         Assert.assertNotNull(InstanceManager.lightManagerInstance());
-        Assert.assertNotNull(InstanceManager.signalHeadManagerInstance());
-        Assert.assertNotNull(InstanceManager.signalMastManagerInstance());
-        Assert.assertNotNull(InstanceManager.signalSystemManagerInstance());
-        Assert.assertNotNull(InstanceManager.signalGroupManagerInstance());
-        Assert.assertNotNull(InstanceManager.blockManagerInstance());
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalHeadManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalMastManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalSystemManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalGroupManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(WarrantManager.class));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance());
-        Assert.assertNotNull(InstanceManager.transitManagerInstance());
-        Assert.assertNotNull(InstanceManager.routeManagerInstance());
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.TransitManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.RouteManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class));
-        Assert.assertNotNull(InstanceManager.conditionalManagerInstance());
-        Assert.assertNotNull(InstanceManager.logixManagerInstance());
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.ConditionalManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.LogixManager.class));
         Assert.assertNotNull(InstanceManager.timebaseInstance());
-        Assert.assertNotNull(InstanceManager.clockControlInstance());
-        Assert.assertNotNull(InstanceManager.signalGroupManagerInstance());
-        Assert.assertNotNull(InstanceManager.reporterManagerInstance());
-        Assert.assertNotNull(InstanceManager.catalogTreeManagerInstance());
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.ClockControl.class));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalGroupManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.ReporterManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(CatalogTreeManager.class));
         Assert.assertNotNull(InstanceManager.memoryManagerInstance());
-        Assert.assertNotNull(InstanceManager.audioManagerInstance());
+        Assert.assertNotNull(InstanceManager.getDefault(AudioManager.class));
         Assert.assertNotNull(InstanceManager.rosterIconFactoryInstance());
     }
 
@@ -203,7 +203,7 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {InstanceManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -216,22 +216,11 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
-        resetInstanceManager();
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-
-    private void resetInstanceManager() {
-        new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = this;
-            }
-        };
-    }
-
-    static Logger log = LoggerFactory.getLogger(InstanceManagerTest.class.getName());
 
 }

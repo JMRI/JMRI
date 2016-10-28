@@ -46,10 +46,6 @@ public class RouteFinder implements Runnable {
 
     static class RouteNode extends DefaultMutableTreeNode {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -5651237533899902323L;
         boolean _needsViaAncestor = false;
 
         RouteNode(Object userObject) {
@@ -174,5 +170,5 @@ public class RouteFinder implements Runnable {
         return children;
     }
 
-    static Logger log = LoggerFactory.getLogger(RouteFinder.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RouteFinder.class.getName());
 }

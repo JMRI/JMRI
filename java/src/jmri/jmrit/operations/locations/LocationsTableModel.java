@@ -1,4 +1,3 @@
-// LocationsTableModel.java
 package jmri.jmrit.operations.locations;
 
 import java.beans.PropertyChangeEvent;
@@ -21,14 +20,8 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2013
- * @version $Revision$
  */
 public class LocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8385333181895879131L;
 
     LocationManager locationManager; // There is only one manager
 
@@ -59,14 +52,12 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     private int _sort = SORTBYNAME;
 
     public void setSort(int sort) {
-        synchronized (this) {
-            _sort = sort;
-        }
+        _sort = sort;
         updateList();
         fireTableDataChanged();
     }
 
-    private synchronized void updateList() {
+    private void updateList() {
         // first, remove listeners from the individual objects
         removePropertyChangeLocations();
 
@@ -83,7 +74,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 
     List<Location> locationsList = null;
 
-    void initTable(JTable table) {
+    void initTable(LocationsTableFrame frame, JTable table) {
         // Install the button handlers
         TableColumnModel tcm = table.getColumnModel();
         ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -92,12 +83,15 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         tcm.getColumn(ACTIONCOLUMN).setCellEditor(buttonEditor);
         tcm.getColumn(EDITCOLUMN).setCellRenderer(buttonRenderer);
         tcm.getColumn(EDITCOLUMN).setCellEditor(buttonEditor);
+
         // set column preferred widths
         table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
         table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(200);
         table.getColumnModel().getColumn(TRACKCOLUMN).setPreferredWidth(
-                Math.max(60, new JLabel(Bundle.getMessage("Class/Interchange") + Bundle.getMessage("Spurs")
-                        + Bundle.getMessage("Yards")).getPreferredSize().width + 20));
+                Math.max(60,
+                        new JLabel(Bundle.getMessage("Class/Interchange") +
+                                Bundle.getMessage("Spurs") +
+                                Bundle.getMessage("Yards")).getPreferredSize().width + 20));
         table.getColumnModel().getColumn(LENGTHCOLUMN).setPreferredWidth(
                 Math.max(60, new JLabel(getColumnName(LENGTHCOLUMN)).getPreferredSize().width + 10));
         table.getColumnModel().getColumn(USEDLENGTHCOLUMN).setPreferredWidth(60);
@@ -110,18 +104,21 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         table.getColumnModel().getColumn(ACTIONCOLUMN).setPreferredWidth(
                 Math.max(80, new JLabel(Bundle.getMessage("Yardmaster")).getPreferredSize().width + 40));
         table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(80);
-        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+        frame.loadTableDetails(table);
     }
 
-    public synchronized int getRowCount() {
+    @Override
+    public int getRowCount() {
         return locationsList.size();
     }
 
+    @Override
     public int getColumnCount() {
         return HIGHESTCOLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case IDCOLUMN:
@@ -143,32 +140,26 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
             case ACTIONCOLUMN:
                 return Bundle.getMessage("Action");
             case EDITCOLUMN:
-                return Bundle.getMessage("Edit"); // edit column
+                return Bundle.getMessage("ButtonEdit"); // titles above all columns
             default:
                 return "unknown"; // NOI18N
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case IDCOLUMN:
-                return String.class;
             case NAMECOLUMN:
-                return String.class;
             case TRACKCOLUMN:
                 return String.class;
             case LENGTHCOLUMN:
-                return String.class;
             case USEDLENGTHCOLUMN:
-                return String.class;
             case ROLLINGSTOCK:
-                return String.class;
             case PICKUPS:
-                return String.class;
             case DROPS:
-                return String.class;
+                return Integer.class;
             case ACTIONCOLUMN:
-                return JButton.class;
             case EDITCOLUMN:
                 return JButton.class;
             default:
@@ -176,6 +167,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case EDITCOLUMN:
@@ -186,35 +178,36 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
-    public synchronized Object getValueAt(int row, int col) {
+    @Override
+    public Object getValueAt(int row, int col) {
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
-        Location l = locationsList.get(row);
-        if (l == null) {
+        Location location = locationsList.get(row);
+        if (location == null) {
             return "ERROR location unknown " + row; // NOI18N
         }
         switch (col) {
             case IDCOLUMN:
-                return l.getId();
+                return location.getId();
             case NAMECOLUMN:
-                return l.getName();
+                return location.getName();
             case TRACKCOLUMN:
-                return getTrackTypes(l);
+                return getTrackTypes(location);
             case LENGTHCOLUMN:
-                return Integer.toString(l.getLength());
+                return location.getLength();
             case USEDLENGTHCOLUMN:
-                return Integer.toString(l.getUsedLength());
+                return location.getUsedLength();
             case ROLLINGSTOCK:
-                return Integer.toString(l.getNumberRS());
+                return location.getNumberRS();
             case PICKUPS:
-                return Integer.toString(l.getPickupRS());
+                return location.getPickupRS();
             case DROPS:
-                return Integer.toString(l.getDropRS());
+                return location.getDropRS();
             case ACTIONCOLUMN:
                 return Bundle.getMessage("Yardmaster");
             case EDITCOLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit");
             default:
                 return "unknown " + col; // NOI18N
         }
@@ -238,6 +231,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         switch (col) {
             case ACTIONCOLUMN:
@@ -253,9 +247,10 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 
     List<LocationEditFrame> frameList = new ArrayList<LocationEditFrame>();
 
-    private synchronized void editLocation(int row) {
+    private void editLocation(int row) {
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 Location loc = locationsList.get(row);
                 log.debug("Edit location ({})", loc.getName());
@@ -272,9 +267,10 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         });
     }
 
-    private synchronized void launchYardmaster(int row) {
+    private void launchYardmaster(int row) {
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 log.debug("Yardmaster");
                 Location loc = locationsList.get(row);
@@ -283,8 +279,9 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         });
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -294,7 +291,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         } else if (e.getSource().getClass().equals(Location.class)) {
             Location loc = (Location) e.getSource();
             int row = locationsList.indexOf(loc);
-            if (Control.showProperty) {
+            if (Control.SHOW_PROPERTY) {
                 log.debug("Update location table row: {} name: {}", row, loc.getName());
             }
             if (row >= 0) {
@@ -303,7 +300,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
-    private synchronized void removePropertyChangeLocations() {
+    private void removePropertyChangeLocations() {
         if (locationsList != null) {
             for (Location loc : locationsList) {
                 loc.removePropertyChangeListener(this);
@@ -312,9 +309,6 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
         for (LocationEditFrame lef : frameList) {
             lef.dispose();
         }
@@ -322,5 +316,5 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         removePropertyChangeLocations();
     }
 
-    static Logger log = LoggerFactory.getLogger(LocationsTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocationsTableModel.class.getName());
 }

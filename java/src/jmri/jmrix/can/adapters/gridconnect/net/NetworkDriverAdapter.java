@@ -16,8 +16,7 @@ import org.slf4j.LoggerFactory;
  * NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
- */
+  */
 public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortController {
 
     public NetworkDriverAdapter() {
@@ -27,7 +26,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
         option2Name = "Protocol";
         options.put(option2Name, new Option("Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions(), false));
         this.getSystemConnectionMemo().setUserName("OpenLCB");
-        setManufacturer(jmri.jmrix.DCCManufacturerList.OPENLCB);
+        setManufacturer(jmri.jmrix.openlcb.OlcbConnectionTypeList.OPENLCB);
     }
 
     /**
@@ -72,6 +71,6 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
         return (CanSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
-    static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
 
 }

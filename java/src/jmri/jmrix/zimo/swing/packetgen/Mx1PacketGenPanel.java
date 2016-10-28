@@ -1,4 +1,3 @@
-// MrcPacketGenPanel.java
 package jmri.jmrix.zimo.swing.packetgen;
 
 import java.awt.Dimension;
@@ -7,8 +6,6 @@ import jmri.jmrix.zimo.Mx1Message;
 import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 import jmri.jmrix.zimo.Mx1TrafficController;
 import jmri.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user input of Mrc messages
@@ -16,15 +13,11 @@ import org.slf4j.LoggerFactory;
  * @author	Ken Cameron	Copyright (C) 2010 derived from:
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 25018 $
  */
 public class Mx1PacketGenPanel extends jmri.jmrix.zimo.swing.Mx1Panel {
 
     //ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.mrc.packetgen.MrcPacketGenBundle");
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7867055984973628076L;
+
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
@@ -124,11 +117,6 @@ public class Mx1PacketGenPanel extends jmri.jmrix.zimo.swing.Mx1Panel {
      */
     static public class Default extends jmri.jmrix.zimo.swing.Mx1NamedPaneAction {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -5895919905704623321L;
-
         public Default() {
             super("Open MRC Send Binary Command",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
@@ -136,6 +124,4 @@ public class Mx1PacketGenPanel extends jmri.jmrix.zimo.swing.Mx1Panel {
                     jmri.InstanceManager.getDefault(Mx1SystemConnectionMemo.class));//IN18N
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(Mx1PacketGenPanel.class.getName());
 }

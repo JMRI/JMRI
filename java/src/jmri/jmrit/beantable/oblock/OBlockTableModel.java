@@ -1,25 +1,8 @@
 package jmri.jmrit.beantable.oblock;
 
-/**
- * GUI to define OBlocks
- * <P>
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
- *
- * @author	Pete Cressman (C) 2010
- * @version $Revision$
- */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -35,23 +18,23 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Reporter;
 import jmri.Sensor;
-import jmri.jmrit.beantable.AbstractTableAction;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
+import jmri.util.IntlUtilities;
 import jmri.util.NamedBeanComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * GUI to define OBlocks
+ * <P>
  * Duplicates the JTable model for BlockTableAction and adds a column for the
  * occupancy sensor. Configured for use within an internal frame.
+ *
+ * @author	Pete Cressman (C) 2010
  */
 public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4782167334919251464L;
     static public final int SYSNAMECOL = 0;
     static public final int USERNAMECOL = 1;
     static public final int COMMENTCOL = 2;
@@ -69,10 +52,10 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
     static public final int CURVECOL = 14;
     static public final int NUMCOLS = 15;
 
-    static public final String noneText = AbstractTableAction.rb.getString("BlockNone");
-    static public final String gradualText = AbstractTableAction.rb.getString("BlockGradual");
-    static public final String tightText = AbstractTableAction.rb.getString("BlockTight");
-    static public final String severeText = AbstractTableAction.rb.getString("BlockSevere");
+    static public final String noneText = Bundle.getMessage("BlockNone");
+    static public final String gradualText = Bundle.getMessage("BlockGradual");
+    static public final String tightText = Bundle.getMessage("BlockTight");
+    static public final String severeText = Bundle.getMessage("BlockSevere");
     static final String[] curveOptions = {noneText, gradualText, tightText, severeText};
 
     static String ZEROS = "00000000";
@@ -388,8 +371,8 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                     block.setComment(tempRow[COMMENTCOL]);
                     float len = 0.0f;
                     try {
-                        len = Float.valueOf(tempRow[LENGTHCOL]).floatValue();
-                    } catch (java.lang.NumberFormatException nfe) {
+                        len = IntlUtilities.floatValue(tempRow[LENGTHCOL]);
+                    } catch (ParseException e) {
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]),
                                 Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
                     }
@@ -423,7 +406,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                     if (tempRow[REPORTERCOL] != null) {
                         Reporter rep = null;
                         try {
-                            rep = InstanceManager.reporterManagerInstance().getReporter(tempRow[REPORTERCOL]);
+                            rep = InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(tempRow[REPORTERCOL]);
                             if (rep != null) {
                                 block.setReporter(rep);
                                 block.setReportingCurrent(tempRow[REPORT_CURRENTCOL].equals(Bundle.getMessage("Current")));
@@ -446,13 +429,13 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                     return;
                 case LENGTHCOL:
                     try {
-                        _tempLen = Float.valueOf((String)value).floatValue();
+                        _tempLen = IntlUtilities.floatValue(value.toString());
                         if (tempRow[UNITSCOL].equals(Bundle.getMessage("cm"))) {
                             _tempLen *= 10f;
                         } else {
                             _tempLen *= 25.4f;                            
                         }
-                    } catch (java.lang.NumberFormatException nfe) {
+                    } catch (ParseException e) {
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]),
                                 Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
                     }
@@ -522,14 +505,14 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 return;
             case LENGTHCOL:
                 try {
-                    float len = Float.valueOf((String)value).floatValue();
+                    float len = IntlUtilities.floatValue(value.toString());
                     if (block.isMetric()) {
                         block.setLength(len * 10.0f);
                     } else {
                         block.setLength(len * 25.4f);
                     }
                     fireTableRowsUpdated(row, row);                    
-                } catch (java.lang.NumberFormatException nfe) {
+                } catch (ParseException e) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", value),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
                 }
@@ -573,7 +556,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
             case REPORTERCOL:
                 Reporter rep = null;
                 try {
-                    rep = InstanceManager.reporterManagerInstance().getReporter((String) value);
+                    rep = InstanceManager.getDefault(jmri.ReporterManager.class).getReporter((String) value);
                     if (rep != null) {
                         block.setReporter(rep);
                         fireTableRowsUpdated(row, row);
@@ -625,15 +608,15 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
     public String getColumnName(int col) {
         switch (col) {
             case COMMENTCOL:
-                return AbstractTableAction.rb.getString("Comment");
+                return Bundle.getMessage("Comment");
             case STATECOL:
-                return AbstractTableAction.rb.getString("ColumnState");
+                return Bundle.getMessage("ColumnState");
             case SENSORCOL:
-                return AbstractTableAction.rbean.getString("BeanNameSensor");
+                return Bundle.getMessage("BeanNameSensor");
             case CURVECOL:
-                return AbstractTableAction.rb.getString("BlockCurveColName");
+                return Bundle.getMessage("BlockCurveColName");
             case LENGTHCOL:
-                return AbstractTableAction.rb.getString("BlockLengthColName");
+                return Bundle.getMessage("BlockLengthColName");
             case UNITSCOL:
                 return "  ";
             case ERR_SENSORCOL:
@@ -649,7 +632,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
             case EDIT_COL:
                 return Bundle.getMessage("ButtonEditPath");
             case DELETE_COL:
-                return AbstractTableAction.rb.getString("ButtonDelete");
+                return Bundle.getMessage("ButtonDelete");
         }
         return super.getColumnName(col);
     }
@@ -670,23 +653,23 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
             String msg;
             if (count > 0) { // warn of listeners attached before delete
                 msg = java.text.MessageFormat.format(
-                        AbstractTableAction.rb.getString("DeletePrompt"), bean.getSystemName()) + "\n"
-                        + java.text.MessageFormat.format(AbstractTableAction.rb.getString("ReminderInUse"),
+                        Bundle.getMessage("DeletePrompt"), bean.getSystemName()) + "\n"
+                        + java.text.MessageFormat.format(Bundle.getMessage("ReminderInUse"),
                                 count);
             } else {
                 msg = java.text.MessageFormat.format(
-                        AbstractTableAction.rb.getString("DeletePrompt"),
+                        Bundle.getMessage("DeletePrompt"),
                         new Object[]{bean.getSystemName()});
             }
 
             // verify deletion
             int val = JOptionPane.showOptionDialog(null,
-                    msg, AbstractTableAction.rb.getString("WarningTitle"),
+                    msg, Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{AbstractTableAction.rb.getString("ButtonYes"),
-                        AbstractTableAction.rb.getString("ButtonYesPlus"),
-                        AbstractTableAction.rb.getString("ButtonNo")},
-                    AbstractTableAction.rb.getString("ButtonNo"));
+                    new Object[]{Bundle.getMessage("ButtonYes"),
+                        Bundle.getMessage("ButtonYesPlus"),
+                        Bundle.getMessage("ButtonNo")},
+                    Bundle.getMessage("ButtonNo"));
             if (val == 2) {
                 return;  // return without deleting
             }
@@ -779,5 +762,5 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(OBlockTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OBlockTableModel.class.getName());
 }

@@ -1,4 +1,3 @@
-// MarklinTrafficController.java
 package jmri.jmrix.marklin;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * Based on work by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 19084 $
  */
 public class MarklinTrafficController extends AbstractMRTrafficController implements MarklinInterface, CommandStation {
 
@@ -106,16 +104,27 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
      *
      * @return The registered MarklinTrafficController instance for general use,
      *         if need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public MarklinTrafficController instance() {
         return self;
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Override
+    @Deprecated
     //This can be removed once multi-connection is complete
     public void setInstance() {
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_PKGPROTECT")
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT")
     // FindBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected MarklinTrafficController self = null;
@@ -239,8 +248,5 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
         return adaptermemo.getSystemPrefix();
     }
 
-    static Logger log = LoggerFactory.getLogger(MarklinTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinTrafficController.class.getName());
 }
-
-
-/* @(#)MarklinTrafficController.java */

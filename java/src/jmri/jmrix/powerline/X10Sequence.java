@@ -1,4 +1,3 @@
-// X10Sequence.java
 package jmri.jmrix.powerline;
 
 /**
@@ -17,7 +16,6 @@ package jmri.jmrix.powerline;
  * should check the coding of your new specific adapter before using them.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  */
 public class X10Sequence {
 
@@ -277,7 +275,7 @@ public class X10Sequence {
      * Translate House Value (1 to 16) to text
      */
     public static String houseValueToText(int hV) {
-        if (hV >= 1 || hV <= 16) {
+        if (hV >= 1 && hV <= 16) {
             return houseValueDecoder[hV];
         } else {
             return "??";
@@ -348,5 +346,3 @@ public class X10Sequence {
         return hCode;
     }
 }
-
-/* @(#)X10Sequence.java */

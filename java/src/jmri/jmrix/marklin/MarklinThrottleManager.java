@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Based on work by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 19121 $
  */
 public class MarklinThrottleManager extends AbstractThrottleManager implements MarklinListener {
 
@@ -27,8 +26,16 @@ public class MarklinThrottleManager extends AbstractThrottleManager implements M
         super(memo);
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static private MarklinThrottleManager mInstance = null;
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public MarklinThrottleManager instance() {
         return mInstance;
     }
@@ -117,6 +124,6 @@ public class MarklinThrottleManager extends AbstractThrottleManager implements M
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(MarklinThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinThrottleManager.class.getName());
 
 }

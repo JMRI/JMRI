@@ -5,12 +5,10 @@ import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.managers.DefaultProgrammerManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * LI100XNetProgrammerTest.java
@@ -18,11 +16,9 @@ import org.slf4j.LoggerFactory;
  * Description:	tests for the jmri.jmrix.lenz.li100.LI100XNetProgrammer class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class LI100XNetProgrammerTest extends TestCase {
 
-    static final int RELEASE_TIME = 100;
     static final int RESTART_TIME = 20;
 
     public void testCtor() {
@@ -81,7 +77,7 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr3.setElement(2, 0x60);
         t.sendTestMessage(mr3);
 
-        jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME);
+        jmri.util.JUnitUtil.releaseThread(this);
 
         //failure in this test occurs with the next line.
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
@@ -141,7 +137,7 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr3.setElement(2, 0x60);
         t.sendTestMessage(mr3);
 
-        jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME);
+        jmri.util.JUnitUtil.releaseThread(this);
 
         //failure in this test occurs with the next line.
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
@@ -199,7 +195,7 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr3.setElement(2, 0x60);
         t.sendTestMessage(mr3);
 
-        jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME);
+        jmri.util.JUnitUtil.releaseThread(this);
 
         //failure in this test occurs with the next line.
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
@@ -259,7 +255,7 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr3.setElement(2, 0x60);
         t.sendTestMessage(mr3);
 
-        jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME);
+        jmri.util.JUnitUtil.releaseThread(this);
 
         //failure in this test occurs with the next line.
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
@@ -317,7 +313,7 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr3.setElement(2, 0x60);
         t.sendTestMessage(mr3);
 
-        jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME);
+        jmri.util.JUnitUtil.releaseThread(this);
 
         //failure in this test occurs with the next line.
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
@@ -377,7 +373,7 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr3.setElement(2, 0x60);
         t.sendTestMessage(mr3);
 
-        jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME);
+        jmri.util.JUnitUtil.releaseThread(this);
 
         //failure in this test occurs with the next line.
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
@@ -393,7 +389,7 @@ public class LI100XNetProgrammerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", LI100XNetProgrammerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -412,7 +408,5 @@ public class LI100XNetProgrammerTest extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(LI100XNetProgrammerTest.class.getName());
 
 }

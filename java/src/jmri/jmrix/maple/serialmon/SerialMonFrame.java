@@ -5,14 +5,11 @@ import jmri.jmrix.maple.SerialListener;
 import jmri.jmrix.maple.SerialMessage;
 import jmri.jmrix.maple.SerialReply;
 import jmri.jmrix.maple.SerialTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying (and logging) serial command messages
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
@@ -43,7 +40,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         addHelpMenu("package.jmri.jmrix.maple.serialmon.SerialMonFrame", true);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "string concatenation, efficiency not as important as clarity here")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "string concatenation, efficiency not as important as clarity here")
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         // check for valid length
         if (l.getNumDataElements() < 2) {
@@ -107,7 +104,5 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             nextLine("unrecognized rep: \"" + l.toString() + "\"\n", "");
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(SerialMonFrame.class.getName());
 
 }

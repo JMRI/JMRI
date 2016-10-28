@@ -1,4 +1,3 @@
-// NetworkDriverAdapter.java
 package jmri.jmrix.marklin.networkdriver;
 
 import java.io.DataInputStream;
@@ -21,7 +20,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 20030 $
  */
 public class NetworkDriverAdapter extends MarklinPortController implements jmri.jmrix.NetworkPortAdapter {
 
@@ -30,7 +28,7 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
     public NetworkDriverAdapter() {
         super(new MarklinSystemConnectionMemo());
         allowConnectionRecovery = true;
-        manufacturerName = jmri.jmrix.DCCManufacturerList.MARKLIN;
+        manufacturerName = jmri.jmrix.marklin.MarklinConnectionTypeList.MARKLIN;
         m_port = 15731;
     }
 
@@ -122,7 +120,6 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
         control.setAdapterMemo(this.getSystemConnectionMemo());
         this.getSystemConnectionMemo().setMarklinTrafficController(control);
         this.getSystemConnectionMemo().configureManagers();
-        jmri.jmrix.marklin.ActiveFlag.setActive();
     }
 
     @Override
@@ -130,6 +127,6 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
         return opened;
     }
 
-    static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
 
 }

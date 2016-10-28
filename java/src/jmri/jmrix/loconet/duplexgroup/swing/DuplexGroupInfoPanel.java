@@ -1,19 +1,11 @@
-// DuplexGroupInfoPanel.java
 package jmri.jmrix.loconet.duplexgroup.swing;
 
-/**
- * Defines a GUI and associated logic to read and update Digitrax Duplex Group
- * identity information.
- *
- * @author B. Milhaupt Copyright 2010, 2011
- */
 import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import jmri.jmrix.loconet.LocoNetBundle;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.duplexgroup.LnDplxGrpInfoImplConstants;
 
@@ -34,15 +26,10 @@ import jmri.jmrix.loconet.duplexgroup.LnDplxGrpInfoImplConstants;
  * compatible with this tool.
  *
  * @author B. Milhaupt Copyright 2010, 2011
- * @version	$Revision: 1.0 $
  */
 public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8260273846859188033L;
     // member declarations
     JButton swingReadButton;
     JButton swingSetButton;
@@ -439,7 +426,6 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
      * ValidatedTextField.VTF_PC_STAT_LN_UPDATE LnDplxGrpInfoImpl -
      * StatusDontBlastError, StatusLineUpdate, NumberOfUr92sUpdate,
      *
-     * @param evt
      */
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         // these messages can arrive without a complete
@@ -652,12 +638,12 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         private static final long serialVersionUID = -7467617476118982830L;
 
         public Default() {
-            super(LocoNetBundle.bundle().getString("MenuItemDuplexInfo"),
+            super(Bundle.getMessage("MenuItemDuplexInfo"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     DuplexGroupInfoPanel.class.getName(),
                     jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
         }
     }
 
-    //    static Logger log = LoggerFactory.getLogger(DuplexGroupInfoPanel.class.getName());
+    //    private final static Logger log = LoggerFactory.getLogger(DuplexGroupInfoPanel.class.getName());
 }

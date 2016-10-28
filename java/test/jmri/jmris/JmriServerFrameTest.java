@@ -1,18 +1,15 @@
 //JmriServerFrameTest.java
 package jmri.jmris;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmris.JmriServerFrame class 
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class JmriServerFrameTest extends TestCase {
 
@@ -29,7 +26,7 @@ public class JmriServerFrameTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {JmriServerFrameTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -49,7 +46,5 @@ public class JmriServerFrameTest extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(JmriServerFrameTest.class.getName());
 
 }

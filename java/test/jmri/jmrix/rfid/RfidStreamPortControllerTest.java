@@ -4,12 +4,10 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * RfidStreamPortControllerTest.java
@@ -17,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * Description:	tests for the jmri.jmrix.rfid.RfidStreamPortController class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class RfidStreamPortControllerTest extends TestCase {
 
@@ -45,7 +42,7 @@ public class RfidStreamPortControllerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", RfidStreamPortControllerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -64,7 +61,5 @@ public class RfidStreamPortControllerTest extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(RfidStreamPortControllerTest.class.getName());
 
 }

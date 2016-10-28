@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * PositionableRoundRect.
  * <P>
  * @author Pete cresman Copyright (c) 2013
- * @version $Revision: 1 $
  */
 public class PositionablePolygon extends PositionableShape {
 
@@ -46,9 +45,7 @@ public class PositionablePolygon extends PositionableShape {
         return finishClone(pos);
     }
 
-    @Override
-    public Positionable finishClone(Positionable pg) {
-        PositionablePolygon pos = (PositionablePolygon) pg;
+    protected Positionable finishClone(PositionablePolygon pos) {
         GeneralPath path = new GeneralPath(GeneralPath.WIND_EVEN_ODD);
         path.append(getPathIterator(null), false);
         /*
@@ -81,7 +78,7 @@ public class PositionablePolygon extends PositionableShape {
 
     @Override
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = Bundle.getMessage("editShape", Bundle.getMessage("polygon"));
+        String txt = Bundle.getMessage("editShape", Bundle.getMessage("Polygon"));
         popup.add(new javax.swing.AbstractAction(txt) {
             /**
              *
@@ -92,7 +89,7 @@ public class PositionablePolygon extends PositionableShape {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (_editFrame == null) {
-                    _editFrame = new DrawPolygon(getEditor(), "polygon", ps);
+                    _editFrame = new DrawPolygon(getEditor(), "Polygon", ps);
                     setEditParams();
                 }
             }
@@ -284,7 +281,7 @@ public class PositionablePolygon extends PositionableShape {
                     path.quadTo(coord[0], coord[1], coord[2], coord[3]);
                     break;
                 case PathIterator.SEG_CUBICTO:
-                    path.curveTo(coord[0], coord[1], coord[2], coord[3], coord[4], coord[53]);
+                    path.curveTo(coord[0], coord[1], coord[2], coord[3], coord[4], coord[5]);
                     break;
                 case PathIterator.SEG_CLOSE:
                     path.closePath();
@@ -321,5 +318,5 @@ public class PositionablePolygon extends PositionableShape {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(PositionablePolygon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionablePolygon.class.getName());
 }

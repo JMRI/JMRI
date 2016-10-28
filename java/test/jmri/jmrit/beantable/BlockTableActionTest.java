@@ -1,4 +1,3 @@
-// BlockTableActionTest.java
 package jmri.jmrit.beantable;
 
 import jmri.Block;
@@ -7,33 +6,28 @@ import jmri.util.JUnitUtil;
 import junit.extensions.jfcunit.TestHelper;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrit.beantable.BlockTableAction class
  *
  * @author	Bob Jacobsen Copyright 2004, 2007, 2008
- * @version	$Revision$
- */
+  */
 public class BlockTableActionTest extends jmri.util.SwingTestCase {
 
     public void testCreate() {
-        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         BlockTableAction ba = new BlockTableAction();
         assertNotNull("BlockTableAction is null!", ba);
         TestHelper.disposeWindow(ba.f, this);
     }
 
     public void testInvoke() {
-        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         BlockTableAction ba = new BlockTableAction();
         ba.actionPerformed(null);
 
         // create a couple blocks, and see if they show
-        InstanceManager.blockManagerInstance().createNewBlock("IB1", "block 1");
+        InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("IB1", "block 1");
 
-        Block b2 = InstanceManager.blockManagerInstance().createNewBlock("IB2", "block 2");
+        Block b2 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("IB2", "block 2");
         b2.setDirection(jmri.Path.EAST);
         TestHelper.disposeWindow(ba.f, this);
     }
@@ -46,7 +40,7 @@ public class BlockTableActionTest extends jmri.util.SwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", BlockTableActionTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -56,12 +50,12 @@ public class BlockTableActionTest extends jmri.util.SwingTestCase {
     }
 
     // The minimal setup for log4J
-    // The minimal setup for log4J
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
 
         super.setUp();
         JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
@@ -73,6 +67,4 @@ public class BlockTableActionTest extends jmri.util.SwingTestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(BlockTableActionTest.class.getName());
 }

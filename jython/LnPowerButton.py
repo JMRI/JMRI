@@ -11,9 +11,8 @@
 # Note that the message sent to the PM4 has fixed contents for the
 # other three (of four) channels on the card.  Will this cause a 
 # problem in normal operation?
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
+
+import jmri
 
 import java
 import javax.swing

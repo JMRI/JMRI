@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.LightIcon objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2011
- * @version $Revision: 17977 $
  */
 public class LightIconXml extends PositionableLabelXml {
 
@@ -44,11 +43,6 @@ public class LightIconXml extends PositionableLabelXml {
         element.setAttribute("class", "jmri.jmrit.display.configurexml.LightIconXml");
 
         return element;
-    }
-
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
     }
 
     /**
@@ -114,5 +108,5 @@ public class LightIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.LIGHTS, element);
     }
 
-    static Logger log = LoggerFactory.getLogger(LightIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LightIconXml.class.getName());
 }

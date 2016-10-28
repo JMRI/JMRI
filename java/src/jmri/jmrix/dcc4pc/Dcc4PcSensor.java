@@ -2,8 +2,6 @@
 package jmri.jmrix.dcc4pc;
 
 import jmri.implementation.AbstractSensor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implement a Sensor via Dcc4Pc communications.
@@ -14,7 +12,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Kevin Dickerson (C) 2012
- * @version	$Revision: 17977 $
  */
 public class Dcc4PcSensor extends AbstractSensor {
 
@@ -99,18 +96,6 @@ public class Dcc4PcSensor extends AbstractSensor {
     public int getInput() {
         return inputLine;
     }
-
-    //packet Length is a temp store used for decoding the railcom packet
-    /*int packetLength = 0;
-    
-     void setPacketLength(int i){
-     packetLength = i;
-     }
-    
-     int getPacketLength(){
-     return packetLength;
-     }*/
-    static Logger log = LoggerFactory.getLogger(Dcc4PcSensor.class.getName());
 }
 
 /* @(#)Dcc4PcSensor.java */

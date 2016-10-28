@@ -1,4 +1,3 @@
-// MultiJfcUnitTest.java
 package jmri.util.swing.multipane;
 
 import javax.swing.JButton;
@@ -7,7 +6,7 @@ import jmri.util.swing.SamplePane;
 import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.AbstractButtonFinder;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -15,7 +14,6 @@ import junit.framework.TestSuite;
  * Swing jfcUnit tests for the Multipane (IDE) GUI
  *
  * @author	Bob Jacobsen Copyright 2010
- * @version $Revision$
  */
 public class MultiJfcUnitTest extends jmri.util.SwingTestCase {
 
@@ -105,7 +103,7 @@ public class MultiJfcUnitTest extends jmri.util.SwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {MultiJfcUnitTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

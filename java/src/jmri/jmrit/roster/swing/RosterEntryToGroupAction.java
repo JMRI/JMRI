@@ -1,4 +1,3 @@
-// RosterEntryToGroupAction.java
 package jmri.jmrit.roster.swing;
 
 import java.awt.Component;
@@ -28,14 +27,8 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision$
  */
 public class RosterEntryToGroupAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 583406343893394954L;
 
     /**
      * @param s Name of this action, e.g. in menus
@@ -55,7 +48,7 @@ public class RosterEntryToGroupAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent event) {
 
-        roster = Roster.instance();
+        roster = Roster.getDefault();
 
         selections = new RosterGroupComboBox();
         selections.setAllEntriesEnabled(false);
@@ -84,7 +77,7 @@ public class RosterEntryToGroupAction extends AbstractAction {
         RosterEntry re = roster.entryFromTitle(selEntry);
         String selGroup = Roster.getRosterGroupProperty((String) selections.getSelectedItem());
         re.putAttribute(selGroup, "yes");
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
         re.updateFile();
         actionPerformed(event);
     }
@@ -103,5 +96,5 @@ public class RosterEntryToGroupAction extends AbstractAction {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(RosterEntryToGroupAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterEntryToGroupAction.class.getName());
 }

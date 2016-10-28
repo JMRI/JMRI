@@ -1,4 +1,3 @@
-// NceProgrammerTest.java
 package jmri.jmrix.nce;
 
 import java.io.DataInputStream;
@@ -8,7 +7,7 @@ import java.io.PipedOutputStream;
 import java.util.Vector;
 import jmri.JmriException;
 import jmri.managers.DefaultProgrammerManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * was done would have been good!
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class NceProgrammerTest extends TestCase {
 
@@ -510,7 +508,7 @@ public class NceProgrammerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {NceProgrammerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -523,6 +521,6 @@ public class NceProgrammerTest extends TestCase {
     // apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
     // protected void setUp() { log4jfixtureInst.setUp(); }
     // protected void tearDown() { log4jfixtureInst.tearDown(); }
-    static Logger log = LoggerFactory.getLogger(NceProgrammerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceProgrammerTest.class.getName());
 
 }

@@ -1,13 +1,11 @@
-// LoadAndCheckTest.java
 package jmri.configurexml;
 
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Functional checks of loading basic configuration files. When done across
@@ -18,7 +16,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2009
  * @since 3.9.2 (from earlier form)
- * @version $Revision$
  */
 public class LoadAndCheckTest extends LoadAndStoreTestBase {
 
@@ -29,25 +26,8 @@ public class LoadAndCheckTest extends LoadAndStoreTestBase {
      */
     public void testLoadFileTest() throws Exception {
         // load file
-        InstanceManager.configureManagerInstance()
+        InstanceManager.getDefault(ConfigureManager.class)
                 .load(new java.io.File("java/test/jmri/configurexml/load/LoadFileTest.xml"));
-
-        // check existance of a few objects
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("IS1"));
-        Assert.assertNull(InstanceManager.sensorManagerInstance().getSensor("no sensor"));
-
-        Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
-        Assert.assertNull(InstanceManager.turnoutManagerInstance().getTurnout("no sensor"));
-
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM1"));
-        Assert.assertNull(InstanceManager.memoryManagerInstance().getMemory("no memory"));
-
-    }
-
-    public void testLoadFileTest277() throws Exception {
-        // load file
-        InstanceManager.configureManagerInstance()
-                .load(new java.io.File("java/test/jmri/configurexml/load/LoadFileTest277.xml"));
 
         // check existance of a few objects
         Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("IS1"));
@@ -63,7 +43,7 @@ public class LoadAndCheckTest extends LoadAndStoreTestBase {
 
     public void testLoadMultipleSystems() throws Exception {
         // load file
-        InstanceManager.configureManagerInstance()
+        InstanceManager.getDefault(ConfigureManager.class)
                 .load(new java.io.File("java/test/jmri/configurexml/load/LoadMultipleSystems.xml"));
 
         // check existance of a few objects
@@ -80,7 +60,7 @@ public class LoadAndCheckTest extends LoadAndStoreTestBase {
 
     public void testLoad295() throws Exception {
         // load file
-        InstanceManager.configureManagerInstance()
+        InstanceManager.getDefault(ConfigureManager.class)
                 .load(new java.io.File("java/test/jmri/configurexml/load/LoadFileTest295.xml"));
 
         // check existance of a few objects
@@ -103,7 +83,7 @@ public class LoadAndCheckTest extends LoadAndStoreTestBase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", LoadAndCheckTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -129,6 +109,4 @@ public class LoadAndCheckTest extends LoadAndStoreTestBase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(LoadAndCheckTest.class.getName());
 }

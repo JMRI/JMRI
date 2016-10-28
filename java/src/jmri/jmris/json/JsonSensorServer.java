@@ -1,5 +1,9 @@
-//JsonSensorServer.java
 package jmri.jmris.json;
+
+import static jmri.server.json.JSON.METHOD;
+import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.PUT;
+import static jmri.server.json.sensor.JsonSensor.SENSOR;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,12 +12,7 @@ import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.AbstractSensorServer;
 import jmri.jmris.JmriConnection;
-import static jmri.jmris.json.JSON.METHOD;
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.PUT;
-import static jmri.jmris.json.JSON.SENSOR;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.server.json.JsonException;
 
 /**
  * JSON Web Socket interface between the JMRI Sensor manager and a network
@@ -26,14 +25,13 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2010
  * @author Randall Wood Copyright (C) 2013
- * @version $Revision: 21313 $
+ * @deprecated Use {@link jmri.server.json.sensor.JsonSensorSocketService} instead.
  */
+@Deprecated
 public class JsonSensorServer extends AbstractSensorServer {
 
     private final JmriConnection connection;
     private final ObjectMapper mapper;
-    static Logger log = LoggerFactory.getLogger(JsonSensorServer.class);
-
     public JsonSensorServer(JmriConnection connection) {
         super();
         this.connection = connection;

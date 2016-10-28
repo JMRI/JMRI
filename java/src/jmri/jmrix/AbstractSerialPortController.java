@@ -1,4 +1,3 @@
-// AbstractSerialPortController.java
 package jmri.jmrix;
 
 import gnu.io.CommPortIdentifier;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  */
 abstract public class AbstractSerialPortController extends AbstractPortController implements SerialPortAdapter {
 
@@ -29,9 +27,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     /**
      * Standard error handling for port-busy case
      */
-    public String handlePortBusy(gnu.io.PortInUseException p,
-            String portName,
-            Logger log) {
+    public String handlePortBusy(gnu.io.PortInUseException p, String portName, Logger log) {
         log.error(portName + " port is in use: " + p.getMessage());
         /*JOptionPane.showMessageDialog(null, "Port is in use",
          "Error", JOptionPane.ERROR_MESSAGE);*/
@@ -42,9 +38,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     /**
      * Standard error handling for port-not-found case
      */
-    public String handlePortNotFound(gnu.io.NoSuchPortException p,
-            String portName,
-            Logger log) {
+    public String handlePortNotFound(gnu.io.NoSuchPortException p, String portName, Logger log) {
         log.error("Serial port " + portName + " not found");
         /*JOptionPane.showMessageDialog(null, "Serial port "+portName+" not found",
          "Error", JOptionPane.ERROR_MESSAGE);*/
@@ -183,6 +177,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         }
         reconnect();
     }
+
     /*Each serial port adapter should handle this and it should be abstract.
      However this is in place until all the other code has been refactored */
 
@@ -278,6 +273,6 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         }
     }
 
-    final static protected Logger log = LoggerFactory.getLogger(AbstractSerialPortController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractSerialPortController.class.getName());
 
 }

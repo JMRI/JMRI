@@ -1,12 +1,9 @@
-// JToolBarUtil.java
 package jmri.util.swing;
 
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Common utility methods for working with JToolBars.
@@ -17,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Only parses top level of XML file, since ToolBars have only level.
  *
  * @author Bob Jacobsen Copyright 2003, 2010
- * @version $Revision$
  * @since 2.9.4
  */
 public class JToolBarUtil extends GuiUtilBase {
@@ -48,6 +44,4 @@ public class JToolBarUtil extends GuiUtilBase {
         return retval;
 
     }
-
-    static Logger log = LoggerFactory.getLogger(JToolBarUtil.class.getName());
 }

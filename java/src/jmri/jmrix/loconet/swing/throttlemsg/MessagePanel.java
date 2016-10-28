@@ -6,13 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-import jmri.jmrix.loconet.LocoNetBundle;
 
 /**
  * Panel for sending messages to throttles.
  *
  * @author	Bob Jacobsen Copyright (C) 2008, 2010
- * @version $Revision$
  */
 public class MessagePanel extends jmri.jmrix.loconet.swing.LnPanel {
 
@@ -44,7 +42,7 @@ public class MessagePanel extends jmri.jmrix.loconet.swing.LnPanel {
     }
 
     public String getTitle() {
-        return getTitle(LocoNetBundle.bundle().getString("MenuItemThrottleMessages"));
+        return getTitle(Bundle.getMessage("MenuItemThrottleMessages"));
     }
 
 }

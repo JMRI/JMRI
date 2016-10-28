@@ -1,23 +1,5 @@
 package jmri.jmrit.vsdecoder;
 
-/*
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
- * <P>
- *
- * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
- */
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -25,7 +7,6 @@ import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -44,10 +25,25 @@ import jmri.util.swing.JmriPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SuppressWarnings({"serial", "deprecation"})
+/*
+ * <hr>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under 
+ * the terms of version 2 of the GNU General Public License as published 
+ * by the Free Software Foundation. See the "COPYING" file for a copy
+ * of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * for more details.
+ * <P>
+ *
+ * @author			Mark Underwood Copyright (C) 2011
+ */
+@SuppressWarnings("deprecation")
 public class VSDConfigPanel extends JmriPanel {
-
-    private static final ResourceBundle vsdecoderBundle = VSDecoderBundle.bundle();
 
     // Local References
     VSDecoderManager decoder_mgr; // local reference to the VSDecoderManager instance
@@ -136,7 +132,7 @@ public class VSDConfigPanel extends JmriPanel {
         }
 
         // This is a bit tedious...
-        ArrayList<String> ce_list = new ArrayList<String>();
+        ArrayList<String> ce_list = new ArrayList<>();
         for (int i = 0; i < profileComboBox.getItemCount(); i++) {
             ce_list.add(profileComboBox.getItemAt(i).toString());
         }
@@ -173,7 +169,7 @@ public class VSDConfigPanel extends JmriPanel {
 
         log.warn("updating the profile list.");
 
-        profileComboBox.setModel(new DefaultComboBoxModel<Object>());
+        profileComboBox.setModel(new DefaultComboBoxModel<>());
         Iterator<String> itr = s.iterator();
         while (itr.hasNext()) {
 
@@ -268,17 +264,17 @@ public class VSDConfigPanel extends JmriPanel {
             }
         });
         rosterSaveButton.setEnabled(false); // temporarily disable this until we update the RosterEntry
-        rosterSaveButton.setToolTipText(vsdecoderBundle.getString("RosterSaveButtonToolTip"));
+        rosterSaveButton.setToolTipText(Bundle.getMessage("RosterSaveButtonToolTip"));
         rosterPanel.add(rosterSaveButton);
 
         addressLabel = new javax.swing.JLabel();
         addressSetButton = new javax.swing.JButton();
         addressSelector = new DccLocoAddressSelector();
 
-        profileComboBox = new javax.swing.JComboBox<Object>();
+        profileComboBox = new javax.swing.JComboBox<>();
         profileLabel = new javax.swing.JLabel();
 
-        profileComboBox.setModel(new javax.swing.DefaultComboBoxModel<Object>());
+        profileComboBox.setModel(new javax.swing.DefaultComboBoxModel<>());
         // Add any already-loaded profile names
         ArrayList<String> sl = VSDecoderManager.instance().getVSDProfileNames();
         if (sl.isEmpty()) {
@@ -402,9 +398,9 @@ public class VSDConfigPanel extends JmriPanel {
                 r.putAttribute("VSDecoder_Path", main_pane.getDecoder().getVSDFilePath());
                 r.putAttribute("VSDecoder_Profile", profileComboBox.getSelectedItem().toString());
                 int value = JOptionPane.showConfirmDialog(null,
-                        MessageFormat.format(vsdecoderBundle.getString("UpdateRoster"),
+                        MessageFormat.format(Bundle.getMessage("UpdateRoster"),
                                 new Object[]{r.titleString()}),
-                        vsdecoderBundle.getString("SaveRoster?"), JOptionPane.YES_NO_OPTION);
+                        Bundle.getMessage("SaveRoster?"), JOptionPane.YES_NO_OPTION);
                 if (value == JOptionPane.YES_OPTION) {
                     storeFile(r);
                 }
@@ -418,8 +414,8 @@ public class VSDConfigPanel extends JmriPanel {
     protected boolean storeFile(RosterEntry _rosterEntry) {
         log.debug("storeFile starts");
         // We need to create a programmer, a cvTableModel, an iCvTableModel, and a variableTableModel.
-        // Doesn't matter which, so we'll use the LocoNet programmer.
-        Programmer p = InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+        // Doesn't matter which, so we'll use the Global programmer.
+        Programmer p = InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
         CvTableModel cvModel = new CvTableModel(null, p);
         IndexedCvTableModel iCvModel = new IndexedCvTableModel(null, p);
         VariableTableModel variableModel = new VariableTableModel(null, new String[]{"Name", "Value"}, cvModel, iCvModel);
@@ -428,7 +424,7 @@ public class VSDConfigPanel extends JmriPanel {
         if (_rosterEntry.getFileName() != null) {
             // set the loco file name in the roster entry
             _rosterEntry.readFile();  // read, but don't yet process
-            _rosterEntry.loadCvModel(cvModel, iCvModel);
+            _rosterEntry.loadCvModel(variableModel, cvModel, iCvModel);
         }
 
         // id has to be set!
@@ -447,7 +443,7 @@ public class VSDConfigPanel extends JmriPanel {
         variableModel.setFileDirty(false);
 
         // and store an updated roster file
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
 
         return true;
     }

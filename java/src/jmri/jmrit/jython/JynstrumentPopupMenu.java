@@ -8,15 +8,8 @@ import java.awt.event.MouseEvent;
 import java.util.ResourceBundle;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class JynstrumentPopupMenu extends JPopupMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8294137276227871972L;
 
     private static final ResourceBundle jythonBundle = ResourceBundle.getBundle("jmri/jmrit/jython/JythonBundle");
 
@@ -86,6 +79,4 @@ public class JynstrumentPopupMenu extends JPopupMenu {
         // A separator to differentiate Jynstrument private menu items
         addSeparator();
     }
-
-    static Logger log = LoggerFactory.getLogger(JynstrumentPopupMenu.class.getName());
 }

@@ -1,4 +1,3 @@
-// AccessoryOpsModeProgrammerFacadeTest.java
 package jmri.implementation;
 
 import jmri.CommandStation;
@@ -6,7 +5,7 @@ import jmri.InstanceManager;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.progdebugger.ProgDebugger;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -107,7 +106,7 @@ public class AccessoryOpsModeProgrammerFacadeTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {AccessoryOpsModeProgrammerFacadeTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -117,6 +116,6 @@ public class AccessoryOpsModeProgrammerFacadeTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(AccessoryOpsModeProgrammerFacadeTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AccessoryOpsModeProgrammerFacadeTest.class.getName());
 
 }

@@ -3,14 +3,11 @@ package jmri.jmrit.display.configurexml;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.ReporterIcon;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for display.ReporterIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision$
  */
 public class ReporterIconXml extends PositionableLabelXml {
 
@@ -40,11 +37,6 @@ public class ReporterIconXml extends PositionableLabelXml {
         return element;
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Create a PositionableLabel, then add to a target JLayeredPane
      *
@@ -57,7 +49,7 @@ public class ReporterIconXml extends PositionableLabelXml {
 
         loadTextInfo(l, element);
 
-        l.setReporter(jmri.InstanceManager.reporterManagerInstance().getReporter(
+        l.setReporter(jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(
                 element.getAttribute("reporter").getValue()));
 
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
@@ -65,6 +57,4 @@ public class ReporterIconXml extends PositionableLabelXml {
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.REPORTERS, element);
     }
-
-    static Logger log = LoggerFactory.getLogger(ReporterIconXml.class.getName());
 }

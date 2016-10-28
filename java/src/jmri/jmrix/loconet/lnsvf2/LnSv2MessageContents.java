@@ -1,11 +1,11 @@
 // LnSv2MessageContents
 package jmri.jmrix.loconet.lnsvf2;
 
+import java.util.Locale;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.*;
 
 /**
  * Supporting class for LocoNet SV Programming Format 2 messaging
@@ -565,12 +565,12 @@ public class LnSv2MessageContents {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(LnSv2MessageContents.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnSv2MessageContents.class.getName());
     
     /**
      * Get the data from a SVs Single Read Reply message.  May also be used to
      * return the effective SV value reported in a SV2 Single Write Reply message.
-     * @return the <D1> value from the SV2 message
+     * @return the {@code <D1>} value from the SV2 message
      */
     public int getSingleReadReportData() {
         return d1;

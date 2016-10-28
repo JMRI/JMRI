@@ -6,8 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying the LZV100 configuration utility
@@ -20,8 +18,7 @@ import org.slf4j.LoggerFactory;
  * utility for the LV102 power station
  *
  * @author	Paul Bender Copyright (C) 2003,2005
- * @version	$Revision$
- */
+  */
 public class LZV100Frame extends jmri.util.JmriJFrame {
 
     /**
@@ -73,7 +70,5 @@ public class LZV100Frame extends jmri.util.JmriJFrame {
         // take apart the JFrame
         super.dispose();
     }
-
-    static Logger log = LoggerFactory.getLogger(LZV100Frame.class.getName());
 
 }

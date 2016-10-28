@@ -3,8 +3,6 @@ package jmri.jmrix.lenz;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base for classes representing a XNet communications port
@@ -12,8 +10,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  * @author	Paul Bender Copyright (C) 2004,2010,2014
- * @version	$Revision$
- */
+  */
 public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortController implements XNetPortController {
 
     public XNetStreamPortController(DataInputStream in, DataOutputStream out, String pname) {
@@ -28,8 +25,6 @@ public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortContr
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
 
         new XNetInitializationManager(this.getSystemConnectionMemo());
-
-        jmri.jmrix.lenz.ActiveFlag.setActive();
     }
 
     public XNetSystemConnectionMemo getSystemConnectionMemo() {
@@ -58,8 +53,6 @@ public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortContr
      */
     synchronized public void setOutputBufferEmpty(boolean s) {
     }
-
-    static Logger log = LoggerFactory.getLogger(XNetStreamPortController.class.getName());
 
 }
 

@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * that board.
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 17977 $
  */
 public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         implements Dcc4PcListener {
@@ -36,7 +35,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         if (pollShutDownTask == null) {
             pollShutDownTask = new QuietShutDownTask("DCC4PC Board Poll Shutdown") {
                 @Override
-                public boolean doAction() {
+                public boolean execute() {
                     stopPolling = true;
                     return true;
                 }
@@ -1201,7 +1200,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(Dcc4PcSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcSensorManager.class.getName());
 }
 
 /* @(#)Dcc4PcSensorManager.java */

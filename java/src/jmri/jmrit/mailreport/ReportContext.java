@@ -1,4 +1,3 @@
-// ReportContext.java
 package jmri.jmrit.mailreport;
 
 import gnu.io.CommPortIdentifier;
@@ -17,6 +16,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import javax.swing.JFrame;
+import jmri.InstanceManager;
+import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ConnectionConfigManager;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
@@ -31,8 +33,6 @@ import jmri.util.zeroconf.ZeroConfService;
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2009
  * @author Matt Harris Copyright (C) 2008, 2009
- *
- * @version $Revision$
  */
 public class ReportContext {
 
@@ -56,10 +56,10 @@ public class ReportContext {
         }
 
         addString("JMRI Application: " + jmri.Application.getApplicationName() + "   ");
-        ArrayList<Object> connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
+        ConnectionConfig[] connList = InstanceManager.getDefault(ConnectionConfigManager.class).getConnections();
         if (connList != null) {
-            for (int x = 0; x < connList.size(); x++) {
-                jmri.jmrix.ConnectionConfig conn = (jmri.jmrix.ConnectionConfig) connList.get(x);
+            for (int x = 0; x < connList.length; x++) {
+                ConnectionConfig conn = connList[x];
                 addString("Connection " + x + ": " + conn.getManufacturer() + " connected via " + conn.name() + " on " + conn.getInfo() + " Disabled " + conn.getDisabled() + "   ");
             }
         }
@@ -67,7 +67,7 @@ public class ReportContext {
         addString("Available Communication Ports:");
         addCommunicationPortInfo();
 
-        Profile profile = ProfileManager.defaultManager().getActiveProfile();
+        Profile profile = ProfileManager.getDefault().getActiveProfile();
         addString("Active profile: " + profile.getName() + "   ");
         addString("Profile location: " + profile.getPath().getPath() + "   ");
         addString("Profile ID: " + profile.getId() + "   ");
@@ -78,7 +78,7 @@ public class ReportContext {
         String prog = System.getProperty("user.dir");
         addString("Program directory: " + prog + "   ");
 
-        String roster = jmri.jmrit.roster.Roster.defaultRosterFilename();
+        String roster = jmri.jmrit.roster.Roster.getDefault().getRosterIndexPath();
         addString("Roster index location: " + roster + "   ");
 
         File panel = jmri.configurexml.LoadXmlUserAction.getCurrentFile();
@@ -86,7 +86,7 @@ public class ReportContext {
 
         //String operations = jmri.jmrit.operations.setup.OperationsSetupXml.getFileLocation();
         //addString("Operations files location: "+operations+"  ");
-        jmri.jmrit.audio.AudioFactory af = jmri.InstanceManager.audioManagerInstance().getActiveAudioFactory();
+        jmri.jmrit.audio.AudioFactory af = jmri.InstanceManager.getDefault(jmri.AudioManager.class).getActiveAudioFactory();
         String audio = af != null ? af.toString() : "[not initialised]";
         addString("Audio factory type: " + audio + "   ");
 
@@ -117,6 +117,8 @@ public class ReportContext {
 
         addProperty("python.home");
         addProperty("python.path");
+        addProperty("python.cachedir");
+        addProperty("python.cachedir.skip");
         addProperty("python.startup");
 
         addProperty("user.name");

@@ -1,11 +1,8 @@
-// AboutDialog.java
 package jmri.swing;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.util.ArrayList;
 import java.util.Locale;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -17,8 +14,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.Application;
+import jmri.InstanceManager;
 import jmri.Version;
 import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ConnectionConfigManager;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,14 +26,9 @@ import org.slf4j.LoggerFactory;
  * About dialog.
  *
  * @author Randall Wood Copyright (C) 2012
- * @version $Revision$
  */
 public class AboutDialog extends JDialog {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -769569735384243080L;
     ConnectionConfig[] connection = {null, null, null, null};
 
     // this should probably be changed to a JmriAbstractAction that opens a JOptionPane with the contents and an OK button instead.
@@ -66,7 +60,9 @@ public class AboutDialog extends JDialog {
         }
         addCenteredComponent(new JLabel(new ImageIcon(getToolkit().getImage(FileUtil.findURL(logo, FileUtil.Location.INSTALLED)), "JMRI logo"), JLabel.CENTER), pane);
         pane.add(Box.createRigidArea(new Dimension(0, 15)));
-        JLabel appName = new JLabel(Application.getApplicationName(), JLabel.CENTER);
+        String name = Application.getApplicationName();
+        name = checkCopyright(name);
+        JLabel appName = new JLabel(name, JLabel.CENTER);
         appName.setFont(pane.getFont().deriveFont(Font.BOLD, pane.getFont().getSize() * 1.2f));
         addCenteredComponent(appName, pane);
         addCenteredComponent(new JLabel(Application.getURL(), JLabel.CENTER), pane);
@@ -75,6 +71,12 @@ public class AboutDialog extends JDialog {
         return pane;
     }
 
+    String checkCopyright(String name) {
+        if (name.toUpperCase().equals("DECODERPRO"))
+            name = name+"\u00ae";
+        return name;
+    }
+    
     protected JPanel infoPane() {
         JPanel pane1 = new JPanel();
         pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
@@ -82,20 +84,10 @@ public class AboutDialog extends JDialog {
         log.debug("start labels");
 
         // add listener for Com port updates
-        ArrayList<Object> connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
-        if (connList != null && !connList.isEmpty()) {
-            for (Object conn : connList) {
-                if (!((ConnectionConfig) conn).getDisabled()) {
-                    pane1.add(new ConnectionLabel((ConnectionConfig) conn));
-                }
+        for (ConnectionConfig conn : InstanceManager.getDefault(ConnectionConfigManager.class)) {
+            if (!conn.getDisabled()) {
+                pane1.add(new ConnectionLabel(conn));
             }
-        } else {
-            /**
-             * Internationalization fix - Jens E Christensen
-             */
-            JLabel error = new JLabel(Bundle.getMessage("ConnectionListReadError"));
-            error.setForeground(Color.red);
-            pane1.add(error);
         }
         pane1.add(Box.createRigidArea(new Dimension(0, 15)));
 

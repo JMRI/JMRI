@@ -1,4 +1,3 @@
-// OpenLcbCanSendPane.java
 package jmri.jmrix.openlcb.swing.send;
 
 import java.awt.Dimension;
@@ -38,6 +37,7 @@ import org.openlcb.ProducerConsumerEventReportMessage;
 import org.openlcb.VerifyNodeIDNumberMessage;
 import org.openlcb.can.AliasMap;
 import org.openlcb.cdi.jdom.CdiMemConfigReader;
+import org.openlcb.cdi.jdom.JdomCdiReader;
 import org.openlcb.cdi.swing.CdiPanel;
 import org.openlcb.implementations.MemoryConfigurationService;
 import org.openlcb.swing.NodeSelector;
@@ -54,7 +54,7 @@ import org.slf4j.LoggerFactory;
  * </UL>
  *
  * @author	Bob Jacobsen Copyright (C) 2008, 2012
- * @version	$Revision: 19697 $
+ * 
  */
 public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 
@@ -431,19 +431,37 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         int space = 0xFF - addrSpace.getSelectedIndex();
         long addr = Integer.parseInt(configAddressField.getText(), 16);
         int length = Integer.parseInt(configNumberField.getText());
-        mcs.request(new MemoryConfigurationService.McsReadMemo(destNodeID(), space, addr, length) {
-            public void handleReadData(NodeID dest, int space, long address, byte[] data) {
-                log.debug("Read data received " + data.length + " bytes");
-                readDataField.setText(jmri.util.StringUtil.hexStringFromBytes(data));
-            }
-        });
+        mcs.requestRead(destNodeID(), space, addr,
+                length, new MemoryConfigurationService.McsReadHandler() {
+                    @Override
+                    public void handleReadData(NodeID dest, int space, long address, byte[] data) {
+                        log.debug("Read data received " + data.length + " bytes");
+                        readDataField.setText(jmri.util.StringUtil.hexStringFromBytes(data));
+                    }
+
+                    @Override
+                    public void handleFailure(int errorCode) {
+                        log.warn("OpenLCB read failed: 0x{}", Integer.toHexString
+                                (errorCode));
+                    }
+                });
     }
 
     public void writePerformed(java.awt.event.ActionEvent e) {
         int space = 0xFF - addrSpace.getSelectedIndex();
         long addr = Integer.parseInt(configAddressField.getText(), 16);
         byte[] content = jmri.util.StringUtil.bytesFromHexString(writeDataField.getText());
-        mcs.request(new MemoryConfigurationService.McsWriteMemo(destNodeID(), space, addr, content));
+        mcs.requestWrite(destNodeID(), space, addr, content, new MemoryConfigurationService.McsWriteHandler() {
+            @Override
+            public void handleSuccess() {
+            }
+
+            @Override
+            public void handleFailure(int errorCode) {
+                log.warn("OpenLCB write failed:  0x{}", Integer.toHexString
+                        (errorCode));
+            }
+        });
     }
 
     public void openCdiPane() {
@@ -451,6 +469,11 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         CdiMemConfigReader cmcr = new CdiMemConfigReader(destNodeID(), store, mcs);
 
         CdiMemConfigReader.ReaderAccess rdr = new CdiMemConfigReader.ReaderAccess() {
+            @Override
+            public void progressNotify(long bytesRead, long totalBytes) {
+                // TODO: 7/14/16 Add some visual progress indicator for reading the CDI.
+            }
+
             public void provideReader(java.io.Reader r) {
                 JmriJFrame f = new JmriJFrame();
                 f.setTitle("Configure " + destNodeID());
@@ -463,14 +486,34 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
                 // create an adapter for reading and writing
                 CdiPanel.ReadWriteAccess accessor = new CdiPanel.ReadWriteAccess() {
                     public void doWrite(long address, int space, byte[] data) {
-                        mcs.request(new MemoryConfigurationService.McsWriteMemo(destNodeID(), space, address, data));
+                        mcs.requestWrite(destNodeID(), space, address, data, new MemoryConfigurationService.McsWriteHandler() {
+                            @Override
+                            public void handleSuccess() {
+                            }
+
+                            @Override
+                            public void handleFailure(int errorCode) {
+                                log.warn("OpenLCB write failed: 0x{}", Integer.toHexString
+                                        (errorCode));
+                            }
+                        });
                     }
 
                     public void doRead(long address, int space, int length, final CdiPanel.ReadReturn handler) {
-                        mcs.request(new MemoryConfigurationService.McsReadMemo(destNodeID(), space, address, length) {
-                            public void handleReadData(NodeID dest, int space, long address, byte[] data) {
+                        mcs.requestRead(destNodeID(), space, address, length, new MemoryConfigurationService.McsReadHandler() {
+                            @Override
+                            public void handleReadData(NodeID dest, int space, long address,
+                                                       byte[] data) {
                                 log.debug("Read data received " + data.length + " bytes");
                                 handler.returnData(data);
+                            }
+
+                            @Override
+                            public void handleFailure(int errorCode) {
+                                log.warn("OpenLCB read failed: 0x{}", Integer.toHexString
+                                        (errorCode));
+                                // TODO: 7/14/16 somehow propagate the failure or make it visible
+                                // to the user.
                             }
                         });
                     }
@@ -481,7 +524,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
                 try {
                     m.loadCDI(
                             new org.openlcb.cdi.jdom.JdomCdiRep(
-                                    (new org.openlcb.cdi.jdom.JdomCdiReader()).getHeadFromReader(r)
+                                    JdomCdiReader.getHeadFromReader(r)
                             )
                     );
                 } catch (Exception e) {
@@ -503,7 +546,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     javax.swing.Timer timer = null;
 
     /**
-     * Internal routine to handle timer starts & restarts
+     * Internal routine to handle timer starts {@literal &} restarts
      */
     protected void restartTimer(int delay) {
         if (timer == null) {
@@ -529,7 +572,6 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     /**
      * Run button pressed down, start the sequence operation
      *
-     * @param e
      */
     public void runButtonActionPerformed(java.awt.event.ActionEvent e) {
         if (!mRunButton.isSelected()) {
@@ -596,7 +638,6 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
      * Create a well-formed message from a String String is expected to be space
      * seperated hex bytes or CbusAddress, e.g.: 12 34 56 +n4e1
      *
-     * @param s
      * @return The packet, with contents filled-in
      */
     CanMessage createPacket(String s) {
@@ -670,6 +711,6 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     // private data
     private TrafficController tc = null; //was CanInterface
-    static Logger log = LoggerFactory.getLogger(OpenLcbCanSendPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OpenLcbCanSendPane.class.getName());
 
 }

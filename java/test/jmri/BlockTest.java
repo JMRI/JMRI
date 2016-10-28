@@ -1,8 +1,7 @@
-// BlockTest.java
 package jmri;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the Block class
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version $Revision$
  */
 public class BlockTest extends TestCase {
 
@@ -23,6 +21,39 @@ public class BlockTest extends TestCase {
         new Block("SystemName");
     }
 
+    public void testEquals() {
+        Block b1 = new Block("SystemName1");
+        Block b2 = new Block("SystemName2");
+        
+        //multiple Block objects with same SystemName are really the same
+        Block b1a = new Block("SystemName1");
+        
+        Assert.assertTrue(b1.equals(b1)); // identity
+        Assert.assertFalse(b1.equals(b2)); // blocks are named objects
+
+        Assert.assertTrue(b1a.equals(b1));
+        Assert.assertTrue(b1.equals(b1a)); // commutes
+        
+        // check null
+        Assert.assertFalse(b1.equals(null));
+
+        // check another type
+        Assert.assertFalse(b1.equals(new StringBuffer("foo")));        
+    }
+
+    public void testHashCode() {
+        Block b1 = new Block("SystemName1");
+        
+        //multiple Block objects with same SystemName are really the same
+        Block b1a = new Block("SystemName1");
+        
+        Assert.assertTrue(b1.hashCode() == b1a.hashCode());
+
+        b1a.setLength(120);
+        b1a.setCurvature(21);
+        Assert.assertTrue(b1.hashCode() == b1a.hashCode());
+    }
+    
     public void testSensorAdd() {
         Block b = new Block("SystemName");
         b.setSensor("IS12");
@@ -34,11 +65,6 @@ public class BlockTest extends TestCase {
         SensorManager sm = new jmri.managers.InternalSensorManager();
         count = 0;
         Block b = new Block("SystemName") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 5139018101378690325L;
-
             void handleSensorChange(java.beans.PropertyChangeEvent e) {
                 count++;
             }
@@ -181,7 +207,7 @@ public class BlockTest extends TestCase {
         p23.setFromBlockDirection(Path.LEFT);
         p23.setToBlockDirection(Path.RIGHT);
         b2.addPath(p23);
-
+        
         // actual test
         b2.goingActive();
         Assert.assertEquals("State", Block.OCCUPIED, b2.getState());
@@ -190,6 +216,50 @@ public class BlockTest extends TestCase {
 
     }
 
+    // Test going active with two neighbors, both active, where FROM is a combination direction.
+    // b2 is between b1 and b3. 
+    public void testTwoOfTwoGoesActiveCombination() throws JmriException {
+        SensorManager sm = new jmri.managers.InternalSensorManager();
+
+        Block b1 = new Block("SystemName1");
+        Block b2 = new Block("SystemName2");
+        Block b3 = new Block("SystemName3");
+
+        Sensor s1 = sm.provideSensor("IS1");
+        b1.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS1", s1));
+        s1.setState(Sensor.ACTIVE);
+        b1.setValue("b1 contents");
+        b1.setDirection(Path.NORTH | Path.WEST); //combination direction
+
+        Sensor s2 = sm.provideSensor("IS2");
+        b2.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS2", s2));
+        s2.setState(Sensor.INACTIVE);
+
+        Sensor s3 = sm.provideSensor("IS3");
+        b3.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS3", s3));
+        s3.setState(Sensor.ACTIVE);
+        b3.setValue("b3 contents");
+        b3.setDirection(Path.NORTH);
+
+        Path p21 = new Path();
+        p21.setBlock(b1);
+        p21.setFromBlockDirection(Path.NORTH);
+        p21.setToBlockDirection(Path.SOUTH);
+        b2.addPath(p21);
+
+        Path p23 = new Path();
+        p23.setBlock(b3);
+        p23.setFromBlockDirection(Path.EAST);
+        p23.setToBlockDirection(Path.NORTH);
+        b2.addPath(p23);
+        
+        // actual test
+        b2.goingActive();
+        Assert.assertEquals("State", Block.OCCUPIED, b2.getState());
+        Assert.assertEquals("Value transferred", "b1 contents", b2.getValue());
+        Assert.assertEquals("Direction", Path.NORTH, b2.getDirection());
+
+    }
     public void testReporterAdd() {
         ReporterManager rm = new jmri.managers.InternalReporterManager();
         Block b = new Block("SystemName");
@@ -200,11 +270,6 @@ public class BlockTest extends TestCase {
         ReporterManager rm = new jmri.managers.InternalReporterManager();
         count = 0;
         Block b = new Block("SystemName") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 3547154109447369497L;
-
             @Override
             void handleReporterChange(java.beans.PropertyChangeEvent e) {
                 count++;
@@ -221,11 +286,6 @@ public class BlockTest extends TestCase {
         ReporterManager rm = new jmri.managers.InternalReporterManager();
         count = 0;
         Block b = new Block("SystemName") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 5571669574284994013L;
-
             @Override
             void handleReporterChange(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("currentReport")) {
@@ -247,11 +307,6 @@ public class BlockTest extends TestCase {
         ReporterManager rm = new jmri.managers.InternalReporterManager();
         count = 0;
         Block b = new Block("SystemName") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -2814760455640517297L;
-
             @Override
             void handleReporterChange(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("lastReport")) {
@@ -277,7 +332,7 @@ public class BlockTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {BlockTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

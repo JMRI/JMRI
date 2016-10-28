@@ -20,8 +20,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <P>
@@ -248,6 +246,4 @@ public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionL
     protected OBlock getHomeBlock() {
         return _homeBlock;
     }
-
-    static Logger log = LoggerFactory.getLogger(EditPortalDirection.class.getName());
 }

@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * Handle XML configuration for a DefaultSignalMastManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 18102 $
+ * 
  */
 public class TurnoutSignalMastXml
         extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -82,25 +82,20 @@ public class TurnoutSignalMastXml
         return e;
     }
 
-    /**
-     * Create a DefaultSignalMastManager
-     *
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         TurnoutSignalMast m;
-        String sys = getSystemName(element);
+        String sys = getSystemName(shared);
         m = new jmri.implementation.TurnoutSignalMast(sys);
 
-        if (getUserName(element) != null) {
-            m.setUserName(getUserName(element));
+        if (getUserName(shared) != null) {
+            m.setUserName(getUserName(shared));
         }
 
-        loadCommon(m, element);
+        loadCommon(m, shared);
 
-        if (element.getChild("unlit") != null) {
-            Element unlit = element.getChild("unlit");
+        if (shared.getChild("unlit") != null) {
+            Element unlit = shared.getChild("unlit");
             if (unlit.getAttribute("allowed") != null) {
                 if (unlit.getAttribute("allowed").getValue().equals("no")) {
                     m.setAllowUnLit(false);
@@ -117,7 +112,7 @@ public class TurnoutSignalMastXml
             }
         }
 
-        List<Element> list = element.getChildren("aspect");
+        List<Element> list = shared.getChildren("aspect");
         for (int i = 0; i < list.size(); i++) {
             Element e = list.get(i);
             String aspect = e.getAttribute("defines").getValue();
@@ -129,19 +124,19 @@ public class TurnoutSignalMastXml
             }
             m.setTurnout(aspect, turnout, turnState);
         }
-        Element e = element.getChild("disabledAspects");
+        Element e = shared.getChild("disabledAspects");
         if (e != null) {
             list = e.getChildren("disabledAspect");
             for (Element aspect : list) {
                 m.setAspectDisabled(aspect.getText());
             }
         }
-        if ((element.getChild("resetPreviousStates") != null)
-                && element.getChild("resetPreviousStates").getText().equals("yes")) {
+        if ((shared.getChild("resetPreviousStates") != null)
+                && shared.getChild("resetPreviousStates").getText().equals("yes")) {
             m.resetPreviousStates(true);
         }
 
-        InstanceManager.signalMastManagerInstance()
+        InstanceManager.getDefault(jmri.SignalMastManager.class)
                 .register(m);
 
         return true;
@@ -151,5 +146,5 @@ public class TurnoutSignalMastXml
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(TurnoutSignalMastXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutSignalMastXml.class.getName());
 }

@@ -4,8 +4,9 @@
 # Author: Bob Jacobsen, copyright 2013
 # Part of the JMRI distribution
 #
-# The next line is maintained by SVN, please don't change it
-# $Revision$
+
+import jmri
+import java
 
 # Define routine to map status numbers to text
 def stateMap(state) :

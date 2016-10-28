@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * rail com tag.
  * <P>
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 17977 $
  */
 public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocationReporter {
 
@@ -572,7 +571,7 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
         ACK_4, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR,
         ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR};
 
-    static Logger log = LoggerFactory.getLogger(Dcc4PcReporter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcReporter.class.getName());
 
 }
 

@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LocoNetBundle;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -37,8 +36,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Alex Shepherd Copyright (C) 2003
  * @author	Bob Jacobsen Copyright (C) 2008, 2010
- * @version	$Revision$
- * @since 2.1.5
+  * @since 2.1.5
  */
 public class LocoStatsPanel extends LnPanel implements LocoNetListener {
 
@@ -56,7 +54,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
     }
 
     public String getTitle() {
-        return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemLocoStats"));
+        return getTitle(Bundle.getMessage("MenuItemLocoStats"));
     }
 
     public LocoStatsPanel() {
@@ -297,12 +295,12 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
         private static final long serialVersionUID = -5534308120479708337L;
 
         public Default() {
-            super(LocoNetBundle.bundle().getString("MenuItemLocoStats"),
+            super(Bundle.getMessage("MenuItemLocoStats"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     LocoStatsPanel.class.getName(),
                     jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LocoStatsPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoStatsPanel.class.getName());
 }

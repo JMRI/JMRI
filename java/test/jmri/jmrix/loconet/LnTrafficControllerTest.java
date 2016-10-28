@@ -14,8 +14,6 @@ import junit.framework.TestSuite;
  * Copyright: Copyright (c) 2002</p>
  *
  * @author Bob Jacobsen
- * @version $Id: LnTrafficControllerTest.java 27828 2014-12-11 22:46:11Z
- * jacobsen $
  */
 public class LnTrafficControllerTest extends TestCase {
 
@@ -30,7 +28,7 @@ public class LnTrafficControllerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {LnTrafficControllerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

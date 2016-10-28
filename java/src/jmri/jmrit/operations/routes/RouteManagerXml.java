@@ -1,4 +1,3 @@
-// RouteManagerXml.java
 package jmri.jmrit.operations.routes;
 
 import java.io.File;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Loads and stores routes using xml files.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision$
  */
 public class RouteManagerXml extends OperationsXml {
 
@@ -28,24 +26,21 @@ public class RouteManagerXml extends OperationsXml {
 
     public static synchronized RouteManagerXml instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("RouteManagerXml creating instance");
-            }
+            log.debug("RouteManagerXml creating instance");
             // create and load
             _instance = new RouteManagerXml();
             _instance.load();
             log.debug("Routes have been loaded!");
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("RouteManagerXml returns instance {}", _instance);
         }
         return _instance;
     }
 
+    @Override
     public void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("writeFile {}", name);
-        }
+        log.debug("writeFile {}", name);
         // This is taken in large part from "Java and XML" page 368
         File file = findFile(name);
         if (file == null) {
@@ -94,21 +89,24 @@ public class RouteManagerXml extends OperationsXml {
         setDirty(false);
     }
 
+    @Override
     public void setOperationsFileName(String name) {
         operationsFileName = name;
     }
 
+    @Override
     public String getOperationsFileName() {
         return operationsFileName;
     }
 
     private String operationsFileName = "OperationsRouteRoster.xml"; // NOI18N
 
-    public void dispose(){
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "for testing")
+    public void dispose() {
         _instance = null;
     }
 
-
-    static Logger log = LoggerFactory.getLogger(RouteManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RouteManagerXml.class.getName());
 
 }

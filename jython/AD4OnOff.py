@@ -8,9 +8,8 @@
 #
 # Author: Bob Jacobsen, copyright 2007
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
+
+import jmri
 
 import java
 import javax.swing
@@ -19,10 +18,10 @@ import javax.swing
 b = javax.swing.JCheckBox("Local Control Disabled")
 def whenMyButtonClicked(event) :
         if (event.getSource().isSelected()) :
-            programmer = programmers.getAddressedProgrammer(True, 2041)
+            programmer = addressedProgrammers.getAddressedProgrammer(True, 2041)
             programmer.writeCV(514, 0, None)  
         else :
-            programmer = programmers.getAddressedProgrammer(True, 2041)
+            programmer = addressedProgrammers.getAddressedProgrammer(True, 2041)
             programmer.writeCV(514, 85, None)  
         return
 b.actionPerformed = whenMyButtonClicked

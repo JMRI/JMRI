@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * MRC implementation of a ThrottleManager.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 24649 $
+ * 
  */
 public class MrcThrottleManager extends AbstractThrottleManager {
 
@@ -70,6 +70,6 @@ public class MrcThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(MrcThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MrcThrottleManager.class.getName());
 
 }

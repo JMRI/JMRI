@@ -1,4 +1,3 @@
-// AbstractNetworkConnectionConfig.java
 package jmri.jmrix;
 
 import java.awt.Color;
@@ -30,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @version	$Revision$
  */
 abstract public class AbstractNetworkConnectionConfig extends AbstractConnectionConfig {
 
@@ -39,7 +37,6 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     /**
      * Ctor for an object being created during load process
      *
-     * @param p
      */
     public AbstractNetworkConnectionConfig(NetworkPortAdapter p) {
         adapter = p;
@@ -557,12 +554,13 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
 
     @Override
     public void dispose() {
+        super.dispose();
         if (adapter != null) {
             adapter.dispose();
             adapter = null;
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractNetworkConnectionConfig.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractNetworkConnectionConfig.class.getName());
 
 }

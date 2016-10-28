@@ -10,14 +10,8 @@ import org.slf4j.LoggerFactory;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2009, 2010, 2011
- * @version $Revision$
  */
 final class CarLoadAttributeAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8136064419213869243L;
 
     public CarLoadAttributeAction(String actionName, CarLoadEditFrame clef) {
         super(actionName);
@@ -26,10 +20,11 @@ final class CarLoadAttributeAction extends AbstractAction {
 
     CarLoadEditFrame clef;
 
+    @Override
     public void actionPerformed(ActionEvent ae) {
         log.debug("Show attribute quanity");
         clef.toggleShowQuanity();
     }
 
-    static Logger log = LoggerFactory.getLogger(CarAttributeEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarAttributeEditFrame.class.getName());
 }

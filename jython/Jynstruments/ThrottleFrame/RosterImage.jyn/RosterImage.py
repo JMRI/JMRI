@@ -2,6 +2,8 @@
 # Part of the JMRI distribution
 #
 
+import java
+import jmri
 import jmri.jmrit.jython.Jynstrument as Jynstrument
 import java.awt.BorderLayout as BorderLayout
 import jmri.jmrit.throttle.BackgroundPanel as BackgroundPanel

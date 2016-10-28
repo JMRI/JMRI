@@ -6,8 +6,7 @@
  * @author	Bob Jacobsen Copyright (C) 2001, 2008 copied from Ecos and converted
  * to Powerline
  * @author	Ken Cameron Copyright (C) 2011
- * @version	$Revision$
- */
+  */
 package jmri.jmrix.powerline.swing.serialmon;
 
 import java.util.ResourceBundle;
@@ -16,8 +15,6 @@ import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.swing.PowerlinePanelInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialListener, PowerlinePanelInterface {
 
@@ -99,8 +96,6 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialL
         }
 
     }
-
-    static Logger log = LoggerFactory.getLogger(SerialMonPane.class.getName());
 
 }
 

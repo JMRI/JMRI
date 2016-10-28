@@ -1,10 +1,11 @@
+package jmri.jmrix.lenz;
+
 /**
  * XNetConstants.java
  *
  * Description:	Constants to represent values seen in XpressNet traffic
  *
  * @author	Paul Bender Copyright (C) 2003-2009
- * @version $ Revision: 1.9 $
  *
  * Variable prefix abreviation keys: ACC_ is for accessory messages BC_ is for
  * broadcast messages CS_ is for command station messages PROG_ is for
@@ -16,8 +17,6 @@
  * A few variables don't have a prefix. The name should be self explanitory, but
  * a prefix may be added later.
  */
-package jmri.jmrix.lenz;
-
 public final class XNetConstants {
 
     /* Commands send from the command station to the computer*/
@@ -369,7 +368,10 @@ public final class XNetConstants {
     public final static int LI101_REQUEST_BAUD = 0x02;
 
     /* The following are error messages sent by the LIUSB (version 3.6) */
-    public final static int LIUSB_WRONG_SYNTAX = 0x0A;
+    public final static int LIUSB_TIMESLOT_RESTORED = 0x07;
+    public final static int LIUSB_REQUEST_SENT_WHILE_NO_TIMESLOT = 0x08;
+    public final static int LIUSB_BAD_DATA_IN_REQUEST = 0x09;
+    public final static int LIUSB_RETRANSMIT_REQUEST = 0x0A;
 
 }
 

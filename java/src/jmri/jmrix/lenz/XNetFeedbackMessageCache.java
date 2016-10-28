@@ -9,8 +9,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Paul Bender Copyright (C) 2012
- * @version	$Revision$
- */
+  */
 public class XNetFeedbackMessageCache implements XNetListener {
 
     protected XNetTrafficController tc = null;
@@ -111,7 +110,7 @@ public class XNetFeedbackMessageCache implements XNetListener {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(XNetFeedbackMessageCache.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetFeedbackMessageCache.class.getName());
 
 }
 

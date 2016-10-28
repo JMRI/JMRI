@@ -1,5 +1,6 @@
 package jmri.jmrix.ieee802154.xbee.configurexml;
 
+import jmri.configurexml.JmriConfigureXmlException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Ken Cameron Copyright: Copyright (c) 2014
- * @version $Revision$
  */
 public class XBeeSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -27,10 +27,11 @@ public class XBeeSensorManagerXml extends jmri.managers.configurexml.AbstractSen
         log.error("Invalid method called");
     }
 
-    public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
+    @Override
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         // load individual sensors
-        return loadSensors(sensors);
+        return loadSensors(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(XBeeSensorManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeSensorManagerXml.class.getName());
 }

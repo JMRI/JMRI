@@ -2,8 +2,6 @@
 package jmri.jmrix.mrc;
 
 import jmri.Turnout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * New MRC Turnout Manager
@@ -12,7 +10,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Paul Bender Copyright (C) 2004
  * @author Martin Wade Copyright (C) 2014
- * @version	$Revision: 22821 $
+ * 
  */
 public class MrcTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
@@ -35,8 +33,6 @@ public class MrcTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         t.setUserName(userName);
         return t;
     }
-
-    static Logger log = LoggerFactory.getLogger(MrcTurnoutManager.class.getName());
 
 }
 

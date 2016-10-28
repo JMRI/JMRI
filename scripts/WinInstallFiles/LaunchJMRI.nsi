@@ -25,6 +25,10 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.20.0
+; - Allow options to be specified either as '/' or '-'
+; - Add option '/J' to pass JVM option
+; -------------------------------------------------------------------------
 ; - Version 0.1.19.0
 ; - Bring heap size calculation into line with Linux and OS X launchers
 ; - Increase minimum memory requirement to 96 MB
@@ -129,8 +133,8 @@
 ; -------------------------------------------------------------------------
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
-!define COPYRIGHT  "© 1997-2014 JMRI Community"   ; Copyright string
-!define VER        "0.1.19.0"                     ; Launcher version
+!define COPYRIGHT  "© 1997-2016 JMRI Community"   ; Copyright string
+!define VER        "0.1.20.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
@@ -153,6 +157,7 @@ Var CLASSPATH  ; holds the class path for JMRI .jars
 Var CLASS      ; holds the class to launch
 Var APPNAME    ; holds the application name
 Var OPTIONS    ; holds the JRE options
+Var JVMOPTIONS ; holds the additonal JRE options passed via '/J'
 Var JMRIOPTIONS ; holds the JMRI-specific options (read from JMRI_OPTIONS)
 Var JMRIPREFS  ; holds the path to user preferences (read from JMRI_PREFSDIR)
 Var JMRIHOME   ; holds the path to JMRI program files (read from JMRI_HOME)
@@ -359,7 +364,7 @@ Section "Main"
     StrCpy $JMRIOPTIONS '$JMRIOPTIONS -Dorg.jmri.profile="$JMRIPROFILE"'
   
   contOptions:
-  StrCpy $OPTIONS "$JMRIOPTIONS -noverify"
+  StrCpy $OPTIONS "$JMRIOPTIONS $JVMOPTIONS -noverify"
   StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.d3d=false"
   StrCpy $OPTIONS "$OPTIONS -Djava.security.policy=security.policy"
   StrCpy $OPTIONS "$OPTIONS -Djinput.plugins=net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"
@@ -498,7 +503,7 @@ Function .onInit
   Call GetParameters
   Pop $0
   StrCmp $0 "" 0 cmdlineOk
-    MessageBox MB_OK|MB_ICONSTOP "No command line parameter. Usage 'LaunchJMRI.exe [/debug] [/noisy] [/32bit] [/profile <profileID>] class [config]'"
+    MessageBox MB_OK|MB_ICONSTOP "No command line parameter. Usage 'LaunchJMRI.exe [/debug] [/noisy] [/32bit] [/profile <profileID>] [/JOPTION] class [config]'"
     Abort
 
   cmdlineOk:
@@ -507,13 +512,19 @@ Function .onInit
   Call GetWord
   Pop $1
   StrCpy $2 $1 1
-  StrCmp $2 "/" cmdlineOptsGet cmdlineOptsDone
+  StrCmp $2 "/" cmdlineOptsGet
+  StrCmp $2 "-" cmdlineOptsGet cmdlineOptsDone
   cmdlineOptsGet:
   ; -- Process the possible commandline options
-  StrCmp $1 "/debug" optsDebug
-  StrCmp $1 "/noisy" optsNoisy
-  StrCmp $1 "/32bit" opts32bit
-  StrCmp $1 "/profile" optsProfile
+  ; -- Strip first character
+  StrCpy $2 $1 "" 1
+  StrCmp $2 "debug" optsDebug
+  StrCmp $2 "noisy" optsNoisy
+  StrCmp $2 "32bit" opts32bit
+  StrCmp $2 "profile" optsProfile
+  ; -- Now check if we've got a '/J | -J' option
+  StrCpy $2 $2 1
+  StrCmp $2 "J" optsJVMOpts
   ; -- If we've got here, the commandline option is not known so give an error.
     MessageBox MB_OK|MB_ICONSTOP "Command line option '$1' not known."
     Abort
@@ -542,6 +553,18 @@ Function .onInit
   StrCmp $2 '"' 0 cmdLoop
     StrCpy $JMRIPROFILE $JMRIPROFILE "" 1
     Goto cmdLoop
+    
+  optsJVMOpts:
+  ; -- Format is '-J-Dsun.java2d.hdiaware=true'
+  ; -- to pass '-Dsun.java2d.hdiaware=true'
+  ; -- $1 already contains complete option with '-J' prefix
+  StrCpy $2 $1 "" 2  ; strip first 2 chars
+  StrCmp $JVMOPTIONS "" optsJVMcont
+    ; -- add space if more than one option
+    StrCpy $JVMOPTIONS `$JVMOPTIONS `
+  optsJVMcont:
+  StrCpy $JVMOPTIONS `$JVMOPTIONS$2`
+  Goto cmdLoop
 
   cmdlineOptsDone:
   ; -- Read the class name

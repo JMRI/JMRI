@@ -1,4 +1,3 @@
-//SimpleReporterServer.java
 package jmri.jmris.simpleserver;
 
 import java.io.DataInputStream;
@@ -9,8 +8,6 @@ import jmri.JmriException;
 import jmri.Reporter;
 import jmri.jmris.AbstractReporterServer;
 import jmri.jmris.JmriConnection;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Simple Server interface between the JMRI reporter manager and a network
@@ -18,7 +15,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2011
  * @author Randall Wood Copyright (C) 2013
- * @version $Revision$
  */
 public class SimpleReporterServer extends AbstractReporterServer {
 
@@ -59,19 +55,25 @@ public class SimpleReporterServer extends AbstractReporterServer {
         int index, index2;
         index = statusString.indexOf(" ") + 1;
         index2 = statusString.indexOf(" ", index + 1);
-        initReporter(statusString.substring(index, index2>0?index2:statusString.length()));
+        int newlinepos = statusString.indexOf("\n");
+        String reporterName = statusString.substring(index, index2>0?index2:newlinepos).toUpperCase();
+        initReporter(reporterName);
         // the string should be "REPORTER xxxxxx REPORTSTRING\n\r"
         // where xxxxxx is the reporter identifier and REPORTSTRING is
         // the report, which may contain spaces.
-        if (index2 > 0 && statusString.substring(index2 + 1).length() > 0) {
-            setReporterReport(statusString.substring(index, index2).toUpperCase(), statusString.substring(index2 + 1));
+        if (index2 > 0 && ( newlinepos - (index2 + 1) > 0)) {
+            setReporterReport(reporterName, statusString.substring(index2 + 1,newlinepos));
+            // setReporterReport ALSO triggers sending the status report, so 
+            // no further action is required to echo the status to the client.
+        } else {
+            // send the current status if the report
+            try {
+               Reporter reporter = InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter(reporterName);
+               sendReport(reporterName, reporter.getCurrentReport());
+            } catch (IllegalArgumentException ex) {
+                log.warn("Failed to provide Reporter \"{}\" in parseStatus", reporterName);
+            }
         }
-        //} else {
-        // return report for this reporter/
-        Reporter reporter = InstanceManager.reporterManagerInstance().provideReporter(statusString.substring(index).toUpperCase());
-        sendReport(statusString.substring(index), reporter.getCurrentReport());
-
-        //}
     }
 
     private void sendMessage(String message) throws IOException {
@@ -81,5 +83,6 @@ public class SimpleReporterServer extends AbstractReporterServer {
             this.connection.sendMessage(message);
         }
     }
-    static Logger log = LoggerFactory.getLogger(SimpleReporterServer.class.getName());
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SimpleReporterServer.class.getName());
 }

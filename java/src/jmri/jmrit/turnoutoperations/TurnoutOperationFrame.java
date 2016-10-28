@@ -1,6 +1,3 @@
-/**
- *
- */
 package jmri.jmrit.turnoutoperations;
 
 import java.awt.Component;
@@ -20,8 +17,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import jmri.TurnoutOperation;
 import jmri.TurnoutOperationManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author John Harper
@@ -29,10 +24,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TurnoutOperationFrame extends JDialog {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8722204384333835792L;
     TurnoutOperationFrame self = this;
     TurnoutOperationConfig currentConfig = null;
     TurnoutOperation currentOperation = null;
@@ -40,9 +31,9 @@ public class TurnoutOperationFrame extends JDialog {
     JTabbedPane tabPane;
 
     public TurnoutOperationFrame(Frame parent) {
-        super(parent, "Turnout Operation Editor");
+        super(parent, Bundle.getMessage("TurnoutOperationEditorTitle"));
         Container contentPane = getContentPane();
-        setSize(400, 150);
+        setSize(400, 165);
         Box outerBox = Box.createVerticalBox();
         contentPane.add(outerBox);
         tabPane = new JTabbedPane();
@@ -54,7 +45,7 @@ public class TurnoutOperationFrame extends JDialog {
         outerBox.add(tabPane);
         Box bottomBox = Box.createHorizontalBox();
         bottomBox.add(Box.createHorizontalGlue());
-        JButton okButton = new JButton("OK");
+        JButton okButton = new JButton(Bundle.getMessage("ButtonOK"));
         okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 self.doOK();
@@ -62,7 +53,7 @@ public class TurnoutOperationFrame extends JDialog {
         }
         );
         bottomBox.add(okButton);
-        JButton cancelButton = new JButton("Cancel");
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 setVisible(false);
@@ -70,7 +61,7 @@ public class TurnoutOperationFrame extends JDialog {
         }
         );
         bottomBox.add(cancelButton);
-        JButton deleteButton = new JButton("Delete");
+        JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
         deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 self.doDelete();
@@ -103,8 +94,8 @@ public class TurnoutOperationFrame extends JDialog {
         String query = "";
         if (currentOperation != null && !currentOperation.isDefinitive()) {
             if (currentOperation.isInUse()) {
-                query = "Operation " + currentOperation.getName() + " is in use\n"
-                        + "Turnouts using it will revert to the global default\n";
+                query = Bundle.getMessage("DeleteOperation") + " " + currentOperation.getName() + " " + Bundle.getMessage("DeleteIsInUse")
+                        + Bundle.getMessage("DeleteRevert");
             }
             if (JOptionPane.showConfirmDialog(this, query + "Delete operation " + currentOperation.getName() + "?",
                     "Confirm delete", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -149,7 +140,7 @@ public class TurnoutOperationFrame extends JDialog {
             pane = TurnoutOperationConfig.getConfigPanel(op);
             if (pane != null) {
                 tabPane.add(op.getName(), pane);
-                if (op.getName() == previousSelectionName) {
+                if (op.getName().equals(previousSelectionName)) {
                     tabPane.setSelectedComponent(pane);
                 }
             }
@@ -170,6 +161,4 @@ public class TurnoutOperationFrame extends JDialog {
             previousSelectionName = currentOperation.getName();
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(TurnoutOperationFrame.class.getName());
 }

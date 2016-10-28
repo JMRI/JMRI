@@ -1,4 +1,3 @@
-// SpeedoTrafficController.java
 package jmri.jmrix.bachrus;
 
 import gnu.io.SerialPortEvent;
@@ -22,23 +21,20 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author	Andrew Crosland Copyright (C) 2010
- * @version	$Revision$
  */
 public class SpeedoTrafficController implements SpeedoInterface, SerialPortEventListener {
 
     private SpeedoReply reply = new SpeedoReply();
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
-    // Ignore FindBugs warning as we can only have on SPROG instance at this time
-    public SpeedoTrafficController() {
-        self = this;
+    public SpeedoTrafficController(SpeedoSystemConnectionMemo adaptermemo) {
+        memo = adaptermemo;
     }
 
     // The methods to implement the SpeedoInterface
     protected Vector<SpeedoListener> cmdListeners = new Vector<SpeedoListener>();
 
     public boolean status() {
-        return (ostream != null & istream != null);
+        return (ostream != null && istream != null);
     }
 
     public synchronized void addSpeedoListener(SpeedoListener l) {
@@ -121,16 +117,14 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
      *
      * @return The registered SpeedoTrafficController instance for general use,
      *         if need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public SpeedoTrafficController instance() {
-        if (self == null) {
-            self = new SpeedoTrafficController();
-        }
-        return self;
+        return null;
     }
 
-    static volatile protected SpeedoTrafficController self = null;
-
+    private SpeedoSystemConnectionMemo memo = null;
     // data members to hold the streams
     DataInputStream istream = null;
     OutputStream ostream = null;
@@ -152,7 +146,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
     }
 
     private boolean unsolicited;
-    static Logger log = LoggerFactory.getLogger(SpeedoTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpeedoTrafficController.class.getName());
 
     /**
      * serialEvent - respond to an event triggered by RXTX. In this case we are
@@ -185,6 +179,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
                         this.reply.setElement(i, char1);
 
                     } catch (Exception e) {
+                        log.debug("{} Exception handling reply cause {}",e,e.getCause());
                     }
                     if (endReply(this.reply)) {
                         sendreply();
@@ -223,6 +218,3 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
         this.reply = new SpeedoReply();
     }
 }
-
-
-/* @(#)SpeedoTrafficController.java */

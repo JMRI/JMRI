@@ -1,4 +1,3 @@
-// RailCommTagManager.java
 package jmri.managers;
 
 import java.util.ArrayList;
@@ -11,6 +10,11 @@ import jmri.RailCom;
 import jmri.RailComManager;
 import jmri.Reporter;
 import jmri.implementation.DefaultRailCom;
+
+import javax.annotation.Nonnull;
+import javax.annotation.CheckForNull;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * interface.
  *
  * @author Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 18102 $
  * @since 2.99.4
  */
 public class DefaultRailComManager extends AbstractManager
@@ -27,12 +30,9 @@ public class DefaultRailComManager extends AbstractManager
 
     public DefaultRailComManager() {
         InstanceManager.store(this, RailComManager.class);
-        if (jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
-            new jmri.jmrit.beantable.ListedTableFrame();
-        }
-        jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class).addTable("jmri.jmrit.beantable.RailComTableAction", "RailComm Table", true);
     }
 
+    @Override
     public RailCom provideIdTag(String name) {
         RailCom t = getIdTag(name);
         if (t != null) {
@@ -54,18 +54,25 @@ public class DefaultRailComManager extends AbstractManager
         return new DefaultRailCom(systemName, userName);
     }
 
-    public RailCom newIdTag(String systemName, String userName) {
-        if (log.isDebugEnabled()) {
-            log.debug("new IdTag:"
-                    + ((systemName == null) ? "null" : systemName)
-                    + ";" + ((userName == null) ? "null" : userName));
-        }
+    @SuppressFBWarnings(value="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE", justification="defensive programming check of @Nonnull argument")
+    private void checkSystemName(@Nonnull String systemName, @CheckForNull String userName) {
         if (systemName == null) {
             log.error("SystemName cannot be null. UserName was "
                     + ((userName == null) ? "null" : userName));
             throw new IllegalArgumentException("SystemName cannot be null. UserName was "
                     + ((userName == null) ? "null" : userName));
         }
+    }
+    
+    @Override
+    public RailCom newIdTag(@Nonnull String systemName, @CheckForNull String userName) {
+        if (log.isDebugEnabled()) {
+            log.debug("new IdTag:"
+                    + ((systemName == null) ? "null" : systemName)
+                    + ";" + ((userName == null) ? "null" : userName));
+        }
+        checkSystemName(systemName, userName);
+        
         // return existing if there is one
         RailCom s;
         if ((userName != null) && ((s = getByUserName(userName)) != null)) {
@@ -98,6 +105,7 @@ public class DefaultRailComManager extends AbstractManager
         return s;
     }
 
+    @Override
     public RailCom getIdTag(String name) {
         RailCom t = getBySystemName(makeSystemName(name));
         if (t != null) {
@@ -112,20 +120,24 @@ public class DefaultRailComManager extends AbstractManager
         return getBySystemName(name);
     }
 
+    @Override
     public RailCom getByTagID(String tagID) {
         return getBySystemName(makeSystemName(tagID));
     }
 
+    @Override
     public RailCom getBySystemName(String name) {
         return (RailCom) _tsys.get(name);
     }
 
+    @Override
     public RailCom getByUserName(String key) {
         return (RailCom) _tuser.get(key);
     }
 
+    @Override
     public List<IdTag> getTagsForReporter(Reporter reporter, long threshold) {
-        List<IdTag> out = new ArrayList<IdTag>();
+        List<IdTag> out = new ArrayList<>();
         Date lastWhenLastSeen = new Date(0);
 
         // First create a list of all tags seen by specified reporter
@@ -162,39 +174,49 @@ public class DefaultRailComManager extends AbstractManager
     protected void registerSelf() {
     }
 
+    @Override
     public char typeLetter() {
         return 'D';
     }
 
+    @Override
     public String getSystemPrefix() {
         return "I";
     }
 
+    @Override
     public int getXMLOrder() {
         return jmri.Manager.IDTAGS;
     }
 
+    @Override
     public boolean isInitialised() {
         return true;
     }
 
+    @Override
     public void setStateStored(boolean state) {
     }
 
+    @Override
     public boolean isStateStored() {
         return false;
     }
 
+    @Override
     public void setFastClockUsed(boolean fastClock) {
     }
 
+    @Override
     public boolean isFastClockUsed() {
         return false;
     }
 
+    @Override
     public void init() {
     }
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameReporter");
     }
@@ -202,5 +224,3 @@ public class DefaultRailComManager extends AbstractManager
     private static final Logger log = LoggerFactory.getLogger(DefaultRailComManager.class.getName());
 
 }
-
-/* @(#)DefaultRailComManager.java */

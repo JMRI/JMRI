@@ -14,13 +14,11 @@ import junit.framework.TestSuite;
  * Description:
  *
  * @author	Bob Jacobsen Copyright 2009
- * @version	$Revision$
- */
+  */
 public class SignalMastIconTest extends jmri.util.SwingTestCase {
 
     SignalMastIcon to = null;
-    jmri.jmrit.display.panelEditor.PanelEditor panel
-            = new jmri.jmrit.display.panelEditor.PanelEditor("Test SignalMastIcon Panel");
+    jmri.jmrit.display.panelEditor.PanelEditor panel;
 
     public void testShowText() {
         // this one is for Layout editor, which for now
@@ -36,41 +34,26 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
 
         // reset instance manager & create test heads
         jmri.util.JUnitUtil.resetInstanceManager();
-        InstanceManager.signalHeadManagerInstance().register(
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH1") {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -183285703527320024L;
-
                     protected void updateOutput() {
                     }
                 }
         );
-        InstanceManager.signalHeadManagerInstance().register(
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH2") {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -7406765405866446309L;
-
                     protected void updateOutput() {
                     }
                 }
         );
-        InstanceManager.signalHeadManagerInstance().register(
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH3") {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 5252087327996710968L;
-
                     protected void updateOutput() {
                     }
                 }
         );
 
-        SignalMast s = InstanceManager.signalMastManagerInstance()
+        SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class)
                 .provideSignalMast("IF$shsm:basic:one-searchlight:IH1");
 
         to.setSignalMast(s.getSystemName());
@@ -98,41 +81,26 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
 
         // reset instance manager & create test heads
         jmri.util.JUnitUtil.resetInstanceManager();
-        InstanceManager.signalHeadManagerInstance().register(
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH1") {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 790075319304422152L;
-
                     protected void updateOutput() {
                     }
                 }
         );
-        InstanceManager.signalHeadManagerInstance().register(
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH2") {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -1129562077221922315L;
-
                     protected void updateOutput() {
                     }
                 }
         );
-        InstanceManager.signalHeadManagerInstance().register(
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH3") {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 6702020027184748479L;
-
                     protected void updateOutput() {
                     }
                 }
         );
 
-        SignalMast s = InstanceManager.signalMastManagerInstance()
+        SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class)
                 .provideSignalMast("IF$shsm:basic:two-searchlight:IH1:IH2");
 
         s.setAspect("Clear");
@@ -157,7 +125,7 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SignalMastIconTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -169,6 +137,7 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test SignalMastIcon Panel");
     }
 
     protected void tearDown() {

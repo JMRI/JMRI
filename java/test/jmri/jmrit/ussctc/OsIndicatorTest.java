@@ -1,23 +1,19 @@
-// OsIndicatorTest.java
 package jmri.jmrit.ussctc;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.Turnout;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for classes in the jmri.jmrit.ussctc.OsIndicator class
  *
  * @author	Bob Jacobsen Copyright 2003, 2007, 2015
- * @version	$Revision$
- */
+  */
 public class OsIndicatorTest extends TestCase {
 
     public void testCreate() {
@@ -136,7 +132,7 @@ public class OsIndicatorTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {OsIndicatorTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -161,7 +157,5 @@ public class OsIndicatorTest extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(OsIndicatorTest.class.getName());
 
 }

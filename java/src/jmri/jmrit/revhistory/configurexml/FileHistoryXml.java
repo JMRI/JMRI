@@ -12,7 +12,6 @@ import org.jdom2.Element;
  * them. The "load()" method is therefore a null-op here.
  *
  * @author Bob Jacobsen Copyright (c) 2010
- * @version $Revision$
  */
 public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
 
@@ -20,7 +19,8 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
      * Usual configurexml method, this one doesn't do anything because the
      * content is explicitly loaded from the file
      */
-    public boolean load(Element e) throws Exception {
+    @Override
+    public boolean load(Element shared, Element perNode) throws Exception {
         return true;
     }
 

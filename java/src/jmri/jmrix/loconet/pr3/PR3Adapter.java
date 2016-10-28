@@ -14,8 +14,7 @@ import org.slf4j.LoggerFactory;
  * switch settings on the new Digitrax PR3
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2005, 2006, 2008
- * @version	$Revision$
- */
+  */
 public class PR3Adapter extends LocoBufferAdapter {
 
     public PR3Adapter() {
@@ -81,7 +80,6 @@ public class PR3Adapter extends LocoBufferAdapter {
 
             // start operation
             packets.startThreads();
-            jmri.jmrix.loconet.ActiveFlag.setActive();
 
             // set mode
             LocoNetMessage msg = new LocoNetMessage(6);
@@ -110,7 +108,6 @@ public class PR3Adapter extends LocoBufferAdapter {
 
             // start operation
             packets.startThreads();
-            jmri.jmrix.loconet.ActiveFlag.setActive();
 
             // set mode
             LocoNetMessage msg = new LocoNetMessage(6);
@@ -160,5 +157,5 @@ public class PR3Adapter extends LocoBufferAdapter {
         return (PR3SystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
-    static Logger log = LoggerFactory.getLogger(PR3Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PR3Adapter.class.getName());
 }

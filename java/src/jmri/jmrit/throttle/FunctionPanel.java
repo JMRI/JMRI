@@ -21,10 +21,6 @@ import org.slf4j.LoggerFactory;
  */
 public class FunctionPanel extends JInternalFrame implements FunctionListener, java.beans.PropertyChangeListener, AddressListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4241542668066898837L;
     public static final int NUM_FUNCTION_BUTTONS = 29;
     public static final int NUM_FUNC_BUTTONS_INIT = 16;	//only show 16 function buttons at start
     private DccThrottle mThrottle;
@@ -53,7 +49,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public FunctionButton[] getFunctionButtons() {
         return functionButton;
     }
@@ -317,7 +313,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 rosterEntry.setFunctionSelectedImage(functionNumber, imageSelectedPath);
             }
         }
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
     }
 
     /**
@@ -538,7 +534,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      * A KeyAdapter that listens for the keys that work the function buttons
      *
      * @author glen
-     * @version $Revision$
      */
     class FunctionButtonKeyListener extends KeyAdapter {
 
@@ -673,5 +668,5 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
     }
 
-    static Logger log = LoggerFactory.getLogger(FunctionPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FunctionPanel.class.getName());
 }

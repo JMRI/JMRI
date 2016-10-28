@@ -196,7 +196,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 //      pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
         _length.setText("0.0");
         pp.add(CircuitBuilder.makeTextBoxPanel(
-                false, _length, "length", true, "TooltipPathLength"));
+                false, _length, "Length", true, "TooltipPathLength"));
         _length.setPreferredSize(new Dimension(100, _length.getPreferredSize().height));
         _length.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent event) {
@@ -204,7 +204,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
             }            
         });
         _units = new JToggleButton("", !_block.isMetric());
-        _units.setToolTipText(Bundle.getMessage("TooltipPathLength"));
+        _units.setToolTipText(Bundle.getMessage("TooltipPathUnitButton"));
         _units.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 changeUnits();
@@ -222,7 +222,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         l = new JLabel(Bundle.getMessage("selectPathIcons"));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(l);
-        l = new JLabel(Bundle.getMessage("pressAddButton"));
+        l = new JLabel(Bundle.getMessage("pressAddButton", Bundle.getMessage("buttonAddPath")));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(l);
         panel.add(Box.createVerticalStrut(STRUT_SIZE / 2));
@@ -350,7 +350,6 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     /**
      * Construct the array of icons that displays the path
      *
-     * @param path
      */
     private ArrayList<Positionable> makePathGroup(OPath path) {
         Portal fromPortal = path.getFromPortal();
@@ -390,7 +389,6 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     /**
      * Sets the path icons for display
      *
-     * @param pathChanged
      */
     protected void updatePath(boolean pathChanged) {
         // to avoid ConcurrentModificationException now set data
@@ -742,7 +740,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         String name = _pathName.getText();
         OPath path = _pathList.getSelectedValue();
         if (name == null || name.trim().length() == 0 || path == null) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("changePathName"),
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("changePathName", Bundle.getMessage("buttonChangeName")),
                     Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
             return;
         }
@@ -832,5 +830,5 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         return _block;
     }
 
-    static Logger log = LoggerFactory.getLogger(EditCircuitPaths.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EditCircuitPaths.class.getName());
 }

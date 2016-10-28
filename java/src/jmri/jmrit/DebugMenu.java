@@ -1,24 +1,15 @@
-// DebugMenu.java
 package jmri.jmrit;
 
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Create a "Debug" menu containing the JMRI system-independent debugging tools.
  *
  * @author	Bob Jacobsen Copyright 2003
- * @version $Revision$
  */
 public class DebugMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -954409766062724149L;
 
     public DebugMenu(String name, JPanel panel) {
         this(panel);
@@ -57,6 +48,4 @@ public class DebugMenu extends JMenu {
         add(vsdMenu);
 
     }
-
-    static Logger log = LoggerFactory.getLogger(DebugMenu.class.getName());
 }

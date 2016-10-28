@@ -1,11 +1,8 @@
 package jmri.jmrix.roco.z21.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.roco.z21.ConnectionConfig;
-import jmri.jmrix.roco.z21.z21Adapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrix.roco.z21.Z21Adapter;
 
 /**
  * Handle XML persistance of layout connections by persistening the Z21 (and
@@ -16,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * attribute in the XML.
  *
  * @author Paul Bender Copyright (C) 2014
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
@@ -27,7 +23,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     @Override
     protected void getInstance() {
         if (adapter == null) {
-            adapter = new z21Adapter();
+            adapter = new Z21Adapter();
         }
     }
 
@@ -38,10 +34,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     @Override
     protected void register() {
-        InstanceManager.getDefault(jmri.ConfigureManager.class).registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

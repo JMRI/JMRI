@@ -1,4 +1,3 @@
-// SprogCSTurnout.java
 package jmri.jmrix.sprog;
 
 import jmri.Turnout;
@@ -15,25 +14,20 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005
  * @author J.M. (Mark) Knox Copyright (C) 2005
- *
- * @version	$Revision$
  */
 public class SprogCSTurnout extends AbstractTurnout {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4189742441156229537L;
+    private SprogSystemConnectionMemo _memo = null;
 
     /**
      * Sprog turnouts use the NMRA number (0-511) as their numerical
      * identification.
      */
-    public SprogCSTurnout(int number) {
-        super("ST" + number);
+    public SprogCSTurnout(int number,SprogSystemConnectionMemo memo) {
+        super(memo.getSystemPrefix() + "T" + number);
         _number = number;
-
-        commandStation = SprogCommandStation.instance();
+        _memo = memo;
+        commandStation = _memo.getCommandStation();
     }
 
     public int getNumber() {
@@ -43,9 +37,9 @@ public class SprogCSTurnout extends AbstractTurnout {
     // Handle a request to change state by sending a formatted DCC packet
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states
-        if ((s & Turnout.CLOSED) > 0) {
+        if ((s & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) > 0) {
+            if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both CLOSED and THROWN " + s);
                 return;
@@ -77,7 +71,7 @@ public class SprogCSTurnout extends AbstractTurnout {
 
     int _number;   // turnout number
 
-    static Logger log = LoggerFactory.getLogger(SprogCSTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogCSTurnout.class.getName());
 }
 
 /* @(#)SprogCSTurnout.java */

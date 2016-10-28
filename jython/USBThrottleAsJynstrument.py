@@ -4,9 +4,9 @@
 # Author: Lionel Jeanson, copyright 2010
 # Part of the JMRI distribution
 #
-# The next line is maintained by CVS, please don't change it
-# $Revision$
+
 import net.java.games.input.Controller as Controller
+import jmri
 
 numThrottles  = 0
 for ctrl in jmri.jmrix.jinput.TreeModel.instance().controllers(): 

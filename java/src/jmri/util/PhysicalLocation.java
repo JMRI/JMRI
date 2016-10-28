@@ -16,7 +16,6 @@ package jmri.util;
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
  */
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,14 +42,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class PhysicalLocation extends Vector3f {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6996042081848047974L;
-
-    float[] f = new float[3];  // used for extracting a single dimension
-    // from the underlying vector.
 
     private boolean _isTunnel;
 
@@ -101,7 +92,7 @@ public class PhysicalLocation extends Vector3f {
      */
     public static PhysicalLocation getBeanPhysicalLocation(NamedBean b) {
         String s = (String) b.getProperty(PhysicalLocation.NBPropertyKey);
-        if ((s == null) || (s.equals(""))) {
+        if ((s == null) || (s.isEmpty())) {
             return (PhysicalLocation.Origin);
         } else {
             return (PhysicalLocation.parse(s));
@@ -122,6 +113,9 @@ public class PhysicalLocation extends Vector3f {
 
     /**
      * Get a panel component that can be used to view and/or edit a location.
+     *
+     * @param title the title of the component
+     * @return a new component
      */
     static public PhysicalLocationPanel getPanel(String title) {
         return (new PhysicalLocationPanel(title));
@@ -139,8 +133,9 @@ public class PhysicalLocation extends Vector3f {
         // Optional flags come immediately after the (x,y,z) in the form of "(flag)".
         // Flags are boolean. If they are present, they are true.
         // Regex [-+]?[0-9]*\.?[0-9]+
-        //String syntax = "\\((\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+)\\)";
-        String syntax = "\\((\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+)\\)(\\([tunnel]\\))*";
+        // String syntax = "\\((\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+)\\)";
+        // String syntax = "\\((\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+)\\)(\\([tunnel]\\))*";
+        String syntax = "\\((\\s*[-+]?[0-9]*\\.?[0-9]+), (\\s*[-+]?[0-9]*\\.?[0-9]+), (\\s*[-+]?[0-9]*\\.?[0-9]+)\\)\\(?([tunnel]*)\\)?";
         try {
             Pattern p = Pattern.compile(syntax);
             Matcher m = p.matcher(pos);
@@ -157,14 +152,14 @@ public class PhysicalLocation extends Vector3f {
             boolean is_tunnel = false;
             // Handle optional flags
             for (int i = 4; i < m.groupCount() + 1; i++) {
-                if ((m.group(i) != null) && (m.group(i) == "(tunnel)")) {
+                if ((m.group(i) != null) && ("tunnel".equals(m.group(i)))) {
                     is_tunnel = true;
                 }
             }
 
-            return (new PhysicalLocation(Float.parseFloat(m.group(1)),
-                    Float.parseFloat(m.group(2)),
-                    Float.parseFloat(m.group(3)),
+            return (new PhysicalLocation(Float.parseFloat(xs),
+                    Float.parseFloat(ys),
+                    Float.parseFloat(zs),
                     is_tunnel));
         } catch (PatternSyntaxException e) {
             log.error("Malformed listener position syntax! " + syntax);
@@ -185,6 +180,7 @@ public class PhysicalLocation extends Vector3f {
      *
      * @return String "(X, Y, Z)"
      */
+    @Override
     public String toString() {
         String s = "(" + this.getX() + ", " + this.getY() + ", " + this.getZ() + ")";
         if (_isTunnel) {
@@ -207,7 +203,9 @@ public class PhysicalLocation extends Vector3f {
     }
 
     /**
-     * Constructor from Vector3f
+     * Constructor from Vector3f.
+     *
+     * @param v the vector
      */
     public PhysicalLocation(Vector3f v) {
         super(v);
@@ -221,97 +219,59 @@ public class PhysicalLocation extends Vector3f {
 
     /**
      * Constructor from X, Y, Z (float) + is_tunnel (boolean)
+     *
+     * @param x        location on X axis
+     * @param y        location on Y axis
+     * @param z        location on Z axis
+     * @param isTunnel true is location is in a tunnel
      */
-    public PhysicalLocation(float x, float y, float z, boolean is_tunnel) {
+    public PhysicalLocation(float x, float y, float z, boolean isTunnel) {
         super(x, y, z);
-        _isTunnel = is_tunnel;
+        _isTunnel = isTunnel;
 
     }
 
     /**
      * Constructor from X, Y, Z (float)
+     *
+     * @param x location on X axis
+     * @param y location on Y axis
+     * @param z location on Z axis
      */
     public PhysicalLocation(float x, float y, float z) {
-        setX(x);
-        setY(y);
-        setZ(z);
-        _isTunnel = false;
-
+        this(x, y, z, false);
     }
 
     /**
      * Constructor from X, Y, Z (double)
+     *
+     * @param x location on X axis
+     * @param y location on Y axis
+     * @param z location on Z axis
      */
     public PhysicalLocation(double x, double y, double z) {
-        super((float) x, (float) y, (float) z);
-        _isTunnel = false;
+        this(x, y, z, false);
     }
 
     /**
      * Constructor from X, Y, Z (double)
+     *
+     * @param x        location on X axis
+     * @param y        location on Y axis
+     * @param z        location on Z axis
+     * @param isTunnel true if location is in a tunnel
      */
-    public PhysicalLocation(double x, double y, double z, boolean is_tunnel) {
-        super((float) x, (float) y, (float) z);
-        _isTunnel = is_tunnel;
+    public PhysicalLocation(double x, double y, double z, boolean isTunnel) {
+        this((float) x, (float) y, (float) z, isTunnel);
     }
 
     /**
      * Copy Constructor
+     *
+     * @param p the location to copy
      */
     public PhysicalLocation(PhysicalLocation p) {
-        super(p.getX(), p.getY(), p.getZ());
-        _isTunnel = p.isTunnel();
-    }
-
-    /**
-     * Get X dimension
-     */
-    public float getX() {
-        this.get(f);
-        return (f[0]);
-    }
-
-    /**
-     * Set X dimension
-     */
-    public void setX(float x) {
-        this.get(f);
-        f[0] = x;
-        this.set(f);
-    }
-
-    /**
-     * Get Y dimension
-     */
-    public float getY() {
-        this.get(f);
-        return (f[1]);
-    }
-
-    /**
-     * Set Y dimension
-     */
-    public void setY(float y) {
-        this.get(f);
-        f[1] = y;
-        this.set(f);
-    }
-
-    /**
-     * Get Z dimension
-     */
-    public float getZ() {
-        this.get(f);
-        return (f[2]);
-    }
-
-    /**
-     * Set Z dimension
-     */
-    public void setZ(float z) {
-        this.get(f);
-        f[2] = z;
-        this.set(f);
+        this(p.getX(), p.getY(), p.getZ(), p.isTunnel());
     }
 
     public boolean isTunnel() {
@@ -322,18 +282,21 @@ public class PhysicalLocation extends Vector3f {
         _isTunnel = t;
     }
 
-    /**
-     * equals()
-     */
-    public Boolean equals(PhysicalLocation l) {
-        if ((this.getX() == l.getX())
-                && (this.getY() == l.getY())
-                && (this.getZ() == l.getZ())
-                && (this.isTunnel() == l.isTunnel())) {
-            return (true);
-        } else {
-            return (false);
+    @Override
+    public boolean equals(Object o) {
+        if (this.getClass().equals(o.getClass())) {
+            if (this.hashCode() == o.hashCode()) {
+                return true;
+            }
         }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + (this._isTunnel ? 1 : 0) + super.hashCode();
+        return hash;
     }
 
     /**

@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 18133 $
+ * 
  */
 public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -189,7 +189,7 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static Logger log = LoggerFactory.getLogger(Dcc4PcMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcMessage.class.getName());
 
 }
 

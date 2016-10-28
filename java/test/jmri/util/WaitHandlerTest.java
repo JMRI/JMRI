@@ -1,8 +1,7 @@
-// WaitHandlerTest.java
 package jmri.util;
 
 import java.util.Calendar;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,14 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Tests for the jmri.util.FileUtil class.
+ * Tests for the jmri.util.WaitHandler class.
  *
  * These tests are inherently time based, and may fail on a very busy computer.
  * Some have been commented out so they don't run during normal production
  * testing.
  *
  * @author	Bob Jacobsen Copyright 2003, 2009, 2010
- * @version	$Revision$
  */
 public class WaitHandlerTest extends TestCase {
 
@@ -227,8 +225,8 @@ public class WaitHandlerTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {WaitHandlerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        String[] testCaseName = {"-noloading", WaitHandlerTest.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -248,6 +246,6 @@ public class WaitHandlerTest extends TestCase {
         super.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(WaitHandlerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WaitHandlerTest.class.getName());
 
 }

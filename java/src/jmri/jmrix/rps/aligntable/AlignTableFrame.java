@@ -1,4 +1,3 @@
-// AlignTableFrame.java
 package jmri.jmrix.rps.aligntable;
 
 import java.awt.Container;
@@ -14,14 +13,9 @@ import javax.swing.JDialog;
  * @see AlignTableAction
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  */
 public class AlignTableFrame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1010732755062965677L;
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rps.aligntable.AlignTableBundle");
 
     /**

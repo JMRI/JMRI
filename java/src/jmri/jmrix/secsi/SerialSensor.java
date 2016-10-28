@@ -1,15 +1,11 @@
-// SerialSensor.java
 package jmri.jmrix.secsi;
 
 import jmri.implementation.AbstractSensor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Extend jmri.AbstractSensor for serial systems
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version $Revision$
  */
 public class SerialSensor extends AbstractSensor {
 
@@ -40,8 +36,6 @@ public class SerialSensor extends AbstractSensor {
      */
     public void requestUpdateFromLayout() {
     }
-
-    static Logger log = LoggerFactory.getLogger(SerialSensor.class.getName());
 
 }
 

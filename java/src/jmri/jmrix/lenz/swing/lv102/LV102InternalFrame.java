@@ -28,8 +28,7 @@ import org.slf4j.LoggerFactory;
  * that initialization is in the right order.
  *
  * @author	Paul Bender Copyright (C) 2005
- * @version	$Revision$
- */
+  */
 public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
     /**
@@ -46,7 +45,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
     // programming operation.  This 
     // should not be more than 15.
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SC_START_IN_CTOR",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SC_START_IN_CTOR",
             justification = "with existing code structure, we do not expect this to ever be subclassed.")
 
     public LV102InternalFrame() {
@@ -296,9 +295,25 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
     //Send Power Station settings
     void writeLV102Settings() {
 
+        // obtain the programmer Manager
+        jmri.ProgrammerManager pm = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class);
+        if(pm == null) {
+           // no programmer manager, cannot proceed.
+           CurrentStatus.setText(rb.getString("LV102StatusNoPM"));
+           log.error("No Programmer Manager Available, cannot configure LV102");
+           return;
+        }
+
+
         // Obtain an ops mode programmer instance
-        AddressedProgrammer opsProg = jmri.InstanceManager.programmerManagerInstance()
-                .getAddressedProgrammer(false, 00);
+        AddressedProgrammer opsProg = pm.getAddressedProgrammer(false, 00);
+
+        if(opsProg == null) {
+           // no ops mode programmer programmer, cannot proceed.
+           CurrentStatus.setText(rb.getString("LV102StatusNoPOM"));
+           log.error("Failed to obtain Operations Mode Programmer, cannot configure LV102");
+           return;
+        }
 
         // write the values to the power station.
         writeVoltSetting(opsProg);
@@ -308,8 +323,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         writeRailComTimingSetting(opsProg);
 
         // we're done now, so we can release the programmer.
-        jmri.InstanceManager.programmerManagerInstance()
-                .releaseAddressedProgrammer(opsProg);
+        pm.releaseAddressedProgrammer(opsProg);
     }
 
     // Write the voltage setting
@@ -328,11 +342,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 }
                 /* Pause briefly to give the user a chance to see what is 
                  happening */
-                try {
-                    CurrentStatus.wait(waitValue);
-                } catch (java.lang.InterruptedException ie1) {
-                    Thread.currentThread().interrupt(); // retain if needed later
-                }
+                new jmri.util.WaitHandler(this,waitValue);
 
                 /* First, send the ops mode programing command to enter
                  programing mode */
@@ -344,11 +354,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
                 /* Pause briefly to give the booster a chance to change 
                  into It's programming mode */
-                try {
-                    CurrentStatus.wait(waitValue);
-                } catch (java.lang.InterruptedException ie1) {
-                    Thread.currentThread().interrupt(); // retain if needed later
-                }
+                new jmri.util.WaitHandler(this,waitValue);
 
                 CurrentStatus.setText(rb.getString("LV102StatusWriteVolt"));
                 CurrentStatus.doLayout();
@@ -366,11 +372,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
                 /* Pause briefly to wait for the programmer to send back a 
                  reply */
-                try {
-                    CurrentStatus.wait(waitValue);
-                } catch (java.lang.InterruptedException ie1) {
-                    Thread.currentThread().interrupt(); // retain if needed later
-                }
+                new jmri.util.WaitHandler(this,waitValue);
+
             }  // End of synchronized(CurrentStatus) block for voltage setting
         } else {
             if (log.isDebugEnabled()) {
@@ -396,11 +399,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
                 /* Pause briefly to give the user a chance to see what is 
                  happening */
-                try {
-                    CurrentStatus.wait(waitValue);
-                } catch (java.lang.InterruptedException ie1) {
-                    Thread.currentThread().interrupt(); // retain if needed later
-                }
+                new jmri.util.WaitHandler(this,waitValue);
 
                 /* First, send the ops mode programing command to enter
                  programing mode */
@@ -412,11 +411,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
                 /* Pause briefly to give the booster a chance to change 
                  into It's programming mode */
-                try {
-                    CurrentStatus.wait(waitValue);
-                } catch (java.lang.InterruptedException ie2) {
-                    Thread.currentThread().interrupt(); // retain if needed later
-                }
+                new jmri.util.WaitHandler(this,waitValue);
 
                 CurrentStatus.setText(rb.getString("LV102StatusWriteELine"));
                 CurrentStatus.doLayout();
@@ -435,11 +430,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
                 /* Pause briefly to wait for the programmer to send back a 
                  reply */
-                try {
-                    CurrentStatus.wait(waitValue);
-                } catch (java.lang.InterruptedException ie1) {
-                    Thread.currentThread().interrupt(); // retain if needed later
-                }
+                new jmri.util.WaitHandler(this,waitValue);
+
             } // End of synchronized(CurrentStatus) block for E-line setting
         } else {
             if (log.isDebugEnabled()) {
@@ -466,11 +458,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
                 /* Pause briefly to give the user a chance to see what is 
                  happening */
-                try {
-                    CurrentStatus.wait(waitValue);
-                } catch (java.lang.InterruptedException ie1) {
-                    Thread.currentThread().interrupt(); // retain if needed later
-                }
+                new jmri.util.WaitHandler(this,waitValue);
 
                 /* First, send the ops mode programing command to enter
                  programing mode */
@@ -482,11 +470,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
                 /* Pause briefly to give the booster a chance to change 
                  into It's programming mode */
-                try {
-                    CurrentStatus.wait(waitValue);
-                } catch (java.lang.InterruptedException ie3) {
-                    Thread.currentThread().interrupt(); // retain if needed later
-                }
+                new jmri.util.WaitHandler(this,waitValue);
 
                 CurrentStatus.setText(rb.getString("LV102StatusWriteRailCom"));
                 CurrentStatus.doLayout();
@@ -504,11 +488,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
                 /* Pause briefly to wait for the programmer to send back a 
                  reply */
-                try {
-                    CurrentStatus.wait(waitValue);
-                } catch (java.lang.InterruptedException ie1) {
-                    Thread.currentThread().interrupt(); // retain if needed later
-                }
+                new jmri.util.WaitHandler(this,waitValue);
+
             } // End of synchronized(CurrentStatus) block for RailCom Setting
         } else {
             if (log.isDebugEnabled()) {
@@ -534,11 +515,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
                 /* Pause briefly to give the user a chance to see what is 
                  happening */
-                try {
-                    CurrentStatus.wait(waitValue);
-                } catch (java.lang.InterruptedException ie1) {
-                    Thread.currentThread().interrupt(); // retain if needed later
-                }
+                new jmri.util.WaitHandler(this,waitValue);
 
                 /* First, send the ops mode programing command to enter
                  programing mode */
@@ -550,11 +527,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
                 /* Pause briefly to give the booster a chance to change 
                  into It's programming mode */
-                try {
-                    CurrentStatus.wait(waitValue);
-                } catch (java.lang.InterruptedException ie3) {
-                    Thread.currentThread().interrupt(); // retain if needed later
-                }
+                new jmri.util.WaitHandler(this,waitValue);
 
                 CurrentStatus.setText(rb.getString("LV102StatusWriteRailComMode"));
                 CurrentStatus.doLayout();
@@ -572,11 +545,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
                 /* Pause briefly to wait for the programmer to send back a 
                  reply */
-                try {
-                    CurrentStatus.wait(waitValue);
-                } catch (java.lang.InterruptedException ie1) {
-                    Thread.currentThread().interrupt(); // retain if needed later
-                }
+                new jmri.util.WaitHandler(this,waitValue);
+
             } // End of synchronized(CurrentStatus) block for RailCom Mode
         } else {
             if (log.isDebugEnabled()) {
@@ -602,11 +572,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
                 /* Pause briefly to give the user a chance to see what is 
                  happening */
-                try {
-                    CurrentStatus.wait(waitValue);
-                } catch (java.lang.InterruptedException ie1) {
-                    Thread.currentThread().interrupt(); // retain if needed later
-                }
+                new jmri.util.WaitHandler(this,waitValue);
 
                 /* First, send the ops mode programing command to enter
                  programing mode */
@@ -618,11 +584,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
                 /* Pause briefly to give the booster a chance to change 
                  into It's programming mode */
-                try {
-                    CurrentStatus.wait(waitValue);
-                } catch (java.lang.InterruptedException ie3) {
-                    Thread.currentThread().interrupt(); // retain if needed later
-                }
+                new jmri.util.WaitHandler(this,waitValue);
 
                 CurrentStatus.setText(rb.getString("LV102StatusWriteRailComMode"));
                 CurrentStatus.doLayout();
@@ -640,11 +602,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
                 /* Pause briefly to wait for the programmer to send back a 
                  reply */
-                try {
-                    CurrentStatus.wait(waitValue);
-                } catch (java.lang.InterruptedException ie1) {
-                    Thread.currentThread().interrupt(); // retain if needed later
-                }
+                new jmri.util.WaitHandler(this,waitValue);
+
             } // End of synchronized(CurrentStatus) block for RailCom Mode
         } else {
             if (log.isDebugEnabled()) {
@@ -701,6 +660,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
          * This class is a programmer listener, so we implement the
          * programmingOpReply() function
          */
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NO_NOTIFY_NOT_NOTIFYALL", justification = "There should only ever be one thread waiting for this method.")
+
         public void programmingOpReply(int value, int status) {
             if (log.isDebugEnabled()) {
                 log.debug("Programming Operation reply recieved, value is " + value + " ,status is " + status);
@@ -743,6 +704,6 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LV102InternalFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LV102InternalFrame.class.getName());
 
 }

@@ -2,15 +2,13 @@
 package jmri.jmrix.can.adapters.gridconnect.net;
 
 import java.util.ResourceBundle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Definition of objects to handle configuring a connection via a
  * NetworkDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2010
- * @version	$Revision: 21889 $
+ * 
  */
 public class MergConnectionConfig extends ConnectionConfig {
 
@@ -45,6 +43,4 @@ public class MergConnectionConfig extends ConnectionConfig {
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.can.CanActionListBundle");
     }
-
-    static Logger log = LoggerFactory.getLogger(MergConnectionConfig.class.getName());
 }

@@ -1,4 +1,3 @@
-// TrafficControllerScaffold.java
 package jmri.jmrix.can;
 
 import java.util.Vector;
@@ -12,8 +11,7 @@ import org.slf4j.LoggerFactory;
  * Stands in for the can.TrafficController class
  *
  * @author	Bob Jacobsen 2008
- * @version	$Revision$
- */
+  */
 public class TrafficControllerScaffold extends TrafficController {
 
     public TrafficControllerScaffold() {
@@ -88,6 +86,6 @@ public class TrafficControllerScaffold extends TrafficController {
         return cmdListeners.size();
     }
 
-    static Logger log = LoggerFactory.getLogger(TrafficControllerScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrafficControllerScaffold.class.getName());
 
 }

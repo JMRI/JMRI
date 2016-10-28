@@ -9,8 +9,7 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a NodeConfigFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public class NodeConfigAction extends jmri.jmrix.ieee802154.swing.nodeconfig.NodeConfigAction {
 
     /**
@@ -26,7 +25,7 @@ public class NodeConfigAction extends jmri.jmrix.ieee802154.swing.nodeconfig.Nod
             try {
                 xcm = jmri.InstanceManager.
                         getList(jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo.class).get(0);
-            } catch (java.lang.NullPointerException npe) {
+            } catch (java.lang.NullPointerException|java.lang.IndexOutOfBoundsException e) {
                 // no memo is registered, is this the first time the
                 // connection has been configured?
                 log.debug("No XBee System Connection Memo available");
@@ -59,7 +58,7 @@ public class NodeConfigAction extends jmri.jmrix.ieee802154.swing.nodeconfig.Nod
         f.setVisible(true);
     }
 
-    static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
 }
 
 

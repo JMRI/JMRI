@@ -1,8 +1,6 @@
 // pricom.pockettester.DataSourceAction.java
 package jmri.jmrix.pricom.pockettester;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * JmriJFrameAction to create and register a pricom.pockettester.DataSource
@@ -11,8 +9,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrix.pricom.pockettester.DataSource
  *
  * @author	Bob Jacobsen Copyright (C) 2002,2005
- * @version	$Revision$
- */
+  */
 public class DataSourceAction extends jmri.util.JmriJFrameAction {
 
     /**
@@ -38,8 +35,6 @@ public class DataSourceAction extends jmri.util.JmriJFrameAction {
     public String getName() {
         return "jmri.jmrix.pricom.pockettester.DataSource";
     }
-
-    static Logger log = LoggerFactory.getLogger(DataSourceAction.class.getName());
 
 }
 

@@ -4,8 +4,6 @@ import jmri.jmrix.AbstractMRReply;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the CoreIdRfidProtocol class
@@ -73,11 +71,11 @@ public class CoreIdRfidProtocolTest extends TestCase {
         // First as stand-alone
         CoreIdRfidProtocol instance = new CoreIdRfidProtocol();
         assertEquals(true, instance.isValid(msgStandalone));
-        assertEquals(true, instance.isValid(msgBadChkSumStandalone));
+        assertEquals(false, instance.isValid(msgBadChkSumStandalone));
         // Now as concentrator
         instance = new CoreIdRfidProtocol('A', 'H', 1);
         assertEquals(true, instance.isValid(msgConcentrator));
-        assertEquals(true, instance.isValid(msgBadChkSumConcentrator));
+        assertEquals(false, instance.isValid(msgBadChkSumConcentrator));
     }
 
     /**
@@ -160,7 +158,7 @@ public class CoreIdRfidProtocolTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", CoreIdRfidProtocolTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -179,7 +177,5 @@ public class CoreIdRfidProtocolTest extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(CoreIdRfidProtocolTest.class.getName());
 
 }

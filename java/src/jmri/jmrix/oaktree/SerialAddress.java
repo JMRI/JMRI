@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author Bob Jacobsen, Copyright (C) 2006
- * @version $Revision$
  */
 public class SerialAddress {
 
@@ -330,7 +329,7 @@ public class SerialAddress {
         return nName;
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialAddress.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialAddress.class.getName());
 }
 
 /* @(#)SerialAddress.java */

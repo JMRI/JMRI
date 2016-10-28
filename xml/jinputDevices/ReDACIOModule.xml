@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE preferences SYSTEM "http://java.sun.com/dtd/preferences.dtd">
+<preferences EXTERNAL_XML_VERSION="1.0">
+  <root type="user">
+    <map/>
+    <node name="net">
+      <map/>
+      <node name="bobis">
+        <map/>
+        <node name="jinput">
+          <map/>
+          <node name="hidraw">
+            <map/>
+            <node name="HidRawDevices">
+              <map/>
+              <node name="ReDAC I/O Module">
+                <map>
+                  <entry key="vendor_id" value="1523"/>
+                  <entry key="product_id" value="217"/>
+                  <entry key="device_name" value="ReDAC I/O Module"/>
+                  <entry key="udev_device_path" value="/dev/ReDACIOModule"/>
+                </map>
+                <node name="Components">
+                  <map>
+                    <entry key="num_components" value="69"/>
+                  </map>
+                  <node name="comp0">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="0"/>
+                      <entry key="name" value="0"/>
+                    </map>
+                  </node>
+                  <node name="comp1">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="1"/>
+                      <entry key="name" value="1"/>
+                    </map>
+                  </node>
+                  <node name="comp2">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="2"/>
+                      <entry key="name" value="2"/>
+                    </map>
+                  </node>
+                  <node name="comp3">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="3"/>
+                      <entry key="name" value="3"/>
+                    </map>
+                  </node>
+                  <node name="comp4">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="4"/>
+                      <entry key="name" value="4"/>
+                    </map>
+                  </node>
+                  <node name="comp5">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="5"/>
+                      <entry key="name" value="5"/>
+                    </map>
+                  </node>
+                  <node name="comp6">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="6"/>
+                      <entry key="name" value="6"/>
+                    </map>
+                  </node>
+                  <node name="comp7">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="7"/>
+                      <entry key="name" value="7"/>
+                    </map>
+                  </node>
+                  <node name="comp8">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="8"/>
+                      <entry key="name" value="8"/>
+                    </map>
+                  </node>
+                  <node name="comp9">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="9"/>
+                      <entry key="name" value="9"/>
+                    </map>
+                  </node>
+                  <node name="comp10">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="10"/>
+                      <entry key="name" value="10"/>
+                    </map>
+                  </node>
+                  <node name="comp11">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="11"/>
+                      <entry key="name" value="11"/>
+                    </map>
+                  </node>
+                  <node name="comp12">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="12"/>
+                      <entry key="name" value="12"/>
+                    </map>
+                  </node>
+                  <node name="comp13">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="13"/>
+                      <entry key="name" value="13"/>
+                    </map>
+                  </node>
+                  <node name="comp14">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="14"/>
+                      <entry key="name" value="14"/>
+                    </map>
+                  </node>
+                  <node name="comp15">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="15"/>
+                      <entry key="name" value="15"/>
+                    </map>
+                  </node>
+                  <node name="comp16">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="16"/>
+                      <entry key="name" value="16"/>
+                    </map>
+                  </node>
+                  <node name="comp17">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="17"/>
+                      <entry key="name" value="17"/>
+                    </map>
+                  </node>
+                  <node name="comp18">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="18"/>
+                      <entry key="name" value="18"/>
+                    </map>
+                  </node>
+                  <node name="comp19">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="19"/>
+                      <entry key="name" value="19"/>
+                    </map>
+                  </node>
+                  <node name="comp20">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="20"/>
+                      <entry key="name" value="20"/>
+                    </map>
+                  </node>
+                  <node name="comp21">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="21"/>
+                      <entry key="name" value="21"/>
+                    </map>
+                  </node>
+                  <node name="comp22">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="22"/>
+                      <entry key="name" value="22"/>
+                    </map>
+                  </node>
+                  <node name="comp23">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="23"/>
+                      <entry key="name" value="23"/>
+                    </map>
+                  </node>
+                  <node name="comp24">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="24"/>
+                      <entry key="name" value="24"/>
+                    </map>
+                  </node>
+                  <node name="comp25">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="25"/>
+                      <entry key="name" value="25"/>
+                    </map>
+                  </node>
+                  <node name="comp26">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="26"/>
+                      <entry key="name" value="26"/>
+                    </map>
+                  </node>
+                  <node name="comp27">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="27"/>
+                      <entry key="name" value="27"/>
+                    </map>
+                  </node>
+                  <node name="comp28">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="28"/>
+                      <entry key="name" value="28"/>
+                    </map>
+                  </node>
+                  <node name="comp29">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="29"/>
+                      <entry key="name" value="29"/>
+                    </map>
+                  </node>
+                  <node name="comp30">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="30"/>
+                      <entry key="name" value="30"/>
+                    </map>
+                  </node>
+                  <node name="comp31">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="31"/>
+                      <entry key="name" value="31"/>
+                    </map>
+                  </node>
+                  <node name="comp32">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="32"/>
+                      <entry key="name" value="32"/>
+                    </map>
+                  </node>
+                  <node name="comp33">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="33"/>
+                      <entry key="name" value="33"/>
+                    </map>
+                  </node>
+                  <node name="comp34">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="34"/>
+                      <entry key="name" value="34"/>
+                    </map>
+                  </node>
+                  <node name="comp35">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="35"/>
+                      <entry key="name" value="35"/>
+                    </map>
+                  </node>
+                  <node name="comp36">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="36"/>
+                      <entry key="name" value="36"/>
+                    </map>
+                  </node>
+                  <node name="comp37">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="37"/>
+                      <entry key="name" value="37"/>
+                    </map>
+                  </node>
+                  <node name="comp38">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="38"/>
+                      <entry key="name" value="38"/>
+                    </map>
+                  </node>
+                  <node name="comp39">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="39"/>
+                      <entry key="name" value="39"/>
+                    </map>
+                  </node>
+                  <node name="comp40">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="40"/>
+                      <entry key="name" value="40"/>
+                    </map>
+                  </node>
+                  <node name="comp41">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="41"/>
+                      <entry key="name" value="41"/>
+                    </map>
+                  </node>
+                  <node name="comp42">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="42"/>
+                      <entry key="name" value="42"/>
+                    </map>
+                  </node>
+                  <node name="comp43">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="43"/>
+                      <entry key="name" value="43"/>
+                    </map>
+                  </node>
+                  <node name="comp44">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="44"/>
+                      <entry key="name" value="44"/>
+                    </map>
+                  </node>
+                  <node name="comp45">
+                    <map>
+                      <entry key="type" value="button"/>
+                      <entry key="ident" value="45"/>
+                      <entry key="name" value="45"/>
+                    </map>
+                  </node>
+                  <node name="comp46">
+                    <map>
+                      <entry key="type" value="axis"/>
+                      <entry key="ident" value="0"/>
+                      <entry key="name" value="Axis 0"/>
+                    </map>
+                  </node>
+                  <node name="comp47">
+                    <map>
+                      <entry key="type" value="axis"/>
+                      <entry key="ident" value="1"/>
+                      <entry key="name" value="Axis 1"/>
+                    </map>
+                  </node>
+                  <node name="comp48">
+                    <map>
+                      <entry key="type" value="axis"/>
+                      <entry key="ident" value="2"/>
+                      <entry key="name" value="Axis 2"/>
+                    </map>
+                  </node>
+                  <node name="comp49">
+                    <map>
+                      <entry key="type" value="axis"/>
+                      <entry key="ident" value="3"/>
+                      <entry key="name" value="Axis 3"/>
+                    </map>
+                  </node>
+                  <node name="comp50">
+                    <map>
+                      <entry key="type" value="axis"/>
+                      <entry key="ident" value="4"/>
+                      <entry key="name" value="Axis 4"/>
+                    </map>
+                  </node>
+                  <node name="comp51">
+                    <map>
+                      <entry key="type" value="axis"/>
+                      <entry key="ident" value="5"/>
+                      <entry key="name" value="Axis 5"/>
+                    </map>
+                  </node>
+                  <node name="comp52">
+                    <map>
+                      <entry key="type" value="axis"/>
+                      <entry key="ident" value="6"/>
+                      <entry key="name" value="Axis 6"/>
+                    </map>
+                  </node>
+                  <node name="comp53">
+                    <map>
+                      <entry key="type" value="axis"/>
+                      <entry key="ident" value="7"/>
+                      <entry key="name" value="Axis 7"/>
+                    </map>
+                  </node>
+                  <node name="comp54">
+                    <map>
+                      <entry key="type" value="axis"/>
+                      <entry key="ident" value="8"/>
+                      <entry key="name" value="Axis 8"/>
+                    </map>
+                  </node>
+                  <node name="comp55">
+                    <map>
+                      <entry key="type" value="axis"/>
+                      <entry key="ident" value="9"/>
+                      <entry key="name" value="Axis 9"/>
+                    </map>
+                  </node>
+                  <node name="comp56">
+                    <map>
+                      <entry key="type" value="axis"/>
+                      <entry key="ident" value="10"/>
+                      <entry key="name" value="Axis 10"/>
+                    </map>
+                  </node>
+                  <node name="comp57">
+                    <map>
+                      <entry key="type" value="axis"/>
+                      <entry key="ident" value="11"/>
+                      <entry key="name" value="Axis 11"/>
+                    </map>
+                  </node>
+                  <node name="comp58">
+                    <map>
+                      <entry key="type" value="axis"/>
+                      <entry key="ident" value="12"/>
+                      <entry key="name" value="Axis 12"/>
+                    </map>
+                  </node>
+                  <node name="comp59">
+                    <map>
+                      <entry key="type" value="axis"/>
+                      <entry key="ident" value="13"/>
+                      <entry key="name" value="Axis 13"/>
+                    </map>
+                  </node>
+                  <node name="comp60">
+                    <map>
+                      <entry key="type" value="axis"/>
+                      <entry key="ident" value="14"/>
+                      <entry key="name" value="Axis 14"/>
+                    </map>
+                  </node>
+                  <node name="comp61">
+                    <map>
+                      <entry key="type" value="axis"/>
+                      <entry key="ident" value="15"/>
+                      <entry key="name" value="Axis 15"/>
+                    </map>
+                  </node>
+                  <node name="comp62">
+                    <map>
+                      <entry key="type" value="axis"/>
+                      <entry key="ident" value="16"/>
+                      <entry key="name" value="Axis 16"/>
+                    </map>
+                  </node>
+                  <node name="comp63">
+                    <map>
+                      <entry key="type" value="axis"/>
+                      <entry key="ident" value="17"/>
+                      <entry key="name" value="Axis 17"/>
+                    </map>
+                  </node>
+                  <node name="comp64">
+                    <map>
+                      <entry key="type" value="axis"/>
+                      <entry key="ident" value="18"/>
+                      <entry key="name" value="Axis 18"/>
+                    </map>
+                  </node>
+                  <node name="comp65">
+                    <map>
+                      <entry key="type" value="axis"/>
+                      <entry key="ident" value="19"/>
+                      <entry key="name" value="Axis 19"/>
+                    </map>
+                  </node>
+                  <node name="comp66">
+                    <map>
+                      <entry key="type" value="axis"/>
+                      <entry key="ident" value="20"/>
+                      <entry key="name" value="Axis 20"/>
+                    </map>
+                  </node>
+                  <node name="comp67">
+                    <map>
+                      <entry key="type" value="axis"/>
+                      <entry key="ident" value="21"/>
+                      <entry key="name" value="Axis 21"/>
+                    </map>
+                  </node>
+                  <node name="comp68">
+                    <map>
+                      <entry key="type" value="axis"/>
+                      <entry key="ident" value="22"/>
+                      <entry key="name" value="Axis 22"/>
+                    </map>
+                  </node>
+                </node>
+                <node name="Calibration">
+                  <map/>
+                  <node name="Axis 0">
+                    <map>
+                      <entry key="calib_zero_offset" value="0.0"/>
+                      <entry key="calib_negative_factor" value="1.0"/>
+                      <entry key="calib_positive_factor" value="1.0"/>
+                      <entry key="dead_zone" value="0.10"/>
+                      <entry key="threshold" value="0.05"/>
+                    </map>
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+  </root>
+</preferences>

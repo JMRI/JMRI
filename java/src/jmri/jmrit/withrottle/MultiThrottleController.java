@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2011
- * @version $Revision$
  */
 public class MultiThrottleController extends ThrottleController {
 
@@ -23,7 +22,7 @@ public class MultiThrottleController extends ThrottleController {
 
     /**
      * Builds a header to send to the wi-fi device for use in a message.
-     * Includes a separator - <;>
+     * Includes a separator - {@literal <;>}
      *
      * @param chr the character indicating what action is performed
      * @return a pre-assembled header for this DccThrottle

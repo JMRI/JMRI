@@ -6,7 +6,6 @@ import org.jdom2.Element;
  * Interface assumed during configuration operations.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision$
  * @see ConfigXmlManager
  */
 public interface XmlAdapter {
@@ -20,6 +19,19 @@ public interface XmlAdapter {
      * @return true if successful
      */
     public boolean load(Element e) throws Exception;
+
+    /**
+     * Create a set of configured objects from their XML description.
+     *
+     * @param shared  Top-level XML element containing the common, multi-node
+     *                elements of the description
+     * @param perNode Top-level XML element containing the private, single-node
+     *                elements of the description
+     * @throws Exception when a error prevents creating the objects as as
+     *                   required by the input XML.
+     * @return true if successful
+     */
+    public boolean load(Element shared, Element perNode) throws Exception;
 
     /**
      * Determine if this set of configured objects should be loaded after basic
@@ -41,11 +53,27 @@ public interface XmlAdapter {
      * @param o Implementation-specific Object needed for the conversion
      * @throws Exception when a error prevents creating the objects as as
      *                   required by the input XML.
+     * }
      */
     public void load(Element e, Object o) throws Exception;
 
     /**
-     * Store the
+     * Create a set of configured objects from their XML description, using an
+     * auxiliary object.
+     * <P>
+     * For example, the auxilary object o might be a manager or GUI of some type
+     * that needs to be informed as each object is created.
+     *
+     * @param shared  Top-level XML element containing the common description
+     * @param perNode Top-level XML element containing the per-node description
+     * @param o       Implementation-specific Object needed for the conversion
+     * @throws Exception when a error prevents creating the objects as as
+     *                   required by the input XML.
+     */
+    public void load(Element shared, Element perNode, Object o) throws Exception;
+
+    /**
+     * Store the object in XML
      *
      * @param o The object to be recorded. Specific XmlAdapter implementations
      *          will require this to be of a specific type; that binding is done
@@ -53,6 +81,18 @@ public interface XmlAdapter {
      * @return The XML representation Element
      */
     public Element store(Object o);
+
+    /**
+     * Store the object in XML
+     *
+     * @param o      The object to be recorded. Specific XmlAdapter
+     *               implementations will require this to be of a specific type;
+     *               that binding is done in ConfigXmlManager.
+     * @param shared true if the returned element should be the common XML and
+     *               false if the returned element should be per-node.
+     * @return The XML representation Element
+     */
+    public Element store(Object o, boolean shared);
 
     public int loadOrder();
 
@@ -77,6 +117,4 @@ public interface XmlAdapter {
             String systemName,
             String userName,
             Throwable exception) throws JmriConfigureXmlException;
-
-    public void setConfigXmlManager(ConfigXmlManager c);
 }

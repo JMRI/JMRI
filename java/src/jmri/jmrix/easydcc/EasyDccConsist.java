@@ -5,7 +5,6 @@
  * the EasyDcc specific commands to build a consist.
  *
  * @author Paul Bender Copyright (C) 2006
- * @version $Revision$
  */
 package jmri.jmrix.easydcc;
 
@@ -308,6 +307,6 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(EasyDccConsist.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccConsist.class.getName());
 
 }

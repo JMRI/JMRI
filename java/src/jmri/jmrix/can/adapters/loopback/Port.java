@@ -5,15 +5,12 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import jmri.jmrix.AbstractSerialPortController;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Loopback connection to simulate a CAN link
  *
  * @author	Bob Jacobsen Copyright (C) 2008, 2010
- * @version	$Revision$
- */
+  */
 public class Port extends AbstractSerialPortController {
 
     public Port() {
@@ -75,8 +72,6 @@ public class Port extends AbstractSerialPortController {
     public CanSystemConnectionMemo getSystemConnectionMemo() {
         return (CanSystemConnectionMemo) super.getSystemConnectionMemo();
     }
-
-    static Logger log = LoggerFactory.getLogger(Port.class.getName());
 }
 
 /* @(#)Port.java */

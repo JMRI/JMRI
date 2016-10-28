@@ -1,4 +1,3 @@
-// RouteManager.java
 package jmri.jmrit.operations.routes;
 
 import java.util.ArrayList;
@@ -19,7 +18,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision$
  */
 public class RouteManager {
 
@@ -36,15 +34,13 @@ public class RouteManager {
 
     public static synchronized RouteManager instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("RouteManager creating instance");
-            }
+            log.debug("RouteManager creating instance");
             // create and load
             _instance = new RouteManager();
             OperationsSetupXml.instance(); // load setup
             RouteManagerXml.instance(); // load routes
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("RouteManager returns instance {}", _instance);
         }
         return _instance;
@@ -59,6 +55,7 @@ public class RouteManager {
     protected Hashtable<String, Route> _routeHashTable = new Hashtable<String, Route>();
 
     /**
+     * @param name The string name of the Route.
      * @return requested Route object or null if none exists
      */
     public Route getRouteByName(String name) {
@@ -80,8 +77,8 @@ public class RouteManager {
     /**
      * Finds an existing route or creates a new route if needed requires route's
      * name creates a unique id for this route
+     * @param name The string name of the new Route.
      *
-     * @param name
      *
      * @return new route or existing route
      */
@@ -92,13 +89,15 @@ public class RouteManager {
             route = new Route(Integer.toString(_id), name);
             Integer oldSize = Integer.valueOf(_routeHashTable.size());
             _routeHashTable.put(route.getId(), route);
-            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_routeHashTable.size()));
+            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
+                    Integer.valueOf(_routeHashTable.size()));
         }
         return route;
     }
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     * @param route The Route to add.
      */
     public void register(Route route) {
         Integer oldSize = Integer.valueOf(_routeHashTable.size());
@@ -114,6 +113,7 @@ public class RouteManager {
 
     /**
      * Forget a NamedBean Object created outside the manager.
+     * @param route The Route to delete.
      */
     public void deregister(Route route) {
         if (route == null) {
@@ -208,9 +208,9 @@ public class RouteManager {
      * Copy route, returns a new route named routeName. If invert is true the
      * reverse of the route is returned.
      *
-     * @param route     The route to be copied
+     * @param route The route to be copied
      * @param routeName The name of the new route
-     * @param invert    If true, return the inversion of route
+     * @param invert If true, return the inversion of route
      * @return A copy of the route
      */
     public Route copyRoute(Route route, String routeName, boolean invert) {
@@ -286,9 +286,7 @@ public class RouteManager {
         if (root.getChild(Xml.ROUTES) != null) {
             @SuppressWarnings("unchecked")
             List<Element> eRoutes = root.getChild(Xml.ROUTES).getChildren(Xml.ROUTE);
-            if (log.isDebugEnabled()) {
-                log.debug("readFile sees {} routes", eRoutes.size());
-            }
+            log.debug("readFile sees {} routes", eRoutes.size());
             for (Element eRoute : eRoutes) {
                 register(new Route(eRoute));
             }
@@ -318,7 +316,7 @@ public class RouteManager {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(RouteManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RouteManager.class.getName());
 
 }
 

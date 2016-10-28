@@ -1,4 +1,3 @@
-// BeanTableModel.java
 package jmri.jmrit.sensorgroup;
 
 import javax.swing.table.AbstractTableModel;
@@ -10,15 +9,8 @@ import org.slf4j.LoggerFactory;
  * Abstract base for simple bean tables for insertion in other GUI elements
  *
  * @author Bob Jacobsen Copyright (C) 2007
- *
- * @version $Revision$
  */
 public abstract class BeanTableModel extends AbstractTableModel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8121523528465367528L;
 
     public Class<?> getColumnClass(int c) {
         if (c == INCLUDE_COLUMN) {
@@ -71,8 +63,5 @@ public abstract class BeanTableModel extends AbstractTableModel {
                 return null;
         }
     }
-    static final Logger log = LoggerFactory.getLogger(BeanTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BeanTableModel.class.getName());
 }
-
-
-/* @(#)BeanTableModel.java */

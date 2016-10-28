@@ -23,14 +23,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision$
  */
 public class LocoIcon extends PositionableLabel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9079140879519495618L;
     public static final String WHITE = Bundle.getMessage("White");		//loco background colors
     public static final String GREEN = Bundle.getMessage("Green");
     public static final String GRAY = Bundle.getMessage("Gray");
@@ -68,13 +63,13 @@ public class LocoIcon extends PositionableLabel {
         });
     }
 
+    @Override
     public Positionable deepClone() {
         LocoIcon pos = new LocoIcon(_editor);
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        LocoIcon pos = (LocoIcon) p;
+    protected Positionable finishClone(LocoIcon pos) {
         if (_entry != null) {
             pos.setRosterEntry(getRosterEntry());
         }
@@ -330,5 +325,5 @@ public class LocoIcon extends PositionableLabel {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LocoIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoIcon.class.getName());
 }

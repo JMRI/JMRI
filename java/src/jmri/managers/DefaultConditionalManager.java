@@ -1,4 +1,3 @@
-// DefaultConditionalManager.java
 package jmri.managers;
 
 import java.util.Iterator;
@@ -29,7 +28,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cresman Copyright (C) 2009
- * @version	$Revision$
  */
 public class DefaultConditionalManager extends AbstractManager
         implements ConditionalManager, java.beans.PropertyChangeListener {
@@ -108,7 +106,7 @@ public class DefaultConditionalManager extends AbstractManager
         }
         for (int i = name.length() - 1; i > 2; i--) {
             if (name.charAt(i) == 'C') {
-                return InstanceManager.logixManagerInstance().getBySystemName(
+                return InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(
                         name.substring(0, i));
             }
         }
@@ -156,7 +154,7 @@ public class DefaultConditionalManager extends AbstractManager
         if (key == null) {
             return null;
         }
-        jmri.LogixManager logixManager = InstanceManager.logixManagerInstance();
+        jmri.LogixManager logixManager = InstanceManager.getDefault(jmri.LogixManager.class);
         Iterator<String> iter = logixManager.getSystemNameList().iterator();
         while (iter.hasNext()) {
             // get the next Logix
@@ -170,7 +168,7 @@ public class DefaultConditionalManager extends AbstractManager
                 if (sName == null) {
                     break;
                 }
-                Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(sName);
+                Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(sName);
                 if (c == null) {
                     break;
                 }
@@ -227,7 +225,5 @@ public class DefaultConditionalManager extends AbstractManager
         return Bundle.getMessage("BeanNameConditional");
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultConditionalManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultConditionalManager.class.getName());
 }
-
-/* @(#)DefaultConditionalManager.java */

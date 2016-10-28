@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * AIU broadcasts, 0 = disabled, 1 = enabled.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision$
+ * 
  * 
  */
 public class NceAIUChecker implements NceListener {
@@ -85,7 +85,7 @@ public class NceAIUChecker implements NceListener {
         }
     }
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(NceAIUChecker.class.getName());
 
 }

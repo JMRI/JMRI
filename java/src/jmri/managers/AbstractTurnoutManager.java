@@ -1,4 +1,3 @@
-// AbstractTurnoutManager.java
 package jmri.managers;
 
 import jmri.JmriException;
@@ -6,6 +5,7 @@ import jmri.Manager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.TurnoutOperationManager;
+import jmri.implementation.SignalSpeedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
         implements TurnoutManager, java.beans.VetoableChangeListener {
@@ -27,7 +26,6 @@ public abstract class AbstractTurnoutManager extends AbstractManager
     public int getXMLOrder() {
         return Manager.TURNOUTS;
     }
-    //protected int xmlorder = 20;
 
     public char typeLetter() {
         return 'T';
@@ -68,14 +66,9 @@ public abstract class AbstractTurnoutManager extends AbstractManager
                     + ((systemName == null) ? "null" : systemName)
                     + ";" + ((userName == null) ? "null" : userName));
         }
-        if (systemName == null) {
-            log.error("SystemName cannot be null. UserName was "
-                    + ((userName == null) ? "null" : userName));
-            throw new IllegalArgumentException("SystemName cannot be null. UserName was "
-                    + ((userName == null) ? "null" : userName));
-        }
         // is system name in correct format?
-        if (!systemName.startsWith(getSystemPrefix() + typeLetter())) {
+        if (!systemName.startsWith(getSystemPrefix() + typeLetter()) 
+                || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
             log.error("Invalid system name for turnout: " + systemName
                     + " needed " + getSystemPrefix() + typeLetter());
             throw new IllegalArgumentException("Invalid system name for turnout: " + systemName
@@ -199,7 +192,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
      * they will be tried in the order specified.
      */
     public String[] getValidOperationTypes() {
-        if (jmri.InstanceManager.commandStationInstance() != null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.CommandStation.class) != null) {
             return new String[]{"Sensor", "Raw", "NoFeedback"};
         } else {
             return new String[]{"Sensor", "NoFeedback"};
@@ -275,7 +268,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
     String defaultClosedSpeed = "Normal";
     String defaultThrownSpeed = "Restricted";
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NP_NULL_PARAM_DEREF", justification = "We are validating user input however the value is stored in its original format")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_PARAM_DEREF", justification = "We are validating user input however the value is stored in its original format")
     public void setDefaultClosedSpeed(String speed) throws JmriException {
         if (speed == null) {
             throw new JmriException("Value of requested turnout default closed speed can not be null");
@@ -293,7 +286,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
                 Float.parseFloat(speed);
             } catch (NumberFormatException nx) {
                 try {
-                    jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
+                    jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
                 } catch (Exception ex) {
                     throw new JmriException("Value of requested turnout default closed speed is not valid");
                 }
@@ -322,7 +315,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
                 Float.parseFloat(speed);
             } catch (NumberFormatException nx) {
                 try {
-                    jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
+                    jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
                 } catch (Exception ex) {
                     throw new JmriException("Value of requested turnout default thrown speed is not valid");
                 }
@@ -341,7 +334,5 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         return defaultClosedSpeed;
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class.getName());
 }
-
-/* @(#)AbstractTurnoutManager.java */

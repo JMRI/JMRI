@@ -40,7 +40,7 @@
 			<variable label="Extended Address" CV="17" comment="4 digit address (Range 128-10240)" item="Long Address">
 				<longAddressVal/>
 				<label>Long Address</label>
-				<label>Each van should get the same address see Leig pane</label>
+				<tooltip>Long Address: Each van should get the same address see Leig pane</tooltip>
 				<comment>4 digit address (Range 128-10240) van selected trhough CV 15</comment>
 			</variable>
 			<variable label="Speed Steps" CV="29" mask="XXXXXXVX" default="1" item="Speed Step Mode" tooltip="Sets the speed step mode default 28/128">

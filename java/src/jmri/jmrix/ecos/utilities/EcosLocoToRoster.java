@@ -35,11 +35,13 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
+import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterConfigManager;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.IndexedCvTableModel;
@@ -299,7 +301,7 @@ public class EcosLocoToRoster implements EcosListener {
                     endval = (lines[1].substring(startval)).indexOf(",") + startval;
                     boolean moment = true;
                     functNo = Integer.parseInt(lines[1].substring(startval, endval));
-                    startval = endval + 2;
+                    startval = endval + 1;
                     endval = (lines[1].substring(startval)).indexOf(",");//+startval;
                     if (endval == -1) {
                         endval = (lines[1].substring(startval)).indexOf("]");//+startval;
@@ -439,13 +441,13 @@ public class EcosLocoToRoster implements EcosListener {
     }
 
     void storeloco() {
-        Roster.instance().addEntry(re);
+        Roster.getDefault().addEntry(re);
         ecosLoco.setRosterId(re.getId());
         re.ensureFilenameExists();
 
         re.writeFile(null, null, null);
 
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
         ecosManager.clearLocoToRoster();
     }
 
@@ -540,11 +542,7 @@ public class EcosLocoToRoster implements EcosListener {
         re.setRoadNumber("");
         re.setMfg("");
         re.setModel("");
-        if (RosterEntry.getDefaultOwner() == null) {
-            re.setOwner("");
-        } else {
-            re.setOwner(RosterEntry.getDefaultOwner());
-        }
+        re.setOwner(InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner());
         re.setComment("Automatically Imported from the Ecos");
         re.setDecoderComment("");
         re.putAttribute(adaptermemo.getPreferenceManager().getRosterAttribute(), _ecosObject);
@@ -591,7 +589,7 @@ public class EcosLocoToRoster implements EcosListener {
      */
     public boolean checkDuplicate(String id) {
         // check its not a duplicate
-        List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, id);
+        List<RosterEntry> l = Roster.getDefault().matchingList(null, null, null, null, null, null, id);
         boolean oops = false;
         for (int i = 0; i < l.size(); i++) {
             if (re != l.get(i)) {
@@ -925,10 +923,10 @@ public class EcosLocoToRoster implements EcosListener {
         df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
 
         // load reset from decoder tree
-        if (variableModel.piCv() != "") {
+        if (!variableModel.piCv().equals("")) {
             resetModel.setPiCv(variableModel.piCv());
         }
-        if (variableModel.siCv() != "") {
+        if (!variableModel.siCv().equals("")) {
             resetModel.setSiCv(variableModel.siCv());
         }
         df.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
@@ -982,7 +980,7 @@ public class EcosLocoToRoster implements EcosListener {
         adaptermemo.getTrafficController().sendEcosMessage(m, this);
     }
 
-    static Logger log = LoggerFactory.getLogger(EcosLocoToRoster.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosLocoToRoster.class.getName());
 }
 /*
  cv8 - mfgIdFromName

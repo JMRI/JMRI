@@ -6,7 +6,6 @@
  *
  * @author Paul Bender Copyright (C) 2011
  * @author Daniel Boudreau Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 package jmri.jmrix.nce;
 
@@ -154,5 +153,5 @@ public class NceConsistManager extends AbstractConsistManager {
             notifyConsistListChanged();
         }
     }
-    static Logger log = LoggerFactory.getLogger(NceConsistManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceConsistManager.class.getName());
 }

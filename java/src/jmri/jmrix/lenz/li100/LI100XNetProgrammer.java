@@ -1,7 +1,3 @@
-/**
- * LI100XNetProgrammer.java
- */
- // Convert the jmri.Programmer interface into commands for the Lenz XpressNet
 package jmri.jmrix.lenz.li100;
 
 import jmri.jmrix.lenz.XNetConstants;
@@ -30,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (c) 2002, 2007
  * @author Paul Bender Copyright (c) 2003, 2004, 2005, 2009
  * @author Giorgio Terdina Copyright (c) 2007
- * @version $Revision$
  */
 public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener {
 
@@ -85,7 +80,7 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
         }
     }
 
-    synchronized public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
@@ -143,7 +138,7 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
                     log.debug("change _service_mode to true");
                 }
                 _service_mode = true;
-            } else if (_service_mode == true) {
+            } else { // _service_mode == true
                 // Since we get this message as both a broadcast and
                 // a directed message, ignore the message if we're
                 //already in the indicated mode
@@ -163,7 +158,7 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
                     log.debug("change _service_mode to false");
                 }
                 _service_mode = false;
-            } else if (_service_mode == false) {
+            } else { // _service_mode == false
                 // Since we get this message as both a broadcast and
                 // a directed message, ignore the message if we're
                 //already in the indicated mode
@@ -417,9 +412,6 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LI100XNetProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LI100XNetProgrammer.class.getName());
 
 }
-
-
-/* @(#)XNetProgrammer.java */

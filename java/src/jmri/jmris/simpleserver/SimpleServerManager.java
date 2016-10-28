@@ -3,30 +3,29 @@ package jmri.jmris.simpleserver;
 import java.io.File;
 import jmri.InstanceManager;
 import jmri.util.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import jmri.jmris.simpleserver.configurexml.SimpleServerPreferences;
 
 public class SimpleServerManager {
 
-    static private SimpleServerManager instance = null;
     private SimpleServerPreferences preferences;
     private SimpleServer server;
-    static Logger log = LoggerFactory.getLogger(SimpleServer.class.getName());
 
     private SimpleServerManager() {
-        if (InstanceManager.getDefault(SimpleServerPreferences.class) == null) {
-            InstanceManager.store(new SimpleServerPreferences(FileUtil.getUserFilesPath() + "networkServices" + File.separator + "SimpleServer.xml"), SimpleServerPreferences.class); // NOI18N
+        if (InstanceManager.getNullableDefault(SimpleServerPreferences.class) == null) {
+            String fileName = FileUtil.getUserFilesPath() + "networkServices" + File.separator + "SimpleServer.xml";
+            if ((new File(fileName)).exists()) {
+                InstanceManager.store(new SimpleServerPreferences(fileName), SimpleServerPreferences.class); // NOI18N
+            } else {
+                InstanceManager.store(new SimpleServerPreferences(), SimpleServerPreferences.class);
+            }
         }
         preferences = InstanceManager.getDefault(SimpleServerPreferences.class);
     }
 
     public static SimpleServerManager getInstance() {
-        if (instance == null) {
-            instance = new SimpleServerManager();
+        if (InstanceManager.getNullableDefault(SimpleServerManager.class) == null) {
+            InstanceManager.store(new SimpleServerManager(), SimpleServerManager.class); // NOI18N
         }
-        return instance;
+        return InstanceManager.getDefault(SimpleServerManager.class);
     }
 
     public SimpleServerPreferences getPreferences() {

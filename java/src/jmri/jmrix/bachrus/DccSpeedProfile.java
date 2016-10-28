@@ -23,8 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Andrew Crosland Copyright (C) 2010
  * @author	Dennis Miller Copyright (C) 2015
- * @version	$Revision$
- */
+  */
 public class DccSpeedProfile {
 
     protected int _length;
@@ -237,7 +236,7 @@ public class DccSpeedProfile {
         for (int i = 2; i < dccProfileData.size(); i++) {
             try {
                 String value = dccProfileData.get(i).split("\\s*,\\s*")[1];
-                float speed = new Float(value);
+                float speed = Float.valueOf(value);
                 // speed values from the speedometer are calc'd and stored in 
                 // the DccSpeedProfile object as KPH so need to convert
                 // if the file was in MPH
@@ -274,5 +273,5 @@ public class DccSpeedProfile {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(DccSpeedProfile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DccSpeedProfile.class.getName());
 }

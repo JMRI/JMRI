@@ -2,12 +2,11 @@ package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * EliteXNetThrottleManagerTest.java
@@ -15,45 +14,24 @@ import org.slf4j.LoggerFactory;
  * Description:	tests for the jmri.jmrix.lenz.EliteXNetThrottleManager class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
-public class EliteXNetThrottleManagerTest extends TestCase {
-
-    public void testCtor() {
-        // infrastructure objects
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
-
-        EliteXNetThrottleManager c = new EliteXNetThrottleManager(new XNetSystemConnectionMemo(tc));
-
-        Assert.assertNotNull(c);
-    }
-
-    // from here down is testing infrastructure
-    public EliteXNetThrottleManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", EliteXNetThrottleManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(EliteXNetThrottleManagerTest.class);
-        return suite;
-    }
+public class EliteXNetThrottleManagerTest extends jmri.jmrix.lenz.XNetThrottleManagerTest {
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Override
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
+        tm = new EliteXNetThrottleManager(new XNetSystemConnectionMemo(tc));
     }
 
-    protected void tearDown() {
+    @After
+    @Override
+    public void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(EliteXNetThrottleManagerTest.class.getName());
 
 }

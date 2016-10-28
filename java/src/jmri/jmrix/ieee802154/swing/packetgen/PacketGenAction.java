@@ -5,8 +5,7 @@
  * object
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
- */
+  */
 package jmri.jmrix.ieee802154.swing.packetgen;
 
 import java.awt.event.ActionEvent;
@@ -56,7 +55,7 @@ public class PacketGenAction extends AbstractAction {
         // connect to the TrafficController
         f.connect(_memo.getTrafficController());
     }
-    static Logger log = LoggerFactory.getLogger(PacketGenAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PacketGenAction.class.getName());
 }
 
 

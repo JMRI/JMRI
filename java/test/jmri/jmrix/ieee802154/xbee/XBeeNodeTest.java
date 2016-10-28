@@ -1,27 +1,69 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.powermock.modules.junit4.PowerMockRunner;
+import com.digi.xbee.api.models.XBee16BitAddress;
+import com.digi.xbee.api.models.XBee64BitAddress;
+import com.digi.xbee.api.models.XBeeProtocol;
+import com.digi.xbee.api.XBeeDevice;
+import com.digi.xbee.api.RemoteXBeeDevice;
+
+import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
+import org.powermock.core.classloader.annotations.MockPolicy;
+@MockPolicy(Slf4jMockPolicy.class)
 
 /**
  * XBeeNodeTest.java
  *
  * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeNode class
  *
- * @author	Paul Bender
- * @version $Revision$
+ * @author	Paul Bender Copyright (C) 2016
  */
-public class XBeeNodeTest extends TestCase {
+@RunWith(PowerMockRunner.class)
+public class XBeeNodeTest{
 
+    private XBeeTrafficController tc = null;
+
+    @Test
     public void testCtor() {
         XBeeNode m = new XBeeNode();
         Assert.assertNotNull("exists", m);
     }
 
+    @Test
+    public void testCtorWithParamters() {
+        byte pan[] = {(byte) 0x00, (byte) 0x42};
+        byte uad[] = {(byte) 0x6D, (byte) 0x97};
+        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        XBeeNode node = new XBeeNode(pan,uad,gad);
+        node.setTrafficController(tc);
+        Assert.assertNotNull("exists", node);
+        Assert.assertEquals("Node PAN address high byte", pan[0], node.getPANAddress()[0]);
+        Assert.assertEquals("Node PAN address low byte", pan[1], node.getPANAddress()[1]);
+        Assert.assertEquals("Node user address high byte", uad[0], node.getUserAddress()[0]);
+        Assert.assertEquals("Node user address low byte", uad[1], node.getUserAddress()[1]);
+        for (int i = 0; i < gad.length; i++) {
+            Assert.assertEquals("Node global address byte " + i, gad[i], node.getGlobalAddress()[i]);
+        }
+    }
+
+    @Test
+    public void testSetPANAddress() {
+        // test the code to set the User address
+        XBeeNode node = new XBeeNode();
+        byte pan[] = {(byte) 0x00, (byte) 0x01};
+        node.setPANAddress(pan);
+        Assert.assertEquals("Node PAN address high byte", pan[0], node.getPANAddress()[0]);
+        Assert.assertEquals("Node PAN address low byte", pan[1], node.getPANAddress()[1]);
+    }
+
+    @Test
     public void testSetUserAddress() {
         // test the code to set the User address
         XBeeNode node = new XBeeNode();
@@ -31,6 +73,7 @@ public class XBeeNodeTest extends TestCase {
         Assert.assertEquals("Node user address low byte", uad[1], node.getUserAddress()[1]);
     }
 
+    @Test
     public void testSetGlobalAddress() {
         // test the code to set the User address
         XBeeNode node = new XBeeNode();
@@ -41,32 +84,118 @@ public class XBeeNodeTest extends TestCase {
         }
     }
 
-    // from here down is testing infrastructure
-    public XBeeNodeTest(String s) {
-        super(s);
+    @Test
+    public void testGetPreferedNameAsUserAddress() {
+        // Mock the remote device.
+        RemoteXBeeDevice rd = Mockito.mock(RemoteXBeeDevice.class);
+        Mockito.when(rd.getXBeeProtocol()).thenReturn(XBeeProtocol.UNKNOWN);
+        Mockito.when(rd.getNodeID()).thenReturn("");
+        Mockito.when(rd.get64BitAddress()).thenReturn(new XBee64BitAddress("0013A20040A04D2D"));
+        Mockito.when(rd.get16BitAddress()).thenReturn(new XBee16BitAddress("6D97"));
+        byte pan[] = {(byte) 0x00, (byte) 0x42};
+        byte uad[] = {(byte) 0x6D, (byte) 0x97};
+        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        XBeeNode node = new XBeeNode(pan,uad,gad);
+        node.setXBee(rd);
+        tc.registerNode(node);
+        Assert.assertEquals("Short Address Name","6D 97 ",node.getPreferedName());
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XBeeNodeTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+    @Test
+    public void testGetPreferedNameAsGlobalAddress() {
+        // Mock the remote device.
+        RemoteXBeeDevice rd = Mockito.mock(RemoteXBeeDevice.class);
+        Mockito.when(rd.getXBeeProtocol()).thenReturn(XBeeProtocol.UNKNOWN);
+        Mockito.when(rd.getNodeID()).thenReturn("");
+        Mockito.when(rd.get64BitAddress()).thenReturn(new XBee64BitAddress("0013A20040A04D2D"));
+        Mockito.when(rd.get16BitAddress()).thenReturn(new XBee16BitAddress("FFFE"));
+        byte pan[] = {(byte) 0x00, (byte) 0x42};
+        byte uad[] = {(byte) 0xFF, (byte) 0xFE};
+        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        XBeeNode node = new XBeeNode(pan,uad,gad);
+        tc.registerNode(node);
+        node.setXBee(rd);
+        Assert.assertEquals("Global Address Name","00 13 A2 00 40 A0 4D 2D ",node.getPreferedName());
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XBeeNodeTest.class);
-        return suite;
+    @Test
+    public void testGetPreferedNameAsNodeIdentifier() {
+        // Mock the remote device.
+        RemoteXBeeDevice rd = Mockito.mock(RemoteXBeeDevice.class);
+        Mockito.when(rd.getXBeeProtocol()).thenReturn(XBeeProtocol.UNKNOWN);
+        Mockito.when(rd.getNodeID()).thenReturn("Hello World");
+        Mockito.when(rd.get64BitAddress()).thenReturn(new XBee64BitAddress("0013A20040A04D2D"));
+        Mockito.when(rd.get16BitAddress()).thenReturn(new XBee16BitAddress("FFFF"));
+        byte pan[] = {(byte) 0x00, (byte) 0x42};
+        byte uad[] = {(byte) 0xFF, (byte) 0xFF};
+        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        XBeeNode node = new XBeeNode(pan,uad,gad);
+        node.setXBee(rd);
+        node.setIdentifier("Hello World");
+        tc.registerNode(node);
+        Assert.assertEquals("Identifier Name",node.getPreferedName(),"Hello World");
+    }
+
+    @Test
+    public void testGetPreferedTransmitUserAddress() {
+        // Mock the remote device.
+        RemoteXBeeDevice rd = Mockito.mock(RemoteXBeeDevice.class);
+        Mockito.when(rd.getXBeeProtocol()).thenReturn(XBeeProtocol.UNKNOWN);
+        Mockito.when(rd.getNodeID()).thenReturn("");
+        Mockito.when(rd.get64BitAddress()).thenReturn(new XBee64BitAddress("0013A20040A04D2D"));
+        Mockito.when(rd.get16BitAddress()).thenReturn(new XBee16BitAddress("6D97"));
+        byte pan[] = {(byte) 0x00, (byte) 0x42};
+        byte uad[] = {(byte) 0x6D, (byte) 0x97};
+        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        XBeeNode node = new XBeeNode(pan,uad,gad);
+        node.setXBee(rd);
+        tc.registerNode(node);
+        Assert.assertEquals("Short Transmit Address",node.getXBeeAddress16(),node.getPreferedTransmitAddress());
+    }
+
+    @Test
+    public void testGetPreferedTransmitGlobalAddress() {
+        // Mock the remote device.
+        RemoteXBeeDevice rd = Mockito.mock(RemoteXBeeDevice.class);
+        Mockito.when(rd.getXBeeProtocol()).thenReturn(XBeeProtocol.UNKNOWN);
+        Mockito.when(rd.getNodeID()).thenReturn("");
+        Mockito.when(rd.get64BitAddress()).thenReturn(new XBee64BitAddress("0013A20040A04D2D"));
+        Mockito.when(rd.get16BitAddress()).thenReturn(new XBee16BitAddress("FFFF"));
+        byte pan[] = {(byte) 0x00, (byte) 0x42};
+        byte uad[] = {(byte) 0xFF, (byte) 0xFF};
+        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        XBeeNode node = new XBeeNode(pan,uad,gad);
+        node.setXBee(rd);
+        tc.registerNode(node);
+        Assert.assertEquals("Global Transmit Address",node.getXBeeAddress64(),node.getPreferedTransmitAddress());
+    }
+
+    @Test
+    public void testGetPreferedTransmitGlobalAddressWithMaskRequired() {
+        // Mock the remote device.
+        RemoteXBeeDevice rd = Mockito.mock(RemoteXBeeDevice.class);
+        Mockito.when(rd.getXBeeProtocol()).thenReturn(XBeeProtocol.UNKNOWN);
+        Mockito.when(rd.getNodeID()).thenReturn("");
+        Mockito.when(rd.get64BitAddress()).thenReturn(new XBee64BitAddress("0013A20040A04D2D"));
+        Mockito.when(rd.get16BitAddress()).thenReturn(new XBee16BitAddress("FFFF"));
+        byte pan[] = {(byte) 0x00, (byte) 0x42};
+        byte uad[] = {(byte) 0x0fffffff, (byte) 0x0ffffffe};
+        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        XBeeNode node = new XBeeNode(pan,uad,gad);
+        node.setXBee(rd);
+        tc.registerNode(node);
+        Assert.assertEquals("Global Transmit Address",node.getXBeeAddress64(),node.getPreferedTransmitAddress());
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    public void setUp() {
+        tc = new XBeeInterfaceScaffold();
     }
 
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        tc=null;
     }
-
-    static Logger log = LoggerFactory.getLogger(XBeeNodeTest.class.getName());
 
 }

@@ -6,14 +6,11 @@ import java.awt.geom.Ellipse2D;
 import javax.swing.JPopupMenu;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * PositionableCircle PositionableShapes.
  * <P>
- * @author Pete cresman Copyright (c) 2012
- * @version $Revision: 1 $
+ * @author Pete Cressman Copyright (c) 2012
  */
 public class PositionableCircle extends PositionableShape {
 
@@ -54,19 +51,19 @@ public class PositionableCircle extends PositionableShape {
         setShape(new Ellipse2D.Double(0, 0, _width, _width));
     }
 
+    @Override
     public Positionable deepClone() {
         PositionableCircle pos = new PositionableCircle(_editor);
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        PositionableCircle pos = (PositionableCircle) p;
+    protected Positionable finishClone(PositionableCircle pos) {
         pos._width = _width;
         return super.finishClone(pos);
     }
 
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = Bundle.getMessage("editShape", Bundle.getMessage("circle"));
+        String txt = Bundle.getMessage("editShape", Bundle.getMessage("Circle"));
         popup.add(new javax.swing.AbstractAction(txt) {
             /**
              *
@@ -75,13 +72,11 @@ public class PositionableCircle extends PositionableShape {
 
             public void actionPerformed(ActionEvent e) {
                 if (_editFrame == null) {
-                    _editFrame = new DrawCircle("editShape", "circle", null);
+                    _editFrame = new DrawCircle("editShape", "Circle", null);
                     setEditParams();
                 }
             }
         });
         return true;
     }
-
-    static Logger log = LoggerFactory.getLogger(PositionableCircle.class.getName());
 }

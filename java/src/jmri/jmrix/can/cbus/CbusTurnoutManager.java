@@ -1,12 +1,9 @@
-// CbusTurnoutManager.java
 package jmri.jmrix.can.cbus;
 
 import jmri.JmriException;
 import jmri.Turnout;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.managers.AbstractTurnoutManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * CAN CBUS implementation of a TurnoutManager.
@@ -14,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Turnouts must be manually created.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  * @since 2.3.1
  */
 public class CbusTurnoutManager extends AbstractTurnoutManager {
@@ -100,8 +96,4 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         }
         return range;
     }
-
-    static Logger log = LoggerFactory.getLogger(CbusTurnoutManager.class.getName());
 }
-
-/* @(#)CbusTurnoutManager.java */

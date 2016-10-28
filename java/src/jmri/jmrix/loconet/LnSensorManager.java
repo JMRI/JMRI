@@ -1,4 +1,3 @@
-// LnSensorManager.java
 package jmri.jmrix.loconet;
 
 import jmri.JmriException;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * System names are "LSnnn", where nnn is the sensor number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class LnSensorManager extends jmri.managers.AbstractSensorManager implements LocoNetListener {
 
@@ -184,12 +182,12 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LnSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnSensorManager.class.getName());
 
     /**
      * Class providing a thread to update sensor states
      */
-    class LnSensorUpdateThread extends Thread {
+    static class LnSensorUpdateThread extends Thread {
 
         /**
          * Constructs the thread
@@ -230,4 +228,3 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     }
 
 }
-/* @(#)LnSensorManager.java */

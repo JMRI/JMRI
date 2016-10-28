@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <name>Settings</name>
+    <column>
+      <display item="GSC1 bit 7"/>
+      <display item="GSC1 bit 6"/>
+      <display item="GSC1 bit 5"/>
+      <display item="GSC1 bit 4"/>
+      <display item="GSC1 bit 3"/>
+      <display item="GSC1 bit 2"/>
+      <display item="GSC1 bit 1"/>
+      <display item="GSC1 bit 0"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="GSC2 bit 7"/>
+      <display item="GSC2 bit 6"/>
+      <display item="GSC2 bit 5"/>
+      <display item="GSC2 bit 4"/>
+      <display item="GSC2 bit 3"/>
+      <display item="GSC2 bit 2"/>
+      <display item="GSC2 bit 1"/>
+      <display item="GSC2 bit 0"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Smoke Unit"/>
+    </column>
+    <column>
+      <row>
+        <display item="Chuff Adjust" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Chuff Adjust" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Smoke Unit Fan Chuff Time" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Smoke Unit Fan Chuff Time" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Smoke Unit Chuff Heater Power" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Smoke Unit Chuff Heater Power" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Smoke Unit Idle Heater Power" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Smoke Unit Idle Heater Power" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Smoke Unit Fan Idle Power" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Smoke Unit Fan Idle Power" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Smoke Unit Fan Rev Speed" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Smoke Unit Fan Rev Speed" layout="above" format="hslider"/>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Smoke Unit Fan Idle Speed" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Smoke Unit Fan Idle Speed" layout="above" format="hslider"/>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Smoke Unit Rev Heater Power" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Smoke Unit Rev Heater Power" layout="above" format="hslider"/>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Smoke Unit Idle Heater Power" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Smoke Unit Idle Heater Power" layout="above" format="hslider"/>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Fan Normal Chuff Power" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Fan Normal Chuff Power" layout="above" format="hslider"/>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Fan Loaded Chuff Power" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Fan Loaded Chuff Power" layout="above" format="hslider"/>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Fan Steam Cock Chuff Power" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Fan Steam Cock Chuff Power" layout="above" format="hslider"/>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Fan Rod Knock Chuff Power" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Fan Rod Knock Chuff Power" layout="above" format="hslider"/>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Motor Load Chuff Power Filter" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Motor Load Chuff Power Filter" layout="above" format="hslider"/>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Motor Load Power Filter" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Motor Load Power Filter" layout="above" format="hslider"/>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Grid Blower Brake Motor Decrease Time" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Grid Blower Brake Motor Decrease Time" layout="above" format="hslider"/>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Track Sounds Maximum Speed Step" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Track Sounds Maximum Speed Step" layout="above" format="hslider"/>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+    </column>
+    <column>
+      <display item="Consist Rear Light"/>
+      <display item="Consist Front Light"/>
+      <display item="Consist L1 Light"/>
+      <display item="Consist L4 Light"/>
+      <display item="Consist Cab"/>
+      <display item="Consist Aux"/>
+      <display item="Consist Bell"/>
+      <display item="Consist Horn"/>
+      <display item="Easy Consist"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Broadcast Stop Packet Count"/>
+      <display item="Fatal OverCurrent Config"/>
+      <display item="Fatal OverCurrent Sensitivity"/>
+    </column>
+</pane>

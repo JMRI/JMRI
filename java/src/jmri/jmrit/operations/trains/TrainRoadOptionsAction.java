@@ -9,14 +9,9 @@ import javax.swing.AbstractAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2013
- * @version $Revision: 21765 $
+ * 
  */
 public class TrainRoadOptionsAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8700464067750312373L;
 
     public TrainRoadOptionsAction(String s, TrainEditFrame frame) {
         super(s);
@@ -27,6 +22,7 @@ public class TrainRoadOptionsAction extends AbstractAction {
 
     TrainRoadOptionsFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a train edit option frame
         if (f != null && f.isVisible()) {

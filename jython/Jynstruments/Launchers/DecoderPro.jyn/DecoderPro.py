@@ -1,4 +1,5 @@
-
+import java
+import jmri
 import jmri.jmrit.jython.Jynstrument as Jynstrument
 import jmri.jmrit.catalog.NamedIcon as NamedIcon
 import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction as PaneOpsProgAction

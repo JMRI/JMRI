@@ -1,9 +1,6 @@
-// MergReply.java
 package jmri.jmrix.can.adapters.gridconnect.canrs;
 
 import jmri.jmrix.can.adapters.gridconnect.GridConnectReply;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Class for replies in a MERG GridConnect based message/reply protocol.
@@ -17,15 +14,14 @@ import org.slf4j.LoggerFactory;
  * MERG hardware uses a fixed 4 or 8 byte header when sending
  * GridConnectMessages to the computer. The 11 bit standard header is left
  * justified in these 4 bytes. The 29 bit standard header is sent as
- * <11 bit SID><0><1><0>< 18 bit EID>
+ * {@code <11 bit SID><0><1><0>< 18 bit EID>}
  * N or R indicates a normal or remote frame, in position 6 or 10 d0 - d7 are
  * the (up to) 8 data bytes
  * <P>
  *
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
- */
+  */
 public class MergReply extends GridConnectReply {
 
     public MergReply() {
@@ -55,8 +51,4 @@ public class MergReply extends GridConnectReply {
         }
         return val;
     }
-
-    static Logger log = LoggerFactory.getLogger(MergReply.class.getName());
 }
-
-/* @(#)MergReply.java */

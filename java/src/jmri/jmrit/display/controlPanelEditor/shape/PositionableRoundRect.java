@@ -6,14 +6,11 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.JPopupMenu;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * PositionableRoundRect adds corner radii to PositionableShapes.
  * <P>
  * @author Pete cresman Copyright (c) 2012
- * @version $Revision: 1 $
  */
 public class PositionableRoundRect extends PositionableRectangle {
 
@@ -47,13 +44,13 @@ public class PositionableRoundRect extends PositionableRectangle {
         setShape(new RoundRectangle2D.Double(0, 0, _width, _height, _radius, _radius));
     }
 
+    @Override
     public Positionable deepClone() {
         PositionableRoundRect pos = new PositionableRoundRect(_editor);
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        PositionableRoundRect pos = (PositionableRoundRect) p;
+    protected Positionable finishClone(PositionableRoundRect pos) {
         pos._radius = _radius;
         return super.finishClone(pos);
     }
@@ -75,6 +72,4 @@ public class PositionableRoundRect extends PositionableRectangle {
         });
         return true;
     }
-
-    static Logger log = LoggerFactory.getLogger(PositionableRoundRect.class.getName());
 }

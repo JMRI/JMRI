@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * connection
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  */
 public class SimpleTurnoutServer extends AbstractTurnoutServer {
 
@@ -75,8 +74,12 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
             closeTurnout(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
         } else {
             // default case, return status for this turnout
-            sendStatus(statusString.substring(index),
+            try {
+                sendStatus(statusString.substring(index),
                     InstanceManager.turnoutManagerInstance().provideTurnout(statusString.substring(index).toUpperCase()).getKnownState());
+            } catch (IllegalArgumentException ex) {
+                log.warn("Failed to provide Turnout \"{}\" in parseStatus", statusString.substring(index).toUpperCase());
+            }
         }
     }
 
@@ -88,5 +91,5 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SimpleTurnoutServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleTurnoutServer.class.getName());
 }

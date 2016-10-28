@@ -1,4 +1,3 @@
-// PR3SystemConnectionMemo.java
 package jmri.jmrix.loconet.pr3;
 
 import jmri.InstanceManager;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Lightweight class to denote that a PR3 is active
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
  */
 public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
 
@@ -66,8 +64,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
      */
     public void configureManagersPR2() {
         mode = PR3MODE;
-        InstanceManager.setPowerManager(
-                getPowerManager());
+        InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
 
         InstanceManager.setThrottleManager(
                 getThrottleManager());
@@ -140,7 +137,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         tm = new LocoNetThrottledTransmitter(getLnTrafficController(), mTurnoutExtraSpace);
         log.debug("ThrottleTransmitted configured with :" + mTurnoutExtraSpace);
 
-        InstanceManager.setPowerManager(super.getPowerManager());
+        InstanceManager.store(super.getPowerManager(), jmri.PowerManager.class);
 
         InstanceManager.setTurnoutManager(getTurnoutManager());
 
@@ -162,7 +159,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         InstanceManager.deregister(this, PR3SystemConnectionMemo.class);
         super.dispose();
     }
-    static Logger log = LoggerFactory.getLogger(PR3SystemConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PR3SystemConnectionMemo.class.getName());
 }
 
 /* @(#)PR3SystemConnectionMemo.java */

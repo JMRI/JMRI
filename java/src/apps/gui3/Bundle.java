@@ -1,14 +1,14 @@
-// Bundle.java
 package apps.gui3;
 
-import edu.umd.cs.findbugs.annotations.CheckReturnValue;
-import edu.umd.cs.findbugs.annotations.DefaultAnnotation;
-import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.util.Locale;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 
-@DefaultAnnotation({NonNull.class, CheckReturnValue.class})
-@SuppressWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
+@ParametersAreNonnullByDefault
+@CheckReturnValue
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
 
 @net.jcip.annotations.Immutable
 
@@ -19,7 +19,6 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
  * the local resource bundle name.
  *
  * @author Bob Jacobsen Copyright (C) 2012
- * @version $Revision: 17977 $
  * @since 3.3.1
  */
 public class Bundle extends apps.Bundle {
@@ -59,6 +58,25 @@ public class Bundle extends apps.Bundle {
         return b.handleGetMessage(key, subs);
     }
 
+    /**
+     * Merges user data with a translated string for a given key in a given
+     * locale from the package resource bundle or parent.
+     * <p>
+     * Uses the transformation conventions of the Java MessageFormat utility.
+     * <p>
+     * Note that this is intentionally package-local access.
+     *
+     * @see java.text.MessageFormat
+     * @param locale The locale to be used
+     * @param key    Bundle key to be translated
+     * @param subs   One or more objects to be inserted into the message
+     * @return Internationalized text
+     */
+    static String getMessage(Locale locale, String key, Object... subs) {
+        return b.handleGetMessage(locale, key, subs);
+    }
+
+
     private final static Bundle b = new Bundle();
 
     @Override
@@ -73,10 +91,8 @@ public class Bundle extends apps.Bundle {
     }
 
     @Override
-    protected String retry(String key) {
-        return super.getBundle().handleGetMessage(key);
+    protected String retry(Locale locale, String key) {
+        return super.getBundle().handleGetMessage(locale,key);
     }
 
 }
-
-/* @(#)Bundle.java */

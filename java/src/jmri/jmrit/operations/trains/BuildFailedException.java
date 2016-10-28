@@ -5,14 +5,9 @@ package jmri.jmrit.operations.trains;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
  * 2014
- * @version $Revision$
  */
 class BuildFailedException extends Exception {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 139074685463077186L;
     public final static String NORMAL = "normal"; // NOI18N
     public final static String STAGING = "staging"; // NOI18N
     private String type = NORMAL;

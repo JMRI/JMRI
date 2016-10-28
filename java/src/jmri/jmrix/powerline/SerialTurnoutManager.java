@@ -14,8 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision$
- */
+  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     SerialTrafficController tc = null;
@@ -75,7 +74,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
         String sName = tc.getAdapterMemo().getSerialAddress().normalizeSystemName(systemName);
-        if (sName == "") {
+        if (sName.equals("")) {
             // system name is not valid
             return null;
         }
@@ -96,7 +95,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return t;
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());
 
 }
 

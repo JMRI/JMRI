@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Base class for rolling stock managers car and engine.
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2011
- * @version $Revision$
  */
 public class RollingStockManager {
 
@@ -45,6 +44,7 @@ public class RollingStockManager {
 
     /**
      * Get rolling stock by id
+     * @param id The string id.
      *
      * @return requested RollingStock object or null if none exists
      */
@@ -102,6 +102,7 @@ public class RollingStockManager {
 
     /**
      * Load RollingStock.
+     * @param rs The RollingStock to load.
      */
     public void register(RollingStock rs) {
         Integer oldSize = Integer.valueOf(_hashTable.size());
@@ -111,6 +112,7 @@ public class RollingStockManager {
 
     /**
      * Unload RollingStock.
+     * @param rs The RollingStock to delete.
      */
     public void deregister(RollingStock rs) {
         rs.dispose();
@@ -191,10 +193,13 @@ public class RollingStockManager {
         return getByList(getByIdList(), BY_ROAD);
     }
 
+    private static final int PAGE_SIZE = 64;
+    private static final int NOT_INTEGER = -999999999; // flag when RS number isn't an Integer
+
     /**
-     * Sort by rolling stock number, number can be alphanumeric.
-     * RollingStock number can also be in the format of nnnn-N, where
-     * the "-N" allows the user to enter RollingStock with similar numbers.
+     * Sort by rolling stock number, number can be alphanumeric. RollingStock
+     * number can also be in the format of nnnn-N, where the "-N" allows the
+     * user to enter RollingStock with similar numbers.
      *
      * @return list of RollingStock ordered by number
      */
@@ -205,26 +210,20 @@ public class RollingStockManager {
         List<RollingStock> out = new ArrayList<RollingStock>();
         int rsNumber = 0;
         int outRsNumber = 0;
-        int notInteger = -999999999; // flag when rolling stock number isn't an
-        // integer
-        String[] number;
-        boolean rsAdded = false;
 
         for (RollingStock rs : sortIn) {
-            rsAdded = false;
+            boolean rsAdded = false;
             try {
                 rsNumber = Integer.parseInt(rs.getNumber());
                 rs.number = rsNumber;
             } catch (NumberFormatException e) {
                 // maybe rolling stock number in the format nnnn-N
                 try {
-                    number = rs.getNumber().split("-");
+                    String[] number = rs.getNumber().split("-");
                     rsNumber = Integer.parseInt(number[0]);
                     rs.number = rsNumber;
-                    // two possible exceptions, ArrayIndexOutOfBoundsException on split, and NumberFormatException on
-                    // parseInt
-                } catch (Exception e2) {
-                    rs.number = notInteger;
+                } catch (NumberFormatException e2) {
+                    rs.number = NOT_INTEGER;
                     // sort alphanumeric numbers at the end of the out list
                     String numberIn = rs.getNumber();
                     // log.debug("rolling stock in road number ("+numberIn+") isn't a number");
@@ -254,10 +253,10 @@ public class RollingStockManager {
 
             int start = 0;
             // page to improve sort performance.
-            int divisor = out.size() / pageSize;
+            int divisor = out.size() / PAGE_SIZE;
             for (int k = divisor; k > 0; k--) {
                 outRsNumber = out.get((out.size() - 1) * k / divisor).number;
-                if (outRsNumber == notInteger) {
+                if (outRsNumber == NOT_INTEGER) {
                     continue;
                 }
                 if (rsNumber >= outRsNumber) {
@@ -267,14 +266,14 @@ public class RollingStockManager {
             }
             for (int j = start; j < out.size(); j++) {
                 outRsNumber = out.get(j).number;
-                if (outRsNumber == notInteger) {
+                if (outRsNumber == NOT_INTEGER) {
                     try {
                         outRsNumber = Integer.parseInt(out.get(j).getNumber());
                     } catch (NumberFormatException e) {
                         try {
-                            number = out.get(j).getNumber().split("-");
+                            String[] number = out.get(j).getNumber().split("-");
                             outRsNumber = Integer.parseInt(number[0]);
-                        } catch (Exception e2) {
+                        } catch (NumberFormatException e2) {
                             // force add
                             outRsNumber = rsNumber + 1;
                         }
@@ -422,8 +421,6 @@ public class RollingStockManager {
         return getByList(inList, BY_LAST);
     }
 
-    private static final int pageSize = 64;
-
     protected List<RollingStock> getByList(List<RollingStock> sortIn, int attribute) {
         List<RollingStock> out = new ArrayList<RollingStock>();
         sortIn.forEach(n -> out.add(n));
@@ -455,8 +452,9 @@ public class RollingStockManager {
     // BY_WAIT = 16
     protected static final int BY_LAST = 17;
     protected static final int BY_BLOCKING = 18;
-
     // BY_PICKUP = 19
+    // BY_B_UNIT = 20
+    // BY_HAZARD = 21
 
     protected java.util.Comparator<RollingStock> getComparator(int attribute) {
         switch (attribute) {
@@ -469,18 +467,21 @@ public class RollingStockManager {
             case BY_COLOR:
                 return (r1, r2) -> (r1.getColor().compareToIgnoreCase(r2.getColor()));
             case BY_LOCATION:
-                return (r1, r2) -> (r1.getStatus() + r1.getLocationName() + r1.getTrackName()).compareToIgnoreCase(r2.getStatus() +
-                        r2.getLocationName() +
-                        r2.getTrackName());
+                return (r1, r2) -> (r1.getStatus() + r1.getLocationName() + r1.getTrackName())
+                        .compareToIgnoreCase(r2.getStatus() +
+                                r2.getLocationName() +
+                                r2.getTrackName());
             case BY_DESTINATION:
-                return (r1, r2) -> (r1.getDestinationName() + r1.getDestinationTrackName()).compareToIgnoreCase(r2.getDestinationName() +
-                        r2.getDestinationTrackName());
+                return (r1, r2) -> (r1.getDestinationName() + r1.getDestinationTrackName())
+                        .compareToIgnoreCase(r2.getDestinationName() +
+                                r2.getDestinationTrackName());
             case BY_TRAIN:
                 return (r1, r2) -> (r1.getTrainName().compareToIgnoreCase(r2.getTrainName()));
             case BY_MOVES:
                 return (r1, r2) -> (r1.getMoves() - r2.getMoves());
             case BY_BUILT:
-                return (r1, r2) -> (convertBuildDate(r1.getBuilt()).compareToIgnoreCase(convertBuildDate(r2.getBuilt())));
+                return (r1,
+                        r2) -> (convertBuildDate(r1.getBuilt()).compareToIgnoreCase(convertBuildDate(r2.getBuilt())));
             case BY_OWNER:
                 return (r1, r2) -> (r1.getOwner().compareToIgnoreCase(r2.getOwner()));
             case BY_RFID:
@@ -499,15 +500,25 @@ public class RollingStockManager {
 
     private String convertBuildDate(String date) {
         String[] built = date.split("-");
-        if (built.length > 1) {
+        if (built.length == 2) {
             try {
                 int d = Integer.parseInt(built[1]);
                 if (d < 100) {
                     d = d + 1900;
                 }
                 return Integer.toString(d);
-            } catch (NumberFormatException e2) {
-                log.debug("Unable to parse car built date {}", date);
+            } catch (NumberFormatException e) {
+                log.debug("Unable to parse built date ({})", date);
+            }
+        } else {
+            try {
+                int d = Integer.parseInt(date);
+                if (d < 100) {
+                    d = d + 1900;
+                }
+                return Integer.toString(d);
+            } catch (NumberFormatException e) {
+                log.debug("Unable to parse built date ({})", date);
             }
         }
         return date;
@@ -515,8 +526,8 @@ public class RollingStockManager {
 
     /**
      * Get a list of rolling stocks assigned to a train ordered by location
+     * @param train The Train.
      *
-     * @param train
      * @return List of RollingStock assigned to the train ordered by location
      */
     public List<RollingStock> getByTrainList(Train train) {
@@ -527,18 +538,16 @@ public class RollingStockManager {
 
     /**
      * Returns a list (no order) of RollingStock in a train.
+     * @param train The Train.
      *
      * @return list of RollingStock
      */
     public List<RollingStock> getList(Train train) {
-        Enumeration<RollingStock> en = _hashTable.elements();
         List<RollingStock> out = new ArrayList<RollingStock>();
-        while (en.hasMoreElements()) {
-            RollingStock rs = en.nextElement();
-            if (rs.getTrain() == train) {
+        _hashTable.forEach((key, rs) -> {
+            if (rs.getTrain() == train)
                 out.add(rs);
-            }
-        }
+        });
         return out;
     }
 
@@ -558,7 +567,7 @@ public class RollingStockManager {
     }
 
     /**
-     * Returns a list (no order) of RollingStock at a location.
+     * Returns a list (no order) of RollingStock on a track.
      * 
      * @param track Track to search for.
      * @return list of RollingStock
@@ -571,7 +580,7 @@ public class RollingStockManager {
         });
         return out;
     }
-    
+
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
@@ -586,6 +595,6 @@ public class RollingStockManager {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(RollingStockManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RollingStockManager.class.getName());
 
 }

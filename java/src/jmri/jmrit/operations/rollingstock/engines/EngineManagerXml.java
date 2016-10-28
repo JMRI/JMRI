@@ -1,4 +1,3 @@
-// CarManagerXml.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.io.File;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * models, engine types, engine lengths, and engine consist names.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class EngineManagerXml extends OperationsXml {
 
@@ -32,23 +30,20 @@ public class EngineManagerXml extends OperationsXml {
 
     public static synchronized EngineManagerXml instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("EngineManagerXml creating instance");
-            }
+            log.debug("EngineManagerXml creating instance");
             // create and load
             _instance = new EngineManagerXml();
             _instance.load();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("EngineManagerXml returns instance {}", _instance);
         }
         return _instance;
     }
 
+    @Override
     public void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("writeFile {}", name);
-        }
+        log.debug("writeFile {}", name);
         // This is taken in large part from "Java and XML" page 368
         File file = findFile(name);
         if (file == null) {
@@ -107,21 +102,24 @@ public class EngineManagerXml extends OperationsXml {
         LocationManagerXml.instance().setDirty(false);
     }
 
+    @Override
     public void setOperationsFileName(String name) {
         operationsFileName = name;
     }
 
+    @Override
     public String getOperationsFileName() {
         return operationsFileName;
     }
 
     private String operationsFileName = "OperationsEngineRoster.xml"; // NOI18N
 
-    public void dispose(){
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "for testing")
+    public void dispose() {
         _instance = null;
     }
 
-
-    static Logger log = LoggerFactory.getLogger(EngineManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EngineManagerXml.class.getName());
 
 }

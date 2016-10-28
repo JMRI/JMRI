@@ -8,14 +8,8 @@ import java.util.Hashtable;
  * Hashtable that preserves order for later access.
  *
  * @author Bob Jacobsen
- * @version $Revision$
  */
 public class OrderedHashtable<K, V> extends Hashtable<K, V> {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8358692158328153199L;
 
     @Override
     public V put(K key, V value) {

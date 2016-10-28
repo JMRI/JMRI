@@ -12,8 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
- */
+  */
 public class Reply extends AbstractMRReply {
 
     // Creates a new instance of ConnectReply
@@ -145,7 +144,7 @@ public class Reply extends AbstractMRReply {
         return (byte) b;
     }
 
-    static Logger log = LoggerFactory.getLogger(Reply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Reply.class.getName());
 }
 
 /* @(#)Reply.java */

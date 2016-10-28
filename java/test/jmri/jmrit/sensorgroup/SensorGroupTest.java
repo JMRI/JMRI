@@ -1,18 +1,14 @@
-// SensorGroupTest.java
 package jmri.jmrit.sensorgroup;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for classes in the jmri.jmrit.sensorgroup package
  *
  * @author	Bob Jacobsen Copyright 2003, 2007
- * @version	$Revision$
- */
+  */
 public class SensorGroupTest extends TestCase {
 
     public void testFrameCreate() {
@@ -32,7 +28,7 @@ public class SensorGroupTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SensorGroupTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -54,7 +50,5 @@ public class SensorGroupTest extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(SensorGroupTest.class.getName());
 
 }

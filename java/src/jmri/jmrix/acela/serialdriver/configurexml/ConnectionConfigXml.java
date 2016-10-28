@@ -1,8 +1,6 @@
-// ConnectionConfigXml.java
 package jmri.jmrix.acela.serialdriver.configurexml;
 
 import java.util.List;
-import jmri.InstanceManager;
 import jmri.jmrix.acela.AcelaNode;
 import jmri.jmrix.acela.AcelaTrafficController;
 import jmri.jmrix.acela.serialdriver.ConnectionConfig;
@@ -23,8 +21,6 @@ import org.slf4j.LoggerFactory;
  * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision$
- *
  * @author Bob Coleman, Copyright (c) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
@@ -33,7 +29,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     public ConnectionConfigXml() {
         super();
     }
-
+ 
     /**
      * Write out the SerialNode objects too
      *
@@ -103,7 +99,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                 }
             }
             // look for the next node
-            node = (AcelaNode) AcelaTrafficController.instance().getNode(index);
+            node = (AcelaNode) ((jmri.jmrix.acela.serialdriver.SerialDriverAdapter)adapter).getSystemConnectionMemo().getTrafficController().getNode(index);
             index++;
         }
     }
@@ -115,17 +111,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         return p;
     }
 
-    protected void getInstance() {
-        adapter = SerialDriverAdapter.instance();
-    }
-
-    /**
-     * Unpack the node information when reading the "connection" element
-     *
-     * @param e Element containing the connection info
-     */
-    protected void unpackElement(Element e) {
-        List<Element> l = e.getChildren("node");
+    @Override
+    protected void unpackElement(Element shared, Element perNode) {
+        List<Element> l = shared.getChildren("node");
         for (int i = 0; i < l.size(); i++) {
             Element n = l.get(i);
             int addr = Integer.parseInt(n.getAttributeValue("name"));
@@ -133,7 +121,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             int type = AcelaNode.moduleTypes.lastIndexOf(nodetypestring) / 2;
 
             // create node (they register themselves)
-            AcelaNode node = new AcelaNode(addr, type);
+            AcelaNode node = new AcelaNode(addr, type,((jmri.jmrix.acela.serialdriver.SerialDriverAdapter)adapter).getSystemConnectionMemo().getTrafficController());
             log.info("Created a new Acela Node [" + addr + "] as a result of a configuration file of type: " + type);
 
             if (type == AcelaNode.TB) {
@@ -334,7 +322,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             AcelaTrafficController.instance().initializeAcelaNode(node);
         }
         // Do not let the Acela network poll until we are really ready
-        AcelaTrafficController.instance().setReallyReadyToPoll(true);
+        ((AcelaTrafficController)adapter).setReallyReadyToPoll(true);
     }
 
     /**
@@ -356,12 +344,25 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         return null;
     }
 
+    @Override
+    protected void getInstance() {
+        if (adapter == null) {
+            adapter = new SerialDriverAdapter();
+        }
+    }
+
+    @Override
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig) object).getAdapter();
+    }
+
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 }
 
 /* @(#)ConnectionConfigXml.java */

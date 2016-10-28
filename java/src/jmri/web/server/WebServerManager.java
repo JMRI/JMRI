@@ -17,16 +17,17 @@ import org.slf4j.LoggerFactory;
  * the older 2.n Mini Web Server.
  *
  * @author rhwood
+ * @deprecated since 4.3.5. Use {@link jmri.web.server.WebServer#getDefault()}
+ * and {@link jmri.web.server.WebServerPreferences#getDefault()} directly to get
+ * the default instances of the WebServer and WebServerPreferences respectively.
  */
+@Deprecated
 public class WebServerManager {
 
-    static private WebServerManager instance = null;
-    private WebServerPreferences preferences;
-    private WebServer server;
-    static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
 
     private WebServerManager() {
-        if (InstanceManager.getDefault(WebServerPreferences.class) == null) {
+        if (InstanceManager.getNullableDefault(WebServerPreferences.class) == null) {
             File webServerPrefsFile = new File(FileUtil.getUserFilesPath() + "networkServices" + File.separator + "WebServerPreferences.xml"); // NOI18N
             File miniServerPrefsFile = new File(FileUtil.getUserFilesPath() + "miniserver" + File.separator + "MiniServerPreferences.xml"); // NOI18N
             if (!webServerPrefsFile.exists() && miniServerPrefsFile.exists()) {
@@ -35,24 +36,23 @@ public class WebServerManager {
             } else if (!webServerPrefsFile.exists()) {
                 InstanceManager.store(new WebServerPreferences(), WebServerPreferences.class);
             } else {
-                InstanceManager.store(new WebServerPreferences(FileUtil.getUserFilesPath() + "networkServices" + File.separator + "WebServerPreferences.xml"), WebServerPreferences.class); // NOI18N
+                InstanceManager.store(new WebServerPreferences(webServerPrefsFile.getAbsolutePath()), WebServerPreferences.class); // NOI18N
             }
         }
-        preferences = InstanceManager.getDefault(WebServerPreferences.class);
     }
 
     public static WebServerManager getInstance() {
-        if (instance == null) {
-            instance = new WebServerManager();
+        if (InstanceManager.getNullableDefault(WebServerManager.class) == null) {
+            InstanceManager.setDefault(WebServerManager.class, new WebServerManager());
         }
-        return instance;
+        return InstanceManager.getDefault(WebServerManager.class);
     }
 
     public WebServerPreferences getPreferences() {
-        if (preferences == null) {
-            preferences = new WebServerPreferences();
+        if (InstanceManager.getNullableDefault(WebServerPreferences.class) == null) {
+            InstanceManager.setDefault(WebServerPreferences.class, new WebServerPreferences());
         }
-        return preferences;
+        return InstanceManager.getDefault(WebServerPreferences.class);
     }
 
     public static WebServerPreferences getWebServerPreferences() {
@@ -60,20 +60,21 @@ public class WebServerManager {
     }
 
     public WebServer getServer() {
-        if (server == null) {
-            server = new WebServer();
+        if (InstanceManager.getNullableDefault(WebServer.class) == null) {
+            InstanceManager.setDefault(WebServer.class, new WebServer());
         }
-        return server;
+        return InstanceManager.getDefault(WebServer.class);
     }
 
     public static WebServer getWebServer() {
         return getInstance().getServer();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "REC_CATCH_EXCEPTION",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "REC_CATCH_EXCEPTION",
             justification = "Catch is covering both JDOMException and IOException, FindBugs seems confused")
     private void preferencesFromMiniServerPreferences(File MSFile, File WSFile) {
-        WebServerPreferences.WebServerPreferencesXml xmlFile = new WebServerPreferences.WebServerPreferencesXml();
+        XmlFile xmlFile = new XmlFile() {
+        };
         try {
             Element MSRoot = xmlFile.rootFromFile(MSFile);
             Element WSRoot = new Element(WebServerPreferences.WebServerPreferences);

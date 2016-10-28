@@ -75,11 +75,11 @@
         <label xml:lang="fr">V démarr.</label>
         <label xml:lang="de">Anfahrspannung</label>
         <comment>Range 0-31</comment>
-        <label xml:lang="de">Vstart</label>
+        <comment xml:lang="de">Vstart</comment>
         <comment xml:lang="de">Range 0-31</comment>
       </variable>
       <!-- CV 3-4 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_31.xml"/>
       <!-- deleted max and mid voltage-->
       <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>

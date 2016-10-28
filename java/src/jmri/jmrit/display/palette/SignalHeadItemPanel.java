@@ -29,11 +29,6 @@ import org.slf4j.LoggerFactory;
 
 public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelectionListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2071814434938345310L;
-
     public SignalHeadItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
         super(parentFrame, type, family, model, editor);
     }
@@ -124,14 +119,14 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         if (allIconsMap == null) {
             JOptionPane.showMessageDialog(_paletteFrame,
                     Bundle.getMessage("FamilyNotFound", _itemType, _family),
-                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return null;
         }
         if (_table == null || _table.getSelectedRow() < 0) {
             return allIconsMap;
         }
 
-        SignalHead sh = (SignalHead) getNamedBean();
+        SignalHead sh = (SignalHead) getDeviceNamedBean();
         if (sh != null) {
             String[] states = sh.getValidStateNames();
             if (states.length == 0) {
@@ -163,52 +158,62 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         return allIconsMap;
     }
 
-    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map) {
-        return new IconDragJLabel(flavor, map);
+    protected JLabel getDragger(DataFlavor flavor, HashMap<String, 
+            NamedIcon> map, NamedIcon icon) {
+        return new IconDragJLabel(flavor, map, icon);
     }
 
     protected class IconDragJLabel extends DragJLabel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1379306442765612241L;
-        HashMap<String, NamedIcon> iconMap;
+        HashMap<String, NamedIcon> iMap;
 
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP2") // icon map is within package 
-        public IconDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map) {
-            super(flavor);
-            iconMap = map;
+        public IconDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map, 
+                NamedIcon icon) {
+            super(flavor, icon);
+            iMap = map;
+        }
+
+        protected boolean okToDrag() {
+            NamedBean bean = getDeviceNamedBean();
+            if (bean == null) {
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                return false;
+            }
+            return true;
         }
 
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {
                 return null;
             }
-            if (iconMap == null) {
-                log.error("IconDragJLabel.getTransferData: iconMap is null!");
-                return null;
-            }
-            NamedBean bean = getNamedBean();
+            NamedBean bean = getDeviceNamedBean();
             if (bean == null) {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("noRowSelected"),
-                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }
 
-            SignalHeadIcon sh = new SignalHeadIcon(_editor);
-            sh.setSignalHead(bean.getDisplayName());
-            HashMap<String, NamedIcon> map = getFilteredIconMap(iconMap);
-            Iterator<Entry<String, NamedIcon>> iter = map.entrySet().iterator();
-            while (iter.hasNext()) {
-                Entry<String, NamedIcon> ent = iter.next();
-                sh.setIcon(Bundle.getMessage(ent.getKey()), new NamedIcon(ent.getValue()));
+            if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
+                SignalHeadIcon sh = new SignalHeadIcon(_editor);
+                sh.setSignalHead(bean.getDisplayName());
+                HashMap<String, NamedIcon> map = getFilteredIconMap(iMap);
+                Iterator<Entry<String, NamedIcon>> iter = map.entrySet().iterator();
+                while (iter.hasNext()) {
+                    Entry<String, NamedIcon> ent = iter.next();
+                    sh.setIcon(Bundle.getMessage(ent.getKey()), new NamedIcon(ent.getValue()));
+                }
+                sh.setFamily(_family);
+                sh.setLevel(Editor.SIGNALS);
+                return sh;
+            } else if (DataFlavor.stringFlavor.equals(flavor)) {
+                StringBuilder sb = new StringBuilder(_itemType);
+                sb.append(" icons for \"");
+                sb.append(bean.getDisplayName());
+                sb.append("\"");
+                return  sb.toString();
             }
-            sh.setFamily(_family);
-            sh.setLevel(Editor.SIGNALS);
-            return sh;
+            return null;
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SignalHeadItemPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalHeadItemPanel.class.getName());
 }

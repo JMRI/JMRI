@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * sending a few commands).
  *
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision$
  */
 public class HexFileFrame extends JmriJFrame {
 
@@ -185,9 +184,6 @@ public class HexFileFrame extends JmriJFrame {
         packets.startThreads();
         sourceThread = new Thread(port);
         sourceThread.start();
-
-        jmri.jmrix.loconet.ActiveFlag.setActive();
-
     }
 
     @SuppressWarnings("deprecation")
@@ -221,6 +217,6 @@ public class HexFileFrame extends JmriJFrame {
     }
     private LnHexFilePort port = null;
 
-    static Logger log = LoggerFactory.getLogger(HexFileFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(HexFileFrame.class.getName());
 
 }

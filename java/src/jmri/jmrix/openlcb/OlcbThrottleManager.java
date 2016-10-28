@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Implementation of a ThrottleManager for OpenLCB
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003, 2005, 2012
- * @version $Revision$
  */
 public class OlcbThrottleManager extends AbstractThrottleManager {
 
@@ -92,6 +91,6 @@ public class OlcbThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(OlcbThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbThrottleManager.class.getName());
 
 }

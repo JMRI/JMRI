@@ -1,17 +1,13 @@
-// ZTC640Test.java
 package jmri.jmrix.lenz.ztc640;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.lenz.ztc640 package
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class ZTC640Test extends TestCase {
 
@@ -23,7 +19,7 @@ public class ZTC640Test extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {ZTC640Test.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -31,9 +27,9 @@ public class ZTC640Test extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.lenz.ztc640.ZTC640Test");  // no tests in this class itself
         suite.addTest(new TestSuite(ZTC640AdapterTest.class));
         suite.addTest(new TestSuite(ZTC640XNetPacketizerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.lenz.ztc640.configurexml.PackageTest.class));
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(ZTC640Test.class.getName());
 
 }

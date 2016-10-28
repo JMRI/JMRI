@@ -1,6 +1,3 @@
-/*
- * LenzCommandStation.java
- */
 package jmri.jmrix.lenz;
 
 import org.slf4j.Logger;
@@ -10,11 +7,9 @@ import org.slf4j.LoggerFactory;
  * Defines the standard/common routines used in multiple classes related to the
  * a Lenz Command Station, on an XPressNet network.
  *
- * @author	Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C)
- * 2003
- * @version	$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
  */
-public class LenzCommandStation implements jmri.jmrix.DccCommandStation, jmri.CommandStation {
+public class LenzCommandStation implements jmri.CommandStation {
 
     /* The First group of routines is for obtaining the Software and
      hardware version of the Command station */
@@ -102,38 +97,11 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation, jmri.Co
     }
 
     /**
-     * Provides the version string returned during the initial check. This
-     * function is not yet implemented...
-     *
+     * Provides the version string returned during the initial check.
      */
     public String getVersionString() {
-        return "<unknown>";
+        return Bundle.getMessage("CSVersionString", getCommandStationType(),getCommandStationSoftwareVersionBCD());
     }
-
-    /* 
-     * The next group of messages has to do with determining if the
-     * command station has, and is currently in service mode 
-     */
-    /**
-     * Lenz does use a service mode
-     */
-    public boolean getHasServiceMode() {
-        return true;
-    }
-
-    /**
-     * If this command station has a service mode, is the command station
-     * currently in that mode?
-     */
-    public boolean getInServiceMode() {
-        return mInServiceMode;
-    }
-
-    /**
-     * Remember whether or not in service mode
-     *
-     */
-    boolean mInServiceMode = false;
 
     /**
      * XPressNet command station does provide Ops Mode We should make this
@@ -190,11 +158,12 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation, jmri.Co
      sendPacket function */
     /**
      * Send a specific packet to the rails.
-     *
+     * <p>
      * @param packet  Byte array representing the packet, including the
      *                error-correction byte. Must not be null.
      * @param repeats Number of times to repeat the transmission.
      */
+    @Override
     public void sendPacket(byte[] packet, int repeats) {
 
         if (_tc == null) {
@@ -224,6 +193,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation, jmri.Co
 
     XNetSystemConnectionMemo adaptermemo;
 
+    @Override
     public String getUserName() {
         if (adaptermemo == null) {
             return "XPressnet";
@@ -231,6 +201,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation, jmri.Co
         return adaptermemo.getUserName();
     }
 
+    @Override
     public String getSystemPrefix() {
         if (adaptermemo == null) {
             return "X";
@@ -241,9 +212,6 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation, jmri.Co
     /*
      * We need to register for logging
      */
-    static Logger log = LoggerFactory.getLogger(LenzCommandStation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LenzCommandStation.class.getName());
 
 }
-
-
-/* @(#)LenzCommandStation.java */

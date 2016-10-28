@@ -1,4 +1,3 @@
-// CvTableModelTest.java
 package jmri.jmrit.symbolicprog;
 
 import javax.swing.JLabel;
@@ -8,8 +7,7 @@ import junit.framework.TestSuite;
 
 /**
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class CvTableModelTest extends TestCase {
 
     public void testStart() {
@@ -24,7 +22,7 @@ public class CvTableModelTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {CvTableModelTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

@@ -1,8 +1,6 @@
-// CbusCommandStation.java
 package jmri.jmrix.can.cbus;
 
 import jmri.CommandStation;
-import jmri.jmrix.DccCommandStation;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
@@ -19,9 +17,8 @@ import org.slf4j.LoggerFactory;
  * should always be referred to.
  *
  * @author Andrew Crosland Copyright (C) 2009
- * @version $Revision$
  */
-public class CbusCommandStation implements CommandStation, DccCommandStation, CanListener {
+public class CbusCommandStation implements CommandStation, CanListener {
 
     public CbusCommandStation(CanSystemConnectionMemo memo) {
         tc = memo.getTrafficController();
@@ -77,7 +74,6 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
     /**
      * Send keep alive (DKEEP) packet for a throttle
      *
-     * @param handle
      */
     public void sendKeepAlive(int handle) {
         CanMessage msg = new CanMessage(2, tc.getCanid());
@@ -141,37 +137,6 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
     synchronized public void reply(CanReply m) {
     }
 
-    /**
-     * Does this command station have a "service mode", where it stops normal
-     * train operation while programming?
-     */
-    @Override
-    public boolean getHasServiceMode() {
-        return true;
-    }
-
-    /**
-     * If this command station has a service mode, is the command station
-     * currently in that mode?
-     */
-    @Override
-    public boolean getInServiceMode() {
-
-        // *** ???
-        return true;
-    }
-
-    /**
-     * Provides an-implementation specific version string from the command
-     * station. In general, this should be as close as possible to what the
-     * command station replied when asked; it should not be reformatted
-     *
-     */
-    @Override
-    public String getVersionString() {
-        return "0.0";
-    }
-
     @Override
     public String getUserName() {
         return adapterMemo.getUserName();
@@ -182,7 +147,5 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
         return adapterMemo.getSystemPrefix();
     }
 
-    static Logger log = LoggerFactory.getLogger(CbusCommandStation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusCommandStation.class.getName());
 }
-
-/* @(#)CbusCommandStation.java */

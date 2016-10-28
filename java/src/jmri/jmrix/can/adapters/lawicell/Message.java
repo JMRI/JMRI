@@ -17,8 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008, 2009
- * @version	$Revision$
- */
+  */
 public class Message extends AbstractMRMessage {
 
     static final int MAXLEN = 27;
@@ -148,7 +147,7 @@ public class Message extends AbstractMRMessage {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(Message.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Message.class.getName());
 }
 
 /* @(#)Message.java */

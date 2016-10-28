@@ -1,18 +1,22 @@
 package apps.configurexml;
 
 import apps.PerformActionModel;
+import apps.StartupActionsManager;
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
+import jmri.InstanceManager;
+import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.swing.SystemConnectionAction;
+import jmri.util.ConnectionNameFromSystemName;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle XML persistance of PerformActionModel objects.
+ * Handle XML persistence of PerformActionModel objects.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision$
- * @see apps.PerformActionPanel
+ * @author Bob Jacobsen Copyright (c) 2003
+ * @see apps.startup.PerformActionModelFactory
  */
 public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
@@ -26,13 +30,17 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
      * @return Element containing the complete info
      */
     public Element store(Object o) {
-        Element e = new Element("perform");
+        Element element = new Element("perform");
         PerformActionModel g = (PerformActionModel) o;
 
-        e.setAttribute("name", g.getClassName());
-        e.setAttribute("type", "Action");
-        e.setAttribute("class", this.getClass().getName());
-        return e;
+        element.setAttribute("name", g.getClassName());
+        element.setAttribute("type", "Action");
+        element.setAttribute("class", this.getClass().getName());
+        Element property = new Element("property"); // NOI18N
+        property.setAttribute("name", "systemPrefix"); // NOI18N
+        property.setAttribute("value", g.getSystemPrefix());
+        element.addContent(property);
+        return element;
     }
 
     /**
@@ -47,42 +55,52 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
         return true;
     }
 
-    /**
-     * Create object from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element e) {
+    @Override
+    public boolean load(Element shared, Element perNode) throws Exception {
         boolean result = true;
-        String className = e.getAttribute("name").getValue();
-        // rename MiniServerAction to WebServerAction
-        if (className.equals("jmri.web.miniserver.MiniServerAction")) {
-            className = "jmri.web.server.WebServerAction";
-            log.debug("Updating MiniServerAction to WebServerAction");
+        String className = shared.getAttribute("name").getValue();
+        PerformActionModel model = new PerformActionModel();
+        Exception exception = null;
+        model.setClassName(className);
+        for (Element child : shared.getChildren("property")) { // NOI18N
+            if (child.getAttributeValue("name").equals("systemPrefix") // NOI18N
+                    && child.getAttributeValue("value") != null) { // NOI18N
+                model.setSystemPrefix(child.getAttributeValue("value")); // NOI18N
+            }
         }
-        log.debug("Invoke Action from" + className);
+        log.debug("Invoke Action from {}", className);
         try {
             Action action = (Action) Class.forName(className).newInstance();
+            if (SystemConnectionAction.class.isAssignableFrom(action.getClass())) {
+                SystemConnectionMemo memo = ConnectionNameFromSystemName.getSystemConnectionMemoFromSystemPrefix(model.getSystemPrefix());
+                if (memo != null) {
+                    ((SystemConnectionAction) action).setSystemConnectionMemo(memo);
+                } else {
+                    log.error("Connection {} does not exist. Cannot be assigned to action {}", model.getSystemPrefix(), className);
+                    result = false;
+                }
+            }
             action.actionPerformed(new ActionEvent("prefs", 0, ""));
-        } catch (ClassNotFoundException ex1) {
-            log.error("Could not find specified class: " + className);
+        } catch (ClassNotFoundException ex) {
+            log.error("Could not find specified class: {}", className);
+            exception = ex;
+        } catch (IllegalAccessException ex) {
+            log.error("Unexpected access exception for class: {}", className, ex);
             result = false;
-        } catch (IllegalAccessException ex2) {
-            log.error("Unexpected access exception for  class: " + className, ex2);
+            exception = ex;
+        } catch (InstantiationException ex) {
+            log.error("Could not instantiate specified class: {}", className, ex);
             result = false;
-        } catch (InstantiationException ex3) {
-            log.error("Could not instantiate specified class: " + className, ex3);
+            exception = ex;
+        } catch (Exception ex) {
+            log.error("Error while performing startup action for class: {}", className, ex);
             result = false;
-        } catch (Exception ex4) {
-            log.error("Error while performing startup action for class: " + className, ex4);
-            ex4.printStackTrace();
-            result = false;
+            exception = ex;
         }
-        PerformActionModel m = new PerformActionModel();
-        m.setClassName(className);
-        PerformActionModel.rememberObject(m);
-        jmri.InstanceManager.configureManagerInstance().registerPref(new apps.PerformActionPanel());
+        InstanceManager.getDefault(StartupActionsManager.class).addAction(model);
+        if (exception != null) {
+            throw exception;
+        }
         return result;
     }
 
@@ -96,6 +114,6 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(PerformActionModelXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PerformActionModelXml.class.getName());
 
 }

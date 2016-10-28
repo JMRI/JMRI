@@ -7,7 +7,7 @@
  * <p>
  * This code isn't invoked currently. To make it available, you could e.g. add
  * the following to setCommandStation in the InstanceManager, though that's a
- * pretty brittle design:  <code><pre>
+ * pretty brittle design:  <pre><code>
  *
  * // since there is a command station available,
  * // create a DCC turnout manager and make available
@@ -16,7 +16,7 @@
  * store(m, jmri.jmrix.dcc.DccTurnoutManager.class);
  * setTurnoutManager(m);
  * }
- * </pre></code>
+ * </code></pre>
  *
  * <h2>Related Documentation</h2>
  *
@@ -32,5 +32,4 @@
  *
  * @since 3.9.6
  */
-@edu.umd.cs.findbugs.annotations.SuppressWarnings({})
 package jmri.jmrix.dcc;

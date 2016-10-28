@@ -8,9 +8,9 @@ import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations Setup class Last manually cross-checked on 20090131
@@ -18,7 +18,6 @@ import junit.framework.TestSuite;
  * Still to do: Backup, Control, Demo
  *
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision$
  */
 public class OperationsSetupTest extends OperationsTestCase {
 
@@ -494,14 +493,12 @@ public class OperationsSetupTest extends OperationsTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", OperationsSetupTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(OperationsSetupTest.class);
-        suite.addTestSuite(OperationsBackupTest.class);
-
         return suite;
     }
 

@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * Frame to control an instance of CBUS filter to filter events
  *
  * @author	Andrew Crosland Copyright (C) 2008
- * @version	$Revision: 17977 $
  */
 public class CbusEventFilterFrame extends JmriJFrame {
 
@@ -141,5 +140,5 @@ public class CbusEventFilterFrame extends JmriJFrame {
 //    	addHelpMenu("package.jmri.jmrix.can.cbus.CbusEventFilterFrame", true);
     }
 
-    static Logger log = LoggerFactory.getLogger(CbusEventFilterFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusEventFilterFrame.class.getName());
 }

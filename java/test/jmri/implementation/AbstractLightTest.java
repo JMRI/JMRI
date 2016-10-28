@@ -1,9 +1,8 @@
-// AbstractLightTest.java
 package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
 import jmri.Light;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.TestCase;
 
 /**
@@ -12,8 +11,7 @@ import junit.framework.TestCase;
  * the base for test classes, including providing some common tests.
  *
  * @author	Bob Jacobsen 2002, 2004, 2005, 2007, 2008
- * @version	$Revision$
- */
+  */
 public abstract class AbstractLightTest extends TestCase {
 
     // implementing classes must provide these abstract members:

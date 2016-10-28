@@ -1,4 +1,3 @@
-// ReportAction.java
 package jmri.jmrit.mailreport;
 
 import java.awt.event.ActionEvent;
@@ -10,14 +9,8 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a ReportFrame object
  *
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  */
 public class ReportAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2713560182288676071L;
 
     public ReportAction(String s) {
         super(s);
@@ -37,7 +30,5 @@ public class ReportAction extends AbstractAction {
         }
         f.setVisible(true);
     }
-    static Logger log = LoggerFactory.getLogger(ReportFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ReportFrame.class.getName());
 }
-
-/* @(#)ReportAction.java */

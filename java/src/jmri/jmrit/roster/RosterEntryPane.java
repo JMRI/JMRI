@@ -1,4 +1,3 @@
-// RosterEntryPane.java
 package jmri.jmrit.roster;
 
 import java.awt.Component;
@@ -34,14 +33,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Dennis Miller Copyright 2004, 2005
- * @version	$Revision$
  */
 public class RosterEntryPane extends javax.swing.JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9116104893414386723L;
     // Field sizes expanded to 30 from 12 to match comment
 // fields and allow for more text to be displayed
     JTextField id = new JTextField(30);
@@ -99,7 +93,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
         addrSel.setEnabled(false);
         addrSel.setLocked(false);
 
-        if ((InstanceManager.throttleManagerInstance() != null)
+        if ((InstanceManager.getNullableDefault(jmri.ThrottleManager.class) != null)
                 && !InstanceManager.throttleManagerInstance().addressTypeUnique()) {
             // This goes through to find common protocols between the command station and the decoder
             // and will set the selection box list to match those that are common.
@@ -378,7 +372,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
      */
     public boolean checkDuplicate() {
         // check its not a duplicate
-        List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, id.getText());
+        List<RosterEntry> l = Roster.getDefault().matchingList(null, null, null, null, null, null, id.getText());
         boolean oops = false;
         for (int i = 0; i < l.size(); i++) {
             if (re != l.get(i)) {
@@ -457,6 +451,6 @@ public class RosterEntryPane extends javax.swing.JPanel {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(RosterEntryPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterEntryPane.class.getName());
 
 }

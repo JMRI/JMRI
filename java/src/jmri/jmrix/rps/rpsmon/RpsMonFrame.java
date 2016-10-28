@@ -1,11 +1,3 @@
-/**
- * RpsMonFrame.java
- *
- * Description:	Frame displaying (and logging) RPS messages
- *
- * @author	Bob Jacobsen Copyright (C) 2006
- * @version $Revision$
- */
 package jmri.jmrix.rps.rpsmon;
 
 import jmri.jmrix.rps.Distributor;
@@ -13,16 +5,14 @@ import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.MeasurementListener;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.ReadingListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+/**
+ * Frame displaying (and logging) RPS messages
+ *
+ * @author	Bob Jacobsen Copyright (C) 2006
+ */
 public class RpsMonFrame extends jmri.jmrix.AbstractMonFrame
         implements ReadingListener, MeasurementListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3577651671435326280L;
 
     public RpsMonFrame() {
         super();
@@ -60,6 +50,4 @@ public class RpsMonFrame extends jmri.jmrix.AbstractMonFrame
         }
         nextLine(m.toString() + "\n", raw);
     }
-
-    static Logger log = LoggerFactory.getLogger(RpsMonFrame.class.getName());
 }

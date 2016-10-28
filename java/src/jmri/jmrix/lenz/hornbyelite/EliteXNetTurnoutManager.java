@@ -11,8 +11,7 @@ import org.slf4j.LoggerFactory;
  * System names are "XTnnn", where nnn is the turnout number without padding.
  *
  * @author	Paul Bender Copyright (C) 2008
- * @version	$Revision$
- */
+  */
 public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager implements jmri.jmrix.lenz.XNetListener {
 
     final java.util.ResourceBundle rbt = java.util.ResourceBundle.getBundle("jmri.jmrix.lenz.XNetBundle");
@@ -82,7 +81,7 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManager.class.getName());
 
 }
 

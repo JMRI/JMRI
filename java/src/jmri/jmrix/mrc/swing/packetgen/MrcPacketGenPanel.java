@@ -1,4 +1,3 @@
-// MrcPacketGenPanel.java
 package jmri.jmrix.mrc.swing.packetgen;
 
 import java.awt.Dimension;
@@ -7,8 +6,6 @@ import jmri.jmrix.mrc.MrcMessage;
 import jmri.jmrix.mrc.MrcSystemConnectionMemo;
 import jmri.jmrix.mrc.MrcTrafficController;
 import jmri.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user input of Mrc messages
@@ -16,15 +13,9 @@ import org.slf4j.LoggerFactory;
  * @author	Ken Cameron	Copyright (C) 2010 derived from:
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 25018 $
  */
 public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
 
-    //ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.mrc.packetgen.MrcPacketGenBundle");
-    /**
-     *
-     */
-    private static final long serialVersionUID = 491326388683242575L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
@@ -48,7 +39,7 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
 
     public String getHelpTarget() {
         return "package.jmri.jmrix.mrc.swing.packetgen.MrcPacketGenPanel";
-    }//IN18N
+    }//NOI18N
 
     public String getTitle() {
         StringBuilder x = new StringBuilder();
@@ -58,7 +49,7 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
             x.append("MRC_");//IN18N
         }
         x.append(": ");
-        x.append(Bundle.getMessage("Title"));//IN18N
+        x.append(Bundle.getMessage("Title"));//NOI18N
         return x.toString();
     }
 
@@ -67,15 +58,15 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
         this.tc = m.getMrcTrafficController();
 
         // the following code sets the frame's initial state
-        jLabel1.setText("Command: ");//IN18N
+        jLabel1.setText(Bundle.getMessage("MrcPacketGenLabelCommand"));//NOI18N
         jLabel1.setVisible(true);
 
-        sendButton.setText("Send");//IN18N
+        sendButton.setText(Bundle.getMessage("MrcPacketGenButtonSend"));//NOI18N
         sendButton.setVisible(true);
-        sendButton.setToolTipText("Send packet");//IN18N
+        sendButton.setToolTipText(Bundle.getMessage("MrcPacketGenTipSend"));//NOI18N
 
         packetTextField.setText("");
-        packetTextField.setToolTipText("Enter command"); //IN18N
+        packetTextField.setToolTipText(Bundle.getMessage("MrcPacketGenTipText")); //NOI18N
         packetTextField.setMaximumSize(new Dimension(packetTextField
                 .getMaximumSize().width, packetTextField.getPreferredSize().height));
 
@@ -138,6 +129,4 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
                     jmri.InstanceManager.getDefault(MrcSystemConnectionMemo.class));//IN18N
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(MrcPacketGenPanel.class.getName());
 }

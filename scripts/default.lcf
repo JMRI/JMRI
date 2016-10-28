@@ -1,4 +1,8 @@
-# Default log4j configuration file for JMRI project releases.
+# Default logging configuration file for JMRI project releases.
+
+# #############################################################
+#  Log4J configuration
+# #############################################################
 
 # Output is sent to system.err, generally a console window.
 # The output info consists of relative time, priority, thread name,
@@ -8,7 +12,7 @@
 # For the general syntax of property based configuration files see the
 # documentation of org.apache.log4j.PropertyConfigurator.
 
-# Valid priority names are FATAL, ERROR, WARN, INFO and DEBUG. 
+# Valid priority names are FATAL, ERROR, WARN, INFO, DEBUG, and TRACE. 
 
 # The root category is set to log priority INFO and above
 # to the console (A1), to rolling log files (T), and to a single file (R).
@@ -21,7 +25,7 @@
 
 log4j.rootCategory= INFO, A1, T, R
 
-# A1 is set to be a ConsoleAppender which outputs to System.out. 
+# A1 is set to be a ConsoleAppender which outputs to System.err. 
 log4j.appender.A1=org.apache.log4j.ConsoleAppender
 
 # A1 writes to system.err to synchronize with e.g. exception traces
@@ -75,6 +79,14 @@ log4j.appender.T.MaxBackupIndex=2
 
 # Default Jetty server to only logging WARN since it can be verbose at points
 log4j.category.org.eclipse.jetty=WARN
+log4j.category.org.eclipse.jetty.server.handler=WARN
+
+# Turning off logging for Java Xerces; emits WARNING messages during routine use
+log4j.category.org.jdom2.transform=SEVERE
+
+# Turning off logging for Java JMDNS; logs SEVERE and WARNING to j.u.l routinely
+log4j.category.com.strangeberry=OFF
+log4j.category.javax.jmdns=OFF
 
 # Examples of changing priority of specific categories (classes, packages):
 #
@@ -86,3 +98,4 @@ log4j.category.org.eclipse.jetty=WARN
 # log4j.category.jmri.jmrit.symbolicprog.LongAddrVariableValueTest=DEBUG
 # log4j.category.jmri.jmrix.nce=DEBUG
 # log4j.category.jmri.jmrix.nce.NceTrafficController=WARN
+# log4j.category.org.eclipse.jetty=INFO

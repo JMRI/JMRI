@@ -1,4 +1,3 @@
-// AbstractRosterItemAction.java
 package jmri.jmrit.roster;
 
 import java.awt.Component;
@@ -9,6 +8,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import jmri.beans.Beans;
+import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.util.swing.WindowInterface;
 import org.slf4j.Logger;
@@ -21,15 +21,9 @@ import org.slf4j.LoggerFactory;
  * doesn't use this base class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2007, 2008
- * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  */
 abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8258669241681051088L;
 
     public AbstractRosterItemAction(String pName, Component pWho) {
         super(pName);
@@ -97,8 +91,8 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
     boolean selectExistingFromEntry() {
         // create a dialog to select the roster entry to copy
         String group = null;
-        if (Beans.hasProperty(wi, "selectedRosterGroup")) {
-            group = (String) Beans.getProperty(wi, "selectedRosterGroup");
+        if (Beans.hasProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP)) {
+            group = (String) Beans.getProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP);
         }
         JComboBox<?> selections = new RosterEntryComboBox(group);
         int retval = JOptionPane.showOptionDialog(mParent,
@@ -144,7 +138,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
             }
 
             // check for duplicate
-            if (0 == Roster.instance().matchingList(null, null, null, null, null, null, mToID).size()) {
+            if (0 == Roster.getDefault().matchingList(null, null, null, null, null, null, mToID).size()) {
                 break;
             }
 
@@ -199,8 +193,8 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
 
     void addToEntryToRoster() {
         // add the new entry to the roster & write it out
-        Roster.instance().addEntry(mToEntry);
-        Roster.writeRosterFile();
+        Roster.getDefault().addEntry(mToEntry);
+        Roster.getDefault().writeRoster();
     }
 
     // never invoked, because we overrode actionPerformed above
@@ -209,7 +203,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
     }
 
     // initialize logging
-    static Logger log
+    private final static Logger log
             = LoggerFactory.getLogger(AbstractRosterItemAction.class.getName());
 
 }

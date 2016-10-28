@@ -1,7 +1,6 @@
-// Message.java
 package jmri.jmrix.direct;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import javax.annotation.Nonnull;
 import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version	$Revision$
  */
 public class Message extends jmri.jmrix.AbstractMRMessage {
 
@@ -27,7 +25,7 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
 
     // copy one
     @SuppressWarnings("null")
-    public Message(@NonNull Message m) {
+    public Message(@Nonnull Message m) {
         _nDataChars = m._nDataChars;
         _dataChars = new int[_nDataChars];
         for (int i = 0; i < _nDataChars; i++) {
@@ -60,7 +58,7 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
         _dataChars[n] = v & 0x7F;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public String toString() {
@@ -170,8 +168,6 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
         return s;
     }
 
-    static Logger log = LoggerFactory.getLogger(Message.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Message.class.getName());
 
 }
-
-/* @(#)Message.java */

@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision$
  *
  * @author Bob Coleman, Copyright (c) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
@@ -32,7 +31,8 @@ public class AcelaSensorManagerXml extends jmri.managers.configurexml.AbstractSe
         log.error("Invalid method called");
     }
 
-    public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
+    @Override
+    public boolean load(Element shared, Element perNode) throws jmri.configurexml.JmriConfigureXmlException {
         // create the master object
         try {
             AcelaSensorManager.instance();
@@ -44,10 +44,10 @@ public class AcelaSensorManagerXml extends jmri.managers.configurexml.AbstractSe
         }
 
         // load individual sensors
-        return loadSensors(sensors);
+        return loadSensors(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(AcelaSensorManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaSensorManagerXml.class.getName());
 }
 
 /* @(#)AcelaSensorManagerXml.java */

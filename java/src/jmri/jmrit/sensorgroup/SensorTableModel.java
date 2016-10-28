@@ -1,4 +1,3 @@
-// SensorTableModel.java
 package jmri.jmrit.sensorgroup;
 
 import java.beans.PropertyChangeListener;
@@ -13,14 +12,9 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version $Revision$
  */
 public class SensorTableModel extends BeanTableModel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3536564177611715912L;
     String[] _sysNameList;
     Boolean[] _includedSensors;
 
@@ -87,7 +81,6 @@ public class SensorTableModel extends BeanTableModel implements PropertyChangeLi
         }
     }
 
-    static final Logger log = LoggerFactory.getLogger(SensorTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorTableModel.class.getName());
 
 }
-/* @(#)SensorTableModel.java */

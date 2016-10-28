@@ -1,17 +1,13 @@
-// LI100Test.java
 package jmri.jmrix.lenz.li100;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.lenz.li100 package
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class LI100Test extends TestCase {
 
@@ -23,7 +19,7 @@ public class LI100Test extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {LI100Test.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -32,9 +28,9 @@ public class LI100Test extends TestCase {
         suite.addTest(new TestSuite(LI100AdapterTest.class));
         suite.addTest(new TestSuite(LI100XNetInitializationManagerTest.class));
         suite.addTest(new TestSuite(LI100XNetProgrammerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.lenz.li100.configurexml.PackageTest.class));
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(LI100Test.class.getName());
 
 }

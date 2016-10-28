@@ -2,9 +2,9 @@
 #
 # Based on Listen example and sound example by Bob Jacobsen, copyright 2004
 # Modified by Scott CR Henry
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
+
+import jmri
+import java
 
 # Define the listener to play a sound when a sensor goes active
 class SoundListener(java.beans.PropertyChangeListener):

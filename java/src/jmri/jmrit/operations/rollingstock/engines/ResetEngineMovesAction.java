@@ -13,20 +13,16 @@ import org.slf4j.LoggerFactory;
  * database.
  *
  * @author Dan Boudreau Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 public class ResetEngineMovesAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5851492095725608963L;
     EngineManager manager = EngineManager.instance();
 
     public ResetEngineMovesAction(String actionName, Component frame) {
         super(actionName);
     }
 
+    @Override
     public void actionPerformed(ActionEvent ae) {
         if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("engineSureResetMoves"),
                 Bundle.getMessage("engineResetMovesAll"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
@@ -35,6 +31,6 @@ public class ResetEngineMovesAction extends AbstractAction {
         }
     }
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(ResetEngineMovesAction.class.getName());
 }

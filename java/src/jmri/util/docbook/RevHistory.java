@@ -8,21 +8,20 @@ import java.util.ArrayList;
  * These can be nested: A revision can come with a history.
  *
  * @author Bob Jacobsen Copyright (c) 2010
- * @version $Revision$
  */
 public class RevHistory {
 
-    ArrayList<Revision> list = new ArrayList<Revision>();
+    ArrayList<Revision> list = new ArrayList<>();
 
     /**
      * Used to add a revision form complete information created elsewhere
+     *
+     * @param revnumber      the revision number
+     * @param date           the revision date
+     * @param authorinitials the author's initials
+     * @param revremark      the revision
      */
-    public void addRevision(
-            int revnumber,
-            String date,
-            String authorinitials,
-            String revremark
-    ) {
+    public void addRevision(int revnumber, String date, String authorinitials, String revremark) {
         Revision r = new Revision();
         r.revnumber = revnumber;
         r.date = date;
@@ -40,13 +39,12 @@ public class RevHistory {
      * Usual form.
      *
      * Dated now, with the next number.
+     *
+     * @param authorinitials the author's initials
+     * @param revremark      the revision
      */
-    public void addRevision(
-            String authorinitials,
-            String revremark
-    ) {
-        addRevision(maxNumber() + 1, (new java.util.Date()).toString(),
-                authorinitials, revremark);
+    public void addRevision(String authorinitials, String revremark) {
+        addRevision(maxNumber() + 1, (new java.util.Date()).toString(), authorinitials, revremark);
     }
 
     public int maxNumber() {
@@ -59,14 +57,14 @@ public class RevHistory {
 
     /**
      * Add a revision, credited to the current user
+     *
+     * @param revremark the revision
      */
     public void addRevision(String revremark) {
-        addRevision(
-                System.getProperty("user.name"),
-                revremark);
+        addRevision(System.getProperty("user.name"), revremark);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public String toString(String prefix) {
@@ -78,6 +76,7 @@ public class RevHistory {
         return retval;
     }
 
+    @Override
     public String toString() {
         return toString("");
     }

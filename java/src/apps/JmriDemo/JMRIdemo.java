@@ -1,4 +1,3 @@
-// JMRIdemo.java
 package apps.JmriDemo;
 
 import apps.Apps;
@@ -30,14 +29,8 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright 2003
- * @version $Revision$
  */
 public class JMRIdemo extends Apps {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4150983739482568886L;
 
     JMRIdemo(JFrame p) {
         super(p);
@@ -50,9 +43,6 @@ public class JMRIdemo extends Apps {
 
     /**
      * Adds the development menu to the default main menu bar.
-     *
-     * @param menuBar
-     * @param wi
      */
     @Override
     protected void createMenus(JMenuBar menuBar, WindowInterface wi) {
@@ -63,6 +53,9 @@ public class JMRIdemo extends Apps {
 
     /**
      * Show all systems in the menu bar.
+     *
+     * @param menuBar the menu bar to attach the systems menu(s) to
+     * @param frame   ignored; available for overriding methods to use
      */
     protected void systemsMenu(JMenuBar menuBar, JFrame frame) {
         menuBar.add(new jmri.jmrix.SystemsMenu());
@@ -84,5 +77,5 @@ public class JMRIdemo extends Apps {
         splash(false);
     }
 
-    static Logger log = LoggerFactory.getLogger(JMRIdemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIdemo.class.getName());
 }

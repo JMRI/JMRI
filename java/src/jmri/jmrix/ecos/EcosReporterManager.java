@@ -2,8 +2,6 @@
 package jmri.jmrix.ecos;
 
 import jmri.Reporter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * EcosReporterManager implements the ReporterManager.
@@ -11,7 +9,6 @@ import org.slf4j.LoggerFactory;
  * Description:	Implement Reporter manager for ecos
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 public class EcosReporterManager extends jmri.managers.AbstractReporterManager {
 
@@ -35,8 +32,6 @@ public class EcosReporterManager extends jmri.managers.AbstractReporterManager {
         register(r);
         return r;
     }
-
-    static Logger log = LoggerFactory.getLogger(EcosReporterManager.class.getName());
 }
 
 /* @(#)EcosReporterManager.java */

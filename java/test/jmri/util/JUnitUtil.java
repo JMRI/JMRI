@@ -1,14 +1,21 @@
 package jmri.util;
 
-import java.beans.PropertyChangeListener;
+import java.lang.reflect.InvocationTargetException;
 import jmri.ConditionalManager;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.LogixManager;
 import jmri.MemoryManager;
+import jmri.NamedBean;
 import jmri.PowerManager;
+import jmri.PowerManagerScaffold;
+import jmri.ReporterManager;
+import jmri.RouteManager;
+import jmri.ShutDownManager;
 import jmri.SignalHeadManager;
 import jmri.SignalMastLogicManager;
+import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
@@ -18,11 +25,11 @@ import jmri.managers.DefaultConditionalManager;
 import jmri.managers.DefaultIdTagManager;
 import jmri.managers.DefaultLogixManager;
 import jmri.managers.DefaultMemoryManager;
+import jmri.managers.DefaultRailComManager;
 import jmri.managers.DefaultSignalMastLogicManager;
-import jmri.managers.InternalLightManager;
+import jmri.managers.InternalReporterManager;
 import jmri.managers.InternalSensorManager;
-import jmri.managers.InternalTurnoutManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,181 +42,313 @@ import org.slf4j.LoggerFactory;
  * to use JFCUnit for that.
  * <p>
  * If you're using the InstanceManager, setUp() implementation should start
- * with:  <code><pre>
+ * with:
+ * <pre><code>
  * super.setUp();
  * JUnitUtil.resetInstanceManager();
  * JUnitUtil.initInternalTurnoutManager();
  * JUnitUtil.initInternalLightManager();
  * JUnitUtil.initInternalSensorManager();
  * JUnitUtil.initDebugThrottleManager();
- * </pre></code>
+ * </code></pre>
  * <p>
- * Your tearDown() should end with:  <code><pre>
+ * Your tearDown() should end with:
+ * <pre><code>
  * JUnitUtil.resetInstanceManager();
  * super.tearDown();
- * </pre></code>
+ * </code></pre>
  *
  * Note that memory managers and some others are completely internal, and will
  * be reset when you reset the instance manager.
  *
- * @author Bob Jacobsen Copyright 2009
- * @version $Revision$
+ * @author Bob Jacobsen Copyright 2009, 2015
  * @since 2.5.3
  */
 public class JUnitUtil {
 
-    static int DEFAULTDELAY = 200;
+    static final int DEFAULT_RELEASETHREAD_DELAY = 50;
+
+    static int count = 0;
 
     /**
-     * Release the current thread, allowing other threads to process
+     * Release the current thread, allowing other threads to process. Waits for
+     * {@value #DEFAULT_RELEASETHREAD_DELAY} milliseconds.
+     *
+     * This cannot be used on the Swing or AWT event threads. For those, please
+     * use JFCUnit's flushAWT() and waitAtLeast(..)
+     *
+     * @param self currently ignored
+     */
+    public static void releaseThread(Object self) {
+        releaseThread(self, DEFAULT_RELEASETHREAD_DELAY);
+    }
+
+    /**
+     * Release the current thread, allowing other threads to process.
+     *
+     * This cannot be used on the Swing or AWT event threads. For those, please
+     * use JFCUnit's flushAWT() and waitAtLeast(..)
+     *
+     * @param self  currently ignored
+     * @param delay milliseconds to wait
      */
     public static void releaseThread(Object self, int delay) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use releaseThread on Swing thread", new Exception());
             return;
         }
-        synchronized (self) {
-            try {
-                int priority = Thread.currentThread().getPriority();
-                Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
-                Thread.yield();
-                Thread.sleep(delay);
-                Thread.currentThread().setPriority(priority);
-                self.wait(delay);
-            } catch (InterruptedException e) {
-                Assert.fail("failed due to InterruptedException");
-            }
+        try {
+            int priority = Thread.currentThread().getPriority();
+            Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+            Thread.sleep(delay);
+            Thread.currentThread().setPriority(priority);
+        } catch (InterruptedException e) {
+            Assert.fail("failed due to InterruptedException");
         }
     }
 
-    public static void releaseThread(Object self) {
-        releaseThread(self, DEFAULTDELAY);
+    static final int WAITFOR_DELAY_STEP = 5;
+    static final int WAITFOR_MAX_DELAY = 15000; // really long, but only matters when failing
+
+    /**
+     * Wait for a specific condition to be true, without having to wait longer
+     * <p>
+     * To be used in tests, will do an assert if the total delay is longer than
+     * WAITFOR_MAX_DELAY
+     * <p>
+     * Typical use:
+     * <code>JUnitUtil.waitFor(()->{return replyVariable != null;},"reply not received")</code>
+     *
+     * @param condition condition being waited for
+     * @param name      name of condition being waited for; will appear in
+     *                  Assert.fail if condition not true fast enough
+     */
+    static public void waitFor(ReleaseUntil condition, String name) {
+        if (javax.swing.SwingUtilities.isEventDispatchThread()) {
+            log.error("Cannot use waitFor on Swing thread", new Exception());
+            return;
+        }
+        int delay = 0;
+        try {
+            while (delay < WAITFOR_MAX_DELAY) {
+                if (condition.ready()) {
+                    return;
+                }
+                int priority = Thread.currentThread().getPriority();
+                try {
+                    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+                    Thread.sleep(WAITFOR_DELAY_STEP);
+                    delay += WAITFOR_DELAY_STEP;
+                } catch (InterruptedException e) {
+                    Assert.fail("failed due to InterruptedException");
+                } finally {
+                    Thread.currentThread().setPriority(priority);
+                }
+            }
+            Assert.fail("\"" + name + "\" did not occur in time");
+        } catch (Exception ex) {
+            Assert.fail("Exception while waiting for \"" + name + "\" " + ex);
+        }
+    }
+
+    /**
+     * Wait for a specific condition to be true, without having to wait longer
+     * <p>
+     * To be used in assumptions, will return false if the total delay is longer
+     * than WAITFOR_MAX_DELAY
+     * <p>
+     * Typical use:
+     * <code>Assume.assumeTrue("reply not received", JUnitUtil.waitForTrue(()->{return replyVariable != null;}));</code>
+     *
+     * @param condition condition to wait for
+     * @return true if condition is met before WAITFOR_MAX_DELAY, false
+     *         otherwise
+     */
+    static public boolean waitFor(ReleaseUntil condition) {
+        if (javax.swing.SwingUtilities.isEventDispatchThread()) {
+            log.error("Cannot use waitFor on Swing thread", new Exception());
+            return false;
+        }
+        int delay = 0;
+        try {
+            while (delay < WAITFOR_MAX_DELAY) {
+                if (condition.ready()) {
+                    return true;
+                }
+                int priority = Thread.currentThread().getPriority();
+                try {
+                    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+                    Thread.sleep(WAITFOR_DELAY_STEP);
+                    delay += WAITFOR_DELAY_STEP;
+                } catch (InterruptedException e) {
+                    return false;
+                } finally {
+                    Thread.currentThread().setPriority(priority);
+                }
+            }
+            return false;
+        } catch (Exception ex) {
+            log.error("Exception in waitFor condition.", ex);
+            return false;
+        }
+    }
+
+    static public interface ReleaseUntil {
+
+        public boolean ready() throws Exception;
+    }
+
+    /**
+     * Set a NamedBean (Turnout, Sensor, SignalHead, ...) to a specific value in
+     * a thread-safe way.
+     *
+     * You can't assume that all the consequences of that setting will have
+     * propagated through when this returns; those might take a long time. But
+     * the set operation itself will be complete.
+     *
+     * @param bean  the bean
+     * @param state the desired state
+     */
+    static public void setBeanState(NamedBean bean, int state) {
+        try {
+            javax.swing.SwingUtilities.invokeAndWait(
+                    () -> {
+                        try {
+                            bean.setState(state);
+                        } catch (JmriException e) {
+                            log.error("Threw exception while setting state: ", e);
+                        }
+                    }
+            );
+        } catch (InterruptedException e) {
+            log.warn("Interrupted while setting state: ", e);
+        } catch (InvocationTargetException e) {
+            log.warn("Failed during invocation while setting state: ", e);
+        }
     }
 
     public static void resetInstanceManager() {
-        // create a new instance manager
+        // clear system connections
+        jmri.jmrix.SystemConnectionMemo.reset();
+
+        // create a new instance manager & use initializer to clear static list of state
         new InstanceManager() {
-            @Override
-            protected void init() {
-                root = null;
-                super.init();
-                root = this;
+            {
+                managerLists.clear();
             }
         };
+
+        // add the NamedBeanHandleManager, which is always needed
         InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
+    public static void resetTurnoutOperationManager() {
+        new jmri.TurnoutOperationManager() {
+            {
+                resetTheInstance();
+            }
+        };
+    }
+
     public static void initConfigureManager() {
-        InstanceManager.setConfigureManager(new jmri.configurexml.ConfigXmlManager());
+        InstanceManager.setDefault(ConfigureManager.class, new JmriConfigurationManager());
+    }
+
+    public static void initDefaultUserMessagePreferences() {
+        InstanceManager.store(
+                new jmri.managers.TestUserPreferencesManager(),
+                jmri.UserPreferencesManager.class);
     }
 
     public static void initInternalTurnoutManager() {
-        InstanceManager.setTurnoutManager(new InternalTurnoutManager());
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(
-                    InstanceManager.turnoutManagerInstance(), jmri.Manager.TURNOUTS);
-        }
+        // now done automatically by InstanceManager's autoinit
+        jmri.InstanceManager.turnoutManagerInstance();
     }
 
     public static void initInternalLightManager() {
-        InternalLightManager m = new InternalLightManager();
-        InstanceManager.setLightManager(m);
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.LIGHTS);
-        }
+        // now done automatically by InstanceManager's autoinit
+        jmri.InstanceManager.lightManagerInstance();
     }
 
     public static void initInternalSensorManager() {
-        InternalSensorManager m = new InternalSensorManager();
-        InstanceManager.setSensorManager(m);
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.SENSORS);
-        }
+        // now done automatically by InstanceManager's autoinit
+        jmri.InstanceManager.sensorManagerInstance();
+        InternalSensorManager.setDefaultStateForNewSensors(jmri.Sensor.UNKNOWN);
+    }
+
+    public static void initRouteManager() {
+        // routes provide sensors, so ensure the sensor manager is initialized
+        // routes need turnouts, so ensure the turnout manager is initialized
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalTurnoutManager();
+        // now done automatically by InstanceManager's autoinit
+        InstanceManager.getDefault(RouteManager.class);
     }
 
     public static void initMemoryManager() {
         MemoryManager m = new DefaultMemoryManager();
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.MEMORIES);
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.MEMORIES);
+        }
+    }
+
+    public static void initReporterManager() {
+        ReporterManager m = new InternalReporterManager();
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.REPORTERS);
         }
     }
 
     public static void initOBlockManager() {
         OBlockManager b = new OBlockManager();
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(b, jmri.Manager.OBLOCKS);
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(b, jmri.Manager.OBLOCKS);
         }
     }
 
     public static void initWarrantManager() {
         WarrantManager w = new WarrantManager();
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(w, jmri.Manager.WARRANTS);
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(w, jmri.Manager.WARRANTS);
         }
     }
 
     public static void initSignalMastLogicManager() {
         SignalMastLogicManager w = new DefaultSignalMastLogicManager();
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(w, jmri.Manager.SIGNALMASTLOGICS);
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(w, jmri.Manager.SIGNALMASTLOGICS);
         }
     }
 
     public static void initLayoutBlockManager() {
         LayoutBlockManager w = new LayoutBlockManager();
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(w, jmri.Manager.LAYOUTBLOCKS);
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(w, jmri.Manager.LAYOUTBLOCKS);
         }
     }
 
     public static void initSectionManager() {
         jmri.SectionManager w = new jmri.SectionManager();
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(w, jmri.Manager.SECTIONS);
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(w, jmri.Manager.SECTIONS);
         }
     }
 
     public static void initInternalSignalHeadManager() {
         SignalHeadManager m = new AbstractSignalHeadManager();
         InstanceManager.setSignalHeadManager(m);
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.SIGNALHEADS);
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.SIGNALHEADS);
         }
     }
 
     public static void initDebugThrottleManager() {
         jmri.ThrottleManager m = new DebugThrottleManager();
         InstanceManager.setThrottleManager(m);
-        return;
     }
 
     public static void initDebugPowerManager() {
-        jmri.PowerManager manager = new jmri.PowerManager() {
-            int state = PowerManager.UNKNOWN;
-
-            public void setPower(int v) throws JmriException {
-                state = v;
-            }
-
-            public int getPower() throws JmriException {
-                return state;
-            }
-
-            public void dispose() throws JmriException {
-            }
-
-            public void addPropertyChangeListener(PropertyChangeListener p) {
-            }
-
-            public void removePropertyChangeListener(PropertyChangeListener p) {
-            }
-
-            public String getUserName() {
-                return "test";
-            }
-        }; // end of anonymous PowerManager class new()
-        // store dummy power manager object for retrieval
-        InstanceManager.setPowerManager(manager);
+        InstanceManager.setDefault(PowerManager.class, new PowerManagerScaffold());
     }
 
     public static void initIdTagManager() {
@@ -217,19 +356,36 @@ public class JUnitUtil {
         InstanceManager.store(new DefaultIdTagManager(), jmri.IdTagManager.class);
     }
 
+    public static void initRailComManager() {
+        InstanceManager.reset(jmri.RailComManager.class);
+        InstanceManager.store(new DefaultRailComManager(), jmri.RailComManager.class);
+    }
+
     public static void initLogixManager() {
         LogixManager m = new DefaultLogixManager();
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.LOGIXS);
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.LOGIXS);
         }
     }
 
     public static void initConditionalManager() {
         ConditionalManager m = new DefaultConditionalManager();
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.CONDITIONALS);
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.CONDITIONALS);
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(JUnitUtil.class.getName());
+    public static void initShutDownManager() {
+        if (InstanceManager.getNullableDefault(ShutDownManager.class) == null) {
+            InstanceManager.setDefault(ShutDownManager.class, new MockShutDownManager());
+        }
+    }
+
+    public static void initStartupActionsManager() {
+        InstanceManager.store(
+                new apps.StartupActionsManager(),
+                apps.StartupActionsManager.class);
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class.getName());
 }

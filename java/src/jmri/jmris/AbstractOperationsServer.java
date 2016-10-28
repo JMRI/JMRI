@@ -1,4 +1,3 @@
-// AbstractOperationsServer.java
 package jmri.jmris;
 
 import java.beans.PropertyChangeEvent;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2012 (added checks for null train)
  * @author Rodney Black Copyright (C) 2012
  * @author Randall Wood Copyright (C) 2012, 2014
- * @version $Revision$
  */
 abstract public class AbstractOperationsServer implements PropertyChangeListener {
 
@@ -85,9 +83,9 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
      *
      * @param trainName    is the name of the desired train. If not found in
      *                     Operations, an error message is sent to the client
-     * @param locationName
+     * @param locationName is the name of the desired location.
      * @return the train's location, as known by Operations
-     * @throws IOException on failure to send an error message ot the client
+     * @throws IOException on failure to send an error message to the client
      */
     public String setTrainLocation(String trainName, String locationName)
             throws IOException {

@@ -16,19 +16,15 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of additional manifest print options
  *
  * @author Dan Boudreau Copyright (C) 2012
- * @version $Revision: 21846 $
+ * 
  */
 public class PrintMoreOptionPanel extends OperationsPreferencesPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5124421051550630914L;
     private static final Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class);
 
     // labels
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // radio buttons
     // check boxes
@@ -113,7 +109,7 @@ public class PrintMoreOptionPanel extends OperationsPreferencesPanel {
             Setup.setTab1length(Integer.parseInt(tab1TextField.getText()));
             Setup.setTab2length(Integer.parseInt(tab2TextField.getText()));
             Setup.setTab3length(Integer.parseInt(tab3TextField.getText()));
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             log.error("Tab wasn't a number");
         }
 
@@ -129,7 +125,7 @@ public class PrintMoreOptionPanel extends OperationsPreferencesPanel {
             return (Setup.getTab1Length() != Integer.parseInt(tab1TextField.getText())
                     || Setup.getTab2Length() != Integer.parseInt(tab2TextField.getText())
                     || Setup.getTab3Length() != Integer.parseInt(tab3TextField.getText()));
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             log.error("Tab wasn't a number");
         }
         return true;

@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrew Crosland Copyright (C) 2012
  * @author Andrew Crosland Copyright (C) 2008
- * @version	$Revision: 17977 $
  */
 public class GridConnectDoubledMessage extends GridConnectMessage {
 
@@ -152,7 +151,7 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(GridConnectDoubledMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(GridConnectDoubledMessage.class.getName());
 }
 
 /* @(#)GridConnectDoubledMessage.java */

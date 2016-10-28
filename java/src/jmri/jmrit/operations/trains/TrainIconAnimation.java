@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
  * Provides simple animation for train icons.
  *
  * @author Daniel Boudreau (C) Copyright 2009, 2010
- * @version $Revision$
  */
 public class TrainIconAnimation extends Thread {
 
@@ -25,6 +24,7 @@ public class TrainIconAnimation extends Thread {
         setName("TrainIconAnimation"); // NOI18N
     }
 
+    @Override
     public void run() {
         // we need to wait for any previous icon animation to complete
         if (_previous != null) {
@@ -70,7 +70,7 @@ public class TrainIconAnimation extends Thread {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainIconAnimation.class
+    private final static Logger log = LoggerFactory.getLogger(TrainIconAnimation.class
             .getName());
 
 }

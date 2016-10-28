@@ -1,4 +1,3 @@
-// DecoderProPane.java
 package apps.DecoderPro;
 
 import apps.Apps;
@@ -10,8 +9,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The JMRI main pane for configuring DCC decoders
@@ -28,22 +25,13 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright 2003, 2014
- * @version $Revision$
  */
 public class DecoderProPane extends apps.AppsLaunchPane {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4713040816106118873L;
 
     DecoderProPane() {
         super();
     }
 
-    /**
-     * Returns the ID for the window's help, which is application specific
-     */
     protected String windowHelpID() {
         return "package.apps.DecoderPro.DecoderPro";
     }
@@ -70,11 +58,6 @@ public class DecoderProPane extends apps.AppsLaunchPane {
         Action serviceprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("DpButtonUseProgrammingTrack"));
         Action opsprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("DpButtonProgramOnMainTrack"));
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2382260205232391687L;
-
             public void actionPerformed(ActionEvent e) {
                 Apps.handleQuit();
             }
@@ -84,8 +67,8 @@ public class DecoderProPane extends apps.AppsLaunchPane {
         b1.addActionListener(serviceprog);
         b1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(b1);
-        if (jmri.InstanceManager.programmerManagerInstance() == null
-                || !jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) == null
+                || !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).isGlobalProgrammerAvailable()) {
             b1.setEnabled(false);
             b1.setToolTipText(Bundle.getMessage("MsgServiceButtonDisabled"));
         }
@@ -93,8 +76,8 @@ public class DecoderProPane extends apps.AppsLaunchPane {
         m1.addActionListener(opsprog);
         m1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(m1);
-        if (jmri.InstanceManager.programmerManagerInstance() == null
-                || !jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) == null
+                || !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).isAddressedModePossible()) {
             m1.setEnabled(false);
             m1.setToolTipText(Bundle.getMessage("MsgOpsButtonDisabled"));
         }
@@ -113,6 +96,4 @@ public class DecoderProPane extends apps.AppsLaunchPane {
 
         return j;
     }
-
-    static Logger log = LoggerFactory.getLogger(DecoderProPane.class.getName());
 }

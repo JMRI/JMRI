@@ -1,18 +1,11 @@
-// NamedBeanHandle.java
 package jmri;
 
 /**
  * Utility class for managing access to a NamedBean
  *
  * @author Bob Jacobsen Copyright 2009
- * @version $Revision$
  */
 public class NamedBeanHandle<T> implements java.io.Serializable {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5234423868376521202L;
 
     public NamedBeanHandle(String name, T bean) {
         this.name = name;

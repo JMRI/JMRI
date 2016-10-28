@@ -1,4 +1,3 @@
-/* CbusDccOpsModeProgrammer.java */
 package jmri.jmrix.can.cbus;
 
 import java.util.ArrayList;
@@ -9,6 +8,8 @@ import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import jmri.jmrix.can.CanReply;
 import jmri.managers.DefaultProgrammerManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide an Ops Mode Programmer via a wrapper what works with the CBUS command
@@ -18,12 +19,12 @@ import jmri.managers.DefaultProgrammerManager;
  *
  * @see jmri.Programmer
  * @author	Andrew Crosland Copyright (C) 2009
- * @version	$Revision$
  */
 public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements AddressedProgrammer {
 
     int mAddress;
     boolean mLongAddr;
+    private final static Logger log = LoggerFactory.getLogger(CbusDccOpsModeProgrammer.class);
 
     public CbusDccOpsModeProgrammer(int pAddress, boolean pLongAddr, jmri.jmrix.can.TrafficController tc) {
         super(tc);
@@ -34,6 +35,7 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
     /**
      * Forward a write request to an ops-mode write operation
      */
+    @Override
     synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         log.debug("ops mode write CV=" + CV + " val=" + val);
 
@@ -49,6 +51,7 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
         notifyProgListenerEnd(_val, jmri.ProgListener.OK);
     }
 
+    @Override
     synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("read CV=" + CV);
@@ -57,7 +60,8 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
         throw new ProgrammerException();
     }
 
-    synchronized public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
+    @Override
+    synchronized public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("confirm CV=" + CV);
         }
@@ -111,5 +115,3 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
     }
 
 }
-
-/* @(#)CbusDccOpsModeProgrammer.java */

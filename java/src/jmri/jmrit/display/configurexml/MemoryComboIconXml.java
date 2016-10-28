@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.MemorySpinnerIcon objects.
  *
  * @author Pete Cressman Copyright (c) 2012
- * @version $Revision: 1 $
  */
 public class MemoryComboIconXml extends PositionableLabelXml {
 
@@ -24,37 +23,32 @@ public class MemoryComboIconXml extends PositionableLabelXml {
     /**
      * Default implementation for storing the contents of a MemorySpinnerIcon
      *
-     * @param o Object to store, of type MemorySpinnerIcon
+     * @param obj Object to store, of type MemorySpinnerIcon
      * @return Element containing the complete info
      */
-    public Element store(Object o) {
+    public Element store(Object obj) {
 
-        MemoryComboIcon p = (MemoryComboIcon) o;
+        MemoryComboIcon memoryIcon = (MemoryComboIcon) obj;
 
         Element element = new Element("memoryComboIcon");
 
         Element elem = new Element("itemList");
-        DefaultComboBoxModel model = p.getComboModel();
+        DefaultComboBoxModel<String> model = memoryIcon.getComboModel();
         for (int i = 0; i < model.getSize(); i++) {
             Element e = new Element("item");
             e.setAttribute("index", "" + i);
-            e.addContent((String) model.getElementAt(i));
+            e.addContent(model.getElementAt(i));
             elem.addContent(e);
         }
         element.addContent(elem);
 
         // include attributes
-        element.setAttribute("memory", p.getNamedMemory().getName());
-        storeCommonAttributes(p, element);
-        storeTextInfo(p, element);
+        element.setAttribute("memory", memoryIcon.getNamedMemory().getName());
+        storeCommonAttributes(memoryIcon, element);
+        storeTextInfo(memoryIcon, element);
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.MemoryComboIconXml");
         return element;
-    }
-
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
     }
 
     /**
@@ -112,5 +106,5 @@ public class MemoryComboIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.MEMORIES, element);
     }
 
-    static Logger log = LoggerFactory.getLogger(MemoryComboIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryComboIconXml.class.getName());
 }

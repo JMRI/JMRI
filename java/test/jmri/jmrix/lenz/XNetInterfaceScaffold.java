@@ -1,4 +1,3 @@
-//  XNetInterfaceScaffold.java
 package jmri.jmrix.lenz;
 
 import java.util.Vector;
@@ -11,8 +10,7 @@ import org.slf4j.LoggerFactory;
  * Description:	Test scaffold implementation of XNetInterface
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2006
- * @version	$Revision$
- *
+  *
  * Use an object of this type as a XNetTrafficController in tests
  */
 public class XNetInterfaceScaffold extends XNetTrafficController {
@@ -82,7 +80,7 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
     public void receiveLoop() {
     }
 
-    static Logger log = LoggerFactory.getLogger(XNetInterfaceScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetInterfaceScaffold.class.getName());
 
 }
 

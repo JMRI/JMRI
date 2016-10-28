@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable CV="181" default="50" item="Sound Group 3 Option 4">
+        <decVal/>
+        <label>Horn Fade In</label>
+      </variable>
+      <variable CV="182" default="40" item="Sound Group 3 Option 5">
+        <decVal/>
+        <label>Horn Fade Out</label>
+      </variable>
+      <variable CV="183" default="69" item="Sound Group 3 Option 6">
+        <decVal/>
+        <label>Horn Fade In Level</label>
+      </variable>
+      <variable CV="188" default="128" item="Sound Group 3 Option 7">
+        <decVal/>
+        <label>Pitch Shift</label>
+      </variable>
+      <variable item="Horn Select" CV="224" default="0">
+        <enumVal>
+          <enumChoice choice="Default">
+            <choice>Default</choice>
+          </enumChoice>
+          <enumChoice choice="Horn3">
+            <choice>Horn3</choice>
+          </enumChoice>
+          <enumChoice choice="Horn4">
+            <choice>Horn4</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Horn Select</label>
+      </variable>
+</variables>

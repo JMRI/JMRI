@@ -4,7 +4,6 @@
  * Description:	JUnit tests
  *
  * @author	Bob Jacobsen
- * @version
  */
 package jmri.jmrix.tmcc.serialmon;
 
@@ -12,7 +11,7 @@ import java.util.Vector;
 import jmri.jmrix.tmcc.SerialMessage;
 import jmri.jmrix.tmcc.SerialReply;
 import jmri.jmrix.tmcc.SerialTrafficController;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
 public class SerialMonFrameTest extends TestCase {
 
     public void testCreateAndShow() {
-        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         SerialMonFrame f = new SerialMonFrame();
         try {
             f.initComponents();
@@ -146,7 +144,7 @@ public class SerialMonFrameTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SerialMonFrameTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -155,6 +153,21 @@ public class SerialMonFrameTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialMonFrameTest.class.getName());
+    // The minimal setup for log4J
+    protected void setUp() throws Exception {
+        apps.tests.Log4JFixture.setUp();
+
+        super.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+    }
+
+    protected void tearDown() throws Exception {
+        jmri.util.JUnitUtil.resetInstanceManager();
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown();
+    }
+    
+    private final static Logger log = LoggerFactory.getLogger(SerialMonFrameTest.class.getName());
 
 }

@@ -5,15 +5,8 @@ import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.swing.ResizableImagePanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class BackgroundPanel extends ResizableImagePanel implements AddressListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4774584990257220648L;
 
     public BackgroundPanel() {
         super();
@@ -65,6 +58,4 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
 
     public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
     }
-
-    static Logger log = LoggerFactory.getLogger(BackgroundPanel.class.getName());
 }

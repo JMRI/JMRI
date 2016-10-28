@@ -1,4 +1,3 @@
-// NodeConfigAction.java
 package jmri.jmrix.ieee802154.swing.nodeconfig;
 
 import java.awt.event.ActionEvent;
@@ -10,14 +9,9 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a NodeConfigFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public class NodeConfigAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9095207703075488295L;
     private jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo icm = null;
 
     public NodeConfigAction(String s, jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo cm) {
@@ -27,7 +21,7 @@ public class NodeConfigAction extends AbstractAction {
                 // find the first registered memo.
                 icm = jmri.InstanceManager.
                         getList(jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo.class).get(0);
-            } catch (java.lang.NullPointerException npe) {
+            } catch (java.lang.NullPointerException|java.lang.IndexOutOfBoundsException e) {
                 // no memo exists, are we configuring this for the first time?
                 log.debug("No IEEE 802.15.4 System Connection Memo available");
             }
@@ -58,7 +52,7 @@ public class NodeConfigAction extends AbstractAction {
         f.setLocation(100, 30);
         f.setVisible(true);
     }
-    static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
 }
 
 

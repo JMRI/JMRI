@@ -2,8 +2,6 @@
 package jmri.jmrix.powerline.cm11;
 
 import jmri.jmrix.powerline.SerialTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the Light Object for X10 CM11 interfaces.
@@ -26,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009, 2010
  * @author Ken Cameron Copyright (C) 2009 Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version $Revision$
  */
 public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
 
@@ -56,8 +53,6 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
     }
 
     SerialTrafficController tc = null;
-
-    static Logger log = LoggerFactory.getLogger(SpecificLight.class.getName());
 }
 
 /* @(#)SerialLight.java */

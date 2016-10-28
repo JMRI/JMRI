@@ -1,8 +1,5 @@
-// SerialReply.java
 package jmri.jmrix.cmri.serial;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Contains the data payload of a CMRI serial reply packet. Note that _only_ the
@@ -10,7 +7,6 @@ import org.slf4j.LoggerFactory;
  * included. But it does include addressing characters, etc.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version $Revision$
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
@@ -27,7 +23,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         super(l);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public String toString() {
@@ -58,8 +54,4 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         return index;
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialReply.class.getName());
-
 }
-
-/* @(#)SerialReply.java */

@@ -10,14 +10,8 @@ import javax.swing.AbstractAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision$
  */
 public class OptionAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7507020443490655869L;
 
     public OptionAction(String s) {
         super(s);
@@ -25,6 +19,7 @@ public class OptionAction extends AbstractAction {
 
     OptionFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (f == null || !f.isVisible()) {
             f = new OptionFrame();

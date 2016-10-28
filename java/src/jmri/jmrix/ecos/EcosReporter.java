@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * rail com tag.
  * <P>
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 17977 $
  */
 public class EcosReporter extends AbstractReporter implements PhysicalLocationReporter {
 
@@ -144,7 +143,7 @@ public class EcosReporter extends AbstractReporter implements PhysicalLocationRe
         return (PhysicalLocation.getBeanPhysicalLocation(this));
     }
 
-    static Logger log = LoggerFactory.getLogger(EcosReporter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosReporter.class.getName());
 
 }
 

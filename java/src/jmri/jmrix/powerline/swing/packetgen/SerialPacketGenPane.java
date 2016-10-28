@@ -1,4 +1,3 @@
-// SerialPacketGenPane.java
 package jmri.jmrix.powerline.swing.packetgen;
 
 import java.awt.Dimension;
@@ -10,8 +9,6 @@ import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user input of Powerline messages
@@ -19,14 +16,8 @@ import org.slf4j.LoggerFactory;
  * @author	Ken Cameron	Copyright (C) 2010 derived from:
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision$
  */
 public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePanel implements SerialListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2993960846641037667L;
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.powerline.swing.packetgen.SerialPacketGenBundle");
 
@@ -77,6 +68,8 @@ public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePan
 
     public void initComponents(SerialSystemConnectionMemo memo) throws Exception {
         this.memo = memo;
+        tc = memo.getTrafficController();
+        
         // the following code sets the frame's initial state
 
         jLabel1.setText("Command:");
@@ -129,7 +122,5 @@ public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePan
 
     public void reply(SerialReply r) {
     } // ignore replies
-
-    static Logger log = LoggerFactory.getLogger(SerialPacketGenPane.class.getName());
 
 }

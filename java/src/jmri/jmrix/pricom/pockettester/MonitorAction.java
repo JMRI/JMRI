@@ -13,8 +13,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrix.pricom.pockettester.MonitorFrame
  *
  * @author	Bob Jacobsen Copyright (C) 2002,2004
- * @version	$Revision$
- */
+  */
 public abstract class MonitorAction extends AbstractAction {
 
     /**
@@ -45,7 +44,7 @@ public abstract class MonitorAction extends AbstractAction {
 
     abstract void connect(DataListener l);
 
-    static Logger log = LoggerFactory.getLogger(MonitorAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MonitorAction.class.getName());
 
 }
 

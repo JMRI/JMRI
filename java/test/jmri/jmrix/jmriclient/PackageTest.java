@@ -1,17 +1,13 @@
-// PackageTest.java
 package jmri.jmrix.jmriclient;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.jmriclient package
  *
  * @author	Bob Jacobsen
- * @version	$Revision: 18472 $
  */
 public class PackageTest extends TestCase {
 
@@ -23,7 +19,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -34,19 +30,21 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(JMRIClientTurnoutTest.class));
         suite.addTest(new TestSuite(JMRIClientSensorTest.class));
         suite.addTest(new TestSuite(JMRIClientReporterTest.class));
-        suite.addTest(new TestSuite(JMRIClientTurnoutManagerTest.class));
-        suite.addTest(new TestSuite(JMRIClientSensorManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientTurnoutManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientSensorManagerTest.class));
         suite.addTest(new TestSuite(JMRIClientReporterManagerTest.class));
         suite.addTest(new TestSuite(JMRIClientTrafficControllerTest.class));
         suite.addTest(new TestSuite(JMRIClientSystemConnectionMemoTest.class));
         suite.addTest(new TestSuite(JMRIClientPowerManagerTest.class));
-
-        // if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.jmriclient.networkdriver.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.jmriclient.configurexml.PackageTest.class));
+        suite.addTest(jmri.jmrix.jmriclient.json.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.jmriclient.swing.PackageTest.class));
+// if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
         // there are currently no swing tests.
         // }
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
 
 }

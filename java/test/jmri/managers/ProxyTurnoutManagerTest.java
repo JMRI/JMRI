@@ -1,23 +1,19 @@
-// ProxyTurnoutManagerTest.java
 package jmri.managers;
 
 import java.beans.PropertyChangeListener;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test the ProxyTurnoutManager
  *
  * @author	Bob Jacobsen 2003, 2006, 2008, 2014
- * @version	$Revision$
- */
+  */
 public class ProxyTurnoutManagerTest extends TestCase {
 
     public String getSystemName(int i) {
@@ -54,6 +50,18 @@ public class ProxyTurnoutManagerTest extends TestCase {
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+
+    public void testProvideFailure() {
+        boolean correct = false;
+        try {
+            Turnout t = l.provideTurnout("");
+            Assert.fail("didn't throw");
+        } catch (IllegalArgumentException ex) {
+            correct = true;
+        }
+        Assert.assertTrue("Exception thrown properly", correct);
+        jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for turnout: JT needed JT");
     }
 
     public void testSingleObject() {
@@ -166,7 +174,7 @@ public class ProxyTurnoutManagerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", ProxyTurnoutManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -191,7 +199,5 @@ public class ProxyTurnoutManagerTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(ProxyTurnoutManagerTest.class.getName());
 
 }

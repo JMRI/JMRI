@@ -13,8 +13,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001, 2007, 2008 Converted to multiple
  * connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision$
- */
+  */
 public class SerialPacketGenAction extends AbstractAction {
 
     /**
@@ -43,7 +42,7 @@ public class SerialPacketGenAction extends AbstractAction {
         }
         f.setVisible(true);
     }
-    static Logger log = LoggerFactory.getLogger(SerialPacketGenAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialPacketGenAction.class.getName());
 }
 
 

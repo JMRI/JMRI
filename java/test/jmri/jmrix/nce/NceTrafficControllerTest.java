@@ -1,11 +1,10 @@
-// NceTrafficControllerTest.java
 package jmri.jmrix.nce;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * JUnit tests for the NceTrafficController class
  *
  * @author	Bob Jacobsen Copyright 2003, 2007
- * @version $Revision$
  */
 public class NceTrafficControllerTest extends TestCase {
 
@@ -279,7 +277,7 @@ public class NceTrafficControllerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {NceTrafficControllerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -288,6 +286,6 @@ public class NceTrafficControllerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(NceTrafficControllerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceTrafficControllerTest.class.getName());
 
 }

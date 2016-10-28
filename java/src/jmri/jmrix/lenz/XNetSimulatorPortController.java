@@ -3,8 +3,6 @@ package jmri.jmrix.lenz;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base for classes representing a XNet communications port
@@ -12,8 +10,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  * @author	Paul Bender Copyright (C) 2004,2010
- * @version	$Revision$
- */
+  */
 public abstract class XNetSimulatorPortController extends jmri.jmrix.AbstractSerialPortController implements XNetPortController {
 
     public XNetSimulatorPortController() {
@@ -49,8 +46,6 @@ public abstract class XNetSimulatorPortController extends jmri.jmrix.AbstractSer
     public XNetSystemConnectionMemo getSystemConnectionMemo() {
         return (XNetSystemConnectionMemo) super.getSystemConnectionMemo();
     }
-
-    static Logger log = LoggerFactory.getLogger(XNetSimulatorPortController.class.getName());
 
 }
 

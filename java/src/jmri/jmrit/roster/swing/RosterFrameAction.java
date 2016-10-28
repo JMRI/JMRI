@@ -1,9 +1,7 @@
-// RosterFrameAction.java
 package jmri.jmrit.roster.swing;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
 import javax.swing.Icon;
 import javax.swing.WindowConstants;
 import jmri.InstanceManager;
@@ -19,11 +17,6 @@ import jmri.util.swing.WindowInterface;
  * @author Randall Wood Copyright (C) 2012
  */
 public class RosterFrameAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3393320955672226931L;
 
     public RosterFrameAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -43,7 +36,7 @@ public class RosterFrameAction extends JmriAbstractAction {
      * configured in user preferences
      */
     public RosterFrameAction() {
-        super(ResourceBundle.getBundle("apps.ActionListBundle").getString("jmri.jmrit.roster.swing.RosterFrameAction"));
+        super(Bundle.getMessage("RosterFrameAction")); // NOI18N
         allowQuit = false;
     }
 

@@ -1,7 +1,6 @@
-// TurnoutTest.java
 package jmri;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the Turnout class
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
  */
 public class TurnoutTest extends TestCase {
 
@@ -31,7 +29,7 @@ public class TurnoutTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {TurnoutTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

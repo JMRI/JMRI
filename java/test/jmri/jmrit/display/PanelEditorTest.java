@@ -13,14 +13,12 @@ import junit.framework.TestSuite;
  * Description:
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class PanelEditorTest extends TestCase {
 
     TurnoutIcon to = null;
 
     public void testShow() throws Exception {
-        jmri.util.JUnitUtil.initConfigureManager();
 
         // load and display
         File f = new File("java/test/jmri/jmrit/display/verify/PanelEditorTest1.xml");
@@ -29,7 +27,6 @@ public class PanelEditorTest extends TestCase {
     }
 
     public void testShow2() throws Exception {
-        jmri.util.JUnitUtil.initConfigureManager();
 
         // load and display
         File f = new File("java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml");
@@ -38,7 +35,6 @@ public class PanelEditorTest extends TestCase {
     }
 
     public void testShow3() throws Exception {
-        jmri.util.JUnitUtil.initConfigureManager();
 
         // load and display
         File f = new File("java/test/jmri/jmrit/display/configurexml/load/OneOfEach.3.3.3.xml");
@@ -54,7 +50,7 @@ public class PanelEditorTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PanelEditorTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -69,6 +65,7 @@ public class PanelEditorTest extends TestCase {
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
+        jmri.util.JUnitUtil.initConfigureManager();
     }
 
     protected void tearDown() {

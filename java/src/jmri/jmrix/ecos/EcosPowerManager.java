@@ -3,13 +3,14 @@ package jmri.jmrix.ecos;
 
 import jmri.JmriException;
 import jmri.PowerManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PowerManager implementation for controlling layout power.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision$
- */
+  */
 public class EcosPowerManager implements PowerManager, EcosListener {
 
     public EcosPowerManager(EcosTrafficController etc) {
@@ -85,11 +86,13 @@ public class EcosPowerManager implements PowerManager, EcosListener {
     public void reply(EcosReply m) {
         // power message?
         String msg = m.toString();
-        if (msg.contains("<EVENT 1>") || msg.contains("REPLY get(1,")) {
-            if (msg.contains("status[GO]")) {
+        if (msg.contains("<EVENT 1>") || msg.contains("REPLY get(1,") || msg.contains("REPLY set(1,")) {
+            if (msg.contains("status[GO]") || msg.contains("et(1, go)")) {
+                log.debug("POWER ON DETECTED");
                 power = ON;
                 firePropertyChange("Power", null, null);
-            } else if (msg.contains("status[STOP]")) {
+            } else if (msg.contains("status[STOP]") || msg.contains("et(1, stop)")) {
+                log.debug("POWER OFF DETECTED");
                 power = OFF;
                 firePropertyChange("Power", null, null);
             }
@@ -100,6 +103,7 @@ public class EcosPowerManager implements PowerManager, EcosListener {
         // messages are ignored
     }
 
+    private final static Logger log = LoggerFactory.getLogger(EcosPowerManager.class.getName());
 }
 
 

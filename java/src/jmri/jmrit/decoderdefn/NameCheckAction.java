@@ -1,4 +1,3 @@
-// NameCheckAction.java
 package jmri.jmrit.decoderdefn;
 
 import java.awt.event.ActionEvent;
@@ -19,15 +18,9 @@ import org.slf4j.LoggerFactory;
  * Check the names in an XML decoder file against the names.xml definitions
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2007
- * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  */
 public class NameCheckAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8721690694443271221L;
 
     public NameCheckAction(String s, JPanel who) {
         super(s);
@@ -39,7 +32,7 @@ public class NameCheckAction extends AbstractAction {
     JPanel _who;
 
     @SuppressWarnings("unchecked")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void actionPerformed(ActionEvent e) {
@@ -133,6 +126,6 @@ public class NameCheckAction extends AbstractAction {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(NameCheckAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NameCheckAction.class.getName());
 
 }

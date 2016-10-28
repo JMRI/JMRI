@@ -8,7 +8,6 @@ import jmri.InstanceManager;
  * Does configuration for Nmra Net communications implementations.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision: 17977 $
  */
 public class CanConfigurationManager extends ConfigurationManager {
 
@@ -22,7 +21,6 @@ public class CanConfigurationManager extends ConfigurationManager {
     jmri.jmrix.swing.ComponentFactory cf = null;
 
     public void configureManagers() {
-        ActiveFlag.setActive();
     }
 
     /**

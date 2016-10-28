@@ -1,4 +1,3 @@
-// PaneOpsProgAction.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.event.ActionEvent;
@@ -32,14 +31,9 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class PaneOpsProgAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2255562820678458397L;
     Object o1, o2, o3, o4;
     JLabel statusLabel;
 
@@ -53,8 +47,8 @@ public class PaneOpsProgAction extends AbstractAction {
         statusLabel = new JLabel(SymbolicProgBundle.getMessage("StateIdle"));
 
         // disable ourself if ops programming is not possible
-        if (jmri.InstanceManager.programmerManagerInstance() == null
-                || !jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) == null
+                || !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).isAddressedModePossible()) {
             setEnabled(false);
             // This needs to return so the xmlThread is not started;
             return;
@@ -82,11 +76,6 @@ public class PaneOpsProgAction extends AbstractAction {
         // known loco on main track
         JPanel pane1 = new KnownLocoSelPane(false) {  // no ident in ops mode yet
 
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2816965509649056116L;
-
             protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                     String filename) {
                 String title = java.text.MessageFormat.format(SymbolicProgBundle.getMessage("FrameOpsProgrammerTitle"),
@@ -94,7 +83,7 @@ public class PaneOpsProgAction extends AbstractAction {
                 // find the ops-mode programmer
                 int address = Integer.parseInt(re.getDccAddress());
                 boolean longAddr = re.isLongAddress();
-                Programmer programmer = InstanceManager.programmerManagerInstance()
+                Programmer programmer = InstanceManager.getDefault(jmri.ProgrammerManager.class)
                         .getAddressedProgrammer(longAddr, address);
                 // and created the frame
                 JFrame p = new PaneOpsProgFrame(decoderFile, re,
@@ -119,8 +108,6 @@ public class PaneOpsProgAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    static Logger log = LoggerFactory.getLogger(PaneOpsProgAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PaneOpsProgAction.class.getName());
 
 }
-
-/* @(#)PaneOpsProgAction.java */

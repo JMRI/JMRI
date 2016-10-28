@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * color, type, load, road, owner, model etc.
  *
  * @author Daniel Boudreau Copyright (C) 2014
- * @version $Revision: 25735 $
+ * 
  */
 public class RollingStockAttribute {
 
@@ -24,7 +24,7 @@ public class RollingStockAttribute {
     public RollingStockAttribute() {
     }
 
-    public synchronized void dispose() {
+    public void dispose() {
         list.clear();
         //TODO The removal of listeners causes the tests to fail.
         // Need to reload all listeners for the tests to work.
@@ -50,7 +50,7 @@ public class RollingStockAttribute {
     }
 
     protected String getDefaultNames() {
-        return "Error"; //  NOI18N overridden
+        return "Error"; // overridden //  NOI18N
     }
 
     public void setNames(String[] names) {
@@ -67,8 +67,8 @@ public class RollingStockAttribute {
 
     /**
      * Performs number sort before adding to list
+     * @param lengths The set of strings to be ordered.
      *
-     * @param lengths
      */
     public void setValues(String[] lengths) {
         if (lengths.length == 0) {
@@ -144,7 +144,11 @@ public class RollingStockAttribute {
 
     /**
      * Create an XML element to represent this Entry. This member has to remain
-     * synchronized with the detailed DTD in operations-cars.dtd.
+     * synchronized with the detailed DTD in operations-cars.dtd and operations-engines.dtd.
+     * @param root Common Element for storage.
+     * @param eNames New format Element group name
+     * @param eName New format Element name
+     * @param oldName Backwards compatibility Element name
      *
      */
     public void store(Element root, String eNames, String eName, String oldName) {
@@ -209,6 +213,6 @@ public class RollingStockAttribute {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(RollingStockAttribute.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RollingStockAttribute.class.getName());
 
 }

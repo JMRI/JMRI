@@ -2,8 +2,6 @@
 package jmri.jmrix.jmriclient;
 
 import jmri.Sensor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implement sensor manager for JMRIClient systems
@@ -12,8 +10,7 @@ import org.slf4j.LoggerFactory;
  * the sensor number without padding.
  *
  * @author	Paul Bender Copyright (C) 2010
- * @version	$Revision$
- */
+  */
 public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager {
 
     private JMRIClientSystemConnectionMemo memo = null;
@@ -44,8 +41,6 @@ public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager
     public String createSystemName(String curAddress, String prefix) throws jmri.JmriException {
         return prefix + typeLetter() + curAddress;
     }
-
-    static Logger log = LoggerFactory.getLogger(JMRIClientSensorManager.class.getName());
 
 }
 

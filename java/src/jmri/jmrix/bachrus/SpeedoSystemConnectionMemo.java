@@ -12,7 +12,6 @@ import jmri.InstanceManager;
  * activate their particular system.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
  */
 public class SpeedoSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -20,8 +19,8 @@ public class SpeedoSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
         super("A", "Speedo");
         this.tc = tc;
         register();
-        /*InstanceManager.store(cf = new jmri.jmrix.speedo.swing.ComponentFactory(this), 
-         jmri.jmrix.swing.ComponentFactory.class);*/
+        InstanceManager.store(cf = new jmri.jmrix.bachrus.swing.SpeedoComponentFactory(this), 
+         jmri.jmrix.swing.ComponentFactory.class);
     }
 
     public SpeedoSystemConnectionMemo() {
@@ -29,8 +28,8 @@ public class SpeedoSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
         register(); // registers general type
         InstanceManager.store(this, SpeedoSystemConnectionMemo.class); // also register as specific type
         //Needs to be implemented
-        /*InstanceManager.store(cf = new jmri.jmrix.speedo.swing.ComponentFactory(this), 
-         jmri.jmrix.swing.ComponentFactory.class);*/
+        InstanceManager.store(cf = new jmri.jmrix.bachrus.swing.SpeedoComponentFactory(this), 
+         jmri.jmrix.swing.ComponentFactory.class);
     }
 
     jmri.jmrix.swing.ComponentFactory cf = null;

@@ -1,4 +1,3 @@
-// RfidSensorManager.java
 package jmri.jmrix.rfid;
 
 import org.slf4j.Logger;
@@ -11,18 +10,18 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  * @since 2.11.4
  */
 abstract public class RfidSensorManager extends jmri.managers.AbstractSensorManager implements RfidListener {
 
-    private String prefix;
+    private final String prefix;
 
     public RfidSensorManager(String prefix) {
         super();
         this.prefix = prefix;
     }
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
@@ -37,6 +36,7 @@ abstract public class RfidSensorManager extends jmri.managers.AbstractSensorMana
 //        RfidSensor r = new RfidSensor(systemName, userName);
 //        return r;
 //    }
+    @Override
     public void message(RfidMessage m) {
         log.warn("Unexpected message received: " + m);
     }
@@ -44,5 +44,3 @@ abstract public class RfidSensorManager extends jmri.managers.AbstractSensorMana
     private static final Logger log = LoggerFactory.getLogger(RfidSensorManager.class.getName());
 
 }
-
-/* @(#)RfidSensorManager.java */

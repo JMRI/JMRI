@@ -4,6 +4,7 @@ import java.util.List;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.roster.RosterEntry;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -20,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision$
  */
 public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -51,6 +51,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
                 String sname = iter.next();
                 if (sname == null) {
                     log.error("System name null during store");
+                    break;
                 }
                 log.debug("system name is " + sname);
                 Memory m = tm.getBySystemName(sname);
@@ -99,10 +100,13 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
      * Create a MemoryManager object of the correct class, then register and
      * fill it.
      *
-     * @param memories Top level Element to unpack.
+     * @param sharedMemories  Shared top level Element to unpack.
+     * @param perNodeMemories Per-node top level Element to unpack.
      * @return true if successful
+     * @throws jmri.configurexml.JmriConfigureXmlException if error during load.
      */
-    abstract public boolean load(Element memories) throws jmri.configurexml.JmriConfigureXmlException;
+    @Override
+    abstract public boolean load(Element sharedMemories, Element perNodeMemories) throws JmriConfigureXmlException;
 
     /**
      * Utility method to load the individual Memory objects. If there's no
@@ -150,7 +154,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
         if (memory.getAttribute("valueClass") != null) {
             String adapter = memory.getAttribute("valueClass").getValue();
             if (adapter.equals("jmri.jmrit.roster.RosterEntry")) {
-                RosterEntry re = jmri.jmrit.roster.Roster.instance().getEntryForId(value);
+                RosterEntry re = jmri.jmrit.roster.Roster.getDefault().getEntryForId(value);
                 m.setValue(re);
                 return;
             }
@@ -158,5 +162,5 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
         m.setValue(value);
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractMemoryManagerConfigXML.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractMemoryManagerConfigXML.class.getName());
 }

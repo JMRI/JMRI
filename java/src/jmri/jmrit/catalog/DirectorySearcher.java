@@ -1,4 +1,3 @@
-// ImageIndexEditor.java
 package jmri.jmrit.catalog;
 
 import java.awt.Font;
@@ -13,27 +12,22 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.CatalogTreeManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A file system directory searcher to locate Image files to include in an Image
  * Catalog. This is a singleton class.
- * <P>
- *
- *
+ * <BR>
  * <hr>
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
- *
+ * </P>
  * @author	Pete Cressman Copyright 2010
  *
  */
@@ -142,7 +136,7 @@ public class DirectorySearcher {
     /**
      * Open one directory.
      *
-     * @param addDir - <pre>if true, allows directory to be added as a tree to the Catalog.
+     * @param addDir if true, allows directory to be added as a tree to the Catalog.<br>
      *                      if false, allows preview panel to drag icons.
      */
     public void openDirectory(boolean addDir) {
@@ -301,6 +295,4 @@ public class DirectorySearcher {
         closeWaitFrame();
         cancelLooking();
     }
-
-    static Logger log = LoggerFactory.getLogger(DirectorySearcher.class.getName());
 }

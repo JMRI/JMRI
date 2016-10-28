@@ -16,8 +16,7 @@ import org.slf4j.LoggerFactory;
  * System names are "MSnnn", where nnn is the sensor number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2008, 2010
- * @version	$Revision$
- */
+  */
 public class OlcbSensorManager extends jmri.managers.AbstractSensorManager implements CanListener {
 
     String prefix = "M";
@@ -110,7 +109,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     public void updateAll() {
     }
 
-    static Logger log = LoggerFactory.getLogger(OlcbSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbSensorManager.class.getName());
 
 }
 

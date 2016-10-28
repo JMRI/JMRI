@@ -1,4 +1,3 @@
-// WaitHandler.java
 package jmri.util;
 
 import java.util.Calendar;
@@ -8,20 +7,20 @@ import java.util.Calendar;
  * described in the {@link java.lang.Object#wait(long)} JavaDocs
  *
  * Generally, when waiting for a notify() operation, you need to provide a test
- * that a valid notify had happened due to e.g. a state change, etc.  <code><pre>
+ * that a valid notify had happened due to e.g. a state change, etc.
+ * <pre><code>
  * new WaitHandler(this, 120) {
  * protected boolean wasSpurious() {
  * return !(state == expectedNextState);
  * }
  * };
- * </pre></code>
+ * </code></pre>
  *
  * By default, interrupting the thread leaves the wait early with the
  * interrupted flag set. InterruptedException is not thrown. You can modify this
  * behavior via the handleInterruptedException routine.
  *
  * @author Bob Jacobsen Copyright 2010
- * @version $Revision$
  */
 public class WaitHandler {
 
@@ -58,7 +57,7 @@ public class WaitHandler {
      *
      * @param self waiting Object
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "UW_UNCOND_WAIT", justification = "unguarded wait() used intentionally here as part of utility class")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification = "unguarded wait() used intentionally here as part of utility class")
     public WaitHandler(Object self) {
         // loop until interrupted, or non-spurious wake
         while (true) {
@@ -83,6 +82,8 @@ public class WaitHandler {
      * are considered not spurious and the full time may not elapse. Override to
      * provide a test (returning true) when there's a way to tell that a wake
      * was spurious and the wait() should continue.
+     *
+     * @return false unless overridden by a subclass
      */
     protected boolean wasSpurious() {
         return false;
@@ -93,6 +94,7 @@ public class WaitHandler {
      *
      * By default, just records and leaves the wait early.
      *
+     * @param e the exception to handle
      * @return true if should break out of wait
      */
     boolean handleInterruptedException(InterruptedException e) {

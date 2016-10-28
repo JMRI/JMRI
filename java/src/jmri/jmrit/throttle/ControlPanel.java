@@ -53,16 +53,8 @@ import org.slf4j.LoggerFactory;
  * @author glen Copyright (C) 2002
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
- *
- * @version $Revision$
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2556116647848797537L;
-
     private DccThrottle throttle;
 
     private JSlider speedSlider;
@@ -684,43 +676,40 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         spinnerPanel = new JPanel();
         spinnerPanel.setLayout(new GridBagLayout());
 
-        if (speedSpinner != null) {
-            spinnerPanel.add(speedSpinner, constraints);
-        }
-        //this.getContentPane().add(spinnerPanel,BorderLayout.CENTER);
+        spinnerPanel.add(speedSpinner, constraints);
+
         speedControlPanel.add(spinnerPanel);
+
         // remove old actions
-        if (speedSpinner != null) {
-            speedSpinner.addChangeListener(
-                    new ChangeListener() {
-                        public void stateChanged(ChangeEvent e) {
-                            if (!internalAdjust) {
-                                //if (!speedSpinner.getValueIsAdjusting())
-                                //{
-                                float newSpeed = ((Integer) speedSpinner.getValue()).floatValue() / (intSpeedSteps * 1.0f);
-                                if (log.isDebugEnabled()) {
-                                    log.debug("stateChanged: spinner pos: " + speedSpinner.getValue() + " speed: " + newSpeed);
-                                }
-                                if (throttle != null) {
-                                    if (spinnerPanel.isVisible()) {
-                                        throttle.setSpeedSetting(newSpeed);
-                                    }
-                                    speedSlider.setValue(((Integer) speedSpinner.getValue()).intValue());
-                                    if (speedSliderContinuous != null) {
-                                        if (forwardButton.isSelected()) {
-                                            speedSliderContinuous.setValue(((Integer) speedSpinner.getValue()).intValue());
-                                        } else {
-                                            speedSliderContinuous.setValue(-((Integer) speedSpinner.getValue()).intValue());
-                                        }
-                                    }
-                                } else {
-                                    log.warn("no throttle object in stateChanged, ignoring change of speed to " + newSpeed);
-                                }
-                                //}
+        speedSpinner.addChangeListener(
+                new ChangeListener() {
+                    public void stateChanged(ChangeEvent e) {
+                        if (!internalAdjust) {
+                            //if (!speedSpinner.getValueIsAdjusting())
+                            //{
+                            float newSpeed = ((Integer) speedSpinner.getValue()).floatValue() / (intSpeedSteps * 1.0f);
+                            if (log.isDebugEnabled()) {
+                                log.debug("stateChanged: spinner pos: " + speedSpinner.getValue() + " speed: " + newSpeed);
                             }
+                            if (throttle != null) {
+                                if (spinnerPanel.isVisible()) {
+                                    throttle.setSpeedSetting(newSpeed);
+                                }
+                                speedSlider.setValue(((Integer) speedSpinner.getValue()).intValue());
+                                if (speedSliderContinuous != null) {
+                                    if (forwardButton.isSelected()) {
+                                        speedSliderContinuous.setValue(((Integer) speedSpinner.getValue()).intValue());
+                                    } else {
+                                        speedSliderContinuous.setValue(-((Integer) speedSpinner.getValue()).intValue());
+                                    }
+                                }
+                            } else {
+                                log.warn("no throttle object in stateChanged, ignoring change of speed to " + newSpeed);
+                            }
+                            //}
                         }
-                    });
-        }
+                    }
+                });
 
         ButtonGroup speedStepButtons = new ButtonGroup();
         speedStepButtons.add(SpeedStep128Button);
@@ -1051,7 +1040,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author glen
-     * @version $Revision$
      */
     class ControlPadKeyListener extends KeyAdapter {
 
@@ -1093,7 +1081,33 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             }
         }
     }
-
+    
+    /** 
+     * Intended for throttle scripting
+     */
+    public void setForwardDirection(boolean fwd) {
+        if (fwd) {
+            if (forwardButton.isEnabled()) {
+                forwardButton.doClick();
+            } else {
+                log.error("setForwardDirection(true) with forwardButton disabled, failed");
+            }
+        } else {
+            if (reverseButton.isEnabled()) {
+                reverseButton.doClick();
+            } else {
+                log.error("setForwardDirection(false) with reverseButton disabled, failed");
+            }
+        }
+    }
+    
+    /** 
+     * Intended for throttle scripting
+     */
+    public JSlider getSpeedSlider() {
+        return speedSlider;
+    }
+    
     // update the state of this panel if any of the properties change
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("SpeedSetting")) {
@@ -1379,14 +1393,14 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         if ((throttle != null) && (_displaySlider != STEPDISPLAY)) { // Update UI depending on function state
             try {
                 java.lang.reflect.Method getter = throttle.getClass().getMethod("get" + switchSliderFunction, (Class[]) null);
-                if (getter != null) {
-                    Boolean state = (Boolean) getter.invoke(throttle, (Object[]) null);
-                    if (state) {
-                        setSpeedController(SLIDERDISPLAYCONTINUOUS);
-                    } else {
-                        setSpeedController(SLIDERDISPLAY);
-                    }
+
+                Boolean state = (Boolean) getter.invoke(throttle, (Object[]) null);
+                if (state) {
+                    setSpeedController(SLIDERDISPLAYCONTINUOUS);
+                } else {
+                    setSpeedController(SLIDERDISPLAY);
                 }
+                
             } catch (java.lang.Exception ex) {
                 log.debug("Exception in setSwitchSliderFunction: " + ex + " while looking for function " + switchSliderFunction);
             }
@@ -1408,9 +1422,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         } else {
             return;
         }
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ControlPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ControlPanel.class.getName());
 }

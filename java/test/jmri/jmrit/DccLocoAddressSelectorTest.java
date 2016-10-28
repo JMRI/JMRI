@@ -1,4 +1,3 @@
-// DccLocoAddressSelectorTest.java
 package jmri.jmrit;
 
 import javax.swing.JComboBox;
@@ -7,19 +6,16 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.ThrottleManager;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test simple functioning of DccLocoAddressSelector
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version	$Revision$
- */
+  */
 public class DccLocoAddressSelectorTest extends TestCase {
 
     public void testCtor() {
@@ -43,11 +39,6 @@ public class DccLocoAddressSelectorTest extends TestCase {
         setThrottleManager();
         reportedError = null;
         DccLocoAddressSelector sel = new DccLocoAddressSelector() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -7065357497721821474L;
-
             void reportError(String msg) {
                 reportedError = msg;
             }
@@ -150,7 +141,7 @@ public class DccLocoAddressSelectorTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", DccLocoAddressSelectorTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -158,7 +149,5 @@ public class DccLocoAddressSelectorTest extends TestCase {
         TestSuite suite = new TestSuite(DccLocoAddressSelectorTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(DccLocoAddressSelectorTest.class.getName());
 
 }

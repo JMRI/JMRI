@@ -1,6 +1,6 @@
-// EcosPreferences.java
 package jmri.jmrix.ecos;
 
+import apps.gui3.TabbedPreferences;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * with JMRI.
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version $Revision$
  */
 public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
 
@@ -21,22 +20,22 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
         if (log.isDebugEnabled()) {
             log.debug("creating a new EcosPreferences object");
         }
-        if (ecosPreferencesShutDownTask == null) {
-            ecosPreferencesShutDownTask = new QuietShutDownTask("Ecos Preferences Shutdown") {
-                @Override
-                public boolean doAction() {
-                    if (getChangeMade()) {
-                        jmri.InstanceManager.configureManagerInstance().storePrefs();
-                    }
-                    return true;
+
+        ecosPreferencesShutDownTask = new QuietShutDownTask("Ecos Preferences Shutdown") {
+            @Override
+            public boolean execute() {
+                if (getChangeMade()) {
+                    InstanceManager.getDefault(jmri.ConfigureManager.class).storePrefs();
                 }
-            };
-            if (jmri.InstanceManager.shutDownManagerInstance() != null) {
-                jmri.InstanceManager.shutDownManagerInstance().register(ecosPreferencesShutDownTask);
+                return true;
             }
-        }
+        };
+        InstanceManager.getOptionalDefault(jmri.ShutDownManager.class).ifPresent(sdm -> {
+            sdm.register(ecosPreferencesShutDownTask);
+        });
+
         adaptermemo = memo;
-        InstanceManager.tabbedPreferencesInstance().addPreferencesPanel(new PreferencesPane(this));
+        InstanceManager.getDefault(TabbedPreferences.class).addPreferencesPanel(new PreferencesPane(this));
     }
 
     private EcosSystemConnectionMemo adaptermemo;
@@ -381,7 +380,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(EcosPreferences.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosPreferences.class.getName());
 
     /**
      * @return the adaptermemo

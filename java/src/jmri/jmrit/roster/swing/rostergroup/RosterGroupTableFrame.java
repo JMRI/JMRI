@@ -1,4 +1,3 @@
-// RosterGroupTableFrame.java
 package jmri.jmrit.roster.swing.rostergroup;
 
 import java.awt.Component;
@@ -8,8 +7,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JMenuBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import jmri.util.JTableUtil;
-import jmri.util.com.sun.TableSorter;
+import javax.swing.table.TableRowSorter;
 
 /**
  * Provide a JFrame to display the Roster Data Based upon BeanTableFrame.
@@ -25,14 +23,9 @@ import jmri.util.com.sun.TableSorter;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision$
- */
+  */
 public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 81131762773750394L;
     RosterGroupTableModel dataModel;
     JTable dataTable;
     JScrollPane dataScroll;
@@ -50,16 +43,16 @@ public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
         super();
         dataModel = model;
 
-        dataTable = JTableUtil.sortableDataModel(dataModel);
-        dataScroll = new JScrollPane(dataTable);
+        dataTable = new JTable(dataModel);
+        TableRowSorter<RosterGroupTableModel> sorter = new TableRowSorter<>(dataModel);
+        dataTable.setRowSorter(sorter);
 
-        // give system name column as smarter sorter and use it initially
-        try {
-            TableSorter tmodel = ((TableSorter) dataTable.getModel());
-            tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            tmodel.setSortingStatus(RosterGroupTableModel.IDCOL, TableSorter.ASCENDING);
-        } catch (java.lang.ClassCastException e) {
-        }  // happens if not sortable table
+        // not sure I understand how to address this unchecked warning
+        sorter.setComparator(RosterGroupTableModel.IDCOL, new jmri.util.SystemNameComparator());
+        sorter.toggleSortOrder(RosterGroupTableModel.IDCOL);
+        dataTable = new JTable(dataModel);
+        
+        dataScroll = new JScrollPane(dataTable);
 
         // configure items for GUI
         dataModel.configureTable(dataTable);
@@ -117,7 +110,6 @@ public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
      * Add a component to the bottom box. Takes care of organising glue, struts
      * etc
      *
-     * @param comp
      */
     protected void addToBottomBox(Component comp) {
         bottomBox.add(Box.createHorizontalStrut(bottomStrutWidth), bottomBoxIndex);
@@ -134,7 +126,6 @@ public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
      * Add a component to the bottom box. Takes care of organising glue, struts
      * etc
      *
-     * @param comp
      */
     protected void addToTopBox(Component comp) {
         topBox.add(Box.createHorizontalStrut(topStrutWidth), topBoxIndex);

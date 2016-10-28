@@ -1,11 +1,9 @@
-// TestTrafficController.java
 package jmri.jmrix.can;
 
 /**
  * Test scaffold to replace the TrafficController
  *
  * @author	Bob Jacobsen Copyright 2008, 2010
- * @version $Revision$
  */
 public class TestTrafficController extends TrafficController {
 

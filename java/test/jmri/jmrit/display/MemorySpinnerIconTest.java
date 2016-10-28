@@ -1,7 +1,7 @@
 package jmri.jmrit.display;
 
 import jmri.util.JmriJFrame;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -11,8 +11,7 @@ import junit.framework.TestSuite;
  * Description:
  *
  * @author	Bob Jacobsen Copyright 2009
- * @version	$Revision$
- */
+  */
 public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
 
     MemorySpinnerIcon tos1 = null;
@@ -22,8 +21,7 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
     MemorySpinnerIcon toi2 = null;
     MemorySpinnerIcon toi3 = null;
 
-    jmri.jmrit.display.panelEditor.PanelEditor panel
-            = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemorySpinnerIcon Panel");
+    jmri.jmrit.display.panelEditor.PanelEditor panel;
 
     public void testShow() {
         JmriJFrame jf = new JmriJFrame();
@@ -38,14 +36,8 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
         toi2 = new MemorySpinnerIcon(panel);
         jf.getContentPane().add(toi2);
 
-        jmri.InstanceManager i = new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = this;
-            }
-        };
-        jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
-        Assert.assertNotNull("Instance exists", i);
+        jmri.util.JUnitUtil.resetInstanceManager();
+
         tos1.setMemory("IM1");
         tos2.setMemory("IM1");
         jmri.InstanceManager.memoryManagerInstance().getMemory("IM1").setValue("4");
@@ -69,6 +61,10 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
 
         jf.pack();
         jf.setVisible(true);
+        
+        if (!System.getProperty("jmri.demo", "false").equals("false")) {
+            jf.setVisible(false);
+        }
 
     }
 
@@ -80,7 +76,7 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", MemorySpinnerIconTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -92,6 +88,8 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        
+        panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemorySpinnerIcon Panel");
     }
 
     protected void tearDown() {

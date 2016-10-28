@@ -1,4 +1,3 @@
-// EcosTrafficController.java
 package jmri.jmrix.ecos;
 
 import java.util.List;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * message.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class EcosTrafficController extends AbstractMRTrafficController implements EcosInterface, CommandStation {
 
@@ -34,6 +32,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         // set as command station too
         jmri.InstanceManager.setCommandStation(this);
         this.setAllowUnexpectedReply(true);
+        this.setSynchronizeRx(false);
     }
 
     public void setAdapterMemo(EcosSystemConnectionMemo memo) {
@@ -114,16 +113,20 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
      *
      * @return The registered EcosTrafficController instance for general use, if
      *         need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public EcosTrafficController instance() {
         return self;
     }
 
     //This can be removed once multi-connection is complete
+    @Override
+    @Deprecated
     public void setInstance() {
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_PKGPROTECT")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT")
     // FindBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected EcosTrafficController self = null;
@@ -301,7 +304,5 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         }
         return adaptermemo.getSystemPrefix();
     }
-    static Logger log = LoggerFactory.getLogger(EcosTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosTrafficController.class.getName());
 }
-
-/* @(#)EcosTrafficController.java */

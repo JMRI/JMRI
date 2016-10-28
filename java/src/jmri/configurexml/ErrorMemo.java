@@ -4,7 +4,6 @@ package jmri.configurexml;
  * Memo class to remember errors encountered during loading
  *
  * @author Bob Jacobsen Copyright (c) 2010
- * @version $Revision$
  */
 public class ErrorMemo {
 

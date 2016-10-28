@@ -1,10 +1,7 @@
-// QuadOutputSignalHead.java
 package jmri.implementation;
 
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Drive a single signal head via four "Turnout" objects.
@@ -20,14 +17,8 @@ import org.slf4j.LoggerFactory;
  * changed via some other mechanism.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version	$Revision$
  */
 public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3055732456230925340L;
 
     public QuadOutputSignalHead(String sys, String user, NamedBeanHandle<Turnout> green, NamedBeanHandle<Turnout> yellow, NamedBeanHandle<Turnout> red, NamedBeanHandle<Turnout> lunar) {
         super(sys, user, green, yellow, red);
@@ -115,12 +106,12 @@ public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
         Bundle.getMessage("SignalHeadStateFlashingGreen")
     };
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public int[] getValidStates() {
         return validStates;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public String[] getValidStateNames() {
         return validStateNames;
     }
@@ -134,8 +125,4 @@ public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
         }
         return false;
     }
-
-    static Logger log = LoggerFactory.getLogger(QuadOutputSignalHead.class.getName());
 }
-
-/* @(#)QuadOutputSignalHead.java */

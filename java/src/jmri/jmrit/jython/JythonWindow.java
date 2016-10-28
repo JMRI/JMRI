@@ -1,4 +1,3 @@
-// JythonWindow.java
 package jmri.jmrit.jython;
 
 import java.awt.BorderLayout;
@@ -16,6 +15,9 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import jmri.InstanceManager;
+import jmri.UserPreferencesManager;
+import jmri.script.ScriptOutput;
 import jmri.util.JmriJFrame;
 
 /**
@@ -24,14 +26,18 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen Copyright (C) 2004
  * @author Matthew Harris Copyright (C) 2010
- * @version $Revision$
  */
 public class JythonWindow extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2991411495753279905L;
+    private JTextArea area;
+    private JFrame f;
+    private JCheckBox autoScroll;
+    private UserPreferencesManager pref;
+    private JButton clearButton;
+
+    public static final String alwaysOnTopCheck = JythonWindow.class.getName() + ".alwaysOnTop";
+    public static final String alwaysScrollCheck = JythonWindow.class.getName() + ".alwaysScroll";
+    protected JCheckBox alwaysOnTopCheckBox = new JCheckBox();
 
     /**
      * Constructor just initializes parent class.
@@ -50,26 +56,23 @@ public class JythonWindow extends AbstractAction {
      * Invoking this action via an event triggers display of a file dialog. If a
      * file is selected, it's then invoked as a script.
      *
-     * @param e
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
-        pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        jmri.util.PythonInterp.getPythonInterpreter();
+        pref = InstanceManager.getDefault(UserPreferencesManager.class);
 
-        java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.jython.JythonBundle");
-
-        f = new JmriJFrame(rb.getString("TitleOutputFrame"));
+        f = new JmriJFrame(Bundle.getMessage("TitleOutputFrame"));
         f.getContentPane().add(
                 new JScrollPane(
-                        area = new javax.swing.JTextArea(jmri.util.PythonInterp.getOutputArea().getDocument(), null, 12, 50),
+                        area = new javax.swing.JTextArea(ScriptOutput.getDefault().getOutputArea().getDocument(), null, 12, 50),
                         ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                         ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED
                 ), BorderLayout.CENTER);
 
         // Add checkbox to enable/disable auto-scrolling
         JPanel p = new JPanel();
-        p.add(clearButton = new JButton(rb.getString("ButtonClear")));
-        p.add(autoScroll = new JCheckBox(rb.getString("CheckBoxAutoScroll"), true));
+        p.add(clearButton = new JButton(Bundle.getMessage("ButtonClear")));
+        p.add(autoScroll = new JCheckBox(Bundle.getMessage("CheckBoxAutoScroll"), true));
         autoScroll.setSelected(pref.getSimplePreferenceState(alwaysScrollCheck));
         alwaysOnTopCheckBox.setText("Window always on Top");
         alwaysOnTopCheckBox.setVisible(true);
@@ -83,6 +86,7 @@ public class JythonWindow extends AbstractAction {
             // Reference to the JTextArea of this instantiation
             JTextArea ta = area;
 
+            @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     doAutoScroll(ta, true);
@@ -91,17 +95,13 @@ public class JythonWindow extends AbstractAction {
             }
         });
 
-        alwaysOnTopCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                f.setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
-                pref.setSimplePreferenceState(alwaysOnTopCheck, alwaysOnTopCheckBox.isSelected());
-            }
+        alwaysOnTopCheckBox.addActionListener((ActionEvent ae) -> {
+            f.setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
+            pref.setSimplePreferenceState(alwaysOnTopCheck, alwaysOnTopCheckBox.isSelected());
         });
 
-        clearButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                area.setText("");
-            }
+        clearButton.addActionListener((ActionEvent ae) -> {
+            area.setText("");
         });
         f.getContentPane().add(p, BorderLayout.PAGE_END);
 
@@ -117,14 +117,17 @@ public class JythonWindow extends AbstractAction {
             JTextArea ta = area;
             JCheckBox chk = autoScroll;
 
+            @Override
             public void insertUpdate(DocumentEvent e) {
                 doAutoScroll(ta, chk.isSelected());
             }
 
+            @Override
             public void removeUpdate(DocumentEvent e) {
                 doAutoScroll(ta, chk.isSelected());
             }
 
+            @Override
             public void changedUpdate(DocumentEvent e) {
                 doAutoScroll(ta, chk.isSelected());
             }
@@ -152,16 +155,6 @@ public class JythonWindow extends AbstractAction {
     public JFrame getFrame() {
         return f;
     }
-
-    JTextArea area;
-    JFrame f;
-    JCheckBox autoScroll;
-    jmri.UserPreferencesManager pref;
-    JButton clearButton;
-
-    String alwaysOnTopCheck = this.getClass().getName() + ".alwaysOnTop";
-    String alwaysScrollCheck = this.getClass().getName() + ".alwaysScroll";
-    protected JCheckBox alwaysOnTopCheckBox = new JCheckBox();
 
 }
 

@@ -2,10 +2,14 @@
 jmri.jar
 /dist
 java/docs
+/target
 
 # test artifacts
 junit-results.xml
 junit*.properties
+findbugs.xml
+findbugs.html
+jacoco.exec
 
 # runtime artifacts
 messages.log*
@@ -14,16 +18,30 @@ session.log
 # transient artifacts
 .ant-targets-build.xml
 /java/classes
+/java/test-classes
 /java/tmp
+/java/doc
+/java/test-classes/
 *.class
 /temp
 .pydevproject
 *.swp
 /lib/cachedir
+/xml/XSLT/DTD
+/xml/XSLT/properties
+/xml/XSLT/xml
+/xml/XSLT/pages
+.run.sh
 
 # private / per-user configuration files
 /nbproject/private
+/.idea/workspace.xml
 local.properties
+/test
+/test/jmri.conf
+*.original~
+.metadata
+RemoteSystemsTempFiles
 
 # CATS source, sometimes present for test
 /java/src/cats
@@ -31,3 +49,4 @@ local.properties
 # OS junk files
 [Tt]humbs.db
 *.DS_Store
+/jmri-fb.html

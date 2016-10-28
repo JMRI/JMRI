@@ -1,4 +1,3 @@
-// RfidSensorManager.java
 package jmri.jmrix.rfid.generic.standalone;
 
 import jmri.IdTag;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  * @since 2.11.4
  */
 public class StandaloneSensorManager extends RfidSensorManager {
@@ -83,5 +81,3 @@ public class StandaloneSensorManager extends RfidSensorManager {
     private static final Logger log = LoggerFactory.getLogger(StandaloneSensorManager.class.getName());
 
 }
-
-/* @(#)SpecificSensorManager.java */

@@ -23,8 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2008
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision$
- */
+  */
 public class SerialNode extends AbstractNode {
 
     /**
@@ -164,7 +163,7 @@ public class SerialNode extends AbstractNode {
      * Public method to set node type.
      */
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     public void setNodeType(int type) {
         nodeType = type;
         switch (nodeType) {
@@ -341,7 +340,7 @@ public class SerialNode extends AbstractNode {
         timeout = 0;
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialNode.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialNode.class.getName());
 }
 
 /* @(#)SerialNode.java */

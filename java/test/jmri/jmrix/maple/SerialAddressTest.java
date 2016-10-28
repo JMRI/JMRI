@@ -1,8 +1,7 @@
-// SerialAddressTest.java
 package jmri.jmrix.maple;
 
 import jmri.util.JUnitAppender;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -11,8 +10,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the SerialAddress utility class.
  *
  * @author	Dave Duchamp Copyright 2004
- * @version	$Revision$
- */
+  */
 public class SerialAddressTest extends TestCase {
 
     public void setUp() {
@@ -33,11 +31,6 @@ public class SerialAddressTest extends TestCase {
         jmri.InstanceManager.setTurnoutManager(l);
 
         jmri.LightManager lgt = new SerialLightManager() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -2625025480408831496L;
-
             @Override
             public void notifyLightCreationError(String conflict, int bitNum) {
             }
@@ -231,7 +224,7 @@ public class SerialAddressTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SerialAddressTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

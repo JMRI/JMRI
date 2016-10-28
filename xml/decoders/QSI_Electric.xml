@@ -39,7 +39,7 @@
         <comment>A value of 255 corresponds to 100%</comment>
       </variable>
       <!-- CV 3-4 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
       <variable CV="5" item="Vhigh" default="1" tooltip="range 2-255, 1 = not used">
         <decVal min="1" max="255"/>
         <label>Max Volts</label>

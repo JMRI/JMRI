@@ -12,8 +12,9 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision$
+ * @deprecated As of 4.3.5, see jmri.jmrix.internal.configurexml classes
  */
+@Deprecated
 public class InternalSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
     public InternalSensorManagerXml() {
@@ -52,11 +53,12 @@ public class InternalSensorManagerXml extends jmri.managers.configurexml.Abstrac
 
     }
 
-    public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
-        // load individual sensors
-        if (sensors.getChild("defaultInitialState") != null) {
+    @Override
+    public boolean load(Element sharedSensors, Element perNodeSensors) throws jmri.configurexml.JmriConfigureXmlException {
+        // load individual sharedSensors
+        if (sharedSensors.getChild("defaultInitialState") != null) {
             int defaultState = jmri.Sensor.UNKNOWN;
-            String state = sensors.getChild("defaultInitialState").getText();
+            String state = sharedSensors.getChild("defaultInitialState").getText();
             if (state.equals("active")) {
                 defaultState = jmri.Sensor.ACTIVE;
             } else if (state.equals("inactive")) {
@@ -66,10 +68,10 @@ public class InternalSensorManagerXml extends jmri.managers.configurexml.Abstrac
             }
             InternalSensorManager.setDefaultStateForNewSensors(defaultState);
         }
-        boolean load = loadSensors(sensors);
+        boolean load = loadSensors(sharedSensors);
 
         return load;
     }
 
-    static Logger log = LoggerFactory.getLogger(InternalSensorManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InternalSensorManagerXml.class.getName());
 }

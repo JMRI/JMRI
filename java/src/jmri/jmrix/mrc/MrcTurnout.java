@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Paul Bender Copyright (C) 2004
  * @author Martin Wade Copyright (C) 2014
- * @version	$Revision: 22821 $
+ * 
  */
 public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
 
@@ -59,9 +59,9 @@ public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
     // Handle a request to change state by sending a formatted DCC packet
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states
-        if ((s & Turnout.CLOSED) > 0) {
+        if ((s & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) > 0) {
+            if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both CLOSED and THROWN " + s); //IN18N
                 return;
@@ -115,7 +115,7 @@ public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
     protected void turnoutPushbuttonLockout(boolean pushButtonLockout) {
     }
 
-    static Logger log = LoggerFactory.getLogger(MrcTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MrcTurnout.class.getName());
 
 }
 

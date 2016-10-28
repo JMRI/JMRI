@@ -1,4 +1,3 @@
-// SerialSignalHeadXml.java
 package jmri.jmrix.grapevine.configurexml;
 
 import jmri.InstanceManager;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Handle XML configuration for Grapevine SerialSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2007, 2008
- * @version $Revision$
  */
 public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -42,15 +40,10 @@ public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         return element;
     }
 
-    /**
-     * Create a Grapevine SerialSignalHead
-     *
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
-        String sys = element.getAttribute("systemName").getValue();
-        Attribute a = element.getAttribute("userName");
+    @Override
+    public boolean load(Element shared, Element perNode) {
+        String sys = shared.getAttribute("systemName").getValue();
+        Attribute a = shared.getAttribute("userName");
         SignalHead h;
         if (a == null) {
             h = new SerialSignalHead(sys);
@@ -58,9 +51,9 @@ public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
             h = new SerialSignalHead(sys, a.getValue());
         }
 
-        loadCommon(h, element);
+        loadCommon(h, shared);
 
-        InstanceManager.signalHeadManagerInstance().register(h);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         return true;
     }
 
@@ -68,5 +61,5 @@ public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialSignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialSignalHeadXml.class.getName());
 }

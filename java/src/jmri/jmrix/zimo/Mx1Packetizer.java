@@ -1,7 +1,6 @@
-/**
- * Mx1Packetizer.java
- */
 package jmri.jmrix.zimo;
+
+import static jmri.jmrix.zimo.Mx1Message.PROGCMD;
 
 import java.io.DataInputStream;
 import java.io.OutputStream;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentHashMap;
-import static jmri.jmrix.zimo.Mx1Message.PROGCMD;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <P>
  * <UL>
  * <LI> RcvHandler - at highest available priority
  * <LI> XmtHandler - down one, which is assumed to be above the GUI
@@ -31,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * </UL>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -45,7 +41,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
 
     // The methods to implement the Mx1Interface
     public boolean status() {
-        return (ostream != null & istream != null);
+        return (ostream != null && istream != null);
     }
 
     public final static boolean ASCII = false;
@@ -251,7 +247,6 @@ public class Mx1Packetizer extends Mx1TrafficController {
         }
 
         public void run() {
-            boolean debug = log.isDebugEnabled();
             int opCode;
             if (protocol) {
                 ArrayList<Integer> message = new ArrayList<Integer>();
@@ -261,9 +256,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                         int secondByte = readByteProtected(istream) & 0xFF;
                         // start by looking for command 0x01, 0x01
                         while (firstByte != SOH && secondByte != SOH) {
-                            if (debug) {
-                                log.debug("Skipping: " + Integer.toHexString(firstByte) + " " + Integer.toHexString(secondByte)); //IN18N
-                            }
+                            log.debug("Skipping: {} {}", Integer.toHexString(firstByte), Integer.toHexString(secondByte));
                             firstByte = secondByte;
                             secondByte = readByteProtected(istream) & 0xFF;
                         }
@@ -279,9 +272,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                                 b = b ^ 0x20;
                             }
                             message.add(b);
-                            if (debug) {
-                                log.debug("char is: " + Integer.toHexString(b)); //IN18N
-                            }
+                            log.debug("char is: {}", Integer.toHexString(b));
                         }
                         //lastSequence = ((byte)(message.get(0)&0xff));
                         //Remove the message from the list
@@ -322,7 +313,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                         };
                         log.debug("schedule notify of incoming packet");
                         javax.swing.SwingUtilities.invokeLater(r);
-                        
+
                     } // done with this one
                     /*catch (java.io.EOFException e) {
                      // posted from idle port when enableReceiveTimeout used
@@ -353,7 +344,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                             int b = istream.readByte() & 0xFF;
                             len = len + 1;
                             //if end of message
-                            if (b == 0x0D | b == 0x0A) {
+                            if (b == 0x0D || b == 0x0A) {
                                 msgn.setElement(i, b);
                                 break;
                             }
@@ -487,19 +478,16 @@ public class Mx1Packetizer extends Mx1TrafficController {
     /**
      * Captive class to handle transmission
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "UW_UNCOND_WAIT",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT",
             justification = "while loop controls access")
     class XmtHandler implements Runnable {
 
         public void run() {
-            boolean debug = log.isDebugEnabled();
             while (true) {   // loop permanently
                 // any input?
                 try {
                     // get content; failure is a NoSuchElementException
-                    if (debug) {
-                        log.debug("check for input");
-                    }
+                    log.debug("check for input");
                     byte msg[] = null;
                     synchronized (this) {
                         msg = xmtList.removeFirst();
@@ -508,9 +496,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                     try {
                         if (ostream != null) {
                             //if (!controller.okToSend()) log.warn("Mx1 port not ready to receive");
-                            if (debug) {
-                                log.debug("start write to stream");
-                            }
+                            log.debug("start write to stream");
                             ostream.write(msg);
                             ostream.flush();
                             if (protocol) {
@@ -520,9 +506,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                                 }
                             }
 
-                            if (debug) {
-                                log.debug("end write to stream");
-                            }
+                            log.debug("end write to stream");
                         } else {
                             // no stream connected
                             log.warn("send message: no connection established");
@@ -533,9 +517,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                 } catch (NoSuchElementException e) {
                     //Check retry queue?
                     // message queue was empty, wait for input
-                    if (debug) {
-                        log.debug("start wait");
-                    }
+                    log.debug("start wait");
                     try {
                         synchronized (this) {
                             wait();
@@ -543,9 +525,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                     } catch (java.lang.InterruptedException ei) {
                         Thread.currentThread().interrupt(); // retain if needed later
                     }
-                    if (debug) {
-                        log.debug("end wait");
-                    }
+                    log.debug("end wait");
                 }
             }
         }
@@ -579,20 +559,18 @@ public class Mx1Packetizer extends Mx1TrafficController {
                         Mx1Message m = mq.getMessage();
                         if (m.getRetry() <= 0) {
                             xmtPackets.remove(key);
-                        } else {
-                            if (m.getTimeStamp() + 200 < System.currentTimeMillis()) {
-                                m.setRetries(m.getRetry() - 1);
-                                m.setTimeStamp(System.currentTimeMillis());
-                                trafficController.notify(m, mq.getListener());
-                                synchronized (xmtHandler) {
-                                    log.warn("Packet not replied to so will retry");
-                                    xmtList.addFirst(m.getRawPacket());
-                                    xmtHandler.notify();
-                                }
-                            } else {
-                                //Using a linked list, so if the first packet we come too isn't 
-                                break;
+                        } else if (m.getTimeStamp() + 200 < System.currentTimeMillis()) {
+                            m.setRetries(m.getRetry() - 1);
+                            m.setTimeStamp(System.currentTimeMillis());
+                            trafficController.notify(m, mq.getListener());
+                            synchronized (xmtHandler) {
+                                log.warn("Packet not replied to so will retry");
+                                xmtList.addFirst(m.getRawPacket());
+                                xmtHandler.notify();
                             }
+                        } else {
+                            //Using a linked list, so if the first packet we come too isn't 
+                            break;
                         }
                     }
                     //As the retry packet list is not empty, we will wait for 200ms before rechecking it.
@@ -710,8 +688,5 @@ public class Mx1Packetizer extends Mx1TrafficController {
         0x74, 0x2a, 0xc8, 0x96, 0x15, 0x4b, 0xa9, 0xf7, 0xb6, 0xe8, 0x0a, 0x54, 0xd7, 0x89, 0x6b, 0x35
     };
 
-    static Logger log = LoggerFactory.getLogger(Mx1Packetizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1Packetizer.class.getName());
 }
-
-
-/* @(#)Mx1Packetizer.java */

@@ -1,4 +1,3 @@
-// ProxyLightManagerTest.java
 package jmri.managers;
 
 import java.beans.PropertyChangeListener;
@@ -6,19 +5,16 @@ import jmri.InstanceManager;
 import jmri.LightManager;
 import jmri.Reporter;
 import jmri.ReporterManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test the ProxyReporterManager
  *
  * @author	Bob Jacobsen 2003, 2006, 2008
  * @author	Mark Underwood 2012
- * @version	$Revision: 17977 $
  */
 public class ProxyReporterManagerTest extends TestCase {
 
@@ -57,6 +53,18 @@ public class ProxyReporterManagerTest extends TestCase {
         Assert.assertTrue("real object returned ", t != null);
         t = l.getBySystemName(getSystemName(getNumToTest3()));
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest3())));
+    }
+
+    public void testProvideFailure() {
+        boolean correct = false;
+        try {
+            Reporter t = l.provideReporter("");
+            Assert.fail("didn't throw");
+        } catch (IllegalArgumentException ex) {
+            correct = true;
+        }
+        Assert.assertTrue("Exception thrown properly", correct);
+        
     }
 
     public void testSingleObject() {
@@ -139,10 +147,6 @@ public class ProxyReporterManagerTest extends TestCase {
         Assert.assertNotNull(InstanceManager.getDefault(LightManager.class).provideLight("IL1"));
 
         InternalLightManager m = new InternalLightManager() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2721638034147721142L;
 
             public String getSystemPrefix() {
                 return "J";
@@ -178,7 +182,7 @@ public class ProxyReporterManagerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", ProxyReporterManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -191,14 +195,12 @@ public class ProxyReporterManagerTest extends TestCase {
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         // create and register the manager object
-        l = InstanceManager.reporterManagerInstance();
+        l = InstanceManager.getDefault(jmri.ReporterManager.class);
     }
 
     @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(ProxyReporterManagerTest.class.getName());
 
 }

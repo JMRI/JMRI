@@ -14,8 +14,7 @@ import org.slf4j.LoggerFactory;
  * NetworkDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
     public final static String NAME = "CAN via GridConnect Network Interface";
@@ -105,5 +104,5 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         return ResourceBundle.getBundle("jmri.jmrix.can.CanActionListBundle");
     }
 
-    static Logger log = LoggerFactory.getLogger(ConnectionConfig.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class.getName());
 }

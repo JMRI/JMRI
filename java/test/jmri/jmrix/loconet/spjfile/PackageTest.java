@@ -1,19 +1,15 @@
-// PackageTest.java
 package jmri.jmrix.loconet.spjfile;
 
 import jmri.jmrit.Sound;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.spjfile package
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -74,7 +70,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -82,7 +78,5 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite(PackageTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
 
 }

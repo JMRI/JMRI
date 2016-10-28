@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Based in part on SerialLight.java
  *
  * @author Paul Bender Copyright (C) 2008-2010
- * @version $Revision$
  */
 public class XNetLight extends AbstractLight implements XNetListener {
 
@@ -82,9 +81,6 @@ public class XNetLight extends AbstractLight implements XNetListener {
     /**
      * System dependent instance variables
      */
-    String mSystemName = "";     // system name 
-    //protected int mState = OFF;  // current state of this light
-    //private int mOldState =mState; // save the old state
     int mAddress = 0;            // accessory output address
 
     /* Internal State Machine states. */
@@ -211,7 +207,7 @@ public class XNetLight extends AbstractLight implements XNetListener {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(XNetLight.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetLight.class.getName());
 }
 
 /* @(#)XNetLight.java */

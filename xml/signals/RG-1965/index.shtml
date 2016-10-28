@@ -43,7 +43,7 @@ Compatibility:
 <li>Some special .GIF icon files are included to help the user address known issues: rule-282.gif is the default animated icon that works fine in JMRI 3.2 but doesn't show as an aspect on a panel with JMRI 2.14.1 on Mac OSX 10.5.8 (Java 1.5). rule-282-1.gif and rule-282-2.gif are the 2 files used to create the animated gif rule-282.gif</li>
 <li>The Digitrax SE8c signal decoder does not support the Lunar aspect used in the Restricting  appearance (rule 290). Replacing the word &quot;lunar&quot; by &quot;dark&quot; in your copies of the appearance xml files is a fix.</li>
 <li>For older systems limited to Java 1.5 and JMRI 2.14.1 a static icon rule-282-b.gif is included in each aspect icon folder under JMRI/resources/icons/smallschematics/aspects/RG-1965/SL-x-etc/ which can be renamed to rule-282.gif</li>
-<li>If preferred, one could overrule the icons in the application's resource folder as described in the <a href="http://jmri.sourceforge.net/help/en/html/tools/signaling/DefineNewAspects.shtml">Signal documentation</a>.</li>
+<li>If preferred, one could overrule the icons in the application's resource folder as described in the <a href="http://jmri.org/help/en/html/tools/signaling/DefineNewAspects.shtml">Signal documentation</a>.</li>
 </ul>
 </p>
 <p>

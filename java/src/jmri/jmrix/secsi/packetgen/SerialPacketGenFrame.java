@@ -1,4 +1,3 @@
-// SerialPacketGenFrame.java
 package jmri.jmrix.secsi.packetgen;
 
 import java.awt.Dimension;
@@ -16,8 +15,7 @@ import jmri.util.StringUtil;
  * Frame for user input of serial messages
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2003, 2006, 2007, 2008
- * @version	$Revision$
- */
+  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.secsi.SerialListener {
 
     /**

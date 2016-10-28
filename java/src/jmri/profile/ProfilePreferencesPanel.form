@@ -41,7 +41,7 @@
     </Container>
     <Component class="javax.swing.ButtonGroup" name="grpStartWithSelectors">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_allCodePost" type="java.lang.String" value="if (ProfileManager.defaultManager().isAutoStartActiveProfile()) {&#xa;this.rdoStartWithActiveProfile.setSelected(true);&#xa;} else {&#xa;this.rdoStartWithProfileSelector.setSelected(true);&#xa;}&#xa;"/>
+        <AuxValue name="JavaCodeGenerator_allCodePost" type="java.lang.String" value="if (ProfileManager.getDefault().isAutoStartActiveProfile()) {&#xa;this.rdoStartWithActiveProfile.setSelected(true);&#xa;} else {&#xa;this.rdoStartWithProfileSelector.setSelected(true);&#xa;}"/>
       </AuxValues>
     </Component>
   </NonVisualComponents>
@@ -320,9 +320,8 @@
                           <Component id="jScrollPane3" pref="667" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="btnAddSearchPath" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="btnRemoveSearchPath" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>

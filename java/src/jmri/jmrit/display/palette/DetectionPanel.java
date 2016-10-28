@@ -23,18 +23,12 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OPath;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.picker.PickPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Panel for Occupancy and Error detection,
  */
 public class DetectionPanel extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5943021268643905786L;
     private JTextField _occDetectorName = new JTextField();   // can be either a Sensor or OBlock name
     private JFrame _pickFrame;
     private JButton _openPicklistButton;
@@ -64,7 +58,7 @@ public class DetectionPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(makeSensorPanel(_occDetectorName, "OccupancySensor", "ToolTipOccupancySensor"));
+        panel.add(makeSensorPanel(_occDetectorName, "DetectionSensor", "ToolTipOccupancySensor"));
         _openPicklistButton = new JButton(Bundle.getMessage("OpenPicklist"));
         _openPicklistButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
@@ -125,8 +119,8 @@ public class DetectionPanel extends JPanel {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(Bundle.getMessage("DragOccupancyName")));
-        blurb.add(new JLabel(Bundle.getMessage("DragErrorName")));
+        blurb.add(new JLabel(Bundle.getMessage("DragOccupancyName", Bundle.getMessage("DetectionSensor"))));
+        blurb.add(new JLabel(Bundle.getMessage("DragErrorName", Bundle.getMessage("ErrorSensor"))));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);
@@ -173,7 +167,7 @@ public class DetectionPanel extends JPanel {
         }
     }
 
-    /**
+    /*
      * **************** Getters & Setters **************************
      */
     public boolean getShowTrainName() {
@@ -239,7 +233,7 @@ public class DetectionPanel extends JPanel {
         }
     }
 
-    /**
+    /*
      * ******************************************
      */
     private void checkDetection() {
@@ -256,7 +250,7 @@ public class DetectionPanel extends JPanel {
                 if (sensor == null) {
                     JOptionPane.showMessageDialog(_parent._paletteFrame,
                             Bundle.getMessage("InvalidOccDetector", name),
-                            Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                     _occDetectorName.setText(null);
                 }
                 _blockPathPanel.setVisible(false);
@@ -298,6 +292,4 @@ public class DetectionPanel extends JPanel {
         _blockPathPanel.add(_checkBoxPanel, 1);
         _blockPathPanel.setVisible(true);
     }
-
-    static Logger log = LoggerFactory.getLogger(DetectionPanel.class.getName());
 }

@@ -8,7 +8,7 @@ import jmri.swing.PreferencesSubPanel;
  * Provide PreferencesPanel information for the JPanel provided by
  * {@link apps.GuiLafConfigPane#doLocale()}.
  *
- * @author Randall Wood <randall.h.wood@alexandriasoftware.com>
+ * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
 public class GuiLocalePreferencesPanel implements PreferencesSubPanel {
 
@@ -43,12 +43,12 @@ public class GuiLocalePreferencesPanel implements PreferencesSubPanel {
 
     @Override
     public String getTabbedPreferencesTitle() {
-        return GuiLafConfigPane.rb.getString("TabbedLayoutLocale"); // NOI18N
+        return ConfigBundle.getMessage("TabbedLayoutLocale"); // NOI18N
     }
 
     @Override
     public String getLabelKey() {
-        return GuiLafConfigPane.rb.getString("LabelTabbedLayoutLocale"); // NOI18N
+        return ConfigBundle.getMessage("LabelTabbedLayoutLocale"); // NOI18N
     }
 
     @Override

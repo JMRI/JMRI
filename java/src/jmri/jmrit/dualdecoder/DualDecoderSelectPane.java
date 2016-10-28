@@ -1,26 +1,28 @@
-// DualDecoderSelectPane.java
 package jmri.jmrit.dualdecoder;
 
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JSeparator;
+import javax.swing.JToggleButton;
+import jmri.ProgListener;
+import jmri.Programmer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-
-import jmri.*;
 
 /**
  * Pane for selecting an active decoder from multiple ones in a loco
  *
  * @author Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.ProgListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1032342693614263212L;
     boolean scanning = false;
     int next = 0;
 
@@ -302,6 +304,6 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(DualDecoderSelectPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DualDecoderSelectPane.class.getName());
 
 }

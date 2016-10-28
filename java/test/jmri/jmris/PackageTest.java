@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Set of tests for the jmri.jmris package
  *
  * @author	Paul Bender Copyright 2010
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -21,19 +20,20 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmris.JmrisTest");
 
-        suite.addTest(jmri.jmris.srcp.SRCPTest.suite());
-        suite.addTest(jmri.jmris.simpleserver.SimpleServerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmris.srcp.SRCPTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmris.simpleserver.PackageTest.class));
         suite.addTest(jmri.jmris.json.JsonServerTest.suite());
         suite.addTest(jmri.jmris.JmriServerTest.suite());
         suite.addTest(jmri.jmris.JmriConnectionTest.suite());
         suite.addTest(jmri.jmris.ServiceHandlerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             // put any tests that require a UI here.

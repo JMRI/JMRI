@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.roster.swing;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.roster.swing package
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2012
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -21,17 +19,20 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.roster.swing.PackageTest");
 
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(RosterTableModelTest.suite());
 
         suite.addTest(jmri.jmrit.roster.swing.attributetable.PackageTest.suite());
+        suite.addTest(jmri.jmrit.roster.swing.rostergroup.PackageTest.suite());
+        suite.addTest(jmri.jmrit.roster.swing.speedprofile.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.roster.swing.rostertree.PackageTest.class));
 
         return suite;
     }

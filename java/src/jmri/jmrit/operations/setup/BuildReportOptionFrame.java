@@ -8,14 +8,9 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of the build report options
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2013
- * @version $Revision: 21643 $
+ * 
  */
 public class BuildReportOptionFrame extends OperationsFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5896574373818704098L;
 
     public BuildReportOptionFrame() {
         super(Bundle.getMessage("TitleBuildReportOptions"), new BuildReportOptionPanel());

@@ -1,5 +1,7 @@
-// RailComManager.java
 package jmri;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 
 /**
  * Locate a RailCom Object representing a specific RailCom Enabled device.<br>
@@ -17,15 +19,21 @@ package jmri;
  * itself be unique.
  * <P>
  * @author Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 18102 $
  * @since 2.99.4
  */
 public interface RailComManager extends IdTagManager {
 
-    public RailCom provideIdTag(String name);
+    /**
+     * 
+     * @throws IllegalArgumentException if requested object doesn't already exist and 
+     *                                  the manager cannot create it due to
+     *                                  e.g. an illegal name or name that can't
+     *                                  be parsed.
+     */
+    @Override
+    public @Nonnull RailCom provideIdTag(@Nonnull String name) throws IllegalArgumentException;
 
-    public RailCom getIdTag(String name);
+    @Override
+    public @CheckForNull RailCom getIdTag(@Nonnull String name);
 
 }
-
-/* @(#)RailComManager.java */

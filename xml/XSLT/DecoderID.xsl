@@ -135,7 +135,11 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 </xsl:template>
 
 <!-- do nothing with the following elements -->
+<xsl:template match="comment"/>
+<xsl:template match="soundlabel"/>
 <xsl:template match="functionlabel"/>
 <xsl:template match="protocol"/>
+<xsl:template match="output"/>
+<xsl:template match="label"/>
 
 </xsl:stylesheet>

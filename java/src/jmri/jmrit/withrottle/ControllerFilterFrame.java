@@ -23,6 +23,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.Route;
 import jmri.RouteManager;
 import jmri.TurnoutManager;
 import jmri.util.JmriJFrame;
@@ -31,32 +32,27 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010
- * @version $Revision$
  */
 public class ControllerFilterFrame extends JmriJFrame implements TableModelListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6006763517792223304L;
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
-    static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
-    private static String[] COLUMN_NAMES = {rbx.getString("ColumnLabelSystemName"),
-        rbx.getString("ColumnLabelUserName"),
-        rbx.getString("ColumnLabelInclude")};
+    //static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
+    private static String[] COLUMN_NAMES = {Bundle.getMessage("ColumnSystemName"),
+            Bundle.getMessage("ColumnUserName"),
+            Bundle.getMessage("Include")};
 
     public ControllerFilterFrame() {
-        super("Controls Filter", true, true);
+        super(Bundle.getMessage("TitleControlsFilter"), true, true);
     }
 
     public void initComponents() throws Exception {
         JTabbedPane tabbedPane = new JTabbedPane();
-        if (InstanceManager.turnoutManagerInstance() != null) {
+        if (InstanceManager.getNullableDefault(jmri.TurnoutManager.class) != null) {
 
             tabbedPane.addTab(rb.getString("LabelTurnout"), null, addTurnoutPanel(), rb.getString("ToolTipTurnoutTab"));
         }
 
-        if (InstanceManager.routeManagerInstance() != null) {
+        if (InstanceManager.getNullableDefault(jmri.RouteManager.class) != null) {
 
             tabbedPane.addTab(rb.getString("LabelRoute"), null, addRoutePanel(), rb.getString("ToolTipRouteTab"));
         }
@@ -233,7 +229,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
         public void dispose() {
             InstanceManager.turnoutManagerInstance().removePropertyChangeListener(this);
-            InstanceManager.routeManagerInstance().removePropertyChangeListener(this);
+            InstanceManager.getDefault(jmri.RouteManager.class).removePropertyChangeListener(this);
         }
 
         public String getColumnName(int c) {
@@ -302,7 +298,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
             switch (c) {
                 case INCLUDECOL:
-                    mgr.getBySystemName(sysNameList.get(r)).setProperty("WifiControllable", ((Boolean) type).booleanValue());
+                    mgr.getBySystemName(sysNameList.get(r)).setProperty("WifiControllable", type);
                     if (!isDirty) {
                         this.fireTableChanged(new TableModelEvent(this));
                         isDirty = true;
@@ -321,7 +317,8 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         public void SetIncludeToUserNamed() {
             for (String sysName : sysNameList) {
                 NamedBean bean = mgr.getBySystemName(sysName);
-                if ((bean.getUserName() != null) && (bean.getUserName().length() > 0)) {
+                String uname = bean.getUserName();
+                if ((uname != null) && (uname.length() > 0)) {
                     bean.setProperty("WifiControllable", true);
                 } else {
                     bean.setProperty("WifiControllable", false);
@@ -333,11 +330,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
     class RouteFilterModel extends AbstractFilterModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6672681464508618475L;
-        RouteManager mgr = InstanceManager.routeManagerInstance();
+        RouteManager mgr = InstanceManager.getDefault(jmri.RouteManager.class);
 
         RouteFilterModel() {
 
@@ -352,9 +345,13 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
                 log.debug("row is greater than turnout list size");
                 return null;
             }
+            Route rt = mgr.getBySystemName(sysNameList.get(r));
             switch (c) {
                 case INCLUDECOL:
-                    Object o = mgr.getBySystemName(sysNameList.get(r)).getProperty("WifiControllable");
+                    if (rt == null) {
+                        return null;
+                    }
+                    Object o = rt.getProperty("WifiControllable");
                     if ((o != null) && (o.toString().equalsIgnoreCase("false"))) {
                         return Boolean.valueOf(false);
                     }
@@ -362,7 +359,10 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
                 case SNAMECOL:
                     return sysNameList.get(r);
                 case UNAMECOL:
-                    return mgr.getBySystemName(sysNameList.get(r)).getUserName();
+                    if (rt == null) {
+                        return null;
+                    }
+                    return rt.getUserName();
                 default:
                     return null;
             }
@@ -372,10 +372,13 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
             switch (c) {
                 case INCLUDECOL:
-                    mgr.getBySystemName(sysNameList.get(r)).setProperty("WifiControllable", ((Boolean) type).booleanValue());
-                    if (!isDirty) {
-                        this.fireTableChanged(new TableModelEvent(this));
-                        isDirty = true;
+                    Route rt = mgr.getBySystemName(sysNameList.get(r));
+                    if (rt != null) {
+                        rt.setProperty("WifiControllable", type);
+                        if (!isDirty) {
+                            this.fireTableChanged(new TableModelEvent(this));
+                            isDirty = true;
+                        }
                     }
                     break;
             }
@@ -383,7 +386,10 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
         public void setIncludeColToValue(boolean value) {
             for (String sysName : sysNameList) {
-                mgr.getBySystemName(sysName).setProperty("WifiControllable", value);
+                Route rt = mgr.getBySystemName(sysName);
+                if (rt != null) {
+                    rt.setProperty("WifiControllable", value);
+                }
             }
             fireTableDataChanged();
         }
@@ -391,16 +397,21 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         public void SetIncludeToUserNamed() {
             for (String sysName : sysNameList) {
                 NamedBean bean = mgr.getBySystemName(sysName);
-                if (bean.getUserName().length() > 0) {
-                    bean.setProperty("WifiControllable", true);
+                if (bean != null) {
+                    String uname = bean.getUserName();
+                    if ((uname != null) && (uname.length() > 0)) {
+                        bean.setProperty("WifiControllable", true);
+                    } else {
+                        bean.setProperty("WifiControllable", false);
+                    }
                 } else {
-                    bean.setProperty("WifiControllable", false);
+                    log.error("Failed to get bean from getBySystemName {}", sysName);
                 }
             }
             fireTableDataChanged();
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(ControllerFilterFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ControllerFilterFrame.class.getName());
 
 }

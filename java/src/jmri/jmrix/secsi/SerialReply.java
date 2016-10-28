@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
  * payload.
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2006, 2007, 2008
- * @version $Revision$
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
@@ -43,7 +42,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         return index;
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialReply.class.getName());
 
 }
 

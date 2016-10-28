@@ -9,21 +9,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <P>
  * @author Pete Cressman Copyright: Copyright (c) 2012
- * @version $Revision: 1 $
  *
  */
 public class DrawEllipse extends DrawFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4225546649083339942L;
     int _width;
     int _height;
     JTextField _widthText;
@@ -109,6 +102,4 @@ public class DrawEllipse extends DrawFrame {
         pos.makeShape();
         setPositionableParams(pos);
     }
-
-    static Logger log = LoggerFactory.getLogger(DrawEllipse.class.getName());
 }

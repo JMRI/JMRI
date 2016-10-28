@@ -1,4 +1,3 @@
-// CarRoads.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Represents the road names that cars can have.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2014
- * @version $Revision$
  */
 public class CarRoads extends RollingStockAttribute {
 
@@ -29,27 +27,28 @@ public class CarRoads extends RollingStockAttribute {
 
     public static synchronized CarRoads instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("CarRoads creating instance");
-            }
+            log.debug("CarRoads creating instance");
             // create and load
             _instance = new CarRoads();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("CarRoads returns instance {}", _instance);
         }
         return _instance;
     }
 
+    @Override
     protected String getDefaultNames() {
         return ROADS;
     }
 
+    @Override
     public void addName(String road) {
         super.addName(road);
         setDirtyAndFirePropertyChange(CARROADS_CHANGED_PROPERTY, null, road);
     }
 
+    @Override
     public void deleteName(String road) {
         super.deleteName(road);
         setDirtyAndFirePropertyChange(CARROADS_CHANGED_PROPERTY, road, null);
@@ -63,13 +62,14 @@ public class CarRoads extends RollingStockAttribute {
             setDirtyAndFirePropertyChange(CARROADS_CHANGED_PROPERTY, list.size() + 1, list.size());
         }
     }
-    
+
     /**
      * Get the maximum character length of a road name when printing on a
      * manifest or switch list. Characters after the "-" are ignored.
      *
      * @return the maximum character length of a car type
      */
+    @Override
     public int getMaxNameLength() {
         if (maxNameLengthSubType == 0) {
             String maxName = "";
@@ -91,6 +91,7 @@ public class CarRoads extends RollingStockAttribute {
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-cars.dtd.
+     * @param root The common Element for operations-cars.dtd.
      *
      */
     public void store(Element root) {
@@ -107,5 +108,5 @@ public class CarRoads extends RollingStockAttribute {
         super.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(CarRoads.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarRoads.class.getName());
 }

@@ -1,6 +1,3 @@
-/**
- * PacketPro.java
- */
 package apps.PacketPro;
 
 import apps.Apps;
@@ -33,14 +30,8 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright 2002
- * @version $Revision$
  */
 public class PacketPro extends Apps {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3300948571506621106L;
 
     PacketPro(JFrame p) {
         super(p);
@@ -67,5 +58,5 @@ public class PacketPro extends Apps {
         splash(false);
     }
 
-    static Logger log = LoggerFactory.getLogger(PacketPro.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PacketPro.class.getName());
 }

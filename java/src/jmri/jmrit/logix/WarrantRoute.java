@@ -51,8 +51,6 @@ import org.slf4j.LoggerFactory;
 
 public abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListener, PropertyChangeListener {
 
-    private static final long serialVersionUID = 6066050907933847146L;
-
     enum Location {ORIGIN, DEST, VIA, AVOID}
     protected RouteLocation  _origin = new RouteLocation(Location.ORIGIN);
     protected RouteLocation  _destination = new RouteLocation(Location.DEST);
@@ -61,13 +59,14 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     RouteLocation _focusedField;
     
     static int STRUT_SIZE = 10;
+    static int _depth =20;
+    
     static String PAD = "               ";
     private JDialog         _pickRouteDialog;
     private RouteTableModel _routeModel;
     private ArrayList <BlockOrder> _orders = new ArrayList <BlockOrder>();
     private JFrame      _debugFrame;
     private RouteFinder _routeFinder;
-    private int         _depth =20;
     private JTextField  _searchDepth =  new JTextField(5);
 
     private RosterEntry _train;
@@ -139,7 +138,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     }
     
     private void getRoster() {
-        List<RosterEntry> list = Roster.instance().matchingList(null, null, null, null, null, null, null);
+        List<RosterEntry> list = Roster.getDefault().matchingList(null, null, null, null, null, null, null);
         _rosterBox.setRenderer(new jmri.jmrit.roster.swing.RosterEntryListCellRenderer());
         _rosterBox.addItem(" ");
         _rosterBox.addItem(Bundle.getMessage("noSuchAddress"));
@@ -147,7 +146,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             RosterEntry r = list.get(i);
             _rosterBox.addItem(r.titleString());
         }
-        //_rosterBox = Roster.instance().fullRosterComboBox();
+        //_rosterBox = Roster.getDefault().fullRosterComboBox();
         _rosterBox.setMaximumSize(_rosterBox.getPreferredSize());
         _rosterBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -165,13 +164,12 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
      * Set the roster entry, if it exists, or train id string if not.
      * i.e. set enough info to get a dccLocoAddress
      * @param name may be roster Id or address
-     * @return
      */
     protected String setTrainInfo(String name) {
         if (log.isDebugEnabled()) {
             log.debug("setTrainInfo for: " + name);
         }
-        _train = Roster.instance().entryFromTitle(name);
+        _train = Roster.getDefault().entryFromTitle(name);
         if (_train == null) {
             if (name==null || name.trim().length()==0) {
                 _trainId = null;
@@ -197,7 +195,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                     numId = name;                    
                 }
             }
-            List<RosterEntry> l = Roster.instance().matchingList(null, null, numId, null, null, null, null);
+            List<RosterEntry> l = Roster.getDefault().matchingList(null, null, numId, null, null, null, null);
             if (l.size() > 0) {
                 _train = l.get(0);
             } else {
@@ -308,6 +306,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     }
     
     @SuppressWarnings("unchecked") // parameter can be any of several types, including JComboBox<String>
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UCF_USELESS_CONTROL_FLOW", justification = "checkBlockBox in the internal class RouteLocation is a method with side effects that returns a boolean value. This code basically says try all possibilities until one succeeds.")
     void doAction(Object obj) {
         if (obj instanceof JTextField) {
             JTextField box = (JTextField)obj;
@@ -1046,10 +1045,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
 
     /************************* Route Table ******************************/
     class RouteTableModel extends AbstractTableModel {
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 1966890806689115258L;
+
         public static final int BLOCK_COLUMN = 0;
         public static final int ENTER_PORTAL_COL =1;
         public static final int PATH_COLUMN = 2;
@@ -1144,9 +1140,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     /**
     *
     * @param vertical  Label orientation true = above, false = left
-    * @param textField
     * @param label String label message
-    * @return
     */
    static protected JPanel makeTextBoxPanel(boolean vertical, JComponent textField, String label, String tooltip) {
        JPanel panel = new JPanel();
@@ -1185,5 +1179,5 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
        return panel;
    }
     
-    static Logger log = LoggerFactory.getLogger(WarrantRoute.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantRoute.class.getName());
 }

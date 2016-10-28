@@ -21,6 +21,8 @@
 # 2008 Feb
 #
 
+import jmri
+
 import java
 
 #
@@ -36,6 +38,7 @@ class PM42Listener(jmri.jmrix.loconet.LocoNetListener):
             if ((pCmd == 0x30) or (pCmd == 0x10)) :
                 pAdr = (msg.getElement(1)& 0x1) * 128 + (msg.getElement(2)& 0x7F)+1   # PM42 address
                 pAdrHex = ("0"+java.lang.Integer.toHexString(pAdr))[-2:]              # make addr a 2 char string
+                pAdrHex = pAdrHex.upper()                                             # Make sure the hex character, if any, is upper case
                 pSen = "ISPM_"+pAdrHex                                                # internal sensor prefix
 
                 #bit mapped codes: bits 0-3 correspond to PM42 sections 1-4 

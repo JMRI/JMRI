@@ -43,7 +43,7 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading",
             OperationsBackupGuiTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // Ensure minimal setup for log4J

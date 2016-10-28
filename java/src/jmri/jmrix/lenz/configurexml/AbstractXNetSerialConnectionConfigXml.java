@@ -1,7 +1,5 @@
 package jmri.jmrix.lenz.configurexml;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig;
 
@@ -16,7 +14,6 @@ import jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig;
  * here directly via the class attribute in the XML.
  *
  * @author Paul Bender Copyright: Copyright (c) 2015
- * @version $Revision$
  */
 abstract public class AbstractXNetSerialConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -28,8 +25,5 @@ abstract public class AbstractXNetSerialConnectionConfigXml extends AbstractSeri
     protected void getInstance(Object object) {
         adapter=((AbstractXNetSerialConnectionConfig) object).getAdapter();
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(AbstractXNetSerialConnectionConfigXml.class.getName());
 
 }

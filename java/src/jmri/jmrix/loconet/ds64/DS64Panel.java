@@ -1,4 +1,3 @@
-// DS64Panel.java
 package jmri.jmrix.loconet.ds64;
 
 import javax.swing.JCheckBox;
@@ -22,14 +21,8 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2004, 2005, 2007, 2010
- * @version	$Revision$
  */
 public class DS64Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8039300267592456122L;
 
     public DS64Panel() {
         this(1);
@@ -75,7 +68,7 @@ public class DS64Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     public String getTitle() {
-        return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemDS64Programmer"));
+        return getTitle(Bundle.getMessage("MenuItemDS64Programmer"));
     }
 
     /**
@@ -205,6 +198,6 @@ public class DS64Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     JCheckBox opsw20 = new JCheckBox("OpSw 20: Output 4 is crossing gate");
     JCheckBox opsw21 = new JCheckBox("OpSw 21: Send turnout sensor messages (general sensor messages if off)");
 
-    static Logger log = LoggerFactory.getLogger(DS64Panel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DS64Panel.class.getName());
 
 }

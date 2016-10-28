@@ -1,6 +1,6 @@
-// SystemConnectionMemo.java
 package jmri.jmrix;
 
+import apps.startup.StartupActionModelUtil;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * activate their particular system.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
  */
 abstract public class SystemConnectionMemo {
 
@@ -32,6 +31,7 @@ abstract public class SystemConnectionMemo {
     private String userNameAsLoaded;
 
     protected SystemConnectionMemo(String prefix, String userName) {
+        log.debug("SystemConnectionMemo created for prefix \"{}\" user name \"{}\"", prefix, userName);
         initialise();
         if (!setSystemPrefix(prefix)) {
             for (int x = 2; x < 50; x++) {
@@ -55,21 +55,33 @@ abstract public class SystemConnectionMemo {
         this.userNameAsLoaded = null;
     }
 
-    private static boolean initialised = false;
+    // private static boolean initialised = false;
 
     /**
      * Provides a method to reserve System Names and prefixes at creation
      */
     private static void initialise() {
-        if (!initialised) {
-            addUserName("Internal");
-            addSystemPrefix("I");
-            initialised = true;
-        }
+        log.debug("initialise called");
+//        if (!initialised) {
+//             addUserName("Internal");
+//             addSystemPrefix("I");
+//             initialised = true;
+//        }
     }
 
-    final protected static ArrayList<String> userNames = new ArrayList<>();
-    final protected static ArrayList<String> sysPrefixes = new ArrayList<>();
+    /**
+     * For use in testing, undo any initialization that's been done.
+     */
+    public static void reset() {
+        userNames = new ArrayList<>();
+        sysPrefixes = new ArrayList<>();
+        listeners = new HashSet<>();
+        
+        //initialised = false;
+    }
+    
+    protected static ArrayList<String> userNames = new ArrayList<>();
+    protected static ArrayList<String> sysPrefixes = new ArrayList<>();
 
     private synchronized static boolean addUserName(String userName) {
         if (userNames.contains(userName)) {
@@ -112,7 +124,21 @@ abstract public class SystemConnectionMemo {
      * system
      */
     public void register() {
-        jmri.InstanceManager.store(this, SystemConnectionMemo.class);
+        log.debug("register as SystemConnectionMemo, really of type {}", this.getClass());
+        
+        // check for special case
+        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        if ((list.size() > 0) && (list.get(list.size()-1) instanceof jmri.jmrix.internal.InternalSystemConnectionMemo)) {
+            // last is internal, so insert before that one
+            log.debug("   putting one before end");
+            SystemConnectionMemo old = list.get(list.size()-1);
+            jmri.InstanceManager.deregister(old, SystemConnectionMemo.class);
+            jmri.InstanceManager.store(this, SystemConnectionMemo.class);
+            jmri.InstanceManager.store(old, SystemConnectionMemo.class);
+        } else {
+            // just add on end
+            jmri.InstanceManager.store(this, SystemConnectionMemo.class);
+        }
         notifyPropertyChangeListener("ConnectionAdded", null, null);
     }
 
@@ -129,7 +155,6 @@ abstract public class SystemConnectionMemo {
     /**
      * Set the system prefix.
      *
-     * @param systemPrefix
      * @throws java.lang.NullPointerException if systemPrefix is null
      * @return true if the system prefix could be set
      */
@@ -153,6 +178,7 @@ abstract public class SystemConnectionMemo {
             notifyPropertyChangeListener("ConnectionPrefixChanged", oldPrefix, systemPrefix);
             return true;
         }
+        log.debug("setSystemPrefix false for \"{}\"", systemPrefix);
         return false;
     }
 
@@ -169,7 +195,6 @@ abstract public class SystemConnectionMemo {
     /**
      * Set the user name for the system connection.
      *
-     * @param name
      * @throws java.lang.NullPointerException if name is null
      * @return true if the user name could be set.
      */
@@ -277,35 +302,35 @@ abstract public class SystemConnectionMemo {
     abstract protected ResourceBundle getActionModelResourceBundle();
 
     protected void addToActionList() {
-        apps.CreateButtonModel bm = jmri.InstanceManager.getDefault(apps.CreateButtonModel.class);
+        StartupActionModelUtil util = jmri.InstanceManager.getNullableDefault(StartupActionModelUtil.class);
         ResourceBundle rb = getActionModelResourceBundle();
-        if (rb == null || bm == null) {
+        if (rb == null || util == null) {
             return;
         }
         Enumeration<String> e = rb.getKeys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
             try {
-                bm.addAction(key, rb.getString(key));
+                util.addAction(key, rb.getString(key));
             } catch (ClassNotFoundException ex) {
-                log.error("Did not find class " + key);
+                log.error("Did not find class \"{}\"", key);
             }
         }
     }
 
     protected void removeFromActionList() {
-        apps.CreateButtonModel bm = jmri.InstanceManager.getDefault(apps.CreateButtonModel.class);
+        StartupActionModelUtil util = jmri.InstanceManager.getNullableDefault(StartupActionModelUtil.class);
         ResourceBundle rb = getActionModelResourceBundle();
-        if (rb == null || bm == null) {
+        if (rb == null || util == null) {
             return;
         }
         Enumeration<String> e = rb.getKeys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
             try {
-                bm.removeAction(key);
+                util.removeAction(key);
             } catch (ClassNotFoundException ex) {
-                log.error("Did not find class " + key);
+                log.error("Did not find class \"{}\"", key);
             }
         }
     }
@@ -321,10 +346,7 @@ abstract public class SystemConnectionMemo {
     }
 
     // data members to hold contact with the property listeners
-    final private static Set<PropertyChangeListener> listeners = new HashSet<>();
+    private static Set<PropertyChangeListener> listeners = new HashSet<>();
 
-    static Logger log = LoggerFactory.getLogger(SystemConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SystemConnectionMemo.class.getName());
 }
-
-
-/* @(#)SystemConnectionMemo.java */

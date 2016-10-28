@@ -53,11 +53,11 @@ class setStartup(jmri.jmrit.automat.AbstractAutomaton) :
 
   def handle(self):
     # Next Two Lines - Reset PSX or PSX-AR to Factory Defaults
-    programmers.getAddressedProgrammer(True, 9983).writeCV(63, 42, None)	
+    addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(63, 42, None)	
     self.waitMsec(750)         # time is in milliseconds
 
     # Next Two Lines - Point PSX or PSX-AR to Receive Primary Address, Not Necessary, However, good practice.
-    programmers.getAddressedProgrammer(True, 9983).writeCV(63, 0, None)	
+    addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(63, 0, None)	
     self.waitMsec(750)
 
     # Next Two Lines - Set Track Power On/OFF Address - Change 1234 to Address Desired
@@ -73,36 +73,36 @@ class setStartup(jmri.jmrit.automat.AbstractAutomaton) :
     # self.waitMsec(750)
 
 
-    # CV49 – Sets the Current Trip Value. If CV49=0, then the Trip Current jumpers on J6 are enabled. 
+    # CV49 ï¿½ Sets the Current Trip Value. If CV49=0, then the Trip Current jumpers on J6 are enabled. 
     # REMEMBER TO USE EITHER JUMPERS (J6) OR CV SETTINGS, !!! NOT BOTH !!! 
 
     # Next Two Lines - CV49 - Current Trip Value (Values 00-15)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(49, 03, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(49, 03, None)	
     # self.waitMsec(750)
 
     # Next Two Lines - CV50 - Block Detection Source (Values 0,1)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(50, 1, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(50, 1, None)	
     # self.waitMsec(750)
 
     # PSX-AR (Auto Reverser) ONLY! Next Two Lines - CV52 - Power On Position of Reverser (Values 0,1)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(52, 0, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(52, 0, None)	
     # self.waitMsec(750)
 
     # Next Two Lines - CV53 - Enables/Disables Inrush Boost (Values 0,1)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(53, 0, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(53, 0, None)	
     # self.waitMsec(750)
 
     # Next Two Lines - CV54 - Current Level Detector Turns On (Values 0-212)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(54, 0, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(54, 0, None)	
     # self.waitMsec(750)
 
     # Next Two Lines - CV55 - Double Reverse Mode(Values 0, 1) (Value 0 = Primary Reverser, 1 = Secondary Reverser) 
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(55, 0, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(55, 0, None)	
     # self.waitMsec(750)
 
     # Notes regarding CV65 -  A value of 16 to 40 (2 to 5 ms) Should Solve Most Issues. Goal is the CV65 value should be as small as possible consistent with reliable operation.
     # Next Two Lines - CV65 - Double Reverse Mode Timing(Values 1-240) ( 8 is Default - 8 = 1 Millisecond, 16 = 2 Millisecond, Etc))
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(65, 8, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(65, 8, None)	
     # self.waitMsec(750)
 
     # Some PSX-AR Documention indicates a CV64 for Current Level Detection. 

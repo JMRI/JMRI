@@ -1,8 +1,5 @@
 package jmri;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Represent a Named Bean (e.g.&nbsp;Turnout) and specific setting for it. These
  * can be used e.g. to represent part of a particular path through a layout, or
@@ -14,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * function of the current bean setting(s).
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2008, 2010
- * @version	$Revision$
  */
 @net.jcip.annotations.Immutable
 public class BeanSetting {
@@ -38,7 +34,9 @@ public class BeanSetting {
     }
 
     /**
-     * Convenience method; check if the Bean currently has the desired setting
+     * Convenience method; check if the Bean currently has the desired setting.
+     *
+     * @return true if bean has expected setting; false otherwise
      */
     public boolean check() {
         if (_namedBean == null) {
@@ -68,5 +66,45 @@ public class BeanSetting {
     private final NamedBeanHandle<NamedBean> _namedBean;
     final private int _setting;
 
-    static final Logger log = LoggerFactory.getLogger(BeanSetting.class.getName());
+    // include _namedBean and _setting in equals() and hashCode() because they can't 
+    // change after construction
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+
+        if (!(getClass() == obj.getClass())) {
+            return false;
+        } else {
+            BeanSetting p = (BeanSetting) obj;
+            if (p._setting != this._setting) {
+                return false;
+            }
+
+            if (p._namedBean == null && this._namedBean != null) {
+                return false;
+            }
+            if (p._namedBean != null && this._namedBean == null) {
+                return false;
+            }
+            if (p._namedBean != null && this._namedBean != null && !p._namedBean.equals(this._namedBean)) {
+                return false;
+            }
+
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = _setting * 1000;
+        if (_namedBean != null) {
+            hash += _namedBean.hashCode();
+        }
+        return hash;
+    }
 }

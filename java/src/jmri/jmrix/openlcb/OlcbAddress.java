@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  *
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008, 2010
- * @version $Revision$
  */
 public class OlcbAddress {
 
@@ -208,7 +207,7 @@ public class OlcbAddress {
         return retval;
     }
 
-    static Logger log = LoggerFactory.getLogger(OlcbAddress.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbAddress.class.getName());
 
 }
 

@@ -1,4 +1,3 @@
-// SerialMonFrame.java
 package jmri.jmrix.grapevine.serialmon;
 
 import jmri.jmrix.grapevine.SerialListener;
@@ -12,14 +11,8 @@ import org.slf4j.LoggerFactory;
  * Frame displaying (and logging) serial command messages.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
- * @version $Revision$
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6899668182950545603L;
 
     public SerialMonFrame() {
         super();
@@ -53,6 +46,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         nextLine("R: " + l.format() + "\n", l.toString());
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialMonFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialMonFrame.class.getName());
 
 }

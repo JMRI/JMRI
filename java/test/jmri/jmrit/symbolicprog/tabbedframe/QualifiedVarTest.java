@@ -1,4 +1,3 @@
-// QualifiedVarTest.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import javax.swing.JPanel;
@@ -17,8 +16,7 @@ import org.jdom2.Element;
  * Test PaneProg with qualified variables
  *
  * @author	Bob Jacobsen Copyright 2010
- * @version	$Revision$
- */
+  */
 public class QualifiedVarTest extends TestCase {
 
     // show me a specially-created frame
@@ -34,11 +32,6 @@ public class QualifiedVarTest extends TestCase {
                 PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
                         "test qualified var", "programmers/Basic.xml",
                         new jmri.progdebugger.ProgDebugger(), false) {
-                            /**
-                             *
-                             */
-                            private static final long serialVersionUID = 1786734447474211880L;
-
                             // dummy implementations
                             protected JPanel getModePane() {
                                 return null;
@@ -49,7 +42,7 @@ public class QualifiedVarTest extends TestCase {
                 try {
                     jmri.jmrit.XmlFile file = new jmri.jmrit.XmlFile() {
                     };
-                    org.jdom2.Element el = file.rootFromFile(new java.io.File("java/test/jmri/jmrit/decoderdefn/DecoderWithQualifier.xml"));
+                    org.jdom2.Element el = file.rootFromFile(new java.io.File("java/test/jmri/jmrit/symbolicprog/tabbedframe/pass/DecoderWithQualifier.xml"));
 
                     DecoderFile df = new DecoderFile();  // used as a temporary
                     df.loadVariableModel(el.getChild("decoder"), p.variableModel);
@@ -193,7 +186,7 @@ public class QualifiedVarTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", QualifiedVarTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -202,7 +195,7 @@ public class QualifiedVarTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(QualifiedVarTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QualifiedVarTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

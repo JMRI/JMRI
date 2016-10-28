@@ -9,14 +9,9 @@ import javax.swing.AbstractAction;
  * Swing action open the yardmaster by track frame.
  *
  * @author Daniel Boudreau Copyright (C) 2015
- * @version $Revision: 28746 $
+ * 
  */
 public class YardmasterByTrackAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8755364574386629561L;
 
     public YardmasterByTrackAction(String s, Location location) {
         super(s);
@@ -40,6 +35,7 @@ public class YardmasterByTrackAction extends AbstractAction {
 
     YardmasterByTrackFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a frame
         if (f == null || !f.isVisible()) {

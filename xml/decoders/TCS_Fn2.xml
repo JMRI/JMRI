@@ -62,7 +62,7 @@
 			<enumVal>
 				<enumChoice choice="1 slowest" value="1">
             <choice>1 slowest</choice>
-            <choice xml:lang="it">1 più lento</choice>
+            <choice xml:lang="it">1 piï¿½ lento</choice>
         </enumChoice>
 				<enumChoice choice="2"/>
 				<enumChoice choice="3"/>
@@ -76,7 +76,7 @@
 				<enumChoice choice="11"/>
 				<enumChoice choice="12 fastest">
             <choice>12 fastest</choice>
-            <choice xml:lang="it">12 più veloce</choice>
+            <choice xml:lang="it">12 piï¿½ veloce</choice>
           </enumChoice>
 			</enumVal>
 			<label>Ditch Light Blink Rate</label>
@@ -85,25 +85,25 @@
 		<variable CV="64" default="16" item="Global lighting option 2" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
 			<decVal max="32"/>
 			<label>Dimming Brightness 1</label>
-      <label xml:lang="it">Luminosità 1 di smorzamento</label>
+      <label xml:lang="it">Luminositï¿½ 1 di smorzamento</label>
       <tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
 		</variable>
 		<variable CV="153" default="5" item="Global lighting option 3" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
 			<decVal max="32"/>
 			<label>Dimming Brightness 2</label>
-			<label xml:lang="it">Luminosità 2 di smorzamento</label>
+			<label xml:lang="it">Luminositï¿½ 2 di smorzamento</label>
 			<tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
 		</variable>
 		<variable CV="154" default="5" item="Global lighting option 4" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
 			<decVal max="32"/>
 			<label>Dimming Brightness 3</label>
-			<label xml:lang="it">Luminosità 3 di smorzamento</label>
+			<label xml:lang="it">Luminositï¿½ 3 di smorzamento</label>
 			<tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
 		</variable>
 		<variable CV="155" default="5" item="Global lighting option 5" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
 			<decVal max="32"/>
 			<label>Dimming Brightness 4</label>
-			<label xml:lang="it">Luminosità 4 di smorzamento</label>
+			<label xml:lang="it">Luminositï¿½ 4 di smorzamento</label>
 			<tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
 		</variable>
 		<variable CV="112" default="1" item="Function F0F effect generated">
@@ -124,18 +124,17 @@
 		<variable CV="115" default="6" item="Function F0F behavior">
 			<decVal min="2" max="26"/>
 			<label>Mars/Gyra Mid Brightness</label>
-			<label xml:lang="it">Luminosità Media Mars/Gyra</label>
+			<label xml:lang="it">Luminositï¿½ Media Mars/Gyra</label>
 		</variable>
 		<variable CV="116" default="22" item="Function F0F options">
 			<decVal min="4" max="28"/>
 			<label>Mars/Gyra Max Brightness</label>
-			<label xml:lang="it">Luminosità Max Mars/Gyra</label>
+			<label xml:lang="it">Luminositï¿½ Max Mars/Gyra</label>
 		</variable>
 		<variable CV="118" default="1" item="Function F0R effect generated">
 			<decVal min="1" max="5"/>
 			<label>Beacon Min Brightness</label>
-			<label xml:lang="it">Beacon Min Brightness</label>
-			<label xml:lang="it">Luminosità Min Faro</label>
+			<label xml:lang="it">Luminositï¿½ Min Faro</label>
 		</variable>
 		<variable CV="119" default="5" item="Function F0R option 2">
 			<decVal/>
@@ -150,12 +149,12 @@
 		<variable CV="121" default="15" item="Function F0R behavior">
 			<decVal min="2" max="26"/>
 			<label>Beacon Mid Brightness</label>
-			<label xml:lang="it">Luminosità Media Faro</label>
+			<label xml:lang="it">Luminositï¿½ Media Faro</label>
 		</variable>
 		<variable CV="122" default="25" item="Function F0R options">
 			<decVal min="4" max="28"/>
 			<label>Beacon Max Brightness</label>
-			<label xml:lang="it">Luminosità Max.Faro</label>
+			<label xml:lang="it">Luminositï¿½ Max.Faro</label>
 		</variable>
 		<variable CV="140" default="140" item="Function 3 effect generated">
 			<decVal/>
@@ -220,13 +219,13 @@
 		<variable CV="135" default="16" item="Function 7 effect generated" tooltip="Random Flicker for fireboxes">
 			<decVal/>
 			<label>Random Flicker 1 Speed</label>
-			<label xml:lang="it">Velocità Sfarfallio casuale 1</label>
+			<label xml:lang="it">Velocitï¿½ Sfarfallio casuale 1</label>
 			<tooltip xml:lang="it">Sfarfallio casuale caldaia</tooltip>
 		</variable>
 		<variable CV="152" default="16" item="Function 7 behavior" tooltip="Random Flicker 2 for fireboxes">
 			<decVal/>
 			<label>Random Flicker 2 Speed</label>
-			<label xml:lang="it">Velocità Sfarfallio casuale 2</label>
+			<label xml:lang="it">Velocitï¿½ Sfarfallio casuale 2</label>
 			<tooltip xml:lang="it">Sfarfallio casuale caldaia</tooltip>
 		</variable>
      
@@ -268,7 +267,7 @@
       </label>
       <label>
         <text>useful when several decoders are used in one loco</text>
-        <text xml:lang="it">utile qundo si usano più decoder in una loco</text>
+        <text xml:lang="it">utile qundo si usano piï¿½ decoder in una loco</text>
       </label>
       <label>
         <text>on the same address, e.g. for adding sound</text>

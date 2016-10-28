@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Based on SerialTurnoutManagerXml.java
  *
  * @author Dave Duchamp Copyright (c) 2004, 2007, 2008
- * @version $Revision$
  */
 public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
@@ -30,10 +29,11 @@ public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLi
         log.error("Invalid method called");
     }
 
-    public boolean load(Element lights) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // load individual lights
-        return loadLights(lights);
+        return loadLights(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialLightManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialLightManagerXml.class.getName());
 }

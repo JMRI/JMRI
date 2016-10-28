@@ -1,4 +1,3 @@
-// DecoderIndexFile.java
 package jmri.jmrit.decoderdefn;
 
 import java.io.File;
@@ -31,8 +30,6 @@ import org.slf4j.LoggerFactory;
  * member to navigate to a single one.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- *
  */
 public class DecoderIndexFile extends XmlFile {
 
@@ -66,8 +63,8 @@ public class DecoderIndexFile extends XmlFile {
     /**
      * Get a List of decoders matching some information
      */
-    public List<DecoderFile> matchingDecoderList(String mfg, String family, 
-            String decoderMfgID, String decoderVersionID, String decoderProductID, 
+    public List<DecoderFile> matchingDecoderList(String mfg, String family,
+            String decoderMfgID, String decoderVersionID, String decoderProductID,
             String model) {
         return (matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model, null));
     }
@@ -75,8 +72,8 @@ public class DecoderIndexFile extends XmlFile {
     /**
      * Get a List of decoders matching some information
      */
-    public List<DecoderFile> matchingDecoderList(String mfg, String family, 
-            String decoderMfgID, String decoderVersionID, 
+    public List<DecoderFile> matchingDecoderList(String mfg, String family,
+            String decoderMfgID, String decoderVersionID,
             String decoderProductID, String model, String developerID) {
         List<DecoderFile> l = new ArrayList<DecoderFile>();
         for (int i = 0; i < numDecoders(); i++) {
@@ -136,8 +133,8 @@ public class DecoderIndexFile extends XmlFile {
      * Don't bother asking about the model number...
      *
      */
-    public boolean checkEntry(int i, String mfgName, String family, String mfgID, 
-            String decoderVersionID, String decoderProductID, String model, 
+    public boolean checkEntry(int i, String mfgName, String family, String mfgID,
+            String decoderVersionID, String decoderProductID, String model,
             String developerID) {
         DecoderFile r = decoderList.get(i);
         if (mfgName != null && !mfgName.equals(r.getMfg())) {
@@ -154,18 +151,16 @@ public class DecoderIndexFile extends XmlFile {
         }
         // check version ID - no match if a range specified and out of range
         if (decoderVersionID != null) {
-            int versionID = Integer.valueOf(decoderVersionID).intValue();
+            int versionID = Integer.parseInt(decoderVersionID);
             if (!r.isVersion(versionID)) {
                 return false;
             }
         }
         if (decoderProductID != null && !("," + r.getProductID()+ ",").contains("," + decoderProductID+ ",")) {
-            if (decoderProductID != null && !("," + r.getModelElement().getAttribute("productID") + ",").contains("," + decoderProductID +",") ) {
                 return false;
             }
-        }
         if (developerID != null && !developerID.equals(r.getDeveloperID())) {
-            if (developerID != null && !("," + r.getModelElement().getAttribute("developerID").getValue() + ",").contains("," + developerID +",") ) {
+            if ( !("," + r.getModelElement().getAttribute("developerID").getValue() + ",").contains("," + developerID +",") ) {
                 return false;
             }
         }
@@ -202,7 +197,7 @@ public class DecoderIndexFile extends XmlFile {
                         e.printStackTrace();
                     }
                 }
-            } catch (Exception e) {
+            } catch (java.io.IOException | org.jdom2.JDOMException e) {
                 log.error("Exception during decoder index update: " + e);
                 e.printStackTrace();
             }
@@ -218,8 +213,6 @@ public class DecoderIndexFile extends XmlFile {
      * updated; if it does, then forces the update.
      *
      * @return true is the index should be reloaded because it was updated
-     * @throws org.jdom2.JDOMException
-     * @throws java.io.IOException
      */
     static boolean updateIndexIfNeeded() throws org.jdom2.JDOMException, java.io.IOException {
         // get version from master index; if not found, give up
@@ -452,7 +445,7 @@ public class DecoderIndexFile extends XmlFile {
 
         List<Element> l = family.getChildren("model");
         if (log.isDebugEnabled()) {
-            log.debug("readFamily sees " + l.size() + " children");
+            log.trace("readFamily sees " + l.size() + " children");
         }
         Element modelElement;
         if (l.size() <= 0) {
@@ -483,9 +476,9 @@ public class DecoderIndexFile extends XmlFile {
             String hiVersID = ((attr = decoder.getAttribute("highVersionID")) != null ? attr.getValue() : parentHighVersID);
             String replacementModelName = ((attr = decoder.getAttribute("replacementModel")) != null ? attr.getValue() : null);
             replacementFamilyName = ((attr = decoder.getAttribute("replacementFamily")) != null ? attr.getValue() : replacementFamilyName);
-            int numFns = ((attr = decoder.getAttribute("numFns")) != null ? Integer.valueOf(attr.getValue()).intValue() : -1);
-            int numOuts = ((attr = decoder.getAttribute("numOuts")) != null ? Integer.valueOf(attr.getValue()).intValue() : -1);
-            String devId = ((attr = decoder.getAttribute("developerId")) != null ? attr.getValue(): "-1");
+            int numFns = ((attr = decoder.getAttribute("numFns")) != null ? Integer.parseInt(attr.getValue()) : -1);
+            int numOuts = ((attr = decoder.getAttribute("numOuts")) != null ? Integer.parseInt(attr.getValue()) : -1);
+            String devId = ((attr = decoder.getAttribute("developerId")) != null ? attr.getValue() : "-1");
             DecoderFile df = new DecoderFile(mfg, mfgID,
                     ((attr = decoder.getAttribute("model")) != null ? attr.getValue() : null),
                     loVersID, hiVersID, familyName, filename, devId, numFns, numOuts, decoder,

@@ -10,9 +10,6 @@
 #
 # Modified by Peter Ulvestad, June 2009
 # Added Mid Station stop
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 
 import jarray
 import jmri

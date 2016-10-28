@@ -1,17 +1,13 @@
-// PackageTest.java
 package jmri.jmrix.srcp;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.srcp package
  *
  * @author	Paul Bender
- * @version	$Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -23,7 +19,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -34,21 +30,22 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(SRCPTrafficControllerTest.class));
         suite.addTest(new TestSuite(SRCPSystemConnectionMemoTest.class));
         suite.addTest(new TestSuite(SRCPBusConnectionMemoTest.class));
-        suite.addTest(new TestSuite(SRCPTurnoutManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPTurnoutManagerTest.class));
         suite.addTest(new TestSuite(SRCPTurnoutTest.class));
-        suite.addTest(new TestSuite(SRCPSensorManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPSensorManagerTest.class));
         suite.addTest(new TestSuite(SRCPSensorTest.class));
-        suite.addTest(new TestSuite(SRCPThrottleManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPThrottleManagerTest.class));
         suite.addTest(new TestSuite(SRCPThrottleTest.class));
         suite.addTest(new TestSuite(SRCPPowerManagerTest.class));
         suite.addTest(new TestSuite(SRCPProgrammerTest.class));
         suite.addTest(new TestSuite(SRCPProgrammerManagerTest.class));
         suite.addTest(new TestSuite(SRCPClockControlTest.class));
         suite.addTest(jmri.jmrix.srcp.parser.SRCPClientParserTests.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.srcp.networkdriver.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.srcp.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.srcp.swing.PackageTest.class));
 
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
 
 }

@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * </UL>
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 17977 $
  */
 public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 
@@ -140,7 +139,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
     javax.swing.Timer timer = null;
 
     /**
-     * Internal routine to handle timer starts & restarts
+     * Internal routine to handle timer starts {@literal &} restarts
      */
     protected void restartTimer(int delay) {
         if (timer == null) {
@@ -166,7 +165,6 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
     /**
      * Run button pressed down, start the sequence operation
      *
-     * @param e
      */
     public void runButtonActionPerformed(java.awt.event.ActionEvent e) {
         if (!mRunButton.isSelected()) {
@@ -233,7 +231,6 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
      * Create a well-formed message from a String String is expected to be space
      * seperated hex bytes or CbusAddress, e.g.: 12 34 56 +n4e1
      *
-     * @param s
      * @return The packet, with contents filled-in
      */
     CanMessage createPacket(String s) {
@@ -310,6 +307,6 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
                     jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
         }
     }
-    static Logger log = LoggerFactory.getLogger(CanSendPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CanSendPane.class.getName());
 
 }

@@ -1,79 +1,87 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: BTLocoBridge.shtml 27263 2014-09-21 00:42:15Z jacobsen $ -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
- <TITLE>
-      JMRI Hardware Guide: Connecting through a Bluetooth LocoBridge Adapter
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="Digitrax LocoNet Bluetooth LocoBridge java model railroad JMRI install windows">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
+  <title>JMRI Hardware Support - Bluetooth LocoBridge
+  Adapter</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content=
+  "Digitrax LocoNet Bluetooth LocoBridge java model railroad JMRI install windows">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
 
-<BODY>
-<!--#include virtual="/Header" -->
+<body>
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Hardware Support: Connecting through a Bluetooth
+      LocoBridge Adapter</h1><img src=
+      "http://www.mollehem.se/images/stories/virtuemart/product/bt_rensad2.png"
+      alt="LocoAdapter picture" align="right" height="205" width=
+      "166"> The <a href=
+      "http://www.mollehem.se/index.php/electronics/smartphoninterface-detail">
+      LocoBridge</a> allows you to connect remotely through
+      Bluetooth to the adapter, which then connects to a LocoNet to
+      control your layout.
 
-<h1> 
-JMRI Hardware Guide: Connecting through a Bluetooth LocoBridge Adapter
-</h1>
+      <p>For more information on the LocoBridge itself, please see
+      <a href=
+      "http://www.mollehem.se/index.php/electronics/smartphoninterface-detail">
+      its page</a>.</p>
 
+      <h2>Setup</h2>
 
-<img src="http://www.mollehem.se/images/stories/virtuemart/product/bt_rensad2.png" alt="LocoAdapter picture" align="right" height="205" width="166"/>
-The <a href="http://www.mollehem.se/index.php/electronics/smartphoninterface-detail">LocoBridge</a> 
-allows you to connect remotely through Bluetooth to 
-the adapter, which then connects to a LocoNet to control your layout.
+      <p>On recent Mac and Windows systems, all necessary software
+      comes with the JMRI download.</p>
 
-<p>
-For more information on the LocoBridge itself, please see the
-<a href="http://www.mollehem.se/index.php/electronics/smartphoninterface-detail">its page</a>.
+      <p>On Linux and other systems, you need to have a
+      libbluetooth installed. Depending on which Linux distribution
+      you are using, you might have to use commands like "sudo
+      apt-get install libbluetooth" or perhaps "sudo apt-get
+      install libbluetooth-dev". For more information, please see
+      <a href="http://snapshot.bluecove.org/bluecove-gpl/">this
+      page</a>, which describes the requirements to use the Blue
+      Cove library that JMRI uses to access Bluetooth.</p>
 
-<h2>Setup</h2>
+      <h2>Configuration</h2>
 
-On recent Mac and Windows systems, all necessary software comes with the JMRI download.
+      <p>To set up a JMRI application to use the LocoBridge:</p>
 
-<p>
-On Linux and other systems, you need to have a libbluetooth installed.
-Depending on which Linux distribution you are using, you might have to use commands
-like "sudo apt-get install libbluetooth" or perhaps "sudo apt-get install libbluetooth-dev".
-For more information, please see 
-<a href="http://snapshot.bluecove.org/bluecove-gpl/">this page</a>, 
-which describes the requirements to use the Blue Cove library that JMRI
-uses to access Bluetooth.
+      <ol>
+        <li>Start JMRI</li>
 
-<h2>Configuration</h2>
+        <li>Open the Preferences window from the Edit menu and
+        configure the Connection as:
 
-<p>
-To set up a JMRI application to use the LocoBridge:
-</p>
+          <ul>
+            <li>Select System manufacturer as: Digitrax</li>
 
-<UL>
-<LI>
-Start the application
-<li>
-Open the Preferences window from the Edit menu and configure the connection by:
-<UL>
-<LI>Select System manufacturer as Digitrax
-<li>Select the System connection as BT LocoBridge
-<li>Select your LocoBridge as the Bluetooth adapter
-<li>Select your Command Station type
-</UL>
-<li>Click Save at the bottom of the preferences window, quit the program and restart.
-</UL>
-	  
-    </div>
+            <li>Select the System connection as: BT LocoBridge</li>
 
-<!--#include virtual="/Footer" -->
+            <li>Select your LocoBridge as: the Bluetooth
+            adapter</li>
+
+            <li>Select your Command Station type</li>
+          </ul>
+        </li>
+
+        <li>Click "Save" at the bottom of the Preferences window,
+        quit JMRI and restart.</li>
+      </ol><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

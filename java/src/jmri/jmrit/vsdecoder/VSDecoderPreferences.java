@@ -16,7 +16,7 @@ package jmri.jmrit.vsdecoder;
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
+ * 
  */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -303,7 +303,6 @@ public class VSDecoderPreferences {
      * Add an AddressListener. AddressListeners are notified when the user
      * selects a new address and when a Throttle is acquired for that address
      *
-     * @param l
      */
     public void addPropertyChangeListener(PropertyChangeListener l) {
         if (listeners == null) {
@@ -317,7 +316,6 @@ public class VSDecoderPreferences {
     /**
      * Remove an AddressListener.
      *
-     * @param l
      */
     public void removePropertyChangeListener(PropertyChangeListener l) {
         if (listeners == null) {
@@ -328,5 +326,5 @@ public class VSDecoderPreferences {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(VSDecoderPreferences.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VSDecoderPreferences.class.getName());
 }

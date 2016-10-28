@@ -1,11 +1,8 @@
 package jmri.jmrix.sprog.sprogCS.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.sprog.sprogCS.ConnectionConfig;
 import jmri.jmrix.sprog.sprogCS.SprogCSSerialDriverAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persistening the
@@ -18,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * attribute in the XML.
  *
  * @author Andrew Crosland Copyright: Copyright (c) 2006
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -26,15 +22,22 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
-        adapter = SprogCSSerialDriverAdapter.instance();
+        if (adapter == null) {
+            adapter = new SprogCSSerialDriverAdapter();
+        }
     }
 
+    @Override
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig) object).getAdapter();
+    }
+
+
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

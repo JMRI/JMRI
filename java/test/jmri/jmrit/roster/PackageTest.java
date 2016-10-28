@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.roster;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.roster package
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2012
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -21,16 +19,16 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.roster.PackageTest");
-        suite.addTest(jmri.jmrit.roster.BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(jmri.jmrit.roster.RosterEntryTest.suite());
         suite.addTest(jmri.jmrit.roster.RosterTest.suite());
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.roster.configurexml.PackageTest.class));
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrit.roster.CopyRosterItemActionTest.suite());
             suite.addTest(jmri.jmrit.roster.RosterEntryPaneTest.suite());

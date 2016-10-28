@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Base for classes representing a LocoNet communications port
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision$
  */
 public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortController {
     // base class. Implementations will provide InputStream and OutputStream
@@ -18,7 +17,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
 
     protected LnPortController(LocoNetSystemConnectionMemo connectionMemo) {
         super(connectionMemo);
-        setManufacturer(jmri.jmrix.DCCManufacturerList.DIGITRAX);
+        setManufacturer(LnConnectionTypeList.DIGITRAX);
     }
 
     // returns the InputStream from the port
@@ -51,6 +50,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
 
     protected LnCommandStationType[] commandStationTypes = {
         LnCommandStationType.COMMAND_STATION_DCS100,
+        LnCommandStationType.COMMAND_STATION_DCS240,
         LnCommandStationType.COMMAND_STATION_DCS200,
         LnCommandStationType.COMMAND_STATION_DCS050,
         LnCommandStationType.COMMAND_STATION_DCS051,
@@ -70,8 +70,8 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
         }
     }
 
-    // There are also "PR3 standalone programmer" and "Stand-alone LocoNet"
-    // in pr3/PR3Adapter
+    // There are also "PR3 standalone programmer" and "Stand-alone LocoNet" in pr3/PR3Adapter
+    //  and "PR2 standalone programmer" in pr2/Pr2Adaper
     /**
      * Set config info from a name, which needs to be one of the valid ones.
      */
@@ -105,7 +105,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
         return (LocoNetSystemConnectionMemo) super.getSystemConnectionMemo();
     }
-    static Logger log = LoggerFactory.getLogger(LnPortController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnPortController.class.getName());
 }
 
 

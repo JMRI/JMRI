@@ -63,7 +63,7 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
             log.debug("getBySystemName: systemName= " + name);
             CatalogTree tree = (CatalogTree) _tsys.get(name);
             if (tree != null) {
-                CatalogTreeNode root = (CatalogTreeNode) tree.getRoot();
+                CatalogTreeNode root = tree.getRoot();
                 log.debug("root= " + root.toString()
                         + ", has " + root.getChildCount() + " children");
             }
@@ -182,7 +182,7 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
         return Bundle.getMessage("BeanNameCatalog");
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultCatalogTreeManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultCatalogTreeManager.class.getName());
 }
 
 /* @(#)CatalogTreeFSManager.java */

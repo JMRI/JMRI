@@ -3,24 +3,53 @@ package jmri.jmrit.display;
 import java.beans.PropertyChangeEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
  * TurnoutIconTest.java
  *
- * Description:
- *
  * @author	Bob Jacobsen
- * @version	$Revision$
  */
 public class TurnoutIconTest extends jmri.util.SwingTestCase {
 
-    TurnoutIcon to = null;
-    jmri.jmrit.display.panelEditor.PanelEditor panel
-            = new jmri.jmrit.display.panelEditor.PanelEditor("Test TurnoutIcon Panel");
+    TurnoutIcon to;
+    jmri.jmrit.display.panelEditor.PanelEditor panel;
 
+    public void testEquals() {
+        JFrame jf = new JFrame();
+        jf.getContentPane().setLayout(new java.awt.FlowLayout());
+
+        to = new TurnoutIcon(panel);
+        jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
+        to.setTurnout(new jmri.NamedBeanHandle<jmri.Turnout>("IT1", turnout));
+
+        TurnoutIcon to2 = new TurnoutIcon(panel);
+        turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
+        to2.setTurnout(new jmri.NamedBeanHandle<jmri.Turnout>("IT1", turnout));
+
+        Assert.assertTrue("identity", to.equals(to));
+        Assert.assertFalse("object (not content) equality", to2.equals(to));
+        Assert.assertFalse("object (not content) equality commutes", to.equals(to2));        
+    }
+
+    public void testClone() {
+        JFrame jf = new JFrame();
+        jf.getContentPane().setLayout(new java.awt.FlowLayout());
+
+        to = new TurnoutIcon(panel);
+        jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
+        to.setTurnout(new jmri.NamedBeanHandle<jmri.Turnout>("IT1", turnout));
+
+        TurnoutIcon to2 = (TurnoutIcon) to.deepClone();
+
+        Assert.assertFalse("clone object (not content) equality", to2.equals(to));
+        
+        Assert.assertTrue("class type equality", to2.getClass().equals(to.getClass()));
+        
+    }
+    
     public void testShow() {
         JFrame jf = new JFrame();
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
@@ -28,14 +57,6 @@ public class TurnoutIconTest extends jmri.util.SwingTestCase {
         to = new TurnoutIcon(panel);
         jf.getContentPane().add(to);
 
-        jmri.InstanceManager i = new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = this;
-                store(new jmri.managers.InternalTurnoutManager(), jmri.TurnoutManager.class);
-            }
-        };
-        Assert.assertNotNull("Instance exists", i);
         jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         to.setTurnout(new jmri.NamedBeanHandle<jmri.Turnout>("IT1", turnout));
 
@@ -107,7 +128,7 @@ public class TurnoutIconTest extends jmri.util.SwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", TurnoutIconTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -119,6 +140,10 @@ public class TurnoutIconTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+    
+        jmri.util.JUnitUtil.resetInstanceManager();
+        panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test TurnoutIcon Panel");
+        to = null;
     }
 
     protected void tearDown() {

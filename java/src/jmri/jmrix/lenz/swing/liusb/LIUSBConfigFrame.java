@@ -24,8 +24,7 @@ import org.slf4j.LoggerFactory;
  * XPressNet Address and the port speed used to communicate with the LIUSB.
  *
  * @author	Paul Bender Copyright (C) 2009-2010
- * @version	$Revision$
- */
+  */
 public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListener {
 
     /**
@@ -182,6 +181,6 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(LIUSBConfigFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LIUSBConfigFrame.class.getName());
 
 }

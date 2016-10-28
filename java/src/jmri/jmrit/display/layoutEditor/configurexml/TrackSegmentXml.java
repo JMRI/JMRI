@@ -1,4 +1,3 @@
-// jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml.java
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import jmri.configurexml.AbstractXmlAdapter;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision$
  */
 public class TrackSegmentXml extends AbstractXmlAdapter {
 
@@ -31,7 +29,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
 
         TrackSegment p = (TrackSegment) o;
 
-        Element element = new Element("tracksegment");
+        Element element = new Element("tracksegment"); // NOI18N
 
         // include attributes
         element.setAttribute("ident", p.getID());
@@ -54,11 +52,12 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                 element.setAttribute("hideConLines", "" + (p.hideConstructionLines() ? "yes" : "no"));
             }
         }
-        element.setAttribute("class", "jmri.jmrit.display.configurexml.TrackSegmentXml");
+        element.setAttribute("class", getClass().getName());
         return element;
     }
 
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         log.error("Invalid method called");
         return false;
     }
@@ -145,5 +144,5 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         p.trackList.add(l);
     }
 
-    static Logger log = LoggerFactory.getLogger(TrackSegmentXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrackSegmentXml.class.getName());
 }

@@ -1,4 +1,3 @@
-// NceConsistEditPanel.java
 package jmri.jmrix.nce.consist;
 
 import java.awt.Dimension;
@@ -57,15 +56,9 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2007 2008 Cloned from NceConsistEditFrame
  * by
  * @author kcameron Copyright (C) 2010
- * @version $Revision$
  */
 public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implements
         jmri.jmrix.nce.NceListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7857105641140192352L;
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.consist.NceConsistBundle");
 
@@ -440,7 +433,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                 return;
             }
             int locoAddr = validLocoAdr(locoTextField1.getText());
-            boolean isLong = (adrButton1.getText() == rb.getString("KeyLONG"));
+            boolean isLong = (adrButton1.getText().equals(rb.getString("KeyLONG")));
             if (locoAddr < 0) {
                 return;
             }
@@ -707,19 +700,18 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         }
         if (entry != null) {
             DccLocoAddress a = entry.getDccLocoAddress();
-            if (a != null) {
-                locoTextField.setText("" + a.getNumber());
-                if (a.isLongAddress()) {
-                    adrButton.setText(rb.getString("KeyLONG"));
-                } else {
-                    adrButton.setText(rb.getString("KeySHORT"));
-                }
-                // if lead loco get road number and name
-                if (locoRosterBox == locoRosterBox1) {
-                    textConRoadName.setText(entry.getRoadName());
-                    textConRoadNumber.setText(entry.getRoadNumber());
-                    textConModel.setText(entry.getModel());
-                }
+
+            locoTextField.setText("" + a.getNumber());
+            if (a.isLongAddress()) {
+                adrButton.setText(rb.getString("KeyLONG"));
+            } else {
+                adrButton.setText(rb.getString("KeySHORT"));
+            }
+            // if lead loco get road number and name
+            if (locoRosterBox == locoRosterBox1) {
+                textConRoadName.setText(entry.getRoadName());
+                textConRoadNumber.setText(entry.getRoadNumber());
+                textConModel.setText(entry.getModel());
             }
         }
     }
@@ -827,7 +819,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         } catch (NumberFormatException e) {
             return -1;
         }
-        if (cN < CONSIST_MIN | cN > CONSIST_MAX) {
+        if (cN < CONSIST_MIN || cN > CONSIST_MAX) {
             return -1;
         } else {
             return cN;
@@ -845,7 +837,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         } catch (NumberFormatException e) {
             lA = -1;
         }
-        if (lA < LOC_ADR_MIN | lA > LOC_ADR_MAX) {
+        if (lA < LOC_ADR_MIN || lA > LOC_ADR_MAX) {
             JOptionPane.showMessageDialog(this,
                     rb.getString("DIALOG_AddrRange"), rb.getString("DIALOG_NceConsist"),
                     JOptionPane.ERROR_MESSAGE);
@@ -1801,11 +1793,6 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     /**
      * updates NCE CS based on the loco line supplied called by load button
      *
-     * @param locoRosterBox
-     * @param locoTextField
-     * @param adrButton
-     * @param dirButton
-     * @param cmdButton
      */
     private void loadOneLine(JComboBox<Object> locoRosterBox, JTextField locoTextField,
             JButton adrButton, JButton dirButton, JButton cmdButton) {
@@ -2224,11 +2211,6 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
      */
     static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3301881443857178333L;
-
         public Default() {
             super("Open NCE Consist Editor",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
@@ -2237,6 +2219,6 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         }
     }
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(NceConsistEditPanel.class.getName());
 }

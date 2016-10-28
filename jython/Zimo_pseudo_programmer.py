@@ -25,8 +25,6 @@
 #
 # Components based on Bob Jacobsen's scripts in JMRI distribution. 
 #
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 
 import java
 import javax.swing
@@ -46,7 +44,7 @@ class LocoZimoPseudoProg(jmri.jmrit.automat.AbstractAutomaton) :
         else :
             long = False
         # setup a programmer for ops-mode
-        self.programmer = programmers.getAddressedProgrammer(long, number)
+        self.programmer = addressedProgrammers.getAddressedProgrammer(long, number)
         self.throttle = self.getThrottle(number, long)
         self.waitMsec(self.delay*1000)
         if (self.throttle == None) :
@@ -354,7 +352,7 @@ class LocoZimoPseudoProg(jmri.jmrit.automat.AbstractAutomaton) :
         self.startButton = javax.swing.JButton("Start")
         self.startButton.actionPerformed = self.whenMyButtonClicked		
 
-        self.roster = jmri.jmrit.roster.Roster.instance()
+        self.roster = jmri.jmrit.roster.Roster.getDefault()
         self.box = jmri.jmrit.roster.swing.GlobalRosterEntryComboBox()
         self.box.itemStateChanged = self.rosterBoxChange
         temppanel1.add(self.box)

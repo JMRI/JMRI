@@ -1,11 +1,6 @@
-/**
- *
- */
 package jmri;
 
 import jmri.implementation.AbstractTurnout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Some (not much) common machinery for the concrete turnout operator classes.
@@ -34,12 +29,5 @@ public abstract class TurnoutOperator extends Thread {
      * and that this one should just quietly stop doing its thing.
      */
     static public class TurnoutOperatorException extends java.lang.Exception {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -9039683362922025389L;
     }
-
-    static Logger log = LoggerFactory.getLogger(TurnoutOperator.class.getName());
 }

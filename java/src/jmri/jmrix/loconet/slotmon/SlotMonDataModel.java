@@ -1,4 +1,3 @@
-// SlotMonDataModel.java
 package jmri.jmrix.loconet.slotmon;
 
 import java.awt.event.MouseEvent;
@@ -25,7 +24,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Jeffrey Machacek 2013
- * @version $Revision$
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener {
 
@@ -539,7 +537,6 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
      * optional, in that other table formats can use this table model. But we
      * put it here to help keep it consistent.
      *
-     * @param slotTable
      */
     public void configureTable(JTable slotTable) {
         // allow reordering of the columns
@@ -710,6 +707,6 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         // table = null;
     }
 
-    static Logger log = LoggerFactory.getLogger(SlotMonDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SlotMonDataModel.class.getName());
 
 }

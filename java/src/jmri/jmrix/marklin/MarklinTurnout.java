@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * Based on work by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 18574 $
+ * 
  */
 public class MarklinTurnout extends AbstractTurnout
         implements MarklinListener {
@@ -53,9 +53,9 @@ public class MarklinTurnout extends AbstractTurnout
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states
-        if ((s & Turnout.CLOSED) > 0) {
+        if ((s & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) > 0) {
+            if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both CLOSED and THROWN " + s);
                 return;
@@ -195,7 +195,7 @@ public class MarklinTurnout extends AbstractTurnout
     static final int METERINTERVAL = 100;  // msec wait before closed
     static java.util.Timer meterTimer = new java.util.Timer(true);
 
-    static Logger log = LoggerFactory.getLogger(MarklinTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinTurnout.class.getName());
 }
 
 /* @(#)MarklinTurnout.java */

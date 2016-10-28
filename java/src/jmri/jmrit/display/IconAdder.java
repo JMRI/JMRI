@@ -1,4 +1,3 @@
-// IconAdder.java
 package jmri.jmrit.display;
 
 import java.awt.Color;
@@ -71,11 +70,6 @@ import org.slf4j.LoggerFactory;
  */
 public class IconAdder extends JPanel implements ListSelectionListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6650497287808063959L;
-
     static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     int ROW_HEIGHT;
@@ -115,7 +109,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
 
     public void reset() {
         if (_table != null) {
-            _table.getSelectedRow();
             _table.clearSelection();
         }
         closeCatalog();
@@ -131,13 +124,14 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         initDefaultIcons();
     }
 
-    @SuppressWarnings("unchecked")
     public void initDefaultIcons() {
-        CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
+        CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         CatalogTree tree = manager.getBySystemName("NXDI");
         if (tree != null) {
-            CatalogTreeNode node = (CatalogTreeNode) tree.getRoot();
+            CatalogTreeNode node = tree.getRoot();
+            
             Enumeration<CatalogTreeNode> e = node.children();
+            
             while (e.hasMoreElements()) {
                 CatalogTreeNode nChild = e.nextElement();
                 if (_type.equals(nChild.toString())) {
@@ -370,6 +364,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
 
     public void setSelection(NamedBean bean) {
         int row = _pickListModel.getIndexOf(bean);
+        row = _table.convertRowIndexToView(row);
         _table.addRowSelectionInterval(row, row);
         _pickTablePane.getVerticalScrollBar().setValue(row * ROW_HEIGHT);
     }
@@ -455,7 +450,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             int nextWidth = but.getIcon().getIconWidth();
             int nextHeight = but.getIcon().getIconHeight();
             if ((Math.abs(lastWidth - nextWidth) > 3 || Math.abs(lastHeight - nextHeight) > 3)) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("IconSizeDiff"), Bundle.getMessage("warnTitle"),
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("IconSizeDiff"), Bundle.getMessage("WarningTitle"),
                         JOptionPane.WARNING_MESSAGE);
                 return;
             }
@@ -479,6 +474,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             checkIconSizes();
         }
         int row = _table.getSelectedRow();
+        row = _table.convertRowIndexToModel(row);
         if (row >= 0) {
             NamedBean b = _pickListModel.getBeanAt(row);
             _table.clearSelection();
@@ -708,15 +704,16 @@ public class IconAdder extends JPanel implements ListSelectionListener {
      * If icons are changed, update global tree
      */
     private void updateCatalogTree() {
-        CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
+        CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         // unfiltered, xml-stored, default icon tree
         CatalogTree tree = manager.getBySystemName("NXDI");
         if (tree == null) {	// build a new Default Icons tree
             tree = manager.newCatalogTree("NXDI", "Default Icons");
         }
-        CatalogTreeNode root = (CatalogTreeNode) tree.getRoot();
-        @SuppressWarnings("unchecked")
+        CatalogTreeNode root = tree.getRoot();
+
         Enumeration<CatalogTreeNode> e = root.children();
+
         String name = _defaultIcons.toString();
         while (e.hasMoreElements()) {
             CatalogTreeNode nChild = e.nextElement();
@@ -733,11 +730,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     }
 
     private class IconButton extends DropButton {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2038108988532738646L;
         String key;
 
         IconButton(String label, Icon icon) {  // init icon passed to avoid ref before ctor complete
@@ -758,11 +750,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     }
 
     class DropButton extends JToggleButton implements DropTargetListener {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7846729392258288644L;
         DataFlavor dataFlavor;
 
         DropButton(Icon icon) {
@@ -843,5 +830,5 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(IconAdder.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IconAdder.class.getName());
 }

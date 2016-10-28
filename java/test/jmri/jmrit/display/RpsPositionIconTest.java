@@ -1,4 +1,3 @@
-// RpsPositionIconTest.java
 package jmri.jmrit.display;
 
 import javax.swing.JButton;
@@ -6,7 +5,7 @@ import javax.swing.JFrame;
 import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.Reading;
 import jmri.util.JmriJFrame;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -14,13 +13,11 @@ import junit.framework.TestSuite;
  * Tests for the RpsIcon class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision$
- */
+  */
 public class RpsPositionIconTest extends jmri.util.SwingTestCase {
 
     RpsPositionIcon rpsIcon;
-    jmri.jmrit.display.panelEditor.PanelEditor panel
-            = new jmri.jmrit.display.panelEditor.PanelEditor("Test RpsPositionIcon Panel");
+    jmri.jmrit.display.panelEditor.PanelEditor panel;
 
     public void testShow() {
         JmriJFrame jf = new JmriJFrame("RpsPositionIcon Test");
@@ -29,14 +26,7 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
         rpsIcon = new RpsPositionIcon(panel);
         jf.getContentPane().add(rpsIcon);
 
-        jmri.InstanceManager i = new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = this;
-                store(new jmri.managers.InternalTurnoutManager(), jmri.TurnoutManager.class);
-            }
-        };
-        Assert.assertNotNull("Instance exists", i);
+        jmri.util.JUnitUtil.resetInstanceManager();
 
         // test buttons
         JButton originButton = new JButton("Set 0,0");
@@ -115,8 +105,8 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {RpsPositionIconTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        String[] testCaseName = {"-noloading", RpsPositionIconTest.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -128,6 +118,8 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        
+        panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test RpsPositionIcon Panel");
     }
 
     protected void tearDown() {

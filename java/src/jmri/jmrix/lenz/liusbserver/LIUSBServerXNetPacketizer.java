@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * received.
  *
  * @author	Paul Bender, Copyright (C) 2009
- * @version $Revision$
  *
  */
 public class LIUSBServerXNetPacketizer extends XNetPacketizer {
@@ -32,9 +31,12 @@ public class LIUSBServerXNetPacketizer extends XNetPacketizer {
     /**
      * Actually transmits the next message to the port
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"UW_UNCOND_WAIT"},
+             justification = "Wait is for external hardware, which doesn't necessarilly respond, to process the data.")
+
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (log.isDebugEnabled()) {
-            log.debug("forwardToPort message: [" + m + "]");
+            log.debug("forwardToPort message: [{}]", m);
         }
         // remember who sent this
         mLastSender = reply;
@@ -51,11 +53,12 @@ public class LIUSBServerXNetPacketizer extends XNetPacketizer {
                 while (m.getRetries() >= 0) {
                     if (portReadyToSend(controller)) {
                         ostream.write((m + "\n\r").getBytes(java.nio.charset.Charset.forName("UTF-8")));
+                        ostream.flush();
                         log.debug("written");
                         break;
                     } else if (m.getRetries() >= 0) {
                         if (log.isDebugEnabled()) {
-                            log.debug("Retry message: " + m.toString() + " attempts remaining: " + m.getRetries());
+                            log.debug("Retry message: {} attempts remaining: {}", m.toString(), m.getRetries());
                         }
                         m.setRetries(m.getRetries() - 1);
                         try {
@@ -67,7 +70,7 @@ public class LIUSBServerXNetPacketizer extends XNetPacketizer {
                             log.error("retry wait interupted");
                         }
                     } else {
-                        log.warn("sendMessage: port not ready for data sending: " + m.toString());
+                        log.warn("sendMessage: port not ready for data sending: {}", m.toString());
                     }
                 }
             } else {  // ostream is null
@@ -81,7 +84,7 @@ public class LIUSBServerXNetPacketizer extends XNetPacketizer {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LIUSBServerXNetPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LIUSBServerXNetPacketizer.class.getName());
 }
 
 /* @(#)XnTcpXNetPacketizer.java */

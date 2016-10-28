@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for rps.RpsPositionIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision$
  */
 public class RpsPositionIconXml extends PositionableLabelXml {
 
@@ -55,11 +54,6 @@ public class RpsPositionIconXml extends PositionableLabelXml {
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.RpsPositionIconXml");
         return element;
-    }
-
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
     }
 
     /**
@@ -153,6 +147,6 @@ public class RpsPositionIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.SENSORS, element);
     }
 
-    static Logger log = LoggerFactory.getLogger(RpsPositionIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RpsPositionIconXml.class.getName());
 
 }

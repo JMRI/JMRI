@@ -5,7 +5,7 @@ import jmri.managers.DefaultProgrammerManager;
 import jmri.ProgListenerScaffold;
 import jmri.ProgrammerException;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.TestCase;
 
 public class LnOpsModeProgrammerTest extends TestCase {
@@ -248,7 +248,7 @@ public class LnOpsModeProgrammerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {LnOpsModeProgrammerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // The minimal setup for log4J

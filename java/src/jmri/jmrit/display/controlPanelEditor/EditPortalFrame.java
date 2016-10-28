@@ -276,7 +276,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         }
         String name = _portalName.getText();
         if (portal == null || name == null || name.trim().length() == 0) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("changePortalName"),
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("changePortalName", Bundle.getMessage("buttonChangeName")),
                     Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
             return;
         }
@@ -550,14 +550,12 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     /**
      * Query whether icon intersects any track icons of block
      *
-     * @param icon
-     * @param block
      * @return null if intersection, otherwise a messags
      */
     private String iconIntersectsBlock(PortalIcon icon, OBlock block) {
         java.util.List<Positionable> list = _parent.getCircuitIcons(block);
         if (list == null || list.size() == 0) {
-            return Bundle.getMessage("needIcons", block.getDisplayName());
+            return Bundle.getMessage("needIcons", block.getDisplayName(), Bundle.getMessage("editCircuitItem"));
         }
         Rectangle rect = new Rectangle();
         Rectangle iconRect = icon.getBounds(new Rectangle());
@@ -584,11 +582,11 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         NamedIcon icon = new NamedIcon(fileName, fileName);
         JPanel panel = new JPanel();
         panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
-                Bundle.getMessage("portal")));
+                Bundle.getMessage("BeanNamePortal")));
         try {
             JLabel label = new IconDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
             label.setIcon(icon);
-            label.setName(Bundle.getMessage("portal"));
+            label.setName(Bundle.getMessage("BeanNamePortal"));
             panel.add(label);
         } catch (java.lang.ClassNotFoundException cnfe) {
             cnfe.printStackTrace();
@@ -649,5 +647,5 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(EditPortalFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EditPortalFrame.class.getName());
 }

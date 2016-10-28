@@ -706,12 +706,12 @@
     <label xml:lang="it">F2(retro) controllo uscita 8</label>
   </variable>
   <!-- MOTOR SETTINGS -->
-  <variable item="Vstart" CV="2" comment="0-15" default="0">
+  <variable CV="2" item="Vstart" comment="0-15" default="0">
     <decVal min="0" max="15"/>
     <label>Vstart</label>
     <label xml:lang="it">Volt Partenza</label>
     <label xml:lang="fr">V démarr.</label>
-    <label xml:lang="de">Startspannung</label>
+    <label xml:lang="de">Anfahrspannung</label>
   </variable>
   <variable CV="3" default="3" item="Accel">
     <decVal min="0" max="255"/>
@@ -735,7 +735,7 @@
     <label xml:lang="de">Motorfrequenz</label>
   </variable>
   <!-- EMF equivalent for Doehler und Haass -->
-  <variable CV="50" default="2" item="Load Control" tooltip="0=CV56, 1=hard, 2=soft, 3=very soft">
+  <variable CV="50" default="2" item="Load Control" tooltip="0=CV56, 1=hard, 2=soft, 3=very soft" exclude="Combo sound decoders">
     <enumVal>
       <enumChoice choice="According to CV56" value="0">
         <choice>According to CV56</choice>
@@ -803,7 +803,7 @@
     <label xml:lang="fr">Courbe de vitesse</label>
     <label xml:lang="de">Kennlinie</label>
   </variable>
-  <variable CV="63" default="0" item="Start delay for speed step 1" tooltip="CV63 (0-250)">
+  <variable CV="63" default="0" item="Start delay for speed step 1" tooltip="CV63 (0-250)" exclude="Combo sound decoders">
     <decVal min="0" max="250"/>
     <label>Start delay for speed step 1</label>
     <label xml:lang="it">Inizio ritardo velocità step 1</label>

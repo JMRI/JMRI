@@ -4,16 +4,13 @@
  * Description:	tests for the jmri.jmrix.nce.NceTurnout class
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 package jmri.jmrix.nce;
 
 import jmri.implementation.AbstractTurnoutTest;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class NceTurnoutTest extends AbstractTurnoutTest {
 
@@ -52,7 +49,7 @@ public class NceTurnoutTest extends AbstractTurnoutTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {NceTurnoutTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -60,7 +57,5 @@ public class NceTurnoutTest extends AbstractTurnoutTest {
         TestSuite suite = new TestSuite(NceTurnoutTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(NceTurnoutTest.class.getName());
 
 }

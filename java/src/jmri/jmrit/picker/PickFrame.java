@@ -2,15 +2,8 @@ package jmri.jmrit.picker;
 
 import javax.swing.JMenuBar;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class PickFrame extends JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3288532933990677427L;
 
     public PickFrame(String title) {
         setTitle(title);
@@ -47,7 +40,4 @@ public class PickFrame extends JmriJFrame {
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.picker.PickTables", true);
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(PickFrame.class.getName());
 }

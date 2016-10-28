@@ -6,13 +6,10 @@
  * </P>
  *
  * @author	Paul Bender Copyright (C) 2008
- * @version	$Revision$
- */
+  */
 package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.lenz.XNetTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class EliteXNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
 
@@ -36,8 +33,6 @@ public class EliteXNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
         newKnownState(getCommandedState());
         internalState = jmri.jmrix.lenz.XNetTurnout.IDLE;
     }
-
-    static Logger log = LoggerFactory.getLogger(EliteXNetTurnout.class.getName());
 
 }
 

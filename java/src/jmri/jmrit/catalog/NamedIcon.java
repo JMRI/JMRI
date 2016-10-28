@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extend an ImageIcon to remember the name from which it was created and
- * provide rotation & scaling services.
+ * provide rotation {@literal &} scaling services.
  * <p>
  * We store both a "URL" for finding the file this was made from (so we can load
  * this later), plus a shorter "name" for display.
@@ -29,14 +29,8 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen Copyright 2002, 2008
  * @author Pete Cressman Copyright: Copyright (c) 2009, 2010
- * @version $Revision$
  */
 public class NamedIcon extends ImageIcon {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5274934991719576677L;
 
     /**
      * Create a NamedIcon that is a complete copy of an existing NamedIcon
@@ -172,9 +166,11 @@ public class NamedIcon extends ImageIcon {
         mRotation = pRotation;
         setImage(createRotatedImage(mDefaultImage, comp, mRotation));
         _deg = 0;
-        int w = (int) Math.ceil(_scale * getIconWidth());
-        int h = (int) Math.ceil(_scale * getIconHeight());
-        transformImage(w, h, _transformS, comp);
+        if (Math.abs(_scale-1.0) > .00001) {
+            int w = (int) Math.ceil(_scale * getIconWidth());
+            int h = (int) Math.ceil(_scale * getIconHeight());
+            transformImage(w, h, _transformS, comp);
+        }
     }
 
     private String mName = null;
@@ -335,20 +331,17 @@ public class NamedIcon extends ImageIcon {
 
     /**
      * Scale as a percentage
-     *
-     * public void scale(int s, Component comp) { //log.info("scale= "+s+",
+     */
+    /* public void scale(int s, Component comp) { //log.info("scale= "+s+",
      * "+getDescription()); if (s<1) { return; } scale(s/100.0, comp); }
      */
     public void scale(double scale, Component comp) {
         setImage(mDefaultImage);
-        int w = (int) Math.ceil(scale * getIconWidth());
-        int h = (int) Math.ceil(scale * getIconHeight());
-        _transformS = AffineTransform.getScaleInstance(scale, scale);
-        transformImage(w, h, _transformS, comp);
-        _scale = scale;
-        if (_deg != 0) {
-            rotate(_deg, comp);
+        _scale = scale;            
+        if (Math.abs(scale-1.0) > .00001) {
+            _transformS = AffineTransform.getScaleInstance(scale, scale);
         }
+        rotate(_deg, comp);            
     }
 
     /**
@@ -356,13 +349,17 @@ public class NamedIcon extends ImageIcon {
      */
     public void rotate(int degree, Component comp) {
         setImage(mDefaultImage);
-        if (_scale != 1.0) {
+        if (Math.abs(_scale-1.0) > .00001) {
             int w = (int) Math.ceil(_scale * getIconWidth());
             int h = (int) Math.ceil(_scale * getIconHeight());
             transformImage(w, h, _transformS, comp);
         }
         mRotation = 0;
         degree = degree % 360;
+        _deg = degree;
+        if (degree==0){
+            return;
+        }
         double rad = degree * Math.PI / 180.0;
         double w = getIconWidth();
         double h = getIconHeight();
@@ -381,7 +378,6 @@ public class NamedIcon extends ImageIcon {
         AffineTransform r = AffineTransform.getRotateInstance(rad);
         t.concatenate(r);
         transformImage(width, heigth, t, comp);
-        _deg = degree;
         if (comp instanceof PositionableLabel) {
             ((PositionableLabel) comp).setDegrees(degree);
         }
@@ -438,6 +434,5 @@ public class NamedIcon extends ImageIcon {
         transformImage(w, h, _transformF, null);
     }
 
-    static Logger log = LoggerFactory.getLogger(NamedIcon.class.getName());
-
+    private final static Logger log = LoggerFactory.getLogger(NamedIcon.class.getName());
 }

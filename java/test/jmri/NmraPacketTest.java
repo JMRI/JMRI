@@ -4,16 +4,13 @@
  * Description:
  *
  * @author	Bob Jacobsen
- * @version
  */
 package jmri;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class NmraPacketTest extends TestCase {
 
@@ -113,6 +110,22 @@ public class NmraPacketTest extends TestCase {
         Assert.assertEquals("first byte ", 0x81, ba[0] & 0xFF);
         Assert.assertEquals("second byte ", 0xB9, ba[1] & 0xFF);
         Assert.assertEquals("third byte ", 0x38, ba[2] & 0xFF);
+    }
+
+    public void testAccDecoderPacket13() {
+        // invalid address (0)
+        int addr = 0;
+        // expect this to throw exception
+        boolean threw = false;
+        try {
+            byte[] ba = NmraPacket.accDecoderPkt(addr, 0, 0);
+            Assert.fail("Expected IllegalArgumentException not thrown");
+        } catch (IllegalArgumentException ex) {
+            threw = true;
+        } finally {
+            jmri.util.JUnitAppender.assertErrorMessage("invalid address " + addr);
+        }
+        Assert.assertTrue("Expected exception", threw);
     }
 
     public void testOpsModeLong() {
@@ -394,7 +407,7 @@ public class NmraPacketTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {NmraPacketTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -414,7 +427,5 @@ public class NmraPacketTest extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(NmraPacketTest.class.getName());
 
 }

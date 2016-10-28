@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * <p>
  *
  * @author Paul Bender Copyright (C) 2014
- * @version $Revision$
  */
 public class XBeeTurnoutManager extends AbstractTurnoutManager {
 
@@ -207,6 +206,6 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(XBeeTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeTurnoutManager.class.getName());
 
 }

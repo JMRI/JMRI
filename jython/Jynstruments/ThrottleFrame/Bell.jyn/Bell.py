@@ -1,3 +1,5 @@
+import java
+import jmri
 import jmri.jmrit.jython.Jynstrument as Jynstrument
 import java.awt.CardLayout as CardLayout
 import jmri.util.swing.ResizableImagePanel as ResizableImagePanel

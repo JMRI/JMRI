@@ -1,4 +1,3 @@
-// SectionManagerXML.java
 package jmri.configurexml;
 
 import java.util.List;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision$
  */
 public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -103,17 +101,9 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
                                         log.error("Unexpected null getFromBlock while storing ep " + i + " in Section " + sname + ", skipped");
                                         break;
                                     }
-                                    if (ep.getFromBlock().getSystemName() == null) {
-                                        log.error("Unexpected null in FromBlock systemName while storing ep " + i + " in Section " + sname + ", skipped");
-                                        break;
-                                    }
                                     epElem.setAttribute("fromblock", ep.getFromBlock().getSystemName());
                                     if (ep.getBlock() == null) {
                                         log.error("Unexpected null getBlock while storing ep " + i + " in Section " + sname + ", skipped");
-                                        break;
-                                    }
-                                    if (ep.getBlock().getSystemName() == null) {
-                                        log.error("Unexpected null in Block systemName while storing ep " + i + " in Section " + sname + ", skipped");
                                         break;
                                     }
                                     epElem.setAttribute("toblock", ep.getBlock().getSystemName());
@@ -151,12 +141,14 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * Create a SectionManager object of the correct class, then register and
      * fill it.
      *
-     * @param sections Top level Element to unpack.
+     * @param sharedSections  Top level Element to unpack.
+     * @param perNodeSections Per-node Element to unpack.
      * @return true if successful
      */
-    public boolean load(Element sections) {
+    @Override
+    public boolean load(Element sharedSections, Element perNodeSections) {
         // load individual Sections
-        loadSections(sections);
+        loadSections(sharedSections, perNodeSections);
         return true;
     }
 
@@ -165,14 +157,16 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * additional info needed for a specific Section type, invoke this with the
      * parent of the set of Section elements.
      *
-     * @param sections Element containing the Section elements to load.
+     * @param sharedSections  Element containing the Section elements to load.
+     * @param perNodeSections Per-node Element containing the Section elements
+     *                        to load.
      */
-    public void loadSections(Element sections) {
-        List<Element> sectionList = sections.getChildren("section");
+    public void loadSections(Element sharedSections, Element perNodeSections) {
+        List<Element> sectionList = sharedSections.getChildren("section");
         if (log.isDebugEnabled()) {
             log.debug("Found " + sectionList.size() + " sections");
         }
-        SectionManager tm = InstanceManager.sectionManagerInstance();
+        SectionManager tm = InstanceManager.getDefault(jmri.SectionManager.class);
 
         for (int i = 0; i < sectionList.size(); i++) {
             if (sectionList.get(i).getAttribute("systemName") == null) {
@@ -258,8 +252,8 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
     }
 
     public int loadOrder() {
-        return InstanceManager.sectionManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(jmri.SectionManager.class).getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(SectionManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SectionManagerXml.class.getName());
 }

@@ -1,18 +1,11 @@
-// DefaultMemory.java
 package jmri.implementation;
 
 /**
  * Concrete implementation of the Reporter interface for the Internal system.
  *
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version	$Revision$
  */
 public class DefaultMemory extends AbstractMemory {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8101816552143434940L;
 
     public DefaultMemory(String systemName) {
         super(systemName);
@@ -46,5 +39,3 @@ public class DefaultMemory extends AbstractMemory {
         setValue("" + s);
     }
 }
-
-/* @(#)DefaultMemory.java */

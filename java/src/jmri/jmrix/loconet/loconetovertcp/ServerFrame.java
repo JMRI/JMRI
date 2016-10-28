@@ -1,4 +1,3 @@
-// ServerFrame.java
 package jmri.jmrix.loconet.loconetovertcp;
 
 import java.awt.event.ActionEvent;
@@ -12,8 +11,6 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying and programming a LocoNet clock monitor.
@@ -24,16 +21,10 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2004
+ * @author Bob Jacobsen Copyright (C) 2003, 2004
  * @author Alex Shepherd Copyright (C) 2006
- * @version	$Revision$
  */
 public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3729652398213286613L;
 
     private ServerFrame() {
         super("LocoNetOverTcp Server");
@@ -93,18 +84,16 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
             }
         });
 
-        if (portNumber != null) {
-            portNumber.addChangeListener(new ChangeListener() {
-                public void stateChanged(ChangeEvent e) {
-                    saveButton.setEnabled(true);
-                }
-            });
-        }
+        portNumber.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                saveButton.setEnabled(true);
+            }
+        });
 
         pack();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization")
     public void windowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
@@ -178,6 +167,4 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
     JButton saveButton = new JButton("Save Settings");
 
     static ServerFrame self;
-
-    static Logger log = LoggerFactory.getLogger(ServerFrame.class.getName());
 }

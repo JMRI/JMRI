@@ -1,4 +1,3 @@
-//PowerPane.java
 package jmri.jmrit.powerpanel;
 
 import java.util.List;
@@ -15,15 +14,9 @@ import org.slf4j.LoggerFactory;
  * Pane for power control
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2010
- * @version	$Revision$
  */
 public class PowerPane extends jmri.util.swing.JmriPanel
         implements java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7334101847422291784L;
 
     public String getHelpTarget() {
         return "package.jmri.jmrit.powerpanel.PowerPanelFrame";
@@ -116,6 +109,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
     private boolean mgrOK() {
         if (listening == null) {
             listening = selectMenu.getManager();
+	        log.debug("Manager = {}", listening);
             if (listening == null) {
                 log.warn("No power manager instance found, panel not active");
                 return false;
@@ -170,6 +164,6 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(PowerPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PowerPane.class.getName());
 
 }

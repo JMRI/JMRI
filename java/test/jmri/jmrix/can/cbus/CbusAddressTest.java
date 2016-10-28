@@ -1,4 +1,3 @@
-// CbusAddressTest.java
 package jmri.jmrix.can.cbus;
 
 import jmri.jmrix.can.CanMessage;
@@ -6,14 +5,11 @@ import jmri.jmrix.can.CanReply;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.can.cbus.SensorAddress class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class CbusAddressTest extends TestCase {
 
@@ -251,7 +247,7 @@ public class CbusAddressTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {CbusAddressTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -259,8 +255,6 @@ public class CbusAddressTest extends TestCase {
         TestSuite suite = new TestSuite(CbusAddressTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(CbusAddressTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

@@ -47,7 +47,6 @@ import org.slf4j.LoggerFactory;
  * Frame for Cbus Console
  *
  * @author	Andrew Crosland Copyright (C) 2008
- * @version	$Revision: 17977 $
  */
 public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 
@@ -948,7 +947,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         return new String(linesBuffer[CBUS]);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "separately interlocked")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "separately interlocked")
     PrintStream logStream = null;
 
     // to get a time string
@@ -1091,5 +1090,5 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(CbusConsolePane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusConsolePane.class.getName());
 }

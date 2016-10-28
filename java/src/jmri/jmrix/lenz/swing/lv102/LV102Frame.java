@@ -6,8 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying the LV102 configuration utility
@@ -16,8 +14,7 @@ import org.slf4j.LoggerFactory;
  * is defined in {@link LV102InternalFrame}
  *
  * @author	Paul Bender Copyright (C) 2004,2005
- * @version	$Revision$
- */
+  */
 public class LV102Frame extends jmri.util.JmriJFrame {
 
     //private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lv102.LV102Bundle");
@@ -65,7 +62,5 @@ public class LV102Frame extends jmri.util.JmriJFrame {
         // take apart the JFrame
         super.dispose();
     }
-
-    static Logger log = LoggerFactory.getLogger(LV102Frame.class.getName());
 
 }

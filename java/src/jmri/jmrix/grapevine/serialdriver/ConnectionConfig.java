@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.grapevine.serialdriver;
 
 import java.util.ResourceBundle;
@@ -10,7 +9,6 @@ import jmri.jmrix.grapevine.nodeconfig.NodeConfigAction;
  * Definition of objects to handle configuring a Grapevine layout connection
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007
- * @version	$Revision$
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 

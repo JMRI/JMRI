@@ -26,17 +26,18 @@ import org.slf4j.LoggerFactory;
  * railroad.
  *
  * @author Daniel Boudreau (C) Copyright 2011, 2013, 2014, 2015
- * @version $Revision: 1 $
+ * 
  *
  */
 public class TrainCsvSwitchLists extends TrainCsvCommon {
 
     /**
      * builds a csv file containing the switch list for a location
+     * @param location The Location requesting a switch list.
      *
-     * @param location
      * @return File
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     public File buildSwitchList(Location location) {
 
         // create csv switch list file
@@ -112,7 +113,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                     addLine(fileOut, TN + train.getName());
                     addLine(fileOut, TM + train.getDescription());
 
-                    if (train.isTrainInRoute()) {
+                    if (train.isTrainEnRoute()) {
                         addLine(fileOut, TIR);
                         addLine(fileOut, ETE + expectedArrivalTime);
                     } else {
@@ -140,7 +141,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                         // if it terminate at this location
 
                         addLine(fileOut, VN + stops);
-                        if (train.isTrainInRoute()) {
+                        if (train.isTrainEnRoute()) {
                             addLine(fileOut, ETE + expectedArrivalTime);
                         } else {
                             addLine(fileOut, ETA + expectedArrivalTime);
@@ -258,5 +259,5 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
         return file;
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainCsvSwitchLists.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainCsvSwitchLists.class.getName());
 }

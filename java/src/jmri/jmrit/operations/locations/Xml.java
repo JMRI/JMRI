@@ -4,7 +4,7 @@ package jmri.jmrit.operations.locations;
  * A convenient place to access operations xml element and attribute names.
  *
  * @author Daniel Boudreau Copyright (C) 2012
- * @version $Revision: 22156 $
+ * 
  *
  */
 public class Xml {
@@ -46,26 +46,7 @@ public class Xml {
 
     static final String PHYSICAL_LOCATION = "physicalLocation"; // NOI18N
     static final String SWITCH_LIST_COMMENT = "switchListComment"; // NOI18N
-    static final String SECONDARY = "secondary"; // NOI18N early version of operations called tracks "secondary"
-
-    // SccheduleManager.java
-    static final String SCHEDULES = "schedules"; // NOI18N
-
-    // ScheduleItem.java
-    static final String ITEM = "item"; // NOI18N
-    static final String SEQUENCE_ID = "sequenceId"; // NOI18N
-    static final String RANDOM = "random"; // NOI18N
-    static final String TRAIN_SCHEDULE_ID = "trainScheduleId"; // NOI18N
-    static final String PICKUP_TRAIN_SCHEDULE_ID = "pickupTrainScheduleId"; // NOI18N
-    static final String COUNT = "count"; // NOI18N
-    static final String WAIT = "wait"; // NOI18N
-    static final String TYPE = "type"; // NOI18N
-    static final String ROAD = "road"; // NOI18N
-    static final String LOAD = "load"; // NOI18N
-    static final String SHIP = "ship"; // NOI18N
-    static final String DESTINATION_ID = "destinationId"; // NOI18N
-    static final String DEST_TRACK_ID = "destTrackId"; // NOI18N
-    static final String HITS = "hits"; // NOI18N
+    static final String SECONDARY = "secondary"; // early version of operations called tracks "secondary" // NOI18N
 
     // Track.java
     static final String LOC_TYPE = "locType"; // NOI18N
@@ -107,5 +88,7 @@ public class Xml {
     static final String POOL = "pool"; // NOI18N
     static final String MIN_LENGTH = "minLength"; // NOI18N
     static final String IGNORE_USED_PERCENTAGE = "ignoreUsedPercentage"; // NOI18N
+    static final String HOLD_CARS_CUSTOM = "holdCustomLoads"; // NOI18N
+    static final String ONLY_CARS_WITH_FD = "onlyCarWithFD"; // NOI18N
 
 }

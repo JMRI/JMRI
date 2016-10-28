@@ -176,28 +176,28 @@
     <label>F6 controls output Ditch</label>
     <label xml:lang="it">F6 controlla Uscita Ditch</label>
   </variable>
-  <variable item="Decel 2 Ending Point" CV="125" default="0" tooltip="Sets the Decel 3 end point, range 0(default)-255" comment="Range 0-255">
+  <variable item="Decel 2 Ending Point" CV="125" default="0" tooltip="Sets the Decel 2 end point, range 0(default)-255" comment="Range 0-255">
     <decVal max="255"/>
     <label>Decel 2 Ending Point</label>
     <label xml:lang="it">Decell.2 Punto finale</label>
     <comment xml:lang="it">Valori 0-255</comment>
     <tooltip xml:lang="it">Imposta il punto finale di Decel 2, valori 0(default)-255</tooltip>
   </variable>
-  <variable item="Decel 2 Rate" CV="126" default="0" tooltip="Sets the Decel 3 rate, range 0(default)-255" comment="Range 0-255">
+  <variable item="Decel 2 Rate" CV="126" default="0" tooltip="Sets the Decel 2 rate, range 0(default)-255" comment="Range 0-255">
     <decVal max="255"/>
     <label>Decel 2 Rate</label>
     <label xml:lang="it">Tasso Decell.2</label>
     <comment xml:lang="it">Valori 0-255</comment>
     <tooltip xml:lang="it">Imposta il Tasso di Decel 2, valori 0(default)-255</tooltip>
   </variable>
-  <variable item="Decel 3 Ending Point" CV="127" default="0" tooltip="Sets the Decel 2 End point, range 0(default)-255" comment="Range 0-255">
+  <variable item="Decel 3 Ending Point" CV="127" default="0" tooltip="Sets the Decel 3 End point, range 0(default)-255" comment="Range 0-255">
     <decVal max="255"/>
     <label>Decel 3 Ending Point</label>
     <label xml:lang="it">Punto Finale Decell.3</label>
     <comment xml:lang="it">Valori 0-255</comment>
     <tooltip xml:lang="it">Imposta il Punto finale di Decell.3, valori 0(default)-255</tooltip>
   </variable>
-  <variable item="Decel 3 Rate" CV="128" default="0" tooltip="Sets the Decel 2 rate, range 0(default)-255" comment="Range 0-255">
+  <variable item="Decel 3 Rate" CV="128" default="0" tooltip="Sets the Decel 3 rate, range 0(default)-255" comment="Range 0-255">
     <decVal max="255"/>
     <label>Decel 3 Rate</label>
     <label xml:lang="it">Tasso Decel 3 Rate</label>

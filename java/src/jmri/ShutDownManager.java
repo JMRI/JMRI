@@ -1,5 +1,6 @@
-// ShutDownManager.java
 package jmri;
+
+import javax.annotation.Nonnull;
 
 /**
  * Manage tasks to be completed when the program shuts down normally.
@@ -29,45 +30,59 @@ package jmri;
  * a null manager and skip operations if needed.
  *
  * @author Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  */
 public interface ShutDownManager {
 
     /**
-     * Register a task object for later execution
+     * Register a task object for later execution. If called with an already
+     * registered task, the task is not registered twice.
+     *
+     * @param task the task to execute
+     * @throws NullPointerException if the task is null
      */
-    public void register(ShutDownTask s);
+    public void register(@Nonnull ShutDownTask task);
 
     /**
-     * Deregister a task object.
+     * Deregister a task object. Attempts to deregister a task that is not
+     * registered are silently ignored.
      *
-     * @throws IllegalArgumentException if task object not currently registered
+     * @param task the task not to execute
+     * @throws NullPointerException if the task is null
      */
-    public void deregister(ShutDownTask s);
+    public void deregister(@Nonnull ShutDownTask task);
 
     /**
      * Run the shutdown tasks, and then terminate the program with status 100 if
      * not aborted. Does not return under normal circumstances. Does return
-     * False if the shutdown was aborted by the user, in which case the program
+     * false if the shutdown was aborted by the user, in which case the program
      * should continue to operate.
-     * <b>NOTE</b> If the OS X application->quit menu item is used, this must
-     * return false to abort the shutdown.
+     * <p>
+     * <b>NOTE</b> If the OS X {@literal application->quit} menu item is used,
+     * this must return false to abort the shutdown.
      *
-     * @return boolean which should be False
+     * @return boolean which should be false
      */
-    public Boolean restart();
+    public boolean restart();
 
     /**
      * Run the shutdown tasks, and then terminate the program with status 0 if
      * not aborted. Does not return under normal circumstances. Does return
-     * False if the shutdown was aborted by the user, in which case the program
+     * false if the shutdown was aborted by the user, in which case the program
      * should continue to operate.
-     * <b>NOTE</b> If the OS X application->quit menu item is used, this must
-     * return false to abort the shutdown.
+     * <p>
+     * <b>NOTE</b> If the OS X {@literal application->quit} menu item is used,
+     * this must return false to abort the shutdown.
      *
-     * @return boolean which should be False
+     * @return boolean which should be false
      */
-    public Boolean shutdown();
-}
+    public boolean shutdown();
 
-/* @(#)ShutDownManager.java */
+    /**
+     * Allow components that normally request confirmation to shutdown to
+     * determine if the shutdown is already underway so as not to request
+     * confirmation.
+     *
+     * @return true if shutting down or restarting
+     */
+    public boolean isShuttingDown();
+}

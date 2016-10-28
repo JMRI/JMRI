@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008, 2009
- * @version $Revision$
  */
 public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -50,6 +49,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
                 String sname = iter.next();
                 if (sname == null) {
                     log.error("System name null during store");
+                    break;
                 }
                 log.debug("system name is " + sname);
                 Reporter r = tm.getBySystemName(sname);
@@ -77,15 +77,6 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
     abstract public void setStoreElementClass(Element reporters);
 
     /**
-     * Create a ReporterManager object of the correct class, then register and
-     * fill it.
-     *
-     * @param reporters Top level Element to unpack.
-     * @return true if successful
-     */
-    abstract public boolean load(Element reporters);
-
-    /**
      * Utility method to load the individual Reporter objects. If there's no
      * additional info needed for a specific Reporter type, invoke this with the
      * parent of the set of Reporter elements.
@@ -100,7 +91,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         if (log.isDebugEnabled()) {
             log.debug("Found " + reporterList.size() + " reporters");
         }
-        ReporterManager tm = InstanceManager.reporterManagerInstance();
+        ReporterManager tm = InstanceManager.getDefault(jmri.ReporterManager.class);
 
         for (int i = 0; i < reporterList.size(); i++) {
 
@@ -123,8 +114,8 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
     }
 
     public int loadOrder() {
-        return InstanceManager.reporterManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(jmri.ReporterManager.class).getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractReporterManagerConfigXML.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractReporterManagerConfigXML.class.getName());
 }

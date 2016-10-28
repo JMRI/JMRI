@@ -4,16 +4,13 @@
  * Description:	tests for the jmri.jmrix.nce.EasyDccTurnout class
  *
  * @author	Bob Jacobsen
- * @version
  */
 package jmri.jmrix.easydcc;
 
 import jmri.implementation.AbstractTurnoutTest;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class EasyDccTurnoutTest extends AbstractTurnoutTest {
 
@@ -48,8 +45,8 @@ public class EasyDccTurnoutTest extends AbstractTurnoutTest {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {EasyDccTurnoutTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        String[] testCaseName = {"-noloading", EasyDccTurnoutTest.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -62,7 +59,5 @@ public class EasyDccTurnoutTest extends AbstractTurnoutTest {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(EasyDccTurnoutTest.class.getName());
 
 }

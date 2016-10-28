@@ -1,4 +1,3 @@
-// StatusPanel.java
 package jmri.jmrit.beantable.beanedit;
 
 import java.awt.Component;
@@ -15,6 +14,7 @@ import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.TurnoutOperation;
 import jmri.TurnoutOperationManager;
+import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.util.swing.JmriBeanComboBox;
 
@@ -22,14 +22,8 @@ import jmri.util.swing.JmriBeanComboBox;
  * Provides an edit panel for a block object
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision: 19923 $
  */
 public class TurnoutEditAction extends BeanEditAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3432794348005461234L;
 
     public String helpTarget() {
         return "package.jmri.jmrit.beantable.TurnoutTable";
@@ -93,11 +87,11 @@ public class TurnoutEditAction extends BeanEditAction {
     JmriBeanComboBox sensorFeedBack2Field;
     JComboBox<String> modeBox;
     JComboBox<String> automationBox;
-    String useBlockSpeed = "Use Block Speed";//IN18N
+    String useBlockSpeed = Bundle.getMessage("UseGlobal", "Block Speed");
     TurnoutOperationConfig config;
     BeanItemPanel feedback;
     JPanel turnoutOperation = new JPanel();
-    String userDefinedOperation = null;
+    String userDefinedOperation = null;  // ERROR: Something here should be setting this to a user-selected value!
 
     BeanItemPanel feedback() {
         feedback = new BeanItemPanel();
@@ -144,10 +138,6 @@ public class TurnoutEditAction extends BeanEditAction {
         feedback.addItem(new BeanEditItem(operationsName, Bundle.getMessage("FeedbackNameSet"), Bundle.getMessage("FeedbackNameSetToolTip")));
 
         feedback.setSaveItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2969190372668700931L;
 
             public void actionPerformed(ActionEvent e) {
                 Turnout t = (Turnout) bean;
@@ -201,10 +191,6 @@ public class TurnoutEditAction extends BeanEditAction {
         });
 
         feedback.setResetItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -6958613309056965212L;
 
             public void actionPerformed(ActionEvent e) {
                 Turnout t = (Turnout) bean;
@@ -327,10 +313,6 @@ public class TurnoutEditAction extends BeanEditAction {
         lock.addItem(new BeanEditItem(lockBox, Bundle.getMessage("LockModeDecoder"), Bundle.getMessage("LockModeDecoderToolTip")));
 
         lock.setSaveItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -275341435715029798L;
 
             public void actionPerformed(ActionEvent e) {
                 Turnout t = (Turnout) bean;
@@ -354,10 +336,6 @@ public class TurnoutEditAction extends BeanEditAction {
         });
 
         lock.setResetItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 7063263885175963245L;
 
             public void actionPerformed(ActionEvent e) {
                 Turnout t = (Turnout) bean;
@@ -394,10 +372,10 @@ public class TurnoutEditAction extends BeanEditAction {
 
         speed.addItem(new BeanEditItem(null, null, Bundle.getMessage("SpeedTabToolTip")));
 
-        defaultThrownSpeedText = ("Use Global " + InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed());
-        defaultClosedSpeedText = ("Use Global " + InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed());
+        defaultThrownSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed());
+        defaultClosedSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed());
 
-        useBlockSpeed = "Use Block Speed";
+        useBlockSpeed = Bundle.getMessage("UseGlobal", "Block Speed");
 
         speedListClosed.add(defaultClosedSpeedText);
         speedListThrown.add(defaultThrownSpeedText);
@@ -405,7 +383,7 @@ public class TurnoutEditAction extends BeanEditAction {
         speedListClosed.add(useBlockSpeed);
         speedListThrown.add(useBlockSpeed);
 
-        java.util.Vector<String> _speedMap = jmri.implementation.SignalSpeedMap.getMap().getValidSpeedNames();
+        java.util.Vector<String> _speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames();
         for (int i = 0; i < _speedMap.size(); i++) {
             if (!speedListClosed.contains(_speedMap.get(i))) {
                 speedListClosed.add(_speedMap.get(i));
@@ -425,10 +403,6 @@ public class TurnoutEditAction extends BeanEditAction {
         speed.addItem(new BeanEditItem(thrownSpeedBox, Bundle.getMessage("ThrownSpeed"), Bundle.getMessage("ThrownSpeedToolTip")));
 
         speed.setSaveItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 8189801856564109719L;
 
             public void actionPerformed(ActionEvent e) {
                 Turnout t = (Turnout) bean;
@@ -454,10 +428,6 @@ public class TurnoutEditAction extends BeanEditAction {
         });
 
         speed.setResetItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 3766958497699526365L;
 
             public void actionPerformed(ActionEvent e) {
                 Turnout t = (Turnout) bean;
@@ -465,7 +435,7 @@ public class TurnoutEditAction extends BeanEditAction {
                 String speed = t.getDivergingSpeed();
 
                 speedListThrown.remove(defaultThrownSpeedText);
-                defaultThrownSpeedText = ("Use Global " + InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed());
+                defaultThrownSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed());
                 speedListThrown.add(0, defaultThrownSpeedText);
                 if (!speedListThrown.contains(speed)) {
                     speedListThrown.add(speed);
@@ -476,7 +446,7 @@ public class TurnoutEditAction extends BeanEditAction {
                 speed = t.getStraightSpeed();
 
                 speedListClosed.remove(defaultClosedSpeedText);
-                defaultClosedSpeedText = ("Use Global " + InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed());
+                defaultClosedSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed());
                 speedListClosed.add(0, defaultClosedSpeedText);
                 if (!speedListClosed.contains(speed)) {
                     speedListClosed.add(speed);

@@ -1,4 +1,3 @@
-// DefaultUserMessagePreferences.java
 package jmri.managers;
 
 import java.awt.Dimension;
@@ -20,6 +19,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SortOrder;
+import jmri.ConfigureManager;
 import jmri.ShutDownTask;
 import jmri.UserPreferencesManager;
 import jmri.implementation.QuietShutDownTask;
@@ -35,37 +36,45 @@ import org.slf4j.LoggerFactory;
  * next time"
  *
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
+ * @deprecated Since 4.5.4; use {@link jmri.managers.JmriUserPreferencesManager} instead.
  */
 @net.jcip.annotations.NotThreadSafe  // intended for access from Swing thread only
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
         value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
         justification = "Class is single-threaded, and uses statics extensively")
-
+@Deprecated
 public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements UserPreferencesManager {
 
     private boolean allowSave = true;
 
     // needs to be package or protected level for tests to be able to instantiate
     DefaultUserMessagePreferences() {
+        init();
+    }
+
+    DefaultUserMessagePreferences(boolean doInit) {
+        if (doInit) init();
+    }
+    
+    void init() {
         // register this object to be stored as part of preferences
-        if (jmri.InstanceManager.configureManagerInstance() != null) {
-            jmri.InstanceManager.configureManagerInstance().registerUserPrefs(this);
+        if (jmri.InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            jmri.InstanceManager.getDefault(ConfigureManager.class).registerUserPrefs(this);
         }
-        if (jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class) == null) {
             //We add this to the instanceManager so that other components can access the preferences
             //We need to make sure that this is registered before we do the read
             jmri.InstanceManager.store(this, jmri.UserPreferencesManager.class);
         }
         // register a shutdown task to fore storing of preferences at shutdown
         if (userPreferencesShutDownTask == null) {
-            userPreferencesShutDownTask = new QuietShutDownTask("User Preferences Shutdown") {
+            userPreferencesShutDownTask = new QuietShutDownTask("User Preferences Shutdown") { //NOI18N
                 @Override
-                public boolean doAction() {
+                public boolean execute() {
                     if (getChangeMade()) {
                         log.info("Storing preferences as part of shutdown");
                         if (allowSave) {
-                            jmri.InstanceManager.configureManagerInstance().storeUserPrefs(file);
+                            jmri.InstanceManager.getDefault(ConfigureManager.class).storeUserPrefs(file);
                         } else {
                             log.info("Not allowing save of changes as the user has accessed the preferences and not performed a save");
                         }
@@ -74,20 +83,21 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
                 }
             };
             // need a shut down manager to be present
-            if (jmri.InstanceManager.shutDownManagerInstance() != null) {
-                jmri.InstanceManager.shutDownManagerInstance().register(userPreferencesShutDownTask);
+            if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
+                jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(userPreferencesShutDownTask);
             } else {
                 log.warn("Won't protect preferences at shutdown without registered ShutDownManager");
             }
         }
 
-        preferenceItemDetails(getClassName(), "reminder", "Hide Reminder Location Message");
-        classPreferenceList.get(getClassName()).setDescription("User Preferences");
+        preferenceItemDetails(getClassName(), "reminder", Bundle.getMessage("HideReminderLocationMessage"));
+        //I18N in ManagersBundle.properties (this is a checkbox on prefs tab Messages|Misc items)
+        classPreferenceList.get(getClassName()).setDescription(Bundle.getMessage("UserPreferences"));
+        //I18N in ManagersBundle.properties (this is the title of prefs tab Messages|Misc items)
         readUserPreferences();
     }
 
-    static class DefaultUserMessagePreferencesHolder {
-
+    private static class DefaultUserMessagePreferencesHolder {
         static DefaultUserMessagePreferences instance = null;
     }
 
@@ -295,7 +305,6 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * class.
      *
      * @param name  A unique identifer for preference.
-     * @param state
      */
     public void setSessionPreferenceState(String name, boolean state) {
         if (state) {
@@ -325,8 +334,8 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     /**
      * Show an info message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
-     * in the future. The classString & item parameters should form a unique
-     * value
+     * in the future. The classString {@literal &} item parameters should form a
+     * unique value
      *
      * @param title    Message Box title
      * @param message  Message to be displayed
@@ -341,8 +350,8 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * Show an info message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
      * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString & item parameters should
-     * form a unique value
+     * suppressed JMRI session only. The classString {@literal &} item
+     * parameters should form a unique value
      *
      * @param title          Message Box title
      * @param message        Message to be displayed
@@ -361,8 +370,8 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * Show an info message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
      * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString & item parameters should
-     * form a unique value
+     * suppressed JMRI session only. The classString {@literal &} item
+     * parameters should form a unique value
      *
      * @param title          Message Box title
      * @param message        Message to be displayed
@@ -381,8 +390,8 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * Show an info message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
      * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString & item parameters should
-     * form a unique value
+     * suppressed JMRI session only. The classString {@literal &} item
+     * parameters should form a unique value
      *
      * @param title          Message Box title
      * @param message        Message to be displayed
@@ -410,12 +419,14 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
             JPanel container = new JPanel();
             container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
             container.add(new JLabel(message));
-            final JCheckBox rememberSession = new JCheckBox("Skip message for this session only?");
+            final JCheckBox rememberSession = new JCheckBox(Bundle.getMessage("SkipMessageSession"));
+            //I18N in ManagersBundle.properties
             if (sessionOnly) {
                 rememberSession.setFont(rememberSession.getFont().deriveFont(10f));
                 container.add(rememberSession);
             }
-            final JCheckBox remember = new JCheckBox("Skip message in future?");
+            final JCheckBox remember = new JCheckBox(Bundle.getMessage("SkipMessageFuture"));
+            //I18N in ManagersBundle.properties
             if (alwaysRemember) {
                 remember.setFont(remember.getFont().deriveFont(10f));
                 container.add(remember);
@@ -602,7 +613,8 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         if (_loading) {
             return;
         }
-        showInfoMessage("Reminder", "You can re-display this message from 'Edit|Preferences|Message' Menu.", getClassName(), "reminder");
+        showInfoMessage(Bundle.getMessage("Reminder"), Bundle.getMessage("ReminderLine"), getClassName(), "reminder");
+        //I18N in ManagersBundle.properties, //last element is a key, so NOI18N for that
     }
 
     Hashtable<String, WindowLocations> windowDetails = new Hashtable<String, WindowLocations>();
@@ -679,7 +691,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         return list;
     }
 
-    public void setProperty(String strClass, Object key, Object value) {
+    public void setProperty(String strClass, String key, Object value) {
         if (strClass.equals("jmri.util.JmriJFrame")) {
             return;
         }
@@ -689,14 +701,14 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         windowDetails.get(strClass).setProperty(key, value);
     }
 
-    public Object getProperty(String strClass, Object key) {
+    public Object getProperty(String strClass, String key) {
         if (windowDetails.containsKey(strClass)) {
             return windowDetails.get(strClass).getProperty(key);
         }
         return null;
     }
 
-    public java.util.Set<Object> getPropertyKeys(String strClass) {
+    public java.util.Set<String> getPropertyKeys(String strClass) {
         if (windowDetails.containsKey(strClass)) {
             return windowDetails.get(strClass).getPropertyKeys();
         }
@@ -859,7 +871,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
             log.error("class name " + strClass + " is in valid " + ec);
         } catch (java.lang.IllegalAccessException ex) {
             ex.printStackTrace();
-        } catch (Exception e) {
+        } catch (InstantiationException e) {
             log.error("unable to get a class name " + e);
         }
     }
@@ -1056,7 +1068,8 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
 
     Hashtable<String, Hashtable<String, TableColumnPreferences>> tableColumnPrefs = new Hashtable<String, Hashtable<String, TableColumnPreferences>>();
 
-    public void setTableColumnPreferences(String table, String column, int order, int width, int sort, boolean hidden) {
+    @Override
+    public void setTableColumnPreferences(String table, String column, int order, int width, SortOrder sort, boolean hidden) {
         if (!tableColumnPrefs.containsKey(table)) {
             tableColumnPrefs.put(table, new Hashtable<String, TableColumnPreferences>());
         }
@@ -1064,6 +1077,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         columnPrefs.put(column, new TableColumnPreferences(order, width, sort, hidden));
     }
 
+    @Override
     public int getTableColumnOrder(String table, String column) {
         if (tableColumnPrefs.containsKey(table)) {
             Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
@@ -1074,6 +1088,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         return -1;
     }
 
+    @Override
     public int getTableColumnWidth(String table, String column) {
         if (tableColumnPrefs.containsKey(table)) {
             Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
@@ -1084,16 +1099,18 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         return -1;
     }
 
-    public int getTableColumnSort(String table, String column) {
+    @Override
+    public SortOrder getTableColumnSort(String table, String column) {
         if (tableColumnPrefs.containsKey(table)) {
             Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
             if (columnPrefs.containsKey(column)) {
                 return columnPrefs.get(column).getSort();
             }
         }
-        return 0;
+        return SortOrder.UNSORTED;
     }
 
+    @Override
     public boolean getTableColumnHidden(String table, String column) {
         if (tableColumnPrefs.containsKey(table)) {
             Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
@@ -1104,6 +1121,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         return false;
     }
 
+    @Override
     public String getTableColumnAtNum(String table, int i) {
         if (tableColumnPrefs.containsKey(table)) {
             Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
@@ -1118,10 +1136,12 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         return null;
     }
 
+    @Override
     public List<String> getTablesList() {
         return new ArrayList<String>(tableColumnPrefs.keySet());
     }
 
+    @Override
     public List<String> getTablesColumnList(String table) {
         if (tableColumnPrefs.containsKey(table)) {
             Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
@@ -1359,28 +1379,28 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
             saveSize = true;
         }
 
-        void setProperty(Object key, Object value) {
+        void setProperty(String key, Object value) {
             if (parameters == null) {
-                parameters = new HashMap<Object, Object>();
+                parameters = new HashMap<String, Object>();
             }
             parameters.put(key, value);
         }
 
-        Object getProperty(Object key) {
+        Object getProperty(String key) {
             if (parameters == null) {
                 return null;
             }
             return parameters.get(key);
         }
 
-        java.util.Set<Object> getPropertyKeys() {
+        java.util.Set<String> getPropertyKeys() {
             if (parameters == null) {
                 return null;
             }
             return parameters.keySet();
         }
 
-        HashMap<Object, Object> parameters = null;
+        HashMap<String, Object> parameters = null;
 
     }
 
@@ -1388,10 +1408,10 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
 
         int order;
         int width;
-        int sort;
+        SortOrder sort;
         boolean hidden;
 
-        TableColumnPreferences(int order, int width, int sort, boolean hidden) {
+        TableColumnPreferences(int order, int width, SortOrder sort, boolean hidden) {
             this.order = order;
             this.width = width;
             this.sort = sort;
@@ -1406,7 +1426,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
             return width;
         }
 
-        int getSort() {
+        SortOrder getSort() {
             return sort;
         }
 
@@ -1436,7 +1456,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         if (file.exists()) {
             log.debug("start load user pref file: {}", file.getPath());
             try {
-                jmri.InstanceManager.configureManagerInstance().load(file, true);
+                jmri.InstanceManager.getDefault(ConfigureManager.class).load(file, true);
             } catch (jmri.JmriException e) {
                 log.error("Unhandled problem loading configuration: " + e);
             } catch (java.lang.NullPointerException e) {
@@ -1448,5 +1468,5 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
 
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferences.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferences.class.getName());
 }

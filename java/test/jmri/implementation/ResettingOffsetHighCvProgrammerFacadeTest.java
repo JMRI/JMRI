@@ -1,10 +1,9 @@
-// ResettingOffsetHighCvProgrammerFacadeTest.java
 package jmri.implementation;
 
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.progdebugger.ProgDebugger;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -15,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * Test the ResettingOffsetHighCvProgrammerFacade class.
  *
  * @author	Bob Jacobsen Copyright 2013, 2014
- * @version $Revision: 24246 $
+ * 
  */
 public class ResettingOffsetHighCvProgrammerFacadeTest extends TestCase {
 
@@ -119,7 +118,7 @@ public class ResettingOffsetHighCvProgrammerFacadeTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {ResettingOffsetHighCvProgrammerFacadeTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -129,6 +128,6 @@ public class ResettingOffsetHighCvProgrammerFacadeTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(ResettingOffsetHighCvProgrammerFacadeTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ResettingOffsetHighCvProgrammerFacadeTest.class.getName());
 
 }

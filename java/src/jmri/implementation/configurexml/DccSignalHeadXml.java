@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008, 2009
  * @author Petr Koud'a Copyright: Copyright (c) 2007
- * @version $Revision$
  */
 public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -66,16 +65,11 @@ public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBe
         return element;
     }
 
-    /**
-     * Create a LsDecSignalHead
-     *
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // put it together
-        String sys = getSystemName(element);
-        String uname = getUserName(element);
+        String sys = getSystemName(shared);
+        String uname = getUserName(shared);
         DccSignalHead h;
         if (uname == null) {
             h = new DccSignalHead(sys);
@@ -83,15 +77,15 @@ public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBe
             h = new DccSignalHead(sys, uname);
         }
 
-        loadCommon(h, element);
+        loadCommon(h, shared);
 
-        if (element.getChild("useAddressOffSet") != null) {
-            if (element.getChild("useAddressOffSet").getText().equals("yes")) {
+        if (shared.getChild("useAddressOffSet") != null) {
+            if (shared.getChild("useAddressOffSet").getText().equals("yes")) {
                 h.useAddressOffSet(true);
             }
         }
 
-        List<Element> list = element.getChildren("aspect");
+        List<Element> list = shared.getChildren("aspect");
         for (Element e : list) {
             String aspect = e.getAttribute("defines").getValue();
             int number = -1;
@@ -115,7 +109,7 @@ public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBe
             }
         }
 
-        InstanceManager.signalHeadManagerInstance().register(h);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         return true;
     }
 
@@ -123,5 +117,5 @@ public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBe
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(DccSignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DccSignalHeadXml.class.getName());
 }

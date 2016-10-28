@@ -12,10 +12,9 @@
 # script written by Bob Jacobsen
 #
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 
+import jmri
+import java
 
 # set the desired colour and size in the two lines below.
 # Many normal colour names can be used instead of WHITE 

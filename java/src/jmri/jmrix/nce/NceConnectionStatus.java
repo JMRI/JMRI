@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
  *
  * @author Daniel Boudreau (C) 2007, 2010, 2012
- * @version $Revision$
  *
  */
 public class NceConnectionStatus implements NceListener {
@@ -373,7 +372,7 @@ public class NceConnectionStatus implements NceListener {
         nceEpromMarch2007 = b;
     }
 
-    static Logger log = LoggerFactory.getLogger(NceConnectionStatus.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceConnectionStatus.class.getName());
 
 }
 /* @(#)NceConnectionStatus.java */

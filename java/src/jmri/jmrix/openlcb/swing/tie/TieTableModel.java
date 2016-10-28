@@ -13,8 +13,7 @@ import org.slf4j.LoggerFactory;
  * Table Model for access to tie info
  *
  * @author	Bob Jacobsen 2008
- * @version	$Revision$
- * @since 2.3.7
+  * @since 2.3.7
  */
 public class TieTableModel extends AbstractTableModel {
 
@@ -199,7 +198,7 @@ public class TieTableModel extends AbstractTableModel {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TieTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TieTableModel.class.getName());
 
 }
 

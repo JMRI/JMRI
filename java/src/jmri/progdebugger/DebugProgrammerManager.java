@@ -1,4 +1,3 @@
-/* DebugProgrammerManager.java */
 package jmri.progdebugger;
 
 import java.util.Hashtable;
@@ -15,8 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision$
- */
+  */
 public class DebugProgrammerManager extends DefaultProgrammerManager {
 
     public DebugProgrammerManager() {
@@ -69,8 +67,5 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
         return true;
     }
 
-    static Logger log = LoggerFactory.getLogger(DebugProgrammerManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DebugProgrammerManager.class.getName());
 }
-
-
-/* @(#)DefaultProgrammerManager.java */

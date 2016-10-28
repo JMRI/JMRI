@@ -1,4 +1,3 @@
-// NetworkDriverAdapter.java
 package jmri.jmrix.ecos.networkdriver;
 
 import jmri.jmrix.ecos.EcosPortController;
@@ -16,14 +15,13 @@ import org.slf4j.LoggerFactory;
  * controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
- * @version	$Revision$
  */
 public class NetworkDriverAdapter extends EcosPortController implements jmri.jmrix.NetworkPortAdapter {
 
     public NetworkDriverAdapter() {
         super(new jmri.jmrix.ecos.EcosSystemConnectionMemo());
         allowConnectionRecovery = true;
-        manufacturerName = jmri.jmrix.DCCManufacturerList.ESU;
+        manufacturerName = jmri.jmrix.ecos.EcosConnectionTypeList.ESU;
     }
 
     /**
@@ -37,7 +35,6 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
         control.setAdapterMemo(this.getSystemConnectionMemo());
         this.getSystemConnectionMemo().setEcosTrafficController(control);
         this.getSystemConnectionMemo().configureManagers();
-        jmri.jmrix.ecos.ActiveFlag.setActive();
     }
 
     @Override
@@ -45,7 +42,7 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
         return opened;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DE_MIGHT_IGNORE",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
             justification = "We are closing the connection and not worried if it throws an exception as this stage")
     protected void closeConnection() {
         try {
@@ -65,6 +62,6 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
 
 }

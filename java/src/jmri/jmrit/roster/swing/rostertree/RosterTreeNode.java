@@ -10,14 +10,8 @@ import jmri.jmrit.roster.RosterEntry;
  *
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
  */
 public class RosterTreeNode extends DefaultMutableTreeNode {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7965184515372170059L;
 
     public RosterTreeNode() {
         super();
@@ -34,7 +28,7 @@ public class RosterTreeNode extends DefaultMutableTreeNode {
         setUserObject("Roster");
 
         // add every roster entry
-        List<RosterEntry> list = Roster.instance().matchingList(null, null, null, null, null, null, null);
+        List<RosterEntry> list = Roster.getDefault().matchingList(null, null, null, null, null, null, null);
 
         for (RosterEntry r : list) {
             add(new DefaultMutableTreeNode(r.getId()));

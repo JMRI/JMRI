@@ -1,4 +1,3 @@
-// AudioListener.java
 package jmri.jmrit.audio;
 
 import javax.vecmath.Vector3f;
@@ -19,22 +18,20 @@ import jmri.Audio;
  * form, and can be used for any purpose. The "system" name is provided by the
  * system-specific implementations, and provides a unique mapping to the layout
  * control system (e.g. LocoNet, NCE, etc) and address within that system.
- * <P>
- *
+ * <BR>
  * <hr>
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * </P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public interface AudioListener extends Audio {
 
@@ -213,7 +210,7 @@ public interface AudioListener extends Audio {
      * <li>Source
      * </ul>
      *
-     * @param gain
+     * @param gain new gain value - range 0.0f to 1.0f
      */
     public void setGain(float gain);
 
@@ -259,5 +256,3 @@ public interface AudioListener extends Audio {
     public float getMetersPerUnit();
 
 }
-
-/* @(#)AudioListener.java */

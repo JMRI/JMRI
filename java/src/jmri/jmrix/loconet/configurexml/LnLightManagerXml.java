@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  * <P>
  * @author Dave Duchamp Copyright (c) 2006
- * @version $Revision$
  */
 public class LnLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
@@ -28,10 +27,11 @@ public class LnLightManagerXml extends jmri.managers.configurexml.AbstractLightM
         log.error("Invalid method called");
     }
 
-    public boolean load(Element lights) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // load individual lights
-        return loadLights(lights);
+        return loadLights(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(LnLightManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnLightManagerXml.class.getName());
 }

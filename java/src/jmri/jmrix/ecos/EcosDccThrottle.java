@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen Copyright (C) 2001, modified 2009 by Kevin Dickerson
- * @version $Revision$
  */
 public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
@@ -220,7 +219,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         boolean old = this.f6;
         this.f6 = f6;
         if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[6, " + (getF6() ? 6 : 0) + "])");
+            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[6, " + (getF6() ? 1 : 0) + "])");
             tc.sendEcosMessage(m, this);
         }
         if (old != this.f6) {
@@ -233,7 +232,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         boolean old = this.f7;
         this.f7 = f7;
         if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[7, " + (getF7() ? 6 : 0) + "])");
+            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[7, " + (getF7() ? 1 : 0) + "])");
             tc.sendEcosMessage(m, this);
         }
         if (old != this.f7) {
@@ -246,7 +245,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         boolean old = this.f8;
         this.f8 = f8;
         if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[8, " + (getF8() ? 6 : 0) + "])");
+            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[8, " + (getF8() ? 1 : 0) + "])");
             tc.sendEcosMessage(m, this);
         }
         if (old != this.f8) {
@@ -259,7 +258,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         boolean old = this.f9;
         this.f9 = f9;
         if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[9, " + (getF9() ? 6 : 0) + "])");
+            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[9, " + (getF9() ? 1 : 0) + "])");
             tc.sendEcosMessage(m, this);
         }
         if (old != this.f9) {
@@ -285,7 +284,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         boolean old = this.f11;
         this.f11 = f11;
         if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[11, " + (getF11() ? 11 : 0) + "])");
+            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[11, " + (getF11() ? 1 : 0) + "])");
             tc.sendEcosMessage(m, this);
         }
         if (old != this.f11) {
@@ -298,7 +297,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         boolean old = this.f12;
         this.f12 = f12;
         if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[12, " + (getF12() ? 11 : 0) + "])");
+            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[12, " + (getF12() ? 1 : 0) + "])");
             tc.sendEcosMessage(m, this);
         }
         if (old != this.f12) {
@@ -311,7 +310,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         boolean old = this.f13;
         this.f13 = f13;
         if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[13, " + (getF13() ? 11 : 0) + "])");
+            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[13, " + (getF13() ? 1 : 0) + "])");
             tc.sendEcosMessage(m, this);
         }
         if (old != this.f13) {
@@ -324,7 +323,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         boolean old = this.f14;
         this.f14 = f14;
         if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[14, " + (getF14() ? 11 : 0) + "])");
+            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[14, " + (getF14() ? 1 : 0) + "])");
             tc.sendEcosMessage(m, this);
         }
         if (old != this.f14) {
@@ -350,7 +349,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         boolean old = this.f16;
         this.f16 = f16;
         if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[16, " + (getF16() ? 16 : 0) + "])");
+            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[16, " + (getF16() ? 1 : 0) + "])");
             tc.sendEcosMessage(m, this);
         }
         if (old != this.f16) {
@@ -363,7 +362,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         boolean old = this.f17;
         this.f17 = f17;
         if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[17, " + (getF17() ? 16 : 0) + "])");
+            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[17, " + (getF17() ? 1 : 0) + "])");
             tc.sendEcosMessage(m, this);
         }
         if (old != this.f17) {
@@ -376,7 +375,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         boolean old = this.f18;
         this.f18 = f18;
         if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[18, " + (getF18() ? 16 : 0) + "])");
+            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[18, " + (getF18() ? 1 : 0) + "])");
             tc.sendEcosMessage(m, this);
         }
         if (old != this.f18) {
@@ -389,7 +388,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         boolean old = this.f19;
         this.f19 = f19;
         if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[19, " + (getF19() ? 16 : 0) + "])");
+            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[19, " + (getF19() ? 1 : 0) + "])");
             tc.sendEcosMessage(m, this);
         }
         if (old != this.f19) {
@@ -415,7 +414,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         boolean old = this.f21;
         this.f21 = f21;
         if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[21, " + (getF21() ? 21 : 0) + "])");
+            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[21, " + (getF21() ? 1 : 0) + "])");
             tc.sendEcosMessage(m, this);
         }
         if (old != this.f21) {
@@ -428,7 +427,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         boolean old = this.f22;
         this.f22 = f22;
         if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[22, " + (getF22() ? 21 : 0) + "])");
+            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[22, " + (getF22() ? 1 : 0) + "])");
             tc.sendEcosMessage(m, this);
         }
         if (old != this.f22) {
@@ -441,7 +440,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         boolean old = this.f23;
         this.f23 = f23;
         if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[23, " + (getF23() ? 21 : 0) + "])");
+            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[23, " + (getF23() ? 1 : 0) + "])");
             tc.sendEcosMessage(m, this);
         }
         if (old != this.f23) {
@@ -454,7 +453,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         boolean old = this.f24;
         this.f24 = f24;
         if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[24, " + (getF24() ? 21 : 0) + "])");
+            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[24, " + (getF24() ? 1 : 0) + "])");
             tc.sendEcosMessage(m, this);
         }
         if (old != this.f24) {
@@ -480,7 +479,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         boolean old = this.f26;
         this.f26 = f26;
         if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[26, " + (getF26() ? 26 : 0) + "])");
+            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[26, " + (getF26() ? 1 : 0) + "])");
             tc.sendEcosMessage(m, this);
         }
         if (old != this.f26) {
@@ -493,7 +492,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         boolean old = this.f27;
         this.f27 = f27;
         if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[27, " + (getF27() ? 26 : 0) + "])");
+            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[27, " + (getF27() ? 1 : 0) + "])");
             tc.sendEcosMessage(m, this);
         }
         if (old != this.f27) {
@@ -506,7 +505,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         boolean old = this.f28;
         this.f28 = f28;
         if (_haveControl) {
-            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[28, " + (getF28() ? 26 : 0) + "])");
+            EcosMessage m = new EcosMessage("set(" + this.objectNumber + ", func[28, " + (getF28() ? 1 : 0) + "])");
             tc.sendEcosMessage(m, this);
         }
         if (old != this.f28) {
@@ -515,14 +514,14 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
     }
 
     /**
-     * Set the speed & direction.
+     * Set the speed {@literal &} direction.
      * <P>
      * This intentionally skips the emergency stop value of 1.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     //The values here might need a bit of re-working
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     public void setSpeedSetting(float speed) {
         if (!_haveControl) {
             return;
@@ -587,7 +586,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         finishRecord();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     public void reply(EcosReply m) {
         int resultCode = m.getResultCode();
         if (resultCode == 0) {
@@ -627,7 +626,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
                     if (line.contains("speed") && !line.contains("speedstep")) {
                         speedMessageSent--;
                         if (speedMessageSent <= 0) {
-                            Float newSpeed = new Float(floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed"))));
+                            Float newSpeed = Float.valueOf(floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed"))));
                             super.setSpeedSetting(newSpeed);
                         }
                     } else if (line.contains("dir")) {
@@ -643,7 +642,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
                     if (m.toString().contains("speed") && !m.toString().contains("speedstep")) {
                         speedMessageSent--;
                         if (speedMessageSent <= 0) {
-                            Float newSpeed = new Float(floatSpeed(Integer.parseInt(EcosReply.getContentDetails(m.toString(), "speed"))));
+                            Float newSpeed = Float.valueOf(floatSpeed(Integer.parseInt(EcosReply.getContentDetails(m.toString(), "speed"))));
                             super.setSpeedSetting(newSpeed);
                         }
                     } else if (m.toString().contains("dir")) {
@@ -662,7 +661,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
                     if (speedMessageSent > 0 && m.isUnsolicited() && line.contains("speed")) {
                         //We want to ignore these messages.
                     } else if (speedMessageSent <= 0 && line.contains("speed") && !line.contains("speedstep")) {
-                        Float newSpeed = new Float(floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed"))));
+                        Float newSpeed = Float.valueOf(floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed"))));
                         super.setSpeedSetting(newSpeed);
                     } else if (line.contains("dir")) {
                         boolean newDirection = false;
@@ -679,10 +678,10 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
                         } else if (pro.equals("DCC14")) {
                             setSpeedStepMode(SpeedStepMode14);
                         }
-                    } else if (line.contains("func")) {
+                    } else if (line.contains("func[")) {
                         String funcStr = EcosReply.getContentDetails(line, "func");
                         int function = Integer.parseInt(funcStr.substring(0, funcStr.indexOf(",")));
-                        int functionValue = Integer.parseInt(funcStr.substring((funcStr.indexOf(", ") + 2), funcStr.length()));
+                        int functionValue = Integer.parseInt(funcStr.substring((funcStr.indexOf(",") + 1), funcStr.length()));
                         boolean functionresult = false;
                         if (functionValue == 1) {
                             functionresult = true;
@@ -1023,6 +1022,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(EcosDccThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosDccThrottle.class.getName());
 
 }

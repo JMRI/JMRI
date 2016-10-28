@@ -10,7 +10,6 @@ import jmri.jmrit.logix.OBlock;
  * <P>
  *
  * @author Pete Cressman Copyright (c) 2010
- * @version $Revision$
  */
 public interface IndicatorTrack extends Positionable {
 

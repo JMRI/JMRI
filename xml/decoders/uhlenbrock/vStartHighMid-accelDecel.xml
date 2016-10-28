@@ -79,7 +79,6 @@
     <label>Vmid</label>
     <label xml:lang="it">Volt Intermedi</label>
     <label xml:lang="fr">Vmoy</label>
-    <label xml:lang="it">Vmid</label>
     <label xml:lang="de">Mittengeschwindigkeit</label>
     <tooltip>Speed setting between 1 and 63, must be smaller than Vhigh and greater than Vstart</tooltip>
     <tooltip xml:lang="fr">Valeur de vitesse entre 1 et 63, plus petite que Vmax et plus grande que V démarr.</tooltip>

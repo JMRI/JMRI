@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <variable CV="112" default="18432" item="EMF Static Config" tooltip="BEMF proportional gain">
+	<splitVal highCV="113"/>
+	<label>BEMF Kp</label>
+  </variable>
+  <variable CV="114" default="2048" item="EMF Dynamic Config" tooltip="BEMF integral gain">
+	<splitVal highCV="115"/>
+	<label>BEMF Ki</label>
+  </variable>
+  <variable CV="118" item="EMF Option 1" default="60">
+	<decVal/>
+	<label>KpSlow</label>
+  </variable>
+  <variable item="Analog Startup Voltage" CV="131" default="78">
+	<decVal/>
+	<label>DC Sound Unit Startup Voltage</label>
+  </variable>
+  <variable item="Analog Shutdown Voltage" CV="132" default="62">
+	<decVal/>
+	<label>DC Sound Unit Shutdown</label>
+  </variable>
+  <variable CV="135" default="128" item="Sound Setting 4">
+	<decVal/>
+	<label>Whistle Volume</label>
+  </variable>
+  <variable CV="137" default="128" item="Sound Setting 6">
+	<decVal/>
+	<label>Steam Volume</label>
+  </variable>
+  <variable CV="138" default="128" item="Sound Setting 7">
+	<decVal/>
+	<label>Whistle/Horn2 Volume</label>
+  </variable>
+  <variable CV="143" default="128" item="Sound Setting 12">
+	<decVal/>
+	<label>Air Pump Volume</label>
+  </variable>
+  <variable CV="144" default="128" item="Sound Setting 13">
+	<decVal/>
+	<label>Blow Down Volume</label>
+  </variable>
+  <variable CV="145" default="128" item="Sound Setting 14">
+	<decVal/>
+	<label>Steam Cock Volume</label>
+  </variable>
+  <variable CV="148" default="128" item="Sound Setting 17">
+	<decVal/>
+	<label>Pop Off Valve Volume</label>
+  </variable>
+  <variable CV="149" default="128" item="Sound Setting 18">
+	<decVal/>
+	<label>Blower Volume</label>
+  </variable>
+  <variable CV="150" default="128" item="Sound Setting 19">
+	<decVal/>
+	<label>Dynamo Volume</label>
+  </variable>
+  <variable CV="152" default="128" item="Sound Setting 21">
+	<decVal/>
+	<label>Shovel/Auger Volume</label>
+  </variable>
+  <variable CV="153" default="128" item="Sound Setting 22">
+	<decVal/>
+	<label>Water Fill Volume</label>
+  </variable>
+  <variable CV="154" default="100" item="Sound Setting 23">
+	<decVal/>
+	<label>Injector Volume</label>
+  </variable>
+  <variable CV="155" default="128" item="Sound Setting 24">
+	<decVal/>
+	<label>Chuff/Steam Cock Chuffs Volume</label>
+  </variable>
+  <variable CV="156" default="128" item="Sound Setting 25">
+	<decVal/>
+	<label>Station/Yard Volume</label>
+  </variable>
+  <variable CV="157" default="128" item="Sound Setting 26">
+	<decVal/>
+	<label>Maintenance/Radio Chatter Volume</label>
+  </variable>
+  <variable CV="158" default="128" item="Sound Setting 27">
+	<decVal/>
+	<label>City/Farm/Industrial/Lumber Volume</label>
+  </variable>
+  <variable item="Motor Load Chuff Power Filter" CV="189" default="12">
+	<decVal/>
+	<label>Motor Load Chuff Power Filter</label>
+  </variable>
+  <variable item="Analog Brake Set Voltage" CV="191" default="76">
+	<decVal max="255"/>
+	<label>Analog Brake Set Voltage</label>
+  </variable>
+  <variable item="Analog Brake Release Voltage" CV="192" default="85">
+	<decVal max="255"/>
+	<label>Analog Brake Release Voltage</label>
+  </variable>
+  <variable CV="193" default="105" item="Sound Setting 28">
+	<decVal max="255"/>
+	<label>Articulated Chuff Type</label>
+  </variable>
+  <variable CV="194" default="17" item="Sound Setting 29">
+	<decVal max="25"/>
+	<label>Articulated Chuff Offset</label>
+  </variable>
+  <variable CV="195" default="2" item="Sound Setting 30">
+	<decVal max="255"/>
+	<label>Articulated Chuff Timer</label>
+  </variable>
+  <variable CV="196" default="2" item="Sound Setting 31">
+	<decVal max="255"/>
+	<label>Steam Cock Chuffs Event Count </label>
+  </variable>
+  <variable CV="197" default="2" item="Sound Setting 32">
+	<decVal max="255"/>
+	<label>Rod Knock Chuffs Event Count</label>
+  </variable>
+  <variable CV="198" default="90" item="Sound Setting 33">
+	<decVal max="255"/>
+	<label>Rod Knock Volume</label>
+  </variable>
+  <variable CV="199" default="200" item="Sound Setting 34">
+	<decVal max="255"/>
+	<label>Chuff Magnitude Increase Volume</label>
+  </variable>
+  <variable CV="200" default="0" item="Sound Setting 37">
+	<decVal max="255"/>
+	<label>DCC Throttle Magnitude Increase</label>
+  </variable>
+  <variable CV="201" default="0" item="Sound Setting 38">
+	<decVal max="255"/>
+	<label>DCC Throttle Magnitude Decrease</label>
+  </variable>
+  <variable item="DC Track Change Magnitude Increase" CV="202" default="20">
+	<decVal max="255"/>
+	<label>DC Track Change Magnitude Increase</label>
+  </variable>
+  <variable item="DC Track Change Magnitude Decrease" CV="203" default="20">
+	<decVal max="255"/>
+	<label>DC Track Change Magnitude Decrease</label>
+  </variable>
+  <variable CV="204" default="32" item="Sound Setting 35">
+	<decVal max="255"/>
+	<label>F5 Chuff Magnitude Change Increment</label>
+  </variable>
+  <variable CV="205" default="32" item="Sound Setting 36">
+	<decVal max="255"/>
+	<label>F6 Chuff Magnitude Change Increment</label>
+  </variable>
+  <variable item="DC Chuff Motor Power Scalar" CV="206" default="200">
+	<decVal max="255"/>
+	<label>DC Chuff Motor Power Scalar</label>
+  </variable>
+  <variable item="N Gauge Rev Level Motor Power Scalar" CV="207" default="46">
+	<decVal max="255"/>
+	<label>N Gauge Rev Level Motor Power Scalar</label>
+  </variable>
+  <variable CV="211" default="90" item="Sound Setting 39">
+	<decVal max="128"/>
+	<label>Power Chuff Threshold</label>
+  </variable>
+  <variable item="Recorder Repeats" CV="238" mask="XXXXVVVV" default="1">
+	<decVal max="15"/>
+	<label>Recorder Repeats</label>
+  </variable>
+  <variable item="Broadcast Stop Packet Count" CV="244" default="0">
+	<decVal/>
+	<label>Broadcast Stop Packet Count</label>
+  </variable>
+  <variable item="GSC2 bit 6" CV="246" mask="XVXXXXXX" default="0">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+	<label>Chuff Sensor</label>
+  </variable>
+  <variable item="Motor Startup Delay" CV="248" default="20">
+	<decVal max="255"/>
+	<label>Motor Startup Delay</label>
+  </variable>
+</variables>

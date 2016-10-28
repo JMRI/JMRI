@@ -1,4 +1,3 @@
-// PositionableJComponent.java
 package jmri.jmrit.display;
 
 //import java.awt.event.MouseListener;
@@ -12,11 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p>
- * </p>
  *
  * @author Howard G. Penny copyright (C) 2005
- * @version $Revision$
  */
 public class PositionableJComponent extends JComponent implements Positionable {
 
@@ -25,7 +21,6 @@ public class PositionableJComponent extends JComponent implements Positionable {
      */
     private static final long serialVersionUID = -4906476926163826709L;
     protected Editor _editor = null;
-    protected boolean debug = false;
 
     private ToolTip _tooltip;
     private boolean _showTooltip = true;
@@ -43,15 +38,15 @@ public class PositionableJComponent extends JComponent implements Positionable {
     public PositionableJComponent(Editor editor) {
         _editor = editor;
         _scale = 1.0;
-        debug = log.isDebugEnabled();
     }
 
+    @Override
     public Positionable deepClone() {
         PositionableJComponent pos = new PositionableJComponent(_editor);
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable pos) {
+    protected Positionable finishClone(PositionableJComponent pos) {
         pos.setLocation(getX(), getY());
         pos.setDisplayLevel(getDisplayLevel());
         pos.setControlling(isControlling());
@@ -173,10 +168,6 @@ public class PositionableJComponent extends JComponent implements Positionable {
 
     public int getDegrees() {
         return 0;
-    }
-
-    public boolean getSaveOpaque() {
-        return isOpaque();
     }
 
     public String getNameString() {
@@ -306,5 +297,5 @@ public class PositionableJComponent extends JComponent implements Positionable {
         return null;
     }
 
-    static Logger log = LoggerFactory.getLogger(PositionableJComponent.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableJComponent.class.getName());
 }

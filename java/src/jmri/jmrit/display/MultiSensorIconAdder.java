@@ -111,7 +111,6 @@ public class MultiSensorIconAdder extends IconAdder {
     /**
      * Only called from MultiSensorIcon popup
      *
-     * @param icons
      */
     void setMultiIcon(List<MultiSensorIcon.Entry> icons) {
         for (int i = 0; i < icons.size(); i++) {
@@ -130,7 +129,6 @@ public class MultiSensorIconAdder extends IconAdder {
      * Override. First look for a table selection to set the sensor. If not,
      * then look to change the icon image (super).
      */
-    @SuppressWarnings("null")
     protected void doIconPanel() {
         if (log.isDebugEnabled()) {
             log.debug("doIconPanel: Sizes: _iconMap= " + _iconMap.size()
@@ -181,7 +179,7 @@ public class MultiSensorIconAdder extends IconAdder {
             k.setVisible(false);
             p3.add(k);
             JPanel p4 = new JPanel();
-            p4.add(new JLabel(Bundle.getMessage("Sensor")));
+            p4.add(new JLabel(Bundle.getMessage("BeanNameSensor")));
             p3.add(p4);
             p4 = new JPanel();
             NamedBeanHandle<Sensor> sensor = _sensorMap.get(key);
@@ -528,5 +526,5 @@ public class MultiSensorIconAdder extends IconAdder {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(MultiSensorIconAdder.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MultiSensorIconAdder.class.getName());
 }

@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * connection
  *
  * @author Paul Bender Copyright (C) 2010-2013
- * @version $Revision$
  */
 public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
 
@@ -55,17 +54,21 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
         }
         String turnoutName = memo.getSystemPrefix()
                 + "T" + address;
-        // busy loop, wait for turnout to settle before continuing.
-        while (InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getKnownState() != InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getCommandedState()) {
-        }
-        int Status = InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getKnownState();
-        if (Status == Turnout.THROWN) {
-            TimeStampedOutput.writeTimestamp(output, "100 INFO " + bus + " GA " + address + " 1 0\n\r");
-        } else if (Status == Turnout.CLOSED) {
-            TimeStampedOutput.writeTimestamp(output, "100 INFO " + bus + " GA " + address + " 0 0\n\r");
-        } else {
-            //  unknown state
-            TimeStampedOutput.writeTimestamp(output, "411 ERROR unknown value\n\r");
+        try {
+            // busy loop, wait for turnout to settle before continuing.
+            while (InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getKnownState() != InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getCommandedState()) {
+            }
+            int Status = InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getKnownState();
+            if (Status == Turnout.THROWN) {
+                TimeStampedOutput.writeTimestamp(output, "100 INFO " + bus + " GA " + address + " 1 0\n\r");
+            } else if (Status == Turnout.CLOSED) {
+                TimeStampedOutput.writeTimestamp(output, "100 INFO " + bus + " GA " + address + " 0 0\n\r");
+            } else {
+                //  unknown state
+                TimeStampedOutput.writeTimestamp(output, "411 ERROR unknown value\n\r");
+            }
+        } catch (IllegalArgumentException ex) {
+            log.warn("Failed to provide Turnout \"{}\" in sendStatus", turnoutName);
         }
     }
 
@@ -164,5 +167,5 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
             }
         }
     }
-    static Logger log = LoggerFactory.getLogger(JmriSRCPTurnoutServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriSRCPTurnoutServer.class.getName());
 }

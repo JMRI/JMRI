@@ -1,4 +1,3 @@
-// TrainsTableModel.java
 package jmri.jmrit.operations.trains;
 
 import java.awt.Color;
@@ -15,13 +14,12 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumnModel;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.RouteEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.util.com.sun.TableSorter;
+import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -31,20 +29,15 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2012
- * @version $Revision$
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4245878111843075492L;
 
     TrainManager trainManager = TrainManager.instance(); // There is only one manager
 
     // Defines the columns
     private static final int IDCOLUMN = 0;
-    private static final int BUILDBOXCOLUMN = IDCOLUMN + 1;
+    private static final int TIME_COLUMN = IDCOLUMN + 1;
+    private static final int BUILDBOXCOLUMN = TIME_COLUMN + 1;
     private static final int BUILDCOLUMN = BUILDBOXCOLUMN + 1;
     private static final int NAMECOLUMN = BUILDCOLUMN + 1;
     private static final int DESCRIPTIONCOLUMN = NAMECOLUMN + 1;
@@ -71,12 +64,11 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     private int _sort = SORTBYTIME;
 
     public void setSort(int sort) {
-        synchronized (this) {
-            _sort = sort;
-        }
+        _sort = sort;
         updateList();
-        fireTableStructureChanged();
-        initTable();
+        XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(IDCOLUMN), sort == SORTBYID);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(TIME_COLUMN), sort == SORTBYTIME);
     }
 
     private boolean _showAll = true;
@@ -92,7 +84,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         return _showAll;
     }
 
-    private synchronized void updateList() {
+    private void updateList() {
         // first, remove listeners from the individual objects
         removePropertyChangeTrains();
 
@@ -126,10 +118,17 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         table.setDefaultRenderer(Object.class, new MyTableCellRenderer());
         initTable();
     }
+    
+    // Train frame table column widths (13), starts with id column and ends with edit
+    private int[] _tableColumnWidths = {50, 50, 50, 72, 100, 140, 120, 120, 120, 120, 120, 90, 70};
 
     void initTable() {
+        // Use XTableColumnModel so we can control which columns are visible
+        XTableColumnModel tcm = new XTableColumnModel();
+        _table.setColumnModel(tcm);
+        _table.createDefaultColumnsFromModel();
+        
         // Install the button handlers
-        TableColumnModel tcm = _table.getColumnModel();
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
         tcm.getColumn(EDITCOLUMN).setCellRenderer(buttonRenderer);
@@ -141,21 +140,21 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         _table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
 
         // set column preferred widths
-        if (!_frame.loadTableDetails(_table)) {
-            // load defaults, xml file data not found
-            int[] tableColumnWidths = trainManager.getTrainsFrameTableColumnWidths();
-            for (int i = 0; i < tcm.getColumnCount(); i++) {
-                tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);
-            }
+        for (int i = 0; i < tcm.getColumnCount(); i++) {
+            tcm.getColumn(i).setPreferredWidth(_tableColumnWidths[i]);
         }
-        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        _frame.loadTableDetails(_table);
+
+        // turn off column
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(IDCOLUMN), _sort == SORTBYID);
     }
 
-    public synchronized int getRowCount() {
+    @Override
+    public int getRowCount() {
         return sysList.size();
     }
 
+    @Override
     public int getColumnCount() {
         return HIGHESTCOLUMN;
     }
@@ -172,17 +171,15 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     public static final String TERMINATESCOLUMNNAME = Bundle.getMessage("Terminates");
     public static final String STATUSCOLUMNNAME = Bundle.getMessage("Status");
     public static final String ACTIONCOLUMNNAME = Bundle.getMessage("Action");
-    public static final String EDITCOLUMNNAME = Bundle.getMessage("Edit");
+    public static final String EDITCOLUMNNAME = Bundle.getMessage("ButtonEdit");
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case IDCOLUMN:
-                synchronized (this) {
-                    if (_sort == SORTBYID) {
-                        return IDCOLUMNNAME;
-                    }
-                    return TIMECOLUMNNAME;
-                }
+                return IDCOLUMNNAME;
+            case TIME_COLUMN:
+                return TIMECOLUMNNAME;
             case BUILDBOXCOLUMN:
                 return BUILDBOXCOLUMNNAME;
             case BUILDCOLUMN:
@@ -210,30 +207,23 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
-            case IDCOLUMN:
-                return String.class;
             case BUILDBOXCOLUMN:
                 return Boolean.class;
-            case BUILDCOLUMN:
-                return JButton.class;
+            case IDCOLUMN:
+            case TIME_COLUMN:
             case NAMECOLUMN:
-                return String.class;
             case DESCRIPTIONCOLUMN:
-                return String.class;
             case ROUTECOLUMN:
-                return String.class;
             case DEPARTSCOLUMN:
-                return String.class;
             case CURRENTCOLUMN:
-                return String.class;
             case TERMINATESCOLUMN:
-                return String.class;
             case STATUSCOLUMN:
                 return String.class;
+            case BUILDCOLUMN:
             case ACTIONCOLUMN:
-                return JButton.class;
             case EDITCOLUMN:
                 return JButton.class;
             default:
@@ -241,6 +231,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case BUILDCOLUMN:
@@ -254,8 +245,9 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
-    public synchronized Object getValueAt(int row, int col) {
-        if (row >= sysList.size()) {
+    @Override
+    public Object getValueAt(int row, int col) {
+        if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
         Train train = sysList.get(row);
@@ -263,12 +255,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             return "ERROR train unknown " + row; // NOI18N
         }
         switch (col) {
-            case IDCOLUMN: {
-                if (_sort == SORTBYID) {
-                    return train.getId();
-                }
+            case IDCOLUMN:
+                return train.getId();
+            case TIME_COLUMN:
                 return train.getDepartureTime();
-            }
             case NAMECOLUMN:
                 return train.getIconName();
             case DESCRIPTIONCOLUMN:
@@ -316,16 +306,21 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 if (train.getBuildFailed()) {
                     return Bundle.getMessage("Report");
                 }
+                if (train.getCurrentLocation() == train.getTrainTerminatesRouteLocation() &&
+                        trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
+                    return Bundle.getMessage("Terminate");
+                }
                 return trainManager.getTrainsFrameTrainAction();
             }
             case EDITCOLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit");
             default:
                 return "unknown " + col; // NOI18N
         }
     }
 
-    public synchronized void setValueAt(Object value, int row, int col) {
+    @Override
+    public void setValueAt(Object value, int row, int col) {
         switch (col) {
             case EDITCOLUMN:
                 editTrain(row);
@@ -351,18 +346,19 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     public Color getRowColor(int row) {
         Train train = sysList.get(row);
-//		log.debug("Row: {} train: {} color: {}", row, train.getName(), train.getTableRowColorName());
+        //		log.debug("Row: {} train: {} color: {}", row, train.getName(), train.getTableRowColorName());
         return train.getTableRowColor();
     }
 
     TrainEditFrame tef = null;
 
-    private synchronized void editTrain(int row) {
+    private void editTrain(int row) {
         if (tef != null) {
             tef.dispose();
         }
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 Train train = sysList.get(row);
                 log.debug("Edit train ({})", train.getName());
@@ -373,12 +369,13 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     RouteEditFrame ref = null;
 
-    private synchronized void editRoute(int row) {
+    private void editRoute(int row) {
         if (ref != null) {
             ref.dispose();
         }
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 ref = new RouteEditFrame();
                 Train train = sysList.get(row);
@@ -390,7 +387,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     Thread build;
 
-    private synchronized void buildTrain(int row) {
+    private void buildTrain(int row) {
         final Train train = sysList.get(row);
         if (!train.isBuilt()) {
             // only one train build at a time
@@ -399,6 +396,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             }
             // use a thread to allow table updates during build
             build = new Thread(new Runnable() {
+                @Override
                 public void run() {
                     train.build();
                 }
@@ -421,7 +419,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     // one of four buttons: Report, Move, Conductor or Terminate
-    private synchronized void actionTrain(int row) {
+    private void actionTrain(int row) {
         // no actions while a train is being built
         if (build != null && build.isAlive()) {
             return;
@@ -431,9 +429,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         if (train.getBuildFailed()) {
             train.printBuildReport();
         } else if (trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.RESET)) {
-            if (log.isDebugEnabled()) {
-                log.debug("Reset train (" + train.getName() + ")");
-            }
+            log.debug("Reset train ({})", train.getName());
             // check to see if departure track was reused
             if (checkDepartureTrack(train)) {
                 log.debug("Train is departing staging that already has inbound cars");
@@ -450,43 +446,43 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                     new Object[]{train.getName()}), Bundle.getMessage("CanNotPerformAction"),
                     JOptionPane.INFORMATION_MESSAGE);
         } else if (train.isBuilt() && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
-            if (log.isDebugEnabled()) {
-                log.debug("Move train (" + train.getName() + ")");
-            }
+            log.debug("Move train ({})", train.getName());
             train.move();
         } else if (train.isBuilt() && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.TERMINATE)) {
-            if (log.isDebugEnabled()) {
-                log.debug("Terminate train (" + train.getName() + ")");
-            }
+            log.debug("Terminate train ({})", train.getName());
             int status = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("TerminateTrain"),
                     new Object[]{train.getName(), train.getDescription()}), MessageFormat.format(Bundle
-                            .getMessage("DoYouWantToTermiate"), new Object[]{train.getName()}), JOptionPane.YES_NO_OPTION);
+                            .getMessage("DoYouWantToTermiate"), new Object[]{train.getName()}),
+                    JOptionPane.YES_NO_OPTION);
             if (status == JOptionPane.YES_OPTION) {
                 train.terminate();
             }
         } else if (train.isBuilt() && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.CONDUCTOR)) {
-            if (log.isDebugEnabled()) {
-                log.debug("Enable conductor for train (" + train.getName() + ")");
-            }
+            log.debug("Enable conductor for train (" + train.getName() + ")");
             launchConductor(train);
         }
     }
 
     /*
-     * Check to see if the departure track in staging has been taken by another train. return true if track has been
-     * allocated to another train.
+     * Check to see if the departure track in staging has been taken by another
+     * train. return true if track has been allocated to another train.
      */
     private boolean checkDepartureTrack(Train train) {
-        return (Setup.isStagingTrackImmediatelyAvail() && !train.isTrainInRoute() && train.getDepartureTrack() != null
-                && train.getDepartureTrack().getTrackType().equals(Track.STAGING)
-                && train.getDepartureTrack() != train.getTerminationTrack() && train.getDepartureTrack().getDropRS() > 0);
+        return (Setup.isStagingTrackImmediatelyAvail() &&
+                !train.isTrainEnRoute() &&
+                train.getDepartureTrack() != null &&
+                train.getDepartureTrack().getTrackType().equals(Track.STAGING) &&
+                train.getDepartureTrack() != train.getTerminationTrack() &&
+                train.getDepartureTrack().getDropRS() > 0);
     }
 
-    private static Hashtable<String, TrainConductorFrame> _trainConductorHashTable = new Hashtable<String, TrainConductorFrame>();
+    private static Hashtable<String, TrainConductorFrame> _trainConductorHashTable =
+            new Hashtable<String, TrainConductorFrame>();
 
     private void launchConductor(Train train) {
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 TrainConductorFrame f = _trainConductorHashTable.get(train.getId());
                 // create a copy train frame
@@ -501,55 +497,54 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         });
     }
 
+    @Override
+ // removed synchronized from propertyChange, it caused a thread lock, see _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change {} old: {} new: {}",
                     e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
         }
-        if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
-            _frame.setModifiedFlag(true);
-        }
-        if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(TrainManager.PRINTPREVIEW_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(TrainManager.OPEN_FILE_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(TrainManager.RUN_FILE_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Setup.MANIFEST_CSV_PROPERTY_CHANGE)
-                || e.getPropertyName().equals(TrainManager.TRAIN_ACTION_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Train.DEPARTURETIME_CHANGED_PROPERTY)
-                || (e.getPropertyName().equals(Train.BUILD_CHANGED_PROPERTY) && !isShowAll())) {
+        if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(TrainManager.PRINTPREVIEW_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(TrainManager.OPEN_FILE_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(TrainManager.RUN_FILE_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Setup.MANIFEST_CSV_PROPERTY_CHANGE) ||
+                e.getPropertyName().equals(TrainManager.TRAIN_ACTION_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Train.DEPARTURETIME_CHANGED_PROPERTY) ||
+                (e.getPropertyName().equals(Train.BUILD_CHANGED_PROPERTY) && !isShowAll())) {
             updateList();
             fireTableDataChanged();
         } else if (e.getSource().getClass().equals(Train.class)) {
-            synchronized (this) {
-                Train train = ((Train) e.getSource());
-                int row = sysList.indexOf(train);
-                if (Control.showProperty) {
-                    log.debug("Update train table row: {} name: {}",  row, train.getName());
-                }
-                if (row >= 0) {
-                    fireTableRowsUpdated(row, row);
-                }
+            Train train = ((Train) e.getSource());
+            int row = sysList.indexOf(train);
+            if (Control.SHOW_PROPERTY) {
+                log.debug("Update train table row: {} name: {}", row, train.getName());
+            }
+            if (row >= 0) {
+                int viewRow = _table.convertRowIndexToView(row);
+                // if there are issues with thread locking here, this needs to
+                // be refactored so the panel holding the table is listening for
+                // this changes so it can instruct the table to scroll
+                // adding "synchronized" to this propertyChange can lock up thread                
+                _table.scrollRectToVisible(_table.getCellRect(viewRow, 0, true));
+                fireTableRowsUpdated(row, row);
             }
         }
     }
 
-    private synchronized void removePropertyChangeTrains() {
+    private void removePropertyChangeTrains() {
         for (Train train : trainManager.getTrainsByIdList()) {
             train.removePropertyChangeListener(this);
         }
     }
 
-    private synchronized void addPropertyChangeTrains() {
+    private void addPropertyChangeTrains() {
         for (Train train : trainManager.getTrainsByIdList()) {
             train.addPropertyChangeListener(this);
         }
     }
 
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
         if (tef != null) {
             tef.dispose();
         }
@@ -560,24 +555,18 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     class MyTableCellRenderer extends DefaultTableCellRenderer {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 6030024446880261924L;
-
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                 boolean hasFocus, int row, int column) {
-            Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             if (!isSelected) {
-                TableSorter sorter = (TableSorter) table.getModel();
-                int modelRow = sorter.modelIndex(row);
-//				log.debug("View row: {} Column: {} Model row: {}", row, column, modelRow);
+                int modelRow = table.convertRowIndexToModel(row);
+                //				log.debug("View row: {} Column: {} Model row: {}", row, column, modelRow);
                 Color background = getRowColor(modelRow);
-                c.setBackground(background);
-                c.setForeground(getForegroundColor(background));
+                component.setBackground(background);
+                component.setForeground(getForegroundColor(background));
             }
-            return c;
+            return component;
         }
 
         Color[] darkColors = {Color.BLACK, Color.BLUE, Color.GRAY, Color.RED, Color.MAGENTA};
@@ -585,8 +574,6 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         /**
          * Dark colors need white lettering
          *
-         * @param row
-         * @return
          */
         private Color getForegroundColor(Color background) {
             if (background == null) {
@@ -597,9 +584,9 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                     return Color.WHITE;
                 }
             }
-            return Color.BLACK;	// all others get black lettering
+            return Color.BLACK; // all others get black lettering
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainsTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainsTableModel.class.getName());
 }

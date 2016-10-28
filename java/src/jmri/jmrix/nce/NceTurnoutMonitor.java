@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
  *
  *
  * @author Daniel Boudreau (C) 2007
- * @version $Revision$
  */
 public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChangeListener {
 
@@ -176,7 +175,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NN_NAKED_NOTIFY") // notify not naked, command station is shared state
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY") // notify not naked, command station is shared state
     public void reply(NceReply r) {
         if (r.getNumDataElements() == REPLY_LEN) {
 
@@ -468,7 +467,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
         }
     }
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(NceTurnoutMonitor.class.getName());
 
 }

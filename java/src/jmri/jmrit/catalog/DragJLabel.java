@@ -19,38 +19,55 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Gives a JLabel the capability to Drag and Drop
- * <P>
- *
- *
+ * <BR>
  * <hr>
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * </P>
  *
- * @author	Pete Cressman Copyright 2009
+ * @author	Pete Cressman Copyright 2009, 2016
  *
  */
 public class DragJLabel extends JLabel implements DragGestureListener, DragSourceListener, Transferable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7320850014520972400L;
     protected DataFlavor _dataFlavor;
 
     public DragJLabel(DataFlavor flavor) {
         super();
+        init(flavor);
+    }
+    
+    public DragJLabel(DataFlavor flavor, NamedIcon icon) {
+        super(icon);
+        init(flavor);
+    }
+    
+    public DragJLabel(DataFlavor flavor, String text) {
+        super(text);
+        init(flavor);
+    }
+    
+    private void init(DataFlavor flavor) {
         DragSource dragSource = DragSource.getDefaultDragSource();
         dragSource.createDefaultDragGestureRecognizer(this,
                 DnDConstants.ACTION_COPY, this);
-        _dataFlavor = flavor;
+        _dataFlavor = flavor;        
+    }
+
+    /**
+     * Source can override to prohibit dragging if data is incomplete
+     * when dragGestureRecognized() is called
+     * @return Source's choice to allow drag
+     */
+    protected boolean okToDrag() {
+        return true;
     }
 
     /**
@@ -60,8 +77,9 @@ public class DragJLabel extends JLabel implements DragGestureListener, DragSourc
         if (log.isDebugEnabled()) {
             log.debug("DragJLabel.dragGestureRecognized ");
         }
-        //Transferable t = getTransferable(this);
-        e.startDrag(DragSource.DefaultCopyDrop, this, this);
+        if (okToDrag()) {
+            e.startDrag(DragSource.DefaultCopyDrop, this, this);            
+        }
     }
 
     /**
@@ -119,5 +137,5 @@ public class DragJLabel extends JLabel implements DragGestureListener, DragSourc
         return null;
     }
 
-    static Logger log = LoggerFactory.getLogger(DragJLabel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DragJLabel.class.getName());
 }

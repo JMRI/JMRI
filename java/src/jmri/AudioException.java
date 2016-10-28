@@ -1,4 +1,3 @@
-// AudioException.java
 package jmri;
 
 /**
@@ -17,14 +16,9 @@ package jmri;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
+@SuppressWarnings("serial")
 public class AudioException extends JmriException {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3840261154738009186L;
 
     /**
      * Create new AudioException with a message
@@ -42,5 +36,3 @@ public class AudioException extends JmriException {
 
     }
 }
-
-/* @(#)AudioException.java */

@@ -29,8 +29,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- * @see jmri.jmrix.nce.NceMessage
+  * @see jmri.jmrix.nce.NceMessage
  *
  */
 public class LocoNetMessage implements Serializable {
@@ -354,7 +353,6 @@ public class LocoNetMessage implements Serializable {
      * Check if a high bit is set, usually used to store it in some other
      * location (LocoNet does not allow the high bit to be set in data bytes)
      *
-     * @param val
      * @return True if the argument has the high bit set
      */
     static protected boolean highBit(int val) {
@@ -423,7 +421,7 @@ public class LocoNetMessage implements Serializable {
     static char[] hexChars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(LocoNetMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoNetMessage.class.getName());
 
 }
 

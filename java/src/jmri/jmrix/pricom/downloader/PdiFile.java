@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * have kindly given permission for this use.
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version $Revision$
  */
 public class PdiFile {
 
@@ -140,5 +139,5 @@ public class PdiFile {
         return buffer;
     }
 
-    static Logger log = LoggerFactory.getLogger(PdiFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PdiFile.class.getName());
 }

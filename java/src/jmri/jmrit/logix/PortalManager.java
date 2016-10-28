@@ -1,8 +1,6 @@
 package jmri.jmrit.logix;
 
 import jmri.managers.AbstractManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Basic Implementation of a PortalManager.
@@ -29,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Pete Cressman Copyright (C) 2014
- * @version $Revision: 22821 $
  */
 public class PortalManager extends AbstractManager
         implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
@@ -159,8 +156,6 @@ public class PortalManager extends AbstractManager
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNamePortal");
     }
-
-    static Logger log = LoggerFactory.getLogger(PortalManager.class.getName());
 }
 
 /* @(#)PortalManager.java */

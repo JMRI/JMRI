@@ -1,19 +1,15 @@
-// OpenLcbLocoAddressTest.java
 package jmri.jmrix.openlcb;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.openlcb.NodeID;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OpenLcbLocoAddress class.
  *
  * @author	Bob Jacobsen Copyright 2008, 2010, 2011
- * @version $Revision$
  */
 public class OpenLcbLocoAddressTest extends TestCase {
 
@@ -46,7 +42,7 @@ public class OpenLcbLocoAddressTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {OpenLcbLocoAddressTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -54,8 +50,6 @@ public class OpenLcbLocoAddressTest extends TestCase {
         TestSuite suite = new TestSuite(OpenLcbLocoAddressTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(OpenLcbLocoAddressTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

@@ -1,4 +1,3 @@
-// TurnoutManagerScaffold.java
 package jmri.managers;
 
 import jmri.JmriException;
@@ -21,8 +20,7 @@ import jmri.TurnoutManager;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
- */
+  */
 public class TurnoutManagerScaffold implements TurnoutManager {
 
     public Turnout provideTurnout(String name) {
@@ -75,10 +73,6 @@ public class TurnoutManagerScaffold implements TurnoutManager {
 
     public int askControlType(String systemName) {
         return -1;
-    }
-
-    public char systemLetter() {
-        return ' ';
     }
 
     public String getSystemPrefix() {

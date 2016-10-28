@@ -1,4 +1,3 @@
-// CreateRosterGroupAction.java
 package jmri.jmrit.roster.swing;
 
 import java.awt.Component;
@@ -30,14 +29,8 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision$
  */
 public class CreateRosterGroupAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8222098783980850363L;
 
     public CreateRosterGroupAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -76,12 +69,12 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
         if (rosterEntries != null) {
             for (RosterEntry re : rosterEntries) {
                 log.debug("Adding RosterEntry " + re.getId() + " to new group " + entry);
-                re.putAttribute(Roster.instance().getRosterGroupPrefix() + entry, "yes");
+                re.putAttribute(Roster.getDefault().getRosterGroupPrefix() + entry, "yes");
                 re.updateFile();
             }
         }
-        Roster.instance().addRosterGroup(entry);
-        Roster.writeRosterFile();
+        Roster.getDefault().addRosterGroup(entry);
+        Roster.getDefault().writeRoster();
     }
 
     // never invoked, because we overrode actionPerformed above
@@ -98,8 +91,6 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
      * <dd>An ArrayList&lt;RosterEntry&gt; of roster entries.
      * </dl>
      *
-     * @param key
-     * @param value
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -110,5 +101,5 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(CreateRosterGroupAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CreateRosterGroupAction.class.getName());
 }

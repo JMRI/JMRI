@@ -1,4 +1,3 @@
-// SerialMessage.java
 package jmri.jmrix.cmri.serial;
 
 /**
@@ -8,7 +7,6 @@ package jmri.jmrix.cmri.serial;
  * DLE characters are included. These are added during transmission.
  *
  * @author Bob Jacobsen Copyright (C) 2001,2003
- * @version $Revision$
  */
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     // is this logically an abstract class?
@@ -33,7 +31,6 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
      * This ctor interprets the String as the exact sequence to send,
      * byte-for-byte.
      *
-     * @param m
      */
     public SerialMessage(String m) {
         super(m);
@@ -48,7 +45,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         super(String.valueOf(a));
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public String toString() {
@@ -89,5 +86,3 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
 }
-
-/* @(#)SerialMessage.java */

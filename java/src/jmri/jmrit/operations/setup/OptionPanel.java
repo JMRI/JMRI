@@ -20,19 +20,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for user edit of setup options
  *
- * @author Dan Boudreau Copyright (C) 2010, 2011, 2012, 2013
- * @version $Revision$
+ * @author Dan Boudreau Copyright (C) 2010, 2011, 2012, 2013, 2015
  */
 public class OptionPanel extends OperationsPreferencesPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5466426954499681092L;
-
     // labels
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // radio buttons
     JRadioButton buildNormal = new JRadioButton(Bundle.getMessage("Normal"));
@@ -43,7 +37,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
     JCheckBox routerYardCheckBox = new JCheckBox(Bundle.getMessage("EnableCarRoutingYard"));
     JCheckBox routerStagingCheckBox = new JCheckBox(Bundle.getMessage("EnableCarRoutingStaging"));
     JCheckBox routerAllTrainsBox = new JCheckBox(Bundle.getMessage("AllTrains"));
-    JCheckBox routerRestrictBox = new JCheckBox(Bundle.getMessage("EnableTrackDestinationRestrications"));
+    JCheckBox routerRestrictBox = new JCheckBox(Bundle.getMessage("EnableTrackDestinationRestrictions"));
 
     JCheckBox valueCheckBox = new JCheckBox(Bundle.getMessage("EnableValue"));
     JCheckBox rfidCheckBox = new JCheckBox(Bundle.getMessage("EnableRfid"));
@@ -65,6 +59,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
     JCheckBox generateCvsSwitchListCheckBox = new JCheckBox(Bundle.getMessage("GenerateCsvSwitchList"));
 
     JCheckBox enableVsdCheckBox = new JCheckBox(Bundle.getMessage("EnableVSD"));
+    JCheckBox saveTrainManifestCheckBox = new JCheckBox(Bundle.getMessage("SaveManifests"));
 
     // text field
     JTextField rfidTextField = new JTextField(10);
@@ -94,7 +89,9 @@ public class OptionPanel extends OperationsPreferencesPanel {
         // logging options
         carLoggerCheckBox.setSelected(Setup.isCarLoggerEnabled());
         engineLoggerCheckBox.setSelected(Setup.isEngineLoggerEnabled());
-        trainLoggerCheckBox.setSelected(Setup.isTrainLoggerEnabled());
+        trainLoggerCheckBox.setSelected(Setup.isTrainLoggerEnabled());    
+        // save manifests
+        saveTrainManifestCheckBox.setSelected(Setup.isSaveTrainManifestsEnabled());
 
         generateCvsManifestCheckBox.setSelected(Setup.isGenerateCsvManifestEnabled());
         generateCvsSwitchListCheckBox.setSelected(Setup.isGenerateCsvSwitchListEnabled());
@@ -195,6 +192,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         JPanel pOption = new JPanel();
         pOption.setLayout(new GridBagLayout());
         pOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutOptions")));
+        addItemLeft(pOption, saveTrainManifestCheckBox, 1, 1);
         addItemLeft(pOption, valueCheckBox, 1, 2);
         addItemLeft(pOption, valueTextField, 2, 2);
         addItemLeft(pOption, rfidCheckBox, 1, 3);
@@ -211,9 +209,9 @@ public class OptionPanel extends OperationsPreferencesPanel {
         panel.add(pLogger);
         panel.add(pCustom);
         panel.add(pOption);
-        panel.add(pControl);
 
         add(panelPane);
+        add(pControl);
 
         // setup buttons
         addButtonAction(saveButton);
@@ -227,6 +225,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
 
         // check boxes
         addCheckBoxAction(routerCheckBox);
+        addCheckBoxAction(routerRestrictBox);       
         setRouterCheckBoxesEnabled();
 
         setBuildOption();
@@ -273,6 +272,10 @@ public class OptionPanel extends OperationsPreferencesPanel {
         if (ae.getSource() == routerCheckBox) {
             setRouterCheckBoxesEnabled();
         }
+        if (ae.getSource() == routerRestrictBox && routerRestrictBox.isSelected()) {
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("WarnExtremeTrackDest"), Bundle
+                    .getMessage("WarnExtremeTitle"), JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     private void setRouterCheckBoxesEnabled() {
@@ -318,6 +321,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         // Options
         Setup.setGenerateCsvManifestEnabled(generateCvsManifestCheckBox.isSelected());
         Setup.setGenerateCsvSwitchListEnabled(generateCvsSwitchListCheckBox.isSelected());
+        Setup.setSaveTrainManifestsEnabled(saveTrainManifestCheckBox.isSelected());
         Setup.setValueEnabled(valueCheckBox.isSelected());
         Setup.setValueLabel(valueTextField.getText());
         Setup.setRfidEnabled(rfidCheckBox.isSelected());
@@ -360,6 +364,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
                 || !Setup.getValueLabel().equals(valueTextField.getText())
                 || Setup.isRfidEnabled() != rfidCheckBox.isSelected()
                 || !Setup.getRfidLabel().equals(rfidTextField.getText())
+                || Setup.isSaveTrainManifestsEnabled() != saveTrainManifestCheckBox.isSelected()
                 // Logging enabled?
                 || Setup.isEngineLoggerEnabled() != engineLoggerCheckBox.isSelected()
                 || Setup.isCarLoggerEnabled() != carLoggerCheckBox.isSelected()

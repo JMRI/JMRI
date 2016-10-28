@@ -12,14 +12,8 @@ import org.slf4j.LoggerFactory;
  * We only permit one, because notification is not entirely right yet.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public class PollTableAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4624903291006242421L;
 
     public PollTableAction(String s) {
         super(s);
@@ -31,6 +25,7 @@ public class PollTableAction extends AbstractAction {
 
     PollTableFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         log.debug("starting frame creation");
         if (f == null) {
@@ -38,14 +33,14 @@ public class PollTableAction extends AbstractAction {
             try {
                 f.initComponents();
             } catch (Exception ex) {
-                log.warn("starting frame: Exception: " + ex.toString());
+                log.warn("Exception starting frame.", ex);
             }
         }
         f.setVisible(true);
 
     }
 
-    static Logger log = LoggerFactory.getLogger(PollTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PollTableAction.class.getName());
 
 }
 

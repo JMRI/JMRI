@@ -16,7 +16,7 @@
 
 <!-- This DTD is part of version 2.3.8 development.  Do not modify it       -->
 <!-- after version 2.3.8 is released.  For more information,                -->
-<!-- see http://jmri.sf.net/help/en/html/doc/Technical/XmlPersistance.shtml -->
+<!-- see http://jmri.org/help/en/html/doc/Technical/XmlPersistance.shtml -->
 
 <!ELEMENT rpsfile (poll, transmitter*)>
 

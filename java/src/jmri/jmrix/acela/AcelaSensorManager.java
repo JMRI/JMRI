@@ -1,4 +1,3 @@
-// AcelaSensorManager.java
 package jmri.jmrix.acela;
 
 import jmri.Sensor;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2003, 2007
  * @author Dave Duchamp, multi node extensions, 2004
- * @version $Revision$
  *
  * @author Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
@@ -26,15 +24,18 @@ import org.slf4j.LoggerFactory;
 public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
         implements AcelaListener {
 
-    public AcelaSensorManager() {
+    private AcelaSystemConnectionMemo _memo = null;
+
+    public AcelaSensorManager(AcelaSystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
     /**
      * Return the Acela system letter
      */
     public String getSystemPrefix() {
-        return "A";
+        return _memo.getSystemPrefix();
     }
 
     /**
@@ -45,7 +46,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
         Sensor s;
         // validate the system name, and normalize it
         String sName = AcelaAddress.normalizeSystemName(systemName);
-        if (sName == "") {
+        if (sName.equals("")) {
             // system name is not valid
             log.error("Invalid Acela Sensor system name: " + systemName);
             return null;
@@ -78,7 +79,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
         }
 
         // ensure that a corresponding Acela Node exists
-        AcelaNode node = AcelaAddress.getNodeFromSystemName(sName);
+        AcelaNode node = AcelaAddress.getNodeFromSystemName(sName,_memo);
         if (node == null) {
             log.warn("Sensor: " + sName + ", refers to an undefined Acela Node.");
             return s;
@@ -106,7 +107,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
      */
     public void reply(AcelaReply r) {
         // Determine which state we are in: Initiallizing Acela Network or Polling Sensors
-        boolean currentstate = AcelaTrafficController.instance().getAcelaTrafficControllerState();
+        boolean currentstate = _memo.getTrafficController().getAcelaTrafficControllerState();
         //  Flag to indicate which state we are in: 
         //  false == Initiallizing Acela Network
         //  true == Polling Sensors
@@ -170,10 +171,10 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
                             }
                         }
                         int tempaddr = i + 1;
-                        new AcelaNode(tempaddr, nodetype);
+                        new AcelaNode(tempaddr, nodetype,_memo.getTrafficController());
                         log.info("Created a new Acela Node [" + tempaddr + "] as a result of Acela network Poll of type: " + replynodetype);
                     }
-                    AcelaTrafficController.instance().setAcelaTrafficControllerState(true);
+                    _memo.getTrafficController().setAcelaTrafficControllerState(true);
                 }
             }
         } else {
@@ -202,7 +203,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
                 log.debug("system name is " + sName);
                 if ((sName.charAt(0) == 'A') && (sName.charAt(1) == 'S')) {
                     // This is a Acela Sensor
-                    tNode = AcelaAddress.getNodeFromSystemName(sName);
+                    tNode = AcelaAddress.getNodeFromSystemName(sName,_memo);
                     if (tNode == node) {
                         // This sensor is for this new Acela Node - register it
                         node.registerSensor(getBySystemName(sName),
@@ -222,17 +223,12 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
      *
      * @return The registered AcelaSensorManager instance for general use, if
      *         need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public AcelaSensorManager instance() {
-        if (_instance == null) {
-            _instance = new AcelaSensorManager();
-        }
-        return _instance;
+        return null;
     }
 
-    static AcelaSensorManager _instance = null;
-
-    static Logger log = LoggerFactory.getLogger(AcelaSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaSensorManager.class.getName());
 }
-
-/* @(#)AcelaSensorManager.java */

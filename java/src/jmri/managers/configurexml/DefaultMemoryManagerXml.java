@@ -2,8 +2,6 @@ package jmri.managers.configurexml;
 
 import jmri.InstanceManager;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Persistency implementation for the default MemoryManager persistance.
@@ -11,7 +9,6 @@ import org.slf4j.LoggerFactory;
  * The state of memory objects is not persisted, just their existance.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision$
  */
 public class DefaultMemoryManagerXml extends AbstractMemoryManagerConfigXML {
 
@@ -33,16 +30,14 @@ public class DefaultMemoryManagerXml extends AbstractMemoryManagerConfigXML {
      * Create a MemoryManager object of the correct class, then register and
      * fill it.
      *
-     * @param memories Top level Element to unpack.
+     * @param sharedMemories Top level Element to unpack.
      * @return true if successful
      */
-    public boolean load(Element memories) {
+    public boolean load(Element sharedMemories, Element perNodeMemories) {
         // ensure the master object exists
         InstanceManager.memoryManagerInstance();
         // load individual routes
-        loadMemories(memories);
+        loadMemories(sharedMemories);
         return true;
     }
-
-    static Logger log = LoggerFactory.getLogger(DefaultMemoryManagerXml.class.getName());
 }

@@ -1,8 +1,7 @@
-// SerialAddressTest.java
 package jmri.jmrix.secsi;
 
 import jmri.util.JUnitAppender;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -12,8 +11,7 @@ import junit.framework.TestSuite;
  *
  * @author	Dave Duchamp Copyright 2004
  * @author Bob Jacobsen Copyright 2007
- * @version	$Revision$
- */
+  */
 public class SerialAddressTest extends TestCase {
 
     public void testValidateSystemNameFormat() {
@@ -201,7 +199,7 @@ public class SerialAddressTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SerialAddressTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

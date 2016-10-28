@@ -18,7 +18,6 @@ package jmri.util.iharder.dnd;
  */
 public class FileDropEvent extends java.util.EventObject {
 
-    private static final long serialVersionUID = 259739987174376013L;
     private java.io.File[] files;
 
     /**
@@ -29,7 +28,7 @@ public class FileDropEvent extends java.util.EventObject {
      * @param source The event source
      * @since 1.1
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
     public FileDropEvent(java.io.File[] files, Object source) {
         super(source);
         this.files = files;
@@ -41,9 +40,9 @@ public class FileDropEvent extends java.util.EventObject {
      * @return array of files that were dropped
      * @since 1.1
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public java.io.File[] getFiles() {
         return files;
     }   // end getFiles
 
-}   // end class FileDropEvent
+}

@@ -1,4 +1,3 @@
-// ConsistFile.java
 package jmri.jmrit.consisttool;
 
 import java.io.File;
@@ -29,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * manipulates files conforming to the consist-roster-config DTD.
  *
  * @author Paul Bender Copyright (C) 2008
- * @version $Revision$
  */
 public class ConsistFile extends XmlFile {
 
@@ -40,7 +38,7 @@ public class ConsistFile extends XmlFile {
         consistMan = InstanceManager.getDefault(jmri.ConsistManager.class);
         // set the location to a subdirectory of the defined roster
         // directory
-        setFileLocation(Roster.getFileLocation() + "roster" + File.separator + "consist");
+        setFileLocation(Roster.getDefault().getRosterLocation() + "roster" + File.separator + "consist");
     }
 
     /**
@@ -203,8 +201,6 @@ public class ConsistFile extends XmlFile {
     /**
      * Read all consists from the default file name
      *
-     * @throws JDOMException
-     * @throws IOException
      */
     public void readFile() throws JDOMException, IOException {
         readFile(defaultConsistFilename());
@@ -214,8 +210,6 @@ public class ConsistFile extends XmlFile {
      * Read all consists from a file.
      *
      * @param fileName - with location and file type
-     * @throws JDOMException
-     * @throws IOException
      */
     @SuppressWarnings("unchecked")
     public void readFile(String fileName) throws JDOMException, IOException {
@@ -237,7 +231,7 @@ public class ConsistFile extends XmlFile {
                 do {
                     consist = consistIterator.next();
                     consistFromXml(consist);
-                } while (consist != null);
+                } while ( consistIterator.hasNext() );
             } catch (NoSuchElementException nde) {
                 log.debug("end of consist list");
             }
@@ -250,8 +244,6 @@ public class ConsistFile extends XmlFile {
     /**
      * Write all consists to the default file name
      *
-     * @param consistList
-     * @throws IOException
      */
     public void writeFile(ArrayList<DccLocoAddress> consistList) throws IOException {
         writeFile(consistList, defaultConsistFilename());
@@ -262,7 +254,6 @@ public class ConsistFile extends XmlFile {
      *
      * @param consistList an ArrayList of consists to write
      * @param fileName    - with location and file type
-     * @throws IOException
      */
     public void writeFile(ArrayList<DccLocoAddress> consistList, String fileName) throws IOException {
         // create root element
@@ -328,5 +319,5 @@ public class ConsistFile extends XmlFile {
         return getFileLocation() + "consist.xml";
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConsistFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConsistFile.class.getName());
 }

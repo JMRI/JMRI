@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?><!-- Made from the QSI_Diesel_Ver7.xml file for testing purposes           -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <version author="Bob Jacobsen" version="1" lastUpdated="20100119"/>
+
+    <decoder>
+
+        <family name="Test QSI Decoder" mfg="QSIndustries" lowVersionID="7">
+            <model model="Test QSI Decoder" numFns="14" numOuts="0" productID="1050">
+            </model>
+        </family>
+
+        <programming direct="yes" paged="yes" register="yes" ops="yes">
+        </programming>
+
+        <variables>
+            <variable label="Minor Version Number" CV="56.254.6" readOnly="no" default="0" item="CV56.254.6"> 
+                <decVal/> 
+                <label>Text in label</label>
+            </variable>
+        </variables>
+    </decoder>
+</decoder-config>

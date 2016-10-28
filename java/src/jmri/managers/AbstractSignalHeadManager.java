@@ -1,11 +1,8 @@
-// AbstractSignalHeadManager.java
 package jmri.managers;
 
 import jmri.Manager;
 import jmri.SignalHead;
 import jmri.SignalHeadManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract partial implementation of a SignalHeadManager.
@@ -18,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * the present time. They're just names...
  *
  * @author Bob Jacobsen Copyright (C) 2003
- * @version	$Revision$
  */
 public class AbstractSignalHeadManager extends AbstractManager
         implements SignalHeadManager, java.beans.PropertyChangeListener {
@@ -63,8 +59,4 @@ public class AbstractSignalHeadManager extends AbstractManager
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameSignalHead");
     }
-
-    static Logger log = LoggerFactory.getLogger(AbstractSignalHeadManager.class.getName());
 }
-
-/* @(#)AbstractSignalHeadManager.java */

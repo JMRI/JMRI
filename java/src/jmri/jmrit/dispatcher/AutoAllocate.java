@@ -1,4 +1,3 @@
-// AutoAllocate.java
 package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
@@ -51,19 +50,20 @@ import org.slf4j.LoggerFactory;
  * AllocationPlan objects are discarded.
  * <P>
  *
- * <P>
+ * <BR>
+ * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is open source software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published by the
- * Free Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * </P>
  *
  * @author	Dave Duchamp Copyright (C) 2011
- * @version	$Revision$
  */
 public class AutoAllocate {
 
@@ -81,9 +81,6 @@ public class AutoAllocate {
             return;
         }
         _conUtil = _dispatcher.getLayoutEditor().getConnectivityUtil();
-        if (_conUtil == null) {
-            log.error("null ConnectivityUtil when constructing AutoAllocate");
-        }
     }
 
     // operational variables
@@ -106,103 +103,108 @@ public class AutoAllocate {
         copyAndSortARs(list);
         removeCompletePlans();
         for (int i = 0; i < orderedRequests.size(); i++) {
-            AllocationRequest ar = orderedRequests.get(i);
-            if (ar == null) {
-                log.error("error in allocation request list - AllocationRequest is null");
-                return;
-            }
-            if (DispatcherFrame.instance().getSignalType() == DispatcherFrame.SIGNALMAST && isSignalHeldAtStartOfSection(ar)) {
-                return;
-            }
-            if (getPlanThisTrain(ar.getActiveTrain()) != null) {
-                // this train is in an active Allocation Plan, anything to do now?
-                if (willAllocatingFollowPlan(ar, getPlanThisTrain(ar.getActiveTrain()))) {
-                    if (allocateIfLessThanThreeAhead(ar)) {
-                        return;
-                    }
+            try {
+                AllocationRequest ar = orderedRequests.get(i);
+                if (ar == null) {
+                    log.error("error in allocation request list - AllocationRequest is null");
+                    return;
                 }
-            } else if (!waitingForStartTime(ar)) {
-                // train isn't waiting, continue only if requested Section is currently free and not occupied
-                if ((ar.getSection().getState() == Section.FREE)
-                        && (ar.getSection().getOccupancy() != Section.OCCUPIED)
-                        && (_dispatcher.getSignalType() == DispatcherFrame.SIGNALHEAD
-                        || (_dispatcher.getSignalType() == DispatcherFrame.SIGNALMAST
-                        && _dispatcher.checkBlocksNotInAllocatedSection(ar.getSection(), ar) == null))) {
-                    // requested Section is currently free and not occupied
-                    ArrayList<ActiveTrain> activeTrainsList = _dispatcher.getActiveTrainsList();
-                    if (activeTrainsList.size() == 1) {
-                        // this is the only ActiveTrain
+                if (DispatcherFrame.instance().getSignalType() == DispatcherFrame.SIGNALMAST && isSignalHeldAtStartOfSection(ar)) {
+                    return;
+                }
+                if (getPlanThisTrain(ar.getActiveTrain()) != null) {
+                    // this train is in an active Allocation Plan, anything to do now?
+                    if (willAllocatingFollowPlan(ar, getPlanThisTrain(ar.getActiveTrain()))) {
                         if (allocateIfLessThanThreeAhead(ar)) {
                             return;
                         }
-                    } else {
-                        //check if any other ActiveTrain will need this Section or its alternates, if any
-                        boolean okToAllocate = true;
-                        ArrayList<ActiveTrain> neededByTrainList = new ArrayList<ActiveTrain>();
-                        for (int j = 0; j < activeTrainsList.size(); j++) {
-                            ActiveTrain at = activeTrainsList.get(j);
-                            if (at != ar.getActiveTrain()) {
-                                if (sectionNeeded(ar, at)) {
-                                    neededByTrainList.add(at);
-                                }
-                            }
-                        }
-                        if (neededByTrainList.size() <= 0) {
-                            // no other ActiveTrain needs this Section, any LevelXings?
-                            if (containsLevelXing(ar.getSection())) {
-                                // check if allocating this Section might block a higher priority train
-                                for (int j = 0; j < activeTrainsList.size(); j++) {
-                                    ActiveTrain at = activeTrainsList.get(j);
-                                    if ((at != ar.getActiveTrain())
-                                            && (at.getPriority() > ar.getActiveTrain().getPriority())) {
-                                        if (willLevelXingsBlockTrain(at)) {
-                                            okToAllocate = false;
-                                        }
-                                    }
-                                }
-                            }
-                        } else {
-                            // requested Section (or alternate) is needed by other active Active Train(s)
-                            for (int k = 0; k < neededByTrainList.size(); k++) {
-                                // section is also needed by this active train
-                                ActiveTrain nt = neededByTrainList.get(k);
-                                // are trains moving in same direction through the requested Section?
-                                if (sameDirection(ar, nt)) {
-                                    // trains will move in the same direction thru requested section
-                                    if (firstTrainLeadsSecond(ar.getActiveTrain(), nt)
-                                            && (nt.getPriority() > ar.getActiveTrain().getPriority())) {
-                                        // a higher priority train is trailing this train, can we let it pass?
-                                        if (checkForPassingPlan(ar, nt, neededByTrainList)) {
-                                            // PASSING_MEET plan created
-                                            if (!willAllocatingFollowPlan(ar,
-                                                    getPlanThisTrain(ar.getActiveTrain()))) {
-                                                okToAllocate = false;
-                                            }
-                                        }
-                                    }
-                                } else {
-                                    // trains will move in opposite directions thru requested section
-                                    //   explore possibility of an XING_MEET to avoid gridlock
-                                    if (willTrainsCross(ar.getActiveTrain(), nt)) {
-                                        if (checkForXingPlan(ar, nt, neededByTrainList)) {
-                                            // XING_MEET plan created
-                                            if (!willAllocatingFollowPlan(ar,
-                                                    getPlanThisTrain(ar.getActiveTrain()))) {
-                                                okToAllocate = false;
-                                            }
-                                        }
-                                    }
-// djd debugging - add test for a CONTINUING plan here
-                                }
-                            }
-                        }
-                        if (okToAllocate) {
+                    }
+                } else if (!waitingForStartTime(ar)) {
+                    // train isn't waiting, continue only if requested Section is currently free and not occupied
+                    if ((ar.getSection().getState() == Section.FREE)
+                            && (ar.getSection().getOccupancy() != Section.OCCUPIED)
+                            && (_dispatcher.getSignalType() == DispatcherFrame.SIGNALHEAD
+                            || (_dispatcher.getSignalType() == DispatcherFrame.SIGNALMAST
+                            && _dispatcher.checkBlocksNotInAllocatedSection(ar.getSection(), ar) == null))) {
+                        // requested Section is currently free and not occupied
+                        ArrayList<ActiveTrain> activeTrainsList = _dispatcher.getActiveTrainsList();
+                        if (activeTrainsList.size() == 1) {
+                        // this is the only ActiveTrain
                             if (allocateIfLessThanThreeAhead(ar)) {
                                 return;
+                            }
+                        } else {
+                            //check if any other ActiveTrain will need this Section or its alternates, if any
+                            boolean okToAllocate = true;
+                            ArrayList<ActiveTrain> neededByTrainList = new ArrayList<ActiveTrain>();
+                            for (int j = 0; j < activeTrainsList.size(); j++) {
+                                ActiveTrain at = activeTrainsList.get(j);
+                                    if (at != ar.getActiveTrain()) {
+                                        if (sectionNeeded(ar, at)) {
+                                            neededByTrainList.add(at);
+                                        }
+                                    }
+                            }
+                            if (neededByTrainList.size() <= 0) {
+                                // no other ActiveTrain needs this Section, any LevelXings?
+                                if (containsLevelXing(ar.getSection())) {
+                                    // check if allocating this Section might block a higher priority train
+                                    for (int j = 0; j < activeTrainsList.size(); j++) {
+                                        ActiveTrain at = activeTrainsList.get(j);
+                                        if ((at != ar.getActiveTrain())
+                                                && (at.getPriority() > ar.getActiveTrain().getPriority())) {
+                                            if (willLevelXingsBlockTrain(at)) {
+                                                okToAllocate = false;
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                // requested Section (or alternate) is needed by other active Active Train(s)
+                                for (int k = 0; k < neededByTrainList.size(); k++) {
+                                    // section is also needed by this active train
+                                    ActiveTrain nt = neededByTrainList.get(k);
+                                    // are trains moving in same direction through the requested Section?
+                                    if (sameDirection(ar, nt)) {
+                                        // trains will move in the same direction thru requested section
+                                        if (firstTrainLeadsSecond(ar.getActiveTrain(), nt)
+                                                && (nt.getPriority() > ar.getActiveTrain().getPriority())) {
+                                            // a higher priority train is trailing this train, can we let it pass?
+                                            if (checkForPassingPlan(ar, nt, neededByTrainList)) {
+                                                // PASSING_MEET plan created
+                                                if (!willAllocatingFollowPlan(ar,
+                                                        getPlanThisTrain(ar.getActiveTrain()))) {
+                                                    okToAllocate = false;
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        // trains will move in opposite directions thru requested section
+                                        //   explore possibility of an XING_MEET to avoid gridlock
+                                        if (willTrainsCross(ar.getActiveTrain(), nt)) {
+                                            if (checkForXingPlan(ar, nt, neededByTrainList)) {
+                                                // XING_MEET plan created
+                                                if (!willAllocatingFollowPlan(ar,
+                                                        getPlanThisTrain(ar.getActiveTrain()))) {
+                                                    okToAllocate = false;
+                                                }
+                                            }
+                                        }
+// djd debugging - add test for a CONTINUING plan here
+                                    }
+                                }
+                            }
+                            if (okToAllocate) {
+                                if (allocateIfLessThanThreeAhead(ar)) {
+                                    return;
+                                }
                             }
                         }
                     }
                 }
+            } catch (Exception e) {
+                log.warn("scanAllocationRequestList - maybe the allocationrequest was removed due to a terminating train??"+e.toString());
+                continue;
             }
         }
     }
@@ -390,8 +392,8 @@ public class AutoAllocate {
                 }
             }
         }
-// djd debugging 
-        log.info("auto allocating Section " + ar.getSection().getUserName());
+        log.debug("{}: auto allocating Section {}", ar.getActiveTrain().getTrainName(), 
+                ar.getSectionName());
         _dispatcher.allocateSection(ar, null);
         return true;
     }
@@ -508,37 +510,37 @@ public class AutoAllocate {
             }
             // already in a PASSING_MEET Allocation Plan - find target Section and sequence
             Section oSection = null;
-            ActiveTrain oTrain = null;
+//            ActiveTrain oTrain = null;
             if (apx.getActiveTrain(1) == nt) {
                 nSecSeq = apx.getTargetSectionSequenceNum(1);
                 nSec = apx.getTargetSection(1);
                 oSection = apx.getTargetSection(2);
-                oTrain = apx.getActiveTrain(2);
+//                oTrain = apx.getActiveTrain(2);
             } else {
                 nSecSeq = apx.getTargetSectionSequenceNum(2);
                 nSec = apx.getTargetSection(2);
                 oSection = apx.getTargetSection(1);
-                oTrain = apx.getActiveTrain(1);
+//                oTrain = apx.getActiveTrain(1);
             }
             int aCurrentSeq = getCurrentSequenceNumber(at);
             aSecSeq = willTraverse(nSec, at, aCurrentSeq);
             if (aSecSeq == 0) {
                 return false;
             }
-            int tnSecSeq = nSecSeq;
-            if (nt.getPriority() > oTrain.getPriority()) {
-                if (!nt.isAllocationReversed()) {
-                    tnSecSeq--;
-                    if (tnSecSeq <= 0) {
-                        tnSecSeq = nSecSeq;
-                    }
-                } else {
-                    tnSecSeq++;
-                    if (tnSecSeq > nt.getTransit().getMaxSequence()) {
-                        tnSecSeq = nSecSeq;
-                    }
-                }
-            }
+//            int tnSecSeq = nSecSeq;
+//            if (nt.getPriority() > oTrain.getPriority()) {
+//                if (!nt.isAllocationReversed()) {
+//                    tnSecSeq--;
+//                    if (tnSecSeq <= 0) {
+//                        tnSecSeq = nSecSeq;
+//                    }
+//                } else {
+//                    tnSecSeq++;
+//                    if (tnSecSeq > nt.getTransit().getMaxSequence()) {
+//                        tnSecSeq = nSecSeq;
+//                    }
+//                }
+//            }
             ArrayList<Section> nSections = nt.getTransit().getSectionListBySeq(nSecSeq);
             if (nSections.size() <= 1) {
                 return false;
@@ -725,7 +727,7 @@ public class AutoAllocate {
         Transit t = at.getTransit();
         if (!at.isTransitReversed()) {
             for (int i = seq; i <= t.getMaxSequence(); i++) {
-                for (int j = 0; j <= t.getSectionListBySeq(i).size(); j++) {
+                for (int j = 0; j < t.getSectionListBySeq(i).size(); j++) {
                     if (t.getSectionListBySeq(i).get(j) == s) {
                         return i;
                     }
@@ -733,7 +735,7 @@ public class AutoAllocate {
             }
         } else {
             for (int i = seq; i >= 0; i--) {
-                for (int j = 0; j <= t.getSectionListBySeq(i).size(); j++) {
+                for (int j = 0; j < t.getSectionListBySeq(i).size(); j++) {
                     if (t.getSectionListBySeq(i).get(j) == s) {
                         return i;
                     }
@@ -1096,7 +1098,12 @@ public class AutoAllocate {
             }
         }
         if (seq == 0) {
-            log.error("ActiveTrain has no occupied Section");
+            if (at.getMode() != ActiveTrain.MANUAL) {
+                log.error("{}: ActiveTrain has no occupied Section. Halting immediately to avoid runaway.", at.getTrainName());
+                at.getAutoActiveTrain().getAutoEngineer().setHalt(true);
+            } else {
+                log.debug("{}: ActiveTrain has no occupied Section, running in Manual mode.", at.getTrainName());                
+            }           
         } else {
             curSection = temSection;
         }
@@ -1126,6 +1133,9 @@ public class AutoAllocate {
     private boolean waitingForStartTime(AllocationRequest ar) {
         if (ar != null) {
             ActiveTrain at = ar.getActiveTrain();
+            if (at == null) {
+                return false;
+            }
             if ((!at.getStarted()) && at.getDelayedStart() != ActiveTrain.NODELAY || at.reachedRestartPoint()) {
                 return true;
             }
@@ -1228,7 +1238,6 @@ public class AutoAllocate {
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(AutoAllocate.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutoAllocate.class.getName());
 }
 
-/* @(#)AutoAllocate.java */

@@ -4,7 +4,6 @@
  * Description:	Swing action to create and register a MonFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version
  */
 package jmri.jmrix.dcc4pc.swing.monitor;
 
@@ -133,7 +132,7 @@ public class Dcc4PcMonPane extends jmri.jmrix.AbstractMonPane implements Dcc4PcL
         //We should be increasing our timeout
     }
 
-    static Logger log = LoggerFactory.getLogger(Dcc4PcMonPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcMonPane.class.getName());
 
 }
 

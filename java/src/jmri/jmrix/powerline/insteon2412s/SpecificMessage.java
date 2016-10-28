@@ -19,8 +19,7 @@ import jmri.util.StringUtil;
  *
  * @author	Bob Jacobsen Copyright (C) 2001,2003, 2006, 2007, 2008, 2009
  * @author	Ken Cameron Copyright (C) 2010
- * @version	$Revision$
- */
+  */
 public class SpecificMessage extends SerialMessage {
     // is this logically an abstract class?
 
@@ -206,8 +205,6 @@ public class SpecificMessage extends SerialMessage {
     /**
      * create an Insteon message with the X10 address
      *
-     * @param housecode
-     * @param devicecode
      * @return message
      */
     static public SpecificMessage getX10Address(int housecode, int devicecode) {
@@ -223,9 +220,6 @@ public class SpecificMessage extends SerialMessage {
     /**
      * create an Insteon message with the X10 address and dim steps
      *
-     * @param housecode
-     * @param devicecode
-     * @param dimcode
      * @return message
      */
     static public SpecificMessage getX10AddressDim(int housecode, int devicecode, int dimcode) {

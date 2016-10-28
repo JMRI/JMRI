@@ -25,8 +25,7 @@ import org.slf4j.LoggerFactory;
  * statup mode (automatic or manual) and to reset the command station.
  *
  * @author	Paul Bender Copyright (C) 2005-2010
- * @version	$Revision$
- */
+  */
 public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XNetListener {
 
     /**
@@ -296,6 +295,6 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(LZ100Frame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LZ100Frame.class.getName());
 
 }

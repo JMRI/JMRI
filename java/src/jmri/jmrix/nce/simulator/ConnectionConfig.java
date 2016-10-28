@@ -9,8 +9,7 @@ import javax.swing.JPanel;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003 Convert to multiple connection
  * @author kcameron Copyright (C) 2010
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
     public final static String NAME = "Simulator";
@@ -42,12 +41,5 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         if (adapter == null) {
             adapter = new SimulatorAdapter();
         }
-    }
-
-    public void dispose() {
-        if (adapter != null) {
-            adapter.dispose();
-        }
-        super.dispose();
     }
 }

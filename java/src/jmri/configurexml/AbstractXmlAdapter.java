@@ -1,13 +1,11 @@
 package jmri.configurexml;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.jdom2.Element;
 
 /**
  * Abstract class to provide basic error handling for XmlAdapter
  *
  * @author Bob Jacobsen Copyright (c) 2009
- * @version $Revision$
  * @see XmlAdapter
  */
 public abstract class AbstractXmlAdapter implements XmlAdapter {
@@ -38,6 +36,21 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         );
     }
 
+    @Override
+    public boolean load(Element e) throws Exception {
+        throw new UnsupportedOperationException("Either load(one of the other load methods must be implemented.");
+    }
+
+    @Override
+    public boolean load(Element shared, Element perNode) throws Exception {
+        return this.load(shared);
+    }
+
+    @Override
+    public void load(Element shared, Element perNode, Object o) throws Exception {
+        this.load(shared, o);
+    }
+
     /**
      * Determine if this set of configured objects should be loaded after basic
      * GUI construction is completed.
@@ -61,15 +74,11 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         return 50;
     }
 
-    private ConfigXmlManager c;
-
-    public void setConfigXmlManager(ConfigXmlManager c) {
-        this.c = c;
+    @Override
+    public Element store(Object o, boolean shared) {
+        if (shared) {
+            return this.store(o);
+        }
+        return null;
     }
-
-    protected ConfigXmlManager getConfigXmlManager() {
-        return c;
-    }
-
-    static Logger log = LoggerFactory.getLogger(AbstractXmlAdapter.class.getName());
 }

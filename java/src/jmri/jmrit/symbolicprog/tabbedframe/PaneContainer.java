@@ -1,4 +1,3 @@
-// PaneContainer.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import jmri.util.BusyGlassPane;

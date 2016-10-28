@@ -4,16 +4,18 @@
  * Description:	JUnit tests for the QsiMessage class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 package jmri.jmrix.qsi;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 public class QsiMessageTest extends TestCase {
+
+    private QsiSystemConnectionMemo memo = null;
+    private QsiTrafficController tc = null;
 
     public void testCreate() {
         QsiMessage m = new QsiMessage(1);
@@ -60,13 +62,32 @@ public class QsiMessageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {QsiMessageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(QsiMessageTest.class);
         return suite;
+    }
+
+    // The minimal setup for log4J
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        memo = new QsiSystemConnectionMemo();
+        tc = new QsiTrafficControlScaffold(){
+            @Override
+            public boolean isSIIBootMode(){
+                return true;
+            }
+        };
+        memo.setQsiTrafficController(tc);
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
 }

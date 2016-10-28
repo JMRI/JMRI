@@ -20,8 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Andrew Crosland Copyright (C) 2006, 2012
  * @author	Andrew Berridge 2010
- * @version	$Revision$
- */
+  */
 public class SprogSlot {
 
     private boolean speedPacket = false;
@@ -352,10 +351,10 @@ public class SprogSlot {
 
     private int doRepeat() {
         if (repeat > 0) {
-            log.debug("Slot " + slot + "repeats");
+            log.debug("Slot " + slot + " repeats");
             repeat--;
             if (repeat == 0) {
-                log.debug("Clear slot " + slot + "due to repeats exhausted");
+                log.debug("Clear slot " + slot + " due to repeats exhausted");
                 this.clear();
             }
         }
@@ -366,12 +365,17 @@ public class SprogSlot {
         return spd;
     }
 
+    @SuppressWarnings("unused")
     public int locoAddr() {
         return addr;
     }
 
     public int getAddr() {
-        return addr;
+        if (opsPkt == false) {
+            return addr;
+        } else {
+            return addressFromPacket();
+        }
     }
 
     public void setAddr(int a) {
@@ -379,7 +383,11 @@ public class SprogSlot {
     }
 
     public boolean getIsLong() {
-        return isLong;
+        if (opsPkt == false) {
+            return isLong;
+        } else {
+            return ((payload[0] & 0xC0) >= 0xC0);
+        }
     }
 
     public void setIsLong(boolean a) {
@@ -441,19 +449,18 @@ public class SprogSlot {
      *
      * @return int
      */
-    @SuppressWarnings("unused")
     private int addressFromPacket() {
         if (isFree()) {
             return -1;
         }
         // First deal with possible extended address
         if ((payload[0] & 0xC0) == 0xC0) {
-            return ((payload[0] & 0xFF) << 8 | (payload[1] & 0xFF));
+            return ((payload[0] & 0x3F) << 8 | (payload[1] & 0xFF));
         }
         return payload[0];
     }
 
-    static Logger log = LoggerFactory.getLogger(SprogSlot.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogSlot.class.getName());
 }
 
 

@@ -1,9 +1,9 @@
-// SprogIIUpdateFrame.java
 package jmri.jmrix.sprog.update;
 
 import javax.swing.JOptionPane;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.SprogMessage;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,19 +13,13 @@ import org.slf4j.LoggerFactory;
  * Extended to cover SPROG 3 which uses the same bootloader protocol Refactored
  *
  * @author	Andrew Crosland Copyright (C) 2004
- * @version	$Revision$
  */
 public class SprogIIUpdateFrame
         extends SprogUpdateFrame
         implements SprogVersionListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4424302689786420208L;
-
-    public SprogIIUpdateFrame() {
-        super();
+    public SprogIIUpdateFrame(SprogSystemConnectionMemo memo) {
+        super(memo);
     }
 
     /**
@@ -38,12 +32,12 @@ public class SprogIIUpdateFrame
         addHelpMenu("package.jmri.jmrix.sprog.update.SprogIIUpdateFrame", true);
 
         // Get the SPROG version
-        SprogVersionQuery.requestVersion(this);
+        _memo.getSprogVersionQuery().requestVersion(this);
     }
 
     int bootVer = 0;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD")
     synchronized public void notifyVersion(SprogVersion v) {
         sv = v;
         if (sv.sprogType.isSprog() == false) {
@@ -264,13 +258,13 @@ public class SprogIIUpdateFrame
     }
 
     synchronized protected void sendWrite() {
-        if (hexFile.getAddressU() >= 0xF0) {
+        if ((hexFile.getAddressU()&0xFF) >= 0xF0) {
             // Write to EEPROM
             if (log.isDebugEnabled()) {
                 log.debug("Send write EE " + hexFile.getAddress());
             }
             msg = SprogMessage.getWriteEE(hexFile.getAddress(), hexFile.getData());
-        } else if (hexFile.getAddressU() >= 0x20) {
+        } else if ((hexFile.getAddressU()&0xFF) >= 0x20) {
             // Write to user data or config data not supported
             if (log.isDebugEnabled()) {
                 log.debug("null write " + hexFile.getAddress());
@@ -361,6 +355,6 @@ public class SprogIIUpdateFrame
         startLongTimer();
     }
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(SprogIIUpdateFrame.class.getName());
 }

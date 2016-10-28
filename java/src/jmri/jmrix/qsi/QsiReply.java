@@ -1,14 +1,9 @@
-// QsiReply.java
 package jmri.jmrix.qsi;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Carries the reply to an QsiMessage
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version	$Revision$
  */
 public class QsiReply extends jmri.jmrix.AbstractMessage {
 
@@ -32,7 +27,7 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
         super(s);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public QsiReply(String s, boolean b) {
@@ -106,8 +101,14 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
 
     // display format
     public String toString() {
+       QsiSystemConnectionMemo memo = jmri.InstanceManager.getDefault(jmri.jmrix.qsi.QsiSystemConnectionMemo.class);
+       return toString(memo.getQsiTrafficController());
+    }
+
+    public String toString(QsiTrafficController controller) {
         StringBuilder s = new StringBuilder();
-        if (!QsiTrafficController.instance().isSIIBootMode()) {
+        if (_dataChars == null) return "<none>";
+        if (controller == null || controller.isSIIBootMode()) {
             for (int i = 0; i < _nDataChars; i++) {
                 s.append(jmri.util.StringUtil.twoHexFromInt(_dataChars[i]));
                 s.append(" ");
@@ -166,8 +167,4 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
 
     // contents (private)
     private boolean _isBoot = false;
-
-    static Logger log = LoggerFactory.getLogger(QsiReply.class.getName());
 }
-
-/* @(#)QsiReply.java */

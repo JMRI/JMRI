@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="http://jmri.sourceforge.net/xml/XSLT/panelfile.xsl"?>
-<!DOCTYPE layout-config SYSTEM "http://jmri.sourceforge.net/xml/DTD/layout-config.dtd">
-<layout-config>
+<?xml-stylesheet href="/xml/XSLT/panelfile.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout.xsd">
   <turnouts class="jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml">
     <operations automate="false">
       <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
@@ -22,7 +21,7 @@
   </sensors>
   <reporters class="jmri.jmrix.loconet.configurexml.LnReporterManagerXml" />
   <logixs class="jmri.configurexml.DefaultLogixManagerXml">
-    <logix systemName="IX1" userName="" enabled="yes">
+    <logix systemName="IX1" enabled="yes">
       <logixConditional systemName="IX1C1" order="0" />
       <logixConditional systemName="IX1C3" order="1" />
       <logixConditional systemName="IX1C4" order="2" />
@@ -32,9 +31,8 @@
   </logixs>
   <signalheads class="jmri.configurexml.AbstractSignalHeadManagerXml" />
   <memories class="jmri.configurexml.DefaultMemoryManagerXml">
-    <memory systemName="IM1" userName="" />
+    <memory systemName="IM1"/>
   </memories>
-  <routes class="jmri.configurexml.DefaultRouteManagerXml" />
   <conditionals class="jmri.configurexml.DefaultConditionalManagerXml">
     <conditional systemName="IX1C1" userName="Invalid state">
       <conditionalStateVariable operator="2" type="9" systemName="IM1" dataString="1" num1="0" num2="0" triggersCalc="yes" />

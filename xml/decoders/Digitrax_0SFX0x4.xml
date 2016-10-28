@@ -228,6 +228,11 @@
       </variable>
       <!-- Horn Selector for Series 6 Soundbugs(TM) - Diesel -->
       <variable CV="150" item="Sound Option 2" include="SFX006">
+        <qualifier>
+          <variableref>Sound Option 1</variableref>
+          <relation>le</relation>
+          <value>5</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="Default Horn">
             <choice>Standard Horn</choice>
@@ -293,18 +298,14 @@
             <choice>Playable Horn 7</choice>
             <choice xml:lang="it">Tromba alternativa 135</choice>
           </enumChoice>
-        </enumVal>
-        <!-- Diesel only -->
-        <qualifier>
-          <variableref>Sound Option 1</variableref>
-          <relation>le</relation>
-          <value>5</value>
-        </qualifier>
-        <label>Horn Selector</label>
-        <label xml:lang="it">Selettore Tromba</label>
-      </variable>
+        </enumVal><label>Horn Selector</label><label xml:lang="it">Selettore Tromba</label></variable>
       <!-- Whistle Selector for Series 6 Soundbugs(TM) - Steam -->
       <variable CV="150" item="Sound Option 3" include="SFX006">
+        <qualifier>
+          <variableref>Sound Option 1</variableref>
+          <relation>gt</relation>
+          <value>5</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="Default Whistle">
             <choice>Standard Whistle</choice>
@@ -330,16 +331,7 @@
             <choice>Playable Whistle 2</choice>
             <choice xml:lang="it">Fischietto alternativa 130</choice>
           </enumChoice>
-        </enumVal>
-        <!-- Steam only -->
-        <qualifier>
-          <variableref>Sound Option 1</variableref>
-          <relation>gt</relation>
-          <value>5</value>
-        </qualifier>
-        <label>Whistle Selector</label>
-        <label xml:lang="it">Selettore Fischietto</label>
-      </variable>
+        </enumVal><label>Whistle Selector</label><label xml:lang="it">Selettore Fischietto</label></variable>
       <variable CV="151" item="Sound Option 5" default="48">
         <decVal max="64"/>
         <label>Peak Speed for Auto coupler/brake on dir change</label>

@@ -1,4 +1,3 @@
-// AddSensorPanel.java
 package jmri.jmrit.beantable;
 
 import java.awt.FlowLayout;
@@ -7,32 +6,23 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * JPanel to create a new JMRI devices HiJacked to serve other beantable tables.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision$
  */
 public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7238135491102630527L;
-
     public AddNewBeanPanel(JTextField sys, JTextField userName, JTextField endRange, JCheckBox addRange, JCheckBox autoSystem,
-            String addButtonLabel, ActionListener listener) {
+            String addButtonLabel, ActionListener okListener, ActionListener cancelListener) {
         sysName = sys;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         _endRange = endRange;
@@ -78,8 +68,17 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
         finishLabel.setEnabled(false);
         _endRange.setEnabled(false);
 
-        add(ok = new JButton(rb.getString(addButtonLabel)));
-        ok.addActionListener(listener);
+        // cancel + add buttons at bottom of window
+        JPanel panelBottom = new JPanel();
+        panelBottom.setLayout(new FlowLayout(FlowLayout.TRAILING));
+
+        panelBottom.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+        cancel.addActionListener(cancelListener);
+
+        panelBottom.add(ok = new JButton(Bundle.getMessage(addButtonLabel)));
+        ok.addActionListener(okListener);
+
+        add(panelBottom);
 
         addRange.addItemListener(
                 new ItemListener() {
@@ -134,19 +133,14 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
         }
     }
 
+    JButton cancel;
     JButton ok;
     JTextField sysName;
-    JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
-    JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
+    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
+    JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
 
     JTextField _endRange;
     JCheckBox _range;
     JCheckBox _autoSys;
-    JLabel finishLabel = new JLabel(rb.getString("LabelNumberToAdd"));
-
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
-    static final Logger log = LoggerFactory.getLogger(AddNewBeanPanel.class.getName());
+    JLabel finishLabel = new JLabel(Bundle.getMessage("LabelNumberToAdd"));
 }
-
-
-/* @(#)AddNewBeanPanel.java */

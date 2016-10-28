@@ -1,4 +1,3 @@
-// DefaultPowerManager.java
 package jmri.managers;
 
 import jmri.JmriException;
@@ -8,7 +7,6 @@ import jmri.PowerManager;
  * Default implementation for controlling layout power
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2010
- * @version	$Revision$
  */
 public class DefaultPowerManager implements PowerManager {
 
@@ -51,6 +49,3 @@ public class DefaultPowerManager implements PowerManager {
     }
 
 }
-
-
-/* @(#)DefaultPowerManager.java */

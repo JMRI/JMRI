@@ -11,14 +11,13 @@
 #
 # Created by Bob Jacobsen 2014
 #
-# The next line is maintained by SVN, please don't change it
-# $Revision$
-#
 # A find request to (long)433 should send E5 09 40 03 31 00 00 00 61
 # and the hardware should return E5 09 00 03 31 00 20 00 01
 #
 # For (short)10: E5 09 40 7D 0A 00 00 00 24
 # and reply: E5 09 40 7D 0A 00 20 00 44
+
+import jmri
 
 import java
 import javax.swing

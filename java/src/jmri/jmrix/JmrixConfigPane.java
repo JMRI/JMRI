@@ -1,4 +1,3 @@
-// JmrixConfigPane.java
 package jmri.jmrix;
 
 import java.awt.BorderLayout;
@@ -12,6 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
@@ -35,11 +35,9 @@ import org.slf4j.LoggerFactory;
  * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2004, 2010
- * @version	$Revision$
  */
 public class JmrixConfigPane extends JPanel implements PreferencesPanel {
 
-    private static final long serialVersionUID = -6184977238513337292L;
     private static final ResourceBundle acb = ResourceBundle.getBundle("apps.AppsConfigBundle");
     private boolean isDirty = false;
 
@@ -81,10 +79,14 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
         if (retval != null) {
             return retval;
         }
-        Object c = InstanceManager.configureManagerInstance()
-                .findInstance(ConnectionConfig.class, index);
-        log.debug("findInstance returned " + c);
-        retval = new JmrixConfigPane((ConnectionConfig) c);
+        ConnectionConfig c = null;
+        try {
+            c = InstanceManager.getDefault(ConnectionConfigManager.class).getConnections(index);
+            log.debug("connection {} is {}", index, c);
+        } catch (IndexOutOfBoundsException ex) {
+            log.debug("connection {} is null, creating new one", index);
+        }
+        retval = new JmrixConfigPane(c);
         configPaneTable.put(index, retval);
         if (c == null) {
             retval.isDirty = true;
@@ -100,10 +102,10 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
     public static JmrixConfigPane createNewPanel() {
 
         int lastIndex = -1;
-        ArrayList<Object> conlist = InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class);
+        ConnectionConfig[] connections = InstanceManager.getDefault(ConnectionConfigManager.class).getConnections();
 
-        if (conlist != null) {
-            lastIndex = conlist.size();
+        if (connections.length != 0) {
+            lastIndex = connections.length;
         }
         for (int key : configPaneTable.keySet()) {
             if (key > lastIndex) {
@@ -141,8 +143,12 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
                 log.error("Error Occured while disposing connection {}", ex.toString());
             }
         }
-        InstanceManager.configureManagerInstance().deregister(confPane);
-        InstanceManager.configureManagerInstance().deregister(confPane.ccCurrent);
+        ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cmOD != null) {
+            cmOD.deregister(confPane);
+            cmOD.deregister(confPane.ccCurrent);
+        }
+        InstanceManager.getDefault(ConnectionConfigManager.class).remove(confPane.ccCurrent);
 
         configPaneTable.remove(getInstanceNumber(confPane));
     }
@@ -186,6 +192,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
      */
     private JmrixConfigPane(ConnectionConfig original) {
 
+        ConnectionConfigManager manager = InstanceManager.getDefault(ConnectionConfigManager.class);
         ccCurrent = original;
 
         setLayout(new BorderLayout());
@@ -193,7 +200,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
 
         manuBox.addItem(NONE_SELECTED);
 
-        manufactureNameList = jmri.jmrix.DCCManufacturerList.getSystemNames();
+        manufactureNameList = manager.getConnectionManufacturers();
         for (String manuName : manufactureNameList) {
             if (original != null && original.getManufacturer() != null
                     && original.getManufacturer().equals(manuName)) {
@@ -208,7 +215,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
         });
 
         // get the list of ConnectionConfig items into a selection box
-        classConnectionNameList = jmri.jmrix.DCCManufacturerList.getConnectionList((String) manuBox.getSelectedItem());
+        classConnectionNameList = manager.getConnectionTypes((String) manuBox.getSelectedItem());
         classConnectionList = new jmri.jmrix.ConnectionConfig[classConnectionNameList.length + 1];
         modeBox.addItem(NONE_SELECTED);
         if (manuBox.getSelectedIndex() != 0) {
@@ -277,7 +284,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
     public void updateComboConnection() {
         modeBox.removeAllItems();
         modeBox.addItem(NONE_SELECTED);
-        classConnectionNameList = jmri.jmrix.DCCManufacturerList.getConnectionList((String) manuBox.getSelectedItem());
+        classConnectionNameList = InstanceManager.getDefault(ConnectionConfigManager.class).getConnectionTypes((String) manuBox.getSelectedItem());
         classConnectionList = new jmri.jmrix.ConnectionConfig[classConnectionNameList.length + 1];
 
         if (manuBox.getSelectedIndex() != 0) {
@@ -314,6 +321,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
     }
 
     void selection() {
+        ConnectionConfig old = this.ccCurrent;
         int current = modeBox.getSelectedIndex();
         details.removeAll();
         // first choice is -no- protocol chosen
@@ -329,6 +337,9 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
             if (ccCurrent != null) {
                 ccCurrent.dispose();
             }
+        }
+        if (old != this.ccCurrent) {
+            this.ccCurrent.register();
         }
         validate();
 
@@ -367,7 +378,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
         return classConnectionList[current].getInfo();
     }
 
-    public Object getCurrentObject() {
+    public ConnectionConfig getCurrentObject() {
         int current = modeBox.getSelectedIndex();
         if (current != 0) {
             return classConnectionList[current];
@@ -392,7 +403,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(JmrixConfigPane.class);
+    private final static Logger log = LoggerFactory.getLogger(JmrixConfigPane.class);
 
     @Override
     public String getPreferencesItem() {

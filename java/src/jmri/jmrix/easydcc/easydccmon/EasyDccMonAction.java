@@ -10,8 +10,7 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a EasyDccMonFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public class EasyDccMonAction extends AbstractAction {
 
     /**
@@ -38,7 +37,7 @@ public class EasyDccMonAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    static Logger log = LoggerFactory.getLogger(EasyDccMonAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccMonAction.class.getName());
 
 }
 

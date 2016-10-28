@@ -5,7 +5,6 @@
  * consists it builds
  *
  * @author Paul Bender Copyright (C) 2011
- * @version $Revision$
  */
 package jmri.jmrix.loconet;
 
@@ -130,5 +129,5 @@ public class LocoNetConsistManager extends AbstractConsistManager {
     protected boolean shouldRequestUpdateFromLayout() {
         return !requestingUpdate;
     }
-    static Logger log = LoggerFactory.getLogger(LocoNetConsistManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoNetConsistManager.class.getName());
 }

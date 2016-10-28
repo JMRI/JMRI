@@ -1,4 +1,3 @@
-// AudioTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
@@ -40,14 +39,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class AudioTableAction extends AbstractTableAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 997606126554992440L;
     AudioTableDataModel listeners;
     AudioTableDataModel buffers;
     AudioTableDataModel sources;
@@ -65,13 +59,13 @@ public class AudioTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param actionName
+     * @param actionName title of the action
      */
     public AudioTableAction(String actionName) {
         super(actionName);
 
         // disable ourself if there is no primary Audio manager available
-        if (jmri.InstanceManager.audioManagerInstance() == null) {
+        if (!InstanceManager.getOptionalDefault(AudioManager.class).isPresent()) {
             setEnabled(false);
         }
 
@@ -102,10 +96,6 @@ public class AudioTableAction extends AbstractTableAction {
 
         // create the frame
         atf = new AudioTableFrame(atp, helpTarget()) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -7518952412034675558L;
 
             /**
              * Include "Add Source..." and "Add Buffer..." buttons
@@ -127,13 +117,15 @@ public class AudioTableAction extends AbstractTableAction {
     @Override
     protected void createModel() {
         // ensure that the AudioFactory has been initialised
-        if (InstanceManager.audioManagerInstance().getActiveAudioFactory() == null) {
-            InstanceManager.audioManagerInstance().init();
-            if(InstanceManager.audioManagerInstance().getActiveAudioFactory() instanceof jmri.jmrit.audio.NullAudioFactory) {
-                InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showWarningMessage("Error", "NullAudioFactory initialised - no sounds will be available", getClassName(), "nullAudio", false, true);
+        InstanceManager.getOptionalDefault(jmri.AudioManager.class).ifPresent(cm -> {
+            if (cm.getActiveAudioFactory() == null) {
+                cm.init();
+                if (cm.getActiveAudioFactory() instanceof jmri.jmrit.audio.NullAudioFactory) {
+                    InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                            showWarningMessage("Error", "NullAudioFactory initialised - no sounds will be available", getClassName(), "nullAudio", false, true);
+                }
             }
-        }
+        });
         listeners = new AudioListenerTableDataModel();
         buffers = new AudioBufferTableDataModel();
         sources = new AudioSourceTableDataModel();
@@ -188,7 +180,7 @@ public class AudioTableAction extends AbstractTableAction {
         JMenu fileMenu = null;
         for (int i = 0; i < menuBar.getMenuCount(); i++) {
             if (menuBar.getComponent(i) instanceof JMenu) {
-                if (((JMenu) menuBar.getComponent(i)).getText().equals(rbapps.getString("MenuFile"))) {
+                if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuFile"))) {
                     fileMenu = menuBar.getMenu(i);
                 }
             }
@@ -213,14 +205,14 @@ public class AudioTableAction extends AbstractTableAction {
     }
 
     protected void editAudio(Audio a) {
-        Thread t;
+        Runnable t;
         switch (a.getSubType()) {
             case Audio.LISTENER:
                 if (listenerFrame == null) {
                     listenerFrame = new AudioListenerFrame(Bundle.getMessage("TitleAddAudioListener"), listeners);
                 }
                 listenerFrame.populateFrame(a);
-                t = new Thread() {
+                t = new Runnable() {
                     @Override
                     public void run() {
                         listenerFrame.pack();
@@ -234,7 +226,7 @@ public class AudioTableAction extends AbstractTableAction {
                     bufferFrame = new AudioBufferFrame(Bundle.getMessage("TitleAddAudioBuffer"), buffers);
                 }
                 bufferFrame.populateFrame(a);
-                t = new Thread() {
+                t = new Runnable() {
                     @Override
                     public void run() {
                         bufferFrame.pack();
@@ -249,7 +241,7 @@ public class AudioTableAction extends AbstractTableAction {
                 }
                 sourceFrame.updateBufferList();
                 sourceFrame.populateFrame(a);
-                t = new Thread() {
+                t = new Runnable() {
                     @Override
                     public void run() {
                         sourceFrame.pack();
@@ -270,11 +262,6 @@ public class AudioTableAction extends AbstractTableAction {
      */
     abstract public class AudioTableDataModel extends BeanTableDataModel implements PropertyChangeListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1263874422331471609L;
-
         char subType;
 
         public static final int EDITCOL = NUMCOLUMN;
@@ -289,10 +276,8 @@ public class AudioTableAction extends AbstractTableAction {
 
         @Override
         public AudioManager getManager() {
-            return InstanceManager.audioManagerInstance();
+            return InstanceManager.getDefault(jmri.AudioManager.class);
         }
-        /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"delete"); }
-         public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "delete", boo); }*/
 
         @Override
         protected String getMasterClassName() {
@@ -301,12 +286,12 @@ public class AudioTableAction extends AbstractTableAction {
 
         @Override
         public Audio getBySystemName(String name) {
-            return InstanceManager.audioManagerInstance().getBySystemName(name);
+            return InstanceManager.getDefault(jmri.AudioManager.class).getBySystemName(name);
         }
 
         @Override
         public Audio getByUserName(String name) {
-            return InstanceManager.audioManagerInstance().getByUserName(name);
+            return InstanceManager.getDefault(jmri.AudioManager.class).getByUserName(name);
         }
 
         /**
@@ -341,7 +326,7 @@ public class AudioTableAction extends AbstractTableAction {
         public String getColumnName(int col) {
             switch (col) {
                 case VALUECOL:
-                    return "Description";
+                    return Bundle.getMessage("LightControlDescription");
                 case EDITCOL:
                     return "";
                 default:
@@ -365,7 +350,7 @@ public class AudioTableAction extends AbstractTableAction {
 
         @Override
         public String getValue(String systemName) {
-            Object m = InstanceManager.audioManagerInstance().getBySystemName(systemName);
+            Object m = InstanceManager.getDefault(jmri.AudioManager.class).getBySystemName(systemName);
             return (m != null) ? m.toString() : "";
         }
 
@@ -461,11 +446,6 @@ public class AudioTableAction extends AbstractTableAction {
      */
     public class AudioListenerTableDataModel extends AudioTableDataModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2124461381030149588L;
-
         AudioListenerTableDataModel() {
             super(Audio.LISTENER);
         }
@@ -486,11 +466,6 @@ public class AudioTableAction extends AbstractTableAction {
      */
     public class AudioBufferTableDataModel extends AudioTableDataModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -8823961737671739012L;
-
         AudioBufferTableDataModel() {
             super(Audio.BUFFER);
         }
@@ -506,11 +481,6 @@ public class AudioTableAction extends AbstractTableAction {
      */
     public class AudioSourceTableDataModel extends AudioTableDataModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8123546730548750171L;
-
         AudioSourceTableDataModel() {
             super(Audio.SOURCE);
         }
@@ -523,7 +493,7 @@ public class AudioTableAction extends AbstractTableAction {
 
     @Override
     public void setMessagePreferencesDetails(){
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "nullAudio", "Hide Null Audio Warning Message");
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "nullAudio", Bundle.getMessage("HideNullAudioWarningMessage"));
         super.setMessagePreferencesDetails();
     }
 
@@ -537,5 +507,3 @@ public class AudioTableAction extends AbstractTableAction {
         return AudioTableAction.class.getName();
     }
 }
-
-/* @(#)AudioTableAction.java */

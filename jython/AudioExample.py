@@ -2,11 +2,9 @@
 #
 # Author: Matthew Harris, copyright 2009
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 
 import time
+import jmri
 
 from javax.vecmath import Vector3f
 

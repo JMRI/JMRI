@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Invoke complete set of tests for the Jmri package
  *
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -21,7 +19,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -29,21 +27,24 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.PackageTest");  // no tests in this class itself
 
         suite.addTest(jmri.BeanSettingTest.suite());
-        suite.addTest(jmri.BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(jmri.NamedBeanHandleManagerTest.suite());
         suite.addTest(jmri.BlockTest.suite());
         suite.addTest(jmri.BlockManagerTest.suite());
         suite.addTest(jmri.DccLocoAddressTest.suite());
-        suite.addTest(jmri.DccConsistTest.suite());
         suite.addTest(jmri.InstanceManagerTest.suite());
         suite.addTest(jmri.LightTest.suite());
         suite.addTest(jmri.NmraPacketTest.suite());
+        suite.addTest(jmri.ConditionalVariableTest.suite());
         suite.addTest(jmri.PathTest.suite());
+        suite.addTest(jmri.PathLengthTest.suite());
         suite.addTest(jmri.PushbuttonPacketTest.suite());
         suite.addTest(jmri.TurnoutTest.suite());
+        suite.addTest(jmri.TurnoutOperationTest.suite());
         suite.addTest(jmri.ApplicationTest.suite());
         suite.addTest(jmri.AudioTest.suite());
         suite.addTest(jmri.IdTagTest.suite());
+        suite.addTest(jmri.SchemaTest.suite());
         suite.addTest(jmri.ProgrammingModeTest.suite());
         suite.addTest(jmri.VersionTest.suite());
         suite.addTest(jmri.beans.PackageTest.suite());
@@ -53,10 +54,13 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.managers.PackageTest.suite());
         suite.addTest(jmri.jmrix.PackageTest.suite());  // last due to threading issues?
         suite.addTest(jmri.jmrit.PackageTest.suite());  // last due to classloader issues?
-        suite.addTest(jmri.swing.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.swing.PackageTest.class));
         suite.addTest(jmri.util.PackageTest.suite());
         suite.addTest(jmri.web.PackageTest.suite());
         suite.addTest(jmri.jmris.PackageTest.suite());
+        suite.addTest(jmri.profile.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.server.PackageTest.class));
+        suite.addTest(jmri.script.PackageTest.suite());
         return suite;
     }
 

@@ -10,8 +10,6 @@ import jmri.jmrix.ecos.EcosPreferences;
 import jmri.jmrix.ecos.EcosReply;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import jmri.jmrix.ecos.EcosTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class RosterToEcos implements EcosListener {
 
@@ -132,7 +130,7 @@ public class RosterToEcos implements EcosListener {
                                 objEcosLoco.setProtocol("DCC128");
                         }
                         _re.writeFile(null, null, null);
-                        jmri.jmrit.roster.Roster.writeRosterFile();
+                        jmri.jmrit.roster.Roster.getDefault().writeRoster();
                         objEcosLocoManager.register(objEcosLoco);
                         createloco = false;
                         dispose();
@@ -152,6 +150,4 @@ public class RosterToEcos implements EcosListener {
         _re = null;
         createloco = false;
     }
-
-    static Logger log = LoggerFactory.getLogger(RosterToEcos.class.getName());
 }

@@ -147,6 +147,12 @@
             </row>
           </column>
         </row>
+        <row>
+          <column>
+            <display item="CV133.1.0" layout="left"/>
+            <display item="CV133.2.0" layout="left"/>
+          </column>
+        </row>
       </column>
     </row>
   </column>

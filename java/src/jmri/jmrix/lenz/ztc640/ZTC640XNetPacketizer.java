@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * bytes that appear prior to some messages.
  *
  * @author	Paul Bender Copyright (C) 2006
- * @version $Revision$
  *
  */
 public class ZTC640XNetPacketizer extends XNetPacketizer {
@@ -63,7 +62,7 @@ public class ZTC640XNetPacketizer extends XNetPacketizer {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(ZTC640XNetPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ZTC640XNetPacketizer.class.getName());
 }
 
 /* @(#)ZTC640XNetPacketizer.java */

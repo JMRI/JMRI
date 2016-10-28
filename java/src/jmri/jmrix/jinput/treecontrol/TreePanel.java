@@ -40,8 +40,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision$
- */
+  */
 public class TreePanel extends JPanel {
 
     /**
@@ -320,5 +319,5 @@ public class TreePanel extends JPanel {
 
     JTree dTree;
 
-    static Logger log = LoggerFactory.getLogger(TreePanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TreePanel.class.getName());
 }

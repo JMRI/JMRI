@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.TrainIcon objects.
  *
  * @author mstevetodd Copyright: Copyright (c) 2012
- * @version $Revision: $
+ * 
  */
 public class TrainIconXml extends LocoIconXml {
 
@@ -25,6 +25,7 @@ public class TrainIconXml extends LocoIconXml {
      * @param o Object to store, of type TrainIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         TrainIcon p = (TrainIcon) o;
@@ -56,17 +57,13 @@ public class TrainIconXml extends LocoIconXml {
         return element;
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * TrainIcons should be loaded by the operations function, not here
      *
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         //NOTE: this method should not be populated.  
         //  The operations program restores the Icons when the Trains window is opened.   
@@ -75,5 +72,5 @@ public class TrainIconXml extends LocoIconXml {
         log.debug("Warning: loading of TrainIcon not implemented, TrainIcons will be placed by Operations");
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainIconXml.class.getName());
 }

@@ -1,25 +1,30 @@
 package jmri.jmrit.withrottle;
 
 /**
- * DeviceServer.java
- *
  * WiThrottle
  *
  * @author Brett Hoffman Copyright (C) 2009, 2010
  * @author Created by Brett Hoffman on:
  * @author 7/20/09.
- * @version $Revision$
  *
  * Thread with input and output streams for each connected device. Creates an
  * invisible throttle window for each.
  *
- * Sorting codes: 'T'hrottle - sends to throttleController 'S'econdThrottle -
- * sends to secondThrottleController 'C' - Not used anymore except to provide
- * backward compliance, same as 'T' 'N'ame of device 'H' hardware info -
- * followed by: 'U' UDID - unique device identifier 'P' panel - followed by: 'P'
- * track power 'T' turnouts 'R' routes 'R' roster - followed by: 'C' consists
- * 'Q'uit - device has quit, close its throttleWindow '*' - heartbeat from
- * client device ('*+' starts, '*-' stops)
+ * Sorting codes: 
+ *  'T'hrottle - sends to throttleController 
+ *  'S'econdThrottle - sends to secondThrottleController
+ *  'C' - Not used anymore except to provide backward compliance, same as 'T' 
+ *  'N'ame of device 
+ *  'H' hardware info - followed by:
+ *      'U' UDID - unique device identifier 
+ *  'P' panel - followed by: 
+ *      'P' track power
+ *      'T' turnouts 
+ *      'R' routes
+ *  'R' roster - followed by: 
+ *      'C' consists
+ *  'Q'uit - device has quit, close its throttleWindow
+ *  '*' - heartbeat from client device ('*+' starts, '*-' stops)
  *
  * Added in v2.0: 'M'ultiThrottle - forwards to MultiThrottle class, see notes
  * there for use. Followed by id character to create or control appropriate
@@ -60,7 +65,7 @@ package jmri.jmrit.withrottle;
  *
  *
  * Heartbeat send '*0' to tell device to stop heartbeat, '*#' # = number of
- * seconds until eStop This class sends initial to device, but does not start
+ * seconds until eStop. This class sends initial to device, but does not start
  * monitoring until it gets a response of '*+' Device should send heartbeat to
  * server in shorter time than eStop
  *
@@ -81,7 +86,7 @@ import java.util.TimerTask;
 import jmri.CommandStation;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.web.server.WebServerManager;
+import jmri.web.server.WebServerPreferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -91,7 +96,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     private static final String versionNumber = "2.0";
 
     private Socket device;
-    private CommandStation cmdStation = jmri.InstanceManager.commandStationInstance();
+    private CommandStation cmdStation = jmri.InstanceManager.getNullableDefault(CommandStation.class);
     String newLine = System.getProperty("line.separator");
     BufferedReader in = null;
     PrintStream out = null;
@@ -117,9 +122,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     final boolean isRouteAllowed = WiThrottleManager.withrottlePreferencesInstance().isAllowRoute();
     private ConsistController consistC = null;
     private boolean isConsistAllowed;
-
-    List<RosterEntry> rosterList;
-
+    
     private DeviceManager manager;
 
     DeviceServer(Socket socket, DeviceManager manager) {
@@ -198,7 +201,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                             }
                             char id = inPackage.charAt(1);
                             if (!multiThrottles.containsKey(id)) {   //  Create a MT if this is a new id
-                                multiThrottles.put(id, new MultiThrottle(inPackage.charAt(1), this, this));
+                                multiThrottles.put(id, new MultiThrottle(id, this, this));
                             }
 
                             // Strips 'M' and id, forwards rest
@@ -462,7 +465,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             }
 
         };
-        ekg.scheduleAtFixedRate(task, pulseInterval * 900, pulseInterval * 900);
+        ekg.scheduleAtFixedRate(task, pulseInterval * 900L, pulseInterval * 900L);
     }
 
     public void stopEKG() {
@@ -559,7 +562,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     }
 
     public static String getWebServerPort() {
-        return Integer.toString(WebServerManager.getWebServerPreferences().getPort());
+        return Integer.toString(WebServerPreferences.getDefault().getPort());
     }
 
     /**
@@ -583,7 +586,6 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     /**
      * Add a DeviceListener
      *
-     * @param l
      */
     public void addDeviceListener(DeviceListener l) {
         if (listeners == null) {
@@ -597,7 +599,6 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     /**
      * Remove a DeviceListener
      *
-     * @param l
      */
     public void removeDeviceListener(DeviceListener l) {
         if (listeners == null) {
@@ -639,21 +640,21 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
      *         received.
      */
     public String sendRoster() {
-        if (rosterList == null) {
-            rosterList = Roster.instance().getEntriesInGroup(manager.getSelectedRosterGroup());
-        }
+        List<RosterEntry> rosterList;
+        rosterList = Roster.getDefault().getEntriesInGroup(manager.getSelectedRosterGroup());
         StringBuilder rosterString = new StringBuilder(rosterList.size() * 25);
-        for (int i = 0; i < rosterList.size(); i++) {
-            RosterEntry entry = rosterList.get(i);
+        for (RosterEntry entry : rosterList) {
             StringBuilder entryInfo = new StringBuilder(entry.getId()); //  Start with name
-            entryInfo.append("}|{" + entry.getDccAddress());    //  Append address #
+            entryInfo.append("}|{");
+            entryInfo.append(entry.getDccAddress());
             if (entry.isLongAddress()) { //  Append length value
                 entryInfo.append("}|{L");
             } else {
                 entryInfo.append("}|{S");
             }
 
-            rosterString.append("]\\[" + entryInfo);  //  Put this info in as an item
+            rosterString.append("]\\[");  //  Put this info in as an item
+            rosterString.append(entryInfo);
 
         }
         rosterString.trimToSize();
@@ -661,6 +662,6 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         return ("RL" + rosterList.size() + rosterString);
     }
 
-    static Logger log = LoggerFactory.getLogger(DeviceServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DeviceServer.class.getName());
 
 }

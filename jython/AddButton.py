@@ -3,9 +3,16 @@
 #
 # Author: Bob Jacobsen, copyright 2007
 # Part of the JMRI distribution
+
 #
-# The next line is maintained by SVN, please don't change it
-# $Revision$
+# NOTE: The recommended way to add a script button to JMRI is to
+# use the Startup Items preferences to add that button.
+#
+# NOTE: This script does not support DecoderPro. Use the recommended
+# method if you need to add a script to a button in DecoderPro.
+#
+
+import jmri
 
 import javax.swing.JButton
 import apps

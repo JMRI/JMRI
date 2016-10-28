@@ -1,4 +1,3 @@
-// InstallTest.java
 package apps.InstallTest;
 
 import apps.Apps;
@@ -35,14 +34,8 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Ken Cameron Copyright 2008
- * @version $Revision$
  */
 public class InstallTest extends Apps {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1292408345588882623L;
 
     InstallTest(JFrame p) {
         super(p);
@@ -73,11 +66,6 @@ public class InstallTest extends Apps {
         Action serviceprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("DpButtonUseProgrammingTrack"));
         Action opsprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("DpButtonProgramOnMainTrack"));
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -9126451934736739677L;
-
             public void actionPerformed(ActionEvent e) {
                 Apps.handleQuit();
             }
@@ -88,8 +76,8 @@ public class InstallTest extends Apps {
         b1.addActionListener(serviceprog);
         b1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(b1);
-        if (jmri.InstanceManager.programmerManagerInstance() == null
-                || !jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) == null
+                || !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).isGlobalProgrammerAvailable()) {
             b1.setEnabled(false);
             b1.setToolTipText(Bundle.getMessage("MsgServiceButtonDisabled"));
         }
@@ -97,8 +85,8 @@ public class InstallTest extends Apps {
         m1.addActionListener(opsprog);
         m1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(m1);
-        if (jmri.InstanceManager.programmerManagerInstance() == null
-                || !jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) == null
+                || !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).isAddressedModePossible()) {
             m1.setEnabled(false);
             m1.setToolTipText(Bundle.getMessage("MsgOpsButtonDisabled"));
         }
@@ -126,5 +114,5 @@ public class InstallTest extends Apps {
         splash(false);
     }
 
-    static Logger log = LoggerFactory.getLogger(InstallTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InstallTest.class.getName());
 }

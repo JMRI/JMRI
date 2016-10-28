@@ -26,8 +26,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005, 2006, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision$
- */
+  */
 abstract public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
     public SerialTrafficController() {
@@ -46,6 +45,7 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
      * connections
      */
     @Deprecated
+    @Override
     public void setInstance() {
     }
 
@@ -214,7 +214,7 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
         return null;
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class.getName());
 
 }
 

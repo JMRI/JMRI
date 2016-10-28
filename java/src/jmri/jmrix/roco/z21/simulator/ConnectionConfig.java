@@ -1,22 +1,18 @@
-// ConnectionConfig.java
 package jmri.jmrix.roco.z21.simulator;
 
 import javax.swing.JPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
  * Handle configuring an z21 layout connection via a z21Simulator
  * adapter.
  * <P>
- * This uses the {@link z21SimulatorAdapter} class to do the actual connection.
+ * This uses the {@link Z21SimulatorAdapter} class to do the actual connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Paul Bender Copyright (C) 2009
- * @version	$Revision$
  *
- * @see z21SimulatorAdapter
+ * @see Z21SimulatorAdapter
  */
 public class ConnectionConfig extends jmri.jmrix.roco.z21.ConnectionConfig {
 
@@ -43,7 +39,7 @@ public class ConnectionConfig extends jmri.jmrix.roco.z21.ConnectionConfig {
     @Override
     protected void setInstance() {
         if (adapter == null) {
-            adapter = new z21SimulatorAdapter();
+            adapter = new Z21SimulatorAdapter();
         }
     }
 
@@ -67,7 +63,5 @@ public class ConnectionConfig extends jmri.jmrix.roco.z21.ConnectionConfig {
     public boolean isAutoConfigPossible() {
         return false;  // always fixed, no reason to search.
     }
-
-    static Logger log = LoggerFactory.getLogger(ConnectionConfig.class.getName());
 
 }

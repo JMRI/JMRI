@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
  * @author Paul Bender Copyright: Copyright (c) 2015 
- * @version $Revision$
  */
 public class JMRIClientReporterManagerXml extends jmri.managers.configurexml.AbstractReporterManagerConfigXML {
 
@@ -29,11 +28,12 @@ public class JMRIClientReporterManagerXml extends jmri.managers.configurexml.Abs
         log.error("Invalid method called");
     }
 
-    public boolean load(Element reporters) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // load individual reporters 
-        return loadReporters(reporters);
+        return loadReporters(shared);
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(JMRIClientReporterManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientReporterManagerXml.class.getName());
 }

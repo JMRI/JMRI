@@ -1,5 +1,3 @@
-// SliderSnap.java
-
 /*
  * Copyright (c) 2011 Michael Kneebone. All Rights Reserved.
  *
@@ -65,7 +63,6 @@ import javax.swing.plaf.basic.BasicSliderUI;
  *
  * @author Michael Kneebone Copyright (c) 2007, 2011
  * @author Matthew Harris Copyright (c) 2011
- * @version $Revision$
  */
 public class SliderSnap extends BasicSliderUI {
 
@@ -425,5 +422,3 @@ public class SliderSnap extends BasicSliderUI {
     }
 
 }
-
-/* @(#)SliderSnap.java */

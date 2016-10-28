@@ -1,4 +1,3 @@
-// SignalMastTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.Component;
@@ -13,22 +12,14 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
-import jmri.util.com.sun.TableSorter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.swing.table.TableRowSorter;
 
 /**
  * Swing action to create and register a SignalMastTable GUI.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2009, 2010
- * @version $Revision$
  */
 public class SignalMastTableAction extends AbstractTableAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -9004328747718013361L;
 
     /**
      * Create an action with a specific title.
@@ -36,14 +27,14 @@ public class SignalMastTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param actionName
+     * @param actionName title of the action
      */
     public SignalMastTableAction(String actionName) {
         super(actionName);
     }
 
     public SignalMastTableAction() {
-        this("Signal Mast Table");
+        this(Bundle.getMessage("TitleSignalMastTable"));
     }
 
     /**
@@ -55,7 +46,7 @@ public class SignalMastTableAction extends AbstractTableAction {
     }
 
     protected void setTitle() {
-        f.setTitle(f.rb.getString("TitleSignalMastTable"));
+        f.setTitle(Bundle.getMessage("TitleSignalMastTable"));
     }
 
     protected String helpTarget() {
@@ -71,22 +62,16 @@ public class SignalMastTableAction extends AbstractTableAction {
     public void actionPerformed(ActionEvent e) {
         // create the JTable model, with changes for specific NamedBean
         createModel();
-        TableSorter sorter = new TableSorter(m);
-        JTable dataTable = m.makeJTable(sorter);
-        sorter.setTableHeader(dataTable.getTableHeader());
+        TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter<>(m);
+        JTable dataTable = m.makeJTable(m.getMasterClassName(), m, sorter);
         // create the frame
         f = new BeanTableFrame(m, helpTarget(), dataTable) {
-
-            /**
-             *
-             */
-            private static final long serialVersionUID = 151993526213329064L;
 
             /**
              * Include an "add" button
              */
             void extras() {
-                JButton addButton = new JButton(this.rb.getString("ButtonAdd"));
+                JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
                 addToBottomBox(addButton, this.getClass().getName());
                 addButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -113,9 +98,9 @@ public class SignalMastTableAction extends AbstractTableAction {
 
     public void setMenuBar(BeanTableFrame f) {
         JMenuBar menuBar = f.getJMenuBar();
-        JMenu pathMenu = new JMenu(rb.getString("Tools"));
+        JMenu pathMenu = new JMenu(Bundle.getMessage("MenuTools"));
         menuBar.add(pathMenu);
-        JMenuItem item = new JMenuItem(rb.getString("MenuItemRepeaters"));
+        JMenuItem item = new JMenuItem(Bundle.getMessage("MenuItemRepeaters"));
         pathMenu.add(item);
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -125,14 +110,7 @@ public class SignalMastTableAction extends AbstractTableAction {
         });
     }
 
-    static final Logger log = LoggerFactory.getLogger(SignalMastTableAction.class.getName());
-
     public static class MyComboBoxRenderer extends JComboBox<String> implements TableCellRenderer {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2364477222809281572L;
 
         public MyComboBoxRenderer(Vector<String> items) {
             super(items);
@@ -156,11 +134,6 @@ public class SignalMastTableAction extends AbstractTableAction {
 
     public static class MyComboBoxEditor extends DefaultCellEditor {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -7751205079226082780L;
-
         public MyComboBoxEditor(Vector<String> items) {
             super(new JComboBox<String>(items));
         }
@@ -171,9 +144,7 @@ public class SignalMastTableAction extends AbstractTableAction {
     }
 
     public String getClassDescription() {
-        return rb.getString("TitleSignalGroupTable");
+        return Bundle.getMessage("TitleSignalGroupTable");
     }
 }
 
-
-/* @(#)SignalMastTableAction.java */

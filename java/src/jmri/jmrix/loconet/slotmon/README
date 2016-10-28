@@ -1,7 +1,7 @@
 The jmrix.slotmon package contains a graphical slot monitor for Digitrax
 command stations.
 
-The JMRI web page is located at http://jmri.sourceforge.net/
+The JMRI web page is located at http://jmri.org/
 
 The SlotMonDataModel object is the Swing datamodel part of a JTable, used 
 as a data member in the SlotMonFrame.  The SlotMonDataModel interacts with

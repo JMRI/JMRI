@@ -2,18 +2,18 @@
 # This is particularly useful in simulator mode, when feedback is not available
 #
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 
-def setTurnoutToDirect(turnout):
-    to = turnouts.getTurnout(turnout)
+import jmri
+
+toCnt = 0
+chgCnt = 0
+# loop thru all defined turnouts, setting each to DIRECT if not already DIRECT
+for toName in turnouts.getSystemNameList().toArray() :
+    toCnt += 1
+    to = turnouts.getTurnout(toName)
     fm = to.getFeedbackMode()
     if (fm != jmri.Turnout.DIRECT) :
         to.setFeedbackMode(jmri.Turnout.DIRECT)
-    return
-
-# invoke for all defined turnouts
-for x in turnouts.getSystemNameList().toArray() :
-  setTurnoutToDirect(x)
+        chgCnt += 1
+print str(toCnt) + " turnouts found, " + str(chgCnt) + " changed to DIRECT"
 

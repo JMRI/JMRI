@@ -10,8 +10,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2006, 2008
  *
- * @version	$Revision$
- */
+  */
 public class Distributor {
 
     /**
@@ -111,7 +110,7 @@ public class Distributor {
     final private Vector<ReadingListener> readingListeners = new Vector<ReadingListener>();
     final private Vector<MeasurementListener> measurementListeners = new Vector<MeasurementListener>();
 
-    static Logger log = LoggerFactory.getLogger(Distributor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Distributor.class.getName());
 
     /**
      * Forward the Reading from the Swing thread

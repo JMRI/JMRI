@@ -1,4 +1,3 @@
-// AbstractConsistManager.java
 package jmri.implementation;
 
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import jmri.DccLocoAddress;
  *
  * @author Paul Bender Copyright (C) 2004
  * @author Randall Wood Copyright (C) 2013
- * @version $Revision$
  */
 abstract public class AbstractConsistManager implements ConsistManager {
 

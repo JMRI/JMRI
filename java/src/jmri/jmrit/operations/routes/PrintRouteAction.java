@@ -21,14 +21,9 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2009, 2012
- * @version $Revision$
  */
 public class PrintRouteAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9199448958901465687L;
     static final String NEW_LINE = "\n"; // NOI18N
     static final String TAB = "\t"; // NOI18N
     private static final int MAX_NAME_LENGTH = Control.max_len_string_location_name - 5;
@@ -49,6 +44,7 @@ public class PrintRouteAction extends AbstractAction {
     boolean isPreview;
     Route route;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (route == null) {
             return;
@@ -123,5 +119,5 @@ public class PrintRouteAction extends AbstractAction {
         return buf.toString();
     }
 
-    static Logger log = LoggerFactory.getLogger(PrintRouteAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintRouteAction.class.getName());
 }

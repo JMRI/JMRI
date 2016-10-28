@@ -1,5 +1,6 @@
 package jmri.jmrit.roster;
 
+import jmri.InstanceManager;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -8,8 +9,7 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.roster.RosterEntryPane class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
- */
+  */
 public class CopyRosterItemActionTest extends TestCase {
 
     /**
@@ -22,16 +22,11 @@ public class CopyRosterItemActionTest extends TestCase {
         // create a special roster
         //Roster r = RosterTest.createTestRoster();
         // make that the default; not that test roster uses special name
-        Roster.resetInstance();
-        Roster.instance();
+        InstanceManager.reset(Roster.class);
+        InstanceManager.setDefault(Roster.class, new Roster(null));
 
         // copy the item
         CopyRosterItemAction a = new CopyRosterItemAction("copy", new javax.swing.JFrame()) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -3247630279571447763L;
-
             protected boolean selectFrom() {
                 return false;  // aborts operation
             }
@@ -47,7 +42,7 @@ public class CopyRosterItemActionTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", CopyRosterItemActionTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

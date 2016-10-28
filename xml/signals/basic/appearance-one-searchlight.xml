@@ -59,6 +59,13 @@
       <show>red</show>
       <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-high-abs/rule-292.gif</imagelink>
     </appearance>
+    
+    <appearance>
+      <aspectname>Unlit</aspectname>
+      <show>dark</show>
+      <imagelink>../../../resources/icons/smallschematics/searchlights/one-high-dark.gif</imagelink>
+    </appearance>
+
 
   </appearances>
   
@@ -66,9 +73,13 @@
      <danger>
         <aspect>Stop</aspect>
      </danger>
-     <held>
-        <aspect>Stop</aspect>
-     </held>
+    <held>
+      <aspect>Stop</aspect>
+      <imagelink>../../../resources/icons/smallschematics/searchlights/one-high-held.gif</imagelink>
+    </held>
+    <dark>
+      <aspect>Unlit</aspect>
+    </dark>
   </specificappearances><!-- End of Specific Appearances list -->
   
     <aspectMappings><!-- Start of Aspect Mapping -->

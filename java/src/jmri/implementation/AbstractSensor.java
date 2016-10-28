@@ -1,8 +1,9 @@
-// AbstractSensor.java
 package jmri.implementation;
 
 import jmri.Reporter;
 import jmri.Sensor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract class providing the basic logic of the Sensor interface
@@ -10,14 +11,10 @@ import jmri.Sensor;
  * Sensor system names are always upper case.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2009
- * @version $Revision$
  */
 public abstract class AbstractSensor extends AbstractNamedBean implements Sensor, java.io.Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6188852412145851127L;
+    private final static Logger log = LoggerFactory.getLogger(AbstractSensor.class);
 
     // ctor takes a system-name string for initialization
     public AbstractSensor(String systemName) {
@@ -108,10 +105,14 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                     Thread.sleep(sensorDebounceTimer);
                     restartcount = 0;
                     _knownState = _rawState;
-                    firePropertyChange("KnownState", Integer.valueOf(lastKnownState), Integer.valueOf(_knownState));
-
+                    
+                    javax.swing.SwingUtilities.invokeAndWait(
+                        ()->{firePropertyChange("KnownState", Integer.valueOf(lastKnownState), Integer.valueOf(_knownState));}
+                    );
                 } catch (InterruptedException ex) {
                     restartcount++;
+                } catch (java.lang.reflect.InvocationTargetException ex) {
+                    log.error("failed to start debounced Sensor update for \"{}\" due to {}", getDisplayName(), ex.getCause() );
                 }
             }
         };
@@ -133,14 +134,10 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 int oldRawState = _rawState;
                 _rawState = s;
                 if (thr != null) {
-                    try {
-                        thr.interrupt();
-                    } catch (Exception ie) {
-                        //Can be considered normal.
-                    }
+                    thr.interrupt();
                 }
                 if ((restartcount != 0) && (restartcount % 10 == 0)) {
-                    log.warn("Sensor " + getDisplayName() + " state keeps flapping " + restartcount);
+                    log.warn("Sensor \"{}\" state keeps flapping: {}", getDisplayName(), restartcount);
                 }
                 firePropertyChange("RawState", Integer.valueOf(oldRawState), Integer.valueOf(s));
                 sensorDebounce();
@@ -149,11 +146,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 //we shall try to stop the thread as one of the state changes 
                 //might start the thread, while the other may not.
                 if (thr != null) {
-                    try {
-                        thr.interrupt();
-                    } catch (Exception ie) {
-                        //Can be considered normal.
-                    }
+                    thr.interrupt();
                 }
                 _rawState = s;
             }
@@ -176,15 +169,11 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 int oldRawState = _rawState;
                 _rawState = s;
                 if (thr != null) {
-                    try {
-                        thr.interrupt();
-                    } catch (Exception ie) {
-                        //Can be considered normal.
-                    }
+                    thr.interrupt();
                 }
 
                 if ((restartcount != 0) && (restartcount % 10 == 0)) {
-                    log.warn("Sensor " + getDisplayName() + " state keeps flapping " + restartcount);
+                    log.warn("Sensor \"{}\" state keeps flapping: {}", getDisplayName(), restartcount);
                 }
                 firePropertyChange("RawState", Integer.valueOf(oldRawState), Integer.valueOf(s));
                 sensorDebounce();
@@ -193,11 +182,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 //we shall try to stop the thread as one of the state changes 
                 //might start the thread, while the other may not.
                 if (thr != null) {
-                    try {
-                        thr.interrupt();
-                    } catch (Exception ie) {
-                        //Can be considered normal.
-                    }
+                    thr.interrupt();
                 }
                 _rawState = s;
             }
@@ -288,5 +273,3 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     }
 
 }
-
-/* @(#)AbstractSensor.java */

@@ -20,8 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
- */
+  */
 public class LawicellTrafficController extends jmri.jmrix.can.TrafficController {
 
     public LawicellTrafficController() {
@@ -155,7 +154,7 @@ public class LawicellTrafficController extends jmri.jmrix.can.TrafficController 
 
     private int gcState;
 
-    static Logger log = LoggerFactory.getLogger(LawicellTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LawicellTrafficController.class.getName());
 }
 
 

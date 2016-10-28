@@ -15,6 +15,7 @@
 <!-- version 1 - for Unified Software -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Individual Volume 0</name>
+  <name xml:lang="it">Volume Livello 0</name>
   <column>
     <row>
       <column>
@@ -67,8 +68,6 @@
         <display item="Volume 0-29"/>
         <display item="Volume 0-30"/>
         <display item="Volume 0-31"/>
-      </column>               
-      <column>                
         <display item="Volume 0-32"/>
         <display item="Volume 0-33"/>
         <display item="Volume 0-34"/>
@@ -135,8 +134,6 @@
         <display item="Volume 0-93"/>
         <display item="Volume 0-94"/>
         <display item="Volume 0-95"/>
-      </column>               
-      <column>                
         <display item="Volume 0-96"/>
         <display item="Volume 0-97"/>
         <display item="Volume 0-98"/>
@@ -203,8 +200,6 @@
         <display item="Volume 0-157"/>
         <display item="Volume 0-158"/>
         <display item="Volume 0-159"/>
-      </column>               
-      <column>                
         <display item="Volume 0-160"/>
         <display item="Volume 0-161"/>
         <display item="Volume 0-162"/>
@@ -271,8 +266,6 @@
         <display item="Volume 0-221"/>
         <display item="Volume 0-222"/>
         <display item="Volume 0-223"/>
-      </column>               
-      <column>                
         <display item="Volume 0-224"/>
         <display item="Volume 0-225"/>
         <display item="Volume 0-226"/>
@@ -308,5 +301,4 @@
       </column>
     </row>
   </column>
-  <name xml:lang="it">Volume Livello 0</name>
 </pane>

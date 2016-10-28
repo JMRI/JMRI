@@ -1,4 +1,3 @@
-// XBeeLightManager.java
 package jmri.jmrix.ieee802154.xbee;
 
 import jmri.Light;
@@ -11,14 +10,8 @@ import org.slf4j.LoggerFactory;
  * <p>
  *
  * @author Paul Bender Copyright (C) 2014
- * @version $Revision$
  */
 public class XBeeLightManager extends AbstractLightManager {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3033596888763946284L;
 
     protected String prefix = null;
 
@@ -101,7 +94,11 @@ public class XBeeLightManager extends AbstractLightManager {
             int seperator = systemName.indexOf(":");
             encoderAddress = systemName.substring(getSystemPrefix().length() + 1, seperator);
         } else {
-            encoderAddress = systemName.substring(getSystemPrefix().length() + 1, systemName.length() - 1);
+            if(systemName.length()>(getSystemPrefix().length()+1)) {
+               encoderAddress = systemName.substring(getSystemPrefix().length() + 1, systemName.length() - 1);
+            } else {
+               encoderAddress = systemName.substring(getSystemPrefix().length() + 1);
+            }
         }
         log.debug("Converted {} to hardware address {}", systemName, encoderAddress);
         return encoderAddress;
@@ -172,6 +169,6 @@ public class XBeeLightManager extends AbstractLightManager {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(XBeeLightManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeLightManager.class.getName());
 
 }

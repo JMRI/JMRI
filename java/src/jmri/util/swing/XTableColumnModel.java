@@ -22,16 +22,11 @@ import javax.swing.table.TableColumn;
  * you want invisible columns taken into account.
  *
  * @version 0.9 04/03/01
- * @version	$Revision: 20525 $
  * @author Stephen Kelvin, mail@StephenKelvin.de
  * @see DefaultTableColumnModel
  */
 public class XTableColumnModel extends DefaultTableColumnModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6890678360829524192L;
     /**
      * Array of TableColumn objects in this model. Holds all column objects,
      * regardless of their visibility
@@ -122,7 +117,7 @@ public class XTableColumnModel extends DefaultTableColumnModel {
     }
 
     /**
-     * Checks wether the specified column is currently visible.
+     * Checks whether the specified column is currently visible.
      *
      * @param aColumn column to check
      * @return visibility of specified column (false if there is no such column
@@ -133,7 +128,7 @@ public class XTableColumnModel extends DefaultTableColumnModel {
     }
 
     /**
-     * Append <code>column</code> to the right of exisiting columns. Posts
+     * Append <code>column</code> to the right of existing columns. Posts
      * <code>columnAdded</code> event.
      *
      * @param column The column to be added

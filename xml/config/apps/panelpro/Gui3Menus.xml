@@ -12,18 +12,22 @@
     <node>
       <name>Load...</name>
       <name xml:lang="it">Carica...</name>
+      <name xml:lang="de">Lade...</name>
     </node>
     <node>
       <name>Store...</name>
       <name xml:lang="it">Salva...</name>
+      <name xml:lang="de">Speichere...</name>
     </node>
     <node>
       <name>Print...</name>
       <name xml:lang="it">Stampa...</name>
+      <name xml:lang="de">Drucken...</name>
     </node>
     <node>
       <name>Quit</name>
       <name xml:lang="it">Esci</name>
+      <name xml:lang="de">Beenden</name>
         <adapter>apps.gui3.paned.QuitAction</adapter>
     </node>
   </node>
@@ -31,25 +35,29 @@
   <node>
     <name>Edit</name>
     <name xml:lang="it">Modifica</name>
+    <name xml:lang="de">Bearbeiten</name>
     <node>
       <name>Cut</name>
       <name xml:lang="it">Taglia</name>
+      <name xml:lang="de">Ausschneiden</name>
     </node>
     <node>
       <name>Copy</name>
       <name xml:lang="it">Copia</name>
+      <name xml:lang="de">Kopieren</name>
     </node>
     <node>
       <name>Paste</name>
       <name xml:lang="it">Incolla</name>
+      <name xml:lang="de">Einsetzen</name>
     </node>
     <node>
       <name>Preferences</name>
       <name xml:lang="it">Preferenze</name>
+      <name xml:lang="de">Voreinstellungen</name>
         <panel>apps.gui3.TabbedPreferences</panel>
     </node>
   </node>
-
 
 </nodes>
   

@@ -1,4 +1,3 @@
-// LoaderPane.java
 package jmri.jmrix.loconet.soundloader;
 
 import java.awt.FlowLayout;
@@ -17,21 +16,13 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import jmri.jmrix.loconet.spjfile.SpjFile;
 import jmri.util.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Pane for downloading .hex files
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version	$Revision$
  */
 public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3466057573583241795L;
 
     // GUI member declarations
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Loader");
@@ -55,7 +46,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
     }
 
     public String getTitle() {
-        return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemSoundload"));
+        return getTitle(Bundle.getMessage("MenuItemSoundload"));
     }
 
     public LoaderPane() {
@@ -183,7 +174,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
     }
 
     void doRead() {
-        if (inputFileName.getText() == "") {
+        if (inputFileName.getText().equals("")) {
             JOptionPane.showMessageDialog(this, res.getString("ErrorNoInputFile"),
                     res.getString("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
@@ -274,7 +265,5 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
         }
         engine = null;  // not for GC, this flags need to reinit
     }
-
-    static Logger log = LoggerFactory.getLogger(LoaderPane.class.getName());
 
 }

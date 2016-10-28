@@ -38,10 +38,6 @@ import org.slf4j.LoggerFactory;
  */
 public class FunctionButton extends JToggleButton implements ActionListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2228118723029439168L;
     private ArrayList<FunctionListener> listeners = new ArrayList<FunctionListener>();
     private int identity; // F0, F1, etc?
     private boolean isOn;
@@ -536,6 +532,6 @@ public class FunctionButton extends JToggleButton implements ActionListener {
         return isSelectedImageOK;
     }
 
-    static Logger log = LoggerFactory.getLogger(FunctionButton.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FunctionButton.class.getName());
 
 }

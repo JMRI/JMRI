@@ -37,17 +37,16 @@ import java.awt.datatransfer.DataFlavor;
  *
  * <p>
  * <em>This code is licensed for public use under the Common Public License
- * version 0.5.</em><br/>
+ * version 0.5.</em><br>
  * The Common Public License, developed by IBM and modeled after their
  * industry-friendly IBM Public License, differs from other common open source
- * licenses in several important ways:
+ * licenses in several important ways:</p>
  * <ul>
  * <li>You may include this software with other software that uses a different
  * (even non-open source) license.</li>
  * <li>You may use this software to make for-profit software.</li>
  * <li>Your patent rights, should you generate patents, are protected.</li>
  * </ul>
- * </p>
  * <p>
  * <em>Copyright 2001 Robert Harder</em></p>
  *

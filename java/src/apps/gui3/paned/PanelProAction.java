@@ -1,4 +1,3 @@
-// PanelProAction.java
 package apps.gui3.paned;
 
 import java.awt.event.ActionEvent;
@@ -12,17 +11,13 @@ import jmri.util.swing.WindowInterface;
  * Ignores WindowInterface.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
  */
 public class PanelProAction extends jmri.util.swing.JmriAbstractAction {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = 3146242803186853192L;
-
-    /**
      * Enhanced constructor for placing the pane in various GUIs
+     * @param s Name of the action
+     * @param wi The window this action is associated with
      */
     public PanelProAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -50,5 +45,3 @@ public class PanelProAction extends jmri.util.swing.JmriAbstractAction {
     }
 
 }
-
-/* @(#)PanelProAction.java */

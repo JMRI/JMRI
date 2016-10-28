@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a PacketGenFrame object
  *
  * @author Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public class PacketGenAction extends AbstractAction {
 
@@ -42,7 +41,7 @@ public class PacketGenAction extends AbstractAction {
         f.connect(_memo.getJMRIClientTrafficController());
         f.setVisible(true);
     }
-    static Logger log = LoggerFactory.getLogger(PacketGenAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PacketGenAction.class.getName());
 }
 
 

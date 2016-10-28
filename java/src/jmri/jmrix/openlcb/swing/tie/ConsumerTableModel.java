@@ -13,8 +13,7 @@ import org.slf4j.LoggerFactory;
  * Table Model for access to producer info
  *
  * @author	Bob Jacobsen 2008
- * @version	$Revision$
- * @since 2.3.7
+  * @since 2.3.7
  */
 public class ConsumerTableModel extends AbstractTableModel {
 
@@ -202,7 +201,7 @@ public class ConsumerTableModel extends AbstractTableModel {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(ConsumerTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConsumerTableModel.class.getName());
 
 }
 

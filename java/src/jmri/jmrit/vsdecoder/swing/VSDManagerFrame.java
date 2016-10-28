@@ -22,7 +22,7 @@ package jmri.jmrit.vsdecoder.swing;
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision: 21510 $
+ * 
  */
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -36,7 +36,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -62,8 +61,6 @@ import org.slf4j.LoggerFactory;
 
 @SuppressWarnings("serial")
 public class VSDManagerFrame extends JmriJFrame {
-
-    private static final ResourceBundle rb = VSDSwingBundle.bundle();
 
     public static enum PropertyChangeID {
 
@@ -126,7 +123,7 @@ public class VSDManagerFrame extends JmriJFrame {
      */
     public void initGUI() {
         log.debug("initGUI");
-        this.setTitle(rb.getString("VSDManagerFrameTitle"));
+        this.setTitle(Bundle.getMessage("VSDManagerFrameTitle"));
         this.buildMenu();
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
 
@@ -137,24 +134,24 @@ public class VSDManagerFrame extends JmriJFrame {
 
         volumePane = new JPanel();
         volumePane.setLayout(new BoxLayout(volumePane, BoxLayout.LINE_AXIS));
-        JToggleButton muteButton = new JToggleButton(rb.getString("MuteButtonLabel"));
-        JButton addButton = new JButton(rb.getString("AddButtonLabel"));
-        JButton closeButton = new JButton(rb.getString("MgrCloseButtonLabel"));
+        JToggleButton muteButton = new JToggleButton(Bundle.getMessage("MuteButtonLabel"));
+        JButton addButton = new JButton(Bundle.getMessage("AddButtonLabel"));
+        JButton closeButton = new JButton(Bundle.getMessage("MgrCloseButtonLabel"));
         JSlider volume = new JSlider(0, 100);
         volume.setMinorTickSpacing(10);
         volume.setPaintTicks(true);
         volume.setValue(80);
         volume.setPreferredSize(new Dimension(200, 20));
-        volume.setToolTipText(rb.getString("MgrVolumeToolTip"));
+        volume.setToolTipText(Bundle.getMessage("MgrVolumeToolTip"));
         volume.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 volumeChange(e);
             }
         });
-        volumePane.add(new JLabel(rb.getString("VolumePaneLabel")));
+        volumePane.add(new JLabel(Bundle.getMessage("VolumePaneLabel")));
         volumePane.add(volume);
         volumePane.add(muteButton);
-        muteButton.setToolTipText(rb.getString("MgrMuteToolTip"));
+        muteButton.setToolTipText(Bundle.getMessage("MgrMuteToolTip"));
         muteButton.setMnemonic(Mnemonics.get("MuteButton"));
         muteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -162,7 +159,7 @@ public class VSDManagerFrame extends JmriJFrame {
             }
         });
         volumePane.add(addButton);
-        addButton.setToolTipText(rb.getString("MgrAddButtonToolTip"));
+        addButton.setToolTipText(Bundle.getMessage("MgrAddButtonToolTip"));
         addButton.setMnemonic(Mnemonics.get("AddButton"));
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -170,7 +167,7 @@ public class VSDManagerFrame extends JmriJFrame {
             }
         });
         volumePane.add(closeButton);
-        closeButton.setToolTipText(rb.getString("MgrCloseButtonToolTip"));
+        closeButton.setToolTipText(Bundle.getMessage("MgrCloseButtonToolTip"));
         closeButton.setMnemonic(Mnemonics.get("CloseButton"));
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -212,7 +209,7 @@ public class VSDManagerFrame extends JmriJFrame {
         log.debug("Add button pressed");
         config = new VSDConfig(); // Create a new Config for the new VSDecoder.
         // Do something here.  Create a new VSDecoder and add it to the window.
-        VSDConfigDialog d = new VSDConfigDialog(decoderPane, rb.getString("NewDecoderConfigPaneTitle"), config);
+        VSDConfigDialog d = new VSDConfigDialog(decoderPane, Bundle.getMessage("NewDecoderConfigPaneTitle"), config);
         d.addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent event) {
                 log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
@@ -307,16 +304,16 @@ public class VSDManagerFrame extends JmriJFrame {
     }
 
     private void buildMenu() {
-        JMenu fileMenu = new JMenu(rb.getString("VSDecoderFileMenu"));
+        JMenu fileMenu = new JMenu(Bundle.getMessage("VSDecoderFileMenu"));
         fileMenu.setMnemonic(Mnemonics.get("FileMenu"));
 
-        fileMenu.add(new LoadVSDFileAction(rb.getString("VSDecoderFileMenuLoadVSDFile")));
-        fileMenu.add(new StoreXmlVSDecoderAction(rb.getString("VSDecoderFileMenuSaveProfile")));
-        fileMenu.add(new LoadXmlVSDecoderAction(rb.getString("VSDecoderFileMenuLoadProfile")));
+        fileMenu.add(new LoadVSDFileAction(Bundle.getMessage("VSDecoderFileMenuLoadVSDFile")));
+        fileMenu.add(new StoreXmlVSDecoderAction(Bundle.getMessage("VSDecoderFileMenuSaveProfile")));
+        fileMenu.add(new LoadXmlVSDecoderAction(Bundle.getMessage("VSDecoderFileMenuLoadProfile")));
 
-        JMenu editMenu = new JMenu(rb.getString("VSDecoderEditMenu"));
+        JMenu editMenu = new JMenu(Bundle.getMessage("VSDecoderEditMenu"));
         editMenu.setMnemonic(Mnemonics.get("EditMenu"));
-        editMenu.add(new VSDPreferencesAction(rb.getString("VSDecoderEditMenuPreferences")));
+        editMenu.add(new VSDPreferencesAction(Bundle.getMessage("VSDecoderEditMenuPreferences")));
 
         fileMenu.getItem(1).setEnabled(false); // disable XML store
         fileMenu.getItem(2).setEnabled(false); // disable XML load
@@ -415,5 +412,5 @@ public class VSDManagerFrame extends JmriJFrame {
     }
 
     //public List<JMenu> getMenus() { return menuList; }
-    static Logger log = LoggerFactory.getLogger(VSDManagerFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VSDManagerFrame.class.getName());
 }

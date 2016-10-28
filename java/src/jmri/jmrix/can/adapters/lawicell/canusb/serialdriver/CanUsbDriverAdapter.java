@@ -1,8 +1,6 @@
 // CanUsbDriverAdapter.java
 package jmri.jmrix.can.adapters.lawicell.canusb.serialdriver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the CAN-USB.
@@ -13,8 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Andrew Crosland Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2008, 2010
- * @version	$Revision$
- */
+  */
 public class CanUsbDriverAdapter
         extends jmri.jmrix.can.adapters.lawicell.SerialDriverAdapter
         implements jmri.jmrix.SerialPortAdapter {
@@ -32,7 +29,5 @@ public class CanUsbDriverAdapter
     public int[] validBaudValues() {
         return new int[]{57600, 115200, 230400, 250000, 333333, 460800, 500000};
     }
-
-    static Logger log = LoggerFactory.getLogger(CanUsbDriverAdapter.class.getName());
 
 }

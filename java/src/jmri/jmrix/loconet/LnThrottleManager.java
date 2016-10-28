@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
  *
  * @see SlotManager
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  */
 public class LnThrottleManager extends AbstractThrottleManager implements ThrottleManager, SlotListener {
 
@@ -221,5 +220,5 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LnThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnThrottleManager.class.getName());
 }

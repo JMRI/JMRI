@@ -1,4 +1,3 @@
-// Analytic_AAlgorithmTest.java
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
@@ -10,8 +9,7 @@ import junit.framework.TestSuite;
  *
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision$
- */
+  */
 public class Analytic_AAlgorithmTest extends AbstractAlgorithmTest {
 
     Calculator getAlgorithm(Point3d[] pts, double vs) {
@@ -22,7 +20,7 @@ public class Analytic_AAlgorithmTest extends AbstractAlgorithmTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {Analytic_AAlgorithmTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

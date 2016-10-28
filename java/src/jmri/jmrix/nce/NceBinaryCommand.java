@@ -75,7 +75,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau (C) 2007, 2010
  * @author ken cameron (C) 2013
- * @version $Revision$
  */
 public class NceBinaryCommand {
 
@@ -186,7 +185,6 @@ public class NceBinaryCommand {
     /**
      * Read one byte from NCE command station memory
      *
-     * @param address
      * @return binary command to read one byte
      */
     public static byte[] accMemoryRead1(int address) {
@@ -423,9 +421,6 @@ public class NceBinaryCommand {
     /**
      * create an NCE USB compatible ops mode loco message
      *
-     * @param locoAddr
-     * @param cvAddr
-     * @param cvData
      * @return byte[] containing message
      */
     public static byte[] usbOpsModeLoco(NceTrafficController tc, int locoAddr, int cvAddr, int cvData) {
@@ -449,9 +444,6 @@ public class NceBinaryCommand {
     /**
      * create an NCE USB compatible ops mode accy message
      *
-     * @param accyAddr
-     * @param cvAddr
-     * @param cvData
      * @return byte[] containing message
      */
     public static byte[] usbOpsModeAccy(int accyAddr, int cvAddr, int cvData) {
@@ -472,6 +464,6 @@ public class NceBinaryCommand {
         return retVal;
     }
 
-    static Logger log = LoggerFactory.getLogger(NceBinaryCommand.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceBinaryCommand.class.getName());
 }
 /* @(#)NceBinaryCommand.java */

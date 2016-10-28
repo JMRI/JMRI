@@ -1,4 +1,3 @@
-// CatalogTree.java
 package jmri;
 
 import javax.swing.tree.TreeModel;
@@ -17,19 +16,18 @@ import jmri.jmrit.catalog.CatalogTreeNode;
  * Each CatalogTree object has a two names. The "user" name is entirely free
  * form, and can be used for any purpose. The "system" name is provided by the
  * purpose-specific implementations.
- * <P>
- *
+ * <BR>
  * <hr>
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * </P>
  *
  * @author	Pete Cressman Copyright (C) 2009
  *
@@ -63,6 +61,9 @@ public interface CatalogTree extends NamedBean, TreeModel {
      */
     public void insertNodes(String pathToRoot);
 
+    /**
+     * Get the root element of the tree as a jmri.CatalogTreeNode object.
+     * (Instead of Object, as parent swing.TreeModel provides)
+     */
+    public CatalogTreeNode getRoot();
 }
-
-/* @(#)CatalogTree.java */

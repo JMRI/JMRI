@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 18133 $
+ * 
  */
 public class Dcc4PcReply extends AbstractMRReply {
 
@@ -151,7 +151,7 @@ public class Dcc4PcReply extends AbstractMRReply {
         return maxSize;
     }
 
-    static Logger log = LoggerFactory.getLogger(Dcc4PcReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcReply.class.getName());
 
 }
 

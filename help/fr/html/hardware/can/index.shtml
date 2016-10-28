@@ -36,10 +36,13 @@ Deux premiers efforts:
 
 <dl>
 <dt>
-<img align="right" src="http://www.merg.org.uk/images/logo1m.gif" alt="MERG logo" height="45" width="100">
-<a href="http://www.merg.org.uk/"> MERG</a>
-<a href="http://www.merg.org.uk/resources/lcb.html"> CBUS</a>
-<dd>
+<h2>CAN Implementations</h2>
+<img src="http://www.openlcb.org/trunk/web/logo-ajs-dph.png" align="right" alt="OpenLCB logo" height="43" width="104">
+<h3><a href="../openlcb/index.shtml">OpenLCB</a></h3>
+
+<img src="http://www.merg.org.uk/merg_images/merg_logo.png" align="right" alt="MERG logo" height="45" width="100">
+<h3><a href="cbus/index.shtml">MERG CBUS</a></h3>
+<p>
 Un groupe d'amateurs, sous l'&#233;gide du Groupe de mod&#232;le &#233;lectronique des chemins de fer
 (<a href="http://www.merg.org.uk/"> MERG</a>),
 ont travaill&#233; &#224; l'&#233;laboration d'un bus de contr&#244;le de r&#233;seau appel&#233; CBUS.

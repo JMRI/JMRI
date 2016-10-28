@@ -1,7 +1,6 @@
-// CanReplyTest.java
 package jmri.jmrix.can;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.CanReply class
  *
  * @author Bob Jacobsen Copyright 2008, 2009
- * @version $Revision$
  */
 public class CanReplyTest extends CanMRCommonTest {
 
@@ -139,7 +137,7 @@ public class CanReplyTest extends CanMRCommonTest {
     static public void main(String[] args) {
         apps.tests.AllTest.initLogging();
         String[] testCaseName = {"-noloading", CanReplyTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

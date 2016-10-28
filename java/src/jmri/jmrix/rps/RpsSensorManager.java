@@ -2,8 +2,6 @@
 package jmri.jmrix.rps;
 
 import jmri.Sensor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manage the RPS-specific Sensor implementation.
@@ -11,8 +9,7 @@ import org.slf4j.LoggerFactory;
  * System names are "RSpppp", where ppp is a CSV representation of the region.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version	$Revision$
- */
+  */
 public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
 
     public RpsSensorManager() {
@@ -29,9 +26,13 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
     }
 
     public Sensor createNewSensor(String systemName, String userName) {
-        RpsSensor r = new RpsSensor(systemName, userName);
-        Distributor.instance().addMeasurementListener(r);
-        return r;
+        try {
+           RpsSensor r = new RpsSensor(systemName, userName);
+           Distributor.instance().addMeasurementListener(r);
+           return r;
+       } catch(java.lang.StringIndexOutOfBoundsException sioe){
+         throw new IllegalArgumentException("Invaid System Name: " + systemName);
+       }
     }
 
     static public RpsSensorManager instance() {
@@ -42,8 +43,6 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
     }
 
     static RpsSensorManager _instance = null;
-
-    static Logger log = LoggerFactory.getLogger(RpsSensorManager.class.getName());
 
     static { // class initialization
         // now want a SensorManager always, not just when RPS is created

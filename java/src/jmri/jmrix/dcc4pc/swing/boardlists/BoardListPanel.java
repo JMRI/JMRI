@@ -12,10 +12,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SortOrder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableRowSorter;
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 import jmri.jmrix.dcc4pc.swing.Dcc4PcPanelInterface;
+import jmri.swing.RowSorterUtil;
+import jmri.util.SystemNameComparator;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -25,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * Frame for Signal Mast Add / Edit Panel
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version $Revision: 19647 $
+ * 
  */
 public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements PropertyChangeListener, Dcc4PcPanelInterface {
 
@@ -62,15 +66,11 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         add(header, BorderLayout.NORTH);
 
         _BoardModel = new ReaderBoardModel();
-        JTable boardTable = jmri.util.JTableUtil.sortableDataModel(_BoardModel);
-
-        try {
-            jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter) boardTable.getModel());
-            tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            tmodel.setSortingStatus(ReaderBoardModel.ADDRESS_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
-        } catch (ClassCastException e3) {
-        }  // if not a sortable table model
-
+        JTable boardTable = new JTable(_BoardModel);
+        TableRowSorter<ReaderBoardModel> sorter = new TableRowSorter<>();
+        sorter.setComparator(ReaderBoardModel.ADDRESS_COLUMN, new SystemNameComparator());
+        RowSorterUtil.setSortOrder(sorter, ReaderBoardModel.ADDRESS_COLUMN, SortOrder.ASCENDING);
+        
         boardTable.setRowSelectionAllowed(false);
         boardTable.setPreferredScrollableViewportSize(new java.awt.Dimension(600, 120));
         _BoardModel.configureTable(boardTable);
@@ -183,7 +183,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
                 return rb.getString("ColumnDescription");
             }
             if (col == EDIT_COLUMN) {
-                return rb.getString("ColumnEdit");
+                return rb.getString(""); //no title above Edit buttons
             }
             return "";
         }
@@ -268,7 +268,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
 
        //
         //protected void deletePair(int r){
-            /*jmri.InstanceManager.signalMastLogicManagerInstance().removeSignalMastLogic(senMan, _boardListCount.get(r));*/
+            /*jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removeSignalMastLogic(senMan, _boardListCount.get(r));*/
         //}
         public static final int ADDRESS_COLUMN = 0;
         public static final int INPUTS_COLUMN = 1;
@@ -350,6 +350,6 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         }
     }
 
-    static final Logger log = LoggerFactory.getLogger(BoardListPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BoardListPanel.class.getName());
 
 }

@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * HMI address 1, and output bits are written starting at HMI address 1001.
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2009
- * @version $Revision$
  */
 public class OutputBits {
 
@@ -157,7 +156,7 @@ public class OutputBits {
     }
     static OutputBits mInstance = null; // package access for tests
 
-    static Logger log = LoggerFactory.getLogger(OutputBits.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OutputBits.class.getName());
 }
 
 /* @(#)OutputBits.java */

@@ -2,14 +2,17 @@ package jmri.managers;
 
 import jmri.Light;
 import jmri.LightManager;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+
 /**
- * Tests for the jmri.managers.InternalTurnoutManager class.
+ * Tests for the jmri.managers.InternalLightManager class.
  *
  * @author	Bob Jacobsen Copyright 2009
  */
@@ -19,6 +22,7 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
         return "IL" + i;
     }
 
+    @Test
     public void testAsAbstractFactory() {
         // create and register the manager object
         InternalLightManager alm = new InternalLightManager();
@@ -47,6 +51,7 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
 
     }
 
+    @Test
     public void testIsVariableLight() {
         // create and register the manager object
         InternalLightManager alm = new InternalLightManager();
@@ -59,36 +64,20 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
 
     }
 
-    // from here down is testing infrastructure
-    public InternalLightManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", InternalLightManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(InternalLightManagerTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
         // create and register the manager object
         l = new InternalLightManager();
         jmri.InstanceManager.setLightManager(l);
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(InternalLightManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InternalLightManagerTest.class.getName());
 
 }

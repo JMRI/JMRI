@@ -11,8 +11,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author Dan Boudreau Copyright (C) 2010
  * @author ken cameron Copyright (C) 2013
- * @version	$Revision$
- *
+  *
  */
 public class NceMessageCheck {
 
@@ -123,7 +122,7 @@ public class NceMessageCheck {
         throw new JmriException(txt);
     }
 
-    static Logger log = LoggerFactory.getLogger(NceMessageCheck.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceMessageCheck.class.getName());
 }
 
 /* @(#)NceMessageCheck.java */
