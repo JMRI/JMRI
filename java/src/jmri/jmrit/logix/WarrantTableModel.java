@@ -144,11 +144,11 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
     protected void haltAllTrains() {
         Iterator<Warrant> iter = _warList.iterator();
         while (iter.hasNext()) {
-            iter.next().controlRunTrain(Warrant.HALT);
+            iter.next().controlRunTrain(Warrant.STOP);
         }
         iter = _warNX.iterator();
         while (iter.hasNext()) {
-            iter.next().controlRunTrain(Warrant.HALT);
+            iter.next().controlRunTrain(Warrant.STOP);
         }
         fireTableDataChanged();
     }
@@ -524,6 +524,8 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         s = Warrant.RESUME;
                     } else if (setting.equals(WarrantTableFrame.retry)) {
                         s = Warrant.RETRY;
+                    } else if (setting.equals(WarrantTableFrame.stop)) {
+                        s = Warrant.STOP;
                     } else if (setting.equals(WarrantTableFrame.abort)) {
                         s = Warrant.ABORT;
                     }
@@ -564,7 +566,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                     JOptionPane.WARNING_MESSAGE);
             _frame.setStatusText(msg, Color.red, true);
         }
-//        fireTableRowsUpdated(row, row);
     }
 
     private void openWarrantFrame(Warrant warrant) {
