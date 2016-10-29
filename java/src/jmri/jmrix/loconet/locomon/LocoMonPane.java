@@ -24,10 +24,12 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
         super();
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.loconet.locomon.LocoMonFrame";
     }
 
+    @Override
     public String getTitle() {
         String uName = "";
         if (memo != null) {
@@ -41,8 +43,9 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
         return uName + Bundle.getMessage("MenuItemLocoNetMonitor");
     }
 
+    @Override
     public void dispose() {
-        if (memo!= null && memo.getLnTrafficController() != null) {
+        if (memo != null && memo.getLnTrafficController() != null) {
             // disconnect from the LnTrafficController
             memo.getLnTrafficController().removeLocoNetListener(~0, this);
         }
@@ -50,17 +53,20 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
         super.dispose();
     }
 
+    @Override
     public void init() {
     }
 
     LocoNetSystemConnectionMemo memo;
 
+    @Override
     public void initContext(Object context) {
         if (context instanceof LocoNetSystemConnectionMemo) {
             initComponents((LocoNetSystemConnectionMemo) context);
         }
     }
 
+    @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         this.memo = memo;
         // connect to the LnTrafficController
@@ -69,42 +75,40 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
             return;
         }
         memo.getLnTrafficController().addLocoNetListener(~0, this);
-        if (memo.provides(jmri.TurnoutManager.class)) {
-            llnmon.setLocoNetTurnoutManager((jmri.TurnoutManager) memo.get(jmri.TurnoutManager.class));
-        }
-        if (memo.provides(jmri.SensorManager.class)) {
-            llnmon.setLocoNetSensorManager((jmri.SensorManager) memo.get(jmri.SensorManager.class));
-        }
-        if (memo.provides(jmri.ReporterManager.class)) {
-            llnmon.setLocoNetReporterManager((jmri.ReporterManager) memo.get(jmri.ReporterManager.class));
-        }
+        this.llnmon = new Llnmon(memo);
     }
 
+    @Override
     public synchronized void message(LocoNetMessage l) {  // receive a LocoNet message and log it
         // send the raw data, to display if requested
         String raw = l.toString();
         //format the message text, expect it to provide consistent \n after each line
-        String formatted = llnmon.displayMessage(l); 
+        String formatted = llnmon.displayMessage(l);
 
         // display the formatted data in the monitor pane
         nextLine(formatted, raw);
-        
+
         //include loconet monitoring in session.log if TRACE enabled
-        log.trace(formatted.substring(0, formatted.length()-1)); 
+        log.trace(formatted.substring(0, formatted.length() - 1));
 
     }
 
-    jmri.jmrix.loconet.locomon.Llnmon llnmon = new jmri.jmrix.loconet.locomon.Llnmon();
+    Llnmon llnmon;
 
-    /** 
-     * Get hex opcode for filtering
+    /**
+     * Get hex opcode for filtering.
+     *
+     * @param raw byte sequence
+     * @return the first byte pair
      */
     @Override
     protected String getOpCodeForFilter(String raw) {
         //note: Loconet raw is formatted like "BB 01 00 45", so extract the correct bytes from it (BB) for comparison
         if (raw != null && raw.length() >= 2) {
-            return raw.substring(0,2);
-        } else return null;
+            return raw.substring(0, 2);
+        } else {
+            return null;
+        }
     }
 
     /**
