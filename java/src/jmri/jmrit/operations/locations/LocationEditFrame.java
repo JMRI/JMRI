@@ -318,6 +318,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
                 null));
         toolMenu.add(new EditCarTypeAction());
         toolMenu.add(new ShowCarsByLocationAction(false, locationName, null));
+        toolMenu.addSeparator();
         toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPrint"), false, location));
         toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPreview"), true, location));
         if (Setup.isVsdPhysicalLocationEnabled()) {

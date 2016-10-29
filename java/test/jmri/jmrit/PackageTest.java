@@ -87,6 +87,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.revhistory.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.sound.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.vsdecoder.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.simplelightctrl.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.simpleturnoutctrl.PackageTest.class));
         return suite;
     }
 
