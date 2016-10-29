@@ -1,8 +1,19 @@
 package jmri.jmrix.loconet.locomon;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
+import jmri.InstanceManager;
+import jmri.NmraPacket;
+import jmri.Reporter;
+import jmri.ReporterManager;
+import jmri.Sensor;
+import jmri.SensorManager;
+import jmri.Turnout;
+import jmri.TurnoutManager;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
 import jmri.util.StringUtil;
 
 /**
@@ -14,8 +25,8 @@ import jmri.util.StringUtil;
  * Copyright 2001 Ron W. Auld. Use of these parts is by direct permission of the
  * author.
  * <P>
- * Most major comment blocks here are quotes from the Digitrax Loconet(r) OPCODE
- * SUMMARY: found in the Loconet(r) Personal Edition 1.
+ * Most major comment blocks here are quotes from the Digitrax LocoNet(r) OPCODE
+ * SUMMARY: found in the LocoNet(r) Personal Edition 1.
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
@@ -40,12 +51,13 @@ import jmri.util.StringUtil;
  * permission.
  * <P>
  * @author Bob Jacobsen Copyright 2001, 2002, 2003
- * @author B. Milhaupt  Copyright 2015
+ * @author B. Milhaupt Copyright 2015, 2016
+ * @author Randall Wood Copyright 2016
  */
 public class Llnmon {
 
     /**
-     * Flag that determines if we print loconet opcodes
+     * Flag that determines if we print LocoNet opcodes
      */
     private boolean showOpCode = false;
 
@@ -66,10 +78,63 @@ public class Llnmon {
     protected boolean forceHex = false;
 
     /**
+     * Create a LocoNet Message Formatter. When using this constructor, {@link #setLocoNetReporterManager(jmri.ReporterManager)
+     * }, {@link #setLocoNetSensorManager(jmri.SensorManager) }, and {@link #setLocoNetTurnoutManager(jmri.TurnoutManager)
+     * } may need to be called manually to set the correct device managers.
+     *
+     * @deprecated since 4.5.6; use
+     * {@link #Llnmon(jmri.jmrix.loconet.LocoNetSystemConnectionMemo)} or
+     * {@link #Llnmon(jmri.TurnoutManager, jmri.SensorManager, jmri.ReporterManager)}
+     * instead
+     */
+    @Deprecated
+    public Llnmon() {
+        // prevent NPEs using managers, even if manager is wrong manager
+        this(InstanceManager.getDefault(TurnoutManager.class),
+                InstanceManager.getDefault(SensorManager.class),
+                InstanceManager.getDefault(ReporterManager.class));
+    }
+
+    /**
+     * Create a LocoNet Message Formatter. Use the system connection memo to get
+     * the correct managers to allow the user names of managed devices to be
+     * included in messages with the system names.
+     *
+     * @param memo the system connection memo
+     */
+    public Llnmon(LocoNetSystemConnectionMemo memo) {
+        this(); // set default managers
+        // override default managers with correct managers
+        if (memo.provides(TurnoutManager.class)) {
+            this.setLocoNetTurnoutManager(memo.get(TurnoutManager.class));
+        }
+        if (memo.provides(SensorManager.class)) {
+            this.setLocoNetSensorManager(memo.get(SensorManager.class));
+        }
+        if (memo.provides(ReporterManager.class)) {
+            this.setLocoNetReporterManager(memo.get(ReporterManager.class));
+        }
+    }
+
+    /**
+     * Create a LocoNet Message Formatter. The managers allow the user names of
+     * managed devices to be included in messages with the system names.
+     *
+     * @param turnoutManager  turnout manager
+     * @param sensorManager   sensor manager
+     * @param reporterManager reporter manager
+     */
+    public Llnmon(@Nonnull TurnoutManager turnoutManager, @Nonnull SensorManager sensorManager, @Nonnull ReporterManager reporterManager) {
+        this.setLocoNetTurnoutManager(turnoutManager);
+        this.setLocoNetSensorManager(sensorManager);
+        this.setLocoNetReporterManager(reporterManager);
+    }
+
+    /**
      * Convert bytes from LocoNet packet into a locomotive address.
      *
      * @param a1 Byte containing the upper bits.
-     * @param a2 Byte containting the lower bits.
+     * @param a2 Byte containing the lower bits.
      * @return 1-4096 address
      */
     static private int LOCO_ADR(int a1, int a2) {
@@ -102,7 +167,7 @@ public class Llnmon {
     public static String dotme(int val) {
         int dit;
         int x = val;
-        StringBuffer ret = new StringBuffer();
+        StringBuilder ret = new StringBuilder();
         if (val == 0) {
             return "0";
         }
@@ -167,16 +232,29 @@ public class Llnmon {
      */
     protected String format(LocoNetMessage l) {
 
-        boolean showStatus = false; /* show track status in this message? */
-
+        boolean showStatus = false; // show track status in this message?
         int minutes; // temporary time values
         int hours;
         int frac_mins;
 
+        /*
+         * 2 Byte MESSAGE OPCODES
+         * ; FORMAT = <OPC>,<CKSUM>
+         * ;
+         *
+         * 4 byte MESSAGE OPCODES
+         * ; FORMAT = <OPC>,<ARG1>,<ARG2>,<CKSUM>
+         * :
+         *  CODES 0xA8 to 0xAF have responses
+         *  CODES 0xB8 to 0xBF have responses
+         *
+         * 6 byte MESSAGE OPCODES
+         * ; FORMAT = <OPC>,<ARG1>,<ARG2>,<ARG3>,<ARG4>,<CKSUM>
+         * :
+         *  CODES 0xC8 to 0xCF have responses
+         *  CODES 0xD8 to 0xDF have responses
+         */
         switch (l.getOpCode()) {
-            /*
-             * 2 Byte MESSAGE OPCODES * ; FORMAT = <OPC>,<CKSUM> * ; *
-             */
 
             /*
              * OPC_IDLE 0x85 ;FORCE IDLE state, Broadcast emergency STOP
@@ -213,14 +291,6 @@ public class Llnmon {
             case LnConstants.OPC_GPBUSY: {
                 return "Master is busy.\n";
             } // case LnConstants.OPC_GPBUSY
-
-            /*
-             * ; 4 byte MESSAGE OPCODES
-             * ; FORMAT = <OPC>,<ARG1>,<ARG2>,<CKSUM>
-             * :
-             *  CODES 0xA8 to 0xAF have responses
-             *  CODES 0xB8 to 0xBF have responses
-             */
 
             /*
              * OPC_LOCO_ADR     0xBF   ; REQ loco ADR
@@ -270,7 +340,7 @@ public class Llnmon {
                 turnoutSystemName = locoNetTurnoutPrefix
                         + SENSOR_ADR(l.getElement(1), l.getElement(2));
 
-                jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
+                Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
                 String uname = turnout.getUserName();
                 if ((uname != null) && (!uname.isEmpty())) {
                     turnoutUserName = "(" + uname + ")";
@@ -298,7 +368,7 @@ public class Llnmon {
                 String turnoutUserName = "";
                 turnoutSystemName = locoNetTurnoutPrefix
                         + SENSOR_ADR(l.getElement(1), l.getElement(2));
-                jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
+                Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
                 String uname = turnout.getUserName();
                 if ((uname != null) && (!uname.isEmpty())) {
                     turnoutUserName = "(" + uname + ")";
@@ -358,16 +428,20 @@ public class Llnmon {
                 int dest = l.getElement(2);
 
                 /* check special cases */
-                if (src == 0) { /* DISPATCH GET */
+                if (src == 0) {
+                    /* DISPATCH GET */
 
                     return "Get most recently dispatched slot.\n";
-                } else if (src == dest) { /* IN USE */
+                } else if (src == dest) {
+                    /* IN USE */
 
                     return "Set status of slot " + src + " to IN_USE.\n";
-                } else if (dest == 0) { /* DISPATCH PUT */
+                } else if (dest == 0) {
+                    /* DISPATCH PUT */
 
                     return "Mark slot " + src + " as DISPATCHED.\n";
-                } else { /* general move */
+                } else {
+                    /* general move */
 
                     return "Move data in slot " + src + " to slot " + dest + ".\n";
                 }
@@ -469,14 +543,15 @@ public class Llnmon {
 
                     case (LnConstants.OPC_SW_ACK):
                         // response for OPC_SW_ACK
-                        if (ack1 == 0) {
-                            return "LONG_ACK: The Command Station FIFO is full, the switch command was rejected.\n";
-                        } else if (ack1 == 0x7f) {
-                            return "LONG_ACK: The Command Station accepted the switch command.\n";
-                        } else {
-                            forceHex = true;
-                            return "LONG_ACK: Unknown response to 'Request Switch with ACK' command, value 0x"
-                                    + Integer.toHexString(ack1) + ".\n";
+                        switch (ack1) {
+                            case 0:
+                                return "LONG_ACK: The Command Station FIFO is full, the switch command was rejected.\n";
+                            case 0x7f:
+                                return "LONG_ACK: The Command Station accepted the switch command.\n";
+                            default:
+                                forceHex = true;
+                                return "LONG_ACK: Unknown response to 'Request Switch with ACK' command, value 0x"
+                                        + Integer.toHexString(ack1) + ".\n";
                         }
 
                     case (LnConstants.OPC_SW_REQ):
@@ -485,20 +560,23 @@ public class Llnmon {
 
                     case (LnConstants.OPC_WR_SL_DATA):
                         // response for OPC_WR_SL_DATA
-                        if (ack1 == 0) {
-                            return "LONG_ACK: The Slot Write command was rejected.\n";
-                        } else if (ack1 == 0x01) {
-                            return "LONG_ACK: The Slot Write command was accepted.\n";
-                        } else if (ack1 == 0x23 || ack1 == 0x2b || ack1 == 0x6B) {
-                            return "LONG_ACK: DCS51 programming reply, thought to mean OK.\n";
-                        } else if (ack1 == 0x40) {
-                            return "LONG_ACK: The Slot Write command was accepted blind (no response will be sent).\n";
-                        } else if (ack1 == 0x7f) {
-                            return "LONG_ACK: Function not implemented, no reply will follow.\n";
-                        } else {
-                            forceHex = true;
-                            return "LONG_ACK: Unknown response to Write Slot Data message value 0x"
-                                    + Integer.toHexString(ack1) + ".\n";
+                        switch (ack1) {
+                            case 0:
+                                return "LONG_ACK: The Slot Write command was rejected.\n";
+                            case 0x01:
+                                return "LONG_ACK: The Slot Write command was accepted.\n";
+                            case 0x23:
+                            case 0x2b:
+                            case 0x6B:
+                                return "LONG_ACK: DCS51 programming reply, thought to mean OK.\n";
+                            case 0x40:
+                                return "LONG_ACK: The Slot Write command was accepted blind (no response will be sent).\n";
+                            case 0x7f:
+                                return "LONG_ACK: Function not implemented, no reply will follow.\n";
+                            default:
+                                forceHex = true;
+                                return "LONG_ACK: Unknown response to Write Slot Data message value 0x"
+                                        + Integer.toHexString(ack1) + ".\n";
                         }
 
                     case (LnConstants.OPC_SW_STATE):
@@ -510,14 +588,15 @@ public class Llnmon {
 
                     case (LnConstants.OPC_MOVE_SLOTS):
                         // response for OPC_MOVE_SLOTS
-                        if (ack1 == 0) {
-                            return "LONG_ACK: The Move Slots command was rejected.\n";
-                        } else if (ack1 == 0x7f) {
-                            return "LONG_ACK: The Move Slots command was accepted.\n";
-                        } else {
-                            forceHex = true;
-                            return "LONG_ACK: unknown reponse to Move Slots message 0x"
-                                    + Integer.toHexString(ack1) + ".\n";
+                        switch (ack1) {
+                            case 0:
+                                return "LONG_ACK: The Move Slots command was rejected.\n";
+                            case 0x7f:
+                                return "LONG_ACK: The Move Slots command was accepted.\n";
+                            default:
+                                forceHex = true;
+                                return "LONG_ACK: unknown reponse to Move Slots message 0x"
+                                        + Integer.toHexString(ack1) + ".\n";
                         }
 
                     case LnConstants.OPC_IMM_PACKET:
@@ -588,9 +667,7 @@ public class Llnmon {
                 // get system and user names
                 String sensorSystemName = locoNetSensorPrefix + contactNum;
                 String sensorUserName = "";
-                sensorSystemName = locoNetSensorPrefix + contactNum;
-                jmri.Sensor sensor = sensorManager.getBySystemName(
-                            sensorSystemName);
+                Sensor sensor = sensorManager.getBySystemName(sensorSystemName);
                 sensorUserName = "()";
                 if (sensor != null) {
                     String uname = sensor.getUserName();
@@ -665,9 +742,9 @@ public class Llnmon {
                 turnoutSystemName = locoNetTurnoutPrefix
                         + SENSOR_ADR(sn1, sn2);
 
-                jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
+                Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
                 String uname = turnout.getUserName();
-                if ((uname != null ) && (!uname.isEmpty() )) {
+                if ((uname != null) && (!uname.isEmpty())) {
                     turnoutUserName = "(" + uname + ")";
                 } else {
                     turnoutUserName = "()";
@@ -757,8 +834,8 @@ public class Llnmon {
                             addrListB.append(",\n\t");
                         }
                     }
-                    addrListB.append("" + lval);
-                    addrListB.append("-" + hval);
+                    addrListB.append("").append(lval);
+                    addrListB.append("-").append(hval);
                     count++;
                 }
                 addrListB.append("\n");
@@ -779,9 +856,9 @@ public class Llnmon {
                     String turnoutUserName = "";
                     turnoutSystemName = locoNetTurnoutPrefix
                             + SENSOR_ADR(l.getElement(1), l.getElement(2));
-                    jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
+                    Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
                     String uname = turnout.getUserName();
-                    if ((uname != null ) && (!uname.isEmpty() )) {
+                    if ((uname != null) && (!uname.isEmpty())) {
                         turnoutUserName = "(" + uname + ")";
                     } else {
                         turnoutUserName = "()";
@@ -858,14 +935,6 @@ public class Llnmon {
             } // case LnConstants.OPC_LOCO_SPD
 
             /*
-             * ; 6 byte MESSAGE OPCODES
-             * ; FORMAT = <OPC>,<ARG1>,<ARG2>,<ARG3>,<ARG4>,<CKSUM>
-             * :
-             *  CODES 0xC8 to 0xCF have responses
-             *  CODES 0xD8 to 0xDF have responses
-             */
-
-            /*
              * OPC_PANEL_QUERY 0xDF messages used by throttles to discover
              * panels
              *
@@ -884,13 +953,11 @@ public class Llnmon {
                             // treat this only as a set.
                             return "Set LocoNet ID to " + l.getElement(3) + ".\n";
                         } else {
-                            return "Unknown attempt to set the Loconet ID 0x" + Integer.toHexString(l.getElement(2))
-                                    + ".\n";
+                            return "Unknown attempt to set the LocoNet ID 0x" + Integer.toHexString(l.getElement(2)) + ".\n";
                         }
                     }
                     default: {
-                        return "Unknown Tetherless Receivers Request 0x" + Integer.toHexString(l.getElement(1))
-                                + ".\n";
+                        return "Unknown Tetherless Receivers Request 0x" + Integer.toHexString(l.getElement(1)) + ".\n";
                     }
                 }
             } // case LnConstants.OPC_PANEL_QUERY
@@ -902,7 +969,6 @@ public class Llnmon {
              * This op code is not documented by Digitrax. Reverse engineering
              * performed by Leo Bicknell.  The opcode "name" OPC_PANEL_RESPONSE
              * is not necessarily the name used by Digitrax.
-
              */
             case LnConstants.OPC_PANEL_RESPONSE: {
                 switch (l.getElement(1)) {
@@ -996,18 +1062,23 @@ public class Llnmon {
                             // programming
                             int deviceType = l.getElement(3) & 0x7;
                             String device;
-                            if (deviceType == LnConstants.RE_MULTI_SENSE_DEV_TYPE_PM4X) {
-                                device = "PM4(x) ";
-                            } else if (deviceType == LnConstants.RE_MULTI_SENSE_DEV_TYPE_BDL16X) {
-                                device = "BDL16(x) ";
-                            } else if (deviceType == LnConstants.RE_MULTI_SENSE_DEV_TYPE_SE8) {
-                                device = "SE8 ";
-                            } // DS64 device type response reverse-engineered by B. Milhaupt and
-                            // used with permission
-                            else if (deviceType == LnConstants.RE_MULTI_SENSE_DEV_TYPE_DS64) {
-                                device = "DS64 ";
-                            } else {
-                                device = "(unknown type) ";
+                            switch (deviceType) {
+                                case LnConstants.RE_MULTI_SENSE_DEV_TYPE_PM4X:
+                                    device = "PM4(x) ";
+                                    break;
+                                case LnConstants.RE_MULTI_SENSE_DEV_TYPE_BDL16X:
+                                    device = "BDL16(x) ";
+                                    break;
+                                // DS64 device type response reverse-engineered by B. Milhaupt and
+                                case LnConstants.RE_MULTI_SENSE_DEV_TYPE_SE8:
+                                    device = "SE8 ";
+                                    break;
+                                case LnConstants.RE_MULTI_SENSE_DEV_TYPE_DS64:
+                                    device = "DS64 ";
+                                    break;
+                                default:
+                                    device = "(unknown type) ";
+                                    break;
                             }
 
                             int bit = (l.getElement(4) & 0x0E) / 2;
@@ -1021,7 +1092,7 @@ public class Llnmon {
                             String returnVal = device
                                     + bdaddr
                                     + (((l.getElement(1) & 0x10) != 0) ? " write config bit "
-                                            : " read config bit ") + wrd + "," + bit + " (opsw " + opsw
+                                    : " read config bit ") + wrd + "," + bit + " (opsw " + opsw
                                     + ") val=" + val + (val == 1 ? " (closed)" : " (thrown)");
                             if ((deviceType == 0) && (bdaddr == 0) && (bit == 0) && (val == 0) && (wrd == 0) && (opsw == 1)) {
                                 returnVal += " - Also acts as device query for some device types";
@@ -1067,16 +1138,22 @@ public class Llnmon {
                             // Device type report reverse-engineered by B. Milhaupt and
                             // used with permission
                             String device;
-                            if ((l.getElement(3) & 0x7) == 0) {
-                                device = "PM4x ";
-                            } else if ((l.getElement(3) & 0x7) == 1) {
-                                device = "BDL16x ";
-                            } else if ((l.getElement(3) & 0x7) == 2) {
-                                device = "SE8c ";
-                            } else if ((l.getElement(3) & 0x7) == 3) {
-                                device = "DS64 ";
-                            } else {
-                                device = "(unknown type) ";
+                            switch (l.getElement(3) & 0x7) {
+                                case 0:
+                                    device = "PM4x ";
+                                    break;
+                                case 1:
+                                    device = "BDL16x ";
+                                    break;
+                                case 2:
+                                    device = "SE8c ";
+                                    break;
+                                case 3:
+                                    device = "DS64 ";
+                                    break;
+                                default:
+                                    device = "(unknown type) ";
+                                    break;
                             }
 
                             int bdaddr = l.getElement(2) + 1;
@@ -1145,7 +1222,7 @@ public class Llnmon {
                         reporterSystemName = locoNetReporterPrefix
                                 + ((l.getElement(1) & 0x1F) * 128 + l.getElement(2) + 1);
 
-                        jmri.Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
+                        Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
                         reporterUserName = "()";
                         if (reporter != null) {
                             String uname = reporter.getUserName();
@@ -1155,8 +1232,8 @@ public class Llnmon {
                         }
                         return "Transponder address "
                                 + ((l.getElement(3) == 0x7d)
-                                        ? (l.getElement(4) + " (short)")
-                                        : (l.getElement(3) * 128 + l.getElement(4) + " (long)"))
+                                ? (l.getElement(4) + " (short)")
+                                : (l.getElement(3) * 128 + l.getElement(4) + " (long)"))
                                 + ((type == LnConstants.OPC_MULTI_SENSE_PRESENT) ? " present at " : " absent at ")
                                 + reporterSystemName + " " + reporterUserName
                                 + " (BDL16x Board " + (section + 1) + " RX4 zone " + zone
@@ -1168,11 +1245,6 @@ public class Llnmon {
                 }
             } //  case LnConstants.OPC_MULTI_SENSE
 
-            /*
-             * ; VARIABLE byte MESSAGE OPCODES
-             * ; FORMAT = <OPC>,<COUNT>,<ARG2>,<ARG3>,...,<ARG(COUNT-3)>,<CKSUM>
-             * :
-             */
             /**
              * ********************************************************************************************
              * OPC_WR_SL_DATA 0xEF ; WRITE SLOT DATA, 10 bytes * ; Follow on
@@ -1250,10 +1322,10 @@ public class Llnmon {
              * THROTTLE/PC when STAT2.4=1 * * 10) EXPANSION RESERVED ID2: * * 7
              * bit ms ID code written by THROTTLE/PC when STAT2.4=1 *
              * ********************************************************************************************
+             * page 10 of LocoNet PE
              */
-            case LnConstants.OPC_WR_SL_DATA: /* page 10 of Loconet PE */
-
-            case LnConstants.OPC_SL_RD_DATA: { // Page 10 of LocoNet PE
+            case LnConstants.OPC_WR_SL_DATA:
+            case LnConstants.OPC_SL_RD_DATA: {
                 String mode;
                 String locoAdrStr;
                 String mixedAdrStr;
@@ -1307,492 +1379,504 @@ public class Llnmon {
                     mode = "Response";
                 }
 
-                if (slot == LnConstants.FC_SLOT) {
-                    /**
-                     * ********************************************************************************************
-                     * FAST Clock: * =========== * The system FAST clock and
-                     * parameters are implemented in Slot#123 <7B>. * * Use <EF>
-                     * to write new clock information, Slot read of
-                     * 0x7B,<BB><7B>.., will return current * System clock
-                     * information, and other throttles will update to this
-                     * SYNC. Note that all * attached display devices keep a
-                     * current clock calculation based on this SYNC read value,
-                     * * i.e. devices MUST not continuously poll the clock SLOT
-                     * to generate time, but use this * merely to restore SYNC
-                     * and follow current RATE etc. This clock slot is typically
-                     * "pinged" * or read SYNC'd every 70 to 100 seconds , by a
-                     * single user, so all attached devices can * synchronise
-                     * any phase drifts. Upon seeing a SYNC read, all devices
-                     * should reset their local * sub-minute phase counter and
-                     * invalidate the SYNC update ping generator. * * Clock Slot
-                     * Format:
-                     *
-                     * <0xEF>,<0E>,<7B>,<CLK_RATE>,<FRAC_MINSL>,<FRAC_MINSH>,<256-MINS_60>,
-                     *
-                     * <TRK><256-HRS_24>,<DAYS>,<CLK_CNTRL>,<ID1>,<1D2>,<CHK>
-                     *
-                     * * <CLK_RATE> 0=Freeze clock, * 1=normal 1:1 rate, *
-                     * 10=10:1 etc, max VALUE is 7F/128 to 1
-                     *
-                     * <FRAC_MINSL> FRAC mins hi/lo are a sub-minute counter ,
-                     * depending * on the CLOCK generator
-                     *
-                     * <FRAC_MINSH> Not for ext. usage. This counter is reset
-                     * when valid
-                     *
-                     * <E6><7B> SYNC msg seen
-                     *
-                     * <256-MINS_60> This is FAST clock MINUTES subtracted from
-                     * 256. Modulo 0-59
-                     *
-                     * <256-HRS_24> This is FAST clock HOURS subtracted from
-                     * 256. Modulo 0-23
-                     *
-                     * <DAYS> number of 24 Hr clock rolls, positive count
-                     *
-                     * <CLK_CNTRL> Clock Control Byte * D6- 1=This is valid
-                     * Clock information, * 0=ignore this <E6><7B>, SYNC reply
-                     *
-                     * <ID1>,<1D2> This is device ID last setting the clock.
-                     *
-                     * <00><00> shows no set has happened
-                     *
-                     * <7F><7x> are reserved for PC access *
-                     * ********************************************************************************************
-                     */
+                switch (slot) {
+                    case LnConstants.FC_SLOT:
+                        /**
+                         * ********************************************************************************************
+                         * FAST Clock: * =========== * The system FAST clock and
+                         * parameters are implemented in Slot#123 <7B>. * * Use
+                         * <EF>
+                         * to write new clock information, Slot read of
+                         * 0x7B,<BB><7B>.., will return current * System clock
+                         * information, and other throttles will update to this
+                         * SYNC. Note that all * attached display devices keep a
+                         * current clock calculation based on this SYNC read
+                         * value, * i.e. devices MUST not continuously poll the
+                         * clock SLOT to generate time, but use this * merely to
+                         * restore SYNC and follow current RATE etc. This clock
+                         * slot is typically "pinged" * or read SYNC'd every 70
+                         * to 100 seconds , by a single user, so all attached
+                         * devices can * synchronise any phase drifts. Upon
+                         * seeing a SYNC read, all devices should reset their
+                         * local * sub-minute phase counter and invalidate the
+                         * SYNC update ping generator. * * Clock Slot Format:
+                         *
+                         * <0xEF>,<0E>,<7B>,<CLK_RATE>,<FRAC_MINSL>,<FRAC_MINSH>,<256-MINS_60>,
+                         *
+                         * <TRK><256-HRS_24>,<DAYS>,<CLK_CNTRL>,<ID1>,<1D2>,<CHK>
+                         *
+                         * * <CLK_RATE> 0=Freeze clock, * 1=normal 1:1 rate, *
+                         * 10=10:1 etc, max VALUE is 7F/128 to 1
+                         *
+                         * <FRAC_MINSL> FRAC mins hi/lo are a sub-minute counter
+                         * , depending * on the CLOCK generator
+                         *
+                         * <FRAC_MINSH> Not for ext. usage. This counter is
+                         * reset when valid
+                         *
+                         * <E6><7B> SYNC msg seen
+                         *
+                         * <256-MINS_60> This is FAST clock MINUTES subtracted
+                         * from 256. Modulo 0-59
+                         *
+                         * <256-HRS_24> This is FAST clock HOURS subtracted from
+                         * 256. Modulo 0-23
+                         *
+                         * <DAYS> number of 24 Hr clock rolls, positive count
+                         *
+                         * <CLK_CNTRL> Clock Control Byte * D6- 1=This is valid
+                         * Clock information, * 0=ignore this <E6><7B>, SYNC
+                         * reply
+                         *
+                         * <ID1>,<1D2> This is device ID last setting the clock.
+                         *
+                         * <00><00> shows no set has happened
+                         *
+                         * <7F><7x> are reserved for PC access *
+                         * ********************************************************************************************
+                         */
 
-                    /* make message easier to deal with internally */
-                    // fastClock = (fastClockMsg *)msgBuf;
-                    int clk_rate = l.getElement(3); // 0 = Freeze clock, 1 = normal,
-                    // 10 = 10:1 etc. Max is 0x7f
-                    int frac_minsl = l.getElement(4); // fractional minutes. not for
-                    // external use.
-                    int frac_minsh = l.getElement(5);
-                    int mins_60 = l.getElement(6); // 256 - minutes
-                    int track_stat = l.getElement(7); // track status
-                    int hours_24 = l.getElement(8); // 256 - hours
-                    int days = l.getElement(9); // clock rollovers
-                    int clk_cntrl = l.getElement(10); // bit 6 = 1; data is valid
-                    // clock info
-                    // "  " 0; ignore this reply
-                    // id1/id2 is device id of last device to set the clock
-                    // "   " = zero shows not set has happened
+                        /* make message easier to deal with internally */
+                        // fastClock = (fastClockMsg *)msgBuf;
+                        int clk_rate = l.getElement(3); // 0 = Freeze clock, 1 = normal,
+                        // 10 = 10:1 etc. Max is 0x7f
+                        int frac_minsl = l.getElement(4); // fractional minutes. not for
+                        // external use.
+                        int frac_minsh = l.getElement(5);
+                        int mins_60 = l.getElement(6); // 256 - minutes
+                        int track_stat = l.getElement(7); // track status
+                        int hours_24 = l.getElement(8); // 256 - hours
+                        int days = l.getElement(9); // clock rollovers
+                        int clk_cntrl = l.getElement(10); // bit 6 = 1; data is valid
+                        // clock info
+                        // "  " 0; ignore this reply
+                        // id1/id2 is device id of last device to set the clock
+                        // "   " = zero shows not set has happened
 
-                    /* recover hours and minutes values */
-                    minutes = ((255 - mins_60) & 0x7f) % 60;
-                    hours = ((256 - hours_24) & 0x7f) % 24;
-                    hours = (24 - hours) % 24;
-                    minutes = (60 - minutes) % 60;
-                    frac_mins = 0x3FFF - (frac_minsl + (frac_minsh << 7));
+                        /* recover hours and minutes values */
+                        minutes = ((255 - mins_60) & 0x7f) % 60;
+                        hours = ((256 - hours_24) & 0x7f) % 24;
+                        hours = (24 - hours) % 24;
+                        minutes = (60 - minutes) % 60;
+                        frac_mins = 0x3FFF - (frac_minsl + (frac_minsh << 7));
 
-                    /* check track status value and display */
-                    if ((trackStatus != track_stat) || showTrackStatus) {
-                        trackStatus = track_stat;
-                        showStatus = true;
-                    }
-
-                    if (showStatus) {
-                        logString = mode + " Fast Clock is "
-                                + ((clk_cntrl & 0x20) != 0 ? "" : "Synchronized, ")
-                                + (clk_rate != 0 ? "Running, " : "Frozen, ")
-                                + "rate is " + clk_rate
-                                + ":1. Day " + days + ", " + hours + ":" + minutes + "." + frac_mins
-                                + ". Last set by ID " + idString(id1, id2)
-                                + ".\n\tMaster: "
-                                + ((track_stat & LnConstants.GTRK_MLOK1) != 0 ? "LocoNet 1.1" : "DT-200")
-                                + "; Track Status: "
-                                + ((track_stat & LnConstants.GTRK_POWER) != 0 ? "On" : "Off")
-                                + "/"
-                                + ((track_stat & LnConstants.GTRK_IDLE) == 0 ? "Paused" : "Running")
-                                + "; Programming Track: "
-                                + ((track_stat & LnConstants.GTRK_PROG_BUSY) != 0 ? "Busy" : "Available") + "\n";
-                    } else {
-                        logString = mode + " Fast Clock is "
-                                + ((clk_cntrl & 0x20) != 0 ? "" : "Synchronized, ")
-                                + (clk_rate != 0 ? "Running, " : "Frozen, ")
-                                + "rate is " + clk_rate
-                                + ":1. Day " + days + ", " + hours + ":" + minutes + "." + frac_mins
-                                + ". Last set by ID " + idString(id1, id2)
-                                + ".\n";
-                    }
-                    // end fast clock block
-
-                } else if (slot == LnConstants.PRG_SLOT) {
-                    /**
-                     * ********************************************************************************************
-                     * Programmer track: * ================= * The programmer
-                     * track is accessed as Special slot #124 ( $7C, 0x7C). It
-                     * is a full * asynchronous shared system resource. * * To
-                     * start Programmer task, write to slot 124. There will be
-                     * an immediate LACK acknowledge * that indicates what
-                     * programming will be allowed. If a valid programming task
-                     * is started, * then at the final (asynchronous)
-                     * programming completion, a Slot read <E7> from slot 124 *
-                     * will be sent. This is the final task status reply. * *
-                     * Programmer Task Start: * ----------------------
-                     *
-                     * <0xEF>,<0E>,<7C>,<PCMD>,<0>,<HOPSA>,<LOPSA>,<TRK>;<CVH>,<CVL>,
-                     *
-                     * <DATA7>,<0>,<0>,<CHK> * * This OPC leads to immediate
-                     * LACK codes:
-                     *
-                     * <B4>,<7F>,<7F>,<chk> Function NOT implemented, no reply.
-                     *
-                     * <B4>,<7F>,<0>,<chk> Programmer BUSY , task aborted, no
-                     * reply.
-                     *
-                     * <B4>,<7F>,<1>,<chk> Task accepted , <E7> reply at
-                     * completion.
-                     *
-                     * <B4>,<7F>,<0x40>,<chk> Task accepted blind NO <E7> reply
-                     * at completion. * * Note that the <7F> code will occur in
-                     * Operations Mode Read requests if the System is not *
-                     * configured for and has no Advanced Acknowlegement
-                     * detection installed.. Operations Mode * requests can be
-                     * made and executed whilst a current Service Mode
-                     * programming task is keeping * the Programming track BUSY.
-                     * If a Programming request is rejected, delay and resend
-                     * the * complete request later. Some readback operations
-                     * can keep the Programming track busy for up * to a minute.
-                     * Multiple devices, throttles/PC's etc, can share and
-                     * sequentially use the * Programming track as long as they
-                     * correctly interpret the response messages. Any Slot RD *
-                     * from the master will also contain the Programmer Busy
-                     * status in bit 3 of the <TRK> byte. * * A <PCMD> value of
-                     * <00> will abort current SERVICE mode programming task and
-                     * will echo with * an <E6> RD the command string that was
-                     * aborted. * * <PCMD> Programmer Command: *
-                     * -------------------------- * Defined as * D7 -0 * D6
-                     * -Write/Read 1= Write, * 0=Read * D5 -Byte Mode 1= Byte
-                     * operation, * 0=Bit operation (if possible) * D4 -TY1
-                     * Programming Type select bit * D3 -TY0 Prog type select
-                     * bit * D2 -Ops Mode 1=Ops Mode on Mainlines, * 0=Service
-                     * Mode on Programming Track * D1 -0 reserved * D0
-                     * -0-reserved * * Type codes: * ----------- * Byte Mode Ops
-                     * Mode TY1 TY0 Meaning * 1 0 0 0 Paged mode byte Read/Write
-                     * on Service Track * 1 0 0 0 Paged mode byte Read/Write on
-                     * Service Track * 1 0 0 1 Direct mode byteRead/Write on
-                     * Service Track * 0 0 0 1 Direct mode bit Read/Write on
-                     * Service Track * x 0 1 0 Physical Register byte Read/Write
-                     * on Service Track * x 0 1 1 Service Track- reserved
-                     * function * 1 1 0 0 Ops mode Byte program, no feedback * 1
-                     * 1 0 1 Ops mode Byte program, feedback * 0 1 0 0 Ops mode
-                     * Bit program, no feedback * 0 1 0 1 Ops mode Bit program,
-                     * feedback * * <HOPSA>Operations Mode Programming * 7 High
-                     * address bits of Loco to program, 0 if Service Mode
-                     *
-                     * <LOPSA>Operations Mode Programming * 7 Low address bits
-                     * of Loco to program, 0 if Service Mode
-                     *
-                     * <TRK> Normal Global Track status for this Master, * Bit 3
-                     * also is 1 WHEN Service Mode track is BUSY
-                     *
-                     * <CVH> High 3 BITS of CV#, and ms bit of DATA.7
-                     *
-                     * <0,0,CV9,CV8 - 0,0, D7,CV7>
-                     *
-                     * <CVL> Low 7 bits of 10 bit CV address.
-                     *
-                     * <0,CV6,CV5,CV4-CV3,CV2,CV1,CV0>
-                     *
-                     * <DATA7>Low 7 BITS OF data to WR or RD COMPARE
-                     *
-                     * <0,D6,D5,D4 - D3,D2,D1,D0> * ms bit is at CVH bit 1
-                     * position. * * Programmer Task Final Reply: *
-                     * ---------------------------- * (if saw LACK
-                     * <B4>,<7F>,<1>,<chk> code reply at task start)
-                     *
-                     * <0xE7>,<0E>,<7C>,<PCMD>,<PSTAT>,<HOPSA>,<LOPSA>,<TRK>;<CVH>,<CVL>,
-                     *
-                     * <DATA7>,<0>,<0>,<CHK> * * <PSTAT> Programmer Status error
-                     * flags. Reply codes resulting from * completed task in
-                     * PCMD * D7-D4 -reserved * D3 -1= User Aborted this command
-                     * * D2 -1= Failed to detect READ Compare acknowledge
-                     * response * from decoder * D1 -1= No Write acknowledge
-                     * response from decoder * D0 -1= Service Mode programming
-                     * track empty- No decoder detected * * This <E7> response
-                     * is issued whenever a Programming task is completed. It
-                     * echos most of the * request information and returns the
-                     * PSTAT status code to indicate how the task completed. *
-                     * If a READ was requested <DATA7> and <CVH> contain the
-                     * returned data, if the PSTAT indicates * a successful
-                     * readback (typically =0). Note that if a Paged Read fails
-                     * to detect a * successful Page write acknowledge when
-                     * first setting the Page register, the read will be *
-                     * aborted, showing no Write acknowledge flag D1=1. *
-                     * ********************************************************************************************
-                     */
-                    String operation;
-                    String progMode;
-                    int cvData;
-                    boolean opsMode = false;
-                    int cvNumber;
-
-                    // progTask = (progTaskMsg *) msgBuf;
-                    // slot - slot number for this request - slot 124 is programmer
-                    int pcmd = l.getElement(3); // programmer command
-                    int pstat = l.getElement(4); // programmer status error flags in
-                    // reply message
-                    int hopsa = l.getElement(5); // Ops mode - 7 high address bits
-                    // of loco to program
-                    int lopsa = l.getElement(6); // Ops mode - 7 low address bits of
-                    // loco to program
-                /* trk - track status. Note: bit 3 shows if prog track is busy */
-                    int cvh = l.getElement(8); // hi 3 bits of CV# and msb of data7
-                    int cvl = l.getElement(9); // lo 7 bits of CV#
-                    int data7 = l.getElement(10); // 7 bits of data to program, msb
-                    // is in cvh above
-
-                    cvData = (((cvh & LnConstants.CVH_D7) << 6) | (data7 & 0x7f)); // was
-                    // PROG_DATA
-                    cvNumber = (((((cvh & LnConstants.CVH_CV8_CV9) >> 3) | (cvh & LnConstants.CVH_CV7)) * 128) + (cvl & 0x7f)) + 1; // was
-                    // PROG_CV_NUM(progTask)
-
-                    /* generate loco address, mixed mode or true 4 digit */
-                    mixedAdrStr = convertToMixed(lopsa, hopsa);
-
-                    /* determine programming mode for printing */
-                    if ((pcmd & LnConstants.PCMD_MODE_MASK) == LnConstants.PAGED_ON_SRVC_TRK) {
-                        progMode = "Byte in Paged Mode on Service Track";
-                    } else if ((pcmd & LnConstants.PCMD_MODE_MASK) == LnConstants.DIR_BYTE_ON_SRVC_TRK) {
-                        progMode = "Byte in Direct Mode on Service Track";
-                    } else if ((pcmd & LnConstants.PCMD_MODE_MASK) == LnConstants.DIR_BIT_ON_SRVC_TRK) {
-                        progMode = "Bits in Direct Mode on Service Track";
-                    } else if (((pcmd & ~LnConstants.PCMD_BYTE_MODE) & LnConstants.PCMD_MODE_MASK) == LnConstants.REG_BYTE_RW_ON_SRVC_TRK) {
-                        progMode = "Byte in Physical Register R/W Mode on Service Track";
-                    } else if ((pcmd & LnConstants.PCMD_MODE_MASK) == LnConstants.OPS_BYTE_NO_FEEDBACK) {
-                        progMode = "Byte in OP's Mode (NO feedback)";
-                        opsMode = true;
-                    } else if ((pcmd & LnConstants.PCMD_MODE_MASK) == LnConstants.OPS_BYTE_FEEDBACK) {
-                        progMode = "Byte in OP's Mode";
-                        opsMode = true;
-                    } else if ((pcmd & LnConstants.PCMD_MODE_MASK) == LnConstants.OPS_BIT_NO_FEEDBACK) {
-                        progMode = "Bits in OP's Mode (NO feedback)";
-                        opsMode = true;
-                    } else if ((pcmd & LnConstants.PCMD_MODE_MASK) == LnConstants.OPS_BIT_FEEDBACK) {
-                        progMode = "Bits in OP's Mode";
-                        opsMode = true;
-                    } else if (((pcmd & ~LnConstants.PCMD_BYTE_MODE) & LnConstants.PCMD_MODE_MASK) == LnConstants.SRVC_TRK_RESERVED) {
-                        progMode = "SERVICE TRACK RESERVED MODE DETECTED!";
-                    } else if (pcmd == 0) {
-                        progMode = "Uhlenbrock IB-COM / Intellibox II ";
-                    } else {
-                        progMode = "Unknown mode " + pcmd + " (0x" + Integer.toHexString(pcmd) + ")";
-                        forceHex = true;
-                    }
-
-                    /* are we sending or receiving? */
-                    if ((pcmd & LnConstants.PCMD_RW) != 0) {
-                        /* sending a command */
-                        operation = "Programming " + mode + ": Write " + progMode;
-
-                        /* printout based on whether we're doing Ops mode or not */
-                        if (opsMode) {
-                            logString = operation + " to CV" + cvNumber + " of Loco " + mixedAdrStr
-                                    + " value " + cvData + " (0x" + Integer.toHexString(cvData)
-                                    + ", B'" + Integer.toBinaryString(cvData) + ").\n";
-
-                        } else {
-                            logString = operation + " to CV" + cvNumber + " value " + cvData + " (0x"
-                                    + Integer.toHexString(cvData) + ", "
-                                    + Integer.toBinaryString(cvData) + ").\n";
+                        /* check track status value and display */
+                        if ((trackStatus != track_stat) || showTrackStatus) {
+                            trackStatus = track_stat;
+                            showStatus = true;
                         }
-                    } else {
-                        /* receiving a reply */
-                        operation = "Programming Track " + mode + ": Read " + progMode + " ";
 
-                        /* if we're reading the slot back, check the status */
-                        /* this is supposed to be the Programming task final reply */
-                        /* and will have the resulting status byte */
-                        if (command == LnConstants.OPC_SL_RD_DATA) {
-                            if (pstat != 0) {
-                                if ((pstat & LnConstants.PSTAT_USER_ABORTED) != 0) {
-                                    operation += "Failed, User Aborted: ";
-                                }
+                        if (showStatus) {
+                            logString = mode + " Fast Clock is "
+                                    + ((clk_cntrl & 0x20) != 0 ? "" : "Synchronized, ")
+                                    + (clk_rate != 0 ? "Running, " : "Frozen, ")
+                                    + "rate is " + clk_rate
+                                    + ":1. Day " + days + ", " + hours + ":" + minutes + "." + frac_mins
+                                    + ". Last set by ID " + idString(id1, id2)
+                                    + ".\n\tMaster: "
+                                    + ((track_stat & LnConstants.GTRK_MLOK1) != 0 ? "LocoNet 1.1" : "DT-200")
+                                    + "; Track Status: "
+                                    + ((track_stat & LnConstants.GTRK_POWER) != 0 ? "On" : "Off")
+                                    + "/"
+                                    + ((track_stat & LnConstants.GTRK_IDLE) == 0 ? "Paused" : "Running")
+                                    + "; Programming Track: "
+                                    + ((track_stat & LnConstants.GTRK_PROG_BUSY) != 0 ? "Busy" : "Available") + "\n";
+                        } else {
+                            logString = mode + " Fast Clock is "
+                                    + ((clk_cntrl & 0x20) != 0 ? "" : "Synchronized, ")
+                                    + (clk_rate != 0 ? "Running, " : "Frozen, ")
+                                    + "rate is " + clk_rate
+                                    + ":1. Day " + days + ", " + hours + ":" + minutes + "." + frac_mins
+                                    + ". Last set by ID " + idString(id1, id2)
+                                    + ".\n";
+                        }
+                        // end fast clock block
+                        break;
+                    case LnConstants.PRG_SLOT:
+                        /**
+                         * ********************************************************************************************
+                         * Programmer track: * ================= * The
+                         * programmer track is accessed as Special slot #124 (
+                         * $7C, 0x7C). It is a full * asynchronous shared system
+                         * resource. * * To start Programmer task, write to slot
+                         * 124. There will be an immediate LACK acknowledge *
+                         * that indicates what programming will be allowed. If a
+                         * valid programming task is started, * then at the
+                         * final (asynchronous) programming completion, a Slot
+                         * read <E7> from slot 124 * will be sent. This is the
+                         * final task status reply. * * Programmer Task Start: *
+                         * ----------------------
+                         *
+                         * <0xEF>,<0E>,<7C>,<PCMD>,<0>,<HOPSA>,<LOPSA>,<TRK>;<CVH>,<CVL>,
+                         *
+                         * <DATA7>,<0>,<0>,<CHK> * * This OPC leads to immediate
+                         * LACK codes:
+                         *
+                         * <B4>,<7F>,<7F>,<chk> Function NOT implemented, no
+                         * reply.
+                         *
+                         * <B4>,<7F>,<0>,<chk> Programmer BUSY , task aborted,
+                         * no reply.
+                         *
+                         * <B4>,<7F>,<1>,<chk> Task accepted , <E7> reply at
+                         * completion.
+                         *
+                         * <B4>,<7F>,<0x40>,<chk> Task accepted blind NO <E7>
+                         * reply at completion. * * Note that the <7F> code will
+                         * occur in Operations Mode Read requests if the System
+                         * is not * configured for and has no Advanced
+                         * Acknowlegement detection installed.. Operations Mode
+                         * * requests can be made and executed whilst a current
+                         * Service Mode programming task is keeping * the
+                         * Programming track BUSY. If a Programming request is
+                         * rejected, delay and resend the * complete request
+                         * later. Some readback operations can keep the
+                         * Programming track busy for up * to a minute. Multiple
+                         * devices, throttles/PC's etc, can share and
+                         * sequentially use the * Programming track as long as
+                         * they correctly interpret the response messages. Any
+                         * Slot RD * from the master will also contain the
+                         * Programmer Busy status in bit 3 of the <TRK> byte. *
+                         * * A <PCMD> value of
+                         * <00> will abort current SERVICE mode programming task
+                         * and will echo with * an <E6> RD the command string
+                         * that was aborted. * * <PCMD> Programmer Command: *
+                         * -------------------------- * Defined as * D7 -0 * D6
+                         * -Write/Read 1= Write, * 0=Read * D5 -Byte Mode 1=
+                         * Byte operation, * 0=Bit operation (if possible) * D4
+                         * -TY1 Programming Type select bit * D3 -TY0 Prog type
+                         * select bit * D2 -Ops Mode 1=Ops Mode on Mainlines, *
+                         * 0=Service Mode on Programming Track * D1 -0 reserved
+                         * * D0 -0-reserved * * Type codes: * ----------- * Byte
+                         * Mode Ops Mode TY1 TY0 Meaning * 1 0 0 0 Paged mode
+                         * byte Read/Write on Service Track * 1 0 0 0 Paged mode
+                         * byte Read/Write on Service Track * 1 0 0 1 Direct
+                         * mode byteRead/Write on Service Track * 0 0 0 1 Direct
+                         * mode bit Read/Write on Service Track * x 0 1 0
+                         * Physical Register byte Read/Write on Service Track *
+                         * x 0 1 1 Service Track- reserved function * 1 1 0 0
+                         * Ops mode Byte program, no feedback * 1 1 0 1 Ops mode
+                         * Byte program, feedback * 0 1 0 0 Ops mode Bit
+                         * program, no feedback * 0 1 0 1 Ops mode Bit program,
+                         * feedback * * <HOPSA>Operations Mode Programming * 7
+                         * High address bits of Loco to program, 0 if Service
+                         * Mode
+                         *
+                         * <LOPSA>Operations Mode Programming * 7 Low address
+                         * bits of Loco to program, 0 if Service Mode
+                         *
+                         * <TRK> Normal Global Track status for this Master, *
+                         * Bit 3 also is 1 WHEN Service Mode track is BUSY
+                         *
+                         * <CVH> High 3 BITS of CV#, and ms bit of DATA.7
+                         *
+                         * <0,0,CV9,CV8 - 0,0, D7,CV7>
+                         *
+                         * <CVL> Low 7 bits of 10 bit CV address.
+                         *
+                         * <0,CV6,CV5,CV4-CV3,CV2,CV1,CV0>
+                         *
+                         * <DATA7>Low 7 BITS OF data to WR or RD COMPARE
+                         *
+                         * <0,D6,D5,D4 - D3,D2,D1,D0> * ms bit is at CVH bit 1
+                         * position. * * Programmer Task Final Reply: *
+                         * ---------------------------- * (if saw LACK
+                         * <B4>,<7F>,<1>,<chk> code reply at task start)
+                         *
+                         * <0xE7>,<0E>,<7C>,<PCMD>,<PSTAT>,<HOPSA>,<LOPSA>,<TRK>;<CVH>,<CVL>,
+                         *
+                         * <DATA7>,<0>,<0>,<CHK> * * <PSTAT> Programmer Status
+                         * error flags. Reply codes resulting from * completed
+                         * task in PCMD * D7-D4 -reserved * D3 -1= User Aborted
+                         * this command * D2 -1= Failed to detect READ Compare
+                         * acknowledge response * from decoder * D1 -1= No Write
+                         * acknowledge response from decoder * D0 -1= Service
+                         * Mode programming track empty- No decoder detected * *
+                         * This <E7> response is issued whenever a Programming
+                         * task is completed. It echos most of the * request
+                         * information and returns the PSTAT status code to
+                         * indicate how the task completed. * If a READ was
+                         * requested <DATA7> and <CVH> contain the returned
+                         * data, if the PSTAT indicates * a successful readback
+                         * (typically =0). Note that if a Paged Read fails to
+                         * detect a * successful Page write acknowledge when
+                         * first setting the Page register, the read will be *
+                         * aborted, showing no Write acknowledge flag D1=1. *
+                         * ********************************************************************************************
+                         */
+                        String operation;
+                        String progMode;
+                        int cvData;
+                        boolean opsMode = false;
+                        int cvNumber;
 
-                                if ((pstat & LnConstants.PSTAT_READ_FAIL) != 0) {
-                                    operation += "Failed, Read Compare Acknowledge not detected: ";
-                                }
+                        // progTask = (progTaskMsg *) msgBuf;
+                        // slot - slot number for this request - slot 124 is programmer
+                        int pcmd = l.getElement(3); // programmer command
+                        int pstat = l.getElement(4); // programmer status error flags in
+                        // reply message
+                        int hopsa = l.getElement(5); // Ops mode - 7 high address bits
+                        // of loco to program
+                        int lopsa = l.getElement(6); // Ops mode - 7 low address bits of
+                        // loco to program
+                        /* trk - track status. Note: bit 3 shows if prog track is busy */
+                        int cvh = l.getElement(8); // hi 3 bits of CV# and msb of data7
+                        int cvl = l.getElement(9); // lo 7 bits of CV#
+                        int data7 = l.getElement(10); // 7 bits of data to program, msb
+                        // is in cvh above
 
-                                if ((pstat & LnConstants.PSTAT_WRITE_FAIL) != 0) {
-                                    operation += "Failed, No Write Acknowledge from decoder: ";
-                                }
+                        cvData = (((cvh & LnConstants.CVH_D7) << 6) | (data7 & 0x7f)); // was
+                        // PROG_DATA
+                        cvNumber = (((((cvh & LnConstants.CVH_CV8_CV9) >> 3) | (cvh & LnConstants.CVH_CV7)) * 128) + (cvl & 0x7f)) + 1; // was
+                        // PROG_CV_NUM(progTask)
 
-                                if ((pstat & LnConstants.PSTAT_NO_DECODER) != 0) {
-                                    operation += "Failed, Service Mode programming track empty: ";
-                                }
-                                if ((pstat & 0xF0) != 0) {
-                                    if ((pstat & 0xF0) == 0x10) {
-                                        // response from transponding decoder
-                                        operation += "Was successful via RX4/BDL16x:";
+                        /* generate loco address, mixed mode or true 4 digit */
+                        mixedAdrStr = convertToMixed(lopsa, hopsa);
 
-                                    } else {
-                                        operation += "Unable to decode response = 0x"
-                                                + Integer.toHexString(pstat) + ": ";
-                                    }
-                                }
+                        /* determine programming mode for printing */
+                        if ((pcmd & LnConstants.PCMD_MODE_MASK) == LnConstants.PAGED_ON_SRVC_TRK) {
+                            progMode = "Byte in Paged Mode on Service Track";
+                        } else if ((pcmd & LnConstants.PCMD_MODE_MASK) == LnConstants.DIR_BYTE_ON_SRVC_TRK) {
+                            progMode = "Byte in Direct Mode on Service Track";
+                        } else if ((pcmd & LnConstants.PCMD_MODE_MASK) == LnConstants.DIR_BIT_ON_SRVC_TRK) {
+                            progMode = "Bits in Direct Mode on Service Track";
+                        } else if (((pcmd & ~LnConstants.PCMD_BYTE_MODE) & LnConstants.PCMD_MODE_MASK) == LnConstants.REG_BYTE_RW_ON_SRVC_TRK) {
+                            progMode = "Byte in Physical Register R/W Mode on Service Track";
+                        } else if ((pcmd & LnConstants.PCMD_MODE_MASK) == LnConstants.OPS_BYTE_NO_FEEDBACK) {
+                            progMode = "Byte in OP's Mode (NO feedback)";
+                            opsMode = true;
+                        } else if ((pcmd & LnConstants.PCMD_MODE_MASK) == LnConstants.OPS_BYTE_FEEDBACK) {
+                            progMode = "Byte in OP's Mode";
+                            opsMode = true;
+                        } else if ((pcmd & LnConstants.PCMD_MODE_MASK) == LnConstants.OPS_BIT_NO_FEEDBACK) {
+                            progMode = "Bits in OP's Mode (NO feedback)";
+                            opsMode = true;
+                        } else if ((pcmd & LnConstants.PCMD_MODE_MASK) == LnConstants.OPS_BIT_FEEDBACK) {
+                            progMode = "Bits in OP's Mode";
+                            opsMode = true;
+                        } else if (((pcmd & ~LnConstants.PCMD_BYTE_MODE) & LnConstants.PCMD_MODE_MASK) == LnConstants.SRVC_TRK_RESERVED) {
+                            progMode = "SERVICE TRACK RESERVED MODE DETECTED!";
+                        } else if (pcmd == 0) {
+                            progMode = "Uhlenbrock IB-COM / Intellibox II ";
+                        } else {
+                            progMode = "Unknown mode " + pcmd + " (0x" + Integer.toHexString(pcmd) + ")";
+                            forceHex = true;
+                        }
+
+                        /* are we sending or receiving? */
+                        if ((pcmd & LnConstants.PCMD_RW) != 0) {
+                            /* sending a command */
+                            operation = "Programming " + mode + ": Write " + progMode;
+
+                            /* printout based on whether we're doing Ops mode or not */
+                            if (opsMode) {
+                                logString = operation + " to CV" + cvNumber + " of Loco " + mixedAdrStr
+                                        + " value " + cvData + " (0x" + Integer.toHexString(cvData)
+                                        + ", B'" + Integer.toBinaryString(cvData) + ").\n";
+
                             } else {
-                                operation += "Was Successful, set ";
+                                logString = operation + " to CV" + cvNumber + " value " + cvData + " (0x"
+                                        + Integer.toHexString(cvData) + ", "
+                                        + Integer.toBinaryString(cvData) + ").\n";
                             }
                         } else {
-                            operation += "variable ";
+                            /* receiving a reply */
+                            operation = "Programming Track " + mode + ": Read " + progMode + " ";
+
+                            /* if we're reading the slot back, check the status
+                             * this is supposed to be the Programming task final reply
+                             * and will have the resulting status byte
+                             */
+                            if (command == LnConstants.OPC_SL_RD_DATA) {
+                                if (pstat != 0) {
+                                    if ((pstat & LnConstants.PSTAT_USER_ABORTED) != 0) {
+                                        operation += "Failed, User Aborted: ";
+                                    }
+
+                                    if ((pstat & LnConstants.PSTAT_READ_FAIL) != 0) {
+                                        operation += "Failed, Read Compare Acknowledge not detected: ";
+                                    }
+
+                                    if ((pstat & LnConstants.PSTAT_WRITE_FAIL) != 0) {
+                                        operation += "Failed, No Write Acknowledge from decoder: ";
+                                    }
+
+                                    if ((pstat & LnConstants.PSTAT_NO_DECODER) != 0) {
+                                        operation += "Failed, Service Mode programming track empty: ";
+                                    }
+                                    if ((pstat & 0xF0) != 0) {
+                                        if ((pstat & 0xF0) == 0x10) {
+                                            // response from transponding decoder
+                                            operation += "Was successful via RX4/BDL16x:";
+
+                                        } else {
+                                            operation += "Unable to decode response = 0x"
+                                                    + Integer.toHexString(pstat) + ": ";
+                                        }
+                                    }
+                                } else {
+                                    operation += "Was Successful, set ";
+                                }
+                            } else {
+                                operation += "variable ";
+                            }
+                            /* printout based on whether we're doing Ops mode or not */
+                            if (opsMode) {
+                                logString = operation + " CV" + cvNumber + " of Loco " + mixedAdrStr
+                                        + " value " + cvData + " (0x" + Integer.toHexString(cvData)
+                                        + ", " + Integer.toBinaryString(cvData) + ").\n";
+                            } else {
+                                logString = operation + " CV" + cvNumber + " value " + cvData + " (0x"
+                                        + Integer.toHexString(cvData) + ", "
+                                        + Integer.toBinaryString(cvData) + ").\n";
+                            }
                         }
-                        /* printout based on whether we're doing Ops mode or not */
-                        if (opsMode) {
-                            logString = operation + " CV" + cvNumber + " of Loco " + mixedAdrStr
-                                    + " value " + cvData + " (0x" + Integer.toHexString(cvData)
-                                    + ", " + Integer.toBinaryString(cvData) + ").\n";
+                        // end programming track block
+                        break;
+                    case LnConstants.CFG_SLOT:
+                        /**
+                         * ************************************************
+                         * Configuration slot, holding op switches
+                         * ************************************************
+                         */
+                        logString = mode
+                                + " Comand Station OpSw that are Closed (non-default):\n"
+                                + ((l.getElement(3) & 0x01) != 0 ? "\tOpSw1=c, reserved.\n" : "")
+                                + ((l.getElement(3) & 0x02) != 0 ? "\tOpSw2=c, DCS100 booster only.\n" : "")
+                                + ((l.getElement(3) & 0x04) != 0 ? "\tOpSw3=c, Booster Autoreversing.\n" : "")
+                                + ((l.getElement(3) & 0x08) != 0 ? "\tOpSw4=c, reserved.\n" : "")
+                                + ((l.getElement(3) & 0x10) != 0 ? "\tOpSw5=c, Master Mode.\n" : "")
+                                + ((l.getElement(3) & 0x20) != 0 ? "\tOpSw6=c, reserved.\n" : "")
+                                + ((l.getElement(3) & 0x40) != 0 ? "\tOpSw7=c, reserved.\n" : "")
+                                // this bit implies an OpCode, so ignore it!                            + ((l.getElement(3) & 0x80) != 0 ? "\tOpSw8=c, reserved.\n" : "")
+                                + ((l.getElement(4) & 0x01) != 0 ? "\tOpSw9=c, Allow Motorola trinary echo 1-256.\n" : "")
+                                + ((l.getElement(4) & 0x02) != 0 ? "\tOpSw10=c, Expand trinary switch echo.\n" : "")
+                                + ((l.getElement(4) & 0x04) != 0 ? "\tOpSw11=c, Make certian trinary switches long duration.\n" : "")
+                                + ((l.getElement(4) & 0x08) != 0 ? "\tOpSw12=c, Trinary addresses 1-80 allowed.\n" : "")
+                                + ((l.getElement(4) & 0x10) != 0 ? "\tOpSw13=c, Raise loco address purge time to 600 seconds.\n" : "")
+                                + ((l.getElement(4) & 0x20) != 0 ? "\tOpSw14=c, Disable loco address purging.\n" : "")
+                                + ((l.getElement(4) & 0x40) != 0 ? "\tOpSw15=c, Purge will force loco to zero speed.\n" : "")
+                                // this bit implies an OpCode, so ignore it!                            + ((l.getElement(4) & 0x80) != 0 ? "\tOpSw16=c, reserved.\n" : "")
+                                + ((l.getElement(5) & 0x01) != 0 ? "\tOpSw17=c, Automatic advanced consists are disabled.\n" : "")
+                                + ((l.getElement(5) & 0x02) != 0 ? "\tOpSw18=c, Extend booster short shutdown to 1/2 second.\n" : "")
+                                + ((l.getElement(5) & 0x04) != 0 ? "\tOpSw19=c, reserved.\n" : "")
+                                + ((l.getElement(5) & 0x08) != 0 ? "\tOpSw20=c, Disable address 00 analog operation.\n" : "")
+                                + ((l.getElement(5) & 0x10) != 0 ? "\tOpSw21=c, Global default for new loco is FX.\n" : "")
+                                + ((l.getElement(5) & 0x20) != 0 ? "\tOpSw22=c, Global default for new loco is 28 step.\n" : "")
+                                + ((l.getElement(5) & 0x40) != 0 ? "\tOpSw23=c, Global default for new loco is 14 step.\n" : "")
+                                // this bit implies an OpCode, so ignore it!                            + ((l.getElement(5) & 0x80) != 0 ? "\tOpSw24=c, reserved.\n" : "")
+                                + ((l.getElement(6) & 0x01) != 0 ? "\tOpSw25=c, Disable aliasing.\n" : "")
+                                + ((l.getElement(6) & 0x02) != 0 ? "\tOpSw26=c, Enable routes.\n" : "")
+                                + ((l.getElement(6) & 0x04) != 0 ? "\tOpSw27=c, Disable normal switch commands (Bushby bit).\n" : "")
+                                + ((l.getElement(6) & 0x08) != 0 ? "\tOpSw28=c, Disable DS54/64/SE8C interrogate at power on.\n" : "")
+                                + ((l.getElement(6) & 0x10) != 0 ? "\tOpSw29=c, reserved.\n" : "")
+                                + ((l.getElement(6) & 0x20) != 0 ? "\tOpSw30=c, reserved.\n" : "")
+                                + ((l.getElement(6) & 0x40) != 0 ? "\tOpSw31=c, Meter route/switch output when not in trinary.\n" : "")
+                                // this bit implies an OpCode, so ignore it!                            + ((l.getElement(6) & 0x80) != 0 ? "\tOpSw32=c, reserved.\n" : "")
+                                // element 7 is skipped intentionally - it contains the "Track Status" byte
+                                + ((l.getElement(8) & 0x01) != 0 ? "\tOpSw33=c, Restore track power to previous state at power on.\n" : "")
+                                + ((l.getElement(8) & 0x02) != 0 ? "\tOpSw34=c, Allow track to power up to run state.\n" : "")
+                                + ((l.getElement(8) & 0x04) != 0 ? "\tOpSw35=c, reserved.\n" : "")
+                                + ((l.getElement(8) & 0x08) != 0 ? "\tOpSw36=c, Clear all moble decoder information and consists.\n" : "")
+                                + ((l.getElement(8) & 0x10) != 0 ? "\tOpSw37=c, Clear all routes.\n" : "")
+                                + ((l.getElement(8) & 0x20) != 0 ? "\tOpSw38=c, Clear loco roster.\n" : "")
+                                + ((l.getElement(8) & 0x40) != 0 ? "\tOpSw39=c, Clear internal memory.\n" : "")
+                                // this bit implies an OpCode, so ignore it!                            + ((l.getElement(8) & 0x80) != 0 ? "\tOpSw40=c, reserved.\n" : "")
+                                + ((l.getElement(9) & 0x01) != 0 ? "\tOpSw41=c, Diagnostic click when LocoNet command is received.\n" : "")
+                                + ((l.getElement(9) & 0x02) != 0 ? "\tOpSw42=c, Disable 3 beeps when loco address is purged.\n" : "")
+                                + ((l.getElement(9) & 0x04) != 0 ? "\tOpSw43=c, Disable LocoNet update of track status.\n" : "")
+                                + ((l.getElement(9) & 0x08) != 0 ? "\tOpSw44=c, Expand slots to 120.\n" : "")
+                                + ((l.getElement(9) & 0x10) != 0 ? "\tOpSw45=c, Disable replay for switch state request.\n" : "")
+                                + ((l.getElement(9) & 0x20) != 0 ? "\tOpSw46=c, reserved.\n" : "")
+                                + ((l.getElement(9) & 0x40) != 0 ? "\tOpSw47=c, Programming track is break generator.\n" : "")
+                                // this bit implies an OpCode, so ignore it!                            + ((l.getElement(9) & 0x80) != 0 ? "\tOpSw48=c, reserved.\n" : "")
+                                + ((l.getElement(10) & 0x01) != 0 ? "\tOpSw49=c, reserved.\n" : "")
+                                + ((l.getElement(10) & 0x02) != 0 ? "\tOpSw50=c, reserved.\n" : "")
+                                + ((l.getElement(10) & 0x04) != 0 ? "\tOpSw51=c, reserved.\n" : "")
+                                + ((l.getElement(10) & 0x08) != 0 ? "\tOpSw52=c, reserved.\n" : "")
+                                + ((l.getElement(10) & 0x10) != 0 ? "\tOpSw53=c, reserved.\n" : "")
+                                + ((l.getElement(10) & 0x20) != 0 ? "\tOpSw54=c, reserved.\n" : "")
+                                + ((l.getElement(10) & 0x40) != 0 ? "\tOpSw55=c, reserved.\n" : "")
+                                // this bit implies an OpCode, so ignore it!                            + ((l.getElement(10) & 0x80) != 0 ? "\tOpSw56=c, reserved.\n" : "")
+                                + ((l.getElement(11) & 0x01) != 0 ? "\tOpSw57=c, reserved.\n" : "")
+                                + ((l.getElement(11) & 0x02) != 0 ? "\tOpSw58=c, reserved.\n" : "")
+                                + ((l.getElement(11) & 0x04) != 0 ? "\tOpSw59=c, reserved.\n" : "")
+                                + ((l.getElement(11) & 0x08) != 0 ? "\tOpSw60=c, reserved.\n" : "")
+                                + ((l.getElement(11) & 0x10) != 0 ? "\tOpSw61=c, reserved.\n" : "")
+                                + ((l.getElement(11) & 0x20) != 0 ? "\tOpSw62=c, reserved.\n" : "")
+                                + ((l.getElement(11) & 0x40) != 0 ? "\tOpSw63=c, reserved.\n" : "") // this bit implies an OpCode, so ignore it!                            + ((l.getElement(11) & 0x80) != 0 ? "\tOpSw64=c, reserved.\n" : "")
+                                ;
+                        break;
+                    default:
+                        /**
+                         * ************************************************
+                         * normal slot read/write message - see info above *
+                         * ************************************************
+                         */
+
+                        if ((trackStatus != trk) || showTrackStatus) {
+                            trackStatus = trk;
+                            showStatus = true;
+                        }
+                        if (showStatus) {
+                            logString = mode + " slot " + slot + " information:\n\tLoco " + locoAdrStr
+                                    + " is " + LnConstants.CONSIST_STAT(stat) + ", "
+                                    + LnConstants.LOCO_STAT(stat) + ", operating in "
+                                    + LnConstants.DEC_MODE(stat) + " SS mode, and is going "
+                                    + ((dirf & LnConstants.DIRF_DIR) != 0 ? "in Reverse" : "Forward")
+                                    + " at speed " + spd + ",\n" + "\tF0="
+                                    + ((dirf & LnConstants.DIRF_F0) != 0 ? "On, " : "Off,")
+                                    + " F1="
+                                    + ((dirf & LnConstants.DIRF_F1) != 0 ? "On, " : "Off,")
+                                    + " F2="
+                                    + ((dirf & LnConstants.DIRF_F2) != 0 ? "On, " : "Off,")
+                                    + " F3="
+                                    + ((dirf & LnConstants.DIRF_F3) != 0 ? "On, " : "Off,")
+                                    + " F4="
+                                    + ((dirf & LnConstants.DIRF_F4) != 0 ? "On, " : "Off,")
+                                    + " Sound1/F5="
+                                    + ((snd & LnConstants.SND_F5) != 0 ? "On, " : "Off,")
+                                    + " Sound2/F6="
+                                    + ((snd & LnConstants.SND_F6) != 0 ? "On, " : "Off,")
+                                    + " Sound3/F7="
+                                    + ((snd & LnConstants.SND_F7) != 0 ? "On, " : "Off,")
+                                    + " Sound4/F8=" + ((snd & LnConstants.SND_F8) != 0 ? "On" : "Off")
+                                    + "\n\tMaster: "
+                                    + ((trk & LnConstants.GTRK_MLOK1) != 0 ? "LocoNet 1.1" : "DT-200")
+                                    + "; Track: "
+                                    + ((trk & LnConstants.GTRK_IDLE) != 0 ? "On" : "Off")
+                                    + "; Programming Track: "
+                                    + ((trk & LnConstants.GTRK_PROG_BUSY) != 0 ? "Busy" : "Available")
+                                    + "; SS2=0x" + Integer.toHexString(ss2)
+                                    + ", ThrottleID=" + idString(id1, id2) + "\n";
                         } else {
-                            logString = operation + " CV" + cvNumber + " value " + cvData + " (0x"
-                                    + Integer.toHexString(cvData) + ", "
-                                    + Integer.toBinaryString(cvData) + ").\n";
+                            logString = mode + " slot " + slot + " information:\n\tLoco " + locoAdrStr
+                                    + " is " + LnConstants.CONSIST_STAT(stat) + ", "
+                                    + LnConstants.LOCO_STAT(stat) + ", operating in "
+                                    + LnConstants.DEC_MODE(stat) + " SS mode, and is going "
+                                    + ((dirf & LnConstants.DIRF_DIR) != 0 ? "in Reverse" : "Forward")
+                                    + " at speed " + spd + ",\n" + "\tF0="
+                                    + ((dirf & LnConstants.DIRF_F0) != 0 ? "On, " : "Off,")
+                                    + " F1="
+                                    + ((dirf & LnConstants.DIRF_F1) != 0 ? "On, " : "Off,")
+                                    + " F2="
+                                    + ((dirf & LnConstants.DIRF_F2) != 0 ? "On, " : "Off,")
+                                    + " F3="
+                                    + ((dirf & LnConstants.DIRF_F3) != 0 ? "On, " : "Off,")
+                                    + " F4="
+                                    + ((dirf & LnConstants.DIRF_F4) != 0 ? "On, " : "Off,")
+                                    + " Sound1/F5="
+                                    + ((snd & LnConstants.SND_F5) != 0 ? "On, " : "Off,")
+                                    + " Sound2/F6="
+                                    + ((snd & LnConstants.SND_F6) != 0 ? "On, " : "Off,")
+                                    + " Sound3/F7="
+                                    + ((snd & LnConstants.SND_F7) != 0 ? "On, " : "Off,")
+                                    + " Sound4/F8=" + ((snd & LnConstants.SND_F8) != 0 ? "On" : "Off")
+                                    + "\n\tSS2=0x" + Integer.toHexString(ss2)
+                                    + ", ThrottleID =" + idString(id1, id2) + "\n";
                         }
-                    }
-                    // end programming track block
-
-                } else if (slot == LnConstants.CFG_SLOT) {
-                    /**
-                     * ************************************************
-                     * Configuration slot, holding op switches
-                     * ************************************************
-                     */
-                    logString = mode
-                            + " Comand Station OpSw that are Closed (non-default):\n"
-                            + ((l.getElement(3) & 0x01) != 0 ? "\tOpSw1=c, reserved.\n" : "")
-                            + ((l.getElement(3) & 0x02) != 0 ? "\tOpSw2=c, DCS100 booster only.\n" : "")
-                            + ((l.getElement(3) & 0x04) != 0 ? "\tOpSw3=c, Booster Autoreversing.\n" : "")
-                            + ((l.getElement(3) & 0x08) != 0 ? "\tOpSw4=c, reserved.\n" : "")
-                            + ((l.getElement(3) & 0x10) != 0 ? "\tOpSw5=c, Master Mode.\n" : "")
-                            + ((l.getElement(3) & 0x20) != 0 ? "\tOpSw6=c, reserved.\n" : "")
-                            + ((l.getElement(3) & 0x40) != 0 ? "\tOpSw7=c, reserved.\n" : "")
-                            // this bit implies an OpCode, so ignore it!                            + ((l.getElement(3) & 0x80) != 0 ? "\tOpSw8=c, reserved.\n" : "")
-                            + ((l.getElement(4) & 0x01) != 0 ? "\tOpSw9=c, Allow Motorola trinary echo 1-256.\n" : "")
-                            + ((l.getElement(4) & 0x02) != 0 ? "\tOpSw10=c, Expand trinary switch echo.\n" : "")
-                            + ((l.getElement(4) & 0x04) != 0 ? "\tOpSw11=c, Make certian trinary switches long duration.\n" : "")
-                            + ((l.getElement(4) & 0x08) != 0 ? "\tOpSw12=c, Trinary addresses 1-80 allowed.\n" : "")
-                            + ((l.getElement(4) & 0x10) != 0 ? "\tOpSw13=c, Raise loco address purge time to 600 seconds.\n" : "")
-                            + ((l.getElement(4) & 0x20) != 0 ? "\tOpSw14=c, Disable loco address purging.\n" : "")
-                            + ((l.getElement(4) & 0x40) != 0 ? "\tOpSw15=c, Purge will force loco to zero speed.\n" : "")
-                            // this bit implies an OpCode, so ignore it!                            + ((l.getElement(4) & 0x80) != 0 ? "\tOpSw16=c, reserved.\n" : "")
-                            + ((l.getElement(5) & 0x01) != 0 ? "\tOpSw17=c, Automatic advanced consists are disabled.\n" : "")
-                            + ((l.getElement(5) & 0x02) != 0 ? "\tOpSw18=c, Extend booster short shutdown to 1/2 second.\n" : "")
-                            + ((l.getElement(5) & 0x04) != 0 ? "\tOpSw19=c, reserved.\n" : "")
-                            + ((l.getElement(5) & 0x08) != 0 ? "\tOpSw20=c, Disable address 00 analog operation.\n" : "")
-                            + ((l.getElement(5) & 0x10) != 0 ? "\tOpSw21=c, Global default for new loco is FX.\n" : "")
-                            + ((l.getElement(5) & 0x20) != 0 ? "\tOpSw22=c, Global default for new loco is 28 step.\n" : "")
-                            + ((l.getElement(5) & 0x40) != 0 ? "\tOpSw23=c, Global default for new loco is 14 step.\n" : "")
-                            // this bit implies an OpCode, so ignore it!                            + ((l.getElement(5) & 0x80) != 0 ? "\tOpSw24=c, reserved.\n" : "")
-                            + ((l.getElement(6) & 0x01) != 0 ? "\tOpSw25=c, Disable aliasing.\n" : "")
-                            + ((l.getElement(6) & 0x02) != 0 ? "\tOpSw26=c, Enable routes.\n" : "")
-                            + ((l.getElement(6) & 0x04) != 0 ? "\tOpSw27=c, Disable normal switch commands (Bushby bit).\n" : "")
-                            + ((l.getElement(6) & 0x08) != 0 ? "\tOpSw28=c, Disable DS54/64/SE8C interrogate at power on.\n" : "")
-                            + ((l.getElement(6) & 0x10) != 0 ? "\tOpSw29=c, reserved.\n" : "")
-                            + ((l.getElement(6) & 0x20) != 0 ? "\tOpSw30=c, reserved.\n" : "")
-                            + ((l.getElement(6) & 0x40) != 0 ? "\tOpSw31=c, Meter route/switch output when not in trinary.\n" : "")
-                            // this bit implies an OpCode, so ignore it!                            + ((l.getElement(6) & 0x80) != 0 ? "\tOpSw32=c, reserved.\n" : "")
-                            // element 7 is skipped intentionally - it contains the "Track Status" byte
-                            + ((l.getElement(8) & 0x01) != 0 ? "\tOpSw33=c, Restore track power to previous state at power on.\n" : "")
-                            + ((l.getElement(8) & 0x02) != 0 ? "\tOpSw34=c, Allow track to power up to run state.\n" : "")
-                            + ((l.getElement(8) & 0x04) != 0 ? "\tOpSw35=c, reserved.\n" : "")
-                            + ((l.getElement(8) & 0x08) != 0 ? "\tOpSw36=c, Clear all moble decoder information and consists.\n" : "")
-                            + ((l.getElement(8) & 0x10) != 0 ? "\tOpSw37=c, Clear all routes.\n" : "")
-                            + ((l.getElement(8) & 0x20) != 0 ? "\tOpSw38=c, Clear loco roster.\n" : "")
-                            + ((l.getElement(8) & 0x40) != 0 ? "\tOpSw39=c, Clear internal memory.\n" : "")
-                            // this bit implies an OpCode, so ignore it!                            + ((l.getElement(8) & 0x80) != 0 ? "\tOpSw40=c, reserved.\n" : "")
-                            + ((l.getElement(9) & 0x01) != 0 ? "\tOpSw41=c, Diagnostic click when LocoNet command is received.\n" : "")
-                            + ((l.getElement(9) & 0x02) != 0 ? "\tOpSw42=c, Disable 3 beeps when loco address is purged.\n" : "")
-                            + ((l.getElement(9) & 0x04) != 0 ? "\tOpSw43=c, Disable LocoNet update of track status.\n" : "")
-                            + ((l.getElement(9) & 0x08) != 0 ? "\tOpSw44=c, Expand slots to 120.\n" : "")
-                            + ((l.getElement(9) & 0x10) != 0 ? "\tOpSw45=c, Disable replay for switch state request.\n" : "")
-                            + ((l.getElement(9) & 0x20) != 0 ? "\tOpSw46=c, reserved.\n" : "")
-                            + ((l.getElement(9) & 0x40) != 0 ? "\tOpSw47=c, Programming track is break generator.\n" : "")
-                            // this bit implies an OpCode, so ignore it!                            + ((l.getElement(9) & 0x80) != 0 ? "\tOpSw48=c, reserved.\n" : "")
-                            + ((l.getElement(10) & 0x01) != 0 ? "\tOpSw49=c, reserved.\n" : "")
-                            + ((l.getElement(10) & 0x02) != 0 ? "\tOpSw50=c, reserved.\n" : "")
-                            + ((l.getElement(10) & 0x04) != 0 ? "\tOpSw51=c, reserved.\n" : "")
-                            + ((l.getElement(10) & 0x08) != 0 ? "\tOpSw52=c, reserved.\n" : "")
-                            + ((l.getElement(10) & 0x10) != 0 ? "\tOpSw53=c, reserved.\n" : "")
-                            + ((l.getElement(10) & 0x20) != 0 ? "\tOpSw54=c, reserved.\n" : "")
-                            + ((l.getElement(10) & 0x40) != 0 ? "\tOpSw55=c, reserved.\n" : "")
-                            // this bit implies an OpCode, so ignore it!                            + ((l.getElement(10) & 0x80) != 0 ? "\tOpSw56=c, reserved.\n" : "")
-                            + ((l.getElement(11) & 0x01) != 0 ? "\tOpSw57=c, reserved.\n" : "")
-                            + ((l.getElement(11) & 0x02) != 0 ? "\tOpSw58=c, reserved.\n" : "")
-                            + ((l.getElement(11) & 0x04) != 0 ? "\tOpSw59=c, reserved.\n" : "")
-                            + ((l.getElement(11) & 0x08) != 0 ? "\tOpSw60=c, reserved.\n" : "")
-                            + ((l.getElement(11) & 0x10) != 0 ? "\tOpSw61=c, reserved.\n" : "")
-                            + ((l.getElement(11) & 0x20) != 0 ? "\tOpSw62=c, reserved.\n" : "")
-                            + ((l.getElement(11) & 0x40) != 0 ? "\tOpSw63=c, reserved.\n" : "") // this bit implies an OpCode, so ignore it!                            + ((l.getElement(11) & 0x80) != 0 ? "\tOpSw64=c, reserved.\n" : "")
-                            ;
-                } else {
-                    /**
-                     * ************************************************
-                     * normal slot read/write message - see info above *
-                     * ************************************************
-                     */
-
-                    if ((trackStatus != trk) || showTrackStatus) {
-                        trackStatus = trk;
-                        showStatus = true;
-                    }
-
-                    if (showStatus) {
-                        logString = mode + " slot " + slot + " information:\n\tLoco " + locoAdrStr
-                                + " is " + LnConstants.CONSIST_STAT(stat) + ", "
-                                + LnConstants.LOCO_STAT(stat) + ", operating in "
-                                + LnConstants.DEC_MODE(stat) + " SS mode, and is going "
-                                + ((dirf & LnConstants.DIRF_DIR) != 0 ? "in Reverse" : "Forward")
-                                + " at speed " + spd + ",\n" + "\tF0="
-                                + ((dirf & LnConstants.DIRF_F0) != 0 ? "On, " : "Off,")
-                                + " F1="
-                                + ((dirf & LnConstants.DIRF_F1) != 0 ? "On, " : "Off,")
-                                + " F2="
-                                + ((dirf & LnConstants.DIRF_F2) != 0 ? "On, " : "Off,")
-                                + " F3="
-                                + ((dirf & LnConstants.DIRF_F3) != 0 ? "On, " : "Off,")
-                                + " F4="
-                                + ((dirf & LnConstants.DIRF_F4) != 0 ? "On, " : "Off,")
-                                + " Sound1/F5="
-                                + ((snd & LnConstants.SND_F5) != 0 ? "On, " : "Off,")
-                                + " Sound2/F6="
-                                + ((snd & LnConstants.SND_F6) != 0 ? "On, " : "Off,")
-                                + " Sound3/F7="
-                                + ((snd & LnConstants.SND_F7) != 0 ? "On, " : "Off,")
-                                + " Sound4/F8=" + ((snd & LnConstants.SND_F8) != 0 ? "On" : "Off")
-                                + "\n\tMaster: "
-                                + ((trk & LnConstants.GTRK_MLOK1) != 0 ? "LocoNet 1.1" : "DT-200")
-                                + "; Track: "
-                                + ((trk & LnConstants.GTRK_IDLE) != 0 ? "On" : "Off")
-                                + "; Programming Track: "
-                                + ((trk & LnConstants.GTRK_PROG_BUSY) != 0 ? "Busy" : "Available")
-                                + "; SS2=0x" + Integer.toHexString(ss2)
-                                + ", ThrottleID=" + idString(id1, id2) + "\n";
-                    } else {
-                        logString = mode + " slot " + slot + " information:\n\tLoco " + locoAdrStr
-                                + " is " + LnConstants.CONSIST_STAT(stat) + ", "
-                                + LnConstants.LOCO_STAT(stat) + ", operating in "
-                                + LnConstants.DEC_MODE(stat) + " SS mode, and is going "
-                                + ((dirf & LnConstants.DIRF_DIR) != 0 ? "in Reverse" : "Forward")
-                                + " at speed " + spd + ",\n" + "\tF0="
-                                + ((dirf & LnConstants.DIRF_F0) != 0 ? "On, " : "Off,")
-                                + " F1="
-                                + ((dirf & LnConstants.DIRF_F1) != 0 ? "On, " : "Off,")
-                                + " F2="
-                                + ((dirf & LnConstants.DIRF_F2) != 0 ? "On, " : "Off,")
-                                + " F3="
-                                + ((dirf & LnConstants.DIRF_F3) != 0 ? "On, " : "Off,")
-                                + " F4="
-                                + ((dirf & LnConstants.DIRF_F4) != 0 ? "On, " : "Off,")
-                                + " Sound1/F5="
-                                + ((snd & LnConstants.SND_F5) != 0 ? "On, " : "Off,")
-                                + " Sound2/F6="
-                                + ((snd & LnConstants.SND_F6) != 0 ? "On, " : "Off,")
-                                + " Sound3/F7="
-                                + ((snd & LnConstants.SND_F7) != 0 ? "On, " : "Off,")
-                                + " Sound4/F8=" + ((snd & LnConstants.SND_F8) != 0 ? "On" : "Off")
-                                + "\n\tSS2=0x" + Integer.toHexString(ss2)
-                                + ", ThrottleID =" + idString(id1, id2) + "\n";
-                    }
-                    // end normal slot read/write case
+                        // end normal slot read/write case
+                        break;
                 }
                 return logString;
             } // case LnConstants.OPC_SL_RD_DATA
@@ -1806,44 +1890,51 @@ public class Llnmon {
                     message = "Read ALM msg (Write reply) ";
                 }
 
-                if (l.getElement(1) == 0x10) {
-                    // ALM read and write messages
-                    message = message + l.getElement(2) + " ATASK=" + l.getElement(3);
-                    if (l.getElement(3) == 2) {
-                        message = message + " (RD)";
-                    } else if (l.getElement(3) == 3) {
-                        message = message + " (WR)";
-                    } else if (l.getElement(3) == 0) {
-                        message = message + " (ID)";
-                    }
-                    return message + " BLKL=" + l.getElement(4)
-                            + " BLKH=" + l.getElement(5)
-                            + " LOGIC=" + l.getElement(6)
-                            + "\n      "
-                            + " ARG1L=0x" + Integer.toHexString(l.getElement(7))
-                            + " ARG1H=0x" + Integer.toHexString(l.getElement(8))
-                            + " ARG2L=0x" + Integer.toHexString(l.getElement(9))
-                            + " ARG2H=0x" + Integer.toHexString(l.getElement(10))
-                            + "\n      "
-                            + " ARG3L=0x" + Integer.toHexString(l.getElement(11))
-                            + " ARG3H=0x" + Integer.toHexString(l.getElement(12))
-                            + " ARG4L=0x" + Integer.toHexString(l.getElement(13))
-                            + " ARG4H=0x" + Integer.toHexString(l.getElement(14))
-                            + "\n";
-                } else if (l.getElement(1) == 0x15) {
-                    // write extended master message
-                    if (l.getElement(0) == 0xEE) {
-                        message = "Write extended slot: ";
-                    } else {
-                        message = "Read extended slot (Write reply): ";
-                    }
-                    return message + "slot " + l.getElement(3)
-                            + " stat " + l.getElement(4)
-                            + " addr " + (l.getElement(6) * 128 + l.getElement(5))
-                            + " speed " + l.getElement(8)
-                            + ".\n";
-                } else {
-                    return message + " with unexpected length " + l.getElement(1) + ".\n";
+                switch (l.getElement(1)) {
+                    case 0x10:
+                        // ALM read and write messages
+                        message = message + l.getElement(2) + " ATASK=" + l.getElement(3);
+                        switch (l.getElement(3)) {
+                            case 2:
+                                message = message + " (RD)";
+                                break;
+                            case 3:
+                                message = message + " (WR)";
+                                break;
+                            case 0:
+                                message = message + " (ID)";
+                                break;
+                            default:
+                                break;
+                        }
+                        return message + " BLKL=" + l.getElement(4)
+                                + " BLKH=" + l.getElement(5)
+                                + " LOGIC=" + l.getElement(6)
+                                + "\n      "
+                                + " ARG1L=0x" + Integer.toHexString(l.getElement(7))
+                                + " ARG1H=0x" + Integer.toHexString(l.getElement(8))
+                                + " ARG2L=0x" + Integer.toHexString(l.getElement(9))
+                                + " ARG2H=0x" + Integer.toHexString(l.getElement(10))
+                                + "\n      "
+                                + " ARG3L=0x" + Integer.toHexString(l.getElement(11))
+                                + " ARG3H=0x" + Integer.toHexString(l.getElement(12))
+                                + " ARG4L=0x" + Integer.toHexString(l.getElement(13))
+                                + " ARG4H=0x" + Integer.toHexString(l.getElement(14))
+                                + "\n";
+                    case 0x15:
+                        // write extended master message
+                        if (l.getElement(0) == 0xEE) {
+                            message = "Write extended slot: ";
+                        } else {
+                            message = "Read extended slot (Write reply): ";
+                        }
+                        return message + "slot " + l.getElement(3)
+                                + " stat " + l.getElement(4)
+                                + " addr " + (l.getElement(6) * 128 + l.getElement(5))
+                                + " speed " + l.getElement(8)
+                                + ".\n";
+                    default:
+                        return message + " with unexpected length " + l.getElement(1) + ".\n";
                 }
             } // case LnConstants.OPC_ALM_READ
 
@@ -1988,7 +2079,7 @@ public class Llnmon {
                             String dst_subaddrx = ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : "");
 
                             String src_dev = ((src == 0x50) ? "Locobuffer" : "LocoIO@" + "0x" + Integer.toHexString(src) + src_subaddrx);
-                            String dst_dev = ((dst_l == 0x50) ? "LocoBuffer "   // dst_h == 1 known to be true
+                            String dst_dev = ((dst_l == 0x50) ? "LocoBuffer " // dst_h == 1 known to be true
                                     : (((dst_h == 0x01) && (dst_l == 0x0)) ? "broadcast"
                                             : "LocoIO@0x" + Integer.toHexString(dst_l) + dst_subaddrx));
                             String operation = (src == 0x50)
@@ -2009,27 +2100,27 @@ public class Llnmon {
                         // check for a specific type - SV Programming messages format 2
                         // (New Designs)
                         String svReply = "";
-                        jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents svmc = null;
+                        LnSv2MessageContents svmc = null;
                         try {
-                            svmc =
-                                    new jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents(l);
-                        } catch (java.lang.IllegalArgumentException e) {
+                            svmc = new LnSv2MessageContents(l);
+                        } catch (IllegalArgumentException e) {
                             // message is not an SV2 message.  Ignore the exception.
                         }
                         if (svmc != null) {
                             Locale defaultLocale = new Locale.Builder().build();
                             try {
                                 svReply = svmc.toString(defaultLocale);  // attempt to force display of english, instead of user-specified Locale
-                            } catch (java.lang.IllegalArgumentException e) {
+                            } catch (IllegalArgumentException e) {
                                 // message is not a properly-formatted SV2 message.  Ignore the exception.
                             }
 
-                            if (svReply.length() > 1) { 
+                            if (svReply.length() > 1) {
                                 // was able to interpret message as an SV format 2 message, so
                                 // return its interpreted value
-                                return svReply;}
+                                return svReply;
+                            }
                         }
-                        
+
                         if ((src == 0x7F) && (dst_l == 0x0) && (dst_h == 0x0)
                                 && ((pxct1 & 0x3) == 0x00) && ((pxct2 & 0x70) == 0x70)) {
                             // throttle semaphore symbol message
@@ -2077,20 +2168,27 @@ public class Llnmon {
                         // throttle status
                         int tcntrl = l.getElement(2);
                         String stat;
-                        if (tcntrl == 0x40) {
-                            stat = " (OK) ";
-                        } else if (tcntrl == 0x7F) {
-                            stat = " (no key, immed, ignored) ";
-                        } else if (tcntrl == 0x43) {
-                            stat = " (+ key during msg) ";
-                        } else if (tcntrl == 0x42) {
-                            stat = " (- key during msg) ";
-                        } else if (tcntrl == 0x41) {
-                            stat = " (R/S key during msg, aborts) ";
-                        } else if (tcntrl == 0x4e) {
-                            return "Throttle response to Semaphore Display Command\n";
-                        } else {
-                            stat = " (unknown) ";
+                        switch (tcntrl) {
+                            case 0x40:
+                                stat = " (OK) ";
+                                break;
+                            case 0x7F:
+                                stat = " (no key, immed, ignored) ";
+                                break;
+                            case 0x43:
+                                stat = " (+ key during msg) ";
+                                break;
+                            case 0x42:
+                                stat = " (- key during msg) ";
+                                break;
+                            case 0x41:
+                                stat = " (R/S key during msg, aborts) ";
+                                break;
+                            case 0x4e:
+                                return "Throttle response to Semaphore Display Command\n";
+                            default:
+                                stat = " (unknown) ";
+                                break;
                         }
 
                         return "Throttle status TCNTRL=" + Integer.toHexString(tcntrl)
@@ -2349,7 +2447,7 @@ public class Llnmon {
                                 //             zeros.  There is no LocoNet message reply generated to a
                                 //             request to a PR3 S/N, but there will be a reply on the PR3's
                                 //             computer interface if the ping request was sent via the PR3's
-                                //             computer interface (i.e. not from some other loconet agent).
+                                //             computer interface (i.e. not from some other LocoNet agent).
                                 //     UT4D    While it has been suggested that the UT4D supports firmware
                                 //             updates, the UT4D does not respond to the Ping message.
                                 //     LNRP    While it has been suggested that the LNRP supports firmware
@@ -2363,60 +2461,61 @@ public class Llnmon {
                                 //     <unkn3> Unclear what this byte means.
                                 //
                                 // Information reverse-engineered by B. Milhaupt and used with permission
-                                if (l.getElement(3) == 0x08) {  /* OPC_RE_IPL (IPL Ping Query) */
-                                    // Ping Request: <e5><14><08><08><msBits><Sn0><Sn1><Sn2><Sn3><0><0><0><0><0><0><0><0><0><0><0><Chk>
+                                switch (l.getElement(3)) {
+                                    case 0x08:
+                                        /* OPC_RE_IPL (IPL Ping Query) */
+                                        // Ping Request: <e5><14><08><08><msBits><Sn0><Sn1><Sn2><Sn3><0><0><0><0><0><0><0><0><0><0><0><Chk>
 
+                                        if ((((l.getElement(4) & 0xF) != 0) || (l.getElement(5) != 0)
+                                                || (l.getElement(6) != 0) || (l.getElement(7) != 0) || (l.getElement(8) != 0))
+                                                && (l.getElement(9) == 0) && (l.getElement(10) == 0)
+                                                && (l.getElement(11) == 0) && (l.getElement(12) == 0)
+                                                && (l.getElement(13) == 0) && (l.getElement(14) == 0)
+                                                && (l.getElement(15) == 0) && (l.getElement(16) == 0)
+                                                && (l.getElement(17) == 0) && (l.getElement(18) == 0)) {
 
-                                    if ((((l.getElement(4) & 0xF) != 0) || (l.getElement(5) != 0)
-                                            || (l.getElement(6) != 0) || (l.getElement(7) != 0) || (l.getElement(8) != 0))
-                                            && (l.getElement(9) == 0) && (l.getElement(10) == 0)
-                                            && (l.getElement(11) == 0) && (l.getElement(12) == 0)
-                                            && (l.getElement(13) == 0) && (l.getElement(14) == 0)
-                                            && (l.getElement(15) == 0) && (l.getElement(16) == 0)
-                                            && (l.getElement(17) == 0) && (l.getElement(18) == 0)) {
+                                            interpretedMessage = "Ping request.\n";
+                                            int hostSnInt = 0;
+                                            hostSnInt = (l.getElement(5) + (((l.getElement(4) & 0x1) == 1) ? 128 : 0))
+                                                    + ((l.getElement(6) + (((l.getElement(4) & 0x2) == 2) ? 128 : 0)) * 256)
+                                                    + ((l.getElement(7) + (((l.getElement(4) & 0x4) == 4) ? 128 : 0)) * 256 * 256)
+                                                    + ((l.getElement(8) + (((l.getElement(4) & 0x8) == 8) ? 128 : 0)) * 256 * 256 * 256);
+                                            interpretedMessage += "\tPinging device with serial number "
+                                                    + Integer.toHexString(hostSnInt).toUpperCase() + "\n";
+                                            return interpretedMessage;
+                                        } else {
+                                            // 0xE5 message of unknown format
+                                            forceHex = true;
+                                            return "Message with opcode 0xE5 and unknown format.";
+                                        }
+                                    case 0x10:
+                                        /* OPC_RE_IPL (IPL Ping Report) */
 
-                                        interpretedMessage = "Ping request.\n";
-                                        int hostSnInt = 0;
-                                        hostSnInt = (l.getElement(5) + (((l.getElement(4) & 0x1) == 1) ? 128 : 0))
-                                                + ((l.getElement(6) + (((l.getElement(4) & 0x2) == 2) ? 128 : 0)) * 256)
-                                                + ((l.getElement(7) + (((l.getElement(4) & 0x4) == 4) ? 128 : 0)) * 256 * 256)
-                                                + ((l.getElement(8) + (((l.getElement(4) & 0x8) == 8) ? 128 : 0)) * 256 * 256 * 256);
-                                        interpretedMessage += "\tPinging device with serial number "
-                                                + Integer.toHexString(hostSnInt).toUpperCase() + "\n";
-                                        return interpretedMessage;
-                                    } else {
+                                        // Ping Report:  <e5><14><08><10><msbits><Sn0><Sn1><Sn2><Sn3><unkn1><0><0><Unkn2><Unkn3><0><0><0><0><0><Chk>
+                                        if (((l.getElement(4) & 0xF) != 0) || (l.getElement(5) != 0) || (l.getElement(6) != 0)
+                                                || (l.getElement(7) != 0) || (l.getElement(8) != 0)) {   // if any serial number bit is non-zero //
+
+                                            interpretedMessage = "Ping Report.\n";
+                                            int hostSnInt = 0;
+                                            hostSnInt = (l.getElement(5) + (((l.getElement(4) & 0x1) == 1) ? 128 : 0))
+                                                    + ((l.getElement(6) + (((l.getElement(4) & 0x2) == 2) ? 128 : 0)) * 256)
+                                                    + ((l.getElement(7) + (((l.getElement(4) & 0x4) == 4) ? 128 : 0)) * 256 * 256)
+                                                    + ((l.getElement(8) + (((l.getElement(4) & 0x8) == 8) ? 128 : 0)) * 256 * 256 * 256);
+                                            interpretedMessage += "\tPing response from device with serial number "
+                                                    + Integer.toHexString(hostSnInt).toUpperCase()
+                                                    + " Local RSSI = 0x" + Integer.toHexString(l.getElement(12) + (((l.getElement(9)) & 0x4) == 0x4 ? 128 : 0)).toUpperCase()
+                                                    + " Remote RSSI = 0x" + Integer.toHexString(l.getElement(13) + (((l.getElement(9)) & 0x8) == 0x8 ? 128 : 0)).toUpperCase()
+                                                    + ".\n";
+                                            return interpretedMessage;
+                                        } else {
+                                            // 0xE5 message of unknown format
+                                            forceHex = true;
+                                            return "Message with opcode 0xE5 and unknown format.";
+                                        }
+                                    default:
                                         // 0xE5 message of unknown format
                                         forceHex = true;
                                         return "Message with opcode 0xE5 and unknown format.";
-                                    }
-                                } else if (l.getElement(3) == 0x10) {  /* OPC_RE_IPL (IPL Ping Report) */
-
-                                    // Ping Report:  <e5><14><08><10><msbits><Sn0><Sn1><Sn2><Sn3><unkn1><0><0><Unkn2><Unkn3><0><0><0><0><0><Chk>
-
-                                    if (((l.getElement(4) & 0xF) != 0) || (l.getElement(5) != 0) || (l.getElement(6) != 0)
-                                            || (l.getElement(7) != 0) || (l.getElement(8) != 0)) {   // if any serial number bit is non-zero //
-
-                                        interpretedMessage = "Ping Report.\n";
-                                        int hostSnInt = 0;
-                                        hostSnInt = (l.getElement(5) + (((l.getElement(4) & 0x1) == 1) ? 128 : 0))
-                                                + ((l.getElement(6) + (((l.getElement(4) & 0x2) == 2) ? 128 : 0)) * 256)
-                                                + ((l.getElement(7) + (((l.getElement(4) & 0x4) == 4) ? 128 : 0)) * 256 * 256)
-                                                + ((l.getElement(8) + (((l.getElement(4) & 0x8) == 8) ? 128 : 0)) * 256 * 256 * 256);
-                                        interpretedMessage += "\tPing response from device with serial number "
-                                                + Integer.toHexString(hostSnInt).toUpperCase()
-                                                + " Local RSSI = 0x" + Integer.toHexString(l.getElement(12) + (((l.getElement(9)) & 0x4) == 0x4 ? 128 : 0)).toUpperCase()
-                                                + " Remote RSSI = 0x" + Integer.toHexString(l.getElement(13) + (((l.getElement(9)) & 0x8) == 0x8 ? 128 : 0)).toUpperCase()
-                                                + ".\n";
-                                        return interpretedMessage;
-                                    } else {
-                                        // 0xE5 message of unknown format
-                                        forceHex = true;
-                                        return "Message with opcode 0xE5 and unknown format.";
-                                    }
-                                } else {
-                                    // 0xE5 message of unknown format
-                                    forceHex = true;
-                                    return "Message with opcode 0xE5 and unknown format.";
                                 }
                             } //end of case 0x08, which decodes 0xe5 0x14 0x08
 
@@ -2685,8 +2784,7 @@ public class Llnmon {
                                                     + ((l.getElement(16) + (((l.getElement(14) & 0x2) == 2) ? 128 : 0)) * 256)
                                                     + ((l.getElement(17) + (((l.getElement(14) & 0x4) == 4) ? 128 : 0)) * 256 * 256)
                                                     + ((l.getElement(18) + (((l.getElement(14) & 0x8) == 8) ? 128 : 0)) * 256 * 256 * 256);
-                                            SlaveSN
-                                                    = Integer.toHexString(slaveSnInt).toUpperCase();
+                                            SlaveSN = Integer.toHexString(slaveSnInt).toUpperCase();
                                         } else {
                                             SlaveVer = "N/A";
                                             SlaveSN = "N/A";
@@ -2835,7 +2933,7 @@ public class Llnmon {
                                 reporterSystemName = locoNetReporterPrefix
                                         + ((l.getElement(5) & 0x1F) * 128 + l.getElement(6) + 1);
 
-                                jmri.Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
+                                Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
                                 reporterUserName = "()";
                                 if (reporter != null) {
                                     String uname = reporter.getUserName();
@@ -2902,24 +3000,25 @@ public class Llnmon {
                     case 0x08: // Format LISSY message
                         int unit = (l.getElement(4) & 0x7F);
                         int address = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
-                        if (l.getElement(2) == 0x00) {
-                            // Reverse-engineering note: interpretation of element 2 per wiki.rocrail.net
-                            // OPC_LISSY_REP
-                            return "Lissy " + unit
-                                    + " IR Report: Loco " + address
-                                    + " moving "
-                                    + ((l.getElement(3) & 0x20) == 0 ? "north\n" : "south\n");
-                        } else if (l.getElement(2) == 0x01) {
-                            // Reverse-engineering note: interpretation of element 2 per wiki.rocrail.net
-                            // OPC_WHEELCNT_REP
-                            int wheelCount = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
-                            return "Lissy " + unit
-                                    + " Wheel Report: " + wheelCount
-                                    + " wheels moving "
-                                    + ((l.getElement(3) & 0x20) == 0 ? "north\n" : "south\n");
-                        } else {
-                            forceHex = true;
-                            return "Unrecognized Lissy message varient.\n";
+                        switch (l.getElement(2)) {
+                            case 0x00:
+                                // Reverse-engineering note: interpretation of element 2 per wiki.rocrail.net
+                                // OPC_LISSY_REP
+                                return "Lissy " + unit
+                                        + " IR Report: Loco " + address
+                                        + " moving "
+                                        + ((l.getElement(3) & 0x20) == 0 ? "north\n" : "south\n");
+                            case 0x01:
+                                // Reverse-engineering note: interpretation of element 2 per wiki.rocrail.net
+                                // OPC_WHEELCNT_REP
+                                int wheelCount = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
+                                return "Lissy " + unit
+                                        + " Wheel Report: " + wheelCount
+                                        + " wheels moving "
+                                        + ((l.getElement(3) & 0x20) == 0 ? "north\n" : "south\n");
+                            default:
+                                forceHex = true;
+                                return "Unrecognized Lissy message varient.\n";
                         }
 
                     case 0x0A: // Format special message
@@ -2983,11 +3082,14 @@ public class Llnmon {
              */
             case LnConstants.OPC_IMM_PACKET: {
                 // sendPkt = (sendPktMsg *) msgBuf;
-                int val7f = l.getElement(2); /* fixed value of 0x7f */
+                int val7f = l.getElement(2);
+                /* fixed value of 0x7f */
 
-                int reps = l.getElement(3); /* repeat count */
+                int reps = l.getElement(3);
+                /* repeat count */
 
-                int dhi = l.getElement(4); /* high bits of data bytes */
+                int dhi = l.getElement(4);
+                /* high bits of data bytes */
 
                 int im1 = l.getElement(5);
                 int im2 = l.getElement(6);
@@ -2999,7 +3101,7 @@ public class Llnmon {
                 int nmraSubInstructionType = -999;
                 int playableWhistleLevel = -999;
 
-                // see if it really is a 'Send Packet' as defined in Loconet PE
+                // see if it really is a 'Send Packet' as defined in LocoNet PE
                 if (val7f == 0x7f) {
                     int len = ((reps & 0x70) >> 4);
                     // duplication of packet data as packetInt was deemed necessary
@@ -3133,7 +3235,7 @@ public class Llnmon {
                                     + ((packetInt[2] & 0x08) != 0 ? "On" : "Off") + "\n";
                         } else {
                             // Unknown
-                            return generic + jmri.NmraPacket.format(packet) + "\n";
+                            return generic + NmraPacket.format(packet) + "\n";
                         }
                     } else { // F9-F28 w/a short address.
                         address = packetInt[0];
@@ -3188,7 +3290,7 @@ public class Llnmon {
                                     + ((packetInt[1] & 0x08) != 0 ? "On" : "Off") + "\n";
                         } else {
                             // Unknown
-                            return generic + jmri.NmraPacket.format(packet) + "\n";
+                            return generic + NmraPacket.format(packet) + "\n";
                         }
                     } // else { // F9-F28 w/a short address.
                 } else if (l.getElement(1) == 0x1F && l.getElement(2) == 0x01 && l.getElement(3) == 0x49 && l.getElement(4) == 0x42
@@ -3238,9 +3340,9 @@ public class Llnmon {
                 if ((l.getElement(1) == 0x10) && ((l.getElement(2) & 0x7c) == 0)
                         && (l.getElement(3) == 0) && (l.getElement(4) == 0)) {
                     // set PR3 mode of operation, where LS 2 bits of byte 2 are encoded as:
-                    //	0x00	Set the PR3 mode to MS100 interface mode with PR3 Loconet termination disabled
+                    //	0x00	Set the PR3 mode to MS100 interface mode with PR3 LocoNet termination disabled
                     //  0x01	Set the PR3 to decoder programming track mode
-                    //  0x03	Set the PR3 to MS100 interface mode with PR3 Loconet termination enabled
+                    //  0x03	Set the PR3 to MS100 interface mode with PR3 LocoNet termination enabled
 
                     switch (l.getElement(2) & 0x3) {
                         case 0x00: {
@@ -3359,6 +3461,7 @@ public class Llnmon {
      * This function creates a string representation of a LocoNet buffer. The
      * string may be more than one line, and is terminated with a newline.
      *
+     * @param l the message
      * @return The created string representation.
      */
     public String displayMessage(LocoNetMessage l) {
@@ -3375,53 +3478,85 @@ public class Llnmon {
     } // end of public String displayMessage(LocoNetMessage l)
 
     public static String getDeviceNameFromIPLInfo(int manuf, int type) {
-        return ((manuf != LnConstants.RE_IPL_MFR_DIGITRAX) ? "Unknown manufacturer " + manuf + ", unknown device " + type
-                : (type == LnConstants.RE_IPL_DIGITRAX_HOST_ALL) ? "Digitrax (no host device type specified)"
-                        : (type == LnConstants.RE_IPL_DIGITRAX_HOST_UT4) ? "Digitrax UT4(x) host"
-                                : (type == LnConstants.RE_IPL_DIGITRAX_HOST_UR92) ? "Digitrax UR92 host"
-                                        : (type == LnConstants.RE_IPL_DIGITRAX_HOST_DT402) ? "Digitrax DT402(x) host"
-                                                : (type == LnConstants.RE_IPL_DIGITRAX_HOST_DCS51) ? "Digitrax DCS51 host"
-                                                        : (type == LnConstants.RE_IPL_DIGITRAX_HOST_PR3) ? "Digitrax PR3 host"
-                                                                : "Digitrax (unknown host device type)");
+        if (manuf != LnConstants.RE_IPL_MFR_DIGITRAX) {
+            return "Unknown manufacturer " + manuf + ", unknown device " + type;
+        }
+        switch (type) {
+            case LnConstants.RE_IPL_DIGITRAX_HOST_ALL:
+                return "Digitrax (no host device type specified)";
+            case LnConstants.RE_IPL_DIGITRAX_HOST_UT4:
+                return "Digitrax UT4(x) host";
+            case LnConstants.RE_IPL_DIGITRAX_HOST_UR92:
+                return "Digitrax UR92 host";
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DT402:
+                return "Digitrax DT402(x) host";
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS51:
+                return "Digitrax DCS51 host";
+            case LnConstants.RE_IPL_DIGITRAX_HOST_PR3:
+                return "Digitrax PR3 host";
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
+                return "Digitrax DCS210 host";
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
+                return "Digitrax DCS240 host";
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DT500:
+                return "Digitrax DT500 host";
+            default:
+                return "Digitrax (unknown host device type)";
+        }
     } // end of public static String getDeviceNameFromIPLInfo
 
     public static String getSlaveNameFromIPLInfo(int manuf, int slaveNum) {
-        return ((manuf != LnConstants.RE_IPL_MFR_DIGITRAX) ? "Unknown manufacturer " + manuf + ", unknown device " + slaveNum
-                : (slaveNum == LnConstants.RE_IPL_DIGITRAX_SLAVE_ALL) ? "Digitrax (no slave device type specified)"
-                        : (slaveNum == LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24) ? "Digitrax RF24 slave"
-                                : "Digitrax (unknown slave device type)");
+        if (manuf != LnConstants.RE_IPL_MFR_DIGITRAX) {
+            return "Unknown manufacturer " + manuf + ", unknown device " + slaveNum;
+        }
+        switch (slaveNum) {
+            case LnConstants.RE_IPL_DIGITRAX_SLAVE_ALL:
+                return "Digitrax (no slave device type specified)";
+            case LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24:
+                return "Digitrax RF24 slave";
+            default:
+                return "Digitrax (unknown slave device type)";
+        }
     } // end of public static String getSlaveNameFromIPLInfo
 
-    private jmri.TurnoutManager turnoutManager;
-    private jmri.SensorManager sensorManager;
-    private jmri.ReporterManager reporterManager;
+    private TurnoutManager turnoutManager;
+    private SensorManager sensorManager;
+    private ReporterManager reporterManager;
     private String locoNetTurnoutPrefix = "";
     private String locoNetSensorPrefix = "";
     private String locoNetReporterPrefix = "";
 
     /**
-     * sets the loconet turnout manager which is used to find turnout "user
-     * names" from turnout "system names"
+     * Set the LocoNet turnout manager used to find turnout "user names" from
+     * turnout "system names"
      *
+     * @param turnoutManager the manager
      */
-    public void setLocoNetTurnoutManager(jmri.TurnoutManager loconetTurnoutManager) {
-        turnoutManager = loconetTurnoutManager;
-        locoNetTurnoutPrefix = turnoutManager.getSystemPrefix() + "T";
+    public final void setLocoNetTurnoutManager(@Nonnull TurnoutManager turnoutManager) {
+        this.turnoutManager = turnoutManager;
+        this.locoNetTurnoutPrefix = turnoutManager.getSystemPrefix() + "T";
     }
 
     /**
-     * sets the loconet sensor manager which is used to find sensor "user names"
-     * from sensor "system names"
+     * Set the LocoNet sensor manager used to find sensor "user names" from
+     * sensor "system names".
      *
+     * @param sensorManager the manager
      */
-    public void setLocoNetSensorManager(jmri.SensorManager loconetSensorManager) {
-        sensorManager = loconetSensorManager;
-        locoNetSensorPrefix = sensorManager.getSystemPrefix() + "S";
+    public final void setLocoNetSensorManager(@Nonnull SensorManager sensorManager) {
+        this.sensorManager = sensorManager;
+        this.locoNetSensorPrefix = sensorManager.getSystemPrefix() + "S";
     }
 
-    public void setLocoNetReporterManager(jmri.ReporterManager loconetReporterManager) {
-        reporterManager = loconetReporterManager;
-        locoNetReporterPrefix = reporterManager.getSystemPrefix() + "R";
+    /**
+     * Set the LocoNet reporter manager used to find reported "user names" from
+     * reporter "system names".
+     *
+     * @param reporterManager the manager
+     */
+    public final void setLocoNetReporterManager(@Nonnull ReporterManager reporterManager) {
+        this.reporterManager = reporterManager;
+        this.locoNetReporterPrefix = reporterManager.getSystemPrefix() + "R";
     }
 
 }
