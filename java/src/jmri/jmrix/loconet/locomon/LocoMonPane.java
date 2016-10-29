@@ -1,6 +1,10 @@
 // LocoMonPane.java
 package jmri.jmrix.loconet.locomon;
 
+import jmri.InstanceManager;
+import jmri.ReporterManager;
+import jmri.SensorManager;
+import jmri.TurnoutManager;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -22,6 +26,11 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
 
     public LocoMonPane() {
         super();
+        // provide a default Llnmon instance - this should be replaced with the
+        // correct one later, but is needed for Unit Testing
+        this.llnmon = new Llnmon(InstanceManager.getDefault(TurnoutManager.class),
+                InstanceManager.getDefault(SensorManager.class),
+                InstanceManager.getDefault(ReporterManager.class));
     }
 
     @Override
