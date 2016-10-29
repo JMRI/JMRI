@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+    <?xml version="1.0" encoding="utf-8"?>
 <!-- version 1.1 Corrected labeling errors for CV158 RailCom speed reporting method, Mark Waters, 17 jan 2015 --> 
 <!-- CV158, which is sound & Railcom related, added by Nigel Cliffe, 17 Nov 2012 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
@@ -15,41 +15,50 @@
       <enumChoice choice="Present" value="0">
         <choice>Present</choice>
         <choice xml:lang="it">Presente</choice>
+        <choice xml:lang="cs">Přítomný</choice>
       </enumChoice>
       <enumChoice choice="Disappear" value="1">
         <choice>Disappear</choice>
         <choice xml:lang="it">Sparisce</choice>
+        <choice xml:lang="cs">Zmizí</choice>
       </enumChoice>
     </enumVal>
     <label>Standing Sound on premature shutdown</label>
     <label xml:lang="it">Suono distinto per arresto prematuro</label>
+    <label xml:lang="cs">Zvuk stání při předčasném vypnutí</label>
   </variable>
   <variable item="Chuff rate at higher speed steps" CV="158" mask="XXXVXXXX" default="0">
     <enumVal>
       <enumChoice choice="Normal" value="0">
         <choice>Normal</choice>
         <choice xml:lang="it">Normale</choice>
+        <choice xml:lang="cs">Normální</choice>
       </enumChoice>
       <enumChoice choice="Reduced" value="1">
         <choice>Reduced</choice>
         <choice xml:lang="it">Ridotta</choice>
+        <choice xml:lang="cs">Snížená</choice>
       </enumChoice>
     </enumVal>
     <label>Chuff rate at higher speed steps</label>
     <label xml:lang="it">Frequenza di Chuff a velocità massima</label>
+    <label xml:lang="cs">Frekvence výfuků páry při vyšších rychlostech</label>
   </variable>
   <variable item="Drop one speed step to lower turbocharger" CV="158" mask="XXVXXXXX" default="0">
     <enumVal>
       <enumChoice choice="Off (default)" value="0">
         <choice>Normal</choice>
         <choice xml:lang="it">Normale</choice>
+        <choice xml:lang="cs">Normální</choice>
       </enumChoice>
       <enumChoice choice="On" value="1">
         <choice>Reduced</choice>
         <choice xml:lang="it">Ridotta</choice>
+        <choice xml:lang="cs">Snížený</choice>
       </enumChoice>
     </enumVal>
     <label>Drop one speed step to lower turbocharger</label>
     <label xml:lang="it">Diminiusci di uno step di velocità per diminuire il Turbocompressore</label>
+    <label xml:lang="cs">Snížení jednoho rychlostního stupně sníží turbodmychadlo</label>
   </variable>
 </variables>
