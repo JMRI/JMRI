@@ -5,9 +5,9 @@ addons:
     packages:
     - graphviz
 
-before_install:
-    # set Linux to use JDK 8, accept defaults on OS X
-  - if [ "$TRAVIS_OS_NAME" == "linux" ] ; then jdk_switcher use "oraclejdk8" ; fi
+#before_install:
+#    # set Linux to use JDK 8, accept defaults on OS X
+#  - if [ "$TRAVIS_OS_NAME" == "linux" ] ; then jdk_switcher use "oraclejdk8" ; fi
     
 before_script:
     # setup a display on linux ( the sleep gives xvfb some time to start )
@@ -17,6 +17,9 @@ script:
   - export MAVEN_OPTS=-Xmx1536M
   - mvn test -U -P travis --batch-mode
 
+jdk:
+  - oraclejdk8
+
 cache:
   directories:
   - $HOME/.m2
@@ -24,3 +27,10 @@ cache:
 os:
   - linux
   - osx
+
+matrix:
+  exclude:
+    # Travis on OSX does not include a jdk_switcher
+    # Specifying the JDK fails, so let OSX find pom.xml and use default JDK
+  - os: osx
+    jdk: oraclejdk8
