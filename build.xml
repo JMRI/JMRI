@@ -2070,7 +2070,7 @@
                 <antcall target="compile-generated-source" />
                 <parallel>
                     <antcall target="javadoc" />
-                    <antcall target="ci-test-travis" />
+                    <!-- <antcall target="ci-test-travis" /> -->
                 </parallel>
             </sequential>
         </parallel>
