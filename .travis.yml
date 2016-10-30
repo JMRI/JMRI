@@ -15,7 +15,7 @@ before_script:
 
 script:
   - export MAVEN_OPTS=-Xmx1536M
-  - travis_wait 30 mvn test -U -P travis --batch-mode
+  - mvn test -U -P travis --batch-mode
 
 jdk:
   - oraclejdk8
