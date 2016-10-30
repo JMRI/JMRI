@@ -150,6 +150,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
                 int col = columnAtPoint(pt);
                 int row = rowAtPoint(pt);
                 if (col >= 0 && row >= 0) {
+                    row = convertRowIndexToModel(row);
                     TableCellSelection sel = (TableCellSelection) tr.getTransferData(TABLECELL_FLAVOR);
                     data = (String) sel.getTransferData(DataFlavor.stringFlavor);
                     model.setValueAt(data, row, col);
@@ -225,6 +226,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
             int row = getSelectedRow();
             int col = getSelectedColumn();
             if (col >= 0 && row >= 0) {
+                row = convertRowIndexToModel(row);
                 return getValueAt(row, col);
             }
         }
@@ -290,10 +292,6 @@ public class DnDJTable extends JTable implements DropTargetListener,
 
     class DnDHandler extends TransferHandler {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8476413554238761109L;
         JTable _table;
 
         DnDHandler(JTable table) {
@@ -312,6 +310,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
             if (col < 0 || row < 0) {
                 return null;
             }
+            row = table.convertRowIndexToModel(row);
             //if (log.isDebugEnabled()) log.debug("DnDHandler.createTransferable: at table "+
             //                                    getName()+" from ("+row+", "+col+") data= \""
             //                                    +table.getModel().getValueAt(row, col)+"\"");
@@ -360,6 +359,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
                     int col = table.getSelectedColumn();
                     int row = table.getSelectedRow();
                     if (col >= 0 && row >= 0) {
+                        row = table.convertRowIndexToView(row);
                         String data = (String) tr.getTransferData(DataFlavor.stringFlavor);
                         model.setValueAt(data, row, col);
                         model.fireTableDataChanged();

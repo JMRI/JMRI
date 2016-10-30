@@ -393,6 +393,7 @@ public class FileUtilTest {
 
     @Before
     public void setUp() throws Exception {
+        apps.tests.Log4JFixture.setUp();
         this.programTestFile = new File(UUID.randomUUID().toString());
         this.programTestFile.createNewFile();
         this.preferencesTestFile = new File(FileUtil.getProfilePath() + UUID.randomUUID().toString());
@@ -403,5 +404,6 @@ public class FileUtilTest {
     public void tearDown() {
         this.programTestFile.delete();
         this.preferencesTestFile.delete();
+        apps.tests.Log4JFixture.tearDown();
     }
 }

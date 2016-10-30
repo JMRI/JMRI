@@ -27,6 +27,7 @@ public class DnDTableExportHandler extends TransferHandler {
         if (col < 0 || row < 0) {
             return null;
         }
+        row = table.convertRowIndexToModel(row);
         if (log.isDebugEnabled()) {
             log.debug("TransferHandler.createTransferable: from ("
                     + row + ", " + col + ") for \""

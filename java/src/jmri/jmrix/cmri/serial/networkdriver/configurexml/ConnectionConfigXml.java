@@ -29,10 +29,15 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
-        adapter = new NetworkDriverAdapter();
+        if(adapter == null) {
+           adapter = new NetworkDriverAdapter();
+           adapter.configure(); // sets the memo and traffic controller.
+        }
     }
 
+    @Override
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig) object).getAdapter();
     }

@@ -67,8 +67,6 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     private final HashMap<String, Locale> locale = new HashMap<>();
     private final ButtonGroup LAFGroup = new ButtonGroup();
     public JCheckBox mouseEvent;
-    private boolean dirty = false;
-    private boolean restartRequired = false;
     private JComboBox<Integer> fontSizeComboBox;
 
     public GuiLafConfigPane() {
@@ -90,8 +88,6 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         mouseEvent.setSelected(SwingSettings.getNonStandardMouseEvent());
         mouseEvent.addItemListener((ItemEvent e) -> {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setNonStandardMouseEvent(mouseEvent.isSelected());
-            this.dirty = true;
-            this.restartRequired = true;
         });
         panel.add(mouseEvent);
     }
@@ -112,8 +108,6 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
             jmi.setActionCommand(name);
             jmi.addActionListener((ActionEvent e) -> {
                 InstanceManager.getDefault(GuiLafPreferencesManager.class).setLookAndFeel(name);
-                this.dirty = true;
-                this.restartRequired = true;
             });
             if (installedLAFs.get(name).equals(UIManager.getLookAndFeel().getClass().getName())) {
                 jmi.setSelected(true);
@@ -195,8 +189,6 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
 
         fontSizeComboBox.addActionListener((ActionEvent e) -> {
             manager.setFontSize((int) fontSizeComboBox.getSelectedItem());
-            this.dirty = true;
-            this.restartRequired = true;
         });
         resetButton.addActionListener((ActionEvent e) -> {
             if ((int) fontSizeComboBox.getSelectedItem() != manager.getDefaultFontSize()) {
@@ -213,7 +205,6 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         toolTipDismissDelaySpinner = new JSpinner(new SpinnerNumberModel(manager.getToolTipDismissDelay() / 1000, MIN_TOOLTIP_TIME, MAX_TOOLTIP_TIME, 1));
         this.toolTipDismissDelaySpinner.addChangeListener((ChangeEvent e) -> {
             manager.setToolTipDismissDelay((int) toolTipDismissDelaySpinner.getValue() * 1000); // convert to milliseconds from seconds
-            this.dirty = true;
         });
         this.toolTipDismissDelaySpinner.setToolTipText(MessageFormat.format(ConfigBundle.getMessage("GUIToolTipDismissDelayToolTip"), MIN_TOOLTIP_TIME, MAX_TOOLTIP_TIME));
         toolTipDismissDelayLabel.setToolTipText(this.toolTipDismissDelaySpinner.getToolTipText());

@@ -60,8 +60,8 @@ public class JsonSensorSocketService extends JsonSocketService {
 
     @Override
     public void onClose() {
-        sensors.values().stream().forEach((sensor) -> {
-            sensor.sensor.removePropertyChangeListener(sensor);
+        sensors.values().stream().forEach((listener) -> {
+            listener.sensor.removePropertyChangeListener(listener);
         });
         sensors.clear();
     }

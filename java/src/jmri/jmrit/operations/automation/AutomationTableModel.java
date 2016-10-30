@@ -535,8 +535,9 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
         if (e.getPropertyName().equals(Automation.CURRENT_ITEM_CHANGED_PROPERTY)) {
             int row = _list.indexOf(_automation.getCurrentAutomationItem());
+            int viewRow = _table.convertRowIndexToView(row);
             // the following line can be responsible for a thread lock
-            _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
+            _table.scrollRectToVisible(_table.getCellRect(viewRow, 0, true));
             fireTableDataChanged();
         }
         // update automation item?

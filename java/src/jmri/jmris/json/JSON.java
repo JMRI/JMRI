@@ -2,8 +2,10 @@ package jmri.jmris.json;
 
 import jmri.server.json.JsonException;
 import jmri.server.json.block.JsonBlock;
+import jmri.server.json.consist.JsonConsist;
 import jmri.server.json.light.JsonLight;
 import jmri.server.json.memory.JsonMemory;
+import jmri.server.json.operations.JsonOperations;
 import jmri.server.json.power.JsonPowerServiceFactory;
 import jmri.server.json.reporter.JsonReporter;
 import jmri.server.json.roster.JsonRoster;
@@ -202,11 +204,11 @@ public final class JSON {
     /**
      * {@value #CARS}
      */
-    public static final String CARS = jmri.server.json.JSON.CARS;
+    public static final String CARS = JsonOperations.CARS;
     /**
      * {@value #CONSISTS}
      */
-    public static final String CONSISTS = jmri.server.json.JSON.CONSISTS;
+    public static final String CONSISTS = JsonConsist.CONSISTS;
     /**
      * {@value #ENGINES}
      */
@@ -218,7 +220,7 @@ public final class JSON {
     /**
      * {@value #LOCATIONS}
      */
-    public static final String LOCATIONS = jmri.server.json.JSON.LOCATIONS;
+    public static final String LOCATIONS = JsonOperations.LOCATIONS;
     /**
      * {@value #MEMORIES}
      */
@@ -282,7 +284,7 @@ public final class JSON {
     /**
      * {@value #TRAINS}
      */
-    public static final String TRAINS = jmri.server.json.JSON.TRAINS;
+    public static final String TRAINS = JsonOperations.TRAINS;
     /**
      * {@value #TURNOUTS}
      */
@@ -302,15 +304,15 @@ public final class JSON {
     /**
      * {@value #CAR}
      */
-    public static final String CAR = jmri.server.json.JSON.CAR;
+    public static final String CAR = JsonOperations.CAR;
     /**
      * {@value #CONSIST}
      */
-    public static final String CONSIST = jmri.server.json.JSON.CONSIST;
+    public static final String CONSIST = JsonConsist.CONSIST;
     /**
      * {@value #ENGINE}
      */
-    public static final String ENGINE = jmri.server.json.JSON.ENGINE;
+    public static final String ENGINE = JsonOperations.ENGINE;
     /**
      * {@value #LIGHT}
      */
@@ -318,11 +320,11 @@ public final class JSON {
     /**
      * {@value #LOCATION}
      */
-    public static final String LOCATION = jmri.server.json.JSON.LOCATION;
+    public static final String LOCATION = JsonOperations.LOCATION;
     /**
      * {@value #LOCATION_ID}
      */
-    public static final String LOCATION_ID = jmri.server.json.JSON.LOCATION_ID;
+    public static final String LOCATION_ID = JsonOperations.LOCATION_ID;
     /**
      * {@value #MEMORY}
      */
@@ -396,7 +398,7 @@ public final class JSON {
     /**
      * {@value #TRAIN}
      */
-    public static final String TRAIN = jmri.server.json.JSON.TRAIN;
+    public static final String TRAIN = JsonOperations.TRAIN;
     /**
      * {@value #TURNOUT}
      */
@@ -414,31 +416,31 @@ public final class JSON {
     /**
      * {@value #WEIGHT}
      */
-    public static final String WEIGHT = jmri.server.json.JSON.WEIGHT;
+    public static final String WEIGHT = JsonOperations.WEIGHT;
     /**
      * {@value #LEAD_ENGINE}
      */
-    public static final String LEAD_ENGINE = jmri.server.json.JSON.LEAD_ENGINE;
+    public static final String LEAD_ENGINE = JsonOperations.LEAD_ENGINE;
     /**
      * {@value #CABOOSE}
      */
-    public static final String CABOOSE = jmri.server.json.JSON.CABOOSE;
+    public static final String CABOOSE = JsonOperations.CABOOSE;
     /**
      * {@value #TERMINATE}
      */
-    public static final String TERMINATE = jmri.server.json.JSON.TERMINATE;
+    public static final String TERMINATE = JsonOperations.TERMINATE;
     /**
      * {@value #TRACK}
      *
      * @since 1.1
      */
-    public static final String TRACK = jmri.server.json.JSON.TRACK;
+    public static final String TRACK = JsonOperations.TRACK;
     /**
      * {@value #DATE}
      *
      * @since 1.1
      */
-    public static final String DATE = jmri.server.json.JSON.DATE;
+    public static final String DATE = JsonOperations.DATE;
 
     /* JSON panel tokens */
     /**
@@ -530,15 +532,15 @@ public final class JSON {
     /**
      * {@value #DESTINATION}
      */
-    public static final String DESTINATION = jmri.server.json.JSON.DESTINATION;
+    public static final String DESTINATION = JsonOperations.DESTINATION;
     /**
      * {@value #DESTINATION_TRACK}
      */
-    public static final String DESTINATION_TRACK = jmri.server.json.JSON.DESTINATION_TRACK;
+    public static final String DESTINATION_TRACK = JsonOperations.DESTINATION_TRACK;
     /**
      * {@value #LOCATION_TRACK}
      */
-    public static final String LOCATION_TRACK = jmri.server.json.JSON.LOCATION_TRACK;
+    public static final String LOCATION_TRACK = JsonOperations.LOCATION_TRACK;
     /**
      * {@value #IS_LONG_ADDRESS}
      */

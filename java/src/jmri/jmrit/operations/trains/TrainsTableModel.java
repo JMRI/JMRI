@@ -521,11 +521,12 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 log.debug("Update train table row: {} name: {}", row, train.getName());
             }
             if (row >= 0) {
+                int viewRow = _table.convertRowIndexToView(row);
                 // if there are issues with thread locking here, this needs to
                 // be refactored so the panel holding the table is listening for
                 // this changes so it can instruct the table to scroll
-                // adding "synchronized" to this propertyChange can lock up thread
-                _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
+                // adding "synchronized" to this propertyChange can lock up thread                
+                _table.scrollRectToVisible(_table.getCellRect(viewRow, 0, true));
                 fireTableRowsUpdated(row, row);
             }
         }

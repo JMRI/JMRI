@@ -70,6 +70,11 @@ public class TrainCommon {
 
     /**
      * Used to generate "Two Column" format for engines.
+     * 
+     * @param file Manifest or Switch List File
+     * @param engineList List of engines for this train.
+     * @param rl The RouteLocation being printed.
+     * @param isManifest True if manifest, false if switch list.
      *
      */
     protected void blockLocosTwoColumn(PrintWriter file, List<Engine> engineList, RouteLocation rl,
@@ -96,6 +101,11 @@ public class TrainCommon {
     /**
      * Adds a list of locomotive pick ups for the route location to the output
      * file. Used to generate "Standard" format.
+     * 
+     * @param file Manifest or Switch List File
+     * @param engineList List of engines for this train.
+     * @param rl The RouteLocation being printed.
+     * @param isManifest True if manifest, false if switch list
      *
      */
     protected void pickupEngines(PrintWriter file, List<Engine> engineList, RouteLocation rl, boolean isManifest) {
@@ -130,6 +140,10 @@ public class TrainCommon {
      * Adds a list of locomotive drops for the route location to the output
      * file. Used to generate "Standard" format.
      *
+     * @param file Manifest or Switch List File
+     * @param engineList List of engines for this train.
+     * @param rl The RouteLocation being printed.
+     * @param isManifest True if manifest, false if switch list
      */
     protected void dropEngines(PrintWriter file, List<Engine> engineList, RouteLocation rl, boolean isManifest) {
         boolean printHeader = Setup.isPrintHeadersEnabled();
@@ -162,6 +176,8 @@ public class TrainCommon {
     /**
      * Returns the pick up string for a loco. Useful for frames like the train
      * conductor and yardmaster.
+     * 
+     * @param engine The Engine.
      *
      * @return engine pick up string
      */
@@ -176,6 +192,8 @@ public class TrainCommon {
     /**
      * Returns the drop string for a loco. Useful for frames like the train
      * conductor and yardmaster.
+     * 
+     * @param engine The Engine.
      *
      * @return engine drop string
      */
@@ -195,6 +213,14 @@ public class TrainCommon {
     /**
      * Block cars by track, then pick up and set out for each location in a
      * train's route. This routine is used for the "Standard" format.
+     * 
+     * @param file Manifest or switch list File
+     * @param train The train being printed.
+     * @param carList List of cars for this train
+     * @param routeList The train's list of RouteLocations
+     * @param rl The RouteLocation being printed
+     * @param printHeader True if new location.
+     * @param isManifest True if manifest, false if switch list.
      */
     protected void blockCarsByTrack(PrintWriter file, Train train, List<Car> carList, List<RouteLocation> routeList,
             RouteLocation rl, boolean printHeader, boolean isManifest) {
@@ -333,6 +359,14 @@ public class TrainCommon {
      * Produces a two column format for car pick ups and set outs. Sorted by
      * track and then by destination. This routine is used for the "Two Column"
      * format.
+     * 
+     * @param file Manifest or switch list File
+     * @param train The train being printed.
+     * @param carList List of cars for this train
+     * @param routeList The train's list of RouteLocations
+     * @param rl The RouteLocation being printed
+     * @param printHeader True if new location.
+     * @param isManifest True if manifest, false if switch list.
      */
     protected void blockCarsByTrackTwoColumn(PrintWriter file, Train train, List<Car> carList,
             List<RouteLocation> routeList, RouteLocation rl, boolean printHeader, boolean isManifest) {
@@ -423,6 +457,14 @@ public class TrainCommon {
      * track and then by destination. Track name in header format, track name
      * removed from format. This routine is used to generate the
      * "Two Column by Track" format.
+     * 
+     * @param file Manifest or switch list File
+     * @param train The train being printed.
+     * @param carList List of cars for this train
+     * @param routeList The train's list of RouteLocations
+     * @param rl The RouteLocation being printed
+     * @param printHeader True if new location.
+     * @param isManifest True if manifest, false if switch list.
      */
     protected void blockCarsByTrackNameTwoColumn(PrintWriter file, Train train, List<Car> carList,
             List<RouteLocation> routeList, RouteLocation rl, boolean printHeader, boolean isManifest) {
@@ -613,6 +655,10 @@ public class TrainCommon {
     /**
      * Adds the car's pick up string to the output file using the truncated
      * manifest format
+     * 
+     * @param file Manifest or switch list File
+     * @param car The car being printed.
+     * @param isManifest True if manifest, false if switch list.
      *
      */
     protected void pickUpCarTruncated(PrintWriter file, Car car, boolean isManifest) {
@@ -624,6 +670,10 @@ public class TrainCommon {
     /**
      * Adds the car's pick up string to the output file using the manifest or
      * switch list format
+     * 
+     * @param file Manifest or switch list File
+     * @param car The car being printed.
+     * @param isManifest True if manifest, false if switch list.
      *
      */
     protected void pickUpCar(PrintWriter file, Car car, boolean isManifest) {
@@ -659,9 +709,12 @@ public class TrainCommon {
     /**
      * Returns the pick up car string. Useful for frames like train conductor
      * and yardmaster.
+     * 
+     * @param car The car being printed.
      *
      * @param isManifest when true use manifest format, when false use switch
      *            list format
+     * @param isTwoColumnTrack True if printing using two column format.
      * @return pick up car string
      */
     public String pickupCar(Car car, boolean isManifest, boolean isTwoColumnTrack) {
@@ -687,6 +740,10 @@ public class TrainCommon {
      * Adds the car's set out string to the output file using the truncated
      * manifest format. Does not print out local moves. Local moves are only
      * shown on the switch list for that location.
+     * 
+     * @param file Manifest or switch list File
+     * @param car The car being printed.
+     * @param isManifest True if manifest, false if switch list.
      *
      */
     protected void truncatedDropCar(PrintWriter file, Car car, boolean isManifest) {
@@ -701,6 +758,10 @@ public class TrainCommon {
     /**
      * Adds the car's set out string to the output file using the manifest or
      * switch list format
+     * 
+     * @param file Manifest or switch list File
+     * @param car The car being printed.
+     * @param isManifest True if manifest, false if switch list.
      *
      */
     protected void dropCar(PrintWriter file, Car car, boolean isManifest) {
@@ -747,9 +808,12 @@ public class TrainCommon {
     /**
      * Returns the drop car string. Useful for frames like train conductor and
      * yardmaster.
+     * 
+     * @param car The car being printed.
      *
      * @param isManifest when true use manifest format, when false use switch
      *            list format
+     * @param isTwoColumnTrack True if printing using two column format.
      * @return drop car string
      */
     public String dropCar(Car car, boolean isManifest, boolean isTwoColumnTrack) {
@@ -782,6 +846,8 @@ public class TrainCommon {
     /**
      * Returns the move car string. Useful for frames like train conductor and
      * yardmaster.
+     * 
+     * @param car The car being printed.
      *
      * @param isManifest when true use manifest format, when false use switch
      *            list format
@@ -808,6 +874,11 @@ public class TrainCommon {
     /**
      * Add a list of utility cars scheduled for pick up from the route location
      * to the output file. The cars are blocked by destination.
+     * 
+     * @param file Manifest or Switch List File.
+     * @param carList List of cars for this train.
+     * @param car The utility car.
+     * @param isManifest True if manifest, false if switch list.
      *
      */
     protected void pickupUtilityCars(PrintWriter file, List<Car> carList, Car car, boolean isManifest) {
@@ -831,6 +902,11 @@ public class TrainCommon {
     /**
      * Add a list of utility cars scheduled for drop at the route location to
      * the output file.
+     * 
+     * @param file Manifest or Switch List File.
+     * @param carList List of cars for this train.
+     * @param car The utility car.
+     * @param isManifest True if manifest, false if switch list.
      *
      */
     protected void setoutUtilityCars(PrintWriter file, List<Car> carList, Car car, boolean isManifest) {
@@ -896,6 +972,12 @@ public class TrainCommon {
 
     /**
      * For the Conductor and Yardmaster windows.
+     * 
+     * @param carList List of cars for this train.
+     * @param car The utility car.
+     * @param isLocal True if local move.
+     * @param isManifest True if manifest, false if switch list.
+     * @return A string representing the work of identical utility cars.
      */
     public String setoutUtilityCars(List<Car> carList, Car car, boolean isLocal, boolean isManifest) {
         return setoutUtilityCars(carList, car, isLocal, isManifest, !IS_TWO_COLUMN_TRACK);
@@ -956,6 +1038,11 @@ public class TrainCommon {
      * Scans the car list for utility cars that have the same attributes as the
      * car provided. Returns 0 if this car type has already been processed,
      * otherwise the number of cars with the same attribute.
+     * 
+     * @param format Message format.
+     * @param carList List of cars for this train
+     * @param car The utility car.
+     * @param isPickup True if pick up, false if set out.
      *
      * @return 0 if the car type has already been processed
      */
@@ -1103,6 +1190,8 @@ public class TrainCommon {
 
     /**
      * Used to determine if car is a local move
+     * 
+     * @param car The Car to test.
      *
      * @return true if the move is at the same location
      */
@@ -1148,6 +1237,9 @@ public class TrainCommon {
 
     /**
      * Writes string to file. No line length wrap or protection.
+     * 
+     * @param file The File to write to.
+     * @param string The string to write.
      *
      */
     protected void addLine(PrintWriter file, String string) {
@@ -1160,6 +1252,9 @@ public class TrainCommon {
     /**
      * Writes a string to a file. Checks for string length, and will
      * automatically wrap lines.
+     * 
+     * @param file The File to write to.
+     * @param string The string to write.
      *
      * @param isManifest set true for manifest page orientation, false for
      *            switch list orientation
@@ -1187,6 +1282,8 @@ public class TrainCommon {
 
     /**
      * Adds a blank line to the file.
+     * 
+     * @param file The File to write to.
      *
      */
     protected void newLine(PrintWriter file) {
@@ -1197,6 +1294,8 @@ public class TrainCommon {
      * Splits a string (example-number) as long as the second part of the string
      * is an integer or if the first character after the hyphen is a left
      * parenthesis "(".
+     * 
+     * @param name The string to split if necessary.
      *
      * @return First half of the string.
      */
@@ -1248,6 +1347,9 @@ public class TrainCommon {
 
     /**
      * returns true if the train has work at the location
+     * 
+     * @param train The Train.
+     * @param location The Location.
      *
      * @return true if the train has work at the location
      */
@@ -1514,6 +1616,9 @@ public class TrainCommon {
 
     /**
      * Two column header format. Left side pick ups, right side set outs
+     * 
+     * @param file Manifest or switch list File.
+     * @param isManifest True if manifest, false if switch list.
      *
      */
     public void printEngineHeader(PrintWriter file, boolean isManifest) {
@@ -1549,6 +1654,10 @@ public class TrainCommon {
     /**
      * Prints the two column header for cars. Left side pick ups, right side set
      * outs.
+     * 
+     * @param file Manifest or Switch List File
+     * @param isManifest True if manifest, false if switch list.
+     * @param isTwoColumnTrack True if two column format.
      *
      */
     public void printCarHeader(PrintWriter file, boolean isManifest, boolean isTwoColumnTrack) {
@@ -1768,6 +1877,9 @@ public class TrainCommon {
 
     /**
      * Prints a line across the entire page.
+     * 
+     * @param file The File to print to.
+     * @param isManifest True if manifest, false if switch list.
      *
      */
     public void printHorizontalLine(PrintWriter file, boolean isManifest) {
@@ -1825,6 +1937,9 @@ public class TrainCommon {
      * Pads out a string by adding spaces to the end of the string, and will
      * remove characters from the end of the string if the string exceeds the
      * field size.
+     * 
+     * @param s The string to pad.
+     * @param fieldSize The maximum length of the string.
      *
      * @return A String the specified length
      */
@@ -1846,6 +1961,9 @@ public class TrainCommon {
     /**
      * Adjusts string to be a certain number of characters by adding spaces to
      * the end of the string.
+     * 
+     * @param s The string to pad
+     * @param fieldSize The fixed length of the string.
      *
      * @return A String the specified length
      */
@@ -1858,9 +1976,13 @@ public class TrainCommon {
     }
 
     /**
-     * Adds the requested number of spaces to the start of the string.
+     * Adds the requested number of spaces to the start of the string. Tabs must
+     * be enabled. Setup.isTabEnabled()
+     * 
+     * @param s The string to pad out.
+     * @param tabSize The fixed length of the string.
      *
-     * @return A String the specified length
+     * @return A String with the specified length
      */
     public static String tabString(String s, int tabSize) {
         return tabString(s, tabSize, Setup.isTabEnabled());
@@ -1871,6 +1993,7 @@ public class TrainCommon {
             return s;
         }
         StringBuffer buf = new StringBuffer();
+        // TODO this doesn't consider the length of s string.
         while (buf.length() < tabSize) {
             buf.append(" ");
         }
@@ -1919,7 +2042,7 @@ public class TrainCommon {
         int stringWidth = metrics.stringWidth(string);
         return stringWidth <= getPageSize(orientation).width;
     }
-    
+
     protected static final Dimension PAPER_MARGINS = new Dimension(84, 72);
 
     protected static Dimension getPageSize(String orientation) {
@@ -1941,6 +2064,8 @@ public class TrainCommon {
     /**
      * Produces a string using commas and spaces between the strings provided in
      * the array. Does not check for embedded commas in the string array.
+     * 
+     * @param array The string array to be formated.
      *
      * @return formated string using commas and spaces
      */
