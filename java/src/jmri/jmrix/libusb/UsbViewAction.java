@@ -1,4 +1,3 @@
-// UsbViewAction.java
 package jmri.jmrix.libusb;
 
 import org.slf4j.Logger;
@@ -10,11 +9,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright 2008
   */
 public class UsbViewAction extends javax.swing.AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7957478904918565568L;
 
     public UsbViewAction(String s) {
         super(s);
@@ -36,5 +30,3 @@ public class UsbViewAction extends javax.swing.AbstractAction {
 
     private final static Logger log = LoggerFactory.getLogger(UsbViewAction.class.getName());
 }
-
-/* @(#)UsbViewAction.java */

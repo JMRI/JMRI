@@ -17,8 +17,6 @@ import jmri.util.StringUtil;
  */
 public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements TamsListener {
 
-    private static final long serialVersionUID = 1L;
-    
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();

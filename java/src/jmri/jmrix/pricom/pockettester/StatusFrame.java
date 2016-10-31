@@ -1,4 +1,3 @@
-// pricom.pockettester.StatusFrame.java
 package jmri.jmrix.pricom.pockettester;
 
 import java.util.Hashtable;
@@ -16,11 +15,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2005
   */
 public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8215226616579760539L;
 
     static java.util.ResourceBundle rb
             = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
