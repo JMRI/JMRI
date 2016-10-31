@@ -7,9 +7,9 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations Routes GUI class
@@ -33,8 +33,9 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th route", "Test Route E", f.routesModel.getValueAt(4, RoutesTableModel.NAME_COLUMN));
 
         // create add route frame
-        //f.addButton.doClick();
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
+        f.addButton.doClick();
+        // the following fails on a 13" laptop
+        //getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
         // confirm panel creation
         JmriJFrame ref = JmriJFrame.getFrame("Add Route");
         Assert.assertNotNull("route edit frame", ref);
