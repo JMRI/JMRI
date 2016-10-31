@@ -222,7 +222,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
 
         if (System.getProperty("jmri.migrationtests", "false").equals("false")) { // skip test for migration, but warn about it
-            log.warn("skipping testDisplayAnimatedRGBrotated45degrees because jmri.migrationtests not set true");
+            log.warn("skipping testDisplayAnimatedRGB because jmri.migrationtests not set true");
             return;
         }
 
