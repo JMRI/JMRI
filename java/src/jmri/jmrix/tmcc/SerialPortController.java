@@ -1,4 +1,3 @@
-// SerialPortController.java
 package jmri.jmrix.tmcc;
 
 import jmri.jmrix.SystemConnectionMemo;
@@ -16,6 +15,3 @@ public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPort
         super(connectionMemo);
     }
 }
-
-
-/* @(#)SerialPortController.java */
