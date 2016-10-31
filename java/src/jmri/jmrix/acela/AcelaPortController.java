@@ -1,4 +1,3 @@
-// AcelaPortController.java
 package jmri.jmrix.acela;
 
 import java.io.DataInputStream;
@@ -37,5 +36,3 @@ public abstract class AcelaPortController extends jmri.jmrix.AbstractSerialPortC
         return (AcelaSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 }
-
-/* @(#)AcelaPortController.java */
