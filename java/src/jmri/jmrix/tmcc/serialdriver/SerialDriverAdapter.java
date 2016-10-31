@@ -179,8 +179,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         // connect to the traffic controller
         SerialTrafficController.instance().connectPort(this);
 
-        jmri.InstanceManager.setTurnoutManager(jmri.jmrix.tmcc.SerialTurnoutManager.instance());
-        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.tmcc.SerialThrottleManager());
+        this.getSystemConnectionMemo().configureManagers();
 
         jmri.jmrix.tmcc.ActiveFlag.setActive();
     }
