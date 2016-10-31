@@ -557,6 +557,7 @@
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>F0</choice>
+        <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
       </enumChoice>
       <enumChoice choice="F1">
         <choice>F1</choice>
