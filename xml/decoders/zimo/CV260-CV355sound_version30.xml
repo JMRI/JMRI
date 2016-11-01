@@ -438,7 +438,7 @@
     <label xml:lang="de">Umschaltung Achsdetektor 1</label>
 	<tooltip>0 = virtual sensor, triggers/chuff, INC=1</tooltip>
     <label xml:lang="cs">Frekvence výfuků páry z reálné vačky 1</label>
-    <tooltip>Počet signálů vačky na jeden výfuk páry. 0 přepne na virtuální vačku.</tooltip>
+    <tooltip xml:lang="cs">Počet signálů vačky na jeden výfuk páry. 0 přepne na virtuální vačku.</tooltip>
   </variable>
   <variable item="Real cam sensor chuff rate 2" CV="268" mask="XVVVVVVV" default="0">
         <qualifier>
@@ -451,8 +451,8 @@
     <label xml:lang="it">Frequenza Chuff Camma reale</label>
     <label xml:lang="de">Umschaltung Achsdetektor</label>
 	<tooltip>0 = virtual sensor, triggers/chuff (0-127), INC=1</tooltip>
-    <label>Real cam sensor chuff rate</label>
-    <tooltip>Počet signálů vačky na jeden výfuk páry. 0 přepne na virtuální vačku.</tooltip>
+    <label xml:lang="cs">Frekvence výfuků páry z reálné vačky</label>
+    <tooltip xml:lang="cs">Počet signálů vačky na jeden výfuk páry. 0 přepne na virtuální vačku.</tooltip>
   </variable>
   <variable item="Chuff for Articulated Locomotives" CV="268" mask="VXXXXXXX" default="0" tooltip="With and without axle sensor on 2 channels with 2 sets">
         <qualifier>
