@@ -102,6 +102,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
                     null, null, null
             );
             // now force end to operation
+            log.debug("load failed");
             return false;
         }
 

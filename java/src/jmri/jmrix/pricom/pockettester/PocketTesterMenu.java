@@ -1,4 +1,3 @@
-// PocketTesterMenu.java
 package jmri.jmrix.pricom.pockettester;
 
 import java.util.ResourceBundle;
@@ -10,11 +9,6 @@ import javax.swing.JMenu;
  * @author	Bob Jacobsen Copyright 2005
  */
 public class PocketTesterMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5075945103413996675L;
 
     public PocketTesterMenu(String name) {
         this();

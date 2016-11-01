@@ -1,4 +1,4 @@
-package jmri.jmrix.cmri.serial.serialmon;
+package jmri.jmrix.cmri.serial.nodeconfig;
 
 import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
@@ -11,23 +11,23 @@ import org.junit.Test;
 import java.awt.GraphicsEnvironment;
 
 /**
- * Test simple functioning of SerialMonAction
+ * Test simple functioning of NodeConfigAction
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class SerialMonActionTest {
+public class NodeConfigActionTest {
 
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialMonAction action = new SerialMonAction("C/MRI test Action", new CMRISystemConnectionMemo());
+        NodeConfigAction action = new NodeConfigAction("C/MRI test Action", new CMRISystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialMonAction action = new SerialMonAction( new CMRISystemConnectionMemo());
+        NodeConfigAction action = new NodeConfigAction( new CMRISystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 

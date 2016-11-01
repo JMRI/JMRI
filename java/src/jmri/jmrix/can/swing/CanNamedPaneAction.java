@@ -1,4 +1,3 @@
-// CbusNamedPaneAction.java
 package jmri.jmrix.can.swing;
 
 import javax.swing.Icon;
@@ -14,11 +13,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2012
  */
 public class CanNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5423896954824804035L;
 
     /**
      * Enhanced constructor for placing the pane in various GUIs
@@ -55,5 +49,3 @@ public class CanNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     private final static Logger log = LoggerFactory.getLogger(CanNamedPaneAction.class.getName());
 }
-
-/* @(#)CbusNamedPaneAction.java */
