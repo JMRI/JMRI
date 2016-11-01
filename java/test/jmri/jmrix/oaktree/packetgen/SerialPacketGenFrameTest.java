@@ -1,8 +1,9 @@
-package jmri.jmrix.cmri.serial.serialmon;
+package jmri.jmrix.oaktree.packetgen;
 
 import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
+import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -11,23 +12,16 @@ import org.junit.Test;
 import java.awt.GraphicsEnvironment;
 
 /**
- * Test simple functioning of SerialMonAction
+ * Test simple functioning of SerialPacketGenFrame
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class SerialMonActionTest {
+public class SerialPacketGenFrameTest {
 
     @Test
-    public void testStringCtor() {
+    public void testMemoCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialMonAction action = new SerialMonAction("C/MRI test Action", new CMRISystemConnectionMemo());
-        Assert.assertNotNull("exists", action);
-    }
-
-    @Test
-    public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialMonAction action = new SerialMonAction( new CMRISystemConnectionMemo());
+        SerialPacketGenFrame action = new SerialPacketGenFrame();
         Assert.assertNotNull("exists", action);
     }
 

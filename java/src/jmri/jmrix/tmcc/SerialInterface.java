@@ -1,4 +1,3 @@
-// SerialInterface.java
 package jmri.jmrix.tmcc;
 
 /**
@@ -16,6 +15,3 @@ public interface SerialInterface {
 
     void sendSerialMessage(SerialMessage m, SerialListener l);  // 2nd arg gets the reply
 }
-
-
-/* @(#)SerialInterface.java */
