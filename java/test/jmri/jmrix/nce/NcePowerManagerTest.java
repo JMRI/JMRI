@@ -10,8 +10,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the NcePowerManager class.
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class NcePowerManagerTest extends AbstractPowerManagerTest {
 
     /**

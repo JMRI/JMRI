@@ -63,7 +63,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     ScheduleEditFrame _frame;
     boolean _matchMode = false;
 
-    private synchronized void updateList() {
+    private void updateList() {
         if (_schedule == null) {
             return;
         }
@@ -86,7 +86,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
     List<ScheduleItem> _list = new ArrayList<ScheduleItem>();
 
-    protected synchronized void initTable(ScheduleEditFrame frame, JTable table, Schedule schedule, Location location, Track track) {
+    protected void initTable(ScheduleEditFrame frame, JTable table, Schedule schedule, Location location, Track track) {
         _schedule = schedule;
         _location = location;
         _track = track;
@@ -116,20 +116,6 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
-        setPreferredWidths(table);
-
-        // set row height
-        table.setRowHeight(new JComboBox<Object>().getPreferredSize().height);
-        updateList();
-        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-    }
-
-    private synchronized void setPreferredWidths(JTable table) {
-        if (_frame.loadTableDetails(table)) {
-            return; // done
-        }
-        log.debug("Setting preferred widths");
         // set column preferred widths
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(35);
         table.getColumnModel().getColumn(CURRENT_COLUMN).setPreferredWidth(50);
@@ -147,10 +133,16 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         table.getColumnModel().getColumn(UP_COLUMN).setPreferredWidth(60);
         table.getColumnModel().getColumn(DOWN_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(70);
+
+        _frame.loadTableDetails(table);
+        // does not use a table sorter
+        table.setRowSorter(null);
+
+        updateList();
     }
 
     @Override
-    public synchronized int getRowCount() {
+    public int getRowCount() {
         return _list.size();
     }
 
@@ -160,7 +152,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
 
     @Override
-    public synchronized String getColumnName(int col) {
+    public String getColumnName(int col) {
         switch (col) {
             case ID_COLUMN:
                 return Bundle.getMessage("Id");
@@ -196,7 +188,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
             case DOWN_COLUMN:
                 return Bundle.getMessage("Down");
             case DELETE_COLUMN:
-                return Bundle.getMessage("Delete");
+                return Bundle.getMessage("ButtonDelete");
             default:
                 return "unknown"; // NOI18N
         }
@@ -206,35 +198,23 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case ID_COLUMN:
-                return String.class;
             case CURRENT_COLUMN:
-                return String.class;
             case TYPE_COLUMN:
                 return String.class;
             case RANDOM_COLUMN:
-                return JComboBox.class;
             case SETOUT_DAY_COLUMN:
-                return JComboBox.class;
             case ROAD_COLUMN:
-                return JComboBox.class;
             case LOAD_COLUMN:
-                return JComboBox.class;
             case SHIP_COLUMN:
-                return JComboBox.class;
             case DEST_COLUMN:
-                return JComboBox.class;
             case TRACK_COLUMN:
-                return JComboBox.class;
             case PICKUP_DAY_COLUMN:
                 return JComboBox.class;
             case COUNT_COLUMN:
-                return String.class;
             case WAIT_COLUMN:
-                return String.class;
+                return Integer.class;
             case UP_COLUMN:
-                return JButton.class;
             case DOWN_COLUMN:
-                return JButton.class;
             case DELETE_COLUMN:
                 return JButton.class;
             default:
@@ -265,7 +245,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
 
     @Override
-    public synchronized Object getValueAt(int row, int col) {
+    public Object getValueAt(int row, int col) {
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
@@ -308,14 +288,14 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
             case DOWN_COLUMN:
                 return Bundle.getMessage("Down");
             case DELETE_COLUMN:
-                return Bundle.getMessage("Delete");
+                return Bundle.getMessage("ButtonDelete");
             default:
                 return "unknown " + col; // NOI18N
         }
     }
 
     @Override
-    public synchronized void setValueAt(Object value, int row, int col) {
+    public void setValueAt(Object value, int row, int col) {
         if (value == null) {
             log.debug("Warning schedule table row {} still in edit", row);
             return;
@@ -367,7 +347,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
     private String getCurrentPointer(ScheduleItem si) {
         if (_track.getCurrentScheduleItem() == si) {
-            if (si.getCount() > 1) {
+            if (_track.getScheduleMode() == Track.SEQUENTIAL && si.getCount() > 1) {
                 return " " + _track.getScheduleCount() + " -->"; // NOI18N
             } else {
                 return "    -->"; // NOI18N
@@ -406,7 +386,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         return cb;
     }
 
-    String[] randomValues = {ScheduleItem.NONE, "50", "30", "25", "20", "15", "10", "5", "2", "1"};  // NOI18N
+    String[] randomValues = {ScheduleItem.NONE, "50", "30", "25", "20", "15", "10", "5", "2", "1"}; // NOI18N
 
     private JComboBox<String> getRandomComboBox(ScheduleItem si) {
         JComboBox<String> cb = new JComboBox<String>();
@@ -425,7 +405,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         } else if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE)) {
             // error user deleted this set out day
             String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[]{si
-                .getSetoutTrainScheduleId()});
+                    .getSetoutTrainScheduleId()});
             TrainSchedule errorSchedule = new TrainSchedule(si.getSetoutTrainScheduleId(), notValid);
             cb.addItem(errorSchedule);
             cb.setSelectedItem(errorSchedule);
@@ -441,7 +421,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         } else if (!si.getPickupTrainScheduleId().equals(ScheduleItem.NONE)) {
             // error user deleted this pick up day
             String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[]{si
-                .getPickupTrainScheduleId()});
+                    .getPickupTrainScheduleId()});
             TrainSchedule errorSchedule = new TrainSchedule(si.getSetoutTrainScheduleId(), notValid);
             cb.addItem(errorSchedule);
             cb.setSelectedItem(errorSchedule);
@@ -456,7 +436,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         cb.setSelectedItem(si.getReceiveLoadName());
         if (!cb.getSelectedItem().equals(si.getReceiveLoadName())) {
             String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[]{si
-                .getReceiveLoadName()});
+                    .getReceiveLoadName()});
             cb.addItem(notValid);
             cb.setSelectedItem(notValid);
         }
@@ -509,7 +489,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
 
     // set the count or hits if in match mode
-    private synchronized void setCount(Object value, int row) {
+    private void setCount(Object value, int row) {
         ScheduleItem si = _list.get(row);
         int count;
         try {
@@ -666,16 +646,17 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     private void filterTracks(Location loc, JComboBox<Track> cb, String carType, String carRoad, String carLoad) {
         List<Track> tracks = loc.getTrackList();
         for (Track track : tracks) {
-            if (!track.acceptsTypeName(carType) || track.getTrackType().equals(Track.STAGING)
-                    || (!carRoad.equals(ScheduleItem.NONE) && !track.acceptsRoadName(carRoad))
-                    || (!carLoad.equals(ScheduleItem.NONE) && !track.acceptsLoad(carLoad, carType))) {
+            if (!track.acceptsTypeName(carType) ||
+                    track.getTrackType().equals(Track.STAGING) ||
+                    (!carRoad.equals(ScheduleItem.NONE) && !track.acceptsRoadName(carRoad)) ||
+                    (!carLoad.equals(ScheduleItem.NONE) && !track.acceptsLoad(carLoad, carType))) {
                 cb.removeItem(track);
             }
         }
     }
 
     // remove receive loads not serviced by track
-    private synchronized void filterLoads(ScheduleItem si, JComboBox<String> cb) {
+    private void filterLoads(ScheduleItem si, JComboBox<String> cb) {
         for (int i = cb.getItemCount() - 1; i > 0; i--) {
             String loadName = cb.getItemAt(i);
             if (!loadName.equals(CarLoads.NONE) && !_track.acceptsLoad(loadName, si.getTypeName())) {
@@ -684,7 +665,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         }
     }
 
-    public synchronized void setMatchMode(boolean mode) {
+    public void setMatchMode(boolean mode) {
         if (mode != _matchMode) {
             _matchMode = mode;
             fireTableStructureChanged();
@@ -694,7 +675,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
     // this table listens for changes to a schedule and it's car types
     @Override
-    public synchronized void propertyChange(PropertyChangeEvent e) {
+    public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
@@ -703,12 +684,12 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
             updateList();
             fireTableDataChanged();
         }
-        if (e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Track.ROADS_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Track.LOADS_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Track.SCHEDULE_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Location.DISPOSE_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Track.ROADS_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Track.LOADS_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Track.SCHEDULE_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Location.DISPOSE_CHANGED_PROPERTY)) {
             fireTableDataChanged();
         }
         // update hit count or other schedule item?
@@ -736,7 +717,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         }
     }
 
-    public synchronized void dispose() {
+    public void dispose() {
         if (_schedule != null) {
             removePropertyChangeScheduleItems();
             _schedule.removePropertyChangeListener(this);

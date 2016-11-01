@@ -67,8 +67,6 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     private final HashMap<String, Locale> locale = new HashMap<>();
     private final ButtonGroup LAFGroup = new ButtonGroup();
     public JCheckBox mouseEvent;
-    private boolean dirty = false;
-    private boolean restartRequired = false;
     private JComboBox<Integer> fontSizeComboBox;
 
     public GuiLafConfigPane() {
@@ -90,8 +88,6 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         mouseEvent.setSelected(SwingSettings.getNonStandardMouseEvent());
         mouseEvent.addItemListener((ItemEvent e) -> {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setNonStandardMouseEvent(mouseEvent.isSelected());
-            this.dirty = true;
-            this.restartRequired = true;
         });
         panel.add(mouseEvent);
     }
@@ -112,8 +108,6 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
             jmi.setActionCommand(name);
             jmi.addActionListener((ActionEvent e) -> {
                 InstanceManager.getDefault(GuiLafPreferencesManager.class).setLookAndFeel(name);
-                this.dirty = true;
-                this.restartRequired = true;
             });
             if (installedLAFs.get(name).equals(UIManager.getLookAndFeel().getClass().getName())) {
                 jmi.setSelected(true);
@@ -175,6 +169,7 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     }
 
     public void doFontSize(JPanel panel) {
+        GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
         Integer[] sizes = new Integer[MAX_DISPLAYED_FONT_SIZE - MIN_DISPLAYED_FONT_SIZE + 1];
         for (int i = 0; i < sizes.length; i++) {
             sizes[i] = i + MIN_DISPLAYED_FONT_SIZE;
@@ -182,7 +177,7 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         fontSizeComboBox = new JComboBox<>(sizes);
         fontSizeComboBox.setEditable(true); // allow users to set font sizes not listed
         JLabel fontSizeLabel = new JLabel(ConfigBundle.getMessage("ConsoleFontSize"));
-        fontSizeComboBox.setSelectedItem(manager().getFontSize());
+        fontSizeComboBox.setSelectedItem(manager.getFontSize());
         JLabel fontSizeUoM = new JLabel(ConfigBundle.getMessage("ConsoleFontSizeUoM"));
         JButton resetButton = new JButton(ConfigBundle.getMessage("ResetDefault"));
         resetButton.setToolTipText(ConfigBundle.getMessage("GUIFontSizeReset"));
@@ -193,13 +188,11 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         panel.add(resetButton);
 
         fontSizeComboBox.addActionListener((ActionEvent e) -> {
-            manager().setFontSize((int) fontSizeComboBox.getSelectedItem());
-            this.dirty = true;
-            this.restartRequired = true;
+            manager.setFontSize((int) fontSizeComboBox.getSelectedItem());
         });
         resetButton.addActionListener((ActionEvent e) -> {
-            if ((int) fontSizeComboBox.getSelectedItem() != manager().getDefaultFontSize()) {
-                fontSizeComboBox.setSelectedItem(manager().getDefaultFontSize());
+            if ((int) fontSizeComboBox.getSelectedItem() != manager.getDefaultFontSize()) {
+                fontSizeComboBox.setSelectedItem(manager.getDefaultFontSize());
             }
         });
     }
@@ -207,11 +200,11 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     private JSpinner toolTipDismissDelaySpinner;
 
     public void doToolTipDismissDelay(JPanel panel) {
+        GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
         JLabel toolTipDismissDelayLabel = new JLabel(ConfigBundle.getMessage("GUIToolTipDismissDelay"));
-        toolTipDismissDelaySpinner = new JSpinner(new SpinnerNumberModel(manager().getToolTipDismissDelay() / 1000, MIN_TOOLTIP_TIME, MAX_TOOLTIP_TIME, 1));
+        toolTipDismissDelaySpinner = new JSpinner(new SpinnerNumberModel(manager.getToolTipDismissDelay() / 1000, MIN_TOOLTIP_TIME, MAX_TOOLTIP_TIME, 1));
         this.toolTipDismissDelaySpinner.addChangeListener((ChangeEvent e) -> {
-            manager().setToolTipDismissDelay((int) toolTipDismissDelaySpinner.getValue() * 1000); // convert to milliseconds from seconds
-            this.dirty = true;
+            manager.setToolTipDismissDelay((int) toolTipDismissDelaySpinner.getValue() * 1000); // convert to milliseconds from seconds
         });
         this.toolTipDismissDelaySpinner.setToolTipText(MessageFormat.format(ConfigBundle.getMessage("GUIToolTipDismissDelayToolTip"), MIN_TOOLTIP_TIME, MAX_TOOLTIP_TIME));
         toolTipDismissDelayLabel.setToolTipText(this.toolTipDismissDelaySpinner.getToolTipText());
@@ -263,28 +256,21 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
 
     @Override
     public void savePreferences() {
-        manager().savePreferences(ProfileManager.getDefault().getActiveProfile());
+        InstanceManager.getDefault(GuiLafPreferencesManager.class).savePreferences(ProfileManager.getDefault().getActiveProfile());
     }
 
     @Override
     public boolean isDirty() {
-        return (this.dirty
-                || SwingSettings.getNonStandardMouseEvent() != mouseEvent.isSelected()
-                || !Locale.getDefault().equals(this.locale.get(this.localeBox.getSelectedItem().toString())));
+        return InstanceManager.getDefault(GuiLafPreferencesManager.class).isDirty();
     }
 
     @Override
     public boolean isRestartRequired() {
-        return (this.restartRequired);
+        return InstanceManager.getDefault(GuiLafPreferencesManager.class).isRestartRequired();
     }
 
     @Override
     public boolean isPreferencesValid() {
         return true; // no validity checking performed
     }
-    
-    private GuiLafPreferencesManager manager() {
-        return InstanceManager.getDefault(GuiLafPreferencesManager.class);
-    }
-
 }

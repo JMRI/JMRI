@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
  * @author Martin Wade Copyright (C) 2014
- * @version $Revision: 22821 $
  */
 public class MrcTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 

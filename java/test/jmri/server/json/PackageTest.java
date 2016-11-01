@@ -18,9 +18,13 @@ import org.junit.runners.Suite.SuiteClasses;
     jmri.server.json.route.PackageTest.class,
     jmri.server.json.roster.PackageTest.class,
     jmri.server.json.sensor.PackageTest.class,
+    jmri.server.json.time.PackageTest.class,
     jmri.server.json.turnout.PackageTest.class,
     jmri.server.json.throttle.PackageTest.class,
-    jmri.server.json.util.PackageTest.class
+    jmri.server.json.util.PackageTest.class,
+    jmri.server.json.block.PackageTest.class,
+    jmri.server.json.layoutblock.PackageTest.class,
+    jmri.server.json.time.PackageTest.class
 })
 public class PackageTest {
 }

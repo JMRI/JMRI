@@ -29,6 +29,11 @@ public class MdiMainFrame extends jmri.util.JmriJFrame {
 
     /**
      * Create and initialize a multi-pane GUI window.
+     *
+     * @param name        name and title of the frame
+     * @param treeFile    name of file containing XML tree for left pane
+     * @param menubarFile name of file containing XML menu structure
+     * @param toolbarFile name of file containing XML toolbar structure
      */
     public MdiMainFrame(String name, String treeFile, String menubarFile, String toolbarFile) {
         super(name);
@@ -68,19 +73,17 @@ public class MdiMainFrame extends jmri.util.JmriJFrame {
         tree.setRootVisible(false);  // allow multiple roots
 
         // install listener
-        tree.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
-            public void valueChanged(javax.swing.event.TreeSelectionEvent e) {
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
-                if (node == null) {
-                    return; //Nothing is selected.	
-                }
-                if (node.getUserObject() == null) {
-                    return; // Not an interesting node
-                }
-                if (node.getUserObject() instanceof AbstractAction) {
-                    AbstractAction action = (AbstractAction) node.getUserObject();
-                    action.actionPerformed(null);
-                }
+        tree.addTreeSelectionListener((javax.swing.event.TreeSelectionEvent e) -> {
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+            if (node == null) {
+                return; //Nothing is selected.
+            }
+            if (node.getUserObject() == null) {
+                return; // Not an interesting node
+            }
+            if (node.getUserObject() instanceof AbstractAction) {
+                AbstractAction action = (AbstractAction) node.getUserObject();
+                action.actionPerformed(null);
             }
         });
         // install in scroll area
@@ -112,6 +115,7 @@ public class MdiMainFrame extends jmri.util.JmriJFrame {
     /**
      * Only close frame, etc, dispose() disposes of all cached panes
      */
+    @Override
     public void dispose() {
         rightWI.dispose();
         super.dispose();

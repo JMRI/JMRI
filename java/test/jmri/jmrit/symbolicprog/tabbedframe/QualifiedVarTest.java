@@ -16,8 +16,7 @@ import org.jdom2.Element;
  * Test PaneProg with qualified variables
  *
  * @author	Bob Jacobsen Copyright 2010
- * @version	$Revision$
- */
+  */
 public class QualifiedVarTest extends TestCase {
 
     // show me a specially-created frame

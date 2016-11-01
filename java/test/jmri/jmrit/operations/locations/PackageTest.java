@@ -1,11 +1,5 @@
 package jmri.jmrit.operations.locations;
 
-import jmri.jmrit.operations.locations.schedules.ScheduleEditFrameTest;
-import jmri.jmrit.operations.locations.schedules.ScheduleItemTest;
-import jmri.jmrit.operations.locations.schedules.ScheduleManagerTest;
-import jmri.jmrit.operations.locations.schedules.ScheduleTableFrameTest;
-import jmri.jmrit.operations.locations.schedules.ScheduleTest;
-import jmri.jmrit.operations.locations.tools.PoolTrackGuiTest;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -33,24 +27,20 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.operations.locations.PackageTest"); // no tests in class itself
         suite.addTest(LocationTest.suite());
         suite.addTest(XmlTest.suite());
-        suite.addTest(ScheduleItemTest.suite());
-        suite.addTest(ScheduleTest.suite());
-        suite.addTest(ScheduleManagerTest.suite());
         suite.addTest(TrackTest.suite());
         suite.addTest(OperationsPoolTest.suite());
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
 
+        suite.addTest(jmri.jmrit.operations.locations.tools.PackageTest.suite());
+        suite.addTest(jmri.jmrit.operations.locations.schedules.PackageTest.suite());
         // GUI tests start here
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(InterchangeEditFrameTest.suite());
             suite.addTest(LocationEditFrameTest.suite());
             suite.addTest(LocationTableFrameTest.suite());
-            suite.addTest(ScheduleEditFrameTest.suite());
-            suite.addTest(ScheduleTableFrameTest.suite());
             suite.addTest(SidingEditFrameTest.suite());
             suite.addTest(StagingEditFrameTest.suite());
             suite.addTest(YardEditFrameTest.suite());
-            suite.addTest(PoolTrackGuiTest.suite());
         }
 
         return suite;

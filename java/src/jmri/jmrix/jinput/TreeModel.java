@@ -34,8 +34,7 @@ import org.slf4j.LoggerFactory;
  * constructor is still active.
  *
  * @author	Bob Jacobsen Copyright 2008, 2010
- * @version	$Revision$
- */
+  */
 public final class TreeModel extends DefaultTreeModel {
 
     /**

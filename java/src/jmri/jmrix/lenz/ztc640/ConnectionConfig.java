@@ -8,8 +8,7 @@ package jmri.jmrix.lenz.ztc640;
  * This uses the {@link ZTC640Adapter} class to do the actual connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @version	$Revision$
- *
+  *
  * @see ZTC640Adapter
  */
 public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig {

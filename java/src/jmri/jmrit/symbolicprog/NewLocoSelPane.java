@@ -167,7 +167,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
         if (((String) locoBox.getSelectedItem()).equals("<none>")) {
             return;
         }
-        RosterEntry r = Roster.instance().entryFromTitle((String) locoBox.getSelectedItem());
+        RosterEntry r = Roster.getDefault().entryFromTitle((String) locoBox.getSelectedItem());
         String decoderModel = r.getDecoderModel();
         String decoderFamily = r.getDecoderFamily();
         if (log.isDebugEnabled()) {
@@ -216,7 +216,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
         re.setId(Bundle.getMessage("LabelNewDecoder"));
         // note we're leaving the filename information as null
         // add the new roster entry to the in-memory roster
-        Roster.instance().addEntry(re);
+        Roster.getDefault().addEntry(re);
 
         startProgrammer(decoderFile, re);
     }

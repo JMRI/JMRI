@@ -4,12 +4,11 @@
  * Description:	tests for the jmri.jmrix.nce.EasyDccTurnout class
  *
  * @author	Bob Jacobsen
- * @version
  */
 package jmri.jmrix.easydcc;
 
 import jmri.implementation.AbstractTurnoutTest;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

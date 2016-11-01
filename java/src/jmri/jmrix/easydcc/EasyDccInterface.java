@@ -5,8 +5,7 @@ package jmri.jmrix.easydcc;
  * Layout interface, similar to command station
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public interface EasyDccInterface {
 
     public void addEasyDccListener(EasyDccListener l);

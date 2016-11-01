@@ -1,47 +1,35 @@
-// PackageTest.java
 package apps;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        BundleTest.class,
+        ConfigBundleTest.class,
+        ValidateConfigFilesTest.class,
+        apps.configurexml.PackageTest.class,
+        apps.startup.PackageTest.class,
+        apps.PacketPro.PackageTest.class,
+        apps.PacketScript.PackageTest.class,
+        apps.InstallTest.PackageTest.class,
+        apps.gui3.Gui3AppsTest.class,
+        apps.DecoderPro.PackageTest.class,
+        apps.JmriDemo.PackageTest.class,
+        apps.DispatcherPro.PackageTest.class,
+        apps.PanelPro.PackageTest.class,
+        apps.SignalPro.PackageTest.class,
+        apps.SoundPro.PackageTest.class,
+        JmriFacelessTest.class
+})
 /**
  * Invoke complete set of tests for the apps package
  *
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007, 2012
- * @version $Revision$
+ * @author      Paul Bender, Copyright (C) 2016
  */
-public class PackageTest extends TestCase {
-
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("apps.PackageTest");  // no tests in this class itself
-
-        suite.addTest(BundleTest.suite());
-        suite.addTest(ValidateConfigFilesTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(apps.configurexml.PackageTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(apps.startup.PackageTest.class));
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-    }
-
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
-    }
+public class PackageTest {
 
 }

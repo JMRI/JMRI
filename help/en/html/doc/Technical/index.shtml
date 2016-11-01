@@ -82,7 +82,7 @@
       These screens show the exact contents of each specific
       decoder type. Both the programming screens and decoder
       information are stored in text files, so you can make up new
-      ones as desired.</p><a name="writecode"></a>
+      ones as desired.</p><a name="writecode" id="writecode"></a>
 
       <h2>How can you change how JMRI does things?</h2>There are
       several different ways to modify JMRI:
@@ -129,15 +129,7 @@
         <li><a href="http://sourceforge.net/projects/jmri/">JMRI
         project page</a> and <a href=
         "http://sourceforge.net/export/projhtml.php?group_id=26788">
-        project statistics</a>.</li>
-
-        <li>Trackers for <a href=
-        'http://sourceforge.net/tracker/?group_id=26788&amp;atid=388313'>
-        Bugs</a>, <a href=
-        'http://sourceforge.net/tracker/?group_id=26788&amp;atid=388316'>
-        Feature Requests</a>, and <a href=
-        'http://sourceforge.net/tracker/?group_id=26788&amp;atid=388315'>
-        Patches</a>.</li>
+        project statistics (for that information tracked by SourceForge)</a>.</li>
       </ul>
 
       <h2>Code</h2>All of the JMRI code is available from GitHub.
@@ -175,22 +167,19 @@
       <p>Alternately, if you'd like to edit code with your favorite
       text editor and compile it from a command line, please see
       the page of instructions for <a href="Ant.shtml">building
-      with Ant</a>.</p>
+      with Ant</a>.</p><a name="contributing" id=
+      "contributing"></a>
 
-      <a name="contributing"></a>
       <h2>Contributing</h2>
 
-      <p>We encourage
-      contributions of code, decoder definitions, improvements to
-      web pages, etc, to the JMRI project so that we can distribute
-      them to the rest of the community.</p>
+      <p>We encourage contributions of code, decoder definitions,
+      improvements to web pages, etc, to the JMRI project so that
+      we can distribute them to the rest of the community.</p>
 
       <p>For initial and/or small contributions, e.g. a new decoder
-      file or small bug fix, you can fill out a new "Patches" entry
-      on SourceForge using <a href=
-      "http://sourceforge.net/tracker/?group_id=26788&amp;atid=388315">
-      our patches page</a> (click new on the middle-left, then fill
-      out the resulting form). You can attach the entire file
+      file or small bug fix, you can fill out a new "issue" on
+      <a href="https://github.com/JMRI/JMRI/issues/new">GitHub</a>.
+      You can attach the entire file
       there. If it's more than one files, and you're using an IDE
       like <a href="NetBeans.shtml">NetBeans</a>, it's very easy to
       create a "diff patch file" to carry your changes, and that
@@ -224,12 +213,11 @@
       helped with the contribution, please let us know so we can
       add them to the <a href=
       "../../../Acknowledgements.shtml">acknowledgements
-      page</a>.</p>
+      page</a>.</p><a name="use" id="use"></a>
 
-      <a name="use"></a>
-      <h2>Licensing</h2>We encourage people to build their own projects on
-      top of JMRI. That's the original reason that the JMRI&reg;
-      project was started!
+      <h2>Licensing</h2>We encourage people to build their own
+      projects on top of JMRI. That's the original reason that the
+      JMRI&reg; project was started!
 
       <p>JMRI is licensed only under the "GNU General Public
       License", sometimes called the "GPL". We use version 2 of the

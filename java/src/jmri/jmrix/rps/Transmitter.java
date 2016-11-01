@@ -12,7 +12,6 @@ import jmri.ThrottleListener;
  * name (ID) of the roster entry this was originally created from.
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2008
- * @version $Revision$
  */
 public class Transmitter implements ThrottleListener {
 

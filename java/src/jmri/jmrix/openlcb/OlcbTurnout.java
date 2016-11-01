@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Turnout for OpenLCB connections.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010, 2011
- * @version $Revision$
  */
 public class OlcbTurnout extends jmri.implementation.AbstractTurnout
         implements CanListener {
@@ -23,10 +22,19 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout
     private static final long serialVersionUID = -2709042631708878196L;
     OlcbAddress addrThrown;   // go to thrown state
     OlcbAddress addrClosed;   // go to closed state
+    private static final String[] validFeedbackNames = {"MONITORING", "ONESENSOR", "TWOSENSOR",
+            "DIRECT"};
+    private static final int[] validFeedbackModes = {MONITORING, ONESENSOR, TWOSENSOR, DIRECT};
+    private static final int validFeedbackTypes = MONITORING | ONESENSOR | TWOSENSOR | DIRECT;
+    private static final int defaultFeedbackType = MONITORING;
 
     protected OlcbTurnout(String prefix, String address, TrafficController tc) {
         super(prefix + "T" + address);
         this.tc = tc;
+        this._validFeedbackNames = validFeedbackNames;
+        this._validFeedbackModes = validFeedbackModes;
+        this._validFeedbackTypes = validFeedbackTypes;
+        this._activeFeedbackType = defaultFeedbackType;
         init(address);
     }
 
@@ -81,25 +89,47 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout
         if (s == Turnout.THROWN) {
             m = addrThrown.makeMessage();
             tc.sendCanMessage(m, this);
+            // TC will not give us back the message we sent to the port, so short-circuit the
+            // monitoring feedback here
+            if (_activeFeedbackType == MONITORING) {
+                newKnownState(THROWN);
+            }
         } else if (s == Turnout.CLOSED) {
             m = addrClosed.makeMessage();
             tc.sendCanMessage(m, this);
+            // TC will not give us back the message we sent to the port, so short-circuit the
+            // monitoring feedback here
+            if (_activeFeedbackType == MONITORING) {
+                newKnownState(CLOSED);
+            }
         }
     }
 
     public void message(CanMessage f) {
         if (addrThrown.match(f)) {
-            newCommandedState(THROWN);
+            if (_activeFeedbackType == MONITORING) {
+                newCommandedState(THROWN);
+                newKnownState(THROWN);
+            }
         } else if (addrClosed.match(f)) {
-            newCommandedState(CLOSED);
+            if (_activeFeedbackType == MONITORING) {
+                newCommandedState(CLOSED);
+                newKnownState(CLOSED);
+            }
         }
     }
 
     public void reply(CanReply f) {
         if (addrThrown.match(f)) {
-            newCommandedState(THROWN);
+            if (_activeFeedbackType == MONITORING) {
+                newCommandedState(THROWN);
+                newKnownState(THROWN);
+            }
         } else if (addrClosed.match(f)) {
-            newCommandedState(CLOSED);
+            if (_activeFeedbackType == MONITORING) {
+                newCommandedState(CLOSED);
+                newKnownState(CLOSED);
+            }
         }
     }
 

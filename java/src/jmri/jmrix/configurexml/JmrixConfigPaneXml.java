@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * packages, e.g. jmrix.easydcc.serialdriver.configurexml
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision$
  */
 public class JmrixConfigPaneXml extends AbstractXmlAdapter {
 

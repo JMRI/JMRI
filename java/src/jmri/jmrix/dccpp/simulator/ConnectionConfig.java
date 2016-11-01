@@ -10,8 +10,7 @@ package jmri.jmrix.dccpp.simulator;
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Paul Bender Copyright (C) 2009
  * @author Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- *
+  *
  * @see DCCppSimulatorAdapter
  *
  * Based on jmri.jmrix.lenz.xnetsimulator.ConnectionConfig

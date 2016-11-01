@@ -153,8 +153,8 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
     @CheckForNull
     public InitializationException configure() {
         InitializationException error = null;
-        log.debug("configure defaults into InstanceManager");
         List<SystemConnectionMemo> connList = InstanceManager.getList(SystemConnectionMemo.class);
+        log.debug("configure defaults into InstanceManager from {} memos, {} defaults", connList.size(), defaults.keySet().size());
         for (Class<?> c : defaults.keySet()) {
             // 'c' is the class to load
             String connectionName = this.defaults.get(c);
@@ -175,6 +175,8 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                         log.warn("SystemConnectionMemo for {} ({}) provides a null {} instance", memo.getUserName(), memo.getClass(), c);
                     }
                     break;
+                } else {
+                    log.debug("   memo name didn't match: {} vs {}", testName, connectionName);
                 }
             }
             /*
@@ -184,11 +186,11 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
             if (!found) {
                 log.debug("!found, so resetting");
                 String currentName = null;
-                if (c == ThrottleManager.class && InstanceManager.getOptionalDefault(ThrottleManager.class) != null) {
+                if (c == ThrottleManager.class && InstanceManager.getNullableDefault(ThrottleManager.class) != null) {
                     currentName = InstanceManager.throttleManagerInstance().getUserName();
-                } else if (c == PowerManager.class && InstanceManager.getOptionalDefault(PowerManager.class) != null) {
+                } else if (c == PowerManager.class && InstanceManager.getNullableDefault(PowerManager.class) != null) {
                     currentName = InstanceManager.getDefault(PowerManager.class).getUserName();
-                } else if (c == ProgrammerManager.class && InstanceManager.getOptionalDefault(ProgrammerManager.class) != null) {
+                } else if (c == ProgrammerManager.class && InstanceManager.getNullableDefault(ProgrammerManager.class) != null) {
                     currentName = InstanceManager.getDefault(ProgrammerManager.class).getUserName();
                 }
                 if (currentName != null) {
@@ -230,7 +232,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                 log.info("Unable to read preferences for Default Selector.");
             }
             InitializationException ex = this.configure();
-            ConfigureManager manager = InstanceManager.getOptionalDefault(ConfigureManager.class);
+            ConfigureManager manager = InstanceManager.getNullableDefault(ConfigureManager.class);
             if (manager != null) {
                 manager.registerPref(this); // allow ProfileConfig.xml to be written correctly
             }

@@ -28,7 +28,6 @@ package jmri.jmrit.withrottle;
  *
  * @author Brett Hoffman Copyright (C) 2009, 2010, 2011
  * @author Created by Brett Hoffman on: 8/23/09.
- * @version $Revision$
  */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -242,7 +241,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     public RosterEntry findRosterEntry(DccThrottle t) {
         RosterEntry re = null;
         if (t.getLocoAddress() != null) {
-            List<RosterEntry> l = Roster.instance().matchingList(null, null, "" + ((DccLocoAddress) t.getLocoAddress()).getNumber(), null, null, null, null);
+            List<RosterEntry> l = Roster.getDefault().matchingList(null, null, "" + ((DccLocoAddress) t.getLocoAddress()).getNumber(), null, null, null, null);
             if (l.size() > 0) {
                 if (log.isDebugEnabled()) {
                     log.debug("Roster Loco found: " + l.get(0).getDccAddress());
@@ -528,7 +527,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     public void setRosterLocoForConsistFunctions(String id) {
         RosterEntry re = null;
-        List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, id);
+        List<RosterEntry> l = Roster.getDefault().matchingList(null, null, null, null, null, null, id);
         if (l.size() > 0) {
             if (log.isDebugEnabled()) {
                 log.debug("Consist Lead Roster Loco found: " + l.get(0).getDccAddress() + " for ID: " + id);
@@ -572,13 +571,12 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
         float newSpeed = (rawSpeed * speedMultiplier);
 
-        if (log.isDebugEnabled()) {
-            log.debug("raw: " + rawSpeed + ", NewSpd: " + newSpeed);
-        }
+        log.debug("raw: {}, NewSpd: {}",rawSpeed, newSpeed);
         throttle.setSpeedSetting(newSpeed);
     }
 
     protected void setDirection(boolean isForward) {
+        log.debug("set direction to: {}",(isForward?"Fwd":"Rev"));
         throttle.setIsForward(isForward);
     }
 
@@ -600,7 +598,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     public void requestEntryFromID(String id) {
         RosterEntry re = null;
-        List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, id);
+        List<RosterEntry> l = Roster.getDefault().matchingList(null, null, null, null, null, null, id);
         if (l.size() > 0) {
             if (log.isDebugEnabled()) {
                 log.debug("Roster Loco found: " + l.get(0).getDccAddress() + " for ID: " + id);

@@ -31,6 +31,7 @@ import javax.swing.KeyStroke;
 import javax.swing.TransferHandler;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
+import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.Path;
 import jmri.implementation.SignalSpeedMap;
@@ -39,7 +40,6 @@ import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.WarrantTableAction;
 import jmri.util.SystemType;
-import jmri.util.com.sun.TableSorter;
 import jmri.util.com.sun.TransferActionListener;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
@@ -62,7 +62,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * </P>
  *
- * @author  Pete Cressman (C) 2010
+ * @author Pete Cressman (C) 2010
  */
 public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameListener {
 
@@ -106,7 +106,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     public void initComponents() {
         setTitle(Bundle.getMessage("TitleOBlocks"));
         JMenuBar menuBar = new JMenuBar();
-        java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("apps.AppsBundle");
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         fileMenu.add(new jmri.configurexml.SaveMenu());
 
@@ -165,11 +164,11 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
         menuBar.add(fileMenu);
 
-        JMenu editMenu = new JMenu(rb.getString("MenuEdit"));
+        JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
         editMenu.setMnemonic(KeyEvent.VK_E);
         TransferActionListener actionListener = new TransferActionListener();
 
-        JMenuItem menuItem = new JMenuItem(rb.getString("MenuItemCut"));
+        JMenuItem menuItem = new JMenuItem(Bundle.getMessage("MenuItemCut"));
         menuItem.setActionCommand((String) TransferHandler.getCutAction().getValue(Action.NAME));
         menuItem.addActionListener(actionListener);
         if (SystemType.isMacOSX()) {
@@ -182,7 +181,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         menuItem.setMnemonic(KeyEvent.VK_T);
         editMenu.add(menuItem);
 
-        menuItem = new JMenuItem(rb.getString("MenuItemCopy"));
+        menuItem = new JMenuItem(Bundle.getMessage("MenuItemCopy"));
         menuItem.setActionCommand((String) TransferHandler.getCopyAction().getValue(Action.NAME));
         menuItem.addActionListener(actionListener);
         if (SystemType.isMacOSX()) {
@@ -195,7 +194,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         menuItem.setMnemonic(KeyEvent.VK_C);
         editMenu.add(menuItem);
 
-        menuItem = new JMenuItem(rb.getString("MenuItemPaste"));
+        menuItem = new JMenuItem(Bundle.getMessage("MenuItemPaste"));
         menuItem.setActionCommand((String) TransferHandler.getPasteAction().getValue(Action.NAME));
         menuItem.addActionListener(actionListener);
         if (SystemType.isMacOSX()) {
@@ -306,6 +305,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         map.put(TransferHandler.getCopyAction().getValue(Action.NAME), TransferHandler.getCopyAction());
         map.put(TransferHandler.getPasteAction().getValue(Action.NAME), TransferHandler.getPasteAction());
     }
+
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         errorCheck();
@@ -424,7 +424,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _openMenu.add(openTurnoutPath);
     }
 
-    /**
+    /*
      * ********************* BlockFrame *****************************
      */
     protected JInternalFrame makeBlockFrame() {
@@ -434,21 +434,16 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             OBlockTableModel.DELETE_COL, OBlockTableModel.REPORT_CURRENTCOL,
             OBlockTableModel.PERMISSIONCOL, OBlockTableModel.UNITSCOL});
 
-        try {   // following might fail due to a missing method on Mac Classic
-            TableSorter sorter = new TableSorter(_oBlockTable.getModel());
-            sorter.setTableHeader(_oBlockTable.getTableHeader());
-            sorter.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            _oBlockTable.setModel(sorter);
-        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
-            log.error("makeBlockFrame: Unexpected error: " + e);
-        }
+        TableRowSorter<OBlockTableModel> sorter = new TableRowSorter<>(_oBlockModel);
+        sorter.setComparator(OBlockTableModel.SYSNAMECOL, new jmri.util.SystemNameComparator());
+        _oBlockTable.setRowSorter(sorter);
         // Use XTableColumnModel so we can control which columns are visible
         XTableColumnModel tcm = new XTableColumnModel();
         _oBlockTable.setColumnModel(tcm);
         _oBlockTable.getTableHeader().setReorderingAllowed(true);
         _oBlockTable.createDefaultColumnsFromModel();
         _oBlockModel.addHeaderListener(_oBlockTable);
-            
+
         _oBlockTable.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.EDIT_COL).setCellEditor(new ButtonEditor(new JButton()));
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.EDIT_COL).setCellRenderer(new ButtonRenderer());
@@ -470,6 +465,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             public void mousePressed(MouseEvent me) {
                 showPopup(me);
             }
+
             @Override
             public void mouseReleased(MouseEvent me) {
                 showPopup(me);
@@ -482,10 +478,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
         _oBlockTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         _oBlockTable.setDragEnabled(true);
-        //blockTable.setDropMode(DropMode.USE_SELECTION);
         setActionMappings(_oBlockTable);
         ROW_HEIGHT = _oBlockTable.getRowHeight();
-//        int tableWidth = blockTable.getPreferredSize().width;
         int tableWidth = _desktop.getPreferredSize().width;
         _oBlockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, ROW_HEIGHT * 10));
         _blockTablePane = new JScrollPane(_oBlockTable);
@@ -522,24 +516,17 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
     }
 
-    /**
+    /*
      * ********************* PortalFrame *****************************
      */
     protected JInternalFrame makePortalFrame() {
         JInternalFrame frame = new JInternalFrame(Bundle.getMessage("TitlePortalTable"), true, false, false, true);
         _portalModel = new PortalTableModel(this);
-//        _portalModel.init();
         _portalTable = new DnDJTable(_portalModel, new int[]{PortalTableModel.DELETE_COL});
-//        _portalModel.makeSorter(portalTable);
-        try {   // following might fail due to a missing method on Mac Classic
-            TableSorter sorter = new TableSorter(_portalTable.getModel());
-            sorter.setTableHeader(_portalTable.getTableHeader());
-//            sorter.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            _portalTable.setModel(sorter);
-        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
-            log.error("makePortalFrame: Unexpected error: " + e);
-        }
-
+        TableRowSorter<PortalTableModel> sorter = new TableRowSorter<>(_portalModel);
+        sorter.setComparator(PortalTableModel.FROM_BLOCK_COLUMN, new jmri.util.SystemNameComparator());
+        sorter.setComparator(PortalTableModel.TO_BLOCK_COLUMN, new jmri.util.SystemNameComparator());
+        _portalTable.setRowSorter(sorter);
         _portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         _portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
         for (int i = 0; i < _portalModel.getColumnCount(); i++) {
@@ -548,7 +535,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
         _portalTable.sizeColumnsToFit(-1);
         _portalTable.setDragEnabled(true);
-        //_portalTable.setDropMode(DropMode.USE_SELECTION);
         setActionMappings(_portalTable);
         int tableWidth = _portalTable.getPreferredSize().width;
         _portalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, ROW_HEIGHT * 10));
@@ -566,7 +552,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         return frame;
     }
 
-    /**
+    /*
      * ********************* BlockPortalFrame *****************************
      */
     protected JInternalFrame makeBlockPortalFrame() {
@@ -585,7 +571,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         setActionMappings(_blockPortalTable);
         int tableWidth = _blockPortalTable.getPreferredSize().width;
         _blockPortalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, ROW_HEIGHT * 25));
-//          _blockPortalTable.setPreferredScrollableViewportSize( new java.awt.Dimension(275, ROW_HEIGHT*25));
         JScrollPane tablePane = new JScrollPane(_blockPortalTable);
 
         JPanel contentPane = new JPanel();
@@ -599,7 +584,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         return frame;
     }
 
-    /**
+    /*
      * ********************* SignalFrame *****************************
      */
     protected JInternalFrame makeSignalFrame() {
@@ -607,14 +592,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _signalModel = new SignalTableModel(this);
         _signalModel.init();
         _signalTable = new DnDJTable(_signalModel, new int[]{SignalTableModel.UNITSCOL, SignalTableModel.DELETE_COL});
-        try {   // following might fail due to a missing method on Mac Classic
-            TableSorter sorter = new TableSorter(_signalTable.getModel());
-            sorter.setTableHeader(_signalTable.getTableHeader());
-//            sorter.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            _signalTable.setModel(sorter);
-        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
-            log.error("makeSignalFrame: Unexpected error: " + e);
-        }
+        TableRowSorter<SignalTableModel> sorter = new TableRowSorter<>(_signalModel);
+        _signalTable.setRowSorter(sorter);
         _signalTable.getColumnModel().getColumn(SignalTableModel.UNITSCOL).setCellRenderer(
                 new MyBooleanRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
         _signalTable.getColumnModel().getColumn(SignalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
@@ -650,7 +629,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         /**
          *
          */
-        private static final long serialVersionUID = 1917299755191589427L;
         BlockPathTableModel blockPathModel;
 
         public BlockPathFrame(String title, boolean resizable, boolean closable,
@@ -667,7 +645,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
     }
 
-    /**
+    /*
      * ********************* BlockPathFrame *****************************
      */
     protected BlockPathFrame makeBlockPathFrame(OBlock block) {
@@ -682,16 +660,13 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         blockPathModel.init();
         JTable blockPathTable = new DnDJTable(blockPathModel, new int[]{BlockPathTableModel.EDIT_COL,
             BlockPathTableModel.DELETE_COL, BlockPathTableModel.UNITSCOL});
-        //blockPathTable.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.UNITSCOL).setCellRenderer(
                 new MyBooleanRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.EDIT_COL).setCellEditor(new ButtonEditor(new JButton()));
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.EDIT_COL).setCellRenderer(new ButtonRenderer());
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
-        //blockPathTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         blockPathTable.setDragEnabled(true);
-        //blockPathTable.setDropMode(DropMode.USE_SELECTION);
         setActionMappings(blockPathTable);
         for (int i = 0; i < blockPathModel.getColumnCount(); i++) {
             int width = blockPathModel.getPreferredWidth(i);
@@ -700,7 +675,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         blockPathTable.sizeColumnsToFit(-1);
         int tableWidth = blockPathTable.getPreferredSize().width;
         blockPathTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, ROW_HEIGHT * 10));
-//          blockPathTable.setPreferredScrollableViewportSize( new java.awt.Dimension(766, ROW_HEIGHT*10));
         JScrollPane tablePane = new JScrollPane(blockPathTable);
 
         JPanel contentPane = new JPanel();
@@ -716,7 +690,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         return frame;
     }
 
-    /**
+    /*
      * ********************* PathTurnoutFrame *****************************
      */
     protected JInternalFrame makePathTurnoutFrame(OBlock block, String pathName) {
@@ -735,7 +709,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         JTable PathTurnoutTable = new DnDJTable(PathTurnoutModel, new int[]{PathTurnoutTableModel.SETTINGCOLUMN,
             PathTurnoutTableModel.DELETE_COL});
         JComboBox<String> box = new JComboBox<String>(PathTurnoutTableModel.turnoutStates);
-        //PathTurnoutTable.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
         PathTurnoutTable.getColumnModel().getColumn(PathTurnoutTableModel.SETTINGCOLUMN).setCellEditor(new DefaultCellEditor(box));
         PathTurnoutTable.getColumnModel().getColumn(PathTurnoutTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         PathTurnoutTable.getColumnModel().getColumn(PathTurnoutTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
@@ -746,11 +719,9 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
         PathTurnoutTable.sizeColumnsToFit(-1);
         PathTurnoutTable.setDragEnabled(true);
-        //PathTurnoutTable.setDropMode(DropMode.USE_SELECTION);
         setActionMappings(PathTurnoutTable);
         int tableWidth = PathTurnoutTable.getPreferredSize().width;
         PathTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, ROW_HEIGHT * 5));
-//            PathTurnoutTable.setPreferredScrollableViewportSize( new java.awt.Dimension(397, ROW_HEIGHT*5));
         JScrollPane tablePane = new JScrollPane(PathTurnoutTable);
 
         JPanel contentPane = new JPanel();
@@ -825,7 +796,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     }
 
     static class MyBooleanRenderer extends javax.swing.table.DefaultTableCellRenderer {
-        private static final long serialVersionUID = 934007494903837404L;
+
         String _trueValue;
         String _falseValue;
 

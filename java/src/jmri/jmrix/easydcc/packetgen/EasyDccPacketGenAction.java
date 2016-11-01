@@ -10,8 +10,7 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a EasyDccPacketGenFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public class EasyDccPacketGenAction extends AbstractAction {
 
     /**

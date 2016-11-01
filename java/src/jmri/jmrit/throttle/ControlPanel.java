@@ -1422,7 +1422,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         } else {
             return;
         }
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
     }
 
     // initialize logging

@@ -51,10 +51,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     private String _rowColorTrainEnRoute = NONE; // row color when train is en route
     private String _rowColorTerminated = NONE; // row color when train is terminated
 
-    // Train frame table column widths (12), starts with Time column and ends with Edit
-    private int[] _tableColumnWidths = {50, 50, 72, 100, 140, 120, 120, 120, 120, 120, 90, 70};
-
-    private int[] _tableScheduleColumnWidths = {50, 70, 120};
     private String _trainScheduleActiveId = NONE;
 
     // Scripts
@@ -189,18 +185,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     }
 
     /**
-     *
-     * @return get an array of table column widths for the trains frame
-     */
-    public int[] getTrainsFrameTableColumnWidths() {
-        return _tableColumnWidths.clone();
-    }
-
-    public int[] getTrainScheduleFrameTableColumnWidths() {
-        return _tableScheduleColumnWidths.clone();
-    }
-
-    /**
      * Sets the selected schedule id
      *
      * @param id Selected schedule id
@@ -299,6 +283,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     private Hashtable<String, Train> _trainHashTable = new Hashtable<String, Train>();
 
     /**
+     * @param name The train's name.
      * @return requested Train object or null if none exists
      */
     public Train getTrainByName(String name) {
@@ -328,6 +313,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     /**
      * Finds an existing train or creates a new train if needed requires train's
      * name creates a unique id for this train
+     * @param name The train's name.
      *
      *
      * @return new train or existing train
@@ -347,6 +333,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     * @param train The Train to be added.
      */
     public void register(Train train) {
         Integer oldSize = Integer.valueOf(_trainHashTable.size());
@@ -363,6 +350,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
     /**
      * Forget a NamedBean Object created outside the manager.
+     * @param train The Train to delete.
      */
     public void deregister(Train train) {
         if (train == null) {
@@ -426,6 +414,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
     /**
      *
+     * @param car The car looking for a train.
+     * @param buildReport The build report for logging.
      * @return Train that can service car from its current location to the its
      *         destination.
      */
@@ -435,7 +425,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
     /**
      *
+     * @param car The car looking for a train.
      * @param excludeTrain The only train not to try.
+     * @param buildReport  The build report for logging.
      * @return Train that can service car from its current location to the its
      *         destination.
      */
@@ -876,6 +868,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     /**
      * Sets the switch list status for all built trains. Used for switch lists
      * in consolidated mode.
+     * @param status Train.PRINTED, Train.UNKNOWN
      */
     public void setTrainsSwitchListStatus(String status) {
         for (Train train : getTrainsByTimeList()) {
@@ -995,18 +988,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
                                         TrainsTableFrame.CONDUCTOR))) {
                     _trainAction = a.getValue();
                 }
-
-                // TODO This here is for backwards compatibility, remove after next major release
-                if ((a = e.getAttribute(Xml.COLUMN_WIDTHS)) != null) {
-                    String[] widths = a.getValue().split(" ");
-                    for (int i = 0; i < widths.length; i++) {
-                        try {
-                            _tableColumnWidths[i] = Integer.parseInt(widths[i]);
-                        } catch (NumberFormatException ee) {
-                            log.error("Number format exception when reading trains column widths");
-                        }
-                    }
-                }
             }
 
             // Row color options
@@ -1033,18 +1014,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
             if (e != null) {
                 if ((a = e.getAttribute(Xml.ACTIVE_ID)) != null) {
                     _trainScheduleActiveId = a.getValue();
-                }
-                // TODO This here is for backwards compatibility, remove after next major release
-                if ((a = e.getAttribute(Xml.COLUMN_WIDTHS)) != null) {
-                    String[] widths = a.getValue().split(" ");
-                    _tableScheduleColumnWidths = new int[widths.length];
-                    for (int i = 0; i < widths.length; i++) {
-                        try {
-                            _tableScheduleColumnWidths[i] = Integer.parseInt(widths[i]);
-                        } catch (NumberFormatException ee) {
-                            log.error("Number format exception when reading trains column widths");
-                        }
-                    }
                 }
             }
             // check for scripts
@@ -1078,6 +1047,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-trains.dtd.
+     * @param root common Element for operations-trains.dtd.
      *
      */
     public void store(Element root) {

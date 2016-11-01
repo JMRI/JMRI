@@ -12,7 +12,6 @@ import jmri.implementation.AbstractSensor;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Kevin Dickerson (C) 2012
- * @version	$Revision: 17977 $
  */
 public class Dcc4PcSensor extends AbstractSensor {
 

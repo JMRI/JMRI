@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * A Kernel is a group of cars that is managed as one car.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision$
  */
 public class Kernel extends RollingStockGroup {
 

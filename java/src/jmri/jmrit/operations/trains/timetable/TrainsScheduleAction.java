@@ -9,7 +9,6 @@ import javax.swing.AbstractAction;
  * Swing action to create and register a TrainsScheduleTableFrame object.
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision$
  */
 public class TrainsScheduleAction extends AbstractAction {
 

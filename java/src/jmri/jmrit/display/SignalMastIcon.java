@@ -31,20 +31,13 @@ import org.slf4j.LoggerFactory;
  */
 public class SignalMastIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1381602315927376318L;
-
     public SignalMastIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
         super(editor);
         _control = true;
-        debug = log.isDebugEnabled();
     }
 
     private NamedBeanHandle<SignalMast> namedMast;
-    private boolean debug;
 
     public void setShowAutoText(boolean state) {
         _text = state;
@@ -179,10 +172,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
 
     // update icon as state of turnout changes
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (debug) {
-            log.debug("property change: " + e.getPropertyName()
-                    + " current state: " + mastState());
-        }
+        log.debug("property change: {} current state: {}", e.getPropertyName(), mastState());
         displayState(mastState());
         _editor.getTargetPanel().repaint();
     }
@@ -422,7 +412,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     SignalMastItemPanel _itemPanel;
 
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("SignalMast"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSignalMast"));
         popup.add(new AbstractAction(txt) {
             /**
              *
@@ -437,7 +427,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     }
 
     protected void editItem() {
-        makePalettteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("SignalMast")));
+        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSignalMast")));
         _itemPanel = new SignalMastItemPanel(_paletteFrame, "SignalMast", getFamily(),
                 PickListModel.signalMastPickModelInstance(), _editor);
         ActionListener updateAction = new ActionListener() {
@@ -540,7 +530,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
      */
     public void displayState(String state) {
         updateSize();
-        if (debug) {
+        if (log.isDebugEnabled()) { // Avoid signal lookup unless needed
             if (getSignalMast() == null) {
                 log.debug("Display state " + state + ", disconnected");
             } else {

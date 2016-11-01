@@ -27,7 +27,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.PackageTest");  // no tests in this class itself
 
         suite.addTest(jmri.BeanSettingTest.suite());
-        suite.addTest(jmri.BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(jmri.NamedBeanHandleManagerTest.suite());
         suite.addTest(jmri.BlockTest.suite());
         suite.addTest(jmri.BlockManagerTest.suite());
@@ -54,7 +54,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.managers.PackageTest.suite());
         suite.addTest(jmri.jmrix.PackageTest.suite());  // last due to threading issues?
         suite.addTest(jmri.jmrit.PackageTest.suite());  // last due to classloader issues?
-        suite.addTest(jmri.swing.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.swing.PackageTest.class));
         suite.addTest(jmri.util.PackageTest.suite());
         suite.addTest(jmri.web.PackageTest.suite());
         suite.addTest(jmri.jmris.PackageTest.suite());

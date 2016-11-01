@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision$
  */
 public class EasyDccTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 

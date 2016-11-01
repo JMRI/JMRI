@@ -41,12 +41,14 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
     }
 
     public void init() {
-        super.init();
-        _table.getSelectionModel().addListSelectionListener(this);
-        _showIconsButton.setEnabled(false);
-        _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipPickRowToShowIcon"));
-        initIconFamiliesPanel();
-        add(_iconFamilyPanel, 1);
+        if (!_initialized) {
+            super.init();
+            _table.getSelectionModel().addListSelectionListener(this);
+            _showIconsButton.setEnabled(false);
+            _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipPickRowToShowIcon"));
+//            initIconFamiliesPanel();
+            add(_iconFamilyPanel, 1);            
+        }
     }
 
     protected JPanel instructions() {
@@ -102,13 +104,12 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
                 borderName));
         JLabel label;
         try {
-            label = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
+            label = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR), icon);
             label.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         } catch (java.lang.ClassNotFoundException cnfe) {
             cnfe.printStackTrace();
             label = new JLabel();
         }
-        label.setIcon(icon);
         label.setName(borderName);
         panel.add(label);
         int width = Math.max(100, panel.getPreferredSize().width);
@@ -117,7 +118,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         _dragIconPanel.add(panel);
     }
 
-    protected void makeBottomPanel() {
+    protected void makeBottomPanel(ActionListener doneAction) {
         JPanel panel = new JPanel();
         _showIconsButton = new JButton(Bundle.getMessage("ShowIcons"));
         _showIconsButton.addActionListener(new ActionListener() {
@@ -131,9 +132,13 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         });
         _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipShowIcons"));
         panel.add(_showIconsButton);
-        JPanel bottomPanel = new JPanel(new FlowLayout());
-        bottomPanel.add(panel);
-        add(bottomPanel);
+        _bottom1Panel = new JPanel(new FlowLayout());
+        _bottom1Panel.add(panel);
+        if (doneAction != null) {
+            addUpdateButtonToBottom(doneAction);
+        }
+        initIconFamiliesPanel();
+        add(_bottom1Panel);
     }
 
     private void getIconMap(int row) {
@@ -166,9 +171,14 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         Enumeration<String> e = _mast.getAppearanceMap().getAspects();
         while (e.hasMoreElements()) {
             String aspect = e.nextElement();
-            String s = appMap.getProperty(aspect, "imagelink");
-            NamedIcon n = new NamedIcon(s, s);
-            _currentIconMap.put(aspect, n);
+            String s = appMap.getImageLink(aspect, _family);
+            if (s !=null && !s.equals("")) {
+                if (!s.contains("preference:")) {
+                    s = s.substring(s.indexOf("resources"));
+                }
+                NamedIcon n = new NamedIcon(s, s);
+                _currentIconMap.put(aspect, n);                
+            }
         }
         if (log.isDebugEnabled()) {
             log.debug("getIconMap: for " + _family
@@ -222,36 +232,48 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         validate();
     }
 
-    protected JLabel getDragger(DataFlavor flavor) {
-        return new IconDragJLabel(flavor);
+    protected JLabel getDragger(DataFlavor flavor, NamedIcon icon) {
+        return new IconDragJLabel(flavor, icon);
     }
 
     protected class IconDragJLabel extends DragJLabel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2350506428940610321L;
+        public IconDragJLabel(DataFlavor flavor, NamedIcon icon) {
+            super(flavor, icon);
+        }
 
-        public IconDragJLabel(DataFlavor flavor) {
-            super(flavor);
+        protected boolean okToDrag() {
+            NamedBean bean = getDeviceNamedBean();
+            if (bean == null) {
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                return false;
+            }
+            return true;
         }
 
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {
                 return null;
             }
-            NamedBean bean = getNamedBean();
+            NamedBean bean = getDeviceNamedBean();
             if (bean == null) {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("noRowSelected"),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }
 
-            SignalMastIcon sm = new SignalMastIcon(_editor);
-            sm.setSignalMast(bean.getDisplayName());
-            sm.setLevel(Editor.SIGNALS);
-            return sm;
+            if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
+                SignalMastIcon sm = new SignalMastIcon(_editor);
+                sm.setSignalMast(bean.getDisplayName());
+                sm.setLevel(Editor.SIGNALS);
+                return sm;
+            } else if (DataFlavor.stringFlavor.equals(flavor)) {
+                StringBuilder sb = new StringBuilder(_itemType);
+                sb.append(" icons for \"");
+                sb.append(bean.getDisplayName());
+                sb.append("\"");
+                return  sb.toString();
+            }
+            return null;                
         }
     }
 

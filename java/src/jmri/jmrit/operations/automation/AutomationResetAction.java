@@ -8,7 +8,6 @@ import javax.swing.AbstractAction;
  * Action to reset an automation
  *
  * @author Daniel Boudreau Copyright (C) 2016
- * @version $Revision$
  */
 public class AutomationResetAction extends AbstractAction {
 

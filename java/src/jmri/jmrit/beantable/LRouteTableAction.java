@@ -74,8 +74,8 @@ public class LRouteTableAction extends AbstractTableAction {
      */
     public LRouteTableAction(String s) {
         super(s);
-        _logixManager = InstanceManager.getOptionalDefault(jmri.LogixManager.class);
-        _conditionalManager = InstanceManager.getOptionalDefault(jmri.ConditionalManager.class);
+        _logixManager = InstanceManager.getNullableDefault(jmri.LogixManager.class);
+        _conditionalManager = InstanceManager.getNullableDefault(jmri.ConditionalManager.class);
         // disable ourself if there is no Logix manager or no Conditional manager available
         if ((_logixManager == null) || (_conditionalManager == null)) {
             setEnabled(false);
@@ -374,10 +374,15 @@ public class LRouteTableAction extends AbstractTableAction {
         iter = systemNameList.iterator();
         while (iter.hasNext()) {
             String systemName = iter.next();
-            String userName = sm.getBySystemName(systemName).getUserName();
-            inputTS.add(new RouteInputSensor(systemName, userName));
-            outputTS.add(new RouteOutputSensor(systemName, userName));
-            alignTS.add(new AlignElement(systemName, userName));
+            Sensor sen = sm.getBySystemName(systemName);
+            if (sen != null) {
+                String userName = sen.getUserName();
+                inputTS.add(new RouteInputSensor(systemName, userName));
+                outputTS.add(new RouteOutputSensor(systemName, userName));
+                alignTS.add(new AlignElement(systemName, userName));
+            } else {
+                log.error("Failed to get sensor {}", systemName);
+            }
         }
 
         jmri.LightManager lm = InstanceManager.lightManagerInstance();
@@ -385,18 +390,28 @@ public class LRouteTableAction extends AbstractTableAction {
         iter = systemNameList.iterator();
         while (iter.hasNext()) {
             String systemName = iter.next();
-            String userName = lm.getBySystemName(systemName).getUserName();
-            inputTS.add(new RouteInputLight(systemName, userName));
-            outputTS.add(new RouteOutputLight(systemName, userName));
+            Light l = lm.getBySystemName(systemName);
+            if (l != null) {
+                String userName = l.getUserName();
+                inputTS.add(new RouteInputLight(systemName, userName));
+                outputTS.add(new RouteOutputLight(systemName, userName));
+            } else {
+                log.error("Failed to get light {}", systemName);
+            }
         }
         jmri.SignalHeadManager shm = InstanceManager.getDefault(jmri.SignalHeadManager.class);
         systemNameList = shm.getSystemNameList();
         iter = systemNameList.iterator();
         while (iter.hasNext()) {
             String systemName = iter.next();
-            String userName = shm.getBySystemName(systemName).getUserName();
-            inputTS.add(new RouteInputSignal(systemName, userName));
-            outputTS.add(new RouteOutputSignal(systemName, userName));
+            SignalHead sh = shm.getBySystemName(systemName);
+            if (sh != null) {
+                String userName = sh.getUserName();
+                inputTS.add(new RouteInputSignal(systemName, userName));
+                outputTS.add(new RouteOutputSignal(systemName, userName));
+            } else {
+                log.error("Failed to get signal head {}", systemName);
+            }
         }
         _includedInputList = new ArrayList<RouteInputElement>();
         _includedOutputList = new ArrayList<RouteOutputElement>();

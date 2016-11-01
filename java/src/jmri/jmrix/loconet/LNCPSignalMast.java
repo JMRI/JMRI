@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * in {@link jmri.implementation.DccSignalMast}.
  *
  * @author	Kevin Dickerson Copyright (C) 2002
- * @version	$Revision: 17977 $
  */
 public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
 

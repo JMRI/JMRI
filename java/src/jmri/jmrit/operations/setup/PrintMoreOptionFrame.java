@@ -8,7 +8,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of additional manifest print options
  *
  * @author Dan Boudreau Copyright (C) 2012
- * @version $Revision: 21846 $
+ * 
  */
 public class PrintMoreOptionFrame extends OperationsFrame {
 

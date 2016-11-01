@@ -16,14 +16,13 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001, 2004
  * @author Kevin Dickerson Copyright (C) 2014
  * @author	kcameron Copyright (C) 2014
- * @version	$Revision$
- */
+  */
 public class MrcMessage {
 
     // create a new one
     public MrcMessage(int len) {
         if (len < 1) {
-            log.error(MrcMessageBundle.getMessage("LogMrcMessageLengthError"), len);  //IN18N
+            log.error("invalid length in call to ctor: {0}", len);  //IN18N
         }
         _nDataChars = len;
         _dataChars = new int[len];
@@ -191,7 +190,7 @@ public class MrcMessage {
                 i = m.putHeader(MrcPackets.FUNCTIONGROUP6PACKETHEADER);
                 break;
             default:
-                log.error(MrcMessageBundle.getMessage("LogMrcMessageInvalidFunctionGroupError"), group);  //IN18N
+                log.error("Invalid function group: {0}", group);  //IN18N
                 return null;
         }
 
@@ -293,10 +292,10 @@ public class MrcMessage {
             if (getElement(4) == getElement(6)) {
                 val = getElement(4) & 0xff;
             } else {
-                log.error(MrcMessageBundle.getMessage("LogMrcMessageReturnedCvFormatError")); //IN18N
+                log.error("Error in format of the returned CV value"); //IN18N
             }
         } else {
-            log.error(MrcMessageBundle.getMessage("LogMrcMessageNotCvReadFormatPacketError")); //IN18N
+            log.error("Not a CV Read formated packet"); //IN18N
         }
         return val;
     }
@@ -345,7 +344,7 @@ public class MrcMessage {
      */
     static public MrcMessage setClockRatio(int ratio) {
         if (ratio < 0 || ratio > 60) {
-            log.error(MrcMessageBundle.getMessage("LogMrcMessageClockRatioRangeError"), ratio); //IN18N
+            log.error("ratio number too large: {0}", ratio); //IN18N
         }
         MrcMessage m = new MrcMessage(MrcPackets.getSetClockRatioPacketLength());
         m.setMessageClass(MrcInterface.CLOCK);
@@ -365,10 +364,10 @@ public class MrcMessage {
      */
     static public MrcMessage setClockTime(int hour, int minute) {
         if (hour < 0 || hour > 23) {
-            log.error(MrcMessageBundle.getMessage("LogMrcMessageClockHourRangeError"), hour); //IN18N
+            log.error("hour number out of range : {0}", hour); //IN18N
         }
         if (minute < 0 || minute > 59) {
-            log.error(MrcMessageBundle.getMessage("LogMrcMessageClockMinuteRangeError"), minute); //IN18N
+            log.error("minute number out of range : {0}", minute); //IN18N
         }
         MrcMessage m = new MrcMessage(MrcPackets.getSetClockTimePacketLength());
         m.setMessageClass(MrcInterface.CLOCK);

@@ -14,7 +14,6 @@ package jmri.jmrix.can;
  * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2009, 2010
- * @version $Revision$
  */
 @net.jcip.annotations.Immutable
 public interface CanFrame {

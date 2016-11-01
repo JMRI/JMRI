@@ -11,7 +11,6 @@ import jmri.jmrit.operations.trains.Train;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 public class ShowCarsInTrainAction extends AbstractAction {
 

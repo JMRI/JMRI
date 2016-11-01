@@ -4,12 +4,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -108,10 +105,11 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
     /**
      * Search for engine by road number
+     * @param roadNumber The string road number to search for.
      *
      * @return -1 if not found, table row number if found
      */
-    public synchronized int findEngineByRoadNumber(String roadNumber) {
+    public int findEngineByRoadNumber(String roadNumber) {
         if (sysList != null) {
             if (!roadNumber.equals(_roadNumber)) {
                 return getIndex(0, roadNumber);
@@ -156,7 +154,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         return -1;
     }
 
-    private synchronized void updateList() {
+    private void updateList() {
         // first, remove listeners from the individual objects
         removePropertyChangeEngines();
         sysList = getSelectedEngineList();
@@ -228,15 +226,11 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         tcm.getColumn(EDIT_COLUMN).setCellEditor(buttonEditor);
 
         // set column preferred widths
-        if (!_frame.loadTableDetails(_table)) {
-            // load defaults, xml file data not found
-            for (int i = 0; i < tcm.getColumnCount(); i++) {
-                tcm.getColumn(i).setPreferredWidth(_enginesTableColumnWidths[i]);
-            }
+        // load defaults, xml file data not found
+        for (int i = 0; i < tcm.getColumnCount(); i++) {
+            tcm.getColumn(i).setPreferredWidth(_enginesTableColumnWidths[i]);
         }
-        _table.setRowHeight(new JComboBox<>().getPreferredSize().height);
-        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        _frame.loadTableDetails(_table);
 
         // turn off columns
         tcm.setColumnVisible(tcm.getColumnByModelIndex(BUILT_COLUMN), false);
@@ -249,7 +243,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     }
 
     @Override
-    public synchronized int getRowCount() {
+    public int getRowCount() {
         return sysList.size();
     }
 
@@ -300,7 +294,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             case SET_COLUMN:
                 return Bundle.getMessage("Set");
             case EDIT_COLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit"); // titles above all columns
             default:
                 return "unknown"; // NOI18N
         }
@@ -312,6 +306,10 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             case SET_COLUMN:
             case EDIT_COLUMN:
                 return JButton.class;
+            case HP_COLUMN:
+            case LENGTH_COLUMN:
+            case MOVES_COLUMN:
+                return Integer.class;
             default:
                 return String.class;
         }
@@ -332,7 +330,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     }
 
     @Override
-    public synchronized Object getValueAt(int row, int col) {
+    public Object getValueAt(int row, int col) {
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
@@ -371,7 +369,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 return s;
             }
             case RFID_WHERE_LAST_SEEN_COLUMN: {
-                return eng.getWhereLastSeenName() + " (" + eng.getTrackLastSeenName() +")";
+                return eng.getWhereLastSeenName() +
+                        (eng.getTrackLastSeenName().equals(Engine.NONE) ? "" : " (" + eng.getTrackLastSeenName() + ")");
             }
             case RFID_WHEN_LAST_SEEN_COLUMN: {
                 return eng.getWhenLastSeenDate();
@@ -405,7 +404,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             case SET_COLUMN:
                 return Bundle.getMessage("Set");
             case EDIT_COLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit");
             default:
                 return "unknown " + col; // NOI18N
         }
@@ -415,7 +414,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     EngineSetFrame engineSetFrame = null;
 
     @Override
-    public synchronized void setValueAt(Object value, int row, int col) {
+    public void setValueAt(Object value, int row, int col) {
         Engine engine = (Engine) sysList.get(row);
         switch (col) {
             case MOVES_COLUMN:
@@ -484,7 +483,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         }
     }
 
-    private synchronized void removePropertyChangeEngines() {
+    private void removePropertyChangeEngines() {
         if (sysList != null) {
             for (RollingStock rs : sysList) {
                 rs.removePropertyChangeListener(this);
@@ -493,7 +492,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     }
 
     @Override
-    public synchronized void propertyChange(PropertyChangeEvent e) {
+    public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());

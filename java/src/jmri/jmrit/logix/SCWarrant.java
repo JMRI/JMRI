@@ -53,7 +53,7 @@ public class SCWarrant extends Warrant {
             firePropertyChange("throttleFail", null, Bundle.getMessage("noThrottle"));
             return;
         }
-        if (_debug) {
+        if (log.isDebugEnabled()) {
             log.debug(_trainName+" notifyThrottleFound address= " + throttle.getLocoAddress().toString() + " _runMode= " + _runMode);
         }
 
@@ -276,7 +276,7 @@ public class SCWarrant extends Warrant {
             return;
         }
         int activeIdx = getIndexOfBlock(block, _idxCurrentOrder);
-        if (_debug) {
+        if (log.isDebugEnabled()) {
             log.debug(_trainName+" **Block \"" + block.getDisplayName() + "\" goingActive. activeIdx= "
                     + activeIdx + ", _idxCurrentOrder= " + _idxCurrentOrder
                     + " - warrant= " + getDisplayName());
@@ -317,7 +317,7 @@ public class SCWarrant extends Warrant {
         }
 
         int idx = getIndexOfBlock(block, 0);  // if idx >= 0, it is in this warrant
-        if (_debug) {
+        if (log.isDebugEnabled()) {
             log.debug(_trainName+" Block \"" + block.getDisplayName() + "\" goingInactive. idx= "
                     + idx + ", _idxCurrentOrder= " + _idxCurrentOrder
                     + " - warrant= " + getDisplayName());
@@ -326,7 +326,7 @@ public class SCWarrant extends Warrant {
             deallocateUpToBlock(idx);
         } else if (idx == _idxCurrentOrder) {
             // train is lost
-            if (_debug) {
+            if (log.isDebugEnabled()) {
                 log.debug(_trainName+" LOST TRAIN firePropertyChange(\"blockChange\", " + block.getDisplayName()
                                 + ", null) - warrant= " + getDisplayName());
             }
@@ -390,12 +390,12 @@ public class SCWarrant extends Warrant {
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (!(evt.getSource() instanceof NamedBean)) {
-            if (_debug) log.debug(_trainName+" propertyChange \""+evt.getPropertyName()+
+            if (log.isDebugEnabled()) log.debug(_trainName+" propertyChange \""+evt.getPropertyName()+
                                                 "\" old= "+evt.getOldValue()+" new= "+evt.getNewValue());
             return;
         }
         String property = evt.getPropertyName();
-        if (_debug) {
+        if (log.isDebugEnabled()) {
             log.debug(_trainName+" propertyChange \"" + property + "\" new= " + evt.getNewValue()
             		+ " source= " + ((NamedBean) evt.getSource()).getDisplayName()
                     + " - warrant= " + getDisplayName());
@@ -467,7 +467,7 @@ public class SCWarrant extends Warrant {
                     allocateBlocksAndSetTurnouts(_warrant._idxCurrentOrder);
                     if (isNextBlockFreeAndAllocated()) {
                         getAndGetNotifiedFromNextSignal();
-                        if (_debug) {
+                        if (log.isDebugEnabled()) {
                             log.debug(_warrant._trainName+" runSignalControlledTrain lets train run according to signal ");
                             if (_nextSignal == null) {
                                 log.debug(_warrant._trainName+" _nextSignal == null");

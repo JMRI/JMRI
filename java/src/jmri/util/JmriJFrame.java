@@ -18,6 +18,9 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
+import jmri.UserPreferencesManager;
 import jmri.beans.BeanInterface;
 import jmri.beans.Beans;
 import jmri.util.swing.JmriAbstractAction;
@@ -165,42 +168,43 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     }
 
     void setFrameLocation() {
-        jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
-        if ((prefsMgr != null) && (prefsMgr.isWindowPositionSaved(windowFrameRef))) {
-            Dimension screen = getToolkit().getScreenSize();
-            if ((reuseFrameSavedPosition)
-                    && (!((prefsMgr.getWindowLocation(windowFrameRef).getX() >= screen.getWidth()) || (prefsMgr
-                    .getWindowLocation(windowFrameRef).getY() >= screen.getHeight())))) {
-                log.debug("setFrameLocation 1st clause sets \"{}\" location to {}", getTitle(), prefsMgr.getWindowLocation(windowFrameRef));
-                this.setLocation(prefsMgr.getWindowLocation(windowFrameRef));
-            }
-            /*
-             * Simple case that if either height or width are zero, then we should not set them
-             */
-            if ((reuseFrameSavedSized)
-                    && (!((prefsMgr.getWindowSize(windowFrameRef).getWidth() == 0.0) || (prefsMgr.getWindowSize(
-                    windowFrameRef).getHeight() == 0.0)))) {
-                log.debug("setFrameLocation 2nd clause sets \"{}\" preferredSize to {}", getTitle(), prefsMgr.getWindowSize(windowFrameRef));
-                this.setPreferredSize(prefsMgr.getWindowSize(windowFrameRef));
-                log.debug("setFrameLocation 2nd clause sets \"{}\" size to {}", getTitle(), prefsMgr.getWindowSize(windowFrameRef));
-                this.setSize(prefsMgr.getWindowSize(windowFrameRef));
-            }
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(prefsMgr -> {
+            if (prefsMgr.isWindowPositionSaved(windowFrameRef)) {
+                Dimension screen = getToolkit().getScreenSize();
+                if ((reuseFrameSavedPosition)
+                        && (!((prefsMgr.getWindowLocation(windowFrameRef).getX() >= screen.getWidth()) || (prefsMgr
+                        .getWindowLocation(windowFrameRef).getY() >= screen.getHeight())))) {
+                    log.debug("setFrameLocation 1st clause sets \"{}\" location to {}", getTitle(), prefsMgr.getWindowLocation(windowFrameRef));
+                    this.setLocation(prefsMgr.getWindowLocation(windowFrameRef));
+                }
+                //
+                // Simple case that if either height or width are zero, then we should not set them
+                //
+                if ((reuseFrameSavedSized)
+                        && (!((prefsMgr.getWindowSize(windowFrameRef).getWidth() == 0.0) || (prefsMgr.getWindowSize(
+                        windowFrameRef).getHeight() == 0.0)))) {
+                    log.debug("setFrameLocation 2nd clause sets \"{}\" preferredSize to {}", getTitle(), prefsMgr.getWindowSize(windowFrameRef));
+                    this.setPreferredSize(prefsMgr.getWindowSize(windowFrameRef));
+                    log.debug("setFrameLocation 2nd clause sets \"{}\" size to {}", getTitle(), prefsMgr.getWindowSize(windowFrameRef));
+                    this.setSize(prefsMgr.getWindowSize(windowFrameRef));
+                }
 
-            /*
-             * We just check to make sure that having set the location that we do not have anther frame with the same
-             * class name and title in the same location, if it is we offset
-             */
-            for (int i = 0; i < list.size(); i++) {
-                JmriJFrame j = list.get(i);
-                if (j.getClass().getName().equals(this.getClass().getName()) && (j.getExtendedState() != ICONIFIED)
-                        && (j.isVisible()) && j.getTitle().equals(getTitle())) {
-                    if ((j.getX() == this.getX()) && (j.getY() == this.getY())) {
-                        log.debug("setFrameLocation 3rd clause calls offSetFrameOnScreen({})", j);
-                        offSetFrameOnScreen(j);
+                //
+                // We just check to make sure that having set the location that we do not have anther frame with the same
+                // class name and title in the same location, if it is we offset
+                //
+                for (int i = 0; i < list.size(); i++) {
+                    JmriJFrame j = list.get(i);
+                    if (j.getClass().getName().equals(this.getClass().getName()) && (j.getExtendedState() != ICONIFIED)
+                            && (j.isVisible()) && j.getTitle().equals(getTitle())) {
+                        if ((j.getX() == this.getX()) && (j.getY() == this.getY())) {
+                            log.debug("setFrameLocation 3rd clause calls offSetFrameOnScreen({})", j);
+                            offSetFrameOnScreen(j);
+                        }
                     }
                 }
             }
-        }
+        });
     }
 
     /**
@@ -640,15 +644,9 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      */
     public void setSavePosition(boolean save) {
         reuseFrameSavedPosition = save;
-        jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
-        if (prefsMgr == null) {  /* Why is this duplicated with above? */
-            prefsMgr = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
-        }
-        if (prefsMgr != null) {
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(prefsMgr -> {
             prefsMgr.setSaveWindowLocation(windowFrameRef, save);
-        } else {
-            log.warn("setSavePosition() UserPreferencesManager() not initialised");
-        }
+        });
     }
 
     /**
@@ -658,15 +656,9 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      */
     public void setSaveSize(boolean save) {
         reuseFrameSavedSized = save;
-        jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
-        if (prefsMgr == null) {  /* Why is this duplicated with above? */
-            prefsMgr = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
-        }
-        if (prefsMgr != null) {
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(prefsMgr -> {
             prefsMgr.setSaveWindowSize(windowFrameRef, save);
-        } else {
-            log.warn("setSaveSize() UserPreferencesManager() not initialised");
-        }
+        });
     }
 
     /**
@@ -766,18 +758,22 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     public void componentHidden(java.awt.event.ComponentEvent e) {
     }
 
+    @Override
     public void componentMoved(java.awt.event.ComponentEvent e) {
-        jmri.UserPreferencesManager p = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
-        if ((p != null) && (reuseFrameSavedPosition) && isVisible()) {
-            p.setWindowLocation(windowFrameRef, this.getLocation());
-        }
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(p -> {
+            if (reuseFrameSavedPosition && isVisible()) {
+                p.setWindowLocation(windowFrameRef, this.getLocation());
+            }
+        });
     }
 
+    @Override
     public void componentResized(java.awt.event.ComponentEvent e) {
-        jmri.UserPreferencesManager p = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
-        if ((p != null) && (reuseFrameSavedSized) && isVisible()) {
-            saveWindowSize(p);
-        }
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(p -> {
+            if (reuseFrameSavedSized && isVisible()) {
+                saveWindowSize(p);
+            }
+        });
     }
 
     public void componentShown(java.awt.event.ComponentEvent e) {
@@ -786,15 +782,16 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     private transient jmri.implementation.AbstractShutDownTask task = null;
 
     protected void setShutDownTask() {
-        if (jmri.InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+        InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(sdm -> {
             task = new jmri.implementation.AbstractShutDownTask(getTitle()) {
+                @Override
                 public boolean execute() {
                     handleModified();
                     return true;
                 }
             };
-            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(task);
-        }
+            sdm.register(task);
+        });
     }
 
     protected boolean reuseFrameSavedPosition = true;
@@ -806,16 +803,16 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * Subclasses that over-ride this method must invoke this implementation
      * with super.dispose()
      */
+    @Override
     public void dispose() {
-        jmri.UserPreferencesManager p = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
-        if (p != null) {
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(p -> {
             if (reuseFrameSavedPosition) {
                 p.setWindowLocation(windowFrameRef, this.getLocation());
             }
             if (reuseFrameSavedSized) {
                 saveWindowSize(p);
             }
-        }
+        });
         log.debug("dispose \"{}\"", getTitle());
         if (windowInterface != null) {
             windowInterface.dispose();

@@ -26,7 +26,6 @@ import jmri.util.FileUtil;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010
- * @version $Revision$
  */
 public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
@@ -51,7 +50,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     JFrame parentFrame = null;
 
     public WiThrottlePrefsPanel() {
-        if (InstanceManager.getOptionalDefault(WiThrottlePreferences.class) == null) {
+        if (InstanceManager.getNullableDefault(WiThrottlePreferences.class) == null) {
             InstanceManager.store(new WiThrottlePreferences(FileUtil.getUserFilesPath() + "throttle" + File.separator + "WiThrottlePreferences.xml"), WiThrottlePreferences.class);
         }
         localPrefs = InstanceManager.getDefault(WiThrottlePreferences.class);

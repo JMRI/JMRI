@@ -8,6 +8,10 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+   ScriptButtonModelXmlTest.class,
+   StartupActionsPreferencesPanelXmlTest.class,
+   StartupPauseModelXmlTest.class,
+   TriggerRouteModelXmlTest.class
 })
 /**
  * Tests for the apps.startup.configurexml package.

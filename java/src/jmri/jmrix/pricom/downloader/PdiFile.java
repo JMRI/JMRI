@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * have kindly given permission for this use.
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version $Revision$
  */
 public class PdiFile {
 

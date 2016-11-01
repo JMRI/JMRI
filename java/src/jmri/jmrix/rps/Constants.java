@@ -5,8 +5,7 @@ package jmri.jmrix.rps;
  * Basic constants for the RPS package and subpackages
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version	$Revision$
- */
+  */
 public interface Constants {
 
     static final int NREADINGS = 8;

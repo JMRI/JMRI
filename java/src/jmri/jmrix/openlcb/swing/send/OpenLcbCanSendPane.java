@@ -37,6 +37,7 @@ import org.openlcb.ProducerConsumerEventReportMessage;
 import org.openlcb.VerifyNodeIDNumberMessage;
 import org.openlcb.can.AliasMap;
 import org.openlcb.cdi.jdom.CdiMemConfigReader;
+import org.openlcb.cdi.jdom.JdomCdiReader;
 import org.openlcb.cdi.swing.CdiPanel;
 import org.openlcb.implementations.MemoryConfigurationService;
 import org.openlcb.swing.NodeSelector;
@@ -53,7 +54,7 @@ import org.slf4j.LoggerFactory;
  * </UL>
  *
  * @author	Bob Jacobsen Copyright (C) 2008, 2012
- * @version	$Revision: 19697 $
+ * 
  */
 public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 
@@ -523,7 +524,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
                 try {
                     m.loadCDI(
                             new org.openlcb.cdi.jdom.JdomCdiRep(
-                                    (new org.openlcb.cdi.jdom.JdomCdiReader()).getHeadFromReader(r)
+                                    JdomCdiReader.getHeadFromReader(r)
                             )
                     );
                 } catch (Exception e) {

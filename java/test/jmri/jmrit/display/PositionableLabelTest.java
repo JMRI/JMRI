@@ -2,7 +2,6 @@
 package jmri.jmrit.display;
 
 import java.awt.Color;
-import jmri.ConfigureManager;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
@@ -12,12 +11,13 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.finder.JLabelFinder;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Test of PositionableLabel
@@ -221,6 +221,11 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     public void testDisplayAnimatedRGB() throws IOException {
         if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
 
+        if (System.getProperty("jmri.migrationtests", "false").equals("false")) { // skip test for migration, but warn about it
+            log.warn("skipping testDisplayAnimatedRGB because jmri.migrationtests not set true");
+            return;
+        }
+
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
@@ -239,6 +244,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         flushAWT();
 
         // check for initial red
+        sleep(5);
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0,0));
 
         Assert.assertEquals("icon arraylength", 13*13, val.length);

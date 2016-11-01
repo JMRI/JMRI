@@ -1,6 +1,6 @@
 package jmri.jmrix.jmriclient;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.jmriclient.JMRIClientReply class
  *
  * @author	Bob Jacobsen
- * @version $Revision: 17977 $
  */
 public class JMRIClientReplyTest extends TestCase {
 

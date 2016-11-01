@@ -1,8 +1,10 @@
 package jmri.jmrix.cmri.serial;
 
 import jmri.Turnout;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     private SerialTrafficControlScaffold stcs = null;
 
     @Override
+    @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -35,17 +38,20 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
         jmri.util.JUnitUtil.resetInstanceManager();
         stcs = null;
         memo = null;
     }
 
+    @Override
     public String getSystemName(int n) {
         return "CT" + n;
     }
 
+    @Test
     public void testAsAbstractFactory() {
         // ask for a Turnout, and check type
         Turnout o = l.newTurnout("CT21", "my name");
@@ -53,7 +59,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         if (log.isDebugEnabled()) {
             log.debug("received turnout value " + o);
         }
-        assertTrue(null != (SerialTurnout) o);
+        Assert.assertTrue(null != (SerialTurnout) o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
@@ -63,27 +69,9 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
             log.debug("by user name:   " + l.getByUserName("my name"));
         }
 
-        assertTrue(null != l.getBySystemName("CT21"));
-        assertTrue(null != l.getByUserName("my name"));
+        Assert.assertTrue(null != l.getBySystemName("CT21"));
+        Assert.assertTrue(null != l.getByUserName("my name"));
 
-    }
-
-    // from here down is testing infrastructure
-    public SerialTurnoutManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SerialTurnoutManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite(SerialTurnoutManagerTest.class);
-        return suite;
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class.getName());

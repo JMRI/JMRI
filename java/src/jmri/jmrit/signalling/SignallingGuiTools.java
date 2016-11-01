@@ -20,7 +20,7 @@ import jmri.util.JmriJFrame;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision: 19571 $
+ * 
  */
 public class SignallingGuiTools {
 

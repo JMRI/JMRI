@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2010
  * @author Randall Wood Copyright (C) 2013
- * @version $Revision$
  */
 abstract public class AbstractRouteServer {
 

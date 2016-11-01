@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -103,7 +104,7 @@ public class WarrantPreferences  {
     }
     
     private void loadSpeedMapFromOldXml() {
-        SignalSpeedMap map = jmri.InstanceManager.getOptionalDefault(SignalSpeedMap.class);
+        SignalSpeedMap map = jmri.InstanceManager.getNullableDefault(SignalSpeedMap.class);
         if (map==null) {
             log.error("Cannot find signalSpeeds.xml file.");
             return;
@@ -307,16 +308,17 @@ public class WarrantPreferences  {
      */
     public void apply() {
         setSpeedMap();
-        setNXFrame();
+        setNXdata();
     }
-    private void setNXFrame() {
-        NXFrame frame = NXFrame.getInstance();
-        frame.setScale(_scale);
-        frame.setDepth(_searchDepth);
-        frame.setTimeInterval(_msIncrTime);
-        frame.setRampIncrement(_throttleIncr);
-        frame.updatePanel(_interpretation);
-        frame.closeFrame();
+    private void setNXdata() {
+        NXFrame._scale = _scale;
+        WarrantRoute._depth = _searchDepth;
+        NXFrame._intervalTime = _msIncrTime;
+        NXFrame._throttleIncr = _throttleIncr;
+        if (!GraphicsEnvironment.isHeadless()) {
+            NXFrame frame = NXFrame.getInstance();
+            frame.updatePanel(_interpretation);            
+        }
     }
     private void setSpeedMap() {
         SignalSpeedMap map = new SignalSpeedMap();

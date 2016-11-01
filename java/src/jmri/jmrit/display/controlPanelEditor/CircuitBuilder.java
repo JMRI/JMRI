@@ -295,7 +295,7 @@ public class CircuitBuilder {
         }
         if (!WarrantTableAction.showPathPortalErrors()) {
             JOptionPane.showMessageDialog(_editCircuitFrame,
-                    Bundle.getMessage("blocksEtcOK"), Bundle.getMessage("OK"),
+                    Bundle.getMessage("blocksEtcOK"), Bundle.getMessage("ButtonOK"),
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -503,7 +503,8 @@ public class CircuitBuilder {
                 }
                 // must have converted icons for paths
                 if (!iconsConverted(_currentBlock)) {
-                    JOptionPane.showMessageDialog(_editor, Bundle.getMessage("needConversion", _currentBlock.getDisplayName()),
+                    JOptionPane.showMessageDialog(_editor,
+                            Bundle.getMessage("needConversion", _currentBlock.getDisplayName(), Bundle.getMessage("ButtonEdit"), Bundle.getMessage("EditTrackSegment")),
                             Bundle.getMessage("noIcons"), JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     _editor.setSelectionGroup(makeSelectionGroup(_currentBlock, true));
@@ -619,9 +620,9 @@ public class CircuitBuilder {
         c.gridx = 0;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.EAST;
-        p.add(new JLabel(Bundle.getMessage("SystemName")), c);
+        p.add(new JLabel(Bundle.getMessage("ColumnSystemName")), c);
         c.gridy = 1;
-        p.add(new JLabel(Bundle.getMessage("UserName")), c);
+        p.add(new JLabel(Bundle.getMessage("ColumnUserName")), c);
         c.gridx = 1;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.WEST;
@@ -1132,7 +1133,7 @@ public class CircuitBuilder {
                 convertIcons(_circuitMap.get(block));
             }
         } else {
-            JOptionPane.showMessageDialog(_editor, Bundle.getMessage("needIcons", block.getDisplayName()),
+            JOptionPane.showMessageDialog(_editor, Bundle.getMessage("needIcons", block.getDisplayName(), Bundle.getMessage("editCircuitItem")),
                     Bundle.getMessage("noIcons"), JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -1175,7 +1176,7 @@ public class CircuitBuilder {
         _editor.toFront();
         _editor.repaint();
         if (pos instanceof TurnoutIcon) {
-            makePalettteFrame("IndicatorTO");
+            makePaletteFrame("IndicatorTO");
             _trackTOPanel = new IndicatorTOItemPanel(_convertFrame, "IndicatorTO", null, null, _editor);
             ActionListener updateAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -1185,7 +1186,7 @@ public class CircuitBuilder {
             _trackTOPanel.init(updateAction);
             _convertDialog.add(_trackTOPanel);
         } else {
-            makePalettteFrame("IndicatorTrack");
+            makePaletteFrame("IndicatorTrack");
             _trackPanel = new IndicatorItemPanel(_convertFrame, "IndicatorTrack", null, _editor);
             ActionListener updateAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -1200,7 +1201,7 @@ public class CircuitBuilder {
         _editor.repaint();
     }
 
-    private void makePalettteFrame(String title) {
+    private void makePaletteFrame(String title) {
         jmri.jmrit.display.palette.ItemPalette.loadIcons(_editor);
         _convertDialog = new JDialog(_editor, java.text.MessageFormat.format(
                 Bundle.getMessage("EditItem"), Bundle.getMessage(title)), true);

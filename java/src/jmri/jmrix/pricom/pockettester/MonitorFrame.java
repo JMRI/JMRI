@@ -1,4 +1,3 @@
-// pricom.pockettester.MonitorFrame.java
 package jmri.jmrix.pricom.pockettester;
 
 
@@ -8,14 +7,9 @@ package jmri.jmrix.pricom.pockettester;
  * For more info on the product, see http://www.pricom.com
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version	$Revision$
- */
+  */
 public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements DataListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7060223518481154741L;
     static java.util.ResourceBundle rb
             = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
 

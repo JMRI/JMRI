@@ -11,7 +11,7 @@ import jmri.Turnout;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.managers.InternalSensorManager;
 import jmri.managers.InternalTurnoutManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -203,13 +203,13 @@ public class AcelaNodeTest extends TestCase {
             a3 = new AcelaNode(3, AcelaNode.SY,tcis);
             a3.initNode();
         } else {
-            a0 = (AcelaNode) (tcis.instance().getNode(0));
+            a0 = (AcelaNode) (AcelaTrafficControlScaffold.instance().getNode(0));
             tcis.initializeAcelaNode(a0);
-            a1 = (AcelaNode) (tcis.getNode(1));
+            a1 = (AcelaNode) (AcelaTrafficControlScaffold.instance().getNode(1));
             tcis.initializeAcelaNode(a1);
-            a2 = (AcelaNode) (tcis.getNode(2));
+            a2 = (AcelaNode) (AcelaTrafficControlScaffold.instance().getNode(2));
             tcis.initializeAcelaNode(a2);
-            a3 = (AcelaNode) (tcis.getNode(3));
+            a3 = (AcelaNode) (AcelaTrafficControlScaffold.instance().getNode(3));
             tcis.initializeAcelaNode(a3);
         }
 

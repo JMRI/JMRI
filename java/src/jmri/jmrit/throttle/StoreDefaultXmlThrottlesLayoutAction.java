@@ -19,7 +19,7 @@ public class StoreDefaultXmlThrottlesLayoutAction extends AbstractAction {
     public StoreDefaultXmlThrottlesLayoutAction(String s) {
         super(s);
         // disable this ourselves if there is no throttle Manager
-        if (jmri.InstanceManager.getOptionalDefault(jmri.ThrottleManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
             setEnabled(false);
         }
     }

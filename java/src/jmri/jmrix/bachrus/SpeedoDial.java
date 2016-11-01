@@ -22,7 +22,6 @@ import jmri.jmrit.catalog.NamedIcon;
  * @author Andrew Crosland Copyright (C) 2010
  * @author	Dennis Miller Copyright (C) 2015
  *
- * @version $Revision$
  */
 public class SpeedoDial extends JPanel {
 
@@ -99,6 +98,10 @@ public class SpeedoDial extends JPanel {
 
     public void paint(Graphics g) {
         super.paint(g);
+        if (!(g instanceof Graphics2D) ) {
+              throw new IllegalArgumentException("Graphics object passed is not the correct type");
+        }
+
         Graphics2D g2 = (Graphics2D) g;
 
         // overridden Paint method to draw the speedo dial
