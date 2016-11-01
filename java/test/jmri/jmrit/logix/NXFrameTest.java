@@ -112,6 +112,10 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         });
         jmri.util.JUnitUtil.releaseThread(this);
 
+        JUnitUtil.waitFor(() -> {
+            return Bundle.getMessage("Halted", block.getDisplayName(), "0").equals(warrant.getRunningMessage());
+        }, "Warrant processed sensor change");
+
         Assert.assertEquals("Halted/Resume message", warrant.getRunningMessage(),
                 Bundle.getMessage("Halted", block.getDisplayName(), "0"));
 
