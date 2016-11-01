@@ -50,11 +50,19 @@
   <version author="Dave Heap" version="14" lastUpdated="20140107"/>
   <!-- ver15 changed all indexed CVs to new form -->
   <version author="Dave Heap" version="15" lastUpdated="20140114"/>
-  <!-- ver16 renamed where necessary to match ESU practice and added decoder-matchable Product IDs-->
+  <!-- ver16 renamed where necessary to match ESU practice and added decoder-matchable Product IDs -->
   <version author="Dave Heap" version="16" lastUpdated="20150427"/>
+  <!-- ver17 added LokSound V4.0 M4,LokSound V4.0 M4 OEM -->
+  <version author="Dave Heap" version="17" lastUpdated="20161101"/>
   <decoder>
     <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
       <model model="LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554493,33554503,33554538">
+        <size length="30.5" width="15.5" height="5.5" units="mm"/>
+      </model>
+      <model model="LokSound V4.0 M4" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554500,33554536">
+        <size length="30.5" width="15.5" height="5.5" units="mm"/>
+      </model>
+      <model model="LokSound V4.0 M4 OEM" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554521,33554547">
         <size length="30.5" width="15.5" height="5.5" units="mm"/>
       </model>
       <model model="LokSound Micro V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="33554497,33554552">

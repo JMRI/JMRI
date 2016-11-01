@@ -19,6 +19,8 @@
   <version author="Dave Heap" version="1.1" lastUpdated="20150427"/>
   <!-- ver1.2 added LokPilot Nano Standard V1.0 -->
   <version author="Dave Heap" version="1.2" lastUpdated="20160519"/>
+  <!-- ver1.3 added LokPilot Fx Nano V1.0 -->
+  <version author="Dave Heap" version="1.3" lastUpdated="20161101"/>
   <decoder>
     <family name="ESU LokPilot Standard V1.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
       <model model="LokPilot Standard V1.0" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="16777308">
@@ -42,6 +44,24 @@
         <!-- connector="NEM651, 21MTC, Plux12, wires" -->
       </model>
       <model model="LokPilot Nano Standard V1.0" numOuts="4" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.0 A" formFactor="N" productID="16777352">
+        <output name="1" label="Front|Light" maxcurrent="150 mA"/>
+        <output name="2" label="Rear|Light" maxcurrent="150 mA"/>
+        <output name="3" label="AUX|1" maxcurrent="150 mA"/>
+        <output name="4" label="AUX|2" maxcurrent="150 mA"/>
+        <output name="7" label="Shunt|Mode"/>
+        <output name="8" label="Acceleration|Deceleration"/>
+        <output name="9" label="Grade|Crossing"/>
+        <output name="10" label="|Dimmer"/>
+        <output name="11" label="Dynamic|Brake"/>
+        <output name="12" label="Virtual|Sound"/>
+        <output name="13" label="|"/>
+        <output name="14" label="|"/>
+        <output name="15" label="|"/>
+        <output name="16" label="|"/>
+        <size length="25.5" width="15.5" height="4.5" units="mm"/>
+        <!-- connector="NEM651, 21MTC, Plux12, wires" -->
+      </model>
+      <model model="LokPilot Fx Nano V1.0" numOuts="4" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.0 A" formFactor="N" productID="16777352">
         <output name="1" label="Front|Light" maxcurrent="150 mA"/>
         <output name="2" label="Rear|Light" maxcurrent="150 mA"/>
         <output name="3" label="AUX|1" maxcurrent="150 mA"/>
@@ -98,13 +118,51 @@
     </programming>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable CV="2" default="3" item="Vstart" tooltip="Determines the starting speed, range 1-255">
-        <decVal min="1" max="255"/>
-        <label>Starting Voltage</label>
-        <label xml:lang="it">Volt Partenza</label>
-        <label xml:lang="fr">V démarr.</label>
-        <label xml:lang="de">Anfahrspannung</label>
-      </variable>
+      <variables exclude="LokPilot Fx Nano V1.0">
+        <variable CV="2" default="3" item="Vstart" tooltip="Determines the starting speed, range 1-255">
+          <decVal min="1" max="255"/>
+          <label>Starting Voltage</label>
+          <label xml:lang="it">Volt Partenza</label>
+          <label xml:lang="fr">V démarr.</label>
+          <label xml:lang="de">Anfahrspannung</label>
+        </variable>
+        <variable CV="5" default="64" item="Vhigh" tooltip="Maximum speed of locomotive, range 1-64">
+          <decVal min="1" max="64"/>
+          <label>Maximum Speed</label>
+          <label xml:lang="it">Volt Massimi (0-64):</label>
+          <label xml:lang="de">Höchstgeschwindigkeit</label>
+        </variable>
+        <variable item="Vmid" CV="6" default="22" comment="Range 1-64">
+          <decVal min="1" max="64"/>
+          <label>Vmid</label>
+          <comment>Range 0-64</comment>
+        </variable>
+        <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+        <variable CV="49" mask="XXXXXXXV" default="1" item="EMF Static Config">
+          <enumVal>
+            <enumChoice choice="Off"/>
+            <enumChoice choice="Active"/>
+          </enumVal>
+          <label>BEMF control</label>
+        </variable>
+        <variable CV="53" default="140" item="EMF Control Reference">
+          <decVal/>
+          <label>BEMF Reference Voltage</label>
+        </variable>
+        <variable CV="54" default="50" item="EMF Option 1">
+          <decVal/>
+          <label>BEMF Parameter 'K'</label>
+        </variable>
+        <variable CV="55" default="100" item="EMF Option 2">
+          <decVal/>
+          <label>BEMF Parameter 'I'</label>
+        </variable>
+        <variable item="Speed Table" CV="67">
+          <speedTableVal min="1" max="255"/>
+          <label>Speed Table</label>
+          <label xml:lang="it">Tabella Velocità</label>
+        </variable>
+      </variables>
       <variable CV="3" default="16" item="Accel" tooltip="This value multiplied by 0.25 gives the time from stop to maximum speed, range 0-255">
         <decVal min="0" max="255"/>
         <label>Acceleration</label>
@@ -118,17 +176,6 @@
         <label xml:lang="it">Decellerazione (0-255)</label>
         <label xml:lang="fr">Décélération (0-255)</label>
         <label xml:lang="de">Bremszeit (0-255)</label>
-      </variable>
-      <variable CV="5" default="64" item="Vhigh" tooltip="Maximum speed of locomotive, range 1-64">
-        <decVal min="1" max="64"/>
-        <label>Maximum Speed</label>
-        <label xml:lang="it">Volt Massimi (0-64):</label>
-        <label xml:lang="de">Höchstgeschwindigkeit</label>
-      </variable>
-      <variable item="Vmid" CV="6" default="22" comment="Range 1-64">
-        <decVal min="1" max="64"/>
-        <label>Vmid</label>
-        <comment>Range 0-64</comment>
       </variable>
       <variable CV="7" readOnly="yes" default="000" item="Decoder Version" tooltip="The decoder version number (read only)">
         <decVal/>
@@ -257,14 +304,6 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>RailCom Enable</label>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
-      <variable CV="49" mask="XXXXXXXV" default="1" item="EMF Static Config">
-        <enumVal>
-          <enumChoice choice="Off"/>
-          <enumChoice choice="Active"/>
-        </enumVal>
-        <label>BEMF control</label>
-      </variable>
       <variable CV="49" mask="XXXVXXXX" default="1" item="ESU V4 Adavanced Speed Step Option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Automatic Speed Step Detection</label>
@@ -279,23 +318,6 @@
       </variable>
       <!-- Function Mapping in a fragment file -->
       <xi:include href="http://jmri.org/xml/decoders/esu/lpStdV1FnMapCVs.xml"/>
-      <variable CV="53" default="140" item="EMF Control Reference">
-        <decVal/>
-        <label>BEMF Reference Voltage</label>
-      </variable>
-      <variable CV="54" default="50" item="EMF Option 1">
-        <decVal/>
-        <label>BEMF Parameter 'K'</label>
-      </variable>
-      <variable CV="55" default="100" item="EMF Option 2">
-        <decVal/>
-        <label>BEMF Parameter 'I'</label>
-      </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal min="1" max="255"/>
-        <label>Speed Table</label>
-        <label xml:lang="it">Tabella Velocità</label>
-      </variable>
       <variable CV="112" default="16" tooltip="Unit is 0.0655 seconds" item="ESU V4 Function Settings General Slider 1">
         <decVal/>
         <label>Rate for Blinking Effects</label>

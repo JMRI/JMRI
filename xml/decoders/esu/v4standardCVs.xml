@@ -39,7 +39,7 @@
     <decVal min="1"/>
     <label>Vhigh</label>
   </variable>
-  <variable item="Vmid" CV="6" default="88" exclude="LokPilot Fx V4.0">
+  <variable item="Vmid" CV="6" default="88" exclude="LokSound V4.0 M4,LokSound V4.0 M4 OEM,LokPilot V4.0 M4,LokPilot V4.0 M4 MKL,LokPilot Fx V4.0">
     <decVal min="1"/>
     <label>Vmid</label>
   </variable>
@@ -187,7 +187,7 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>RailCom Enable</label>
   </variable>
-  <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" exclude="LokPilot Fx V4.0">
+  <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" exclude="LokSound V4.0 M4,LokSound V4.0 M4 OEM,LokPilot V4.0 M4,LokPilot V4.0 M4 MKL,LokPilot Fx V4.0">
     <enumVal>
       <enumChoice choice="Use Vstart, Vmid, Vhigh">
         <choice>Use Vstart, Vmid, Vhigh</choice>
@@ -210,7 +210,7 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>DCC Protocol</label>
   </variable>
-  <variable CV="47" mask="XXXXXXVX" default="0" include="LokPilot XL V4.0,LokSound XL V4.0" item="ESU V4 Advanced Protocols Option 4">
+  <variable CV="47" mask="XXXXXXVX" default="0" include="LokPilot V4.0 M4,LokPilot V4.0 M4 MKL,LokPilot XL V4.0,LokSound V4.0 M4,LokSound V4.0 M4 OEM,LokSound XL V4.0" item="ESU V4 Advanced Protocols Option 4">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>M4 Protocol</label>
   </variable>
