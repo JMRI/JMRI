@@ -1329,7 +1329,7 @@
       <enumChoice choice="Non Directional, normal NMRA mapping" value="0">
         <choice>Non Directional, normal NMRA mapping</choice>
         <choice xml:lang="it">non direzionale, Standard NMRA</choice>
-        <choice xml:lang="cs">Ne směrové, normální mapování NMRA</choice>
+        <choice xml:lang="cs">Ne směrové, normální přiřazení NMRA</choice>
       </enumChoice>
       <enumChoice choice="FO3 on in reverse, FO4 on in forward" value="1">
         <choice>FO3 on in reverse, FO4 on in forward</choice>

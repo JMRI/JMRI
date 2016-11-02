@@ -1530,22 +1530,22 @@
       <enumChoice choice="NMRA Standard Mapping">
         <choice>NMRA Standard Mapping</choice>
         <choice xml:lang="it">Mappatura standard NMRA</choice>
-        <choice xml:lang="cs">Standardní mapování NMRA</choice>
+        <choice xml:lang="cs">Standardní přiřazení NMRA</choice>
       </enumChoice>
       <enumChoice choice="Alternative Mapping, use this page" value="97">
         <choice>Alternative Mapping, use this page</choice>
         <choice xml:lang="it">Mappatura alternativa, usa questa pagina</choice>
-        <choice xml:lang="cs">Alternativní mapování, použijte tuto stránku</choice>
+        <choice xml:lang="cs">Alternativní přiřazení, použijte tuto stránku</choice>
       </enumChoice>
       <enumChoice choice="Use mapping stored by POM CV61=98 method" value="99">
         <choice>Use mapping stored by POM CV61=98 method</choice>
         <choice xml:lang="it">Usa Mappatura in memoria metodo POM CV61=98</choice>
-        <choice xml:lang="cs">Použití uložení mapování metodou POM CV61=98</choice>
+        <choice xml:lang="cs">Použití přiřazení uloženého metodou POM CV61=98</choice>
       </enumChoice>
     </enumVal>
     <label>Special Function Mapping</label>
     <label xml:lang="it">Mappatura funzioni speciali</label>
-    <label xml:lang="cs">Speciální mapování funkcí</label>
+    <label xml:lang="cs">Přiřazení speciálních funkcí</label>
   </variable>
   <variable CV="62" default="0" item="Global lighting option 1">
     <decVal min="0" max="9"/>
