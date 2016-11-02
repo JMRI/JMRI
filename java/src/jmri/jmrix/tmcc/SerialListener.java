@@ -1,4 +1,3 @@
-// SerialListener.java
 package jmri.jmrix.tmcc;
 
 /**
@@ -12,5 +11,3 @@ public interface SerialListener extends jmri.jmrix.AbstractMRListener {
 
     public void reply(SerialReply m);
 }
-
-/* @(#)SerialListener.java */

@@ -122,6 +122,12 @@
             <isset property="cp.prepend"/>
         </not>
     </condition>
+    <condition property="os.linux" value="true">
+        <and>
+            <os family="unix"/>
+            <equals arg1="${os.name}" arg2="Linux"/>
+        </and>
+    </condition>
 
     <!-- set global properties for this build -->
     <property name="dist"         value="${basedir}/dist"/>
@@ -1091,7 +1097,7 @@
 
     <!-- check for non-ASCII characters in properties files -->
 
-    <target name="checknonascii" description="check for non-ASCII characters in properties files (Linux only)">
+    <target name="checknonascii" description="check for non-ASCII characters in properties files (Linux only)" if="os.linux">
         <exec executable="sh" outputproperty="checknonascii.files">
             <arg value="-c" />
             <arg value="grep -rIn -P '[^\x00-\x7f]' --include=*.properties java/src" />

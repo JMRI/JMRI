@@ -153,8 +153,8 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
     @CheckForNull
     public InitializationException configure() {
         InitializationException error = null;
-        log.debug("configure defaults into InstanceManager");
         List<SystemConnectionMemo> connList = InstanceManager.getList(SystemConnectionMemo.class);
+        log.debug("configure defaults into InstanceManager from {} memos, {} defaults", connList.size(), defaults.keySet().size());
         for (Class<?> c : defaults.keySet()) {
             // 'c' is the class to load
             String connectionName = this.defaults.get(c);
@@ -175,6 +175,8 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                         log.warn("SystemConnectionMemo for {} ({}) provides a null {} instance", memo.getUserName(), memo.getClass(), c);
                     }
                     break;
+                } else {
+                    log.debug("   memo name didn't match: {} vs {}", testName, connectionName);
                 }
             }
             /*
