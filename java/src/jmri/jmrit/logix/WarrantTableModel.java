@@ -492,11 +492,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                 if (msg != null) {
                     w.deAllocate();
                 } else {
-                    msg = w.checkStartBlock(Warrant.MODE_RUN); // notify first block occupied by
-                                                // this train
+                    msg = w.checkStartBlock(Warrant.MODE_RUN);
                     if (msg != null) {
-                        _frame.setStatusText(msg, WarrantTableModel.myGold,
-                                false);
+                        _frame.setStatusText(msg, WarrantTableModel.myGold, false);
                     }
                 }
                 if (log.isDebugEnabled())
@@ -525,7 +523,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                     } else if (setting.equals(WarrantTableFrame.retry)) {
                         s = Warrant.RETRY;
                     } else if (setting.equals(WarrantTableFrame.stop)) {
-                        s = Warrant.STOP;
+                        s = Warrant.ESTOP;
                     } else if (setting.equals(WarrantTableFrame.abort)) {
                         s = Warrant.ABORT;
                     }
