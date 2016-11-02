@@ -1,4 +1,3 @@
-// PacketTableAction.java
 package jmri.jmrix.pricom.pockettester;
 
 import java.awt.event.ActionEvent;
@@ -10,11 +9,6 @@ import javax.swing.AbstractAction;
  * @author	Bob Jacobsen Copyright (C) 2005
  */
 public abstract class PacketTableAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -755408790466810109L;
 
     public PacketTableAction(String s) {
         super(s);
@@ -40,6 +34,3 @@ public abstract class PacketTableAction extends AbstractAction {
     abstract void connect(DataListener l);
 
 }
-
-
-/* @(#)PacketTableAction.java */

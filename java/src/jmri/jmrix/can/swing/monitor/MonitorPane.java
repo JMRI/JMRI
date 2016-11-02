@@ -1,4 +1,3 @@
-// MonitorPane.java
 package jmri.jmrix.can.swing.monitor;
 
 import jmri.jmrix.can.CanListener;
@@ -15,11 +14,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2009
  */
 public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListener, CanPanelInterface {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4147929733083518618L;
 
     public MonitorPane() {
         super();
@@ -94,11 +88,6 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2277527920171927509L;
 
         public Default() {
             super("CAN Monitor",

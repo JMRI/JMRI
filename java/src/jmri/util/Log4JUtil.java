@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * <dl>
  * <dt>jmri.log</dt><dd>The logging control file. If this file is not an
  * absolute path, this file is searched for in the following order:<ol>
- * <li>Current working directory</li>
  * <li>JMRI settings directory</li>
  * <li>JMRI installation (program) directory</li>
  * </ol>
@@ -74,8 +73,8 @@ public class Log4JUtil {
      * Initialize Log4J.
      * <p>
      * Use the logging control file specified in the <i>jmri.log</i> property
-     * or, if none, the default.lcf file. If the file cannot be found in the
-     * current directory, look for the file first in the settings directory and
+     * or, if none, the default.lcf file. If the file is absolute and cannot be
+     * found, look for the file first in the settings directory and
      * then in the installation directory.
      *
      * @param logFile the logging control file
@@ -98,7 +97,7 @@ public class Log4JUtil {
 
         // initialize log4j - from logging control file (lcf) only
         try {
-            if (new File(logFile).canRead()) {
+            if (new File(logFile).isAbsolute() && new File(logFile).canRead()) {
                 configureLogging(logFile);
             } else if (new File(FileUtil.getPreferencesPath() + logFile).canRead()) {
                 configureLogging(FileUtil.getPreferencesPath() + logFile);
@@ -157,11 +156,8 @@ public class Log4JUtil {
      */
     static private void configureLogging(String config) throws IOException {
         Properties p = new Properties();
-        FileInputStream f = new FileInputStream(config);
-        try {
+        try (FileInputStream f = new FileInputStream(config)) {
             p.load(f);
-        } finally {
-            f.close();
         }
 
         if (System.getProperty("jmri.log.path") == null || p.getProperty("jmri.log.path") == null) {
