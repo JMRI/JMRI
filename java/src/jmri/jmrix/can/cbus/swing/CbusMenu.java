@@ -1,4 +1,3 @@
-// CbusMenu.java
 package jmri.jmrix.can.cbus.swing;
 
 import java.util.ResourceBundle;
@@ -13,11 +12,6 @@ import jmri.jmrix.can.swing.CanNamedPaneAction;
  * @author Andrew Crosland 2008
  */
 public class CbusMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8901183972160758403L;
 
     public CbusMenu(CanSystemConnectionMemo memo) {
         super();
