@@ -9,45 +9,56 @@
       <enumChoice choice="Mars light">
         <choice>Mars light</choice>
         <choice xml:lang="it">Luci Mars</choice>
+        <choice xml:lang="cs">Mars světlo</choice>
       </enumChoice>
       <enumChoice choice="Random Flicker">
         <choice>Random Flicker</choice>
         <choice xml:lang="it">Sfarfallio casuale (caldaia)</choice>
+        <choice xml:lang="cs">Náhodné blikání</choice>
       </enumChoice>
       <enumChoice choice="Flashing Headlight">
         <choice>Flashing Headlight</choice>
         <choice xml:lang="it">Luci Lampeggianti</choice>
+        <choice xml:lang="cs">Blikající dálkové světlo</choice>
       </enumChoice>
       <enumChoice choice="Single Pulse Strobe">
         <choice>Single Pulse Strobe</choice>
         <choice xml:lang="it">Lampeggiante Singolo Impulso</choice>
+        <choice xml:lang="cs">Jednoimpulsový stroboskop</choice>
       </enumChoice>
       <enumChoice choice="Double Pulse Strobe">
         <choice>Double Pulse Strobe</choice>
         <choice xml:lang="it">Lampeggiante Doppio Impulso</choice>
+        <choice xml:lang="cs">Dvouimpulsový stroboskop</choice>
       </enumChoice>
       <enumChoice choice="Rotary Beacon">
         <choice>Rotary Beacon</choice>
         <choice xml:lang="it">Faro Rotante</choice>
+        <choice xml:lang="cs">Rotační maják</choice>
       </enumChoice>
       <enumChoice choice="Gyralite">
         <choice>Gyralite</choice>
         <choice xml:lang="it">Faro Gyra-Light</choice>
+          <text xml:lang="cs">Gyroskopické světlo</text>
       </enumChoice>
       <enumChoice choice="Ditch Light Type 1, right">
         <choice>Ditch Light Type 1, right</choice>
         <choice xml:lang="it">Luce Ditch tipo 1, destro</choice>
+          <text xml:lang="cs">Návěstní světlo typ 1, pravé</text>
       </enumChoice>
       <enumChoice choice="Ditch Light Type 1, left">
         <choice>Ditch Light Type 1, left</choice>
         <choice xml:lang="it">Luce Ditch tipo 1, sinistro</choice>
+          <text xml:lang="cs">Návěstní světlo typ 1, levé</text>
       </enumChoice>
       <enumChoice choice="Ditch Light Type 2, right">
         <choice>Ditch Light Type 2, right</choice>
         <choice xml:lang="it">Luce Ditch tipo 2, destro</choice>
+          <text xml:lang="cs">Návěstní světlo typ 2, pravé</text>
       </enumChoice>
       <enumChoice choice="Ditch Light Type 2, left">
         <choice>Ditch Light Type 2, left</choice>
         <choice xml:lang="it">Luce Ditch tipo 2, sinistro</choice>
+          <text xml:lang="cs">Návěstní světlo typ 2, levé</text>
       </enumChoice>
 </enumChoiceGroup>
