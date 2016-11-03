@@ -56,12 +56,14 @@ public class DuplicateTest extends TestCase {
 
         boolean failed = false;
         while (iter.hasNext()) {
-            String model = iter.next().getAttributeValue("model");
-            if (models.contains(family + model)) {
-                System.err.println("found duplicate for " + family + model);
+            Element e = iter.next();
+            String model = e.getAttributeValue("model") + "][";
+            String productID = e.getAttributeValue("productID");
+            if (models.contains(family + model + productID)) {
+                System.err.println("found duplicate for " + family + model + productID);
                 failed = true;
             }
-            models.add(family + model);
+            models.add(family + model + productID);
         }
         return failed;
     }
