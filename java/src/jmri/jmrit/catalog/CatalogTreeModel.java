@@ -71,11 +71,12 @@ public class CatalogTreeModel extends DefaultTreeModel {
             
             if (sp == null) {
                 log.warn("unexpected null list() in insertResourceNodes from \"{}\"", pPath);
+                return;
             }
             
-            for (int i = 0; i < sp.length; i++) {
-                log.trace("Descend into resource: {}", sp[i]);
-                insertResourceNodes(sp[i], pPath + "/" + sp[i], newElement);
+            for (String item : sp) {
+                log.trace("Descend into resource: {}", item);
+                insertResourceNodes(item, pPath + "/" + item, newElement);
             }
         }
     }

@@ -36,6 +36,9 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(AcelaTurnoutTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.acela.configurexml.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.acela.serialdriver.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.acela.nodeconfig.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.acela.acelamon.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.acela.packetgen.PackageTest.class));
         return suite;
     }
 }

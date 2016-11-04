@@ -16,7 +16,8 @@ import org.slf4j.LoggerFactory;
     VSDSoundTest.class,
     SoundBiteTest.class,
     BundleTest.class,
-    jmri.jmrit.vsdecoder.swing.PackageTest.class
+    jmri.jmrit.vsdecoder.swing.PackageTest.class,
+    jmri.jmrit.vsdecoder.listener.PackageTest.class
 })
 
 /**

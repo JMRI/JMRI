@@ -29,6 +29,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
         if(adapter == null) {
            adapter = new NetworkDriverAdapter();
@@ -36,6 +37,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         }
     }
 
+    @Override
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig) object).getAdapter();
     }

@@ -72,6 +72,10 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read decoder ID CV 250");
             readCV(250);
             return false;
+        } else if (mfgID == 141 && (modelID == 70 || modelID == 71)) {  // SoundTraxx
+            statusUpdate("Read productID CV256");
+            readCV(256);
+            return false;
         } else if (mfgID == 98) {  // Harman
             statusUpdate("Read decoder ID high CV 112");
             readCV(112);
@@ -97,6 +101,10 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             return true;
         } else if (mfgID == 145) {  // Zimo
             productID = value;
+            return true;
+        } else if (mfgID == 141 && (modelID == 70 || modelID == 71)) {  // SoundTraxx
+            productID = value;
+            log.info("Decoder returns mfgID:" + mfgID + ";modelID:" + modelID + ";productID:" + productID);
             return true;
         } else if (mfgID == 98) {  // Harman
             productIDhigh = value;
