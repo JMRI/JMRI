@@ -761,13 +761,13 @@
     <decVal min="0" max="255"/>
     <label>Differential value</label>
     <label xml:lang="it">Valore differenziale</label>
-    <label xml:lang="cs">Diferenciální hodnota</label>
+    <label xml:lang="cs">Diferenciální složka</label>
   </variable>
   <variable CV="149" mask="VVVVVVVX" default="0" item="EMF Enable">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
     <label>Adaptive proportional value</label>
     <label xml:lang="it">Valore proprzionale adattabile</label>
-    <label xml:lang="cs">Adaptivní proporcionální hodnota</label>
+    <label xml:lang="cs">Adaptivní proporcionální složka</label>
   </variable>
   <variable CV="150" default="0" item="EMF Static Config">
     <decVal min="0" max="255"/>

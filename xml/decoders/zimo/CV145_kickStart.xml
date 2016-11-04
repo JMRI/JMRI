@@ -44,7 +44,7 @@
       <enumChoice choice="Normal (DC and Coreless)" value="0">
         <choice>Normal (DC and Coreless)</choice>
         <choice xml:lang="it">Normale (DC e Coreless)</choice>
-        <choice xml:lang="cs">Normální (DC e Coreless)</choice>
+        <choice xml:lang="cs">Normální (DC a Coreless)</choice>
       </enumChoice>
       <enumChoice choice="Low Impedance DC (with added capacitor see manual)" value="1">
         <choice>Low Impedance DC (with added capacitor see manual)</choice>

@@ -1461,7 +1461,7 @@
     <label xml:lang="de">Verhaltensdefinition für Lokfahrt 2</label>
     <tooltip>CV348 bit 1</tooltip>
     <tooltip xml:lang="de">reduziert CV #3, CV #4 (bit 1)</tooltip>
-    <label xml:lang="cs">Strojová jízda zrychlení a zpomalení</label>
+    <label xml:lang="cs">Strojová jízda hybnost</label>
   </variable>
   <variable item="Solo change idle only" CV="348" default="0" mask="XXXXXVXX">
     <enumVal>

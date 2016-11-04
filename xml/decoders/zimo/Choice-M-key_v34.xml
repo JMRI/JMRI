@@ -22,6 +22,7 @@
       <enumChoice choice="High Beam" value="255">
         <choice>High Beam</choice>
         <choice xml:lang="de">Fernlicht</choice>
+        <choice xml:lang="cs">Dálkové světlo</choice>
       </enumChoice>
       <enumChoice choice="F0" value="29">
         <choice>F0</choice>
