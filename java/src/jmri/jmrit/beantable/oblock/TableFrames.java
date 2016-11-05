@@ -424,7 +424,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _openMenu.add(openTurnoutPath);
     }
 
-    /**
+    /*
      * ********************* BlockFrame *****************************
      */
     protected JInternalFrame makeBlockFrame() {
@@ -478,10 +478,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
         _oBlockTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         _oBlockTable.setDragEnabled(true);
-        //blockTable.setDropMode(DropMode.USE_SELECTION);
         setActionMappings(_oBlockTable);
         ROW_HEIGHT = _oBlockTable.getRowHeight();
-//        int tableWidth = blockTable.getPreferredSize().width;
         int tableWidth = _desktop.getPreferredSize().width;
         _oBlockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, ROW_HEIGHT * 10));
         _blockTablePane = new JScrollPane(_oBlockTable);
@@ -518,15 +516,13 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
     }
 
-    /**
+    /*
      * ********************* PortalFrame *****************************
      */
     protected JInternalFrame makePortalFrame() {
         JInternalFrame frame = new JInternalFrame(Bundle.getMessage("TitlePortalTable"), true, false, false, true);
         _portalModel = new PortalTableModel(this);
-//        _portalModel.init();
         _portalTable = new DnDJTable(_portalModel, new int[]{PortalTableModel.DELETE_COL});
-//        _portalModel.makeSorter(portalTable);
         TableRowSorter<PortalTableModel> sorter = new TableRowSorter<>(_portalModel);
         sorter.setComparator(PortalTableModel.FROM_BLOCK_COLUMN, new jmri.util.SystemNameComparator());
         sorter.setComparator(PortalTableModel.TO_BLOCK_COLUMN, new jmri.util.SystemNameComparator());
@@ -539,7 +535,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
         _portalTable.sizeColumnsToFit(-1);
         _portalTable.setDragEnabled(true);
-        //_portalTable.setDropMode(DropMode.USE_SELECTION);
         setActionMappings(_portalTable);
         int tableWidth = _portalTable.getPreferredSize().width;
         _portalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, ROW_HEIGHT * 10));
@@ -557,7 +552,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         return frame;
     }
 
-    /**
+    /*
      * ********************* BlockPortalFrame *****************************
      */
     protected JInternalFrame makeBlockPortalFrame() {
@@ -576,7 +571,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         setActionMappings(_blockPortalTable);
         int tableWidth = _blockPortalTable.getPreferredSize().width;
         _blockPortalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, ROW_HEIGHT * 25));
-//          _blockPortalTable.setPreferredScrollableViewportSize( new java.awt.Dimension(275, ROW_HEIGHT*25));
         JScrollPane tablePane = new JScrollPane(_blockPortalTable);
 
         JPanel contentPane = new JPanel();
@@ -590,7 +584,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         return frame;
     }
 
-    /**
+    /*
      * ********************* SignalFrame *****************************
      */
     protected JInternalFrame makeSignalFrame() {
@@ -651,7 +645,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
     }
 
-    /**
+    /*
      * ********************* BlockPathFrame *****************************
      */
     protected BlockPathFrame makeBlockPathFrame(OBlock block) {
@@ -666,16 +660,13 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         blockPathModel.init();
         JTable blockPathTable = new DnDJTable(blockPathModel, new int[]{BlockPathTableModel.EDIT_COL,
             BlockPathTableModel.DELETE_COL, BlockPathTableModel.UNITSCOL});
-        //blockPathTable.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.UNITSCOL).setCellRenderer(
                 new MyBooleanRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.EDIT_COL).setCellEditor(new ButtonEditor(new JButton()));
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.EDIT_COL).setCellRenderer(new ButtonRenderer());
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
-        //blockPathTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         blockPathTable.setDragEnabled(true);
-        //blockPathTable.setDropMode(DropMode.USE_SELECTION);
         setActionMappings(blockPathTable);
         for (int i = 0; i < blockPathModel.getColumnCount(); i++) {
             int width = blockPathModel.getPreferredWidth(i);
@@ -684,7 +675,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         blockPathTable.sizeColumnsToFit(-1);
         int tableWidth = blockPathTable.getPreferredSize().width;
         blockPathTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, ROW_HEIGHT * 10));
-//          blockPathTable.setPreferredScrollableViewportSize( new java.awt.Dimension(766, ROW_HEIGHT*10));
         JScrollPane tablePane = new JScrollPane(blockPathTable);
 
         JPanel contentPane = new JPanel();
@@ -700,7 +690,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         return frame;
     }
 
-    /**
+    /*
      * ********************* PathTurnoutFrame *****************************
      */
     protected JInternalFrame makePathTurnoutFrame(OBlock block, String pathName) {
@@ -719,7 +709,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         JTable PathTurnoutTable = new DnDJTable(PathTurnoutModel, new int[]{PathTurnoutTableModel.SETTINGCOLUMN,
             PathTurnoutTableModel.DELETE_COL});
         JComboBox<String> box = new JComboBox<String>(PathTurnoutTableModel.turnoutStates);
-        //PathTurnoutTable.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
         PathTurnoutTable.getColumnModel().getColumn(PathTurnoutTableModel.SETTINGCOLUMN).setCellEditor(new DefaultCellEditor(box));
         PathTurnoutTable.getColumnModel().getColumn(PathTurnoutTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         PathTurnoutTable.getColumnModel().getColumn(PathTurnoutTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
@@ -730,11 +719,9 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
         PathTurnoutTable.sizeColumnsToFit(-1);
         PathTurnoutTable.setDragEnabled(true);
-        //PathTurnoutTable.setDropMode(DropMode.USE_SELECTION);
         setActionMappings(PathTurnoutTable);
         int tableWidth = PathTurnoutTable.getPreferredSize().width;
         PathTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, ROW_HEIGHT * 5));
-//            PathTurnoutTable.setPreferredScrollableViewportSize( new java.awt.Dimension(397, ROW_HEIGHT*5));
         JScrollPane tablePane = new JScrollPane(PathTurnoutTable);
 
         JPanel contentPane = new JPanel();

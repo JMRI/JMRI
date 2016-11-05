@@ -10,8 +10,9 @@ import org.slf4j.LoggerFactory;
     jmri.jmrix.can.cbus.swing.CbusMenuTest.class,
     jmri.jmrix.can.cbus.swing.CbusComponentFactoryTest.class,
     jmri.jmrix.can.cbus.swing.eventtable.PackageTest.class,
+    jmri.jmrix.can.cbus.swing.nodeconfig.PackageTest.class,
+    jmri.jmrix.can.cbus.swing.console.PackageTest.class,
     jmri.jmrix.can.cbus.swing.configtool.ConfigToolActionTest.class
-
 })
 
 /**

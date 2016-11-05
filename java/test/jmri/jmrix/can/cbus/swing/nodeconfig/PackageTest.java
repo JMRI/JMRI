@@ -1,25 +1,22 @@
-package jmri.jmrix.can.swing;
+package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    jmri.jmrix.can.swing.monitor.PackageTest.class,
-    jmri.jmrix.can.swing.send.PackageTest.class,
-    CanMenuTest.class,
-    CanComponentFactoryTest.class
+     NodeConfigToolPaneTest.class
 })
+
 /**
- * Tests for the jmri.jmrix.can.swing.monitor package.
+ * Tests for the jmri.jmrix.can.cbus.swing.nodeconfigpackage
  *
  * @author Bob Jacobsen Copyright 2008
- * @author Paul Bender Copyright (C) 2016
+ * @author  Paul Bender	Copyright (C) 2016
  */
-public class PackageTest {
+public class PackageTest{
 
     // Main entry point
     static public void main(String[] args) {

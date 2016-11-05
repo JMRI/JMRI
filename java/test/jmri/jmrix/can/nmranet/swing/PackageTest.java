@@ -1,4 +1,4 @@
-package jmri.jmrix.can.swing;
+package jmri.jmrix.can.nmranet.swing;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -8,15 +8,12 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    jmri.jmrix.can.swing.monitor.PackageTest.class,
-    jmri.jmrix.can.swing.send.PackageTest.class,
-    CanMenuTest.class,
-    CanComponentFactoryTest.class
+    NmraNetComponentFactoryTest.class,
+    NmraNetMenuTest.class
 })
 /**
- * Tests for the jmri.jmrix.can.swing.monitor package.
+ * Tests for the jmri.jmrix.can.nmranet.swing package.
  *
- * @author Bob Jacobsen Copyright 2008
  * @author Paul Bender Copyright (C) 2016
  */
 public class PackageTest {
