@@ -18,7 +18,7 @@
       <enumChoice choice="Pantograph Operation (Zimo/Roco BR110)">
         <choice>Pantograph Operation (Zimo/Roco BR110)</choice>
         <choice xml:lang="it">Pantografo (Zimo/Roco BR110)(</choice>
-        <choice xml:lang="cs">Ovládání sběrače (Zimo/Roco BR110)(</choice>
+        <choice xml:lang="cs">Ovládání sběrače (Zimo/Roco BR110)</choice>
       </enumChoice>
     </enumVal>
     <label>Special Output Configuration</label>

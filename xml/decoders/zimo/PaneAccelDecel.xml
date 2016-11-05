@@ -127,7 +127,7 @@
           <label>
             <text>(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp</text>
             <text xml:lang="it">(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp-</text>
-            <text xml:lang="it">(131 + mantisa * 4) * 2 ^ exponent. Bity 0-4 = mantisa, Bity 5-7 = exponent</text>
+            <text xml:lang="cs">(131 + mantisa * 4) * 2 ^ exponent. Bity 0-4 = mantisa, Bity 5-7 = exponent</text>
           </label>
         <label>
           <text> </text>
@@ -233,4 +233,5 @@
     </row>
   </column>
   <name>Accel/Decel</name>
+  <name xml:lang="cs">Zrychlení/Zpomalení</name>
 </pane>

@@ -5,8 +5,10 @@
   <variable item="RailCom speed reporting method" CV="158" mask="XXXXXVXX" default="1">
     <enumVal>
       <enumChoice choice="Zimo for MX31ZL" value="0">
+        <choice xml:lang="cs">Zimo pro MX31ZL</choice>
       </enumChoice>
       <enumChoice choice="Standard Reporting" value="1">
+        <choice xml:lang="cs">Standardní zprávy</choice>
       </enumChoice>
     </enumVal>
   </variable>

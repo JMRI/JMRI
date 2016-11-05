@@ -1505,7 +1505,7 @@
     <decVal/>
     <label>BEMF Intensity</label>
     <label xml:lang="it">Intensità BEMF</label>
-    <label xml:lang="cs">intehzita BEMF</label>
+    <label xml:lang="cs">Intenzita BEMF</label>
   </variable>
   <variable item="Signal Dependent Reaction Time" CV="59" default="5" comment="Range 0-255">
     <decVal max="255"/>
@@ -1535,7 +1535,7 @@
       <enumChoice choice="Alternative Mapping, use this page" value="97">
         <choice>Alternative Mapping, use this page</choice>
         <choice xml:lang="it">Mappatura alternativa, usa questa pagina</choice>
-        <choice xml:lang="cs">Alternativní přiřazení, použijte tuto stránku</choice>
+        <choice xml:lang="cs">Alternativní přiřazení, použije tuto stránku</choice>
       </enumChoice>
       <enumChoice choice="Use mapping stored by POM CV61=98 method" value="99">
         <choice>Use mapping stored by POM CV61=98 method</choice>
@@ -1563,7 +1563,7 @@
     <decVal min="0" max="9"/>
     <label>Ditch Light Off Time</label>
     <label xml:lang="it">Tempo di Off luci Ditch</label>
-    <label xml:lang="cs">Čas zhasínání světel Ditch</label>
+    <label xml:lang="cs">Čas zhasínání návěstních světel</label>
   </variable>
   <variable CV="65" readOnly="yes" default="0" item="Product Number" tooltip="Sub-version Number (read only)">
     <decVal/>

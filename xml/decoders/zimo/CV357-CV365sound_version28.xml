@@ -72,6 +72,6 @@
     <label xml:lang="it">Velocità massima prima di cambiare marcia</label>
     <label xml:lang="de">&lt;html&gt;Diesel-Mechanisch:&lt;br&gt;Max. Motor-Drehzahl&lt;/html&gt;</label>
     <tooltip>0 to 255</tooltip>
-    <label xml:lang="cs">maximální otáčky spalovacího motoru před řazení mechanické převodovky nahoru</label>
+    <label xml:lang="cs">Maximální otáčky spalovacího motoru před řazení mechanické převodovky nahoru</label>
   </variable>
 </variables>

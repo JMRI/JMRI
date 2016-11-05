@@ -561,7 +561,7 @@
     <label>Engine volume at full acceleration</label>
     <label xml:lang="it">Volume Motore a piena Accellerazione</label>
     <label xml:lang="de">Maximale Lautstärke des Fahrgeräusch</label>
-    <label xml:lang="cs">Hlasitost při zrychlení na plno</label>
+    <label xml:lang="cs">Hlasitost při zrychlení naplno</label>
   </variable>
   <variable item="Threshold for deceleration sound" CV="284" default="1" tooltip="See manual!, INC=1">
     <decVal min="0" max="255"/>
@@ -666,7 +666,7 @@
     <label>Electric Engine Motor sound: starting point of full volume</label>
     <label xml:lang="it">Motore Elettrico: Punto partenza Volume. massimo</label>
     <label xml:lang="de">E-Motor: Steigung der Lautstärke</label>
-    <label xml:lang="cs">Trakční motor: počáteční bod hlasitosti na plno</label>
+    <label xml:lang="cs">Trakční motor: počáteční bod hlasitosti naplno</label>
   </variable>
   <variable item="Electric Engine Motor sound: dependence of the pitch on speed" CV="299" default="100" tooltip="Should be &gt; value in CV 297. See manual!, INC=10.">
     <decVal min="0" max="255"/>

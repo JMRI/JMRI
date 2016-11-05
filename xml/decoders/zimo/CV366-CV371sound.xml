@@ -35,13 +35,13 @@
     <label>Increase in frequency of the Turbocharger</label>
     <label xml:lang="it">Incremento frequenza Turbocompressore</label>
     <label xml:lang="de">Turbolader: Steigung der Frequenz erhöhen</label>
-    <label xml:lang="cs">Rychlost nárůstu frekvence turbodmychadla</label>
+    <label xml:lang="cs">Nárůst frekvence turbodmychadla</label>
   </variable>
   <variable item="Decrease in frequency of the Turbocharger" CV="371" default="15" tooltip="The rate of change of a decrease in the frequency of the turbocharger">
     <decVal min="0" max="255"/>
     <label>Decrease in frequency of the Turbocharger</label>
     <label xml:lang="it">Decremento frequenza Turbocompressore</label>
     <label xml:lang="de">Turbolader: Steigung der Frequenz absenken</label>
-    <label xml:lang="cs">Rychlost poklesu frekvence turbodmychadla</label>
+    <label xml:lang="cs">Pokles frekvence turbodmychadla</label>
   </variable>
 </variables>

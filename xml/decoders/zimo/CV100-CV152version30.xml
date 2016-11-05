@@ -1008,60 +1008,79 @@
       </enumChoice>
       <enumChoice choice="0.2" value="2">
         <choice>0.2</choice>
+        <choice xml:lang="cs">0,2</choice>
       </enumChoice>
       <enumChoice choice="0.3" value="3">
         <choice>0.3</choice>
+        <choice xml:lang="cs">0,3</choice>
       </enumChoice>
       <enumChoice choice="0.4" value="4">
         <choice>0.4</choice>
+        <choice xml:lang="cs">0,4</choice>
       </enumChoice>
       <enumChoice choice="0.5" value="5">
         <choice>0.5</choice>
+        <choice xml:lang="cs">0,5</choice>
       </enumChoice>
       <enumChoice choice="0.6" value="6">
         <choice>0.6</choice>
+        <choice xml:lang="cs">0,6</choice>
       </enumChoice>
       <enumChoice choice="0.7" value="7">
         <choice>0.7</choice>
+        <choice xml:lang="cs">0,7</choice>
       </enumChoice>
       <enumChoice choice="0.8" value="8">
         <choice>0.8</choice>
+        <choice xml:lang="cs">0,8</choice>
       </enumChoice>
       <enumChoice choice="0.9" value="9">
         <choice>0.9</choice>
+        <choice xml:lang="cs">0,9</choice>
       </enumChoice>
       <enumChoice choice="1" value="10">
         <choice>1</choice>
+        <choice xml:lang="cs">1,0</choice>
       </enumChoice>
       <enumChoice choice="1.1" value="11">
         <choice>1.1</choice>
+        <choice xml:lang="cs">1,1</choice>
       </enumChoice>
       <enumChoice choice="1.2" value="12">
         <choice>1.2</choice>
+        <choice xml:lang="cs">1,2</choice>
       </enumChoice>
       <enumChoice choice="1.3" value="13">
         <choice>1.3</choice>
+        <choice xml:lang="cs">1,3</choice>
       </enumChoice>
       <enumChoice choice="1.4" value="14">
         <choice>1.4</choice>
+        <choice xml:lang="cs">1,4</choice>
       </enumChoice>
       <enumChoice choice="1.5" value="15">
         <choice>1.5</choice>
+        <choice xml:lang="cs">1,5</choice>
       </enumChoice>
       <enumChoice choice="1.6" value="16">
         <choice>1.6</choice>
+        <choice xml:lang="cs">1,6</choice>
       </enumChoice>
       <enumChoice choice="1.7" value="17">
         <choice>1.7</choice>
+        <choice xml:lang="cs">1,7</choice>
       </enumChoice>
       <enumChoice choice="1.8" value="18">
         <choice>1.8</choice>
+        <choice xml:lang="cs">1,8</choice>
       </enumChoice>
       <enumChoice choice="1.9" value="19">
         <choice>1.9</choice>
+        <choice xml:lang="cs">1,9</choice>
       </enumChoice>
       <enumChoice choice="2" value="20">
         <choice>2</choice>
+        <choice xml:lang="cs">2,0</choice>
       </enumChoice>
     </enumVal>
     <label>km/h speed regulation control and range</label>
@@ -1102,12 +1121,12 @@
       <enumChoice choice="Automatic stops, Signal controlled speed influence or Asymmetric DCC">
         <choice>Automatic stops, Signal controlled speed influence or Asymmetric DCC</choice>
         <choice xml:lang="it">Stop Automatico, Controllato da segnale o DCC asimmetrica</choice>
-        <choice xml:lang="cs">Automatické zastavení, přizpůsobení řízení rychlosti návěstidlům nebo asimetrické DCC</choice>
+        <choice xml:lang="cs">Automatické zastavení, přizpůsobení řízení rychlosti návěstidlům nebo asymetrické DCC</choice>
       </enumChoice>
       <enumChoice choice="Manual stops using cab">
         <choice>Manual stops using cab</choice>
         <choice xml:lang="it">Stop manuale con palmare</choice>
-        <choice xml:lang="cs">Ruční zastavení ze stanoviště</choice>
+        <choice xml:lang="cs">Ruční zastavení z ovladače</choice>
       </enumChoice>
       <enumChoice choice="Automatic and Manual stops">
         <choice>Automatic and Manual stops</choice>

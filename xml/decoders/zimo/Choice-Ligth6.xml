@@ -15,7 +15,7 @@
           <enumChoice choice="Manual stops using cab">
             <choice>Manual stops using cab</choice>
             <choice xml:lang="it">Stop manuale da Palmare</choice>
-            <choice xml:lang="cs">Ruční zastavení ze stanoviště</choice>
+            <choice xml:lang="cs">Ruční zastavení z ovladače</choice>
         </enumChoice>
         <enumChoice choice="Automatic and Manual stops">
             <choice>Automatic and Manual stops</choice>
