@@ -104,11 +104,13 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         tc.addCanListener(new CanListener() {
             @Override
             public void message(CanMessage m) {
+                if (!m.isExtended() || m.isRtr()) return;
                 aliasMap.processFrame(convertFromCan(m));
             }
 
             @Override
             public void reply(CanReply m) {
+                if (!m.isExtended() || m.isRtr()) return;
                 aliasMap.processFrame(convertFromCan(m));
             }
         });
@@ -377,27 +379,22 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         return fallback;
     }
 
-    static jmri.jmrix.can.CanMessage convertToCan(CanFrame f) {
+    static jmri.jmrix.can.CanMessage convertToCan(org.openlcb.can.CanFrame f) {
         jmri.jmrix.can.CanMessage fout = new jmri.jmrix.can.CanMessage(f.getData(), f.getHeader());
         fout.setExtended(true);
         return fout;
     }
 
-    static OpenLcbCanFrame convertFromCan(int header, int[] dataElements) {
+    static OpenLcbCanFrame convertFromCan(jmri.jmrix.can.CanFrame message) {
         OpenLcbCanFrame fin = new OpenLcbCanFrame(0);
-        fin.setHeader(header);
-        if (dataElements == null) return fin;
-        byte[] data = new byte[dataElements.length];
-        System.arraycopy(dataElements, 0, data, 0, data.length);
+        fin.setHeader(message.getHeader());
+        if (message.getNumDataElements() == 0) return fin;
+        byte[] data = new byte[message.getNumDataElements()];
+        for (int i = 0; i < data.length; ++i) {
+            data[i] = (byte)(message.getElement(i) & 0xff);
+        }
         fin.setData(data);
         return fin;
-    }
-    static OpenLcbCanFrame convertFromCan(jmri.jmrix.can.CanReply message) {
-        return convertFromCan(message.getHeader(), message.getData());
-    }
-
-    static OpenLcbCanFrame convertFromCan(jmri.jmrix.can.CanMessage message) {
-        return convertFromCan(message.getHeader(), message.getData());
     }
 
     /**
