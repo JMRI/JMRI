@@ -1,4 +1,3 @@
-// PacketDataModel.java
 package jmri.jmrix.pricom.pockettester;
 
 import java.util.Vector;
@@ -20,10 +19,6 @@ import org.slf4j.LoggerFactory;
   */
 public class PacketDataModel extends javax.swing.table.AbstractTableModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8398725528235582417L;
     static java.util.ResourceBundle rb
             = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
     static public final int ADDRESSCOLUMN = 0;

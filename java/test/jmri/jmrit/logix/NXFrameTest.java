@@ -125,7 +125,11 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         // OBlock sensor names
         String[] route = {"IS1", "IS2", "IS3", "IS7", "IS5", "IS10"};
         Sensor sensor10 = _sensorMgr.getBySystemName("IS10");
+<<<<<<< HEAD
         Assert.assertEquals("Train in last block", sensor10, runtimes(route));
+=======
+        Assert.assertEquals("Train in last block", sensor10, runtimes(sensor10, route));
+>>>>>>> branch 'master' of https://github.com/JMRI/JMRI
 
         flushAWT();
         flushAWT();   // let calm down before running abort
@@ -185,8 +189,13 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
     }
 
     /**
+<<<<<<< HEAD
      * works through a list of sensors, activating one, then the next
      * inactivating the previous and continuing. Leaves last ACTIVE.
+=======
+     * works through a list of sensors, activating one, then the next, then
+     * inactivating the first and continuing. Leaves last ACTIVE.
+>>>>>>> branch 'master' of https://github.com/JMRI/JMRI
      *
      * @param sensor - active start sensor
      * @return - active end sensor
@@ -194,15 +203,25 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
      */
     private Sensor runtimes(String[] sensors) throws Exception {
         flushAWT();
+<<<<<<< HEAD
         Sensor sensor = _sensorMgr.getSensor(sensors[0]);
 //        sensor.setState(Sensor.ACTIVE);
+=======
+        _sensorMgr.getSensor(sensors[0]).setState(Sensor.ACTIVE);
+>>>>>>> branch 'master' of https://github.com/JMRI/JMRI
         for (int i = 1; i < sensors.length; i++) {
             flushAWT();
+<<<<<<< HEAD
             Sensor nextSensor = _sensorMgr.getSensor(sensors[i]);
             nextSensor.setState(Sensor.ACTIVE);
             flushAWT();
             sensor.setState(Sensor.INACTIVE);
             sensor = nextSensor;
+=======
+            _sensorMgr.getSensor(sensors[i]).setState(Sensor.ACTIVE);
+            flushAWT();
+            _sensorMgr.getSensor(sensors[i - i]).setState(Sensor.INACTIVE);
+>>>>>>> branch 'master' of https://github.com/JMRI/JMRI
         }
         return sensor;
     }
