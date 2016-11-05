@@ -188,7 +188,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
      * works through a list of sensors, activating one, then the next
      * inactivating the previous and continuing. Leaves last ACTIVE.
      * @param list of detection sensors of the route
-     * @return - active end sensor
+     * @return active end sensor
      * @throws Exception
      */
     private Sensor runtimes(String[] sensors) throws Exception {
