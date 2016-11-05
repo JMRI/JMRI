@@ -250,8 +250,8 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         setIcon(_iconMaps.get("ClearTrack").get(_name2stateMap.get("BeanStateInconsistent")));
     }
 
-    /**
-     * Get clear icon by its localized bean state name
+    /*
+     * Get icon by its localized bean state name
      */
     public NamedIcon getIcon(String status, int state) {
         log.debug("getIcon: status= " + status + ", state= " + state);

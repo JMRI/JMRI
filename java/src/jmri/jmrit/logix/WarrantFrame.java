@@ -351,8 +351,7 @@ public class WarrantFrame extends WarrantRoute {
                 }
                 break;
             case Warrant.MODE_LEARN:
-                return Bundle.getMessage("Learning",
-                        _warrant.getCurrentBlockOrder().getBlock().getDisplayName());
+                return Bundle.getMessage("Learning", _warrant.getCurrentBlockName());
             case Warrant.MODE_RUN:
             case Warrant.MODE_MANUAL:
                 return _warrant.getRunningMessage();
@@ -786,15 +785,6 @@ public class WarrantFrame extends WarrantRoute {
             setStatusText(msg, Color.red);
             return;
         }
-        msg = _warrant.checkStartBlock(Warrant.MODE_LEARN);
-        if (msg != null) {
-            if (JOptionPane.NO_OPTION == JOptionPane.showConfirmDialog(this,
-                    Bundle.getMessage("OkToRun", msg), Bundle.getMessage("QuestionTitle"),
-                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
-                setStatusText(msg, Color.red);
-                return;                
-            }
-        }
         
         msg = _warrant.checkRoute();
         if (msg!=null) {
@@ -812,6 +802,27 @@ public class WarrantFrame extends WarrantRoute {
             }
             _throttleCommands = new ArrayList<ThrottleSetting>();
             _commandModel.fireTableDataChanged();
+        }
+
+        msg = _warrant.checkStartBlock(Warrant.MODE_LEARN);
+        if (msg != null) {
+            if (msg.equals("warnStart")) {
+                msg = Bundle.getMessage("warnStart", getTrainName(), _warrant.getCurrentBlockName());
+                JOptionPane.showMessageDialog(this, msg,
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                setStatusText(msg, Color.red);
+                return;
+            } else if (msg.equals("BlockDark")) {
+                msg = Bundle.getMessage("BlockDark", _warrant.getCurrentBlockName(), getTrainName());                            
+                if (JOptionPane.NO_OPTION == JOptionPane.showConfirmDialog(this,
+                        Bundle.getMessage("OkToRun", msg), Bundle.getMessage("QuestionTitle"),
+                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
+                    stopRunTrain();
+                    setStatusText(msg, Color.red);
+                    return;
+                }
+            }
+            setStatusText(msg, Color.black);
         }
         if (_learnThrottle == null) {
             _learnThrottle = new LearnThrottleFrame(this);
@@ -866,8 +877,13 @@ public class WarrantFrame extends WarrantRoute {
         }
         msg = _warrant.checkStartBlock(Warrant.MODE_RUN);
         if (msg != null) {
+            if (msg.equals("warnStart")) {
+                msg = Bundle.getMessage("warnStart", _warrant.getTrainName(), _warrant.getCurrentBlockName());
+            } else if (msg.equals("BlockDark")) {
+                msg = Bundle.getMessage("BlockDark", _warrant.getCurrentBlockName(), _warrant.getTrainName());                            
+            }
             if (JOptionPane.NO_OPTION == JOptionPane.showConfirmDialog(this,
-                    Bundle.getMessage("OkToRun", msg), Bundle.getMessage("WarningTitle"),
+                    Bundle.getMessage("OkToRun", msg), Bundle.getMessage("QuestionTitle"),
                     JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
                 stopRunTrain();
                 setStatusText(msg, Color.red);
@@ -891,7 +907,6 @@ public class WarrantFrame extends WarrantRoute {
             _learnThrottle = null;
         }
         if (_warrant != null) {
-            clearWarrant();
             if (orders.size()>0) {
                 BlockOrder bo = _warrant.getCurrentBlockOrder();
                 if (bo!=null) {
@@ -912,6 +927,7 @@ public class WarrantFrame extends WarrantRoute {
                     }                                    
                 }
             }
+            clearWarrant();
         }        
     }
     private void clearWarrant() {
@@ -952,20 +968,27 @@ public class WarrantFrame extends WarrantRoute {
             switch (_warrant.getRunMode()) {
                 case Warrant.MODE_NONE:
                     _warrant.removePropertyChangeListener(this);
-                    int oldMode = ((Integer) e.getOldValue()).intValue();
-                    if (oldMode != Warrant.MODE_NONE) {
-                        OBlock block = _warrant.getCurrentBlockOrder().getBlock();
-                        int state = block.getState();
-                        if ((state & OBlock.OCCUPIED) != 0 || (state & OBlock.DARK) != 0
-                                 || _runBlind.isSelected()) {
-                            msg = Bundle.getMessage("warrantEnd",
-                                            _warrant.getTrainName(),
-                                            _warrant.getDisplayName(),
-                                            block.getDisplayName());
-                        } else {
-                            msg =Bundle.getMessage("warrantAbort",
-                                            _warrant.getTrainName(),
-                                            _warrant.getDisplayName());
+                    int newMode = ((Integer) e.getNewValue()).intValue();
+                    if (newMode==Warrant.MODE_ABORT) {
+                        msg =Bundle.getMessage("warrantAbort",
+                                _warrant.getTrainName(),
+                                _warrant.getDisplayName());                        
+                    } else {
+                        int oldMode = ((Integer) e.getOldValue()).intValue();
+                        if (oldMode != Warrant.MODE_NONE) {
+                            OBlock curBlock = _warrant.getCurrentBlockOrder().getBlock();
+                            OBlock lastBlock = _warrant.getLastOrder().getBlock();
+                            if (lastBlock.equals(curBlock)) {
+                                msg = Bundle.getMessage("warrantComplete",
+                                        _warrant.getTrainName(), _warrant.getDisplayName(), 
+                                        lastBlock.getDisplayName());
+                                color = Color.green;                                
+                            } else {
+                                msg = Bundle.getMessage("warrantEnd",
+                                        _warrant.getTrainName(), _warrant.getDisplayName(), 
+                                        lastBlock.getDisplayName());                        
+                                color = Color.red;
+                            }
                         }
                     }
                     break;
@@ -1002,8 +1025,7 @@ public class WarrantFrame extends WarrantRoute {
                             color = Color.red;                            
                         }
                     } else {
-                        msg = Bundle.getMessage("Learning",
-                                _warrant.getCurrentBlockOrder().getBlock().getDisplayName());
+                        msg = Bundle.getMessage("Learning", _warrant.getCurrentBlockName());
                         color = Color.black;                        
                     }
                     break;
@@ -1035,31 +1057,23 @@ public class WarrantFrame extends WarrantRoute {
                         msg = _warrant.getRunningMessage();
                         color = Color.black;
                     } else if (e.getPropertyName().equals("SpeedRestriction")) {
-                        msg = Bundle.getMessage("speedChange",
-                                _warrant.getTrainName(), _warrant.getCurrentBlockOrder()
-                                        .getBlock().getDisplayName(), e.getNewValue());
+                        msg = Bundle.getMessage("speedChange", _warrant.getTrainName(), 
+                                _warrant.getCurrentBlockName(), e.getNewValue());
                         color = Color.black;
                     } else if (e.getPropertyName().equals("runMode")) {
-                        oldMode = ((Integer) e.getOldValue()).intValue();
-                        int newMode = ((Integer) e.getNewValue()).intValue();
+                        int oldMode = ((Integer) e.getOldValue()).intValue();
+                        newMode = ((Integer) e.getNewValue()).intValue();
                         if (oldMode == Warrant.MODE_NONE) {
                             if (newMode != Warrant.MODE_NONE) {
                                 msg = Bundle.getMessage("warrantStart",
                                         _warrant.getTrainName(), _warrant.getDisplayName(),
-                                        _warrant.getCurrentBlockOrder().getBlock()
-                                                .getDisplayName(),
+                                        _warrant.getCurrentBlockName(),
                                         Bundle.getMessage(Warrant.MODES[newMode]));
                                 if (_warrant.getState()==Warrant.HALT) {
                                     JOptionPane.showMessageDialog(this, _warrant.getRunningMessage(),
                                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);                                    
                                 }                                
                             }
-                        } else {
-                            msg = Bundle.getMessage("modeChange",
-                                    _warrant.getTrainName(), _warrant.getDisplayName(),
-                                    Bundle.getMessage(Warrant.MODES[oldMode]),
-                                    Bundle.getMessage(Warrant.MODES[newMode]));
-                            color = Color.black;
                         }
                     } else if (e.getPropertyName().equals("controlChange")) {
                         int runState = ((Integer) e.getOldValue()).intValue();
@@ -1069,8 +1083,7 @@ public class WarrantFrame extends WarrantRoute {
                             stateStr = Bundle.getMessage(Warrant.MODES[-runState]);
                         } else {
                             stateStr = Bundle.getMessage(Warrant.RUN_STATE[runState],
-                                    _warrant.getCurrentBlockOrder().getBlock()
-                                            .getDisplayName());
+                                    _warrant.getCurrentBlockName());
                         }
                         msg = Bundle.getMessage("controlChange",
                                 _warrant.getTrainName(), stateStr,

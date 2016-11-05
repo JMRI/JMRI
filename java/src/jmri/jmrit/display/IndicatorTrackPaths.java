@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 class IndicatorTrackPaths {
 
     protected ArrayList<String> _paths;      // list of paths that this icon displays
-    private boolean _showTrain; 		// this track icon should display _loco when occupied
+    private boolean _showTrain;         // this track icon should display _loco when occupied
     private LocoLabel _loco = null;
 
     protected IndicatorTrackPaths() {
@@ -136,7 +136,7 @@ class IndicatorTrackPaths {
             font = ed.getFont();
         }
         int width = ed.getFontMetrics(font).stringWidth(trainName);
-        int height = ed.getFontMetrics(ed.getFont()).getHeight();	// limit height to locoIcon height
+        int height = ed.getFontMetrics(ed.getFont()).getHeight();   // limit height to locoIcon height
         _loco.setLineWidth(1);
         _loco.setLineColor(Color.BLACK);
         _loco.setFillColor(block.getMarkerBackground());
@@ -153,7 +153,7 @@ class IndicatorTrackPaths {
         ed.putItem(_loco);
     }
 
-    /**
+    /*
      * Return track name for known state of occupancy sensor
      */
     protected String getStatus(int state) {

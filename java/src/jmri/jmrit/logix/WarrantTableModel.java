@@ -494,6 +494,11 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                 } else {
                     msg = w.checkStartBlock(Warrant.MODE_RUN);
                     if (msg != null) {
+                        if (msg.equals("BlockDark")) {
+                            msg = Bundle.getMessage("BlockDark", w.getCurrentBlockName(), w.getTrainName());                            
+                        } else if (msg.equals("warnStart")) {
+                            msg = Bundle.getMessage("warnStart", w.getTrainName(), w.getCurrentBlockName());
+                        }
                         _frame.setStatusText(msg, WarrantTableModel.myGold, false);
                     }
                 }
@@ -510,8 +515,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             // getRunningMessage()
             int mode = w.getRunMode();
             if (mode == Warrant.MODE_LEARN) {
-                Bundle.getMessage("Learning", w.getCurrentBlockOrder()
-                        .getBlock().getDisplayName());
+                Bundle.getMessage("Learning", w.getCurrentBlockName());
             } else if (value!=null) {
                 String setting = (String) value;
                 if (mode == Warrant.MODE_RUN || mode == Warrant.MODE_MANUAL) {
@@ -539,9 +543,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             break;
         case EDIT_COLUMN:
             openWarrantFrame(w);                
-            if (w.getRunMode()!=Warrant.MODE_NONE) {
-                msg = Bundle.getMessage("CannotEdit", w.getDisplayName());
-            }
             break;
         case DELETE_COLUMN:
             if (w.getRunMode() == Warrant.MODE_NONE) {
@@ -647,8 +648,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         et % 60), myGreen, true);
             } else if (e.getPropertyName().equals("SpeedRestriction")) {
                 _frame.setStatusText(Bundle.getMessage("speedChange",
-                        bean.getTrainName(), bean.getCurrentBlockOrder()
-                                .getBlock().getDisplayName(), e.getNewValue()),
+                        bean.getCurrentBlockName()),
                         myGold, true);
             } else if (e.getPropertyName().equals("SpeedChange")) {
                 int row = getRow(bean);
@@ -658,42 +658,44 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             } else if (e.getPropertyName().equals("runMode")) {
                 int oldMode = ((Integer) e.getOldValue()).intValue();
                 int newMode = ((Integer) e.getNewValue()).intValue();
-                if (oldMode == Warrant.MODE_NONE) {
-                    if (newMode != Warrant.MODE_NONE) {
-                        _frame.setStatusText(Bundle.getMessage("warrantStart",
-                                bean.getTrainName(), bean.getDisplayName(),
-                                bean.getCurrentBlockOrder().getBlock()
-                                        .getDisplayName(),
-                                Bundle.getMessage(Warrant.MODES[newMode])),
-                                myGreen, true);
-                    }
-                } else if (newMode == Warrant.MODE_NONE) {
-                    OBlock block = bean.getCurrentBlockOrder().getBlock();
-                    int state = block.getState();
-                    if ((state & OBlock.OCCUPIED) != 0
-                         || (state & OBlock.DARK) != 0) {
-                       _frame.setStatusText(
-                            Bundle.getMessage("warrantEnd",
-                                            bean.getTrainName(),
-                                            bean.getDisplayName(),
-                                            block.getDisplayName()), myGreen,
-                                            true);
+                if (newMode == Warrant.MODE_ABORT) {
+                    if (oldMode != Warrant.MODE_NONE) {
+                        _frame.setStatusText(
+                                Bundle.getMessage("warrantAbort",
+                                               bean.getTrainName(),
+                                               bean.getDisplayName()), myGreen,
+                                               true);                        
                     } else {
                         _frame.setStatusText(
-                             Bundle.getMessage("warrantAbort",
-                                            bean.getTrainName(),
-                                            bean.getDisplayName()), myGreen,
-                                            true);
+                                Bundle.getMessage("warrantAnnull",
+                                               bean.getTrainName(),
+                                               bean.getDisplayName()), myGreen,
+                                               true);
                     }
-                } else {
-                    _frame.setStatusText(Bundle.getMessage("modeChange",
+                } else if (oldMode == Warrant.MODE_NONE && newMode != Warrant.MODE_NONE) {
+                    _frame.setStatusText(Bundle.getMessage("warrantStart",
                             bean.getTrainName(), bean.getDisplayName(),
-                            Bundle.getMessage(Warrant.MODES[oldMode]),
-                            Bundle.getMessage(Warrant.MODES[newMode])), myGold,
-                            true);
+                            bean.getCurrentBlockName(),
+                            Bundle.getMessage(Warrant.MODES[newMode])),
+                            myGreen, true);                    
+                } else if (oldMode != Warrant.MODE_NONE && newMode == Warrant.MODE_NONE) {
+                    OBlock curBlock = bean.getCurrentBlockOrder().getBlock();
+                    OBlock lastBlock = bean.getLastOrder().getBlock();
+                    if (lastBlock.equals(curBlock)) {
+                        _frame.setStatusText(Bundle.getMessage("warrantComplete",
+                                bean.getTrainName(), bean.getDisplayName(), 
+                                lastBlock.getDisplayName()), myGold,
+                                true);
+                        
+                    } else {
+                        _frame.setStatusText(Bundle.getMessage("warrantEnd",
+                                bean.getTrainName(), bean.getDisplayName(), 
+                                lastBlock.getDisplayName()), myGold,
+                                true);                        
+                    }
                 }
             } else if (e.getPropertyName().equals("controlChange")) {
-                String blkName = bean.getCurrentBlockOrder().getBlock().getDisplayName();
+                String blkName = bean.getCurrentBlockName();
                 String stateStr;
                 Color color;
                 if (e.getOldValue()==null) {
@@ -710,7 +712,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         Bundle.getMessage(Warrant.CNTRL_CMDS[newCntrl])),
                         color, true);
             } else if (e.getPropertyName().equals("controlFailed")) {
-                String blkName = bean.getCurrentBlockOrder().getBlock().getDisplayName();
+                String blkName = bean.getCurrentBlockName();
                 String stateStr;
                 if (e.getOldValue()==null) {
                     stateStr = Bundle.getMessage("engineerGone", blkName); 

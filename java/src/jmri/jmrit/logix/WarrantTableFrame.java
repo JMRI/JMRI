@@ -407,6 +407,13 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             return msg;
         }
         msg = w.checkStartBlock(Warrant.MODE_RUN);  // notify first block occupied by this train
+        if (msg != null) {
+            if (msg.equals("BlockDark")) {
+                msg = Bundle.getMessage("BlockDark", w.getCurrentBlockName(), w.getTrainName());                            
+            } else if (msg.equals("warnStart")) {
+                msg = Bundle.getMessage("warnStart", w.getTrainName(), w.getCurrentBlockName());
+            }
+        }
         setStatusText(msg, WarrantTableModel.myGold, false);
         // From here on messages are status information, not abort info
         msg = w.checkRoute();   // notify about occupation ahead

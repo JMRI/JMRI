@@ -195,7 +195,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         _status = _pathUtil.getStatus(state);
     }
 
-    /**
+    /*
      * Place icon by its bean state name
      */
     public void setIcon(String name, NamedIcon icon) {
@@ -287,8 +287,8 @@ public class IndicatorTrackIcon extends PositionableIcon
         return false;
     }
 
-    /**
-     * Drive the current state of the display from the state of the turnout.
+    /*
+     * Drive the current state of the display from the status.
      */
     public void displayState(String status) {
         if (log.isDebugEnabled()) {
