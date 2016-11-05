@@ -20,7 +20,7 @@ public class SerialMonActionTest {
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SerialMonAction action = new SerialMonAction("IEEE 802.15.4 test Action", new CMRISystemConnectionMemo());
+        SerialMonAction action = new SerialMonAction("C/MRI test Action", new CMRISystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 
