@@ -256,17 +256,19 @@
                 <version>2.19.1</version>
                 <configuration>
                     <excludes>
+                        <!-- ignore until #2455 is resolved -->
+                        <exclude>jmri.jmrit.decoderdefn.DuplicateTest</exclude>
                         <!-- ignore to avoid duplicate test runs -->
-                        <exclude>apps/tests/AllTest.java</exclude>
-                        <exclude>jmri/HeadLessTest.java</exclude>
+                        <exclude>apps.tests.AllTest</exclude>
+                        <exclude>jmri.HeadLessTest</exclude>
                         <!-- ignore package tests under assumption they only include other tests -->
-                        <exclude>**/PackageTest.java</exclude>
+                        <exclude>**.PackageTest</exclude>
                         <!-- ignore since the test is not intended to be normally used -->
-                        <exclude>jmri/util/FailTest.java</exclude>
+                        <exclude>jmri.util.FailTest</exclude>
                         <!-- ingore since base classes for other tests -->
-                        <exclude>jmri/util/SwingTestCase.java</exclude>
-                        <exclude>jmri/jmrit/operations/OperationsTestCase.java</exclude>
-                        <exclude>jmri/jmrit/operations/OperationsSwingTestCase.java</exclude>
+                        <exclude>jmri.util.SwingTestCase</exclude>
+                        <exclude>jmri.jmrit.operations.OperationsTestCase</exclude>
+                        <exclude>jmri.jmrit.operations.OperationsSwingTestCase</exclude>
                     </excludes>
                     <workingDirectory>${basedir}</workingDirectory>
                 </configuration>
