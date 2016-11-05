@@ -64,6 +64,9 @@
           </display>
       </column>
       <column>
+        <display item="PA1 Inv" format="checkbox" tooltip="Invert output drive" label="Inv"/>
+      </column>
+      <column>
         <display item="PA1 Timing" label="                                       Debounce">
           </display>
       </column>
@@ -158,6 +161,9 @@
       <column>
         <display item="PA2 Type" label="    Type">
           </display>
+      </column>
+      <column>
+        <display item="PA2 Inv" format="checkbox" tooltip="Invert output drive" label="Inv"/>
       </column>
       <column>
         <display item="PA2 Timing" label="                                       Debounce">
@@ -256,6 +262,9 @@
           </display>
       </column>
       <column>
+        <display item="PA3 Inv" format="checkbox" tooltip="Invert output drive" label="Inv"/>
+      </column>
+      <column>
         <display item="PA3 Timing" label="                                       Debounce">
           </display>
       </column>
@@ -350,6 +359,9 @@
       <column>
         <display item="PA4 Type" label="    Type">
           </display>
+      </column>
+      <column>
+        <display item="PA4 Inv" format="checkbox" tooltip="Invert output drive" label="Inv"/>
       </column>
       <column>
         <display item="PA4 Timing" label="                                       Debounce">
