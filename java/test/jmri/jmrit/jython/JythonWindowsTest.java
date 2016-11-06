@@ -5,6 +5,8 @@ import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Invokes complete set of tests in the jmri.jmrit.jython tree
@@ -15,6 +17,8 @@ import junit.framework.TestSuite;
  */
 public class JythonWindowsTest extends TestCase {
 
+    private final static Logger log = LoggerFactory.getLogger(JythonWindowsTest.class);
+    
     // Really a check of Jython init, including the defaults file
     public void testExec() {
         jmri.util.JUnitAppender.clearBacklog();
@@ -34,6 +38,7 @@ public class JythonWindowsTest extends TestCase {
         try {
             w.buttonPressed();
         } catch (Exception e) {
+            log.error("unexpected excetion", e);
             Assert.fail("exception during execution: " + e);
         }
         
