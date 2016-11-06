@@ -1,4 +1,4 @@
-package jmri.jmrix.dccpp.swing;
+package jmri.jmrix.dccpp.swing.packetgen;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -7,15 +7,13 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    BundleTest.class,
-    jmri.jmrix.dccpp.swing.mon.PackageTest.class,
-    jmri.jmrix.dccpp.swing.packetgen.PackageTest.class
+    PacketGenActionTest.class,
+    PacketGenFrameTest.class
 })
 
 /**
- * Tests for the jmri.jmrix.dccpp.swing package
+ * Tests for the jmri.jmrix.dccpp.swing.packetgen package
  *
- * @author	Bob Jacobsen
  * @author  Paul Bender	Copyright (C) 2016
  */
 public class PackageTest{
