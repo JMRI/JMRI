@@ -27,11 +27,11 @@ cache:
 os:
   - linux
   - osx
-  
+
 matrix:
   env:
-    HEADLESS=true
-    HEADLESS=false
+  - HEADLESS=true
+  - HEADLESS=false
   exclude:
   - os: osx
-    env: java.awt.headless=true
+    env: HEADLESS=true
