@@ -59,7 +59,7 @@
   
   <!-- The "aspectSpeeds" table below maps the speed names used in signal aspects.xml  -->
   <!-- files to a number. The number may be translated to a throttle setting.  The     -->
-  <!-- meaning of the number may be given two different interpretations:               -->
+  <!-- meaning of the number may be given different interpretations:               -->
   <!--   "percentNormal" is the percentage of the recorded speed, i.e. the speed       -->
   <!--      when running with no signals or aspect clear.  With this choice a speed    -->
   <!--      change will always be made when a restrictive aspect is signaled.  Use     -->
