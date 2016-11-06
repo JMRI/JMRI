@@ -438,9 +438,9 @@
             <version>2.7.0</version>
         </dependency>
         <dependency>
-            <groupId>org.bidib.jbidib.org.qbang.rxtx</groupId>
-            <artifactId>rxtxcomm</artifactId>
-            <version>2.2</version>
+            <groupId>org.bidib.jbidib</groupId>
+            <artifactId>jbidibc-rxtx-2.2</artifactId>
+            <version>1.6.0</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
