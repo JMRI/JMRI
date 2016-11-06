@@ -22,6 +22,7 @@ import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.SimpleNodeIdentInfoReplyMessage;
 import org.openlcb.SimpleNodeIdentInfoRequestMessage;
+import org.openlcb.Version;
 import org.openlcb.can.AliasMap;
 import org.openlcb.can.CanFrame;
 import org.openlcb.can.CanFrameListener;
@@ -318,7 +319,10 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         public void handleSimpleNodeIdentInfoRequest(SimpleNodeIdentInfoRequestMessage msg,
                                                      Connection sender) {
             if (msg.getDestNodeID().equals(nodeID)) {
-                getInterface().getOutputConnection().put(new SimpleNodeIdentInfoReplyMessage(nodeID, msg.getSourceNodeID(), content), this);
+                // Sending a SNIP reply to the bus crashes the library up to 0.7.7.
+                if (msg.getSourceNodeID().equals(nodeID) || (Version.major > 0 || Version.minor > 7 || Version.libMod > 7)) {
+                    getInterface().getOutputConnection().put(new SimpleNodeIdentInfoReplyMessage(nodeID, msg.getSourceNodeID(), content), this);
+                }
             }
         }
     }
