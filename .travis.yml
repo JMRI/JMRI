@@ -14,11 +14,11 @@ install: true
     
 before_script:
   # setup a display on linux ( the sleep gives xvfb some time to start )
-  - if [ "$TRAVIS_OS_NAME" == "linux" ] ; then export DISPLAY=:99.0 ; sh -e /etc/init.d/xvfb start ; sleep 3 ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" && "${java.awt.headless}" == "false" ] ; then export DISPLAY=:99.0 ; sh -e /etc/init.d/xvfb start ; sleep 3 ; fi
 
 script:
   - export MAVEN_OPTS=-Xmx1536M
-  - travis_wait 30 mvn test -U -P travis --batch-mode
+  - travis_wait 30 mvn test -U -P travis --batch-mode -D${java.awt.headless}
 
 cache:
   directories:
@@ -27,3 +27,8 @@ cache:
 os:
   - linux
   - osx
+  
+matrix:
+  env:
+    java.awt.headless=true
+    java.awt.headless=false
