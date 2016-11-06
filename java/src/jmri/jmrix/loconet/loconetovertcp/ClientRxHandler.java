@@ -18,8 +18,7 @@ import org.slf4j.LoggerFactory;
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author Alex Shepherd Copyright (C) 2006
- * @version	$Revision$
- */
+  */
 public final class ClientRxHandler extends Thread implements LocoNetListener {
 
     Socket clientSocket;

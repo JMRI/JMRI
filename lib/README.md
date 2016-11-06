@@ -1,24 +1,42 @@
-This is the JMRI distributed "lib" directory, available as the "lib" directory in JMRI/JMRI Git.   These are the library files, .jars and others, needed at build and run time.
+This is the JMRI distributed "lib" directory, available as the "lib" directory
+in JMRI/JMRI Git.   These are the library files, .jars and others, needed at
+build and run time.
 
 ## Contents:
 
-Generally, we use subdirectories to hold the Git-resident versions of OS-specific code for Windows (.dll files) and Linux (.so files) so that we can separate various builds.
+Generally, we use subdirectories to hold the Git-resident versions of
+OS-specific code for Windows (.dll files) and Linux (.so files) so that we can
+separate various builds.
 
-For example, the RXTX rxtxSerial.dll comes in separate versions for 32-bit and 64-bit Windows, but the files have the same name.  We store them in separate subdirectories under windows/, and let the installer sort them out.
+For example, the RXTX rxtxSerial.dll comes in separate versions for 32-bit and
+64-bit Windows, but the files have the same name.  We store them in separate
+subdirectories under windows/, and let the installer sort them out.
 
 A similar mechanism is used for Linux under the linux/ directory.
 
-MacOS X fat binaries are treated slightly differently, see the README file there.
+macOS binaries are treated slightly differently, see the README file there.
 
 #### Updates
 
 If you make a change in this directory (add/change/remove a file), please make corresponding changes in the control files that are used for various JMRI development and release operations:
 - build.xml - used by Ant, and in turn by various IDEs
 - .classpath - used by Eclipse
+- pom.xml - used by Maven (see notes below)
 - nbproject/ide-file-targets.xml, nbproject/project.xml - used by NetBeans
 
 Note that Windows installers don't necessarily remove existing library versions. (See [JMRI Issue #359](https://github.com/JMRI/JMRI/issues/359) for discussion on this)  Until that's changed, if you remove a library from here that really needs to _not_ be in user installs, you need to add an explicit delete to the scripts/WinInstallFiles/InstallJMRI.nsi file, in addition to modifying those above.
 
+If the specific library being added or updated is not published to
+[Maven Central](http://maven.org) by the upstream provider, run the following
+command after updating the pom.xml file, replacing the tokens in ALL CAPS with
+the correct values for that library:
+```
+mvn deploy:deploy-file -DgroupId=GROUP -DartifactId=ARTIFACT -Dversion=VERSION -Durl=file:./lib -DrepositoryId=lib -DupdateReleaseInfo=true -Dfile=./lib/FILE.jar
+``` 
+for example:
+```
+mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplugin -Dversion=0.0 -Durl=file:./lib -DrepositoryId=lib -DupdateReleaseInfo=true -Dfile=./lib/jhidrawplugin.jar
+```
 
 ### Specific components:
 
@@ -51,7 +69,7 @@ Note that Windows installers don't necessarily remove existing library versions.
 - updated JMRI 4.1.4 from version 1.7.6, added jul-to-slf4j
 
 ##### openlcb.jar
-- 0.7.5 from https://sourceforge.net/p/openlcb/svn/HEAD/tree/trunk/prototypes/java/
+- 0.7.7 from https://github.com/openlcb/OpenLCB_Java/blob/master/openlcb.jar
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels

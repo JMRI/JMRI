@@ -1,7 +1,7 @@
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -15,8 +15,7 @@ import junit.framework.TestSuite;
  * The default transmitter location is (3,2,1)
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision$
- */
+  */
 public class Ash1_1AlgorithmTest extends TestCase {
 
     double vs = 0.0344;  // SI default for testing

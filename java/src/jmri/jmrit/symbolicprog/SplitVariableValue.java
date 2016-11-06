@@ -504,7 +504,7 @@ public class SplitVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision$
+     * 
      */
     public class VarTextField extends JTextField {
 

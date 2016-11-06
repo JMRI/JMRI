@@ -1,4 +1,3 @@
-// SerialMessage.java
 package jmri.jmrix.tmcc;
 
 
@@ -9,7 +8,6 @@ package jmri.jmrix.tmcc;
  * DLE characters are included. These are added during transmission.
  *
  * @author Bob Jacobsen Copyright (C) 2001,2003, 2006
- * @version $Revision$
  */
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     // is this logically an abstract class?
@@ -81,5 +79,3 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         return (getElement(1) & 0xFF) * 256 + (getElement(2) & 0xFF);
     }
 }
-
-/* @(#)SerialMessage.java */

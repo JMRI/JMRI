@@ -32,11 +32,11 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.can.cbus.CbusAddressTest.suite());
         suite.addTest(jmri.jmrix.can.cbus.CbusProgrammerTest.suite());
         suite.addTest(jmri.jmrix.can.cbus.CbusProgrammerManagerTest.suite());
-        suite.addTest(jmri.jmrix.can.cbus.CbusSensorManagerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusSensorManagerTest.class));
         suite.addTest(jmri.jmrix.can.cbus.CbusSensorTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.can.cbus.configurexml.PackageTest.class));
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(jmri.jmrix.can.cbus.swing.SwingTest.suite());
+            suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.can.cbus.swing.PackageTest.class));
         }
 
         return suite;

@@ -2,7 +2,7 @@ package jmri.jmrix.grapevine;
 
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRMessage;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

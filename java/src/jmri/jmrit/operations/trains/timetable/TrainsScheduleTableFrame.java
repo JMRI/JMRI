@@ -43,7 +43,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010, 2012, 2016
- * @version $Revision$
  */
 public class TrainsScheduleTableFrame extends OperationsFrame implements PropertyChangeListener {
 
@@ -73,10 +72,10 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     ButtonGroup schGroup = new ButtonGroup();
 
     // major buttons
-    JButton selectButton = new JButton(Bundle.getMessage("Select"));
-    JButton clearButton = new JButton(Bundle.getMessage("Clear"));
+    JButton selectButton = new JButton(Bundle.getMessage("SelectAll"));
+    JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
 
-    JButton applyButton = new JButton(Bundle.getMessage("Apply"));
+    JButton applyButton = new JButton(Bundle.getMessage("ButtonApply"));
     JButton buildButton = new JButton(Bundle.getMessage("Build"));
     JButton printButton = new JButton(Bundle.getMessage("Print"));
     JButton runFileButton = new JButton(Bundle.getMessage("RunFile"));
@@ -84,7 +83,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     JButton terminateButton = new JButton(Bundle.getMessage("Terminate"));
 
     JButton activateButton = new JButton(Bundle.getMessage("Activate"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // check boxes
     // panel
@@ -295,7 +294,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
                         JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                 .getMessage("NeedToBuildBeforeRunFile"), new Object[]{
                                         train.getName()}),
-                                Bundle.getMessage("Error"),
+                                Bundle.getMessage("ErrorTitle"),
                                 JOptionPane.ERROR_MESSAGE);
                     } else {
                         // Make sure our csv manifest file exists for this Train.

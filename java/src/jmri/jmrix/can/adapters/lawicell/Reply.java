@@ -12,8 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
- */
+  */
 public class Reply extends AbstractMRReply {
 
     // Creates a new instance of ConnectReply

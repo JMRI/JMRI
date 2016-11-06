@@ -1,5 +1,6 @@
 package jmri.jmrit.withrottle;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -26,7 +27,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.withrottle.PackageTest");   // no tests in this class itself
 
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(ConsistControllerTest.suite());
         suite.addTest(ConsistFunctionControllerTest.suite());
         suite.addTest(DeviceServerTest.suite());
@@ -43,13 +44,13 @@ public class PackageTest extends TestCase {
         suite.addTest(WiThrottleManagerTest.suite());
         suite.addTest(WiThrottlePreferencesTest.suite());
         suite.addTest(WiThrottlesListModelTest.suite());
+        suite.addTest(new JUnit4TestAdapter(WiThrottlePrefsPanelTest.class));
 
-
+        // These tests do not need this protection against headless exceptions
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(ControllerFilterActionTest.suite());
-            suite.addTest(ControllerFilterFrameTest.suite());
-            suite.addTest(UserInterfaceTest.suite());
-            suite.addTest(WiThrottlePrefsPanelTest.suite());
+            suite.addTest(new JUnit4TestAdapter(ControllerFilterActionTest.class));
+            suite.addTest(new JUnit4TestAdapter(ControllerFilterFrameTest.class));
+            suite.addTest(new JUnit4TestAdapter(UserInterfaceTest.class));
         }
 
         return suite;

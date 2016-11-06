@@ -10,7 +10,6 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2014
- * @version $Revision: 17977 $
  */
 public class ShowTrackMovesAction extends AbstractAction {
 

@@ -6,7 +6,6 @@ package jmri.jmrix.mrc;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2014
- * @version	$Revision: 17977 $
  *
  */
 public class MrcConnectionTypeList implements jmri.jmrix.ConnectionTypeList {

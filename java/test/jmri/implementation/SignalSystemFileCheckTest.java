@@ -41,5 +41,6 @@ public class SignalSystemFileCheckTest extends jmri.configurexml.SchemaTestBase 
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
+
     static protected Logger log = LoggerFactory.getLogger(SignalSystemFileCheckTest.class.getName());
 }

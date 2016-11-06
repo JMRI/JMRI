@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * Based on Glen Oberhauser's original LnThrottle implementation and work by Kevin Dickerson
  *
  * @author	Jan Boen
- * @version $Revision: 20160619 $
+ * 
  */
 public class TamsThrottle extends AbstractThrottle implements TamsListener {
 

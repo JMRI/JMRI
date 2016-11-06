@@ -1,5 +1,3 @@
-package jmri.server.json;
-
 /**
  * The JMRI JSON Services provide access to JMRI layout, operations and roster
  * elements.
@@ -44,3 +42,4 @@ package jmri.server.json;
  *
  * @since 4.3.4
  */
+package jmri.server.json;

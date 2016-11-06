@@ -1,7 +1,7 @@
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,8 +10,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the rps.Region class.
  *
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision$
- */
+  */
 public class RegionTest extends TestCase {
 
     public void testCtors() {

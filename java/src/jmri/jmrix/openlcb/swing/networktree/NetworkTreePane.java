@@ -38,7 +38,6 @@ import org.slf4j.LoggerFactory;
  * Frame displaying tree of OpenLCB nodes
  *
  * @author	Bob Jacobsen Copyright (C) 2009, 2010, 2012
- * @version $Revision: 17977 $
  */
 public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanListener, CanPanelInterface {
 
@@ -208,6 +207,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                     JScrollPane scrollPane = new JScrollPane(m, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                     Dimension minScrollerDim = new Dimension(800, 12);
                     scrollPane.setMinimumSize(minScrollerDim);
+                    scrollPane.getVerticalScrollBar().setUnitIncrement(50);
 
                     // create an object to add "New Sensor" buttons
                     CdiPanel.GuiItemFactory factory = new CdiPanel.GuiItemFactory() {

@@ -84,7 +84,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         return _showAll;
     }
 
-    private synchronized void updateList() {
+    private void updateList() {
         // first, remove listeners from the individual objects
         removePropertyChangeTrains();
 
@@ -150,7 +150,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     @Override
-    public synchronized int getRowCount() {
+    public int getRowCount() {
         return sysList.size();
     }
 
@@ -171,7 +171,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     public static final String TERMINATESCOLUMNNAME = Bundle.getMessage("Terminates");
     public static final String STATUSCOLUMNNAME = Bundle.getMessage("Status");
     public static final String ACTIONCOLUMNNAME = Bundle.getMessage("Action");
-    public static final String EDITCOLUMNNAME = Bundle.getMessage("Edit");
+    public static final String EDITCOLUMNNAME = Bundle.getMessage("ButtonEdit");
 
     @Override
     public String getColumnName(int col) {
@@ -246,7 +246,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     @Override
-    public synchronized Object getValueAt(int row, int col) {
+    public Object getValueAt(int row, int col) {
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
@@ -313,14 +313,14 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 return trainManager.getTrainsFrameTrainAction();
             }
             case EDITCOLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit");
             default:
                 return "unknown " + col; // NOI18N
         }
     }
 
     @Override
-    public synchronized void setValueAt(Object value, int row, int col) {
+    public void setValueAt(Object value, int row, int col) {
         switch (col) {
             case EDITCOLUMN:
                 editTrain(row);
@@ -344,7 +344,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
-    public synchronized Color getRowColor(int row) {
+    public Color getRowColor(int row) {
         Train train = sysList.get(row);
         //		log.debug("Row: {} train: {} color: {}", row, train.getName(), train.getTableRowColorName());
         return train.getTableRowColor();
@@ -352,7 +352,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     TrainEditFrame tef = null;
 
-    private synchronized void editTrain(int row) {
+    private void editTrain(int row) {
         if (tef != null) {
             tef.dispose();
         }
@@ -369,7 +369,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     RouteEditFrame ref = null;
 
-    private synchronized void editRoute(int row) {
+    private void editRoute(int row) {
         if (ref != null) {
             ref.dispose();
         }
@@ -387,7 +387,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     Thread build;
 
-    private synchronized void buildTrain(int row) {
+    private void buildTrain(int row) {
         final Train train = sysList.get(row);
         if (!train.isBuilt()) {
             // only one train build at a time
@@ -419,7 +419,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     // one of four buttons: Report, Move, Conductor or Terminate
-    private synchronized void actionTrain(int row) {
+    private void actionTrain(int row) {
         // no actions while a train is being built
         if (build != null && build.isAlive()) {
             return;
@@ -498,7 +498,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     @Override
-    public synchronized void propertyChange(PropertyChangeEvent e) {
+ // removed synchronized from propertyChange, it caused a thread lock, see _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
+    public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change {} old: {} new: {}",
                     e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
@@ -520,22 +521,24 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 log.debug("Update train table row: {} name: {}", row, train.getName());
             }
             if (row >= 0) {
+                int viewRow = _table.convertRowIndexToView(row);
                 // if there are issues with thread locking here, this needs to
                 // be refactored so the panel holding the table is listening for
                 // this changes so it can instruct the table to scroll
-                _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
+                // adding "synchronized" to this propertyChange can lock up thread                
+                _table.scrollRectToVisible(_table.getCellRect(viewRow, 0, true));
                 fireTableRowsUpdated(row, row);
             }
         }
     }
 
-    private synchronized void removePropertyChangeTrains() {
+    private void removePropertyChangeTrains() {
         for (Train train : trainManager.getTrainsByIdList()) {
             train.removePropertyChangeListener(this);
         }
     }
 
-    private synchronized void addPropertyChangeTrains() {
+    private void addPropertyChangeTrains() {
         for (Train train : trainManager.getTrainsByIdList()) {
             train.addPropertyChangeListener(this);
         }

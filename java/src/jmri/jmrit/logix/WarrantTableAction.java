@@ -63,9 +63,9 @@ public class WarrantTableAction extends AbstractAction {
     private static JDialog _errorDialog;
     protected static WarrantFrame _openFrame;
     protected static NXFrame _nxFrame;
-    private static OpSessionLog _log;
+    private static boolean _logging = false;
     private static boolean _edit;
-    static ShutDownTask     _shutDownTask;
+    static ShutDownTask     _shutDownTask = null;
 
     protected WarrantTableAction(String menuOption) {
         super(Bundle.getMessage(menuOption));
@@ -130,15 +130,20 @@ public class WarrantTableAction extends AbstractAction {
         };
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
         String[] sysNames = manager.getSystemNameArray();
-         
-        for (int i = 0; i < sysNames.length; i++) {
-            Warrant warrant = manager.getBySystemName(sysNames[i]);
-            JMenuItem mi = new JMenuItem(warrant.getDisplayName());
-            mi.setActionCommand(warrant.getDisplayName());
-            mi.addActionListener(editWarrantAction);
-            editWarrantMenu.add(mi);                                                  
+        if (sysNames.length == 0) { // when there are no Warrants, enter the word "None" to the submenu
+            JMenuItem _noWarrants = new JMenuItem(Bundle.getMessage("None"));
+            editWarrantMenu.add(_noWarrants);
+            // disable it
+            _noWarrants.setEnabled(false);
+        } else { // when there are Warrents, add them to the submenu
+            for (int i = 0; i < sysNames.length; i++) {
+                Warrant warrant = manager.getBySystemName(sysNames[i]);
+                JMenuItem mi = new JMenuItem(warrant.getDisplayName());
+                mi.setActionCommand(warrant.getDisplayName());
+                mi.addActionListener(editWarrantAction);
+                editWarrantMenu.add(mi);
+            }
         }
-
         _warrantMenu.add(new jmri.jmrit.logix.WarrantTableAction("CreateWarrant"));
         _warrantMenu.add(_trackerTable);
         _warrantMenu.add(new AbstractAction(Bundle.getMessage("CreateNXWarrant")) {
@@ -154,28 +159,25 @@ public class WarrantTableAction extends AbstractAction {
     
     protected static JMenuItem makeLogMenu() {
         JMenuItem mi;
-        if (_log==null) {
+        if (!_logging) {
             mi = new JMenuItem(Bundle.getMessage("startLog"));          
             mi.addActionListener( new ActionListener()
                 {
                     public void actionPerformed(ActionEvent e) {
-                        _log = OpSessionLog.getInstance();
-                        if (!_log.showFileChooser(WarrantTableFrame.getInstance())) {
-                            _log = null;
+                        if (!OpSessionLog.makeLogFile(WarrantTableFrame.getInstance())) {
                             return;
                         }
-                        if (_shutDownTask == null) {
-                            _shutDownTask = new SwingShutDownTask("PanelPro Save default icon check",
-                                    null, null, null)
-                            {
-                                public boolean checkPromptNeeded() {
-                                    _log.close();
-                                    _log = null;
-                                    return true;
-                                }
-                            };
-                            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(_shutDownTask);
-                        }
+                        _logging = true;
+                        _shutDownTask = new SwingShutDownTask("PanelPro Save default icon check",
+                                null, null, null)
+                        {
+                            public boolean checkPromptNeeded() {
+                                OpSessionLog.close();
+                                _logging = false;
+                                return true;
+                            }
+                        };
+                        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(_shutDownTask);
                         updateWarrantMenu();
                     }
                 });
@@ -184,10 +186,10 @@ public class WarrantTableAction extends AbstractAction {
             mi.addActionListener( new ActionListener()
                 {
                     public void actionPerformed(ActionEvent e) {
-                        _log.close();
+                        OpSessionLog.close();
                         jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(_shutDownTask);
                         _shutDownTask = null;
-                        _log = null;
+                        _logging = false;
                         updateWarrantMenu();
                     }
                 });
@@ -196,8 +198,8 @@ public class WarrantTableAction extends AbstractAction {
     }
     
     synchronized protected static void writetoLog(String text) {
-        if (_log!=null) {
-            _log.writeLn(text);
+        if (_logging) {
+            OpSessionLog.writeLn(text);
         }       
     }
     

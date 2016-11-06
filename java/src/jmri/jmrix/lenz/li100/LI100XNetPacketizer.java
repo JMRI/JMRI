@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * mode in the AbstractMRTrafficController.
  *
  * @author	Paul Bender Copyright (C) 2009
- * @version $Revision$
  *
  */
 public class LI100XNetPacketizer extends XNetPacketizer {

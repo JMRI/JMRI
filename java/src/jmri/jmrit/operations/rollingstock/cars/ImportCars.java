@@ -75,7 +75,7 @@ public class ImportCars extends ImportRollingStock {
     //    private static final int CAR_MISCELLANEOUS = 16;
     private static final int CAR_EXTENSIONS = 17;
 
-    private static final int MAXIMUM_NUMBER_FIELDS = CAR_EXTENSIONS - 1;
+    private static final int MAXIMUM_NUMBER_FIELDS = CAR_EXTENSIONS + 1;
 
     // we use a thread so the status frame will work!
     @Override
@@ -458,8 +458,7 @@ public class ImportCars extends ImportRollingStock {
                                 JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                         .getMessage("CarTrackDoesNotExist"), new Object[]{
                                                 (carRoad + " " + carNumber), carTrack, carLocation}),
-                                        Bundle
-                                                .getMessage("carTrack"),
+                                        Bundle.getMessage("carTrack"),
                                         JOptionPane.ERROR_MESSAGE);
                                 int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
                                         .getMessage("DoYouWantToCreateTrack"), new Object[]{carTrack, carLocation}),

@@ -57,7 +57,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of a train
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011, 2012, 2013, 2014
- * @version $Revision$
  */
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -87,8 +86,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
     // major buttons
     JButton editButton = new JButton(Bundle.getMessage("ButtonEdit"));	// edit route
-    JButton clearButton = new JButton(Bundle.getMessage("Clear"));
-    JButton setButton = new JButton(Bundle.getMessage("Select"));
+    JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
+    JButton setButton = new JButton(Bundle.getMessage("SelectAll"));
     JButton resetButton = new JButton(Bundle.getMessage("ResetTrain"));
     JButton saveTrainButton = new JButton(Bundle.getMessage("SaveTrain"));
     JButton deleteTrainButton = new JButton(Bundle.getMessage("DeleteTrain"));
@@ -372,6 +371,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         if (_train != null) {
             toolMenu.add(new TrainConductorAction(Bundle.getMessage("TitleTrainConductor"), _train));
         }
+        toolMenu.addSeparator();
         toolMenu.add(new PrintTrainAction(Bundle.getMessage("MenuItemPrint"), new Frame(), false, this));
         toolMenu.add(new PrintTrainAction(Bundle.getMessage("MenuItemPreview"), new Frame(), true, this));
         toolMenu.add(new PrintTrainManifestAction(Bundle.getMessage("MenuItemPrintManifest"), false, this));

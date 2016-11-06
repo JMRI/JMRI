@@ -6,8 +6,7 @@
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
  * @author      Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- */
+  */
 package jmri.jmrix.dccpp.swing.packetgen;
 
 import java.awt.event.ActionEvent;

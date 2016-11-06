@@ -997,7 +997,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                         java.text.MessageFormat.format(message,
                                 new Object[]{name}), Bundle.getMessage("ReminderTitle"),
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
-                        null, new Object[]{Bundle.getMessage("ButtonHide"), Bundle.getMessage("ButtonDelete"),
+                        null, new Object[]{Bundle.getMessage("ButtonHide"), Bundle.getMessage("ButtonDeletePanel"),
                             Bundle.getMessage("ButtonDontShow")}, Bundle.getMessage("ButtonHide"));
                 switch (selectedValue) {
                     case 0:
@@ -2898,7 +2898,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 @Override
                 public void actionPerformed(ActionEvent a) {
                     PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
-                    _decorator.getText(_pos);
+                    _decorator.setAttributes(_pos);
                     if (_selectionGroup == null) {
                         setAttributes(util, _pos);
                     } else {

@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * connection on the Hornby Elite
  *
  * @author Paul Bender (C) 2008-2009
- * @version $Revision$
  */
 public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
 

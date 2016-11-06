@@ -37,7 +37,7 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests, including others in the package
     public static Test suite() {
         TestSuite suite = new TestSuite(PackageTest.class);
-        suite.addTest(jmri.jmrit.symbolicprog.BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(jmri.jmrit.symbolicprog.ArithmeticQualifierTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.QualifierAdderTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.FnMapPanelTest.suite());
@@ -57,6 +57,8 @@ public class PackageTest extends TestCase {
 
         suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.symbolicprog.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.symbolicprog.autospeed.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.symbolicprog.symbolicframe.PackageTest.class));
         return suite;
     }
 

@@ -35,7 +35,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of route
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2014
- * @version $Revision$
  */
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -100,12 +99,13 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         routePane = new JScrollPane(routeTable);
         routePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         routePane.setBorder(BorderFactory.createTitledBorder(""));
+        
+        routeModel.initTable(this, routeTable, _route);
 
         if (_route != null) {
             routeName = _route.getName();
             routeNameTextField.setText(routeName);
             commentTextField.setText(_route.getComment());
-            routeModel.initTable(this, routeTable, route);
             enableButtons(true);
         } else {
             setTitle(Bundle.getMessage("TitleRouteAdd"));
@@ -206,6 +206,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new RouteCopyAction(Bundle.getMessage("MenuItemCopy"), routeName));
         toolMenu.add(new SetTrainIconRouteAction(Bundle.getMessage("MenuSetTrainIconRoute"), routeName));
+        toolMenu.addSeparator();
         toolMenu.add(new PrintRouteAction(Bundle.getMessage("MenuItemPrint"), false, _route));
         toolMenu.add(new PrintRouteAction(Bundle.getMessage("MenuItemPreview"), true, _route));
         menuBar.add(toolMenu);

@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class LocationsTableFrame extends OperationsFrame {
 
@@ -48,7 +47,7 @@ public class LocationsTableFrame extends OperationsFrame {
     javax.swing.JRadioButton sortById = new javax.swing.JRadioButton(Bundle.getMessage("Id"));
 
     // major buttons
-    JButton addButton = new JButton(Bundle.getMessage("Add"));
+    JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
 
     public LocationsTableFrame() {
         super(Bundle.getMessage("TitleLocationsTable"));
@@ -95,6 +94,7 @@ public class LocationsTableFrame extends OperationsFrame {
         if (Setup.isVsdPhysicalLocationEnabled()) {
             toolMenu.add(new SetPhysicalLocationAction(Bundle.getMessage("MenuSetPhysicalLocation"), null));
         }
+        toolMenu.addSeparator();
         toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPrint"), false));
         toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPreview"), true));
         menuBar.add(toolMenu);

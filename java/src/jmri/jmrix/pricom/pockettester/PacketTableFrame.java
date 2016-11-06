@@ -1,4 +1,3 @@
-// PacketTableFrame.java
 package jmri.jmrix.pricom.pockettester;
 
 import javax.swing.BoxLayout;
@@ -12,14 +11,9 @@ import javax.swing.table.TableRowSorter;
  * Frame providing survey of DCC contents
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version	$Revision$
- */
+  */
 public class PacketTableFrame extends jmri.util.JmriJFrame implements DataListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 219225062863225988L;
     PacketDataModel model = new PacketDataModel();
     JTable table;
     JScrollPane scroll;

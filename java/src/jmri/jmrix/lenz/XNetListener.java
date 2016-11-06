@@ -13,8 +13,7 @@ package jmri.jmrix.lenz;
  *
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
- */
+  */
 public interface XNetListener extends jmri.jmrix.AbstractMRListener {
 
     /**

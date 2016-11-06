@@ -8,8 +8,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.xpa package
  *
  * @author	Paul Bender
- * @version	$Revision$
- */
+  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
@@ -33,13 +32,14 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(XpaThrottleTest.class));
         //suite.addTest(new TestSuite(XpaPacketizerTest.class));
         //suite.addTest(new TestSuite(jmri.jmrix.xpa.packetgen.PacketGenFrameTest.class));
-        suite.addTest(new TestSuite(XpaTurnoutManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XpaTurnoutManagerTest.class));
         suite.addTest(new TestSuite(XpaPowerManagerTest.class));
-        suite.addTest(new TestSuite(XpaThrottleManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XpaThrottleManagerTest.class));
         //suite.addTest(new TestSuite(XpaTrafficControllerTest.class));
         //suite.addTest(new TestSuite(XpaTrafficRouterTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.xpa.serialdriver.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.xpa.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.xpa.swing.PackageTest.class));
         return suite;
     }
 

@@ -8,7 +8,6 @@ import javax.swing.AbstractAction;
  * Action to reset the all of the schedule item hit counts for this schedule
  *
  * @author Daniel Boudreau Copyright (C) 2014
- * @version $Revision: 17977 $
  */
 public class ScheduleResetHitsAction extends AbstractAction {
 

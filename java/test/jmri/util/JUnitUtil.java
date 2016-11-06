@@ -25,6 +25,7 @@ import jmri.managers.DefaultConditionalManager;
 import jmri.managers.DefaultIdTagManager;
 import jmri.managers.DefaultLogixManager;
 import jmri.managers.DefaultMemoryManager;
+import jmri.managers.DefaultRailComManager;
 import jmri.managers.DefaultSignalMastLogicManager;
 import jmri.managers.InternalReporterManager;
 import jmri.managers.InternalSensorManager;
@@ -353,6 +354,11 @@ public class JUnitUtil {
     public static void initIdTagManager() {
         InstanceManager.reset(jmri.IdTagManager.class);
         InstanceManager.store(new DefaultIdTagManager(), jmri.IdTagManager.class);
+    }
+
+    public static void initRailComManager() {
+        InstanceManager.reset(jmri.RailComManager.class);
+        InstanceManager.store(new DefaultRailComManager(), jmri.RailComManager.class);
     }
 
     public static void initLogixManager() {

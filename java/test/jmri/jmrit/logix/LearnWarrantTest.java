@@ -16,9 +16,9 @@ import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.AbstractButtonFinder;
 import junit.extensions.jfcunit.finder.DialogFinder;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Warrant creation
@@ -38,6 +38,18 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
     public void testLearnWarrant() throws Exception {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/LearnWarrantTest.xml");
+        /* This layout designed so that the block and path will define a unique
+         * route from origin to destination.  i.e. the review and select route
+         * never needs to be displayed.  All possible EastBound Routes:
+         * OB1/Main - OB5/main (default)    Route {OB1, OB2, OB3, OB4, OB5}
+         * OB1/WestSiding - OB5/Main        Route {OB1, OB6, OB3, OB4, OB5}
+         * OB1/Main - OB5/EastSiding        Route {OB1, OB2, OB3, OB7, OB5}
+         * OB1/WestSiding - OB5/EastSiding  Route {OB1, OB6, OB3, OB7, OB5}
+         * OB1/Main - OB7/EastSiding        Route {OB1, OB2, OB3, OB7}
+         * OB1/WestSiding - OB7/EastSiding  Route {OB1, OB6, OB3, OB7}
+         * OB1/Main - OB6/EastSiding        Route {OB1, OB6}
+         * OB1/WestSiding - OB6/EastSiding  Route {OB1, OB6}
+        */
         InstanceManager.getDefault(ConfigureManager.class).load(f);
 //        ControlPanelEditor panel = (ControlPanelEditor)null;
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
@@ -48,41 +60,59 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         
         frame._origin.blockBox.setText("OB1");
         frame._destination.blockBox.setText("OB5");
+        String[] route = {"OB1", "OB2", "OB3", "OB4", "OB5"};
+
         pressButton(frame, Bundle.getMessage("Calculate"));
         List<BlockOrder> orders = frame.getOrders();
         Assert.assertEquals("5 BlockOrders", 5, orders.size());
         
         frame.setAddress("99");
+        flushAWT();  
+        
         pressButton(frame, Bundle.getMessage("Start"));
         // dismiss warning "starting block not occupied
         confirmJOptionPane(frame, Bundle.getMessage("WarningTitle"), "OK");
+//        confirmJOptionPane(frame, Bundle.getMessage("QuestionTitle"), "Yes");
         
         // occupy starting block
-        Sensor sensor = _sensorMgr.getBySystemName("IS1");
+        Sensor sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
         sensor.setState(Sensor.ACTIVE);
         pressButton(frame, Bundle.getMessage("Start"));
 
+        JUnitUtil.waitFor(() -> {
+            return (frame._learnThrottle!=null);
+        }, "Found throttle");
         Assert.assertNotNull("Throttle not found", frame._learnThrottle.getThrottle());
-        sensor = runtimes(sensor, frame._learnThrottle.getThrottle());
+        
+        sensor = recordtimes(route, frame._learnThrottle.getThrottle());
+        
         pressButton(frame, Bundle.getMessage("Stop"));
         
+        // change address and run
         frame.setAddress("111");
         sensor.setState(Sensor.INACTIVE);
-        sensor = _sensorMgr.getBySystemName("IS1");
+        
+        sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
         sensor.setState(Sensor.ACTIVE);
         pressButton(frame, Bundle.getMessage("ARun"));
-        sensor = runtimes(sensor, null);
-        while (w.getThrottle() != null) {
-            // Sometimes the engineer is blocked
-            flushAWT();          
-        }        
+        sensor = runtimes(route);
+        
+        final Warrant warrant = w;
+        JUnitUtil.waitFor(() -> {
+            return (warrant.getThrottle()==null);
+        }, "Wait for run to end");
         String msg = w.getRunModeMessage();
         Assert.assertEquals("run finished", Bundle.getMessage("NotRunning", w.getDisplayName()), msg);
 //        sensor.setState(Sensor.INACTIVE);
+        
         pressButton(frame, Bundle.getMessage("ButtonSave"));
         w = InstanceManager.getDefault(WarrantManager.class).getWarrant("Learning");
         List<ThrottleSetting> commands = w.getThrottleCommands();
-        Assert.assertEquals("9 ThrottleCommands", 9, commands.size());
+        Assert.assertEquals("11 ThrottleCommands", 11, commands.size());
+        /*
+        for (ThrottleSetting ts: commands) {
+            System.out.println(ts.toString());
+        }*/
         WarrantTableFrame tableFrame = WarrantTableFrame.getInstance();
 //        WarrantTableFrame tableFrame = (WarrantTableFrame)jmri.util.JmriJFrame.getFrame(Bundle.getMessage("WarrantTable"));
         Assert.assertNotNull("Warrant Table save", tableFrame);
@@ -112,32 +142,58 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
 
     private void confirmJOptionPane(java.awt.Container frame, String title, String text) {
         DialogFinder finder = new DialogFinder(title);
+        JUnitUtil.waitFor(() -> {
+            return (java.awt.Container)finder.find()!=null;
+        }, "Found dialog + \"title\"");
         java.awt.Container pane = (java.awt.Container)finder.find();
         Assert.assertNotNull(title+" JOptionPane not found", pane);
         pressButton(pane, text);
     }
     
     /**
-     * @param sensor - active start sensor
+     * @param array of OBlock names
+     * @param throttle
      * @return - active end sensor
      * @throws Exception
      */
-    private Sensor runtimes(Sensor sensor, DccThrottle throttle) throws Exception {
+    private Sensor recordtimes(String[] route, DccThrottle throttle) throws Exception {
         flushAWT();
-        if (throttle!=null) {
-            throttle.setSpeedSetting(0.5f);
+        float speed = 0.1f;
+        if (throttle==null) {
+            throw new Exception("recordtimes: No Throttle");
         }
-        for (int i=2; i<=5; i++) {
+        throttle.setSpeedSetting(speed);
+        Sensor sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
+        for (int i=1; i<route.length; i++) {
             flushAWT();
-            Sensor sensorNext = _sensorMgr.getBySystemName("IS"+i);
+            if (i<3) {
+                speed += 0.1f;
+            } else {
+                speed -= 0.1f;                
+            }
+            throttle.setSpeedSetting(speed);
+            flushAWT();
+            Sensor sensorNext = _OBlockMgr.getBySystemName(route[i]).getSensor();
             sensorNext.setState(Sensor.ACTIVE);
             flushAWT();          
             sensor.setState(Sensor.INACTIVE);
             sensor = sensorNext;
         }
-        if (throttle!=null) {
-            // leaving script with non-zero speed adds 2 more speed commands (-0.5f & 0.0f)
-            throttle.setSpeedSetting(0.2f);
+        // leaving script with non-zero speed adds 2 more speed commands (-0.5f & 0.0f)
+        throttle.setSpeedSetting(0.0f);
+        return sensor;
+    }
+
+    private Sensor runtimes(String[] route) throws Exception {
+        flushAWT();
+        Sensor sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
+        for (int i=1; i<route.length; i++) {
+            flushAWT();
+            Sensor sensorNext = _OBlockMgr.getBySystemName(route[i]).getSensor();
+            sensorNext.setState(Sensor.ACTIVE);
+            flushAWT();          
+            sensor.setState(Sensor.INACTIVE);
+            sensor = sensorNext;
         }
         return sensor;
     }

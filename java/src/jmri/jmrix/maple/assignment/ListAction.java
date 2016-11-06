@@ -10,8 +10,7 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a ListFrame object
  *
  * @author Dave Duchamp Copyright (C) 2006
- * @version	$Revision$
- */
+  */
 public class ListAction extends AbstractAction {
 
     /**

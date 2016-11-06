@@ -2,7 +2,7 @@ package jmri.util;
 
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

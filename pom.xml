@@ -12,6 +12,12 @@
         <release.build_date>${maven.build.timestamp}</release.build_date>
         <!-- it would be better to get current year from machine clock -->
         <jmri.copyright.year>${project.inceptionYear}-${current.year}</jmri.copyright.year>
+        <!-- dependency versions (its easier to include version in dependency
+        but if multiple dependencies are linked, use a property for single
+        dependency source) -->
+        <jetty.version>9.2.17.v20160517</jetty.version>
+        <powermock.version>1.6.5</powermock.version>
+        <slf4j.version>1.7.21</slf4j.version>
     </properties>
     <scm>
         <connection>scm:git:https://github.com/JMRI/JMRI.git</connection>
@@ -252,6 +258,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>1.8</version>
+                <!--
                 <executions>
                     <execution>
                         <id>test</id>
@@ -268,6 +275,7 @@
                         </goals>
                     </execution>
                 </executions>  
+                -->
                 <dependencies>
                     <!-- use the version of ant we specify -->
                     <dependency>
@@ -320,7 +328,12 @@
                         <exclude>**/PackageTest.java</exclude>
                         <!-- ignore since the test is not intended to be normally used -->
                         <exclude>jmri/util/FailTest.java</exclude>
+                        <!-- ingore since base classes for other tests -->
+                        <exclude>jmri/util/SwingTestCase.java</exclude>
+                        <exclude>jmri/jmrit/operations/OperationsTestCase.java</exclude>
+                        <exclude>jmri/jmrit/operations/OperationsSwingTestCase.java</exclude>
                     </excludes>
+                    <workingDirectory>${basedir}</workingDirectory>
                 </configuration>
             </plugin>
             <plugin>
@@ -377,7 +390,19 @@
             </plugin>        
         </plugins>
     </build>
-    
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <showSuccess>false</showSuccess>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+
     <dependencies>
         <dependency>
             <groupId>org.jdom</groupId>
@@ -387,18 +412,18 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.21</version>
+            <version>${slf4j.version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.21</version>
+            <version>${slf4j.version}</version>
         </dependency>        
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jul-to-slf4j</artifactId>
-            <version>1.7.21</version>
+            <version>${slf4j.version}</version>
         </dependency>        
         <dependency>
             <groupId>javax.mail</groupId>
@@ -431,13 +456,13 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
-            <version>9.2.17.v20160517</version>
+            <version>${jetty.version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlet</artifactId>
-            <version>9.2.17.v20160517</version>
+            <version>${jetty.version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -449,13 +474,13 @@
         <dependency>
             <groupId>org.eclipse.jetty.websocket</groupId>
             <artifactId>websocket-api</artifactId>
-            <version>9.2.17.v20160517</version>
+            <version>${jetty.version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty.websocket</groupId>
             <artifactId>websocket-servlet</artifactId>
-            <version>9.2.17.v20160517</version>
+            <version>${jetty.version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -488,7 +513,7 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-util</artifactId>
-            <version>9.2.17.v20160517</version>
+            <version>${jetty.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -529,17 +554,12 @@
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
-            <version>1.0</version>
+            <version>1.1</version>
         </dependency>
         <dependency>
             <groupId>net.sf.bluecove</groupId>
             <artifactId>bluecove</artifactId>
             <version>2.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.rapplogic</groupId>
-            <artifactId>xbee-api</artifactId>
-            <version>0.9</version>
         </dependency>
         <dependency>
             <groupId>at.jta</groupId>
@@ -570,7 +590,7 @@
         <dependency>
             <groupId>org.openlcb</groupId>
             <artifactId>openlcb</artifactId>
-            <version>0.7.5</version>
+            <version>0.7.7</version>
         </dependency>
         <dependency>
             <groupId>ch.ntb</groupId>
@@ -596,6 +616,23 @@
             <groupId>xerces</groupId>
             <artifactId>xercesImpl</artifactId>
             <version>2.11.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.digi</groupId>
+            <artifactId>xbjlib</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <version>${powermock.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito</artifactId>
+            <version>${powermock.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

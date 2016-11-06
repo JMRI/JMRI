@@ -2,9 +2,10 @@ package jmri.jmrix.acela;
 
 import jmri.Turnout;
 import jmri.TurnoutManager;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,17 +19,19 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
     private AcelaTrafficControlScaffold tcis = null; 
     private AcelaSystemConnectionMemo memo = null; 
 
+    @Override
     public String getSystemName(int i) {
         return "AT" + i;
     }
 
+    @Test
     public void testConstructor() {
         // create and register the manager object
         AcelaTurnoutManager atm = new AcelaTurnoutManager(new AcelaSystemConnectionMemo(tcis) );
         Assert.assertNotNull("Acela Turnout Manager creation",atm);
     }
 
-
+    @Test
     public void testAsAbstractFactory() {
         // a Turnout Manager object is created and registered in setUp.
         // ask for a Turnout, and check type
@@ -54,27 +57,12 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
 
     }
 
-    // from here down is testing infrastructure
-    public AcelaTurnoutManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", AcelaTurnoutManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(AcelaTurnoutManagerTest.class);
-        return suite;
-    }
-
     AcelaNode a0, a1, a2, a3;
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Override
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
  
@@ -117,10 +105,10 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
-    @Override
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
         jmri.util.JUnitUtil.resetInstanceManager();
+        apps.tests.Log4JFixture.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutManagerTest.class.getName());

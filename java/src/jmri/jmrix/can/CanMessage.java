@@ -23,7 +23,6 @@ import jmri.jmrix.AbstractMRMessage;
  *
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008, 2009, 2010
- * @version $Revision$
  */
 public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
 

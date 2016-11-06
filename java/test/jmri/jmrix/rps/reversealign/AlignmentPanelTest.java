@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import jmri.InstanceManager;
 import jmri.jmrit.roster.RosterConfigManager;
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -15,8 +15,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the rps.AlignmentPanel class.
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision$
- */
+  */
 public class AlignmentPanelTest extends TestCase {
 
     public void testShow() {

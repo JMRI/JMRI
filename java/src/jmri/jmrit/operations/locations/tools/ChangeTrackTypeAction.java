@@ -10,7 +10,6 @@ import jmri.jmrit.operations.locations.TrackEditFrame;
  * Interchanges and Staging.
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision$
  */
 public class ChangeTrackTypeAction extends AbstractAction {
 

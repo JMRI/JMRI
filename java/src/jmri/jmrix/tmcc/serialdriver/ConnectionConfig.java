@@ -1,12 +1,10 @@
-// ConnectionConfig.java
 package jmri.jmrix.tmcc.serialdriver;
 
 /**
  * Definition of objects to handle configuring a TMCC layout connection
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**

@@ -5,7 +5,6 @@ package jmri.jmrix.loconet.sdf;
  * Implement the DELAY_SOUND macro from the Digitrax sound definition language
  *
  * @author	Bob Jacobsen Copyright (C) 2007, 2008
- * @version $Revision$
  */
 public class DelaySound extends SdfMacro {
 

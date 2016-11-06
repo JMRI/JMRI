@@ -8,7 +8,6 @@ import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
  *
  * @author	Bob Jacobsen Copyright (C) 2010
  * @author	Paul Bender Copyright (C) 2010
- * @version $Revision$
  * @since 2.11.1
  */
 public class JMRIClientComponentFactory extends jmri.jmrix.swing.ComponentFactory {

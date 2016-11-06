@@ -1,7 +1,7 @@
 package jmri.jmrix.loconet.locogen;
 
 import jmri.jmrix.loconet.LocoNetMessage;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -28,7 +28,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.loconet.locogen.PackageTest");  // no tests in this class itself
         suite.addTest(new TestSuite(LocoGenTest.class));
-        suite.addTest(new TestSuite(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         return suite;
     }
 

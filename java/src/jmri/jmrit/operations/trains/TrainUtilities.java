@@ -10,13 +10,14 @@ import org.slf4j.LoggerFactory;
  * Train file utilities
  *
  * @author Daniel Boudreau (C) 2010
- * @version $Revision: 20668 $
+ * 
  *
  */
 public class TrainUtilities {
 
     /**
      * This method uses Desktop which is supported in Java 1.6.
+     * @param file The File to open.
      */
     public static void openDesktop(File file) {
         if (!java.awt.Desktop.isDesktopSupported()) {

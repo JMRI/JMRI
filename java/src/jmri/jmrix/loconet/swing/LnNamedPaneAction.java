@@ -17,8 +17,7 @@ import org.slf4j.LoggerFactory;
  * Action to create and load a JmriPanel from just its name.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
- */
+  */
 public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConnectionAction {
 
     /**

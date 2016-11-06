@@ -395,6 +395,7 @@ public class Train implements java.beans.PropertyChangeListener {
      * for this train. TODO Doesn't provide expected arrival time if train is in
      * route, instead provides relative time. If train is at or has passed the
      * location return -1.
+     * @param routeLocation The RouteLocation.
      *
      * @return expected arrival time
      */
@@ -659,6 +660,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Set train's current route location
+     * @param location The current RouteLocation. 
      */
     protected void setCurrentLocation(RouteLocation location) {
         RouteLocation old = _current;
@@ -819,6 +821,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Get train's status in the specified locale.
+     * @param locale The Locale.
      *
      * @return Human-readable status
      */
@@ -828,6 +831,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Get the human-readable status for the requested status code.
+     * @param locale The Locale.
      *
      * @param code requested status
      * @return Human-readable status
@@ -1150,6 +1154,7 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Add a road name that the train will either service or exclude. See
      * setRoadOption
+     * @param road The string road name.
      *
      * @return true if road name was added, false if road name wasn't in the
      *         list.
@@ -1167,6 +1172,7 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Delete a road name that the train will either service or exclude. See
      * setRoadOption
+     * @param road The string road name to delete.
      *
      * @return true if road name was removed, false if road name wasn't in the
      *         list.
@@ -1279,6 +1285,7 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Add a load that the train will either service or exclude. See
      * setLoadOption
+     * @param load The string load name.
      *
      * @return true if load name was added, false if load name wasn't in the
      *         list.
@@ -1296,6 +1303,7 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Delete a load name that the train will either service or exclude. See
      * setLoadOption
+     * @param load The string load name.
      *
      * @return true if load name was removed, false if load name wasn't in the
      *         list.
@@ -1395,6 +1403,7 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Add a owner name that the train will either service or exclude. See
      * setOwnerOption
+     * @param owner The string representing the owner's name.
      *
      * @return true if owner name was added, false if owner name wasn't in the
      *         list.
@@ -1412,6 +1421,7 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Delete a owner name that the train will either service or exclude. See
      * setOwnerOption
+     * @param owner The string representing the owner's name.
      *
      * @return true if owner name was removed, false if owner name wasn't in the
      *         list.
@@ -1451,6 +1461,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Only rolling stock built in or after this year will be used.
+     * @param year A string representing a year.
      *
      */
     public void setBuiltStartYear(String year) {
@@ -1467,6 +1478,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Only rolling stock built in or before this year will be used.
+     * @param year A string representing a year.
      *
      */
     public void setBuiltEndYear(String year) {
@@ -1483,6 +1495,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Determine if train will service rolling stock by built date.
+     * @param date A string representing the built date for a car or engine.
      *
      * @return true is built date is in the acceptable range.
      */
@@ -1887,6 +1900,7 @@ public class Train implements java.beans.PropertyChangeListener {
      * The code using getServiceStatus() currently assumes that if there's a
      * service status that the issue is either route moves or maximum train
      * length.
+     * @return The statusCode.
      */
     public String getServiceStatus() {
         return _serviceStatus;
@@ -1935,6 +1949,7 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Gets the number of cars in the train when train departs the route
      * location.
+     * @param routeLocation The RouteLocation.
      *
      * @return The number of cars in the train departing the route location.
      */
@@ -1962,6 +1977,7 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Gets the number of empty cars in the train when train departs the route
      * location.
+     * @param routeLocation The RouteLocation.
      *
      * @return The number of empty cars in the train departing the route
      *         location.
@@ -2137,6 +2153,7 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Returns a formated string providing the train's description. {0} = lead
      * engine number, {1} = train's departure direction {2} = lead engine road.
+     * @return The train's description.
      */
     public String getDescription() {
         String description =
@@ -2764,6 +2781,7 @@ public class Train implements java.beans.PropertyChangeListener {
      * adding or removing a car from a train, or changing the manifest format.
      * Once the manifest has been regenerated (modified == false), the old
      * status for the train is restored.
+     * @param modified True if train's manifest has been modified.
      *
      */
     public void setModified(boolean modified) {
@@ -2863,6 +2881,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Build this train. Creates a train manifest.
+     * @return True if build successful.
      */
     public synchronized boolean build() {
         reset();
@@ -2995,6 +3014,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Print manifest for train.
+     * @param isPreview True if preview.
      *
      * @return true if print successful.
      */
