@@ -1264,7 +1264,7 @@
             <classpath refid="test.class.path"/>
 
             <jvmarg value="-Xmx640m"/>
-            <jvmarg ling="${jvm.args}"/>
+            <jvmarg line="${jvm.args}"/>
 
             <test name="apps.tests.AllTest">
                 <formatter usefile="no" type="brief"/>
