@@ -28,11 +28,6 @@ public class SRCPClientParserTests extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmris.srcp.SRCPClientParserTests");  // no tests in this class itself
         suite.addTest(new TestSuite(SRCPClientParserTokenizerTest.class));
         suite.addTest(new TestSuite(SRCPClientParserTest.class));
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            // put any tests that require a UI here.
-        }
-
         return suite;
     }
 

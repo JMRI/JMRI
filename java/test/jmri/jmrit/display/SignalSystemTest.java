@@ -22,7 +22,7 @@ public class SignalSystemTest extends jmri.configurexml.SchemaTestBase {
 
 
     public void testLoadSimplePanelOBlocksDB1969() throws jmri.JmriException {
-        if (System.getProperty("jmri.headlesstest", "false").equals("true")) { return; }
+        if (System.getProperty("jmri.headlesstest", System.getProperty("java.awt.headless", "false")).equals("true")) { return; }
         
         // load file
         InstanceManager.getDefault(ConfigureManager.class)
@@ -90,7 +90,7 @@ public class SignalSystemTest extends jmri.configurexml.SchemaTestBase {
     }
 
     public void testLoadAA1UPtest() throws jmri.JmriException {
-        if (System.getProperty("jmri.headlesstest", "false").equals("true")) { return; }
+        if (System.getProperty("jmri.headlesstest", System.getProperty("java.awt.headless", "false")).equals("true")) { return; }
         
         // load file
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).setStabilisedSensor("IS_ROUTING_DONE");

@@ -31,7 +31,7 @@ public class PackageTest extends TestCase {
 
         suite.addTest(jmri.jmrit.display.PositionableLabelTest.suite());
 
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (!System.getProperty("jmri.headlesstest", System.getProperty("java.awt.headless", "false")).equals("true")) {
             suite.addTest(jmri.jmrit.display.LinkingLabelTest.suite());
             suite.addTest(jmri.jmrit.display.MemoryIconTest.suite());
             suite.addTest(jmri.jmrit.display.MemorySpinnerIconTest.suite());
