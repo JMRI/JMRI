@@ -18,9 +18,15 @@
   <decoder>
     <family name="Lenz Standard" mfg="Lenz" highVersionID="81" lowVersionID="80" comment="No comment">
       <model model="Standard" numOuts="3" numFns="9" lowVersionID="80" maxMotorCurrent="1A " formFactor="N">
-        <output name="1" label="A - White"/>
-        <output name="2" label="B - Yellow"/>
-        <output name="3" label="C - Green"/>
+        <output name="1" label="A - White">
+            <label xml:lang="cs">A - Bílá</label>
+        </output>
+        <output name="2" label="B - Yellow">
+            <label xml:lang="cs">B - Žlutá</label>            
+        </output>
+        <output name="3" label="C - Green">
+            <label xml:lang="cs">C - Zelená</label>            
+        </output>
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
@@ -62,8 +68,8 @@
         <label xml:lang="de">Höchstgeschwindigkeit</label>
         <comment>Sets the maximum voltage at full throttle</comment>
         <comment xml:lang="de">Sets the maximum voltage at full throttle</comment>
-        <label xml:lang="cs">Maximální napětí (0-255)</label>
-        <comment xml:lang="cs">Nastavení maximálního napětí při plně otevřeném ovladači</comment>
+        <label xml:lang="cs">Maximální napětí</label>
+        <comment xml:lang="cs">Meze 0-255. Nastavení maximálního napětí při plně otevřeném ovladači.</comment>
       </variable>
       <variable CV="6" item="Vmid" default="48" comment="Range 0-255">
         <decVal min="0" max="255"/>

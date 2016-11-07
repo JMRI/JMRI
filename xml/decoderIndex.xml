@@ -5704,10 +5704,12 @@
           <output name="1" label="White">
             <label xml:lang="it">Bianco</label>
             <label xml:lang="de">Weiß</label>
+            <label xml:lang="cs">Bílá</label>
           </output>
           <output name="2" label="Yellow">
             <label xml:lang="it">Giallo</label>
             <label xml:lang="de">Gelb</label>
+            <label xml:lang="cs">Žlutá</label>
           </output>
         </model>
         <model model="N025-P" numOuts="2" numFns="10" maxMotorCurrent="0.7 A" maxTotalCurrent="1 A">
@@ -5715,10 +5717,12 @@
           <output name="1" label="White">
             <label xml:lang="it">Bianco</label>
             <label xml:lang="de">Weiß</label>
+            <label xml:lang="cs">Bílá</label>
           </output>
           <output name="2" label="Yellow">
             <label xml:lang="it">Giallo</label>
             <label xml:lang="de">Gelb</label>
+            <label xml:lang="cs">Žlutá</label>
           </output>
         </model>
         <model model="N025-P8" numOuts="2" numFns="10" maxMotorCurrent="0.7 A" maxTotalCurrent="1 A">
@@ -5726,10 +5730,12 @@
           <output name="1" label="White">
             <label xml:lang="it">Bianco</label>
             <label xml:lang="de">Weiß</label>
+            <label xml:lang="cs">Bílá</label>
           </output>
           <output name="2" label="Yellow">
             <label xml:lang="it">Giallo</label>
             <label xml:lang="de">Gelb</label>
+            <label xml:lang="cs">Žlutá</label>
           </output>
         </model>
         <model model="N025-PA" numOuts="2" numFns="10" maxMotorCurrent="0.7 A" maxTotalCurrent="1 A">
@@ -5737,10 +5743,12 @@
           <output name="1" label="White">
             <label xml:lang="it">Bianco</label>
             <label xml:lang="de">Weiß</label>
+            <label xml:lang="cs">Bílá</label>
           </output>
           <output name="2" label="Yellow">
             <label xml:lang="it">Giallo</label>
             <label xml:lang="de">Gelb</label>
+            <label xml:lang="cs">Žlutá</label>
           </output>
         </model>
         <model model="T125" numOuts="2" numFns="10" maxMotorCurrent="1.1 A" maxTotalCurrent="1.4 A">
@@ -5748,10 +5756,12 @@
           <output name="1" label="White">
             <label xml:lang="it">Bianco</label>
             <label xml:lang="de">Weiß</label>
+            <label xml:lang="cs">Bílá</label>
           </output>
           <output name="2" label="Yellow">
             <label xml:lang="it">Giallo</label>
             <label xml:lang="de">Gelb</label>
+            <label xml:lang="cs">Žlutá</label>
           </output>
         </model>
         <model model="T125-8" numOuts="2" numFns="10" maxMotorCurrent="1.1 A" maxTotalCurrent="1.4 A">
@@ -5759,10 +5769,12 @@
           <output name="1" label="White">
             <label xml:lang="it">Bianco</label>
             <label xml:lang="de">Weiß</label>
+            <label xml:lang="cs">Bílá</label>
           </output>
           <output name="2" label="Yellow">
             <label xml:lang="it">Giallo</label>
             <label xml:lang="de">Gelb</label>
+            <label xml:lang="cs">Žlutá</label>
           </output>
         </model>
         <model model="T145" numOuts="4" numFns="10" maxMotorCurrent="1.1 A" maxTotalCurrent="2.0 A">
@@ -5770,18 +5782,22 @@
           <output name="1" label="White">
             <label xml:lang="it">Bianco</label>
             <label xml:lang="de">Weiß</label>
+            <label xml:lang="cs">Bílá</label>
           </output>
           <output name="2" label="Yellow">
             <label xml:lang="it">Giallo</label>
             <label xml:lang="de">Gelb</label>
+            <label xml:lang="cs">Žlutá</label>
           </output>
           <output name="3" label="Green">
             <label xml:lang="it">Verde</label>
             <label xml:lang="de">Grün</label>
+            <label xml:lang="cs">Zelená</label>
           </output>
           <output name="4" label="Violet">
             <label xml:lang="it">Viola</label>
             <label xml:lang="de">Violett</label>
+            <label xml:lang="cs">Fialová</label>
           </output>
         </model>
         <model model="T145-8" numOuts="4" numFns="10" maxMotorCurrent="1.1 A" maxTotalCurrent="2.0 A">
@@ -5789,18 +5805,22 @@
           <output name="1" label="White">
             <label xml:lang="it">Bianco</label>
             <label xml:lang="de">Weiß</label>
+            <label xml:lang="cs">Bílá</label>
           </output>
           <output name="2" label="Yellow">
             <label xml:lang="it">Giallo</label>
             <label xml:lang="de">Gelb</label>
+            <label xml:lang="cs">Žlutá</label>
           </output>
           <output name="3" label="Green">
             <label xml:lang="it">Verde</label>
             <label xml:lang="de">Grün</label>
+            <label xml:lang="cs">Zelená</label>
           </output>
           <output name="4" label="Violet">
             <label xml:lang="it">Viola</label>
             <label xml:lang="de">Violett</label>
+            <label xml:lang="cs">Fialová</label>
           </output>
         </model>
       </family>
@@ -5809,63 +5829,81 @@
           <versionCV lowVersionID="35" highVersionID="35" />
           <output name="1" label="Front|Light">
             <label xml:lang="de">Ausgang|A</label>
+            <label xml:lang="cs">Přední|Světlo</label>
           </output>
           <output name="2" label="Rear|Light">
             <label xml:lang="de">Ausgang|B</label>
+            <label xml:lang="cs">Zadní|Světlo</label>
           </output>
           <output name="3" label="Output|C">
             <label xml:lang="de">Ausgang|C</label>
+            <label xml:lang="cs">Výstup|C</label>
           </output>
           <output name="4" label="Output|D">
             <label xml:lang="de">Ausgang|D</label>
+            <label xml:lang="cs">Výstup|D</label>
           </output>
           <output name="5" label="Output|E">
             <label xml:lang="de">Ausgang|E</label>
+            <label xml:lang="cs">Výstup|E</label>
           </output>
           <output name="6" label="Output|F">
             <label xml:lang="de">Ausgang|F</label>
+            <label xml:lang="cs">Výstup|F</label>
           </output>
         </model>
         <model model="N45-P" numOuts="6" numFns="14" maxMotorCurrent="0.8 A" maxTotalCurrent="0.8 A">
           <versionCV lowVersionID="35" highVersionID="35" />
           <output name="1" label="Front|Light">
             <label xml:lang="de">Ausgang|A</label>
+            <label xml:lang="cs">Přední|Světlo</label>
           </output>
           <output name="2" label="Rear|Light">
             <label xml:lang="de">Ausgang|B</label>
+            <label xml:lang="cs">Zadní|Světlo</label>
           </output>
           <output name="3" label="Output|C">
             <label xml:lang="de">Ausgang|C</label>
+            <label xml:lang="cs">Výstup|C</label>
           </output>
           <output name="4" label="Output|D">
             <label xml:lang="de">Ausgang|D</label>
+            <label xml:lang="cs">Výstup|D</label>
           </output>
           <output name="5" label="Output|E">
             <label xml:lang="de">Ausgang|E</label>
+            <label xml:lang="cs">Výstup|E</label>
           </output>
           <output name="6" label="Output|F">
             <label xml:lang="de">Ausgang|F</label>
+            <label xml:lang="cs">Výstup|F</label>
           </output>
         </model>
         <model model="N45-P8" numOuts="6" numFns="14" maxMotorCurrent="0.8 A" maxTotalCurrent="0.8 A">
           <versionCV lowVersionID="35" highVersionID="35" />
           <output name="1" label="Front|Light">
             <label xml:lang="de">Ausgang|A</label>
+            <label xml:lang="cs">Přední|Světlo</label>
           </output>
           <output name="2" label="Rear|Light">
             <label xml:lang="de">Ausgang|B</label>
+            <label xml:lang="cs">Zadní|Světlo</label>
           </output>
           <output name="3" label="Output|C">
             <label xml:lang="de">Ausgang|C</label>
+            <label xml:lang="cs">Výstup|C</label>
           </output>
           <output name="4" label="Output|D">
             <label xml:lang="de">Ausgang|D</label>
+            <label xml:lang="cs">Výstup|D</label>
           </output>
           <output name="5" label="Output|E">
             <label xml:lang="de">Ausgang|E</label>
+            <label xml:lang="cs">Výstup|E</label>
           </output>
           <output name="6" label="Output|F">
             <label xml:lang="de">Ausgang|F</label>
+            <label xml:lang="cs">Výstup|F</label>
           </output>
         </model>
       </family>
@@ -5873,9 +5911,11 @@
         <model model="ZTC217" numOuts="2">
           <output name="1" label="White">
             <label xml:lang="it">Bianco</label>
+            <label xml:lang="cs">Bílá</label>
           </output>
           <output name="2" label="Yellow">
             <label xml:lang="it">Giallo</label>
+            <label xml:lang="cs">Žlutá</label>
           </output>
         </model>
       </family>
@@ -6188,9 +6228,15 @@
       </family>
       <family name="Lenz Standard" mfg="Lenz" highVersionID="81" lowVersionID="80" comment="No comment" file="Lenz_Standard.xml">
         <model model="Standard" numOuts="3" numFns="9" lowVersionID="80" maxMotorCurrent="1A " formFactor="N">
-          <output name="1" label="A - White" />
-          <output name="2" label="B - Yellow" />
-          <output name="3" label="C - Green" />
+            <output name="1" label="A - White">
+            <label xml:lang="cs">A - Bílá</label>
+          </output>
+          <output name="2" label="B - Yellow">
+            <label xml:lang="cs">B - Žlutá</label>            
+          </output>
+          <output name="3" label="C - Green">
+            <label xml:lang="cs">C - Zelená</label>            
+          </output>
         </model>
       </family>
       <family name="Lenz Ultra-Drive decoders" mfg="Lenz" lowVersionID="1" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" file="Lenz_UltraDrive.xml">
@@ -25006,8 +25052,12 @@
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX644v28.xml">
         <model model="MX644D version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="222">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -25019,8 +25069,12 @@
           <size length="30" width="15" height="4" units="mm" />
         </model>
         <model model="MX644C version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="222">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -25034,8 +25088,12 @@
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX645P16v28.xml">
         <model model="MX645P16 version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX16" numOuts="4" numFns="14" productID="221">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <size length="30" width="15" height="4" units="mm" />
@@ -25043,8 +25101,12 @@
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX645v28.xml">
         <model model="MX645 version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -25056,8 +25118,12 @@
           <size length="30" width="15" height="4" units="mm" />
         </model>
         <model model="MX645R version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="221">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -25069,8 +25135,12 @@
           <size length="30" width="15" height="4" units="mm" />
         </model>
         <model model="MX645F version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="10" numFns="14" productID="221">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -25082,8 +25152,12 @@
           <size length="30" width="15" height="4" units="mm" />
         </model>
         <model model="MX645P22 version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX22" numOuts="10" numFns="14" productID="221">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -25211,8 +25285,12 @@
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX648v28.xml">
         <model model="MX648 version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="225">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3 (+5v)" />
@@ -25220,8 +25298,12 @@
           <size length="20" width="11" height="4" units="mm" />
         </model>
         <model model="MX648R version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="225">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -25229,8 +25311,12 @@
           <size length="20" width="11" height="4" units="mm" />
         </model>
         <model model="MX648F version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="225">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -25238,8 +25324,12 @@
           <size length="28" width="10.5" height="4" units="mm" />
         </model>
         <model model="MX648N version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="225">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -25249,8 +25339,12 @@
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX648v30.xml">
         <model model="MX648 version 30+" lowVersionID="30" highVersionID="45" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="225,249">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3 (+5v)" />
@@ -25258,8 +25352,12 @@
           <size length="20" width="11" height="4" units="mm" />
         </model>
         <model model="MX648R version 30+" lowVersionID="30" highVersionID="45" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="225,249">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -25267,8 +25365,12 @@
           <size length="20" width="11" height="4" units="mm" />
         </model>
         <model model="MX648F version 30+" lowVersionID="30" highVersionID="45" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="225,249">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -25276,8 +25378,12 @@
           <size length="28" width="10.5" height="4" units="mm" />
         </model>
         <model model="MX648N version 30+" lowVersionID="30" highVersionID="45" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="225,249">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -25980,8 +26086,12 @@
       </family>
       <family name="Zimo Unified software (version 32+)" mfg="Zimo" file="Zimo_Unified_software_v32_MX644.xml">
         <model model="MX644 version 32+" show="no" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="222">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3 (+5v)" />
@@ -25991,8 +26101,12 @@
           <size length="30" width="15" height="4" units="mm" />
         </model>
         <model model="MX644C version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="222">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3 (+5v)" />
@@ -26002,8 +26116,12 @@
           <size length="30" width="15" height="4" units="mm" />
         </model>
         <model model="MX644D version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="222">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -26015,8 +26133,12 @@
       </family>
       <family name="Zimo Unified software (version 32+)" mfg="Zimo" file="Zimo_Unified_software_v32_MX645.xml">
         <model model="MX645 version 32+" lowVersionID="32" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -26028,8 +26150,12 @@
           <size length="30" width="15" height="4" units="mm" />
         </model>
         <model model="MX645R version 32+" lowVersionID="32" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="221">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -26041,8 +26167,12 @@
           <size length="30" width="15" height="4" units="mm" />
         </model>
         <model model="MX645F version 32+" lowVersionID="32" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="10" numFns="14" productID="221">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -26054,8 +26184,12 @@
           <size length="30" width="15" height="4" units="mm" />
         </model>
         <model model="MX645P22 version 32+" lowVersionID="32" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX22" numOuts="10" numFns="14" productID="221">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -26142,8 +26276,12 @@
       </family>
       <family name="Zimo Unified software (version 32+)" mfg="Zimo" file="Zimo_Unified_software_v32_MX648+.xml">
         <model model="MX648 version 33+" lowVersionID="33" highVersionID="42" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="8" numFns="14" productID="225">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3 (+5v)" />
@@ -26153,8 +26291,12 @@
           <size length="20" width="11" height="4" units="mm" />
         </model>
         <model model="MX648R version 33+" lowVersionID="33" highVersionID="42" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAmedium" numOuts="8" numFns="14" productID="225">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -26164,8 +26306,12 @@
           <size length="20" width="11" height="4" units="mm" />
         </model>
         <model model="MX648F version 33+" lowVersionID="33" highVersionID="42" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="8" numFns="14" productID="225">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -26175,8 +26321,12 @@
           <size length="28" width="10.5" height="4" units="mm" />
         </model>
         <model model="MX648N version 33+" lowVersionID="33" highVersionID="42" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="8" numFns="14" productID="225">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -26188,8 +26338,12 @@
       </family>
       <family name="Zimo Unified software (version 32+)" mfg="Zimo" file="Zimo_Unified_software_v32_MX648.xml">
         <model model="MX648 version 32+" lowVersionID="32" highVersionID="32" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="225">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3 (+5v)" />
@@ -26197,8 +26351,12 @@
           <size length="20" width="11" height="4" units="mm" />
         </model>
         <model model="MX648R version 32+" lowVersionID="32" highVersionID="32" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="225">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -26206,8 +26364,12 @@
           <size length="20" width="11" height="4" units="mm" />
         </model>
         <model model="MX648F version 32+" lowVersionID="32" highVersionID="32" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="225">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -26215,8 +26377,12 @@
           <size length="28" width="10.5" height="4" units="mm" />
         </model>
         <model model="MX648N version 32+" lowVersionID="32" highVersionID="32" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="225">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -26570,8 +26736,12 @@
       </family>
       <family name="Zimo Unified software (version 34+)" mfg="Zimo" file="Zimo_Unified_software_v34_MX644.xml">
         <model show="no" model="MX644 version 34+" replacementModel="MX644 version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="222">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -26583,8 +26753,12 @@
       </family>
       <family name="Zimo Unified software (version 34+)" mfg="Zimo" file="Zimo_Unified_software_v34_MX645.xml">
         <model show="no" model="MX645 version 34+" replacementModel="MX645 version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -26596,8 +26770,12 @@
           <size length="30" width="15" height="4" units="mm" />
         </model>
         <model show="no" model="MX645R version 34+" replacementModel="MX645R version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="221">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -26609,8 +26787,12 @@
           <size length="30" width="15" height="4" units="mm" />
         </model>
         <model show="no" model="MX645F version 34+" replacementModel="MX645F version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="10" numFns="14" productID="221">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -26622,8 +26804,12 @@
           <size length="30" width="15" height="4" units="mm" />
         </model>
         <model show="no" model="MX645P22 version 34+" replacementModel="MX645P22 version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX22" numOuts="10" numFns="14" productID="221">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -26675,8 +26861,12 @@
       </family>
       <family name="Zimo Unified software (version 34+)" mfg="Zimo" file="Zimo_Unified_software_v34_MX648.xml">
         <model show="no" model="MX648 version 34+" replacementModel="MX648 version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="38" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="225">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3 (+5v)" />
@@ -26684,8 +26874,12 @@
           <size length="20" width="11" height="4" units="mm" />
         </model>
         <model show="no" model="MX648R version 34+" replacementModel="MX648R version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="38" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="225">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -26693,8 +26887,12 @@
           <size length="20" width="11" height="4" units="mm" />
         </model>
         <model show="no" model="MX648F version 34+" replacementModel="MX648F version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="38" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="225">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -26702,8 +26900,12 @@
           <size length="28" width="10.5" height="4" units="mm" />
         </model>
         <model show="no" model="MX648N version 34+" replacementModel="MX648N version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="38" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="225">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3" />
@@ -26713,8 +26915,12 @@
       </family>
       <family name="Zimo Unified software (version 34+)" mfg="Zimo" file="Zimo_Unified_software_v34_MX658.xml">
         <model show="no" model="MX658N18 version 34+" replacementModel="MX644 version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="246">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
+          <output name="1" label="Front Light">
+              <label xml:lang="cs">Přední světlo</label>
+          </output>
+          <output name="2" label="Rear Light">
+              <label xml:lang="cs">Zadní světlo</label>
+          </output>
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3 (+5v)" />

@@ -53,7 +53,7 @@
         <label>
           <text>Tens digit = Move Away time (0-9)</text>
           <text xml:lang="it">Decine = Tempo allontanamento (0-9)</text>
-          <text xml:lang="cs">Desítky = doba vzdalování (0-9)</text>
+          <text xml:lang="cs">Desítky = doba odstoupení (0-9)</text>
         </label>
         <label>
           <text>Ones digit = Internal Speed Step x4 (0-9)</text>

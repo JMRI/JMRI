@@ -20,7 +20,7 @@
       <enumChoice choice="Flashing Headlight">
         <choice>Flashing Headlight</choice>
         <choice xml:lang="it">Luci Lampeggianti</choice>
-        <choice xml:lang="cs">Blikající dálkové světlo</choice>
+        <choice xml:lang="cs">Zábleskové dálkové světlo</choice>
       </enumChoice>
       <enumChoice choice="Single Pulse Strobe">
         <choice>Single Pulse Strobe</choice>
