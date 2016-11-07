@@ -1,4 +1,3 @@
-// MrcSystemConnectionMemo.java
 package jmri.jmrix.mrc;
 
 import java.util.ResourceBundle;
@@ -224,5 +223,3 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
 }
 
-
-/* @(#)MrcSystemConnectionMemo.java */
