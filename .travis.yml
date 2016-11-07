@@ -28,10 +28,12 @@ os:
   - linux
   - osx
 
-matrix:
-  env:
+env:
+  matrix:
   - HEADLESS=true
   - HEADLESS=false
+
+matrix:
   exclude:
   - os: osx
     env: HEADLESS=true
