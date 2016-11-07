@@ -29,6 +29,7 @@ public class SprogProgrammerManager extends DefaultProgrammerManager {
         super(serviceModeProgrammer, memo);
         //localProgrammer = serviceModeProgrammer;
         this.mode = mode;
+        adapterMemo = memo;
     }
 
     /**
@@ -53,7 +54,7 @@ public class SprogProgrammerManager extends DefaultProgrammerManager {
     }
 
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
-        return new SprogOpsModeProgrammer(pAddress, pLongAddress,adapterMemo);
+        return new SprogOpsModeProgrammer(pAddress, pLongAddress, adapterMemo);
     }
 
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
