@@ -1253,6 +1253,7 @@
     </target>
 
     <target name="ci-test-travis" depends="tests, runtime-library-selection" description="run ci-test using Travis-CI">
+        <echo message="jmv.args=[[[${jvm.args}]]]"/>
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
