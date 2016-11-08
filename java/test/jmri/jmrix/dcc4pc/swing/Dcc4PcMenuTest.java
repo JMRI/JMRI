@@ -2,11 +2,13 @@ package jmri.jmrix.dcc4pc.swing;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
+import java.awt.GraphicsEnvironment;
 
 /**
  * Tests for Dcc4PcMenu class.
@@ -20,6 +22,7 @@ public class Dcc4PcMenuTest {
 
    @Test
    public void MemoConstructorTest(){
+      Assume.assumeFalse(GraphicsEnvironment.isHeadless());
       Assert.assertNotNull("Dcc4PcMenu constructor",new Dcc4PcMenu(memo));
    }
 
