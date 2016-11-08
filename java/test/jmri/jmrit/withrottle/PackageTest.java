@@ -47,7 +47,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(WiThrottlePrefsPanelTest.class));
 
         // These tests do not need this protection against headless exceptions
-        if (!System.getProperty("jmri.headlesstest", System.getProperty("java.awt.headless", "false")).equals("true")) {
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
             suite.addTest(new JUnit4TestAdapter(ControllerFilterActionTest.class));
             suite.addTest(new JUnit4TestAdapter(ControllerFilterFrameTest.class));
             suite.addTest(new JUnit4TestAdapter(UserInterfaceTest.class));
