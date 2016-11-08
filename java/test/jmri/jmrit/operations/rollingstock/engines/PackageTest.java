@@ -35,7 +35,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
 
         // GUI tests start here
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (!System.getProperty("jmri.headlesstest", System.getProperty("java.awt.headless", "false")).equals("true")) {
             suite.addTest(EnginesTableFrameTest.suite());
             suite.addTest(EngineEditFrameTest.suite());
             suite.addTest(EngineAttributeEditFrameTest.suite());

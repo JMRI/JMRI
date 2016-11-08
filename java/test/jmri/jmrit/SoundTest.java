@@ -33,7 +33,7 @@ public class SoundTest {
      */
     @Test
     public void testPlay() {
-        Assume.assumeFalse(Boolean.getBoolean("jmri.headlesstest"));
+        Assume.assumeFalse(Boolean.getBoolean("java.awt.headless"));
         try {
             AudioSystem.getClip();
         } catch (IllegalArgumentException | LineUnavailableException ex) {
@@ -49,7 +49,7 @@ public class SoundTest {
      */
     @Test
     public void testLoopInt() {
-        Assume.assumeFalse(Boolean.getBoolean("jmri.headlesstest"));
+        Assume.assumeFalse(Boolean.getBoolean("java.awt.headless"));
         try {
             AudioSystem.getClip();
         } catch (IllegalArgumentException | LineUnavailableException ex) {
@@ -65,7 +65,7 @@ public class SoundTest {
      */
     @Test
     public void testStop() {
-        Assume.assumeFalse(Boolean.getBoolean("jmri.headlesstest"));
+        Assume.assumeFalse(Boolean.getBoolean("java.awt.headless"));
         try {
             AudioSystem.getClip();
         } catch (IllegalArgumentException | LineUnavailableException ex) {
