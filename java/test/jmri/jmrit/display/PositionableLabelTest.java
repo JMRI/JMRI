@@ -19,7 +19,6 @@ import junit.extensions.jfcunit.finder.JLabelFinder;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  * Test of PositionableLabel
@@ -39,7 +38,10 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     jmri.jmrit.display.panelEditor.PanelEditor panel;
 
     public void testSmallPanel() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // TextCase subclasses fail on unmet assumptions
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
 
         panel = new jmri.jmrit.display.panelEditor.PanelEditor("PositionableLabel Test Panel");
 
@@ -77,7 +79,10 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     // Load file showing four labels with backgrounds and make sure they have right color
     // The file used was written with 4.0.1, and behaves as expected from panel names
     public void testBackgroundColorFile() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // TextCase subclasses fail on unmet assumptions
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
 
         // make four windows
         InstanceManager.getDefault(ConfigureManager.class)
@@ -130,7 +135,10 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     // Explicit tests of PositionableLabel features
 
     public void testDisplayTransparent() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // TextCase subclasses fail on unmet assumptions
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
 
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
@@ -171,7 +179,10 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     }
 
     public void testDisplayTransparent45degrees() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // TextCase subclasses fail on unmet assumptions
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
 
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
@@ -221,7 +232,10 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
     // test with an RGB animated 13x13 GIF, 0.1 sec per frame
     public void testDisplayAnimatedRGB() throws IOException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // TextCase subclasses fail on unmet assumptions
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
 
         if (System.getProperty("jmri.migrationtests", "false").equals("false")) { // skip test for migration, but warn about it
             log.warn("skipping testDisplayAnimatedRGB because jmri.migrationtests not set true");
@@ -298,7 +312,10 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
     // test with an RGB animated 13x13 GIF, 0.1 sec per frame, rotate
     public void testDisplayAnimatedRGBrotated45degrees() throws IOException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // TextCase subclasses fail on unmet assumptions
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
 
          if (System.getProperty("jmri.migrationtests","false").equals("false")) { // skip test for migration, but warn about it
             log.warn("skipping testDisplayAnimatedRGBrotated45degrees because jmri.migrationtests not set true");
@@ -390,7 +407,10 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     // HEAVY MULTIPLICATION X \u2716
 
     public void testDisplayText() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // TextCase subclasses fail on unmet assumptions
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
 
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
@@ -431,7 +451,10 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
 
     public void testDisplayTextRotated90() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // TextCase subclasses fail on unmet assumptions
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
 
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
@@ -476,7 +499,10 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     }
 
     public void testDisplayTextRotated45() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // TextCase subclasses fail on unmet assumptions
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
 
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
