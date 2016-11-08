@@ -1,6 +1,7 @@
 package apps;
 
 import apps.gui3.TabbedPreferences;
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -112,7 +113,7 @@ public abstract class AppsBase {
          * work in the background if the file doesn't exist then we do not
          * initialize it
          */
-        if (preferenceFileExists && Boolean.getBoolean("java.awt.headless")) {
+        if (preferenceFileExists && !GraphicsEnvironment.isHeadless()) {
             r = new Runnable() {
 
                 public void run() {
