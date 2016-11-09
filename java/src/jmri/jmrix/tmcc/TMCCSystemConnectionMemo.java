@@ -48,10 +48,6 @@ public class TMCCSystemConnectionMemo extends SystemConnectionMemo {
         log.debug("configureManagers");
         jmri.InstanceManager.setTurnoutManager(jmri.jmrix.tmcc.SerialTurnoutManager.instance());
         jmri.InstanceManager.setThrottleManager(jmri.jmrix.tmcc.SerialThrottleManager.instance());
-        
-        // create a default, basically null ConsistManager in the absence of a 
-        // command station or programmer to do it.
-        jmri.InstanceManager.setConsistManager(new jmri.implementation.DccConsistManager());
     }
     
     /**
