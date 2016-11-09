@@ -21,7 +21,7 @@ public class QualifiedVarTest extends TestCase {
 
     // show me a specially-created frame
     public void testFrame() throws Exception {
-        if (System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (System.getProperty("jmri.headlesstest", System.getProperty("java.awt.headless", "false")).equals("true")) {
             return;
         }
 
