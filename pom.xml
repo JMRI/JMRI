@@ -262,6 +262,7 @@
                         <configuration>
                             <name>current.year</name>
                             <pattern>yyyy</pattern>
+                            <locale>en,US</locale>
                         </configuration>
                     </execution>
                 </executions>
