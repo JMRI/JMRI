@@ -363,7 +363,7 @@ public class NXFrame extends WarrantRoute {
             }
             if (msg!=null) {
                 if (log.isDebugEnabled()) log.debug("WarrantTableFrame run warrant. msg= "+msg+" Remove warrant "+warrant.getDisplayName());
-                tableFrame.getModel().removeNXWarrant(warrant);
+                tableFrame.getModel().removeWarrant(warrant);
             }
         }
         if (msg==null) {

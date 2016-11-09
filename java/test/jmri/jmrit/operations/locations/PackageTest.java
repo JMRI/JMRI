@@ -34,7 +34,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.operations.locations.tools.PackageTest.suite());
         suite.addTest(jmri.jmrit.operations.locations.schedules.PackageTest.suite());
         // GUI tests start here
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
             suite.addTest(InterchangeEditFrameTest.suite());
             suite.addTest(LocationEditFrameTest.suite());
             suite.addTest(LocationTableFrameTest.suite());

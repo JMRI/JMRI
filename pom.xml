@@ -18,6 +18,7 @@
         <jetty.version>9.2.17.v20160517</jetty.version>
         <powermock.version>1.6.5</powermock.version>
         <slf4j.version>1.7.21</slf4j.version>
+        <ant.jvm.args></ant.jvm.args>
     </properties>
     <scm>
         <connection>scm:git:https://github.com/JMRI/JMRI.git</connection>
@@ -40,6 +41,7 @@
                                 <phase>test</phase>
                                 <configuration>
                                     <target>
+                                        <property name="jvm.args">${ant.jvm.args}</property>
                                         <ant antfile="${basedir}/build.xml">
                                             <target name="travis-ci"/>
                                         </ant>
@@ -590,7 +592,7 @@
         <dependency>
             <groupId>org.openlcb</groupId>
             <artifactId>openlcb</artifactId>
-            <version>0.7.6</version>
+            <version>0.7.7</version>
         </dependency>
         <dependency>
             <groupId>ch.ntb</groupId>

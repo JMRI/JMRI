@@ -17,7 +17,7 @@ public class PackageTest extends TestCase {
         LoggerFactory.getLogger("apps.foo");
         LoggerFactory.getLogger("jmri.util");
 
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
 
             try {
                 new jmri.util.swing.JmriNamedPaneAction("Log4J Tree",
