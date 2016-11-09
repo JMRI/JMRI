@@ -9,6 +9,7 @@ import java.util.concurrent.Semaphore;
 
 import jmri.jmrix.can.TestTrafficController;
 import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.can.CanMessage;
 
 /**
  * Created by bracz on 11/7/16.
@@ -31,6 +32,15 @@ public class OlcbTestInterface {
             }
         });
         s.acquireUninterruptibly();
+        flush();
+    }
+
+    public void sendMessage(CanMessage msg) {
+        canInterface.frameInput().send(OlcbConfigurationManager.convertFromCan(msg));
+    }
+
+    public void flush() {
+        iface.flushSendQueue();
     }
 
     TestTrafficController tc;
