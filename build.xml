@@ -139,8 +139,9 @@
     <property name="doctarget"    value="${javadir}/doc"/>
     <property name="coveragetarget" value="${basedir}/coveragereport"/>
     <property name="source"       value="${javadir}/src"/>
-    <property name="target"       value="${javadir}/classes"/>
-    <property name="testtarget"   value="${javadir}/test-classes"/>
+    <property name="maventarget"  value="${basedir}/target"/>
+    <property name="target"       value="${maventarget}/classes"/>
+    <property name="testtarget"   value="${maventarget}/test-classes"/>
     <property name="test"         value="${javadir}/test"/>
     <property name="templatedir"  value="${javadir}/template"/>
     <property name="tmptarget"    value="${javadir}/tmp"/>
@@ -388,8 +389,7 @@
             <fileset file="log.txt"/>
             <fileset file="${jartarget}/jmri.jar"/>
             <fileset dir="${doctarget}"/>
-            <fileset dir="${target}"/>
-            <fileset dir="${testtarget}"/>
+            <fileset dir="${maventarget}"/>
             <fileset dir="${dist}"/>
             <fileset dir="${genjavasrcdir}"/>
             <fileset file="${javadir}/manifest"/>
