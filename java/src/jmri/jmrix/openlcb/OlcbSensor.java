@@ -11,9 +11,6 @@ import java.util.Timer;
 
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
-import jmri.jmrix.can.CanListener;
-import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.CanReply;
 
 /**
  * Extend jmri.AbstractSensor for OpenLCB controls.
@@ -56,7 +53,7 @@ public class OlcbSensor extends AbstractSensor {
                 // momentary sensor
                 addrActive = v[0];
                 addrInactive = null;
-                pc = new BitProducerConsumer(iface, new EventID(addrActive.toString()), new
+                pc = new BitProducerConsumer(iface, addrActive.toEventID(), new
                         EventID("00.00.00.00.00.00.00.00"), false);
                 timer = new Timer(true);
                 sensorListener = new VersionedValueListener<Boolean>(pc.getValue()) {
@@ -72,8 +69,8 @@ public class OlcbSensor extends AbstractSensor {
             case 2:
                 addrActive = v[0];
                 addrInactive = v[1];
-                pc = new BitProducerConsumer(iface, new EventID(addrActive.toString()), new
-                        EventID(addrInactive.toString()), false);
+                pc = new BitProducerConsumer(iface, addrActive.toEventID(),
+                        addrInactive.toEventID(), false);
                 sensorListener = new VersionedValueListener<Boolean>(pc.getValue()) {
                     @Override
                     public void update(Boolean value) {
