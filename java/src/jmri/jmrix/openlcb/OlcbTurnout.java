@@ -92,8 +92,7 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
                 break;
 
         }
-        pc = new BitProducerConsumer(iface, new EventID(addrThrown.toString()), new EventID
-                (addrClosed.toString()), flags);
+        pc = new BitProducerConsumer(iface, addrThrown.toEventID(), addrClosed.toEventID(), flags);
         turnoutListener = new VersionedValueListener<Boolean>(pc.getValue()) {
             @Override
             public void update(Boolean value) {
