@@ -22,7 +22,7 @@ public class QualifiedVarTest extends TestCase {
 
     // show me a specially-created frame
     public void testFrame() throws Exception {
-        if (!GraphicsEnvironment.isHeadless()) {
+        if (GraphicsEnvironment.isHeadless()) {
             return;
         }
 
