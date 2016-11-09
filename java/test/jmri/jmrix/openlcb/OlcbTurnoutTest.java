@@ -16,7 +16,12 @@ import junit.framework.TestSuite;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbTurnout class.
@@ -26,46 +31,22 @@ import static org.mockito.Mockito.mock;
 public class OlcbTurnoutTest extends TestCase {
     private final static Logger log = LoggerFactory.getLogger(OlcbTurnoutTest.class.getName());
 
-    public class FakePropertyChangeListener implements PropertyChangeListener {
-        private String property;
-        public int eventCount;
-        private int expectedCount;
-        private Object expectedValue;
-        public FakePropertyChangeListener(String property) {
-            this.property = property;
-            eventCount = 0;
-            expectedValue = null;
-            expectedCount = 0;
-        }
-
-        public void expectChange(Object newValue, int count) {
-            verifyExpectations();
-            expectedValue = newValue;
-            expectedCount += count;
-        }
-        public void expectChange(Object newValue) {
-            expectChange(newValue, 1);
-        }
-
-        public void verifyExpectations() {
-            Assert.assertEquals(property + ": expected count mismatch. last expected change: " +
-                    (expectedValue != null ? expectedValue.toString() : "null") + ". ",
-                    expectedCount, eventCount);
+    interface MockablePropertyChangeListener {
+        void onChange(String property, Object newValue);
+    }
+    class FPropertyChangeListener implements PropertyChangeListener {
+        MockablePropertyChangeListener m;
+        FPropertyChangeListener() {
+            m = mock(MockablePropertyChangeListener.class);
         }
 
         @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            if (!evt.getPropertyName().equals(property)) {
-                return;
-            }
-            Assert.assertTrue("Unexpected property change for " + property, eventCount <
-                    expectedCount);
-            ++eventCount;
-            if (expectedValue != null) {
-                Assert.assertEquals(evt.getNewValue(), expectedValue);
-            }
+        public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+            m.onChange(propertyChangeEvent.getPropertyName(), propertyChangeEvent.getNewValue());
         }
     }
+
+    protected FPropertyChangeListener l = new FPropertyChangeListener();
 
     private static final String COMMANDED_STATE = "CommandedState";
     private static final String KNOWN_STATE = "KnownState";
@@ -87,28 +68,23 @@ public class OlcbTurnoutTest extends TestCase {
         );
         mInactive.setExtended(true);
 
-        PropertyChangeListener l = mock(PropertyChangeListener.class);
         s.addPropertyChangeListener(l);
-        FakePropertyChangeListener commandedListener = new FakePropertyChangeListener(COMMANDED_STATE);
-        s.addPropertyChangeListener(commandedListener);
-        FakePropertyChangeListener knownListener = new FakePropertyChangeListener(KNOWN_STATE);
-        s.addPropertyChangeListener(knownListener);
 
         // check states
         Assert.assertTrue(s.getCommandedState() == Turnout.UNKNOWN);
 
-        commandedListener.expectChange(Turnout.THROWN);
-        knownListener.expectChange(Turnout.THROWN);
         t.sendMessage(mActive);
+
+        verify(l.m).onChange(COMMANDED_STATE, Turnout.THROWN);
+        verify(l.m).onChange(KNOWN_STATE, Turnout.THROWN);
+        verifyNoMoreInteractions(l.m);
         Assert.assertTrue(s.getCommandedState() == Turnout.THROWN);
 
-        commandedListener.expectChange(Turnout.CLOSED);
-        knownListener.expectChange(Turnout.CLOSED);
         t.sendMessage(mInactive);
+        verify(l.m).onChange(COMMANDED_STATE, Turnout.CLOSED);
+        verify(l.m).onChange(KNOWN_STATE, Turnout.CLOSED);
+        verifyNoMoreInteractions(l.m);
         Assert.assertTrue(s.getCommandedState() == Turnout.CLOSED);
-
-        commandedListener.verifyExpectations();
-        knownListener.verifyExpectations();
     }
 
     public void testLocalChange() throws jmri.JmriException {
@@ -116,30 +92,27 @@ public class OlcbTurnoutTest extends TestCase {
         OlcbTurnout s = new OlcbTurnout("MT", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
         s.finishLoad();
 
-        FakePropertyChangeListener knownListener = new FakePropertyChangeListener(KNOWN_STATE);
-        s.addPropertyChangeListener(knownListener);
-        FakePropertyChangeListener commandedListener = new FakePropertyChangeListener(COMMANDED_STATE);
-        s.addPropertyChangeListener(commandedListener);
+        s.addPropertyChangeListener(l);
 
         t.flush();
         t.tc.rcvMessage = null;
-        knownListener.expectChange(Turnout.THROWN);
-        commandedListener.expectChange(Turnout.THROWN);
         s.setState(Turnout.THROWN);
         t.flush();
+        verify(l.m).onChange(COMMANDED_STATE, Turnout.THROWN);
+        verify(l.m).onChange(KNOWN_STATE, Turnout.THROWN);
+        verifyNoMoreInteractions(l.m);
         Assert.assertTrue(s.getCommandedState() == Turnout.THROWN);
         log.debug("recv msg: " + t.tc.rcvMessage + " header " + Integer.toHexString(t.tc.rcvMessage.getHeader()));
         Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.8").match(t.tc.rcvMessage));
 
         t.tc.rcvMessage = null;
-        knownListener.expectChange(Turnout.CLOSED);
-        commandedListener.expectChange(Turnout.CLOSED);
         s.setState(Turnout.CLOSED);
         t.flush();
+        verify(l.m).onChange(COMMANDED_STATE, Turnout.CLOSED);
+        verify(l.m).onChange(KNOWN_STATE, Turnout.CLOSED);
+        verifyNoMoreInteractions(l.m);
         Assert.assertTrue(s.getCommandedState() == Turnout.CLOSED);
         Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(t.tc.rcvMessage));
-
-        knownListener.verifyExpectations();
     }
 
     public void testDirectFeedback() throws jmri.JmriException {
@@ -147,24 +120,23 @@ public class OlcbTurnoutTest extends TestCase {
         s.setFeedbackMode(Turnout.DIRECT);
         s.finishLoad();
 
-        FakePropertyChangeListener knownListener = new FakePropertyChangeListener(KNOWN_STATE);
-        s.addPropertyChangeListener(knownListener);
+        s.addPropertyChangeListener(l);
 
-        knownListener.expectChange(Turnout.THROWN);
         s.setState(Turnout.THROWN);
         t.flush();
+        verify(l.m).onChange(COMMANDED_STATE, Turnout.THROWN);
+        verify(l.m).onChange(KNOWN_STATE, Turnout.THROWN);
 
         Assert.assertEquals(Turnout.THROWN, s.getCommandedState());
         Assert.assertEquals(Turnout.THROWN, s.getKnownState());
 
-        knownListener.expectChange(Turnout.CLOSED);
         s.setState(Turnout.CLOSED);
         t.flush();
+        verify(l.m).onChange(COMMANDED_STATE, Turnout.CLOSED);
+        verify(l.m).onChange(KNOWN_STATE, Turnout.CLOSED);
 
         Assert.assertEquals(Turnout.CLOSED, s.getCommandedState());
         Assert.assertEquals(Turnout.CLOSED, s.getKnownState());
-
-        knownListener.verifyExpectations();
 
         // message for Active and Inactive
         CanMessage mActive = new CanMessage(
@@ -183,12 +155,12 @@ public class OlcbTurnoutTest extends TestCase {
         t.sendMessage(mActive);
         Assert.assertEquals(Turnout.CLOSED, s.getCommandedState());
         Assert.assertEquals(Turnout.CLOSED, s.getKnownState());
+        verifyNoMoreInteractions(l.m);
 
         t.sendMessage(mInactive);
         Assert.assertEquals(Turnout.CLOSED, s.getCommandedState());
         Assert.assertEquals(Turnout.CLOSED, s.getKnownState());
-
-        knownListener.verifyExpectations();
+        verifyNoMoreInteractions(l.m);
     }
 
     public void testLoopback() throws jmri.JmriException {
@@ -199,20 +171,21 @@ public class OlcbTurnoutTest extends TestCase {
         OlcbTurnout r = new OlcbTurnout("MT", "1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.8", t.iface);
         r.finishLoad();
 
-        FakePropertyChangeListener knownListener = new FakePropertyChangeListener(KNOWN_STATE);
-        r.addPropertyChangeListener(knownListener);
+        r.addPropertyChangeListener(l);
 
-        knownListener.expectChange(Turnout.CLOSED);
         s.setState(Turnout.THROWN);
         t.flush();
+        verify(l.m).onChange(COMMANDED_STATE, Turnout.CLOSED);
+        verify(l.m).onChange(KNOWN_STATE, Turnout.CLOSED);
+        verifyNoMoreInteractions(l.m);
         Assert.assertTrue(s.getCommandedState() == Turnout.THROWN);
 
-        knownListener.expectChange(Turnout.THROWN);
         s.setState(Turnout.CLOSED);
         t.flush();
+        verify(l.m).onChange(COMMANDED_STATE, Turnout.THROWN);
+        verify(l.m).onChange(KNOWN_STATE, Turnout.THROWN);
+        verifyNoMoreInteractions(l.m);
         Assert.assertTrue(s.getCommandedState() == Turnout.CLOSED);
-
-        knownListener.verifyExpectations();
     }
 
     public void testNameFormatXlower() {
