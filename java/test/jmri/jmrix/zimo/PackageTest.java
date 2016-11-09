@@ -29,7 +29,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.zimo.swing.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.zimo.mx1.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.zimo.mxulf.PackageTest.class));
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (!System.getProperty("jmri.headlesstest", System.getProperty("java.awt.headless", "false")).equals("true")) {
         }
 
         return suite;

@@ -21,7 +21,7 @@ public class PaneProgFrameTest extends TestCase {
 
     // test creating a pane in config file
     public void testPane() {
-        if (System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (System.getProperty("jmri.headlesstest", System.getProperty("java.awt.headless", "false")).equals("true")) {
             return;
         }
         setupDoc();
@@ -51,7 +51,7 @@ public class PaneProgFrameTest extends TestCase {
 
     // show me the specially-created frame
     public void testFrame() {
-        if (System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (System.getProperty("jmri.headlesstest", System.getProperty("java.awt.headless", "false")).equals("true")) {
             return;
         }
         setupDoc();

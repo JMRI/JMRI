@@ -26,7 +26,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.rps.swing.polling");
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (!System.getProperty("jmri.headlesstest", System.getProperty("java.awt.headless", "false")).equals("true")) {
            suite.addTest(PollTableActionTest.suite());
         }
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
