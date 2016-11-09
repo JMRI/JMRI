@@ -195,7 +195,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     /*public MrcConsistManager  getConsistManager() { return consistManager; }*/
 
     protected ResourceBundle getActionModelResourceBundle() {
-        return ResourceBundle.getBundle("jmri.jmrix.mrc.MrcBundle"); //IN18N
+        return ResourceBundle.getBundle("jmri.jmrix.mrc.MrcActionListBundle"); //NO18N
     }
 
     public void dispose() {
