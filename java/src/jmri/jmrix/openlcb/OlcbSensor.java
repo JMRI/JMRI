@@ -54,10 +54,20 @@ public class OlcbSensor extends AbstractSensor {
         switch (v.length) {
             case 1:
                 // momentary sensor
-                log.error("Momentary sensors not supported temporarily");
-                //addrActive = v[0];
-                //addrInactive = null;
-                //timer = new Timer(true);
+                addrActive = v[0];
+                addrInactive = null;
+                pc = new BitProducerConsumer(iface, new EventID(addrActive.toString()), new
+                        EventID("00.00.00.00.00.00.00.00"), false);
+                timer = new Timer(true);
+                sensorListener = new VersionedValueListener<Boolean>(pc.getValue()) {
+                    @Override
+                    public void update(Boolean value) {
+                        setOwnState(value ? Sensor.ACTIVE : Sensor.INACTIVE);
+                        if (value) {
+                            setTimeout();
+                        }
+                    }
+                };
                 break;
             case 2:
                 addrActive = v[0];
@@ -92,11 +102,31 @@ public class OlcbSensor extends AbstractSensor {
      *
      */
     public void setKnownState(int s) throws jmri.JmriException {
+        setOwnState(s);
         if (s == Sensor.ACTIVE) {
             sensorListener.setFromOwner(true);
+            if (addrInactive == null) {
+                setTimeout();
+            }
         } else if (s == Sensor.INACTIVE) {
             sensorListener.setFromOwner(false);
         }
+    }
+
+    /**
+     * Have sensor return to inactive after delay, used if no inactive event was
+     * specified
+     */
+    void setTimeout() {
+        timer.schedule(new java.util.TimerTask() {
+            public void run() {
+                try {
+                    setKnownState(Sensor.INACTIVE);
+                } catch (jmri.JmriException e) {
+                    log.error("error setting momentary sensor INACTIVE", e);
+                }
+            }
+        }, ON_TIME);
     }
 
     public void dispose() {
