@@ -31,7 +31,6 @@ public class HeadLessTest extends TestCase {
     static public void main(String[] args) {
         // force headless operation
         System.setProperty("java.awt.headless", "true");
-        System.setProperty("jmri.headlesstest", "true");
 
         // start tests
         String[] testCaseName = {"-noloading", HeadLessTest.class.getName()};

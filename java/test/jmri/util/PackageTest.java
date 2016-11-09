@@ -39,7 +39,7 @@ public class PackageTest extends TestCase {
         suite.addTest(I18NTest.suite());
         suite.addTest(ColorUtilTest.suite());
 
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
             suite.addTest(SwingTestCaseTest.suite());
         }
 
@@ -47,7 +47,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.util.exceptionhandler.PackageTest.suite());
         suite.addTest(jmri.util.jdom.PackageTest.suite());
 
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
             suite.addTest(jmri.util.swing.PackageTest.suite());
         }
 

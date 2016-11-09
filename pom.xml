@@ -22,6 +22,7 @@
         <jmri.path.program>${basedir}</jmri.path.program>
         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
         <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
+        <ant.jvm.args></ant.jvm.args>
     </properties>
     <scm>
         <connection>scm:git:https://github.com/JMRI/JMRI.git</connection>
@@ -44,6 +45,7 @@
                                 <phase>test</phase>
                                 <configuration>
                                     <target>
+                                        <property name="jvm.args">${ant.jvm.args}</property>
                                         <ant antfile="${basedir}/build.xml">
                                             <target name="travis-ci"/>
                                         </ant>
