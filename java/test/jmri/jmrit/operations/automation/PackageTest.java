@@ -31,7 +31,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(jmri.jmrit.operations.automation.actions.PackageTest.suite());
 
-        if (!System.getProperty("jmri.headlesstest", System.getProperty("java.awt.headless", "false")).equals("true")) {
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
             suite.addTest(AutomationTableFrameGuiTest.suite());
             suite.addTest(AutomationsTableFrameGuiTest.suite());
             suite.addTest(AutomationCopyFrameGuiTest.suite());

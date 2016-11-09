@@ -29,7 +29,7 @@ public class PackageTest extends TestCase {
 
 
 
-        if (!System.getProperty("jmri.headlesstest", System.getProperty("java.awt.headless", "false")).equals("true")) {
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
         }
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
