@@ -98,8 +98,10 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         WarrantTableFrame tableFrame = WarrantTableFrame.getInstance();
         Warrant warrant = tableFrame.getModel().getWarrantAt(0);
         OBlock block = _OBlockMgr.getBySystemName("OB0");
-        Assert.assertEquals("Waiting message", warrant.getRunningMessage(), 
-                Bundle.getMessage("waitForDelayStart", warrant.getTrainName(), block.getDisplayName()));
+
+        jmri.util.JUnitUtil.waitFor(
+            ()->{return warrant.getRunningMessage().equals(Bundle.getMessage("waitForDelayStart", warrant.getTrainName(), block.getDisplayName()));},
+            "Waiting message"); 
         
         Sensor sensor0 = _sensorMgr.getBySystemName("IS0");
         Assert.assertNotNull("Senor IS0 not found", sensor0); 
@@ -111,8 +113,9 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         });
         jmri.util.JUnitUtil.releaseThread(this);
 
-        Assert.assertEquals("Halted/Resume message", warrant.getRunningMessage(), 
-                Bundle.getMessage("Halted", block.getDisplayName(), "0"));
+        jmri.util.JUnitUtil.waitFor(
+            ()->{return warrant.getRunningMessage().equals(Bundle.getMessage("Halted", block.getDisplayName(), "0"));},
+            "Halted/Resume message"); 
 
         jmri.util.ThreadingUtil.runOnGUI( ()->{
             warrant.controlRunTrain(Warrant.RESUME);
