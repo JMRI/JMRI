@@ -1,6 +1,10 @@
 // OlcbTurnoutManager.java
 package jmri.jmrix.openlcb;
 
+import org.openlcb.OlcbInterface;
+
+import java.util.ArrayList;
+
 import jmri.JmriException;
 import jmri.Turnout;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -24,6 +28,10 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     CanSystemConnectionMemo memo;
 
     String prefix = "M";
+    // Whether we accumulate partially loaded turnouts in pendingTurnouts.
+    private boolean isLoading = false;
+    // Turnouts that are being loaded from XML.
+    private final ArrayList<OlcbTurnout> pendingTurnouts = new ArrayList<>();
 
     public String getSystemPrefix() {
         return prefix;
@@ -37,9 +45,42 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
      */
     protected Turnout createNewTurnout(String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
-        Turnout t = new OlcbTurnout(getSystemPrefix(), addr, memo.getTrafficController());
+        OlcbTurnout t = new OlcbTurnout(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
         t.setUserName(userName);
+        synchronized (pendingTurnouts) {
+            if (isLoading) {
+                pendingTurnouts.add(t);
+            } else {
+                t.finishLoad();
+            }
+        }
         return t;
+    }
+
+    /**
+     * This function is invoked before an XML load is started. We defer initialization of the
+     * newly created turnouts until finishLoad because the feedback type might be changing as we
+     * are parsing the XML.
+     */
+    public void startLoad() {
+        synchronized (pendingTurnouts) {
+            isLoading = true;
+        }
+    }
+
+    /**
+     * This function is invoked after the XML load is complete and all turnouts are instantiated
+     * and their feedback type is read in. We use this hook to finalize the construction of the
+     * OpenLCB objects whose instantiation was deferred until the feedback type was known.
+     */
+    public void finishLoad() {
+        synchronized (pendingTurnouts) {
+            for (OlcbTurnout t : pendingTurnouts) {
+                t.finishLoad();
+            }
+            pendingTurnouts.clear();
+            isLoading = false;
+        }
     }
 
     public boolean allowMultipleAdditions() {
