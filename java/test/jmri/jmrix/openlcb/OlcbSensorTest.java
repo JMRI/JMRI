@@ -49,6 +49,46 @@ public class OlcbSensorTest extends TestCase {
 
     }
 
+    public void testRecoverUponStartup() {
+        // load dummy TrafficController
+        OlcbTestInterface t = new OlcbTestInterface();
+        t.waitForStartup();
+        Assert.assertNotNull("exists", t);
+        t.tc.rcvMessage = null;
+
+        OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        t.flush();
+
+        assertNotNull(t.tc.rcvMessage);
+        log.debug("recv msg: " + t.tc.rcvMessage + " header " + Integer.toHexString(t.tc.rcvMessage.getHeader()));
+        CanMessage expected = new CanMessage(new byte[]{1,2,3,4,5,6,7,8}, 0x198F4C4C);
+        expected.setExtended(true);
+        Assert.assertEquals(expected, t.tc.rcvMessage);
+
+
+        // message for Active and Inactive
+        CanMessage mStateActive = new CanMessage(
+                new int[]{1, 2, 3, 4, 5, 6, 7, 8},
+                0x194C4123
+        );
+        mStateActive.setExtended(true);
+
+        CanMessage mStateInactive = new CanMessage(
+                new int[]{1, 2, 3, 4, 5, 6, 7, 9},
+                0x194C4123
+        );
+        mStateInactive.setExtended(true);
+
+        // check states
+        Assert.assertTrue(s.getKnownState() == Sensor.UNKNOWN);
+
+        t.sendMessage(mStateActive);
+        Assert.assertTrue(s.getKnownState() == Sensor.ACTIVE);
+
+        t.sendMessage(mStateInactive);
+        Assert.assertTrue(s.getKnownState() == Sensor.INACTIVE);
+    }
+
     public void testMomentarySensor() throws Exception {
         // load dummy TrafficController
         OlcbTestInterface t = new OlcbTestInterface();
