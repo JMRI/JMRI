@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>3</revnumber>
+      <date>2016-10-23</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>2</revnumber>
       <date>2013-07-29</date>
       <authorinitials>PB</authorinitials>
@@ -46,17 +52,20 @@
         <choice xml:lang="it">Non usare Tabella, usa Tensione Iniziale (Vstart e Vmax)</choice>
         <choice xml:lang="fr">Utiliser V démarrage (Vstart-Vmax)</choice>
         <choice xml:lang="de">Anfahrspannung (Vstart-Vmax) nutzen</choice>
+        <choice xml:lang="cs">Nepoužít rychlostní tabulku, použít rozjezdové napětí (Vstart a Vmax)</choice>
       </enumChoice>
       <enumChoice choice="Use Speed Table">
         <choice>Use Speed Table</choice>
         <choice xml:lang="it">Usa Tabella Velocità</choice>
         <choice xml:lang="fr">Utiliser tableau de vitesse</choice>
         <choice xml:lang="de">Geschw.-kennlinie nutzen</choice>
+        <choice xml:lang="cs">Použít rychlostní tabulku</choice>
       </enumChoice>
     </enumVal>
     <label>Use Speed Table</label>
     <label xml:lang="fr">Tableau de vitesse</label>
     <label xml:lang="de">Geschwindigkeitskennlinie nutzen</label>
     <label xml:lang="it">Uso Tabella Velocità</label>
+    <label xml:lang="cs">Použití rychlostní tabulky</label>
   </variable>
 </variables>

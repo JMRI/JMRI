@@ -96,6 +96,6 @@ fi
 
 # tests are no longer with production classes, so append the directory containing
 # tests to the classpaths
-testclasspath="--cp:a=${dirname}/java/test-classes"
+testclasspath="--cp:a=${dirname}/target/test-classes"
 
 "${dirname}/.run.sh" "${settingsdir}" "${prefsdir}" "${testclasspath}" $@

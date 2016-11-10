@@ -75,5 +75,5 @@
         <classpathentry kind="lib" path="lib/javassist-3.20.0-GA.jar"/>
         <classpathentry kind="lib" path="lib/objenesis-2.2.jar"/>
         <classpathentry kind="lib" path="lib/byte-buddy-1.2.1.jar"/>
-	<classpathentry kind="output" path="java/classes"/>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>

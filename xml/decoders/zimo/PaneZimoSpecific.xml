@@ -28,6 +28,7 @@
       <column>
         <label>
           <text>Signal Dependent Speed Limits</text>
+          <text xml:lang="cs">Omezení rychlosti závislé na návěstidle</text>
         </label>
         <separator/>
         <label>
@@ -48,6 +49,7 @@
     <display item="MAN Key Extension (Disable HLU or ABC signal control)" label="Set Function Key to Disable HLU Signal Control">
        <label>Set Function Key to Disable HLU Signal Control</label>
        <label xml:lang="it">Tasto funzione per disabilitare controllo segnale HLU</label>
+       <label xml:lang="cs">Nastavení funkční klávesy pro znepřístupnění řízení signálem HLU</label>
     </display>
     <display item="Distance controlled stopping"/>
     <label>
@@ -70,4 +72,5 @@
   </column>
   <name>Zimo Specific</name>
   <name xml:lang="it">Specifiche Zimo</name>
+  <name xml:lang="cs">Zimo zvláštnosti</name>
 </pane>
