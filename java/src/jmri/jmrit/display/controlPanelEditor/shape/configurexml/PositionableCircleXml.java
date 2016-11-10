@@ -30,7 +30,7 @@ public class PositionableCircleXml extends PositionableShapeXml {
         storeCommonAttributes(p, element);
 
         Element elem = new Element("size");
-        elem.setAttribute("radius", "" + p.getRadius());
+        elem.setAttribute("radius", "" + p.getWidth());     // actually diameter
         element.addContent(elem);
 
         element.setAttribute("class", "jmri.jmrit.display.controlPanelEditor.shape.configurexml.PositionableCircleXml");
@@ -49,7 +49,7 @@ public class PositionableCircleXml extends PositionableShapeXml {
         PositionableCircle ps = new PositionableCircle(ed);
 
         Element elem = element.getChild("size");
-        ps.setRadius(getInt(elem, "radius"));
+        ps.setWidth(getInt(elem, "radius"));    // actually diameter - too late to change name
 
         // get object class and determine editor being used
         Editor editor = (Editor) o;
