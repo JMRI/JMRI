@@ -67,20 +67,26 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
                         for (int ii = 0; ii < sensors.size(); ii++) {
                             String sName = sensors.get(ii);
                             if (newHouseCode.compareTo(tc.getAdapterMemo().getSerialAddress().houseCodeFromSystemName(sName)) == 0) {
-                                sensor = provideSensor(sName);
-                                if (sensor != null) {
-                                    try {
-                                        if (newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_UNITS_OFF) {
-                                            sensor.setKnownState(Sensor.INACTIVE);
-                                        } else {
-                                            sensor.setKnownState(Sensor.ACTIVE);
-                                        }
-                                    } catch (jmri.JmriException e) {
-                                        if (newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_UNITS_OFF) {
-                                            log.error("Exception setting " + sName + " sensor INACTIVE: " + e);
-                                        } else {
-                                            log.error("Exception setting " + sName + " sensor ACTIVE: " + e);
-                                        }
+                                try {
+                                    sensor = provideSensor(sName);
+                                } catch(java.lang.IllegalArgumentException iae){
+                                    // if provideSensor fails, it will throw an IllegalArgumentException, so catch that,log it if debugging is enabled, and then re-throw it.
+                                    if (log.isDebugEnabled()) {
+                                        log.debug("Attempt access sensor " + sName + " failed");
+                                    }
+                                    throw iae;
+                                }
+                                try {
+                                    if (newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_UNITS_OFF) {
+                                        sensor.setKnownState(Sensor.INACTIVE);
+                                    } else {
+                                        sensor.setKnownState(Sensor.ACTIVE);
+                                    }
+                                } catch (jmri.JmriException e) {
+                                    if (newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_UNITS_OFF) {
+                                        log.error("Exception setting " + sName + " sensor INACTIVE: " + e);
+                                    } else {
+                                        log.error("Exception setting " + sName + " sensor ACTIVE: " + e);
                                     }
                                 }
                             }
@@ -89,8 +95,15 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
                         // was not a global command, so might be a sensor
                         if (newAddrCode > 0) {
                             String sysName = getSystemPrefix() + "S" + newHouseCode + newAddrCode;
-                            sensor = provideSensor(sysName);
-
+                            try {
+                                sensor = provideSensor(sysName);
+                            } catch(java.lang.IllegalArgumentException iae){
+                                // if provideSensor fails, it will throw an IllegalArgumentException, so catch that,log it if debugging is enabled, and then re-throw it.
+                                if (log.isDebugEnabled()) {
+                                    log.debug("Attempt access sensor " + sysName + " failed");
+                                }
+                                throw iae;
+                            }
                             if (newCmdCode == X10Sequence.FUNCTION_ON || newCmdCode == X10Sequence.FUNCTION_BRIGHT || newCmdCode == X10Sequence.FUNCTION_STATUS_ON) {
                                 try {
                                     sensor.setKnownState(Sensor.ACTIVE);

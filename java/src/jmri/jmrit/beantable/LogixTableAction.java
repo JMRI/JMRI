@@ -115,8 +115,8 @@ public class LogixTableAction extends AbstractTableAction {
         // set up managers - no need to use InstanceManager since both managers are
         // Default only (internal). We use InstanceManager to get managers for
         // compatibility with other facilities.
-        _logixManager = InstanceManager.getOptionalDefault(jmri.LogixManager.class);
-        _conditionalManager = InstanceManager.getOptionalDefault(jmri.ConditionalManager.class);
+        _logixManager = InstanceManager.getNullableDefault(jmri.LogixManager.class);
+        _conditionalManager = InstanceManager.getNullableDefault(jmri.ConditionalManager.class);
         // disable ourself if there is no Logix manager or no Conditional manager available
         if ((_logixManager == null) || (_conditionalManager == null)) {
             setEnabled(false);
@@ -1185,7 +1185,7 @@ public class LogixTableAction extends AbstractTableAction {
          javax.swing.JOptionPane.INFORMATION_MESSAGE);
          }*/
         if (_showReminder) {
-            if (InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class) != null) {
+            if (InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class) != null) {
                 InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemLogixTable")),
                                 getClassName(),
@@ -1330,7 +1330,7 @@ public class LogixTableAction extends AbstractTableAction {
         }
         final Logix x = _logixManager.getBySystemName(sName);
         final jmri.UserPreferencesManager p;
-        p = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
+        p = jmri.InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
         if (p != null && p.getMultipleChoiceOption(getClassName(), "delete") == 0x02) {
             if (x != null) {
                 _logixManager.deleteLogix(x);
@@ -1602,11 +1602,11 @@ public class LogixTableAction extends AbstractTableAction {
             // initialize and populate Combo boxes for table of state variables
             _notOperatorBox = new JComboBox<String>();
             _notOperatorBox.addItem(" ");
-            _notOperatorBox.addItem(rbx.getString("LogicNOT"));
+            _notOperatorBox.addItem(Bundle.getMessage("LogicNOT"));
 
             _andOperatorBox = new JComboBox<String>();
-            _andOperatorBox.addItem(rbx.getString("LogicAND"));
-            _andOperatorBox.addItem(rbx.getString("LogicOR"));
+            _andOperatorBox.addItem(Bundle.getMessage("LogicAND"));
+            _andOperatorBox.addItem(Bundle.getMessage("LogicOR"));
             // initialize table of state variables
             _variableTableModel = new VariableTableModel();
             JTable variableTable = new JTable(_variableTableModel);
@@ -1694,9 +1694,9 @@ public class LogixTableAction extends AbstractTableAction {
 
             // logic type area
             _operatorBox = new JComboBox<String>(new String[]{
-                rbx.getString("LogicAND"),
-                rbx.getString("LogicOR"),
-                rbx.getString("LogicMixed")});
+                    Bundle.getMessage("LogicAND"),
+                    Bundle.getMessage("LogicOR"),
+                    Bundle.getMessage("LogicMixed")});
             JPanel typePanel = makeEditPanel(_operatorBox, "LabelLogicType", "TypeLogicHint");
             _operatorBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -1922,7 +1922,7 @@ public class LogixTableAction extends AbstractTableAction {
         if (oper == null) {
             variable.setNegation(false);
         } else {
-            variable.setNegation(oper.equals(rbx.getString("LogicNOT")));
+            variable.setNegation(oper.equals(Bundle.getMessage("LogicNOT")));
         }
         if (variable.isNegated() != state) {
             makeAntecedent();
@@ -1936,7 +1936,7 @@ public class LogixTableAction extends AbstractTableAction {
         ConditionalVariable variable = _variableList.get(row);
         int oldOper = variable.getOpern();
         if (row > 0) {
-            if (oper.equals(rbx.getString("LogicOR"))) {
+            if (oper.equals(Bundle.getMessage("LogicOR"))) {
                 variable.setOpern(Conditional.OPERATOR_OR);
             } else {
                 variable.setOpern(Conditional.OPERATOR_AND);
@@ -1947,7 +1947,6 @@ public class LogixTableAction extends AbstractTableAction {
         if (variable.getOpern() != oldOper) {
             makeAntecedent();
         }
-
     }
 
     /*
@@ -2198,10 +2197,10 @@ public class LogixTableAction extends AbstractTableAction {
     void makeAntecedent() {
         String str = "";
         if (_variableList.size() != 0) {
-            String not = rbx.getString("LogicNOT").toLowerCase();
-            String row = rbx.getString("rowAbrev");
-            String and = " " + rbx.getString("LogicAND").toLowerCase() + " ";
-            String or = " " + rbx.getString("LogicOR").toLowerCase() + " ";
+            String not = Bundle.getMessage("LogicNOT").toLowerCase();
+            String row = "R"; //NOI18N
+            String and = " " + Bundle.getMessage("LogicAND").toLowerCase() + " ";
+            String or = " " + Bundle.getMessage("LogicOR").toLowerCase() + " ";
             if (_variableList.get(0).isNegated()) {
                 str = not + " ";
             }
@@ -2219,7 +2218,7 @@ public class LogixTableAction extends AbstractTableAction {
                         break;
                 }
                 if (variable.isNegated()) {
-                    str = str + not;
+                    str = str + not + " ";
                 }
                 str = str + row + (i + 1);
                 if (i > 0 && i + 1 < _variableList.size()) {
@@ -2235,12 +2234,12 @@ public class LogixTableAction extends AbstractTableAction {
     void appendToAntecedent(ConditionalVariable variable) {
         if (_variableList.size() > 1) {
             if (_logicType == Conditional.OPERATOR_OR) {
-                _antecedent = _antecedent + " " + rbx.getString("LogicOR").toLowerCase() + " ";
+                _antecedent = _antecedent + " " + Bundle.getMessage("LogicOR").toLowerCase() + " ";
             } else {
-                _antecedent = _antecedent + " " + rbx.getString("LogicAND").toLowerCase() + " ";
+                _antecedent = _antecedent + " " + Bundle.getMessage("LogicAND").toLowerCase() + " ";
             }
         }
-        _antecedent = _antecedent + rbx.getString("rowAbrev") + _variableList.size();
+        _antecedent = _antecedent + "R" + _variableList.size(); //NOI18N
         _antecedentField.setText(_antecedent);
     }
 
@@ -2622,17 +2621,18 @@ public class LogixTableAction extends AbstractTableAction {
             ActionListener deleteListener) {
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.X_AXIS));
-        JButton updateAction = new JButton(Bundle.getMessage("ButtonUpdate"));
-        panel3.add(updateAction);
-        panel3.add(Box.createHorizontalStrut(STRUT));
-        updateAction.addActionListener(updateListener);
-        updateAction.setToolTipText(rbx.getString("UpdateButtonHint"));
 
         JButton cancelAction = new JButton(Bundle.getMessage("ButtonCancel"));
         panel3.add(cancelAction);
         panel3.add(Box.createHorizontalStrut(STRUT));
         cancelAction.addActionListener(cancelListener);
         cancelAction.setToolTipText(rbx.getString("CancelButtonHint"));
+
+        JButton updateAction = new JButton(Bundle.getMessage("ButtonUpdate"));
+        panel3.add(updateAction);
+        panel3.add(Box.createHorizontalStrut(STRUT));
+        updateAction.addActionListener(updateListener);
+        updateAction.setToolTipText(rbx.getString("UpdateButtonHint"));
 
         JButton deleteAction = new JButton(Bundle.getMessage("ButtonDelete"));
         panel3.add(deleteAction);
@@ -3116,7 +3116,7 @@ public class LogixTableAction extends AbstractTableAction {
     JFileChooser defaultFileChooser = null;
 
     /**
-     * Responds to the Set button in the Edit Action window action section.
+     * Responds to the (...) Set button in the Edit Action window action section.
      */
     void setFileLocation(ActionEvent e) {
         ConditionalAction action = _actionList.get(_curActionRowNumber);
@@ -5238,15 +5238,15 @@ public class LogixTableAction extends AbstractTableAction {
             ConditionalVariable variable = _variableList.get(r);
             switch (c) {
                 case ROWNUM_COLUMN:
-                    return (rbx.getString("rowAbrev") + (r + 1));
+                    return ("R" + (r + 1)); //NOI18N
                 case AND_COLUMN:
-                    if (r == 0 || _logicType == Conditional.MIXED) {
+                    if (r == 0) { //removed: || _logicType == Conditional.MIXED
                         return "";
                     }
-                    return variable.getOpernString();
+                    return variable.getOpernString(); // also display Operand selection when set to Mixed
                 case NOT_COLUMN:
                     if (variable.isNegated()) {
-                        return rbx.getString("LogicNOT");
+                        return Bundle.getMessage("LogicNOT");
                     }
                     break;
                 case DESCRIPTION_COLUMN:

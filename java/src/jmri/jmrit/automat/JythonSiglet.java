@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * </UL>
  * <P>
  * Access is via Java reflection so that both users and developers can work
- * without the jython.jar file in the classpath. To make it easier to read the
+ * without the jython-standalone-2.7.0.jar file in the classpath. To make it easier to read the
  * code, the "non-reflection" statements are in the comments.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
@@ -64,7 +64,7 @@ public class JythonSiglet extends Siglet {
             set.invoke(interp, new Object[]{"turnouts", InstanceManager.turnoutManagerInstance()});
             set.invoke(interp, new Object[]{"sensors", InstanceManager.sensorManagerInstance()});
             set.invoke(interp, new Object[]{"signals", InstanceManager.getDefault(jmri.SignalHeadManager.class)});
-            set.invoke(interp, new Object[]{"dcc", InstanceManager.getOptionalDefault(jmri.CommandStation.class)});
+            set.invoke(interp, new Object[]{"dcc", InstanceManager.getNullableDefault(jmri.CommandStation.class)});
 
             set.invoke(interp, new Object[]{"CLOSED", Integer.valueOf(jmri.Turnout.CLOSED)});
             set.invoke(interp, new Object[]{"THROWN", Integer.valueOf(jmri.Turnout.THROWN)});

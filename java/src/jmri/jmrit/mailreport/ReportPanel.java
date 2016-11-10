@@ -208,7 +208,7 @@ public class ReportPanel extends JPanel {
             if (checkProfile.isSelected()) {
                 log.debug("prepare profile attachment");
                 // Check that a profile has been loaded
-                Profile profile = ProfileManager.defaultManager().getActiveProfile();
+                Profile profile = ProfileManager.getDefault().getActiveProfile();
                 File file = profile.getPath();
                 if (file != null) {
                     log.debug("add profile: {}", file.getPath());

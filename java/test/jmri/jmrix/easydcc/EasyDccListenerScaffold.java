@@ -5,7 +5,6 @@ package jmri.jmrix.easydcc;
  * Stands in for the EasyDccTrafficController class
  *
  * @author	Bob Jacobsen
- * @version
  */
 class EasyDccListenerScaffold implements EasyDccListener {
 

@@ -59,7 +59,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     public SignalHeadTableAction(String s) {
         super(s);
         // disable ourself if there is no primary Signal Head manager available
-        if (jmri.InstanceManager.getOptionalDefault(jmri.SignalHeadManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.SignalHeadManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -2001,7 +2001,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
     void updatePressed(ActionEvent e) {
         String nam = eUserName.getText();
         // check if user name changed
-        if (!((curS.getUserName() != null) && (curS.getUserName().equals(nam)))) {
+        String uname = curS.getUserName();
+        // TODO: not sure this if statement is right. I think (uname != null && !uname.equals(nam))
+        if (!((uname != null) && (uname.equals(nam)))) {
             if (checkUserName(nam)) {
                 curS.setUserName(nam);
             } else {

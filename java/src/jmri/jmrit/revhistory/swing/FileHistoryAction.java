@@ -41,7 +41,7 @@ public class FileHistoryAction extends AbstractAction {
         JScrollPane scroll = new JScrollPane(pane);
         frame.getContentPane().add(scroll);
 
-        FileHistory r = InstanceManager.getOptionalDefault(FileHistory.class);
+        FileHistory r = InstanceManager.getNullableDefault(FileHistory.class);
         if (r == null) {
             pane.append("<No History Found>\n");
         } else {

@@ -1,4 +1,3 @@
-// TrainsByCarTypeFrame.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Dimension;
@@ -33,7 +32,6 @@ import org.slf4j.LoggerFactory;
  * Frame to display which trains service certain car types
  *
  * @author Dan Boudreau Copyright (C) 2009
- * @version $Revision$
  */
 public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -47,12 +45,12 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
     JPanel pTrains;
 
     // major buttons
-    JButton clearButton = new JButton(Bundle.getMessage("Clear"));
-    JButton setButton = new JButton(Bundle.getMessage("Select"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
+    JButton setButton = new JButton(Bundle.getMessage("SelectAll"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // check boxes
-    JCheckBox copyCheckBox = new JCheckBox(Bundle.getMessage("Copy"));
+    JCheckBox copyCheckBox = new JCheckBox(Bundle.getMessage("ButtonCopy"));
 
     // radio buttons
     // text field
@@ -121,7 +119,8 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        toolMenu.add(new PrintTrainsByCarTypesAction(Bundle.getMessage("MenuItemPrintByType"), new Frame(), false, this));
+        toolMenu.add(
+                new PrintTrainsByCarTypesAction(Bundle.getMessage("MenuItemPrintByType"), new Frame(), false, this));
         toolMenu.add(new PrintTrainsByCarTypesAction(Bundle.getMessage("MenuItemPreviewByType"), new Frame(), true,
                 this));
         menuBar.add(toolMenu);
@@ -160,9 +159,11 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
      * checkbox name is the id of the train or track.
      */
     private void save() {
-        if (copyCheckBox.isSelected() && JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("CopyCarType"),
-                new Object[]{typeComboBox.getSelectedItem(), textCarType.getText()}), Bundle.getMessage("CopyCarTypeTitle"),
-                JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+        if (copyCheckBox.isSelected() &&
+                JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("CopyCarType"),
+                        new Object[]{typeComboBox.getSelectedItem(), textCarType.getText()}),
+                        Bundle.getMessage("CopyCarTypeTitle"),
+                        JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
             return;
         }
         log.debug("Save {} trains", trainList.size());
@@ -265,18 +266,15 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (log.isDebugEnabled()) {
-            log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
-                    + e.getNewValue());
-        }
-        if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Train.TYPES_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Train.NAME_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Train.DESCRIPTION_CHANGED_PROPERTY)) {
+        log.debug("Property change {} old: {} new: {}", e.getPropertyName(), e.getOldValue(), e.getNewValue());
+        if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Train.TYPES_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Train.NAME_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Train.DESCRIPTION_CHANGED_PROPERTY)) {
             updateTrains();
         }
-        if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY)) {
             updateComboBox();
         }
     }

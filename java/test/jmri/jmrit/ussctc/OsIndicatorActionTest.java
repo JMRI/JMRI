@@ -7,8 +7,7 @@ import junit.framework.TestSuite;
  * Tests for classes in the jmri.jmrit.ussctc.OsIndicatorAction class
  *
  * @author	Bob Jacobsen Copyright 2003, 2007, 2010
- * @version	$Revision$
- */
+  */
 public class OsIndicatorActionTest extends jmri.util.SwingTestCase {
 
     public void testFrameCreate() {

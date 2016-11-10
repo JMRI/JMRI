@@ -4,8 +4,7 @@
  * Description:	Stands in for the SerialTrafficController class
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 package jmri.jmrix.oaktree;
 
 import java.util.Vector;

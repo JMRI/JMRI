@@ -27,16 +27,15 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmris.JmrisTest");
 
-        suite.addTest(jmri.jmris.srcp.SRCPTest.suite());
-        suite.addTest(jmri.jmris.simpleserver.SimpleServerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmris.srcp.SRCPTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmris.simpleserver.PackageTest.class));
         suite.addTest(jmri.jmris.json.JsonServerTest.suite());
         suite.addTest(jmri.jmris.JmriServerTest.suite());
         suite.addTest(jmri.jmris.JmriConnectionTest.suite());
         suite.addTest(jmri.jmris.ServiceHandlerTest.suite());
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
 
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            // put any tests that require a UI here.
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
             suite.addTest(jmri.jmris.JmriServerFrameTest.suite());
             suite.addTest(jmri.jmris.JmriServerActionTest.suite());
         }

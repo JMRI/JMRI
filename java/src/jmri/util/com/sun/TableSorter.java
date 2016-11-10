@@ -73,7 +73,7 @@ import javax.swing.table.TableModel;
  * @author Parwinder Sekhon
  * @author Daniel Boudreau 2009
  * @version 2.0 02/27/04
- * @deprecated Use {@link javax.swing.table.TableRowSorter} instead.
+ * @deprecated Since 4.5.4; use {@link javax.swing.table.TableRowSorter} instead.
  */
 @Deprecated
 public class TableSorter extends AbstractTableModel {

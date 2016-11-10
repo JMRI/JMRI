@@ -33,18 +33,18 @@
       de M&Atilde;&copy;moire vous permet de voir combien de
       m&Atilde;&copy;moire JMRI utilise dans votre ordinateur.
 
-      <p>Il ya trois colonnes &Atilde;  l'&Atilde;&copy;cran en
+      <p>Il ya trois colonnes &Atilde; l'&Atilde;&copy;cran en
       haut:</p>
 
       <ul>
-        <li>"Mise &Atilde;  Jour" - : met une nouvelle
+        <li>"Mise &Atilde; Jour" - : met une nouvelle
         s&Atilde;&copy;rie de valeurs dans l'affichage</li>
 
         <li>&Acirc;&laquo;Recueillir la
         m&Atilde;&copy;moire&Acirc;&raquo; - r&Atilde;&copy;duire
         la quantit&Atilde;&copy; de m&Atilde;&copy;moire
         utilis&Atilde;&copy;e au minimum possible en demandant
-        &Atilde;  Java d'ex&Atilde;&copy;cuter un nettoyage de
+        &Atilde; Java d'ex&Atilde;&copy;cuter un nettoyage de
         cMemory Monitor Toolollection</li>
 
         <li>"Test" - Ex&Atilde;&copy;cuter un test de l'allocation
@@ -55,7 +55,7 @@
 
       <p>La partie sup&Atilde;&copy;rieure affiche des informations
       sur la m&Atilde;&copy;moire. Chaque fois que vous appuyez sur
-      le bouton "Mise &Atilde;  Jour", la ligne de fond obtient de
+      le bouton "Mise &Atilde; Jour", la ligne de fond obtient de
       nouvelles valeurs et les valeurs anciennes sont
       d&Atilde;&copy;plac&Atilde;&copy;s vers le haut.</p>
 
@@ -67,7 +67,7 @@
 
         <li>La colonne du milieu montre la quantit&Atilde;&copy; de
         m&Atilde;&copy;moire actuellement affect&Atilde;&copy;es
-        &Atilde;  JMRI, mais que vous n'utilisez pas. Celle-ci est
+        &Atilde; JMRI, mais que vous n'utilisez pas. Celle-ci est
         libre pour une utilisation ult&Atilde;&copy;rieure.</li>
 
         <li>La colonne de droite est la quantit&Atilde;&copy;

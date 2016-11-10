@@ -20,12 +20,13 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.TableColumnModel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.util.com.sun.TableSorter;
+import jmri.swing.JTablePersistenceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,12 +35,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2013
- * @version $Revision$
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener {
 
     EnginesTableModel enginesModel;
-    TableSorter sorter;
     javax.swing.JTable enginesTable;
     JScrollPane enginesPane;
     EngineManager engineManager = EngineManager.instance();
@@ -66,9 +65,9 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     ButtonGroup group = new ButtonGroup();
 
     // major buttons
-    JButton addButton = new JButton(Bundle.getMessage("Add"));
+    JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
     JButton findButton = new JButton(Bundle.getMessage("Find"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     JTextField findEngineTextBox = new JTextField(6);
 
@@ -80,9 +79,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 
         // Set up the jtable in a Scroll Pane..
         enginesModel = new EnginesTableModel();
-        sorter = new TableSorter(enginesModel);
-        enginesTable = new JTable(sorter);
-        sorter.setTableHeader(enginesTable.getTableHeader());
+        enginesTable = new JTable(enginesModel);
         enginesPane = new JScrollPane(enginesTable);
         enginesPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         enginesModel.initTable(enginesTable, this);
@@ -212,6 +209,8 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
+        // clear any sorts by column
+        clearTableSort(enginesTable);
         if (ae.getSource() == sortByNumber) {
             enginesModel.setSort(enginesModel.SORTBY_NUMBER);
         }
@@ -251,8 +250,6 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         if (ae.getSource() == sortByLast) {
             enginesModel.setSort(enginesModel.SORTBY_LAST);
         }
-        // clear any sorts by column
-        clearTableSort(enginesTable);
     }
 
     public List<RollingStock> getSortByList() {
@@ -292,7 +289,6 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
                 enginesTable.getCellEditor().stopCellEditing();
             }
             OperationsXml.save();
-            saveTableDetails(enginesTable);
             if (Setup.isCloseWindowOnSaveEnabled()) {
                 dispose();
             }
@@ -315,6 +311,9 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         if (engineEditFrame != null) {
             engineEditFrame.dispose();
         }
+        InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {
+            tpm.stopPersisting(enginesTable);
+        });
         super.dispose();
     }
 

@@ -17,7 +17,7 @@ public class PackageTest extends TestCase {
         LoggerFactory.getLogger("apps.foo");
         LoggerFactory.getLogger("jmri.util");
 
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
 
             try {
                 new jmri.util.swing.JmriNamedPaneAction("Log4J Tree",
@@ -42,7 +42,7 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(PackageTest.class);
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         return suite;
     }
 

@@ -126,7 +126,8 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 int oldValue = ((Integer) e.getOldValue()).intValue();
                 if (newValue == ActiveTrain.DISPATCHED) {
                     removeThrottleListener((AutoActiveTrain) e.getSource());
-                } else if (oldValue == ActiveTrain.DISPATCHED && newValue != ActiveTrain.DISPATCHED) {
+//                } else if (oldValue == ActiveTrain.DISPATCHED && newValue != ActiveTrain.DISPATCHED) {
+                } else if (oldValue == ActiveTrain.DISPATCHED) {
                     setupThrottle(aat);
                 }
             }

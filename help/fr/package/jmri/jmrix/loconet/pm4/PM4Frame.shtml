@@ -1,58 +1,64 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 <!-- $Id$ -->
-<!-- Translated  by Blorec Hervé le 2011-10-30--> 
+<!-- Translated  by Blorec Hervé le 2011-10-30-->
+
 <html lang="fr">
 <head>
- <TITLE>
-      JMRI: Configure Digitrax PM4
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help configure loconet PM4">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Configure Digitrax PM4</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI help configure loconet PM4">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Configurer PM4 Digitrax</h1><a href=
+      "../../../../../html/apps/LocoTools/images/DS64.jpg"><img src="../../../../../html/apps/LocoTools/images/DS64.jpg"
+      align="right" height="271" width="245" alt=
+      "image du panneau"></a> -&gt;
 
-<H1>Configurer PM4 Digitrax 
-</H1>
-    
+      <p>L'outil de programmation JMRI PM4 vous permet de
+      configurer les options internes d'un PM4 directement &Atilde;
+       partir de votre ordinateur.</p>
 
-<a href="../../../../../html/apps/LocoTools/images/DS64.jpg"> 
-<img src ="../../../../../html/apps/LocoTools/images/DS64.jpg "
-align = "right" height = "271" width = "245" alt = "image du panneau"> </a>
-  ->
-<p>
-L'outil de programmation JMRI PM4 vous permet de configurer
-les options internes d'un PM4 directement à partir de votre ordinateur.
-<p>
-Pour ouvrir cet outil à partir de la page de démarrage JMRI sélectionnez l'onglet LocoNet
-puis trouver l'outil sur la liste déroulante.
-<p>
-Pour l'utiliser, vous mettez l'adresse d'une carte PM4 dans le champ texte
-et cliquez sur "Lire PM4». L'outil  relira les 
-états actuels des différentes options et définira les cases à cocher pour correspondre à
-leurs valeurs actuelles.
-<p>
-Vous pouvez alors, si vous le souhaitez, modifier les cases et cliquez sur "Ecrire dans DS64"
-pour rendre vos modifications permanentes.
+      <p>Pour ouvrir cet outil &Atilde;  partir de la page de
+      d&Atilde;&copy;marrage JMRI s&Atilde;&copy;lectionnez
+      l'onglet LocoNet puis trouver l'outil sur la liste
+      d&Atilde;&copy;roulante.</p>
 
-<h3> Limitations </h3>
+      <p>Pour l'utiliser, vous mettez l'adresse d'une carte PM4
+      dans le champ texte et cliquez sur "Lire PM4&Acirc;&raquo;.
+      L'outil relira les &Atilde;&copy;tats actuels des
+      diff&Atilde;&copy;rentes options et d&Atilde;&copy;finira les
+      cases &Atilde;  cocher pour correspondre &Atilde;  leurs
+      valeurs actuelles.</p>
 
-En raison de la façon dont fonctionne la carte PM4, cet outil ne peut pas changer
-l'adresse de base de l'unité.
+      <p>Vous pouvez alors, si vous le souhaitez, modifier les
+      cases et cliquez sur "Ecrire dans DS64" pour rendre vos
+      modifications permanentes.</p>
 
-<!--#include virtual="/Footer" -->
+      <h3>Limitations</h3>En raison de la fa&Atilde;&sect;on dont
+      fonctionne la carte PM4, cet outil ne peut pas changer
+      l'adresse de base de l'unit&Atilde;&copy;. 
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>
-

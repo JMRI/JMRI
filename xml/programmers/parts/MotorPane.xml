@@ -13,13 +13,13 @@
     </display>
     <display item="Accel" tooltip="Sets the acceleration rate (delay)">
       <tooltip xml:lang="it">Imposta grado di accellerazione (ritardo)</tooltip>
-      <tooltip xml:lang="ca">Estableix la taxa d'acceleraciÛ (retard)</tooltip>
+      <tooltip xml:lang="ca">Estableix la taxa d'acceleració (retard)</tooltip>
       <tooltip xml:lang="de">Anfahrverzögerung einstellen</tooltip>
       <tooltip xml:lang="cs">Nastavení míry zrychlení (zpoždění)</tooltip>
     </display>
     <display item="Decel" tooltip="Sets the deceleration rate (delay)">
       <tooltip xml:lang="it">Imposta grado di decellerazione (ritardo)</tooltip>
-      <tooltip xml:lang="ca"> Estableix la taxa de desacceleraciÛ (retard)</tooltip>
+      <tooltip xml:lang="ca"> Estableix la taxa de desacceleració (retard)</tooltip>
       <tooltip xml:lang="de">Bremsverzögerung einstellen</tooltip>
       <tooltip xml:lang="cs">Nastavení míry zpomalení (zpoždění)</tooltip>
     </display>
@@ -37,19 +37,19 @@
     </label>
     <display item="Total PWM Period" tooltip="Sets the motor drive frequency">
       <tooltip xml:lang="it">Imposta periodo impulsi al Motore</tooltip>
-      <tooltip xml:lang="ca">Estableix la freq¸Ëncia de control del motor</tooltip>
+      <tooltip xml:lang="ca">Estableix la freqüència de control del motor</tooltip>
       <tooltip xml:lang="de">Wiederholrate einstellen</tooltip>
       <tooltip xml:lang="cs">Nastavení frekvence pulsů motoru</tooltip>
     </display>
     <display item="Motor PWM Frequency" tooltip="Sets the motor drive frequency">
       <tooltip xml:lang="it">Imposta frequenza impulsi al Motore</tooltip>
-      <tooltip xml:lang="ca">Estableix la freq¸Ëncia de control del motor</tooltip>
+      <tooltip xml:lang="ca">Estableix la freqüència de control del motor</tooltip>
       <tooltip xml:lang="de">Wiederholrate einstellen</tooltip>
       <tooltip xml:lang="cs">Nastavení frekvence pulsů motoru</tooltip>
     </display>
     <display item="Dither frequency" tooltip="Sets the frequency of starting voltage pulses">
       <tooltip xml:lang="it">Imposta frequenza impulsi al Motore in partenza</tooltip>
-      <tooltip xml:lang="ca">Estableix la freq¸Ëncia del voltatge inicial</tooltip>
+      <tooltip xml:lang="ca">Estableix la freqüència del voltatge inicial</tooltip>
       <tooltip xml:lang="de">Frequenz des Startimpulses einstellen</tooltip>
       <tooltip xml:lang="cs">Nastavení počáteční frekvence pulsů motoru</tooltip>
     </display>
@@ -72,13 +72,13 @@
     </display>
     <display item="EMF Static Config" tooltip="EMF Static Config">
       <tooltip xml:lang="it">Configurazione Statica EMF</tooltip>
-      <tooltip xml:lang="ca">ConfiguraciÛ est‡tica EMF</tooltip>
+      <tooltip xml:lang="ca">Configuració estàtica EMF</tooltip>
       <tooltip xml:lang="de">EMK statische Konfiguration</tooltip>
       <tooltip xml:lang="cs">Nastavení statické EMF</tooltip>
     </display>
     <display item="EMF Dynamic Config" tooltip="EMF Dynamic Config">
       <tooltip xml:lang="it">Configurazione Dinamica EMF</tooltip>
-      <tooltip xml:lang="ca">ConfiguraciÛ din‡mica EMF</tooltip>
+      <tooltip xml:lang="ca">Configuració dinàmica EMF</tooltip>
       <tooltip xml:lang="de">EMK dynamische Konfiguration</tooltip>
       <tooltip xml:lang="cs">Nastavení dynamické EMF</tooltip>
     </display>
@@ -90,7 +90,7 @@
     </display>
     <display item="EMF Feedback Cutout" tooltip="Sets the speed step above which the back EMF motor control cuts off">
       <tooltip xml:lang="it">Imposta il valore di velocità oltre il quale il controllo di Back-EMF viene tagliato</tooltip>
-      <tooltip xml:lang="ca">Estableix a quin pas es desconnecta la compensaciÛ de c‡rrega</tooltip>
+      <tooltip xml:lang="ca">Estableix a quin pas es desconnecta la compensació de càrrega</tooltip>
       <tooltip xml:lang="de">Fahrstufe einstellen, oberhalb derer EMK abgeschaltet ist</tooltip>
       <tooltip xml:lang="cs">Nastavení rychlostního kroku nad kterým Back-EMF řízení motoru přeruší</tooltip>
     </display>

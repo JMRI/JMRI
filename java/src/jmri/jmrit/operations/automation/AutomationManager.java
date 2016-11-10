@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2016
- * @version $Revision$
  */
 public class AutomationManager implements java.beans.PropertyChangeListener {
 
@@ -34,9 +33,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
 
     public static synchronized AutomationManager instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("AutomationManager creating instance");
-            }
+            log.debug("AutomationManager creating instance");
             // create and load
             _instance = new AutomationManager();
         }
@@ -65,6 +62,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
     }
 
     /**
+     * @param name The string name of the automation to be returned.
      * @return requested Automation object or null if none exists
      */
     public Automation getAutomationByName(String name) {
@@ -86,6 +84,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
     /**
      * Finds an existing automation or creates a new automation if needed
      * requires automation's name creates a unique id for this automation
+     * @param name The string name of the automation.
      *
      *
      * @return new automation or existing automation
@@ -105,6 +104,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     * @param automation The automation that is being registered.
      */
     public void register(Automation automation) {
         Integer oldSize = Integer.valueOf(_automationHashTable.size());
@@ -114,11 +114,13 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
         if (id > _id) {
             _id = id;
         }
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_automationHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
+                Integer.valueOf(_automationHashTable.size()));
     }
 
     /**
      * Forget a NamedBean Object created outside the manager.
+     * @param automation The automation to be deleted.
      */
     public void deregister(Automation automation) {
         if (automation == null) {
@@ -127,7 +129,8 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
         automation.dispose();
         Integer oldSize = Integer.valueOf(_automationHashTable.size());
         _automationHashTable.remove(automation.getId());
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_automationHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
+                Integer.valueOf(_automationHashTable.size()));
     }
 
     /**
@@ -216,6 +219,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
 
     /**
      * Makes a new copy of automation
+     * 
      * @param automation the automation to copy
      * @param newName name for the copy of automation
      * @return new copy of automation

@@ -115,7 +115,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
             setOccSensorHandle(null);
             return;
         }
-        if (InstanceManager.getOptionalDefault(jmri.SensorManager.class) != null) {
+        if (InstanceManager.getNullableDefault(jmri.SensorManager.class) != null) {
             try {
                 Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
                 setOccSensorHandle(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
@@ -135,7 +135,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         if (namedOccSensor != null) {
             Sensor sensor = getOccSensor();
             sensor.addPropertyChangeListener(this, namedOccSensor.getName(), "Indicator Turnout Icon");
-            _status = _pathUtil.setStatus(sensor.getKnownState());
+            _status = _pathUtil.getStatus(sensor.getKnownState());
             if (_iconMaps != null) {
                 displayState(turnoutState());
             }
@@ -222,12 +222,11 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         _pathUtil.removePath(path);
     }
 
+    /**
+     * get track name for known state of occupancy sensor
+     */
     public void setStatus(int state) {
-        // this code is almost certainly an error.  _pathUtil.setStatus(int) is a 
-        // method that converts an int argument to a String explanation.
-        // Perhaps _pathUtil.(OBlock block, int state) was intended,
-        // or that setStatus (in IndicatorTrackPaths) is just wrong.
-        _pathUtil.setStatus(state);
+        _status = _pathUtil.getStatus(state);
     }
 
     /**
@@ -251,8 +250,8 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         setIcon(_iconMaps.get("ClearTrack").get(_name2stateMap.get("BeanStateInconsistent")));
     }
 
-    /**
-     * Get clear icon by its localized bean state name
+    /*
+     * Get icon by its localized bean state name
      */
     public NamedIcon getIcon(String status, int state) {
         log.debug("getIcon: status= " + status + ", state= " + state);
@@ -395,7 +394,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
             if (evt.getPropertyName().equals("KnownState")) {
                 int now = ((Integer) evt.getNewValue()).intValue();
                 if (source.equals(getOccSensor())) {
-                    _status = _pathUtil.setStatus(now);
+                    _status = _pathUtil.getStatus(now);
                 }
             }
         }
@@ -403,7 +402,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     }
 
     private void setStatus(OBlock block, int state) {
-        _status = _pathUtil.setStatus(block, state);
+        _status = _pathUtil.getStatus(block, state);
         if ((state & (OBlock.OCCUPIED | OBlock.RUNNING)) != 0) {
             _pathUtil.setLocoIcon(block, getLocation(), getSize(), _editor);
             repaint();
@@ -416,7 +415,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     }
 
     protected void editItem() {
-        makePalettteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("IndicatorTO")));
+        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("IndicatorTO")));
         _TOPanel = new IndicatorTOItemPanel(_paletteFrame, "IndicatorTO", _iconFamily,
                 PickListModel.turnoutPickModelInstance(), _editor);
         ActionListener updateAction = new ActionListener() {

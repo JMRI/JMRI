@@ -11,6 +11,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
 import jmri.BlockManager;
 import jmri.ConditionalManager;
 import jmri.InstanceManager;
@@ -29,7 +30,7 @@ import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.signalling.EntryExitPairs;
 import jmri.util.NamedBeanComparator;
-import jmri.util.com.sun.TableSorter;
+import jmri.util.SystemNameComparator;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +63,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     protected ArrayList<NamedBean> _pickList;
     protected String _name;
     private JTable _table;       // table using this model
-    protected TableSorter _sorter;
+    protected TableRowSorter<PickListModel> _sorter;
 
     public static final int SNAME_COLUMN = 0;
     public static final int UNAME_COLUMN = 1;
@@ -104,7 +105,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
      * @param index = row of table
      */
     public NamedBean getBeanAt(int index) {
-        index = _sorter.modelIndex(index);
         if (index >= _pickList.size()) {
             return null;
         }
@@ -275,16 +275,10 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
      */
     public JTable makePickTable() {
         this.init();
-        try {   // following might fail due to a missing method on Mac Classic
-            _sorter = new TableSorter(this);
-            _table = jmri.util.JTableUtil.sortableDataModel(_sorter);
-            _sorter.setTableHeader(_table.getTableHeader());
-            _sorter.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            _table.setModel(_sorter);
-        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
-            log.error("makePickTable: Unexpected error: " + e);
-            _table = new JTable(this);
-        }
+        _sorter = new TableRowSorter<>(this);
+        _table = new JTable(this);
+        _sorter.setComparator(SNAME_COLUMN, new SystemNameComparator());
+        _table.setRowSorter(_sorter);
 
         _table.setRowSelectionAllowed(true);
         _table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -308,19 +302,15 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         //uNameColumnT.setMaxWidth(300);
 
         addMouseListenerToHeader(_table);
+        _table.setAutoCreateColumnsFromModel(false);
 
         return _table;
     }
 
     public void makeSorter(JTable table) {
-        try {   // following might fail due to a missing method on Mac Classic
-            _sorter = new TableSorter(this);
-            _sorter.setTableHeader(table.getTableHeader());
-            _sorter.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            table.setModel(_sorter);
-        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
-            log.error("makeSorter: Unexpected error: " + e);
-        }
+        _sorter = new TableRowSorter<>(this);
+        _sorter.setComparator(SNAME_COLUMN, new SystemNameComparator());
+        table.setRowSorter(_sorter);
     }
 
     public JTable getTable() {

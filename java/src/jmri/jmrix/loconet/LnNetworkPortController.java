@@ -1,4 +1,3 @@
-// LnNetworkPortController.java
 package jmri.jmrix.loconet;
 
 import org.slf4j.Logger;
@@ -8,7 +7,6 @@ import org.slf4j.LoggerFactory;
  * Base for classes representing a LocoNet communications port
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version $Revision: 1.24 $
  */
 public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetworkPortController {
     // base class. Implementations will provide InputStream and OutputStream
@@ -28,6 +26,8 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
 
     protected LnCommandStationType[] commandStationTypes = {
         LnCommandStationType.COMMAND_STATION_DCS100,
+        LnCommandStationType.COMMAND_STATION_DCS240,
+        LnCommandStationType.COMMAND_STATION_DCS210,
         LnCommandStationType.COMMAND_STATION_DCS200,
         LnCommandStationType.COMMAND_STATION_DCS050,
         LnCommandStationType.COMMAND_STATION_DCS051,

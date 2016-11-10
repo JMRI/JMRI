@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  * Common elements for the Conductor and Yardmaster Frames.
  *
  * @author Dan Boudreau Copyright (C) 2013
- * @version $Revision: 18630 $
+ * 
  */
 public abstract class CommonConductorYardmasterPanel extends OperationsPanel implements PropertyChangeListener {
 
@@ -71,8 +71,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     protected JLabel textStatus = new JLabel();
 
     // major buttons
-    protected JButton selectButton = new JButton(Bundle.getMessage("Select"));
-    protected JButton clearButton = new JButton(Bundle.getMessage("Clear"));
+    protected JButton selectButton = new JButton(Bundle.getMessage("SelectAll"));
+    protected JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
     protected JButton setButton = new JButton(Bundle.getMessage("Set"));
     protected JButton moveButton = new JButton(Bundle.getMessage("Move"));
 
@@ -404,6 +404,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
      * three panes are pick up, set out, or local move. To keep track of each
      * car and which pane to use, they are placed in the list "rollingStock"
      * with the prefix "p", "s" or "m" and the car's unique id.
+     * @param rl The RouteLocation
+     * @param isManifest True if manifest, false if switch list
      *
      */
     protected void blockCars(RouteLocation rl, boolean isManifest) {
@@ -654,7 +656,6 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
 
     @Override
     public void propertyChange(PropertyChangeEvent e) {
-        // if (Control.showProperty && log.isDebugEnabled())
         log.debug("Property change {} for: {} old: {} new: {}", e.getPropertyName(), e.getSource().toString(), e
                 .getOldValue(), e.getNewValue()); // NOI18N
     }

@@ -1,4 +1,3 @@
-// CarManager.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.util.ArrayList;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class CarManager extends RollingStockManager {
 
@@ -41,9 +39,7 @@ public class CarManager extends RollingStockManager {
 
     public static synchronized CarManager instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("CarManager creating instance");
-            }
+            log.debug("CarManager creating instance");
             // create and load
             _instance = new CarManager();
             OperationsSetupXml.instance(); // load setup
@@ -60,7 +56,7 @@ public class CarManager extends RollingStockManager {
      * Finds an existing Car or creates a new Car if needed requires car's road
      * and number
      *
-     * @param road   car road
+     * @param road car road
      * @param number car number
      * @return new car or existing Car
      */
@@ -84,7 +80,7 @@ public class CarManager extends RollingStockManager {
     /**
      * Get Car by road and number
      *
-     * @param road   Car road
+     * @param road Car road
      * @param number Car number
      * @return requested Car object or null if none exists
      */
@@ -108,6 +104,7 @@ public class CarManager extends RollingStockManager {
 
     /**
      * Create a new Kernel
+     * @param name string name for this Kernel
      *
      * @return Kernel
      */
@@ -125,6 +122,7 @@ public class CarManager extends RollingStockManager {
 
     /**
      * Delete a Kernel by name
+     * @param name string name for the Kernel
      *
      */
     public void deleteKernel(String name) {
@@ -140,6 +138,7 @@ public class CarManager extends RollingStockManager {
 
     /**
      * Get a Kernel by name
+     * @param name string name for the Kernel
      *
      * @return named Kernel
      */
@@ -288,19 +287,22 @@ public class CarManager extends RollingStockManager {
     protected java.util.Comparator<RollingStock> getComparator(int attribute) {
         switch (attribute) {
             case BY_LOAD:
-                return (c1,c2)->(((Car)c1).getLoadName().compareToIgnoreCase(((Car) c2).getLoadName()));
+                return (c1, c2) -> (((Car) c1).getLoadName().compareToIgnoreCase(((Car) c2).getLoadName()));
             case BY_KERNEL:
-                return (c1,c2)->(((Car)c1).getKernelName().compareToIgnoreCase(((Car)c2).getKernelName()));
+                return (c1, c2) -> (((Car) c1).getKernelName().compareToIgnoreCase(((Car) c2).getKernelName()));
             case BY_RWE:
-                return (c1,c2)->(((Car)c1).getReturnWhenEmptyDestName().compareToIgnoreCase(((Car)c2).getReturnWhenEmptyDestName()));
+                return (c1, c2) -> (((Car) c1).getReturnWhenEmptyDestName()
+                        .compareToIgnoreCase(((Car) c2).getReturnWhenEmptyDestName()));
             case BY_FINAL_DEST:
-                return (c1,c2)->(((Car)c1).getFinalDestinationName().compareToIgnoreCase(((Car)c2).getFinalDestinationName()));
+                return (c1, c2) -> (((Car) c1).getFinalDestinationName()
+                        .compareToIgnoreCase(((Car) c2).getFinalDestinationName()));
             case BY_WAIT:
-                return (c1,c2)->(((Car)c1).getWait() - ((Car)c2).getWait());
+                return (c1, c2) -> (((Car) c1).getWait() - ((Car) c2).getWait());
             case BY_PICKUP:
-                return (c1,c2)->(((Car)c1).getPickupScheduleName().compareToIgnoreCase(((Car)c2).getPickupScheduleName()));
+                return (c1, c2) -> (((Car) c1).getPickupScheduleName()
+                        .compareToIgnoreCase(((Car) c2).getPickupScheduleName()));
             case BY_HAZARD:
-                return (c1,c2)->((((Car)c1).isHazardous()? 1:0) - (((Car)c2).isHazardous()? 1:0));
+                return (c1, c2) -> ((((Car) c1).isHazardous() ? 1 : 0) - (((Car) c2).isHazardous() ? 1 : 0));
             default:
                 return super.getComparator(attribute);
         }
@@ -310,6 +312,7 @@ public class CarManager extends RollingStockManager {
      * Return a list available cars (no assigned train or car already assigned
      * to this train) on a route, cars are ordered least recently moved to most
      * recently moved.
+     * @param train The Train to use.
      *
      * @return List of cars with no assigned train on a route
      */
@@ -334,9 +337,10 @@ public class CarManager extends RollingStockManager {
                 }
             }
             // pickup allowed at destination? Don't include cars in staging
-            if (destination != null && destination.isPickUpAllowed()
-                    && destination.getLocation() != null
-                    && !destination.getLocation().isStaging()) {
+            if (destination != null &&
+                    destination.isPickUpAllowed() &&
+                    destination.getLocation() != null &&
+                    !destination.getLocation().isStaging()) {
                 destination = null; // include cars at destination
             }
         }
@@ -363,7 +367,7 @@ public class CarManager extends RollingStockManager {
         List<Car> out = new ArrayList<Car>();
         // move high priority cars to the start
         for (RollingStock rs : list) {
-            Car car = (Car)rs;
+            Car car = (Car) rs;
             if (car.getLoadPriority().equals(CarLoad.PRIORITY_HIGH)) {
                 out.add(car);
             }
@@ -371,7 +375,7 @@ public class CarManager extends RollingStockManager {
         // now load all of the remaining low priority cars
         for (RollingStock rs : list) {
             if (!out.contains(rs)) {
-                out.add((Car)rs);
+                out.add((Car) rs);
             }
         }
         return out;
@@ -406,6 +410,7 @@ public class CarManager extends RollingStockManager {
      * 
      * If the train is to be blocked by track blocking order, all of the tracks
      * at that location need a blocking number greater than 0.
+     * @param train The selected Train.
      *
      * @return Ordered list of cars assigned to the train
      */
@@ -427,15 +432,18 @@ public class CarManager extends RollingStockManager {
                 if (car.getDestinationTrack() != null && car.getDestinationTrack().getBlockingOrder() > 0) {
                     for (int j = 0; j < out.size(); j++) {
                         if (car.getRouteDestination() != null &&
-                                (car.getRouteDestination().getTrainDirectionString().equals(RouteLocation.WEST_DIR)
-                                || car.getRouteDestination().getTrainDirectionString().equals(RouteLocation.NORTH_DIR))) {
-                            if (car.getDestinationTrack().getBlockingOrder() < out.get(j).getDestinationTrack().getBlockingOrder()) {
+                                (car.getRouteDestination().getTrainDirectionString().equals(RouteLocation.WEST_DIR) ||
+                                        car.getRouteDestination().getTrainDirectionString()
+                                                .equals(RouteLocation.NORTH_DIR))) {
+                            if (car.getDestinationTrack().getBlockingOrder() < out.get(j).getDestinationTrack()
+                                    .getBlockingOrder()) {
                                 out.add(j, car);
                                 break;
                             }
-                        // Train is traveling East or South when setting out the car
+                            // Train is traveling East or South when setting out the car
                         } else {
-                            if (car.getDestinationTrack().getBlockingOrder() > out.get(j).getDestinationTrack().getBlockingOrder()) {
+                            if (car.getDestinationTrack().getBlockingOrder() > out.get(j).getDestinationTrack()
+                                    .getBlockingOrder()) {
                                 out.add(j, car);
                                 break;
                             }
@@ -454,8 +462,10 @@ public class CarManager extends RollingStockManager {
                 for (index = 0; index < lastCarsIndex; index++) {
                     Car carTest = out.get(out.size() - 1 - index);
                     log.debug("Car ({}) has blocking number: {}", carTest.toString(), carTest.getBlocking());
-                    if (carTest.isPassenger() && !carTest.isCaboose() && !carTest.hasFred()
-                            && carTest.getBlocking() < car.getBlocking()) {
+                    if (carTest.isPassenger() &&
+                            !carTest.isCaboose() &&
+                            !carTest.hasFred() &&
+                            carTest.getBlocking() < car.getBlocking()) {
                         break;
                     }
                 }
@@ -528,7 +538,7 @@ public class CarManager extends RollingStockManager {
     /**
      * Replace car loads
      *
-     * @param type        type of car
+     * @param type type of car
      * @param oldLoadName old load name
      * @param newLoadName new load name
      */
@@ -563,9 +573,7 @@ public class CarManager extends RollingStockManager {
         if (root.getChild(Xml.NEW_KERNELS) != null) {
             @SuppressWarnings("unchecked")
             List<Element> eKernels = root.getChild(Xml.NEW_KERNELS).getChildren(Xml.KERNEL);
-            if (log.isDebugEnabled()) {
-                log.debug("Car manager sees {} kernels", eKernels.size());
-            }
+            log.debug("Car manager sees {} kernels", eKernels.size());
             Attribute a;
             for (Element eKernel : eKernels) {
                 if ((a = eKernel.getAttribute(Xml.NAME)) != null) {
@@ -577,26 +585,17 @@ public class CarManager extends RollingStockManager {
             String names = root.getChildText(Xml.KERNELS);
             if (!names.equals("")) {
                 String[] kernelNames = names.split("%%"); // NOI18N
-                if (log.isDebugEnabled()) {
-                    log.debug("kernels: {}", names);
-                }
+                log.debug("kernels: {}", names);
                 for (String name : kernelNames) {
                     newKernel(name);
                 }
             }
         }
 
-        // if (root.getChild(Xml.OPTIONS) != null) {
-        // Element options = root.getChild(Xml.OPTIONS);
-        // if (log.isDebugEnabled())
-        // log.debug("ctor from element " + options);
-        // }
         if (root.getChild(Xml.CARS) != null) {
             @SuppressWarnings("unchecked")
             List<Element> eCars = root.getChild(Xml.CARS).getChildren(Xml.CAR);
-            if (log.isDebugEnabled()) {
-                log.debug("readFile sees {} cars", eCars.size());
-            }
+            log.debug("readFile sees {} cars", eCars.size());
             for (Element eCar : eCars) {
                 register(new Car(eCar));
             }
@@ -606,6 +605,7 @@ public class CarManager extends RollingStockManager {
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-cars.dtd.
+     * @param root The common Element for operations-cars.dtd.
      */
     public void store(Element root) {
         root.addContent(new Element(Xml.OPTIONS)); // nothing to save under

@@ -49,10 +49,6 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
 
         // add sensor
         makeSensor = new MakeNamedBean("LabelEventActive", "LabelEventInactive") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -7423601645608436305L;
 
             void create(String name) {
                 if (memo != null) {
@@ -278,11 +274,6 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8264581016480363352L;
 
         public Default() {
             super("CBUS Event Capture Tool",

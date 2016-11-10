@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.Reading;
 import jmri.util.JmriJFrame;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -13,8 +13,7 @@ import junit.framework.TestSuite;
  * Tests for the RpsIcon class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision$
- */
+  */
 public class RpsPositionIconTest extends jmri.util.SwingTestCase {
 
     RpsPositionIcon rpsIcon;

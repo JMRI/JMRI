@@ -1,4 +1,3 @@
-// SerialReply.java
 package jmri.jmrix.tmcc;
 
 
@@ -7,7 +6,6 @@ package jmri.jmrix.tmcc;
  * payload.
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2006
- * @version $Revision$
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
@@ -48,5 +46,3 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
     }
 
 }
-
-/* @(#)SerialReply.java */

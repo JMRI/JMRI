@@ -91,6 +91,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
     /**
      * Create a RosterGroupTreePane with the defaultRosterGroup selected.
      *
+     * @param defaultRosterGroup the name of the default selection
      */
     public RosterGroupsPanel(String defaultRosterGroup) {
         this.scrollPane = new JScrollPane(getTree());
@@ -335,7 +336,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
             _tree.setTransferHandler(new TransferHandler());
             _tree.addMouseListener(new MouseAdapter());
             setSelectionToGroup(selectedRosterGroup);
-            Roster.instance().addPropertyChangeListener(new PropertyChangeListener());
+            Roster.getDefault().addPropertyChangeListener(new PropertyChangeListener());
         }
         return _tree;
     }
@@ -393,7 +394,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
     private void setRosterGroups(DefaultMutableTreeNode root) {
         root.removeAllChildren();
         root.add(new DefaultMutableTreeNode(Roster.ALLENTRIES));
-        for (String g : Roster.instance().getRosterGroupList()) {
+        for (String g : Roster.getDefault().getRosterGroupList()) {
             root.add(new DefaultMutableTreeNode(g));
         }
     }
@@ -529,7 +530,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
                             re.putAttribute(Roster.getRosterGroupProperty(p.getLastPathComponent().toString()), "yes");
                             re.updateFile();
                         }
-                        Roster.writeRosterFile();
+                        Roster.getDefault().writeRoster();
                         setSelectedRosterGroup(p.getLastPathComponent().toString());
                     } catch (Exception e) {
                         log.warn("Exception dragging RosterEntries onto RosterGroups: " + e);
@@ -560,7 +561,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
             String oldGroup = selectedRosterGroup;
             if (e.getNewLeadSelectionPath() == null) {
                 // if there are no Roster Groups set selection to "All Entries"
-                if (Roster.instance().getRosterGroupList().isEmpty()) {
+                if (Roster.getDefault().getRosterGroupList().isEmpty()) {
                     _tree.setSelectionPath(new TreePath(_model.getPathToRoot(_groups.getFirstChild())));
                 }
             } else if (e.getNewLeadSelectionPath().isDescendant(g)) {

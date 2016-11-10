@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
  * Invokes complete set of tests in the jmri.jmrit.symbolicprog.tabbedframe tree
  *
  * @author	Bob Jacobsen Copyright 2001, 2003, 2012
- * @version $Revision: 21497 $
+ * 
  */
 public class PackageTest extends TestCase {
 
@@ -32,7 +32,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.CheckProgrammerNames.suite());
         suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.QualifiedVarTest.suite());
 
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
         }
 
         return suite;

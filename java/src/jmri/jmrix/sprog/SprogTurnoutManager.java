@@ -8,8 +8,7 @@ import jmri.Turnout;
  * System names are "STnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     SprogSystemConnectionMemo _memo = null;

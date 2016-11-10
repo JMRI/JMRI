@@ -15,8 +15,7 @@ import jmri.managers.DefaultProgrammerManager;
  * programmer. This provides a service mode programmer.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public class SprogProgrammer extends AbstractProgrammer implements SprogListener {
 
     private SprogSystemConnectionMemo _memo = null;

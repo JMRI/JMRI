@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  * <P>
  * @author Matthew Harris Copyright (c) 2015
- * @version $Revision$
  */
 public class CbusLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 

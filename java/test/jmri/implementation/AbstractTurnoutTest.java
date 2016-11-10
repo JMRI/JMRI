@@ -4,7 +4,6 @@
  * Description:	AbsBaseClass for Turnout tests in specific jmrix. packages
  *
  * @author	Bob Jacobsen
- * @version
  */
 /**
  * This is not itself a test class, e.g. should not be added to a suite.
@@ -15,7 +14,7 @@ package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
 import jmri.Turnout;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.TestCase;
 
 public abstract class AbstractTurnoutTest extends TestCase {

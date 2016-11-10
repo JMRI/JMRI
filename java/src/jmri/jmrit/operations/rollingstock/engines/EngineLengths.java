@@ -1,4 +1,3 @@
-// EngineLengths.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Represents the lengths that engines can have.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2014
- * @version $Revision$
  */
 public class EngineLengths extends RollingStockAttribute {
 
@@ -29,9 +27,7 @@ public class EngineLengths extends RollingStockAttribute {
 
     public static synchronized EngineLengths instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("EngineLengths creating instance");
-            }
+            log.debug("EngineLengths creating instance");
             // create and load
             _instance = new EngineLengths();
         }
@@ -74,6 +70,7 @@ public class EngineLengths extends RollingStockAttribute {
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-engines.dtd.
+     * @param root The common Element for operations-engines.dtd.
      *
      */
     public void store(Element root) {

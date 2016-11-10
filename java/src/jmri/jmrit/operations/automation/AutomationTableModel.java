@@ -1,4 +1,3 @@
-// AutomationTableModel.java
 package jmri.jmrit.operations.automation;
 
 import java.awt.BorderLayout;
@@ -19,7 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.ListSelectionModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 import jmri.jmrit.operations.automation.actions.Action;
@@ -36,7 +34,6 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of a automation used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2016
- * @version $Revision$
  */
 public class AutomationTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -65,7 +62,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     AutomationTableFrame _frame;
     boolean _matchMode = false;
 
-    synchronized void updateList() {
+    private void updateList() {
         if (_automation == null) {
             return;
         }
@@ -80,7 +77,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
 
     List<AutomationItem> _list = new ArrayList<AutomationItem>();
 
-    void initTable(AutomationTableFrame frame, JTable table, Automation automation) {
+    protected void initTable(AutomationTableFrame frame, JTable table, Automation automation) {
         _automation = automation;
         _table = table;
         _frame = frame;
@@ -108,22 +105,6 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
-        setPreferredWidths(table);
-
-        // set row height
-        table.setRowHeight(new JComboBox<Object>().getPreferredSize().height);
-        updateList();
-        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        // only allow one row at a time to be selected
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    }
-
-    private void setPreferredWidths(JTable table) {
-        if (_frame.loadTableDetails(table)) {
-            return; // done
-        }
-        log.debug("Setting preferred widths");
         // set column preferred widths
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(35);
         table.getColumnModel().getColumn(CURRENT_COLUMN).setPreferredWidth(60);
@@ -137,6 +118,12 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         table.getColumnModel().getColumn(UP_COLUMN).setPreferredWidth(60);
         table.getColumnModel().getColumn(DOWN_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(70);
+
+        _frame.loadTableDetails(table);
+        // does not use a table sorter
+        table.setRowSorter(null);
+
+        updateList();
     }
 
     @Override
@@ -175,7 +162,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
             case DOWN_COLUMN:
                 return Bundle.getMessage("Down");
             case DELETE_COLUMN:
-                return Bundle.getMessage("Delete");
+                return Bundle.getMessage("ButtonDelete");
             default:
                 return "unknown"; // NOI18N
         }
@@ -238,8 +225,52 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
     }
 
+    // TODO adding synchronized to the following causes thread lock.
+    // See line in propertyChange below:
+    // _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
+    // Stack trace:
+    //    owns: Component$AWTTreeLock  (id=127)   
+    //    waiting for: AutomationTableModel  (id=128) 
+    //    AutomationTableModel.getRowCount() line: 131    
+    //    JTable.getRowCount() line: 2662 
+    //    BasicTableUI.paint(Graphics, JComponent) line: 1766 
+    //    BasicTableUI(ComponentUI).update(Graphics, JComponent) line: 161    
+    //    JTable(JComponent).paintComponent(Graphics) line: 777   
+    //    JTable(JComponent).paint(Graphics) line: 1053   
+    //    JViewport(JComponent).paintChildren(Graphics) line: 886 
+    //    JViewport(JComponent).paint(Graphics) line: 1062    
+    //    JViewport.paint(Graphics) line: 692 
+    //    JViewport(JComponent).paintToOffscreen(Graphics, int, int, int, int, int, int) line: 5223   
+    //    RepaintManager$PaintManager.paintDoubleBuffered(JComponent, Image, Graphics, int, int, int, int) line: 1572 
+    //    RepaintManager$PaintManager.paint(JComponent, JComponent, Graphics, int, int, int, int) line: 1495  
+    //    RepaintManager.paint(JComponent, JComponent, Graphics, int, int, int, int) line: 1265   
+    //    JViewport(JComponent).paintForceDoubleBuffered(Graphics) line: 1089 
+    //    JViewport.paintView(Graphics) line: 1635    
+    //    JViewport.flushViewDirtyRegion(Graphics, Rectangle) line: 1508  
+    //    JViewport.setViewPosition(Point) line: 1093 
+    //    JViewport.scrollRectToVisible(Rectangle) line: 436  
+    //    JTable(JComponent).scrollRectToVisible(Rectangle) line: 3108    
+    //    AutomationTableModel.propertyChange(PropertyChangeEvent) line: 498  
+    //    PropertyChangeSupport.fire(PropertyChangeListener[], PropertyChangeEvent) line: 335 
+    //    PropertyChangeSupport.firePropertyChange(PropertyChangeEvent) line: 327 
+    //    PropertyChangeSupport.firePropertyChange(String, Object, Object) line: 263  
+    //    Automation.setDirtyAndFirePropertyChange(String, Object, Object) line: 666  
+    //    Automation.setCurrentAutomationItem(AutomationItem) line: 279   
+    //    Automation.setNextAutomationItem() line: 243    
+    //    Automation.CheckForActionPropertyChange(PropertyChangeEvent) line: 607  
+    //    Automation.propertyChange(PropertyChangeEvent) line: 646    
+    //    PropertyChangeSupport.fire(PropertyChangeListener[], PropertyChangeEvent) line: 335 
+    //    PropertyChangeSupport.firePropertyChange(PropertyChangeEvent) line: 327 
+    //    PropertyChangeSupport.firePropertyChange(String, Object, Object) line: 263  
+    //    ResetTrainAction(Action).firePropertyChange(String, Object, Object) line: 244   
+    //    ResetTrainAction(Action).finishAction(boolean, Object[]) line: 158  
+    //    ResetTrainAction(Action).finishAction(boolean) line: 128    
+    //    ResetTrainAction.doAction() line: 27    
+    //    Automation$1.run() line: 172    
+    //    Thread.run() line: 745  
+
     @Override
-    public synchronized Object getValueAt(int row, int col) {
+    public Object getValueAt(int row, int col) {
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
@@ -268,20 +299,20 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
                 if (item.getMessage().equals(AutomationItem.NONE) && item.getMessageFail().equals(AutomationItem.NONE))
                     return Bundle.getMessage("Add");
                 else
-                    return Bundle.getMessage("Edit");
+                    return Bundle.getMessage("ButtonEdit");
             case UP_COLUMN:
                 return Bundle.getMessage("Up");
             case DOWN_COLUMN:
                 return Bundle.getMessage("Down");
             case DELETE_COLUMN:
-                return Bundle.getMessage("Delete");
+                return Bundle.getMessage("ButtonDelete");
             default:
                 return "unknown " + col; // NOI18N
         }
     }
 
     @Override
-    public synchronized void setValueAt(Object value, int row, int col) {
+    public void setValueAt(Object value, int row, int col) {
         if (value == null) {
             log.debug("Warning automation table row {} still in edit", row);
             return;
@@ -431,7 +462,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
             buttonPane.add(new JLabel("      ")); // some padding
         }
 
-        JButton okayButton = new JButton(Bundle.getMessage("Okay"));
+        JButton okayButton = new JButton(Bundle.getMessage("ButtonOK"));
         okayButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -444,7 +475,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         });
         buttonPane.add(okayButton);
 
-        JButton cancelButton = new JButton(Bundle.getMessage("Cancel"));
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -491,6 +522,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     // this table listens for changes to a automation and it's car types
+    // TODO removed synchronized from propertyChange, it may cause a thread lock, see _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY)
@@ -503,7 +535,9 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
         if (e.getPropertyName().equals(Automation.CURRENT_ITEM_CHANGED_PROPERTY)) {
             int row = _list.indexOf(_automation.getCurrentAutomationItem());
-            _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
+            int viewRow = _table.convertRowIndexToView(row);
+            // the following line can be responsible for a thread lock
+            _table.scrollRectToVisible(_table.getCellRect(viewRow, 0, true));
             fireTableDataChanged();
         }
         // update automation item?
@@ -525,9 +559,6 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
         if (_automation != null) {
             removePropertyChangeAutomationItems();
             _automation.removePropertyChangeListener(this);

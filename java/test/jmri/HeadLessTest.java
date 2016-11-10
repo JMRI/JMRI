@@ -31,7 +31,6 @@ public class HeadLessTest extends TestCase {
     static public void main(String[] args) {
         // force headless operation
         System.setProperty("java.awt.headless", "true");
-        System.setProperty("jmri.headlesstest", "true");
 
         // start tests
         String[] testCaseName = {"-noloading", HeadLessTest.class.getName()};
@@ -44,8 +43,7 @@ public class HeadLessTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.JmriTest");  // no tests in this class itself
 
         suite.addTest(jmri.PackageTest.suite());
-        suite.addTest(apps.PackageTest.suite());
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(apps.PackageTest.class));
         return suite;
     }
 

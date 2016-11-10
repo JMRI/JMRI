@@ -12,7 +12,7 @@ import jmri.TurnoutManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -39,6 +39,7 @@ public class JsonTurnoutHttpServiceTest extends TestCase {
             turnout1.setState(Turnout.UNKNOWN);
             result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1", Locale.ENGLISH);
             Assert.assertNotNull(result);
+            Assert.assertEquals(JsonTurnoutServiceFactory.TURNOUT, result.path(JSON.TYPE).asText());
             Assert.assertEquals("IT1", result.path(JSON.DATA).path(JSON.NAME).asText());
             Assert.assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
             turnout1.setState(Turnout.CLOSED);

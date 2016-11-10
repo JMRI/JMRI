@@ -50,6 +50,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.22.7
+; - Remove outmoded jython files
+; -------------------------------------------------------------------------
 ; - Version 0.1.22.6
 ; - Remove outmoded vecmath files
 ; -------------------------------------------------------------------------
@@ -270,7 +273,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JRE_VER   "1.8"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.22.5"                    ; Installer version
+!define INST_VER  "0.1.22.7"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -557,6 +560,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\lib\slf4j-log4j12-1.7.2.jar"
     Delete "$OUTDIR\lib\slf4j-api-1.7.5.jar"
     Delete "$OUTDIR\lib\slf4j-log4j12-1.7.5.jar"
+    Delete "$OUTDIR\lib\jython.jar"
 
     ; -- Delete .jar & support files installed using previous layout
     Delete "$OUTDIR\activation.jar"

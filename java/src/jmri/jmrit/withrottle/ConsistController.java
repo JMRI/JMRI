@@ -27,9 +27,10 @@ public class ConsistController extends AbstractController implements ProgListene
         //  writeFile needs to be separate method
         if (WiThrottleManager.withrottlePreferencesInstance().isUseWiFiConsist()) {
             manager = new WiFiConsistManager();
+            jmri.InstanceManager.store(manager,jmri.ConsistManager.class);
             log.debug("Using WiFiConsisting");
         } else {
-            manager = jmri.InstanceManager.getOptionalDefault(jmri.ConsistManager.class);
+            manager = jmri.InstanceManager.getNullableDefault(jmri.ConsistManager.class);
             log.debug("Using JMRIConsisting");
         }
 
@@ -86,7 +87,7 @@ public class ConsistController extends AbstractController implements ProgListene
 
         // Loop through the NCE consists and send consist detail for each
     	/* dboudreau 2/26/2012 added consist manager for NCE
-         NceConsistRoster r = NceConsistRoster.instance();
+         NceConsistRoster r = NceConsistRoster.getDefault();
          List<NceConsistRosterEntry> l = r.matchingList(null, null, null, null, null, null, null, null, null, null); // take all
          int i=-1;
          for (i = 0; i<l.size(); i++) {

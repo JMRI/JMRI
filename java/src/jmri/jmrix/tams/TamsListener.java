@@ -8,7 +8,6 @@ package jmri.jmrix.tams;
  * Based on work by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 17977 $
  */
 public interface TamsListener extends jmri.jmrix.AbstractMRListener {
 

@@ -30,14 +30,16 @@ public class PackageTest extends TestCase {
         suite.addTest(PositionFileTest.suite());
         suite.addTest(ReadingTest.suite());
         suite.addTest(EngineTest.suite());
-        suite.addTest(jmri.jmrix.rps.RpsSensorManagerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RpsSensorManagerTest.class));
         suite.addTest(jmri.jmrix.rps.RpsSensorTest.suite());
         suite.addTest(jmri.jmrix.rps.RegionTest.suite());
         suite.addTest(jmri.jmrix.rps.TransformTest.suite());
-        suite.addTest(BundleTest.suite());
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.rps.serial.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.rps.configurexml.PackageTest.class));
+
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
             suite.addTest(jmri.jmrix.rps.reversealign.AlignmentPanelTest.suite());
-            suite.addTest(jmri.jmrix.rps.serial.SerialAdapterTest.suite());
             suite.addTest(RpsPositionIconTest.suite());
             suite.addTest(jmri.jmrix.rps.rpsmon.RpsMonTest.suite());
             suite.addTest(jmri.jmrix.rps.swing.SwingTest.suite()); // do 2nd to display in front

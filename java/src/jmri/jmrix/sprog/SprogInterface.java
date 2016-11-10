@@ -6,8 +6,7 @@ package jmri.jmrix.sprog;
  * station.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public interface SprogInterface {
 
     public void addSprogListener(SprogListener l);

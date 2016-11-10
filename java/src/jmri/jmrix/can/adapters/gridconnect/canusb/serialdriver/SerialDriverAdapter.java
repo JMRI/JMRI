@@ -12,8 +12,7 @@ import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
  *
  * @author	Andrew Crosland Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version	$Revision$
- */
+  */
 public class SerialDriverAdapter extends GcSerialDriverAdapter implements jmri.jmrix.SerialPortAdapter {
 
     /**

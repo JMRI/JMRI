@@ -9,8 +9,7 @@ import jmri.PowerManager;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  * @author	Paul Bender Copyright (C) 2010
- * @version	$Revision$
- */
+  */
 public class JMRIClientPowerManager implements PowerManager, JMRIClientListener {
 
     private JMRIClientSystemConnectionMemo memo = null;

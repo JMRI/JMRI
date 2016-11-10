@@ -33,4 +33,12 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
         return LoadAndStoreTestBase.makeSuite("java/test/jmri/configurexml/");
     }
 
+    // The minimal setup for log4J
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 }

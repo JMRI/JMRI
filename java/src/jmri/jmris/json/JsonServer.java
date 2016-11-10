@@ -24,29 +24,41 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This is an implementation of a simple server for JMRI. There is currently no
- * handshaking in this server. You may just start sending commands.
+ * This is an implementation of a JSON server for JMRI. See
+ * {@link jmri.server.json} for more details.
  *
  * @author Paul Bender Copyright (C) 2010
- *
+ * @author Randall Wood Copyright (C) 2016
  */
 public class JsonServer extends JmriServer {
 
     private static final Logger log = LoggerFactory.getLogger(JsonServer.class);
     private ObjectMapper mapper;
 
+    /**
+     * Get the default JsonServer, creating it if needed.
+     *
+     * @return the default JsonServer instance.
+     */
     public static JsonServer getDefault() {
-        if (InstanceManager.getOptionalDefault(JsonServer.class) == null) {
-            InstanceManager.store(new JsonServer(), JsonServer.class);
-        }
-        return InstanceManager.getDefault(JsonServer.class);
+        return InstanceManager.getOptionalDefault(JsonServer.class).orElseGet(() -> {
+            return InstanceManager.setDefault(JsonServer.class, new JsonServer());
+        });
     }
 
-    // Create a new server using the default port
+    /**
+     * Create a new server using the default port.
+     */
     public JsonServer() {
         this(JsonServerPreferences.getDefault().getPort(), JsonServerPreferences.getDefault().getHeartbeatInterval());
     }
 
+    /**
+     * Create a new server.
+     *
+     * @param port    the port to listen on
+     * @param timeout the timeout before closing unresponsive connections
+     */
     public JsonServer(int port, int timeout) {
         super(port, timeout);
         this.mapper = new ObjectMapper().configure(Feature.AUTO_CLOSE_SOURCE, false);
@@ -78,7 +90,7 @@ public class JsonServer extends JmriServer {
 
     @Override
     protected void advertise() {
-        HashMap<String, String> properties = new HashMap<String, String>();
+        HashMap<String, String> properties = new HashMap<>();
         properties.put(JSON, JSON_PROTOCOL_VERSION);
         this.advertise(ZEROCONF_SERVICE_TYPE, properties);
     }

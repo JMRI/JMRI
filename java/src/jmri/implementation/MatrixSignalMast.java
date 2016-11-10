@@ -96,7 +96,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
     */
     public void setBitsForAspect(String aspect, char[] bitArray) {
         if (aspectToOutput.containsKey(aspect)) {
-            log.debug("Aspect " + aspect + " is already defined as " + aspectToOutput.get(aspect));
+            if (log.isDebugEnabled()) log.debug("Aspect {} is already defined as {}", aspect, java.util.Arrays.toString(aspectToOutput.get(aspect)));
             aspectToOutput.remove(aspect);
         }
         aspectToOutput.put(aspect, bitArray); // store keypair aspectname - bitArray in hashmap
@@ -165,7 +165,9 @@ public class MatrixSignalMast extends AbstractSignalMast {
             return;
         }
         if (newLit) {
-            setAspect(getAspect());
+            if (getAspect() != null) {
+                setAspect(getAspect());
+            }
             // if true, activate prior aspect
         } else {
             if (unLitBits != null) {
@@ -353,10 +355,10 @@ public class MatrixSignalMast extends AbstractSignalMast {
                 if (getOutputBean(i + 1) != null) {
                     getOutputBean(i + 1).setBinaryOutput(true); // prevent feedback etc.
                 }
-                if (bits[i] == '1' && getOutputBean(i + 1) != null && getOutputBean(i + 1).getCommandedState() == Turnout.THROWN) {
+                if (bits[i] == '1' && getOutputBean(i + 1) != null && getOutputBean(i + 1).getCommandedState() != Turnout.CLOSED) {
                     // no need to set a state already set
                     getOutputBean(i + 1).setCommandedState(Turnout.CLOSED);
-                } else if (bits[i] == '0' && getOutputBean(i + 1) != null && getOutputBean(i + 1).getCommandedState() == Turnout.CLOSED) {
+                } else if (bits[i] == '0' && getOutputBean(i + 1) != null && getOutputBean(i + 1).getCommandedState() != Turnout.THROWN) {
                     getOutputBean(i + 1).setCommandedState(Turnout.THROWN);
                 } else if (bits[i] == 'n' || bits[i] == 'u') {
                     // let pass, extra chars up to 5 are not defined

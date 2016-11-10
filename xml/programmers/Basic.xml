@@ -28,6 +28,7 @@
         <display item="Analog (DC) Operation"/>
       </column>
       <name xml:lang="it">Basic</name>
+	  <name xml:lang="ca">Bàsic</name>
       <name xml:lang="cs">Základní</name>
     </pane>
   </programmer>

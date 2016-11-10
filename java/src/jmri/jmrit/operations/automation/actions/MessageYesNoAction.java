@@ -17,18 +17,18 @@ public class MessageYesNoAction extends Action {
     
     @Override
     public String getActionSuccessfulString() {
-        return Bundle.getMessage("Yes");
+        return Bundle.getMessage("ButtonYes");
     }
 
     @Override
     public String getActionFailedString() {
-        return Bundle.getMessage("No");
+        return Bundle.getMessage("ButtonNo");
     }
 
     @Override
     public void doAction() {
         setRunning(true);
-        int response = sendMessage(getAutomationItem().getMessage(), new Object[]{Bundle.getMessage("Yes"), Bundle.getMessage("No")}, true);
+        int response = sendMessage(getAutomationItem().getMessage(), new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo")}, true);
         getAutomationItem().setActionSuccessful(response != 1);
         setRunning(false);
         firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);

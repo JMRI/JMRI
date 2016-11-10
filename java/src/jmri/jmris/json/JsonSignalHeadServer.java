@@ -1,14 +1,14 @@
 package jmri.jmris.json;
 
-import static jmri.server.json.JsonException.CODE;
 import static jmri.server.json.JSON.DATA;
-import static jmri.server.json.JsonException.ERROR;
-import static jmri.server.json.JsonException.MESSAGE;
 import static jmri.server.json.JSON.NAME;
-import static jmri.server.json.JSON.SIGNAL_HEAD;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.UNKNOWN;
+import static jmri.server.json.JsonException.CODE;
+import static jmri.server.json.JsonException.ERROR;
+import static jmri.server.json.JsonException.MESSAGE;
+import static jmri.server.json.signalHead.JsonSignalHead.SIGNAL_HEAD;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,7 +28,9 @@ import org.slf4j.LoggerFactory;
  * connection
  *
  * @author Paul Bender Copyright (C) 2010
+ * @deprecated since 4.5.6
  */
+@Deprecated
 public class JsonSignalHeadServer extends AbstractSignalHeadServer {
 
     private final JmriConnection connection;

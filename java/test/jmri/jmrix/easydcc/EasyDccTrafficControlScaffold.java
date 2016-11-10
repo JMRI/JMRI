@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
  * Stands in for the EasyDccTrafficController class
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version
  */
 public class EasyDccTrafficControlScaffold extends EasyDccTrafficController {
 

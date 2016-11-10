@@ -19,7 +19,6 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  * Editor panel for the PLAY macro from the Digitrax sound definition language
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
  */
 class PlayEditor extends SdfMacroEditor {
 

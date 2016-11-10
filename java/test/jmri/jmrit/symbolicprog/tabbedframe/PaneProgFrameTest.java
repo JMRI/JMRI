@@ -1,28 +1,28 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.junit.Assert;
 
 /**
  * Test PaneProgFrame
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class PaneProgFrameTest extends TestCase {
 
     // test creating a pane in config file
     public void testPane() {
-        if (System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (GraphicsEnvironment.isHeadless()) {
             return;
         }
         setupDoc();
@@ -52,7 +52,7 @@ public class PaneProgFrameTest extends TestCase {
 
     // show me the specially-created frame
     public void testFrame() {
-        if (System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (GraphicsEnvironment.isHeadless()) {
             return;
         }
         setupDoc();

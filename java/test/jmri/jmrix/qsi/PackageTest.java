@@ -34,8 +34,8 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.qsi.QsiTrafficControllerTest.suite());
         suite.addTest(jmri.jmrix.qsi.QsiMessageTest.suite());
         suite.addTest(jmri.jmrix.qsi.QsiReplyTest.suite());
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.qsi.serialdriver.PackageTest.class));
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
             suite.addTest(jmri.jmrix.qsi.qsimon.QsiMonFrameTest.suite());
             suite.addTest(jmri.jmrix.qsi.packetgen.PacketGenFrameTest.suite());
         }

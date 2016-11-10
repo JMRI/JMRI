@@ -4,7 +4,7 @@ package jmri.jmrit.operations.automation.actions;
  * Action codes for automation
  *
  * @author Daniel Boudreau Copyright (C) 2016
- * @version $Revision: 22156 $
+ * 
  *
  */
 public class ActionCodes {

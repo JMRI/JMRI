@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Properties;
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
 import jmri.server.json.JSON;
@@ -49,10 +50,9 @@ public final class WebServer implements LifeCycle.Listener {
     }
 
     public static WebServer getDefault() {
-        if (InstanceManager.getOptionalDefault(WebServer.class) == null) {
-            InstanceManager.setDefault(WebServer.class, new WebServer());
-        }
-        return InstanceManager.getDefault(WebServer.class);
+        return InstanceManager.getOptionalDefault(WebServer.class).orElseGet(() -> {
+            return InstanceManager.setDefault(WebServer.class, new WebServer());
+        });
     }
 
     public void start() {
@@ -169,9 +169,9 @@ public final class WebServer implements LifeCycle.Listener {
     @Override
     public void lifeCycleStarting(LifeCycle lc) {
         shutDownTask = new ServerShutDownTask(this);
-        if (InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
-            InstanceManager.getDefault(jmri.ShutDownManager.class).register(shutDownTask);
-        }
+        InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(manager -> {
+            manager.register(shutDownTask);
+        });
         log.info("Starting Web Server on port " + preferences.getPort());
     }
 
@@ -201,9 +201,9 @@ public final class WebServer implements LifeCycle.Listener {
 
     @Override
     public void lifeCycleStopped(LifeCycle lc) {
-        if (InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
-            InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(shutDownTask);
-        }
+        InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(manager -> {
+            manager.deregister(shutDownTask);
+        });
         log.debug("Web Server stopped");
     }
 
@@ -242,21 +242,21 @@ public final class WebServer implements LifeCycle.Listener {
                 try {
                     server.stop();
                 } catch (Exception ex) {
-                    log.warn("Error shutting down WebServer: " + ex);
-                    if (log.isDebugEnabled()) {
-                        log.debug("Details follow: ", ex);
-                    }
+                    // Error without stack trace
+                    log.warn("Error shutting down WebServer: {}", ex);
+                    // Full stack trace
+                    log.debug("Details follow: ", ex);
                 }
                 this.isComplete = true;
             }).start();
             return true;
         }
-        
+
         @Override
         public boolean isParallel() {
             return true;
         }
-        
+
         @Override
         public boolean isComplete() {
             return this.isComplete;

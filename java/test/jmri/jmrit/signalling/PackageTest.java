@@ -26,10 +26,10 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.signalling.PackageTest");   // no tests in this class itself
 
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(jmri.jmrit.signalling.entryexit.PackageTest.suite());
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.signalling.configurexml.PackageTest.class));
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
         }
 
         return suite;

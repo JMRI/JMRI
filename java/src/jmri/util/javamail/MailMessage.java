@@ -120,6 +120,7 @@ public class MailMessage {
     /**
      * sets the protocol to be used connecting to the mailhost default smtp
      *
+     * @param p the protocol
      */
     public void setProtocol(String p) {
         this.pProtocol = p;
@@ -128,6 +129,7 @@ public class MailMessage {
     /**
      * shows the protocol to be used connecting to the mailhost
      *
+     * @return the protocol
      */
     public String getProtocol() {
         return (this.pProtocol);
@@ -137,6 +139,7 @@ public class MailMessage {
      * sets if encryption will used when connecting to the mailhost default is
      * true
      *
+     * @param t true if message should be sent in encrypted channels
      */
     public void setTls(boolean t) {
         if (t) {
@@ -149,14 +152,16 @@ public class MailMessage {
     /**
      * shows if encryption will be used when connecting to the mailhost
      *
+     * @return true if message will be sent encrypted
      */
     public boolean isTls() {
-        return ((this.pTls.equals("true") ? true : false));
+        return this.pTls.equals("true");
     }
 
     /**
      * sets if authorization will be used to the mailhost default is true
      *
+     * @param t true if authorization should be used
      */
     public void setAuth(boolean t) {
         if (t) {
@@ -169,9 +174,10 @@ public class MailMessage {
     /**
      * shows if authorization will be used to the mailhost
      *
+     * @return true if authorization will be used
      */
     public boolean isAuth() {
-        return ((this.pAuth.equals("true") ? true : false));
+        return this.pAuth.equals("true");
     }
 
     Session session;
@@ -228,6 +234,7 @@ public class MailMessage {
     /**
      * Adds the text to the message as a separate Mime part
      *
+     * @param text the text to add
      */
     public void setText(String text) {
         try {
@@ -242,6 +249,7 @@ public class MailMessage {
     /**
      * Adds the provided file to the message as a separate Mime part.
      *
+     * @param file the file path to attach
      */
     public void setFileAttachment(String file) {
         try {
@@ -321,6 +329,7 @@ public class MailMessage {
      */
     private class SMTPAuthenticator extends javax.mail.Authenticator {
 
+        @Override
         public PasswordAuthentication getPasswordAuthentication() {
             return new PasswordAuthentication(user, password);
         }

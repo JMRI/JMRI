@@ -17,7 +17,6 @@ import jmri.ProgrammerManager;
  * @author	Ken Cameron Copyright (C) 2011 copied from PowerLine into IEEE802154
  * by
  * @author	Paul Bender Copyright (C) 2013
- * @version $Revision$
  */
 public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 

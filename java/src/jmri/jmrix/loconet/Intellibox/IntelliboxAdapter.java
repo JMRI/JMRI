@@ -13,8 +13,7 @@ import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
  *
  * @author	Alex Shepherd Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2005, 2010
- * @version	$Revision$
- */
+  */
 public class IntelliboxAdapter extends LocoBufferAdapter {
 
     public IntelliboxAdapter() {

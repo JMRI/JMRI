@@ -108,6 +108,32 @@ public final class JmriPreferencesProvider {
     }
 
     /**
+     * Get the {@link java.util.prefs.Preferences} for the specified package in
+     * the specified profile.
+     *
+     * @param project The profile. This is most often the profile returned by
+     *                the {@link jmri.profile.ProfileManager#getActiveProfile()}
+     *                method of the ProfileManager returned by
+     *                {@link jmri.profile.ProfileManager#getDefault()}
+     * @param pkg     The package requesting preferences.
+     * @param shared  True if the preferences apply to this profile irregardless
+     *                of host. If false, the preferences only apply to this
+     *                computer.
+     * @return The shared or private Preferences node for the package.
+     * @deprecated Not for removal. Use of
+     * {@link #getPreferences(jmri.profile.Profile, java.lang.Class, boolean)}
+     * is preferred and recommended unless reading preferences for a
+     * non-existent package or class.
+     */
+    public static Preferences getPreferences(final Profile project, final String pkg, final boolean shared) {
+        if (project != null) {
+            return findProvider(project.getPath(), shared).getPreferences(pkg);
+        } else {
+            return findProvider(null, shared).getPreferences(pkg);
+        }
+    }
+
+    /**
      * Get the {@link java.util.prefs.Preferences} for the specified class in
      * the specified path.
      *
@@ -122,7 +148,7 @@ public final class JmriPreferencesProvider {
      *         clazz for project.
      * @deprecated Not for removal. Use of
      * {@link #getPreferences(jmri.profile.Profile, java.lang.Class, boolean)}
-     * is prefered and recommended unless being used to during the construction
+     * is preferred and recommended unless being used to during the construction
      * of a Profile object.
      */
     public static Preferences getPreferences(final @Nonnull File path, @Nullable final Class<?> clazz, final boolean shared) {
@@ -142,6 +168,19 @@ public final class JmriPreferencesProvider {
             return this.root;
         }
         return this.root.node(findCNBForClass(clazz));
+    }
+
+    /**
+     * Get the {@link java.util.prefs.Preferences} for the specified package.
+     *
+     * @param pkg The package for which preferences are needed.
+     * @return The shared or private Preferences node for the package.
+     */
+    Preferences getPreferences(final String pkg) {
+        if (pkg == null) {
+            return this.root;
+        }
+        return this.root.node(pkg);
     }
 
     JmriPreferencesProvider(File path, boolean shared) {
@@ -187,7 +226,6 @@ public final class JmriPreferencesProvider {
     //
     //    return result.toString();
     //}
-
     /**
      * Returns the name of the package for the class in a format that is treated
      * as a single token.

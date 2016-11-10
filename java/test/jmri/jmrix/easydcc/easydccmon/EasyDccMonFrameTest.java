@@ -4,7 +4,6 @@
  * Description:	JUnit tests for the EasyDccProgrammer class
  *
  * @author	Bob Jacobsen
- * @version
  */
 package jmri.jmrix.easydcc.easydccmon;
 
@@ -13,7 +12,7 @@ import jmri.jmrix.easydcc.EasyDccListener;
 import jmri.jmrix.easydcc.EasyDccMessage;
 import jmri.jmrix.easydcc.EasyDccReply;
 import jmri.jmrix.easydcc.EasyDccTrafficController;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

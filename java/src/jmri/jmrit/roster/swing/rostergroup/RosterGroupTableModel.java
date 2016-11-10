@@ -34,7 +34,7 @@ public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel 
     static final int NUMCOL = ADDTOGROUPCOL + 1;
 
     public int getRowCount() {
-        return Roster.instance().numEntries();
+        return Roster.getDefault().numEntries();
     }
 
     public int getColumnCount() {
@@ -104,7 +104,7 @@ public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel 
      */
     public Object getValueAt(int row, int col) {
         // get roster entry for row
-        RosterEntry re = Roster.instance().getEntry(row);
+        RosterEntry re = Roster.getDefault().getEntry(row);
 
         switch (col) {
             case IDCOL:
@@ -156,7 +156,7 @@ public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel 
     }
 
     public void setValueAt(Object value, int row, int col) {
-        RosterEntry re = Roster.instance().getEntry(row);
+        RosterEntry re = Roster.getDefault().getEntry(row);
         if ((col == ADDTOGROUPCOL) && (!group.equals("RosterGroup:"))) {
             if (value.toString().equals("true")) {
                 re.putAttribute(group, "yes");
@@ -164,11 +164,11 @@ public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel 
                 re.deleteAttribute(group);
             }
             re.updateFile();
-            Roster.writeRosterFile();
+            Roster.getDefault().writeRoster();
 
         }
         //re.updateFile();
-        //Roster.instance().writeRosterFile();
+        //Roster.getDefault().writeRosterFile();
     }
 
     public void setGroup(String grp) {

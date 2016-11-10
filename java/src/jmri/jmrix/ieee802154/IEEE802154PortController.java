@@ -8,8 +8,7 @@ package jmri.jmrix.ieee802154;
  * multiple connection
  * @author kcameron Copyright (C) 2011 Modified for IEEE 802.15.4 connection
  * @author Paul Bender Copyright (C) 2013
- * @version	$Revision$
- */
+  */
 public abstract class IEEE802154PortController extends jmri.jmrix.AbstractSerialPortController {
 
     // base class. Implementations will provide InputStream and OutputStream

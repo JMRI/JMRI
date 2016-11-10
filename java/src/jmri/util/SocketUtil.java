@@ -18,14 +18,16 @@ import java.net.Socket;
 public class SocketUtil {
 
     /**
-     * Return the remote address, if possible, otherwise {@code "<unknown>"}
+     * Return the remote address, if possible, otherwise {@literal <unknown>}
+     *
+     * @param socket the remotely connected socket
+     * @return the address or {@literal <unknown>}
      */
     static public String getRemoteSocketAddress(Socket socket) {
         try {
             return socket.getRemoteSocketAddress().toString();
         } catch (Throwable e) {
-        } finally {
-//            return "<unknown>";
+            // ignore
         }
         return "<unknown>";
 
@@ -33,11 +35,16 @@ public class SocketUtil {
 
     /**
      * Set the Socket's reuseAddress parameter while protecting against failure
+     *
+     * @param socket the socket to set
+     * @param on true if the address should be reused; false otherwise
+     * @see java.net.ServerSocket#setReuseAddress(boolean) 
      */
     static public void setReuseAddress(ServerSocket socket, boolean on) {
         try {
             socket.setReuseAddress(on);
         } catch (Throwable e) {
+            // ignore any errors
         }
     }
 

@@ -11,14 +11,13 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
- * @see jmri.jmrit.roster.RosterEntry
+  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
 public class RosterRecorder extends Thread {
 
     public RosterRecorder() {
-        Roster roster = Roster.instance();  // forces roster to be loaded
+        Roster roster = Roster.getDefault();  // forces roster to be loaded
 
         // listen for any new entries
         roster.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
@@ -75,7 +74,7 @@ public class RosterRecorder extends Thread {
      * Trigger the next roster write
      */
     void forceWrite() {
-        if (queue.offer(Roster.instance())) {
+        if (queue.offer(Roster.getDefault())) {
             log.debug("forceWrite queued OK");
         } else {
             log.error("forceWrite failed to queue roster write");
@@ -107,7 +106,7 @@ public class RosterRecorder extends Thread {
 
             // write final result
             log.debug("writeRosterFile start");
-            Roster.writeRosterFile();
+            Roster.getDefault().writeRoster();
             log.debug("writeRosterFile end");
         }
     }

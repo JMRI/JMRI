@@ -11,12 +11,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SortOrder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableRowSorter;
 import jmri.jmrix.grapevine.SerialMessage;
 import jmri.jmrix.grapevine.SerialReply;
 import jmri.jmrix.grapevine.SerialTrafficController;
 import jmri.jmrix.grapevine.nodeconfig.NodeConfigFrame;
+import jmri.swing.RowSorterUtil;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -57,7 +60,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
 
         nodesModel = new NodesModel();
 
-        JTable nodesTable = jmri.util.JTableUtil.sortableDataModel(nodesModel);
+        JTable nodesTable = new JTable(nodesModel);
 
         // install a button renderer & editor
         ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -65,11 +68,9 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
         TableCellEditor buttonEditor = new ButtonEditor(new JButton());
         nodesTable.setDefaultEditor(JButton.class, buttonEditor);
 
-        try {
-            jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter) nodesTable.getModel());
-            tmodel.setSortingStatus(NodeTablePane.NodesModel.STATUSCOL, jmri.util.com.sun.TableSorter.DESCENDING);
-        } catch (ClassCastException e3) {
-        }  // if not a sortable table model
+        TableRowSorter<NodesModel> sorter = new TableRowSorter<>(nodesModel);
+        RowSorterUtil.setSortOrder(sorter, NodesModel.STATUSCOL, SortOrder.DESCENDING);
+        nodesTable.setRowSorter(sorter);
         nodesTable.setRowSelectionAllowed(false);
         nodesTable.setPreferredScrollableViewportSize(new java.awt.Dimension(580, 80));
 

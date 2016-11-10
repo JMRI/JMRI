@@ -2,7 +2,7 @@ package jmri.jmrix.can.cbus.swing.configtool;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -25,8 +25,8 @@ public class ConfigToolActionTest extends TestCase {
         CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tcs);
         //f.initComponents(memo);
-        new ConfigToolPane();
-        Assert.assertNotNull("exists", tcs);
+        ConfigToolPane pane = new ConfigToolPane();
+        Assert.assertNotNull("exists", pane);
     }
 
     /*public void testFrameCreation() {

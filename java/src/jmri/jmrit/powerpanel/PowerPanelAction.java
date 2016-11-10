@@ -32,7 +32,7 @@ public class PowerPanelAction extends jmri.util.swing.JmriNamedPaneAction {
 
     void checkManager() {
         // disable ourself if there is no power Manager
-        if (jmri.InstanceManager.getOptionalDefault(jmri.PowerManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.PowerManager.class) == null) {
             setEnabled(false);
         }
     }

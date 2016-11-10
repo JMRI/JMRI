@@ -20,6 +20,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.automation.AutomationsTableFrameAction;
@@ -47,7 +50,7 @@ import jmri.jmrit.operations.trains.tools.TrainCopyAction;
 import jmri.jmrit.operations.trains.tools.TrainsByCarTypeAction;
 import jmri.jmrit.operations.trains.tools.TrainsScriptAction;
 import jmri.jmrit.operations.trains.tools.TrainsTableSetColorAction;
-import jmri.util.com.sun.TableSorter;
+import jmri.swing.JTablePersistenceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +60,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
  * 2014
- * @version $Revision$
  */
 public class TrainsTableFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -73,13 +75,12 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     LocationManager locationManager = LocationManager.instance();
 
     TrainsTableModel trainsModel;
-    TableSorter sorter;
     JTable trainsTable;
     JScrollPane trainsPane;
 
     // labels
     JLabel numTrains = new JLabel();
-    JLabel textTrains = new JLabel(Bundle.getMessage("Trains").toLowerCase());
+    JLabel textTrains = new JLabel(Bundle.getMessage("trains"));
     JLabel textSep1 = new JLabel("      ");
 
     // radio buttons
@@ -92,7 +93,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     JRadioButton conductorRB = new JRadioButton(CONDUCTOR);
 
     // major buttons
-    JButton addButton = new JButton(Bundle.getMessage("Add"));
+    JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
     JButton buildButton = new JButton(Bundle.getMessage("Build"));
     JButton printButton = new JButton(Bundle.getMessage("Print"));
     JButton openFileButton = new JButton(Bundle.getMessage("OpenFile"));
@@ -124,9 +125,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 
         // Set up the jtable in a Scroll Pane..
         trainsModel = new TrainsTableModel();
-        sorter = new TableSorter(trainsModel);
-        trainsTable = new JTable(sorter);
-        sorter.setTableHeader(trainsTable.getTableHeader());
+        trainsTable = new JTable(trainsModel);
         trainsPane = new JScrollPane(trainsTable);
         trainsModel.initTable(trainsTable, this);
 
@@ -288,6 +287,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         toolMenu.add(new PrintSavedTrainManifestAction(Bundle.getMessage("MenuItemPreviewSavedManifest"), true, null));
         toolMenu.add(new SetupExcelProgramFrameAction(Bundle.getMessage("MenuItemSetupExcelProgram")));
         toolMenu.add(new ExportTrainRosterAction());
+        toolMenu.addSeparator();
         toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPrint"), new Frame(), false, this));
         toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPreview"), new Frame(), true, this));
 
@@ -315,6 +315,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
+        // clear any sorts by column
+        clearTableSort(trainsTable);
         if (ae.getSource() == showId) {
             trainsModel.setSort(trainsModel.SORTBYID);
         }
@@ -359,8 +361,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
                     if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
                         JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                 .getMessage("NeedToBuildBeforeOpenFile"), new Object[]{
-                                        train.getName()}),
-                                Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);
+                            train.getName()}),
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     } else if (train.isBuilt()) {
                         train.openFile();
                     }
@@ -374,7 +376,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
                         + ", file name: " + TrainCustomManifest.instance().getFileName()); // NOI18N
                 JOptionPane.showMessageDialog(this, MessageFormat.format(
                         Bundle.getMessage("LoadDirectoryNameFileName"), new Object[]{
-                            TrainCustomManifest.instance().getDirectoryName(), TrainCustomManifest.instance().getFileName()}), Bundle
+                    TrainCustomManifest.instance().getDirectoryName(), TrainCustomManifest.instance().getFileName()}), Bundle
                         .getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -384,8 +386,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
                     if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
                         JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                 .getMessage("NeedToBuildBeforeRunFile"), new Object[]{
-                                        train.getName()}),
-                                Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);
+                            train.getName()}),
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     } else if (train.isBuilt()) {
                         // Make sure our csv manifest file exists for this Train.
                         File csvFile = train.createCSVManifestFile();
@@ -413,18 +415,18 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         }
     }
 
-    int _status = TableSorter.ASCENDING;
+    SortOrder _status = SortOrder.ASCENDING;
 
     protected String getSortBy() {
         // set the defaults
         String sortBy = TrainsTableModel.TIMECOLUMNNAME;
-        _status = TableSorter.ASCENDING;
+        _status = SortOrder.ASCENDING;
         // now look to see if a sort is active
-        for (int i = 0; i < sorter.getColumnCount(); i++) {
-            String name = sorter.getColumnName(i);
-            int status = sorter.getSortingStatus(i);
-            // log.debug("Column " + name + " status " + status);
-            if (status != TableSorter.NOT_SORTED && !name.equals("")) {
+        for (RowSorter.SortKey key : trainsTable.getRowSorter().getSortKeys()) {
+            String name = trainsModel.getColumnName(key.getColumn());
+            SortOrder status = key.getSortOrder();
+            // log.debug("Column {} status {}", name, status);
+            if (!status.equals(SortOrder.UNSORTED) && !name.isEmpty()) {
                 sortBy = name;
                 _status = status;
                 break;
@@ -554,6 +556,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         Setup.removePropertyChangeListener(this);
         removePropertyChangeLocations();
         setModifiedFlag(false);
+        InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {
+            tpm.stopPersisting(trainsTable);
+        });
         super.dispose();
     }
 
@@ -584,7 +589,6 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     @Override
     protected void storeValues() {
         super.storeValues();
-        saveTableDetails(trainsTable);
     }
 
     @Override

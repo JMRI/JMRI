@@ -15,7 +15,7 @@ package jmri.jmrix.dccpp.swing;
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision: 21510 $
+ * 
  */
 
 import java.awt.Frame;

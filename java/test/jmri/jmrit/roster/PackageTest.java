@@ -25,11 +25,11 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.roster.PackageTest");
-        suite.addTest(jmri.jmrit.roster.BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(jmri.jmrit.roster.RosterEntryTest.suite());
         suite.addTest(jmri.jmrit.roster.RosterTest.suite());
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.roster.configurexml.PackageTest.class));
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
             suite.addTest(jmri.jmrit.roster.CopyRosterItemActionTest.suite());
             suite.addTest(jmri.jmrit.roster.RosterEntryPaneTest.suite());
             suite.addTest(jmri.jmrit.roster.FunctionLabelPaneTest.suite());

@@ -6,8 +6,7 @@ package jmri.jmrix.lenz;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
- *
+  *
  */
 public class LenzConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 

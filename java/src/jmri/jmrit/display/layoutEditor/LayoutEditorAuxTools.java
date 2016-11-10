@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 public class LayoutEditorAuxTools {
 
     // Defined text resource
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
+    //ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     // constants
     // operational instance variables 

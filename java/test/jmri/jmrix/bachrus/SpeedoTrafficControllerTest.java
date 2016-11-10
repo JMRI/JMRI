@@ -16,8 +16,9 @@ import org.junit.Test;
 public class SpeedoTrafficControllerTest {
 
     @Test public void integerConstructorTest() {
-        SpeedoTrafficController m = new SpeedoTrafficController();
-        Assert.assertNotNull(m);
+        SpeedoSystemConnectionMemo m = new SpeedoSystemConnectionMemo();
+        SpeedoTrafficController tc = new SpeedoTrafficController(m);
+        Assert.assertNotNull(tc);
     }
 
     // The minimal setup for log4J

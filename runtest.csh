@@ -29,10 +29,11 @@
 # If you need to add any additional Java options or defines,
 # include them in the JMRI_OPTIONS environment variable
 #
-#  jmri.demo             Keep some test windows open after tests run
-#  jmri.headlesstest     Tests won't attempt to use screen
-#  jmri.skipschematests  Skip tests of XML schema if true
-#  jmri.skipscripttests  Skip tests of Jython scripts if true
+#  jmri.demo                Keep some test windows open after tests run
+#  java.awt.headless        Tests won't attempt to use screen
+#  jmri.skipschematests     Skip tests of XML schema if true
+#  jmri.skipscripttests     Skip tests of Jython scripts if true
+#  jmri.log4jconfigfilename Specify replacement for details tests.lcf file (tests only)
 #
 # E.g.: 
 # setenv JMRI_OPTIONS -Djmri.skipschematests=true

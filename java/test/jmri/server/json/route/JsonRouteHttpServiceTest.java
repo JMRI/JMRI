@@ -16,7 +16,7 @@ import jmri.TurnoutManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -48,6 +48,7 @@ public class JsonRouteHttpServiceTest extends TestCase {
         try {
             result = service.doGet(JsonRouteServiceFactory.ROUTE, "IR1", Locale.ENGLISH);
             Assert.assertNotNull(result);
+            Assert.assertEquals(JsonRouteServiceFactory.ROUTE, result.path(JSON.TYPE).asText());
             Assert.assertEquals("IR1", result.path(JSON.DATA).path(JSON.NAME).asText());
             Assert.assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
             sensor1.setKnownState(Sensor.ACTIVE);

@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * Description:	Implement Reporter manager for loconet
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  */
 public class LnReporterManager extends jmri.managers.AbstractReporterManager implements LocoNetListener {
 

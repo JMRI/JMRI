@@ -4,7 +4,7 @@ package jmri.jmrit.operations.rollingstock;
  * A convenient place to access operations xml element and attribute names.
  *
  * @author Daniel Boudreau Copyright (C) 2012
- * @version $Revision: 22156 $
+ * 
  *
  */
 public class Xml {
@@ -34,8 +34,6 @@ public class Xml {
     static final String OWNER = "owner"; // NOI18N
     static final String VALUE = "value"; // NOI18N
     static final String RFID = "rfid"; // NOI18N
-    static final String RFID_WHERE_LAST_SEEN = "wherelastSeen"; // NOI18N
-    static final String RFID_WHEN_LAST_SEEN = "whenlastSeen"; // NOI18N
     static final String TRAIN = "train"; // NOI18N
     static final String TRAIN_ID = "trainId"; // NOI18N
     static final String OUT_OF_SERVICE = "outOfService"; // NOI18N
