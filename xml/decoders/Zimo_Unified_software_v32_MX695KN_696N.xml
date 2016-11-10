@@ -69,6 +69,7 @@
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV400-CV428.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV430-CV489.xml"/>

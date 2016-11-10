@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>3</revnumber>
+      <date>2016-10-23</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>2</revnumber>
       <date>2015-04-28</date>
       <authorinitials>ALM</authorinitials>
@@ -45,6 +51,7 @@
     <label xml:lang="fr">Adresse d'Unité Multiple active pour F1</label>
     <label xml:lang="de">Verbundadresse aktiv für F1</label>
     <label>Consist Address Active For F1</label>
+    <label xml:lang="cs">Adresa soupravy aktivní na F1</label>
   </variable>
   <variable CV="21" mask="XXXXXXVX" item="Consist Address Active For F2" default="0" minFn="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
@@ -52,6 +59,7 @@
     <label xml:lang="fr">Adresse d'Unité Multiple active pour F2</label>
     <label xml:lang="de">Verbundadresse aktiv für F2</label>
     <label>Consist Address Active For F2</label>
+    <label xml:lang="cs">Adresa soupravy aktivní na F2</label>
   </variable>
   <variable CV="21" mask="XXXXXVXX" item="Consist Address Active For F3" default="0" minFn="3">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
@@ -59,6 +67,7 @@
     <label xml:lang="fr">Adresse d'Unité Multiple active pour F3</label>
     <label xml:lang="de">Verbundadresse aktiv für F3</label>
     <label>Consist Address Active For F3</label>
+    <label xml:lang="cs">Adresa soupravy aktivní na F3</label>
   </variable>
   <variable CV="21" mask="XXXXVXXX" item="Consist Address Active For F4" default="0" minFn="4">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
@@ -66,6 +75,7 @@
     <label xml:lang="fr">Adresse d'Unité Multiple active pour F4</label>
     <label xml:lang="de">Verbundadresse aktiv für F4</label>
     <label>Consist Address Active For F4</label>
+    <label xml:lang="cs">Adresa soupravy aktivní na F4</label>
   </variable>
   <variable CV="21" mask="XXXVXXXX" item="Consist Address Active For F5" default="0" minFn="5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
@@ -73,6 +83,7 @@
     <label xml:lang="fr">Adresse d'Unité Multiple active pour F5</label>
     <label xml:lang="de">Verbundadresse aktiv für F5</label>
     <label>Consist Address Active For F5</label>
+    <label xml:lang="cs">Adresa soupravy aktivní na F5</label>
   </variable>
   <variable CV="21" mask="XXVXXXXX" item="Consist Address Active For F6" default="0" minFn="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
@@ -80,6 +91,7 @@
     <label xml:lang="fr">Adresse d'Unité Multiple active pour F6</label>
     <label xml:lang="de">Verbundadresse aktiv für F6</label>
     <label>Consist Address Active For F6</label>
+    <label xml:lang="cs">Adresa soupravy aktivní na F6</label>
   </variable>
   <variable CV="21" mask="XVXXXXXX" item="Consist Address Active For F7" default="0" minFn="7">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
@@ -87,6 +99,7 @@
     <label xml:lang="fr">Adresse d'Unité Multiple active pour F7</label>
     <label xml:lang="de">Verbundadresse aktiv für F7</label>
     <label>Consist Address Active For F7</label>
+    <label xml:lang="cs">Adresa soupravy aktivní na F7</label>
   </variable>
   <variable CV="21" mask="VXXXXXXX" item="Consist Address Active For F8" default="0" minFn="8">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
@@ -94,6 +107,7 @@
     <label xml:lang="fr">Adresse d'Unité Multiple active pour F8</label>
     <label xml:lang="de">Verbundadresse aktiv für F8</label>
     <label>Consist Address Active For F8</label>
+    <label xml:lang="cs">Adresa soupravy aktivní na F8</label>
   </variable>
   <variable CV="22" mask="XXXXXXXV" item="Consist Address Active For F0" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
@@ -101,6 +115,7 @@
     <label xml:lang="fr">Adresse UM active pour F0</label>
     <label xml:lang="de">Verbundadresse aktiv für F0</label>
     <label>Consist Address Active For F0</label>
+    <label xml:lang="cs">Adresa soupravy aktivní na F0</label>
   </variable>
   <variable CV="22" mask="XXXXXXVX" item="Consist Address Active For F9" default="0" minFn="9">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
@@ -108,6 +123,7 @@
     <label xml:lang="fr">Adresse d'Unité Multiple active pour F9</label>
     <label xml:lang="de">Verbundadresse aktiv für F9</label>
     <label>Consist Address Active for F9</label>
+    <label xml:lang="cs">Adresa soupravy aktivní na F9</label>
   </variable>
   <variable CV="22" mask="XXXXXVXX" item="Consist Address Active For F10" default="0" minFn="10">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
@@ -115,6 +131,7 @@
     <label xml:lang="fr">Adresse d'Unité Multiple active pour F10</label>
     <label xml:lang="de">Verbundadresse aktiv für F10</label>
     <label>Consist Address Active for F10</label>
+    <label xml:lang="cs">Adresa soupravy aktivní na F10</label>
   </variable>
   <variable CV="22" mask="XXXXVXXX" item="Consist Address Active For F11" default="0" minFn="11">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
@@ -122,6 +139,7 @@
     <label xml:lang="fr">Adresse d'Unité Multiple active pour F11</label>
     <label xml:lang="de">Verbundadresse aktiv für F11</label>
     <label>Consist Address Active for F11</label>
+    <label xml:lang="cs">Adresa soupravy aktivní na F11</label>
   </variable>
   <variable CV="22" mask="XXXVXXXX" item="Consist Address Active For F12" default="0" minFn="12">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
@@ -129,6 +147,7 @@
     <label xml:lang="fr">Adresse d'Unité Multiple active pour F12</label>
     <label xml:lang="de">Verbundadresse aktiv für F12</label>
     <label>Consist Address Active for F12</label>
+    <label xml:lang="cs">Adresa soupravy aktivní na F12</label>
   </variable>
   <variable CV="22" mask="XXVXXXXX" item="Consist Address Active For F13" default="0" minFn="13">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
@@ -136,6 +155,7 @@
     <label xml:lang="fr">Adresse d'Unité Multiple active pour F13</label>
     <label xml:lang="de">Verbundadresse aktiv für F13</label>
     <label>Consist Address Active for F13</label>
+    <label xml:lang="cs">Adresa soupravy aktivní na F13</label>
   </variable>
   <variable CV="22" mask="XVXXXXXX" item="Consist Address Active For F14" default="0" minFn="14">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
@@ -143,6 +163,7 @@
     <label xml:lang="fr">Adresse d'Unité Multiple active pour F14</label>
     <label xml:lang="de">Verbundadresse aktiv für F14</label>
     <label>Consist Address Active for F14</label>
+    <label xml:lang="cs">Adresa soupravy aktivní na F14</label>
   </variable>
   <variable CV="22" mask="VXXXXXXX" item="Consist Address Active For F15" default="0" minFn="15">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
@@ -150,5 +171,6 @@
     <label xml:lang="fr">Adresse d'Unité Multiple active pour F15</label>
     <label xml:lang="de">Verbundadresse aktiv für F15</label>
     <label>Consist Address Active for F15</label>
+    <label xml:lang="cs">Adresa soupravy aktivní na F15</label>
   </variable>      
 </variables>

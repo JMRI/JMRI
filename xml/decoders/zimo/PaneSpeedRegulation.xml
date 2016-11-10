@@ -7,22 +7,27 @@
     <label>
       <text>To calibrate the speed regulation, mark a scale tenth of a unit (Mile or Kilometre), place loco</text>
       <text xml:lang="it">Per calibrare la velocità, segnare un decimo di unità in scala (Milgio o Km)</text>
+      <text xml:lang="cs">Pro kalibraci regulace rychlosti, označte v měřítku úsek desetinu jednotky (kilometr nebo míli), umístěte lokomotivu</text>
     </label>
     <label>
       <text>on track with correct direction set, F0 turned off and enough distance from the Start marker</text>
       <text xml:lang="it">sulle rotaie,con F0 in Off e a distanza sufficente dal segno di inizio tratta</text>
+      <text xml:lang="cs">na kolej se správně nastaveným směrem a v dostatečné vzdálenosti od značky Start, F0 přepněte na vypnuto</text>
     </label>
     <label>
       <text>to allow for the acceleration (change momentum settings if neccessary). Write '1' to CV 135</text>
       <text xml:lang="it">per permetterle di accellerare (azzerare l'inerzia se necessario). Scrivere un '1' in CV 135</text>
+      <text xml:lang="cs">pro umožnění zrychlení (pokud je to nezbytné tak změňte zrychlení). Zapiště '1' do CV135</text>
     </label>
     <label>
       <text>using a cab or the Single CV Programmer, then drive the loco through the marked section at</text>
       <text xml:lang="it">usando un Cab o il Programmatore per le singole CV. Far avanzare a velocità media la loco</text>
+      <text xml:lang="cs">s použitím ovladače nebo jednoduchého programátoru CV, potom projeďte s lokomotivou označený úsek</text>
     </label>
     <label>
       <text>a mid speed, turning F0 on at the Start marker and off at the End marker.</text>
       <text xml:lang="it">lungo il tratto. Premere F0 all'inizio del tratto e alla fine</text>
+      <text xml:lang="cs">na střední rychlosti, přepněte F0 na zapnuto na značce Start a přepněte na vypnuto na značce Konec.</text>
     </label>
     <label>
       <text> </text>
@@ -30,16 +35,19 @@
     <label>
       <text>If several calibration runs are performed at different speeds and the Calibration Result read</text>
       <text xml:lang="it">Se si eseguono diverse calibrazioni a varie velocità, leggendo il risultato della calibrazione</text>
+      <text xml:lang="cs">Pokud je provedeno více kalibračních jízd s různými rychlostmi a Výsledek kalibrace je přečten</text>
     </label>
     <label>
       <text>after each one, the Calibration Result should be approximately the same</text>
       <text xml:lang="it">dopo ognuna, i risultati dovrebbero essere simili tra loro</text>
+      <text xml:lang="cs">po každé z nich, potom by Výsledek kalibrace by měl být přibližně stejný.</text>
     </label>
     <label>
       <text> </text>
     </label>
     <display item="km/h speed regulation control number readout" label="Calibration Result" tooltip="Read Only">
        <label xml:lang="it">Risultati Calibrazione</label>
+       <label xml:lang="cs">Výsledek kalibrace</label>
     </display>
     <label>
       <text> </text>
@@ -51,15 +59,18 @@
       <column>
         <display item="km/h speed regulation control and range" label="Speed Regulation Control">
           <label xml:lang="it">Controllo regolazione velocità</label>
+          <label xml:lang="cs">Ovladač nastavení rychlosti</label>
         </display>
       </column>
       <column>
         <label>
           <text> Miles or Kilometres per hour per (128) Speed Step</text>
           <text xml:lang="it">Miglia o Kilometri all'ora per (128) Step di Velocità</text>
+          <text xml:lang="cs"> kilometry nebo míle za hodinu na rychlostní stupeň (128)</text>
         </label>
       </column>
     </row>
   </column>
   <name xml:lang="it">Regolazione velocità</name>
+  <name xml:lang="cs">Regulace rychlosti</name>
 </pane>

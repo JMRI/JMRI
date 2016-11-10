@@ -33,6 +33,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>7</revnumber>
+      <date>2016-10-22</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>6</revnumber>
       <date>2014-05-18</date>
       <authorinitials>Ba</authorinitials>
@@ -51,6 +57,7 @@
 	<label>Decoder Software Version (read only): </label>
 	<label xml:lang="it">Versione Software Decoder (sola lettura)</label>
 	<label xml:lang="de">Softwareversion des Dekoders (nur lesen)</label>
+	<label xml:lang="cs">Verze softwaru dekodéru (pouze pro čtení)</label>
   </variable>
   
 </variables>

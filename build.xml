@@ -1661,7 +1661,7 @@
             </not>
           </condition>
         </fail>
-        <fixcrlf file="${decoderindex.file}"/>
+        <fixcrlf file="${decoderindex.file}" encoding="UTF-8" />
         <move file="${decoderindex.file}" todir="xml" />
     </target>
 

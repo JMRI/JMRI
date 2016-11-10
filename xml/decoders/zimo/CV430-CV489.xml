@@ -20,6 +20,7 @@
     </enumVal>
     <label>Swiss Mapping Group 1 F-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 1 Tasto F</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 1 tlačítko F</label>
   </variable>
   <variable item="Swiss Mapping Group 1 M-key v33" CV="431">
         <qualifier>
@@ -31,6 +32,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 1 M-key v33</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 1 tlačítko M v33</label>
   </variable>
   <variable item="Swiss Mapping Group 1 M-key" CV="431">
         <qualifier>
@@ -42,6 +44,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 1 M-key</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 1 tlačítko M</label>
   </variable>
   <variable item="Swiss Mapping Group 1 A1 Fw" CV="432">
     <enumVal>
@@ -49,6 +52,7 @@
     </enumVal>
     <label>Swiss Mapping Group 1 A1 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 1 A1 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 1 A1 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 1 A2 Fw" CV="433">
     <enumVal>
@@ -56,6 +60,7 @@
     </enumVal>
     <label>Swiss Mapping Group 1 A2 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 1 A2 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 1 A2 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 1 A1 Rw" CV="434">
     <enumVal>
@@ -63,6 +68,7 @@
     </enumVal>
     <label>Swiss Mapping Group 1 A1 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 1 A1Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 1 A1 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 1 A2 Rw" CV="435">
     <enumVal>
@@ -70,6 +76,7 @@
     </enumVal>
     <label>Swiss Mapping Group 1 A2 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 1 A2 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 1 A2 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 2 F-key" CV="436">
     <enumVal>
@@ -77,6 +84,7 @@
     </enumVal>
     <label>Swiss Mapping Group 2 F-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 2 Tasto F</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 2 tlačítko F</label>
   </variable>
   <variable item="Swiss Mapping Group 2 M-key v33" CV="437">
         <qualifier>
@@ -89,6 +97,7 @@
     </enumVal>
     <label>Swiss Mapping Group 2 M-key v33</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 2 Tasto M</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 2 tlačítko M v33</label>
   </variable>
   <variable item="Swiss Mapping Group 2 M-key" CV="437">
         <qualifier>
@@ -101,6 +110,7 @@
     </enumVal>
     <label>Swiss Mapping Group 2 M-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 2 Tasto M</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 2 tlačítko M</label>
   </variable>
   <variable item="Swiss Mapping Group 2 A1 Fw" CV="438">
     <enumVal>
@@ -108,6 +118,7 @@
     </enumVal>
     <label>Swiss Mapping Group 2 A1 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 2 A1 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 2 A1 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 2 A2 Fw" CV="439">
     <enumVal>
@@ -115,6 +126,7 @@
     </enumVal>
     <label>Swiss Mapping Group 2 A2 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 2 A2 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 2 A2 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 2 A1 Rw" CV="440">
     <enumVal>
@@ -122,6 +134,7 @@
     </enumVal>
     <label>Swiss Mapping Group 2 A1 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 2 A1 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 2 A1 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 2 A2 Rw" CV="441">
     <enumVal>
@@ -129,6 +142,7 @@
     </enumVal>
     <label>Swiss Mapping Group 2 A2 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 2 A2 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 2 A2 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 3 F-key" CV="442">
     <enumVal>
@@ -136,6 +150,7 @@
     </enumVal>
     <label>Swiss Mapping Group 3 F-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 3 Tasto F</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 3 tlačítko F</label>
   </variable>
   <variable item="Swiss Mapping Group 3 M-key v33" CV="443">
         <qualifier>
@@ -148,6 +163,7 @@
     </enumVal>
     <label>Swiss Mapping Group 3 M-key v33</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 3 Tasto M</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 3 tlačítko M v33</label>
   </variable>
   <variable item="Swiss Mapping Group 3 M-key" CV="443">
         <qualifier>
@@ -160,6 +176,7 @@
     </enumVal>
     <label>Swiss Mapping Group 3 M-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 3 Tasto M</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 3 tlačítko M</label>
   </variable>
   <variable item="Swiss Mapping Group 3 A1 Fw" CV="444">
     <enumVal>
@@ -167,6 +184,7 @@
     </enumVal>
     <label>Swiss Mapping Group 3 A1 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 3 A1 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 3 A1 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 3 A2 Fw" CV="445">
     <enumVal>
@@ -174,6 +192,7 @@
     </enumVal>
     <label>Swiss Mapping Group 3 A2 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 3 A2 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 3 A2 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 3 A1 Rw" CV="446">
     <enumVal>
@@ -181,6 +200,7 @@
     </enumVal>
     <label>Swiss Mapping Group 3 A1 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 3 A1 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 3 A1 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 3 A2 Rw" CV="447">
     <enumVal>
@@ -188,6 +208,7 @@
     </enumVal>
     <label>Swiss Mapping Group 3 A2 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 3 A2 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 3 A2 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 4 F-key" CV="448">
     <enumVal>
@@ -195,6 +216,7 @@
     </enumVal>
     <label>Swiss Mapping Group 4 F-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 4 Tasto F</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 4 tlačítko F</label>
   </variable>
   <variable item="Swiss Mapping Group 4 M-key v33" CV="449">
         <qualifier>
@@ -207,6 +229,7 @@
     </enumVal>
     <label>Swiss Mapping Group 4 M-key v33</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 4 Tasto M</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 4 tlačítko M v33</label>
   </variable>
   <variable item="Swiss Mapping Group 4 M-key" CV="449">
         <qualifier>
@@ -219,6 +242,7 @@
     </enumVal>
     <label>Swiss Mapping Group 4 M-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 4 Tasto M</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 4 tlačítko M</label>
   </variable>
   <variable item="Swiss Mapping Group 4 A1 Fw" CV="450">
     <enumVal>
@@ -226,6 +250,7 @@
     </enumVal>
     <label>Swiss Mapping Group 4 A1 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 4 A1 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 4 A1 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 4 A2 Fw" CV="451">
     <enumVal>
@@ -233,6 +258,7 @@
     </enumVal>
     <label>Swiss Mapping Group 4 A2 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 4 A2 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 4 A2 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 4 A1 Rw" CV="452">
     <enumVal>
@@ -240,6 +266,7 @@
     </enumVal>
     <label>Swiss Mapping Group 4 A1 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 4 A1 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 4 A1 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 4 A2 Rw" CV="453">
     <enumVal>
@@ -247,6 +274,7 @@
     </enumVal>
     <label>Swiss Mapping Group 4 A2 Rw</label>
      <label xml:lang="it">Mappatura Svizzera Gruppo 4 A2 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 4 A2 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 5 F-key" CV="454">
     <enumVal>
@@ -254,6 +282,7 @@
     </enumVal>
     <label>Swiss Mapping Group 5 F-key</label>
      <label xml:lang="it">Mappatura Svizzera Gruppo 5 tasto F</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 5 tlačítko F</label>
   </variable>
   <variable item="Swiss Mapping Group 5 M-key v33" CV="455">
         <qualifier>
@@ -266,6 +295,7 @@
     </enumVal>
     <label>Swiss Mapping Group 5 M-key v33</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 5 tasto M v33</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 5 tlačítko M v33</label>
   </variable>
   <variable item="Swiss Mapping Group 5 M-key" CV="455">
         <qualifier>
@@ -278,6 +308,7 @@
     </enumVal>
     <label>Swiss Mapping Group 5 M-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 5 tasto M</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 5 tlačítko M</label>
   </variable>
   <variable item="Swiss Mapping Group 5 A1 Fw" CV="456">
     <enumVal>
@@ -285,6 +316,7 @@
     </enumVal>
     <label>Swiss Mapping Group 5 A1 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 5 A1 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 5 A1 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 5 A2 Fw" CV="457">
     <enumVal>
@@ -292,6 +324,7 @@
     </enumVal>
     <label>Swiss Mapping Group 5 A2 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 5 A2 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 5 A2 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 5 A1 Rw" CV="458">
     <enumVal>
@@ -299,6 +332,7 @@
     </enumVal>
     <label>Swiss Mapping Group 5 A1 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 5 A1 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 5 A1 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 5 A2 Rw" CV="459">
     <enumVal>
@@ -306,6 +340,7 @@
     </enumVal>
     <label>Swiss Mapping Group 5 A2 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 5 A2 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 5 A2 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 6 F-key" CV="460">
     <enumVal>
@@ -313,6 +348,7 @@
     </enumVal>
     <label>Swiss Mapping Group 6 F-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 6 Tasto F</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 6 tlačítko F</label>
   </variable>
   <variable item="Swiss Mapping Group 6 M-key v33" CV="461">
         <qualifier>
@@ -325,6 +361,7 @@
     </enumVal>
     <label>Swiss Mapping Group 6 M-key v33</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 6 Tasto M v33</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 6 tlačítko M v33</label>
   </variable>
   <variable item="Swiss Mapping Group 6 M-key" CV="461">
         <qualifier>
@@ -337,6 +374,7 @@
     </enumVal>
     <label>Swiss Mapping Group 6 M-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 6 Tasto M</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 6 tlačítko M</label>
   </variable>
   <variable item="Swiss Mapping Group 6 A1 Fw" CV="462">
     <enumVal>
@@ -344,6 +382,7 @@
     </enumVal>
     <label>Swiss Mapping Group 6 A1 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 6 A1 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 6 A1 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 6 A2 Fw" CV="463">
     <enumVal>
@@ -351,6 +390,7 @@
     </enumVal>
     <label>Swiss Mapping Group 6 A2 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 6 A2 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 6 A2 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 6 A1 Rw" CV="464">
     <enumVal>
@@ -358,6 +398,7 @@
     </enumVal>
     <label>Swiss Mapping Group 6 A1 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 6 A1 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 6 A1 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 6 A2 Rw" CV="465">
     <enumVal>
@@ -365,6 +406,7 @@
     </enumVal>
     <label>Swiss Mapping Group 6 A2 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 6 A2 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 6 A2 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 7 F-key" CV="466">
     <enumVal>
@@ -372,6 +414,7 @@
     </enumVal>
     <label>Swiss Mapping Group 7 F-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 7 Tasto F</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 7 tlačítko F</label>
   </variable>
   <variable item="Swiss Mapping Group 7 M-key v33" CV="467">
         <qualifier>
@@ -384,6 +427,7 @@
     </enumVal>
     <label>Swiss Mapping Group 7 M-key v33</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 7 Tasto M v33</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 7 tlačítko M v33</label>
   </variable>
   <variable item="Swiss Mapping Group 7 M-key" CV="467">
         <qualifier>
@@ -396,6 +440,7 @@
     </enumVal>
     <label>Swiss Mapping Group 7 M-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 7 Tasto M</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 7 tlačítko M</label>
   </variable>
   <variable item="Swiss Mapping Group 7 A1 Fw" CV="468">
     <enumVal>
@@ -403,6 +448,7 @@
     </enumVal>
     <label>Swiss Mapping Group 7 A1 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 7 A1 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 7 A1 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 7 A2 Fw" CV="469">
     <enumVal>
@@ -410,6 +456,7 @@
     </enumVal>
     <label>Swiss Mapping Group 7 A2 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 7 A2 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 7 A2 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 7 A1 Rw" CV="470">
     <enumVal>
@@ -417,6 +464,7 @@
     </enumVal>
     <label>Swiss Mapping Group 7 A1 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 7 A1 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 7 A1 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 7 A2 Rw" CV="471">
     <enumVal>
@@ -424,6 +472,7 @@
     </enumVal>
     <label>Swiss Mapping Group 7 A2 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 7 A2 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 7 A2 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 8 F-key" CV="472">
     <enumVal>
@@ -431,6 +480,7 @@
     </enumVal>
     <label>Swiss Mapping Group 8 F-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 8 Tasto F</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 8 tlačítko F</label>
   </variable>
   <variable item="Swiss Mapping Group 8 M-key v33" CV="473">
         <qualifier>
@@ -443,6 +493,7 @@
     </enumVal>
     <label>Swiss Mapping Group 8 M-key v33</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 8 Tasto M v33</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 8 tlačítko M v33</label>
   </variable>
   <variable item="Swiss Mapping Group 8 M-key" CV="473">
         <qualifier>
@@ -455,6 +506,7 @@
     </enumVal>
     <label>Swiss Mapping Group 8 M-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 8 Tasto M</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 8 tlačítko M</label>
   </variable>
   <variable item="Swiss Mapping Group 8 A1 Fw" CV="474">
     <enumVal>
@@ -462,6 +514,7 @@
     </enumVal>
     <label>Swiss Mapping Group 8 A1 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 8 A1 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 8 A1 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 8 A2 Fw" CV="475">
     <enumVal>
@@ -469,6 +522,7 @@
     </enumVal>
     <label>Swiss Mapping Group 8 A2 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 8 A2 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 8 A2 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 8 A1 Rw" CV="476">
     <enumVal>
@@ -476,6 +530,7 @@
     </enumVal>
     <label>Swiss Mapping Group 8 A1 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 8 A1 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 8 A1 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 8 A2 Rw" CV="477">
     <enumVal>
@@ -483,6 +538,7 @@
     </enumVal>
     <label>Swiss Mapping Group 8 A2 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 8 A2 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 8 A2 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 9 F-key" CV="478">
     <enumVal>
@@ -490,6 +546,7 @@
     </enumVal>
     <label>Swiss Mapping Group 9 F-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 9 Tasto F</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 9 tlačítko F</label>
   </variable>
   <variable item="Swiss Mapping Group 9 M-key v33" CV="479">
         <qualifier>
@@ -502,6 +559,7 @@
     </enumVal>
     <label>Swiss Mapping Group 9 M-key v33</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 9 Tasto M v33</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 9 tlačítko M v33</label>
   </variable>
   <variable item="Swiss Mapping Group 9 M-key" CV="479">
         <qualifier>
@@ -514,6 +572,7 @@
     </enumVal>
     <label>Swiss Mapping Group 9 M-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 9 Tasto M</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 9 tlačítko M</label>
   </variable>
   <variable item="Swiss Mapping Group 9 A1 Fw" CV="480">
     <enumVal>
@@ -521,6 +580,7 @@
     </enumVal>
     <label>Swiss Mapping Group 9 A1 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 9 A1 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 9 A1 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 9 A2 Fw" CV="481">
     <enumVal>
@@ -528,6 +588,7 @@
     </enumVal>
     <label>Swiss Mapping Group 9 A2 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 9 A2 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 9 A2 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 9 A1 Rw" CV="482">
     <enumVal>
@@ -535,6 +596,7 @@
     </enumVal>
     <label>Swiss Mapping Group 9 A1 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 9 A1 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 9 A1 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 9 A2 Rw" CV="483">
     <enumVal>
@@ -542,6 +604,7 @@
     </enumVal>
     <label>Swiss Mapping Group 9 A2 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 9 A2 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 9 A2 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 10 F-key" CV="484">
     <enumVal>
@@ -549,6 +612,7 @@
     </enumVal>
     <label>Swiss Mapping Group 10 F-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 10 Tasto F</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 10 tlačítko F</label>
   </variable>
   <variable item="Swiss Mapping Group 10 M-key v33" CV="485">
         <qualifier>
@@ -561,6 +625,7 @@
     </enumVal>
     <label>Swiss Mapping Group 10 M-key v33</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 10 Tasto M v33</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 10 tlačítko M v33</label>
   </variable>
   <variable item="Swiss Mapping Group 10 M-key" CV="485">
         <qualifier>
@@ -573,6 +638,7 @@
     </enumVal>
     <label>Swiss Mapping Group 10 M-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 10 Tasto M</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 10 tlačítko M</label>
   </variable>
   <variable item="Swiss Mapping Group 10 A1 Fw" CV="486">
     <enumVal>
@@ -580,6 +646,7 @@
     </enumVal>
     <label>Swiss Mapping Group 10 A1 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 10 A1 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 10 A1 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 10 A2 Fw" CV="487">
     <enumVal>
@@ -587,6 +654,7 @@
     </enumVal>
     <label>Swiss Mapping Group 10 A2 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 10 A2 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 10 A2 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 10 A1 Rw" CV="488">
     <enumVal>
@@ -594,6 +662,7 @@
     </enumVal>
     <label>Swiss Mapping Group 10 A1 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 10 A1 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 10 A1 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 10 A2 Rw" CV="489">
     <enumVal>
@@ -601,6 +670,7 @@
     </enumVal>
     <label>Swiss Mapping Group 10 A2 Rw</label>
     <label xml:lang="it">Mappatur1 Svizzera Gruppo 10 A2 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 10 A2 vzad</label>
   </variable>
 	<variables>
         <qualifier>
@@ -614,6 +684,7 @@
     </enumVal>
     <label>Swiss Mapping Group 11 F-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 11 Tasto F</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 11 tlačítko F</label>
   </variable>
   <variable item="Swiss Mapping Group 11 M-key" CV="491">
     <enumVal>
@@ -621,6 +692,7 @@
     </enumVal>
     <label>Swiss Mapping Group 11 M-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 11 Tasto M</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 11 tlačítko M</label>
   </variable>
   <variable item="Swiss Mapping Group 11 A1 Fw" CV="492">
     <enumVal>
@@ -628,6 +700,7 @@
     </enumVal>
     <label>Swiss Mapping Group 11 A1 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 11 A1 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 11 A1 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 11 A2 Fw" CV="493">
     <enumVal>
@@ -635,6 +708,7 @@
     </enumVal>
     <label>Swiss Mapping Group 11 A2 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 11 A2 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 11 A2 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 11 A1 Rw" CV="494">
     <enumVal>
@@ -642,6 +716,7 @@
     </enumVal>
     <label>Swiss Mapping Group 11 A1 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 11 A1 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 11 A1 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 11 A2 Rw" CV="495">
     <enumVal>
@@ -649,6 +724,7 @@
     </enumVal>
     <label>Swiss Mapping Group 11 A2 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 11 A2 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 11 A2 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 12 F-key" CV="496">
     <enumVal>
@@ -656,6 +732,7 @@
     </enumVal>
     <label>Swiss Mapping Group 12 F-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 12 Tasto F</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 12 tlačítko F</label>
   </variable>
   <variable item="Swiss Mapping Group 12 M-key" CV="497">
     <enumVal>
@@ -663,6 +740,7 @@
     </enumVal>
     <label>Swiss Mapping Group 12 M-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 12 Tasto M</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 12 tlačítko M</label>
   </variable>
   <variable item="Swiss Mapping Group 12 A1 Fw" CV="498">
     <enumVal>
@@ -670,6 +748,7 @@
     </enumVal>
     <label>Swiss Mapping Group 12 A1 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 12 A1 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 12 A1 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 12 A2 Fw" CV="499">
     <enumVal>
@@ -677,6 +756,7 @@
     </enumVal>
     <label>Swiss Mapping Group 12 A2 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 12 A2 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 12 A2 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 12 A1 Rw" CV="500">
     <enumVal>
@@ -684,6 +764,7 @@
     </enumVal>
     <label>Swiss Mapping Group 12 A1 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 12 A1 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 12 A1 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 12 A2 Rw" CV="501">
     <enumVal>
@@ -691,6 +772,7 @@
     </enumVal>
     <label>Swiss Mapping Group 12 A2 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 12 A2 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 12 A2 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 13 F-key" CV="502">
     <enumVal>
@@ -698,6 +780,7 @@
     </enumVal>
     <label>Swiss Mapping Group 13 F-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 13 Tasto F</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 13 tlačítko F</label>
   </variable>
   <variable item="Swiss Mapping Group 13 M-key" CV="503">
     <enumVal>
@@ -705,6 +788,7 @@
     </enumVal>
     <label>Swiss Mapping Group 13 M-key</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 13 Tasto M</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 13 tlačítko M</label>
   </variable>
   <variable item="Swiss Mapping Group 13 A1 Fw" CV="504">
     <enumVal>
@@ -712,6 +796,7 @@
     </enumVal>
     <label>Swiss Mapping Group 13 A1 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 13 A1 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 13 A1 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 13 A2 Fw" CV="505">
     <enumVal>
@@ -719,6 +804,7 @@
     </enumVal>
     <label>Swiss Mapping Group 13 A2 Fw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 13 A2 Avanti</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 13 A2 vpřed</label>
   </variable>
   <variable item="Swiss Mapping Group 13 A1 Rw" CV="506">
     <enumVal>
@@ -726,6 +812,7 @@
     </enumVal>
     <label>Swiss Mapping Group 13 A1 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 13 A1 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 13 A1 vzad</label>
   </variable>
   <variable item="Swiss Mapping Group 13 A2 Rw" CV="507">
     <enumVal>
@@ -733,6 +820,7 @@
     </enumVal>
     <label>Swiss Mapping Group 13 A2 Rw</label>
     <label xml:lang="it">Mappatura Svizzera Gruppo 13 A2 Retro</label>
+    <label xml:lang="cs">Švýcyrské přiřazení skupina 13 A2 vzad</label>
   </variable>
 </variables>
 </variables>
