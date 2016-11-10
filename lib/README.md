@@ -132,8 +132,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
         lib/windows/x64/intelbth_x64.dll
         lib/windows/x86/intelbth.dll
 
-##### jython.jar
-- version 2.7.0 from jython.org (was jython-standalone-2.7.0.jar)
+##### jython-standalone-2.7.0.jar
+- from http://repo1.maven.org/maven2/org/python/jython-standalone/2.7.0/
+- unlike jython-2.7.0.jar, includes embedded standard python libs
 
 ##### jakarta-regexp-1.5.jar
 - (needed for jfcunit)
