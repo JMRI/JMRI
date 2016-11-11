@@ -210,8 +210,11 @@
           <dt>Add Possible Startup Items</dt>
 
           <dd>
-            <p>Edit src/apps/ActionListBundle.properties to add
-            appropriate items.</p>
+            <p>Create a new system-specific `ActionListBundle.properties` file 
+            (src/jmri/jmrix/powerline/PowerlineActionListBundle.properties)
+            to add appropriate action items. Make sure to update the
+            `getActionModelResourceBundle()` method of the SystemConnectionMemo
+            to reference this newly created ActionListBundle.</p>
           </dd>
 
           <dd>

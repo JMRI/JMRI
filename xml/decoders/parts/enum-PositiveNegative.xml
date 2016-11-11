@@ -5,9 +5,11 @@
   <enumChoice choice="positive">
             <choice>positive</choice>
     <choice xml:lang="it">positivo</choice>
+    <choice xml:lang="cs">kladný</choice>
   </enumChoice>
   <enumChoice choice="negative">
             <choice>negative</choice>
     <choice xml:lang="it">negativo</choice>
+    <choice xml:lang="cs">záporný</choice>
   </enumChoice>
 </enumVal>

@@ -29,7 +29,7 @@ public class PackageTest extends TestCase {
 
         suite.addTest(jmri.jmrix.ecos.swing.locodatabase.PackageTest.suite());
 
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
         }
 
         return suite;

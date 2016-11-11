@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>2</revnumber>
+      <date>2016-10-23</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>1</revnumber>
       <date>2014-08-19</date>
       <authorinitials>EF</authorinitials>
@@ -39,5 +45,7 @@
         <label xml:lang="it">Indirizzo valido per le Funzioni</label>
         <tooltip>Selects the address accessory functions will respond to</tooltip>
         <tooltip xml:lang="it">Seleziona l'indirizzo a cui rispondono le Funzioni</tooltip>
+        <label xml:lang="cs">Funkce reaguje na adrese</label>
+        <tooltip xml:lang="cs">Vyberte adresu na které bude reagovat funkce</tooltip>
       </variable>
 </variables>

@@ -556,12 +556,12 @@ environment.
 
       <p>Because we run tests in "headless" mode during the
       <a href="ContinuousIntegration.shtml">continuous integration
-      builds</a>, it's important that Swing (and AWT) access in
-      tests be enclosed within a mode check:</p>
-      <pre>
-<code>
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {<br>            suite.addTest(myTest.suite());<br>        }<br></code>
-</pre>
+      builds</a>, it's important that tests needing access to the screen start
+      with:</p>
+      <code>Assume.assumeFalse(GraphicsEnvironment.isHeadless());</code>
+      or
+      <code>if (GraphicsEnvironment.isHeadless()) { return; }</code>
+      if the Assume statement throws an exception.
 
       <p>This will run the myTest suite of tests only when a
       display is available.</p>
