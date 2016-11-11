@@ -99,7 +99,7 @@
       <ul>
         <li>ant clean compile</li>
 
-        <li>rm -rf java/classes/cats java/classes/designer</li>
+        <li>rm -rf target/classes/cats target/classes/designer</li>
 
         <li>ant -Ddeprecation="on" compile</li>
       </ul>The first compilation will compile everything. The

@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>8</revnumber>
+      <date>2016-10-23</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>7</revnumber>
       <date>2013-07-31</date>
       <authorinitials>PB</authorinitials>
@@ -51,5 +57,6 @@
     <label xml:lang="fr">Impuls. de démarrage (kick start)</label>
     <label xml:lang="de">Kick Start</label>
     <label>Kick Start</label>
+    <label xml:lang="cs">Startovací impulz</label>
   </variable>
 </variables>

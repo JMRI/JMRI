@@ -106,7 +106,7 @@ fi
 [ "${DEBUG}" ] && echo "PWD: '${PWD}'"
 
 # build classpath dynamically
-CP=".:classes:java/classes"
+CP=".:classes:target/classes"
 # list of jar files in home, not counting jmri.jar
 LOCALJARFILES=`ls *.jar | grep -v jmri.jar | tr "\n" ":"`
 if [ ${LOCALJARFILES} ]
