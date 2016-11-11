@@ -35,7 +35,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
         });
 
         adaptermemo = memo;
-        InstanceManager.getDefault(TabbedPreferences.class).addPreferencesPanel(new PreferencesPane(this));
+        InstanceManager.store(new PreferencesPane(this),jmri.swing.PreferencesPanel.class);
     }
 
     private EcosSystemConnectionMemo adaptermemo;
