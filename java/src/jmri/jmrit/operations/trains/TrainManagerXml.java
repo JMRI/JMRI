@@ -8,6 +8,7 @@ import jmri.jmrit.operations.automation.AutomationManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.util.FileUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.ProcessingInstruction;
@@ -221,17 +222,19 @@ public class TrainManagerXml extends OperationsXml {
     }
 
     public String getDefaultCsvManifestFilename(String name) {
-        return defaultCsvManifestDirectory + MANIFEST_FILE_NAME + name + FILE_TYPE_CSV; // NOI18N
+        return getDefaultCsvManifestDirectory() + MANIFEST_FILE_NAME + name + FILE_TYPE_CSV;
     }
 
-    private String defaultCsvManifestDirectory = OperationsXml.getFileLocation() +
-            OperationsXml.getOperationsDirectoryName() +
-            File.separator +
-            CSV_MANIFESTS +
-            File.separator;
+    private String getDefaultCsvManifestDirectory() {
+        return OperationsXml.getFileLocation()
+                + OperationsXml.getOperationsDirectoryName()
+                + File.separator
+                + CSV_MANIFESTS
+                + File.separator;
+    }
 
     public void createDefaultCsvManifestDirectory() {
-        createFile(defaultCsvManifestDirectory + " ", false); // don't backup
+        FileUtil.createDirectory(getDefaultCsvManifestDirectory());
     }
 
     /**
@@ -292,17 +295,19 @@ public class TrainManagerXml extends OperationsXml {
     }
 
     public String getDefaultCsvSwitchListName(String name) {
-        return defaultCsvSwitchListDirectory + SWITCH_LIST_FILE_NAME + name + FILE_TYPE_CSV;// NOI18N
+        return getDefaultCsvSwitchListDirectory() + SWITCH_LIST_FILE_NAME + name + FILE_TYPE_CSV;
     }
 
-    private String defaultCsvSwitchListDirectory = OperationsXml.getFileLocation() +
-            OperationsXml.getOperationsDirectoryName() +
-            File.separator +
-            CSV_SWITCH_LISTS +
-            File.separator;
+    private String getDefaultCsvSwitchListDirectory() {
+        return OperationsXml.getFileLocation()
+                + OperationsXml.getOperationsDirectoryName()
+                + File.separator
+                + CSV_SWITCH_LISTS
+                + File.separator;
+    }
 
     public void createDefaultCsvSwitchListDirectory() {
-        createFile(defaultCsvSwitchListDirectory + " ", false); // don't backup
+        FileUtil.createDirectory(getDefaultCsvSwitchListDirectory());
     }
 
     @Override
