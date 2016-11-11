@@ -28,6 +28,10 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
 
         suite.addTest(jmri.jmrix.ecos.swing.locodatabase.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ecos.swing.packetgen.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ecos.swing.monitor.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ecos.swing.preferences.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ecos.swing.statusframe.PackageTest.class));
 
         if (!System.getProperty("jmri.headlesstest", System.getProperty("java.awt.headless", "false")).equals("true")) {
         }
