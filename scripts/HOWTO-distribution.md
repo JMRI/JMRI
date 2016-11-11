@@ -38,7 +38,7 @@ So our releases procedure is, in outline:
 
 - [ ] How best to deal with bringing additional commits into the branch from master - do we 'cherry-pick' or 'merge'? Everybody is using pull requests, which makes it pretty easy to get the hash numbers needed for cherry-pick (that can be messy with direct commits, because you’re not always sure which commits go together). We can play this by ear, but if somebody says “can you include PR 123?” I think that lends itself to a cherry pick pretty nicely. Best of all - get people to do their work on a branch, which can be separately merged.
 
-- [ ] It might be a good idea to keep the production release branches around throughout the next test phases, but we should be able to prune each test release branch once we've tagged it. So, we'd keep the 4.2 (and 4.2.1) branch around throughout the 4.3.x phase and then prune it when moving to 4.4. Each 4.3.x branch should be pruned once tagged as, if we need to do changes to a test release, we just release a new version on it's own branch from 'master’. How about the case near the end of a development cycle when we’re doing incremental releases? E.g. 4.3.9 might be 4.3.8+deltas?  Should that be a branch from a branch? We'll need to develop and document this as needed.
+- [ ] It might be a good idea to keep the production release branches around throughout the next test phases, but we should be able to prune each test release branch once we've tagged it. So, we'd keep the 4.4 (and 4.4.1) branch around throughout the 4.5.x phase and then prune it when moving to 4.6. Each 4.5.x branch should be pruned once tagged as, if we need to do changes to a test release, we just release a new version on it's own branch from 'master’. How about the case near the end of a development cycle when we’re doing incremental releases? E.g. 4.5.9 might be 4.5.8+deltas?  Should that be a branch from a branch? We'll need to develop and document this as needed.
 
 ============================================================================
 
@@ -204,13 +204,13 @@ where the date at the end should be the date (and optionally time) of the last r
 - Put a comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note
 
 ```
-The release-4.5.4 branch has been created. 
+The release-4.5.5 branch has been created. 
 
-From now on, please document your changes in the [jmri4.5.5.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.5.5.shtml) release note file.
+From now on, please document your changes in the [jmri4.5.6.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.5.6.shtml) release note file.
 
-Maintainers, please set the 4.5.5 milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
+Maintainers, please set the 4.5.6 milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
 
-Jenkins will be creating files shortly at the [CI server](http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.4/)
+Jenkins will be creating files shortly at the [CI server](http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.5/)
 ````
 
 ================================================================================
@@ -283,11 +283,11 @@ If you're building locally:
 
 - Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force via ["Build Now"](http://jmri.tagadab.com/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/) update). Confirm visible on web.
 
-- Announce the file set via email to jmri-developers@lists.sf.net with a subject line "First 4.5.4 files available":
+- Announce the file set via email to jmri-developers@lists.sf.net with a subject line "First 4.5.5 files available":
 
-First JMRI 4.5.4 files are available in the usual way at:
+First JMRI 4.5.5 files are available in the usual way at:
 
-http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.4
+http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.5
 
 Feedback appreciated. I would like to release this later today or tomorrow morning. 
 
@@ -337,13 +337,13 @@ It still gets a bit tricky if there’s a difference (e.g. due to a conflict wit
 
  - (If you use a browser to download instead of curl, make sure the .tgz wasn't auto-expanded)
 
- - (The "./testrelease 4.5.4" local script on shell.sf.net does the following steps, except for the edit, of course)
+ - (The "./testrelease 4.5.6" local script on shell.sf.net does the following steps, except for the edit, of course)
 ```
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
-    curl -o release.zip "http://jmri.tagadab.com/jenkins/job/Test%20Releases/job/4.5.2/ws/dist/release/*zip*/release.zip"
+    curl -o release.zip "http://jmri.tagadab.com/jenkins/job/Test%20Releases/job/4.5.6/ws/dist/release/*zip*/release.zip"
         (use the following instead if building on second Jenkins server)
-    curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.2/ws/dist/release/*zip*/release.zip"
+    curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.6/ws/dist/release/*zip*/release.zip"
     rm release/JMRI*
     unzip release.zip
     cd release
@@ -395,20 +395,21 @@ Note: Unlike releasing files to SourceForge, once a GitHub Release is created it
 ```
    - Description content (really need to automate this!):
 ```    
-[Release notes](http://jmri.org/releasenotes/jmri4.5.4.shtml)
+[Release notes](http://jmri.org/releasenotes/jmri4.5.6.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.5.4-Rb93cb4f.dmg](https://github.com/JMRI/JMRI/releases/download/v4.5.2/JMRI.4.5.4-Rb93cb4f.dmg) | f613c24cef0ba3e2aaa51575ba6566ef20ca57cb3f909ca4e3d8151f6f92693a
-[JMRI.4.5.4-Rb93cb4f.exe](https://github.com/JMRI/JMRI/releases/download/v4.5.2/JMRI.4.5.4-Rb93cb4f.exe) | 228b44a8bd3036f47be97492dcf51e37c64673bf322e417eefd849ab505ca5a6
-[JMRI.4.5.4-Rb93cb4f.tgz](https://github.com/JMRI/JMRI/releases/download/v4.5.2/JMRI.4.5.4-Rb93cb4f.tgz) | afe3d48bb6dc93f678dda3e6ce714c8683d225e80b7e884fe6c01e7aff038ba5
+[JMRI.4.5.6-R5a99fdd-signed.dmg](https://github.com/JMRI/JMRI/releases/download/v4.5.6/JMRI.4.5.6-R5a99fdd-signed.dmg) | a9b17a2ebfb3cbb902dab0b09b98621be56e18c88ae1a9536ab544c9c46382ae
+[JMRI.4.5.6-R5a99fdd.dmg](https://github.com/JMRI/JMRI/releases/download/v4.5.6/JMRI.4.5.6-R5a99fdd.dmg) | b2e41f9de2c4b34cecd283d5e84dfcb2e11286094f8120bea230cf6666ec4dab
+[JMRI.4.5.6-R5a99fdd.exe](https://github.com/JMRI/JMRI/releases/download/v4.5.6/JMRI.4.5.6-R5a99fdd.exe) | cc02c4b9bf781579151a4d7217075471222aeedaf2a0cc81fac7867d37ce5f59
+[JMRI.4.5.6-R5a99fdd.tgz](https://github.com/JMRI/JMRI/releases/download/v4.5.6/JMRI.4.5.6-R5a99fdd.tgz) | 580a97fdf1e2b2e0c2e2c5f3315dbf25fabf54163940f7397b478d1937dac089
 ```
 
 - Attach files by dragging them in (you might have to have downloaded them above via e.g. a separate 
 ```
-curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.2/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"" 
+curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.6/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"" 
 ```
 and expansion; it's slow to upload from a typical home machine, though, so wish we had a way to cross-load from somewhere fast - if release.zip is still on SF.net, you can do
 ```
@@ -422,9 +423,9 @@ Note there's a little progress bar that has to go across & "Uploading your relea
 Alternatively, if you have shell access to the Jenkins server, you can upload directly from there, once the initial draft release has been created:
 
 ```
-github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.5.2 -n "JMRI.4.5.2-Rd144052.dmg" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.5.2/workspace/dist/release/JMRI.4.5.2-Rd144052.dmg 
-github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.5.2 -n "JMRI.4.3.9-Rd144052.exe" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.5.2/workspace/dist/release/JMRI.4.5.2-Rd144052.exe 
-github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.5.2 -n "JMRI.4.3.9-Rd144052.tgz" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.5.2/workspace/dist/release/JMRI.4.5.2-Rd144052.tgz 
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.5.6 -n "JMRI.4.5.6-Rd144052.dmg" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.5.6/workspace/dist/release/JMRI.4.5.6-Rd144052.dmg 
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.5.6 -n "JMRI.4.5.6-Rd144052.exe" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.5.6/workspace/dist/release/JMRI.4.5.6-Rd144052.exe 
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.5.6 -n "JMRI.4.5.6-Rd144052.tgz" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.5.6/workspace/dist/release/JMRI.4.5.6-Rd144052.tgz 
 ```
     
 - Click "Publish Release"
@@ -461,7 +462,7 @@ If there are any changes in other files, do both of:
 
 Lastly, if this release is one of the special series at the end of a development cycle that leads to a test release, create the next release branch now.  Those test releases are made cumulatively from each other, rather than each from master. We start the process now so that people can open pull requests for it, and discuss whether changes should be included.
 
-(Maybe we should change their nomenclature to get this across?  E.g. instead of 4.3.5, 4.3.6, 4.3.7, 4.4 where the last two look like regular "from master" test releases, call them 4.3.6, 4.3.6.1, 4.3.6.2, 4.2 - this will make the operations clearer)
+(Maybe we should change their nomenclature to get this across?  E.g. instead of 4.5.5, 4.5.6, 4.5.7, 4.6 where the last two look like regular "from master" test releases, call them 4.5.6, 4.5.6.1, 4.5.6.2, 4.6 - this will make the operations clearer)
 
    - Create the next pre-production branch (*pre-production case only*):
 
@@ -474,7 +475,7 @@ git push github
 
 - Create the next [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create release-n.n.n+1". Add the next release milestone (created above) to it.
 
-- Confirm that the tag for the current release (release-4.5.2) is in place, then manually delete the current release branch via the [GitHub UI](https://github.com/JMRI/JMRI/branches).
+- Confirm that the tag for the current release (release-4.5.6) is in place, then manually delete the current release branch via the [GitHub UI](https://github.com/JMRI/JMRI/branches).
 
 - Go to the GitHub PR and Issues [labels list](https://github.com/JMRI/JMRI/labels) and remove any "afterNextTestRelease" (and "afterNextProductionRelease" if appropriate) labels from done items
 
@@ -504,7 +505,7 @@ If you don't, a bunch of Windows users are likely to whine
 
 - Mail announcement to jmriusers@yahoogroups.com
 
-    Subject is "Test version 4.5.2 of JMRI/DecoderPro is available for download" or "JMRI 4.4 is available for download"
+    Subject is "Test version 4.5.6 of JMRI/DecoderPro is available for download" or "JMRI 4.4 is available for download"
 
 - If a production version, update the SF automatic download icon by selecting default in SF.net FRS (3 times)
 
