@@ -17,11 +17,6 @@ import org.slf4j.LoggerFactory;
   */
 public class SerialLightManager extends AbstractLightManager {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 133186075340822885L;
-
     public SerialLightManager() {
 
     }

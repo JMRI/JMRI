@@ -30,7 +30,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.mrc.simulator.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.mrc.serialdriver.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.mrc.configurexml.PackageTest.class));
-        if (!System.getProperty("jmri.headlesstest", System.getProperty("java.awt.headless", "false")).equals("true")) {
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
         }
 
         return suite;

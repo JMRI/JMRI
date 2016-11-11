@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>2</revnumber>
+      <date>2016-10-23</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>1</revnumber>
       <date>2014-08-19</date>
       <authorinitials>EF</authorinitials>
@@ -54,5 +60,8 @@
         <comment xml:lang="de">output A</comment>
         <tooltip xml:lang="it">Abilita Regola 17 per luci frontali (controllo independentel)</tooltip>
         <tooltip xml:lang="de">Enables Rule 17 for headlights (independent control)</tooltip>
+        <label xml:lang="cs">Směr světlometu</label>
+        <comment xml:lang="cs">Výstup A</comment>
+        <tooltip xml:lang="cs">Zpřístupní pravidlo 17 pro světlomet (nezávislé ovládání)</tooltip>
       </variable>
 </variables>

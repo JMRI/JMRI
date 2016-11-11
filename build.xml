@@ -139,8 +139,9 @@
     <property name="doctarget"    value="${javadir}/doc"/>
     <property name="coveragetarget" value="${basedir}/coveragereport"/>
     <property name="source"       value="${javadir}/src"/>
-    <property name="target"       value="${javadir}/classes"/>
-    <property name="testtarget"   value="${javadir}/test-classes"/>
+    <property name="maventarget"  value="${basedir}/target"/>
+    <property name="target"       value="${maventarget}/classes"/>
+    <property name="testtarget"   value="${maventarget}/test-classes"/>
     <property name="test"         value="${javadir}/test"/>
     <property name="templatedir"  value="${javadir}/template"/>
     <property name="tmptarget"    value="${javadir}/tmp"/>
@@ -171,7 +172,7 @@
         <pathelement location="${libdir}/openlcb.jar"/>
         <pathelement location="${libdir}/jlfgr-1_0.jar"/>
         <pathelement location="${libdir}/joal.jar"/>
-        <pathelement location="${libdir}/jython.jar"/>
+        <pathelement location="${libdir}/jython-standalone-2.7.0.jar"/>
         <pathelement location="${libdir}/log4j-1.2.17.jar"/>
         <pathelement location="${libdir}/javax.servlet-api-3.1.0.jar"/>
         <pathelement location="${libdir}/vecmath-1.5.2.jar"/>
@@ -388,8 +389,9 @@
             <fileset file="log.txt"/>
             <fileset file="${jartarget}/jmri.jar"/>
             <fileset dir="${doctarget}"/>
-            <fileset dir="${target}"/>
-            <fileset dir="${testtarget}"/>
+            <fileset dir="${maventarget}"/>
+            <fileset dir="${javadir}/classes"/>
+            <fileset dir="${javadir}/test-classes"/>
             <fileset dir="${dist}"/>
             <fileset dir="${genjavasrcdir}"/>
             <fileset file="${javadir}/manifest"/>
@@ -424,7 +426,7 @@
     <!-- generated source code that uses keyword substitution -->
     <!-- Typically configured to take a template Version.properties -->
     <!-- file from java/templates/jmri and copy it, expanded, to -->
-    <!-- java/classes where the jmri.Version class can reference -->
+    <!-- target/classes where the jmri.Version class can reference -->
     <!-- the values at run time -->
     <target name="update-template-code" depends="init"><!-- create the substituted template java code, not for user use -->
         <copy todir="${genjavasrcdir}" overwrite="true" >
@@ -1659,7 +1661,7 @@
             </not>
           </condition>
         </fail>
-        <fixcrlf file="${decoderindex.file}"/>
+        <fixcrlf file="${decoderindex.file}" encoding="UTF-8" />
         <move file="${decoderindex.file}" todir="xml" />
     </target>
 

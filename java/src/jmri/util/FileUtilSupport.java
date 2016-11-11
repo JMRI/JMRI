@@ -479,13 +479,16 @@ public class FileUtilSupport extends Bean {
     }
 
     /**
-     * Get the JMRI program directory.
+     * Get the JMRI program directory. If the program directory has not been
+     * previously sets, first sets the program directory to the value specified
+     * in the Java System property <code>jmri.path.program</code>, or
+     * <code>.</code> if that property is not set.
      *
      * @return JMRI program directory as a String.
      */
     public String getProgramPath() {
         if (programPath == null) {
-            this.setProgramPath("."); // NOI18N
+            this.setProgramPath(System.getProperty("jmri.path.program", ".")); // NOI18N
         }
         return programPath;
     }
@@ -494,7 +497,7 @@ public class FileUtilSupport extends Bean {
      * Set the JMRI program directory.
      *
      * Convenience method that calls
-     * {@link FileUtil#setProgramPath(java.io.File)} with the passed in path.
+     * {@link #setProgramPath(java.io.File)} with the passed in path.
      *
      * @param path the path to the JMRI installation
      */

@@ -29,7 +29,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.roster.RosterEntryTest.suite());
         suite.addTest(jmri.jmrit.roster.RosterTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.roster.configurexml.PackageTest.class));
-        if (!System.getProperty("jmri.headlesstest", System.getProperty("java.awt.headless", "false")).equals("true")) {
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
             suite.addTest(jmri.jmrit.roster.CopyRosterItemActionTest.suite());
             suite.addTest(jmri.jmrit.roster.RosterEntryPaneTest.suite());
             suite.addTest(jmri.jmrit.roster.FunctionLabelPaneTest.suite());

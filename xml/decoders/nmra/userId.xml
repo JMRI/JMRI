@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>8</revnumber>
+      <date>2016-10-23</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>7</revnumber>
       <date>2013-07-29</date>
       <authorinitials>PB</authorinitials>
@@ -51,6 +57,7 @@
         <label xml:lang="it">Id Utente #1 (0-255)</label>
         <label xml:lang="fr">CV Utilisateur #1 (0-255)</label>
         <label xml:lang="de">Benutzer-CV #1 (0-255)</label>
+        <label xml:lang="cs">Uživatel ID #1 (0-255)</label>
   </variable>
   <variable item="User Id #2" CV="106" default="0">
     <decVal max="255"/>
@@ -58,5 +65,6 @@
         <label xml:lang="it">Id Utente #2 (0-255)</label>
         <label xml:lang="fr">CV Utilisateur #2 (0-255)</label>
         <label xml:lang="de">Benutzer-CV #2 (0-255)</label>
+        <label xml:lang="cs">Uživatel ID #2 (0-255)</label>
   </variable>
 </variables>

@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>9</revnumber>
+      <date>2016-10-23</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>8</revnumber>
       <date>2014-08-20</date>
       <authorinitials>EF</authorinitials>
@@ -39,11 +45,13 @@
             <choice>Loco runs under DC analog voltage control</choice>
             <choice xml:lang="it">Loco va in Analogico</choice>
             <choice xml:lang="de">Loco runs under DC analog voltage control</choice>
+            <choice xml:lang="cs">Lokomotiva používá pro řízení analogové stejnosměrné napětí</choice>
           </enumChoice>
           <enumChoice choice="Loco brakes to a stop using momentum set in CV4">
             <choice>Loco brakes to a stop using momentum set in CV4</choice>
             <choice xml:lang="it">Loco frena fino a fermarsi usando inerzia in CV4</choice>
             <choice xml:lang="de">Loco brakes to a stop using momentum set in CV4</choice>
+            <choice xml:lang="cs">Lokomotiva při brždění do zastavení používá zpomalení nastavené v CV4</choice>
           </enumChoice>
         </enumVal>
         <label>Brake Momentum on DC</label>
@@ -52,5 +60,7 @@
         <comment>Governs how loco acts in DC track block</comment>
         <comment xml:lang="it">Comportamento Loco in blocco analogico</comment>
         <comment xml:lang="de">Governs how loco acts in DC track block</comment>
-      </variable>
+        <label xml:lang="cs">DC brzdné zpomalení</label>
+        <comment xml:lang="cs">Určuje jak bude lokomotiva reagovat na DC kolejovém obvodu</comment>
+    </variable>
 </variables>
