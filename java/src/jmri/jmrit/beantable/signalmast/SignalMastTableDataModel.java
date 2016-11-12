@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.EventObject;
 import java.util.Hashtable;
 import java.util.Vector;
+import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -33,8 +34,8 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.SignalMast;
 import jmri.jmrit.beantable.BeanTableDataModel;
-import jmri.jmrit.beantable.SignalMastTableAction.MyComboBoxEditor;
-import jmri.jmrit.beantable.SignalMastTableAction.MyComboBoxRenderer;
+import jmri.jmrit.beantable.SignalMastTableAction.MyComboBoxEditor; // @Deprecated
+import jmri.jmrit.beantable.SignalMastTableAction.MyComboBoxRenderer; // @Deprecated
 import jmri.jmrit.signalling.SignallingSourceAction;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
@@ -83,7 +84,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
 
     public Class<?> getColumnClass(int col) {
         if (col == VALUECOL) {
-            return ComboBoxTableCellEditor.class; // Use a JPanel containing a custom Aspect ComboBox
+            return JPanel.class; // Use a JPanel containing a custom Aspect ComboBox
         } else if (col == EDITMASTCOL) {
             return JButton.class;
         } else if (col == EDITLOGICCOL) {
@@ -369,14 +370,13 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     }
 
     /**
-     * This is a table cell editor with a combobox as the editing component.
-     * Built on:
+     * A table cell editor with a combobox as the editing component. Based on:
      * http://alvinalexander.com/java/jwarehouse/netbeans-src/monitor/src/org/netbeans/modules/web/
      * monitor/client/ComboBoxTableCellEditor.java.shtml
      */
-    public class      ComboBoxTableCellEditor
-            extends    DefaultCellEditor
-            implements TableCellEditor {
+    public class      AspectComboBox
+            extends    AbstractCellEditor
+            implements TableCellEditor, TableCellRenderer {
 
         /**
          * The surrounding panel for the label and the combobox.
@@ -431,18 +431,14 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
 
 
         /**
-         *  Creates a new CellEditor.
+         *  Create a new CellEditor
          */
 
-        public ComboBoxTableCellEditor (Object [] combo)
-        {
-
-            super (new JComboBox ());
-
-            //setItems (values);
-            //setItems(get.row()); // from HashMap in SignalMastTableAction
+        public AspectComboBox() {
+            //super (new JComboBox());
+            // filled from HashMap
             this.editor = new JPanel (new BorderLayout ());
-            setClickCountToStart (1);
+            //setClickCountToStart (1); // value for a TableCellRenderer
 
             //show the combobox if the mouse clicks at the panel
             this.editor.addMouseListener (new MouseAdapter ()
@@ -453,12 +449,11 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
                 }
             });
 
-            JComboBox cb = getComboBox (combo);
+            JComboBox cb = getComboBox();
 
             cb.addActionListener (new ActionListener ()
             {
-                public final void actionPerformed (ActionEvent evt)
-                {
+                public final void actionPerformed (ActionEvent evt) {
                     eventComboBoxActionPerformed ();
                 }
             });
@@ -467,7 +462,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             {
                 public final void run ()
                 {
-                    getComboBox ().requestFocus ();
+                    getComboBox().requestFocus ();
                 }
             };
             this.comboBoxOpener = new Runnable ()
@@ -476,9 +471,8 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
                 {
                     if  (startEditingEvent instanceof MouseEvent)
                     {
-                        try
-                        {
-                            getComboBox (combo).setPopupVisible (true);
+                        try {
+                            getComboBox().setPopupVisible (true);
                         }
                         catch (java.awt.IllegalComponentStateException ex)
                         {
@@ -490,27 +484,25 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
 
         }
 
-        /**********************************************************************
+        /**
          *  Returns the renderer component of the cell.
          *
          *  @interfaceMethod javax.swing.table.TableCellEditor
-         *********************************************************************/
+         */
 
         public final Component getTableCellEditorComponent (JTable  table,
                                                             Object  value,
-                                                            boolean selected,
+                                                            boolean isSelected,
                                                             int     row,
                                                             int     col)
         {
-
             //add a listener to the table
-            if  ( ! this.tableListenerAdded)
-            {
+            if  ( ! this.tableListenerAdded) {
                 this.tableListenerAdded = true;
                 this.table = table;
-                this.table.getSelectionModel ().addListSelectionListener (new ListSelectionListener ()
+                this.table.getSelectionModel().addListSelectionListener(new ListSelectionListener ()
                 {
-                    public final void valueChanged (ListSelectionEvent evt)
+                    public final void valueChanged(ListSelectionEvent evt)
                     {
                         eventTableSelectionChanged ();
                     }
@@ -518,52 +510,96 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             }
             this.currentRow = row;
             this.initialValue = value;
-
-            return getEditorComponent (table, value, selected, row, col);
-
+            updateData(row, true, table);
+            return getEditorComponent(table, value, isSelected, row, col);
         }
 
-        protected Component getEditorComponent (JTable  table,
+        protected Component getEditorComponent(JTable  table,
                                                 Object  value,
-                                                boolean selected,
+                                                boolean isSelected,
                                                 int     row,
                                                 int     col)
         {
-
-            setSelectedItem (value);
+            setSelectedItem(value);
 
             //new or old row?
-            selected = table.isRowSelected (row);
-            if  (selected)  //old row
-            {
-                SwingUtilities.invokeLater (this.comboBoxFocusRequester);
-                SwingUtilities.invokeLater (this.comboBoxOpener);
-                return getComboBox ();
+            isSelected = table.isRowSelected(row);
+            if  (isSelected) {
+                //old row
+                SwingUtilities.invokeLater(this.comboBoxFocusRequester);
+                SwingUtilities.invokeLater(this.comboBoxOpener);
+                return getComboBox();
             }
-
             //the user selected a new row
-            this.editor.removeAll ();  //remove the combobox from the panel
-
+            this.editor.removeAll();  //remove the combobox from the panel
             return this.editor;
-
         }
 
+        public final Component getTableCellRendererComponent (JTable  table,
+                                                            Object  value,
+                                                            boolean isSelected,
+                                                            int     row,
+                                                            int     col)
+        {
+            //add a listener to the table
+            if  ( ! this.tableListenerAdded) {
+                this.tableListenerAdded = true;
+                this.table = table;
+                this.table.getSelectionModel().addListSelectionListener(new ListSelectionListener ()
+                {
+                    public final void valueChanged(ListSelectionEvent evt)
+                    {
+                        eventTableSelectionChanged ();
+                    }
+                });
+            }
+            this.currentRow = row;
+            this.initialValue = value;
+            updateData(row, isSelected, table);
+            return getRendererComponent(table, value, isSelected, row, col);
+        }
 
-        /**********************************************************************
+        protected Component getRendererComponent(JTable  table,
+                                               Object  value,
+                                               boolean isSelected,
+                                               int     row,
+                                               int     col)
+        {
+            setSelectedItem(value);
+
+            //new or old row?
+            //isSelected = table.isRowSelected(row);
+            //if  (isSelected) {
+                //old row
+                //SwingUtilities.invokeLater(this.comboBoxFocusRequester);
+                //SwingUtilities.invokeLater(this.comboBoxOpener);
+                //return getComboBox();
+            //}
+            //the user selected a new row
+            //this.editor.removeAll();  //remove the combobox from the panel
+            return this.editor;
+        }
+
+        private void updateData(int row, boolean isSelected, JTable table) {
+            // get correct Aspects for ComboBox
+            setItems(row);
+            if (isSelected) {
+                editor.setBackground(table.getSelectionBackground());
+            } else {
+                editor.setBackground(table.getBackground());
+            }
+        }
+        /**
          *  Is the cell editable? If the mouse was pressed at a margin
          *  we don't want the cell to be editable.
          *
          *  @param  evt  The event-object.
-         *
          *  @interfaceMethod javax.swing.table.TableCellEditor
-         *********************************************************************/
+         */
 
-        public boolean isCellEditable (EventObject evt)
-        {
-
+        public boolean isCellEditable(EventObject evt) {
             this.startEditingEvent = evt;
-            if  (evt instanceof MouseEvent  &&  evt.getSource () instanceof JTable)
-            {
+            if  (evt instanceof MouseEvent  &&  evt.getSource () instanceof JTable) {
                 MouseEvent me = (MouseEvent) evt;
                 JTable table = (JTable) me.getSource ();
                 Point pt = new Point (me.getX (), me.getY ());
@@ -575,85 +611,56 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
                     return false;
                 }
             }
-
-            return super.isCellEditable (evt);
-
+            return super.isCellEditable(evt);
         }
 
-        public Object getCellEditorValue ()
-        {
-
+        public Object getCellEditorValue() {
             return prevItem ;
-
         }
 
-        protected void setSelectedItem (Object item)
-        {
-
-            if  (getComboBox ().getSelectedItem () != item)
-            {
+        protected void setSelectedItem(Object item) {
+            if  (getComboBox().getSelectedItem() != item) {
                 this.consumeComboBoxActionEvent = false;
-                getComboBox ().setSelectedItem (item);
+                getComboBox().setSelectedItem(item);
                 this.consumeComboBoxActionEvent = true;
             }
-
         }
 
-        public final void setItems (int row)
+        public final void setItems(int row)
         {
-            JComboBox cb = new JComboBox (getAspectVector (row));
+            JComboBox cb = new JComboBox(getAspectVector (row));
         }
 
-        final void eventEditorMousePressed ()
-        {
-
-            this.editor.add (getComboBox ());
-            this.editor.revalidate ();
-            SwingUtilities.invokeLater (this.comboBoxFocusRequester);
-
+        final void eventEditorMousePressed() {
+            this.editor.add (getComboBox());
+            this.editor.revalidate();
+            SwingUtilities.invokeLater(this.comboBoxFocusRequester);
         }
 
-        protected void eventTableSelectionChanged ()
-        {
-
+        protected void eventTableSelectionChanged() {
             //stop editing if a new row is selected
-            if  ( ! this.table.isRowSelected (this.currentRow))
+            if  ( ! this.table.isRowSelected(this.currentRow))
             {
                 stopCellEditing ();
             }
-
         }
 
-        protected void eventComboBoxActionPerformed ()
-        {
-
-            Object item = getComboBox ().getSelectedItem ();
+        protected void eventComboBoxActionPerformed() {
+            Object item = getComboBox().getSelectedItem();
             if  (item != null) prevItem = item;
-            if (consumeComboBoxActionEvent) stopCellEditing ();
-
+            if (consumeComboBoxActionEvent) stopCellEditing();
         }
 
-        public final JComboBox getComboBox ()
-        {
-
-            return (JComboBox) getComponent ();
-
+        public final JComboBox getComboBox() {
+            return (JComboBox) getComponent();
         }
 
-
-        public final Object getInitialValue ()
-        {
-
+        public final Object getInitialValue() {
             return this.initialValue;
-
         }
 
-
-        public final int getCurrentRow ()
-        {
-
+        public final int getCurrentRow() {
             return this.currentRow;
-
         }
 
     }
@@ -669,13 +676,14 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         // test EBR: never called!
         System.out.println("EBR Configure VALUECOL");
         // add extras, override BeanTableDataModel
-
+        table.setDefaultRenderer(JPanel.class, new AspectComboBox());
+        table.setDefaultEditor(JPanel.class, new AspectComboBox());
         //TableColumn aspectcol = table.getColumnModel().getColumn(VALUECOL);
         //JComboBox combo = new JComboBox();
         //combo.addItem("Stop");
         //combo.addItem("Clear");
         //aspectcol.setCellEditor(new DefaultCellEditor ComboBoxTableCellEditor ()); //test
-        //}
+
         // convert from view to model?
     }
 
@@ -713,7 +721,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         }
     }
 
-    ComboBoxTableCellEditor getRenderer(int row) {
+    TableCellRenderer getRenderer(int row) {
         JComboBox combo = rendererMap.get(this.getValueAt(row, SYSNAMECOL));
         // test EBR: never called!
         System.out.println("EBR NEW Retval: " + row);
@@ -722,7 +730,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             combo = new JComboBox(getAspectVector(row));
             rendererMap.put(this.getValueAt(row, SYSNAMECOL), combo);
         }
-        TableCellRenderer retval = new ComboBoxTableCellRenderer(combo); // create a custom JComboBox inside a JPanel for this row
+        TableCellRenderer retval = new AspectComboBox(combo); // create a custom JComboBox inside a JPanel for this row
         return retval;
     }
     Hashtable<Object, JComboBox> rendererMap = new Hashtable<Object, JComboBox>();
@@ -734,7 +742,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             combo = new JComboBox(getAspectVector(row));
             editorMap.put(this.getValueAt(row, SYSNAMECOL), combo);
         }
-        TableCellEditor retval = new ComboBoxTableCellEditor(combo); // create a custom JComboBox inside a JPanel for this row
+        TableCellEditor retval = new AspectComboBox(combo); // create a custom JComboBox inside a JPanel for this row
         return retval;
     }
     Hashtable<Object, JComboBox> editorMap = new Hashtable<Object, JComboBox>();

@@ -98,6 +98,7 @@ public class SignalMastTableAction extends AbstractTableAction {
         });
     }
 
+    @Deprecated
     public static class MyComboBoxEditor extends DefaultCellEditor {
 
         public MyComboBoxEditor(Vector<String> items) {
@@ -105,6 +106,7 @@ public class SignalMastTableAction extends AbstractTableAction {
         }
     }
 
+    @Deprecated
     public static class MyComboBoxRenderer extends JComboBox<String> implements TableCellRenderer {
 
         public MyComboBoxRenderer(Vector<String> items) {
