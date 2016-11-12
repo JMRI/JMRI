@@ -7,6 +7,7 @@ import org.openlcb.can.CanInterface;
 
 import java.util.concurrent.Semaphore;
 
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TestTrafficController;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.CanMessage;
@@ -41,6 +42,15 @@ public class OlcbTestInterface {
 
     public void flush() {
         iface.flushSendQueue();
+    }
+
+    static OlcbSystemConnectionMemo createForLegacyTests() {
+        OlcbTestInterface testIf = new OlcbTestInterface();
+        OlcbSystemConnectionMemo memo = new OlcbSystemConnectionMemo();
+        memo.setTrafficController(testIf.tc);
+        memo.setInterface(testIf.iface);
+        testIf.waitForStartup();
+        return memo;
     }
 
     TestTrafficController tc;
