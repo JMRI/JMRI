@@ -352,7 +352,10 @@ public final class FileUtil {
     }
 
     /**
-     * Get the JMRI program directory.
+     * Get the JMRI program directory. If the program directory has not been
+     * previously sets, first sets the program directory to the value specified
+     * in the Java System property <code>jmri.path.program</code>, or
+     * <code>.</code> if that property is not set.
      *
      * @return JMRI program directory as a String.
      */

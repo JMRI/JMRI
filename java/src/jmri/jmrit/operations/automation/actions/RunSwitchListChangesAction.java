@@ -64,16 +64,19 @@ public class RunSwitchListChangesAction extends Action {
             // check that both the Excel custom manifest and custom switch lists aren't busy with other work
             // We've found that on some OS only one copy of Excel can be running at a time
             // this can wait thread
-            if (!new TrainCustomManifest().checkProcessReady()) {
+            if (!TrainCustomManifest.instance().checkProcessReady()) {
                 log.warn(
                         "Timeout waiting for excel manifest program to complete previous operation, timeout value: {} seconds",
                         Control.excelWaitTime);
             }
             // this can wait thread
-            if (!new TrainCustomSwitchList().checkProcessReady()) {
+            if (!TrainCustomSwitchList.instance().checkProcessReady()) {
                 log.warn(
                         "Timeout waiting for excel switch list program to complete previous operation, timeout value: {} seconds",
                         Control.excelWaitTime);                
+            }
+            if (TrainCustomSwitchList.instance().doesCommonFileExist()) {
+                log.warn("Switch List CSV common file exists!");
             }
             for (Location location : LocationManager.instance().getLocationsByNameList()) {
                 if (location.isSwitchListEnabled() &&
