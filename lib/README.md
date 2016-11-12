@@ -69,7 +69,7 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 - updated JMRI 4.1.4 from version 1.7.6, added jul-to-slf4j
 
 ##### openlcb.jar
-- 0.7.6 from https://sourceforge.net/p/openlcb/svn/HEAD/tree/trunk/prototypes/java/
+- 0.7.7 from https://github.com/openlcb/OpenLCB_Java/blob/master/openlcb.jar
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -132,8 +132,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
         lib/windows/x64/intelbth_x64.dll
         lib/windows/x86/intelbth.dll
 
-##### jython.jar
-- version 2.7.0 from jython.org (was jython-standalone-2.7.0.jar)
+##### jython-standalone-2.7.0.jar
+- from http://repo1.maven.org/maven2/org/python/jython-standalone/2.7.0/
+- unlike jython-2.7.0.jar, includes embedded standard python libs
 
 ##### jakarta-regexp-1.5.jar
 - (needed for jfcunit)

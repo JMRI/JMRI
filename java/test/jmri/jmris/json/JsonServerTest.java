@@ -1,10 +1,10 @@
 //JsonServerTest.java
 package jmri.jmris.json;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.jmris.json package
@@ -45,11 +45,6 @@ public class JsonServerTest extends TestCase {
         suite.addTest(jmri.jmris.json.JsonLightServerTest.suite());
         suite.addTest(jmri.jmris.json.JsonOperationsServerTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            // put any tests that require a UI here.
-        }
-
         return suite;
     }
 

@@ -37,7 +37,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.logix.configurexml.PackageTest.class));
 
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
             suite.addTest(NXFrameTest.suite()); //formerly NXWarrantTest        
             suite.addTest(LearnWarrantTest.suite());            
         }

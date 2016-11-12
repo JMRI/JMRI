@@ -30,7 +30,7 @@ public class PackageTest extends TestCase {
         // and errors in other places when later, e.g. in
         // jmri.jmrit.beantable.MemoryTableAction$1.getValue(MemoryTableAction.java:56)
         // suite.addTest(jmri.jmrit.MemoryContentsTest.suite());
-        if (!Boolean.getBoolean("jmri.headlesstest")) {
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
             suite.addTest(jmri.jmrit.AbstractIdentifyTest.suite());
         }
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
@@ -40,11 +40,11 @@ public class PackageTest extends TestCase {
         suite.addTest(XmlFileTest.suite());
 
         suite.addTest(jmri.jmrit.automat.AutomatTest.suite());
-        if (!Boolean.getBoolean("jmri.headlesstest")) {
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
             suite.addTest(jmri.jmrit.beantable.PackageTest.suite());
         }
         suite.addTest(jmri.jmrit.blockboss.PackageTest.suite());
-        if (!Boolean.getBoolean("jmri.headlesstest")) {
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
             suite.addTest(jmri.jmrit.catalog.PackageTest.suite());
         }
         suite.addTest(jmri.jmrit.decoderdefn.PackageTest.suite());
@@ -55,19 +55,19 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.logix.PackageTest.suite());
         suite.addTest(jmri.jmrit.operations.PackageTest.suite());
         suite.addTest(jmri.jmrit.progsupport.PackageTest.suite());
-        if (!Boolean.getBoolean("jmri.headlesstest")) {
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
             suite.addTest(jmri.jmrit.mastbuilder.MastBuilderTest.suite());
             suite.addTest(jmri.jmrit.powerpanel.PackageTest.suite());
         }
         suite.addTest(jmri.jmrit.roster.PackageTest.suite());
-        if (!Boolean.getBoolean("jmri.headlesstest")) {
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
             suite.addTest(jmri.jmrit.sendpacket.SendPacketTest.suite());
             suite.addTest(jmri.jmrit.sensorgroup.SensorGroupTest.suite());
         }
         suite.addTest(jmri.jmrit.simpleclock.PackageTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.PackageTest.suite());
         suite.addTest(jmri.jmrit.tracker.PackageTest.suite());
-        if (!Boolean.getBoolean("jmri.headlesstest")) {
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
             suite.addTest(jmri.jmrit.ussctc.PackageTest.suite());
         }
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.consisttool.PackageTest.class));

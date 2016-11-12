@@ -97,9 +97,11 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         WarrantTableFrame tableFrame = WarrantTableFrame.getInstance();
         Warrant warrant = tableFrame.getModel().getWarrantAt(0);
         OBlock block = _OBlockMgr.getBySystemName("OB0");
-        Assert.assertEquals("Waiting message", warrant.getRunningMessage(),
-                Bundle.getMessage("waitForDelayStart", warrant.getTrainName(), block.getDisplayName()));
 
+        jmri.util.JUnitUtil.waitFor(
+            ()->{return warrant.getRunningMessage().equals(Bundle.getMessage("waitForDelayStart", warrant.getTrainName(), block.getDisplayName()));},
+            "Waiting message"); 
+        
         Sensor sensor0 = _sensorMgr.getBySystemName("IS0");
         Assert.assertNotNull("Senor IS0 not found", sensor0);
 
@@ -122,9 +124,10 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             warrant.controlRunTrain(Warrant.RESUME);
         });
+        // OBlock sensor names
         String[] route = {"IS1", "IS2", "IS3", "IS7", "IS5", "IS10"};
         Sensor sensor10 = _sensorMgr.getBySystemName("IS10");
-        Assert.assertEquals("Train in last block", sensor10, runtimes(sensor10, route));
+        Assert.assertEquals("Train in last block", sensor10, runtimes(route));
 
         flushAWT();
         flushAWT();   // let calm down before running abort
@@ -184,21 +187,22 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
     }
 
     /**
-     * works through a list of sensors, activating one, then the next, then
-     * inactivating the first and continuing. Leaves last ACTIVE.
-     *
-     * @param sensor - active start sensor
-     * @return - active end sensor
+     * works through a list of sensors, activating one, then the next
+     * inactivating the previous and continuing. Leaves last ACTIVE.
+     * @param list of detection sensors of the route
+     * @return active end sensor
      * @throws Exception
      */
-    private Sensor runtimes(Sensor sensor, String[] sensors) throws Exception {
+    private Sensor runtimes(String[] sensors) throws Exception {
         flushAWT();
-        _sensorMgr.getSensor(sensors[0]).setState(Sensor.ACTIVE);
+        Sensor sensor = _sensorMgr.getSensor(sensors[0]);
         for (int i = 1; i < sensors.length; i++) {
             flushAWT();
-            _sensorMgr.getSensor(sensors[i]).setState(Sensor.ACTIVE);
+            Sensor nextSensor = _sensorMgr.getSensor(sensors[i]);
+            nextSensor.setState(Sensor.ACTIVE);
             flushAWT();
-            _sensorMgr.getSensor(sensors[i - i]).setState(Sensor.INACTIVE);
+            sensor.setState(Sensor.INACTIVE);
+            sensor = nextSensor;
         }
         return sensor;
     }
