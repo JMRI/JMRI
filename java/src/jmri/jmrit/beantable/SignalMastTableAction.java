@@ -3,16 +3,29 @@ package jmri.jmrit.beantable;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Hashtable;
 import java.util.Vector;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import jmri.InstanceManager;
+import jmri.NamedBean;
+import jmri.jmrit.beantable.signalmast.SignalMastTableDataModel;
+//import jmri.util.swing.XTableColumnModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a SignalMastTable GUI.
@@ -39,10 +52,12 @@ public class SignalMastTableAction extends AbstractTableAction {
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
-     * of Sensors
+     * of Signal Masts
      */
     protected void createModel() {
-        m = new jmri.jmrit.beantable.signalmast.SignalMastTableDataModel();
+        m = new SignalMastTableDataModel();
+        log.debug("Add stuff here");
+        // add stuff here? cf. SM Logic
     }
 
     protected void setTitle() {
@@ -53,39 +68,12 @@ public class SignalMastTableAction extends AbstractTableAction {
         return "package.jmri.jmrit.beantable.SignalMastTable";
     }
 
+    // prepare the Add Signal Mast frame
     jmri.jmrit.beantable.signalmast.AddSignalMastJFrame addFrame = null;
 
     // has to agree with number in SignalMastDataModel
     final static int VALUECOL = BeanTableDataModel.VALUECOL;
     final static int SYSNAMECOL = BeanTableDataModel.SYSNAMECOL;
-
-    public void actionPerformed(ActionEvent e) {
-        // create the JTable model, with changes for specific NamedBean
-        createModel();
-        TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter<>(m);
-        JTable dataTable = m.makeJTable(m.getMasterClassName(), m, sorter);
-        // create the frame
-        f = new BeanTableFrame(m, helpTarget(), dataTable) {
-
-            /**
-             * Include an "add" button
-             */
-            void extras() {
-                JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
-                addToBottomBox(addButton, this.getClass().getName());
-                addButton.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        addPressed(e);
-                    }
-                });
-            }
-
-        };
-        setTitle();
-        addToFrame(f);
-        f.pack();
-        f.setVisible(true);
-    }
 
     protected void addPressed(ActionEvent e) {
         if (addFrame == null) {
@@ -110,6 +98,13 @@ public class SignalMastTableAction extends AbstractTableAction {
         });
     }
 
+    public static class MyComboBoxEditor extends DefaultCellEditor {
+
+        public MyComboBoxEditor(Vector<String> items) {
+            super(new JComboBox<String>(items));
+        }
+    }
+
     public static class MyComboBoxRenderer extends JComboBox<String> implements TableCellRenderer {
 
         public MyComboBoxRenderer(Vector<String> items) {
@@ -132,13 +127,6 @@ public class SignalMastTableAction extends AbstractTableAction {
         }
     }
 
-    public static class MyComboBoxEditor extends DefaultCellEditor {
-
-        public MyComboBoxEditor(Vector<String> items) {
-            super(new JComboBox<String>(items));
-        }
-    }
-
     protected String getClassName() {
         return SignalMastTableAction.class.getName();
     }
@@ -146,5 +134,7 @@ public class SignalMastTableAction extends AbstractTableAction {
     public String getClassDescription() {
         return Bundle.getMessage("TitleSignalGroupTable");
     }
+
+    private final static Logger log = LoggerFactory.getLogger(TurnoutTableAction.class.getName());
 }
 

@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a SignalHeadTable GUI
+ * Swing action to create and register a NamedBeanTable GUI
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  */
@@ -56,7 +56,7 @@ abstract public class AbstractTableAction extends AbstractAction {
         f = new BeanTableFrame(m, helpTarget(), dataTable) {
 
             /**
-             * Include an "add" button
+             * Include an "add" button doesn't work as it is already created from ListedTableFrame
              */
             void extras() {
                 if (includeAddButton) {
@@ -87,7 +87,7 @@ abstract public class AbstractTableAction extends AbstractAction {
     }
 
     /**
-     * Allow subclasses to add to the frame without have to actually subclass
+     * Allow subclasses to add to the frame without having to actually subclass
      * the BeanTableDataFrame
      */
     public void addToFrame(BeanTableFrame f) {
