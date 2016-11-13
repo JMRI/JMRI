@@ -1866,11 +1866,27 @@
               failonerror="true">
             <!-- ORDER MATTERS HERE -->
             <arg value="${release.version-string}"/>
-            <arg path="${dist.release}/JMRI.${release.version-string}.dmg"/>
+            <arg path="${dist.release}/JMRI.${release.version-string}-unsigned.dmg"/>
             <arg path="${dist.macosx}"/>
         </exec>
     </target>
 
+    <target name="sign-macosx"
+            description="sign the macOS distribution DMG file; assumes package-macosx"
+            depends="get-version-string">
+        <chmod perm="ugo+rwx">
+            <fileset dir="${dist.release}"/>
+        </chmod>
+        <echo message="Location: ${dist.release}"/>
+        <echo message="Host: ${env.signinghost}"/>
+        <echo message="http://${env.signinghost}/selfsign.php?get=${dist.release}/JMRI.${release.version-string}-unsigned.dmg&amp;rel=${release.version-string}&amp;put=${dist.release}/JMRI/${release.version-string}.dmg"/>
+        <exec executable="xwget"
+              osFamily="unix"
+              failonerror="true">
+            <arg value="http://${env.signinghost}/selfsign.php?get=${dist.release}/JMRI.${release.version-string}-unsigned.dmg&amp;rel=${release.version-string}&amp;put=${dist.release}/JMRI/${release.version-string}.dmg"/>
+        </exec>
+    </target>
+            
     <target name="package-linux"
             description="create a Linux release package"
             depends="get-version-string, jar, startup-scripts-linux">
