@@ -1,4 +1,4 @@
-package jmri.jmrix.cmri;
+package jmri.jmrix.zimo.swing.monitor;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -7,12 +7,11 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   CMRISystemConnectionMemoTest.class,
-   CMRIMenuTest.class,
-   jmri.jmrix.cmri.serial.PackageTest.class})
+    Mx1MonPanelTest.class
+})
 
 /**
- * Tests for the jmri.jmrix.cmri package
+ * Tests for the jmri.jmrix.zimo.swing.monitor package
  *
  * @author  Paul Bender	Copyright (C) 2016
  */
