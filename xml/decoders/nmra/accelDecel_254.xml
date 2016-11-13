@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>8</revnumber>
+      <date>2016-10-22</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>7</revnumber>
       <date>2013-07-29</date>
       <authorinitials>PB</authorinitials>
@@ -53,6 +59,8 @@
     <label>Acceleration Rate</label>
     <comment>Range 0-254</comment>
         <comment xml:lang="it">Valori 0-254</comment>
+    <label xml:lang="cs">Míra zrychlení</label>
+    <comment xml:lang="cs">Meze 0-254</comment>
   </variable>
   <variable CV="4" item="Decel" default="0" comment="Range 0-254">
     <decVal max="254"/>
@@ -62,5 +70,7 @@
     <label xml:lang="de">Bremszeit (0-254)</label>
     <comment>Range 0-254</comment>
         <comment xml:lang="it">Valori 0-254</comment>
+    <label xml:lang="cs">Míra zpomalení</label>
+    <comment xml:lang="cs">Meze 0-254</comment>
   </variable>
 </variables>

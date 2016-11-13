@@ -1,16 +1,23 @@
 package jmri.jmrix.can;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import jmri.jmrix.openlcb.OlcbSensorTest;
+
 /**
  * Test scaffold to replace the TrafficController
  *
  * @author	Bob Jacobsen Copyright 2008, 2010
  */
 public class TestTrafficController extends TrafficController {
+    private final static Logger log = LoggerFactory.getLogger(OlcbSensorTest.class.getName());
 
     public CanMessage rcvMessage = null;
 
     public void sendCanMessage(CanMessage m, CanListener l) {
         rcvMessage = m;
+        log.debug("Message sent: header {} body {}", Integer.toHexString(m.getHeader()), m);
     }
 
     // dummies

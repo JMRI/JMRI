@@ -5,6 +5,7 @@
   <name xml:lang="de">Sound</name>
   <name xml:lang="da">Lyd</name>
   <name xml:lang="ca">So</name>
+  <name xml:lang="cs">Zvuk</name>
   <column>
     <display item="Sound Option 1"/>
     <display item="Sound Option 2"/>

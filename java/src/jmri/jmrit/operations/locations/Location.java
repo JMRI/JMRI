@@ -116,6 +116,7 @@ public class Location implements java.beans.PropertyChangeListener {
 
     /**
      * Sets the location's name.
+     * @param name The string name for this location.
      *
      */
     public void setName(String name) {
@@ -187,6 +188,7 @@ public class Location implements java.beans.PropertyChangeListener {
 
     /**
      * Set total length of all tracks for this location
+     * @param length The integer sum of all tracks at this location.
      *
      */
     public void setLength(int length) {
@@ -280,6 +282,7 @@ public class Location implements java.beans.PropertyChangeListener {
 
     /**
      *
+     * @param trackType The track type to check.
      * @return True if location has the track type specified Track.INTERCHANGE
      *         Track.YARD Track.SPUR Track.Staging
      */
@@ -325,7 +328,8 @@ public class Location implements java.beans.PropertyChangeListener {
     }
 
     /**
-     * Sets the number of cars and or engines on for this location
+     * Sets the quantity of rolling stock for this location
+     * @param number An integer representing the quantity of rolling stock at this location.
      *
      */
     public void setNumberRS(int number) {
@@ -390,6 +394,7 @@ public class Location implements java.beans.PropertyChangeListener {
     /**
      * When true, a switchlist is desired for this location. Used for preview
      * and printing a manifest for a single location
+     * @param switchList When true, switch lists are enabled for this location.
      *
      */
     public void setSwitchListEnabled(boolean switchList) {
@@ -513,6 +518,7 @@ public class Location implements java.beans.PropertyChangeListener {
 
     /**
      * Adds rolling stock to a specific location.
+     * @param rs The RollingStock to add.
      *
      */
     public void addRS(RollingStock rs) {
@@ -687,6 +693,7 @@ public class Location implements java.beans.PropertyChangeListener {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     * @param track The Track to be loaded at this location.
      */
     public void register(Track track) {
         Integer old = Integer.valueOf(_trackHashTable.size());
@@ -1087,6 +1094,7 @@ public class Location implements java.beans.PropertyChangeListener {
 
     /**
      * True if this location has a track with pick up or set out restrictions.
+     * @return True if there are restrictions at this location.
      */
     public boolean hasServiceRestrictions() {
         Track track;

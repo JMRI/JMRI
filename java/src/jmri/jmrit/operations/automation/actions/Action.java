@@ -42,6 +42,7 @@ public abstract class Action {
 
     /**
      * Mask off menu bits.
+     * @param code the integer to be modified by masking off menu bits.
      *
      * @return code {@literal &} ActionCodes.CODE_MASK
      */
@@ -191,6 +192,7 @@ public abstract class Action {
      * <p>
      * action name, train name, route location name, automation name, goto item id,
      * train schedule day.
+     * @param message the string to be formated
      *
      * @return formated message
      */

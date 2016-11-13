@@ -1,6 +1,7 @@
 package jmri.jmrit;
 
 import apps.tests.Log4JFixture;
+import java.awt.GraphicsEnvironment;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 import org.junit.After;
@@ -33,7 +34,7 @@ public class SoundTest {
      */
     @Test
     public void testPlay() {
-        Assume.assumeFalse(Boolean.getBoolean("jmri.headlesstest"));
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         try {
             AudioSystem.getClip();
         } catch (IllegalArgumentException | LineUnavailableException ex) {
@@ -49,7 +50,7 @@ public class SoundTest {
      */
     @Test
     public void testLoopInt() {
-        Assume.assumeFalse(Boolean.getBoolean("jmri.headlesstest"));
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         try {
             AudioSystem.getClip();
         } catch (IllegalArgumentException | LineUnavailableException ex) {
@@ -65,7 +66,7 @@ public class SoundTest {
      */
     @Test
     public void testStop() {
-        Assume.assumeFalse(Boolean.getBoolean("jmri.headlesstest"));
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         try {
             AudioSystem.getClip();
         } catch (IllegalArgumentException | LineUnavailableException ex) {

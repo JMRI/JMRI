@@ -44,6 +44,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         JButton b = new JButton("Configure CMRInet nodes");
         details.add(b);
 
+        setInstance();
+
         b.addActionListener(new NodeConfigManagerAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
         if (!additionalItems.contains(b)) {
             additionalItems.add(b);
@@ -62,6 +64,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     protected void setInstance() {
-        adapter = SerialDriverAdapter.instance();
+        if (adapter == null) {
+            adapter = new SerialDriverAdapter();
+        }
     }
 }

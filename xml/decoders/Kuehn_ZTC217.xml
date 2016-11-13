@@ -22,9 +22,11 @@
       <model model="ZTC217" numOuts="2">
         <output name="1" label="White">
           <label xml:lang="it">Bianco</label>
+          <label xml:lang="cs">Bílá</label>
         </output>
         <output name="2" label="Yellow">
           <label xml:lang="it">Giallo</label>
+          <label xml:lang="cs">Žlutá</label>
         </output>
       </model>
     </family>
@@ -39,6 +41,8 @@
         <label xml:lang="de">Anfahrspannung</label>
         <comment>Range 0-255</comment>
         <comment xml:lang="it">Valori 0-255</comment>
+        <label xml:lang="cs">Rozjezdové napětí</label>
+        <comment xml:lang="cs">Meze 0-255</comment>
       </variable>
       <variable item="Accel" CV="3" comment="Range 0-15">
         <decVal max="15"/>
@@ -46,6 +50,8 @@
         <label xml:lang="it">Accellerazione</label>
         <comment>Range 0-15</comment>
         <comment xml:lang="it">Valori 0-15</comment>
+        <label xml:lang="cs">Zrychlení</label>
+        <comment xml:lang="cs">Meze 0-15</comment>
       </variable>
       <variable item="Decel" CV="4" comment="Range 0-15">
         <decVal max="15"/>
@@ -53,6 +59,8 @@
         <label xml:lang="it">Decellerazione</label>
         <comment>Range 0-15</comment>
         <comment xml:lang="it">Valori 0-15</comment>
+        <label xml:lang="cs">Zpomalení</label>
+        <comment xml:lang="cs">Meze 0-15</comment>
       </variable>
       <variable item="Vhigh" CV="5" comment="Range 0-255">
         <decVal max="255"/>
@@ -60,6 +68,8 @@
         <label xml:lang="it">Volt Massimi</label>
         <comment>Range 0-255</comment>
         <comment xml:lang="it">Valori 0-255</comment>
+        <label xml:lang="cs">Maximální napětí</label>
+        <comment xml:lang="cs">Meze 0-255</comment>
       </variable>
       <variable item="Vmid" CV="6" comment="Range 1-13">
         <decVal min="0" max="13"/>
@@ -67,6 +77,8 @@
         <label xml:lang="it">Volt Intermedi</label>
         <comment>Range 1-13</comment>
         <comment xml:lang="it">Valori 1-13</comment>
+        <label xml:lang="cs">Střední napětí</label>
+        <comment xml:lang="cs">Meze 1-13</comment>
       </variable>
       <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
@@ -74,6 +86,7 @@
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
+        <label xml:lang="cs">Verze dekodéru: </label>
       </variable>
       <variable CV="8" readOnly="yes" item="Manufacturer" default="157">
         <decVal/>
@@ -81,6 +94,7 @@
         <label xml:lang="it">ID Costruttore: </label>
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
+        <label xml:lang="cs">ID výrobce: </label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
@@ -90,14 +104,17 @@
           <enumChoice choice="WhisperDrive ON">
             <choice>WhisperDrive ON</choice>
             <choice xml:lang="it">WhisperDrive ON</choice>
+            <choice xml:lang="cs">WhisperDrive zapnuto (tichý chod)</choice>
           </enumChoice>
           <enumChoice choice="WhisperDrive OFF">
             <choice>WhisperDrive OFF</choice>
             <choice xml:lang="it">WhisperDrive OFF</choice>
+            <choice xml:lang="cs">WhisperDrive vypnuto (tichý chod)</choice>
           </enumChoice>
         </enumVal>
         <label>Motor Drive Selection</label>
         <label xml:lang="it">Selezione Driver Motore</label>
+        <label xml:lang="cs">Volba pohonu motoru</label>
       </variable>
       <variable CV="55" item="Static Compensation" default="128" comment="Range 0-255">
         <decVal min="0" max="255"/>
@@ -105,6 +122,8 @@
         <label xml:lang="it">Compensazione Statica</label>
         <comment>Range 0-255</comment>
         <comment xml:lang="it">Valori 0-255</comment>
+        <label xml:lang="cs">Statická kompenzace (složka P)</label>
+        <comment xml:lang="cs">Meze 0-255</comment>
       </variable>
       <variable CV="56" item="Dynamic Compensation" default="48" comment="Range 0-255">
         <decVal min="0" max="255"/>
@@ -112,6 +131,8 @@
         <label xml:lang="it">Compensazione Dinamica</label>
         <comment>Range 0-255</comment>
         <comment xml:lang="it">Valori 0-255</comment>
+        <label xml:lang="cs">Dynamická kompenzace (složka I)</label>
+        <comment xml:lang="cs">Meze 0-255</comment>
       </variable>
       <variable CV="57" item="Decay Rate" default="0" comment="Range 0-15">
         <decVal min="0" max="15"/>
@@ -119,20 +140,25 @@
         <label xml:lang="it">Grado Decay</label>
         <comment>Range 0-15</comment>
         <comment xml:lang="it">Valori 0-15</comment>
+        <label xml:lang="cs">Míra rozkladu</label>
+        <comment xml:lang="cs">Meze 0-15</comment>
       </variable>
       <variable item="Directional Headlights" CV="61" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="Headlights are directional and operate automatically">
             <choice>Headlights are directional and operate automatically</choice>
             <choice xml:lang="it">Luci direzionali ed automatiche</choice>
+            <choice xml:lang="cs">Světla jsou závislá na směru a přepínají se automaticky</choice>
           </enumChoice>
           <enumChoice choice="Headlights are independently controlled (F0-Front, F4-Rear)">
             <choice>Headlights are independently controlled (F0-Front, F4-Rear)</choice>
             <choice xml:lang="it">Luci indipendenti e controllate da : F0=davanti , F4=retro</choice>
+            <choice xml:lang="cs">Světla jsou ovládána nezávisle (F0 - přední, F4 - zadní)</choice>
           </enumChoice>
         </enumVal>
         <label>Directional Headlights</label>
         <label xml:lang="it">Luci di direzione</label>
+        <label xml:lang="cs">Směrová světla</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart_63.xml"/>
       <!-- Define the fixed Function-Output mapping -->
@@ -166,6 +192,7 @@
           <display item="Motor Drive Selection" layout="above" label="Motor Drive Selection">
             <label>Motor Drive Selection</label>
             <label xml:lang="it">Selezione Driver Motore</label>
+            <label xml:lang="cs">Volba pohonu motoru</label>
           </display>
         </column>
       </row>

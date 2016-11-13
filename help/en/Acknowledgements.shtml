@@ -833,6 +833,9 @@
         <li>Dustin Shoup, who figured out how to preserve order in
         XML files</li>
 
+        <li>Petr Šídlo, who provided a large update to the Czech
+        translations of JMRI</li>
+
         <li>Pekka Siiskonen, who suggested we add error numbers to
         error messages to make it easier to discuss which specific
         error is happening</li>

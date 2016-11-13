@@ -6,10 +6,10 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the OPath class
@@ -21,11 +21,6 @@ public class LogixActionTest extends TestCase {
     public void testLogixAction() throws Exception {
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
         };
-
-        /* headless OK
-        if (System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            return;
-        }*/ 
 
         // load and display sample file. Panel file does not display screen
         java.io.File f = new java.io.File("java/test/jmri/jmrit/logix/valid/LogixActionTest.xml");

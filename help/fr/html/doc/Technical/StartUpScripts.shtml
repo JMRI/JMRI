@@ -304,7 +304,7 @@
                   r&eacute;pertoire courant</li>
 
                   <li>les fichiers de classe dans le
-                  sous-r&eacute;pertoire java/classes du
+                  sous-r&eacute;pertoire target/classes du
                   r&eacute;pertoire courant</li>
 
                   <li>tous les fichiers jar dans le

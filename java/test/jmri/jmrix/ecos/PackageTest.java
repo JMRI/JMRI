@@ -29,7 +29,9 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.ecos.swing.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ecos.networkdriver.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ecos.configurexml.PackageTest.class));
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EcosPreferencesTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EcosSystemConnectionMemoTest.class));
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
         }
 
         return suite;

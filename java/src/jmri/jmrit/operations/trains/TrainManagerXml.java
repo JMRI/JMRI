@@ -8,6 +8,7 @@ import jmri.jmrit.operations.automation.AutomationManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.util.FileUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.ProcessingInstruction;
@@ -133,6 +134,8 @@ public class TrainManagerXml extends OperationsXml {
 
     /**
      * Store the train's build report
+     * @param name Full path name for train build report
+     * @return Build report File.
      */
     public File createTrainBuildReportFile(String name) {
         return createFile(defaultBuildReportFilename(name), false); // don't backup
@@ -155,7 +158,9 @@ public class TrainManagerXml extends OperationsXml {
     }
 
     /**
-     * Store the train's manifest
+     * Creates the train's manifest file.
+     * @param name Full path name for manifest file.
+     * @return Manifest File.
      */
     public File createTrainManifestFile(String name) {
         savePreviousManifestFile(name);
@@ -204,6 +209,8 @@ public class TrainManagerXml extends OperationsXml {
 
     /**
      * Store the CSV train manifest
+     * @param name Full path name to CSV train manifest file.
+     * @return Train CSV manifest File.
      */
     public File createTrainCsvManifestFile(String name) {
         return createFile(getDefaultCsvManifestFilename(name), false); // don't backup
@@ -215,21 +222,26 @@ public class TrainManagerXml extends OperationsXml {
     }
 
     public String getDefaultCsvManifestFilename(String name) {
-        return defaultCsvManifestDirectory + MANIFEST_FILE_NAME + name + FILE_TYPE_CSV; // NOI18N
+        return getDefaultCsvManifestDirectory() + MANIFEST_FILE_NAME + name + FILE_TYPE_CSV;
     }
 
-    private String defaultCsvManifestDirectory = OperationsXml.getFileLocation() +
-            OperationsXml.getOperationsDirectoryName() +
-            File.separator +
-            CSV_MANIFESTS +
-            File.separator;
+    private String getDefaultCsvManifestDirectory() {
+        return OperationsXml.getFileLocation()
+                + OperationsXml.getOperationsDirectoryName()
+                + File.separator
+                + CSV_MANIFESTS
+                + File.separator;
+    }
 
     public void createDefaultCsvManifestDirectory() {
-        createFile(defaultCsvManifestDirectory + " ", false); // don't backup
+        FileUtil.createDirectory(getDefaultCsvManifestDirectory());
     }
 
     /**
      * Store the Json manifest for a train
+     * @param name file name
+     * @param ext file extension to use
+     * @return Json manifest File
      */
     public File createManifestFile(String name, String ext) {
         return createFile(getDefaultManifestFilename(name, ext), false); // don't backup
@@ -245,6 +257,8 @@ public class TrainManagerXml extends OperationsXml {
 
     /**
      * Store the switch list for a location
+     * @param name The location's name, to become file name.
+     * @return Switch list File.
      */
     public File createSwitchListFile(String name) {
         return createFile(getDefaultSwitchListName(name), false); // don't backup
@@ -268,6 +282,8 @@ public class TrainManagerXml extends OperationsXml {
 
     /**
      * Store the CSV switch list for a location
+     * @param name Location's name, to become file name.
+     * @return CSV switch list File.
      */
     public File createCsvSwitchListFile(String name) {
         return createFile(getDefaultCsvSwitchListName(name), false); // don't backup
@@ -279,17 +295,19 @@ public class TrainManagerXml extends OperationsXml {
     }
 
     public String getDefaultCsvSwitchListName(String name) {
-        return defaultCsvSwitchListDirectory + SWITCH_LIST_FILE_NAME + name + FILE_TYPE_CSV;// NOI18N
+        return getDefaultCsvSwitchListDirectory() + SWITCH_LIST_FILE_NAME + name + FILE_TYPE_CSV;
     }
 
-    private String defaultCsvSwitchListDirectory = OperationsXml.getFileLocation() +
-            OperationsXml.getOperationsDirectoryName() +
-            File.separator +
-            CSV_SWITCH_LISTS +
-            File.separator;
+    private String getDefaultCsvSwitchListDirectory() {
+        return OperationsXml.getFileLocation()
+                + OperationsXml.getOperationsDirectoryName()
+                + File.separator
+                + CSV_SWITCH_LISTS
+                + File.separator;
+    }
 
     public void createDefaultCsvSwitchListDirectory() {
-        createFile(defaultCsvSwitchListDirectory + " ", false); // don't backup
+        FileUtil.createDirectory(getDefaultCsvSwitchListDirectory());
     }
 
     @Override
