@@ -2,6 +2,7 @@ package jmri.jmrix.roco.z21.swing.packetgen;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -9,6 +10,8 @@ import org.junit.Test;
 import jmri.jmrix.roco.z21.RocoZ21CommandStation;
 import jmri.jmrix.roco.z21.Z21SystemConnectionMemo;
 import jmri.jmrix.roco.z21.Z21InterfaceScaffold;
+
+import java.awt.GraphicsEnvironment;
 
 /**
  * Tests for PacketGenFrame class.
@@ -24,6 +27,7 @@ public class Z21PacketGenFrameTest {
 
    @Test
    public void MemoConstructorTest(){
+      Assume.assumeFalse(GraphicsEnvironment.isHeadless());
       Assert.assertNotNull("PacketGenFrame constructor",new PacketGenFrame());
    }
 

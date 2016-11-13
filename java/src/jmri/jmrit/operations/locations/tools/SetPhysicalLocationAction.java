@@ -132,6 +132,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
 
         /**
          * Close button action
+         * @param ae The ActionEvent.
          */
         public void closeButtonActionPerformed(java.awt.event.ActionEvent ae) {
             dispose();
@@ -139,6 +140,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
 
         /**
          * Save button action {@literal ->} save this Reporter's location
+         * @param ae The ActionEvent.
          */
         public void saveButtonActionPerformed(java.awt.event.ActionEvent ae) {
             // check to see if a location has been selected

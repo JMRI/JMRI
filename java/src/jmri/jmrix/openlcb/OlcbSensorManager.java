@@ -7,6 +7,8 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+
+import org.openlcb.OlcbInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +53,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         }
 
         // OK, make
-        Sensor s = new OlcbSensor(getSystemPrefix(), addr, memo.getTrafficController());
+        Sensor s = new OlcbSensor(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
         s.setUserName(userName);
         return s;
     }

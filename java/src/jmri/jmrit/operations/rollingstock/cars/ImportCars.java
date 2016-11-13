@@ -458,8 +458,7 @@ public class ImportCars extends ImportRollingStock {
                                 JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                         .getMessage("CarTrackDoesNotExist"), new Object[]{
                                                 (carRoad + " " + carNumber), carTrack, carLocation}),
-                                        Bundle
-                                                .getMessage("carTrack"),
+                                        Bundle.getMessage("carTrack"),
                                         JOptionPane.ERROR_MESSAGE);
                                 int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
                                         .getMessage("DoYouWantToCreateTrack"), new Object[]{carTrack, carLocation}),

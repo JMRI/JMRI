@@ -6,6 +6,9 @@ import jmri.jmrix.can.TestTrafficController;
 import jmri.jmrix.can.adapters.loopback.LoopbackTrafficController;
 
 import org.junit.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -13,61 +16,43 @@ import junit.framework.TestSuite;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbTurnout class.
  *
  * @author	Bob Jacobsen Copyright 2008, 2010, 2011
  */
 public class OlcbTurnoutTest extends TestCase {
+    private final static Logger log = LoggerFactory.getLogger(OlcbTurnoutTest.class.getName());
 
-    public class FakePropertyChangeListener implements PropertyChangeListener {
-        private String property;
-        public int eventCount;
-        private int expectedCount;
-        private Object expectedValue;
-        public FakePropertyChangeListener(String property) {
-            this.property = property;
-            eventCount = 0;
-            expectedValue = null;
-            expectedCount = 0;
-        }
-
-        public void expectChange(Object newValue, int count) {
-            verifyExpectations();
-            expectedValue = newValue;
-            expectedCount += count;
-        }
-        public void expectChange(Object newValue) {
-            expectChange(newValue, 1);
-        }
-
-        public void verifyExpectations() {
-            Assert.assertEquals(property + ": expected count mismatch. last expected change: " +
-                    (expectedValue != null ? expectedValue.toString() : "null") + ". ",
-                    expectedCount, eventCount);
+    interface MockablePropertyChangeListener {
+        void onChange(String property, Object newValue);
+    }
+    class FPropertyChangeListener implements PropertyChangeListener {
+        MockablePropertyChangeListener m;
+        FPropertyChangeListener() {
+            m = mock(MockablePropertyChangeListener.class);
         }
 
         @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            if (!evt.getPropertyName().equals(property)) {
-                return;
-            }
-            Assert.assertTrue("Unexpected property change for " + property, eventCount <
-                    expectedCount);
-            ++eventCount;
-            if (expectedValue != null) {
-                Assert.assertEquals(evt.getNewValue(), expectedValue);
-            }
+        public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+            m.onChange(propertyChangeEvent.getPropertyName(), propertyChangeEvent.getNewValue());
         }
     }
+
+    protected FPropertyChangeListener l = new FPropertyChangeListener();
 
     private static final String COMMANDED_STATE = "CommandedState";
     private static final String KNOWN_STATE = "KnownState";
     public void testIncomingChange() {
-        // load dummy TrafficController
-        TestTrafficController t = new TestTrafficController();
         Assert.assertNotNull("exists", t);
-        OlcbTurnout s = new OlcbTurnout("MT", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t);
+        OlcbTurnout s = new OlcbTurnout("MT", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        s.finishLoad();
 
         // message for Active and Inactive
         CanMessage mActive = new CanMessage(
@@ -82,77 +67,75 @@ public class OlcbTurnoutTest extends TestCase {
         );
         mInactive.setExtended(true);
 
-        FakePropertyChangeListener commandedListener = new FakePropertyChangeListener(COMMANDED_STATE);
-        s.addPropertyChangeListener(commandedListener);
-        FakePropertyChangeListener knownListener = new FakePropertyChangeListener(KNOWN_STATE);
-        s.addPropertyChangeListener(knownListener);
+        s.addPropertyChangeListener(l);
 
         // check states
         Assert.assertTrue(s.getCommandedState() == Turnout.UNKNOWN);
 
-        commandedListener.expectChange(Turnout.THROWN);
-        knownListener.expectChange(Turnout.THROWN);
-        s.message(mActive);
+        t.sendMessage(mActive);
+
+        verify(l.m).onChange(COMMANDED_STATE, Turnout.THROWN);
+        verify(l.m).onChange(KNOWN_STATE, Turnout.THROWN);
+        verifyNoMoreInteractions(l.m);
         Assert.assertTrue(s.getCommandedState() == Turnout.THROWN);
 
-        commandedListener.expectChange(Turnout.CLOSED);
-        knownListener.expectChange(Turnout.CLOSED);
-        s.message(mInactive);
+        t.sendMessage(mInactive);
+        verify(l.m).onChange(COMMANDED_STATE, Turnout.CLOSED);
+        verify(l.m).onChange(KNOWN_STATE, Turnout.CLOSED);
+        verifyNoMoreInteractions(l.m);
         Assert.assertTrue(s.getCommandedState() == Turnout.CLOSED);
-
-        commandedListener.verifyExpectations();
-        knownListener.verifyExpectations();
     }
 
     public void testLocalChange() throws jmri.JmriException {
         // load dummy TrafficController
-        TestTrafficController t = new TestTrafficController();
+        OlcbTurnout s = new OlcbTurnout("MT", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        s.finishLoad();
 
-        OlcbTurnout s = new OlcbTurnout("MT", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t);
+        s.addPropertyChangeListener(l);
 
-        FakePropertyChangeListener knownListener = new FakePropertyChangeListener(KNOWN_STATE);
-        s.addPropertyChangeListener(knownListener);
-        FakePropertyChangeListener commandedListener = new FakePropertyChangeListener(COMMANDED_STATE);
-        s.addPropertyChangeListener(commandedListener);
-
-        t.rcvMessage = null;
-        knownListener.expectChange(Turnout.THROWN);
-        commandedListener.expectChange(Turnout.THROWN);
+        t.flush();
+        t.tc.rcvMessage = null;
         s.setState(Turnout.THROWN);
+        t.flush();
+        verify(l.m).onChange(COMMANDED_STATE, Turnout.THROWN);
+        verify(l.m).onChange(KNOWN_STATE, Turnout.THROWN);
+        verifyNoMoreInteractions(l.m);
         Assert.assertTrue(s.getCommandedState() == Turnout.THROWN);
-        Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.8").match(t.rcvMessage));
+        log.debug("recv msg: " + t.tc.rcvMessage + " header " + Integer.toHexString(t.tc.rcvMessage.getHeader()));
+        Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.8").match(t.tc.rcvMessage));
 
-        t.rcvMessage = null;
-        knownListener.expectChange(Turnout.CLOSED);
-        commandedListener.expectChange(Turnout.CLOSED);
+        t.tc.rcvMessage = null;
         s.setState(Turnout.CLOSED);
+        t.flush();
+        verify(l.m).onChange(COMMANDED_STATE, Turnout.CLOSED);
+        verify(l.m).onChange(KNOWN_STATE, Turnout.CLOSED);
+        verifyNoMoreInteractions(l.m);
         Assert.assertTrue(s.getCommandedState() == Turnout.CLOSED);
-        Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(t.rcvMessage));
-
-        knownListener.verifyExpectations();
+        Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(t.tc.rcvMessage));
     }
 
     public void testDirectFeedback() throws jmri.JmriException {
-        // load dummy TrafficController
-        TestTrafficController t = new TestTrafficController();
-
-        OlcbTurnout s = new OlcbTurnout("MT", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t);
+        OlcbTurnout s = new OlcbTurnout("MT", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
         s.setFeedbackMode(Turnout.DIRECT);
+        s.finishLoad();
 
-        FakePropertyChangeListener knownListener = new FakePropertyChangeListener(KNOWN_STATE);
-        s.addPropertyChangeListener(knownListener);
+        s.addPropertyChangeListener(l);
 
-        knownListener.expectChange(Turnout.THROWN);
         s.setState(Turnout.THROWN);
+        t.flush();
+        verify(l.m).onChange(COMMANDED_STATE, Turnout.THROWN);
+        verify(l.m).onChange(KNOWN_STATE, Turnout.THROWN);
+
         Assert.assertEquals(Turnout.THROWN, s.getCommandedState());
         Assert.assertEquals(Turnout.THROWN, s.getKnownState());
 
-        knownListener.expectChange(Turnout.CLOSED);
         s.setState(Turnout.CLOSED);
+        t.flush();
+        verify(l.m).onChange(COMMANDED_STATE, Turnout.CLOSED);
+        verify(l.m).onChange(KNOWN_STATE, Turnout.CLOSED);
+
         Assert.assertEquals(Turnout.CLOSED, s.getCommandedState());
         Assert.assertEquals(Turnout.CLOSED, s.getKnownState());
-
-        knownListener.verifyExpectations();
 
         // message for Active and Inactive
         CanMessage mActive = new CanMessage(
@@ -168,45 +151,46 @@ public class OlcbTurnoutTest extends TestCase {
         mInactive.setExtended(true);
 
         //  Feedback is ignored. Neither known nor commanded state changes.
-        s.message(mActive);
+        t.sendMessage(mActive);
         Assert.assertEquals(Turnout.CLOSED, s.getCommandedState());
         Assert.assertEquals(Turnout.CLOSED, s.getKnownState());
+        verifyNoMoreInteractions(l.m);
 
-        s.message(mInactive);
+        t.sendMessage(mInactive);
         Assert.assertEquals(Turnout.CLOSED, s.getCommandedState());
         Assert.assertEquals(Turnout.CLOSED, s.getKnownState());
-
-        knownListener.verifyExpectations();
+        verifyNoMoreInteractions(l.m);
     }
 
     public void testLoopback() throws jmri.JmriException {
-        // need a real TrafficController here to loopback the CAN messages to ourselves.
-        LoopbackTrafficController t = new LoopbackTrafficController();
-
         // Two turnouts behaving in opposite ways. One will be used to generate an event and the
         // other will be observed to make sure it catches it.
-        OlcbTurnout s = new OlcbTurnout("MT", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t);
-        OlcbTurnout r = new OlcbTurnout("MT", "1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.8", t);
+        OlcbTurnout s = new OlcbTurnout("MT", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        s.finishLoad();
+        OlcbTurnout r = new OlcbTurnout("MT", "1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.8", t.iface);
+        r.finishLoad();
 
-        FakePropertyChangeListener knownListener = new FakePropertyChangeListener(KNOWN_STATE);
-        r.addPropertyChangeListener(knownListener);
+        r.addPropertyChangeListener(l);
 
-        knownListener.expectChange(Turnout.CLOSED);
         s.setState(Turnout.THROWN);
+        t.flush();
+        verify(l.m).onChange(COMMANDED_STATE, Turnout.CLOSED);
+        verify(l.m).onChange(KNOWN_STATE, Turnout.CLOSED);
+        verifyNoMoreInteractions(l.m);
         Assert.assertTrue(s.getCommandedState() == Turnout.THROWN);
 
-        knownListener.expectChange(Turnout.THROWN);
         s.setState(Turnout.CLOSED);
+        t.flush();
+        verify(l.m).onChange(COMMANDED_STATE, Turnout.THROWN);
+        verify(l.m).onChange(KNOWN_STATE, Turnout.THROWN);
+        verifyNoMoreInteractions(l.m);
         Assert.assertTrue(s.getCommandedState() == Turnout.CLOSED);
-
-        knownListener.verifyExpectations();
     }
 
     public void testNameFormatXlower() {
         // load dummy TrafficController
-        TestTrafficController t = new TestTrafficController();
-        Assert.assertNotNull("tc exists", t);
-        OlcbTurnout s = new OlcbTurnout("MT", "x0501010114FF2000;x0501010114FF2001", t);
+        OlcbTurnout s = new OlcbTurnout("MT", "x0501010114FF2000;x0501010114FF2001", t.iface);
+        s.finishLoad();
         Assert.assertNotNull("to exists", s);
 
         // message for Active and Inactive
@@ -225,19 +209,18 @@ public class OlcbTurnoutTest extends TestCase {
         // check states
         Assert.assertTrue(s.getCommandedState() == Turnout.UNKNOWN);
 
-        s.message(mActive);
+        t.sendMessage(mActive);
         Assert.assertTrue(s.getCommandedState() == Turnout.THROWN);
 
-        s.message(mInactive);
+        t.sendMessage(mInactive);
         Assert.assertTrue(s.getCommandedState() == Turnout.CLOSED);
 
     }
 
     public void testNameFormatXupper() {
         // load dummy TrafficController
-        TestTrafficController t = new TestTrafficController();
-        Assert.assertNotNull("tc exists", t);
-        OlcbTurnout s = new OlcbTurnout("MT", "X0501010114FF2000;X0501010114FF2001", t);
+        OlcbTurnout s = new OlcbTurnout("MT", "X0501010114FF2000;X0501010114FF2001", t.iface);
+        s.finishLoad();
         Assert.assertNotNull("to exists", s);
 
         // message for Active and Inactive
@@ -256,10 +239,10 @@ public class OlcbTurnoutTest extends TestCase {
         // check states
         Assert.assertTrue(s.getCommandedState() == Turnout.UNKNOWN);
 
-        s.message(mActive);
+        t.sendMessage(mActive);
         Assert.assertTrue(s.getCommandedState() == Turnout.THROWN);
 
-        s.message(mInactive);
+        t.sendMessage(mInactive);
         Assert.assertTrue(s.getCommandedState() == Turnout.CLOSED);
 
     }
@@ -281,9 +264,15 @@ public class OlcbTurnoutTest extends TestCase {
         return suite;
     }
 
+    OlcbTestInterface t;
+
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+
+        // load dummy TrafficController
+        t = new OlcbTestInterface();
+        t.waitForStartup();
     }
 
     protected void tearDown() {

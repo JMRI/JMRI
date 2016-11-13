@@ -27,6 +27,7 @@ import javax.swing.event.ListSelectionEvent;
 import jmri.swing.PreferencesPanel;
 import jmri.swing.PreferencesSubPanel;
 import jmri.util.FileUtil;
+import jmri.InstanceManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -157,6 +158,25 @@ public class TabbedPreferences extends AppConfigBase {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
         Set<PreferencesPanel> delayed = new HashSet<>();
+
+        // add preference panels registered with the Instance Manager
+
+        for (PreferencesPanel panel : InstanceManager.getList(jmri.swing.PreferencesPanel.class)) {
+            if (panel instanceof PreferencesSubPanel) {
+                String parent = ((PreferencesSubPanel) panel).getParentClassName();
+                if (!this.getPreferencesPanels().containsKey(parent)) {
+                    delayed.add(panel);
+                } else {
+                    ((PreferencesSubPanel) panel).setParent(this.getPreferencesPanels().get(parent));
+                }
+            }
+            if (!delayed.contains(panel)) {
+                this.addPreferencesPanel(panel);
+            }
+        }
+
+
+
         for (PreferencesPanel panel : ServiceLoader.load(PreferencesPanel.class)) {
             if (panel instanceof PreferencesSubPanel) {
                 String parent = ((PreferencesSubPanel) panel).getParentClassName();

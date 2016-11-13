@@ -1,4 +1,3 @@
-// ActiveFlag.java
 package jmri.jmrix.tmcc;
 
 /**
@@ -24,6 +23,3 @@ abstract public class ActiveFlag {
         return flag;
     }
 }
-
-
-/* @(#)AbstractMRReply.java */

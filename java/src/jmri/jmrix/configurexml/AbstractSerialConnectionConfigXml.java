@@ -30,7 +30,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
      * Default implementation for storing the static contents of the serial port
      * implementation
      *
-     * @param object Object to store, of type PositionableLabel
+     * @param object Object to store, of type AbstractSerialConnectionConfig 
      * @return Element containing the complete info
      */
     public Element store(Object object) {
@@ -102,6 +102,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
                     null, null, null
             );
             // now force end to operation
+            log.debug("load failed");
             return false;
         }
 

@@ -6,15 +6,18 @@
        <choice>Both directions</choice>
        <choice xml:lang="it">Entrambe le direzioni</choice>
        <choice xml:lang="de">beide Richtungen ein</choice>
+       <choice xml:lang="cs">Oba směry</choice>
       </enumChoice>
       <enumChoice choice="Only in forward">
         <choice>Only in forward</choice>
         <choice xml:lang="it">Solo in Avanti</choice>
         <choice xml:lang="de">wenn Rückwärts aus</choice>
+        <choice xml:lang="cs">Pouze vpřed</choice>
       </enumChoice>
       <enumChoice choice="Only in reverse">
         <choice>Only in reverse</choice>
         <choice xml:lang="it">Solo in Retro</choice>
         <choice xml:lang="de">wenn Vorwärts aus</choice>
+        <choice xml:lang="cs">Pouze vzad</choice>
       </enumChoice>
 </enumVal>

@@ -56,6 +56,8 @@ public interface GlobalProgrammerManager {
     /**
      * Return access to the Global Mode Programmer, so that it can be used
      * elsewhere.
+     *
+     * @param p the Programmer to release
      */
     public void releaseGlobalProgrammer(@Nonnull Programmer p);
 
@@ -71,6 +73,8 @@ public interface GlobalProgrammerManager {
      * Provides the human-readable representation for including
      * ProgrammerManagers directly in e.g. JComboBoxes, so it should return a
      * user-provided name for this particular one.
+     *
+     * @return user name of the GlobalProgrammerManager
      */
     @Nonnull
     public String getUserName();
@@ -79,7 +83,10 @@ public interface GlobalProgrammerManager {
      * toString() provides the human-readable representation for including
      * ProgrammerManagers directly in e.g. JComboBoxes, so it should return a
      * user-provided name for this particular one.
+     *
+     * @return String representation of the GlobalProgrammerManager
      */
     @Nonnull
+    @Override
     public String toString();
 }

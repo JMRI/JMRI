@@ -50,6 +50,7 @@ public abstract class TrainCustomCommon {
 
     /**
      * Adds one CSV file path to the collection of files to be processed.
+     * @param csvFile The File to add.
      *
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT")
@@ -87,6 +88,7 @@ public abstract class TrainCustomCommon {
     /**
      * Processes the CSV files using a Custom external program that reads the
      * file of file names.
+     * @return True if successful.
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT")
     public boolean process() {
@@ -111,6 +113,8 @@ public abstract class TrainCustomCommon {
                 }
             }
         }
+        
+        log.debug("Queued {} files to custom Excel program", getFileCount());
 
         // Build our command string out of these bits
         // We need to use cmd and start to allow launching data files like
@@ -197,6 +201,15 @@ public abstract class TrainCustomCommon {
         }
         alive = false;
         return status;
+    }
+    
+    /**
+     * Checks to see if the common file exists
+     * @return true if the common file exists
+     */
+    public boolean doesCommonFileExist() {
+        File file = new File(OperationsManager.getInstance().getFile(getDirectoryName()), getCommonFileName());
+        return file.exists();
     }
 
     public void load(Element mc) {
