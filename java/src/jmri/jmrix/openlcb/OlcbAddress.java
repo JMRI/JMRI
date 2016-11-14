@@ -5,6 +5,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+
+import org.openlcb.EventID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -205,6 +207,12 @@ public class OlcbAddress {
             retval = jmri.util.StringUtil.appendTwoHexFromInt(aFrame[i], retval);
         }
         return retval;
+    }
+
+    public EventID toEventID() {
+        byte[] b = new byte[8];
+        for (int i = 0; i < 8; ++i) b[i] = (byte)aFrame[i];
+        return new EventID(b);
     }
 
     private final static Logger log = LoggerFactory.getLogger(OlcbAddress.class.getName());

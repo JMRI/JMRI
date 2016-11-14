@@ -1,50 +1,34 @@
 //JmriServerActionTest.java
 package jmri.jmris;
 
+import apps.tests.Log4JFixture;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
- * Tests for the jmri.jmris.JmriServerAction class 
+ * Tests for the jmri.jmris.JmriServerAction class
  *
  * @author Paul Bender
  */
-public class JmriServerActionTest extends TestCase {
+public class JmriServerActionTest {
 
+    @Test
     public void testCtorDefault() {
         JmriServerAction a = new JmriServerAction();
         Assert.assertNotNull(a);
     }
 
-    // from here down is testing infrastructure
-    public JmriServerActionTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {JmriServerActionTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(jmri.jmris.JmriServerActionTest.class);
-
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
+        Log4JFixture.setUp();
     }
 
-    protected void tearDown() throws Exception {
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() throws Exception {
+        Log4JFixture.tearDown();
     }
 
 }
