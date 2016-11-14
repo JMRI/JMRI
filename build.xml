@@ -1875,38 +1875,15 @@
             description="sign the macOS distribution DMG file; assumes package-macosx"
             depends="get-version-string">
         <chmod perm="ugo+rwx" dir="${dist.release}"/>
-        <echo message="Location: ${dist.release}"/>
-        <echo message="Host: ${env.signinghost}"/>
-        <echo message="Build: ${env.BUILD_NUMBER}"/>
-        <echo  message="http://${env.signinghost}/selfsign.php?get=${dist.release}/JMRI.${release.version-string}-unsigned.dmg&amp;rel=${release.version-string}&amp;put=${dist.release}/JMRI/${release.version-string}.dmg"/>
-        <exec executable="ls"
-              osFamily="unix"
-              failonerror="true">
-            <arg value="-lt"/>
-        </exec>
-        <exec executable="pwd"
-              osFamily="unix"
-              failonerror="true">
-        </exec>
-        <exec executable="ls"
-              osFamily="unix"
-              failonerror="true">
-            <arg value="-lt"/>
-            <arg value="dist"/>
-        </exec>
-        <exec executable="ls"
-              osFamily="unix"
-              failonerror="true">
-            <arg value="-lt"/>
-            <arg value="dist/release"/>
-        </exec>
+        <!-- invoke signing server -->
         <exec executable="wget"
               osFamily="unix"
               failonerror="true">
-            <arg value="-t 1800"/>
+            <arg value="-t 600"/>
             <arg value="-O signing-wget.log"/>
             <arg value="http://${env.signinghost}/selfsign.php?get=${dist.release}/JMRI.${release.version-string}-unsigned.dmg&amp;rel=${release.version-string}&amp;put=${dist.release}/JMRI.${release.version-string}.dmg"/>
         </exec>
+        <chmod perm="go-w" dir="${dist.release}"/>
     </target>
             
     <target name="package-linux"
