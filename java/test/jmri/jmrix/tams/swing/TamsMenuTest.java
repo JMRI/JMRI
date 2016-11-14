@@ -21,6 +21,9 @@ public class TamsMenuTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        // the constructor looks for the default ListedTableFrame class, 
+        // which is set by the ListedTableFrame constructor.
+        new jmri.jmrit.beantable.ListedTableFrame();
         TamsMenu action = new TamsMenu(new jmri.jmrix.tams.TamsSystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
@@ -30,9 +33,6 @@ public class TamsMenuTest {
         Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initDefaultUserMessagePreferences();
-        // the constructor looks for the default ListedTableFrame class, 
-        // which is set by the ListedTableFrame constructor.
-        new jmri.jmrit.beantable.ListedTableFrame();
     }
 
     @After

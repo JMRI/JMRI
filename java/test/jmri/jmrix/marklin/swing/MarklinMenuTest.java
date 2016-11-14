@@ -30,9 +30,6 @@ public class MarklinMenuTest {
         Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initDefaultUserMessagePreferences();
-        // the constructor looks for the default ListedTableFrame class, 
-        // which is set by the ListedTableFrame constructor.
-        new jmri.jmrit.beantable.ListedTableFrame();
     }
 
     @After
