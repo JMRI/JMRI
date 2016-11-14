@@ -108,7 +108,7 @@ abstract public class AbstractTableAction extends AbstractAction {
     }
 
     /**
-     * Allow subclasses to add alter the frames Menubar without have to actually
+     * Allow subclasses to alter the frames Menubar without having to actually
      * subclass the BeanTableDataFrame
      */
     public void setMenuBar(BeanTableFrame f) {
