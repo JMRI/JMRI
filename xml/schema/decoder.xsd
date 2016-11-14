@@ -432,6 +432,7 @@
                 <xs:enumeration value="NMRAmedium"/>
                 <xs:enumeration value="NMRAlarge"/>
                 <xs:enumeration value="9pin"/>
+                <xs:enumeration value="Wires"/>
                 <xs:enumeration value="21MTC"/>
                 <xs:enumeration value="Next18"/>
                 <xs:enumeration value="PluX8"/>

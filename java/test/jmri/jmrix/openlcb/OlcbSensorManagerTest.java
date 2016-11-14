@@ -18,7 +18,7 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
 
     @Override
     public String getSystemName(int i) {
-        return "MSX00000" + i;
+        return "MSX010203040506070" + i;
     }
 
     @Test
@@ -30,8 +30,8 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
     @Test
     public void testDefaultSystemName() {
         // create
-        // olcb addresses are hex values requirng 6 digits.
-        Sensor t = l.provideSensor("MSx00000" + getNumToTest1());
+        // olcb addresses are hex values requirng 16 digits.
+        Sensor t = l.provideSensor("MSx010203040506070" + getNumToTest1());
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("system name correct " + t.getSystemName(), t == l.getBySystemName(getSystemName(getNumToTest1())));
@@ -40,12 +40,19 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
     @Override
     @Test
     public void testUpperLower() {
-        // olcb addresses are hex values requirng 6 digits.
-        Sensor t = l.provideSensor("MSx00000" + getNumToTest2());
+        // olcb addresses are hex values requirng 16 digits.
+        Sensor t = l.provideSensor("MSx010203040506070" + getNumToTest2());
         String name = t.getSystemName();
         Assert.assertNull(l.getSensor(name.toLowerCase()));
     }
 
+    @Test
+    public void testDotted() {
+        // olcb addresses are hex values requirng 16 digits.
+        Sensor t = l.provideSensor("MS01.02.03.04.05.06.07.0" + getNumToTest2());
+        String name = t.getSystemName();
+        Assert.assertNull(l.getSensor(name.toLowerCase()));
+    }
 
 
     // The minimal setup for log4J
@@ -55,10 +62,9 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
 
-        OlcbSystemConnectionMemo m = new OlcbSystemConnectionMemo();
-        m.setTrafficController(new jmri.jmrix.can.TestTrafficController());
-        l = new OlcbSensorManager(m);
+        OlcbSystemConnectionMemo m = OlcbTestInterface.createForLegacyTests();
 
+        l = new OlcbSensorManager(m);
     }
 
     @After

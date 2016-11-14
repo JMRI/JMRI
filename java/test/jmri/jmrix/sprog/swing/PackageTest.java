@@ -1,8 +1,4 @@
-package jmri.jmrix.marklin;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+package jmri.jmrix.sprog.swing;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -12,14 +8,12 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   jmri.jmrix.marklin.networkdriver.PackageTest.class,
-   jmri.jmrix.marklin.configurexml.PackageTest.class,
-   jmri.jmrix.marklin.swing.PackageTest.class
+    SprogComponentFactoryTest.class
 })
 /**
- * Tests for the jmri.jmrix.marklin package
+ * Tests for the jmri.jmrix.sprog.swing package.
  *
- * @author  Paul Bender	Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class PackageTest {
 
@@ -37,6 +31,5 @@ public class PackageTest {
     }
 
     private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
-
 
 }
