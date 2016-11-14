@@ -1230,6 +1230,29 @@
           <html destdir="${coveragetarget}" />
        </jacoco:report>
     </target>
+    
+    <target name="headless-coveragecheck" depends="headlesstest" description="Generate Test Coverage Report from headlesstest">
+    <!-- Generate Code Coverage report
+    See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
+       <jacoco:report>
+          <executiondata>
+              <file file="jacoco.exec" />
+          </executiondata>
+
+          <structure name="AntTestReporting">
+              <classfiles>
+                 <fileset refid="jacocofileset"/>
+              </classfiles>
+          </structure>
+
+          <check>
+              <rule> 
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.28"/>
+                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
+              </rule>
+          </check>
+       </jacoco:report>
+    </target>
 
     <target name="ci-test" depends="tests, runtime-library-selection" description="run AllTest CI tests">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
@@ -1366,6 +1389,28 @@
        </jacoco:report>
     </target>
 
+    <target name="alltest-coveragecheck" depends="logalltest" description="Test Coverage check from logalltest">
+    <!-- Generate Code Coverage report
+    See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
+       <jacoco:report>
+          <executiondata>
+              <file file="jacoco.exec" />
+          </executiondata>
+
+          <structure name="AntTestReporting">
+              <classfiles>
+                 <fileset refid="jacocofileset"/>
+              </classfiles>
+          </structure>
+
+          <check>
+              <rule> 
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.28"/>
+                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
+              </rule>
+          </check>
+       </jacoco:report>
+    </target>
 
 
     <!-- end of test execution targets -->

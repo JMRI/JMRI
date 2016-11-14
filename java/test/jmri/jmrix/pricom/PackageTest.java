@@ -31,6 +31,8 @@ public class PackageTest extends TestCase {
             suite.addTest(jmri.jmrix.pricom.downloader.DownloaderTest.suite());
         }
 
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PricomMenuTest.class));
+
         return suite;
     }
 

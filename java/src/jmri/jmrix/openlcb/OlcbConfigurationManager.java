@@ -63,19 +63,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         // do the connections
         tc = adapterMemo.getTrafficController();
 
-        olcbCanInterface = new CanInterface(nodeID, frame -> tc.sendCanMessage(convertToCan(frame), null));
-        tc.addCanListener(new CanListener() {
-            @Override
-            public void message(CanMessage m) {
-                // ignored -- loopback is handled by the olcbInterface.
-            }
-
-            @Override
-            public void reply(CanReply m) {
-                if (!m.isExtended() || m.isRtr()) return;
-                olcbCanInterface.frameInput().send(convertFromCan(m));
-            }
-        });
+        olcbCanInterface = createOlcbCanInterface(nodeID, tc);
 
         // create JMRI objects
         InstanceManager.setSensorManager(
@@ -381,6 +369,23 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             // ignore
         }
         return fallback;
+    }
+
+    public static CanInterface createOlcbCanInterface(NodeID nodeID, TrafficController tc) {
+        final CanInterface olcbIf = new CanInterface(nodeID, frame -> tc.sendCanMessage(convertToCan(frame), null));
+        tc.addCanListener(new CanListener() {
+            @Override
+            public void message(CanMessage m) {
+                // ignored -- loopback is handled by the olcbInterface.
+            }
+
+            @Override
+            public void reply(CanReply m) {
+                if (!m.isExtended() || m.isRtr()) return;
+                olcbIf.frameInput().send(convertFromCan(m));
+            }
+        });
+        return olcbIf;
     }
 
     static jmri.jmrix.can.CanMessage convertToCan(org.openlcb.can.CanFrame f) {
