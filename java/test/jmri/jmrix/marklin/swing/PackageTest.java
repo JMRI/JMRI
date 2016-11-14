@@ -1,4 +1,4 @@
-package jmri.jmrix.tams.swing;
+package jmri.jmrix.marklin.swing;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -8,15 +8,13 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    jmri.jmrix.tams.swing.packetgen.PackageTest.class,
-    jmri.jmrix.tams.swing.statusframe.PackageTest.class,
-    jmri.jmrix.tams.swing.locodatabase.PackageTest.class,
-    jmri.jmrix.tams.swing.monitor.PackageTest.class,
-    TamsComponentFactoryTest.class,
-    TamsMenuTest.class
+    jmri.jmrix.marklin.swing.packetgen.PackageTest.class,
+    jmri.jmrix.marklin.swing.monitor.PackageTest.class,
+    MarklinComponentFactoryTest.class,
+    MarklinMenuTest.class
 })
 /**
- * Tests for the jmri.jmrix.tams.swing package.
+ * Tests for the jmri.jmrix.marklin.swing package.
  *
  * @author Paul Bender Copyright (C) 2016
  */
