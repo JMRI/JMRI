@@ -1884,6 +1884,8 @@
         <exec executable="wget"
               osFamily="unix"
               failonerror="true">
+            <arg value="-t 1800"/>
+            <arg value="-O signing-wget.log"/>
             <arg value="http://${env.signinghost}/selfsign.php?get=${dist.release}/JMRI.${release.version-string}-unsigned.dmg&amp;rel=${release.version-string}&amp;put=${dist.release}/JMRI/${release.version-string}.dmg"/>
         </exec>
     </target>
