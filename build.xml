@@ -1890,6 +1890,18 @@
               osFamily="unix"
               failonerror="true">
         </exec>
+        <exec executable="ls"
+              osFamily="unix"
+              failonerror="true">
+            <arg value="-lt"/>
+            <arg value="dist"/>
+        </exec>
+        <exec executable="ls"
+              osFamily="unix"
+              failonerror="true">
+            <arg value="-lt"/>
+            <arg value="dist/release"/>
+        </exec>
         <exec executable="wget"
               osFamily="unix"
               failonerror="true">
