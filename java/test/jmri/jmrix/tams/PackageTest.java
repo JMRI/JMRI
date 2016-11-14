@@ -31,6 +31,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.tams.simulator.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.tams.serialdriver.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.tams.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.tams.swing.PackageTest.class));
 
         return suite;
     }

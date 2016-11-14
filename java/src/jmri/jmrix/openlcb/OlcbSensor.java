@@ -1,35 +1,39 @@
 package jmri.jmrix.openlcb;
 
-import java.util.Timer;
-import jmri.Sensor;
-import jmri.implementation.AbstractSensor;
-import jmri.jmrix.can.CanListener;
-import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.TrafficController;
+import org.openlcb.EventID;
+import org.openlcb.OlcbInterface;
+import org.openlcb.implementations.BitProducerConsumer;
+import org.openlcb.implementations.VersionedValueListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Timer;
+
+import jmri.Sensor;
+import jmri.implementation.AbstractSensor;
 
 /**
  * Extend jmri.AbstractSensor for OpenLCB controls.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008, 2010, 2011
  */
-public class OlcbSensor extends AbstractSensor implements CanListener {
+public class OlcbSensor extends AbstractSensor {
 
     static int ON_TIME = 500; // time that sensor is active after being tripped
     Timer timer = null;
 
     OlcbAddress addrActive;    // go to active state
     OlcbAddress addrInactive;  // go to inactive state
+    OlcbInterface iface;
 
-    public OlcbSensor(String prefix, String address, TrafficController tc) {
+    VersionedValueListener<Boolean> sensorListener;
+    BitProducerConsumer pc;
+
+    public OlcbSensor(String prefix, String address, OlcbInterface iface) {
         super(prefix + "S" + address);
-        this.tc = tc;
+        this.iface = iface;
         init(address);
     }
-
-    TrafficController tc;
 
     /**
      * Common initialization for both constructors.
@@ -49,18 +53,35 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
                 // momentary sensor
                 addrActive = v[0];
                 addrInactive = null;
+                pc = new BitProducerConsumer(iface, addrActive.toEventID(), new
+                        EventID("00.00.00.00.00.00.00.00"), false);
                 timer = new Timer(true);
+                sensorListener = new VersionedValueListener<Boolean>(pc.getValue()) {
+                    @Override
+                    public void update(Boolean value) {
+                        setOwnState(value ? Sensor.ACTIVE : Sensor.INACTIVE);
+                        if (value) {
+                            setTimeout();
+                        }
+                    }
+                };
                 break;
             case 2:
                 addrActive = v[0];
                 addrInactive = v[1];
+                pc = new BitProducerConsumer(iface, addrActive.toEventID(),
+                        addrInactive.toEventID(), false);
+                sensorListener = new VersionedValueListener<Boolean>(pc.getValue()) {
+                    @Override
+                    public void update(Boolean value) {
+                        setOwnState(value ? Sensor.ACTIVE : Sensor.INACTIVE);
+                    }
+                };
                 break;
             default:
                 log.error("Can't parse OpenLCB Sensor system name: " + address);
                 return;
         }
-        // connect
-        tc.addCanListener(this);
     }
 
     /**
@@ -78,50 +99,14 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
      *
      */
     public void setKnownState(int s) throws jmri.JmriException {
-        CanMessage m;
+        setOwnState(s);
         if (s == Sensor.ACTIVE) {
-            m = addrActive.makeMessage();
-            tc.sendCanMessage(m, this);
-            setOwnState(Sensor.ACTIVE);
+            sensorListener.setFromOwner(true);
             if (addrInactive == null) {
                 setTimeout();
             }
         } else if (s == Sensor.INACTIVE) {
-            if (addrInactive != null) {
-                m = addrInactive.makeMessage();
-                tc.sendCanMessage(m, this);
-            }
-            setOwnState(Sensor.INACTIVE);
-        }
-    }
-
-    /**
-     * Track layout status from messages being sent to CAN
-     *
-     */
-    public void message(CanMessage f) {
-        if (addrActive.match(f)) {
-            setOwnState(Sensor.ACTIVE);
-            if (addrInactive == null) {
-                setTimeout();
-            }
-        } else if (addrInactive != null && addrInactive.match(f)) {
-            setOwnState(Sensor.INACTIVE);
-        }
-    }
-
-    /**
-     * Track layout status from messages being received from CAN
-     *
-     */
-    public void reply(CanReply f) {
-        if (addrActive.match(f)) {
-            setOwnState(Sensor.ACTIVE);
-            if (addrInactive == null) {
-                setTimeout();
-            }
-        } else if (addrInactive != null && addrInactive.match(f)) {
-            setOwnState(Sensor.INACTIVE);
+            sensorListener.setFromOwner(false);
         }
     }
 
@@ -142,7 +127,8 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
     }
 
     public void dispose() {
-        tc.removeCanListener(this);
+        if (sensorListener != null) sensorListener.release();
+        if (pc != null) pc.release();
         super.dispose();
     }
 
