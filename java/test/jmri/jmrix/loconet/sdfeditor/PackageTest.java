@@ -25,9 +25,11 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.loconet.sdf.SdfTest");  // no tests in this class itself
-        suite.addTest(MonitoringLabelTest.suite());
-        suite.addTest(EditorPaneTest.suite());
-        suite.addTest(EditorFrameTest.suite());
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
+           suite.addTest(MonitoringLabelTest.suite());
+           suite.addTest(EditorPaneTest.suite());
+           suite.addTest(EditorFrameTest.suite());
+        }
         return suite;
     }
 
