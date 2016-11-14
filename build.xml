@@ -1277,6 +1277,7 @@
     </target>
 
     <target name="ci-test-travis" depends="tests, runtime-library-selection" description="run ci-test using Travis-CI">
+        <jacoco:coverage destfile="jacoco.exec" excludes="org.slf4j.*">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1285,6 +1286,8 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
+            <!-- use different log4j settings to pick up additional coverage -->
+            <sysproperty key="jmri.log4jconfigfilename" value="tests_jacoco.lcf"/>
             <classpath refid="test.class.path"/>
 
             <jvmarg value="-Xmx640m"/>
@@ -1294,6 +1297,7 @@
                 <formatter usefile="no" type="brief"/>
             </test>
         </junit>
+        </jacoco:coverage>
         <fail>
             <condition>
                 <istrue value="${test.failed}" />
@@ -1390,6 +1394,29 @@
     </target>
 
     <target name="alltest-coveragecheck" depends="logalltest" description="Test Coverage check from logalltest">
+    <!-- Generate Code Coverage report
+    See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
+       <jacoco:report>
+          <executiondata>
+              <file file="jacoco.exec" />
+          </executiondata>
+
+          <structure name="AntTestReporting">
+              <classfiles>
+                 <fileset refid="jacocofileset"/>
+              </classfiles>
+          </structure>
+
+          <check>
+              <rule> 
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.28"/>
+                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
+              </rule>
+          </check>
+       </jacoco:report>
+    </target>
+
+    <target name="ci-test-travis-coveragecheck" depends="ci-test-travis" description="Test Coverage check from logalltest">
     <!-- Generate Code Coverage report
     See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
        <jacoco:report>
@@ -2123,7 +2150,7 @@
                 <antcall target="compile-generated-source" />
                 <parallel>
                     <antcall target="javadoc" />
-                    <antcall target="ci-test-travis" />
+                    <antcall target="ci-test-travis-coveragetest" />
                 </parallel>
             </sequential>
         </parallel>
