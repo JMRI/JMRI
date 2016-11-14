@@ -2150,7 +2150,7 @@
                 <antcall target="compile-generated-source" />
                 <parallel>
                     <antcall target="javadoc" />
-                    <antcall target="ci-test-travis-coveragetest" />
+                    <antcall target="ci-test-travis-coveragecheck" />
                 </parallel>
             </sequential>
         </parallel>
