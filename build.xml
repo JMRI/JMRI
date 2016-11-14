@@ -1881,6 +1881,15 @@
         <echo message="Host: ${env.signinghost}"/>
         <echo message="Build: ${env.BUILD_NUMBER}"/>
         <echo  message="http://${env.signinghost}/selfsign.php?get=${dist.release}/JMRI.${release.version-string}-unsigned.dmg&amp;rel=${release.version-string}&amp;put=${dist.release}/JMRI/${release.version-string}.dmg"/>
+        <exec executable="ls"
+              osFamily="unix"
+              failonerror="true">
+            <arg value="-lt"/>
+        </exec>
+        <exec executable="pwd"
+              osFamily="unix"
+              failonerror="true">
+        </exec>
         <exec executable="wget"
               osFamily="unix"
               failonerror="true">
