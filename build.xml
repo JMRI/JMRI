@@ -1874,9 +1874,7 @@
     <target name="sign-macosx"
             description="sign the macOS distribution DMG file; assumes package-macosx"
             depends="get-version-string">
-        <chmod perm="ugo+rwx">
-            <fileset dir="${dist.release}"/>
-        </chmod>
+        <chmod perm="ugo+rwx" dir="${dist.release}"/>
         <echo message="Location: ${dist.release}"/>
         <echo message="Host: ${env.signinghost}"/>
         <echo message="Build: ${env.BUILD_NUMBER}"/>
