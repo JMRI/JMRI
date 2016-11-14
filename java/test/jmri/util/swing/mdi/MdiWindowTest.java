@@ -1,16 +1,20 @@
 package jmri.util.swing.mdi;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.awt.GraphicsEnvironment;
+import org.junit.After;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
  * @author	Bob Jacobsen Copyright 2003, 2010
  */
-public class PackageTest extends TestCase {
+public class MdiWindowTest {
 
+    @Test
     public void testShow() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         MdiMainFrame f = new MdiMainFrame("Test of MDI Frame",
                 "java/test/jmri/util/swing/xml/Gui3LeftTree.xml",
                 "java/test/jmri/util/swing/xml/Gui3Menus.xml",
@@ -23,34 +27,15 @@ public class PackageTest extends TestCase {
         f.dispose();
     }
 
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(PackageTest.class);
-
-        //suite.addTest(MultiJfcUnitTest.suite());
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 
