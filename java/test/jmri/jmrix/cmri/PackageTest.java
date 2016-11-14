@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    CMRISystemConnectionMemoTest.class,
+   CMRIMenuTest.class,
    jmri.jmrix.cmri.serial.PackageTest.class})
 
 /**
