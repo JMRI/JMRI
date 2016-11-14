@@ -1433,7 +1433,7 @@
           <check>
               <rule> 
                   <limit counter="LINE" value="COVEREDRATIO" minimum="0.28"/>
-                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
+                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.60"/>
               </rule>
           </check>
        </jacoco:report>
