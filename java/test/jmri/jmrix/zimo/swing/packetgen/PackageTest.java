@@ -27,8 +27,9 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.zimo.swing.packetgen.PackageTest");  // no tests in this class itself
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Mx1PacketGenPanelTest.class));
 
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
         }
 
         return suite;

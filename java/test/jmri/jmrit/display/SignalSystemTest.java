@@ -1,13 +1,13 @@
 package jmri.jmrit.display;
 
+import java.awt.GraphicsEnvironment;
+import jmri.*;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import jmri.*;
-import jmri.util.JUnitUtil;
 /**
  * Test signal system via a specific layout file
  *
@@ -22,7 +22,9 @@ public class SignalSystemTest extends jmri.configurexml.SchemaTestBase {
 
 
     public void testLoadSimplePanelOBlocksDB1969() throws jmri.JmriException {
-        if (System.getProperty("jmri.headlesstest", "false").equals("true")) { return; }
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
         
         // load file
         InstanceManager.getDefault(ConfigureManager.class)
@@ -90,7 +92,9 @@ public class SignalSystemTest extends jmri.configurexml.SchemaTestBase {
     }
 
     public void testLoadAA1UPtest() throws jmri.JmriException {
-        if (System.getProperty("jmri.headlesstest", "false").equals("true")) { return; }
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
         
         // load file
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).setStabilisedSensor("IS_ROUTING_DONE");

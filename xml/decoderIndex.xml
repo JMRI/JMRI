@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.5.6ish-201611010809-heap-R9f1e6ec on Tue Nov 01 19:09:18 AEDT 2016 $Id$-->
-  <decoderIndex version="774">
+  <!--Written by JMRI version 4.5.6ish-201611131836-jake-R3bdf0f5 on Sun Nov 13 10:36:30 PST 2016 $Id$-->
+  <decoderIndex version="780">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -5676,8 +5676,8 @@
           <output name="8" label="Output H" />
         </model>
         <model model="SC1 version 0.23" lowVersionID="9" highVersionID="10" numOuts="8" numFns="16" formFactor="HO" productID="57379">
-          <!--productID=57379 should match Version=E023Hex    
-			Version numbers are in CV112/113 and take values 224 and 035 (ie. the version is in hex, so Hex23 = 35) 
+          <!--productID=57379 should match Version=E023Hex
+			Version numbers are in CV112/113 and take values 224 and 035 (ie. the version is in hex, so Hex23 = 35)
 			-->
           <output name="1" label="Output A" />
           <output name="2" label="Output B" />
@@ -5797,10 +5797,12 @@
           <output name="1" label="White">
             <label xml:lang="it">Bianco</label>
             <label xml:lang="de">Weiß</label>
+            <label xml:lang="cs">Bílá</label>
           </output>
           <output name="2" label="Yellow">
             <label xml:lang="it">Giallo</label>
             <label xml:lang="de">Gelb</label>
+            <label xml:lang="cs">Žlutá</label>
           </output>
         </model>
         <model model="N025-P" numOuts="2" numFns="10" maxMotorCurrent="0.7 A" maxTotalCurrent="1 A">
@@ -5808,10 +5810,12 @@
           <output name="1" label="White">
             <label xml:lang="it">Bianco</label>
             <label xml:lang="de">Weiß</label>
+            <label xml:lang="cs">Bílá</label>
           </output>
           <output name="2" label="Yellow">
             <label xml:lang="it">Giallo</label>
             <label xml:lang="de">Gelb</label>
+            <label xml:lang="cs">Žlutá</label>
           </output>
         </model>
         <model model="N025-P8" numOuts="2" numFns="10" maxMotorCurrent="0.7 A" maxTotalCurrent="1 A">
@@ -5819,10 +5823,12 @@
           <output name="1" label="White">
             <label xml:lang="it">Bianco</label>
             <label xml:lang="de">Weiß</label>
+            <label xml:lang="cs">Bílá</label>
           </output>
           <output name="2" label="Yellow">
             <label xml:lang="it">Giallo</label>
             <label xml:lang="de">Gelb</label>
+            <label xml:lang="cs">Žlutá</label>
           </output>
         </model>
         <model model="N025-PA" numOuts="2" numFns="10" maxMotorCurrent="0.7 A" maxTotalCurrent="1 A">
@@ -5830,10 +5836,12 @@
           <output name="1" label="White">
             <label xml:lang="it">Bianco</label>
             <label xml:lang="de">Weiß</label>
+            <label xml:lang="cs">Bílá</label>
           </output>
           <output name="2" label="Yellow">
             <label xml:lang="it">Giallo</label>
             <label xml:lang="de">Gelb</label>
+            <label xml:lang="cs">Žlutá</label>
           </output>
         </model>
         <model model="T125" numOuts="2" numFns="10" maxMotorCurrent="1.1 A" maxTotalCurrent="1.4 A">
@@ -5841,10 +5849,12 @@
           <output name="1" label="White">
             <label xml:lang="it">Bianco</label>
             <label xml:lang="de">Weiß</label>
+            <label xml:lang="cs">Bílá</label>
           </output>
           <output name="2" label="Yellow">
             <label xml:lang="it">Giallo</label>
             <label xml:lang="de">Gelb</label>
+            <label xml:lang="cs">Žlutá</label>
           </output>
         </model>
         <model model="T125-8" numOuts="2" numFns="10" maxMotorCurrent="1.1 A" maxTotalCurrent="1.4 A">
@@ -5852,10 +5862,12 @@
           <output name="1" label="White">
             <label xml:lang="it">Bianco</label>
             <label xml:lang="de">Weiß</label>
+            <label xml:lang="cs">Bílá</label>
           </output>
           <output name="2" label="Yellow">
             <label xml:lang="it">Giallo</label>
             <label xml:lang="de">Gelb</label>
+            <label xml:lang="cs">Žlutá</label>
           </output>
         </model>
         <model model="T145" numOuts="4" numFns="10" maxMotorCurrent="1.1 A" maxTotalCurrent="2.0 A">
@@ -5863,18 +5875,22 @@
           <output name="1" label="White">
             <label xml:lang="it">Bianco</label>
             <label xml:lang="de">Weiß</label>
+            <label xml:lang="cs">Bílá</label>
           </output>
           <output name="2" label="Yellow">
             <label xml:lang="it">Giallo</label>
             <label xml:lang="de">Gelb</label>
+            <label xml:lang="cs">Žlutá</label>
           </output>
           <output name="3" label="Green">
             <label xml:lang="it">Verde</label>
             <label xml:lang="de">Grün</label>
+            <label xml:lang="cs">Zelená</label>
           </output>
           <output name="4" label="Violet">
             <label xml:lang="it">Viola</label>
             <label xml:lang="de">Violett</label>
+            <label xml:lang="cs">Fialová</label>
           </output>
         </model>
         <model model="T145-8" numOuts="4" numFns="10" maxMotorCurrent="1.1 A" maxTotalCurrent="2.0 A">
@@ -5882,18 +5898,22 @@
           <output name="1" label="White">
             <label xml:lang="it">Bianco</label>
             <label xml:lang="de">Weiß</label>
+            <label xml:lang="cs">Bílá</label>
           </output>
           <output name="2" label="Yellow">
             <label xml:lang="it">Giallo</label>
             <label xml:lang="de">Gelb</label>
+            <label xml:lang="cs">Žlutá</label>
           </output>
           <output name="3" label="Green">
             <label xml:lang="it">Verde</label>
             <label xml:lang="de">Grün</label>
+            <label xml:lang="cs">Zelená</label>
           </output>
           <output name="4" label="Violet">
             <label xml:lang="it">Viola</label>
             <label xml:lang="de">Violett</label>
+            <label xml:lang="cs">Fialová</label>
           </output>
         </model>
       </family>
@@ -5902,63 +5922,81 @@
           <versionCV lowVersionID="35" highVersionID="35" />
           <output name="1" label="Front|Light">
             <label xml:lang="de">Ausgang|A</label>
+            <label xml:lang="cs">Přední|Světlo</label>
           </output>
           <output name="2" label="Rear|Light">
             <label xml:lang="de">Ausgang|B</label>
+            <label xml:lang="cs">Zadní|Světlo</label>
           </output>
           <output name="3" label="Output|C">
             <label xml:lang="de">Ausgang|C</label>
+            <label xml:lang="cs">Výstup|C</label>
           </output>
           <output name="4" label="Output|D">
             <label xml:lang="de">Ausgang|D</label>
+            <label xml:lang="cs">Výstup|D</label>
           </output>
           <output name="5" label="Output|E">
             <label xml:lang="de">Ausgang|E</label>
+            <label xml:lang="cs">Výstup|E</label>
           </output>
           <output name="6" label="Output|F">
             <label xml:lang="de">Ausgang|F</label>
+            <label xml:lang="cs">Výstup|F</label>
           </output>
         </model>
         <model model="N45-P" numOuts="6" numFns="14" maxMotorCurrent="0.8 A" maxTotalCurrent="0.8 A">
           <versionCV lowVersionID="35" highVersionID="35" />
           <output name="1" label="Front|Light">
             <label xml:lang="de">Ausgang|A</label>
+            <label xml:lang="cs">Přední|Světlo</label>
           </output>
           <output name="2" label="Rear|Light">
             <label xml:lang="de">Ausgang|B</label>
+            <label xml:lang="cs">Zadní|Světlo</label>
           </output>
           <output name="3" label="Output|C">
             <label xml:lang="de">Ausgang|C</label>
+            <label xml:lang="cs">Výstup|C</label>
           </output>
           <output name="4" label="Output|D">
             <label xml:lang="de">Ausgang|D</label>
+            <label xml:lang="cs">Výstup|D</label>
           </output>
           <output name="5" label="Output|E">
             <label xml:lang="de">Ausgang|E</label>
+            <label xml:lang="cs">Výstup|E</label>
           </output>
           <output name="6" label="Output|F">
             <label xml:lang="de">Ausgang|F</label>
+            <label xml:lang="cs">Výstup|F</label>
           </output>
         </model>
         <model model="N45-P8" numOuts="6" numFns="14" maxMotorCurrent="0.8 A" maxTotalCurrent="0.8 A">
           <versionCV lowVersionID="35" highVersionID="35" />
           <output name="1" label="Front|Light">
             <label xml:lang="de">Ausgang|A</label>
+            <label xml:lang="cs">Přední|Světlo</label>
           </output>
           <output name="2" label="Rear|Light">
             <label xml:lang="de">Ausgang|B</label>
+            <label xml:lang="cs">Zadní|Světlo</label>
           </output>
           <output name="3" label="Output|C">
             <label xml:lang="de">Ausgang|C</label>
+            <label xml:lang="cs">Výstup|C</label>
           </output>
           <output name="4" label="Output|D">
             <label xml:lang="de">Ausgang|D</label>
+            <label xml:lang="cs">Výstup|D</label>
           </output>
           <output name="5" label="Output|E">
             <label xml:lang="de">Ausgang|E</label>
+            <label xml:lang="cs">Výstup|E</label>
           </output>
           <output name="6" label="Output|F">
             <label xml:lang="de">Ausgang|F</label>
+            <label xml:lang="cs">Výstup|F</label>
           </output>
         </model>
       </family>
@@ -5966,10 +6004,100 @@
         <model model="ZTC217" numOuts="2">
           <output name="1" label="White">
             <label xml:lang="it">Bianco</label>
+            <label xml:lang="cs">Bílá</label>
           </output>
           <output name="2" label="Yellow">
             <label xml:lang="it">Giallo</label>
+            <label xml:lang="cs">Žlutá</label>
           </output>
+        </model>
+      </family>
+      <family name="LaisDcc" mfg="LaisDcc" comment="LaisDcc decoder range" lowVersionID="02" highVersionID="07" file="LaisDcc.xml">
+        <model model="860019" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860019" formFactor="HO" connector="21MTC" comment="HO-scale, with 21MTC harness" lowVersionID="02" highVersionID="02">
+          <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow|Pin 7" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green|Pin 15" connection="plug" maxcurrent="100 mA" />
+          <output name="4" label="Purple|Pin 14" connection="plug" maxcurrent="100 mA" />
+          <output name="7" label="Rule 17|Dimming" />
+          <!-- virtual "output" -->
+          <output name="8" label="Ditch|Blink" />
+          <!-- virtual "output" -->
+          <output name="9" label="Motor|Control" />
+          <!-- virtual "output" -->
+          <output name="10" label="BEMF|Control" />
+          <!-- virtual "output" -->
+          <size length="17" width="16" height="3.5" units="mm" />
+        </model>
+        <model model="860018" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860018" formFactor="HO" connector="NEM652" comment="HO-scale, direct NEM652" lowVersionID="03" highVersionID="03">
+          <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA" />
+          <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA" />
+          <output name="7" label="Rule 17|Dimming" />
+          <!-- virtual "output" -->
+          <output name="8" label="Ditch|Blink" />
+          <!-- virtual "output" -->
+          <output name="9" label="Motor|Control" />
+          <!-- virtual "output" -->
+          <output name="10" label="BEMF|Control" />
+          <!-- virtual "output" -->
+          <size length="14.2" width="12.5" height="3.5" units="mm" />
+        </model>
+        <model model="860013" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860013" formFactor="N" connector="NEM651" comment="Nano 6-pin direct NEM651" lowVersionID="04" highVersionID="04">
+          <output name="1" label="White|Pin 5" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow|Pin 6" connection="plug" maxcurrent="100 mA" />
+          <output name="7" label="Rule 17|Dimming" />
+          <!-- virtual "output" -->
+          <output name="8" label="Ditch|Blink" />
+          <!-- virtual "output" -->
+          <output name="9" label="Motor|Control" />
+          <!-- virtual "output" -->
+          <output name="10" label="BEMF|Control" />
+          <!-- virtual "output" -->
+          <size length="14.5" width="8.2" height="3" units="mm" />
+        </model>
+        <model model="860012" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860012" formFactor="N" connector="NEM651" comment="NEM651 Wire" lowVersionID="05" highVersionID="05">
+          <output name="1" label="White|Pin 5" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow|Pin 6" connection="wire" maxcurrent="100 mA" />
+          <output name="7" label="Rule 17|Dimming" />
+          <!-- virtual "output" -->
+          <output name="8" label="Ditch|Blink" />
+          <!-- virtual "output" -->
+          <output name="9" label="Motor|Control" />
+          <!-- virtual "output" -->
+          <output name="10" label="BEMF|Control" />
+          <!-- virtual "output" -->
+          <size length="14.5" width="8.2" height="3" units="mm" />
+        </model>
+        <model model="860021" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860021" formFactor="HO" connector="Wires/NEM652" comment="Wire and NEM652" lowVersionID="06" highVersionID="06">
+          <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA" />
+          <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA" />
+          <output name="7" label="Rule 17|Dimming" />
+          <!-- virtual "output" -->
+          <output name="8" label="Ditch|Blink" />
+          <!-- virtual "output" -->
+          <output name="9" label="Motor|Control" />
+          <!-- virtual "output" -->
+          <output name="10" label="BEMF|Control" />
+          <!-- virtual "output" -->
+          <size length="15" width="7" height="2.7" units="mm" />
+        </model>
+        <model model="860014" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860014" formFactor="HO" connector="Wires" comment="9 Wire" lowVersionID="07" highVersionID="07">
+          <output name="1" label="White|Wire" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow|Wire" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green|Wire" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA" />
+          <output name="7" label="Rule 17|Dimming" />
+          <!-- virtual "output" -->
+          <output name="8" label="Ditch|Blink" />
+          <!-- virtual "output" -->
+          <output name="9" label="Motor|Control" />
+          <!-- virtual "output" -->
+          <output name="10" label="BEMF|Control" />
+          <!-- virtual "output" -->
+          <size length="15" width="7" height="2.7" units="mm" />
         </model>
       </family>
       <family name="Lenz 4th gen BEMF decoders" mfg="Lenz" lowVersionID="51" file="Lenz_51.xml">
@@ -6281,9 +6409,15 @@
       </family>
       <family name="Lenz Standard" mfg="Lenz" highVersionID="81" lowVersionID="80" comment="No comment" file="Lenz_Standard.xml">
         <model model="Standard" numOuts="3" numFns="9" lowVersionID="80" maxMotorCurrent="1A " formFactor="N">
-          <output name="1" label="A - White" />
-          <output name="2" label="B - Yellow" />
-          <output name="3" label="C - Green" />
+          <output name="1" label="A - White">
+            <label xml:lang="cs">A - Bílá</label>
+          </output>
+          <output name="2" label="B - Yellow">
+            <label xml:lang="cs">B - Žlutá</label>
+          </output>
+          <output name="3" label="C - Green">
+            <label xml:lang="cs">C - Zelená</label>
+          </output>
         </model>
       </family>
       <family name="Lenz Ultra-Drive decoders" mfg="Lenz" lowVersionID="1" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" file="Lenz_UltraDrive.xml">
@@ -10433,7 +10567,7 @@
       <family name="Control Point" mfg="RR-CirKits" type="stationary" comment="The Control Point is normally programmed in OPs mode" file="RR-CirKits-LNCP-basic.xml">
         <model model="LNCP" comment="LocoNet Control Point" lowVersionID="01" />
       </family>
-      <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The MotorMan is normally programmed in OPs mode" file="RR-CirKits-MotorMan.xml">
+      <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The MotorMan is programmed in OPs mode" file="RR-CirKits-MotorMan.xml">
         <model model="MotorMan" comment="8 Line Output Driver" lowVersionID="10" />
       </family>
       <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The SignalMan is normally programmed in OPs mode" file="RR-CirKits-SignalMan-basic.xml">
@@ -17841,7 +17975,7 @@
           <functionlabel num="6" lockable="true">Smoke</functionlabel>
           <functionlabel num="7" lockable="true">Dimmer</functionlabel>
           <functionlabel num="8" lockable="true">Mute</functionlabel>
-          <!-- regular Soundtraxx functions, not used for Bachmann  
+          <!-- regular Soundtraxx functions, not used for Bachmann
         <functionlabel num="5" lockable="true">FX5 Light</functionlabel>
         <functionlabel num="6" lockable="true">FX6 Light</functionlabel>
         <functionlabel num="9" lockable="true">Water Stop</functionlabel>
@@ -26090,108 +26224,140 @@
         <model model="MX634 version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" numOuts="8" numFns="14" productID="240">
           <output name="1" label="Front Light">
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
           </output>
           <output name="2" label="Rear Light">
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">Funkční výstup 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">Funkční výstup 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">Funkční výstup 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">Funkční výstup 4</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5|(+5v)</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5 V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6|(+5v)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
         <model model="MX634R version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="240">
           <output name="1" label="Front Light">
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
           </output>
           <output name="2" label="Rear Light">
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">Funkční výstup 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">Funkční výstup 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">Funkční výstup 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">Funkční výstup 4</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5|(+5v)</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5 V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6|(+5v)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
         <model model="MX634F version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="240">
           <output name="1" label="Front Light">
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
           </output>
           <output name="2" label="Rear Light">
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">Funkční výstup 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">Funkční výstup 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">Funkční výstup 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">Funkční výstup 4</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
+            <label xml:lang="cs">Funkční výstup 5</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
         <model model="MX634D version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="240">
           <output name="1" label="Front Light">
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
           </output>
           <output name="2" label="Rear Light">
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">Funkční výstup 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">Funkční výstup 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">Funkční výstup 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">Funkční výstup 4</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
+            <label xml:lang="cs">Funkční výstup 5</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
+            <label xml:lang="cs">Funkční výstup 6</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -26537,105 +26703,135 @@
         <model model="MX649 version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="253">
           <output name="1" label="Front Light">
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
           </output>
           <output name="2" label="Rear Light">
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">Funkční výstup 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">Funkční výstup 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">Funkční výstup 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">Funkční výstup 4</label>
           </output>
           <size length="20" width="11" height="4" units="mm" />
         </model>
         <model model="MX649R version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="253">
           <output name="1" label="Front Light">
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
           </output>
           <output name="2" label="Rear Light">
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">Funkční výstup 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">Funkční výstup 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">Funkční výstup 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">Funkční výstup 4</label>
           </output>
           <size length="20" width="11" height="4" units="mm" />
         </model>
         <model model="MX649F version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="253">
           <output name="1" label="Front Light">
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
           </output>
           <output name="2" label="Rear Light">
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">Funkční výstup 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">Funkční výstup 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">Funkční výstup 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">Funkční výstup 4</label>
           </output>
           <size length="28" width="10.5" height="4" units="mm" />
         </model>
         <model model="MX649N version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="253">
           <output name="1" label="Front Light">
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
           </output>
           <output name="2" label="Rear Light">
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">Funkční výstup 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">Funkční výstup 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">Funkční výstup 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">Funkční výstup 4</label>
           </output>
           <size length="28" width="10.5" height="4" units="mm" />
         </model>
         <model model="MX649L version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="253">
           <output name="1" label="Front Light">
             <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
           </output>
           <output name="2" label="Rear Light">
             <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">Funkční výstup 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">Funkční výstup 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">Funkční výstup 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">Funkční výstup 4</label>
           </output>
           <size length="28" width="10.5" height="4" units="mm" />
         </model>

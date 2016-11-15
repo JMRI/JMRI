@@ -38,18 +38,11 @@ public class PackageTest extends TestCase {
         suite.addTest(ThreadingUtilTest.suite());
         suite.addTest(I18NTest.suite());
         suite.addTest(ColorUtilTest.suite());
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(SwingTestCaseTest.suite());
-        }
-
+        suite.addTest(SwingTestCaseTest.suite());
         suite.addTest(jmri.util.docbook.PackageTest.suite());
         suite.addTest(jmri.util.exceptionhandler.PackageTest.suite());
         suite.addTest(jmri.util.jdom.PackageTest.suite());
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(jmri.util.swing.PackageTest.suite());
-        }
+        suite.addTest(jmri.util.swing.PackageTest.suite());
 
         suite.addTest(jmri.util.WaitHandlerTest.suite());
         suite.addTest(jmri.util.zeroconf.PackageTest.suite());
@@ -61,7 +54,7 @@ public class PackageTest extends TestCase {
 
         // deliberately at end
         suite.addTest(jmri.util.Log4JErrorIsErrorTest.suite());
-        
+
         return suite;
     }
 

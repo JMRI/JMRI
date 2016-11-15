@@ -1,4 +1,3 @@
-// XNetInitializationManager.java
 package jmri.jmrix.lenz;
 
 import org.slf4j.Logger;
