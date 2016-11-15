@@ -338,7 +338,7 @@ runs a specific test or test suite.<br>
     import org.junit.runners.Suite;
 
     /**
-     * tests for the jmri.jmrix.sprog package
+     * tests for the jmri.jmrix.foo package
      *
      * @author Your Name Copyright (C) 2016
      */
