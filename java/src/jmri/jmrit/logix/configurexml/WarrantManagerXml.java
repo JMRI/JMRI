@@ -113,6 +113,7 @@ public class WarrantManagerXml //extends XmlFile
             elem.setAttribute("dccType", ""+(addr.isLongAddress() ? "L" : "S"));
         }
         elem.setAttribute("runBlind", warrant.getRunBlind()?"true":"false");
+        elem.setAttribute("noRamp", warrant.getNoRamp()?"true":"false");
 
         str = warrant.getTrainName();
         if (str==null) str = "";
@@ -238,11 +239,12 @@ public class WarrantManagerXml //extends XmlFile
                 }
             }
 
-            Warrant warrant = manager.createNewWarrant(sysName, userName, SCWa, timeToPlatform);
+            Warrant warrant = manager.createNewWarrant(sysName, userName);
             if (warrant==null) {
                 log.info("Warrant \""+sysName+"("+userName+")\" previously loaded. This version not loaded.");
                 continue;
             }
+            warrant.setNoRamp(SCWa);
             List<Element> orders = elem.getChildren("blockOrder");
             for (int k=0; k<orders.size(); k++) {
                 BlockOrder bo = loadBlockOrder(orders.get(k));
@@ -297,6 +299,9 @@ public class WarrantManagerXml //extends XmlFile
         }
         if (elem.getAttribute("runBlind") != null) {
             warrant.setRunBlind(elem.getAttribute("runBlind").getValue().equals("true"));
+        }
+        if (elem.getAttribute("noRamp") != null) {
+            warrant.setNoRamp(elem.getAttribute("noRamp").getValue().equals("true"));
         }
         if (elem.getAttribute("trainName") != null) {
             warrant.setTrainName(elem.getAttribute("trainName").getValue());

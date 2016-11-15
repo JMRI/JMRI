@@ -401,17 +401,13 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 log.error("Unknown speed interpretation {}", _speedMap.getInterpretation());
                 throw new java.lang.IllegalArgumentException("Unknown speed interpretation " + _speedMap.getInterpretation());
         }
-        if (log.isDebugEnabled()) log.debug("modifySpeed: from {}, to {}, speedtype= {} using interpretation {}",
-                tSpeed, throttleSpeed, sType, _speedMap.getInterpretation());
+//        if (log.isDebugEnabled()) log.debug("modifySpeed: from {}, to {}, speedtype= {} using interpretation {}",
+//                tSpeed, throttleSpeed, sType, _speedMap.getInterpretation());
         return throttleSpeed;
     }
 
     protected void setSpeed(float s) {
         float speed = s;
-        float minIncre = _throttle.getSpeedIncrement();
-        if (0.0f < speed && speed < minIncre) {    // don't let speed be less than 1 speed step
-            speed = 0.0f;
-        }
         _throttle.setSpeedSetting(speed);
         // Do asynchronously, already within a synchronized block
         ThreadingUtil.runOnLayoutEventually(() -> {
