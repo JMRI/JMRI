@@ -38,7 +38,7 @@ So our releases procedure is, in outline:
 
 - [ ] How best to deal with bringing additional commits into the branch from master - do we 'cherry-pick' or 'merge'? Everybody is using pull requests, which makes it pretty easy to get the hash numbers needed for cherry-pick (that can be messy with direct commits, because you’re not always sure which commits go together). We can play this by ear, but if somebody says “can you include PR 123?” I think that lends itself to a cherry pick pretty nicely. Best of all - get people to do their work on a branch, which can be separately merged.
 
-- [ ] It might be a good idea to keep the production release branches around throughout the next test phases, but we should be able to prune each test release branch once we've tagged it. So, we'd keep the 4.2 (and 4.2.1) branch around throughout the 4.3.x phase and then prune it when moving to 4.4. Each 4.3.x branch should be pruned once tagged as, if we need to do changes to a test release, we just release a new version on it's own branch from 'master’. How about the case near the end of a development cycle when we’re doing incremental releases? E.g. 4.3.9 might be 4.3.8+deltas?  Should that be a branch from a branch? We'll need to develop and document this as needed.
+- [ ] It might be a good idea to keep the production release branches around throughout the next test phases, but we should be able to prune each test release branch once we've tagged it. So, we'd keep the 4.4 (and 4.4.1) branch around throughout the 4.5.x phase and then prune it when moving to 4.6. Each 4.5.x branch should be pruned once tagged as, if we need to do changes to a test release, we just release a new version on it's own branch from 'master’. How about the case near the end of a development cycle when we’re doing incremental releases? E.g. 4.5.9 might be 4.5.8+deltas?  Should that be a branch from a branch? We'll need to develop and document this as needed.
 
 ============================================================================
 
@@ -341,9 +341,9 @@ It still gets a bit tricky if there’s a difference (e.g. due to a conflict wit
 ```
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
-    curl -o release.zip "http://jmri.tagadab.com/jenkins/job/Test%20Releases/job/4.5.2/ws/dist/release/*zip*/release.zip"
+    curl -o release.zip "http://jmri.tagadab.com/jenkins/job/Test%20Releases/job/4.5.6/ws/dist/release/*zip*/release.zip"
         (use the following instead if building on second Jenkins server)
-    curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.2/ws/dist/release/*zip*/release.zip"
+    curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.6/ws/dist/release/*zip*/release.zip"
     rm release/JMRI*
     unzip release.zip
     cd release
@@ -404,11 +404,12 @@ File | SHA256 checksum
 [JMRI.4.5.6-R9bfae82.dmg](https://github.com/JMRI/JMRI/releases/download/v4.5.6/JMRI.4.5.6-R9bfae82.dmg) | e7223f2ba8163f4b607f1d77d8817eeaff6227b0345d16a92c8cba961f837809
 [JMRI.4.5.6-R9bfae82.exe](https://github.com/JMRI/JMRI/releases/download/v4.5.6/JMRI.4.5.6-R9bfae82.exe) | 27c8542568624dec65943b7787e80235f3cad73f7e598ea1c883573cf7837263
 [JMRI.4.5.6-R9bfae82.tgz](https://github.com/JMRI/JMRI/releases/download/v4.5.6/JMRI.4.5.6-R9bfae82.tgz) | 84cb9ad5411eda97802a86ecaca53e718ec23353b8a57767fa287359bd5d4057
+
 ```
 
 - Attach files by dragging them in (you might have to have downloaded them above via e.g. a separate 
 ```
-curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.2/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"" 
+curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.6/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"" 
 ```
 and expansion; it's slow to upload from a typical home machine, though, so wish we had a way to cross-load from somewhere fast - if release.zip is still on SF.net, you can do
 ```
@@ -422,9 +423,9 @@ Note there's a little progress bar that has to go across & "Uploading your relea
 Alternatively, if you have shell access to the Jenkins server, you can upload directly from there, once the initial draft release has been created:
 
 ```
-github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.5.2 -n "JMRI.4.5.2-Rd144052.dmg" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.5.2/workspace/dist/release/JMRI.4.5.2-Rd144052.dmg 
-github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.5.2 -n "JMRI.4.3.9-Rd144052.exe" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.5.2/workspace/dist/release/JMRI.4.5.2-Rd144052.exe 
-github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.5.2 -n "JMRI.4.3.9-Rd144052.tgz" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.5.2/workspace/dist/release/JMRI.4.5.2-Rd144052.tgz 
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.5.6 -n "JMRI.4.5.6-Rd144052.dmg" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.5.6/workspace/dist/release/JMRI.4.5.6-Rd144052.dmg 
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.5.6 -n "JMRI.4.5.6-Rd144052.exe" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.5.6/workspace/dist/release/JMRI.4.5.6-Rd144052.exe 
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.5.6 -n "JMRI.4.5.6-Rd144052.tgz" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.5.6/workspace/dist/release/JMRI.4.5.6-Rd144052.tgz 
 ```
     
 - Click "Publish Release"
@@ -461,7 +462,7 @@ If there are any changes in other files, do both of:
 
 Lastly, if this release is one of the special series at the end of a development cycle that leads to a test release, create the next release branch now.  Those test releases are made cumulatively from each other, rather than each from master. We start the process now so that people can open pull requests for it, and discuss whether changes should be included.
 
-(Maybe we should change their nomenclature to get this across?  E.g. instead of 4.3.5, 4.3.6, 4.3.7, 4.4 where the last two look like regular "from master" test releases, call them 4.3.6, 4.3.6.1, 4.3.6.2, 4.2 - this will make the operations clearer)
+(Maybe we should change their nomenclature to get this across?  E.g. instead of 4.5.5, 4.5.6, 4.5.7, 4.6 where the last two look like regular "from master" test releases, call them 4.5.6, 4.5.6.1, 4.5.6.2, 4.6 - this will make the operations clearer)
 
    - Create the next pre-production branch (*pre-production case only*):
 
@@ -474,7 +475,7 @@ git push github
 
 - Create the next [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create release-n.n.n+1". Add the next release milestone (created above) to it.
 
-- Confirm that the tag for the current release (release-4.5.2) is in place, then manually delete the current release branch via the [GitHub UI](https://github.com/JMRI/JMRI/branches).
+- Confirm that the tag for the current release (release-4.5.6) is in place, then manually delete the current release branch via the [GitHub UI](https://github.com/JMRI/JMRI/branches).
 
 - Go to the GitHub PR and Issues [labels list](https://github.com/JMRI/JMRI/labels) and remove any "afterNextTestRelease" (and "afterNextProductionRelease" if appropriate) labels from done items
 
@@ -504,7 +505,7 @@ If you don't, a bunch of Windows users are likely to whine
 
 - Mail announcement to jmriusers@yahoogroups.com
 
-    Subject is "Test version 4.5.2 of JMRI/DecoderPro is available for download" or "JMRI 4.4 is available for download"
+    Subject is "Test version 4.5.6 of JMRI/DecoderPro is available for download" or "JMRI 4.4 is available for download"
 
 - If a production version, update the SF automatic download icon by selecting default in SF.net FRS (3 times)
 
