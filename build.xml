@@ -2148,12 +2148,27 @@
                 <antcall target="compile-generated-source" />
                 <parallel>
                     <antcall target="javadoc" />
+                    <antcall target="ci-test-travis" />
+                </parallel>
+            </sequential>
+        </parallel>
+    </target>
+
+    <target name="travis-ci-coverage" description="Parallel execution of CI tasks on Travis CI">
+        <parallel threadCount="4"> <!-- allow up to four tasks at once -->
+            <antcall target="checklineends" />
+            <antcall target="checknonascii" />
+            <sequential>
+                <antcall target="compile-generated-source" />
+                <parallel>
+                    <antcall target="javadoc" />
                     <antcall target="ci-test-travis-coveragecheck" />
                 </parallel>
             </sequential>
         </parallel>
     </target>
-    
+
+	
     <target name="appveyor" description="Parallel execution of CI tasks on Appveyor">
         <parallel threadCount="4"> <!-- allow up to four tasks at once -->
             <antcall target="checkPropertiesFiles" />
