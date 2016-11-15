@@ -15,6 +15,7 @@ before_script:
 
 script:
   - export MAVEN_OPTS=-Xmx1536M
+  # may need to make conditional for different profiles
   - mvn test -U -P travis --batch-mode -Djava.awt.headless=${HEADLESS}
 
 cache:
