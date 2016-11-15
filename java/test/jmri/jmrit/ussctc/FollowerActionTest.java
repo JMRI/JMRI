@@ -1,8 +1,8 @@
 package jmri.jmrit.ussctc;
 
-import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import javax.swing.Action;
+import javax.swing.JFrame;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -28,7 +28,7 @@ public class FollowerActionTest {
     public void testActionCreateAndFire() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         new FollowerAction("test").actionPerformed(null);
-        Frame f = JFrameOperator.waitJFrame("test", true, true);
+        JFrame f = JFrameOperator.waitJFrame(FollowerPanel.rb.getString("TitleFollower"), true, true);
         Assert.assertNotNull(f);
         f.dispose();
     }
