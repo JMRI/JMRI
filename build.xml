@@ -1131,7 +1131,7 @@
     <!-- end of file-checking targets -->
 
     <target name="fixlineends" description="convert specific files to LF line ends">
-        <fixcrlf eol="unix" srcdir="." includes="
+        <fixcrlf eol="unix" srcdir="." encoding="UTF-8" includes="
             **/*.csh
             **/*.css
             **/*.df
@@ -1228,6 +1228,29 @@
           </structure>
 
           <html destdir="${coveragetarget}" />
+       </jacoco:report>
+    </target>
+    
+    <target name="headless-coveragecheck" depends="headlesstest" description="Generate Test Coverage Report from headlesstest">
+    <!-- Generate Code Coverage report
+    See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
+       <jacoco:report>
+          <executiondata>
+              <file file="jacoco.exec" />
+          </executiondata>
+
+          <structure name="AntTestReporting">
+              <classfiles>
+                 <fileset refid="jacocofileset"/>
+              </classfiles>
+          </structure>
+
+          <check>
+              <rule> 
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.28"/>
+                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
+              </rule>
+          </check>
        </jacoco:report>
     </target>
 
@@ -1366,6 +1389,28 @@
        </jacoco:report>
     </target>
 
+    <target name="alltest-coveragecheck" depends="logalltest" description="Test Coverage check from logalltest">
+    <!-- Generate Code Coverage report
+    See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
+       <jacoco:report>
+          <executiondata>
+              <file file="jacoco.exec" />
+          </executiondata>
+
+          <structure name="AntTestReporting">
+              <classfiles>
+                 <fileset refid="jacocofileset"/>
+              </classfiles>
+          </structure>
+
+          <check>
+              <rule> 
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.28"/>
+                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
+              </rule>
+          </check>
+       </jacoco:report>
+    </target>
 
 
     <!-- end of test execution targets -->

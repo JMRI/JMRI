@@ -1,27 +1,23 @@
-package jmri.jmrix.marklin;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+package jmri.jmrix.sprog.sprogslotmon;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   jmri.jmrix.marklin.networkdriver.PackageTest.class,
-   jmri.jmrix.marklin.configurexml.PackageTest.class,
-   jmri.jmrix.marklin.swing.PackageTest.class
+    SprogSlotMonFrameTest.class,
+    SprogSlotMonDataModelTest.class,
+    SprogSlotMonActionTest.class
 })
+
 /**
- * Tests for the jmri.jmrix.marklin package
+ * Tests for the jmri.jmrix.sprog.sprogslotmon package
  *
  * @author  Paul Bender	Copyright (C) 2016
  */
-public class PackageTest {
+public class PackageTest{
 
     // Main entry point
     static public void main(String[] args) {
@@ -30,13 +26,11 @@ public class PackageTest {
         for(org.junit.runner.notification.Failure fail: result.getFailures()) {
             log.error(fail.toString());
         }
-        //junit.textui.TestRunner.main(testCaseName);
         if (result.wasSuccessful()) {
             log.info("Success");
         }
     }
 
     private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
-
 
 }
