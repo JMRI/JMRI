@@ -18,11 +18,15 @@ import java.awt.GraphicsEnvironment;
 public class MDITest {
 
     @Test
-    @Ignore("functions locally,fails on travis/appveyor")
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         String[] args = {"DecoderProConfig3.xml"};
-        apps.AppsBase a = new MDI(args);
+        apps.AppsBase a = new MDI(args){
+            // force the application to not actually start.  
+            // Just checking construction.
+            @Override
+            protected void start(){};
+        };
         Assert.assertNotNull(a);
     }
 
