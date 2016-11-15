@@ -15,7 +15,7 @@ before_script:
 
 script:
   - export MAVEN_OPTS=-Xmx1536M
-  - travis_wait 30 mvn test -U -P travis --batch-mode -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" -Djava.awt.headless=${HEADLESS}
+  - if [[ "$HEADLESS" == "false" ]] ; then travis_wait 30 mvn test -U -P travis-coverage --batch-mode -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" -Djava.awt.headless=${HEADLESS} ; else travis_wait 30 mvn test -U -P travis --batch-mode -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" -Djava.awt.headless=${HEADLESS} ; fi
 
 cache:
   directories:
