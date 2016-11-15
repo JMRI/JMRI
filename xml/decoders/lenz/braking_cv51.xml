@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>7</revnumber>
+      <date>2016-10-06</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>6</revnumber>
       <date>2012-12-27</date>
       <authorinitials>BJ</authorinitials>
@@ -44,12 +50,14 @@
     <label>Constant Braking Distance</label>
     <label xml:lang="it">Distanza Frenata Costante</label>
     <label xml:lang="de">Konstanter Bremsweg bei ABC</label>
+    <label xml:lang="cs">Konstantní brzdná dráha</label>
   </variable>
   <variable CV="51" mask="XXVXXXXX" item="Stop on DC" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Stop on DC (RailCom off only)</label>
     <label xml:lang="it">Stop in Analogica (Solo con RailCom=off)</label>
     <label xml:lang="de">Bei Gleichspannung anhalten (nur bei RailCom aus)</label>
+    <label xml:lang="cs">Zastavit na DC (pouze při vypnutém RailCom)</label>
   </variable>
   <variable CV="52" item="Braking Distance" default="50" comment="Range 0-255">
     <decVal min="0" max="255"/>
@@ -59,5 +67,7 @@
     <comment xml:lang="it">Valori da 0 a 255</comment>
     <label xml:lang="de">Bremsweg bei konstantem Bremsweg</label>
     <comment xml:lang="de">Wertebereich 0-255</comment>
+    <label xml:lang="cs">Brzdná dráha</label>
+    <comment xml:lang="cs">Meze 0-255</comment>
   </variable>
 </variables>

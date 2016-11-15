@@ -10,11 +10,6 @@ import javax.swing.JMenu;
  */
 public class SecsiMenu extends JMenu {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8675063885996858394L;
-
     public SecsiMenu(String name) {
         this();
         setText(name);

@@ -26,10 +26,12 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.pricom.PricomTest");
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
             suite.addTest(jmri.jmrix.pricom.pockettester.PocketTesterTest.suite());
             suite.addTest(jmri.jmrix.pricom.downloader.DownloaderTest.suite());
         }
+
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PricomMenuTest.class));
 
         return suite;
     }

@@ -3,21 +3,15 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Shape;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.PathIterator;
 import java.util.Optional;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
@@ -28,6 +22,7 @@ import jmri.jmrit.display.CoordinateEdit;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableJComponent;
+import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,10 +34,6 @@ import org.slf4j.LoggerFactory;
 public class PositionableShape extends PositionableJComponent
         implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6747180861605933680L;
     private Shape _shape;
     protected Color _lineColor = Color.black;
     protected Color _fillColor = new Color(255, 255, 255, 0);
@@ -71,12 +62,12 @@ public class PositionableShape extends PositionableJComponent
         super(editor);
         setName("Graphic");
         setShowTooltip(false);
+        setDisplayLevel(ControlPanelEditor.LABELS);
     }
 
     public PositionableShape(Editor editor, Shape shape) {
         this(editor);
         _shape = shape;
-        setShowTooltip(false);
     }
 
     public PathIterator getPathIterator(AffineTransform at) {
@@ -236,10 +227,14 @@ public class PositionableShape extends PositionableJComponent
         pos._lineWidth = _lineWidth;
         pos._fillColor = new Color(_fillColor.getRed(), _fillColor.getGreen(), _fillColor.getBlue(), _fillColor.getAlpha());
         pos._lineColor = new Color(_lineColor.getRed(), _lineColor.getGreen(), _lineColor.getBlue(), _lineColor.getAlpha());
-        pos.updateSize();
+        pos.setControlSensor(getSensorName(), _doHide, _changeLevel);
+        pos.setWidth(_width);
+        pos.setHeight(_height);
+        pos.makeShape();
+        pos.repaint();
         return super.finishClone(pos);
     }
-
+    
     @Override
     public Dimension getSize(Dimension rv) {
         return new Dimension(maxWidth(), maxHeight());
@@ -278,7 +273,7 @@ public class PositionableShape extends PositionableJComponent
      */
     @Override
     public boolean setRotateMenu(JPopupMenu popup) {
-        if (getDisplayLevel() > Editor.BKG) {
+        if (super.getDisplayLevel() > Editor.BKG) {
             popup.add(CoordinateEdit.getRotateEditAction(this));
             return true;
         }
@@ -295,81 +290,47 @@ public class PositionableShape extends PositionableJComponent
         return _degrees;
     }
 
-    DrawFrame _editFrame;
-
-    protected void setEditParams() {
-        _editFrame.setDisplayParams(this);
-        java.awt.Container contentPane = _editFrame.getContentPane();
-        contentPane.add(_editFrame.makeParamsPanel());
-        contentPane.add(makeDoneButtonPanel());
-        _editFrame.pack();
-        drawHandles();
-    }
-
-    protected JPanel makeDoneButtonPanel() {
-        JPanel panel0 = new JPanel();
-        panel0.setLayout(new FlowLayout());
-        JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
-        doneButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent a) {
-                editItem();
-            }
-        });
-        panel0.add(doneButton);
-
-        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent a) {
-                removeHandles();
-                _editFrame.closingEvent();
-                _editFrame = null;
-            }
-        });
-        panel0.add(cancelButton);
-        return panel0;
-    }
-
-    protected void editItem() {
-        _editFrame.updateFigure(this);
-//        makeShape();
-        removeHandles();
-        updateSize();
-        _editFrame.closingEvent();
-        _editFrame = null;
-        repaint();
-    }
-
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (log.isDebugEnabled()) {
-            log.debug("property change: " + getNameString() + " property " + evt.getPropertyName() + " is now "
-                    + evt.getNewValue() + " from " + evt.getSource().getClass().getName());
+            log.debug("property change: \"{}\"= {} for {}", 
+                   evt.getPropertyName(), evt.getNewValue(), getClass().getName());
         }
-
         if (!_editor.isEditable()) {
             if (evt.getPropertyName().equals("KnownState")) {
                 if (((Integer) evt.getNewValue()).intValue() == Sensor.ACTIVE) {
                     if (_doHide) {
                         setVisible(true);
                     } else {
-                        setDisplayLevel(_changeLevel);
+                        super.setDisplayLevel(_changeLevel);
                         setVisible(true);
                     }
                 } else if (((Integer) evt.getNewValue()).intValue() == Sensor.INACTIVE) {
                     if (_doHide) {
                         setVisible(false);
                     } else {
-                        setDisplayLevel(_saveLevel);
+                        super.setDisplayLevel(_saveLevel);
                         setVisible(true);
                     }
                 } else {
-                    setDisplayLevel(_saveLevel);
+                    super.setDisplayLevel(_saveLevel);
                     setVisible(true);
                 }
             }
         } else {
-            setDisplayLevel(_saveLevel);
+            super.setDisplayLevel(_saveLevel);
             setVisible(true);
         }
+        if (log.isDebugEnabled()) {
+            log.debug("_changeLevel= {} _saveLevel= {} displayLevel= {} _doHide= {} visible= {}", 
+                    _changeLevel, _saveLevel, getDisplayLevel(), _doHide, isVisible()); 
+        }
+    }
+
+    @Override
+    // changing the level from regular popup
+    public void setDisplayLevel(int l) {
+        super.setDisplayLevel(l);
+        _saveLevel = l;
     }
 
     /**
@@ -379,38 +340,38 @@ public class PositionableShape extends PositionableJComponent
      * @param hide true if sensor should be hidden
      * @param level level at which sensor is placed
      */
-    public void setControlSensor(String pName, boolean hide, int level) {
-        NamedBeanHandle<Sensor> senHandle = null;
+    public String setControlSensor(String pName, boolean hide, int level) {
         String msg = null;
         if (pName == null || pName.trim().isEmpty()) {
-            msg = Bundle.getMessage("badSensorName", pName); // NOI18N
+            setControlSensorHandle(null);
+            return null;
         }
-        _saveLevel = getDisplayLevel();
-        if (pName != null && pName.trim().isEmpty()) {
-            Optional<SensorManager> sensorManager = InstanceManager.getOptionalDefault(SensorManager.class);
-            if (sensorManager.isPresent()) {
-                Sensor sensor = sensorManager.get().getSensor(pName);
-                Optional<NamedBeanHandleManager> nbhm = InstanceManager.getOptionalDefault(NamedBeanHandleManager.class);
-                if (sensor != null) {
-                    if (nbhm.isPresent()) {
-                        senHandle = nbhm.get().getNamedBeanHandle(pName, sensor);
-                    }
-                    _doHide = hide;
-                    _changeLevel = level;
-                    if (_changeLevel <= 0) {
-                        _changeLevel = getDisplayLevel();
-                    }
-                } else {
-                    msg = Bundle.getMessage("badSensorName", pName); // NOI18N
+        NamedBeanHandle<Sensor> senHandle = null;
+        _saveLevel = super.getDisplayLevel();
+        Optional<SensorManager> sensorManager = InstanceManager.getOptionalDefault(SensorManager.class);
+        if (sensorManager.isPresent()) {
+            Sensor sensor = sensorManager.get().getSensor(pName);
+            Optional<NamedBeanHandleManager> nbhm = InstanceManager.getOptionalDefault(NamedBeanHandleManager.class);
+            if (sensor != null) {
+                if (nbhm.isPresent()) {
+                    senHandle = nbhm.get().getNamedBeanHandle(pName, sensor);
+                }
+                _doHide = hide;
+                _changeLevel = level;
+                if (_changeLevel <= 0) {
+                    _changeLevel = super.getDisplayLevel();
                 }
             } else {
-                msg = Bundle.getMessage("NoSensorManager"); // NOI18N
+                msg = Bundle.getMessage("badSensorName", pName); // NOI18N
             }
+        } else {
+            msg = Bundle.getMessage("NoSensorManager"); // NOI18N
         }
         if (msg != null) {
-            JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("ErrorSensorMsg"), JOptionPane.INFORMATION_MESSAGE); // NOI18N
+            log.warn("{} for {} sensor", msg, Bundle.getMessage("VisibleSensor"));
         }
         setControlSensorHandle(senHandle);
+        return msg;
     }
 
     public void setControlSensorHandle(NamedBeanHandle<Sensor> senHandle) {
@@ -431,6 +392,13 @@ public class PositionableShape extends PositionableJComponent
         }
         return _controlSensor.getBean();
     }
+    protected String getSensorName() {
+        Sensor s = getControlSensor();
+        if (s != null) {
+            return s.getDisplayName();
+        }
+        return null;
+    }
 
     public NamedBeanHandle<Sensor> getControlSensorHandle() {
         return _controlSensor;
@@ -443,6 +411,10 @@ public class PositionableShape extends PositionableJComponent
     public int getChangeLevel() {
         return _changeLevel;
     }
+    
+    public void setChangeLevel(int l) {
+        _changeLevel = l;
+    }
 
     public void dispose() {
         if (_controlSensor != null) {
@@ -451,9 +423,24 @@ public class PositionableShape extends PositionableJComponent
         _controlSensor = null;
     }
 
+    DrawFrame _editFrame;
+    
+    protected void setEditFrame(DrawFrame f) {
+        _editFrame = f;
+    }
+
+    protected void setEditParams() {
+        _editFrame.setDisplayParams(this);
+        drawHandles();
+    }
+
+    protected void closeEditFrame() {
+        _editFrame = null;
+        removeHandles();
+    }
+
     public void removeHandles() {
         _handles = null;
-//    	invalidate();
         repaint();
     }
 
@@ -510,31 +497,39 @@ public class PositionableShape extends PositionableJComponent
         if (_hitIndex >= 0 && _editor.isEditable()) {
             int deltaX = event.getX() - _lastX;
             int deltaY = event.getY() - _lastY;
+            int height = _height;
+            int width = _width;
             switch (_hitIndex) {
                 case TOP:
                     if (_height - deltaY > SIZE) {
-                        setHeight(_height - deltaY);
+                        height = _height - deltaY;
                         _editor.moveItem(this, 0, deltaY);
                     } else {
-                        setHeight(SIZE);
-                        _editor.moveItem(this, 0, _height - SIZE);
+                        height = SIZE;
                     }
+                    setHeight(height);
                     break;
                 case RIGHT:
-                    setWidth(Math.max(SIZE, _width + deltaX));
+                    width = Math.max(SIZE, _width + deltaX);
+                    setWidth(width);
                     break;
                 case BOTTOM:
-                    setHeight(Math.max(SIZE, _height + deltaY));
+                    height = Math.max(SIZE, _height + deltaY);
+                    setHeight(height);
                     break;
                 case LEFT:
                     if (_width - deltaX > SIZE) {
-                        setWidth(Math.max(SIZE, _width - deltaX));
+                        width = Math.max(SIZE, _width - deltaX);
                         _editor.moveItem(this, deltaX, 0);
                     } else {
-                        setWidth(SIZE);
-                        _editor.moveItem(this, _width - SIZE, 0);
+                        width = SIZE;
                     }
+                    setWidth(width);
                     break;
+            }
+            if (_editFrame!=null) {
+                _editFrame.setDisplayWidth(_width);
+                _editFrame.setDisplayHeight(_height);
             }
             makeShape();
             updateSize();

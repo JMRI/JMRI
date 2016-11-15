@@ -25,7 +25,7 @@ public class SwingTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.lenz.swing.SwingTest");  // no tests in this class itself
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
             suite.addTest(jmri.jmrix.lenz.swing.liusb.LIUSBTest.suite());
             suite.addTest(jmri.jmrix.lenz.swing.li101.LI101Test.suite());
             suite.addTest(jmri.jmrix.lenz.swing.mon.MonTest.suite());

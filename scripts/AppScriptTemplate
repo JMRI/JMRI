@@ -422,7 +422,7 @@ if [ -n "${pre_classpath}" ] ; then
     pre_classpath="${pre_classpath#:}"
     CP="${pre_classpath}:"
 fi
-CP="${CP}.:classes:java/classes:jmri.jar"
+CP="${CP}.:classes:target/classes:jmri.jar"
 # add contents of lib
 CP="${CP}:$( ls -m ${LIBDIR}/*.jar | tr -d ' \n' | tr ',' ':' )"
 
@@ -479,7 +479,7 @@ fi
 
 OPTIONS="${jmri_options} -noverify"
 OPTIONS="${OPTIONS} -Djava.security.policy=${LIBDIR}/security.policy"
-OPTIONS="${OPTIONS} -Djava.rmi.server.codebase=file:java/classes/"
+OPTIONS="${OPTIONS} -Djava.rmi.server.codebase=file:target/classes/"
 OPTIONS="${OPTIONS} -Djava.library.path=.:$SYSLIBPATH:${LIBDIR}"
 
 # memory start and max limits

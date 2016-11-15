@@ -7,10 +7,12 @@
     <choice>Add value to baseline braking rate (increases braking delay)</choice>
     <choice xml:lang="it">Aggiunge valore al tasso di Frenata base</choice>
     <choice xml:lang="de">Addiere Wert zur Basis-Bremsverzögerung</choice>
+    <choice xml:lang="cs">Přidat hodnotu k základní míře brždění (zvyšuje zpoždění brždění)</choice>
   </enumChoice>
   <enumChoice choice="Subtract value from baseline braking rate (decreases braking delay)">
     <choice>Subtract value from baseline braking rate (decreases braking delay)</choice>
     <choice xml:lang="it">Sottrae valore al tasso di Frenata base</choice>
     <choice xml:lang="de">Subtrahiere Wert von der Basis-Bremsverzögerung</choice>
+    <choice xml:lang="cs">Odečíst hodnotu od základní míry brždění (snižuje zpoždění brždění)</choice>
   </enumChoice>
 </enumVal>

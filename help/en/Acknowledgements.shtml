@@ -13,8 +13,7 @@
   <meta name="keywords" content=
   "java model railroad JMRI CMRI decoderpro panelpro loconet lenz nce easydcc dcc nmra">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -234,6 +233,9 @@
         for <a href="http://www.ppp-digital.es/">PpP
         decoders</a>.</li>
 
+        <li>Claudio Capaccio of LaisDCC provided definitions
+        for their line of decoders</li>
+        
         <li>Bill Carman, who located information on the MRC/Athearn
         F Unit and Challenger decoders</li>
 
@@ -832,6 +834,9 @@
 
         <li>Dustin Shoup, who figured out how to preserve order in
         XML files</li>
+
+        <li>Petr Šídlo, who provided a large update to the Czech
+        translations of JMRI</li>
 
         <li>Pekka Siiskonen, who suggested we add error numbers to
         error messages to make it easier to discuss which specific

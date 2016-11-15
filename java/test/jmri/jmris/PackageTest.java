@@ -34,22 +34,19 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmris.JmriConnectionTest.suite());
         suite.addTest(jmri.jmris.ServiceHandlerTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            // put any tests that require a UI here.
-            suite.addTest(jmri.jmris.JmriServerFrameTest.suite());
-            suite.addTest(jmri.jmris.JmriServerActionTest.suite());
-        }
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JmriServerFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JmriServerActionTest.class));
 
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
