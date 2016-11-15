@@ -3,6 +3,7 @@ package jmri.jmrit.ussctc;
 import java.awt.GraphicsEnvironment;
 import javax.swing.Action;
 import javax.swing.JFrame;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -35,14 +36,13 @@ public class OsIndicatorActionTest {
     @Before
     public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initRouteManager();
     }
 
     @After
     public void tearDown() throws Exception {
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

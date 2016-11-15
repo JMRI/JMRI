@@ -3,8 +3,11 @@ package jmri.jmrit.ussctc;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import javax.swing.Action;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -28,5 +31,18 @@ public class FollowerActionTest {
         Frame f = JFrameOperator.waitJFrame("test", true, true);
         Assert.assertNotNull(f);
         f.dispose();
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initRouteManager();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        JUnitUtil.resetInstanceManager();
+        apps.tests.Log4JFixture.tearDown();
     }
 }
