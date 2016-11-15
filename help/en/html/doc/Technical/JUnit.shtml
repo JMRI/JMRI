@@ -236,25 +236,140 @@ runs a specific test or test suite.<br>
       doesn't exist, see the section below about writing tests for
       a new class)
 
-      <p>To that test class, add one or more test methods using the
+      <p>If the test suite has not been converted to JUnit4 yet,
+      one or more test methods can be added to the class using the
       JUnit conventions. Basically, each method needs a name that
       starts with "test", e.g. "testFirst", and has to have a
       "public void" signature. JUnit will handle everything after
       that.</p>
+
+      <p>If the test suite has been converted to JUnit4, the JUnit4 
+      conventions require that the test be preceeded by the 
+      "<code>@Test</code>" annotation:
+          <pre style="font-family: monospace;">
+    @Test
+    public void testSomething() {
+        ...
+    }
+</pre>
+
+      <p>See the section on <a href="#junit4">JUnit4 Migration</a> for
+      more information on JUnit4.</p>
 
       <p>In general, test methods should be small, testing just one
       piece of the classes operation. That's why they're called
       "unit" tests.</p>
 
       <h3><a name="write4NewClass" id="write4NewClass">Writing
-      Tests for a New Class</a></h3>(Needs info here: basically,
-      copy some other package, and don't forget to put an entry in
-      the enclosing package's test suite)
+      Tests for a New Class</a></h3>
+
+      To write a test for a new class, you need to create a file that 
+      shadows your new class.   For our example, consider creating a
+      test for a new class that appears in 
+      "<code>src/jmri/jmrix/foo/Foo.java</code>".  The new test would
+      be created in a file named "<code>test/jmri/jmrix/foo/FooTest.java</code>"
+.</p>
+      <p>Assuming that the Foo class has a default constructor named <code>foo()</code>,
+      Then the following would be minimal contents for the <code>test/jmri/jmrix/foo/FooTest.java</code> file:
+
+          <pre style="font-family: monospace;">
+    package jmri.jmrix.foo;
+
+    import org.junit.After;
+    import org.junit.Assert;
+    import org.junit.Before;
+    import org.junit.Ignore;
+    import org.junit.Test;
+
+    /*
+     * Tests for the Foo Class
+     * @author  Your Name   Copyright (C) 2016
+     */
+    public class FooTest {
+
+       @Test
+       public void testCtor() {
+           Assert.AssertNotNull("Foo Constructor Return",new foo());
+       }
+  
+      @Before
+      public void setUp() {
+         apps.tests.Log4JFixture.setUp();
+      }
+     
+     @After
+     public void setUp() {
+        apps.tests.Log4JFixture.tearDown();
+     }
+  }
+</pre>
+
+     <p>
+     You may also choose to copy an existing test file and make 
+     modifications to suite the needs of your new class.
+     </p>
+
+     <p>
+     After the test class is created it needs to be added to the 
+     package test for the package.  In the case of our example, 
+     that should be the file <code>test/jmri/jmrix/foo/PackageTest.java</code>
+     </p>
+
+     <p>
+     If the PackageTest has not been converted to JUnit4 format yet, the following line needs to be added to the list of test classes in the "suite" method:</p>
+     <p>
+     <code>suite.addTest(new junit.framework.JUnit4TestAdapter(FooTest.class));
+     </p>
+
+     <p>
+     If the PackageTest has been converted to JUnit4 format, then "<code>FooTest.class</code>" needs to be added to the list test classes in the <code>@Suite.SuiteClasses</code> annotation that appears before the begining of the PackageTest class.</p>
 
       <h3><a name="Write4NewPackage" id="Write4NewPackage">Writing
-      Tests for a New Package</a></h3>(Needs info here: basically,
-      copy some other package, and don't forget to put an entry in
-      the enclosing package's test suite)
+      Tests for a New Package</a></h3>
+
+      To write a tests for a new package, in addition to <a href=#write4NewClass">writing tests for each class</a>, you need to create a "<code>PackageTest.java</code> file that calls your new tests.  For our example, we will create the file "<code>test/jmri/jmrix/foo/PackageTest.java</code>" and call the tests in "<code>test/jmri/jmrix/foo/FooTest.java</code>".</p>
+
+      The following would be minimal contents for the <code>test/jmri/jmrix/foo/PackageTest.java</code> file:
+
+          <pre style="font-family: monospace;">
+    package jmri.jmrix.foo;
+
+    import org.junit.runner.RunWith;
+    import org.junit.runners.Suite;
+
+    /**
+     * tests for the jmri.jmrix.sprog package
+     *
+     * @author Your Name Copyright (C) 2016
+     */
+    @RunWith(Suite.class)
+    @Suite.SuiteClasses({
+       FooTest.class
+    })
+    public class PackageTest{
+    }
+</pre>
+
+     <p>
+     You may also choose to copy an existing test file and make 
+     modifications to suite the needs of your new class.
+
+     <p>
+     After the PackageTest class is created it needs to be added to the 
+     PackageTest for the enclosing package.  In the case of our example, 
+     the enclosing package test would be the file <code>test/jmri/jmrix/PackageTest.java</code>
+     </p>
+
+     <p>
+     If the enclosing PackageTest has not been converted to JUnit4 format yet, the following line needs to be added to the list of test classes in the "suite" method:</p>
+     <p>
+     <code>suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.foo.PackageTest.clas));
+     </p>
+
+     <p>
+     If the enclosing PackageTest has been converted to JUnit4 format, then "<code>jmri.jmrix.foo.PackageTest.class</code>" needs to be added to the list test classes in the <code>@RunWithSuite</code> annotation that appears before the begining of the enclosing PackageTest class.</p>
+
+
 
       <h2><a name="keyMetaphors" id="keyMetaphors">Key Test
       Metaphors</a></h2>
