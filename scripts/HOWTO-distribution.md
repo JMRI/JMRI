@@ -53,7 +53,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 ================================================================================
 ## Notification
 
-- Create a [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create release-n.n.n". 
+- Create a [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create release-n.n.n". (This might already exist, if it was properly created at the end of the last build cycle)
 
 
 ================================================================================
@@ -204,13 +204,13 @@ where the date at the end should be the date (and optionally time) of the last r
 - Put a comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note
 
 ```
-The release-4.5.4 branch has been created. 
+The release-4.5.6 branch has been created. 
 
-From now on, please document your changes in the [jmri4.5.5.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.5.5.shtml) release note file.
+From now on, please document your changes in the [jmri4.5.7.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.5.7.shtml) release note file.
 
-Maintainers, please set the 4.5.5 milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
+Maintainers, please set the 4.5.7 milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
 
-Jenkins will be creating files shortly at the [CI server](http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.4/)
+Jenkins will be creating files shortly at the [CI server](http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.6/)
 ````
 
 ================================================================================
@@ -283,11 +283,11 @@ If you're building locally:
 
 - Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force via ["Build Now"](http://jmri.tagadab.com/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/) update). Confirm visible on web.
 
-- Announce the file set via email to jmri-developers@lists.sf.net with a subject line "First 4.5.4 files available":
+- Announce the file set via email to jmri-developers@lists.sf.net with a subject line "First 4.5.6 files available":
 
-First JMRI 4.5.4 files are available in the usual way at:
+First JMRI 4.5.6 files are available in the usual way at:
 
-http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.4
+http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.6
 
 Feedback appreciated. I would like to release this later today or tomorrow morning. 
 
@@ -337,7 +337,7 @@ It still gets a bit tricky if there’s a difference (e.g. due to a conflict wit
 
  - (If you use a browser to download instead of curl, make sure the .tgz wasn't auto-expanded)
 
- - (The "./testrelease 4.5.4" local script on shell.sf.net does the following steps, except for the edit, of course)
+ - (The "./testrelease 4.5.6" local script on shell.sf.net does the following steps, except for the edit, of course)
 ```
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
@@ -395,15 +395,15 @@ Note: Unlike releasing files to SourceForge, once a GitHub Release is created it
 ```
    - Description content (really need to automate this!):
 ```    
-[Release notes](http://jmri.org/releasenotes/jmri4.5.4.shtml)
+[Release notes](http://jmri.org/releasenotes/jmri4.5.6.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.5.4-Rb93cb4f.dmg](https://github.com/JMRI/JMRI/releases/download/v4.5.2/JMRI.4.5.4-Rb93cb4f.dmg) | f613c24cef0ba3e2aaa51575ba6566ef20ca57cb3f909ca4e3d8151f6f92693a
-[JMRI.4.5.4-Rb93cb4f.exe](https://github.com/JMRI/JMRI/releases/download/v4.5.2/JMRI.4.5.4-Rb93cb4f.exe) | 228b44a8bd3036f47be97492dcf51e37c64673bf322e417eefd849ab505ca5a6
-[JMRI.4.5.4-Rb93cb4f.tgz](https://github.com/JMRI/JMRI/releases/download/v4.5.2/JMRI.4.5.4-Rb93cb4f.tgz) | afe3d48bb6dc93f678dda3e6ce714c8683d225e80b7e884fe6c01e7aff038ba5
+[JMRI.4.5.6-R9bfae82.dmg](https://github.com/JMRI/JMRI/releases/download/v4.5.6/JMRI.4.5.6-R9bfae82.dmg) | e7223f2ba8163f4b607f1d77d8817eeaff6227b0345d16a92c8cba961f837809
+[JMRI.4.5.6-R9bfae82.exe](https://github.com/JMRI/JMRI/releases/download/v4.5.6/JMRI.4.5.6-R9bfae82.exe) | 27c8542568624dec65943b7787e80235f3cad73f7e598ea1c883573cf7837263
+[JMRI.4.5.6-R9bfae82.tgz](https://github.com/JMRI/JMRI/releases/download/v4.5.6/JMRI.4.5.6-R9bfae82.tgz) | 84cb9ad5411eda97802a86ecaca53e718ec23353b8a57767fa287359bd5d4057
 ```
 
 - Attach files by dragging them in (you might have to have downloaded them above via e.g. a separate 
