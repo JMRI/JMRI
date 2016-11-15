@@ -123,6 +123,7 @@ public class Location implements java.beans.PropertyChangeListener {
         String old = _name;
         _name = name;
         if (!old.equals(name)) {
+            LocationManager.instance().resetNameLengths(); // recalculate max location name length for manifests
             setDirtyAndFirePropertyChange(NAME_CHANGED_PROPERTY, old, name);
         }
     }
