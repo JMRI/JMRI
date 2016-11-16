@@ -17,11 +17,16 @@ import java.awt.GraphicsEnvironment;
 public class DecoderPro3Test {
 
     @Test
-    @Ignore("functions locally,fails on travis/appveyor")
+    @Ignore("works locally, fails on travis/appveyor")
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());        
         String[] args = {"DecoderProConfig3.xml"};
-        apps.AppsBase a = new DecoderPro3(args);
+        apps.AppsBase a = new DecoderPro3(args){
+            // force the application to not actually start.  
+            // Just checking construction.
+            @Override 
+            protected void start(){};
+        };
         Assert.assertNotNull(a);
     }
 

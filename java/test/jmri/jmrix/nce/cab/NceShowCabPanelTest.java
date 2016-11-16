@@ -1,4 +1,4 @@
-package jmri.jmrix.dccpp.swing.mon;
+package jmri.jmrix.nce.cab;
 
 import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
@@ -9,17 +9,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test simple functioning of DCCppMonPane
+ * Test simple functioning of NceShowCabPanel
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class DCCppMonPaneTest {
-
-    jmri.jmrix.dccpp.DCCppSystemConnectionMemo memo = null;
+public class NceShowCabPanelTest {
 
     @Test
     public void testCtor() {
-        DCCppMonPane action = new DCCppMonPane();
+        NceShowCabPanel action = new NceShowCabPanel();
         Assert.assertNotNull("exists", action);
     }
 
@@ -27,10 +25,6 @@ public class DCCppMonPaneTest {
     public void setUp() {
         Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
-        jmri.jmrix.dccpp.DCCppInterfaceScaffold t = new jmri.jmrix.dccpp.DCCppInterfaceScaffold(new jmri.jmrix.dccpp.DCCppCommandStation());
-        memo = new jmri.jmrix.dccpp.DCCppSystemConnectionMemo(t);
-
-        jmri.InstanceManager.store(memo, jmri.jmrix.dccpp.DCCppSystemConnectionMemo.class);
     }
 
     @After
