@@ -82,9 +82,6 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.loconet.locoio.PackageTest.suite());
         suite.addTest(jmri.jmrix.loconet.locogen.PackageTest.suite());
 
-        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
-        }
-
         return suite;
     }
 
