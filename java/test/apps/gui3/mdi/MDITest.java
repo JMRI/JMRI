@@ -26,7 +26,7 @@ public class MDITest {
             // force the application to not actually start.  
             // Just checking construction.
             @Override
-            protected void start(){};
+            protected void start(){}
         };
         Assert.assertNotNull(a);
     }

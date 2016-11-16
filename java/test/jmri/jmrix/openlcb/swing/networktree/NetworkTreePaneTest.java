@@ -36,7 +36,7 @@ import org.openlcb.swing.networktree.TreePane;
  *
  * @author Bob Jacobsen Copyright 2009
  */
-public class NetworkTreePaneDemo {
+public class NetworkTreePaneTest {
 
     NodeID nid1 = new NodeID(new byte[]{0, 0, 0, 0, 0, 1});
     NodeID nid2 = new NodeID(new byte[]{0, 0, 0, 0, 0, 2});
@@ -69,14 +69,8 @@ public class NetworkTreePaneDemo {
         Message msg = new ProducerIdentifiedMessage(nid1, eventA, EventState.Unknown);
         store.put(msg, null);
 
-        if(GraphicsEnvironment.isHeadless()) {
-           return; // don't bother setting up a frame in headless.
-        }
-        // Test is really popping a window before doing all else
-        frame = new JFrame();
-        frame.setTitle("TreePane Test");
+        // build the TreePane, but don't put it in a frame (yet).
         pane = new TreePane();
-        frame.add(pane);
         pane.initComponents(store, null, null,
                 new NodeTreeRep.SelectionKeyLoader() {
                     public NodeTreeRep.SelectionKey cdiKey(String name, NodeID node) {
@@ -87,6 +81,14 @@ public class NetworkTreePaneDemo {
                         };
                     }
                 });
+
+        if(GraphicsEnvironment.isHeadless()) {
+           return; // don't bother setting up a frame in headless.
+        }
+        // Test is really popping a window before doing all else
+        frame = new JFrame();
+        frame.setTitle("TreePane Test");
+        frame.add(pane);
         frame.pack();
         frame.setMinimumSize(new java.awt.Dimension(200, 200));
         frame.setVisible(true);
@@ -100,6 +102,12 @@ public class NetworkTreePaneDemo {
            return; // don't bother tearing down a frame in headless.
         }
         frame.setVisible(false);
+    }
+
+    @Test
+    public void testCTor(){
+       // constructor in setUp
+       Assert.assertNotNull(pane);
     }
 
     @Test
