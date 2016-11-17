@@ -25,6 +25,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.21.0
+; - Add option '/project' parameter to specify specific project
+; -------------------------------------------------------------------------
 ; - Version 0.1.20.0
 ; - Allow options to be specified either as '/' or '-'
 ; - Add option '/J' to pass JVM option
@@ -34,7 +37,7 @@
 ; - Increase minimum memory requirement to 96 MB
 ; - Change maximum memory requirement to be between 192 and 768 and to use
 ; - maximum of half physical physical available RAM when above 192
-; - Allow use of '/profile' parameter to specify specific profile
+; - Allow use of '/profile' parameter to specify specific project
 ; -------------------------------------------------------------------------
 ; - Version 0.1.18.0
 ; - Check if application is already running with option to continue
@@ -133,7 +136,7 @@
 ; -------------------------------------------------------------------------
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
-!define COPYRIGHT  "© 1997-2016 JMRI Community"   ; Copyright string
+!define COPYRIGHT  "ù 1997-2016 JMRI Community"   ; Copyright string
 !define VER        "0.1.20.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
@@ -162,7 +165,7 @@ Var JMRIOPTIONS ; holds the JMRI-specific options (read from JMRI_OPTIONS)
 Var JMRIPREFS  ; holds the path to user preferences (read from JMRI_PREFSDIR)
 Var JMRIHOME   ; holds the path to JMRI program files (read from JMRI_HOME)
 Var JMRIUSERHOME ; holds the path to user files (read from JMRI_USERHOME)
-Var JMRIPROFILE ; holds the file to use for profile
+Var JMRIPROFILE ; holds the file to use for project
 Var CALCMAXMEM ; holds the calculated maximum memory
 Var PARAMETERS ; holds the commandline parameters (class and config file)
 Var NOISY      ; used to determine if console should be visible or not
@@ -241,19 +244,19 @@ Section "Main"
   System::Call kernel32::IsWow64Process(is,*i.s)
   Pop $x64
   DetailPrint "Result: $x64"
-  
+
   ; -- Find the JAVA install
-  
+
   ; -- Initialise JRE architecture variable
   StrCpy $x64JRE ${ARCH_32BIT}
-  
+
   ; -- Determine which JAVA exe to use
   StrCpy $R0 "java"
   StrCmp $NOISY ${SW_NORMAL} IsNoisy
   StrCpy $R0 "$R0w"
   IsNoisy:
   StrCpy $JAVAEXE "$R0.exe"
-  
+
   ; -- If we're running x64, first check for 64-bit JRE
   StrCmp ${ARCH_32BIT} $x64 JRESearch
     ; -- Now check if we should force 32-bit JRE usage on x64
@@ -279,7 +282,7 @@ Section "Main"
       DetailPrint "Setting x86 registry view..."
       StrCpy $x64JRE ${ARCH_32BIT}
       Goto JRESearch
-    
+
   JreNotFound:
     MessageBox MB_OK|MB_ICONSTOP "Java not found!"
     Goto Exit
@@ -287,13 +290,13 @@ Section "Main"
   JreFound:
   StrCpy $JAVAPATH $R0
   DetailPrint "JavaPath: $JAVAPATH"
-  
+
   ; -- Now we've determined Java is basically OK, copy the file to a
   ; -- temporary location and rename it
-  
+
   ; -- First try to remove any old temporary launchers
   RMDir /r $TEMP\LaunchJMRI
-  
+
   ; -- Now create temporary directory and copy JAVA launcher across
   CreateDirectory `$TEMP\LaunchJMRI`
   StrCpy $JEXEPATH `$TEMP\LaunchJMRI\$APPNAME.exe`
@@ -301,7 +304,7 @@ Section "Main"
   System::Call "kernel32::CopyFile(t `$JAVAPATH`, t `$JEXEPATH`, b `0`) ?e"
   Pop $0
   DetailPrint "Result: $0"
-  
+
   ; -- Check that the temporary launcher file exists
   ClearErrors
   FindFirst $0 $1 $JEXEPATH
@@ -350,7 +353,7 @@ Section "Main"
   cmp_done:
   DetailPrint "MinMemory: ${MINMEM}m"
   DetailPrint "MaxMemory: $CALCMAXMEMm"
-  
+
   ; -- Build options string
   ; -- JVM and RMI options
 
@@ -359,10 +362,10 @@ Section "Main"
   ; -- If not defined, it returns an empty value
   ReadEnvStr $JMRIOPTIONS "JMRI_OPTIONS"
 
-  ; -- Add profile (if specified)
+  ; -- Add project (if specified)
   StrCmp $JMRIPROFILE "" contOptions
     StrCpy $JMRIOPTIONS '$JMRIOPTIONS -Dorg.jmri.profile="$JMRIPROFILE"'
-  
+
   contOptions:
   StrCpy $OPTIONS "$JMRIOPTIONS $JVMOPTIONS -noverify"
   StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.d3d=false"
@@ -385,7 +388,7 @@ Section "Main"
   StrCpy $OPTIONS "$OPTIONS -Xmx$CALCMAXMEMm"
   ; -- default file coding
   StrCpy $OPTIONS "$OPTIONS -Dfile.encoding=UTF-8"
-  
+
   ; -- Read environment variable
   ; -- JMRI_USERHOME - user files location
   ClearErrors
@@ -395,7 +398,7 @@ Section "Main"
     DetailPrint "Set user.home to JMRI_USERHOME: $JMRIUSERHOME"
     StrCpy $OPTIONS `$OPTIONS -Duser.home="$JMRIUSERHOME"`
     Goto ReadPrefsDir
-    
+
   CheckUserHome:
   ; -- If not defined, check user home is consistent
   Call CheckUserHome
@@ -478,13 +481,13 @@ Section "Main"
 
   ; -- We're no longer active
   DetailPrint "Return code from process: $7"
-  
+
   ; -- Check the return code is 100 - if so, re-launch
   StrCmp $7 100 LaunchJMRI
-  
+
   ; -- Set ErrorLevel to return code
   SetErrorLevel $7
-  
+
   Exit:
   DetailPrint "To copy this text to the clipboard, right click then choose"
   DetailPrint "  'Copy Details To Clipboard'"
@@ -503,7 +506,7 @@ Function .onInit
   Call GetParameters
   Pop $0
   StrCmp $0 "" 0 cmdlineOk
-    MessageBox MB_OK|MB_ICONSTOP "No command line parameter. Usage 'LaunchJMRI.exe [/debug] [/noisy] [/32bit] [/profile <profileID>] [/JOPTION] class [config]'"
+    MessageBox MB_OK|MB_ICONSTOP "No command line parameter. Usage 'LaunchJMRI.exe [/debug] [/noisy] [/32bit] [/project <projectID>] [/JOPTION] class [config]'"
     Abort
 
   cmdlineOk:
@@ -522,6 +525,7 @@ Function .onInit
   StrCmp $2 "noisy" optsNoisy
   StrCmp $2 "32bit" opts32bit
   StrCmp $2 "profile" optsProfile
+  StrCmp $2 "project" optsProfile
   ; -- Now check if we've got a '/J | -J' option
   StrCpy $2 $2 1
   StrCmp $2 "J" optsJVMOpts
@@ -533,15 +537,15 @@ Function .onInit
   optsDebug:
   SetSilent normal
   Goto cmdLoop
-  
+
   optsNoisy:
   StrCpy $NOISY ${SW_NORMAL}
   Goto cmdLoop
-  
+
   opts32bit:
   StrCpy $FORCE32BIT ${FLAG_YES}
   Goto cmdLoop
-  
+
   optsProfile:
   Push $0
   Call GetParameters
@@ -553,7 +557,7 @@ Function .onInit
   StrCmp $2 '"' 0 cmdLoop
     StrCpy $JMRIPROFILE $JMRIPROFILE "" 1
     Goto cmdLoop
-    
+
   optsJVMOpts:
   ; -- Format is '-J-Dsun.java2d.hdiaware=true'
   ; -- to pass '-Dsun.java2d.hdiaware=true'
@@ -571,7 +575,7 @@ Function .onInit
   Push $0
   Call GetWord
   Pop $CLASS
-  
+
   ; -- Determine the application name (last part of class name)
   StrLen $1 $CLASS
   appNameLoop:
@@ -585,7 +589,7 @@ Function .onInit
     StrCpy $APPNAME $CLASS "" $1
 
   ; -- Now check if we've already got an instance of this application running
-  
+
   System::Call 'kernel32::CreateMutex(i 0, i 0, t "JMRI.$CLASS") ?e'
   Pop $R0
   StrCmp $R0 0 okToLaunch
@@ -720,11 +724,11 @@ Function GetParameters
   Push $R2
   Push $R3
   Push $R4
-  
+
   StrCpy $R4 $R0
   StrCpy $R2 1
   StrLen $R3 $R4
-  
+
   ; -- Check for quote or space
   StrCpy $R0 $R4 $R2
   StrCmp $R0 '"' 0 +3

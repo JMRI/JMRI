@@ -53,7 +53,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
             try {
                 sharedConnections = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(CONNECTIONS, NAMESPACE, true));
             } catch (NullPointerException ex) {
-                // Normal if this is a new profile
+                // Normal if this is a new project
                 log.info("No connections configured.");
                 log.debug("Null pointer thrown reading shared configuration.", ex);
             }
@@ -61,7 +61,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
                 try {
                     perNodeConnections = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(CONNECTIONS, NAMESPACE, false));
                 } catch (NullPointerException ex) {
-                    // Normal if the profile has not been used on this computer
+                    // Normal if the project has not been used on this computer
                     log.info("No local configuration found.");
                     log.debug("Null pointer thrown reading local configuration.", ex);
                     // TODO: notify user

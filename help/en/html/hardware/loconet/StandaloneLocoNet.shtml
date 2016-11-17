@@ -1033,7 +1033,7 @@
       "multipleconnections">Multiple active LocoNet
       connections</a></h3>
 
-      <p>When a JMRI profile is configured for more than one active
+      <p>When a JMRI project is configured for more than one active
       LocoNet connection, JMRI treats each active LocoNet
       connection as if it is connected to an independent LocoNet.
       When JMRI sends a message to LocoNet, it will send only to
@@ -1044,7 +1044,7 @@
       LocoNet messages to a LocoNet connection based on "Connection
       Prefix"</a></h4>
 
-      <p>Each active LocoNet connection within a given JMRI profile
+      <p>Each active LocoNet connection within a given JMRI project
       has a unique "Connection Prefix" as well as a unique
       "Connection Name". For each active LocoNet connection, the
       main window of the JMRI tool will show one pull-down menu for
@@ -1057,7 +1057,7 @@
       interface associated with the "Connection Name" shown as the
       pull-down menu name.</p>
 
-      <p>For example, consider a JMRI profile with three active
+      <p>For example, consider a JMRI project with three active
       LocoNet connections, named "LocoNet", "LocoNet2", and
       "LocoNet3". If one opens up the "Configure Command Station"
       tool in the "LocoNet2" menu, the LocoNet messages related to
@@ -1098,7 +1098,7 @@
 
       <p>JMRI allows the user to to configure how some of the JMRI
       tools route their messages to the various connections by
-      default. This configuration is done via the profile's
+      default. This configuration is done via the project's
       "Preferences", in the "Defaults" configuration tab. These
       settings force the JMRI tools to <strong>assume</strong> that
       certain operations will be directed to certain hardware
@@ -1127,7 +1127,7 @@
       LocoNet traffic seen on one connection will be seen on the
       other connected LocoNet hardware connection(s).</p>
 
-      <p>As an example of this, consider a JMRI profile which
+      <p>As an example of this, consider a JMRI project which
       configures three active LocoNet connections, with connection
       names "LocoNet", "LocoNet2", and "LocoNet3". Assume that the
       first and second of these are connected to the same LocoNet,

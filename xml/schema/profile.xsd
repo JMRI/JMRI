@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- Schema for JMRI profile support.          -->
+<!-- Schema for JMRI project support.          -->
 
 <!-- This schema is part of JMRI. Copyright 2013.                           -->
 <!--                                                                        -->
@@ -30,11 +30,12 @@
                 http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
             "
 >
-  
+
+    <!-- for historical reasons project* elements and attributes are named profile* -->
     <xs:element name="profileConfig">
         <xs:annotation>
             <xs:documentation>
-                This is the schema representing a profile catalog
+                This is the schema representing a project catalog
             </xs:documentation>
             <xs:appinfo>
                 <jmri:usingclass configurexml="false">jmri.profile.ProfileManager</jmri:usingclass>
@@ -50,14 +51,14 @@
                                     <xs:attribute name="id" type="xs:string" use="required">
                                         <xs:annotation>
                                             <xs:documentation>
-                                                The Id of the profile.
+                                                The Id of the project.
                                             </xs:documentation>
                                         </xs:annotation>
                                     </xs:attribute>
                                     <xs:attribute name="path" type="xs:string" use="required">
                                         <xs:annotation>
                                             <xs:documentation>
-                                                The location of the profile.
+                                                The location of the project.
                                             </xs:documentation>
                                         </xs:annotation>
                                     </xs:attribute>
@@ -74,7 +75,7 @@
                                     <xs:attribute name="path" type="xs:string" use="required">
                                         <xs:annotation>
                                             <xs:documentation>
-                                                Search path for profiles.
+                                                Search path for projects.
                                             </xs:documentation>
                                         </xs:annotation>
                                     </xs:attribute>

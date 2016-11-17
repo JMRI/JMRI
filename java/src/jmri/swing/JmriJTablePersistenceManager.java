@@ -312,7 +312,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
                 }
             });
         } catch (NullPointerException ex) {
-            log.info("Table preferences not found.\nThis is expected on the first time the \"{}\" profile is used on this computer.",
+            log.info("Table preferences not found.\nThis is expected on the first time the \"{}\" project is used on this computer.",
                     ProfileManager.getDefault().getActiveProfile().getName());
         }
         this.setInitialized(profile, true);

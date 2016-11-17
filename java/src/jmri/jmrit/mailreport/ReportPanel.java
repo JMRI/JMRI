@@ -55,7 +55,7 @@ public class ReportPanel extends JPanel {
     JCheckBox checkProfile;
     JCheckBox checkCopy;
 
-    // Define which profile sub-directories to include
+    // Define which project sub-directories to include
     // In lowercase as I was too lazy to do a proper case-insensitive check...
     String[] profDirs = {"networkservices", "programmers", "throttle"};
 
@@ -204,17 +204,17 @@ public class ReportPanel extends JPanel {
                 }
             }
 
-            // add profile files if OK
+            // add project files if OK
             if (checkProfile.isSelected()) {
-                log.debug("prepare profile attachment");
-                // Check that a profile has been loaded
-                Profile profile = ProfileManager.getDefault().getActiveProfile();
-                File file = profile.getPath();
+                log.debug("prepare project attachment");
+                // Check that a project has been loaded
+                Profile project = ProfileManager.getDefault().getActiveProfile();
+                File file = project.getPath();
                 if (file != null) {
-                    log.debug("add profile: {}", file.getPath());
-                    // Now zip-up contents of profile
+                    log.debug("add project: {}", file.getPath());
+                    // Now zip-up contents of project
                     // Create temp file that will be deleted when Java quits
-                    File temp = File.createTempFile("profile", ".zip");
+                    File temp = File.createTempFile("project", ".zip");
                     temp.deleteOnExit();
 
                     FileOutputStream out = new FileOutputStream(temp);
@@ -227,8 +227,8 @@ public class ReportPanel extends JPanel {
 
                     msg.addFilePart("logfileupload[]", temp);
                 } else {
-                    // No profile loaded
-                    log.warn("No profile loaded - not sending");
+                    // No project loaded
+                    log.warn("No project loaded - not sending");
                 }
             }
 
@@ -286,7 +286,7 @@ public class ReportPanel extends JPanel {
     }
 
     private void addDirectory(ZipOutputStream out, File source) {
-        log.debug("Add profile: {}", source.getName());
+        log.debug("Add project: {}", source.getName());
         addDirectory(out, source, "");
     }
 

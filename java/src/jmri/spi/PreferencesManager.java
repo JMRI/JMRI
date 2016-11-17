@@ -23,7 +23,7 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
 
     /**
      * Initialize the PreferencesManager with preferences associated with the
-     * provided Profile.
+     * provided project.
      *
      * Implementing classes should throw an InitializationException with a user
      * readable localized message, since it most likely be displayed to the
@@ -31,19 +31,19 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
      * returns true if throwing an InitializationException to ensure that the
      * provider is not repeatedly initialized.
      *
-     * @param profile the configuration profile used for this initialization
+     * @param project the project used for this initialization
      * @throws jmri.util.prefs.InitializationException if the user needs to be
      *                                                 notified of an issue
      */
-    public void initialize(@Nonnull Profile profile) throws InitializationException;
+    public void initialize(@Nonnull Profile project) throws InitializationException;
 
     /**
-     * Test if the PreferencesManager is initialized for the provided Profile.
+     * Test if the PreferencesManager is initialized for the provided project.
      *
-     * @param profile the configuration profile to test against
+     * @param project the project to test against
      * @return true if the provider is initialized.
      */
-    public boolean isInitialized(@Nonnull Profile profile);
+    public boolean isInitialized(@Nonnull Profile project);
 
     /**
      * Get the set of PreferencesProviders that must be initialized prior to
@@ -71,10 +71,10 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
     Iterable<Class<?>> getProvides();
 
     /**
-     * Save the preferences that this provider manages for the provided Profile.
+     * Save the preferences that this provider manages for the provided project.
      *
-     * @param profile the profile associated with the preferences to save
+     * @param project the project associated with the preferences to save
      */
-    public void savePreferences(@Nonnull Profile profile);
+    public void savePreferences(@Nonnull Profile project);
 
 }

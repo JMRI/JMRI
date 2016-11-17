@@ -374,7 +374,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 int index = ProfileManager.getDefault().getAllSearchPaths().indexOf(chooser.getSelectedFile());
                 this.searchPathsTbl.setRowSelectionInterval(index, index);
             } catch (IOException ex) {
-                log.warn("Unable to write profiles while adding search path {}", chooser.getSelectedFile().getPath(), ex);
+                log.warn("Unable to write projects while adding search path {}", chooser.getSelectedFile().getPath(), ex);
                 JOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ProfilePreferencesPanel.btnAddSearchPath.errorMessage",
                                 chooser.getSelectedFile().getPath(),
@@ -394,7 +394,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
             try {
                 ProfileManager.getDefault().removeSearchPath(path);
             } catch (IOException ex) {
-                log.warn("Unable to write profiles while removing search path {}", path.getPath(), ex);
+                log.warn("Unable to write projects while removing search path {}", path.getPath(), ex);
                 JOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ProfilePreferencesPanel.btnRemoveSearchPath.errorMessage", path.getPath(), ex.getLocalizedMessage()),
                         Bundle.getMessage("ProfilePreferencesPanel.btnRemoveSearchPath.errorTitle"),
@@ -461,14 +461,14 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 //    // TODO: save roster, panels, operations if needed and safe to do so
                 //}
                 ProfileManager.getDefault().export(p, chooser.getSelectedFile(), exportExternalUserFiles, exportExternalRoster);
-                log.info("Profile \"{}\" exported to \"{}\"", p.getName(), chooser.getSelectedFile().getName());
+                log.info("Project \"{}\" exported to \"{}\"", p.getName(), chooser.getSelectedFile().getName());
                 JOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.successMessage",
                                 p.getName(), chooser.getSelectedFile().getName()),
                         Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.successTitle"),
                         JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException | JDOMException ex) {
-                log.warn("Unable to export profile \"{}\" to {}", p.getName(), chooser.getSelectedFile().getPath(), ex);
+                log.warn("Unable to export project \"{}\" to {}", p.getName(), chooser.getSelectedFile().getPath(), ex);
                 JOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.errorMessage",
                                 p.getName(),
@@ -486,8 +486,8 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
             ProfileManager.getDefault().setNextActiveProfile(p);
             ProfileManager.getDefault().saveActiveProfile(p, ProfileManager.getDefault().isAutoStartActiveProfile());
         } catch (IOException ex) {
-            log.error("Unable to save profile preferences", ex);
-            JOptionPane.showMessageDialog(this, "Usable to save profile preferences.\n" + ex.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            log.error("Unable to save project preferences", ex);
+            JOptionPane.showMessageDialog(this, "Usable to save project preferences.\n" + ex.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnActivateProfileActionPerformed
 
@@ -518,7 +518,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
             if (result == JOptionPane.OK_OPTION) {
                 this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                 if (!FileUtil.delete(deletedProfile.getPath())) {
-                    log.warn("Unable to delete profile directory {}", deletedProfile.getPath());
+                    log.warn("Unable to delete project directory {}", deletedProfile.getPath());
                     this.setCursor(Cursor.getDefaultCursor());
                     JOptionPane.showMessageDialog(this,
                             Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.errorMessage", deletedProfile.getPath()),
@@ -527,7 +527,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                     this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                 }
                 ProfileManager.getDefault().removeProfile(deletedProfile);
-                log.info("Removed profile \"{}\" from {}", deletedProfile.getName(), deletedProfile.getPath());
+                log.info("Removed project \"{}\" from {}", deletedProfile.getName(), deletedProfile.getPath());
                 this.setCursor(Cursor.getDefaultCursor());
                 profilesTbl.repaint();
             }
@@ -547,7 +547,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 int index = ProfileManager.getDefault().getAllProfiles().indexOf(p);
                 profilesTbl.setRowSelectionInterval(index, index);
             } catch (IOException ex) {
-                log.warn("{} is not a profile directory", chooser.getSelectedFile());
+                log.warn("{} is not a project directory", chooser.getSelectedFile());
                 JOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ProfilePreferencesPanel.btnOpenExistingProfile.errorMessage", chooser.getSelectedFile().getPath()),
                         Bundle.getMessage("ProfilePreferencesPanel.btnOpenExistingProfile.errorMessage"),
@@ -568,7 +568,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
         try {
             ProfileManager.getDefault().saveActiveProfile();
         } catch (IOException ex) {
-            log.error("Unable to save active profile.", ex);
+            log.error("Unable to save active project.", ex);
         }
     }//GEN-LAST:event_spinnerTimeoutStateChanged
 
@@ -587,7 +587,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
         try {
             ProfileManager.getDefault().saveActiveProfile();
         } catch (IOException ex) {
-            log.error("Unable to save active profile.", ex);
+            log.error("Unable to save active project.", ex);
         }
     }
 
@@ -621,7 +621,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
 
     @Override
     public String getPreferencesItem() {
-        return "Profiles"; // NOI18N
+        return "Projects"; // NOI18N
     }
 
     @Override
@@ -715,10 +715,10 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
 
     @Override
     public boolean isRestartRequired() {
-        // true if the next profile to use has changed, false otherwise.
-        // Since next profile defaults to null when application starts, restart
-        // is required only if next profile is not null and is not the same
-        // profile as the current profile
+        // true if the next project to use has changed, false otherwise.
+        // Since next project defaults to null when application starts, restart
+        // is required only if next project is not null and is not the same
+        // project as the current project
         return ProfileManager.getDefault().getNextActiveProfile() != null
                 && ProfileManager.getDefault().getActiveProfile() != null
                 && !ProfileManager.getDefault().getActiveProfile().equals(ProfileManager.getDefault().getNextActiveProfile()

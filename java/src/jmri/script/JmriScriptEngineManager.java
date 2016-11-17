@@ -468,7 +468,7 @@ public final class JmriScriptEngineManager {
     /**
      * The Python ScriptEngine can be configured using a custom
      * python.properties file and will run jmri_defaults.py if found in the
-     * user's configuration profile or settings directory. See python.properties
+     * user's project or settings directory. See python.properties
      * in the JMRI installation directory for details of how to configure the
      * Python ScriptEngine.
      */

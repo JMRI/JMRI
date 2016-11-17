@@ -318,13 +318,13 @@ public abstract class Apps3 extends AppsBase {
             profileFile = new File(profileFilename);
         }
         ProfileManager.getDefault().setConfigFile(profileFile);
-        // See if the profile to use has been specified on the command line as
-        // a system property jmri.profile as a profile id.
+        // See if the project to use has been specified on the command line as
+        // a system property jmri.profile as a project id.
         if (System.getProperties().containsKey(ProfileManager.SYSTEM_PROPERTY)) {
             ProfileManager.getDefault().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
         }
         // @see jmri.profile.ProfileManager#migrateToProfiles JavaDoc for conditions handled here
-        if (!ProfileManager.getDefault().getConfigFile().exists()) { // no profile config for this app
+        if (!ProfileManager.getDefault().getConfigFile().exists()) { // no project for this app
             try {
                 if (ProfileManager.getDefault().migrateToProfiles(getConfigFileName())) { // migration or first use
                     // notify user of change only if migration occured
@@ -347,9 +347,9 @@ public abstract class Apps3 extends AppsBase {
             // Manually setting the configFilename property since calling
             // Apps.setConfigFilename() does not reset the system property
             System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
-            log.info("Starting with profile {}", ProfileManager.getDefault().getActiveProfile().getId());
+            log.info("Starting with project {}", ProfileManager.getDefault().getActiveProfile().getId());
         } catch (IOException ex) {
-            log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
+            log.info("Projects not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
         }
     }
 

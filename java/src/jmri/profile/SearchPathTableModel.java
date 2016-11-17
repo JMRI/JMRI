@@ -90,7 +90,7 @@ class SearchPathTableModel extends AbstractTableModel implements PropertyChangeL
                 try {
                     ProfileManager.getDefault().setDefaultSearchPath((File) this.getValueAt(rowIndex, 0));
                 } catch (IOException ex) {
-                    log.warn("Unable to write profiles while setting default search path", ex);
+                    log.warn("Unable to write projects while setting default search path", ex);
                 }
                 break;
             default:

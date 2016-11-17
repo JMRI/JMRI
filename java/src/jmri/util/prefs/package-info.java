@@ -1,6 +1,6 @@
 /**
  * This package provides two mechanisms for storing preferences and one
- * mechanism for storing user interface state within a JMRI profile:
+ * mechanism for storing user interface state within a JMRI project:
  *
  * <dl>
  * <dt>{@link jmri.util.prefs.JmriConfigurationProvider}</dt>
@@ -21,7 +21,7 @@
  * <p>
  * The public interfaces of these classes requires that a
  * {@link jmri.profile.Profile} be passed so that these are ready to (even
- * though nothing currently uses this capability) handle multiple profiles, or
- * non-profile-specific preferences or state.
+ * though nothing currently uses this capability) handle multiple projects, or
+ * non-project-specific preferences or state.
  */
 package jmri.util.prefs;

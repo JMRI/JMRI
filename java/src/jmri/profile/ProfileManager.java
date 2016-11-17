@@ -26,7 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Manage JMRI configuration profiles.
+ * Manage JMRI projects.
  * <p>
  * This manager, and its configuration, fall outside the control of the
  * {@link jmri.ConfigureManager} since the ConfigureManager's configuration is
@@ -72,7 +72,7 @@ public class ProfileManager extends Bean {
      * Create a new ProfileManager. In almost all cases, the use of
      * {@link #getDefault()} is preferred.
      *
-     * @param catalog the list of know profiles as an XML file
+     * @param catalog the list of know projects as an XML file
      */
     // TODO: write Test cases using this.
     public ProfileManager(File catalog) {
@@ -127,7 +127,7 @@ public class ProfileManager extends Bean {
      * Set the {@link Profile} to use. This method finds the Profile by Id and
      * calls {@link #setActiveProfile(jmri.profile.Profile)}.
      *
-     * @param id the profile id
+     * @param id the project id
      */
     public void setActiveProfile(String id) {
         if (id == null) {
@@ -135,17 +135,17 @@ public class ProfileManager extends Bean {
             activeProfile = null;
             FileUtil.setProfilePath(null);
             this.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, null);
-            log.debug("Setting active profile to null");
+            log.debug("Setting active project to null");
             return;
         }
         for (Profile p : profiles) {
-            log.debug("Looking for profile {}, found {}", id, p.getId());
+            log.debug("Looking for project {}, found {}", id, p.getId());
             if (p.getId().equals(id)) {
                 this.setActiveProfile(p);
                 return;
             }
         }
-        log.warn("Unable to set active profile. No profile with id {} could be found.", id);
+        log.warn("Unable to set active project. No project with id {} could be found.", id);
     }
 
     /**
@@ -154,7 +154,7 @@ public class ProfileManager extends Bean {
      * Once the {@link jmri.ConfigureManager} is loaded, this only sets the
      * Profile used at next application start.
      *
-     * @param profile the profile to activate
+     * @param profile the project to activate
      */
     public void setActiveProfile(Profile profile) {
         Profile old = activeProfile;
@@ -162,13 +162,13 @@ public class ProfileManager extends Bean {
             activeProfile = null;
             FileUtil.setProfilePath(null);
             this.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, null);
-            log.debug("Setting active profile to null");
+            log.debug("Setting active project to null");
             return;
         }
         activeProfile = profile;
         FileUtil.setProfilePath(profile.getPath().toString());
         this.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, profile);
-        log.debug("Setting active profile to {}", profile.getId());
+        log.debug("Setting active project to {}", profile.getId());
     }
 
     protected Profile getNextActiveProfile() {
@@ -180,18 +180,18 @@ public class ProfileManager extends Bean {
         if (profile == null) {
             this.nextActiveProfile = null;
             this.firePropertyChange(ProfileManager.NEXT_PROFILE, old, null);
-            log.debug("Setting next active profile to null");
+            log.debug("Setting next active project to null");
             return;
         }
         this.nextActiveProfile = profile;
         this.firePropertyChange(ProfileManager.NEXT_PROFILE, old, profile);
-        log.debug("Setting next active profile to {}", profile.getId());
+        log.debug("Setting next active project to {}", profile.getId());
     }
 
     /**
      * Save the active {@link Profile} and automatic start setting.
      *
-     * @throws java.io.IOException if unable to save the profile
+     * @throws java.io.IOException if unable to save the project
      */
     public void saveActiveProfile() throws IOException {
         this.saveActiveProfile(this.getActiveProfile(), this.autoStartActiveProfile);
@@ -211,7 +211,7 @@ public class ProfileManager extends Bean {
         }
         try {
             os = new FileOutputStream(this.getConfigFile());
-            p.storeToXML(os, "Active profile configuration (saved at " + (new Date()).toString() + ")"); // NOI18N
+            p.storeToXML(os, "Active project configuration (saved at " + (new Date()).toString() + ")"); // NOI18N
             os.close();
         } catch (IOException ex) {
             if (os != null) {
@@ -226,7 +226,7 @@ public class ProfileManager extends Bean {
      * Read the active {@link Profile} and automatic start setting from the
      * ProfileManager config file.
      *
-     * @throws java.io.IOException if unable to read the profile
+     * @throws java.io.IOException if unable to read the project
      * @see #getConfigFile()
      * @see #setConfigFile(java.io.File)
      */
@@ -288,8 +288,8 @@ public class ProfileManager extends Bean {
     /**
      * Set the enabled {@link Profile} at index.
      *
-     * @param profile the Profile to set
-     * @param index   the index to set; any existing profile at index is removed
+     * @param profile the project to set
+     * @param index   the index to set; any existing project at index is removed
      */
     public void setProfiles(Profile profile, int index) {
         Profile oldProfile = profiles.get(index);
@@ -315,7 +315,7 @@ public class ProfileManager extends Bean {
                 try {
                     this.writeProfiles();
                 } catch (IOException ex) {
-                    log.warn("Unable to write profiles while adding profile {}.", profile.getId(), ex);
+                    log.warn("Unable to write projects while adding project {}.", profile.getId(), ex);
                 }
             }
         }
@@ -335,7 +335,7 @@ public class ProfileManager extends Bean {
                 }
             }
         } catch (IOException ex) {
-            log.warn("Unable to write profiles while removing profile {}.", profile.getId(), ex);
+            log.warn("Unable to write projects while removing project {}.", profile.getId(), ex);
         }
     }
 
@@ -344,7 +344,7 @@ public class ProfileManager extends Bean {
      * with a list of Profiles. Profiles that are discovered in these paths are
      * automatically added to the catalog.
      *
-     * @return Paths that may contain profiles
+     * @return Paths that may contain projects
      */
     public File[] getSearchPaths() {
         return searchPaths.toArray(new File[searchPaths.size()]);
@@ -358,7 +358,7 @@ public class ProfileManager extends Bean {
      * Get the search path at index.
      *
      * @param index the index of the search path
-     * @return A path that may contain profiles
+     * @return A path that may contain projects
      */
     public File getSearchPaths(int index) {
         if (index >= 0 && index < searchPaths.size()) {
@@ -427,7 +427,7 @@ public class ProfileManager extends Bean {
                     Profile p = new Profile(pp);
                     this.addProfile(p);
                 } catch (FileNotFoundException ex) {
-                    log.info("Cataloged profile \"{}\" not in expected location\nSearching for it in {}", e.getAttributeValue(Profile.ID), pp.getParentFile());
+                    log.info("Cataloged project \"{}\" not in expected location\nSearching for it in {}", e.getAttributeValue(Profile.ID), pp.getParentFile());
                     this.findProfiles(pp.getParentFile());
                     reWrite = true;
                 }
@@ -564,9 +564,9 @@ public class ProfileManager extends Bean {
     }
 
     /**
-     * Create a default profile if no profiles exist.
+     * Create a default project if no projects exist.
      *
-     * @return A new profile or null if profiles already exist
+     * @return A new project or null if projects already exist
      * @throws java.io.IOException if unable to create a Profile
      */
     public Profile createDefaultProfile() throws IllegalArgumentException, IOException {
@@ -577,7 +577,7 @@ public class ProfileManager extends Bean {
             Profile profile = new Profile(pn, pid, pp);
             this.addProfile(profile);
             this.setAutoStartActiveProfile(true);
-            log.info("Created default profile \"{}\"", pn);
+            log.info("Created default project \"{}\"", pn);
             return profile;
         } else {
             return null;
@@ -585,12 +585,12 @@ public class ProfileManager extends Bean {
     }
 
     /**
-     * Copy a JMRI configuration not in a profile and its user preferences to a
-     * profile.
+     * Copy a JMRI configuration not in a project and its user preferences to a
+     * project.
      *
      * @param config the configuration file
      * @param name   the name of the configuration
-     * @return The profile with the migrated configuration
+     * @return The project with the migrated configuration
      * @throws java.io.IOException if unable to create a Profile
      */
     public Profile migrateConfigToProfile(File config, String name) throws IllegalArgumentException, IOException {
@@ -600,20 +600,20 @@ public class ProfileManager extends Bean {
         FileUtil.copy(config, new File(profile.getPath(), Profile.CONFIG_FILENAME));
         FileUtil.copy(new File(config.getParentFile(), "UserPrefs" + config.getName()), new File(profile.getPath(), "UserPrefs" + Profile.CONFIG_FILENAME)); // NOI18N
         this.addProfile(profile);
-        log.info("Migrated \"{}\" config to profile \"{}\"", name, name);
+        log.info("Migrated \"{}\" config to project \"{}\"", name, name);
         return profile;
     }
 
     /**
      * Migrate a JMRI application to using {@link Profile}s.
      *
-     * Migration occurs when no profile configuration exists, but an application
+     * Migration occurs when no project configuration exists, but an application
      * configuration exists. This method also handles the situation where an
      * entirely new user is first starting JMRI, or where a user has deleted all
-     * their profiles.
+     * their projects.
      * <p>
      * When a JMRI application is starting there are eight potential
-     * Profile-related states requiring preparation to use profiles:
+     * Profile-related states requiring preparation to use projects:
      * <table>
      * <caption>Matrix of states determining if migration required.</caption>
      * <tr><th>Profile Catalog</th><th>Profile Config</th><th>App
@@ -621,17 +621,17 @@ public class ProfileManager extends Bean {
      * <tr><td>YES</td><td>YES</td><td>YES</td><td>No preparation required -
      * migration from earlier JMRI complete</td></tr>
      * <tr><td>YES</td><td>YES</td><td>NO</td><td>No preparation required - JMRI
-     * installed after profiles feature introduced</td></tr>
+     * installed after projects feature introduced</td></tr>
      * <tr><td>YES</td><td>NO</td><td>YES</td><td>Migration required - other
-     * JMRI applications migrated to profiles by this user, but not this
+     * JMRI applications migrated to projects by this user, but not this
      * one</td></tr>
      * <tr><td>YES</td><td>NO</td><td>NO</td><td>No preparation required -
-     * prompt user for desired profile if multiple profiles exist, use default
+     * prompt user for desired project if multiple projects exist, use default
      * otherwise</td></tr>
      * <tr><td>NO</td><td>NO</td><td>NO</td><td>New user - create and use
-     * default profile</td></tr>
+     * default project</td></tr>
      * <tr><td>NO</td><td>NO</td><td>YES</td><td>Migration required - need to
-     * create first profile</td></tr>
+     * create first project</td></tr>
      * <tr><td>NO</td><td>YES</td><td>YES</td><td>No preparation required -
      * catalog will be automatically regenerated</td></tr>
      * <tr><td>NO</td><td>YES</td><td>NO</td><td>No preparation required -
@@ -650,22 +650,22 @@ public class ProfileManager extends Bean {
         if (!appConfigFile.isAbsolute()) {
             appConfigFile = new File(FileUtil.getPreferencesPath() + configFilename);
         }
-        if (this.getAllProfiles().isEmpty()) { // no catalog and no profile config
-            if (!appConfigFile.exists()) { // no catalog and no profile config and no app config: new user
+        if (this.getAllProfiles().isEmpty()) { // no catalog and no project config
+            if (!appConfigFile.exists()) { // no catalog and no project config and no app config: new user
                 this.setActiveProfile(this.createDefaultProfile());
                 this.saveActiveProfile();
-            } else { // no catalog and no profile config, but an existing app config: migrate user who never used profiles before
+            } else { // no catalog and no project config, but an existing app config: migrate user who never used projects before
                 this.setActiveProfile(this.migrateConfigToProfile(appConfigFile, jmri.Application.getApplicationName()));
                 this.saveActiveProfile();
                 didMigrate = true;
             }
-        } else if (appConfigFile.exists()) { // catalog and existing app config, but no profile config: migrate user who used profile with other JMRI app
+        } else if (appConfigFile.exists()) { // catalog and existing app config, but no project config: migrate user who used project with other JMRI app
             try {
                 this.setActiveProfile(this.migrateConfigToProfile(appConfigFile, jmri.Application.getApplicationName()));
             } catch (IllegalArgumentException ex) {
-                if (ex.getMessage().startsWith("A profile already exists at ")) {
+                if (ex.getMessage().startsWith("A project already exists at ")) {
                     // caused by attempt to migrate application with custom launcher
-                    // strip ".xml" from configFilename name and use that to create profile
+                    // strip ".xml" from configFilename name and use that to create project
                     this.setActiveProfile(this.migrateConfigToProfile(appConfigFile, appConfigFile.getName().substring(0, appConfigFile.getName().length() - 4)));
                 } else {
                     // throw the exception so it can be dealt with, since other causes need user attention
@@ -682,16 +682,16 @@ public class ProfileManager extends Bean {
     /**
      * Export the {@link jmri.profile.Profile} to a zip file.
      *
-     * @param profile                 The profile to export
-     * @param target                  The file to export the profile into
+     * @param profile                 The project to export
+     * @param target                  The file to export the project into
      * @param exportExternalUserFiles If the User Files are not within the
-     *                                profile directory, should they be
+     *                                project directory, should they be
      *                                included?
-     * @param exportExternalRoster    It the roster is not within the profile
+     * @param exportExternalRoster    It the roster is not within the project
      *                                directory, should it be included?
      * @throws java.io.IOException     if unable to write a file during the
      *                                 export
-     * @throws org.jdom2.JDOMException if unable to create a new profile
+     * @throws org.jdom2.JDOMException if unable to create a new project
      *                                 configuration file in the exported
      *                                 Profile
      */
@@ -781,22 +781,22 @@ public class ProfileManager extends Bean {
     }
 
     /**
-     * Get the active profile.
+     * Get the active project.
      *
-     * This method initiates the process of setting the active profile when a
+     * This method initiates the process of setting the active project when a
      * headless app launches.
      *
      * @return The active {@link Profile}
-     * @throws java.io.IOException if unable to read the current active profile
+     * @throws java.io.IOException if unable to read the current active project
      * @see ProfileManagerDialog#getStartingProfile(java.awt.Frame)
      */
     public static Profile getStartingProfile() throws IOException {
         if (ProfileManager.getDefault().getActiveProfile() == null) {
             ProfileManager.getDefault().readActiveProfile();
-            // Automatically start with only profile if only one profile
+            // Automatically start with only project if only one project
             if (ProfileManager.getDefault().getProfiles().length == 1) {
                 ProfileManager.getDefault().setActiveProfile(ProfileManager.getDefault().getProfiles(0));
-                // Display profile selector if user did not choose to auto start with last used profile
+                // Display project selector if user did not choose to auto start with last used project
             } else if (!ProfileManager.getDefault().isAutoStartActiveProfile()) {
                 return null;
             }
@@ -823,7 +823,7 @@ public class ProfileManager extends Bean {
     }
 
     /**
-     * Seconds to display profile selector before automatically starting.
+     * Seconds to display project selector before automatically starting.
      *
      * If 0, selector will not automatically dismiss.
      *
@@ -834,16 +834,16 @@ public class ProfileManager extends Bean {
     }
 
     /**
-     * Set the number of seconds to display the profile selector before
+     * Set the number of seconds to display the project selector before
      * automatically starting.
      *
      * If negative or greater than 300 (5 minutes), set to 0 to prevent
-     * automatically starting with any profile.
+     * automatically starting with any project.
      *
      * Call {@link #saveActiveProfile() } after setting this to persist the
      * value across application restarts.
      *
-     * @param autoStartActiveProfileTimeout Seconds to display profile selector
+     * @param autoStartActiveProfileTimeout Seconds to display project selector
      */
     public void setAutoStartActiveProfileTimeout(int autoStartActiveProfileTimeout) {
         int old = this.autoStartActiveProfileTimeout;

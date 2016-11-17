@@ -67,10 +67,10 @@ public class ReportContext {
         addString("Available Communication Ports:");
         addCommunicationPortInfo();
 
-        Profile profile = ProfileManager.getDefault().getActiveProfile();
-        addString("Active profile: " + profile.getName() + "   ");
-        addString("Profile location: " + profile.getPath().getPath() + "   ");
-        addString("Profile ID: " + profile.getId() + "   ");
+        Profile project = ProfileManager.getDefault().getActiveProfile();
+        addString("Active project: " + project.getName() + "   ");
+        addString("Project location: " + project.getPath().getPath() + "   ");
+        addString("Project ID: " + project.getId() + "   ");
 
         String prefs = FileUtil.getUserFilesPath();
         addString("Preferences directory: " + prefs + "   ");

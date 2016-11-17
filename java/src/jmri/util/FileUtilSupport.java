@@ -64,7 +64,7 @@ public class FileUtilSupport extends Bean {
     private String scriptsPath = null;
     /* path to the user's files directory */
     private String userFilesPath = null;
-    /* path to the current profile */
+    /* path to the current project */
     private String profilePath = null;
     // initialize logging
     private static final Logger log = LoggerFactory.getLogger(FileUtilSupport.class);
@@ -162,7 +162,7 @@ public class FileUtilSupport extends Bean {
      * resource directory in the preferences directory (deprecated; see
      * "preference:" above)</li>
      * <li>Starts with "profile:", treat the rest as a relative path below the
-     * profile directory as specified in the
+     * project directory as specified in the
      * active{@link jmri.profile.Profile}</li>
      * <li>Starts with "scripts:", treat the rest as a relative path below the
      * scripts directory</li>
@@ -214,10 +214,10 @@ public class FileUtilSupport extends Bean {
      * This is the inverse of {@link #getFile(String pName)}. Deprecated forms
      * are not created.
      *
-     * This method supports a specific use case concerning profiles and other
+     * This method supports a specific use case concerning projects and other
      * portable paths that are stored within the User files directory, which
      * will cause the {@link jmri.profile.ProfileManager} to write an incorrect
-     * path for the current profile or
+     * path for the current project or
      * {@link apps.configurexml.FileLocationPaneXml} to write an incorrect path
      * for the Users file directory. In most cases, the use of
      * {@link #getPortableFilename(java.io.File)} is preferable.
@@ -226,7 +226,7 @@ public class FileUtilSupport extends Bean {
      * @param ignoreUserFilesPath true if paths in the User files path should be
      *                            stored as absolute paths, which is often not
      *                            desirable.
-     * @param ignoreProfilePath   true if paths in the profile should be stored
+     * @param ignoreProfilePath   true if paths in the project should be stored
      *                            as absolute paths, which is often not
      *                            desirable.
      * @return Storage format representation
@@ -249,7 +249,7 @@ public class FileUtilSupport extends Bean {
         }
 
         if (!ignoreProfilePath) {
-            // compare full path name to see if same as profile
+            // compare full path name to see if same as project
             if (filename.startsWith(getProfilePath())) {
                 return PROFILE + filename.substring(getProfilePath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
             }
@@ -310,10 +310,10 @@ public class FileUtilSupport extends Bean {
      * This is the inverse of {@link #getExternalFilename(String pName)}.
      * Deprecated forms are not created.
      *
-     * This method supports a specific use case concerning profiles and other
+     * This method supports a specific use case concerning projects and other
      * portable paths that are stored within the User files directory, which
      * will cause the {@link jmri.profile.ProfileManager} to write an incorrect
-     * path for the current profile or
+     * path for the current project or
      * {@link apps.configurexml.FileLocationPaneXml} to write an incorrect path
      * for the Users file directory. In most cases, the use of
      * {@link #getPortableFilename(java.io.File)} is preferable.
@@ -322,7 +322,7 @@ public class FileUtilSupport extends Bean {
      * @param ignoreUserFilesPath true if paths in the User files path should be
      *                            stored as absolute paths, which is often not
      *                            desirable.
-     * @param ignoreProfilePath   true if paths in the profile path should be
+     * @param ignoreProfilePath   true if paths in the project path should be
      *                            stored as absolute paths, which is often not
      *                            desirable.
      * @return Storage format representation
@@ -370,7 +370,7 @@ public class FileUtilSupport extends Bean {
 
     /**
      * Get the user's files directory. If not set by the user, this is the same
-     * as the profile path.
+     * as the project path.
      *
      * @see #getProfilePath()
      * @return User's files directory as a String
@@ -398,21 +398,21 @@ public class FileUtilSupport extends Bean {
     }
 
     /**
-     * Get the profile directory. If not set, this is the same as the
+     * Get the project directory. If not set, this is the same as the
      * preferences path.
      *
      * @see #getPreferencesPath()
-     * @return Profile directory as a String using system-specific separators
+     * @return Project directory as a String using system-specific separators
      */
     public String getProfilePath() {
         return (this.profilePath != null) ? this.profilePath : this.getPreferencesPath();
     }
 
     /**
-     * Set the profile directory.
+     * Set the project directory.
      *
      * @see #getProfilePath()
-     * @param path The path to the profile directory using system-specific
+     * @param path The path to the project directory using system-specific
      *             separators.
      */
     public void setProfilePath(String path) {
@@ -1238,7 +1238,7 @@ public class FileUtilSupport extends Bean {
      * resource directory in the preferences directory (deprecated; see
      * "preference:" above)</li>
      * <li>Starts with "profile:", treat the rest as a relative path below the
-     * profile directory as specified in the
+     * project directory as specified in the
      * active{@link jmri.profile.Profile}</li>
      * <li>Starts with "scripts:", treat the rest as a relative path below the
      * scripts directory</li>

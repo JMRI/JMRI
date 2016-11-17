@@ -39,7 +39,7 @@ public class XmlFileLocationAction extends AbstractAction {
 
         final String user = FileUtil.getUserFilesPath();
         final String roster = Roster.getDefault().getRosterLocation();
-        final String profile = FileUtil.getProfilePath();
+        final String project = FileUtil.getProfilePath();
         final String settings = FileUtil.getPreferencesPath();
         final String scripts = FileUtil.getScriptsPath();
         final String prog = System.getProperty("user.dir");
@@ -49,7 +49,7 @@ public class XmlFileLocationAction extends AbstractAction {
         if (!new File(configName).isAbsolute()) {
             // must be relative, but we want it to 
             // be relative to the preferences directory
-            configName = profile + configName;
+            configName = project + configName;
         }
 
         JFrame frame = new jmri.util.JmriJFrame();  // to ensure fits
@@ -89,17 +89,17 @@ public class XmlFileLocationAction extends AbstractAction {
                 }
             }
         });
-        b = new JButton("Open Profile Location");
+        b = new JButton("Open Project Location");
         buttons.add(b);
         b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 try {
-                    Desktop.getDesktop().open(new java.io.File(profile));
+                    Desktop.getDesktop().open(new java.io.File(project));
                 } catch (java.io.IOException e) {
-                    XmlFileLocationAction.log.error("Error when opening profile location: " + e);
+                    XmlFileLocationAction.log.error("Error when opening project location: " + e);
                 } catch (UnsupportedOperationException e) {
-                    XmlFileLocationAction.log.error("Error when opening profile location: " + e);
+                    XmlFileLocationAction.log.error("Error when opening project location: " + e);
                 }
             }
         });
@@ -172,7 +172,7 @@ public class XmlFileLocationAction extends AbstractAction {
 
         textPane.append("Roster Location: " + roster + "\n");
 
-        textPane.append("Profile Location: " + profile + "\n");
+        textPane.append("Project Location: " + project + "\n");
 
         textPane.append("Settings Location: " + settings + "\n");
 

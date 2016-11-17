@@ -49,8 +49,8 @@ import org.slf4j.LoggerFactory;
  * application.
  * <p>
  * This dialog is designed to be displayed while an application is starting. If
- * the last profile used for the application can be found, this dialog will
- * automatically start the application with that profile after 10 seconds unless
+ * the last project used for the application can be found, this dialog will
+ * automatically start the application with that project after 10 seconds unless
  * the user intervenes.
  *
  * @author rhwood
@@ -237,8 +237,8 @@ public class ProfileManagerDialog extends JDialog {
                 ProfileManager.getDefault().addProfile(p);
                 profiles.setSelectedValue(p, true);
             } catch (IOException ex) {
-                log.warn("{} is not a profile directory", chooser.getSelectedFile());
-                // TODO: Display error dialog - selected file is not a profile directory
+                log.warn("{} is not a project directory", chooser.getSelectedFile());
+                // TODO: Display error dialog - selected file is not a project directory
             }
         }
     }//GEN-LAST:event_btnUseExistingActionPerformed
@@ -253,7 +253,7 @@ public class ProfileManagerDialog extends JDialog {
             } else {
                 setVisible(false);
                 ProfileManager.getDefault().setActiveProfile(profiles.getSelectedValue());
-                log.info("Automatically starting with profile " + ProfileManager.getDefault().getActiveProfile().getId() + " after timeout.");
+                log.info("Automatically starting with project " + ProfileManager.getDefault().getActiveProfile().getId() + " after timeout.");
                 timer.stop();
                 countDown = -1;
                 dispose();
@@ -271,7 +271,7 @@ public class ProfileManagerDialog extends JDialog {
     }//GEN-LAST:event_formWindowOpened
 
     /**
-     * Get the active profile or display a dialog to prompt the user for it.
+     * Get the active project or display a dialog to prompt the user for it.
      *
      * @param f - The {@link java.awt.Frame} to display the dialog over
      * @return the active or selected {@link Profile}
@@ -293,9 +293,9 @@ public class ProfileManagerDialog extends JDialog {
     private void profileNameChanged(Profile p) {
         try {
             p.save();
-            log.info("Saving profile {}", p.getId());
+            log.info("Saving project {}", p.getId());
         } catch (IOException ex) {
-            log.error("Unable to save renamed profile: {}", ex.getMessage());
+            log.error("Unable to save renamed project: {}", ex.getMessage());
             JOptionPane.showMessageDialog(this,
                     Bundle.getMessage("ProfileManagerDialog.errorRenamingProfile"),
                     Bundle.getMessage("ProfileManagerDialog.errorRenamingProfileTitle"),
@@ -319,7 +319,7 @@ public class ProfileManagerDialog extends JDialog {
         }
     }//GEN-LAST:event_profilesKeyPressed
 
-    @SuppressFBWarnings(value = "DM_EXIT", justification = "This exit ensures launch is aborted if a profile is not selected or autostarted")
+    @SuppressFBWarnings(value = "DM_EXIT", justification = "This exit ensures launch is aborted if a project is not selected or autostarted")
     private void formWindowClosing(WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         if (countDown != -1) {
             System.exit(255);

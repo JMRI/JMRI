@@ -399,10 +399,10 @@
 
    <h3>Multiple Layout Support</h3>
    You can create and manage multiple layouts using OperationsPro&trade;. From the main menu bar
-   under "Edit" select "Preferences..." then "Config Profiles". Create a new <a
-    href="../../../apps/TabbedPreferences.shtml#Profiles">Configuration Profile</a> for each layout
+   under "Edit" select "Preferences..." then "Projects". Create a new <a
+    href="../../../apps/TabbedPreferences.shtml#Profiles">Project</a> for each layout
    that you want to manage. The database for each layout is unique and not shared with the other
-   layouts. You can find each set of operation files under JMRI-&gt; "profile name" -&gt;
+   layouts. You can find each set of operation files under JMRI-&gt; "project name" -&gt;
    operations. <a name="demo" id="demo"></a>
 
    <h3>Operations Demo Files</h3>

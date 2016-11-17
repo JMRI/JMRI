@@ -49,7 +49,7 @@
       "images/JMRIPrefsChanges.png" height="112" width="250" align=
       "right" alt="Save? dialog"></a> <a href=
       "#WiThrottle">WiThrottle</a><br>
-      <a href="#Profiles">Config Profiles</a><br>
+      <a href="#Profiles">Projects</a><br>
       <a href="#RailroadName">Railroad Name</a><br>
       <a href="#JSONServer">JSON Server</a><br>
       <a href="#WebServer">Web Server</a><br>
@@ -368,13 +368,13 @@
       then restart WiThrottle) as instructed by the dialog.
       <a name="Profiles" id="Profiles"></a>
 
-      <h2>Config Profiles</h2>JMRI Configuration Profiles make it
+      <h2>Projects</h2>JMRI Projects make it
       easy to set up your JMRI applications to work with different
-      setups. Each profile specifies one set of Preferences. You
+      setups. Each project specifies one set of Preferences. You
       can then select which one to use.
 
       <p>For more information, see the <a href=
-      "../../html/setup/profiles.shtml">Configuration Profiles</a>
+      "../../html/setup/profiles.shtml">Projects</a>
       help page. <a name="RailroadName" id="RailroadName"></a></p>
 
       <h2>Railroad Name</h2>
