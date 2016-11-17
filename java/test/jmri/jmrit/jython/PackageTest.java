@@ -1,5 +1,6 @@
 package jmri.jmrit.jython;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -26,21 +27,21 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.jython.PackageTest");   // no tests in this class itself
 
-        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new JUnit4TestAdapter(BundleTest.class));
 
-        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
-            suite.addTest(JythonWindowsTest.suite());
-        }
+        suite.addTest(new JUnit4TestAdapter(JythonWindowsTest.class));
 
         suite.addTest(SampleScriptTest.suite());
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

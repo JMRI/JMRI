@@ -27,11 +27,6 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.display.panelEditor");   // no tests in this class itself
 
-
-
-        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
-        }
-
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.display.panelEditor.configurexml.PackageTest.class));
 

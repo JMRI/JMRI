@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
         jmri.jmrix.openlcb.swing.hub.PackageTest.class,
         jmri.jmrix.openlcb.swing.tie.PackageTest.class,
-        jmri.jmrix.openlcb.swing.networktree.PackageDemo.class,
+        jmri.jmrix.openlcb.swing.networktree.PackageTest.class,
         jmri.jmrix.openlcb.swing.monitor.PackageTest.class,
         jmri.jmrix.openlcb.swing.clockmon.PackageTest.class,
         jmri.jmrix.openlcb.swing.downloader.PackageTest.class,
