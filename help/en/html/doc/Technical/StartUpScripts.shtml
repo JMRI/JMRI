@@ -243,8 +243,8 @@
         64-bit machines. This option has no effect on 32-bit
         machines.</dd>
 
-        <dt>/profile &lt;projectID&gt; (Optional - from JMRI
-        3.7.1)</dt>
+        <dt>/project &lt;projectID&gt; (Optional - from JMRI 4.5.7)</dt>
+        <dt>/profile &lt;projectID&gt; (Optional - from JMRI 3.7.1)</dt>
 
         <dd>If this option is set on the command line, the launcher
         will use project &lt;projectID&gt; as the <a href=
