@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import java.awt.GraphicsEnvironment;
-
+import jmri.util.JUnitUtil;
 
 /**
  *
@@ -26,6 +26,24 @@ public class MDITest {
             // Just checking construction.
             @Override
             protected void start(){}
+            @Override
+            protected void configureProfile(){
+                 JUnitUtil.resetInstanceManager();
+            }
+            @Override
+            protected void installConfigurationManager(){
+                 JUnitUtil.initConfigureManager();
+                 JUnitUtil.initDefaultUserMessagePreferences();
+            }
+            @Override
+            protected void installManagers(){
+                 JUnitUtil.initInternalTurnoutManager();
+                 JUnitUtil.initInternalLightManager();
+                 JUnitUtil.initInternalSensorManager();
+                 JUnitUtil.initRouteManager();
+                 JUnitUtil.initMemoryManager();
+                 JUnitUtil.initDebugThrottleManager();
+            }
         };
         Assert.assertNotNull(a);
     }
@@ -33,12 +51,10 @@ public class MDITest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
     }
 
 
