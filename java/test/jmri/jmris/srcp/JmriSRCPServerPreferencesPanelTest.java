@@ -2,10 +2,8 @@ package jmri.jmris.srcp;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 
 /**
@@ -16,7 +14,6 @@ import java.awt.GraphicsEnvironment;
 public class JmriSRCPServerPreferencesPanelTest {
 
     @Test public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriSRCPServerPreferencesPanel a = new JmriSRCPServerPreferencesPanel();
         Assert.assertNotNull(a);
     }
