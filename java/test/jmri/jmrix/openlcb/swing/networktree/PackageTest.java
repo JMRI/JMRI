@@ -7,13 +7,13 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-     CdiPanelDemo.class,
-     NetworkTreePaneDemo.class
+     CdiPanelTest.class,
+     NetworkTreePaneTest.class
 })
 /**
- * Demos for the jmri.jmrix.openlcb package.
+ * Tests for the jmri.jmrix.openlcb package.
  *
  * @author Bob Jacobsen Copyright 2009, 2012, 2014
  */
-public class PackageDemo {
+public class PackageTest{
 }
