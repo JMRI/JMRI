@@ -605,7 +605,7 @@
     <target depends="-pre-single-test" unless="test.isTest" name="-test-single-src">
         <property name="test.test" value="${test.includes}Test"/>
     </target>
-    <target depends="-test-single-src,-test-single-test,tests" description="Run single unit test." name="test-single">
+    <target depends="-test-single-src,-test-single-test,tests,runtime-library-selection" description="Run single unit test." name="test-single">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
