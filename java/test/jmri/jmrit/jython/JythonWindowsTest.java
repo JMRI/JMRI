@@ -4,18 +4,12 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import org.junit.After;
 import org.junit.Assert;
-<<<<<<< HEAD
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-=======
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
->>>>>>> JMRI/master
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Invokes complete set of tests in the jmri.jmrit.jython tree
