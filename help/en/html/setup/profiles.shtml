@@ -30,20 +30,13 @@
 
       <p><em>Projects</em> allow a single JMRI
       application to be launched with one of multiple
-      user-specified Configurations. A Project
+      user-specified configurations. A Project
       contains all Preferences as they are set in the JMRI
-      Preferences dialog, and may - optionally - include user
-      files, a Roster, and Throttles.</p>
+      Preferences dialog, and, by default, includes user
+      files, a Roster, and Throttles. In some versions of JMRI, Projects
+      were referred to as Configuration Profiles.</p>
 
-      <p><a href="images/Config_ProfileMigrate314.png"><img src=
-      "images/Config_ProfileMigrate314.png" width="438" height=
-      "114" align="right" alt=
-      "Project configuration conversion dialog screen"></a> When
-      opening an older JMRI configuration in one of the newer
-      applications, the way Preferences are stored is converted.
-      The application notifies you with this dialog:</p>
-
-      <p>When a JMRI application (version 3.9 and up) is launched
+      <p>When a JMRI application (version 3.9 and newer) is launched
       for the first time, it checks for a Project. If
       no Project exists, the application will create a default
       Project and use it without prompting you. If only a single
@@ -104,6 +97,14 @@
       neither supported or recommended.</p>
 
       <h2>Upgrading from Earlier Versions of JMRI</h2>
+
+      <p><a href="images/Config_ProfileMigrate314.png"><img src=
+      "images/Config_ProfileMigrate314.png" width="438" height=
+      "114" align="right" alt=
+      "Project configuration conversion dialog screen"></a> When
+      opening an older JMRI configuration in one of the newer
+      applications, the way Preferences are stored is converted.
+      The application notifies you with this dialog:</p>
 
       <p>When you first run a JMRI application after upgrading from
       an earlier version of JMRI, the application will copy its
