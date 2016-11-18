@@ -67,7 +67,6 @@ public abstract class AppsBase {
             Application.setApplicationName(applicationName);
         } catch (IllegalAccessException | IllegalArgumentException ex) {
             log.error("Unable to set application name: " +ex.getCause());
-            ex.printStackTrace();
         }
 
         log.info(Log4JUtil.startupInfo(applicationName));
