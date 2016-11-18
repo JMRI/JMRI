@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import jmri.util.JUnitUtil;
 
 /**
  *
@@ -15,22 +16,43 @@ import org.junit.Test;
 public class JmriFacelessTest {
 
     @Test
-    @Ignore("Causes exception on CI engines, works locally")
+    @Ignore("can only set application name once in jmri.Application.  We need a way to reset this value for testing")
     public void testCtor() {
         String Args[]={};
-        AppsBase a = new JmriFaceless(Args);
+        AppsBase a = new JmriFaceless(Args){
+            // force the application to not actually start.
+            // Just checking construction.
+            @Override
+            public void start(){}
+            @Override
+            protected void configureProfile(){
+                 JUnitUtil.resetInstanceManager();
+            }
+            @Override
+            protected void installConfigurationManager(){
+                 JUnitUtil.initConfigureManager();
+                 JUnitUtil.initDefaultUserMessagePreferences();
+            }
+            @Override
+            protected void installManagers(){
+                 JUnitUtil.initInternalTurnoutManager();
+                 JUnitUtil.initInternalLightManager();
+                 JUnitUtil.initInternalSensorManager();
+                 JUnitUtil.initRouteManager();
+                 JUnitUtil.initMemoryManager();
+                 JUnitUtil.initDebugThrottleManager();
+            }
+        };
         Assert.assertNotNull(a);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
     }
 
 

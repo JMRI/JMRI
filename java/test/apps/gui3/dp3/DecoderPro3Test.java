@@ -18,6 +18,7 @@ import jmri.util.JUnitUtil;
 public class DecoderPro3Test {
 
     @Test
+    @Ignore("can only set application name once in jmri.Application.  We need a way to reset this value for testing")
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());        
         String[] args = {"DecoderProConfig3.xml"};
