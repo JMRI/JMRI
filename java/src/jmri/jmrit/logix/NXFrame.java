@@ -52,7 +52,8 @@ public class NXFrame extends WarrantRoute {
 
     JTextField _trainName = new JTextField(6);
     JTextField _maxSpeedBox = new JTextField(6);
-    JTextField _minSpeedBox = new JTextField(6);
+    JTextField _rampInterval = new JTextField(6);
+    JTextField _rampIncre = new JTextField(6);
     JTextField _throttleFactorBox = new JTextField(6);
     JRadioButton _forward = new JRadioButton();
     JRadioButton _reverse = new JRadioButton();
@@ -61,7 +62,6 @@ public class NXFrame extends WarrantRoute {
     JCheckBox _haltStartBox = new JCheckBox();
     JCheckBox _calibrateBox = new JCheckBox();
 //    JCheckBox _addTracker = new JCheckBox();
-    JTextField _rampInterval = new JTextField(6);
     JRadioButton _runAuto = new JRadioButton(Bundle.getMessage("RunAuto"));
     JRadioButton _runManual = new JRadioButton(Bundle.getMessage("RunManual"));
     protected JPanel      _controlPanel;
@@ -166,6 +166,7 @@ public class NXFrame extends WarrantRoute {
             return;
         }
         _rampInterval.setText(Float.toString(_intervalTime/1000));
+        // find position of panel
         java.awt.Component[] list = _controlPanel.getComponents();
         int i = 0;
         while (i<list.length && !list[i].equals(_autoRunPanel)) {
@@ -236,10 +237,10 @@ public class NXFrame extends WarrantRoute {
         }
         p1.add(makeTextBoxPanel(false, _maxSpeedBox, maxSpeedLabel, null));
         p1.add(makeTextBoxPanel(false, _rampInterval, "rampInterval", null));
-        p1.add(makeTextBoxPanel(false, _minSpeedBox, throttleIncrLabel, "ToolTipRampIncrement"));
+        p1.add(makeTextBoxPanel(false, _rampIncre, throttleIncrLabel, "ToolTipRampIncrement"));
         p1.add(makeTextBoxPanel(false, _throttleFactorBox, "ThrottleScale", "ToolTipThrottleScale"));
         _maxSpeedBox.setText(Float.toString(maxSpeed));
-        _minSpeedBox.setText(Float.toString(throttleIncr));
+        _rampIncre.setText(Float.toString(throttleIncr));
         _throttleFactorBox.setText(Float.toString(_throttleFactor));
         
         JPanel p2 = makeTrainPanel();
@@ -469,7 +470,7 @@ public class NXFrame extends WarrantRoute {
         try {
             text = _maxSpeedBox.getText();
             maxSpeed = Float.parseFloat(text);
-            text = _minSpeedBox.getText();
+            text = _rampIncre.getText();
             minSpeed = Float.parseFloat(text);
             text = _throttleFactorBox.getText();
             factor = Float.parseFloat(text);
@@ -610,7 +611,7 @@ public class NXFrame extends WarrantRoute {
             if (speedProfile!=null) {
                 float s = speedProfile.getSpeed(_maxSpeed, isForward);
                 if (log.isDebugEnabled()) log.debug("SpeedProfile _maxSpeed setting= "+_maxSpeed+" speed= "+s+"mps");
-                if (s<=0.0f) {
+                if (s<=0.0f || s==Float.POSITIVE_INFINITY) {
                     speedProfile = null;
                 }
             }

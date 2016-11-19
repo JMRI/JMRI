@@ -229,7 +229,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             }
         }
         // shut down
-        _warrant.stopWarrant(false);
+        ThreadingUtil.runOnLayout(() -> {
+            _warrant.stopWarrant(false);
+        });
     }
 
     protected int getCurrentCommandIndex() {

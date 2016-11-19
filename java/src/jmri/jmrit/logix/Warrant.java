@@ -57,13 +57,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     protected String _trainName;      // User train name for icon
     private String _trainId;        // Roster Id
     private DccLocoAddress _dccAddress;
-    private boolean _runBlind;      // don't use block detection
+    private boolean _runBlind;      // Unable to use block detection, must run on et only
     private boolean _noRamp;        // do immediate speed change at approach block.
 
     // transient members
     protected List<BlockOrder> _orders;       // temp orders used in run mode
     private LearnThrottleFrame _student;    // need to callback learning throttle in learn mode
-    private boolean _tempRunBlind;          // run mode flag
+    private boolean _tempRunBlind;          // run mode flag to allow running on ET only
     private boolean _delayStart;            // allows start block unoccupied and wait for train
     protected List <ThrottleSetting> _commands;   // temp commands used in run mode
     protected int     _idxCurrentOrder;       // Index of block at head of train (if running)
@@ -719,7 +719,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             log.error(_message);
             return _message;
         }
-        _runBlind = runBlind;
         _idxLastOrder = 0;
         _delayStart = false;
         _curSpeedType = Normal;
@@ -761,7 +760,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         // set mode before setStoppingBlock and callback to notifyThrottleFound are called
         _runMode = mode;
         getBlockAt(0)._entryTime = System.currentTimeMillis();
-        _tempRunBlind = runBlind;
+        if (_runBlind) {
+            _tempRunBlind = _runBlind;            
+        } else {
+            _tempRunBlind = runBlind;            
+        }
         if (!_delayStart) {
             if (mode!=MODE_MANUAL) {
                  if (address==null) {
@@ -1388,7 +1391,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     }
                 }
             }  //if (_runMode != MODE_LEARN) { run mode engineer lost }
-//            _engineer.setRunOnET(false);
             // Since we are moving we assume it is our train entering the block
             _idxCurrentOrder = activeIdx;
         } else if (activeIdx > _idxCurrentOrder + 1) {

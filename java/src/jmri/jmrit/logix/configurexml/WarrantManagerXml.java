@@ -9,7 +9,6 @@ import jmri.jmrit.logix.BlockOrder;
 import jmri.jmrit.logix.NXFrame;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
-import jmri.jmrit.logix.SCWarrant;
 import jmri.jmrit.logix.ThrottleSetting;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
@@ -60,12 +59,6 @@ public class WarrantManagerXml //extends XmlFile
             if (uname==null) uname = "";
             if (uname.length()>0) {
                 elem.setAttribute("userName", uname);
-            }
-            if (warrant instanceof SCWarrant) {
-                elem.setAttribute("wtype", "SC");
-                elem.setAttribute("timeToPlatform", ""+((SCWarrant) warrant).getTimeToPlatform());
-            } else {
-                elem.setAttribute("wtype", "normal");
             }
             String comment = warrant.getComment();
             if (comment != null) {
