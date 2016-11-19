@@ -5,11 +5,9 @@ import jmri.util.JUnitUtil;
 import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Test simple functioning of PreferencesPane
@@ -22,7 +20,6 @@ public class PreferencesPaneTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PreferencesPane action = new PreferencesPane(new jmri.jmrix.ecos.EcosPreferences(memo));
         Assert.assertNotNull("exists", action);
     }

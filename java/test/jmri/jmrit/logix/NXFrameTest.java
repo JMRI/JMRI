@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
@@ -37,13 +38,18 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
     TurnoutManager _turnoutMgr;
 
     public void testGetInstance() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         NXFrame nxFrame = NXFrame.getInstance();
         Assert.assertNotNull("NXFrame", nxFrame);
     }
 
     @SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
     public void testNXWarrant() throws Exception {
-
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
@@ -115,7 +121,6 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         jmri.util.JUnitUtil.waitFor(
             ()->{return warrant.getRunningMessage().equals(Bundle.getMessage("waitForDelayStart", warrant.getTrainName(), name));},
             "Waiting message"); 
-        
         Sensor sensor0 = _sensorMgr.getBySystemName("IS0");
         Assert.assertNotNull("Senor IS0 not found", sensor0);
 
@@ -205,18 +210,19 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
     }
 
     /**
-     * Works through a list of OBlocks, get its sensor, activate it, 
-     * then inactivate the previous Oblock sensor.
-     * Leaves last ACTIVE.
+     * Simulates the movement of a warranted train over its route.
+     * <p>Works through a list of OBlocks, gets its sensor,  
+     * activates it, then inactivates the previous OBlock sensor.
+     * Leaves last sensor ACTIVE to show the train stopped there.
      * @param list of detection sensors of the route
      * @return active end sensor
      * @throws Exception
      */
-    private Sensor runtimes(String[] blocks) throws Exception {
+    private Sensor runtimes(String[] route) throws Exception {
         flushAWT();
-        OBlock block = _OBlockMgr.getOBlock(blocks[0]);
+        OBlock block = _OBlockMgr.getOBlock(route[0]);
         Sensor sensor = block.getSensor();
-        for (int i = 1; i < blocks.length; i++) {
+        for (int i = 1; i < route.length; i++) {
             OBlock blk = block;
             JUnitUtil.waitFor(() -> {
                 int state = blk.getState();
@@ -225,7 +231,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
             }, "Train occupies block");
             flushAWT();
 
-            block = _OBlockMgr.getOBlock(blocks[i]);
+            block = _OBlockMgr.getOBlock(route[i]);
             Sensor nextSensor;
             boolean dark = (block.getState() & OBlock.DARK) != 0;
             if (!dark) {
