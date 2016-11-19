@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
@@ -37,13 +38,18 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
     TurnoutManager _turnoutMgr;
 
     public void testGetInstance() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         NXFrame nxFrame = NXFrame.getInstance();
         Assert.assertNotNull("NXFrame", nxFrame);
     }
 
     @SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
     public void testNXWarrant() throws Exception {
-
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
@@ -99,9 +105,11 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         OBlock block = _OBlockMgr.getBySystemName("OB0");
 
         jmri.util.JUnitUtil.waitFor(
-            ()->{return warrant.getRunningMessage().equals(Bundle.getMessage("waitForDelayStart", warrant.getTrainName(), block.getDisplayName()));},
-            "Waiting message"); 
-        
+                () -> {
+                    return warrant.getRunningMessage().equals(Bundle.getMessage("waitForDelayStart", warrant.getTrainName(), block.getDisplayName()));
+                },
+                "Waiting message");
+
         Sensor sensor0 = _sensorMgr.getBySystemName("IS0");
         Assert.assertNotNull("Senor IS0 not found", sensor0);
 
@@ -189,6 +197,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
     /**
      * works through a list of sensors, activating one, then the next
      * inactivating the previous and continuing. Leaves last ACTIVE.
+     *
      * @param list of detection sensors of the route
      * @return active end sensor
      * @throws Exception
