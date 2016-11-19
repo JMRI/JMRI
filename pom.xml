@@ -5,7 +5,7 @@
 
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>4.6.7-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
