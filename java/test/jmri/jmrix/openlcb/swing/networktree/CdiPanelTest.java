@@ -22,7 +22,12 @@ import java.awt.GraphicsEnvironment;
  * @author Bob Jacobsen Copyright 2012
  * 
  */
-public class CdiPanelDemo {
+public class CdiPanelTest {
+
+    public void testCtor(){
+        CdiPanel m = new CdiPanel();
+        Assert.assertNotNull(m);
+    }
 
     @Test
     public void testDisplay() {

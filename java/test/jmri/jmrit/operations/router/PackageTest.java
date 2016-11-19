@@ -28,10 +28,6 @@ public class PackageTest extends TestCase {
         suite.addTest(OperationsCarRouterTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
 
-        // GUI tests start here
-        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
-        }
-
         return suite;
     }
 
