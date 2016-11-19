@@ -387,5 +387,18 @@ public class JUnitUtil {
                 apps.StartupActionsManager.class);
     }
 
+    /*
+     * Use reflection to reset the jmri.Application instance
+     */
+    public static void resetApplication() {
+       try {
+          Class<?> c = jmri.Application.class;
+          java.lang.reflect.Field f = c.getDeclaredField("name");
+          f.set(new jmri.Application(),null);
+       } catch(NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) { 
+         log.error("Failed to reset jmri.Application static field");
+       }
+    }
+
     private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class.getName());
 }

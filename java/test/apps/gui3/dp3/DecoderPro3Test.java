@@ -18,7 +18,6 @@ import jmri.util.JUnitUtil;
 public class DecoderPro3Test {
 
     @Test
-    @Ignore("can only set application name once in jmri.Application.  We need a way to reset this value for testing")
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());        
         String[] args = {"DecoderProConfig3.xml"};
@@ -53,11 +52,12 @@ public class DecoderPro3Test {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.resetApplication();
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.resetApplication();
         apps.tests.Log4JFixture.tearDown();
     }
 

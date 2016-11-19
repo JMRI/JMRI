@@ -16,7 +16,6 @@ import jmri.util.JUnitUtil;
 public class JmriFacelessTest {
 
     @Test
-    @Ignore("can only set application name once in jmri.Application.  We need a way to reset this value for testing")
     public void testCtor() {
         String Args[]={};
         AppsBase a = new JmriFaceless(Args){
@@ -49,10 +48,13 @@ public class JmriFacelessTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
+       JUnitUtil.resetApplication();
     }
 
     @After
     public void tearDown() {
+       JUnitUtil.resetApplication();
+       apps.tests.Log4JFixture.tearDown();
     }
 
 
