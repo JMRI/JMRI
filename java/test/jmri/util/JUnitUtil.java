@@ -394,9 +394,11 @@ public class JUnitUtil {
        try {
           Class<?> c = jmri.Application.class;
           java.lang.reflect.Field f = c.getDeclaredField("name");
+          f.setAccessible(true);
           f.set(new jmri.Application(),null);
        } catch(NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) { 
          log.error("Failed to reset jmri.Application static field");
+         x.printStackTrace();
        }
     }
 
