@@ -250,6 +250,11 @@
                         <exclude>jmri.jmrit.operations.OperationsTestCase</exclude>
                         <exclude>jmri.jmrit.operations.OperationsSwingTestCase</exclude>
                     </excludes>
+                    <systemPropertyVariables>
+                        <jmri.path.program>${basedir}</jmri.path.program>
+                        <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
+                        <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
+                    </systemPropertyVariables>
                     <workingDirectory>${basedir}</workingDirectory>
                 </configuration>
             </plugin>
@@ -572,12 +577,6 @@
             <groupId>cglib</groupId>
             <artifactId>cglib-nodep</artifactId>
             <version>2.2.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.netbeans</groupId>
-            <artifactId>jemmy</artifactId>
-            <version>2.2.7.5</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.netbeans</groupId>
