@@ -5,10 +5,8 @@ import jmri.util.JUnitUtil;
 import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Test simple functioning of Dcc4PcMonPane
@@ -19,7 +17,6 @@ public class Dcc4PcMonPaneTest {
 
     @Test
     public void testMemoCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Dcc4PcMonPane action = new Dcc4PcMonPane();
         Assert.assertNotNull("exists", action);
     }
