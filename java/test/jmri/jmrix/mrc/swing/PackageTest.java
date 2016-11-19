@@ -29,9 +29,6 @@ public class PackageTest extends TestCase {
 
         suite.addTest(jmri.jmrix.mrc.swing.packetgen.PackageTest.suite());
 
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-        }
-
         return suite;
     }
 

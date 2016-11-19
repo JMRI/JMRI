@@ -1,9 +1,12 @@
 package jmri.configurexml;
 
+import java.io.File;
+import java.io.IOException;
 import jmri.jmrit.XmlFile;
-import java.io.*;
-
-import junit.framework.*;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+import org.jdom2.JDOMException;
+import org.junit.Assert;
 
 /**
  * Base for XML schema testing
@@ -18,20 +21,23 @@ public class SchemaTestBase extends TestCase {
     }
 
     /**
-     * Does actual validation of a single file
+     * Does actual validation of a single file.
+     *
+     * @param file the file to validate
      */
     static public void validate(File file) {
-        if (System.getProperty("jmri.skipschematests", "false").equals("true")) return; // skipping check
+        if (System.getProperty("jmri.skipschematests", "false").equals("true")) {
+            return; // skipping check
+        }
         boolean original = XmlFile.getVerify();
         try {
             XmlFile.setVerify(true);
             XmlFile xf = new XmlFile() {
             };   // odd syntax is due to XmlFile being abstract
             xf.rootFromFile(file);
-        } catch (Exception ex) {
+        } catch (IOException | JDOMException ex) { // throw unexpected errors
             XmlFile.setVerify(original);
             Assert.fail("failed to validate \"" + file.getPath() + "\" due to: " + ex);
-            return;
         } finally {
             XmlFile.setVerify(original);
         }
@@ -41,7 +47,9 @@ public class SchemaTestBase extends TestCase {
      * Does actual validation of a single file, insisting on failure.
      */
     static void validateFail(File file) {
-        if (System.getProperty("jmri.skipschematests", "false").equals("true")) return; // skipping check
+        if (System.getProperty("jmri.skipschematests", "false").equals("true")) {
+            return; // skipping check
+        }
         boolean original = XmlFile.getVerify();
         try {
             XmlFile.setVerify(true);
@@ -49,34 +57,37 @@ public class SchemaTestBase extends TestCase {
             };   // odd syntax is due to XmlFile being abstract
             xf.rootFromFile(file);
             Assert.fail("Validation should have failed: " + file.getName());
-        } catch (Exception ex) {
+        } catch (IOException | JDOMException ex) {
             // expect fail, this is normal
             XmlFile.setVerify(original);
-            return;
         } finally {
             XmlFile.setVerify(original);
         }
     }
 
     /**
-     * Create the tests that validate an entire directory
+     * Create the tests that validate an entire directory.
+     *
+     * @param suite the suite to add tests to
+     * @param name  the name of directory
      */
     static public void validateDirectory(TestSuite suite, String name) {
         // adds subsuite even if empty
         TestSuite subsuite = new TestSuite("Directory " + name + " validation");
         suite.addTest(subsuite);
 
-        if (System.getProperty("jmri.skipschematests", "false").equals("true")) return; // skipping check
-
-        java.io.File dir = new java.io.File(name);
-        java.io.File[] files = dir.listFiles();
+        if (System.getProperty("jmri.skipschematests", "false").equals("true")) {
+            return; // skipping check
+        }
+        File dir = new File(name);
+        File[] files = dir.listFiles();
         if (files == null) {
             return;
         }
 
-        for (int i = 0; i < files.length; i++) {
-            if (files[i].getName().endsWith(".xml")) {
-                subsuite.addTest(new CheckOneFilePasses(files[i]));
+        for (File file : files) {
+            if (file.getName().endsWith(".xml")) {
+                subsuite.addTest(new CheckOneFilePasses(file));
             }
         }
     }
@@ -84,23 +95,27 @@ public class SchemaTestBase extends TestCase {
     /**
      * Create the tests that validate the subdirectories of a given directory.
      * Not recursive.
+     *
+     * @param suite the suite to add tests to
+     * @param name  the name of the directory
      */
     static public void validateSubdirectories(TestSuite suite, String name) {
         // adds subsuite even if empty
         TestSuite subsuite = new TestSuite("Subdirectories of " + name + " validation");
         suite.addTest(subsuite);
 
-        if (System.getProperty("jmri.skipschematests", "false").equals("true")) return; // skipping check
-
-        java.io.File dir = new java.io.File(name);
-        java.io.File[] files = dir.listFiles();
+        if (System.getProperty("jmri.skipschematests", "false").equals("true")) {
+            return; // skipping check
+        }
+        File dir = new File(name);
+        File[] files = dir.listFiles();
         if (files == null) {
             return;
         }
 
-        for (int i = 0; i < files.length; i++) {
-            if (files[i].isDirectory()) {
-                validateDirectory(subsuite, files[i].toString());
+        for (File file : files) {
+            if (file.isDirectory()) {
+                validateDirectory(subsuite, file.toString());
             }
         }
     }
@@ -108,23 +123,27 @@ public class SchemaTestBase extends TestCase {
     /**
      * Create the tests that validate that an entire directory fails. This is
      * used to check that the schema itself is working as a constraint.
+     *
+     * @param suite the suite to add tests to
+     * @param name  the name of the directory
      */
     static public void validateDirectoryFail(TestSuite suite, String name) {
         // adds subsuite even if empty
         TestSuite subsuite = new TestSuite("Directory " + name + " validation");
         suite.addTest(subsuite);
 
-        if (System.getProperty("jmri.skipschematests", "false").equals("true")) return; // skipping check
-
-        java.io.File dir = new java.io.File(name);
-        java.io.File[] files = dir.listFiles();
+        if (System.getProperty("jmri.skipschematests", "false").equals("true")) {
+            return; // skipping check
+        }
+        File dir = new File(name);
+        File[] files = dir.listFiles();
         if (files == null) {
             return;
         }
 
-        for (int i = 0; i < files.length; i++) {
-            if (files[i].getName().endsWith(".xml")) {
-                subsuite.addTest(new CheckOneFileFails(files[i]));
+        for (File file : files) {
+            if (file.getName().endsWith(".xml")) {
+                subsuite.addTest(new CheckOneFileFails(file));
             }
         }
     }
@@ -141,6 +160,7 @@ public class SchemaTestBase extends TestCase {
             this.file = file;
         }
 
+        @Override
         public void runTest() {
             validate(file);
         }
@@ -159,17 +179,20 @@ public class SchemaTestBase extends TestCase {
             this.file = file;
         }
 
+        @Override
         public void runTest() {
             validateFail(file);
         }
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();

@@ -7,10 +7,12 @@
     <choice>Add value to base acceleration rate (increases acceleration delay)</choice>
     <choice xml:lang="it">Aggiunge valore al tasso di accellerazione base</choice>
     <choice xml:lang="de">Addiere Wert zur Basis-Beschleunigung</choice>
+    <choice xml:lang="cs">Přidat hodnotu k základní míře zrychlení (zvyšuje zpoždění zrychlení)</choice>
   </enumChoice>
   <enumChoice choice="Subtract value from base acceleration rate (decreases acceleration delay)">
     <choice>Subtract value from base acceleration rate (decreases acceleration delay)</choice>
     <choice xml:lang="it">Sottrae valore al tasso di accellerazione base</choice>
     <choice xml:lang="de">Subtrahiere Wert von der Basis-Beschleunigung</choice>
+    <choice xml:lang="cs">Odečíst hodnotu od základní míry zrychlení (snižuje zpoždění zrychlení)</choice>
   </enumChoice>
 </enumVal>

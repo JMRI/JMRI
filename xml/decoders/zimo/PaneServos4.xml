@@ -34,6 +34,7 @@
         <display item="Servo 1 Function Allocation" label="Function Allocation">
           <label>Function Allocation</label>
           <label xml:lang="it">Allocazione Funzioni</label>
+          <label xml:lang="cs">Přiřazení funkcí</label>
         </display>
         <label>
           <text> </text>
@@ -43,12 +44,14 @@
             <display item="Servo 1 Rotation Speed" label="Rotation Speed">
               <label>Rotation Speed</label>
               <label xml:lang="it">Velocità di Rotazione</label>
+              <label xml:lang="cs">Rychlost otáčení</label>
             </display>
           </column>
           <column>
             <label>
               <text>Tenths of a second</text>
               <text xml:lang="it">Decimi di secondo</text>
+              <text xml:lang="cs"> desetiny vteřiny</text>
             </label>
           </column>
         </row>
@@ -58,14 +61,17 @@
         <display item="Servo 1 Left Stop" label="Left Stop">
           <label>Left Stop</label>
           <label xml:lang="it">Stop Sinistro</label>
+          <label xml:lang="cs">Levá pozice</label>
         </display>
         <display item="Servo 1 Centre" label="Centre">
           <label>Centre</label>
           <label xml:lang="it">Centro</label>
+          <label xml:lang="cs">Střed</label>
         </display>
         <display item="Servo 1 Right Stop" label="Right Stop">
           <label>Right Stop</label>
           <label xml:lang="it">Stop destro</label>
+          <label xml:lang="cs">Pravá pozice</label>
         </display>
         <label>
           <text> </text>
@@ -94,6 +100,7 @@
         <display item="Servo 2 Function Allocation" label="Function Allocation">
           <label>Function Allocation</label>
           <label xml:lang="it">Allocazione Funzioni</label>
+          <label xml:lang="cs">Přiřazení funkcí</label>
         </display>
         <label>
           <text> </text>
@@ -103,12 +110,14 @@
             <display item="Servo 2 Rotation Speed" label="Rotation Speed">
               <label>Rotation Speed</label>
               <label xml:lang="it">Velocità di Rotazione</label>
+              <label xml:lang="cs">Rychlost otáčení</label>
             </display>
           </column>
           <column>
             <label>
               <text>Tenths of a second</text>
               <text xml:lang="it">Decimi di secondo</text>
+              <text xml:lang="cs"> desetiny vteřiny</text>
             </label>
           </column>
         </row>
@@ -118,14 +127,17 @@
         <display item="Servo 2 Left Stop" label="Left Stop">
           <label>Left Stop</label>
           <label xml:lang="it">Stop Sinistro</label>
+          <label xml:lang="cs">Levá pozice</label>
         </display>
         <display item="Servo 2 Centre" label="Centre">
           <label>Centre</label>
           <label xml:lang="it">Centro</label>
+          <label xml:lang="cs">Střed</label>
         </display>
         <display item="Servo 2 Right Stop" label="Right Stop">
           <label>Right Stop</label>
           <label xml:lang="it">Stop destro</label>
+          <label xml:lang="cs">Pravá pozice</label>
         </display>
         <label>
           <text> </text>
@@ -146,6 +158,7 @@
         <display item="Servo 3 Function Allocation" label="Function Allocation">
           <label>Function Allocation</label>
           <label xml:lang="it">Allocazione Funzioni</label>
+          <label xml:lang="cs">Přiřazení funkcí</label>
         </display>
         <label>
           <text> </text>
@@ -155,12 +168,14 @@
             <display item="Servo 3 Rotation Speed" label="Rotation Speed">
               <label>Rotation Speed</label>
               <label xml:lang="it">Velocità di Rotazione</label>
+              <label xml:lang="cs">Rychlost otáčení</label>
             </display>
           </column>
           <column>
             <label>
               <text>Tenths of a second</text>
               <text xml:lang="it">Decimi di secondo</text>
+              <text xml:lang="cs"> desetiny vteřiny</text>
             </label>
           </column>
         </row>
@@ -170,14 +185,17 @@
         <display item="Servo 3 Left Stop" label="Left Stop">
           <label>Left Stop</label>
           <label xml:lang="it">Stop Sinistro</label>
+          <label xml:lang="cs">Levá pozice</label>
         </display>
         <display item="Servo 3 Centre" label="Centre">
           <label>Centre</label>
           <label xml:lang="it">Centro</label>
+          <label xml:lang="cs">Střed</label>
         </display>
         <display item="Servo 3 Right Stop" label="Right Stop">
           <label>Right Stop</label>
           <label xml:lang="it">Stop destro</label>
+          <label xml:lang="cs">Pravá pozice</label>
         </display>
         <label>
           <text> </text>
@@ -206,6 +224,7 @@
         <display item="Servo 4 Function Allocation" label="Function Allocation">
           <label>Function Allocation</label>
           <label xml:lang="it">Allocazione Funzioni</label>
+          <label xml:lang="cs">Přiřazení funkcí</label>
         </display>
         <label>
           <text> </text>
@@ -215,12 +234,14 @@
             <display item="Servo 4 Rotation Speed" label="Rotation Speed">
               <label>Rotation Speed</label>
               <label xml:lang="it">Velocità di Rotazione</label>
+              <label xml:lang="cs">Rychlost otáčení</label>
             </display>
           </column>
           <column>
             <label>
               <text>Tenths of a second</text>
               <text xml:lang="it">Decimi di secondo</text>
+              <text xml:lang="cs"> desetiny vteřiny</text>
             </label>
           </column>
         </row>
@@ -230,14 +251,17 @@
         <display item="Servo 4 Left Stop" label="Left Stop">
           <label>Left Stop</label>
           <label xml:lang="it">Stop Sinistro</label>
+          <label xml:lang="cs">Levá pozice</label>
         </display>
         <display item="Servo 4 Centre" label="Centre">
           <label>Centre</label>
           <label xml:lang="it">Centro</label>
+          <label xml:lang="cs">Střed</label>
         </display>
         <display item="Servo 4 Right Stop" label="Right Stop">
           <label>Right Stop</label>
           <label xml:lang="it">Stop destro</label>
+          <label xml:lang="cs">Pravá pozice</label>
         </display>
         <label>
           <text> </text>
@@ -252,4 +276,5 @@
   </column>
   <name>Servos</name>
   <name xml:lang="it">Comandi Servo</name>
+  <name xml:lang="cs">Serva</name>
 </pane>

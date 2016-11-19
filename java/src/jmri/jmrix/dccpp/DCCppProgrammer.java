@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (c) 2002, 2007
  * @author Paul Bender Copyright (c) 2003-2010
  * @author Giorgio Terdina Copyright (c) 2007
+ * @author Mark Underwood Copyright (c) 2015
  */
 public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener {
 

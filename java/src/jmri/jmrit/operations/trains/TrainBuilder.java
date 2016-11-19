@@ -1383,7 +1383,7 @@ public class TrainBuilder extends TrainCommon {
                 }
             }
         }
-        // second pass, take a caboose with a road name that is "similar" to the engine road name
+        // second pass, take a caboose with a road name that is "similar" (hyphen feature) to the engine road name
         if (requiresCaboose && !foundCaboose && roadCaboose.equals(Train.NONE)) {
             log.debug("Second pass looking for caboose");
             for (Car car : _carList) {

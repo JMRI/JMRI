@@ -113,6 +113,8 @@ public abstract class TrainCustomCommon {
                 }
             }
         }
+        
+        log.debug("Queued {} files to custom Excel program", getFileCount());
 
         // Build our command string out of these bits
         // We need to use cmd and start to allow launching data files like
@@ -199,6 +201,15 @@ public abstract class TrainCustomCommon {
         }
         alive = false;
         return status;
+    }
+    
+    /**
+     * Checks to see if the common file exists
+     * @return true if the common file exists
+     */
+    public boolean doesCommonFileExist() {
+        File file = new File(OperationsManager.getInstance().getFile(getDirectoryName()), getCommonFileName());
+        return file.exists();
     }
 
     public void load(Element mc) {

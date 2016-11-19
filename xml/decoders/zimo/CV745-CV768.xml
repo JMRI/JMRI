@@ -18,6 +18,7 @@
     <label>Random sound Z1</label>
     <label xml:lang="it">Suono Z1 casuale</label>
     <label xml:lang="de">Lautstärke Sound Z1</label>
+    <label xml:lang="cs">Zvuk generátor náhody Z1</label>
   </variable>
   <variable item="Z1 Stand" CV="746" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -36,6 +37,7 @@
     <label>Random sound Z2</label>
     <label xml:lang="it">Suono Z2 casuale</label>
     <label xml:lang="de">Lautstärke Sound Z2</label>
+    <label xml:lang="cs">Zvuk generátor náhody Z2</label>
   </variable>
   <variable item="Z2 Stand" CV="749" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -54,6 +56,7 @@
     <label>Random sound Z3</label>
     <label xml:lang="it">Suono Z3 casuale</label>
     <label xml:lang="de">Lautstärke Sound Z3</label>
+    <label xml:lang="cs">Zvuk generátor náhody Z3</label>
   </variable>
   <variable item="Z3 Stand" CV="752" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -72,6 +75,7 @@
     <label>Random sound Z4</label>
     <label xml:lang="it">Suono Z4 casuale</label>
     <label xml:lang="de">Lautstärke Sound Z4</label>
+    <label xml:lang="cs">Zvuk generátor náhody Z4</label>
   </variable>
   <variable item="Z4 Stand" CV="755" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -90,6 +94,7 @@
     <label>Random sound Z5</label>
     <label xml:lang="it">Suono Z5 casuale</label>
     <label xml:lang="de">Lautstärke Sound Z5</label>
+    <label xml:lang="cs">Zvuk generátor náhody Z5</label>
   </variable>
   <variable item="Z5 Stand" CV="758" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -108,6 +113,7 @@
     <label>Random sound Z6</label>
     <label xml:lang="it">Suono Z6 casuale</label>
     <label xml:lang="de">Lautstärke Sound Z6</label>
+    <label xml:lang="cs">Zvuk generátor náhody Z6</label>
   </variable>
   <variable item="Z6 Stand" CV="761" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -126,6 +132,7 @@
     <label>Random sound Z7</label>
     <label xml:lang="it">Suono Z7 casuale</label>
     <label xml:lang="de">Lautstärke Sound Z7</label>
+    <label xml:lang="cs">Zvuk generátor náhody Z7</label>
   </variable>
   <variable item="Z7 Stand" CV="764" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -144,6 +151,7 @@
     <label>Random sound Z8</label>
     <label xml:lang="it">Suono Z8 casuale</label>
     <label xml:lang="de">Lautstärke Sound Z8</label>
+    <label xml:lang="cs">Zvuk generátor náhody Z8</label>
   </variable>
   <variable item="Z8 Stand" CV="767" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
