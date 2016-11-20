@@ -44,8 +44,14 @@ public class MDITest {
                  JUnitUtil.initMemoryManager();
                  JUnitUtil.initDebugThrottleManager();
             }
+            @Override
+            protected void installShutDownManager(){
+                 JUnitUtil.initShutDownManager();
+            }
         };
         Assert.assertNotNull(a);
+        // shutdown the application
+        a.handleQuit();
     }
 
     // The minimal setup for log4J
