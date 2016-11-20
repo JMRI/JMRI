@@ -685,6 +685,7 @@ public class Location implements java.beans.PropertyChangeListener {
             _IdNumber++;
             String id = _id + "s" + Integer.toString(_IdNumber);
             log.debug("Adding new ({}) to ({}) track name ({}) id: {}", type, getName(), name, id);
+            LocationManager.instance().resetNameLengths(); // recalculate max track name length for manifests
             track = new Track(id, name, type, this);
             register(track);
         }
