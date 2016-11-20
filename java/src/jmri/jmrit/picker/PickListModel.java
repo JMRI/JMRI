@@ -735,7 +735,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
 
         public NamedBean addBean(String sysName, String userName) {
-            return manager.createNewWarrant(sysName, userName, false, 0);
+            return manager.createNewWarrant(sysName, userName);
         }
 
         public boolean canAddBean() {
