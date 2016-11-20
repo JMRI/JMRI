@@ -19,10 +19,11 @@ import org.junit.Test;
 import java.awt.GraphicsEnvironment;
 
 /**
+ * NOTE: This file actually Demonstrates the openLCB CdiPanel class.
  * @author Bob Jacobsen Copyright 2012
  * 
  */
-public class CdiPanelTest {
+public class CdiPanelDemo {
 
     public void testCtor(){
         CdiPanel m = new CdiPanel();
