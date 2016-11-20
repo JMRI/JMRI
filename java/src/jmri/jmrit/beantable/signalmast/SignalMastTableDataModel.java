@@ -147,6 +147,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
 
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         // some error checking
         if (row >= sysNameList.size()) {
@@ -181,6 +182,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         String name = sysNameList.get(row);
         SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name);
@@ -189,6 +191,8 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         }
         if (col == VALUECOL) {
             if ((String) value != null) {
+                //row = table.convertRowIndexToModel(row); // find the right row in model instead of table
+                System.out.println("setValueAt (rowConverted=" +row + "; value=" + value + ")");
                 s.setAspect((String) value);
                 fireTableRowsUpdated(row, row);
             }
@@ -548,7 +552,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
                                                 int     row,
                                                 int     col)
         {
-            setSelectedItem(value);
+            // setSelectedItem(value);
             System.out.println("getEditorComponent (#552 row=" + row + ", value=" + value +")");
             //new or old row?
             isSelected = table.isRowSelected(row);
@@ -556,10 +560,25 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
                 //old row
                 SwingUtilities.invokeLater(this.comboBoxFocusRequester);
                 SwingUtilities.invokeLater(this.comboBoxOpener);
+                System.out.println("getEditorComponent>isSelected (#559; value=" + value + ")");
                 return getComboBox(); // use method? showPopup()
             }
-            //the user selected a new row
-            //this.editor.removeAll();  // Option we don't use: remove the combobox from the panel
+            //the user selected a new row (or initially no row was selected)
+            this.editor.removeAll();  // remove the combobox from the panel
+            JComboBox editorbox = getEditorBox(table.convertRowIndexToModel(row));
+            System.out.println("getRendererComponent (#565 row=" + row + ", value=" + value + ")");
+            //editorbox.addItem(value); // display current Aspect
+
+            editorbox.setSelectedItem(value);
+            editorbox.addActionListener (new ActionListener ()
+            {
+                public final void actionPerformed (ActionEvent evt) {
+                    Object choice = editorbox.getSelectedItem();
+                    System.out.println("actionPerformed (#575 event=" + evt.toString() + " choice=" + choice.toString());
+                    eventAspectComboBoxActionPerformed (choice); // try a special method for this source
+                }
+            });
+            editor.add(editorbox);
             return this.editor;
         }
 
@@ -598,17 +617,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
                                                int     row,
                                                int     col)
         {
-            //setSelectedItem(value);
-            System.out.println("getRendererComponent (#602 row=" + row + ", value=" + value +")");
-            //new or old row?
-            isSelected = table.isRowSelected(row);
-/*            if  (isSelected) {
-                //old row
-                SwingUtilities.invokeLater(this.comboBoxFocusRequester);
-                SwingUtilities.invokeLater(this.comboBoxOpener);
-                return getComboBox();
-            }*/
-            //the user selected a new row
+            //isSelected = table.isRowSelected(row);
             this.renderer.removeAll();  //remove the combobox from the panel
             JComboBox renderbox = new JComboBox(); // EBR create a fake comboBox with the current Aspect of mast in this row
             System.out.println("getRendererComponent (#614 row=" + row + ", value=" + value + ")");
@@ -621,8 +630,9 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
 
         private void updateData(int row, boolean isSelected, JTable table) {
             // get correct Aspects for ComboBox
-            System.out.println("updateData (row=" + row + ")");
-            JComboBox cb = getRendererBox(table.convertRowIndexToModel(row));
+            System.out.println("#624 updateData (row=" + row + ")");
+            //JComboBox cb = getRendererBox(table.convertRowIndexToModel(row));
+            JComboBox cb = getEditorBox(table.convertRowIndexToModel(row));
             this.editor.add(cb);
             if (isSelected) {
                 editor.setBackground(table.getSelectionBackground());
@@ -678,26 +688,38 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         }
 
         final void eventEditorMousePressed() {
-            this.editor.add (getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add cb to JPanel
+            this.editor.add(getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add cb to JPanel
             this.editor.revalidate();
             SwingUtilities.invokeLater(this.comboBoxFocusRequester);
+            System.out.println("#681 eventEditorMousePressed in row: " + this.currentRow + ")");
+
         }
 
         protected void eventTableSelectionChanged() {
             //stop editing if a new row is selected
+            System.out.println("#697 eventTableSelectionChanged");
             if  ( ! this.table.isRowSelected(this.currentRow))
             {
                 stopCellEditing ();
             }
         }
 
+        // copy for my own box
+        protected void eventAspectComboBoxActionPerformed(Object choice) {
+            Object item = choice;
+            System.out.println("#697 eventAspectComboBoxActionPerformed; selected item=" + item + ")");
+            if  (item != null) prevItem = item;
+            System.out.println("eventAspectComboBoxActionPerformed (item=" + item.toString());
+            if (consumeComboBoxActionEvent) stopCellEditing();
+        }
+
         protected void eventComboBoxActionPerformed() {
             Object item = getComboBox().getSelectedItem();
+            System.out.println("#697 eventComboBoxActionPerformed; selected item=" + item + ")");
             if  (item != null) prevItem = item;
             System.out.println("eventComboBoxActionPerformed (item=" + item.toString());
             if (consumeComboBoxActionEvent) stopCellEditing();
         }
-
         public final JComboBox getComboBox() {
             return (JComboBox) getComponent();
         }
