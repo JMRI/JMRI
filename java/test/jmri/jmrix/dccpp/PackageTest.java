@@ -51,10 +51,6 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.dccpp.simulator.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.dccpp.serial.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.dccpp.configurexml.PackageTest.class));
-	/*
-        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
-        }
-	*/
 
         return suite;
     }
