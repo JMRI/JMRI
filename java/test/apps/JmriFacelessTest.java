@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import jmri.util.JUnitUtil;
 
 /**
  *
@@ -15,22 +16,51 @@ import org.junit.Test;
 public class JmriFacelessTest {
 
     @Test
-    @Ignore("Causes exception on CI engines, works locally")
     public void testCtor() {
         String Args[]={};
-        AppsBase a = new JmriFaceless(Args);
+        AppsBase a = new JmriFaceless(Args){
+            // force the application to not actually start.
+            // Just checking construction.
+            @Override
+            public void start(){}
+            @Override
+            protected void configureProfile(){
+                 JUnitUtil.resetInstanceManager();
+            }
+            @Override
+            protected void installConfigurationManager(){
+                 JUnitUtil.initConfigureManager();
+                 JUnitUtil.initDefaultUserMessagePreferences();
+            }
+            @Override
+            protected void installManagers(){
+                 JUnitUtil.initInternalTurnoutManager();
+                 JUnitUtil.initInternalLightManager();
+                 JUnitUtil.initInternalSensorManager();
+                 JUnitUtil.initRouteManager();
+                 JUnitUtil.initMemoryManager();
+                 JUnitUtil.initDebugThrottleManager();
+            }
+            @Override
+            protected void installShutDownManager(){
+                 JUnitUtil.initShutDownManager();
+            }
+        };
         Assert.assertNotNull(a);
+        // shutdown the application
+        a.handleQuit();
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+       JUnitUtil.resetApplication();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.resetApplication();
+       apps.tests.Log4JFixture.tearDown();
     }
 
 
