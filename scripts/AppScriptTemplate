@@ -33,7 +33,7 @@
 #
 # If you rename the script to, for example, JmriNew, it will use
 # "JmriNewConfig.properties" as it's configuration file. Note that configuration
-# files only determine which profile to use, and if the profile selector should
+# files only determine which project to use, and if the project selector should
 # be shown at application launch.
 #
 # If you are getting X11 warnings about meta keys, uncomment the next line
@@ -58,7 +58,7 @@ Usage: $( basename $0 ) [--help] [OPTIONS] [--] [ARGUMENTS]
   -DPROPERTY                     Set the Java System property PROPERTY
   -JOPTION                       Pass the option OPTION to the JVM
   -m MAIN, --main=MAIN           Use main() method in class MAIN to start JMRI
-  -p PROFILE, --profile=PROFILE  Start JMRI with the profile PROFILE
+  -p PROJECT, --project=PROJECT  Start JMRI with the project PROJECT
   --serial-ports=SERIAL_PORTS    Use the serial ports in SERIAL_PORTS
   --settingsdir=SETTINGS_DIR     Use SETTINGS_DIR as the settings directory
   --                             Do not process anything following as an option,
@@ -100,9 +100,9 @@ function parse_args() {
             # main class
             -m|--main) CLASSNAME="${2}" ; shift ;;
             --main=*) CLASSNAME="${1#*=}" ;;
-            # JMRI configuration profile
-            -p|--profile) jmri_options="${jmri_options} -Dorg.jmri.profile=${2}" ; shift ;;
-            --profile=*) jmri_options="${jmri_options} -Dorg.jmri.profile=${1#*=}" ;;
+            # JMRI project
+            -p|--project|--profile) jmri_options="${jmri_options} -Dorg.jmri.profile=${2}" ; shift ;;
+            --project=*|--profile=*) jmri_options="${jmri_options} -Dorg.jmri.profile=${1#*=}" ;;
             # serial ports
             --serial-ports) JMRI_SERIAL_PORTS="${2}" ; shift ;;
             --serial-ports=*) JMRI_SERIAL_PORTS="${1#*=}" ;;

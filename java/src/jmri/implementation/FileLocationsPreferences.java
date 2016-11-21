@@ -22,10 +22,10 @@ public class FileLocationsPreferences extends AbstractPreferencesManager {
     public static final String SCRIPTS = "scripts"; // NOI18N
 
     @Override
-    public void initialize(Profile profile) throws InitializationException {
-        if (!this.isInitialized(profile)) {
-            Preferences shared = ProfileUtils.getPreferences(profile, this.getClass(), true);
-            Preferences perNode = ProfileUtils.getPreferences(profile, this.getClass(), false);
+    public void initialize(Profile project) throws InitializationException {
+        if (!this.isInitialized(project)) {
+            Preferences shared = ProfileUtils.getPreferences(project, this.getClass(), true);
+            Preferences perNode = ProfileUtils.getPreferences(project, this.getClass(), false);
             String userFiles = shared.get(USER_FILES, FileUtil.PROFILE);
             if (!userFiles.startsWith(FileUtil.PROFILE)) {
                 userFiles = perNode.get(USER_FILES, userFiles);
@@ -36,7 +36,7 @@ public class FileLocationsPreferences extends AbstractPreferencesManager {
                 scripts = perNode.get(SCRIPTS, scripts);
             }
             FileUtil.setScriptsPath(FileUtil.getAbsoluteFilename(scripts));
-            this.setInitialized(profile, true);
+            this.setInitialized(project, true);
             try {
                 if (!FileUtil.getFile(userFiles).isDirectory()) {
                     String message = "UserFilesIsNotDir"; // NOI18N

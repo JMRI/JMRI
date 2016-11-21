@@ -256,7 +256,7 @@ public class AddProfileDialog extends javax.swing.JDialog {
                 this.profileLocation.setText(chooser.getSelectedFile().getCanonicalPath());
                 this.profileNameActionPerformed(evt);
             } catch (IOException ex) {
-                log.error("Error selecting profile location", ex);
+                log.error("Error selecting project location", ex);
             }
         }
     }//GEN-LAST:event_btnBrowseActionPerformed
@@ -280,7 +280,7 @@ public class AddProfileDialog extends javax.swing.JDialog {
             ProfileManager.getDefault().addProfile(p);
             if (this.source != null) {
                 //if (this.source.equals(ProfileManager.getDefault().getActiveProfile())) {
-                //    // TODO: if source is active profile, prompt user to save source
+                //    // TODO: if source is active project, prompt user to save source
                 //    InstanceManager.getDefault(ConfigureManager.class).storePrefs();
                 //}
                 ProfileUtils.copy(source, p);
@@ -292,16 +292,16 @@ public class AddProfileDialog extends javax.swing.JDialog {
             }
             ProfileManager.getDefault().saveActiveProfile(p, ProfileManager.getDefault().isAutoStartActiveProfile());
             if (this.source != null) {
-                log.info("Created profile \"{}\" by copying profile \"{}\"", p.getName(), this.source.getName());
+                log.info("Created project \"{}\" by copying project \"{}\"", p.getName(), this.source.getName());
             } else {
-                log.info("Created new profile \"{}\"", p.getName());
+                log.info("Created new project \"{}\"", p.getName());
             }
             this.setCursor(Cursor.getDefaultCursor());
             this.dispose();
         } catch (IOException | IllegalArgumentException ex) {
             this.setCursor(Cursor.getDefaultCursor());
-            JOptionPane.showMessageDialog(this, ex.getLocalizedMessage(), "Error Creating Profile", JOptionPane.ERROR_MESSAGE);
-            log.error("Error saving profile", ex);
+            JOptionPane.showMessageDialog(this, ex.getLocalizedMessage(), "Error Creating Project", JOptionPane.ERROR_MESSAGE);
+            log.error("Error saving project", ex);
         }
     }//GEN-LAST:event_btnOkActionPerformed
 

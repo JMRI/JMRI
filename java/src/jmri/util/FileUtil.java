@@ -26,11 +26,13 @@ public final class FileUtil {
      */
     static public final String PROGRAM = "program:"; // NOI18N
     /**
-     * Portable reference to the JMRI user's files and preferences directory.
+     * Portable reference to the JMRI user's files and preferences directory. Is
+     * {@literal preference:} for historical reasons.
      */
     static public final String PREFERENCES = "preference:"; // NOI18N
     /**
-     * Portable reference to the JMRI applications preferences directory.
+     * Portable reference to the JMRI applications preferences directory. Is
+     * {@literal settings:} for historical reasons.
      */
     static public final String SETTINGS = "settings:"; // NOI18N
     /**
@@ -38,7 +40,8 @@ public final class FileUtil {
      */
     static public final String HOME = "home:"; // NOI18N
     /**
-     * Portable reference to the current profile directory.
+     * Portable reference to the current project directory. Is
+     * {@literal profile:} for historical reasons.
      */
     static public final String PROFILE = "profile:"; // NOI18N
     /**
@@ -150,8 +153,8 @@ public final class FileUtil {
      * resource directory in the preferences directory (deprecated; see
      * "preference:" above)</li>
      * <li>Starts with "profile:", treat the rest as a relative path below the
-     * profile directory as specified in the
-     * active{@link jmri.profile.Profile}</li>
+     * project directory as specified in the active
+     * {@link jmri.profile.Profile}</li>
      * <li>Starts with "scripts:", treat the rest as a relative path below the
      * scripts directory</li>
      * <li>Otherwise, treat the name as a relative path below the program
@@ -201,10 +204,10 @@ public final class FileUtil {
      * This is the inverse of {@link #getFile(String pName)}. Deprecated forms
      * are not created.
      *
-     * This method supports a specific use case concerning profiles and other
+     * This method supports a specific use case concerning projects and other
      * portable paths that are stored within the User files directory, which
      * will cause the {@link jmri.profile.ProfileManager} to write an incorrect
-     * path for the current profile or
+     * path for the current project or
      * {@link apps.configurexml.FileLocationPaneXml} to write an incorrect path
      * for the Users file directory. In most cases, the use of
      * {@link #getPortableFilename(java.io.File)} is preferable.
@@ -213,7 +216,7 @@ public final class FileUtil {
      * @param ignoreUserFilesPath true if paths in the User files path should be
      *                            stored as absolute paths, which is often not
      *                            desirable.
-     * @param ignoreProfilePath   true if paths in the profile should be stored
+     * @param ignoreProfilePath   true if paths in the project should be stored
      *                            as absolute paths, which is often not
      *                            desirable.
      * @return Storage format representation
@@ -243,10 +246,10 @@ public final class FileUtil {
      * This is the inverse of {@link #getExternalFilename(String pName)}.
      * Deprecated forms are not created.
      *
-     * This method supports a specific use case concerning profiles and other
+     * This method supports a specific use case concerning projects and other
      * portable paths that are stored within the User files directory, which
      * will cause the {@link jmri.profile.ProfileManager} to write an incorrect
-     * path for the current profile or
+     * path for the current project or
      * {@link apps.configurexml.FileLocationPaneXml} to write an incorrect path
      * for the Users file directory. In most cases, the use of
      * {@link #getPortableFilename(java.io.File)} is preferable.
@@ -255,7 +258,7 @@ public final class FileUtil {
      * @param ignoreUserFilesPath true if paths in the User files path should be
      *                            stored as absolute paths, which is often not
      *                            desirable.
-     * @param ignoreProfilePath   true if paths in the profile path should be
+     * @param ignoreProfilePath   true if paths in the project path should be
      *                            stored as absolute paths, which is often not
      *                            desirable.
      * @return Storage format representation
@@ -289,7 +292,7 @@ public final class FileUtil {
 
     /**
      * Get the user's files directory. If not set by the user, this is the same
-     * as the profile path.
+     * as the project path.
      *
      * @see #getProfilePath()
      * @return User's files directory as a String
@@ -309,21 +312,21 @@ public final class FileUtil {
     }
 
     /**
-     * Get the profile directory. If not set, this is the same as the
+     * Get the project directory. If not set, this is the same as the
      * preferences path.
      *
      * @see #getPreferencesPath()
-     * @return Profile directory as a String
+     * @return Project directory as a String
      */
     static public String getProfilePath() {
         return FileUtilSupport.getDefault().getProfilePath();
     }
 
     /**
-     * Set the profile directory.
+     * Set the project directory.
      *
      * @see #getProfilePath()
-     * @param path The path to the profile directory
+     * @param path The path to the project directory
      */
     static public void setProfilePath(String path) {
         FileUtilSupport.getDefault().setProfilePath(path);
@@ -833,11 +836,11 @@ public final class FileUtil {
      * @param extension The extension to use for the rotations. If null or an
      *                  empty string, the rotation number is used as the
      *                  extension.
-     * @throws java.io.IOException if a backup cannot be created
+     * @throws java.io.IOException      if a backup cannot be created
      * @throws IllegalArgumentException if max is less than one
      * @see jmri.util.FileUtilSupport#rotate(java.io.File, int,
      * java.lang.String)
-     * @see jmri.util.FileUtilSupport#backup(java.io.File) 
+     * @see jmri.util.FileUtilSupport#backup(java.io.File)
      */
     public static void rotate(File file, int max, String extension) throws IOException {
         FileUtilSupport.getDefault().rotate(file, max, extension);

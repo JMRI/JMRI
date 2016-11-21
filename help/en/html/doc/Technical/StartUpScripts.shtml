@@ -54,8 +54,7 @@
       sources:</p>
 
       <ul>
-        <li>The active <a href="../../profiles.shtml">configuration
-        profiles</a></li>
+        <li>The active <a href="../../profiles.shtml">project</a></li>
 
         <li>The file <em>jmri.conf</em> in the settings
         directory</li>
@@ -82,8 +81,8 @@
 
         <dd>Starts JMRI with the configuration named
         <em>CONFIG</em>. A configuration determines which
-        configuration profile to use and how the configuration
-        profile selector is displayed at application start.</dd>
+        project to use and how the project selector is displayed at
+        application start.</dd>
 
         <dt><code>--cp:a=<em>CLASSPATH</em></code></dt>
 
@@ -120,12 +119,11 @@
         memory JMRI is allowed to use, passed as
         <em>-J-Xmx2048m</em> (in this example, set to 2 GB).</dd>
 
-        <dt><code>-p <em>PROFILE</em></code></dt>
+        <dt><code>-p <em>PROJECT</em></code></dt>
+        <dt><code>--project=<em>PROJECT</em></code></dt>
+        <dt><code>--profile=<em>PROJECT</em></code></dt>
 
-        <dt><code>--profile=<em>PROFILE</em></code></dt>
-
-        <dd>Start JMRI with the configuration profile
-        <em>PROFILE</em>.</dd>
+        <dd>Start JMRI with the project <em>PROJECT</em>.</dd>
 
         <dt><code>--serial-ports=<em>SERIAL_PORTS</em></code></dt>
 
@@ -245,13 +243,13 @@
         64-bit machines. This option has no effect on 32-bit
         machines.</dd>
 
-        <dt>/profile &lt;profileID&gt; (Optional - from JMRI
-        3.7.1)</dt>
+        <dt>/project &lt;projectID&gt; (Optional - from JMRI 4.5.7)</dt>
+        <dt>/profile &lt;projectID&gt; (Optional - from JMRI 3.7.1)</dt>
 
         <dd>If this option is set on the command line, the launcher
-        will use profile &lt;profileID&gt; as the <a href=
-        "/help/en/html/profiles.shtml">JMRI configuration
-        profile</a> to use instead of the default one.</dd>
+        will use project &lt;projectID&gt; as the <a href=
+        "/help/en/html/profiles.shtml">JMRI project</a>
+        to use instead of the default one.</dd>
 
         <dt>Class Parameter</dt>
 

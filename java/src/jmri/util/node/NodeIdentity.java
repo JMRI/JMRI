@@ -89,7 +89,7 @@ public class NodeIdentity {
      * Return the node's current identity.
      *
      * @return An identity. If this identity is not in the form
-     * <i>jmri-MACADDRESS-profileId</i>, this identity should be considered
+     * <i>jmri-MACADDRESS-projectId</i>, this identity should be considered
      * unreliable and subject to change across JMRI restarts.
      */
     synchronized public static String identity() {

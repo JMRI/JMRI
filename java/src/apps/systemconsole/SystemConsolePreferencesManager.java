@@ -37,15 +37,15 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
 
     /*
      * Unlike most PreferencesProviders, the SystemConsole preferences should be
-     * per-application instead of per-profile.
+     * per-application instead of per-project.
      */
     private boolean initialized = false;
     private static final Logger log = LoggerFactory.getLogger(SystemConsolePreferencesManager.class);
 
     @Override
-    public void initialize(Profile profile) throws InitializationException {
+    public void initialize(Profile project) throws InitializationException {
         if (!this.initialized) {
-            Preferences preferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
+            Preferences preferences = ProfileUtils.getPreferences(project, this.getClass(), true);
             this.setFontFamily(preferences.get(FONT_FAMILY, this.getFontFamily()));
             this.setFontSize(preferences.getInt(FONT_SIZE, this.getFontSize()));
             this.setFontStyle(preferences.getInt(FONT_STYLE, this.getFontStyle()));
@@ -56,8 +56,8 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
     }
 
     @Override
-    public void savePreferences(Profile profile) {
-        Preferences preferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
+    public void savePreferences(Profile project) {
+        Preferences preferences = ProfileUtils.getPreferences(project, this.getClass(), true);
         preferences.put(FONT_FAMILY, this.getFontFamily());
         preferences.putInt(FONT_SIZE, this.getFontSize());
         preferences.putInt(FONT_STYLE, this.getFontStyle());
@@ -71,7 +71,7 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
     }
 
     @Override
-    public boolean isInitialized(Profile profile) {
+    public boolean isInitialized(Profile project) {
         return this.initialized;
     }
 

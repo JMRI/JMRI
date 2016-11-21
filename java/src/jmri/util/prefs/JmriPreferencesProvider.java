@@ -33,10 +33,10 @@ import org.slf4j.LoggerFactory;
  * <code>profile:profile</code>:
  * <ul>
  * <li><code>profile.properties</code> preferences that are shared across
- * multiple nodes for a single profile. An example of such a preference would be
+ * multiple nodes for a single project. An example of such a preference would be
  * the Railroad Name preference.</li>
  * <li><code>&lt;node-identity&gt;/profile.properties</code> preferences that
- * are specific to the profile running on a specific host (&lt;node-identity&gt;
+ * are specific to the project running on a specific host (&lt;node-identity&gt;
  * is the identity returned by {@link jmri.util.node.NodeIdentity#identity()}).
  * An example of such a preference would be a file location.</li>
  * </ul>
@@ -57,12 +57,12 @@ public final class JmriPreferencesProvider {
     private static final Logger log = LoggerFactory.getLogger(JmriPreferencesProvider.class);
 
     /**
-     * Get the JmriPreferencesProvider for the specified profile path. Use of
+     * Get the JmriPreferencesProvider for the specified project path. Use of
      *
      * @param path   The root path of a {@link jmri.profile.Profile}. This is
      *               most frequently the path returned by
      *               {@link jmri.profile.Profile#getPath()}.
-     * @param shared True if the preferences apply to the profile at path
+     * @param shared True if the preferences apply to the project at path
      *               irregardless of host. If false, the preferences only apply
      *               to this computer.
      * @return The shared or private JmriPreferencesProvider for the project at
@@ -84,16 +84,16 @@ public final class JmriPreferencesProvider {
 
     /**
      * Get the {@link java.util.prefs.Preferences} for the specified class in
-     * the specified profile.
+     * the specified project.
      *
-     * @param project The profile. This is most often the profile returned by
+     * @param project The project. This is most often the project returned by
      *                the {@link jmri.profile.ProfileManager#getActiveProfile()}
      *                method of the ProfileManager returned by
      *                {@link jmri.profile.ProfileManager#getDefault()}
      * @param clazz   The class requesting preferences. Note that the
      *                preferences returned are for the package containing the
      *                class.
-     * @param shared  True if the preferences apply to this profile irregardless
+     * @param shared  True if the preferences apply to this project irregardless
      *                of host. If false, the preferences only apply to this
      *                computer.
      * @return The shared or private Preferences node for the package containing
@@ -109,14 +109,14 @@ public final class JmriPreferencesProvider {
 
     /**
      * Get the {@link java.util.prefs.Preferences} for the specified package in
-     * the specified profile.
+     * the specified project.
      *
-     * @param project The profile. This is most often the profile returned by
+     * @param project The project. This is most often the project returned by
      *                the {@link jmri.profile.ProfileManager#getActiveProfile()}
      *                method of the ProfileManager returned by
      *                {@link jmri.profile.ProfileManager#getDefault()}
      * @param pkg     The package requesting preferences.
-     * @param shared  True if the preferences apply to this profile irregardless
+     * @param shared  True if the preferences apply to this project irregardless
      *                of host. If false, the preferences only apply to this
      *                computer.
      * @return The shared or private Preferences node for the package.
@@ -137,11 +137,11 @@ public final class JmriPreferencesProvider {
      * Get the {@link java.util.prefs.Preferences} for the specified class in
      * the specified path.
      *
-     * @param path   The path to a profile. This is most often the result of
+     * @param path   The path to a project. This is most often the result of
      *               {@link jmri.profile.Profile#getPath()} for a given Profile.
      * @param clazz  The class requesting preferences. Note that the preferences
      *               returned are for the package containing the class.
-     * @param shared True if the preferences apply to this profile irregardless
+     * @param shared True if the preferences apply to this project irregardless
      *               of host. If false, the preferences only apply to this
      *               computer.
      * @return The shared or private Preferences node for the package containing
@@ -203,7 +203,7 @@ public final class JmriPreferencesProvider {
      * Note that the first use of a node-specific setting can be different than
      * the first use of a multi-node setting.
      *
-     * @return true if new or newly migrated profile, false otherwise
+     * @return true if new or newly migrated project, false otherwise
      */
     public boolean isFirstUse() {
         return this.firstUse;

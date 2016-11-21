@@ -136,7 +136,7 @@
       how to do that.</p>
 
       <p>The JMRI applications themselves use a more powerful
-      "profile" mechanism that's inherited from the apps.Apps and
+      "project" mechanism that's inherited from the apps.Apps and
       apps.AppsBase classes. <!--#include virtual="/Footer" --></p>
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

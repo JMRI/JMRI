@@ -8,7 +8,7 @@ import java.util.Properties;
 import javax.annotation.Nonnull;
 
 /**
- * A JMRI application profile. Profiles allow a JMRI application to load
+ * A JMRI application project. Projects allow a JMRI application to load
  * completely separate set of preferences at each launch without relying on host
  * OS-specific tricks to ensure this happens.
  *
@@ -44,33 +44,33 @@ public class Profile implements Comparable<Profile> {
     }
 
     /**
-     * Create a Profile object and a profile in storage. A Profile cannot exist
+     * Create a Profile object and a project in storage. A Profile cannot exist
      * in storage on the computer at the path given. Since this is a new
-     * profile, the id must match the last element in the path.
+     * project, the id must match the last element in the path.
      * <p>
      * This is the only time the id can be set on a Profile, as the id becomes a
      * read-only property of the Profile. The {@link ProfileManager} will only
-     * load a single profile with a given id.
+     * load a single project with a given id.
      *
-     * @param name Name of the profile. Will not be used to enforce uniqueness
+     * @param name Name of the project. Will not be used to enforce uniqueness
      *             contraints.
-     * @param id   Id of the profile. Will be prepended to a random String to
+     * @param id   Id of the project. Will be prepended to a random String to
      *             enforce uniqueness constraints.
-     * @param path Location to store the profile
-     * @throws java.io.IOException If unable to create the profile at path
+     * @param path Location to store the project
+     * @throws java.io.IOException If unable to create the project at path
      */
     public Profile(String name, String id, File path) throws IOException, IllegalArgumentException {
         if (!path.getName().equals(id)) {
             throw new IllegalArgumentException(id + " " + path.getName() + " do not match"); // NOI18N
         }
         if (Profile.isProfile(path)) {
-            throw new IllegalArgumentException("A profile already exists at " + path); // NOI18N
+            throw new IllegalArgumentException("A project already exists at " + path); // NOI18N
         }
         if (Profile.containsProfile(path)) {
-            throw new IllegalArgumentException(path + " contains a profile in a subdirectory."); // NOI18N
+            throw new IllegalArgumentException(path + " contains a project in a subdirectory."); // NOI18N
         }
         if (Profile.inProfile(path)) {
-            throw new IllegalArgumentException(path + " is within an existing profile."); // NOI18N
+            throw new IllegalArgumentException(path + " is within an existing project."); // NOI18N
         }
         this.name = name;
         this.id = id + "." + ProfileManager.createUniqueId();
@@ -93,11 +93,11 @@ public class Profile implements Comparable<Profile> {
      *
      * This method exists purely to support subclasses.
      *
-     * @param path       The Profile's directory
-     * @param isReadable True if the profile has storage. See
+     * @param path       The project directory
+     * @param isReadable True if the project has storage. See
      *                   {@link jmri.profile.NullProfile} for a Profile subclass
      *                   where this is not true.
-     * @throws java.io.IOException If the profile's preferences cannot be read.
+     * @throws java.io.IOException If the project preferences cannot be read.
      */
     protected Profile(File path, boolean isReadable) throws IOException {
         this.path = path;
@@ -151,7 +151,7 @@ public class Profile implements Comparable<Profile> {
     }
 
     /**
-     * @deprecated since 4.1.1; Remove sometime after the new profiles get
+     * @deprecated since 4.1.1; Remove sometime after the new projects get
      * entrenched (JMRI 5.0, 6.0?)
      */
     @Deprecated
@@ -198,7 +198,7 @@ public class Profile implements Comparable<Profile> {
     }
 
     /**
-     * Test if the profile is complete. A profile is considered complete if it
+     * Test if the project is complete. A project is considered complete if it
      * can be instantiated using {@link #Profile(java.io.File)} and has a
      * profile.properties file within its "profile" directory.
      *
@@ -209,9 +209,9 @@ public class Profile implements Comparable<Profile> {
     }
 
     /**
-     * Return the uniqueness portion of the Profile Id.
+     * Return the uniqueness portion of the Project Id.
      *
-     * This portion of the Id is automatically generated when the profile is
+     * This portion of the Id is automatically generated when the project is
      * created.
      *
      * @return An eight-character String of alphanumeric characters.

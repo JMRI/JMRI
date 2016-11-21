@@ -5,13 +5,13 @@ import java.io.IOException;
 import javax.annotation.Nonnull;
 
 /**
- * An empty JMRI application profile. Profiles allow a JMRI application to load
+ * An empty JMRI application project. Profiles allow a JMRI application to load
  * completely separate set of preferences at each launch without relying on host
  * OS-specific tricks to ensure this happens.
  * <p>
  * A NullProfile allows an application using JMRI as a library to set the active
- * JMRI profile to an identity set by that application, if the use of a standard
- * JMRI profile is not acceptable.
+ * JMRI project to an identity set by that application, if the use of a standard
+ * JMRI project is not acceptable.
  * <p>
  * This class deliberately overrides all methods of {@link jmri.profile.Profile}
  * that access the {@link #name} and {@link #id} fields to remove protections
@@ -37,18 +37,18 @@ public class NullProfile extends Profile {
     }
 
     /**
-     * Create a Profile object and a profile in storage. A Profile cannot exist
+     * Create a Profile object and a project in storage. A Profile cannot exist
      * in storage on the computer at the path given. Since this is a new
-     * profile, the id must match the last element in the path.
+     * project, the id must match the last element in the path.
      * <p>
      * This is the only time the id can be set on a Profile, as the id becomes a
      * read-only property of the Profile. The {@link ProfileManager} will only
-     * load a single profile with a given id.
+     * load a single project with a given id.
      *
-     * @param name The name of the profile.
+     * @param name The name of the project.
      * @param id   If null, {@link jmri.profile.ProfileManager#createUniqueId()}
      *             will be used to generate the id.
-     * @param path The path where the profile is stored.
+     * @param path The path where the project is stored.
      * @throws java.io.IOException If path is not readable.
      */
     public NullProfile(String name, String id, @Nonnull File path) throws IOException, IllegalArgumentException {
@@ -108,7 +108,7 @@ public class NullProfile extends Profile {
     }
 
     /**
-     * Test if the profile is complete.
+     * Test if the project is complete.
      *
      * @return always true for a NullProfile.
      */

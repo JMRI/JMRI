@@ -30,7 +30,7 @@ panel.layout = new BoxLayout(panel, BoxLayout.PAGE_AXIS);
 panel.add(new JLabel("<html>Zeroconf service advertisements will<br>be for the following Internet Protocol versions:</html>"));
 panel.add(useIPv4);
 panel.add(useIPv6);
-panel.add(new JLabel("<html>Note that this is a per computer,<br>per profile setting.</html>"));
+panel.add(new JLabel("<html>Note that this is a per computer,<br>per project setting.</html>"));
 // Present preferences
 if (JOptionPane.OK_OPTION === JOptionPane.showConfirmDialog(
         null,

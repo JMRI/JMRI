@@ -31,7 +31,7 @@ public interface AuxiliaryConfiguration {
      * @param elementName the name of the element.
      * @param namespace   the namespace of the element.
      * @param shared      true if the fragment is for all computers using this
-     *                    profile, false if the fragment is for just the current
+     *                    project, false if the fragment is for just the current
      *                    computer.
      * @return the matching Element or null if a matching element cannot be
      *         found.
@@ -55,7 +55,7 @@ public interface AuxiliaryConfiguration {
      *
      * @param fragment the XML element. It must have a valid namespace property.
      * @param shared   true if the fragment is for all computers using this
-     *                 profile, false if the fragment is for just the current
+     *                 project, false if the fragment is for just the current
      *                 computer.
      */
     void putConfigurationFragment(@Nonnull Element fragment, boolean shared);
@@ -71,7 +71,7 @@ public interface AuxiliaryConfiguration {
      * @param elementName the name of the element.
      * @param namespace   the namespace of the element.
      * @param shared      true if the fragment is for all computers using this
-     *                    profile, false if the fragment is for just the current
+     *                    project, false if the fragment is for just the current
      *                    computer.
      * @return true if the fragment could be removed, false otherwise.
      */

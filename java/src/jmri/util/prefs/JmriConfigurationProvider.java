@@ -17,10 +17,10 @@ import jmri.profile.Profile;
  * <code>profile:profile</code>:
  * <ul>
  * <li><code>profile.xml</code> preferences that are shared across multiple
- * nodes for a single profile. An example of such a preference would be the
+ * nodes for a single project. An example of such a preference would be the
  * Railroad Name preference.</li>
  * <li><code>&lt;node-identity&gt;/profile.xml</code> preferences that are
- * specific to the profile running on a specific host (&lt;node-identity&gt; is
+ * specific to the project running on a specific host (&lt;node-identity&gt; is
  * the identity returned by {@link jmri.util.node.NodeIdentity#identity()}). An
  * example of such a preference would be a file location.</li>
  * </ul>
@@ -44,9 +44,9 @@ public final class JmriConfigurationProvider extends AbstractConfigurationProvid
     private static final HashMap<Profile, JmriConfigurationProvider> providers = new HashMap<>();
 
     /**
-     * Get the JmriPrefererncesProvider for the specified profile.
+     * Get the JmriPrefererncesProvider for the specified project.
      *
-     * @param project The profile. This is most often the profile returned by
+     * @param project The project. This is most often the project returned by
      *                the {@link jmri.profile.ProfileManager#getActiveProfile()}
      *                method of the ProfileManager returned by
      *                {@link jmri.profile.ProfileManager#getDefault()}
@@ -61,9 +61,9 @@ public final class JmriConfigurationProvider extends AbstractConfigurationProvid
 
     /**
      * Get the {@link java.util.prefs.Preferences} for the specified class in
-     * the specified profile.
+     * the specified project.
      *
-     * @param project The profile. This is most often the profile returned by
+     * @param project The project. This is most often the project returned by
      *                the {@link jmri.profile.ProfileManager#getActiveProfile()}
      *                method of the ProfileManager returned by
      *                {@link jmri.profile.ProfileManager#getDefault()}

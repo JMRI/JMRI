@@ -60,7 +60,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
     /*
      * Unlike most PreferencesProviders, the GUI Look & Feel preferences should
-     * be per-application instead of per-profile.
+     * be per-application instead of per-project.
      */
     private boolean initialized = false;
     private final static Logger log = LoggerFactory.getLogger(GuiLafPreferencesManager.class);
