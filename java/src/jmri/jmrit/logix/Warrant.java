@@ -1441,6 +1441,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
         block.setValue(_trainName);
         block.setState(block.getState() | OBlock.RUNNING);
+        block._entryTime = System.currentTimeMillis();
         if (_calibrater !=null) {
             _calibrater.calibrateAt(_idxCurrentOrder);                
         }
@@ -1474,7 +1475,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
 
         if (_idxCurrentOrder == activeIdx) {
-            block._entryTime = System.currentTimeMillis();
             // fire notification last so engineer's state can be documented in whatever GUI is listening.
             if (log.isDebugEnabled()) {
                 log.debug("end of goingActive. leaving \"{}\" entered \"{}\". warrant {}",
