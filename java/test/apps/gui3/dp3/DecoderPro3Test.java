@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 
 /**
  *
@@ -17,7 +18,6 @@ import java.awt.GraphicsEnvironment;
 public class DecoderPro3Test {
 
     @Test
-    @Ignore("works locally, fails on travis/appveyor")
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());        
         String[] args = {"DecoderProConfig3.xml"};
@@ -26,18 +26,43 @@ public class DecoderPro3Test {
             // Just checking construction.
             @Override 
             protected void start(){}
+           @Override
+            protected void configureProfile(){
+                 JUnitUtil.resetInstanceManager();
+            }
+            @Override
+            protected void installConfigurationManager(){
+                 JUnitUtil.initConfigureManager();
+                 JUnitUtil.initDefaultUserMessagePreferences();
+            }
+            @Override
+            protected void installManagers(){
+                 JUnitUtil.initInternalTurnoutManager();
+                 JUnitUtil.initInternalLightManager();
+                 JUnitUtil.initInternalSensorManager();
+                 JUnitUtil.initRouteManager();
+                 JUnitUtil.initMemoryManager();
+                 JUnitUtil.initDebugThrottleManager();
+            }
+            @Override
+            protected void installShutDownManager(){
+                 JUnitUtil.initShutDownManager();
+            }
         };
         Assert.assertNotNull(a);
+        // shutdown the application
+        a.handleQuit();
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.resetApplication();
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.resetApplication();
         apps.tests.Log4JFixture.tearDown();
     }
 
