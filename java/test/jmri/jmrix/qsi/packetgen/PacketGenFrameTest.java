@@ -4,34 +4,21 @@
  * Description:	tests for the jmri.jmrix.qsi.packetgen.PacketGenFrame class
  *
  * @author	Bob Jacobsen
-  */
+ */
 package jmri.jmrix.qsi.packetgen;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.awt.GraphicsEnvironment;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
 
-public class PacketGenFrameTest extends TestCase {
+public class PacketGenFrameTest {
 
+    @Test
     public void testFrameCreate() {
-        new PacketGenFrame(new jmri.jmrix.qsi.QsiSystemConnectionMemo());
-    }
-
-    // from here down is testing infrastructure
-    public PacketGenFrameTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {PacketGenFrameTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(PacketGenFrameTest.class);
-        return suite;
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        PacketGenFrame packetGenFrame = new PacketGenFrame(new jmri.jmrix.qsi.QsiSystemConnectionMemo());
+        Assert.assertNotNull(packetGenFrame);
     }
 
 }
