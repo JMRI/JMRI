@@ -31,6 +31,7 @@ public class SwingTest extends TestCase {
         suite.addTest(jmri.jmrix.rps.swing.debugger.DebuggerTest.suite()); // do last to display in front
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.rps.swing.soundset.PackageTest.class));
         return suite;
     }
 
