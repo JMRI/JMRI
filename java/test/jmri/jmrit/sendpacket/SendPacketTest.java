@@ -1,28 +1,35 @@
 package jmri.jmrit.sendpacket;
 
+import java.awt.GraphicsEnvironment;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.Test;
 
 /**
  * Tests for classes in the jmri.jmrit.sendpacket package
  *
  * @author	Bob Jacobsen Copyright 2003
   */
-public class SendPacketTest extends TestCase {
+public class SendPacketTest {
 
+    @Test
     public void testFrameCreate() {
-        new SendPacketFrame();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        SendPacketFrame t = new SendPacketFrame();
+        Assert.assertNotNull(t);
     }
 
+    @Test
     public void testPacketNull() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SendPacketFrame t = new SendPacketFrame();
         byte[] m = t.createPacket("");
-        Assert.assertEquals("null pointer", null, m);
+        Assert.assertNull("null pointer", m);
     }
 
+    @Test
     public void testPacketCreate() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SendPacketFrame t = new SendPacketFrame();
         byte[] m = t.createPacket("12 34 AB 3 19 6 B B1");
         Assert.assertEquals("length", 8, m.length);
@@ -34,23 +41,6 @@ public class SendPacketTest extends TestCase {
         Assert.assertEquals("5th byte", 0x06, m[5] & 0xFF);
         Assert.assertEquals("6th byte", 0x0B, m[6] & 0xFF);
         Assert.assertEquals("7th byte", 0xB1, m[7] & 0xFF);
-    }
-
-    // from here down is testing infrastructure
-    public SendPacketTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SendPacketTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SendPacketTest.class);
-        return suite;
     }
 
 }

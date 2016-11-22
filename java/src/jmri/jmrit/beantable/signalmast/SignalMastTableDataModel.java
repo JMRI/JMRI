@@ -13,6 +13,7 @@ import java.util.EventObject;
 import java.util.Hashtable;
 import java.util.Vector;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -22,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
+import javax.swing.RowSorter; // still in use?
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -248,6 +250,19 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         javax.swing.SwingUtilities.invokeLater(t);
     }
 
+    @Override
+    public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @Nullable RowSorter<? extends TableModel> sorter) {
+        JTable table = new SignalMastJTable(model);
+        table.setName(name);
+        table.setRowSorter(sorter);
+        table.getTableHeader().setReorderingAllowed(true);
+        table.setColumnModel(new XTableColumnModel());
+        table.createDefaultColumnsFromModel();
+
+        addMouseListenerToHeader(table);
+        return table;
+    }
+
     /**
      * Does not appear to be used.
      * 
@@ -257,7 +272,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
      */
     @Deprecated
     public JTable makeJTable(TableModel srtr) {
-        table = new SignalMastJTable(srtr);
+        JTable table = new SignalMastJTable(srtr);
 
         table.getTableHeader().setReorderingAllowed(true);
         table.setColumnModel(new XTableColumnModel());
@@ -266,8 +281,6 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         addMouseListenerToHeader(table);
         return table;
     }
-
-    SignalMastJTable table;
 
     /**
      * @param srtr a table model
@@ -361,7 +374,8 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
                 }
                 // since we can add columns, the entire row is marked as updated
                 int row = sysNameList.indexOf(name);
-                clearAspectVector(row);
+                //clearAspectVector(row); // old
+                this.fireTableRowsUpdated(row, row); // new
             }
         }
         super.propertyChange(e);

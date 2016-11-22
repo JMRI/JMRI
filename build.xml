@@ -239,8 +239,7 @@
         <pathelement location="${libdir}/javassist-3.20.0-GA.jar"/>
         <pathelement location="${libdir}/objenesis-2.2.jar"/>
         <pathelement location="${libdir}/byte-buddy-1.2.1.jar"/>
-         
-
+        <pathelement location="${libdir}/jemmy-2.2.7.5.jar"/>
     </path>
 
     <!-- path to run regular executables -->
@@ -606,7 +605,7 @@
     <target depends="-pre-single-test" unless="test.isTest" name="-test-single-src">
         <property name="test.test" value="${test.includes}Test"/>
     </target>
-    <target depends="-test-single-src,-test-single-test,tests" description="Run single unit test." name="test-single">
+    <target depends="-test-single-src,-test-single-test,tests,runtime-library-selection" description="Run single unit test." name="test-single">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1250,6 +1249,9 @@
                   <limit counter="LINE" value="COVEREDRATIO" minimum="0.28"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
               </rule>
+              <rule element="PACKAGE">
+                 <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
           </check>
        </jacoco:report>
     </target>
@@ -1277,6 +1279,7 @@
     </target>
 
     <target name="ci-test-travis" depends="tests, runtime-library-selection" description="run ci-test using Travis-CI">
+        <jacoco:coverage destfile="jacoco.exec" excludes="org.slf4j.*">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1294,6 +1297,7 @@
                 <formatter usefile="no" type="brief"/>
             </test>
         </junit>
+        </jacoco:coverage>
         <fail>
             <condition>
                 <istrue value="${test.failed}" />
@@ -1407,6 +1411,35 @@
               <rule> 
                   <limit counter="LINE" value="COVEREDRATIO" minimum="0.28"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
+              </rule>
+              <rule element="PACKAGE">
+                 <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
+          </check>
+       </jacoco:report>
+    </target>
+
+    <target name="ci-test-travis-coveragecheck" depends="ci-test-travis" description="Test Coverage check from logalltest">
+    <!-- Generate Code Coverage report
+    See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
+       <jacoco:report>
+          <executiondata>
+              <file file="jacoco.exec" />
+          </executiondata>
+
+          <structure name="AntTestReporting">
+              <classfiles>
+                 <fileset refid="jacocofileset"/>
+              </classfiles>
+          </structure>
+
+          <check>
+              <rule> 
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.28"/>
+                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
+              </rule>
+              <rule element="PACKAGE">
+                 <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
               </rule>
           </check>
        </jacoco:report>
@@ -1911,11 +1944,26 @@
               failonerror="true">
             <!-- ORDER MATTERS HERE -->
             <arg value="${release.version-string}"/>
-            <arg path="${dist.release}/JMRI.${release.version-string}.dmg"/>
+            <arg path="${dist.release}/JMRI.${release.version-string}-unsigned.dmg"/>
             <arg path="${dist.macosx}"/>
         </exec>
     </target>
 
+    <target name="sign-macosx"
+            description="sign the macOS distribution DMG file; assumes package-macosx"
+            depends="get-version-string">
+        <chmod perm="ugo+rwx" dir="${dist.release}"/>
+        <!-- invoke signing server -->
+        <exec executable="wget"
+              osFamily="unix"
+              failonerror="true">
+            <arg value="-t 1200"/>
+            <arg value="-O signing-wget.log"/>
+            <arg value="http://${env.signinghost}/selfsign.php?get=${dist.release}/JMRI.${release.version-string}-unsigned.dmg&amp;rel=${release.version-string}&amp;put=${dist.release}/JMRI.${release.version-string}.dmg"/>
+        </exec>
+        <chmod perm="go-w" dir="${dist.release}"/>
+    </target>
+            
     <target name="package-linux"
             description="create a Linux release package"
             depends="get-version-string, jar, startup-scripts-linux">
@@ -2128,7 +2176,22 @@
             </sequential>
         </parallel>
     </target>
-    
+
+    <target name="travis-ci-coverage" description="Parallel execution of CI tasks on Travis CI">
+        <parallel threadCount="4"> <!-- allow up to four tasks at once -->
+            <antcall target="checklineends" />
+            <antcall target="checknonascii" />
+            <sequential>
+                <antcall target="compile-generated-source" />
+                <parallel>
+                    <antcall target="javadoc" />
+                    <antcall target="ci-test-travis-coveragecheck" />
+                </parallel>
+            </sequential>
+        </parallel>
+    </target>
+
+	
     <target name="appveyor" description="Parallel execution of CI tasks on Appveyor">
         <parallel threadCount="4"> <!-- allow up to four tasks at once -->
             <antcall target="checkPropertiesFiles" />

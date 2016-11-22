@@ -31,8 +31,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ecos.configurexml.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(EcosPreferencesTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(EcosSystemConnectionMemoTest.class));
-        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
-        }
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ecos.utilities.PackageTest.class));
 
         return suite;
     }
