@@ -38,6 +38,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.rps.serial.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.rps.configurexml.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.rps.aligntable.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.rps.reversealign.AlignmentPanelTest.class));
         suite.addTest(new JUnit4TestAdapter(RpsPositionIconTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.rps.rpsmon.RpsMonTest.class));

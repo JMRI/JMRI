@@ -14,7 +14,8 @@ import org.junit.runners.Suite;
     AffineEntryPanelTest.class,
     jmri.jmrix.rps.swing.polling.PackageTest.class,
     DebuggerTest.class,
-    BundleTest.class
+    BundleTest.class,
+    jmri.jmrix.rps.swing.debugger.DebuggerTest.class
 })
 public class PackageTest {
 }
