@@ -7,8 +7,10 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-     CdiPanelTest.class,
-     NetworkTreePaneTest.class
+     CdiPanelDemo.class,
+     TreePaneDemo.class,
+     NetworkTreePaneTest.class,
+     NetworkTreeActionTest.class
 })
 /**
  * Tests for the jmri.jmrix.openlcb package.

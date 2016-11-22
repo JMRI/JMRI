@@ -142,11 +142,22 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
     }
 
     protected void haltAllTrains() {
+        ArrayList<Warrant> abortList = new ArrayList<Warrant>();
         Iterator<Warrant> iter = _warList.iterator();
         while (iter.hasNext()) {
-            iter.next().controlRunTrain(Warrant.STOP);
+            Warrant w = iter.next();
+            if (w.getState() >= 0) {
+                abortList.add(w);
+            }
         }
         iter = _warNX.iterator();
+        while (iter.hasNext()) {
+            Warrant w = iter.next();
+            if (w.getState() >= 0) {
+                abortList.add(w);
+            }
+        }
+        iter = abortList.iterator();
         while (iter.hasNext()) {
             iter.next().controlRunTrain(Warrant.STOP);
         }
