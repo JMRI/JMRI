@@ -256,6 +256,10 @@
                         <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
                     </systemPropertyVariables>
                     <workingDirectory>${basedir}</workingDirectory>
+                    <!-- uncomment to force each test into new context
+                    <forkCount>1</forkCount>
+                    <reuseForks>false</reuseForks>
+                    -->
                 </configuration>
             </plugin>
             <plugin>
