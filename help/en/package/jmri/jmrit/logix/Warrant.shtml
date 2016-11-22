@@ -55,7 +55,6 @@
       Preferences</a> for information about configuration.</p>
 
       <h2>How To Get Started</h2>
-
       <ul>
         <li>Definitions of OBlocks, Portals and OPaths are found at
         <a href="OBlockTable.shtml">The Occupancy Block
@@ -156,9 +155,18 @@
 	    having its route set.  However, be advised for such trains
 	    <b><i>there is no protection for having it collide with 
 	    other trains or throwing switches under other trains.</i></b>
-	    It will proceed <b>only</b> according to the elapsed times and throttle
-	    settings that were recorded.
+	    It will proceed <b>only</b> according to the <i>elapsed times</i>
+	    and <i>throttle settings</i> that were recorded.
 	    
+	    <h3>The Importance of Block Path Lengths</h3>
+	    A Warrant detects a position of its train when it enters
+	    a block having occupancy detection.  All other positional 
+	    information must be calculated. For this, the speed of the
+	    train and the length of the path it is on must be known.
+	    Please see <a href="#RampParams">Parameters Needed for Ramping</a>
+	    below if you intend to use NXWarrants and employ gradual changes 
+	    of speed.
+	        
       <h2>Creating a Warrant</h2>There are three types of warrants;
       <ul>
         <li>A recorded script Warrant, where throttle commands are
@@ -174,11 +182,6 @@
         generate the commands to drive the train from start to end.
         To create an NXwarrant select the menu item <b>Create
         NXWarrant</b> from the <b>Warrants</b> menu.</li>
-
-        <li>A <a href="SCWarrant.shtml">signal controlled
-        warrant</a>, that is specially suited for small layouts
-        fully covered by sensors and preferably also with
-        signals.</li>
       </ul>
 
       <p>In either case, first a route must be chosen on which to
@@ -278,8 +281,7 @@
       "CreateEditWarrant.shtml">Creating and Editing Warrants</a>.
       has more information about creating and customizing scripts.
 
-      <p><a name="SpeedMap" id="SpeedMap"></a></p>
-
+      <a name="SpeedMap" id="SpeedMap"></a>
       <h2>Warrants and Speed Restrictions</h2>A train running under
       a warrant must be aware of track conditions ahead. Signals
       may indicate reduced speed or permission to return to normal
@@ -332,6 +334,7 @@
       to experiment with warrants using these default settings
       and defer reading the following sections until later.
 
+      <a name="RampParams" id="RampParams"></a>
       <h2>Parameters Needed for Ramping</h2>To compute how far to
       look ahead and the time when to modify speed the following
       must be known.

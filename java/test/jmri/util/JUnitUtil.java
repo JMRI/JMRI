@@ -15,6 +15,7 @@ import jmri.RouteManager;
 import jmri.ShutDownManager;
 import jmri.SignalHeadManager;
 import jmri.SignalMastLogicManager;
+import jmri.SignalMastManager;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
@@ -27,6 +28,7 @@ import jmri.managers.DefaultLogixManager;
 import jmri.managers.DefaultMemoryManager;
 import jmri.managers.DefaultRailComManager;
 import jmri.managers.DefaultSignalMastLogicManager;
+import jmri.managers.DefaultSignalMastManager;
 import jmri.managers.InternalReporterManager;
 import jmri.managers.InternalSensorManager;
 import org.junit.Assert;
@@ -340,6 +342,10 @@ public class JUnitUtil {
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.SIGNALHEADS);
         }
+    }
+
+    public static void initDefaultSignalMastManager() {
+        InstanceManager.setDefault(SignalMastManager.class, new DefaultSignalMastManager());
     }
 
     public static void initDebugThrottleManager() {
