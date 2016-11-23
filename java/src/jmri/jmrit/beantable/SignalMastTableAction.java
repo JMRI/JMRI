@@ -56,8 +56,6 @@ public class SignalMastTableAction extends AbstractTableAction {
      */
     protected void createModel() {
         m = new SignalMastTableDataModel();
-        log.debug("Add stuff here");
-        // add stuff here? cf. SM Logic
     }
 
     protected void setTitle() {
