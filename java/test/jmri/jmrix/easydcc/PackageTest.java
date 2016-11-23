@@ -1,5 +1,6 @@
 package jmri.jmrix.easydcc;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -40,16 +41,13 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.easydcc.EasyDccReplyTest.suite());
         suite.addTest(jmri.jmrix.easydcc.EasyDccPowerManagerTest.suite());
         suite.addTest(jmri.jmrix.easydcc.EasyDccConsistManagerTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(EasyDccConsistTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.easydcc.serialdriver.PackageTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.easydcc.networkdriver.PackageTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.easydcc.configurexml.PackageTest.class));
-        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
-            suite.addTest(jmri.jmrix.easydcc.easydccmon.EasyDccMonFrameTest.suite());
-            suite.addTest(jmri.jmrix.easydcc.easydccmon.EasyDccMonActionTest.suite());
-            suite.addTest(jmri.jmrix.easydcc.packetgen.EasyDccPacketGenFrameTest.suite());
-        }
-
+        suite.addTest(new JUnit4TestAdapter(EasyDccConsistTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.serialdriver.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.networkdriver.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.configurexml.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.easydccmon.EasyDccMonFrameTest.class));
+        suite.addTest(jmri.jmrix.easydcc.easydccmon.EasyDccMonActionTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.packetgen.EasyDccPacketGenFrameTest.class));
         return suite;
     }
 
