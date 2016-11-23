@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import java.awt.GraphicsEnvironment;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -12,9 +13,9 @@ import junit.extensions.jfcunit.eventdata.EventDataConstants;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.AbstractButtonFinder;
 import junit.extensions.jfcunit.finder.DialogFinder;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Swing jfcUnit tests for the SensorIcon
@@ -25,7 +26,9 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
 
     @SuppressWarnings("unchecked") // DialogFinder not parameterized
     public void testPanelEditor() throws Exception {
-
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         jmri.jmrit.display.panelEditor.PanelEditor panel
                 = new jmri.jmrit.display.panelEditor.PanelEditor("SensorIconWindowTest.testPanelEditor");
 
@@ -99,7 +102,9 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
 
     @SuppressWarnings("unchecked") // DialogFinder not parameterized
     public void testLayoutEditor() throws Exception {
-
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         jmri.jmrit.display.layoutEditor.LayoutEditor panel
                 = new jmri.jmrit.display.layoutEditor.LayoutEditor("SensorIconWindowTest.testLayoutEditor");
 
@@ -191,6 +196,7 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
@@ -200,6 +206,7 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
         JUnitUtil.initShutDownManager();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         apps.tests.Log4JFixture.tearDown();
         super.tearDown();
