@@ -13,8 +13,6 @@ import java.util.EventObject;
 import java.util.Hashtable;
 import java.util.Vector;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -23,7 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
-//import javax.swing.RowSorter; // not in use
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -146,7 +143,6 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     }
 
     protected void clickOn(NamedBean t) {
-
     }
 
     @Override
@@ -193,7 +189,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         }
         if (col == VALUECOL) {
             if ((String) value != null) {
-                //row = table.convertRowIndexToModel(row); // find the right row in model instead of table
+                //row = table.convertRowIndexToModel(row); // find the right row in model instead of table, not needed
                 if (log.isDebugEnabled()) {
                     log.debug("setValueAt (rowConverted=" + row + "; value=" + value + ")");
                 }
@@ -320,6 +316,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
                 retval = new MyComboBoxRenderer(getAspectVector(row));
                 rendererMap.put(getModel().getValueAt(row, SYSNAMECOL), retval);
             }
+            System.out.println("getRenderer");
             return retval;
         }
         Hashtable<Object, TableCellRenderer> rendererMap = new Hashtable<Object, TableCellRenderer>();
@@ -368,8 +365,8 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
                 }
                 // since we can add columns, the entire row is marked as updated
                 int row = sysNameList.indexOf(name);
-                //clearAspectVector(row); // old
-                this.fireTableRowsUpdated(row, row); // new
+                clearAspectVector(row); // old
+                //this.fireTableRowsUpdated(row, row); // new
             }
         }
         super.propertyChange(e);
@@ -390,6 +387,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
      * http://alvinalexander.com/java/jwarehouse/netbeans-src/monitor/src/org/netbeans/modules/web/
      * monitor/client/ComboBoxTableCellEditor.java.shtml
      * Called as TableCellRenderer from JTable, declared in @see ConfigValueColumn()
+     * Egbert Broerse 2016
      */
     public class      AspectComboBoxPanel
             extends    DefaultCellEditor
@@ -474,39 +472,6 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
                 }
             });
 
-/*            JComboBox cb = getComboBox();
-
-            cb.addActionListener (new ActionListener ()
-            {
-                public final void actionPerformed (ActionEvent evt) {
-                    eventComboBoxActionPerformed ();
-                }
-            });
-
-            this.comboBoxFocusRequester = new Runnable ()
-            {
-                public final void run ()
-                {
-                    getComboBox().requestFocus ();
-                }
-            };
-            this.comboBoxOpener = new Runnable ()
-            {
-                public final void run ()
-                {
-                    if  (startEditingEvent instanceof MouseEvent)
-                    {
-                        try {
-                            getComboBox().setPopupVisible (true);
-                        }
-                        catch (java.awt.IllegalComponentStateException ex)
-                        {
-                            //silently ignore - seems to be a bug in JTable
-                        }
-                    }
-                }
-            };*/
-
         }
 
         public AspectComboBoxPanel(Object [] values) {
@@ -561,12 +526,12 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
                                                 int     row,
                                                 int     col)
         {
-            //new or old row?
+            //new or old row? > should be cleaned up, leave our isSelected argument?
             isSelected = table.isRowSelected(row);
             if  (isSelected) {
                 //old row
-                //SwingUtilities.invokeLater(this.comboBoxFocusRequester); // causes an NPE, see line 500
-                //SwingUtilities.invokeLater(this.comboBoxOpener); // causes an NPE, see line 500
+                //SwingUtilities.invokeLater(this.comboBoxFocusRequester);
+                //SwingUtilities.invokeLater(this.comboBoxOpener);
                 if (log.isDebugEnabled()) {
                     log.debug("getEditorComponent>isSelected (value=" + value + ")");
                 }
@@ -712,26 +677,6 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             if (consumeComboBoxActionEvent) stopCellEditing();
         }
 
-        protected void eventComboBoxActionPerformed() {
-            Object item = getComboBox().getSelectedItem();
-            if (log.isDebugEnabled()) {
-                log.debug("eventComboBoxActionPerformed; selected item=" + item + ")");
-            }
-            if  (item != null) prevItem = item;
-            if (log.isDebugEnabled()) {
-                log.debug("eventComboBoxActionPerformed (choice/item=" + item.toString() + ")");
-            }
-            if (consumeComboBoxActionEvent) stopCellEditing();
-        }
-
-        public final JComboBox getComboBox() {
-            return (JComboBox) getComponent();
-        }
-
-        //public final Object getInitialValue() {
-        //    return this.initialValue;
-        //}
-
         public final int getCurrentRow() {
             return this.currentRow;
         }
@@ -802,7 +747,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
 
     /**
      * Holds a Hashtable of valid aspects per signal mast
-     * used by getEditorBox() and getRendererBox
+     * used by getEditorBox()
      * @param int row number (in TableDataModel)
      * @returns Vector of aspect names for a JComboBox
      */
