@@ -1,4 +1,4 @@
-package jmri.jmrix.jmriclient;
+package jmri.jmrix.dcc4pc;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -6,18 +6,19 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * JMRIClientReporterManagerTest.java
+ * Dcc4PcReporterManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.jmriclient.JMRIClientReporterManager
+ * Description:	tests for the jmri.jmrix.dcc4pc.Dcc4PcReporterManager
  * class
  *
  * @author	Bob Jacobsen
+ * @author      Paul Bender Copyright (C) 2016
  */
-public class JMRIClientReporterManagerTest extends jmri.managers.AbstractReporterMgrTest {
+public class Dcc4PcReporterManagerTest extends jmri.managers.AbstractReporterMgrTest {
 
     @Override
     public String getSystemName(int i) {
-        return "JR" + i;
+        return "DPR" + i;
     }
 
 
@@ -27,12 +28,12 @@ public class JMRIClientReporterManagerTest extends jmri.managers.AbstractReporte
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
-        JMRIClientTrafficController tc = new JMRIClientTrafficController(){
+        Dcc4PcTrafficController tc = new Dcc4PcTrafficController(){
            @Override
-           public void sendJMRIClientMessage(JMRIClientMessage m,JMRIClientListener reply) {
+           public void sendDcc4PcMessage(Dcc4PcMessage m,Dcc4PcListener reply) {
            }
         };
-        l = new JMRIClientReporterManager(new JMRIClientSystemConnectionMemo(tc));
+        l = new Dcc4PcReporterManager(tc,new Dcc4PcSystemConnectionMemo(tc));
     }
 
     @After

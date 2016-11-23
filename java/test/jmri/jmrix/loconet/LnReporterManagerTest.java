@@ -1,41 +1,44 @@
-package jmri.jmrix.roco.z21;
+package jmri.jmrix.loconet;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import jmri.Reporter;
 
 /**
- * Tests for Z21ReporterManager class.
+ * LnReporterManagerTest.java
  *
- * @author Paul Bender Copyright (C) 2016
- **/
-
-public class Z21ReporterManagerTest extends jmri.managers.AbstractReporterMgrTest {
+ * Description:	tests for the LnReporterManager class
+ *
+ * @author	Paul Bender Copyright (C) 2012,2016
+ */
+public class LnReporterManagerTest extends jmri.managers.AbstractReporterMgrTest {
 
     @Override
     public String getSystemName(int i) {
-        return "ZR" + i;
+        return "LR" + i;
     }
 
-   @Before
-   public void setUp(){
+    LnTrafficController tc = null;
+
+    // The minimal setup for log4J
+    @Before
+    @Override
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        Z21SystemConnectionMemo memo = new Z21SystemConnectionMemo();
-        Z21InterfaceScaffold tc = new Z21InterfaceScaffold();
-        memo.setTrafficController(tc);
-        memo.setRocoZ21CommandStation(new RocoZ21CommandStation());
-        l = new Z21ReporterManager(memo);
-   }
+        tc = new LocoNetInterfaceScaffold();
+        l = new LnReporterManager(tc,"L");
+    }
 
-   @After
-   public void tearDown(){
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        tc = null;
         jmri.util.JUnitUtil.resetInstanceManager();
-   }
+        apps.tests.Log4JFixture.tearDown();
+    }
 
     @Override
     protected int getNumToTest1() {
