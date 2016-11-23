@@ -1,31 +1,31 @@
-package jmri.jmrix.lenz.swing.packetgen;
+package jmri.jmrix.lenz.swing.mon;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the jmri.jmrix.lenz.swing.packetgen.package
+ * Tests for the jmri.jmrix.lenz.swing.mon package
  *
  * @author Paul Bender
  */
-public class PacketGenTest extends TestCase {
+public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-    public PacketGenTest(String s) {
+    public PackageTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {PacketGenTest.class.getName()};
+        String[] testCaseName = {PackageTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.lenz.swing.packetgen.PacketGenTest");  // no tests in this class itself
-        suite.addTest(new TestSuite(PacketGenFrameTest.class));
+        TestSuite suite = new TestSuite("jmri.jmrix.lenz.swing.mon.MonTest");  // no tests in this class itself
+        suite.addTest(new TestSuite(XNetMonPaneTest.class));
         return suite;
     }
 
