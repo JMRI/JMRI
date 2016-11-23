@@ -15,7 +15,8 @@ import org.junit.runners.Suite;
     jmri.jmrix.rps.swing.polling.PackageTest.class,
     DebuggerTest.class,
     BundleTest.class,
-    jmri.jmrix.rps.swing.debugger.DebuggerTest.class
+    jmri.jmrix.rps.swing.debugger.DebuggerTest.class,
+    jmri.jmrix.rps.swing.soundset.PackageTest.class
 })
 public class PackageTest {
 }
