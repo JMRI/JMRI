@@ -46,7 +46,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.rps.csvinput.CsvTest.suite()); // do 3rd to display in front
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.rps.trackingpanel.PackageTest.class)); // do 4th to display in front
         // test all algorithms as a bunch
-        suite.addTest(AlgorithmsTest.suite());
+        suite.addTest(jmri.jmrix.rps.algorithms.PackageTest.suite());
 
         return suite;
     }

@@ -9,23 +9,22 @@ import junit.framework.TestSuite;
  *
  * @author Bob Jacobsen Copyright 2005
  */
-public class DownloaderTest extends TestCase {
+public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-    public DownloaderTest(String s) {
+    public PackageTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {DownloaderTest.class.getName()};
+        String[] testCaseName = {PackageTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite("jmri.jmrix.pricom.pockettester.DownloaderTest");
+        TestSuite suite = new TestSuite("jmri.jmrix.pricom.pockettester");
         suite.addTest(jmri.jmrix.pricom.downloader.PdiFileTest.suite());
         suite.addTest(jmri.jmrix.pricom.downloader.LoaderPaneTest.suite());
         return suite;
