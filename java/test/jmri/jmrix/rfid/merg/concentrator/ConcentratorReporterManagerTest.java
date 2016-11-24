@@ -14,29 +14,39 @@ import jmri.Reporter;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class ConcentratorReporterManagerTest {
+public class ConcentratorReporterManagerTest extends jmri.managers.AbstractReporterMgrTest {
+
+    @Override
+    public String getSystemName(int i) {
+        return "RR" + "A";
+    }
+
+    @Test
+    @Override
+    public void testDefaultSystemName() {
+        // create - Merg Concentrator uses letters instead of numbers
+        Reporter t = l.provideReporter("" + "A");
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest3())));
+    }
+
+
+    @Test
+    @Override
+    public void testUpperLower() {
+        // Merg concentrator uses letters instead of numbers.
+        Reporter t = l.provideReporter("" + "C");
+        String name = t.getSystemName();
+        Assert.assertNull(l.getReporter(name.toLowerCase()));
+    }
+
 
     ConcentratorTrafficController tc = null;
 
-    @Test
-    public void testCtor() {
-        ConcentratorReporterManager c = new ConcentratorReporterManager(tc,"R"){
-            @Override
-            protected Reporter createNewReporter(String systemName, String userName){
-               return null;
-            }
-            @Override
-            public void message(jmri.jmrix.rfid.RfidMessage m){}
-
-            @Override
-            public void reply(jmri.jmrix.rfid.RfidReply m){}
-
-        };
-        Assert.assertNotNull(c);
-    }
-
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -44,6 +54,14 @@ public class ConcentratorReporterManagerTest {
            @Override
            public void sendInitString(){
            }
+        };
+        l = new ConcentratorReporterManager(tc,"R"){
+            @Override
+            public void message(jmri.jmrix.rfid.RfidMessage m){}
+
+            @Override
+            public void reply(jmri.jmrix.rfid.RfidReply m){}
+
         };
     }
 

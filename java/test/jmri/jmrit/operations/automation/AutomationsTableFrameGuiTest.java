@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.automation;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.util.JmriJFrame;
 import junit.framework.Test;
@@ -9,6 +10,9 @@ import org.junit.Assert;
 public class AutomationsTableFrameGuiTest extends OperationsSwingTestCase {
 
     public void testFrameCreation() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         AutomationManager manager = AutomationManager.instance();
         Assert.assertEquals("Number of automations", 0, manager.getSize());
 

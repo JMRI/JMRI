@@ -54,11 +54,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.nce.cab.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.nce.macro.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.nce.usbinterface.PackageTest.class));
-        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
-            suite.addTest(jmri.jmrix.nce.ncemon.NceMonPanelTest.suite());
-            suite.addTest(jmri.jmrix.nce.packetgen.NcePacketGenPanelTest.suite());
-        }
-
+        suite.addTest(jmri.jmrix.nce.ncemon.NceMonPanelTest.suite());
+        suite.addTest(jmri.jmrix.nce.packetgen.NcePacketGenPanelTest.suite());
         return suite;
     }
 
