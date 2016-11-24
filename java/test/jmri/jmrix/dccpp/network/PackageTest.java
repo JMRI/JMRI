@@ -10,22 +10,22 @@ import junit.framework.TestSuite;
  * @author Paul Bender
  * @author Mark Underwood Copyright (C) 2015
  */
-public class DCCppEthernetTest extends TestCase {
+public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-    public DCCppEthernetTest(String s) {
+    public PackageTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {DCCppEthernetTest.class.getName()};
+        String[] testCaseName = {PackageTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.dccpp.network.DCCppEthernetTest");  // no tests in this class itself
+        TestSuite suite = new TestSuite("jmri.jmrix.dccpp.network");  // no tests in this class itself
         suite.addTest(new TestSuite(DCCppEthernetAdapterTest.class));
         suite.addTest(new TestSuite(DCCppEthernetPacketizerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));

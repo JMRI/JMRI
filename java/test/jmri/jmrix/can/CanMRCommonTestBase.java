@@ -9,23 +9,22 @@ import junit.framework.TestSuite;
  *
  * @author Bob Jacobsen Copyright 2008, 2009
  */
-public class CanMRCommonTest extends TestCase {
+public class CanMRCommonTestBase extends TestCase {
 
     // from here down is testing infrastructure
-    public CanMRCommonTest(String s) {
+    public CanMRCommonTestBase(String s) {
         super(s);
     }
 
     // Main entry point - this runs both CanMessage, CanReply
     static public void main(String[] args) {
         apps.tests.AllTest.initLogging();
-        String[] testCaseName = {"-noloading", CanMRCommonTest.class.getName()};
+        String[] testCaseName = {"-noloading", CanMRCommonTestBase.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests in CanMessage, CanReply
     public static Test suite() {
-        apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.can.CanMRCommonTest");
         suite.addTest(jmri.jmrix.can.CanMessageTest.suite());
         suite.addTest(jmri.jmrix.can.CanReplyTest.suite());
