@@ -1,185 +1,41 @@
 package jmri.jmrix.openlcb.swing.networktree;
 
-import java.awt.GraphicsEnvironment;
-import javax.swing.JFrame;
-import javax.swing.JTree;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.openlcb.AbstractConnection;
-import org.openlcb.Connection;
-import org.openlcb.EventID;
-import org.openlcb.EventState;
-import org.openlcb.Message;
-import org.openlcb.MimicNodeStore;
-import org.openlcb.NodeID;
-import org.openlcb.ProducerIdentifiedMessage;
-import org.openlcb.ProtocolIdentificationReplyMessage;
-import org.openlcb.SimpleNodeIdentInfoReplyMessage;
-import org.openlcb.swing.networktree.NodeTreeRep;
-import org.openlcb.swing.networktree.TreePane;
-
 /**
- * Simulate nine nodes interacting on a single gather/scatter "link", and feed
- * them to monitor.
- * <ul>
- * <li>Nodes 1,2,3 send Event A to 8,9
- * <li>Node 4 sends Event B to node 7
- * <li>Node 5 sends Event C to node 6
- * </ul>
- *
- * @author Bob Jacobsen Copyright 2009
+ * @author Bob Jacobsen Copyright 2013
+ * @author Paul Bender Copyright (C) 2016
  */
 public class NetworkTreePaneTest {
 
-    NodeID nid1 = new NodeID(new byte[]{0, 0, 0, 0, 0, 1});
-    NodeID nid2 = new NodeID(new byte[]{0, 0, 0, 0, 0, 2});
-    NodeID nid3 = new NodeID(new byte[]{0, 0, 0, 0, 0, 3});
-    NodeID nid4 = new NodeID(new byte[]{0, 0, 0, 0, 0, 4});
-    NodeID nid5 = new NodeID(new byte[]{0, 0, 0, 0, 0, 5});
-    NodeID nid6 = new NodeID(new byte[]{0, 0, 0, 0, 0, 6});
-    NodeID nid7 = new NodeID(new byte[]{0, 0, 0, 0, 0, 7});
-    NodeID nid8 = new NodeID(new byte[]{0, 0, 0, 0, 0, 8});
-    NodeID nid9 = new NodeID(new byte[]{0, 0, 0, 0, 0, 9});
+    jmri.jmrix.can.CanSystemConnectionMemo memo;
+    jmri.jmrix.can.TrafficController tc;
 
-    EventID eventA = new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0});
-    EventID eventB = new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0});
-    EventID eventC = new EventID(new byte[]{1, 0, 0, 0, 0, 0, 3, 0});
+    @Test
+    public void testCtor() {
+        NetworkTreePane p = new NetworkTreePane();
+        Assert.assertNotNull("Pane object non-null", p);
+    }
 
-    Message pipmsg = new ProtocolIdentificationReplyMessage(nid2, nid2, 0xF01800000000L);
-
-    JFrame frame;
-    TreePane pane;
-    Connection connection = new AbstractConnection() {
-        public void put(Message msg, Connection sender) {
-        }
-    };
-
-    MimicNodeStore store;
-
+    // The minimal setup for log4J
     @Before
-    public void setUp() throws Exception {
-        store = new MimicNodeStore(connection, nid1);
-        Message msg = new ProducerIdentifiedMessage(nid1, eventA, EventState.Unknown);
-        store.put(msg, null);
+    public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
 
-        // build the TreePane, but don't put it in a frame (yet).
-        pane = new TreePane();
-        pane.initComponents(store, null, null,
-                new NodeTreeRep.SelectionKeyLoader() {
-                    public NodeTreeRep.SelectionKey cdiKey(String name, NodeID node) {
-                        return new NodeTreeRep.SelectionKey(name, node) {
-                            public void select(DefaultMutableTreeNode rep) {
-                                System.out.println("Making special fuss over: " + rep + " for " + name + " on " + node);
-                            }
-                        };
-                    }
-                });
-
-        if(GraphicsEnvironment.isHeadless()) {
-           return; // don't bother setting up a frame in headless.
-        }
-        // Test is really popping a window before doing all else
-        frame = new JFrame();
-        frame.setTitle("TreePane Test");
-        frame.add(pane);
-        frame.pack();
-        frame.setMinimumSize(new java.awt.Dimension(200, 200));
-        frame.setVisible(true);
+        memo = new jmri.jmrix.can.CanSystemConnectionMemo();
+        tc = new jmri.jmrix.can.adapters.loopback.LoopbackTrafficController();
+        memo.setTrafficController(tc);
+        memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
 
     }
 
     @After
     public void tearDown() {
-        store=null;
-        if(GraphicsEnvironment.isHeadless()) {
-           return; // don't bother tearing down a frame in headless.
-        }
-        frame.setVisible(false);
+        jmri.util.JUnitUtil.resetInstanceManager();
+        apps.tests.Log4JFixture.tearDown();
     }
-
-    @Test
-    public void testCTor(){
-       // constructor in setUp
-       Assert.assertNotNull(pane);
-    }
-
-    @Test
-    public void testPriorMessage() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        frame.setTitle("Prior Message");
-    }
-
-    @Test
-    public void testAfterMessage() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        frame.setTitle("After Message");
-        Message msg = new ProducerIdentifiedMessage(nid2, eventA, EventState.Unknown);
-        store.put(msg, null);
-    }
-
-    @Test
-    public void testWithProtocolID() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        frame.setTitle("2nd has protocol id");
-        Message msg;
-        msg = new ProducerIdentifiedMessage(nid2, eventA, EventState.Unknown);
-        store.put(msg, null);
-        store.put(pipmsg, null);
-    }
-
-    @Test
-    public void testWith1stSNII() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        frame.setTitle("3rd has PIP && 1st SNII");
-        Message msg;
-        msg = new ProducerIdentifiedMessage(nid2, eventA, EventState.Unknown);
-        store.put(msg, null);
-        store.put(pipmsg, null);
-
-        msg = new SimpleNodeIdentInfoReplyMessage(nid2, nid2,
-                new byte[]{0x01, 0x31, 0x32, 0x33, 0x41, 0x42, (byte) 0xC2, (byte) 0xA2, 0x44, 0x00}
-        );
-        store.put(msg, null);
-    }
-
-    @Test
-    public void testWithSelect() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        frame.setTitle("listener test");
-
-        pane.addTreeSelectionListener(new TreeSelectionListener() {
-            public void valueChanged(TreeSelectionEvent e) {
-                JTree tree = (JTree) e.getSource();
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
-
-                if (node == null) {
-                    return;
-                }
-                System.out.print("Test prints selected treenode " + node);
-                if (node.getUserObject() instanceof NodeTreeRep.SelectionKey) {
-                    System.out.println(" and invokes");
-                    ((NodeTreeRep.SelectionKey) node.getUserObject()).select(node);
-                } else {
-                    System.out.println();
-                }
-            }
-        });
-        Message msg;
-        msg = new ProducerIdentifiedMessage(nid2, eventA, EventState.Unknown);
-        store.put(msg, null);
-        store.put(pipmsg, null);
-
-        msg = new SimpleNodeIdentInfoReplyMessage(nid2, nid2,
-                new byte[]{0x01, 0x31, 0x32, 0x33, 0x41, 0x42, (byte) 0xC2, (byte) 0xA2, 0x44, 0x00}
-        );
-        store.put(msg, null);
-    }
-
 }

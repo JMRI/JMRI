@@ -15,6 +15,7 @@ import jmri.RouteManager;
 import jmri.ShutDownManager;
 import jmri.SignalHeadManager;
 import jmri.SignalMastLogicManager;
+import jmri.SignalMastManager;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
@@ -27,6 +28,7 @@ import jmri.managers.DefaultLogixManager;
 import jmri.managers.DefaultMemoryManager;
 import jmri.managers.DefaultRailComManager;
 import jmri.managers.DefaultSignalMastLogicManager;
+import jmri.managers.DefaultSignalMastManager;
 import jmri.managers.InternalReporterManager;
 import jmri.managers.InternalSensorManager;
 import org.junit.Assert;
@@ -342,6 +344,10 @@ public class JUnitUtil {
         }
     }
 
+    public static void initDefaultSignalMastManager() {
+        InstanceManager.setDefault(SignalMastManager.class, new DefaultSignalMastManager());
+    }
+
     public static void initDebugThrottleManager() {
         jmri.ThrottleManager m = new DebugThrottleManager();
         InstanceManager.setThrottleManager(m);
@@ -385,6 +391,21 @@ public class JUnitUtil {
         InstanceManager.store(
                 new apps.StartupActionsManager(),
                 apps.StartupActionsManager.class);
+    }
+
+    /*
+     * Use reflection to reset the jmri.Application instance
+     */
+    public static void resetApplication() {
+       try {
+          Class<?> c = jmri.Application.class;
+          java.lang.reflect.Field f = c.getDeclaredField("name");
+          f.setAccessible(true);
+          f.set(new jmri.Application(),null);
+       } catch(NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) { 
+         log.error("Failed to reset jmri.Application static field");
+         x.printStackTrace();
+       }
     }
 
     private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class.getName());

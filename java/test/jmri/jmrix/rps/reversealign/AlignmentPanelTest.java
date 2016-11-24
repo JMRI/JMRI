@@ -1,24 +1,29 @@
 package jmri.jmrix.rps.reversealign;
 
 import apps.tests.Log4JFixture;
+import java.awt.GraphicsEnvironment;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import jmri.InstanceManager;
 import jmri.jmrit.roster.RosterConfigManager;
 import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * JUnit tests for the rps.AlignmentPanel class.
  *
  * @author	Bob Jacobsen Copyright 2006
-  */
-public class AlignmentPanelTest extends TestCase {
+ */
+public class AlignmentPanelTest {
 
+    @Test
     public void testShow() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.util.JmriJFrame f = new jmri.util.JmriJFrame("RPS Alignment");
         f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
 
@@ -27,44 +32,21 @@ public class AlignmentPanelTest extends TestCase {
         f.getContentPane().add(panel);
         f.pack();
         f.setVisible(true);
-//    }
-//  test order isn't guaranteed!
-//    public void testXFrameCreation() {
-        JFrame f2 = jmri.util.JmriJFrame.getFrame("RPS Alignment");
-        Assert.assertTrue("found frame", f2 != null);
+        JFrame f2 = JFrameOperator.waitJFrame("RPS Alignment", true, true);
+        Assert.assertNotNull("found frame", f2);
         f2.dispose();
     }
 
-    // from here down is testing infrastructure
-    public AlignmentPanelTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {AlignmentPanelTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(AlignmentPanelTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         Log4JFixture.setUp();
-        super.setUp();
         JUnitUtil.resetInstanceManager();
         InstanceManager.setDefault(RosterConfigManager.class, new RosterConfigManager());
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         JUnitUtil.resetInstanceManager();
-        super.tearDown();
         Log4JFixture.tearDown();
     }
 }

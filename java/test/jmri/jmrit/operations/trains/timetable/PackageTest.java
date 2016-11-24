@@ -26,11 +26,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.operations.trains.timetable.PackageTest"); // no tests in class itself
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-
-        // GUI tests start here
-        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
-            suite.addTest(OperationsTrainsGuiTest.suite());
-        }
+        suite.addTest(OperationsTrainsGuiTest.suite());
 
         return suite;
     }

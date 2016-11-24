@@ -1,10 +1,11 @@
 package jmri.jmrix.rps;
 
+import apps.tests.Log4JFixture;
 import javax.vecmath.Point3d;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * JUnit tests for the rps.Ash1_0Algorithm class.
@@ -15,7 +16,7 @@ import junit.framework.TestSuite;
  * The default transmitter location for the 7, 13, 13, 13 readings is (0,0,12)
  *
  * @author	Bob Jacobsen Copyright 2006
-  */
+ */
 public class Ash1_0AlgorithmTest extends TestCase {
 
     double vs = 0.0344;  // SI default for testing
@@ -114,4 +115,13 @@ public class Ash1_0AlgorithmTest extends TestCase {
         return suite;
     }
 
+    @Override
+    public void setUp() {
+        Log4JFixture.setUp();
+    }
+    
+    @Override
+    public void tearDown() {
+        Log4JFixture.tearDown();
+    }
 }

@@ -1,19 +1,23 @@
 package jmri.jmrix.loconet.sdfeditor;
 
+import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.loconet.sdfeditor.MonitoringLabel class.
  *
  * @author	Bob Jacobsen Copyright 2007
  */
-public class MonitoringLabelTest extends TestCase {
+public class MonitoringLabelTest {
 
+    @Test
     public void testShowPane() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         MonitoringLabel p = new MonitoringLabel();
         java.beans.PropertyChangeEvent e
                 = new java.beans.PropertyChangeEvent(this, "Event", "old content", "new content");
@@ -25,29 +29,14 @@ public class MonitoringLabelTest extends TestCase {
         Assert.assertEquals("check content", "new content", p.getText());
     }
 
-    // from here down is testing infrastructure
-    public MonitoringLabelTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {MonitoringLabelTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(MonitoringLabelTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 
