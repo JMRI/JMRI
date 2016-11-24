@@ -9,22 +9,22 @@ import junit.framework.TestSuite;
  *
  * @author Paul Bender
  */
-public class EliteTest extends TestCase {
+public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-    public EliteTest(String s) {
+    public PackageTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {EliteTest.class.getName()};
+        String[] testCaseName = {PackageTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.lenz.hornbyelite.EliteTest");  // no tests in this class itself
+        TestSuite suite = new TestSuite("jmri.jmrix.lenz.hornbyelite");  // no tests in this class itself
         suite.addTest(new TestSuite(HornbyEliteCommandStationTest.class));
         suite.addTest(new TestSuite(EliteAdapterTest.class));
         suite.addTest(new TestSuite(EliteConnectionTypeListTest.class));
