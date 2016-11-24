@@ -1,48 +1,33 @@
 package jmri.jmrit.throttle;
 
+import java.awt.GraphicsEnvironment;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test simple functioning of FunctionPanel
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class FunctionPanelTest extends TestCase {
+public class FunctionPanelTest {
 
+    @Test
     public void testCtor() {
-        FunctionPanel panel = new FunctionPanel();
-        Assert.assertNotNull("exists", panel );
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        FunctionPanel frame = new FunctionPanel(); // not a panel despite class name
+        Assert.assertNotNull("exists", frame);
     }
 
-    // from here down is testing infrastructure
-    public FunctionPanelTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", FunctionPanelTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(FunctionPanelTest.class);
-        return suite;
-    }
-
-    @Override
+    @Before
     public void setUp() throws Exception {
-        super.setUp();
         apps.tests.Log4JFixture.setUp();
     }
-    
-    @Override
+
+    @After
     public void tearDown() throws Exception {
-        super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
 }

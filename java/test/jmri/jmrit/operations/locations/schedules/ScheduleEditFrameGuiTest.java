@@ -1,21 +1,17 @@
 //ScheduleEditFrameTest.java
 package jmri.jmrit.operations.locations.schedules;
 
+import java.awt.GraphicsEnvironment;
 import java.util.List;
 import javax.swing.JComboBox;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.locations.schedules.LocationTrackPair;
-import jmri.jmrit.operations.locations.schedules.Schedule;
-import jmri.jmrit.operations.locations.schedules.ScheduleEditFrame;
-import jmri.jmrit.operations.locations.schedules.ScheduleItem;
-import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations Locations GUI class
@@ -27,6 +23,9 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
 
     public void testScheduleEditFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         LocationManager lManager = LocationManager.instance();
         Location l2 = lManager.newLocation("Test Loc C");
         l2.setLength(1003);
