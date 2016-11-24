@@ -189,7 +189,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         }
         if (col == VALUECOL) {
             if ((String) value != null) {
-                //row = table.convertRowIndexToModel(row); // find the right row in model instead of table, not needed
+                //row = table.convertRowIndexToModel(row); // find the right row in model instead of table (not needed)
                 log.debug("setValueAt (rowConverted={}; value={})", row, value);
                 s.setAspect((String) value);
                 fireTableRowsUpdated(row, row);
@@ -249,7 +249,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
      * Does not appear to be used.
      * 
      * @param srtr a table model
-     * @return a new table
+     * @return JTable a new table
      * @deprecated since 4.5.4 without direct replacement
      */
     @Deprecated
@@ -265,14 +265,16 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     }
 
     /**
-     * @param srtr a table model
-     * @return a new SignalMastJTable
-     * @deprecated since 4.5.4; since 4.5.7 use SignalMastTableAction.createModel() or invoke directly from ListedTableFrame()
+     * @deprecated since 4.5.4; replaced by SignalMastTableAction.createModel() or invoke SignalMastTableDataModel instance directly from ListedTableFrame()
      */
     @Deprecated
     //The JTable is extended so that we can reset the available aspect in the drop down when required
     class SignalMastJTable extends JTable {
 
+        /**
+         * @param srtr a table model.
+         * @return JTable a new SignalMastJTable.
+         */
         public SignalMastJTable(TableModel srtr) {
             super(srtr);
         }
@@ -437,7 +439,9 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
 
 
         /**
-         *  Create a new CellEditor
+         *  Create a new CellEditor and CellRenderer
+         *  @param values array (list) of options to display
+         *  @param customRenderer renderer to display things
          */
         public AspectComboBoxPanel(Object [] values,
                                    ListCellRenderer customRenderer) {
@@ -445,9 +449,8 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             //setItems (values);
             // to be filled from HashMap
             this.editor = new JPanel(new BorderLayout ());
-            this.renderer = new JPanel(new BorderLayout ()); // move to its own class?
-            setClickCountToStart(1); // value for a DefaultCellEditor
-
+            this.renderer = new JPanel(new BorderLayout ());
+            setClickCountToStart(1); // value for a DefaultCellEditor: immediately start editing
             //show the combobox if the mouse clicks at the panel
             this.editor.addMouseListener (new MouseAdapter ()
             {
@@ -456,7 +459,6 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
                     eventEditorMousePressed ();
                 }
             });
-
         }
 
         public AspectComboBoxPanel(Object [] values) {
@@ -472,12 +474,13 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         }
 
         /**
-         * Returns the editor component of the cell.
-         * @param table JTable of SignalMastTable
-         * @param isSelected tells if this row is selected in the table
-         * @param row in table
-         * @param column in table, in this case Value (Aspect)
-         * @returns JPanel as CellEditor
+         * Returns the editor component for the cell.
+         * @param table JTable of SignalMastTable.
+         * @param value current value for cell to be rendered.
+         * @param isSelected tells if this row is selected in the table.
+         * @param row the row in table.
+         * @param col the column in table, in this case Value (Aspect).
+         * @return JPanel containing a JComboBox as the CellEditor for the Aspect.
          */
         @Override
         public final Component getTableCellEditorComponent (JTable  table,
@@ -536,6 +539,16 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             return this.editor;
         }
 
+        /**
+         * Returns the renderer component for the cell.
+         * @param table JTable of SignalMastTable.
+         * @param value current value for cell to be rendered.
+         * @param isSelected tells if this row is selected in the table.
+         * @param hasFocus true if the row has focus.
+         * @param row the row in table.
+         * @param col the column in table, in this case Value (Aspect).
+         * @return JPanel containing a JComboBox with only the current Aspect as the CellRenderer.
+         */
         @Override
         public final Component getTableCellRendererComponent (JTable  table,
                                                             Object  value,
@@ -587,6 +600,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
                 editor.setBackground(table.getBackground());
             }
         }
+
         /**
          *  Is the cell editable? If the mouse was pressed at a margin
          *  we don't want the cell to be editable.
@@ -631,7 +645,8 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         }
 
         /**
-         * method for our own comboBox
+         * method for our own Aspect JComboBox
+         * @param choice the selected item (Aspect) in the list
          */
         protected void eventAspectComboBoxActionPerformed(@Nonnull Object choice) {
             Object item = choice;
@@ -646,7 +661,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
 
     /**
      * Customize the SignalMast Value (Aspect) column to show an appropriate ComboBox of available Aspects
-     * @param table a Jtable
+     * @param table a JTable of Signal Masts
      */
     @Override
     protected void configValueColumn(JTable table) {
@@ -681,7 +696,8 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         editorMap.remove(this.getValueAt(row, SYSNAMECOL));
     }
 
-    // we need two different Hashtables
+    // we need two different Hashtables for Editors and Renderers
+
     JComboBox getEditorBox(int row) {
         JComboBox editCombo = editorMap.get(this.getValueAt(row, SYSNAMECOL));
         if (editCombo == null) {
@@ -708,8 +724,8 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     /**
      * Holds a Hashtable of valid aspects per signal mast
      * used by getEditorBox()
-     * @param int row number (in TableDataModel)
-     * @returns Vector of aspect names for a JComboBox
+     * @param row number (in TableDataModel)
+     * @return Vector of valid aspect names for this mast to show in the JComboBox
      */
     Vector<String> getAspectVector(int row) {
         Vector<String> comboaspects = boxMap.get(this.getValueAt(row, SYSNAMECOL));
