@@ -1,5 +1,9 @@
-package jmri.jmrix.rps;
+package jmri.jmrix.rps.algorithms;
 
+import jmri.jmrix.rps.Ash2_0AlgorithmTest;
+import jmri.jmrix.rps.Ash2_1AlgorithmTest;
+import jmri.jmrix.rps.Ash2_2AlgorithmTest;
+import jmri.jmrix.rps.InitialAlgorithmTest;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -12,23 +16,23 @@ import junit.framework.TestSuite;
  *
  * @author Bob Jacobsen Copyright 2008
  */
-public class AlgorithmsTest extends TestCase {
+public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-    public AlgorithmsTest(String s) {
+    public PackageTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {AlgorithmsTest.class.getName()};
+        String[] testCaseName = {PackageTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
         apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite("jmri.jmrix.rps.AlgorithmsTest");
+        TestSuite suite = new TestSuite("jmri.jmrix.rps.algorithms");
 
         suite.addTest(InitialAlgorithmTest.suite());
 
