@@ -11,6 +11,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     LZ100FrameTest.class,
+    LZ100InternalFrameTest.class,
     LZ100ActionTest.class
 })
 public class PackageTest {
