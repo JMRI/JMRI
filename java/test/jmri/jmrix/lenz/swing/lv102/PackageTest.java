@@ -1,17 +1,18 @@
-package jmri.jmrix.lenz.swing.packetgen;
+package jmri.jmrix.lenz.swing.lv102;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
- * Tests for the jmri.jmrix.lenz.swing.packetgen.package
+ * Tests for the jmri.jmrix.lenz.swing.lv102 package
  *
  * @author Paul Bender
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    PacketGenFrameTest.class,
-    PacketGenActionTest.class
+    LV102FrameTest.class,
+    LV102InternalFrameTest.class,
+    LV102ActionTest.class
 })
 public class PackageTest {
 }
