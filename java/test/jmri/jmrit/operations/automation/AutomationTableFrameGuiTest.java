@@ -1,14 +1,18 @@
 package jmri.jmrit.operations.automation;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
 
     public void testNewFrameCreation() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         AutomationManager manager = AutomationManager.instance();
         Assert.assertEquals("Number of automations", 0, manager.getSize());
 
@@ -98,6 +102,9 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
     }
 
     public void testFrameCreation() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         Automation automation = AutomationManager.instance().newAutomation("Automation Table Frame Name");
         automation.setComment("Gui Test Automation Table Frame Comment");
 
@@ -168,6 +175,9 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
     }
 
     public void testFrameCreationWithAction() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         Automation automation = AutomationManager.instance().newAutomation("Automation Table Frame Name");
         automation.setComment("Gui Test Automation Table Frame Comment");
         automation.addItem();

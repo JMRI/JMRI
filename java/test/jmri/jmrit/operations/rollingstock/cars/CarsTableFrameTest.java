@@ -1,6 +1,7 @@
 //CarsTableFrameTest.java
 package jmri.jmrit.operations.rollingstock.cars;
 
+import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -21,6 +22,9 @@ import org.junit.Assert;
 public class CarsTableFrameTest extends OperationsSwingTestCase {
 
     public void testCarsTableFrame() throws Exception {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         // remove previous cars
         CarManager.instance().dispose();
         CarRoads.instance().dispose();

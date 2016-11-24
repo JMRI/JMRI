@@ -1,6 +1,7 @@
 //OperationsRoutesGuiTest.java
 package jmri.jmrit.operations.routes;
 
+import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -19,6 +20,9 @@ import org.junit.Assert;
 public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
 
     public void testRoutesTableFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         loadRoutes();
 
         RoutesTableFrame f = new RoutesTableFrame();
@@ -48,6 +52,9 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
     }
 
     public void testRouteEditFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         RouteEditFrame f = new RouteEditFrame();
         f.setTitle("Test Add Route Frame");
         f.initComponents(null);
@@ -114,6 +121,9 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
     }
 
     public void testRouteEditFrameRead() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         loadRoutes();
         RouteManager lManager = RouteManager.instance();
         Route l2 = lManager.getRouteByName("Test Route C");
