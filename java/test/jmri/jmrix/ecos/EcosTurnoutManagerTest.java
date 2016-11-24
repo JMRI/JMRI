@@ -5,20 +5,20 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import jmri.Reporter;
+import jmri.Turnout;
 
 /**
- * EcosReporterManagerTest.java
+ * EcosTurnoutManagerTest.java
  *
- * Description:	tests for the EcosReporterManager class
+ * Description:	tests for the EcosTurnoutManager class
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class EcosReporterManagerTest extends jmri.managers.AbstractReporterMgrTest {
+public class EcosTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
     @Override
     public String getSystemName(int i) {
-        return "UR" + i;
+        return "UT" + i;
     }
 
     EcosTrafficController tc = null;
@@ -31,7 +31,7 @@ public class EcosReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         jmri.util.JUnitUtil.resetInstanceManager();
         tc = new EcosInterfaceScaffold();
         EcosSystemConnectionMemo memo = new EcosSystemConnectionMemo(tc);
-        l = new EcosReporterManager(memo);
+        l = new EcosTurnoutManager(memo);
     }
 
     @After
