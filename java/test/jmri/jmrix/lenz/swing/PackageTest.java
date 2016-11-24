@@ -1,41 +1,33 @@
 package jmri.jmrix.lenz.swing;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+   jmri.jmrix.lenz.swing.liusb.PackageTest.class,
+   jmri.jmrix.lenz.swing.li101.PackageTest.class,
+   jmri.jmrix.lenz.swing.mon.PackageTest.class,
+   jmri.jmrix.lenz.swing.stackmon.PackageTest.class,
+   jmri.jmrix.lenz.swing.systeminfo.PackageTest.class,
+   jmri.jmrix.lenz.swing.packetgen.PackageTest.class,
+   jmri.jmrix.lenz.swing.lz100.PackageTest.class,
+   jmri.jmrix.lenz.swing.lzv100.PackageTest.class,
+   jmri.jmrix.lenz.swing.lv102.PackageTest.class,
+   BundleTest.class,
+   XNetMenuTest.class,
+   XNetComponentFactoryTest.class
+})
 /**
  * Tests for the jmri.jmrix.lenz.swing package
  *
  * @author	Bob Jacobsen
+ * @author      Paul Bender Copyright (C) 2016
  */
-public class PackageTest extends TestCase {
+public class PackageTest {
 
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.lenz.swing.SwingTest");  // no tests in this class itself
-        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.lenz.swing.liusb.PackageTest.class));
-        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.lenz.swing.li101.PackageTest.class));
-        suite.addTest(jmri.jmrix.lenz.swing.mon.PackageTest.suite());
-        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.lenz.swing.stackmon.PackageTest.class));
-        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.lenz.swing.systeminfo.PackageTest.class));
-        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.lenz.swing.packetgen.PackageTest.class));
-        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.lenz.swing.lz100.PackageTest.class));
-        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.lenz.swing.lzv100.PackageTest.class));
-        suite.addTest(new JUnit4TestAdapter(BundleTest.class));
-        return suite;
-    }
 
 }

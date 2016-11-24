@@ -1,18 +1,18 @@
-package jmri.jmrix.lenz.swing.lz100;
+package jmri.jmrix.lenz.swing.lv102;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
- * Tests for the jmri.jmrix.lenz.swing.lz100 package
+ * Tests for the jmri.jmrix.lenz.swing.lv102 package
  *
  * @author Paul Bender
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    LZ100FrameTest.class,
-    LZ100InternalFrameTest.class,
-    LZ100ActionTest.class
+    LV102FrameTest.class,
+    LV102InternalFrameTest.class,
+    LV102ActionTest.class
 })
 public class PackageTest {
 }

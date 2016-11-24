@@ -10,16 +10,16 @@ import junit.framework.TestSuite;
  *
  * @author Paul Bender
  */
-public class SRCPClientParserTests extends TestCase {
+public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-    public SRCPClientParserTests(String s) {
+    public PackageTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {SRCPClientParserTests.class.getName()};
+        String[] testCaseName = {PackageTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
