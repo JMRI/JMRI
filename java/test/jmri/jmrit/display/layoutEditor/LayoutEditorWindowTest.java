@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.GraphicsEnvironment;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -8,9 +9,9 @@ import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.AbstractButtonFinder;
 import junit.extensions.jfcunit.finder.DialogFinder;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Swing jfcUnit tests for the LayoutEditor
@@ -21,6 +22,9 @@ public class LayoutEditorWindowTest extends jmri.util.SwingTestCase {
 
     @SuppressWarnings("unchecked")
     public void testShowAndClose() throws Exception {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // Can't Assume in TestCase
+        }
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
         };
 

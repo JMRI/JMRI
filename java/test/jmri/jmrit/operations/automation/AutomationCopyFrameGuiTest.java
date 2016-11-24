@@ -1,15 +1,19 @@
 package jmri.jmrit.operations.automation;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 public class AutomationCopyFrameGuiTest extends OperationsSwingTestCase {
 
     public void testFrameCreation() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         AutomationManager manager = AutomationManager.instance();
         Assert.assertEquals("Number of automations", 0, manager.getSize());
 
@@ -32,6 +36,9 @@ public class AutomationCopyFrameGuiTest extends OperationsSwingTestCase {
     }
     
     public void testFrameCreationWithAutomation() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         AutomationManager manager = AutomationManager.instance();
         Assert.assertEquals("Number of automations", 0, manager.getSize());
         
