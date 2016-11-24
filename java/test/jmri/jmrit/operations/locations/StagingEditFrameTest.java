@@ -1,11 +1,12 @@
 //StagingEditFrameTest.java
 package jmri.jmrit.operations.locations;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations Locations GUI class
@@ -23,6 +24,9 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
      * Staging tracks needs its own location
      */
     public void testAddOneStagingTrack() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         StagingEditFrame f = new StagingEditFrame();
         f.setTitle("Test Staging Add Frame");
         f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
@@ -47,6 +51,9 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
      * Staging tracks needs its own location
      */
     public void testStagingEditFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         StagingEditFrame f = new StagingEditFrame();
         f.setTitle("Test Staging Add Frame");
         f.setLocation(0, 0);	// entire panel must be visible for tests to work properly

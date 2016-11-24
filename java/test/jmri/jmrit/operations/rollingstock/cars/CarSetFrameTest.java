@@ -1,6 +1,7 @@
 //CarSetFrameTest.java
 package jmri.jmrit.operations.rollingstock.cars;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -13,6 +14,9 @@ import junit.framework.TestSuite;
 public class CarSetFrameTest extends OperationsSwingTestCase {
 
     public void testCarSetFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         loadCars();		// load cars
         CarSetFrame f = new CarSetFrame();
         f.setTitle("Test Car Set Frame");
