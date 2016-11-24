@@ -172,8 +172,8 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
                 return s.getAspect().toString();
             } catch (java.lang.NullPointerException e) {
                 //Aspect not set
-                log.debug("Aspect for mast " + row + " not set.");
-                return Bundle.getMessage("BeanStateUnknown"); // replace by place holder string in table
+                log.debug("Aspect for mast {} not set", row);
+                return Bundle.getMessage("BeanStateUnknown"); // use place holder string in table
             }
         } else {
             return super.getValueAt(row, col);
@@ -190,9 +190,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         if (col == VALUECOL) {
             if ((String) value != null) {
                 //row = table.convertRowIndexToModel(row); // find the right row in model instead of table, not needed
-                if (log.isDebugEnabled()) {
-                    log.debug("setValueAt (rowConverted=" + row + "; value=" + value + ")");
-                }
+                log.debug("setValueAt (rowConverted={}; value={})", row, value);
                 s.setAspect((String) value);
                 fireTableRowsUpdated(row, row);
             }
@@ -271,8 +269,9 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     /**
      * @param srtr a table model
      * @return a new SignalMastJTable
-     * @deprecated since 4.5.4, since 4.5.7 use SignalMastTableAction.createModel()
-     * or invoked directly from @see ListedTableFrame()
+     * @deprecated since 4.5.4
+     * since 4.5.7 use SignalMastTableAction.createModel()
+     * or invoke directly from ListedTableFrame()
      */
     @Deprecated
     //The JTable is extended so that we can reset the available aspect in the drop down when required
@@ -285,9 +284,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         public void clearAspectVector(int row) {
             // no longer called as of 4.5.7
             // Clear the old aspect combobox and force it to be rebuilt
-            if (log.isDebugEnabled()) {
-                log.debug("clearAspectVector (remove row=" + row + ")");
-            }
+            log.debug("clearAspectVector (remove row={})", row);
             boxMap.remove(getModel().getValueAt(row, SYSNAMECOL));
             editorMap.remove(getModel().getValueAt(row, SYSNAMECOL));
             rendererMap.remove(getModel().getValueAt(row, SYSNAMECOL));
@@ -316,7 +313,6 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
                 retval = new MyComboBoxRenderer(getAspectVector(row));
                 rendererMap.put(getModel().getValueAt(row, SYSNAMECOL), retval);
             }
-            System.out.println("getRenderer");
             return retval;
         }
         Hashtable<Object, TableCellRenderer> rendererMap = new Hashtable<Object, TableCellRenderer>();
@@ -360,13 +356,12 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             if (e.getSource() instanceof NamedBean) {
                 String name = ((NamedBean) e.getSource()).getSystemName();
                 if (log.isDebugEnabled()) {
-                    log.debug("Update cell " + sysNameList.indexOf(name) + ","
-                            + VALUECOL + " for " + name);
+                    log.debug("Update cell {}, {} for {}", sysNameList.indexOf(name), VALUECOL, name);
                 }
                 // since we can add columns, the entire row is marked as updated
                 int row = sysNameList.indexOf(name);
-                clearAspectVector(row); // old
-                //this.fireTableRowsUpdated(row, row); // new
+                this.fireTableRowsUpdated(row, row);
+                clearAspectVector(row);
             }
         }
         super.propertyChange(e);
@@ -432,11 +427,6 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
          *  The previously selected value in the editor.
          */
         private Object prevItem;
-
-        /**
-         *  The initial value of the editor.
-         */
-        //private Object initialValue;
 
         /**
          *  React on action events on the combobox?
@@ -515,7 +505,6 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
                 });
             }
             this.currentRow = row;
-            //this.initialValue = value;
             updateData(row, true, table);
             return getEditorComponent(table, value, isSelected, row, col);
         }
@@ -530,18 +519,12 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             isSelected = table.isRowSelected(row);
             if  (isSelected) {
                 //old row
-                //SwingUtilities.invokeLater(this.comboBoxFocusRequester);
-                //SwingUtilities.invokeLater(this.comboBoxOpener);
-                if (log.isDebugEnabled()) {
-                    log.debug("getEditorComponent>isSelected (value=" + value + ")");
-                }
+                log.debug("getEditorComponent>isSelected (value={})", value);
             }
             //the user selected a new row (or initially no row was selected)
             this.editor.removeAll();  // remove the combobox from the panel
             JComboBox editorbox = getEditorBox(table.convertRowIndexToModel(row));
-            if (log.isDebugEnabled()) {
-                log.debug("getRendererComponent>notSelected (row=" + row + ", value=" + value + ")");
-            }
+            log.debug("getRendererComponent>notSelected (row={}, value={})", row, value);
             if (value != null) {
                 editorbox.setSelectedItem(value); // display current Aspect
             }
@@ -549,9 +532,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             {
                 public final void actionPerformed(ActionEvent evt) {
                     Object choice = editorbox.getSelectedItem();
-                    if (log.isDebugEnabled()) {
-                        log.debug("actionPerformed (event=" + evt.toString() + " choice=" + choice.toString() + " -is this empty?");
-                    }
+                    log.debug("actionPerformed (event={}, choice={}", evt.toString(), choice.toString());
                     if (choice != null) {
                         eventAspectComboBoxActionPerformed(choice); // try a special method for this source
                     }
@@ -595,9 +576,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         {
             this.renderer.removeAll();  //remove the combobox from the panel
             JComboBox renderbox = new JComboBox(); // create a fake comboBox with the current Aspect of mast in this row
-            if (log.isDebugEnabled()) {
-                log.debug("getRendererComponent (row=" + row + ", value=" + value + " -empty?)");
-            }
+            log.debug("getRendererComponent (row={}, value={})", row, value);
             renderbox.addItem(value); // display (only) the current Aspect
             renderer.add(renderbox);
             return this.renderer;
@@ -605,9 +584,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
 
         private void updateData(int row, boolean isSelected, JTable table) {
             // get correct Aspects for ComboBox
-            if (log.isDebugEnabled()) {
-                log.debug("updateData (row=" + row + ")");
-            }
+            log.debug("updateData (row={})", row);
             JComboBox eb = getEditorBox(table.convertRowIndexToModel(row));
             this.editor.add(eb);
             if (isSelected) {
@@ -641,9 +618,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         }
 
         public Object getCellEditorValue() {
-            if (log.isDebugEnabled()) {
-                log.debug("getCellEditorValue, prevItem= " + prevItem + ")");
-            }
+            log.debug("getCellEditorValue, prevItem= {})", prevItem);
             return prevItem;
         }
 
@@ -651,16 +626,12 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             this.editor.add(getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add eb to JPanel
             this.editor.revalidate();
             SwingUtilities.invokeLater(this.comboBoxFocusRequester);
-            if (log.isDebugEnabled()) {
-                log.debug("eventEditorMousePressed in row: " + this.currentRow + ")");
-            }
+            log.debug("eventEditorMousePressed in row: {})", this.currentRow);
         }
 
         protected void eventTableSelectionChanged() {
             //stop editing if a new row is selected
-            if (log.isDebugEnabled()) {
-                log.debug("eventTableSelectionChanged");
-            }
+            log.debug("eventTableSelectionChanged");
             if  ( ! this.table.isRowSelected(this.currentRow))
             {
                 stopCellEditing ();
@@ -670,9 +641,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         // method for our own comboBox
         protected void eventAspectComboBoxActionPerformed(@Nonnull Object choice) {
             Object item = choice;
-            if (log.isDebugEnabled()) {
-                log.debug("eventAspectComboBoxActionPerformed; selected item=" + item + ")");
-            }
+            log.debug("eventAspectComboBoxActionPerformed; selected item={})", item);
             prevItem = choice; // passed as cell value
             if (consumeComboBoxActionEvent) stopCellEditing();
         }
@@ -735,7 +704,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
 
     JComboBox getRendererBox(int row) {
         JComboBox renderCombo = rendererMap.get(this.getValueAt(row, SYSNAMECOL));
-        log.debug("Combo row: " + row);
+        log.debug("Combo row: {}", row);
         if (renderCombo == null) {
             // create a new one with correct aspects
             renderCombo = new JComboBox(getAspectVector(row));

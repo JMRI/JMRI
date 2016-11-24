@@ -37,7 +37,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.RowSorter; // still used?
+import javax.swing.RowSorter;
 import javax.swing.SwingWorker;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
@@ -136,7 +136,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
      * @param e the event to match
      * @return true if the property name is of interest, false otherwise
      */
-    protected boolean matchPropertyName(PropertyChangeEvent e) { // TODO I18N ?
+    protected boolean matchPropertyName(PropertyChangeEvent e) {
         return (e.getPropertyName().contains("State")
                 || e.getPropertyName().contains("Appearance")
                 || e.getPropertyName().contains("Comment"))
@@ -178,7 +178,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
             case USERNAMECOL:
             case COMMENTCOL:
                 return String.class;
-            case VALUECOL: // overridden for SignalMast
+            case VALUECOL:
             case DELETECOL:
                 return JButton.class;
             default:

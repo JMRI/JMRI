@@ -56,7 +56,7 @@ abstract public class AbstractTableAction extends AbstractAction {
         f = new BeanTableFrame(m, helpTarget(), dataTable) {
 
             /**
-             * Include an "add" button doesn't work as it is already created from ListedTableFrame
+             * Include an "add" button
              */
             void extras() {
                 if (includeAddButton) {
