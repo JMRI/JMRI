@@ -1,32 +1,21 @@
 package jmri.jmrix.lenz.swing.mon;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+    XNetMonPaneTest.class
+})
 
 /**
  * Tests for the jmri.jmrix.lenz.swing.mon package
  *
- * @author Paul Bender
+ * @author Paul Bender Copyright (C) 2012,2016
  */
-public class PackageTest extends TestCase {
-
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.lenz.swing.mon.MonTest");  // no tests in this class itself
-        suite.addTest(new TestSuite(XNetMonPaneTest.class));
-        return suite;
-    }
+public class PackageTest {
 
 }
