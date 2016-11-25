@@ -121,6 +121,7 @@ abstract public class AbstractProxyManager implements Manager {
      * turn it into a valid system name. Subclasses use this to provide e.g.
      * getSensor, getTurnout, etc via casts.
      *
+     * @param name the user name or system name of the bean
      * @return Never null under normal circumstances
      */
     protected NamedBean provideNamedBean(String name) throws IllegalArgumentException {
@@ -143,7 +144,9 @@ abstract public class AbstractProxyManager implements Manager {
     /**
      * Defer creation of the proper type to the subclass
      *
-     * @param index      Which manager to invoke
+     * @param index      the manager to invoke
+     * @param systemName the system name
+     * @param userName   the user name
      * @return a bean
      */
     abstract protected NamedBean makeBean(int index, String systemName, String userName);
@@ -196,6 +199,8 @@ abstract public class AbstractProxyManager implements Manager {
      * except to issue warnings. This will mostly happen if you're creating
      * NamedBean when you should be looking them up.
      *
+     * @param systemName the system name
+     * @param userName   the user name
      * @return requested NamedBean object (never null)
      */
     public NamedBean newNamedBean(String systemName, String userName) {
@@ -228,6 +233,7 @@ abstract public class AbstractProxyManager implements Manager {
      * Find the index of a matching manager. Returns -1 if there is no match,
      * which is not considered an error
      *
+     * @param systemname the system name
      * @return the index of the matching manager
      */
     protected int matchTentative(String systemname) {
@@ -243,6 +249,7 @@ abstract public class AbstractProxyManager implements Manager {
      * Find the index of a matching manager. Throws IllegalArgumentException if
      * there is no match, here considered to be an error that must be reported.
      *
+     * @param systemname the system name
      * @return the index of the matching manager
      */
     protected int match(String systemname) {
@@ -271,6 +278,7 @@ abstract public class AbstractProxyManager implements Manager {
      * <P>
      * Forwards the register request to the matching system
      *
+     * @param s the bean
      */
     @Override
     public void register(NamedBean s) {
@@ -283,6 +291,7 @@ abstract public class AbstractProxyManager implements Manager {
      * <P>
      * Forwards the deregister request to the matching system
      *
+     * @param s the name
      */
     @Override
     public void deregister(NamedBean s) {
@@ -368,6 +377,7 @@ abstract public class AbstractProxyManager implements Manager {
     /**
      * Get a list of all system names.
      *
+     * @return a list, possibly empty, of system names
      */
     @Override
     public List<String> getSystemNameList() {
