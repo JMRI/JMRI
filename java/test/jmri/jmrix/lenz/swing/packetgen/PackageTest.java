@@ -10,7 +10,8 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    PacketGenFrameTest.class
+    PacketGenFrameTest.class,
+    PacketGenActionTest.class
 })
 public class PackageTest {
 }

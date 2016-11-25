@@ -34,6 +34,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ecos.utilities.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(EcosReporterManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(EcosTrafficControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EcosSensorManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EcosTurnoutManagerTest.class));
 
         return suite;
     }

@@ -1,9 +1,9 @@
 package jmri.jmrit.automat;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for classes in the jmri.jmrit.automat package
@@ -100,9 +100,7 @@ public class AutomatTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(AutomatTest.class);
-        // suite.addTest(RouteTableActionTest.suite());
-        return suite;
+        return new TestSuite(AutomatTest.class);
     }
 
     // The minimal setup for log4J

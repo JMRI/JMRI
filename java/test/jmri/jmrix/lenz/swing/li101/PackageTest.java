@@ -10,7 +10,8 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    LI101FrameTest.class
+    LI101FrameTest.class,
+    LI101ActionTest.class
 })
 public class PackageTest {
 }

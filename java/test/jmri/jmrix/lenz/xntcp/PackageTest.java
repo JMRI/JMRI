@@ -9,22 +9,22 @@ import junit.framework.TestSuite;
  *
  * @author Paul Bender
  */
-public class XnTcpTest extends TestCase {
+public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-    public XnTcpTest(String s) {
+    public PackageTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {XnTcpTest.class.getName()};
+        String[] testCaseName = {PackageTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.lenz.xntcp.XnTcpTest");  // no tests in this class itself
+        TestSuite suite = new TestSuite("jmri.jmrix.lenz.xntcp");  // no tests in this class itself
         suite.addTest(new TestSuite(XnTcpAdapterTest.class));
         suite.addTest(new TestSuite(XnTcpXNetPacketizerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
