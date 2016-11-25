@@ -88,7 +88,6 @@ public class AutoAllocate {
     private ConnectivityUtil _conUtil = null;
     private ArrayList<AllocationPlan> _planList = new ArrayList<AllocationPlan>();
     private int nextPlanNum = 1;
-    private boolean allocateAll;
     private ArrayList<AllocationRequest> orderedRequests = new ArrayList<AllocationRequest>();
 
     /**
