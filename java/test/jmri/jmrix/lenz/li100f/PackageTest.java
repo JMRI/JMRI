@@ -9,22 +9,22 @@ import junit.framework.TestSuite;
  *
  * @author Paul Bender
  */
-public class LI100FTest extends TestCase {
+public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-    public LI100FTest(String s) {
+    public PackageTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {LI100FTest.class.getName()};
+        String[] testCaseName = {PackageTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.lenz.li100f.LI100FTest");  // no tests in this class itself
+        TestSuite suite = new TestSuite("jmri.jmrix.lenz.li100f");  // no tests in this class itself
         suite.addTest(new TestSuite(LI100AdapterTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.lenz.li100f.configurexml.PackageTest.class));

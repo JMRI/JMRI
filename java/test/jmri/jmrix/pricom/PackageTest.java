@@ -28,7 +28,7 @@ public class PackageTest extends TestCase {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.pricom.PricomTest");
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.pricom.pockettester.PackageTest.class));
-        suite.addTest(jmri.jmrix.pricom.downloader.DownloaderTest.suite());
+        suite.addTest(jmri.jmrix.pricom.downloader.PackageTest.suite());
         suite.addTest(new JUnit4TestAdapter(PricomMenuTest.class));
         return suite;
     }

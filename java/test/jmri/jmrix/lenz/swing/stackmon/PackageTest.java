@@ -10,7 +10,8 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    StackMonFrameTest.class
+    StackMonFrameTest.class,
+    StackMonActionTest.class
 })
 public class PackageTest {
 }

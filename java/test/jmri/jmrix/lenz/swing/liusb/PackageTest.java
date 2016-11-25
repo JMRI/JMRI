@@ -10,7 +10,8 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    LIUSBConfigFrameTest.class
+    LIUSBConfigFrameTest.class,
+    LIUSBConfigActionTest.class
 })
 public class PackageTest {
 }

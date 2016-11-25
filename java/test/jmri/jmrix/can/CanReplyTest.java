@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
  *
  * @author Bob Jacobsen Copyright 2008, 2009
  */
-public class CanReplyTest extends CanMRCommonTest {
+public class CanReplyTest extends CanMRCommonTestBase {
 
     public void testCopyCtor() {
         CanReply m1 = new CanReply();

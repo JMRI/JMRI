@@ -11,7 +11,8 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    LZV100FrameTest.class
+    LZV100FrameTest.class,
+    LZV100ActionTest.class
 })
 public class PackageTest extends TestCase {
 }
