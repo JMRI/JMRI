@@ -117,7 +117,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             XBee16BitAddress address = new XBee16BitAddress(addr);
             String Identifier = findParmValue(n, "name");
             // create the RemoteXBeeDevice for the node.
-            RemoteXBeeDevice remoteDevice = remoteDevice = new RemoteXBeeDevice(xtc.getXBee(),
+            RemoteXBeeDevice remoteDevice = new RemoteXBeeDevice(xtc.getXBee(),
                          guid,address,Identifier);
             // Check to see if the node is a duplicate, if it is, move 
             // to the next one.

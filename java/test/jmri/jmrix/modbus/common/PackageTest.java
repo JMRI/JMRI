@@ -25,12 +25,6 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.modbus.common.PackageTest");  // no tests in this class itself
-
-        // suite.addTest(jmri.jmrix.modbus.common.FooTest.suite());
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            //suite.addTest(jmri.jmrix.modbus.common.FooTest.suite());
-        }
-
         return suite;
     }
 

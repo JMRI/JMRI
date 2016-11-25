@@ -64,6 +64,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
     }
 
     /**
+     * @param name The string name for the schedule
      * @return requested Schedule object or null if none exists
      */
     public Schedule getScheduleByName(String name) {
@@ -85,6 +86,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
     /**
      * Finds an existing schedule or creates a new schedule if needed requires
      * schedule's name creates a unique id for this schedule
+     * @param name The string name for this schedule
      *
      *
      * @return new schedule or existing schedule
@@ -104,6 +106,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     * @param schedule The Schedule to add.
      */
     public void register(Schedule schedule) {
         Integer oldSize = Integer.valueOf(_scheduleHashTable.size());
@@ -118,6 +121,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 
     /**
      * Forget a NamedBean Object created outside the manager.
+     * @param schedule The Schedule to delete.
      */
     public void deregister(Schedule schedule) {
         if (schedule == null) {

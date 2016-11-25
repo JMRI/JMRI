@@ -105,7 +105,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
      * @param index = row of table
      */
     public NamedBean getBeanAt(int index) {
-        index = _sorter.convertRowIndexToModel(index);
         if (index >= _pickList.size()) {
             return null;
         }
@@ -303,6 +302,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         //uNameColumnT.setMaxWidth(300);
 
         addMouseListenerToHeader(_table);
+        _table.setAutoCreateColumnsFromModel(false);
 
         return _table;
     }
@@ -735,7 +735,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
 
         public NamedBean addBean(String sysName, String userName) {
-            return manager.createNewWarrant(sysName, userName, false, 0);
+            return manager.createNewWarrant(sysName, userName);
         }
 
         public boolean canAddBean() {

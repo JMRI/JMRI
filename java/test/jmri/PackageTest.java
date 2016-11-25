@@ -27,7 +27,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.PackageTest");  // no tests in this class itself
 
         suite.addTest(jmri.BeanSettingTest.suite());
-        suite.addTest(jmri.BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(jmri.NamedBeanHandleManagerTest.suite());
         suite.addTest(jmri.BlockTest.suite());
         suite.addTest(jmri.BlockManagerTest.suite());
@@ -60,6 +60,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmris.PackageTest.suite());
         suite.addTest(jmri.profile.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.server.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.plaf.PackageTest.class));
         suite.addTest(jmri.script.PackageTest.suite());
         return suite;
     }

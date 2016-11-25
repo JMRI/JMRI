@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -59,13 +60,14 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     RouteLocation _focusedField;
     
     static int STRUT_SIZE = 10;
+    static int _depth =20;
+    
     static String PAD = "               ";
     private JDialog         _pickRouteDialog;
     private RouteTableModel _routeModel;
     private ArrayList <BlockOrder> _orders = new ArrayList <BlockOrder>();
     private JFrame      _debugFrame;
     private RouteFinder _routeFinder;
-    private int         _depth =20;
     private JTextField  _searchDepth =  new JTextField(5);
 
     private RosterEntry _train;
@@ -1141,39 +1143,64 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     * @param vertical  Label orientation true = above, false = left
     * @param label String label message
     */
-   static protected JPanel makeTextBoxPanel(boolean vertical, JComponent textField, String label, String tooltip) {
+   static protected JPanel makeTextBoxPanel(boolean vertical, JComponent componet, String label, String tooltip) {
        JPanel panel = new JPanel();
        JLabel l = new JLabel(Bundle.getMessage(label));
        if (vertical) {
            panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
            l.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-           textField.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+           componet.setAlignmentX(JComponent.CENTER_ALIGNMENT);
            panel.add(Box.createVerticalStrut(STRUT_SIZE));
        } else {
            panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
            l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
-           textField.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
+           componet.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
            panel.add(Box.createHorizontalStrut(STRUT_SIZE));
        }
        panel.add(l);
        if (!vertical) {
            panel.add(Box.createHorizontalStrut(STRUT_SIZE));
        }
-       textField.setMaximumSize(new Dimension(300, textField.getPreferredSize().height));
-       textField.setMinimumSize(new Dimension(30, textField.getPreferredSize().height));
-       panel.add(textField);
+       componet.setMaximumSize(new Dimension(300, componet.getPreferredSize().height));
+       componet.setMinimumSize(new Dimension(30, componet.getPreferredSize().height));
+       panel.add(componet);
        if (vertical) {
            panel.add(Box.createVerticalStrut(STRUT_SIZE));
        } else {
            panel.add(Box.createHorizontalStrut(STRUT_SIZE));
        }
-       if (textField instanceof JTextField || textField instanceof JComboBox) {
-           textField.setBackground(Color.white);           
+       if (componet instanceof JTextField || componet instanceof JComboBox) {
+           componet.setBackground(Color.white);           
        }
        if (tooltip!=null) {
            panel.setToolTipText(tooltip);
-           textField.setToolTipText(Bundle.getMessage(tooltip));
+           componet.setToolTipText(Bundle.getMessage(tooltip));
            l.setToolTipText(Bundle.getMessage(tooltip));           
+       }
+       return panel;
+   }
+   // puts label message to the right
+   static protected JPanel makeTextBoxPanel(JComponent componet, String label, String tooltip) {
+       JPanel panel = new JPanel();
+       panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+       panel.add(Box.createHorizontalStrut(STRUT_SIZE));
+       componet.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+       componet.setMaximumSize(new Dimension(300, componet.getPreferredSize().height));
+       componet.setMinimumSize(new Dimension(30, componet.getPreferredSize().height));
+       panel.add(componet);
+       if (componet instanceof JTextField || componet instanceof JComboBox) {
+           componet.setBackground(Color.white);           
+           JLabel l = new JLabel(Bundle.getMessage(label));
+           l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+           l.setToolTipText(Bundle.getMessage(tooltip));           
+           panel.add(l);
+       } else if (componet instanceof AbstractButton) {
+           ((AbstractButton)componet).setText(Bundle.getMessage(label));
+       }
+       panel.add(Box.createHorizontalStrut(STRUT_SIZE));
+       if (tooltip!=null) {
+           panel.setToolTipText(tooltip);
+           componet.setToolTipText(Bundle.getMessage(tooltip));
        }
        return panel;
    }

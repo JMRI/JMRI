@@ -30,7 +30,7 @@
 # include them in the JMRI_OPTIONS environment variable
 #
 #  jmri.demo                Keep some test windows open after tests run
-#  jmri.headlesstest        Tests won't attempt to use screen
+#  java.awt.headless        Tests won't attempt to use screen
 #  jmri.skipschematests     Skip tests of XML schema if true
 #  jmri.skipscripttests     Skip tests of Jython scripts if true
 #  jmri.log4jconfigfilename Specify replacement for details tests.lcf file (tests only)
@@ -96,6 +96,6 @@ fi
 
 # tests are no longer with production classes, so append the directory containing
 # tests to the classpaths
-testclasspath="--cp:a=${dirname}/java/test-classes"
+testclasspath="--cp:a=${dirname}/target/test-classes"
 
 "${dirname}/.run.sh" "${settingsdir}" "${prefsdir}" "${testclasspath}" $@

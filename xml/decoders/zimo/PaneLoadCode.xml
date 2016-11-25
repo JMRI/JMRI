@@ -27,4 +27,5 @@
     <display item="Load Code 4"/>
   </column>
   <name xml:lang="it">Carico Codici</name>
+  <name xml:lang="cs">Nahrávací kód</name>
 </pane>

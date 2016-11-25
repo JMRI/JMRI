@@ -1,3 +1,18 @@
+package jmri.jmrix.easydcc.easydccmon;
+
+import java.awt.GraphicsEnvironment;
+import java.util.ArrayList;
+import jmri.jmrix.easydcc.EasyDccListener;
+import jmri.jmrix.easydcc.EasyDccMessage;
+import jmri.jmrix.easydcc.EasyDccReply;
+import jmri.jmrix.easydcc.EasyDccTrafficController;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * EasyDccMonFrameTest.java
  *
@@ -5,55 +20,47 @@
  *
  * @author	Bob Jacobsen
  */
-package jmri.jmrix.easydcc.easydccmon;
+public class EasyDccMonFrameTest {
 
-import java.util.Vector;
-import jmri.jmrix.easydcc.EasyDccListener;
-import jmri.jmrix.easydcc.EasyDccMessage;
-import jmri.jmrix.easydcc.EasyDccReply;
-import jmri.jmrix.easydcc.EasyDccTrafficController;
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-public class EasyDccMonFrameTest extends TestCase {
-
+    @Test
     public void testCreate() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EasyDccMonFrame f = new EasyDccMonFrame();
         Assert.assertNotNull("exists", f);
     }
 
-// Following are not reliable, apparently time-sensitive, so commented out
-/* 	public void testMsg() { */
-    /* 		EasyDccMessage m = new EasyDccMessage(3); */
-    /* 		m.setOpCode('L'); */
-    /* 		m.setElement(1, '0'); */
-    /* 		m.setElement(2, 'A'); */
-    /*  */
-    /* 		EasyDccMonFrame f = new EasyDccMonFrame(); */
-    /*  */
-    /* 		f.message(m); */
-    /*  */
-    /* 		Assert.assertEquals("length ", "cmd: \"L0A\"\n".length(), f.getFrameText().length()); */
-    /* 		Assert.assertEquals("display", "cmd: \"L0A\"\n", f.getFrameText()); */
-    /* 	} */
-    /*  */
-    /* 	public void testReply() { */
-    /* 		EasyDccReply m = new EasyDccReply(); */
-    /* 		m.setOpCode('C'); */
-    /* 		m.setElement(1, 'o'); */
-    /* 		m.setElement(2, ':'); */
-    /*  */
-    /* 		EasyDccMonFrame f = new EasyDccMonFrame(); */
-    /*  */
-    /* 		f.reply(m); */
-    /*  */
-    /* 		Assert.assertEquals("display", "rep: \"Co:\"\n", f.getFrameText()); */
-    /* 		Assert.assertEquals("length ", "rep: \"Co:\"\n".length(), f.getFrameText().length()); */
-    /* 	} */
+    // Following are not reliable, apparently time-sensitive, so commented out
+    @Ignore
+    public void testMsg() {
+        EasyDccMessage m = new EasyDccMessage(3);
+        m.setOpCode('L');
+        m.setElement(1, '0');
+        m.setElement(2, 'A');
+
+        EasyDccMonFrame f = new EasyDccMonFrame();
+
+        f.message(m);
+
+        Assert.assertEquals("length ", "cmd: \"L0A\"\n".length(), f.getFrameText().length());
+        Assert.assertEquals("display", "cmd: \"L0A\"\n", f.getFrameText());
+    }
+
+    @Ignore
+    public void testReply() {
+        EasyDccReply m = new EasyDccReply();
+        m.setOpCode('C');
+        m.setElement(1, 'o');
+        m.setElement(2, ':');
+
+        EasyDccMonFrame f = new EasyDccMonFrame();
+
+        f.reply(m);
+
+        Assert.assertEquals("display", "rep: \"Co:\"\n", f.getFrameText());
+        Assert.assertEquals("length ", "rep: \"Co:\"\n".length(), f.getFrameText().length());
+    }
+
+    @Test
     public void testWrite() {
 
         // infrastructure objects
@@ -69,6 +76,7 @@ public class EasyDccMonFrameTest extends TestCase {
         }
 
         // override some EasyDccInterfaceController methods for test purposes
+        @Override
         public boolean status() {
             return true;
         }
@@ -76,14 +84,15 @@ public class EasyDccMonFrameTest extends TestCase {
         /**
          * record messages sent, provide access for making sure they are OK
          */
-        public Vector<EasyDccMessage> outbound = new Vector<EasyDccMessage>();  // public OK here, so long as this is a test class
+        public ArrayList<EasyDccMessage> outbound = new ArrayList<>();  // public OK here, so long as this is a test class
 
+        @Override
         public void sendEasyDccMessage(EasyDccMessage m, EasyDccListener l) {
             if (log.isDebugEnabled()) {
                 log.debug("sendEasyDccMessage [" + m + "]");
             }
             // save a copy
-            outbound.addElement(m);
+            outbound.add(m);
         }
 
         // test control member functions
@@ -96,7 +105,6 @@ public class EasyDccMonFrameTest extends TestCase {
                 log.debug("sendTestMessage    [" + m + "]");
             }
             notifyMessage(m, null);
-            return;
         }
 
         protected void sendTestReply(EasyDccReply m) {
@@ -105,7 +113,6 @@ public class EasyDccMonFrameTest extends TestCase {
                 log.debug("sendTestReply    [" + m + "]");
             }
             notifyReply(m, null);
-            return;
         }
 
         /*
@@ -115,23 +122,6 @@ public class EasyDccMonFrameTest extends TestCase {
             return cmdListeners.size();
         }
 
-    }
-
-    // from here down is testing infrastructure
-    public EasyDccMonFrameTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {EasyDccMonFrameTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(EasyDccMonFrameTest.class);
-        return suite;
     }
 
     private final static Logger log = LoggerFactory.getLogger(EasyDccMonFrameTest.class.getName());

@@ -27,11 +27,8 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.dispatcher.PackageTest"); // no tests in class itself
         suite.addTest(jmri.jmrit.dispatcher.DispatcherTrainInfoTest.suite());
         suite.addTest(jmri.jmrit.dispatcher.DispatcherTrainInfoFileTest.suite());
-        suite.addTest(BundleTest.suite());
-        // GUI tests start here
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(jmri.jmrit.dispatcher.DispatcherFrameTest.suite());
-        }
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(jmri.jmrit.dispatcher.DispatcherFrameTest.suite());
         return suite;
     }
 

@@ -52,14 +52,12 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     private int _sort = SORTBYNAME;
 
     public void setSort(int sort) {
-        synchronized (this) {
-            _sort = sort;
-        }
+        _sort = sort;
         updateList();
         fireTableDataChanged();
     }
 
-    private synchronized void updateList() {
+    private void updateList() {
         // first, remove listeners from the individual objects
         removePropertyChangeLocations();
 
@@ -85,13 +83,15 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         tcm.getColumn(ACTIONCOLUMN).setCellEditor(buttonEditor);
         tcm.getColumn(EDITCOLUMN).setCellRenderer(buttonRenderer);
         tcm.getColumn(EDITCOLUMN).setCellEditor(buttonEditor);
-        
+
         // set column preferred widths
         table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
         table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(200);
         table.getColumnModel().getColumn(TRACKCOLUMN).setPreferredWidth(
-                Math.max(60, new JLabel(Bundle.getMessage("Class/Interchange") + Bundle.getMessage("Spurs")
-                        + Bundle.getMessage("Yards")).getPreferredSize().width + 20));
+                Math.max(60,
+                        new JLabel(Bundle.getMessage("Class/Interchange") +
+                                Bundle.getMessage("Spurs") +
+                                Bundle.getMessage("Yards")).getPreferredSize().width + 20));
         table.getColumnModel().getColumn(LENGTHCOLUMN).setPreferredWidth(
                 Math.max(60, new JLabel(getColumnName(LENGTHCOLUMN)).getPreferredSize().width + 10));
         table.getColumnModel().getColumn(USEDLENGTHCOLUMN).setPreferredWidth(60);
@@ -104,12 +104,12 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         table.getColumnModel().getColumn(ACTIONCOLUMN).setPreferredWidth(
                 Math.max(80, new JLabel(Bundle.getMessage("Yardmaster")).getPreferredSize().width + 40));
         table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(80);
-        
+
         frame.loadTableDetails(table);
     }
 
     @Override
-    public synchronized int getRowCount() {
+    public int getRowCount() {
         return locationsList.size();
     }
 
@@ -179,7 +179,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     @Override
-    public synchronized Object getValueAt(int row, int col) {
+    public Object getValueAt(int row, int col) {
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
@@ -232,7 +232,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     @Override
-    public synchronized void setValueAt(Object value, int row, int col) {
+    public void setValueAt(Object value, int row, int col) {
         switch (col) {
             case ACTIONCOLUMN:
                 launchYardmaster(row);
@@ -247,7 +247,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 
     List<LocationEditFrame> frameList = new ArrayList<LocationEditFrame>();
 
-    private synchronized void editLocation(int row) {
+    private void editLocation(int row) {
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -267,7 +267,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         });
     }
 
-    private synchronized void launchYardmaster(int row) {
+    private void launchYardmaster(int row) {
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -280,7 +280,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     @Override
-    public synchronized void propertyChange(PropertyChangeEvent e) {
+    public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
@@ -300,7 +300,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
-    private synchronized void removePropertyChangeLocations() {
+    private void removePropertyChangeLocations() {
         if (locationsList != null) {
             for (Location loc : locationsList) {
                 loc.removePropertyChangeListener(this);

@@ -29,19 +29,16 @@ public class PackageTest extends TestCase {
         suite.addTest(XmlTest.suite());
         suite.addTest(TrackTest.suite());
         suite.addTest(OperationsPoolTest.suite());
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
 
         suite.addTest(jmri.jmrit.operations.locations.tools.PackageTest.suite());
         suite.addTest(jmri.jmrit.operations.locations.schedules.PackageTest.suite());
-        // GUI tests start here
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(InterchangeEditFrameTest.suite());
-            suite.addTest(LocationEditFrameTest.suite());
-            suite.addTest(LocationTableFrameTest.suite());
-            suite.addTest(SidingEditFrameTest.suite());
-            suite.addTest(StagingEditFrameTest.suite());
-            suite.addTest(YardEditFrameTest.suite());
-        }
+        suite.addTest(InterchangeEditFrameTest.suite());
+        suite.addTest(LocationEditFrameTest.suite());
+        suite.addTest(LocationTableFrameTest.suite());
+        suite.addTest(SidingEditFrameTest.suite());
+        suite.addTest(StagingEditFrameTest.suite());
+        suite.addTest(YardEditFrameTest.suite());
 
         return suite;
     }

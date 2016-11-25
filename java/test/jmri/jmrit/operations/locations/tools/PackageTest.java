@@ -25,12 +25,8 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.operations.locations.tools.PackageTest"); // no tests in class itself
-        suite.addTest(BundleTest.suite());
-
-        // GUI tests start here
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(PoolTrackGuiTest.suite());
-        }
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(PoolTrackGuiTest.suite());
 
         return suite;
     }

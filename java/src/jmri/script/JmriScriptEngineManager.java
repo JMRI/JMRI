@@ -79,7 +79,7 @@ public final class JmriScriptEngineManager {
     private final ScriptContext context;
 
     private static final Logger log = LoggerFactory.getLogger(JmriScriptEngineManager.class);
-    private static final String jythonDefaults = "jmri_defaults.py"; // should be replaced with default context
+    private static final String JYTHON_DEFAULTS = "jmri_defaults.py"; // should be replaced with default context
 
     public static final String PYTHON = "jython";
     private PythonInterpreter jython = null;
@@ -163,10 +163,9 @@ public final class JmriScriptEngineManager {
      * @return the default JmriScriptEngineManager
      */
     public static JmriScriptEngineManager getDefault() {
-        if (InstanceManager.getNullableDefault(JmriScriptEngineManager.class) == null) {
-            InstanceManager.setDefault(JmriScriptEngineManager.class, new JmriScriptEngineManager());
-        }
-        return InstanceManager.getDefault(JmriScriptEngineManager.class);
+        return InstanceManager.getOptionalDefault(JmriScriptEngineManager.class).orElseGet(() -> {
+            return InstanceManager.setDefault(JmriScriptEngineManager.class, new JmriScriptEngineManager());
+        });
     }
 
     /**
@@ -509,7 +508,7 @@ public final class JmriScriptEngineManager {
                 log.debug("create interpreter");
                 ScriptEngine python = this.manager.getEngineByName(PYTHON);
                 python.setContext(this.context);
-                is = FileUtil.findInputStream(jythonDefaults, new String[]{
+                is = FileUtil.findInputStream(JYTHON_DEFAULTS, new String[]{
                     FileUtil.getUserFilesPath(),
                     FileUtil.getPreferencesPath()
                 });

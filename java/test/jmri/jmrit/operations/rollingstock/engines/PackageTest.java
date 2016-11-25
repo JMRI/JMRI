@@ -32,15 +32,11 @@ public class PackageTest extends TestCase {
         suite.addTest(NceConsistEnginesTest.suite());
         suite.addTest(EngineManagerTest.suite());
         suite.addTest(XmlTest.suite());
-        suite.addTest(BundleTest.suite());
-
-        // GUI tests start here
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(EnginesTableFrameTest.suite());
-            suite.addTest(EngineEditFrameTest.suite());
-            suite.addTest(EngineAttributeEditFrameTest.suite());
-            suite.addTest(EngineSetFrameTest.suite());
-        }
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(EnginesTableFrameTest.suite());
+        suite.addTest(EngineEditFrameTest.suite());
+        suite.addTest(EngineAttributeEditFrameTest.suite());
+        suite.addTest(EngineSetFrameTest.suite());
 
         return suite;
     }

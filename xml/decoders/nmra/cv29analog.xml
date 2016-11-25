@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>8</revnumber>
+      <date>2016-10-23</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>7</revnumber>
       <date>2013-07-25</date>
       <authorinitials>PB</authorinitials>
@@ -53,6 +59,7 @@
         <choice xml:lang="fr">Digital NMRA seulement</choice>
         <choice xml:lang="ca">NMRA Digital only (ca)</choice>
         <choice xml:lang="de">Nur Digital nach NMRA</choice>
+        <choice xml:lang="cs">Pouze digitál NMRA</choice>
       </enumChoice>
       <enumChoice choice="DC conversion enabled">
         <choice>DC conversion enabled</choice>
@@ -60,6 +67,7 @@
         <choice xml:lang="fr">Mode analogique activé</choice>
         <choice xml:lang="ca">DC conversion enabled (ca)</choice>
         <choice xml:lang="de">Analogbetrieb Aktiviert</choice>
+        <choice xml:lang="cs">Povolena konverze DC</choice>
       </enumChoice>
     </enumVal>
     <label xml:lang="it">Conversione Sorgente Alimentazione</label>
@@ -70,5 +78,7 @@
     <tooltip>NMRA Digital only: Digital Operation Only - DC conversion enabled: both Digital + Analog, default is Off</tooltip>
     <tooltip xml:lang="it">'4' bit. Permette alla loco di andare in DC, per default è Off</tooltip>
     <tooltip xml:lang="de">Nur Digital nach NMRA: Die Lokomotive fährt nur digital. Analogbetrieb Aktiviert: Die Lokomotive fährt sowohl digital als auch analog.</tooltip>
+    <label xml:lang="cs">Konverze napájení</label>
+    <tooltip xml:lang="cs">Pouze digitál NMRA: pouze digitální provoz - Povolena konverze DC: obojí provoz digitální + analogový, výhozí hodnota je vypnuto.</tooltip>
   </variable>
 </variables>

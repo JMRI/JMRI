@@ -32,7 +32,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.AbstractPortControllerTest.suite());
         suite.addTest(jmri.jmrix.AbstractMRReplyTest.suite());
         suite.addTest(new TestSuite(jmri.jmrix.AbstractThrottleTest.class));
-        suite.addTest(jmri.jmrix.BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ConnectionConfigManagerTest.class));
 
         suite.addTest(jmri.jmrix.acela.PackageTest.suite());
@@ -59,12 +59,12 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.mrc.PackageTest.suite());
         suite.addTest(jmri.jmrix.nce.PackageTest.suite());
         suite.addTest(jmri.jmrix.oaktree.PackageTest.suite());
-        suite.addTest(jmri.jmrix.openlcb.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.openlcb.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.pi.PackageTest.class));
         suite.addTest(jmri.jmrix.powerline.PackageTest.suite());
         suite.addTest(jmri.jmrix.pricom.PackageTest.suite());
         suite.addTest(jmri.jmrix.qsi.PackageTest.suite());
-        suite.addTest(jmri.jmrix.rfid.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.rfid.PackageTest.class));
         suite.addTest(jmri.jmrix.roco.PackageTest.suite());
         suite.addTest(jmri.jmrix.rps.PackageTest.suite());
         suite.addTest(jmri.jmrix.secsi.PackageTest.suite());
@@ -75,6 +75,9 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.wangrow.PackageTest.class));
         suite.addTest(jmri.jmrix.xpa.PackageTest.suite());
         suite.addTest(jmri.jmrix.zimo.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.jinput.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.serialsensor.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ncemonitor.PackageTest.class));
         return suite;
 
     }

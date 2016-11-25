@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -39,8 +40,8 @@ public class WarrantPreferences  {
 
     private String  _fileName;
     private float   _scale = 87.1f;
-    private int     _searchDepth = 20;
-    private float   _throttleScale = 0.5f;
+    private int     _searchDepth = 20;      // How many tree nodes (blocks) to walk in finding routes
+    private float   _throttleScale = 0.5f;  // factor to approximate throttle setting to track speed
     
     private OrderedHashtable<String, Float> _speedNames;
     private OrderedHashtable<String, String> _headAppearances;
@@ -307,16 +308,18 @@ public class WarrantPreferences  {
      */
     public void apply() {
         setSpeedMap();
-        setNXFrame();
+        setNXdata();
     }
-    private void setNXFrame() {
-        NXFrame frame = NXFrame.getInstance();
-        frame.setScale(_scale);
-        frame.setDepth(_searchDepth);
-        frame.setTimeInterval(_msIncrTime);
-        frame.setRampIncrement(_throttleIncr);
-        frame.updatePanel(_interpretation);
-        frame.closeFrame();
+    private void setNXdata() {
+        NXFrame._scale = _scale;
+        WarrantRoute._depth = _searchDepth;
+        NXFrame._intervalTime = _msIncrTime;
+        NXFrame._throttleIncr = _throttleIncr;
+        NXFrame._throttleFactor = _throttleScale;
+        if (!GraphicsEnvironment.isHeadless()) {
+            NXFrame frame = NXFrame.getInstance();
+            frame.updatePanel(_interpretation);            
+        }
     }
     private void setSpeedMap() {
         SignalSpeedMap map = new SignalSpeedMap();

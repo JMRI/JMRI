@@ -231,8 +231,10 @@ public class SignalTableModel extends AbstractTableModel {
         String[] sysNames = _portalMgr.getSystemNameArray();
         for (int i = 0; i < sysNames.length; i++) {
             Portal portal = _portalMgr.getBySystemName(sysNames[i]);
-            if ((portal.getFromBlock().equals(fromBlock) || portal.getToBlock().equals(fromBlock))
-                    && (portal.getFromBlock().equals(toBlock) || portal.getToBlock().equals(toBlock))) {
+            OBlock fromBlk = portal.getFromBlock();
+            OBlock toBlk = portal.getToBlock();
+            if ((fromBlk.equals(fromBlock) &&  toBlk.equals(toBlock)) ||
+                    (fromBlk.equals(toBlock) && toBlk.equals(fromBlock))) {
                 return portal;
             }
         }

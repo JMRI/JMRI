@@ -62,6 +62,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     }
 
     /**
+     * @param name The string name of the Location to get.
      * @return requested Location object or null if none exists
      */
     public Location getLocationByName(String name) {
@@ -121,6 +122,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     /**
      * Finds an existing location or creates a new location if needed requires
      * location's name creates a unique id for this location
+     * 
+     * @param name The string name for a new Location.
      *
      *
      * @return new location or existing location
@@ -132,6 +135,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
             location = new Location(Integer.toString(_id), name);
             Integer oldSize = Integer.valueOf(_locationHashTable.size());
             _locationHashTable.put(location.getId(), location);
+            resetNameLengths();
             setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
                     Integer.valueOf(_locationHashTable.size()));
         }
@@ -140,6 +144,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     * 
+     * @param location The Location to add.
      */
     public void register(Location location) {
         Integer oldSize = Integer.valueOf(_locationHashTable.size());
@@ -154,6 +160,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 
     /**
      * Forget a NamedBean Object created outside the manager.
+     * 
+     * @param location The Location to delete.
      */
     public void deregister(Location location) {
         if (location == null) {
@@ -350,10 +358,16 @@ public class LocationManager implements java.beans.PropertyChangeListener {
             }
         }
     }
-
+    
     protected int _maxLocationNameLength = 0;
     protected int _maxTrackNameLength = 0;
     protected int _maxLocationAndTrackNameLength = 0;
+    
+    public void resetNameLengths() {
+        _maxLocationNameLength = 0;
+        _maxTrackNameLength = 0;
+        _maxLocationAndTrackNameLength = 0;
+    }
 
     public int getMaxLocationNameLength() {
         calculateMaxNameLengths();
