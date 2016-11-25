@@ -17,67 +17,83 @@
         <choice>None</choice>
         <choice xml:lang="it">Nessuna</choice>
         <choice xml:lang="de">keine</choice>
+        <choice xml:lang="cs">Žádný</choice>
       </enumChoice>
       <enumChoice choice="Front Light" value="14">
         <choice>Front Light</choice>
         <choice xml:lang="it">Luce frontale</choice>
         <choice xml:lang="de">Lvor</choice>
+        <choice xml:lang="cs">Přední světla</choice>
       </enumChoice>
       <enumChoice choice="Rear Light" value="15">
         <choice>Rear Light</choice>
         <choice xml:lang="it">Luce retro</choice>
         <choice xml:lang="de">Lrück</choice>
+        <choice xml:lang="cs">Zadní světla</choice>
       </enumChoice>
       <enumChoice choice="FO 1" value="1">
         <choice>FO 1</choice>
         <choice xml:lang="de">FA 1</choice>
+        <choice xml:lang="cs">Funkční výstup 1</choice>
       </enumChoice>
       <enumChoice choice="FO 2">
         <choice>FO 2</choice>
         <choice xml:lang="de">FA 2</choice>
+        <choice xml:lang="cs">Funkční výstup 2</choice>
       </enumChoice>
       <enumChoice choice="FO 3">
         <choice>FO 3</choice>
         <choice xml:lang="de">FA 3</choice>
+        <choice xml:lang="cs">Funkční výstup 3</choice>
       </enumChoice>
       <enumChoice choice="FO 4">
         <choice>FO 4</choice>
         <choice xml:lang="de">FA 4</choice>
+        <choice xml:lang="cs">Funkční výstup 4</choice>
       </enumChoice>
       <enumChoice choice="FO 5">
         <choice>FO 5</choice>
         <choice xml:lang="de">FA 5</choice>
+        <choice xml:lang="cs">Funkční výstup 5</choice>
       </enumChoice>
       <enumChoice choice="FO 6">
         <choice>FO 6</choice>
         <choice xml:lang="de">FA 6</choice>
+        <choice xml:lang="cs">Funkční výstup 6</choice>
       </enumChoice>
       <enumChoice choice="FO 7">
         <choice>FO 7</choice>
         <choice xml:lang="de">FA 7</choice>
+        <choice xml:lang="cs">Funkční výstup 7</choice>
       </enumChoice>
       <enumChoice choice="FO 8">
         <choice>FO 8</choice>
         <choice xml:lang="de">FA 8</choice>
+        <choice xml:lang="cs">Funkční výstup 8</choice>
       </enumChoice>
       <enumChoice choice="FO 9">
         <choice>FO 9</choice>
         <choice xml:lang="de">FA 9</choice>
+        <choice xml:lang="cs">Funkční výstup 9</choice>
       </enumChoice>
       <enumChoice choice="FO 10">
         <choice>FO 10</choice>
         <choice xml:lang="de">FA 10</choice>
+        <choice xml:lang="cs">Funkční výstup 10</choice>
       </enumChoice>
       <enumChoice choice="FO 11">
         <choice>FO 11</choice>
         <choice xml:lang="de">FA 11</choice>
+        <choice xml:lang="cs">Funkční výstup 11</choice>
       </enumChoice>
       <enumChoice choice="FO 12">
         <choice>FO 12</choice>
         <choice xml:lang="de">FA 12</choice>
+        <choice xml:lang="cs">Funkční výstup 12</choice>
       </enumChoice>
       <enumChoice choice="FO 13">
         <choice>FO 13</choice>
         <choice xml:lang="de">FA 13</choice>
+        <choice xml:lang="cs">Funkční výstup 13</choice>
       </enumChoice>
 </enumChoiceGroup>

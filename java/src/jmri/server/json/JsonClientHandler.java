@@ -7,7 +7,6 @@ import static jmri.server.json.JSON.LIST;
 import static jmri.server.json.JSON.LOCALE;
 import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.PING;
-import static jmri.server.json.JSON.PROGRAMMER;
 import static jmri.server.json.JSON.TYPE;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -19,7 +18,6 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.ServiceLoader;
 import jmri.JmriException;
-import jmri.jmris.json.JsonProgrammerServer;
 import jmri.spi.JsonServiceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,14 +30,12 @@ public class JsonClientHandler {
      * client.
      */
     public static final String HELLO_MSG = "{\"" + JSON.TYPE + "\":\"" + JSON.HELLO + "\"}";
-    private final JsonProgrammerServer programmerServer;
     private final JsonConnection connection;
     private final HashMap<String, HashSet<JsonSocketService>> services = new HashMap<>();
     private static final Logger log = LoggerFactory.getLogger(JsonClientHandler.class);
 
     public JsonClientHandler(JsonConnection connection) {
         this.connection = connection;
-        this.programmerServer = new JsonProgrammerServer(this.connection);
         for (JsonServiceFactory factory : ServiceLoader.load(JsonServiceFactory.class)) {
             for (String type : factory.getTypes()) {
                 JsonSocketService service = factory.getSocketService(connection);
@@ -56,7 +52,6 @@ public class JsonClientHandler {
     }
 
     public void dispose() {
-        this.programmerServer.dispose();
         services.values().stream().forEach((set) -> {
             set.stream().forEach((service) -> {
                 service.onClose();
@@ -144,9 +139,6 @@ public class JsonClientHandler {
                 }
             } else if (!data.isMissingNode()) {
                 switch (type) {
-                    case PROGRAMMER:
-                        this.programmerServer.parseRequest(this.connection.getLocale(), data);
-                        break;
                     case HELLO:
                     case LOCALE:
                         if (!data.path(LOCALE).isMissingNode()) {

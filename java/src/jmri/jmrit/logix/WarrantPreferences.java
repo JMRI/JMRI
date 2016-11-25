@@ -40,8 +40,8 @@ public class WarrantPreferences  {
 
     private String  _fileName;
     private float   _scale = 87.1f;
-    private int     _searchDepth = 20;
-    private float   _throttleScale = 0.5f;
+    private int     _searchDepth = 20;      // How many tree nodes (blocks) to walk in finding routes
+    private float   _throttleScale = 0.5f;  // factor to approximate throttle setting to track speed
     
     private OrderedHashtable<String, Float> _speedNames;
     private OrderedHashtable<String, String> _headAppearances;
@@ -315,6 +315,7 @@ public class WarrantPreferences  {
         WarrantRoute._depth = _searchDepth;
         NXFrame._intervalTime = _msIncrTime;
         NXFrame._throttleIncr = _throttleIncr;
+        NXFrame._throttleFactor = _throttleScale;
         if (!GraphicsEnvironment.isHeadless()) {
             NXFrame frame = NXFrame.getInstance();
             frame.updatePanel(_interpretation);            

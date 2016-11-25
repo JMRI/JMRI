@@ -1,11 +1,12 @@
 //CarLoadEditFrameTest.java
 package jmri.jmrit.operations.rollingstock.cars;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations CarLoadEditFrame class
@@ -15,6 +16,9 @@ import junit.framework.TestSuite;
 public class CarLoadEditFrameTest extends OperationsSwingTestCase {
 
     public void testCarLoadEditFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         CarLoadEditFrame f = new CarLoadEditFrame();
         f.initComponents("Boxcar", "");
         f.addTextBox.setText("New Load");

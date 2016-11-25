@@ -4,13 +4,16 @@
   <enumChoice choice="Off">
     <choice>Off</choice>
     <choice xml:lang="it">Off</choice>
+    <choice xml:lang="cs">Vypnout</choice>
   </enumChoice>
   <enumChoice choice="On">
     <choice>On</choice>
     <choice xml:lang="it">On</choice>
+    <choice xml:lang="cs">Zapnout</choice>
   </enumChoice>
   <enumChoice choice="On with Bell">
     <choice>On with Bell</choice>
     <choice xml:lang="it">On con Campana</choice>
+    <choice xml:lang="cs">Zapnout se zazvoněním</choice>
   </enumChoice>
 </enumVal>

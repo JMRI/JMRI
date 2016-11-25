@@ -16,9 +16,8 @@
  *  TODO: handle drawn ellipse (see LMRC APB)
  *  TODO: update drawn track on color and width changes (would need to create system objects to reflect these chgs)
  *  TODO: research movement of locoicons ("promote" locoicon to system entity in JMRI?, add panel-level listeners?)
- *  TODO: finish layoutturntable (draw rays) (see Mtn RR and CnyMod27)
+ *  TODO: connect turnouts to layoutturntable rays and make clickable (see WhichWay)
  *  TODO: address color differences between java panel and javascript panel (e.g. lightGray)
- *  TODO: diagnose and correct the small position issues visible with footscray
  *  TODO: deal with mouseleave, mouseout, touchout, etc. Slide off Stop button on rb1 for example.
  *  TODO: make turnout, levelXing occupancy work like LE panels (more than just checking A)
  *  TODO: draw dashed curves
@@ -533,8 +532,24 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
                                 break;
                             case "layoutturntable" :
-                                //just draw the circle for now, don't even store it
-                                $drawCircle($widget.xcen, $widget.ycen, $widget.radius);
+                            	//from jmri.jmrit.display.layoutEditor.layoutTurntable
+                                $drawCircle($widget.xcen, $widget.ycen, $widget.radius); //draw the turnout circle
+                                var $raytracks = $(this).find('raytrack');
+                                var $txcen = $widget.xcen*1.0;
+                                var $tycen = $widget.ycen*1.0;
+                                $raytracks.each(function(i, item) {  //loop thru raytracks, calc and store end of ray point for each
+                                	var $t = [];
+                                	$t['ident'] = $widget.ident + ".5" + item.attributes['index'].value * 1; //note: .5 is due to TrackSegment.java TURNTABLE_RAY_OFFSET                               	
+                                	$angle = (item.attributes['angle'].value/180.0)*Math.PI;
+                                	$t['x'] = $txcen + (($widget.radius*1.25)*Math.sin($angle)); //from getRayCoordsIndexed()
+                                	$t['y'] = $tycen - (($widget.radius*1.25)*Math.cos($angle));
+                                	$gPts[$t.ident] = $t; //store the endpoint of this ray
+                                	//draw the line from ray endpoint to turntable edge
+                                	var $t1 = [];
+                                	$t1['x'] = $t.x - (($t.x - $txcen) * 0.2); //from drawTurntables()
+                                	$t1['y'] = $t.y - (($t.y - $tycen) * 0.2); 
+                                	$drawLine($t1.x, $t1.y, $t.x, $t.y, $gPanel.defaulttrackcolor, $gPanel.sidetrackwidth);
+                                });
                                 break;
                             case "backgroundColor" :  //set background color of the panel itself
                                 $("#panel-area").css({"background-color": "rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ")"});

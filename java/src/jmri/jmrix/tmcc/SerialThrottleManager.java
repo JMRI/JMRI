@@ -52,6 +52,18 @@ public class SerialThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
+    static public SerialThrottleManager instance() {
+        if (_instance == null) {
+            _instance = new SerialThrottleManager();
+        }
+        return _instance;
+    }
+    static private SerialThrottleManager _instance;
+    
     private final static Logger log = LoggerFactory.getLogger(SerialThrottleManager.class.getName());
 
 }

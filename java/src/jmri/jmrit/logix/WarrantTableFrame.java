@@ -59,10 +59,11 @@ import org.slf4j.LoggerFactory;
 public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseListener {
 
     static final String halt = Bundle.getMessage("Halt");
+    static final String stop = Bundle.getMessage("Stop");
     static final String resume = Bundle.getMessage("Resume");
     static final String abort = Bundle.getMessage("Abort");
     static final String retry = Bundle.getMessage("Retry");
-    static final String[] controls = {halt, resume, retry, abort};
+    static final String[] controls = {halt, resume, retry, stop, abort};
 
     public static int _maxHistorySize = 30;
 
@@ -360,26 +361,24 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
                 warrant = model.getWarrantAt(row);
             }
             Component component = getComponent();
-            if (!(component instanceof JComboBox<?>)) {
-                log.error("Unexpected editor component of class: {}", component.getClass().getName());
-                return component;
-            }
-            JComboBox<?> comboBox = (JComboBox<?>) getComponent();
-            if (warrant == null) {
-                log.warn("getWarrantAt row= " + row + " Warrant is null!");
-                return comboBox;
-            }
-            comboBox.removeAllItems();
+            if (component instanceof JComboBox<?>) {
+                @SuppressWarnings("unchecked")
+                JComboBox<String> comboBox = (JComboBox<String>) component;
+                if (warrant == null) {
+                    log.warn("getWarrantAt row= " + row + " Warrant is null!");
+                    return comboBox;
+                }
+                comboBox.removeAllItems();
 
-            // make new comboBox because cast "(JComboBox<String>)component" shows warning
-            JComboBox<String> comboBox2 = new JComboBox<>();
-            comboBox2.setFont(new Font(null, Font.PLAIN, 12));
-            List<BlockOrder> orders = warrant.getBlockOrders();
-            for (int i = 0; i < orders.size(); i++) {
-                BlockOrder order = orders.get(i);
-                comboBox2.addItem(order.getBlock().getDisplayName() + ": - " + order.getPath().getName());
+                List<BlockOrder> orders = warrant.getBlockOrders();
+                for (int i = 0; i < orders.size(); i++) {
+                    BlockOrder order = orders.get(i);
+                    comboBox.addItem(order.getBlock().getDisplayName() + ": - " + order.getPath().getName());
+                }
+            } else {
+                log.error("Unexpected editor component of class: {}", component.getClass().getName());
             }
-            return comboBox2;
+            return component;
         }
     }
 
@@ -408,6 +407,13 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             return msg;
         }
         msg = w.checkStartBlock(Warrant.MODE_RUN);  // notify first block occupied by this train
+        if (msg != null) {
+            if (msg.equals("BlockDark")) {
+                msg = Bundle.getMessage("BlockDark", w.getCurrentBlockName(), w.getTrainName());                            
+            } else if (msg.equals("warnStart")) {
+                msg = Bundle.getMessage("warnStart", w.getTrainName(), w.getCurrentBlockName());
+            }
+        }
         setStatusText(msg, WarrantTableModel.myGold, false);
         // From here on messages are status information, not abort info
         msg = w.checkRoute();   // notify about occupation ahead

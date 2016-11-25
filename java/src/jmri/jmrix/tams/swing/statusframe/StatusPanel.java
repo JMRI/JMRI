@@ -100,11 +100,6 @@ public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements Tams
      */
     static public class Default extends jmri.jmrix.tams.swing.TamsNamedPaneAction {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2919382089865855790L;
-
         public Default() {
             super(ResourceBundle.getBundle("jmri.jmrix.tams.TamsBundle").getString("MenuItemInfo"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),

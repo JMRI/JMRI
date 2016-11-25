@@ -19,6 +19,7 @@
     <label>Volume on Key F20</label>
     <label xml:lang="it">Volume per Tasto F20</label>
     <label xml:lang="de">Lautstärke von F20</label>
+    <label xml:lang="cs">Hlasitost na tlačítko F20</label>
   </variable>
   <variable item="F20 Sound Loop" CV="675" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -37,6 +38,7 @@
     <label>Volume on Key F21</label>
     <label xml:lang="it">Volume per Tasto F21</label>
     <label xml:lang="de">Lautstärke von F21</label>
+    <label xml:lang="cs">Hlasitost na tlačítko F21</label>
   </variable>
   <variable item="F21 Sound Loop" CV="678" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -55,6 +57,7 @@
     <label>Volume on Key F22</label>
     <label xml:lang="it">Volume per Tasto F22</label>
     <label xml:lang="de">Lautstärke von F22</label>
+    <label xml:lang="cs">Hlasitost na tlačítko F22</label>
   </variable>
   <variable item="F22 Sound Loop" CV="681" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -73,6 +76,7 @@
     <label>Volume on Key F23</label>
     <label xml:lang="it">Volume per Tasto F23</label>
     <label xml:lang="de">Lautstärke von F23</label>
+    <label xml:lang="cs">Hlasitost na tlačítko F23</label>
   </variable>
   <variable item="F23 Sound Loop" CV="684" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -91,6 +95,7 @@
     <label>Volume on Key F24</label>
     <label xml:lang="it">Volume per Tasto F24</label>
     <label xml:lang="de">Lautstärke von F24</label>
+    <label xml:lang="cs">Hlasitost na tlačítko F24</label>
   </variable>
   <variable item="F24 Sound Loop" CV="687" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -109,6 +114,7 @@
     <label>Volume on Key F25</label>
     <label xml:lang="it">Volume per Tasto F25</label>
     <label xml:lang="de">Lautstärke von F25</label>
+    <label xml:lang="cs">Hlasitost na tlačítko F25</label>
   </variable>
   <variable item="F25 Sound Loop" CV="690" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -127,6 +133,7 @@
     <label>Volume on Key F26</label>
     <label xml:lang="it">Volume per Tasto F26</label>
     <label xml:lang="de">Lautstärke von F26</label>
+    <label xml:lang="cs">Hlasitost na tlačítko F26</label>
   </variable>
   <variable item="F26 Sound Loop" CV="693" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -145,6 +152,7 @@
     <label>Volume on Key F27</label>
     <label xml:lang="it">Volume per Tasto F27</label>
     <label xml:lang="de">Lautstärke von F27</label>
+    <label xml:lang="cs">Hlasitost na tlačítko F27</label>
   </variable>
   <variable item="F27 Sound Loop" CV="696" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -163,6 +171,7 @@
     <label>Volume on Key F28</label>
     <label xml:lang="it">Volume per Tasto F28</label>
     <label xml:lang="de">Lautstärke von F28</label>
+    <label xml:lang="cs">Hlasitost na tlačítko F28</label>
   </variable>
   <variable item="F28 Sound Loop" CV="699" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>

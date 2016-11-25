@@ -203,8 +203,7 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     protected ResourceBundle getActionModelResourceBundle() {
-        //No actions that can be loaded at startup
-        return null;
+        return ResourceBundle.getBundle("jmri.jmrix.zimo.ZimoActionListBundle");
     }
 
     public void dispose() {

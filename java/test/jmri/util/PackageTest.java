@@ -38,27 +38,24 @@ public class PackageTest extends TestCase {
         suite.addTest(ThreadingUtilTest.suite());
         suite.addTest(I18NTest.suite());
         suite.addTest(ColorUtilTest.suite());
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(SwingTestCaseTest.suite());
-        }
-
+        suite.addTest(SwingTestCaseTest.suite());
         suite.addTest(jmri.util.docbook.PackageTest.suite());
         suite.addTest(jmri.util.exceptionhandler.PackageTest.suite());
         suite.addTest(jmri.util.jdom.PackageTest.suite());
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(jmri.util.swing.PackageTest.suite());
-        }
+        suite.addTest(jmri.util.swing.PackageTest.suite());
 
         suite.addTest(jmri.util.WaitHandlerTest.suite());
         suite.addTest(jmri.util.zeroconf.PackageTest.suite());
         suite.addTest(jmri.util.DateUtilTest.suite());
         suite.addTest(jmri.util.prefs.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.javamail.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.davidflanagan.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.datatransfer.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.com.PackageTest.class));
 
         // deliberately at end
         suite.addTest(jmri.util.Log4JErrorIsErrorTest.suite());
-        
+
         return suite;
     }
 

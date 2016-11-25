@@ -29,8 +29,6 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(jmri.jmrit.signalling.entryexit.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.signalling.configurexml.PackageTest.class));
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-        }
 
         return suite;
     }

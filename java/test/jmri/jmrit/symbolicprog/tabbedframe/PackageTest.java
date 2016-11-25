@@ -32,9 +32,6 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.CheckProgrammerNames.suite());
         suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.QualifiedVarTest.suite());
 
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-        }
-
         return suite;
     }
 

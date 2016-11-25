@@ -1,10 +1,11 @@
 package jmri.jmrix.rps;
 
+import apps.tests.Log4JFixture;
 import javax.vecmath.Point3d;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * JUnit tests for the rps.Ash1_1Algorithm class.
@@ -123,4 +124,13 @@ public class Ash1_1AlgorithmTest extends TestCase {
         return suite;
     }
 
+    @Override
+    public void setUp() {
+        Log4JFixture.setUp();
+    }
+    
+    @Override
+    public void tearDown() {
+        Log4JFixture.tearDown();
+    }
 }

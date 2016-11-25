@@ -1383,7 +1383,7 @@ public class TrainBuilder extends TrainCommon {
                 }
             }
         }
-        // second pass, take a caboose with a road name that is "similar" to the engine road name
+        // second pass, take a caboose with a road name that is "similar" (hyphen feature) to the engine road name
         if (requiresCaboose && !foundCaboose && roadCaboose.equals(Train.NONE)) {
             log.debug("Second pass looking for caboose");
             for (Car car : _carList) {
@@ -4931,7 +4931,7 @@ public class TrainBuilder extends TrainCommon {
                         new Object[]{_train.getName(), _train.getDescription()}), JOptionPane.ERROR_MESSAGE);
             } else {
                 // build error, could not find destinations for cars departing staging
-                Object[] options = {Bundle.getMessage("buttonRemoveCars"), "OK"};
+                Object[] options = {Bundle.getMessage("buttonRemoveCars"), Bundle.getMessage("ButtonOK")};
                 int results = JOptionPane.showOptionDialog(null, msg, MessageFormat.format(Bundle
                         .getMessage("buildErrorMsg"), new Object[]{_train.getName(), _train.getDescription()}),
                         JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[1]);
