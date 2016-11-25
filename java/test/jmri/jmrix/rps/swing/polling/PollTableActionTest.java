@@ -1,48 +1,28 @@
 package jmri.jmrix.rps.swing.polling;
 
+import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.Test;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Tests for the jmri.jmrix.rps.swing.polling package.
  *
  * @author Bob Jacobsen Copyright 2008
  */
-public class PollTableActionTest extends TestCase {
+public class PollTableActionTest {
 
     // Show the window
+    @Test
     public void testDisplay() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         new PollTableAction().actionPerformed(null);
         // confirm window was created
-        JFrame f = jmri.util.JmriJFrame.getFrame("RPS Polling Control");
-        Assert.assertTrue("found frame", f != null);
+        JFrame f = JFrameOperator.waitJFrame("RPS Polling Control", true, true);
+        Assert.assertNotNull("found frame", f);
         f.dispose();
-    }
-
-    // from here down is testing infrastructure
-    public PollTableActionTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {PollTableActionTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite(PollTableActionTest.class);
-        return suite;
-    }
-
-    @Override
-    public void setUp() throws Exception {
-        super.setUp();
     }
 
 }

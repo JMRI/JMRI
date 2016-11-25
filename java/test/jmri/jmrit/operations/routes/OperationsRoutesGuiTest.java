@@ -1,15 +1,16 @@
 //OperationsRoutesGuiTest.java
 package jmri.jmrit.operations.routes;
 
+import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations Routes GUI class
@@ -19,6 +20,9 @@ import junit.framework.TestSuite;
 public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
 
     public void testRoutesTableFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         loadRoutes();
 
         RoutesTableFrame f = new RoutesTableFrame();
@@ -33,8 +37,9 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th route", "Test Route E", f.routesModel.getValueAt(4, RoutesTableModel.NAME_COLUMN));
 
         // create add route frame
-        //f.addButton.doClick();
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
+        f.addButton.doClick();
+        // the following fails on a 13" laptop
+        //getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
         // confirm panel creation
         JmriJFrame ref = JmriJFrame.getFrame("Add Route");
         Assert.assertNotNull("route edit frame", ref);
@@ -47,6 +52,9 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
     }
 
     public void testRouteEditFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         RouteEditFrame f = new RouteEditFrame();
         f.setTitle("Test Add Route Frame");
         f.initComponents(null);
@@ -113,6 +121,9 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
     }
 
     public void testRouteEditFrameRead() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         loadRoutes();
         RouteManager lManager = RouteManager.instance();
         Route l2 = lManager.getRouteByName("Test Route C");

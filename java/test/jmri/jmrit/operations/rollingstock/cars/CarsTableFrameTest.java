@@ -1,6 +1,7 @@
 //CarsTableFrameTest.java
 package jmri.jmrit.operations.rollingstock.cars;
 
+import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -9,9 +10,9 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Setup;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations CarsTableFrame class
@@ -21,6 +22,9 @@ import junit.framework.TestSuite;
 public class CarsTableFrameTest extends OperationsSwingTestCase {
 
     public void testCarsTableFrame() throws Exception {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         // remove previous cars
         CarManager.instance().dispose();
         CarRoads.instance().dispose();
@@ -169,7 +173,8 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th car in sort by number list 2", c2, cars.get(4));
 
         // test sort by owner
-        getHelper().enterClickAndLeave(new MouseEventData(this, ctf.sortByOwner));
+        //getHelper().enterClickAndLeave(new MouseEventData(this, ctf.sortByOwner));
+        ctf.sortByOwner.doClick();
         cars = ctf.carsTableModel.getSelectedCarList();
         Assert.assertEquals("1st car in sort by owner list", c4, cars.get(0));
         Assert.assertEquals("2nd car in sort by owner list", c3, cars.get(1));
@@ -178,7 +183,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th car in sort by owner list", c1, cars.get(4));
         
         // test sort by rfid
-//        getHelper().enterClickAndLeave(new MouseEventData(this, ctf.sortByRfid));
+        //getHelper().enterClickAndLeave(new MouseEventData(this, ctf.sortByRfid));
         // use doClick() in case the radio button isn't visible due to scrollbars
         ctf.sortByRfid.doClick();
         cars = ctf.carsTableModel.getSelectedCarList();

@@ -1,6 +1,7 @@
 //CarEditFrameTest.java
 package jmri.jmrit.operations.rollingstock.cars;
 
+import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
@@ -18,6 +19,9 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
     List<String> tempCars;
 
     public void testCarEditFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         loadCars();		// load cars
         CarManager cManager = CarManager.instance();
         Assert.assertEquals("number of cars", 5, cManager.getNumEntries());
@@ -107,6 +111,9 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
     }
 
     public void testCarEditFrameRead() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         loadCars();		// load cars
         CarManager cManager = CarManager.instance();
         // should have 5 cars now

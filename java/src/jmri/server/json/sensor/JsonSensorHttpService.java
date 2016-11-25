@@ -49,7 +49,7 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService {
                     data.put(JSON.STATE, JSON.UNKNOWN);
                     break;
                 default:
-                    throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorInternal", type));
+                    throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorInternal", type)); // NOI18N
             }
         }
         return root;

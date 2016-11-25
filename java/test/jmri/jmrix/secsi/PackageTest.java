@@ -41,6 +41,9 @@ public class PackageTest extends TestCase {
         suite.addTest(SerialAddressTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.secsi.serialdriver.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.secsi.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.secsi.nodeconfig.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.secsi.packetgen.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.secsi.serialmon.PackageTest.class));
         return suite;
     }
 

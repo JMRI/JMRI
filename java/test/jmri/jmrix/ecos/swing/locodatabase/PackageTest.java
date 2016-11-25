@@ -27,9 +27,6 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.ecos.swing.locodatabase.PackageTest");  // no tests in this class itself
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
 
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-        }
-
         return suite;
     }
 

@@ -29,7 +29,9 @@ import jmri.server.json.JsonException;
  *
  * @author Paul Bender Copyright (C) 2011
  * @author Randall Wood Copyright (C) 2013
+ * @deprecated since 4.5.6
  */
+@Deprecated
 public class JsonReporterServer extends AbstractReporterServer {
 
     private final JmriConnection connection;

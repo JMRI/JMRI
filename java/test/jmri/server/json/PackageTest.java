@@ -23,7 +23,11 @@ import org.junit.runners.Suite.SuiteClasses;
     jmri.server.json.throttle.PackageTest.class,
     jmri.server.json.util.PackageTest.class,
     jmri.server.json.block.PackageTest.class,
-    jmri.server.json.layoutblock.PackageTest.class
+    jmri.server.json.layoutblock.PackageTest.class,
+    jmri.server.json.time.PackageTest.class,
+    jmri.server.json.signalHead.PackageTest.class,
+    jmri.server.json.signalMast.PackageTest.class,
+    jmri.server.json.consist.PackageTest.class
 })
 public class PackageTest {
 }

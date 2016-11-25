@@ -30,7 +30,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author rhwood
+ * @deprecated since 4.5.4; use {@link jmri.server.json.consist.JsonConsistServiceFactory} instead
  */
+@Deprecated
 public class JsonConsistServer {
 
     private final JmriConnection connection;

@@ -1,9 +1,9 @@
 //LocationTableFrameTest.java
 package jmri.jmrit.operations.locations;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.util.JmriJFrame;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
@@ -18,6 +18,9 @@ public class LocationTableFrameTest extends OperationsSwingTestCase {
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
 
     public void testLocationsTableFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
 
         LocationsTableFrame f = new LocationsTableFrame();
 
@@ -41,7 +44,9 @@ public class LocationTableFrameTest extends OperationsSwingTestCase {
         f.locationsModel.setValueAt(null, 2, LocationsTableModel.EDITCOLUMN);
 
         // create add location frame by clicking add button
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
+        f.addButton.doClick();
+        // the following fails on 13" laptops
+        //getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
 
         // confirm location add frame creation
         JmriJFrame lef = JmriJFrame.getFrame("Add Location");

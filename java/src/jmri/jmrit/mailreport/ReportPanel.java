@@ -57,7 +57,7 @@ public class ReportPanel extends JPanel {
 
     // Define which profile sub-directories to include
     // In lowercase as I was too lazy to do a proper case-insensitive check...
-    String[] profDirs = {"networkservices", "programmers", "throttle"};
+    String[] profDirs = {"networkservices", "profile", "programmers", "throttle"};
 
     public ReportPanel() {
         if (rb == null) {

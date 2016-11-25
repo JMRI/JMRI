@@ -1,66 +1,39 @@
 //JsonServerTest.java
 package jmri.jmris.json;
 
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmris.json package
  *
  * @author Paul Bender
  */
-public class JsonServerTest extends TestCase {
+public class JsonServerTest {
 
+    @Test
     public void testCtor() {
         JsonServer a = new JsonServer();
         Assert.assertNotNull(a);
     }
 
+    @Test
     public void testCtorwithParameter() {
-        JsonServer a = new JsonServer(12345,10000);
+        JsonServer a = new JsonServer(12345, 10000);
         //jmri.util.JUnitAppender.assertErrorMessage("Failed to connect to port 12345");
         Assert.assertNotNull(a);
     }
 
-    // from here down is testing infrastructure
-    public JsonServerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {JsonServerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(jmri.jmris.json.JsonServerTest.class);
-        suite.addTest(jmri.jmris.json.JsonTurnoutServerTest.suite());
-        suite.addTest(jmri.jmris.json.JsonPowerServerTest.suite());
-        suite.addTest(jmri.jmris.json.JsonReporterServerTest.suite());
-        suite.addTest(jmri.jmris.json.JsonSensorServerTest.suite());
-        suite.addTest(jmri.jmris.json.JsonLightServerTest.suite());
-        suite.addTest(jmri.jmris.json.JsonOperationsServerTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            // put any tests that require a UI here.
-        }
-
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
-        super.setUp();
     }
 
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         apps.tests.Log4JFixture.tearDown();
     }
 

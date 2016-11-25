@@ -28,13 +28,8 @@ public class PackageTest extends TestCase {
         suite.addTest(OperationsSetupTest.suite());
         suite.addTest(OperationsBackupTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-
-        // GUI tests start here
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(OperationsSetupGuiTest.suite());
-            suite.addTest(OperationsBackupGuiTest.suite());
-        }
-
+        suite.addTest(OperationsSetupGuiTest.suite());
+        suite.addTest(OperationsBackupGuiTest.suite());
         return suite;
     }
 

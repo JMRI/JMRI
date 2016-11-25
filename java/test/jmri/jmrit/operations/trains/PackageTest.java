@@ -35,10 +35,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.operations.trains.excel.PackageTest.suite());
         suite.addTest(jmri.jmrit.operations.trains.timetable.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.operations.trains.configurexml.PackageTest.class));
-        // GUI tests start here
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(OperationsTrainsGuiTest.suite());
-        }
+        suite.addTest(OperationsTrainsGuiTest.suite());
 
         return suite;
     }

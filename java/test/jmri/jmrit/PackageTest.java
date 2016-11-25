@@ -1,5 +1,6 @@
 package jmri.jmrit;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -26,51 +27,35 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.PackageTest");   // no tests in this class itself
 
-        // this next line causes obscure AWT errors when here,
-        // and errors in other places when later, e.g. in
-        // jmri.jmrit.beantable.MemoryTableAction$1.getValue(MemoryTableAction.java:56)
-        // suite.addTest(jmri.jmrit.MemoryContentsTest.suite());
-        if (!Boolean.getBoolean("jmri.headlesstest")) {
-            suite.addTest(jmri.jmrit.AbstractIdentifyTest.suite());
-        }
-        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(jmri.jmrit.AbstractIdentifyTest.suite());
+        suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         suite.addTest(DccLocoAddressSelectorTest.suite());
         suite.addTest(MemoryContentsTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SoundTest.class));
+        suite.addTest(new JUnit4TestAdapter(SoundTest.class));
         suite.addTest(XmlFileTest.suite());
 
         suite.addTest(jmri.jmrit.automat.AutomatTest.suite());
-        if (!Boolean.getBoolean("jmri.headlesstest")) {
-            suite.addTest(jmri.jmrit.beantable.PackageTest.suite());
-        }
+        suite.addTest(jmri.jmrit.beantable.PackageTest.suite());
         suite.addTest(jmri.jmrit.blockboss.PackageTest.suite());
-        if (!Boolean.getBoolean("jmri.headlesstest")) {
-            suite.addTest(jmri.jmrit.catalog.PackageTest.suite());
-        }
+        suite.addTest(jmri.jmrit.catalog.PackageTest.suite());
         suite.addTest(jmri.jmrit.decoderdefn.PackageTest.suite());
         suite.addTest(jmri.jmrit.dispatcher.PackageTest.suite());
         suite.addTest(jmri.jmrit.display.PackageTest.suite());
         suite.addTest(jmri.jmrit.jython.PackageTest.suite());
-        suite.addTest(jmri.jmrit.log.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.log.PackageTest.class));
         suite.addTest(jmri.jmrit.logix.PackageTest.suite());
         suite.addTest(jmri.jmrit.operations.PackageTest.suite());
-        suite.addTest(jmri.jmrit.progsupport.PackageTest.suite());
-        if (!Boolean.getBoolean("jmri.headlesstest")) {
-            suite.addTest(jmri.jmrit.mastbuilder.MastBuilderTest.suite());
-            suite.addTest(jmri.jmrit.powerpanel.PackageTest.suite());
-        }
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.progsupport.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.mastbuilder.MastBuilderTest.class));
+        suite.addTest(jmri.jmrit.powerpanel.PackageTest.suite());
         suite.addTest(jmri.jmrit.roster.PackageTest.suite());
-        if (!Boolean.getBoolean("jmri.headlesstest")) {
-            suite.addTest(jmri.jmrit.sendpacket.SendPacketTest.suite());
-            suite.addTest(jmri.jmrit.sensorgroup.SensorGroupTest.suite());
-        }
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.sendpacket.SendPacketTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.sensorgroup.SensorGroupTest.class));
         suite.addTest(jmri.jmrit.simpleclock.PackageTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.PackageTest.suite());
         suite.addTest(jmri.jmrit.tracker.PackageTest.suite());
-        if (!Boolean.getBoolean("jmri.headlesstest")) {
-            suite.addTest(jmri.jmrit.ussctc.PackageTest.suite());
-        }
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.consisttool.PackageTest.class));
+        suite.addTest(jmri.jmrit.ussctc.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.consisttool.PackageTest.class));
         suite.addTest(jmri.jmrit.withrottle.PackageTest.suite());
         suite.addTest(jmri.jmrit.ampmeter.PackageTest.suite());
         suite.addTest(jmri.jmrit.lcdclock.PackageTest.suite());
@@ -84,9 +69,11 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.picker.PackageTest.suite());
         suite.addTest(jmri.jmrit.speedometer.PackageTest.suite());
         suite.addTest(jmri.jmrit.analogclock.PackageTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.revhistory.PackageTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.sound.PackageTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.vsdecoder.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.revhistory.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.sound.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.vsdecoder.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.simplelightctrl.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.simpleturnoutctrl.PackageTest.class));
         return suite;
     }
 

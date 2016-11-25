@@ -33,6 +33,11 @@ public class ConnectionConfigXml extends jmri.jmrix.cmri.serial.serialdriver.con
     }
 
     @Override
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig) object).getAdapter();
+    }
+
+    @Override
     protected void register() {
         this.register(new ConnectionConfig(adapter));
     }

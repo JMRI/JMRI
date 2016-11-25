@@ -1,30 +1,35 @@
 package jmri.jmrit.operations.automation;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.util.JmriJFrame;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 public class AutomationsTableFrameGuiTest extends OperationsSwingTestCase {
 
     public void testFrameCreation() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         AutomationManager manager = AutomationManager.instance();
         Assert.assertEquals("Number of automations", 0, manager.getSize());
 
         AutomationsTableFrame f = new AutomationsTableFrame();
         Assert.assertNotNull("test creation", f);
-        
+
         // confirm that the add automation frame isn't available
         JmriJFrame addAutomationFrame = JmriJFrame.getFrame("Add Automation");
         Assert.assertNull(addAutomationFrame);
-        
+
         // now create the add automation frame
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));       
+        f.addButton.doClick();
+        // the following fails on a 13" laptop
+        //getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
         addAutomationFrame = JmriJFrame.getFrame("Add Automation");
         Assert.assertNotNull(addAutomationFrame);
-        
+
         addAutomationFrame.dispose();
         f.dispose();
     }
@@ -42,7 +47,7 @@ public class AutomationsTableFrameGuiTest extends OperationsSwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading",
-                AutomationsTableFrameGuiTest.class.getName()};
+            AutomationsTableFrameGuiTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 

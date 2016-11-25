@@ -41,6 +41,10 @@ public class PackageTest extends TestCase {
         suite.addTest(SerialAddressTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.oaktree.serialdriver.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.oaktree.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.oaktree.nodeconfig.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.oaktree.packetgen.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.oaktree.serialmon.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OakTreeMenuTest.class));
         return suite;
     }
 
