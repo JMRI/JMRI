@@ -271,9 +271,8 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     //The JTable is extended so that we can reset the available aspect in the drop down when required
     class SignalMastJTable extends JTable {
 
-        /**
+        /** 
          * @param srtr a table model.
-         * @return JTable a new SignalMastJTable.
          */
         public SignalMastJTable(TableModel srtr) {
             super(srtr);
