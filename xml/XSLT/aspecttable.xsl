@@ -190,6 +190,10 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
  Route:  <xsl:apply-templates/><br/>
 </xsl:template>
 
+<xsl:template match="dccAspect" >
+ Default DCC Aspect:  <xsl:apply-templates/><br/>
+</xsl:template>
+
 <xsl:template match="description" >
  Description: <xsl:apply-templates/><br/>
 </xsl:template>
