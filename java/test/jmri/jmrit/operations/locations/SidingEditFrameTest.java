@@ -1,12 +1,13 @@
 //SidingEditFrameTest.java
 package jmri.jmrit.operations.locations;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations Locations GUI class
@@ -18,6 +19,9 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
 
     public void testSidingEditFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         LocationManager lManager = LocationManager.instance();
         Location l = lManager.getLocationByName("Test Loc C");
         SpurEditFrame f = new SpurEditFrame();

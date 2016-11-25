@@ -1,10 +1,11 @@
 package jmri.jmrix.can.cbus.swing.console;
 
 import apps.tests.Log4JFixture;
-import jmri.InstanceManager;
+import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,6 +18,7 @@ public class CbusEventFilterPanelTest {
 
     @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CbusEventFilterFrame frame = new CbusEventFilterFrame();
         CbusEventFilterPanel panel = new CbusEventFilterPanel(frame,1);
         Assert.assertNotNull("exists", panel);
