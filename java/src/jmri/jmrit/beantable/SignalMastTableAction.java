@@ -3,27 +3,15 @@ package jmri.jmrit.beantable;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Hashtable;
 import java.util.Vector;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.swing.DefaultCellEditor;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
-import jmri.InstanceManager;
-import jmri.NamedBean;
 import jmri.jmrit.beantable.signalmast.SignalMastTableDataModel;
-//import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -96,6 +84,9 @@ public class SignalMastTableAction extends AbstractTableAction {
         });
     }
 
+    /**
+     * @deprecated since 4.5.7
+     */
     @Deprecated
     public static class MyComboBoxEditor extends DefaultCellEditor {
 
@@ -104,6 +95,9 @@ public class SignalMastTableAction extends AbstractTableAction {
         }
     }
 
+    /**
+     * @deprecated since 4.5.7
+     */
     @Deprecated
     public static class MyComboBoxRenderer extends JComboBox<String> implements TableCellRenderer {
 
