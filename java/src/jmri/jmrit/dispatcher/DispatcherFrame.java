@@ -2245,7 +2245,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 
     // called by ActivateTrainFrame after a new train is all set up
     //      Dispatcher side of activating a new train should be completed here
-    protected void newTrainDone(ActiveTrain at) {
+    // Jay Janzen protection changed to public for access via scripting
+    public void newTrainDone(ActiveTrain at) {
         if (at != null) {
             // a new active train was created, check for delayed start
             if (at.getDelayedStart() != ActiveTrain.NODELAY && (!at.getStarted())) {
@@ -2291,7 +2292,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         }
     }
 
-    protected AutoTrainsFrame getAutoTrainsFrame() {
+    // Jay Janzen
+    // Protection changed to public to allow access via scripting
+    public AutoTrainsFrame getAutoTrainsFrame() {
         return _autoTrainsFrame;
     }
 
