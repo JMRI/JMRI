@@ -29,6 +29,7 @@ public class SchemaTestBase extends TestCase {
         if (System.getProperty("jmri.skipschematests", "false").equals("true")) {
             return; // skipping check
         }
+        System.err.println(SchemaTestBase.class + " validating " + file);
         boolean original = XmlFile.getVerify();
         try {
             XmlFile.setVerify(true);
@@ -50,6 +51,7 @@ public class SchemaTestBase extends TestCase {
         if (System.getProperty("jmri.skipschematests", "false").equals("true")) {
             return; // skipping check
         }
+        System.err.println(SchemaTestBase.class + " validating " + file);
         boolean original = XmlFile.getVerify();
         try {
             XmlFile.setVerify(true);
