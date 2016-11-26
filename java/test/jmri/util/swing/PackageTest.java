@@ -33,7 +33,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.util.swing.sdi.PackageTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.util.swing.mdi.PackageTest.class));
         suite.addTest(jmri.util.swing.JCBHandleTest.suite());
-        suite.addTest(jmri.util.swing.FontComboUtilTest.suite());
+        suite.addTest(new JUnit4TestAdapter(FontComboUtilTest.class));
         suite.addTest(jmri.util.swing.GuiUtilBaseTest.suite());
 
         return suite;
