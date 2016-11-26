@@ -914,13 +914,6 @@ public class ActivateTrainFrame {
         if (b != null) {
             String sName = b.getSystemName();
             String uName = b.getUserName();
-            // Jay Janzen
-            // Add Block's Comment field to description
-            // for easier identification of block in drop down box
-            String bComment = b.getComment();
-            if ( (bComment!=null) && (bComment!="") ) {
-                sName = sName+"( "+bComment+" )";
-            }
             if ((uName != null) && (!uName.equals("")) && (!uName.equals(sName))) {
                 return (sName + "(" + uName + ")");
             }
