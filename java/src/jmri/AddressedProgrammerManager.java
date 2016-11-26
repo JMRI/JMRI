@@ -62,6 +62,8 @@ public interface AddressedProgrammerManager {
     /**
      * Return access to an Addressed Mode Programmer, so that it can be used
      * elsewhere.
+     *
+     * @param p the programmer to release
      */
     public void releaseAddressedProgrammer(@Nonnull AddressedProgrammer p);
 
@@ -77,6 +79,7 @@ public interface AddressedProgrammerManager {
      * Convenience method to check whether you'll be able to get an Addressed
      * Mode programmer for a specific address
      *
+     * @param address the address to get a programmer for
      * @return false if there's no chance of getting one
      */
     public boolean isAddressedModePossible(@Nonnull LocoAddress address);
@@ -89,6 +92,8 @@ public interface AddressedProgrammerManager {
      * programmer.
      * <p>
      * If the order is significant, earlier modes are better.
+     *
+     * @return the programming modes or an empty list
      */
     @Nonnull
     public List<ProgrammingMode> getDefaultModes();
@@ -97,15 +102,20 @@ public interface AddressedProgrammerManager {
      * Provides the human-readable representation for including
      * ProgrammerManagers directly in e.g. JComboBoxes, so it should return a
      * user-provided name for this particular one.
+     *
+     * @return the name for the programmer
      */
     @Nonnull
     public String getUserName();
 
     /**
-     * toString() provides the human-readable representation for including
+     * Provides the human-readable representation for including
      * ProgrammerManagers directly in e.g. JComboBoxes, so it should return a
      * user-provided name for this particular one.
+     *
+     * @return the name for the programmer
      */
     @Nonnull
+    @Override
     public String toString();
 }
