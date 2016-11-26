@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import java.awt.GraphicsEnvironment;
 import javax.swing.JComponent;
 import jmri.InstanceManager;
 import jmri.Light;
@@ -13,9 +14,10 @@ import jmri.util.JUnitUtil;
 import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.EventDataConstants;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Swing jfcUnit tests for the SensorIcon
@@ -24,11 +26,13 @@ import junit.framework.TestSuite;
  */
 public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
-    Editor _editor;
+    Editor _editor = null;
     JComponent _panel;
 
     public void testSensorEditor() throws Exception {
-
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         _editor.addSensorEditor();
 
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("Sensor");
@@ -46,7 +50,7 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         int x = 50;
         int y = 20;
 
-        jmri.util.ThreadingUtil.runOnGUI(()->{
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
             icon.setLocation(x, y);
             _panel.repaint();
         });
@@ -76,7 +80,9 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
     }
 
     public void testRightTOEditor() throws Exception {
-
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("RightTurnout");
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
@@ -92,7 +98,7 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         int x = 30;
         int y = 10;
 
-        jmri.util.ThreadingUtil.runOnGUI(()->{
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
             icon.setLocation(x, y);
             _panel.repaint();
         });
@@ -122,7 +128,9 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
     }
 
     public void testLeftTOEditor() throws Exception {
-
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("LeftTurnout");
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
@@ -138,7 +146,7 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         int x = 30;
         int y = 10;
 
-        jmri.util.ThreadingUtil.runOnGUI(()->{
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
             icon.setLocation(x, y);
             _panel.repaint();
         });
@@ -168,7 +176,9 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
     }
 
     public void testLightEditor() throws Exception {
-
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("Light");
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
@@ -211,7 +221,9 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
     }
 
     public void testSignalHeadEditor() throws Exception {
-
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("SignalHead");
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
@@ -257,7 +269,9 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
     }
 
     public void testMemoryEditor() throws Exception {
-
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("Memory");
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
@@ -344,7 +358,9 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
     }
 
     public void testReporterEditor() throws Exception {
-
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("Reporter");
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
@@ -378,9 +394,6 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         TestHelper.disposeWindow(iconEditorFrame, this);
     }
 
-    /**
-     * ***********************************************************************************
-     */
     // from here down is testing infrastructure
     public IconEditorWindowTest(String s) {
         super(s);
@@ -399,6 +412,7 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
@@ -410,12 +424,12 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initShutDownManager();
 
-        jmri.util.ThreadingUtil.runOnGUI(()->{
+        if (!GraphicsEnvironment.isHeadless()) {
             _editor = new PanelEditor("IconEditorTestPanel");
-            Assert.assertNotNull(_editor);
+            Assert.assertNotNull(JFrameOperator.waitJFrame("IconEditorTestPanel", true, true));
             _panel = _editor.getTargetPanel();
             Assert.assertNotNull(_panel);
-        });
+        }
     }
 
     @Override
@@ -425,7 +439,9 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         // directly instead of closing the window through a WindowClosing()
         // event - this is the method called to delete a panel if a user
         // selects that in the Hide/Delete dialog triggered by WindowClosing().
-        _editor.dispose(true);
+        if (_editor != null) {
+            _editor.dispose(true);
+        }
 
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();

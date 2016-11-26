@@ -1,6 +1,7 @@
 //LocationTableFrameTest.java
 package jmri.jmrit.operations.locations;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.util.JmriJFrame;
 import junit.framework.Test;
@@ -17,6 +18,9 @@ public class LocationTableFrameTest extends OperationsSwingTestCase {
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
 
     public void testLocationsTableFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
 
         LocationsTableFrame f = new LocationsTableFrame();
 

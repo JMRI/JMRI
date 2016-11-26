@@ -1249,6 +1249,9 @@
                   <limit counter="LINE" value="COVEREDRATIO" minimum="0.28"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
               </rule>
+              <rule element="PACKAGE">
+                 <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
           </check>
        </jacoco:report>
     </target>
@@ -1409,6 +1412,9 @@
                   <limit counter="LINE" value="COVEREDRATIO" minimum="0.28"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
               </rule>
+              <rule element="PACKAGE">
+                 <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
           </check>
        </jacoco:report>
     </target>
@@ -1431,6 +1437,9 @@
               <rule> 
                   <limit counter="LINE" value="COVEREDRATIO" minimum="0.28"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
+              </rule>
+              <rule element="PACKAGE">
+                 <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
               </rule>
           </check>
        </jacoco:report>
@@ -1554,7 +1563,7 @@
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="4866"/><!-- change from default 100 warnings -->
+            <arg value="4700"/><!-- change from default 100 warnings -->
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
 

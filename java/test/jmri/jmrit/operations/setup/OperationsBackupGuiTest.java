@@ -1,6 +1,7 @@
 //OperationsBackupGuiTest.java
 package jmri.jmrit.operations.setup;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -64,6 +65,9 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     }
 
     public void testCreateBackupDialog() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         BackupDialog dlg = new BackupDialog();
         dlg.setLocationRelativeTo(null);
         dlg.setModal(false);
@@ -73,6 +77,9 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     }
 
     public void testCreateRestoreDialog() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         RestoreDialog dlg = new RestoreDialog();
         dlg.setLocationRelativeTo(null);
         dlg.setModal(false);
@@ -82,6 +89,9 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     }
 
     public void testCreateManageBackupsDialog() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         ManageBackupsDialog dlg = new ManageBackupsDialog();
         dlg.setLocationRelativeTo(null);
         dlg.setModal(false);

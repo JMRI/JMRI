@@ -1,15 +1,15 @@
 package jmri.jmrit.operations.locations.tools;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Pool;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.locations.tools.PoolTrackFrame;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations PoolTrackFrame class
@@ -120,8 +120,11 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
      * anything.
      */
     public void testPoolFrameCreate() throws Exception {
-		// Make sure the frame gets created OK and has
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
 
+        // Make sure the frame gets created OK and has
         //CreateTestLocations();
         // Maybe this should use the LocationManager instead????
         Location l = new Location("LOC1", "Location One");
@@ -131,7 +134,7 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
 
         PoolTrackFrame f = new PoolTrackFrame(t);
         f.initComponents();
-		//f.setVisible(true);
+        //f.setVisible(true);
 
         // close windows
         f.dispose();
@@ -154,6 +157,9 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
 //
 //	}
     public void testAddNewPoolName() throws Exception {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         // Enter a new Pool name and click Add, check that the Pool list count
         // is 1
         CreateTestLocations();
@@ -207,6 +213,9 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
     }
 
     public void testSelectPoolAndSaveTrack() throws Exception {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         // This should change the pool track property of the Track under test.
         Location l = new Location("LOC1", "Location One");
         l.addPool("Pool 1");
@@ -237,6 +246,9 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
     }
 
     public void testSetMinLengthAndSaveTrack() throws Exception {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
 // Enter a new minimum length, click save and check that the Track is updated.
         Location l = new Location("LOC1", "Location One");
 //		l.addPool("Pool 1");
@@ -319,7 +331,7 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
         // Not sure if we need this one...
     }
 
-	// ***************************************************
+    // ***************************************************
     // OLD Locations stuff below here, just for reference.....
     // public void testLocationsTableFrame() {
     // // Make sure the frames gets created OK and have the list of current

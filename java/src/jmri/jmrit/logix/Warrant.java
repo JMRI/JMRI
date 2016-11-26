@@ -106,6 +106,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     protected static final int WAIT_FOR_CLEAR = 7;
     protected static final int WAIT_FOR_SENSOR = 8;
     protected static final int WAIT_FOR_TRAIN = 9;
+    protected static final int WAIT_FOR_DELAYED_START = 10;
+    protected static final int LEARNING = 11;
     protected static final String[] CNTRL_CMDS = {"Stop", "Halt", "Resume", "Abort", "Retry", "EStop"};
     protected static final String[] RUN_STATE = {"HaltStart", "atHalt", "Resumed", "Aborts", "Retried",
         "Running", "RestrictSpeed", "WaitingForClear", "WaitingForSensor", "RunningLate"};
@@ -128,12 +130,20 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         _runBlind = false;
     }
 
-    // _state not used (yet?)
     public int getState() {
         if (_engineer != null) {
             return _engineer.getRunState();
         }
-        return 0;
+        if (_delayStart) {
+            return WAIT_FOR_DELAYED_START;
+        }
+        if (_runMode==MODE_LEARN) {
+            return LEARNING;
+        }
+        if (_runMode!=MODE_NONE) {
+            return RUNNING;
+        }
+        return -1;
     }
 
     public void setState(int state) {
@@ -1437,6 +1447,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
         block.setValue(_trainName);
         block.setState(block.getState() | OBlock.RUNNING);
+        block._entryTime = System.currentTimeMillis();
         if (_calibrater !=null) {
             _calibrater.calibrateAt(_idxCurrentOrder);                
         }
@@ -1470,7 +1481,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
 
         if (_idxCurrentOrder == activeIdx) {
-            block._entryTime = System.currentTimeMillis();
             // fire notification last so engineer's state can be documented in whatever GUI is listening.
             if (log.isDebugEnabled()) {
                 log.debug("end of goingActive. leaving \"{}\" entered \"{}\". warrant {}",

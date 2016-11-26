@@ -2,10 +2,13 @@ package jmri.jmrit.beantable.signalmast;
 
 import java.util.Hashtable;
 import java.util.Vector;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowSorter;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
@@ -223,6 +226,19 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         javax.swing.SwingUtilities.invokeLater(t);
     }
 
+    @Override
+    public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @Nullable RowSorter<? extends TableModel> sorter) {
+        JTable table = new SignalMastJTable(model);
+        table.setName(name);
+        table.setRowSorter(sorter);
+        table.getTableHeader().setReorderingAllowed(true);
+        table.setColumnModel(new XTableColumnModel());
+        table.createDefaultColumnsFromModel();
+
+        addMouseListenerToHeader(table);
+        return table;
+    }
+
     /**
      * Does not appear to be used.
      * 
@@ -232,7 +248,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
      */
     @Deprecated
     public JTable makeJTable(TableModel srtr) {
-        table = new SignalMastJTable(srtr);
+        JTable table = new SignalMastJTable(srtr);
 
         table.getTableHeader().setReorderingAllowed(true);
         table.setColumnModel(new XTableColumnModel());
@@ -241,8 +257,6 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         addMouseListenerToHeader(table);
         return table;
     }
-
-    SignalMastJTable table;
 
     //The JTable is extended so that we can reset the available aspect in the drop down when required
     class SignalMastJTable extends JTable {
@@ -325,7 +339,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
                 }
                 // since we can add columns, the entire row is marked as updated
                 int row = sysNameList.indexOf(name);
-                table.clearAspectVector(row);
+                this.fireTableRowsUpdated(row, row);
             }
         }
         super.propertyChange(e);
