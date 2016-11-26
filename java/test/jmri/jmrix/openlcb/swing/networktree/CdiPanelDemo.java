@@ -18,6 +18,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import java.awt.GraphicsEnvironment;
 
+import jmri.jmrix.openlcb.SampleFactory;
+
 import static org.openlcb.cdi.impl.DemoReadWriteAccess.demoRepFromFile;
 import static org.openlcb.cdi.impl.DemoReadWriteAccess.demoRepFromSample;
 
@@ -40,7 +42,7 @@ public class CdiPanelDemo {
         f.setTitle("Configuration Demonstration");
         CdiPanel m = new CdiPanel();
 
-        m.initComponents(demoRepFromSample(org.openlcb.cdi.jdom.SampleFactory.getBasicSample()),
+        m.initComponents(demoRepFromSample(SampleFactory.getBasicSample()),
                 new CdiPanel.GuiItemFactory() {
                     public JButton handleReadButton(JButton button) {
                         //System.out.println("process button");
