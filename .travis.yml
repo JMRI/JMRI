@@ -6,8 +6,11 @@ addons:
     - graphviz
 
 before_install:
-  # set Linux to use JDK 8, accept defaults on OS X
+  # set Linux to use JDK 8, accept defaults on macOS
   - if [ "$TRAVIS_OS_NAME" == "linux" ] ; then jdk_switcher use "oraclejdk8" ; fi
+  # install graphviz on macOS
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install graphviz ; fi
 
 before_script:
   # setup a display on linux ( the sleep gives xvfb some time to start )
@@ -17,7 +20,6 @@ script:
   - export MAVEN_OPTS=-Xmx1536M
   - export MAVEN_PROFILE=travis-coverage
   - if [[ "${HEADLESS}" == "true" ]] ; then MAVEN_PROFILE=travis ; fi
-  - if [[ "${MAVEN}" == "true" ]] ; then MAVEN_PROFILE=travis-maven ; fi
   - travis_wait 30 mvn test -U -P ${MAVEN_PROFILE} --batch-mode -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" -Djava.awt.headless=${HEADLESS}
 
 cache:
@@ -32,11 +34,8 @@ env:
   matrix:
   - HEADLESS=true
   - HEADLESS=false
-  - MAVEN=true
-  - MAVEN=false
 
 matrix:
   exclude:
   - os: osx
     env: HEADLESS=true
-    env: MAVEN=true
