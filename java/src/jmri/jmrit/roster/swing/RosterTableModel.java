@@ -2,6 +2,7 @@ package jmri.jmrit.roster.swing;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javax.annotation.Nullable;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -10,6 +11,7 @@ import javax.swing.table.TableColumn;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterIconFactory;
+import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
@@ -51,6 +53,19 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     public RosterTableModel(boolean editable) {
         this.editable = editable;
         Roster.getDefault().addPropertyChangeListener(this);
+    }
+
+    /**
+     * Create a table model for a Roster group.
+     *
+     * @param group the roster group to show; if null, behaves the same as
+     *              {@link #RosterTableModel()}
+     */
+    public RosterTableModel(@Nullable RosterGroup group) {
+        this(false);
+        if (group != null) {
+            this.setRosterGroup(group.getName());
+        }
     }
 
     @Override
