@@ -1,10 +1,12 @@
 package jmri.util.swing;
 
+import java.awt.GraphicsEnvironment;
 import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.junit.Assume;
 
 /**
  * Tests for the jmri.util.swing.FontComboUtil class.
@@ -32,6 +34,7 @@ public class FontComboUtilTest extends TestCase {
 
     // test monospaced font list
     public void testMonoSpacedFontList() {
+        Assume.assumeFalse("On some completely headless Linuxes, this fails", GraphicsEnvironment.isHeadless());
         List<String> fonts = FontComboUtil.getFonts(FontComboUtil.MONOSPACED);
         Assert.assertFalse("Monospaced font list is not empty", fonts.isEmpty());
         // We can only guarantee the cross-platform fonts
@@ -43,6 +46,7 @@ public class FontComboUtilTest extends TestCase {
 
     // test proportional font list
     public void testProportionalFontList() {
+        Assume.assumeFalse("On some completely headless Linuxes, this fails", GraphicsEnvironment.isHeadless());
         List<String> fonts = FontComboUtil.getFonts(FontComboUtil.PROPORTIONAL);
         Assert.assertFalse("Proportional font list is not empty", fonts.isEmpty());
         // We can only guarantee the cross-platform fonts
