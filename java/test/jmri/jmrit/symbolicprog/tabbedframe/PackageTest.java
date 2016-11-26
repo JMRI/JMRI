@@ -1,5 +1,6 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -27,7 +28,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.symbolicprog.tabbedframe.PackageTest");   // no tests in this class itself
 
-        suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrameTest.suite());
+        suite.addTest(new JUnit4TestAdapter(PaneProgPaneTest.class));
         suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrameTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.CheckProgrammerNames.suite());
         suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.QualifiedVarTest.suite());
