@@ -35,13 +35,4 @@ public class PackageTest extends TestCase {
 
         return suite;
     }
-
-    // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-    }
-
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
-    }
 }

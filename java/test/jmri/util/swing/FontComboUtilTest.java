@@ -1,10 +1,10 @@
 package jmri.util.swing;
 
 import java.util.List;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.util.swing.FontComboUtil class.
@@ -91,5 +91,14 @@ public class FontComboUtilTest extends TestCase {
         return suite;
     }
 
-    //private static final Logger log = LoggerFactory.getLogger(FontComboUtilTest.class.getName());
+    // The minimal setup for log4J
+    @Override
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    @Override
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 }
