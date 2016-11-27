@@ -38,12 +38,12 @@
       <aspectname>Stop</aspectname>
       <show>red</show>
       <reference>Rule 292</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-2009/SE-1-low/rule-292.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-Semaphore/SE-1-low/rule-292.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Unlit</aspectname>
       <show>dark</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-2009/SE-1-low/unlit.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-Semaphore/SE-1-low/unlit.gif</imagelink>
     </appearance>
   </appearances>
   <specificappearances>
