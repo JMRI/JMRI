@@ -38,24 +38,24 @@
       <aspectname>Clear</aspectname>
       <show>green</show>
       <reference>Rule 281</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-2009/SE-1-high/rule-281.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-Semaphore/SE-1-high/rule-281.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <reference>Rule 285</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-2009/SE-1-high/rule-285.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-Semaphore/SE-1-high/rule-285.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Restricted Proceed</aspectname>
       <show>red</show>
       <reference>Rule 291</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-2009/SE-1-high/rule-291.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-Semaphore/SE-1-high/rule-291.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Unlit</aspectname>
       <show>dark</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-2009/SE-1-high/unlit.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-Semaphore/SE-1-high/unlit.gif</imagelink>
     </appearance>
   </appearances>
   <specificappearances>
