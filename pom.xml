@@ -236,7 +236,7 @@
                 <version>2.19.1</version>
                 <configuration>
                     <excludes>
-                        <!-- ignore until #2455 is resolved -->
+                        <!-- ignore until #2601 is resolved -->
                         <exclude>jmri.jmrit.decoderdefn.DuplicateTest</exclude>
                         <!-- ignore to avoid duplicate test runs -->
                         <exclude>apps.tests.AllTest</exclude>
@@ -245,7 +245,7 @@
                         <exclude>**.PackageTest</exclude>
                         <!-- ignore since the test is not intended to be normally used -->
                         <exclude>jmri.util.FailTest</exclude>
-                        <!-- ingore since base classes for other tests -->
+                        <!-- ignore since base classes for other tests -->
                         <exclude>jmri.util.SwingTestCase</exclude>
                         <exclude>jmri.jmrit.operations.OperationsTestCase</exclude>
                         <exclude>jmri.jmrit.operations.OperationsSwingTestCase</exclude>
