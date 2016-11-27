@@ -24,7 +24,7 @@ import jmri.util.JmriJFrame;
 
 /**
  * Shared code for creating UI elements from different places in the application.
- * <p/>
+ * <p>
  * Created by bracz on 11/21/16.
  */
 
