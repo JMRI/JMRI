@@ -47,10 +47,10 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         Bundle.getMessage("center"),
         Bundle.getMessage("right")};
 
-    static final String[] STYLES = {Bundle.getMessage("plain"),
+    static final String[] STYLES = {Bundle.getMessage("Plain"),
         Bundle.getMessage("Bold"),
         Bundle.getMessage("Italic"),
-        Bundle.getMessage("bold/italic")};
+        Bundle.getMessage("Bold/italic")};
 
     static final String[] FONTSIZE = {"6", "8", "10", "11", "12", "14", "16",
         "20", "24", "28", "32", "36"};
@@ -295,7 +295,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     protected void makeFontPanels() {
         JPanel fontPanel = new JPanel();
         _fontSizeBox = new AJComboBox(FONTSIZE, SIZE);
-        fontPanel.add(makeBoxPanel("fontSize", _fontSizeBox)); // NOI18N
+        fontPanel.add(makeBoxPanel("FontSize", _fontSizeBox)); // NOI18N
         int row = 4;
         for (int i = 0; i < FONTSIZE.length; i++) {
             if (_util.getFontSize() == Integer.parseInt(FONTSIZE[i])) {
@@ -306,7 +306,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         _fontSizeBox.setSelectedIndex(row);
 
         _fontStyleBox = new AJComboBox(STYLES, STYLE);
-        fontPanel.add(makeBoxPanel("fontStyle", _fontStyleBox)); // NOI18N
+        fontPanel.add(makeBoxPanel("FontStyle", _fontStyleBox)); // NOI18N
         _fontStyleBox.setSelectedIndex(_util.getFont().getStyle());
 
         _fontJustBox = new AJComboBox(JUSTIFICATION, JUST);

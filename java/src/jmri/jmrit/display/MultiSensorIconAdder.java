@@ -156,7 +156,7 @@ public class MultiSensorIconAdder extends IconAdder {
             p1.add(_iconMap.get(key));
 
             JPanel p2 = new JPanel();
-            JButton delete = new JButton(Bundle.getMessage("ButtonDeleteIcon"));
+            JButton delete = new JButton(Bundle.getMessage("ButtonDelete"));
             ActionListener action = new ActionListener() {
                 String key;
 
