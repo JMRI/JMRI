@@ -884,7 +884,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 OBlock block = w.getfirstOrder().getBlock();
                 block.deAllocate(_warrant);     // insure w can start
             }
-            msg = f.runTrain(w);
+            msg = f.runTrain(w, Warrant.MODE_RUN);
             if (msg != null) {
                 w.stopWarrant(true);
             } else {
