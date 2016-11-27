@@ -6,6 +6,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.beans.IndexedPropertyChangeEvent;
+import java.beans.PropertyChangeEvent;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,15 +64,30 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
                 deleteIcon.getIconHeight() + 2);
         addIcon = new ImageIcon(
                 FileUtil.findURL("program:resources/icons/misc/gui3/Add16x16.png"));
-        ConnectionConfig[] connections = InstanceManager.getDefault(ConnectionConfigManager.class).getConnections();
+        ConnectionConfigManager ccm = InstanceManager.getDefault(ConnectionConfigManager.class);
+        ConnectionConfig[] connections = ccm.getConnections();
         if (connections.length != 0) {
-            for (int x = 0; x < connections.length; x++) {
-                JmrixConfigPane configPane = JmrixConfigPane.instance(x);
-                addConnection(x, configPane);
+            for (int i = 0; i < connections.length; i++) {
+                addConnection(i, JmrixConfigPane.createPanel(i));
             }
         } else {
             addConnection(0, JmrixConfigPane.createNewPanel());
         }
+        ccm.addPropertyChangeListener(ConnectionConfigManager.CONNECTIONS, (PropertyChangeEvent evt) -> {
+            int i = ((IndexedPropertyChangeEvent) evt).getIndex();
+            if (evt.getNewValue() == null
+                    && i < configPanes.size()
+                    && evt.getOldValue().equals(configPanes.get(i).getCurrentObject())) {
+                removeTab(null, i);
+            } else if (evt.getOldValue() == null) {
+                for (JmrixConfigPane pane : this.configPanes) {
+                    if (pane.getCurrentObject().equals(evt.getNewValue())) {
+                        return; // don't add the connection again
+                    }
+                }
+                addConnection(i, JmrixConfigPane.createPanel(i));
+            }
+        });
         this.addChangeListener(addTabListener);
         newConnectionTab();
         this.setSelectedIndex(0);
@@ -96,14 +113,16 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
     private void activeTab() {
         for (int i = 0; i < this.getTabCount() - 1; i++) {
             JPanel panel = (JPanel) this.getTabComponentAt(i);
-            panel.invalidate();
-            Component[] comp = panel.getComponents();
-            for (Component c : comp) {
-                if (c instanceof JButton) {
-                    if (i == this.getSelectedIndex()) {
-                        c.setVisible(true);
-                    } else {
-                        c.setVisible(false);
+            if (panel != null) {
+                panel.invalidate();
+                Component[] comp = panel.getComponents();
+                for (Component c : comp) {
+                    if (c instanceof JButton) {
+                        if (i == this.getSelectedIndex()) {
+                            c.setVisible(true);
+                        } else {
+                            c.setVisible(false);
+                        }
                     }
                 }
             }
@@ -202,13 +221,16 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
         i = x;
 
         if (i != -1) {
-            int n = JOptionPane.showConfirmDialog(null, MessageFormat.format(
-                    rb.getString("MessageDoDelete"),
-                    new Object[]{this.getTitleAt(i)}),
-                    rb.getString("MessageDeleteConnection"),
-                    JOptionPane.YES_NO_OPTION);
-            if (n != JOptionPane.YES_OPTION) {
-                return;
+            // only prompt if triggered by action event
+            if (e != null) {
+                int n = JOptionPane.showConfirmDialog(null, MessageFormat.format(
+                        rb.getString("MessageDoDelete"),
+                        new Object[]{this.getTitleAt(i)}),
+                        rb.getString("MessageDeleteConnection"),
+                        JOptionPane.YES_NO_OPTION);
+                if (n != JOptionPane.YES_OPTION) {
+                    return;
+                }
             }
 
             JmrixConfigPane configPane = this.configPanes.get(i);
