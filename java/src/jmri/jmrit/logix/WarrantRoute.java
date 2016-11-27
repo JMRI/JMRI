@@ -39,12 +39,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Input window for defining a train's route from an eNtry OBlock to an eXit OBlock.
+ * Make panels for WarrantFrame and NXFrame windows that create and edit Warrants.
+ * <p>
+ * Input panels for defining a train's route from an eNtry OBlock to an eXit OBlock.
  * Routes are defined by choosing the originating block, the path on which the train 
  * start and the exit Portal through which it will leave the block.  Also it is required
  * that a Destination block is chosen and the path and Portal through which the train will
  * arrive. The Portal selections establish the direction information.  Optionally, 
  * additional blocks can be specified requiring the train to pass through or avoid entering.
+ * <p>
+ * Input panels to describe the train. accesses the roster for some info.
  * 
  * @author Peter Cressman
  *
@@ -85,6 +89,11 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     public abstract void selectedRoute(ArrayList <BlockOrder> orders);
     public abstract void propertyChange(java.beans.PropertyChangeEvent e);
     
+    /************************** Panel for Route search depth **********************/
+
+    /**
+      * @return How many nodes deep the tree search should be
+     */
     public int getDepth() {
         try {
             _depth = Integer.parseInt(_searchDepth.getText());
@@ -108,21 +117,28 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         return p;
     }
     
-/************************** Loco Address **********************/
+/************************** Train ID info: Loco Address, etc **********************/
 
-    protected JPanel makeTrainPanel() {
+    /**
+     * Make panel containing TextFields for Train name and address and 
+     * ComboBox for Roster entries
+     * @param comp optional panel to add
+     * @return panel 
+     */
+    protected JPanel makeTrainIdPanel(JPanel comp) {
         JPanel trainPanel = new JPanel();
         trainPanel.setLayout(new BoxLayout(trainPanel, BoxLayout.LINE_AXIS));
         trainPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-//        panel.add(Box.createVerticalStrut(STRUT_SIZE));
         panel.add(makeTextBoxPanel(false, _trainNameBox, "TrainName", "noTrainName"));
-//        panel.add(Box.createVerticalStrut(STRUT_SIZE));
         panel.add(makeTextBoxPanel(false, _rosterBox, "Roster", null));
-//        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        panel.add(Box.createVerticalStrut(2));
         panel.add(makeTextBoxPanel(false, _dccNumBox, "DccAddress", null));
+        if (comp!=null) {
+            panel.add(comp);
+        }
         trainPanel.add(panel);
         trainPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
 
@@ -131,11 +147,11 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                 setTrainInfo(_dccNumBox.getText());
             }
         });
-        JPanel x = new JPanel();
+/*        JPanel x = new JPanel();
         x.setLayout(new BoxLayout(x, BoxLayout.PAGE_AXIS));
         x.add(trainPanel);
-//        x.add(Box.createRigidArea(new Dimension(600, 2)));
-        return x;
+        return x;*/
+        return trainPanel;
     }
     
     private void getRoster() {
@@ -164,7 +180,8 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     /**
      * Set the roster entry, if it exists, or train id string if not.
      * i.e. set enough info to get a dccLocoAddress
-     * @param name may be roster Id or address
+     * @param name may be Rroster Id or address
+     * @return Error message, if any
      */
     protected String setTrainInfo(String name) {
         if (log.isDebugEnabled()) {
@@ -677,6 +694,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
 
     /**
     * Gather parameters to search for a route
+     * @return Error message, if any
     */
     protected String findRoute() {
         // read and verify origin and destination blocks/paths/portals
@@ -1139,69 +1157,82 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     }
     
     /**
-    *
+    * Puts label message to the Left
     * @param vertical  Label orientation true = above, false = left
-    * @param label String label message
+    * @param comp Component to put into JPanel
+    * @param label Bundle keyword for label message
+    * @param tooltip Bundle keyword for tooltip message
+    * @return Panel containing Component
     */
-   static protected JPanel makeTextBoxPanel(boolean vertical, JComponent componet, String label, String tooltip) {
+   static protected JPanel makeTextBoxPanel(boolean vertical, JComponent comp, String label, String tooltip) {
        JPanel panel = new JPanel();
        JLabel l = new JLabel(Bundle.getMessage(label));
        if (vertical) {
            panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
            l.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-           componet.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+           comp.setAlignmentX(JComponent.CENTER_ALIGNMENT);
            panel.add(Box.createVerticalStrut(STRUT_SIZE));
        } else {
            panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
            l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
-           componet.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
+           comp.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
            panel.add(Box.createHorizontalStrut(STRUT_SIZE));
        }
        panel.add(l);
        if (!vertical) {
            panel.add(Box.createHorizontalStrut(STRUT_SIZE));
        }
-       componet.setMaximumSize(new Dimension(300, componet.getPreferredSize().height));
-       componet.setMinimumSize(new Dimension(30, componet.getPreferredSize().height));
-       panel.add(componet);
+       comp.setMaximumSize(new Dimension(300, comp.getPreferredSize().height));
+       comp.setMinimumSize(new Dimension(30, comp.getPreferredSize().height));
+       panel.add(comp);
        if (vertical) {
            panel.add(Box.createVerticalStrut(STRUT_SIZE));
        } else {
            panel.add(Box.createHorizontalStrut(STRUT_SIZE));
        }
-       if (componet instanceof JTextField || componet instanceof JComboBox) {
-           componet.setBackground(Color.white);           
+       if (comp instanceof JTextField || comp instanceof JComboBox) {
+           comp.setBackground(Color.white);           
        }
        if (tooltip!=null) {
            panel.setToolTipText(tooltip);
-           componet.setToolTipText(Bundle.getMessage(tooltip));
+           comp.setToolTipText(Bundle.getMessage(tooltip));
            l.setToolTipText(Bundle.getMessage(tooltip));           
        }
+       panel.setMaximumSize(new Dimension(350, comp.getPreferredSize().height));
+       panel.setMinimumSize(new Dimension(80, comp.getPreferredSize().height));
        return panel;
    }
-   // puts label message to the right
-   static protected JPanel makeTextBoxPanel(JComponent componet, String label, String tooltip) {
+   /**
+   * Puts label message to the Right
+   * @param comp Component to put into JPanel
+   * @param label Bundle keyword for label message
+   * @param tooltip Bundle keyword for tooltip message
+   * @return Panel containing Component
+   */
+   static protected JPanel makeTextBoxPanel(JComponent comp, String label, String tooltip) {
        JPanel panel = new JPanel();
        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
        panel.add(Box.createHorizontalStrut(STRUT_SIZE));
-       componet.setAlignmentX(JComponent.LEFT_ALIGNMENT);
-       componet.setMaximumSize(new Dimension(300, componet.getPreferredSize().height));
-       componet.setMinimumSize(new Dimension(30, componet.getPreferredSize().height));
-       panel.add(componet);
-       if (componet instanceof JTextField || componet instanceof JComboBox) {
-           componet.setBackground(Color.white);           
+       comp.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+       comp.setMaximumSize(new Dimension(300, comp.getPreferredSize().height));
+       comp.setMinimumSize(new Dimension(30, comp.getPreferredSize().height));
+       panel.add(comp);
+       if (comp instanceof JTextField || comp instanceof JComboBox) {
+           comp.setBackground(Color.white);           
            JLabel l = new JLabel(Bundle.getMessage(label));
            l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
            l.setToolTipText(Bundle.getMessage(tooltip));           
            panel.add(l);
-       } else if (componet instanceof AbstractButton) {
-           ((AbstractButton)componet).setText(Bundle.getMessage(label));
+       } else if (comp instanceof AbstractButton) {
+           ((AbstractButton)comp).setText(Bundle.getMessage(label));
        }
        panel.add(Box.createHorizontalStrut(STRUT_SIZE));
        if (tooltip!=null) {
            panel.setToolTipText(tooltip);
-           componet.setToolTipText(Bundle.getMessage(tooltip));
+           comp.setToolTipText(Bundle.getMessage(tooltip));
        }
+       panel.setMaximumSize(new Dimension(350, comp.getPreferredSize().height));
+       panel.setMinimumSize(new Dimension(80, comp.getPreferredSize().height));
        return panel;
    }
     

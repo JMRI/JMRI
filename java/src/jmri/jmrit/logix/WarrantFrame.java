@@ -62,8 +62,6 @@ public class WarrantFrame extends WarrantRoute {
 
     private ArrayList<ThrottleSetting> _throttleCommands = new ArrayList<ThrottleSetting>();
     private long _startTime;
-//    private long _TTP = 0;
-//    private boolean _forward = true;
     LearnThrottleFrame _learnThrottle = null;       // need access for JUnit test
     static Color myGreen = new Color(0, 100, 0);
 
@@ -134,13 +132,9 @@ public class WarrantFrame extends WarrantRoute {
         }
         setOrders(orders);      // makes copy
 
-//        _forward = true;
         List<ThrottleSetting> tList = warrant.getThrottleCommands();
         for (int i = 0; i < tList.size(); i++) {
             ThrottleSetting ts = new ThrottleSetting(tList.get(i));
-//            if (ts.getCommand().toUpperCase().equals("FORWARD")) {
-//                _forward = ts.getValue().toUpperCase().equals("TRUE");
-//            }
             _throttleCommands.add(ts);
         }
         _noRampBox.setSelected(warrant.getNoRamp());
@@ -356,7 +350,7 @@ public class WarrantFrame extends WarrantRoute {
     }
 
     private JPanel makeBorderedTrainPanel() {
-        JPanel trainPanel = makeTrainPanel();
+        JPanel trainPanel = makeTrainIdPanel(null);
 
         JPanel edge = new JPanel();
         edge.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
@@ -1091,31 +1085,6 @@ public class WarrantFrame extends WarrantRoute {
         bar.setValue(row * ROW_HEIGHT);
 //        bar.setValue(bar.getMaximum());
     }    
-
-    private void setForward(boolean forward) {
-        String fwString;
-        if (forward) {
-            fwString = "true";
-        } else {
-            fwString = "false";
-        }
-        if (_throttleCommands.size() == 0) {
-            _throttleCommands.add(new ThrottleSetting(0, "Forward", fwString, ""));
-            if (log.isDebugEnabled()) log.debug("setForward adding to empty _throttleCommands");
-            return;
-        }
-        for (int i=0; i<_throttleCommands.size(); i++) {
-            ThrottleSetting ts = _throttleCommands.get(i);
-            if (log.isDebugEnabled()) log.info("setForward examining _throttleCommands "+i+" command: "+ts.getCommand()+" value: "+ts.getValue());
-            if (ts.getCommand().toUpperCase().equals("FORWARD")) {
-                if (log.isDebugEnabled()) log.debug("setForward modifying _throttleCommands "+i);
-                ts.setValue(fwString);
-                return;
-            }
-        }
-        if (log.isDebugEnabled()) log.debug("setForward inserting new command at beginning of list");
-        _throttleCommands.add(0, new ThrottleSetting(0, "Forward", fwString, ""));
-    }
 
     private boolean save() {
         if (_warrant.getRunMode()!=Warrant.MODE_NONE) {
