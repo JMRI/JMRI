@@ -39,48 +39,48 @@
       <show>green</show>
       <show>red</show>
       <reference>Rule 281</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-2009/SE-2-high/rule-281.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-Semaphore/SE-2-high/rule-281.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Approach Medium</aspectname>
       <show>yellow</show>
       <show>green</show>
       <reference>Rule 282</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-2009/SE-2-high/rule-282.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-Semaphore/SE-2-high/rule-282.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <show>red</show>
       <reference>Rule 285</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-2009/SE-2-high/rule-285.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-Semaphore/SE-2-high/rule-285.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Slow Approach Slow</aspectname>
       <show>red</show>
       <show>green</show>
       <reference>Rule 287A</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-2009/SE-2-high/rule-287.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-Semaphore/SE-2-high/rule-287.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>red</show>
       <show>lunar</show>
       <reference>Rule 290</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-2009/SE-2-high/rule-290.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-Semaphore/SE-2-high/rule-290.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
       <show>red</show>
       <reference>Rule 292</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-2009/SE-2-high/rule-292.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-Semaphore/SE-2-high/rule-292.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Unlit</aspectname>
       <show>dark</show>
       <show>dark</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-2009/SE-2-high/unlit.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-Semaphore/SE-2-high/unlit.gif</imagelink>
     </appearance>
   </appearances>
   <specificappearances>
