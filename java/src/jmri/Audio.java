@@ -222,6 +222,8 @@ public interface Audio extends NamedBean {
 
     /**
      * Method used to update the current state of the Audio object
+     *
+     * @param oldState the former state
      */
     public void stateChanged(int oldState);
 
