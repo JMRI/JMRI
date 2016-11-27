@@ -769,6 +769,9 @@ abstract public class AbstractMRTrafficController {
      * EOFException at the end of the timeout. In that case, the read should be
      * repeated to get the next real character.
      *
+     * @param istream stream to read
+     * @return the byte read
+     * @throws java.io.IOException if unable to read
      */
     protected byte readByteProtected(DataInputStream istream) throws IOException {
         while (true) { // loop will repeat until character found

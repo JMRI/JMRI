@@ -1027,9 +1027,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 stoppingBlockSet = true;
                 log.info(block.getDisplayName() + " not allocated, but Occupied.");
                 _totalAllocated = false;
-                return;
+                if (_runMode==MODE_RUN) {
+                    return;                    
+                }
              }
-           _message = block.allocate(this);
+             _message = block.allocate(this);
             if (_message != null) {
                 _totalAllocated = false;
                 return;
@@ -1130,7 +1132,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if ((state & OBlock.DARK) != 0 || _tempRunBlind) {
             msg = "BlockDark";
         } else if ((state & OBlock.OCCUPIED) == 0) {
-            msg = "warnStart";                
+            if (mode==MODE_MANUAL) {
+                msg = "warnStartManual";                
+            } else {
+                msg = "warnStart";                                
+            }
         } else {
             // check if tracker is on this train
             TrackerTableAction.stopTrackerIn(block);
@@ -1189,6 +1195,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                                 block._entryTime = System.currentTimeMillis();
                                 if (_runMode == MODE_RUN) {
                                     _message = acquireThrottle(_dccAddress);
+                                } else if (_runMode == MODE_MANUAL) {
+                                    firePropertyChange("Command", -1, 0);                                    
+                                    _delayStart = false;
                                 } else {
                                     _delayStart = false;
                                     log.error("StoppingBlock \"{}\" set with mode {}", tempSave.getDisplayName(),  MODES[_runMode]);
@@ -1255,7 +1264,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                         getDisplayName(), _stoppingBlock, msg);
             }
          }
-        if (msg==null && _runMode==MODE_RUN) {
+        if (msg==null && (_runMode==MODE_RUN || _runMode==MODE_MANUAL)) {
             _stoppingBlock.removePropertyChangeListener(this);
             _stoppingBlock = null;
             return true;
@@ -1301,7 +1310,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      *
      */
     private void setStoppingBlock(OBlock block) {
-        if (_runMode != MODE_RUN) {
+        if (_runMode != MODE_RUN && _runMode != MODE_MANUAL) {
             return;
         }
         if (_stoppingBlock!=null) {

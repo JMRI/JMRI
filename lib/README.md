@@ -69,7 +69,7 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 - updated JMRI 4.1.4 from version 1.7.6, added jul-to-slf4j
 
 ##### openlcb.jar
-- 0.7.8 from https://github.com/openlcb/OpenLCB_Java/blob/master/openlcb.jar
+- 0.7.10 from https://github.com/openlcb/OpenLCB_Java/blob/master/openlcb.jar
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
