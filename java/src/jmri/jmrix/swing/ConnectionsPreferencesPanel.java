@@ -1,6 +1,5 @@
 package jmri.jmrix.swing;
 
-import apps.gui3.TabbedPreferences;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -44,7 +43,6 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
     private static final Logger log = LoggerFactory.getLogger(ConnectionsPreferencesPanel.class);
     private static final long serialVersionUID = 3007932795460089101L;
 
-    private final TabbedPreferences preferences;
     private final ImageIcon deleteIcon;
     private final ImageIcon deleteIconRollOver;
     private final Dimension deleteButtonSize;
@@ -53,9 +51,8 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
 
     private ArrayList<JmrixConfigPane> configPanes = new ArrayList<>();
 
-    public ConnectionsPreferencesPanel(TabbedPreferences preferences) {
+    public ConnectionsPreferencesPanel() {
         super();
-        this.preferences = preferences;
         deleteIconRollOver = new ImageIcon(
                 FileUtil.findURL("program:resources/icons/misc/gui3/Delete16x16.png"));
         deleteIcon = new ImageIcon(
@@ -65,24 +62,18 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
                 deleteIcon.getIconHeight() + 2);
         addIcon = new ImageIcon(
                 FileUtil.findURL("program:resources/icons/misc/gui3/Add16x16.png"));
-        if (this.preferences != null) {
-            ConnectionConfig[] connections = InstanceManager.getDefault(ConnectionConfigManager.class).getConnections();
-            if (connections.length != 0) {
-                for (int x = 0; x < connections.length; x++) {
-                    JmrixConfigPane configPane = JmrixConfigPane.instance(x);
-                    addConnection(x, configPane);
-                }
-            } else {
-                addConnection(0, JmrixConfigPane.createNewPanel());
+        ConnectionConfig[] connections = InstanceManager.getDefault(ConnectionConfigManager.class).getConnections();
+        if (connections.length != 0) {
+            for (int x = 0; x < connections.length; x++) {
+                JmrixConfigPane configPane = JmrixConfigPane.instance(x);
+                addConnection(x, configPane);
             }
-            this.addChangeListener(addTabListener);
-            newConnectionTab();
-            this.setSelectedIndex(0);
+        } else {
+            addConnection(0, JmrixConfigPane.createNewPanel());
         }
-    }
-
-    public ConnectionsPreferencesPanel() {
-        this(InstanceManager.getDefault(TabbedPreferences.class));
+        this.addChangeListener(addTabListener);
+        newConnectionTab();
+        this.setSelectedIndex(0);
     }
 
     transient ChangeListener addTabListener = (ChangeEvent evt) -> {
