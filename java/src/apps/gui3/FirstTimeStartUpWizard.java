@@ -9,7 +9,6 @@ import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -32,6 +31,8 @@ import jmri.jmrix.AbstractConnectionConfig;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.jmrix.PortAdapter;
+import jmri.profile.Profile;
+import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +42,7 @@ public class FirstTimeStartUpWizard {
     Image splashIm;
 
     jmri.util.JmriJFrame parent;
+    private final JmrixConfigPane connectionConfigPane = JmrixConfigPane.createNewPanel();
 
     public FirstTimeStartUpWizard(jmri.util.JmriJFrame parent, apps.gui3.Apps3 app) {
         this.parent = parent;
@@ -84,7 +86,7 @@ public class FirstTimeStartUpWizard {
         return helpPanel;
     }
 
-    ArrayList<WizardPage> wizPage = new ArrayList<WizardPage>();
+    ArrayList<WizardPage> wizPage = new ArrayList<>();
 
     void createScreens() {
         firstWelcome();
@@ -156,7 +158,7 @@ public class FirstTimeStartUpWizard {
         text.setMaximumSize(maxHelpFieldDim);
         h.add(text);
 
-        wizPage.add(new WizardPage(JmrixConfigPane.instance(0), h, "Select your DCC Connection"));
+        wizPage.add(new WizardPage(this.connectionConfigPane, h, "Select your DCC Connection"));
     }
 
     void firstWelcome() {
@@ -190,66 +192,58 @@ public class FirstTimeStartUpWizard {
         final JButton finish = new JButton("Finish");
         finish.setVisible(false);
         JButton cancel = new JButton("Cancel");
-        cancel.addActionListener(new ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                Locale.setDefault(initalLocale);
-                dispose();
-            }
+        cancel.addActionListener((java.awt.event.ActionEvent e) -> {
+            Locale.setDefault(initalLocale);
+            dispose();
         });
 
-        previous.addActionListener(new ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                if (currentScreen < wizPage.size()) {
-                    wizPage.get(currentScreen).getPanel().setVisible(false);
-                    wizPage.get(currentScreen).getHelpDetails().setVisible(false);
-                }
-                finish.setVisible(false);
-
-                currentScreen = currentScreen - 1;
-                if (currentScreen != -1) {
-                    wizPage.get(currentScreen).getPanel().setVisible(true);
-                    wizPage.get(currentScreen).getHelpDetails().setVisible(true);
-                    header.setText(wizPage.get(currentScreen).getHeaderText());
-                    header.setFont(header.getFont().deriveFont(14f));
-
-                    if (currentScreen == 0) {
-                        previous.setEnabled(false);
-                    }
-                    next.setEnabled(true);
-                    next.setVisible(true);
-                } else {
-                    currentScreen = 0;
-                    previous.setEnabled(false);
-                }
-            }
-        });
-        next.addActionListener(new ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+        previous.addActionListener((java.awt.event.ActionEvent e) -> {
+            if (currentScreen < wizPage.size()) {
                 wizPage.get(currentScreen).getPanel().setVisible(false);
                 wizPage.get(currentScreen).getHelpDetails().setVisible(false);
-                currentScreen++;
-                if (currentScreen < wizPage.size()) {
-                    wizPage.get(currentScreen).getPanel().setVisible(true);
-                    wizPage.get(currentScreen).getHelpDetails().setVisible(true);
-                    header.setText(wizPage.get(currentScreen).getHeaderText());
-                    header.setFont(header.getFont().deriveFont(14f));
-                    previous.setEnabled(true);
-                    if (currentScreen == (wizPage.size() - 1)) {
-                        next.setEnabled(false);
-                        next.setVisible(false);
-                        finish.setVisible(true);
-                    }
+            }
+            finish.setVisible(false);
+            
+            currentScreen = currentScreen - 1;
+            if (currentScreen != -1) {
+                wizPage.get(currentScreen).getPanel().setVisible(true);
+                wizPage.get(currentScreen).getHelpDetails().setVisible(true);
+                header.setText(wizPage.get(currentScreen).getHeaderText());
+                header.setFont(header.getFont().deriveFont(14f));
+                
+                if (currentScreen == 0) {
+                    previous.setEnabled(false);
+                }
+                next.setEnabled(true);
+                next.setVisible(true);
+            } else {
+                currentScreen = 0;
+                previous.setEnabled(false);
+            }
+        });
+        next.addActionListener((java.awt.event.ActionEvent e) -> {
+            wizPage.get(currentScreen).getPanel().setVisible(false);
+            wizPage.get(currentScreen).getHelpDetails().setVisible(false);
+            currentScreen++;
+            if (currentScreen < wizPage.size()) {
+                wizPage.get(currentScreen).getPanel().setVisible(true);
+                wizPage.get(currentScreen).getHelpDetails().setVisible(true);
+                header.setText(wizPage.get(currentScreen).getHeaderText());
+                header.setFont(header.getFont().deriveFont(14f));
+                previous.setEnabled(true);
+                if (currentScreen == (wizPage.size() - 1)) {
+                    next.setEnabled(false);
+                    next.setVisible(false);
+                    finish.setVisible(true);
                 }
             }
         });
 
-        finish.addActionListener(new ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                Runnable r = new Connect();
-                Thread connectThread = new Thread(r);
-                connectThread.start();
-                connectThread.setName("Start-Up Wizard Connect");
-            }
+        finish.addActionListener((java.awt.event.ActionEvent e) -> {
+            Runnable r = new Connect();
+            Thread connectThread = new Thread(r);
+            connectThread.start();
+            connectThread.setName("Start-Up Wizard Connect");
         });
 
         buttonPanel.add(previous);
@@ -265,10 +259,11 @@ public class FirstTimeStartUpWizard {
     //The connection process is placed into its own thread so that it doens't hog the swingthread while waiting for the connections to open.
     protected class Connect implements Runnable {
 
+        @Override
         public void run() {
             Cursor hourglassCursor = new Cursor(Cursor.WAIT_CURSOR);
             parent.setCursor(hourglassCursor);
-            ConnectionConfig connect = JmrixConfigPane.instance(0).getCurrentObject();
+            ConnectionConfig connect = connectionConfigPane.getCurrentObject();
             ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cm != null) {
                 cm.registerPref(connect);
@@ -290,10 +285,13 @@ public class FirstTimeStartUpWizard {
                     return;
                 }
             }
+            Profile project = ProfileManager.getDefault().getActiveProfile();
             InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(owner.getText());
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setLocale(Locale.getDefault());
-            InstanceManager.getDefault(TabbedPreferences.class).init();
-            InstanceManager.getDefault(TabbedPreferences.class).saveContents();
+            InstanceManager.getDefault(RosterConfigManager.class).savePreferences(project);
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).savePreferences(project);
+            connectionConfigPane.savePreferences();
+            InstanceManager.getDefault(ConfigureManager.class).storePrefs();
             dispose();
         }
     }
@@ -302,41 +300,35 @@ public class FirstTimeStartUpWizard {
         JPanel panel = new JPanel();
         // add JComboBoxen for language and country
         panel.setLayout(new FlowLayout());
-        localeBox = new JComboBox<String>(new String[]{
+        localeBox = new JComboBox<>(new String[]{
             Locale.getDefault().getDisplayName(),
             "(Please Wait)"});
         panel.add(localeBox);
 
         // create object to find locales in new Thread
-        Runnable r = new Runnable() {
-            public void run() {
-                Locale[] locales = java.util.Locale.getAvailableLocales();
-                localeNames = new String[locales.length];
-                locale = new HashMap<String, Locale>();
-                for (int i = 0; i < locales.length; i++) {
-                    locale.put(locales[i].getDisplayName(), locales[i]);
-                    localeNames[i] = locales[i].getDisplayName();
-                }
-                java.util.Arrays.sort(localeNames);
-                Runnable update = new Runnable() {
-                    public void run() {
-                        localeBox.setModel(new javax.swing.DefaultComboBoxModel<String>(localeNames));
-                        localeBox.setSelectedItem(Locale.getDefault().getDisplayName());
-                    }
-                };
-                javax.swing.SwingUtilities.invokeLater(update);
+        Runnable r = () -> {
+            Locale[] locales = java.util.Locale.getAvailableLocales();
+            localeNames = new String[locales.length];
+            locale = new HashMap<>();
+            for (int i = 0; i < locales.length; i++) {
+                locale.put(locales[i].getDisplayName(), locales[i]);
+                localeNames[i] = locales[i].getDisplayName();
             }
+            java.util.Arrays.sort(localeNames);
+            Runnable update = () -> {
+                localeBox.setModel(new javax.swing.DefaultComboBoxModel<>(localeNames));
+                localeBox.setSelectedItem(Locale.getDefault().getDisplayName());
+            };
+            javax.swing.SwingUtilities.invokeLater(update);
         };
         new Thread(r).start();
 
-        localeBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent a) {
-                if (localeBox == null || locale == null) {
-                    return;
-                }
-                String desired = (String) localeBox.getSelectedItem();
-                Locale.setDefault(locale.get(desired));
+        localeBox.addActionListener((ActionEvent a) -> {
+            if (localeBox == null || locale == null) {
+                return;
             }
+            String desired = (String) localeBox.getSelectedItem();
+            Locale.setDefault(locale.get(desired));
         });
 
         return panel;
