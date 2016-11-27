@@ -388,7 +388,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
      * @param w warrant
      * @return null if warrant is started
      */
-    public String runTrain(Warrant w) {
+    public String runTrain(Warrant w, int mode) {
         String msg = null;
         if (w.getRunMode() != Warrant.MODE_NONE) {
             msg = w.getRunModeMessage();
@@ -401,16 +401,18 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             setStatusText(msg, Color.red, false);
             return msg;
         }
-        msg = w.setRunMode(Warrant.MODE_RUN, null, null, null, w.getRunBlind());
+        msg = w.setRunMode(mode, null, null, null, w.getRunBlind());
         if (msg != null) {
             setStatusText(msg, Color.red, false);
             return msg;
         }
-        msg = w.checkStartBlock(Warrant.MODE_RUN);  // notify first block occupied by this train
+        msg = w.checkStartBlock(mode);  // notify first block occupied by this train
         if (msg != null) {
             if (msg.equals("BlockDark")) {
                 msg = Bundle.getMessage("BlockDark", w.getCurrentBlockName(), w.getTrainName());                            
             } else if (msg.equals("warnStart")) {
+                msg = Bundle.getMessage("warnStart", w.getTrainName(), w.getCurrentBlockName());
+            } else if (msg.equals("warnStartManual")) {
                 msg = Bundle.getMessage("warnStart", w.getTrainName(), w.getCurrentBlockName());
             }
         }
