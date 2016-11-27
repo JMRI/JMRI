@@ -1,19 +1,22 @@
 package jmri.util.swing;
 
+import java.awt.GraphicsEnvironment;
 import java.util.List;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.util.swing.FontComboUtil class.
  *
  * @author	Matthew Harris Copyright 2011
  */
-public class FontComboUtilTest extends TestCase {
+public class FontComboUtilTest {
 
     // test constants
+    @Test
     public void testFontUtilConstants() {
         Assert.assertTrue("All and Character differ", (FontComboUtil.ALL != FontComboUtil.CHARACTER));
         Assert.assertTrue("All and Monospaced differ", (FontComboUtil.ALL != FontComboUtil.MONOSPACED));
@@ -31,7 +34,9 @@ public class FontComboUtilTest extends TestCase {
     }
 
     // test monospaced font list
+    @Test
     public void testMonoSpacedFontList() {
+        Assume.assumeFalse("On some completely headless Linuxes, this fails", GraphicsEnvironment.isHeadless());
         List<String> fonts = FontComboUtil.getFonts(FontComboUtil.MONOSPACED);
         Assert.assertFalse("Monospaced font list is not empty", fonts.isEmpty());
         // We can only guarantee the cross-platform fonts
@@ -42,7 +47,9 @@ public class FontComboUtilTest extends TestCase {
     }
 
     // test proportional font list
+    @Test
     public void testProportionalFontList() {
+        Assume.assumeFalse("On some completely headless Linuxes, this fails", GraphicsEnvironment.isHeadless());
         List<String> fonts = FontComboUtil.getFonts(FontComboUtil.PROPORTIONAL);
         Assert.assertFalse("Proportional font list is not empty", fonts.isEmpty());
         // We can only guarantee the cross-platform fonts
@@ -53,6 +60,7 @@ public class FontComboUtilTest extends TestCase {
     }
 
     // test character font list
+    @Test
     public void testCharacterFontList() {
         List<String> fonts = FontComboUtil.getFonts(FontComboUtil.CHARACTER);
         Assert.assertFalse("Character font list is not empty", fonts.isEmpty());
@@ -64,6 +72,7 @@ public class FontComboUtilTest extends TestCase {
     }
 
     // test all font list
+    @Test
     public void testAllFontList() {
         List<String> fonts = FontComboUtil.getFonts(FontComboUtil.ALL);
         Assert.assertFalse("All font list is not empty", fonts.isEmpty());
@@ -74,22 +83,14 @@ public class FontComboUtilTest extends TestCase {
         Assert.assertTrue("List contains 'SansSerif'", fonts.contains("SansSerif"));
     }
 
-    // from here down is testing infrastructure
-    public FontComboUtilTest(String s) {
-        super(s);
+    // The minimal setup for log4J
+    @Before
+    public void setUp() {
+        apps.tests.Log4JFixture.setUp();
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {FontComboUtilTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @After
+    public void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
     }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(FontComboUtilTest.class);
-        return suite;
-    }
-
-    //private static final Logger log = LoggerFactory.getLogger(FontComboUtilTest.class.getName());
 }
