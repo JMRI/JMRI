@@ -8,7 +8,13 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     BundleTest.class,
-    WebServerTest.class
+    WebServerTest.class,
+    FrameServletPreferencesPanelTest.class,
+    RailroadNamePreferencesPanelTest.class,
+    WebServerActionTest.class,
+    WebServerManagerTest.class,
+    WebServerPreferencesPanelTest.class,
+    WebServerPreferencesTest.class
 })
 
 /**
