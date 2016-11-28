@@ -601,7 +601,7 @@ public class SlipIconAdder extends IconAdder {
                 JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                         Bundle.getMessage("DupTurnoutName"),
                         new Object[]{name}),
-                        Bundle.getMessage("errorTitle"),
+                        Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
                 return false;
             }

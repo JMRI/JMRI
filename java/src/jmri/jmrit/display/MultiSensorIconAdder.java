@@ -402,7 +402,7 @@ public class MultiSensorIconAdder extends IconAdder {
         if (index >= _order.size()) {
             JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                     Bundle.getMessage("NoIconAt"), index - 2),
-                    Bundle.getMessage("errorTitle"),
+                    Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return null;
         }
@@ -420,7 +420,7 @@ public class MultiSensorIconAdder extends IconAdder {
         if (index >= _order.size()) {
             JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                     Bundle.getMessage("NoSensorAt"), index - 2),
-                    Bundle.getMessage("errorTitle"),
+                    Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return null;
         }
@@ -442,7 +442,7 @@ public class MultiSensorIconAdder extends IconAdder {
                 JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                         Bundle.getMessage("DupSensorName"),
                         new Object[]{name}),
-                        Bundle.getMessage("errorTitle"),
+                        Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
                 return false;
             }

@@ -1127,7 +1127,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                         }
                     }
                     Object select = JOptionPane.showInputDialog(this, Bundle.getMessage("multipleSelections"),
-                            Bundle.getMessage("questionTitle"), JOptionPane.QUESTION_MESSAGE,
+                            Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE,
                             null, selects, null);
                     if (select != null) {
                         iter = selections.iterator();

@@ -1515,7 +1515,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     addLocoIcon(nameID.trim());
                 } else {
                     JOptionPane.showMessageDialog(locoFrame, Bundle.getMessage("ErrorEnterLocoID"),
-                            Bundle.getMessage("errorTitle"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

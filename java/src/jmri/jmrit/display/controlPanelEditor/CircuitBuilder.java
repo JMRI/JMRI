@@ -532,7 +532,7 @@ public class CircuitBuilder {
         if (_editCircuitFrame != null || _editPathsFrame != null || _editPortalFrame != null || _editDirectionFrame != null) {
             // Already editing a circuit, ask for completion of that edit
             JOptionPane.showMessageDialog(_editCircuitFrame,
-                    Bundle.getMessage("AlreadyEditing"), Bundle.getMessage("errorTitle"),
+                    Bundle.getMessage("AlreadyEditing"), Bundle.getMessage("ErrorTitle"),
                     javax.swing.JOptionPane.ERROR_MESSAGE);
             if (_editPathsFrame != null) {
                 _editPathsFrame.toFront();
@@ -1541,7 +1541,7 @@ public class CircuitBuilder {
                     selects[i++] = iter.next().getNameString();
                 }
                 Object select = JOptionPane.showInputDialog(_editor, Bundle.getMessage("multipleSelections"),
-                        Bundle.getMessage("questionTitle"), JOptionPane.QUESTION_MESSAGE,
+                        Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE,
                         null, selects, null);
                 if (select != null) {
                     iter = tracks.iterator();
