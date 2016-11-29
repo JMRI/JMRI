@@ -146,6 +146,7 @@
 !define ICON       "decpro5.ico"                  ; Launcher icon
 !define INITHEAP   96                             ; Initial heap size in Mbyte
 !define MINMEM     192                            ; Minimum memory in Mbyte
+!define X86MAX     1024                           ; Maximum heap size for x86 in Mbyte
 
 ; -------------------------------------------------------------------------
 ; - End of basic information
@@ -341,6 +342,9 @@ Section "Main"
   ; -- - 1/2 total memory size on systems with 1-4GB RAM
   ; -- - 3/4 total memory size on systems with less than 1GB RAM
   ; -- - with an absolute minimum of 192MB (MINMEM)
+  ; -- If running on an x86 JVM, we peg the maximum to ${X86MAX}
+  ; -- as, it seems, the x86 JVM cannot always allocate a larger
+  ; -- amount of RAM even if there is sufficient on the machine
   
   ; -- Check that physical memory is >= MINMEM
   IntCmp $4 ${MINMEM} cmp_mem_gt_4 cmp_min_lt cmp_mem_gt_4
@@ -374,6 +378,17 @@ Section "Main"
   DetailPrint "InitHeap: ${INITHEAP}m"
   DetailPrint "MinMemory: ${MINMEM}m"
   DetailPrint "MaxMemory: $CALCMAXMEMm"
+  
+  ; -- Check if we're on a 32-bit JVM and adjust max heap down if necessary
+  DetailPrint "Checking maximum heap size..."
+  StrCmp $x64JRE ${ARCH_64BIT} check_heap_done
+    ; -- we're on a 32-bit JRE, so check the calculated heap size
+    DetailPrint "Running x86 JVM"
+    IntCmp $CALCMAXMEM ${X86MAX} check_heap_done check_heap_done
+    StrCpy $CALCMAXMEM ${X86MAX}
+    DetailPrint "Adjusted MaxMemory: $CALCMAXMEMm"
+  check_heap_done:
+  DetailPrint "...finished"
   
   ; -- Build options string
   ; -- JVM and RMI options
