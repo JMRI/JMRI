@@ -19,6 +19,33 @@ public class WebServerTest {
         Assert.assertNotNull(a);
     }
 
+    @Test
+    public void testGetDefault() {
+        WebServer a = WebServer.getDefault();
+        Assert.assertNotNull(a);
+    }
+
+    @Test
+    public void testGetPort() {
+        WebServer a = WebServer.getDefault();
+        Assert.assertEquals("Default Port",12080,a.getPort());
+    }
+
+    @Test
+    public void testURIForPreferences(){
+        Assert.assertEquals("URI for Preferences directory","/prefs/",WebServer.URIforPortablePath("preference:"));
+    }
+
+    @Test
+    public void testURIForProgram(){
+        Assert.assertEquals("URI for Program directory","/dist/",WebServer.URIforPortablePath("program:"));
+    }
+
+    @Test
+    public void testURIForOther(){
+        Assert.assertNull("URI for Other directory",WebServer.URIforPortablePath("roster:"));
+    }
+
     @Before
     public void setUp(){
         apps.tests.Log4JFixture.setUp();
