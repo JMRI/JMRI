@@ -112,7 +112,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
 
         _previewPanel = new JPanel();
         _previewPanel.setLayout(new BorderLayout());
-        _previewPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),"Preview"));
+        _previewPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),Bundle.getMessage("PreviewBorderTitle")));
         _previewPanel.add(Box.createVerticalStrut(STRUT), BorderLayout.NORTH);
         _previewPanel.add(Box.createVerticalStrut(STRUT), BorderLayout.SOUTH);
         _previewPanel.setBackground(bkgrnd);
