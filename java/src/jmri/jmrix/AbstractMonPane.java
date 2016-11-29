@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -530,6 +531,16 @@ public abstract class AbstractMonPane extends JmriPanel {
             // start logging
             try {
                 logStream = new PrintStream(new FileOutputStream(logFileChooser.getSelectedFile()));
+            } catch (java.io.FileNotFoundException ex) {
+                log.error("startLogButtonActionPerformed: FileOutputStream cannot open the file '"+logFileChooser.getSelectedFile().getName() +
+                        "'.  Exception: "+ex);
+                JOptionPane.showMessageDialog(this, 
+                        
+                        (Bundle.getMessage("ErrorCannotOpenFileForWriting",
+                            logFileChooser.getSelectedFile().getName(),
+                            Bundle.getMessage("ErrorPossibleCauseCannotOpenForWrite"))),
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+
             } catch (Exception ex) {
                 log.error("exception " + ex);
             }
