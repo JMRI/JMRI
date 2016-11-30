@@ -524,67 +524,26 @@ public abstract class AbstractMonPane extends JmriPanel {
             monTextPane.setText("");
         }
     }
-    
-    public String getFilePathAndName() {
-        String returnString;
-        java.nio.file.Path p = logFileChooser.getSelectedFile().toPath();
-        if (p.getParent() == null) {
-            // This case is a file path with a "parent" of "null"
-            //
-            // Should instead use the profile directory, as "null" can default to 
-            // the JMRI program directory, which might not be user-writable.
-            returnString = FileUtil.getUserFilesPath()+p.getFileName().toString();
-            log.warn("File selection dialog box did not provide a path to the specified file.  Log will be saved to "+returnString);
-        } else {
-            returnString = p.toString();
-        }
-        return returnString;
-    }
 
     public synchronized void startLogButtonActionPerformed(java.awt.event.ActionEvent e) {
         // start logging by creating the stream
         if (logStream == null) {  // successive clicks don't restart the file
             // start logging
-            String filePathAndName = getFilePathAndName();
-            log.warn("startLogButtonActionPerformed: getSelectedFile() returns "+logFileChooser.getSelectedFile().getPath()+" "+logFileChooser.getSelectedFile().getName());
-            log.warn("startLogButtonActionPerformed: is attempting to use returned file path and file name "+filePathAndName);
-            File logFile = new File(filePathAndName);
             try {
-                logStream = new PrintStream(new FileOutputStream(logFile));
+                logStream = new PrintStream(new FileOutputStream(logFileChooser.getSelectedFile()));
             } catch (java.io.FileNotFoundException ex) {
-                if (logStream != null) {
-                    synchronized (logStream) {
-                        logStream.flush();
-                        logStream.close();
-                    }
-                    logStream = null;
-                }
                 log.error("startLogButtonActionPerformed: FileOutputStream cannot open the file '"+logFileChooser.getSelectedFile().getName() +
                         "'.  Exception: "+ex);
                 JOptionPane.showMessageDialog(this, 
+                        
                         (Bundle.getMessage("ErrorCannotOpenFileForWriting",
                             logFileChooser.getSelectedFile().getName(),
                             Bundle.getMessage("ErrorPossibleCauseCannotOpenForWrite"))),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            }
 
-//            if (!logFile.canWrite()) {
-//                // cannot write to the selected file
-//                log.error("Cannot write the selected file: "+filePathAndName);
-//                if (logStream != null) {
-//                    synchronized (logStream) {
-//                        logStream.flush();
-//                        logStream.close();
-//                    }
-//                    logStream = null;
-//                }
-//                JOptionPane.showMessageDialog(this, 
-//                        (Bundle.getMessage("ErrorCannotOpenFileForWriting",
-//                            logFileChooser.getSelectedFile().getName(),
-//                            Bundle.getMessage("ErrorPossibleCauseCannotOpenForWrite"))),
-//                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-//            }
+            } catch (Exception ex) {
+                log.error("exception " + ex);
+            }
         }
     }
 
