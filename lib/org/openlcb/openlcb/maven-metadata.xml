@@ -3,10 +3,10 @@
   <groupId>org.openlcb</groupId>
   <artifactId>openlcb</artifactId>
   <versioning>
-    <release>0.7.9</release>
+    <release>0.7.10</release>
     <versions>
-      <version>0.7.9</version>
+      <version>0.7.10</version>
     </versions>
-    <lastUpdated>20161120041542</lastUpdated>
+    <lastUpdated>20161126205109</lastUpdated>
   </versioning>
 </metadata>
