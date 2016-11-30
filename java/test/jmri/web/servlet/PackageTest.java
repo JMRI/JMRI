@@ -16,7 +16,9 @@ import org.slf4j.LoggerFactory;
    jmri.web.servlet.panel.PackageTest.class,
    jmri.web.servlet.roster.PackageTest.class,
    jmri.web.servlet.simple.PackageTest.class,
-   BundleTest.class
+   BundleTest.class,
+   DenialServletTest.class,
+   RedirectionServletTest.class
 })
 
 /**

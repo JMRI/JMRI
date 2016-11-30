@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    BundleTest.class
+    BundleTest.class,
+    HomeServletTest.class
 })
 /**
  * Invokes complete set of tests in the jmri.web.servlet.home tree
