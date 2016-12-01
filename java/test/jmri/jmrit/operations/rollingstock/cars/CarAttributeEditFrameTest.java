@@ -1,12 +1,13 @@
 //CarAttributeEditFrameTest.java
 package jmri.jmrit.operations.rollingstock.cars;
 
+import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations CarAttributeEditFrame class
@@ -16,6 +17,9 @@ import junit.framework.TestSuite;
 public class CarAttributeEditFrameTest extends OperationsSwingTestCase {
 
     public void testCarAttributeEditFrameColor() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         CarAttributeEditFrame f = new CarAttributeEditFrame();
         f.initComponents(CarEditFrame.COLOR);
         f.addTextBox.setText("Pink");
@@ -41,6 +45,9 @@ public class CarAttributeEditFrameTest extends OperationsSwingTestCase {
     }
 
     public void testCarAttributeEditFrameKernel() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         // remove all kernels
         CarManager cm = CarManager.instance();
         List<String> kList = cm.getKernelNameList();
@@ -82,6 +89,9 @@ public class CarAttributeEditFrameTest extends OperationsSwingTestCase {
     }
 
     public void testCarAttributeEditFrame2() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         CarAttributeEditFrame f = new CarAttributeEditFrame();
         f.initComponents(CarEditFrame.LENGTH);
         f.dispose();

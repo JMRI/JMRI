@@ -255,6 +255,7 @@ public class BlockBossLogicTest extends TestCase {
         
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSignalHeadManager();
 
         t1 = InstanceManager.turnoutManagerInstance().newTurnout("IT1", "1");
         t2 = InstanceManager.turnoutManagerInstance().newTurnout("IT2", "2");
@@ -308,6 +309,8 @@ public class BlockBossLogicTest extends TestCase {
     // The minimal setup for log4J
     protected void tearDown() {
         stopLogic();
+        // reset InstanceManager
+        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 }

@@ -270,8 +270,9 @@ public class Track {
 
     public void setName(String name) {
         String old = _name;
-        _name = name;
+        _name = name;        
         if (!old.equals(name)) {
+            LocationManager.instance().resetNameLengths(); // recalculate max track name length for manifests
             setDirtyAndFirePropertyChange(NAME_CHANGED_PROPERTY, old, name);
         }
     }

@@ -1,6 +1,7 @@
 //EngineEditFrameTest.java
 package jmri.jmrit.operations.rollingstock.engines;
 
+import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -9,9 +10,9 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations EngineEditFrame class
@@ -24,7 +25,9 @@ public class EngineEditFrameTest  extends OperationsSwingTestCase {
     List<String> tempEngines;
 
     public void testEngineEditFrame() {
-
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         EngineEditFrame f = new EngineEditFrame();
         f.initComponents();
         f.setTitle("Test Add Engine Frame");
@@ -60,6 +63,9 @@ public class EngineEditFrameTest  extends OperationsSwingTestCase {
     }
 
     public void testEngineEditFrameRead() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         EngineManager cManager = EngineManager.instance();
         Engine e1 = cManager.getByRoadAndNumber("NH", "1");
         EngineEditFrame f = new EngineEditFrame();

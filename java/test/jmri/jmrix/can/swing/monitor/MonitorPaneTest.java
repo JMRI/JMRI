@@ -6,10 +6,8 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Tests for the jmri.jmrix.can.swing.monitor.MonitorPane class.
@@ -20,7 +18,6 @@ public class MonitorPaneTest {
 
     @Test
     public void testDisplay() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrafficControllerScaffold tcs = new TrafficControllerScaffold();
 
         MonitorPane f = new MonitorPane();

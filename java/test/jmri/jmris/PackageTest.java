@@ -29,7 +29,7 @@ public class PackageTest extends TestCase {
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmris.srcp.SRCPTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmris.simpleserver.PackageTest.class));
-        suite.addTest(jmri.jmris.json.JsonServerTest.suite());
+        suite.addTest(jmri.jmris.json.PackageTest.suite());
         suite.addTest(jmri.jmris.JmriServerTest.suite());
         suite.addTest(jmri.jmris.JmriConnectionTest.suite());
         suite.addTest(jmri.jmris.ServiceHandlerTest.suite());

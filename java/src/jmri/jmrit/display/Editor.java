@@ -1506,7 +1506,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         locoId.setText("");
         locoId.setToolTipText(Bundle.getMessage("EnterLocoID"));
         javax.swing.JButton okay = new javax.swing.JButton();
-        okay.setText(Bundle.getMessage("OK"));
+        okay.setText(Bundle.getMessage("ButtonOK"));
         okay.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {

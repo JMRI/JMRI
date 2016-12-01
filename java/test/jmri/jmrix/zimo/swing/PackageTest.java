@@ -30,9 +30,6 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.zimo.swing.monitor.PackageTest.class));
 
-        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
-        }
-
         return suite;
     }
 
