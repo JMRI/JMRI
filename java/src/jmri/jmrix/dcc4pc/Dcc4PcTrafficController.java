@@ -2,7 +2,6 @@ package jmri.jmrix.dcc4pc;
 
 import java.io.DataInputStream;
 import java.util.Calendar;
-import jmri.CommandStation;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -27,7 +26,7 @@ import purejavacomm.SerialPort;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  */
-public class Dcc4PcTrafficController extends AbstractMRTrafficController implements Dcc4PcInterface, CommandStation/*, SerialPortEventListener*/ {
+public class Dcc4PcTrafficController extends AbstractMRTrafficController implements Dcc4PcInterface {
 
     public Dcc4PcTrafficController() {
         super();
@@ -52,13 +51,6 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     }
 
     public static final int RETRIEVINGDATA = 100;
-
-    /**
-     * Not Supported
-     */
-    public void sendPacket(byte[] packet, int count) {
-        return;
-    }
 
     /**
      * Forward a Dcc4PcMessage to all registered Dcc4PcInterface listeners.
@@ -598,20 +590,6 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
             }
         }
         log.debug("TIMEOUT in transmitWait, mCurrentState:" + mCurrentState + " " + state + " port dsr " + port.isDSR() + " wait time " + waitTime);
-    }
-
-    public String getUserName() {
-        if (adaptermemo == null) {
-            return "DCC4PC";
-        }
-        return adaptermemo.getUserName();
-    }
-
-    public String getSystemPrefix() {
-        if (adaptermemo == null) {
-            return "PC";
-        }
-        return adaptermemo.getSystemPrefix();
     }
 
     private final static Logger log = LoggerFactory.getLogger(Dcc4PcTrafficController.class.getName());

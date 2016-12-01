@@ -14,13 +14,52 @@ import jmri.Reporter;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class RfidReporterManagerTest {
+public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTest {
 
     RfidTrafficController tc = null;
 
+    @Override
+    public String getSystemName(int i) {
+        return "RR" + i;
+    }
+
+
     @Test
-    public void testCtor() {
-        RfidReporterManager c = new RfidReporterManager("R"){
+    @Override
+    @Ignore("Abstract Class under test, test does not apply")
+    public void testSingleObject(){
+    }
+
+    @Test
+    @Override
+    @Ignore("Abstract Class under test, test does not apply")
+    public void testDefaultSystemName(){
+    }
+
+    @Test
+    @Override
+    @Ignore("Abstract Class under test, test does not apply")
+    public void testRename(){
+    }
+
+    @Test
+    @Override
+    @Ignore("Abstract Class under test, test does not apply")
+    public void testUpperLower(){
+    }
+
+    // The minimal setup for log4J
+    @Before
+    @Override
+    public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        tc = new RfidTrafficController(){
+           @Override
+           public void sendInitString(){
+           }
+        };
+        l = new RfidReporterManager("R"){
             @Override
             protected Reporter createNewReporter(String systemName, String userName){
                return null;
@@ -31,19 +70,6 @@ public class RfidReporterManagerTest {
             @Override
             public void reply(RfidReply m){}
 
-        };
-        Assert.assertNotNull(c);
-    }
-
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        tc = new RfidTrafficController(){
-           @Override
-           public void sendInitString(){
-           }
         };
     }
 

@@ -25,6 +25,12 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.21.0
+; - Alter max and initial heap size calculations to be more in-line with
+; - POSIX platforms
+; - Allow options to be defaulted from %userprofile%\JMRI\jmri.conf
+; - Set default L&F to WindowsLookAndFeel
+; -------------------------------------------------------------------------
 ; - Version 0.1.20.0
 ; - Allow options to be specified either as '/' or '-'
 ; - Add option '/J' to pass JVM option
@@ -134,13 +140,13 @@
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
 !define COPYRIGHT  "© 1997-2016 JMRI Community"   ; Copyright string
-!define VER        "0.1.20.0"                     ; Launcher version
+!define VER        "0.1.21.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
-!define MINMEM     96                             ; Minimum memory in Mbyte
-!define HIMAXMEM   768                            ; Highest Maximum memory
-!define LOMAXMEM   192                            ; Lowest Maximum memory
+!define INITHEAP   96                             ; Initial heap size in Mbyte
+!define MINMEM     192                            ; Minimum memory in Mbyte
+!define X86MAX     1024                           ; Maximum heap size for x86 in Mbyte
 
 ; -------------------------------------------------------------------------
 ; - End of basic information
@@ -154,6 +160,8 @@ Var JAVAPATH   ; holds the path to the location where JAVA files can be found
 Var JAVAEXE    ; holds the name of the JAVA exe to use
 Var JEXEPATH   ; holds the path to the temporary JAVA exe used
 Var CLASSPATH  ; holds the class path for JMRI .jars
+Var P_CLASSPATH ; holds additional classpath to prepend to standard
+Var CLASSPATH_A ; holds additional classpath to append to standard
 Var CLASS      ; holds the class to launch
 Var APPNAME    ; holds the application name
 Var OPTIONS    ; holds the JRE options
@@ -169,6 +177,7 @@ Var NOISY      ; used to determine if console should be visible or not
 Var x64        ; used to determine OS architecture
 Var x64JRE     ; used to determine JRE architecture
 Var FORCE32BIT ; used to determine if 32-bit JRE should always be used
+Var DEFOPTIONS ; used to hold any default options
 
 ; -------------------------------------------------------------------------
 ; - Various constants
@@ -228,6 +237,7 @@ VIAddVersionKey /LANG=${LANG_ENGLISH} "OriginalFilename" "${PNAME}.exe"
 Section "Main"
 
   DetailPrint "CommandLine: $CMDLINE"
+  DetailPrint "Default options: $DEFOPTIONS"
   DetailPrint "AppName: $APPNAME"
   DetailPrint "Class: $CLASS"
   DetailPrint "Parameters: $PARAMETERS"
@@ -321,35 +331,64 @@ Section "Main"
   System::Int64Op $4 / 1048576
   Pop $4
   DetailPrint "PhysicalMemory: $4m"
+  ; -- Default Java heap size is 1/4 total memory size
+  ; -- Now it would be good to read this info from the JVM, but
+  ; -- it's not as simple to do that compared to the methods available
+  ; -- on POSIX systems so, for the time being, we will just assume
+  ; -- that the default calculation is performed by the JVM
+  
+  ; -- Our required memory calculations will be as follows:
+  ; -- - 1/4 total memory size on systems with more than 4GB RAM
+  ; -- - 1/2 total memory size on systems with 1-4GB RAM
+  ; -- - 3/4 total memory size on systems with less than 1GB RAM
+  ; -- - with an absolute minimum of 192MB (MINMEM)
+  ; -- If running on an x86 JVM, we peg the maximum to ${X86MAX}
+  ; -- as, it seems, the x86 JVM cannot always allocate a larger
+  ; -- amount of RAM even if there is sufficient on the machine
+  
   ; -- Check that physical memory is >= MINMEM
-  IntCmp $4 ${MINMEM} cmp_max cmp_min_lt cmp_max
+  IntCmp $4 ${MINMEM} cmp_mem_gt_4 cmp_min_lt cmp_mem_gt_4
   cmp_min_lt:
     ; -- If insufficient physical memory, stop with an error
     MessageBox MB_OK|MB_ICONSTOP "Not enough available memory to start. JMRI requires at least ${MINMEM} MBytes memory."
     Goto Exit
-  cmp_max:
-    ; -- Check if 1/2 physical memory is between LOMAXMEM and HIMAXMEM
-    IntOp $CALCMAXMEM $4 / 2
-    DetailPrint "Check if $CALCMAXMEMm is between ${LOMAXMEM}m and ${HIMAXMEM}m"
-    IntCmp $CALCMAXMEM ${HIMAXMEM} cmp_done cmp_max_lt cmp_max_gt
-  cmp_max_gt:
-    ; -- 1/2 physical memory is greater than HIMAXMEM,
-    ; -- so set to HIMAXMEM
-    DetailPrint "Greater than HIMAXMEM: ${HIMAXMEM}m"
-    StrCpy $CALCMAXMEM ${HIMAXMEM}
+  cmp_mem_gt_4:
+    ; -- Check if physical memory is greater than 4GB
+    DetailPrint "Check if more than 4GB memory"
+    IntCmp $4 4096 cmp_mem_bt_1_and_4 cmp_mem_bt_1_and_4
+    ; -- More than 4GB so use 1/4 memory size
+    IntOp $CALCMAXMEM $4 / 4
+    DetailPrint "More than 4GB"
     Goto cmp_done
-  cmp_max_lt:
-    ; -- 1/2 physical memory is less than HIMAXMEM
-    ; --
-    DetailPrint "Less than HIMAXMEM: ${HIMAXMEM}m"
-    DetailPrint "Check if $CALCMAXMEMm is less than ${LOMAXMEM}m"
-    IntCmp $CALCMAXMEM ${LOMAXMEM} cmp_done cmp_use_lomax cmp_done
-    cmp_use_lomax:
-      DetailPrint "Use LOMAXMEM: ${LOMAXMEM}m"
-      StrCpy $CALCMAXMEM ${LOMAXMEM}
+  cmp_mem_bt_1_and_4:
+    ; -- Check if physical memory is greater than 1GB
+    DetailPrint "Less than 4GB"
+    DetailPrint "Check if more than 1GB memory"
+    IntCmp $4 1024 cmp_mem_lt_1 cmp_mem_lt_1
+    ; -- More than 1GB so use 1/2 memory size
+    IntOp $CALCMAXMEM $4 / 2
+    DetailPrint "More than 1GB"
+    Goto cmp_done
+  cmp_mem_lt_1:
+    DetailPrint "Less than 1GB"
+    ; -- Less than 1GB so use 3/4 memory size
+    IntOp $CALCMAXMEM $4 * 3
+    IntOp $CALCMAXMEM $CALCMAXMEM / 4
   cmp_done:
+  DetailPrint "InitHeap: ${INITHEAP}m"
   DetailPrint "MinMemory: ${MINMEM}m"
   DetailPrint "MaxMemory: $CALCMAXMEMm"
+  
+  ; -- Check if we're on a 32-bit JVM and adjust max heap down if necessary
+  DetailPrint "Checking maximum heap size..."
+  StrCmp $x64JRE ${ARCH_64BIT} check_heap_done
+    ; -- we're on a 32-bit JRE, so check the calculated heap size
+    DetailPrint "Running x86 JVM"
+    IntCmp $CALCMAXMEM ${X86MAX} check_heap_done check_heap_done
+    StrCpy $CALCMAXMEM ${X86MAX}
+    DetailPrint "Adjusted MaxMemory: $CALCMAXMEMm"
+  check_heap_done:
+  DetailPrint "...finished"
   
   ; -- Build options string
   ; -- JVM and RMI options
@@ -368,6 +407,7 @@ Section "Main"
   StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.d3d=false"
   StrCpy $OPTIONS "$OPTIONS -Djava.security.policy=security.policy"
   StrCpy $OPTIONS "$OPTIONS -Djinput.plugins=net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"
+  StrCpy $OPTIONS "$OPTIONS -Dswing.defaultlaf=com.sun.java.swing.plaf.windows.WindowsLookAndFeel"
   StrCmp ${ARCH_64BIT} $x64JRE x64Libs x86Libs
   x86Libs:
     ; -- 32-bit libraries
@@ -381,7 +421,7 @@ Section "Main"
   ; -- ddraw is disabled to get around Swing performance problems in Java 1.5.0
   StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.noddraw"
   ; -- memory start and max limits
-  StrCpy $OPTIONS "$OPTIONS -Xms${MINMEM}m"
+  StrCpy $OPTIONS "$OPTIONS -Xms${INITHEAP}m"
   StrCpy $OPTIONS "$OPTIONS -Xmx$CALCMAXMEMm"
   ; -- default file coding
   StrCpy $OPTIONS "$OPTIONS -Dfile.encoding=UTF-8"
@@ -464,6 +504,19 @@ Section "Main"
   StrCpy $CLASSPATH "$CLASSPATH;$9"
   DetailPrint "ClassPath: $CLASSPATH"
 
+  ; -- Now prepend and/or append when required
+  DetailPrint "Check for any prepended/appended classpath entries"
+  StrCmp $P_CLASSPATH "" ClassPathAppend
+  StrCpy $CLASSPATH "$P_CLASSPATH;$CLASSPATH"
+  DetailPrint "Prepended $P_CLASSPATH"
+  ClassPathAppend:
+  StrCmp $CLASSPATH_A "" ClassPathDone
+  StrCpy $CLASSPATH "$CLASSPATH;$CLASSPATH_A"
+  DetailPrint "Appended $CLASSPATH_A"
+
+  ClassPathDone:
+  DetailPrint "Final ClassPath: $CLASSPATH"
+
   DetailPrint "MaxLen: ${NSIS_MAX_STRLEN}"
   DetailPrint `ExeString: "$JEXEPATH" $OPTIONS -Djava.class.path="$CLASSPATH" $CLASS $PARAMETERS`
 
@@ -491,87 +544,40 @@ Section "Main"
 SectionEnd
 
 Function .onInit
-  ; -- Get commandline parameters
-  StrCpy $0 $CMDLINE
   ; -- Setup the default environment
   SetSilent silent
   StrCpy $NOISY ${SW_MINIMIZE}
   StrCpy $FORCE32BIT ${FLAG_NO}
+  ; -- Read any default_options
+  Call ReadConfFile
+  Pop $DEFOPTIONS
+  ; -- Check if we've got some
+  StrCmp $DEFOPTIONS "" cmdlineProcess
+  ; -- If so, process them
+  StrCpy $0 $DEFOPTIONS
+  Call ProcessParameters
+  ; -- Now process commandline
+  cmdlineProcess:
+  ; -- Get commandline parameters
+  StrCpy $0 $CMDLINE
   ; -- Start reading commandline parameters
   cmdLoop:
   Push $0
   Call GetParameters
   Pop $0
   StrCmp $0 "" 0 cmdlineOk
-    MessageBox MB_OK|MB_ICONSTOP "No command line parameter. Usage 'LaunchJMRI.exe [/debug] [/noisy] [/32bit] [/profile <profileID>] [/JOPTION] class [config]'"
+    MessageBox MB_OK|MB_ICONSTOP "No command line parameter. Usage 'LaunchJMRI.exe [/debug] [/noisy] [/32bit] [/profile <profileID>] [/JOPTION] [--cp:a=CLASSPATH] [--cp:p=CLASSPATH] class [config]'"
     Abort
 
   cmdlineOk:
-  ; -- Check if the first parameter is an option
-  Push $0
-  Call GetWord
-  Pop $1
-  StrCpy $2 $1 1
-  StrCmp $2 "/" cmdlineOptsGet
-  StrCmp $2 "-" cmdlineOptsGet cmdlineOptsDone
-  cmdlineOptsGet:
-  ; -- Process the possible commandline options
-  ; -- Strip first character
-  StrCpy $2 $1 "" 1
-  StrCmp $2 "debug" optsDebug
-  StrCmp $2 "noisy" optsNoisy
-  StrCmp $2 "32bit" opts32bit
-  StrCmp $2 "profile" optsProfile
-  ; -- Now check if we've got a '/J | -J' option
-  StrCpy $2 $2 1
-  StrCmp $2 "J" optsJVMOpts
-  ; -- If we've got here, the commandline option is not known so give an error.
-    MessageBox MB_OK|MB_ICONSTOP "Command line option '$1' not known."
-    Abort
+  Call ProcessParameters
+  IfErrors 0 cmdLoop
 
-  ; -- Processing block for each option
-  optsDebug:
-  SetSilent normal
-  Goto cmdLoop
-  
-  optsNoisy:
-  StrCpy $NOISY ${SW_NORMAL}
-  Goto cmdLoop
-  
-  opts32bit:
-  StrCpy $FORCE32BIT ${FLAG_YES}
-  Goto cmdLoop
-  
-  optsProfile:
-  Push $0
-  Call GetParameters
-  Pop $0
-  Push $0
-  Call GetWord
-  Pop $JMRIPROFILE
-  StrCpy $2 $JMRIPROFILE 1
-  StrCmp $2 '"' 0 cmdLoop
-    StrCpy $JMRIPROFILE $JMRIPROFILE "" 1
-    Goto cmdLoop
-    
-  optsJVMOpts:
-  ; -- Format is '-J-Dsun.java2d.hdiaware=true'
-  ; -- to pass '-Dsun.java2d.hdiaware=true'
-  ; -- $1 already contains complete option with '-J' prefix
-  StrCpy $2 $1 "" 2  ; strip first 2 chars
-  StrCmp $JVMOPTIONS "" optsJVMcont
-    ; -- add space if more than one option
-    StrCpy $JVMOPTIONS `$JVMOPTIONS `
-  optsJVMcont:
-  StrCpy $JVMOPTIONS `$JVMOPTIONS$2`
-  Goto cmdLoop
-
-  cmdlineOptsDone:
   ; -- Read the class name
   Push $0
   Call GetWord
   Pop $CLASS
-  
+
   ; -- Determine the application name (last part of class name)
   StrLen $1 $CLASS
   appNameLoop:
@@ -585,7 +591,7 @@ Function .onInit
     StrCpy $APPNAME $CLASS "" $1
 
   ; -- Now check if we've already got an instance of this application running
-  
+
   System::Call 'kernel32::CreateMutex(i 0, i 0, t "JMRI.$CLASS") ?e'
   Pop $R0
   StrCmp $R0 0 okToLaunch
@@ -603,6 +609,161 @@ FunctionEnd
 ; -------------------------------------------------------------------------
 ; - JMRI Launcher Functions
 ; -------------------------------------------------------------------------
+
+Function ProcessParameters
+; -------------------------------------------------------------------------
+; - Processes parameters
+; - input:  parameter string in $0
+; - output: none
+; - modifies $0, $1, $2
+; -------------------------------------------------------------------------
+  ; -- Check if the first parameter is an option
+  Push $0
+  Call GetWord
+  Pop $1
+  StrCpy $2 $1 1
+  StrCmp $2 "/" optsGet
+  StrCmp $2 "-" optsGet optsDone
+  optsGet:
+  ; -- Process the possible commandline options
+  ; -- Strip first character
+  StrCpy $2 $1 "" 1
+  StrCmp $2 "debug" optsDebug
+  StrCmp $2 "noisy" optsNoisy
+  StrCmp $2 "32bit" opts32bit
+  StrCmp $2 "profile" optsProfile
+  ; -- Now check if we've got a '/J | -J' option
+  StrCpy $2 $2 1
+  StrCmp $2 "J" optsJVMOpts
+  ; -- Now check if we've got a '--cp:a= | --cp:p=' option
+  ; -- Start from complete option in $1
+  StrCpy $2 $1 7
+  StrCmp $2 "--cp:a=" optsCPA
+  StrCmp $2 "--cp:p=" optsPCP
+  ; -- If we've got here, the commandline option is not known so give an error.
+    MessageBox MB_OK|MB_ICONSTOP "Command line option '$1' not known."
+    Abort
+
+  ; -- Processing block for each option
+  optsDebug:
+  SetSilent normal
+  Return
+
+  optsNoisy:
+  StrCpy $NOISY ${SW_NORMAL}
+  Return
+
+  opts32bit:
+  StrCpy $FORCE32BIT ${FLAG_YES}
+  Return
+
+  optsProfile:
+  Push $0
+  Call GetParameters
+  Pop $0
+  Push $0
+  Call GetWord
+  Pop $JMRIPROFILE
+  StrCpy $2 $JMRIPROFILE 1
+  StrCmp $2 '"' 0 optsProfile_Done
+    StrCpy $JMRIPROFILE $JMRIPROFILE "" 1
+    optsProfile_Done:
+    Return
+
+  optsJVMOpts:
+  ; -- Format is '-J-Dsun.java2d.hdiaware=true'
+  ; -- to pass '-Dsun.java2d.hdiaware=true'
+  ; -- $1 already contains complete option with '-J' prefix
+  StrCpy $2 $1 "" 2  ; strip first 2 chars
+  StrCmp $JVMOPTIONS "" optsJVMcont
+    ; -- add space if more than one option
+    StrCpy $JVMOPTIONS `$JVMOPTIONS `
+  optsJVMcont:
+  StrCpy $JVMOPTIONS `$JVMOPTIONS$2`
+  Return
+
+  optsCPA:
+  ; -- Format is '--cp:a=CLASSPATH'
+  ; -- to append 'CLASSPATH' to classpath
+  ; -- $1 already contains complete option with '--cp:a=' prefix
+  StrCpy $CLASSPATH_A $1 "" 7 ; strip first 7 chars
+  Return
+
+  optsPCP:
+  ; -- Format is '--cp:p=CLASSPATH'
+  ; -- to prepend 'CLASSPATH' to classpath
+  ; -- $1 already contains complete option with '--cp:p=' prefix
+  StrCpy $P_CLASSPATH $1 "" 7 ; strip first 7 chars
+  Return
+
+  optsDone:
+  ; -- No more parameters to process
+  ; -- so set error flag to signify
+  SetErrors
+FunctionEnd
+
+Function ReadConfFile
+; -------------------------------------------------------------------------
+; - Gets default_options from '%userprofile%\JMRI\jmri.conf'
+; - input:  none
+; - output: top of stack
+; - modifies no other variables
+; -------------------------------------------------------------------------
+
+  ; -- Save variables to the stack
+  Push $0
+  Push $1
+  Push $2
+
+  ClearErrors
+  FileOpen $2 "$PROFILE\JMRI\jmri.conf" r
+  IfErrors ReadConfFile_Exit
+  
+  ReadConfFile_ReadLine:
+    ClearErrors
+    FileRead $2 $1
+    IfErrors ReadConfFile_done
+    StrCpy $0 $1 1
+    ; -- Skip any comments (line begins `#`)
+    StrCmp $0 "#" ReadConfFile_ReadLine
+    ; -- Remove any trailing whitespace
+  ReadConfFile_WhiteSpaceLoop:
+    StrCpy $0 $1 1 -1
+    StrCmp $0 ` ` ReadConfFile_TrimRight
+    StrCmp $0 `$\t` ReadConfFile_TrimRight
+    StrCmp $0 `$\r` ReadConfFile_TrimRight
+    StrCmp $0 `$\n` ReadConfFile_TrimRight
+    Goto ReadConfFile_WhiteSpaceDone
+  ReadConfFile_TrimRight:
+    StrCpy $1 $1 -1
+    Goto ReadConfFile_WhiteSpaceLoop
+  ReadConfFile_WhiteSpaceDone:
+  ; -- now parse
+  StrCpy $0 $1 16
+  ; -- check if line is `default_options=`, otherwise skip
+  StrCmp $0 "default_options=" 0 ReadConfFile_ReadLine
+  ; -- check first character is a quote
+  StrCpy $0 $1 1 16
+  ; -- if so, continue, otherwise skip
+  StrCmp $0 `"` 0 ReadConfFile_ReadLine
+  ; -- check last character is a quote
+  StrCpy $0 $1 1 -1
+  ; -- if so, continue, otherwise skip
+  StrCmp $0 `"` 0 ReadConfFile_ReadLine
+  ; -- grab options string
+  StrCpy $0 $1 -1 17
+
+  ReadConfFile_done:
+    FileClose $2
+  ReadConfFile_exit:
+    ClearErrors
+
+  ; -- Restore variables from the stack
+  Pop $2
+  Pop $1
+  Exch $0
+
+FunctionEnd
 
 Function GetSystemMemoryStatus
 ; -------------------------------------------------------------------------

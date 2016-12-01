@@ -51,6 +51,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.javamail.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.davidflanagan.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.datatransfer.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.com.PackageTest.class));
 
         // deliberately at end
         suite.addTest(jmri.util.Log4JErrorIsErrorTest.suite());

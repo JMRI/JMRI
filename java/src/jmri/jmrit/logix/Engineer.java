@@ -229,7 +229,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             }
         }
         // shut down
-        _warrant.stopWarrant(false);
+        ThreadingUtil.runOnLayout(() -> {
+            _warrant.stopWarrant(false);
+        });
     }
 
     protected int getCurrentCommandIndex() {
@@ -381,7 +383,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             case SignalSpeedMap.SPEED_MPH:          // miles per hour
                 mapSpeed = mapSpeed / jmri.InstanceManager.getDefault(SignalSpeedMap.class
                 ).getLayoutScale();
-                mapSpeed = mapSpeed / 2.2369363f;  // layout track speed mm/ms
+                mapSpeed = mapSpeed / 2.2369363f;  // layout track speed mph
                 mapSpeed = mapSpeed / getThrottleFactor(throttleSpeed);
                 if (mapSpeed < throttleSpeed) {
                     throttleSpeed = mapSpeed;
@@ -391,7 +393,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             case SignalSpeedMap.SPEED_KMPH:
                 mapSpeed = mapSpeed / jmri.InstanceManager.getDefault(SignalSpeedMap.class
                 ).getLayoutScale();
-                mapSpeed = mapSpeed / 3.6f;  // layout track speed mm/ms
+                mapSpeed = mapSpeed / 3.6f;  // layout track speed mm/ms = kmph
                 mapSpeed = mapSpeed / getThrottleFactor(throttleSpeed);
                 if (mapSpeed < throttleSpeed) {
                     throttleSpeed = mapSpeed;
@@ -401,17 +403,13 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 log.error("Unknown speed interpretation {}", _speedMap.getInterpretation());
                 throw new java.lang.IllegalArgumentException("Unknown speed interpretation " + _speedMap.getInterpretation());
         }
-        if (log.isDebugEnabled()) log.debug("modifySpeed: from {}, to {}, speedtype= {} using interpretation {}",
+        if (log.isTraceEnabled()) log.trace("modifySpeed: from {}, to {}, speedtype= {} using interpretation {}",
                 tSpeed, throttleSpeed, sType, _speedMap.getInterpretation());
         return throttleSpeed;
     }
 
     protected void setSpeed(float s) {
         float speed = s;
-        float minIncre = _throttle.getSpeedIncrement();
-        if (0.0f < speed && speed < minIncre) {    // don't let speed be less than 1 speed step
-            speed = 0.0f;
-        }
         _throttle.setSpeedSetting(speed);
         // Do asynchronously, already within a synchronized block
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -886,7 +884,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 OBlock block = w.getfirstOrder().getBlock();
                 block.deAllocate(_warrant);     // insure w can start
             }
-            msg = f.runTrain(w);
+            msg = f.runTrain(w, Warrant.MODE_RUN);
             if (msg != null) {
                 w.stopWarrant(true);
             } else {

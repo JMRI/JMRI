@@ -1,9 +1,11 @@
 package jmri.jmrix.lenz.swing.liusb;
 
+import java.awt.GraphicsEnvironment;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * LIUSBConfigFrameTest.java
@@ -12,9 +14,11 @@ import junit.framework.TestSuite;
  *
  * @author	Paul Bender
  */
-public class LIUSBConfigFrameTest extends TestCase {
+public class LIUSBConfigFrameTest {
 
+    @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.jmrix.lenz.XNetInterfaceScaffold t = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
         jmri.jmrix.lenz.XNetSystemConnectionMemo memo = new jmri.jmrix.lenz.XNetSystemConnectionMemo(t);
 
@@ -22,29 +26,14 @@ public class LIUSBConfigFrameTest extends TestCase {
         Assert.assertNotNull(f);
     }
 
-    // from here down is testing infrastructure
-    public LIUSBConfigFrameTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LIUSBConfigFrameTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LIUSBConfigFrameTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 

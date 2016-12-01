@@ -1,11 +1,12 @@
 package jmri.jmrit.dispatcher;
 
+import java.awt.GraphicsEnvironment;
 import jmri.Scale;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.TestHelper;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Swing jfcUnit tests for dispatcher options
@@ -15,8 +16,9 @@ import junit.framework.TestSuite;
 public class DispatcherFrameTest extends jmri.util.SwingTestCase {
 
     public void testShowAndClose() throws Exception {
-        new jmri.configurexml.ConfigXmlManager() {
-        }; // replace manager
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
 
         OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml");  // exist?
 
@@ -88,12 +90,14 @@ public class DispatcherFrameTest extends jmri.util.SwingTestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         apps.tests.Log4JFixture.tearDown();
         super.tearDown();

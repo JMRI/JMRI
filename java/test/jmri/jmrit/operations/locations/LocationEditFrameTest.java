@@ -1,6 +1,7 @@
 //LocationEditFrameTest.java
 package jmri.jmrit.operations.locations;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.framework.Test;
@@ -17,6 +18,9 @@ public class LocationEditFrameTest extends OperationsSwingTestCase {
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
 
     public void testLocationEditFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         loadLocations();
         
         LocationEditFrame f = new LocationEditFrame(null);

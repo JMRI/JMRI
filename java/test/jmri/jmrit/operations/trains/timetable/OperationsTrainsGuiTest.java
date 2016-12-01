@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.trains.timetable;
 
 import java.awt.Component;
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -10,9 +11,9 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.trains.TrainManager;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations Trains GUI class
@@ -22,6 +23,9 @@ import junit.framework.TestSuite;
 public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
     public void testTrainsScheduleTableFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         TrainsScheduleTableFrame f = new TrainsScheduleTableFrame();
         f.setVisible(true);
 
@@ -30,6 +34,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
     }
 
     public void testTrainsScheduleEditFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         TrainsScheduleEditFrame f = new TrainsScheduleEditFrame();
         Assert.assertNotNull("frame exists", f);
 
