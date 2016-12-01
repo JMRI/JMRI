@@ -468,7 +468,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             _oBlockTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
         _oBlockTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
         ROW_HEIGHT = _oBlockTable.getRowHeight();
         int tableWidth = _desktop.getPreferredSize().width;
         _oBlockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, ROW_HEIGHT * 10));

@@ -1,14 +1,12 @@
 package jmri.jmrix.dcc4pc.swing;
 
+import java.awt.GraphicsEnvironment;
+import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-
-import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Tests for Dcc4PcComponentFactory class.
