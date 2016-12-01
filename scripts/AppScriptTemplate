@@ -264,7 +264,7 @@ if [ $# -gt 0 ] ; then
         all_options=("${all_options[@]-}" "${option}")
     done
 fi
-parse_args "${all_options[@]}"
+parse_args "${all_options[@]:-}"
 
 # define JAVA_HOME if needed
 if [ -z "${JAVA_HOME}" ] ; then

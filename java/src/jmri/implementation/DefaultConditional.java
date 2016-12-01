@@ -1092,7 +1092,7 @@ public class DefaultConditional extends AbstractNamedBean
                             errorList.add("invalid Warrant name in action - " + action.getDeviceName());
                         } else {
                             jmri.jmrit.logix.WarrantTableFrame frame = jmri.jmrit.logix.WarrantTableFrame.getInstance();
-                            String err = frame.runTrain(w);
+                            String err = frame.runTrain(w, Warrant.MODE_RUN);
                             if (err != null) {
                                 w.stopWarrant(true);
                             }

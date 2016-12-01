@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -107,6 +108,7 @@ public abstract class AbstractMonPane extends JmriPanel {
     
     /**
      * Do default configuration of a data pane
+     * @param textPane a JTextArea into which the data pane will be placed
      */
     protected void configureDataPane(JTextArea textPane) {
         textPane.setVisible(true);
@@ -141,12 +143,14 @@ public abstract class AbstractMonPane extends JmriPanel {
     /**
      * Provide initial preferred line length.
      * Used to size the initial GUI
+     * @return preferred initial number of columns
      */
     protected int getInitialPreferredLineLength() { return 80; }
     
     /**
      * Provide initial number of lines to display
      * Used to size the initial GUI
+     * @return preferred initial number of rows
      */
     protected int getInitialPreferredLineCount() { return 10; }
     
@@ -391,6 +395,7 @@ public abstract class AbstractMonPane extends JmriPanel {
      * By default, provides a generic help page that covers general features.
      * Specific implementations can override this to show their own help page if
      * desired.
+     * @return a String containing the name of the help target
      */
     @Override
     public String getHelpTarget() {
@@ -404,6 +409,8 @@ public abstract class AbstractMonPane extends JmriPanel {
     /**
      * Handle display of traffic.
      *
+     * @param timestamp timestamp to be pre-pended to the output line (if 
+     *                  timestamping is enabled)
      * @param line The traffic in normal parsed form, ending with \n
      * @param raw The traffic in raw form, ending with \n
      */
@@ -486,6 +493,11 @@ public abstract class AbstractMonPane extends JmriPanel {
      * than anything else, not clear it really works
      * for any system.  Override this in system-specific subclasses to do something 
      * useful.
+     * @param raw   A string containing the raw message hex information, in ASCII
+     *              encoding, with some "header" information pre-pended.
+     * @return      True if the opcode in the raw message matches one of the "filter"
+     *              opcodes.  False if the opcode does not match any of the "filter"
+     *              opcodes.
      */
     protected boolean isFiltered(String raw) {
         String checkRaw = getOpCodeForFilter(raw);
@@ -506,6 +518,16 @@ public abstract class AbstractMonPane extends JmriPanel {
     
     /** 
      * Get hex opcode for filtering
+     * 
+     * Reports the "opcode" byte from the string containing the ASCII string 
+     * representation of the message.  Assumes that there is a generic header on 
+     * string, like "Tx - ", and ignores it.
+     * 
+     * @param raw   a String containing the generic raw hex information, with 
+     *              pre-pended header.
+     * 
+     * @return      a two character String containing only the hex representation 
+     *              of the opcode from the raw message.
      */
     protected String getOpCodeForFilter(String raw) {
         //note: Generic raw is formatted like "Tx - BB 01 00 45", so extract the correct bytes from it (BB) for comparison
@@ -524,14 +546,47 @@ public abstract class AbstractMonPane extends JmriPanel {
         }
     }
 
+    public String getFilePathAndName() {
+        String returnString;
+        java.nio.file.Path p = logFileChooser.getSelectedFile().toPath();
+        if (p.getParent() == null) {
+            // This case is a file path with a "parent" of "null"
+            //
+            // Should instead use the profile directory, as "null" can default to 
+            // the JMRI program directory, which might not be user-writable.
+            returnString = FileUtil.getUserFilesPath()+p.getFileName().toString();
+            log.warn("File selection dialog box did not provide a path to the specified file.  Log will be saved to "+returnString);
+        } else {
+            returnString = p.toString();
+        }
+        return returnString;
+    }
+
     public synchronized void startLogButtonActionPerformed(java.awt.event.ActionEvent e) {
         // start logging by creating the stream
         if (logStream == null) {  // successive clicks don't restart the file
             // start logging
+            String filePathAndName = getFilePathAndName();
+            log.warn("startLogButtonActionPerformed: getSelectedFile() returns "+logFileChooser.getSelectedFile().getPath()+" "+logFileChooser.getSelectedFile().getName());
+            log.warn("startLogButtonActionPerformed: is attempting to use returned file path and file name "+filePathAndName);
+            File logFile = new File(filePathAndName);
             try {
-                logStream = new PrintStream(new FileOutputStream(logFileChooser.getSelectedFile()));
-            } catch (Exception ex) {
-                log.error("exception " + ex);
+                logStream = new PrintStream(new FileOutputStream(logFile));
+            } catch (java.io.FileNotFoundException ex) {
+                if (logStream != null) {
+                    synchronized (logStream) {
+                        logStream.flush();
+                        logStream.close();
+                    }
+                    logStream = null;
+                }
+                log.error("startLogButtonActionPerformed: FileOutputStream cannot open the file '"+logFileChooser.getSelectedFile().getName() +
+                        "'.  Exception: "+ex);
+                JOptionPane.showMessageDialog(this, 
+                        (Bundle.getMessage("ErrorCannotOpenFileForWriting",
+                            logFileChooser.getSelectedFile().getName(),
+                            Bundle.getMessage("ErrorPossibleCauseCannotOpenForWrite"))),
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
         }
     }
