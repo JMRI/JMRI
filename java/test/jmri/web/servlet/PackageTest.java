@@ -18,7 +18,8 @@ import org.slf4j.LoggerFactory;
    jmri.web.servlet.simple.PackageTest.class,
    BundleTest.class,
    DenialServletTest.class,
-   RedirectionServletTest.class
+   RedirectionServletTest.class,
+   ServletUtilTest.class
 })
 
 /**
