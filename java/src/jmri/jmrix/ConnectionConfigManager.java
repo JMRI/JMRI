@@ -35,7 +35,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
 
     private final ArrayList<ConnectionConfig> connections = new ArrayList<>();
     private final String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/connections-2-9-6.xsd"; // NOI18N
-    private final String CONNECTIONS = "connections"; // NOI18N
+    public final static String CONNECTIONS = "connections"; // NOI18N
     public final static String CONNECTION = "connection"; // NOI18N
     public final static String CLASS = "class"; // NOI18N
     public final static String USER_NAME = "userName"; // NOI18N

@@ -1,6 +1,5 @@
 package jmri.jmrix.ecos;
 
-import apps.gui3.TabbedPreferences;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
@@ -38,7 +37,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
         InstanceManager.store(new PreferencesPane(this),jmri.swing.PreferencesPanel.class);
     }
 
-    private EcosSystemConnectionMemo adaptermemo;
+    private final EcosSystemConnectionMemo adaptermemo;
 
     boolean preferencesLoaded = false;
 

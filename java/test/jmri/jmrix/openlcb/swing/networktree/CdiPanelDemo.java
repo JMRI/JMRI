@@ -18,6 +18,11 @@ import org.junit.Ignore;
 import org.junit.Test;
 import java.awt.GraphicsEnvironment;
 
+import jmri.jmrix.openlcb.SampleFactory;
+
+import static org.openlcb.cdi.impl.DemoReadWriteAccess.demoRepFromFile;
+import static org.openlcb.cdi.impl.DemoReadWriteAccess.demoRepFromSample;
+
 /**
  * NOTE: This file actually Demonstrates the openLCB CdiPanel class.
  * @author Bob Jacobsen Copyright 2012
@@ -37,19 +42,7 @@ public class CdiPanelDemo {
         f.setTitle("Configuration Demonstration");
         CdiPanel m = new CdiPanel();
 
-        m.initComponents(new CdiPanel.ReadWriteAccess() {
-            @Override
-            public void doWrite(long address, int space, byte[] data) {
-                System.out.println(data.length);
-                System.out.println("write " + address + " " + space + ": " + org.openlcb.Utilities.toHexDotsString(data));
-            }
-
-            @Override
-            public void doRead(long address, int space, int length, CdiPanel.ReadReturn handler) {
-                handler.returnData(new byte[]{1, 2, 3, 4, 5, 6, 7, 8});
-                System.out.println("read " + address + " " + space);
-            }
-        },
+        m.initComponents(demoRepFromSample(SampleFactory.getBasicSample()),
                 new CdiPanel.GuiItemFactory() {
                     public JButton handleReadButton(JButton button) {
                         //System.out.println("process button");
@@ -57,11 +50,6 @@ public class CdiPanelDemo {
                         return button;
                     }
                 }
-        );
-        m.loadCDI(
-                new org.openlcb.cdi.jdom.JdomCdiRep(
-                        jmri.jmrix.openlcb.SampleFactory.getBasicSample()
-                )
         );
 
         f.add(m);
@@ -74,7 +62,7 @@ public class CdiPanelDemo {
     @Test
     public void testDisplaySample1() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        JFrame f = makeFrame(getRootFromFile("java/test/jmri/jmrix/openlcb/sample1.xml"));
+        JFrame f = makeFrameFromFile("java/test/jmri/jmrix/openlcb/sample1.xml");
         f.setTitle("Sample1 XML");
         f.setVisible(true);
     }
@@ -82,7 +70,7 @@ public class CdiPanelDemo {
     @Test
     public void testDisplaySample2() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        JFrame f = makeFrame(getRootFromFile("java/test/jmri/jmrix/openlcb/sample2.xml"));
+        JFrame f = makeFrameFromFile("java/test/jmri/jmrix/openlcb/sample2.xml");
         f.setTitle("Sample 2 XML");
         f.setVisible(true);
     }
@@ -90,7 +78,7 @@ public class CdiPanelDemo {
     @Test
     public void testLocoCdiDisplay() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        JFrame f = makeFrame(getRootFromFile("java/test/jmri/jmrix/openlcb/NMRAnetDatabaseTrainNode.xml"));
+        JFrame f = makeFrameFromFile("java/test/jmri/jmrix/openlcb/NMRAnetDatabaseTrainNode.xml");
         f.setTitle("Locomotive CDI Demonstration");
         f.setVisible(true);
     }
@@ -107,23 +95,11 @@ public class CdiPanelDemo {
         return root;
     }
 
-    JFrame makeFrame(Element root) {
+    JFrame makeFrameFromFile(String fileName) {
         JFrame f = new JFrame();
         CdiPanel m = new CdiPanel();
 
-        m.initComponents(new CdiPanel.ReadWriteAccess() {
-            @Override
-            public void doWrite(long address, int space, byte[] data) {
-                System.out.println(data.length);
-                System.out.println("write " + address + " " + space + ": " + org.openlcb.Utilities.toHexDotsString(data));
-            }
-
-            @Override
-            public void doRead(long address, int space, int length, CdiPanel.ReadReturn handler) {
-                handler.returnData(new byte[]{1, 2, 3, 4, 5, 6, 7, 8});
-                System.out.println("read " + address + " " + space);
-            }
-        },
+        m.initComponents(demoRepFromFile(new File(fileName)),
                 new CdiPanel.GuiItemFactory() {
                     public JButton handleReadButton(JButton button) {
                         //System.out.println("process button");
@@ -131,10 +107,6 @@ public class CdiPanelDemo {
                         return button;
                     }
                 }
-        );
-
-        m.loadCDI(
-                new org.openlcb.cdi.jdom.JdomCdiRep(root)
         );
 
         f.add(m);
