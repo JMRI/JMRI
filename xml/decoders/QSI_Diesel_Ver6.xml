@@ -37,12 +37,10 @@
       <model model="Atlas MP-15DC" lowVersionID="6" numFns="14" numOuts="14" productID="129"/>
       <model model="Atlas SD24/26" lowVersionID="6" numFns="14" numOuts="14" productID="111"/>
       <model model="BLI AC6000" lowVersionID="6" numFns="14" numOuts="14" productID="131"/>
-      <model model="BLI E3/E6 w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="115"/>
-      <model model="BLI E3/E6 wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="116"/>
+      <model model="BLI E3/E6 w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="115,121"/>
+      <model model="BLI E3/E6 wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="116,122"/>
       <model model="BLI E7 w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="119"/>
       <model model="BLI E7 wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="120"/>
-      <model model="BLI E3/E6 w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="121"/>
-      <model model="BLI E3/E6 wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="122"/>
       <model model="BLI F7" lowVersionID="6" numFns="14" numOuts="14" productID="104"/>
       <model model="BLI E8/E9 w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="117"/>
       <model model="BLI E8/E9 wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="118"/>

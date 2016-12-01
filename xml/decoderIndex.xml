@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.5.6ish-201611131836-jake-R3bdf0f5 on Sun Nov 13 10:36:30 PST 2016 $Id$-->
-  <decoderIndex version="780">
+  <!--Written by JMRI version 4.5.7ish-201611272226-heap-R57e723c on Mon Nov 28 09:26:08 AEDT 2016 $Id$-->
+  <decoderIndex version="782">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -9297,8 +9297,7 @@
       </family>
       <family name="QSI Articulated Steam Ver. 7" mfg="QSIndustries" lowVersionID="7" file="QSI_Articulated_Steam_ver7.xml">
         <model model="QSI Revolution Articulated Steam" numFns="14" numOuts="0" productID="4050" />
-        <model model="QSI Magnum Articulated Steam" numFns="14" numOuts="0" productID="4000" />
-        <model model="QSI Magnum Articulated Steam" numFns="14" numOuts="0" productID="4004" />
+        <model model="QSI Magnum Articulated Steam" numFns="14" numOuts="0" productID="4000,4004" />
         <model model="Q1 Pot" numFns="14" numOuts="0" productID="4048" />
         <model model="Q1 Reed" numFns="14" numOuts="0" productID="4049" />
         <model model="BLI NW Class A" lowVersionID="7" numFns="14" numOuts="14" productID="400">
@@ -9391,12 +9390,10 @@
         <model model="Atlas MP-15DC" lowVersionID="6" numFns="14" numOuts="14" productID="129" />
         <model model="Atlas SD24/26" lowVersionID="6" numFns="14" numOuts="14" productID="111" />
         <model model="BLI AC6000" lowVersionID="6" numFns="14" numOuts="14" productID="131" />
-        <model model="BLI E3/E6 w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="115" />
-        <model model="BLI E3/E6 wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="116" />
+        <model model="BLI E3/E6 w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="115,121" />
+        <model model="BLI E3/E6 wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="116,122" />
         <model model="BLI E7 w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="119" />
         <model model="BLI E7 wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="120" />
-        <model model="BLI E3/E6 w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="121" />
-        <model model="BLI E3/E6 wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="122" />
         <model model="BLI F7" lowVersionID="6" numFns="14" numOuts="14" productID="104" />
         <model model="BLI E8/E9 w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="117" />
         <model model="BLI E8/E9 wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="118" />
@@ -9562,37 +9559,19 @@
           <output name="3" label="" connection="other" />
           <output name="4" label="" connection="other" />
         </model>
-        <model model="BLI E3/E6 w/Mars" numFns="14" numOuts="14" productID="115">
+        <model model="BLI E3/E6 w/Mars" numFns="14" numOuts="14" productID="115,121">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
           <output name="3" label="" connection="other" />
           <output name="4" label="" connection="other" />
         </model>
-        <model model="BLI E3/E6 wo/Mars" numFns="14" numOuts="14" productID="116">
+        <model model="BLI E3/E6 wo/Mars" numFns="14" numOuts="14" productID="116,122">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
           <output name="3" label="" connection="other" />
           <output name="4" label="" connection="other" />
         </model>
-        <model model="BLI E3/E6 w/Mars" numFns="14" numOuts="14" productID="121">
-          <output name="1" label="" connection="other" />
-          <output name="2" label="" connection="other" />
-          <output name="3" label="" connection="other" />
-          <output name="4" label="" connection="other" />
-        </model>
-        <model model="BLI E3/E6 wo/Mars" numFns="14" numOuts="14" productID="122">
-          <output name="1" label="" connection="other" />
-          <output name="2" label="" connection="other" />
-          <output name="3" label="" connection="other" />
-          <output name="4" label="" connection="other" />
-        </model>
-        <model model="BLI E7 w/Mars" numFns="14" numOuts="14" productID="100">
-          <output name="1" label="" connection="other" />
-          <output name="2" label="" connection="other" />
-          <output name="3" label="" connection="other" />
-          <output name="4" label="" connection="other" />
-        </model>
-        <model model="BLI E7 w/Mars" numFns="14" numOuts="14" productID="119">
+        <model model="BLI E7 w/Mars" numFns="14" numOuts="14" productID="100,119">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
           <output name="3" label="" connection="other" />
@@ -9784,7 +9763,7 @@
           <output name="3" label="" connection="other" />
           <output name="4" label="" connection="other" />
         </model>
-        <model model="P2k F7B" numFns="14" numOuts="14" productID="178">
+        <model model="P2k F7B" numFns="14" numOuts="14" productID="160,178">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
           <output name="3" label="" connection="other" />
@@ -9797,12 +9776,6 @@
           <output name="4" label="" connection="other" />
         </model>
         <model model="P2k F7A" numFns="14" numOuts="14" productID="159">
-          <output name="1" label="" connection="other" />
-          <output name="2" label="" connection="other" />
-          <output name="3" label="" connection="other" />
-          <output name="4" label="" connection="other" />
-        </model>
-        <model model="P2k F7B" numFns="14" numOuts="14" productID="160">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
           <output name="3" label="" connection="other" />
