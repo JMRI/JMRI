@@ -256,8 +256,8 @@ public interface UserPreferencesManager {
     /**
      * Set the last selected value in a given combo box.
      *
-     * @param comboBoxName
-     * @param lastValue
+     * @param comboBoxName the combo box name
+     * @param lastValue the selected value
      */
     public void setComboBoxLastSelection(String comboBoxName, String lastValue);
 
