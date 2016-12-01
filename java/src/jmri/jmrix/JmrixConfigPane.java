@@ -138,7 +138,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
     /**
      * Does nothing.
      *
-     * @param index
+     * @param index index of pane
      * @deprecated since 4.5.7; dispose of any held panes by calling
      * {@link #dispose(jmri.jmrix.JmrixConfigPane)}
      */

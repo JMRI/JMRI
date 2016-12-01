@@ -2,10 +2,9 @@ package jmri;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Objects;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,7 +49,9 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
     @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
     @CheckForNull
     public <T> NamedBeanHandle<T> getNamedBeanHandle(@Nonnull String name, @Nonnull T bean) {
-        if (bean == null || name == null || name.equals("")) {
+        Objects.requireNonNull(bean, "bean must be nonnull");
+        Objects.requireNonNull(name, "name must be nonnull");
+        if (name.isEmpty()) {
             return null;
         }
         NamedBeanHandle<T> temp = new NamedBeanHandle<>(name, bean);
@@ -65,9 +66,15 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
     }
 
     /**
-     * A Method to update the name on a bean. Note this does not change the name
-     * on the bean, it only changes the references
+     * Update the name of a bean in its references.
+     * <p>
+     * <strong>Note</strong> this does not change the name on the bean, it only
+     * changes the references.
      *
+     * @param <T>     the type of the bean
+     * @param oldName the name changing from
+     * @param newName the name changing to
+     * @param bean    the bean being renamed
      */
     @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
     public <T> void renameBean(@Nonnull String oldName, @Nonnull String newName, @Nonnull T bean) {
@@ -88,9 +95,15 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
     }
 
     /**
-     * A method to effectivily move a name from one bean to another. This method
-     * only updates the references to point to the new bean It does not move the
-     * name provided from one bean to another.
+     * Effectively move a name from one bean to another.
+     * <p>
+     * <strong>Note</strong> only updates the references to point to the new
+     * bean; does not move the name provided from one bean to another.
+     *
+     * @param <T>     the bean type
+     * @param oldBean bean loosing the name
+     * @param name    name being moved
+     * @param newBean bean gaining the name
      */
     //Checks are performed to make sure that the beans are the same type before being moved
     @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
@@ -188,10 +201,12 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
     protected void registerSelf() {
     }
 
+    @Override
     public String getSystemPrefix() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
     public char typeLetter() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -238,10 +253,12 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
     public int getXMLOrder() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanName");
     }
