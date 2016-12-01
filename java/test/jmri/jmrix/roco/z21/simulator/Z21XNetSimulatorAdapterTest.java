@@ -27,9 +27,26 @@ public class Z21XNetSimulatorAdapterTest {
     @Test
     public void testGenerateCSVersionReply(){
         Z21XNetSimulatorAdapter a = new Z21XNetSimulatorAdapter();
-        Assert.assertEquals("CS Version Reply",new XNetReply("63 21 30 12 60"),a.generateReply(new XNetMessage("21 21")));
+        Assert.assertEquals("CS Version Reply",new XNetReply("63 21 30 12 60"),a.generateReply(new XNetMessage("21 21 00")));
     }
 
+    @Test
+    public void testGenerateResumeOperationsReply(){
+        Z21XNetSimulatorAdapter a = new Z21XNetSimulatorAdapter();
+        Assert.assertEquals("CS Resume Operations Reply",new XNetReply("61 82 E3"),a.generateReply(new XNetMessage("21 81 A0")));
+    }
+
+    @Test
+    public void testGenerateEmergencyStopReply(){
+        Z21XNetSimulatorAdapter a = new Z21XNetSimulatorAdapter();
+        Assert.assertEquals("CS Emergency Stop Reply",new XNetReply("61 82 E3"),a.generateReply(new XNetMessage("21 80 A1")));
+    }
+
+    @Test
+    public void testGenerateEmergencyStopAllReply(){
+        Z21XNetSimulatorAdapter a = new Z21XNetSimulatorAdapter();
+        Assert.assertEquals("CS Emergeny Stop All Reply",new XNetReply("81 00 81"),a.generateReply(new XNetMessage("80 80")));
+    }
 
 
     // The minimal setup for log4J
