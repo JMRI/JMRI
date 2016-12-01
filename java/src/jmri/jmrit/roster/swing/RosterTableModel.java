@@ -2,6 +2,9 @@ package jmri.jmrit.roster.swing;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
 import javax.annotation.Nullable;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -153,17 +156,22 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
 
     @Override
     public Class<?> getColumnClass(int col) {
-        if (col == ADDRESSCOL) {
-            return Integer.class;
+        switch (col) {
+            case ADDRESSCOL:
+                return Integer.class;
+            case ICONCOL:
+                return ImageIcon.class;
+            case DATEUPDATECOL:
+                return Date.class;
+            default:
+                return String.class;
         }
-        if (col == ICONCOL) {
-            return ImageIcon.class;
-        }
-        return String.class;
     }
 
     /**
-     * Editable state must be set in ctor.
+     * {@inheritDoc}
+     *
+     * Can be overridden if constructed with {@link #RosterTableModel(boolean)}.
      */
     @Override
     public boolean isCellEditable(int row, int col) {
@@ -201,7 +209,9 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     }
 
     /**
-     * Provides the empty String if attribute doesn't exist.
+     * {@inheritDoc}
+     *
+     * Provides an empty attribute if the expected value does not exist
      */
     @Override
     public Object getValueAt(int row, int col) {
@@ -230,8 +240,14 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
                 return getIcon(re);
             case OWNERCOL:
                 return re.getOwner();
-            case DATEUPDATECOL:
-                return re.getDateUpdated();
+            case DATEUPDATECOL: {
+                try {
+                    return DateFormat.getDateTimeInstance().parse(re.getDateUpdated());
+                } catch (ParseException ex) {
+                    log.error("Unable to parse last updated time for roster entry {}", re.getDisplayName());
+                    return null;
+                }
+            }
             case PROTOCOL:
                 return re.getProtocolAsString();
             default:
@@ -327,13 +343,13 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     }
 
     public final void setRosterGroup(String rosterGroup) {
-        for (RosterEntry re : Roster.getDefault().getEntriesInGroup(rosterGroup)) {
+        Roster.getDefault().getEntriesInGroup(rosterGroup).forEach((re) -> {
             re.removePropertyChangeListener(this);
-        }
+        });
         this.rosterGroup = rosterGroup;
-        for (RosterEntry re : Roster.getDefault().getEntriesInGroup(rosterGroup)) {
+        Roster.getDefault().getEntriesInGroup(rosterGroup).forEach((re) -> {
             re.addPropertyChangeListener(this);
-        }
+        });
         fireTableDataChanged();
     }
 
