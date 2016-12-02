@@ -61,6 +61,54 @@
     <separator/>
     <grid ipadx="10" ipady="10">
       <!-- default padding for all grid items -->
+      <griditem gridx="0" gridy="0" weightx="1" anchor="LINE_START">
+                                <!-- gridheight for full-depth row heading, weightx for right-justified row -->
+        <label>
+          <text>Heavy Load and Coast Modes</text>
+        </label>
+      </griditem>
+      <griditem gridx="0" gridy="1">
+        <column>
+          <label>
+            <text>Requires decoder firmware version 4.15.9240 or later</text>
+          </label>
+        <column>
+          <row>
+            <label>
+              <text>Your version is</text>
+            </label>
+            <display item="Firmware Major Version" label=""/>
+            <display item="Firmware Minor Version" label=""/>
+            <display item="Firmware Build Number" label=""/>
+          </row>
+          <label>
+            <text>(a "Read full sheet" may be required to view this)</text>
+          </label>
+        </column>
+        </column>
+      </griditem>
+      <griditem gridx="3" gridy="0">
+        <display item="Heavy Load Option 1" format="checkbox" layout="above"/>
+      </griditem>
+      <griditem gridx="4" gridy="0">
+        <display item="Heavy Load" layout="above" label=""/>
+        <display item="Heavy Load" format="hslider" layout="above"/>
+      </griditem>
+      <griditem gridx="3" gridy="1">
+      <display item="Coast Mode Option 1" format="checkbox" layout="above"/>
+    </griditem>
+      <griditem gridx="4" gridy="1">
+      <display item="Coast Mode" layout="above" label=""/>
+      <display item="Coast Mode" format="hslider" layout="above"/>
+    </griditem>
+      <griditem gridx="4" gridy="1">
+      <display item="Sound Max Speed Brake" layout="above" label=""/>
+      <display item="Sound Max Speed Brake" format="hslider" layout="above"/>
+    </griditem>
+    </grid>
+    <separator/>
+    <grid ipadx="10" ipady="10">
+      <!-- default padding for all grid items -->
       <griditem gridx="3" gridy="0">
         <display item="Sound Brake On" layout="above" label=""/>
         <display item="Sound Brake On" format="hslider" layout="above" label="Sound on threshold"/>
