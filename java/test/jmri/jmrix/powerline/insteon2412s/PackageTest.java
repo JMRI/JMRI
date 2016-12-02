@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
-   jmri.jmrix.powerline.cp290.configurexml.PackageTest.class,
+   jmri.jmrix.powerline.insteon2412s.configurexml.PackageTest.class,
    SpecificDriverAdapterTest.class,
    SpecificInsteonLightTest.class,
    SpecificX10LightTest.class,
