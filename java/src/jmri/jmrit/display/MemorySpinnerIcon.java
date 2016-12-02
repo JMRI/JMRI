@@ -26,10 +26,6 @@ import org.slf4j.LoggerFactory;
  */
 public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListener, PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 258551284293568574L;
     int _min = 0;
     int _max = 100;
     JSpinner spinner = new JSpinner(new SpinnerNumberModel(0, _min, _max, 1));
@@ -157,11 +153,6 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
     public boolean setEditIconMenu(javax.swing.JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameMemory"));
         popup.add(new AbstractAction(txt) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 5789214650725618235L;
-
             public void actionPerformed(ActionEvent e) {
                 edit();
             }
