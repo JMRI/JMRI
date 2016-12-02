@@ -228,7 +228,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
                 int state = blk.getState();
                 return  state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.OCCUPIED) ||
                         state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.DARK);
-            }, "Train occupies block");
+            }, "Train occupies block "+i+" of "+route.length);
             flushAWT();
 
             block = _OBlockMgr.getOBlock(route[i]);
