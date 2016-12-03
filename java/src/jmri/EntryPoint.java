@@ -67,7 +67,9 @@ public class EntryPoint {
     }
 
     /**
-     * Access methods
+     * Get the block.
+     *
+     * @return the block, initialized if needed
      */
     public Block getBlock() {
         if (needsInitialize) {
@@ -111,24 +113,15 @@ public class EntryPoint {
     }
 
     public boolean isForwardType() {
-        if (mDirection == FORWARD) {
-            return true;
-        }
-        return false;
+        return mDirection == FORWARD;
     }
 
     public boolean isReverseType() {
-        if (mDirection == REVERSE) {
-            return true;
-        }
-        return false;
+        return mDirection == REVERSE;
     }
 
     public boolean isUnknownType() {
-        if (mDirection == UNKNOWN) {
-            return true;
-        }
-        return false;
+        return mDirection == UNKNOWN;
     }
 
     public int getDirection() {

@@ -65,6 +65,26 @@ public abstract class AbstractMessage implements Message {
     // contents (private)
     protected int _nDataChars = 0;
 
-    private static Logger log = LoggerFactory.getLogger(AbstractMessage.class.getName());
 
+    /*
+     * equals operator.
+     */
+    @Override
+    public boolean equals(Object obj){
+       if( this.getClass() != obj.getClass() ) {
+          return false;
+       }
+       AbstractMessage m = (AbstractMessage) obj;
+       if(this.getNumDataElements() != m.getNumDataElements()){
+          return false;
+       }
+       for(int i = 0;i<this.getNumDataElements();i++){
+          if(this.getElement(i)!=m.getElement(i)){
+             return false;
+          }
+       }
+       return true;
+    }
+
+    private static Logger log = LoggerFactory.getLogger(AbstractMessage.class.getName());
 }
