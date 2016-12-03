@@ -250,9 +250,10 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
             } else {
                 nextSensor = null;
             }
+            final Sensor tsensor = sensor;
             jmri.util.ThreadingUtil.runOnLayout(() -> {
                 try {
-                    sensor.setState(Sensor.INACTIVE);
+                    tsensor.setState(Sensor.INACTIVE);
                 } catch (jmri.JmriException e) {
                     Assert.fail("Unexpected Exception: " + e);
                 }
