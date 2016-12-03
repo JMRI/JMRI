@@ -70,7 +70,7 @@ abstract public class AbstractTableAction extends AbstractAction {
                 }
             }
         };
-        setMenuBar(f);
+        setMenuBar(f); // comes after the Help menu is added by f = new BeanTableFrame(etc.)
         setTitle();
         addToFrame(f);
         f.pack();
@@ -108,7 +108,7 @@ abstract public class AbstractTableAction extends AbstractAction {
     }
 
     /**
-     * Allow subclasses to alter the frames Menubar without having to actually
+     * Allow subclasses to alter the frame's Menubar without having to actually
      * subclass the BeanTableDataFrame
      */
     public void setMenuBar(BeanTableFrame f) {
