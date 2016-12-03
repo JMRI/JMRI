@@ -309,11 +309,6 @@ public class IndicatorTrackIcon extends PositionableIcon
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("IndicatorTrack"));
         popup.add(new javax.swing.AbstractAction(txt) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 6698198580196221026L;
-
             public void actionPerformed(ActionEvent e) {
                 editItem();
             }
