@@ -55,6 +55,8 @@
     <comment xml:lang="de">Wertebereich 0-255</comment>
     <label xml:lang="cs">Zrychlení</label>
     <comment xml:lang="cs">Meze 0-255</comment>
+    <label xml:lang="ca">Inèrcia d'Acceleració</label>
+    <comment xml:lang="ca">Rang de 0-255</comment>
 </variable>
   <variable CV="4" item="Decel" default="5" comment="Range 0-255">
     <decVal min="0" max="255"/>
@@ -66,5 +68,7 @@
     <comment xml:lang="de">Wertebereich 0-255</comment>
     <label xml:lang="cs">Zpomalení</label>
     <comment xml:lang="cs">Meze 0-255</comment>
+    <label xml:lang="ca">Inèrcia desacceleració (0-255)</label>
+    <comment xml:lang="ca">Rang de 0-255</comment>
   </variable>
 </variables>
