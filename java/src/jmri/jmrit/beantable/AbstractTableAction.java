@@ -70,7 +70,7 @@ abstract public class AbstractTableAction extends AbstractAction {
                 }
             }
         };
-        setMenuBar(f); // comes after the Help menu is added by f = new BeanTableFrame(etc.)
+        setMenuBar(f); // comes after the Help menu is added by f = new BeanTableFrame(etc.) in stand alone application
         setTitle();
         addToFrame(f);
         f.pack();
