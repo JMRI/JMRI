@@ -159,6 +159,7 @@
     <label>F0(r) controls output B</label>
     <label xml:lang="it">F0(indietro) controlla uscita B</label>
     <label xml:lang="de">F0(r) steuert Ausgang B</label>
+    <label xml:lang="cs">F0 vzad funkční výstup B</label>
     <label xml:lang="ca">F0 (darrere) controla la sortida A</label>
   </variable>
   <variable CV="35" mask="XXXVXXXX" item="F1 controls output 2" minOut="2" minFn="1">
