@@ -2,6 +2,8 @@ package jmri.jmrix.roco.z21.swing;
 
 import java.util.ResourceBundle;
 import javax.swing.JMenu;
+import javax.annotation.Nonnull;
+
 
 /**
  * Create a menu containing the Z21 specific tools
@@ -15,17 +17,13 @@ public class Z21Menu extends JMenu {
         setText(name);
     }
 
-    public Z21Menu(jmri.jmrix.roco.z21.Z21SystemConnectionMemo memo) {
+    public Z21Menu(@Nonnull jmri.jmrix.roco.z21.Z21SystemConnectionMemo memo) {
 
         super();
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.roco.z21.z21ActionListBundle");
 
-        if (memo != null) {
-            setText(memo.getUserName());
-        } else {
-            setText(rb.getString("Menuz21"));
-        }
+        setText(memo.getUserName());
 
         add(new jmri.jmrix.roco.z21.swing.mon.Z21MonAction(rb.getString("jmri.jmrix.roco.z21.swing.mon.Z21MonAction"), memo));
         add(new jmri.jmrix.roco.z21.swing.packetgen.PacketGenAction(rb.getString("jmri.jmrix.roco.z21.swing.packetgen.PacketGenAction"), memo));
