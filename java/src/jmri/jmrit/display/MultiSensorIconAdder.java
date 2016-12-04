@@ -54,10 +54,6 @@ import org.slf4j.LoggerFactory;
  */
 public class MultiSensorIconAdder extends IconAdder {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6135920336395495628L;
     JRadioButton _updown;
     JRadioButton _rightleft;
 
@@ -283,11 +279,6 @@ public class MultiSensorIconAdder extends IconAdder {
 
     class ExportHandler extends TransferHandler {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1457006609475522778L;
-
         public int getSourceActions(JComponent c) {
             return COPY;
         }
@@ -456,10 +447,6 @@ public class MultiSensorIconAdder extends IconAdder {
      */
     class DropPanel extends JPanel implements DropTargetListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7051687527703065869L;
         DataFlavor dataFlavor;
 
         DropPanel() {

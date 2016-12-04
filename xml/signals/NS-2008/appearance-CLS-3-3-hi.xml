@@ -7,18 +7,33 @@
 >
 
   <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2012</year><year>2012</year><holder>JMRI</holder>
+    <year>2012</year>
+    <year>2012</year>
+    <holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
-        <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
+        <personname>
+          <firstname>Dick</firstname>
+          <surname>Bronson</surname>
+        </personname>
         <email>dick@rr-cirkits.com</email>
-    </author>    
+    </author>
     <author>
-        <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
+        <personname>
+          <firstname>Bob</firstname>
+          <surname>Jacobsen</surname>
+        </personname>
         <email>jake@physics.berkeley.edu</email>
-    </author>    
+    </author>
+    <author>
+        <personname>
+          <firstname>Suzie</firstname>
+          <surname>Tall</surname>
+        </personname>
+        <email>suzie_tall@yahoo.co.uk</email>
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -27,13 +42,19 @@
         <date>2012-10-05</date>
         <authorinitials>DB</authorinitials>
         <revremark>Initial Version</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>1.1</revnumber>
         <date>2013-01-26</date>
         <authorinitials>DB</authorinitials>
         <revremark>Added Dark</revremark>
-    </revision>    
+    </revision>
+    <revision>
+        <revnumber>1.2</revnumber>
+        <date>2016-12-01</date>
+        <authorinitials>ST</authorinitials>
+        <revremark>Added specific appearances</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>NS</aspecttable>
@@ -136,9 +157,15 @@
     <danger>
       <aspect>Stop Signal</aspect>
     </danger>
+    <permissive>
+      <aspect>Restricting</aspect>
+    </permissive>
     <held>
       <aspect>Stop Signal</aspect>
     </held>
+    <dark>
+      <aspect>Stop Signal</aspect>
+    </dark>
   </specificappearances>
 
   <aspectMappings>
@@ -215,22 +242,22 @@
       <ourAspect>Approach Slow</ourAspect>
     </aspectMapping>
 
-     <aspectMapping>
+    <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
       <ourAspect>Medium Approach</ourAspect>
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
-     <aspectMapping>
+    <aspectMapping>
       <advancedAspect>Stop Signal</advancedAspect>
       <ourAspect>Medium Approach</ourAspect>
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
-     <aspectMapping>
+    <aspectMapping>
       <advancedAspect>171</advancedAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
   </aspectMappings>
-</appearancetable>  
+</appearancetable>
