@@ -1649,7 +1649,9 @@ public class TrainBuilder extends TrainCommon {
                     car.setWait(car.getWait() - 1); // decrement wait count
                     // a car's load changes when the wait count reaches 0
                     String oldLoad = car.getLoadName();
-                    car.updateLoad(); // has the wait count reached 0?
+                    if (car.getTrack().getTrackType().equals(Track.SPUR)) {
+                        car.updateLoad(); // has the wait count reached 0?
+                    }
                     String newLoad = car.getLoadName();
                     if (!oldLoad.equals(newLoad)) {
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarLoadChangedWait"),

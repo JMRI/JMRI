@@ -87,15 +87,6 @@
                             </execution>
                         </executions>  
                     </plugin>
-                    <!-- prevent surefire (maven default test harness) from running tests -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.19.1</version>
-                        <configuration>
-                            <skipTests>true</skipTests>
-                        </configuration>
-                    </plugin>
                 </plugins>
             </build>
         </profile>
@@ -236,7 +227,7 @@
                 <version>2.19.1</version>
                 <configuration>
                     <excludes>
-                        <!-- ignore until #2455 is resolved -->
+                        <!-- ignore until #2601 is resolved -->
                         <exclude>jmri.jmrit.decoderdefn.DuplicateTest</exclude>
                         <!-- ignore to avoid duplicate test runs -->
                         <exclude>apps.tests.AllTest</exclude>
@@ -245,7 +236,7 @@
                         <exclude>**.PackageTest</exclude>
                         <!-- ignore since the test is not intended to be normally used -->
                         <exclude>jmri.util.FailTest</exclude>
-                        <!-- ingore since base classes for other tests -->
+                        <!-- ignore since base classes for other tests -->
                         <exclude>jmri.util.SwingTestCase</exclude>
                         <exclude>jmri.jmrit.operations.OperationsTestCase</exclude>
                         <exclude>jmri.jmrit.operations.OperationsSwingTestCase</exclude>
@@ -259,6 +250,9 @@
                     <!-- uncomment to force each test into new context
                     <forkCount>1</forkCount>
                     <reuseForks>false</reuseForks>
+                    -->
+                    <!-- uncomment to really ensure tests are independent
+                    <runOrder>random</runOrder>
                     -->
                 </configuration>
             </plugin>
@@ -311,6 +305,48 @@
                             <name>current.year</name>
                             <pattern>yyyy</pattern>
                             <locale>en,US</locale>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.7.201606060606</version>
+                <executions>
+                    <execution>
+                        <id>default-check</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <rule>
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>LINE</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.28</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>CLASS</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.50</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                                <rule>
+                                    <element>PACKAGE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>CLASS</counter>
+                                            <value>COVEREDCOUNT</value>
+                                            <minimum>1</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
                         </configuration>
                     </execution>
                 </executions>
@@ -527,7 +563,7 @@
         <dependency>
             <groupId>org.openlcb</groupId>
             <artifactId>openlcb</artifactId>
-            <version>0.7.9</version>
+            <version>0.7.10</version>
         </dependency>
         <dependency>
             <groupId>ch.ntb</groupId>
