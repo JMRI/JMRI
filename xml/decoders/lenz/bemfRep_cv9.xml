@@ -33,6 +33,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>7</revnumber>
+      <date>2016-10-09</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>6</revnumber>
       <date>2014-05-18</date>
       <authorinitials>Ba</authorinitials>
@@ -53,5 +59,9 @@
 	<label xml:lang="de">Wiederholrate der EMK (0-63)</label>
 	<comment xml:lang="de">Wertebereich 0-63</comment>
 	<comment xml:lang="it">Valori 0-63</comment>
+    <label xml:lang="cs">Back EMF míra opakování</label>
+    <comment xml:lang="cs">Meze 0-63</comment>
+    <label xml:lang="ca">Freqüència de repetició de la retroacció EMF (0-63)</label>
+    <comment xml:lang="ca">Rang de 0-63</comment>
   </variable>
 </variables>

@@ -1,6 +1,7 @@
 package jmri.jmrit.logix;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -48,26 +49,29 @@ public class NXFrame extends WarrantRoute {
     static float _scale = 87.1f;
     static float _intervalTime = 0.0f;     // milliseconds
     static float _throttleIncr = 0.0f;
+    static float _throttleFactor = 0.0f;
 
-    JTextField _trainName = new JTextField(6);
     JTextField _maxSpeedBox = new JTextField(6);
-    JTextField _minSpeedBox = new JTextField(6);
+    JTextField _rampInterval = new JTextField(6);
+    JTextField _rampIncre = new JTextField(6);
+    JTextField _throttleFactorBox = new JTextField(6);
     JRadioButton _forward = new JRadioButton();
     JRadioButton _reverse = new JRadioButton();
     JCheckBox _stageEStop = new JCheckBox();
+    JCheckBox _noRampBox = new JCheckBox();
     JCheckBox _haltStartBox = new JCheckBox();
     JCheckBox _calibrateBox = new JCheckBox();
 //    JCheckBox _addTracker = new JCheckBox();
-    JTextField _rampInterval = new JTextField(6);
     JRadioButton _runAuto = new JRadioButton(Bundle.getMessage("RunAuto"));
     JRadioButton _runManual = new JRadioButton(Bundle.getMessage("RunManual"));
-    protected JPanel      _controlPanel;
-    JPanel      _autoRunPanel;
-    JPanel      _manualPanel;
 //  static boolean _addTracker = false;
     private boolean _haltStart = false;
     private float _maxSpeed = 0.5f;
     private float _minSpeed = 0.05f;
+    
+    protected JPanel    _controlPanel;
+    private JPanel          _autoRunPanel;
+    private JPanel          _manualPanel;
     
     private static NXFrame _instance;
 
@@ -79,9 +83,7 @@ public class NXFrame extends WarrantRoute {
             _instance = new NXFrame();
         }
         if (!_instance.isVisible()) {
-            _instance.setAddress(null);
-            _instance.setTrainName(null);
-            _instance._trainName.setText(null);
+            _instance.setTrainInfo(null);
             _instance.clearRoute();            
         }
         return _instance;
@@ -96,26 +98,19 @@ public class NXFrame extends WarrantRoute {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout(10, 10));
         _controlPanel = new JPanel();
-        _controlPanel.setLayout(new BoxLayout(_controlPanel, BoxLayout.Y_AXIS));
+        _controlPanel.setLayout(new BoxLayout(_controlPanel, BoxLayout.PAGE_AXIS));
         _controlPanel.add(Box.createVerticalGlue());
         _controlPanel.add(makeBlockPanels());
         _controlPanel.add(searchDepthPanel(false));
 
-        _autoRunPanel = makeAutoRunPanel(jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation());
         _maxSpeedBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 getBoxData();
             }
         });
-        _manualPanel = new JPanel();
-        _manualPanel.setLayout(new BoxLayout(_manualPanel, BoxLayout.X_AXIS));
-        _manualPanel.add(Box.createHorizontalStrut(2 * STRUT_SIZE));
-        _manualPanel.add(makeTextBoxPanel(false, _trainName, "TrainName", "noTrainName"));
-        _manualPanel.add(Box.createHorizontalStrut(2 * STRUT_SIZE));
+        _autoRunPanel = makeAutoRunPanel(jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation());
 
         _controlPanel.add(_autoRunPanel);
-        _controlPanel.add(_manualPanel);
-        _manualPanel.setVisible(false);
         _controlPanel.add(Box.createVerticalStrut(STRUT_SIZE));
 
         _forward.setSelected(true);
@@ -162,15 +157,18 @@ public class NXFrame extends WarrantRoute {
         if (_controlPanel==null) {
             return;
         }
-        _rampInterval.setText(Float.toString(_intervalTime/1000));
+        // find position of panel
         java.awt.Component[] list = _controlPanel.getComponents();
         int i = 0;
         while (i<list.length && !list[i].equals(_autoRunPanel)) {
             i++;
         }
-        _controlPanel.remove(_autoRunPanel);
-        _autoRunPanel = makeAutoRunPanel(interp);
-        _controlPanel.add(_autoRunPanel, i);
+        if (i<list.length) {
+            _controlPanel.remove(_autoRunPanel);
+            _autoRunPanel = makeAutoRunPanel(interp);
+            _controlPanel.add(_autoRunPanel, i);            
+            pack();        
+        }
     }
     
     private JPanel makeSwitchPanel() {
@@ -189,7 +187,7 @@ public class NXFrame extends WarrantRoute {
         });
         _runAuto.setSelected(true);
         JPanel pp = new JPanel();
-        pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
+        pp.setLayout(new BoxLayout(pp, BoxLayout.LINE_AXIS));
         pp.add(Box.createHorizontalStrut(STRUT_SIZE));
         pp.add(_runAuto);
         pp.add(Box.createHorizontalStrut(STRUT_SIZE));
@@ -200,7 +198,7 @@ public class NXFrame extends WarrantRoute {
     
     private JPanel makeAutoRunPanel(int interpretation) {
         JPanel p1 = new JPanel();
-        p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
+        p1.setLayout(new BoxLayout(p1, BoxLayout.PAGE_AXIS));
         float maxSpeed;
         float throttleIncr;
         String maxSpeedLabel;
@@ -214,17 +212,15 @@ public class NXFrame extends WarrantRoute {
                 throttleIncrLabel = "RampIncrement";
                 break;
             case SignalSpeedMap.SPEED_MPH:
-                float factor =  jmri.InstanceManager.getDefault(SignalSpeedMap.class).getDefaultThrottleFactor();
-                maxSpeed = _maxSpeed*factor*_scale*2.2369363f; // 2.2369363 is 3.6 converted by mile/km
+                maxSpeed = _maxSpeed*_throttleFactor*_scale*2.2369363f; // 2.2369363 is 3.6 converted by mile/km
                 maxSpeedLabel = "MaxMph";
-                throttleIncr = _throttleIncr*factor*_scale*2.2369363f;
+                throttleIncr = _throttleIncr*_throttleFactor*_scale*2.2369363f;
                 throttleIncrLabel = "MinMph";
                 break;
             case SignalSpeedMap.SPEED_KMPH:
-                factor =  jmri.InstanceManager.getDefault(SignalSpeedMap.class).getDefaultThrottleFactor();
-                maxSpeed = _maxSpeed*factor*_scale*3.6f;
+                maxSpeed = _maxSpeed*_throttleFactor*_scale*3.6f;
                 maxSpeedLabel = "MaxKMph";
-                throttleIncr = _throttleIncr*factor*_scale*3.6f;
+                throttleIncr = _throttleIncr*_throttleFactor*_scale*3.6f;
                 throttleIncrLabel = "MinKMph";
                 break;
             default:
@@ -233,18 +229,24 @@ public class NXFrame extends WarrantRoute {
                 throttleIncr = _throttleIncr;
                 throttleIncrLabel = "RampIncrement";
         }
-        p1.add(WarrantFrame.makeTextBoxPanel(false, _maxSpeedBox, maxSpeedLabel, null));
+        p1.add(makeTextBoxPanel(false, _maxSpeedBox, maxSpeedLabel, null));
         p1.add(makeTextBoxPanel(false, _rampInterval, "rampInterval", null));
-        p1.add(makeTextBoxPanel(false, _minSpeedBox, throttleIncrLabel, "ToolTipRampIncrement"));
+        p1.add(makeTextBoxPanel(false, _rampIncre, throttleIncrLabel, "ToolTipRampIncrement"));
+        p1.add(makeTextBoxPanel(false, _throttleFactorBox, "ThrottleScale", "ToolTipThrottleScale"));
         _maxSpeedBox.setText(Float.toString(maxSpeed));
-        _minSpeedBox.setText(Float.toString(throttleIncr));
+        _rampInterval.setText(Float.toString(_intervalTime/1000));
+        _rampIncre.setText(Float.toString(throttleIncr));
+        _throttleFactorBox.setText(Float.toString(_throttleFactor));
         
-        JPanel p2 = makeTrainPanel();
+        JPanel p2 = new JPanel();
+        p2.setLayout(new BoxLayout(p2, BoxLayout.PAGE_AXIS));
+        JPanel trainPanel = makeTrainIdPanel(makeTextBoxPanel(false, _noRampBox, "NoRamping", "ToolTipNoRamping"));
+        p2.add(trainPanel);
 
         JPanel autoRunPanel = new JPanel();
-        autoRunPanel.setLayout(new BoxLayout(autoRunPanel, BoxLayout.Y_AXIS));
+        autoRunPanel.setLayout(new BoxLayout(autoRunPanel, BoxLayout.PAGE_AXIS));
         JPanel pp = new JPanel();
-        pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
+        pp.setLayout(new BoxLayout(pp, BoxLayout.LINE_AXIS));
         pp.add(Box.createHorizontalStrut(STRUT_SIZE));
         pp.add(p1);
         pp.add(Box.createHorizontalStrut(STRUT_SIZE));
@@ -256,13 +258,13 @@ public class NXFrame extends WarrantRoute {
         bg.add(_forward);
         bg.add(_reverse);
         p1 = new JPanel();
-        p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
+        p1.setLayout(new BoxLayout(p1, BoxLayout.LINE_AXIS));
         p1.add(Box.createHorizontalGlue());
         p1.add(makeTextBoxPanel(false, _forward, "forward", null));
         p1.add(makeTextBoxPanel(false, _reverse, "reverse", null));
         p1.add(Box.createHorizontalGlue());
         pp = new JPanel();
-        pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
+        pp.setLayout(new BoxLayout(pp, BoxLayout.LINE_AXIS));
         pp.add(Box.createHorizontalStrut(STRUT_SIZE));
         pp.add(p1);
         pp.add(Box.createHorizontalStrut(STRUT_SIZE));
@@ -270,7 +272,7 @@ public class NXFrame extends WarrantRoute {
         autoRunPanel.add(pp);
 
         JPanel ppp = new JPanel();
-        ppp.setLayout(new BoxLayout(ppp, BoxLayout.X_AXIS));
+        ppp.setLayout(new BoxLayout(ppp, BoxLayout.LINE_AXIS));
         ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
         ppp.add(makeTextBoxPanel(false, _stageEStop, "StageEStop", null));
         ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
@@ -290,13 +292,31 @@ public class NXFrame extends WarrantRoute {
     }
 
     private void enableAuto(boolean enable) {
+        Component[] comps= _controlPanel.getComponents();
         if (enable) {
-            _manualPanel.setVisible(false);
-            _autoRunPanel.setVisible(true);
+            int idx = 0;
+            while(idx < comps.length) {
+               if (comps[idx].equals(_manualPanel)) {
+                   break;
+               }
+               idx++;
+            };
+            _controlPanel.remove(idx);
+            _autoRunPanel = makeAutoRunPanel(jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation());
+            _controlPanel.add(_autoRunPanel, idx);
         } else {
-            _manualPanel.setVisible(true);
-            _autoRunPanel.setVisible(false);
+            int idx = 0;
+            while(idx < comps.length) {
+               if (comps[idx].equals(_autoRunPanel)) {
+                   break;
+               }
+               idx++;
+            };
+            _controlPanel.remove(idx);
+            _manualPanel = makeTrainIdPanel(null);
+            _controlPanel.add(_manualPanel, idx);
         }
+        pack();
     }
 
     @Override
@@ -318,55 +338,56 @@ public class NXFrame extends WarrantRoute {
     public void selectedRoute(ArrayList<BlockOrder> orders) {
         if (log.isDebugEnabled()) log.debug("NXFrame selectedRoute()");
         String msg =null;
-        Warrant warrant = null;
-        if (_runManual.isSelected()) {
-            runManual();
-            return;
+        String name = getTrainName();
+        if (name==null || name.trim().length()==0) {
+            name = getAddress();
         }
-        msg = checkLocoAddress();
+        String s = (""+Math.random()).substring(2);
+        Warrant warrant = new Warrant("IW"+s, "NX("+getAddress()+")");
+        if (!warrant.setDccAddress(getTrainId())) {
+            msg = Bundle.getMessage("BadDccAddress", getTrainId());
+        }
         if (msg==null) {
-            String name = getTrainName();
-            if (name==null || name.trim().length()==0) {
-                name = getAddress();
-            }
-            String s = (""+Math.random()).substring(2);
-            warrant = new Warrant("IW"+s, "NX("+getAddress()+")");
-            warrant.setDccAddress(getTrainId());
             warrant.setTrainName(name);
-
+            warrant.setBlockOrders(getOrders());
+            warrant.setOrders(getOrders());
+        }
+        int mode;
+        if (msg==null && !_runManual.isSelected()) {
+            mode = Warrant.MODE_RUN;
+            warrant.setNoRamp(_noRampBox.isSelected());
             msg = getBoxData();
             if (msg==null) {
                 msg = makeCommands(warrant);                            
             }
             if (msg==null) {
-                warrant.setBlockOrders(getOrders());
-                warrant.setOrders(getOrders());
+                Calibrater calib = null;
+                if (_calibrateBox.isSelected()) {
+                    warrant.setViaOrder(getViaBlockOrder());
+                    calib = new Calibrater(warrant, _forward.isSelected(), getLocation());
+                    msg = calib.verifyCalibrate();
+                    if (msg!=null) {
+                        calib = null;
+                    }                
+                }
+                warrant.setCalibrater(calib);
             }
+        } else {
+            mode = Warrant.MODE_MANUAL;            
         }
-        if (msg==null && warrant!=null) {
-            Calibrater calib = null;
-            if (_calibrateBox.isSelected()) {
-                warrant.setViaOrder(getViaBlockOrder());
-                calib = new Calibrater(warrant, _forward.isSelected(), getLocation());
-                msg = calib.verifyCalibrate();
-                if (msg!=null) {
-                    calib = null;
-                }                
-            }
-            warrant.setCalibrater(calib);
-            WarrantTableFrame tableFrame = WarrantTableFrame.getInstance();
-            if (msg==null) {
-                tableFrame.getModel().addNXWarrant(warrant);   //need to catch propertyChange at start
-                if (log.isDebugEnabled()) log.debug("NXWarrant added to table");
-                msg = tableFrame.runTrain(warrant);                
-                tableFrame.scrollTable();
-            }
-            if (msg!=null) {
-                if (log.isDebugEnabled()) log.debug("WarrantTableFrame run warrant. msg= "+msg+" Remove warrant "+warrant.getDisplayName());
-                tableFrame.getModel().removeWarrant(warrant);
-            }
-        }
+        WarrantTableFrame tableFrame = WarrantTableFrame.getInstance();
         if (msg==null) {
+            tableFrame.getModel().addNXWarrant(warrant);   //need to catch propertyChange at start
+            if (log.isDebugEnabled()) log.debug("NXWarrant added to table");
+            msg = tableFrame.runTrain(warrant, mode);                
+            tableFrame.scrollTable();
+        }
+        if (msg!=null) {
+            if (log.isDebugEnabled()) log.debug("WarrantTableFrame run warrant. msg= "+msg+" Remove warrant "+warrant.getDisplayName());
+            tableFrame.getModel().removeWarrant(warrant);
+        }
+
+        if (msg==null && mode==Warrant.MODE_RUN) {
 //            if (log.isDebugEnabled()) log.debug("Warrant "+warrant.getDisplayName()+" running.");
             if (_haltStartBox.isSelected()) {
                 _haltStart = true;
@@ -401,24 +422,6 @@ public class NXFrame extends WarrantRoute {
             closeFrame();           
             if (log.isDebugEnabled()) log.debug("Close Frame.");
         }
-    }
-
-    private void runManual() {
-        String name = _trainName.getText();
-        if (name == null || name.trim().length() == 0) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("noTrainName"),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        String s = ("" + Math.random()).substring(2);
-        Warrant warrant = new Warrant("IW" + s, "NX(" + name + ")");
-        warrant.setTrainName(name);
-        warrant.setRoute(0, getOrders());
-        WarrantTableFrame tableFrame = WarrantTableFrame.getInstance();
-        tableFrame.getModel().addNXWarrant(warrant);
-        warrant.setRunMode(Warrant.MODE_MANUAL, null, null, null, false);
-        tableFrame.scrollTable();
-        closeFrame();
     }
 
     protected void closeFrame() {
@@ -460,26 +463,27 @@ public class NXFrame extends WarrantRoute {
         String text = null;
         float maxSpeed = _maxSpeed;
         float minSpeed = _minSpeed;
+        float factor = _throttleFactor;
         try {
             text = _maxSpeedBox.getText();
             maxSpeed = Float.parseFloat(text);
-            text = _minSpeedBox.getText();
+            text = _rampIncre.getText();
             minSpeed = Float.parseFloat(text);
+            text = _throttleFactorBox.getText();
+            factor = Float.parseFloat(text);
         } catch (NumberFormatException nfe) {
             return Bundle.getMessage("MustBeFloat", text);             
         }
         String speedErr;
         switch ( jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation()) {
             case SignalSpeedMap.SPEED_MPH:
-                float factor =  jmri.InstanceManager.getDefault(SignalSpeedMap.class).getDefaultThrottleFactor();
-                _maxSpeed = maxSpeed/(factor*_scale*2.2369363f);
-                _minSpeed = minSpeed/(factor*_scale*2.2369363f);
+                _maxSpeed = maxSpeed/(_throttleFactor*_scale*2.2369363f);
+                _minSpeed = minSpeed/(_throttleFactor*_scale*2.2369363f);
                 speedErr = Bundle.getMessage("speedMph");
                 break;
             case SignalSpeedMap.SPEED_KMPH:
-                factor =  jmri.InstanceManager.getDefault(SignalSpeedMap.class).getDefaultThrottleFactor();
-                _maxSpeed = maxSpeed/(factor*_scale*3.6f);
-                _minSpeed = minSpeed/(factor*_scale*3.6f);
+                _maxSpeed = maxSpeed/(_throttleFactor*_scale*3.6f);
+                _minSpeed = minSpeed/(_throttleFactor*_scale*3.6f);
                 speedErr = Bundle.getMessage("speedKmph");
                 break;
             default:
@@ -493,6 +497,7 @@ public class NXFrame extends WarrantRoute {
         if (_minSpeed>0.8 || _minSpeed<0.002|| _minSpeed>=_maxSpeed) {
             return Bundle.getMessage("badSpeed", minSpeed, speedErr);                                 
         }
+        _throttleFactor = factor;
         try {
             text = _rampInterval.getText();
             _intervalTime = Float.parseFloat(text)*1000;
@@ -541,13 +546,12 @@ public class NXFrame extends WarrantRoute {
         float speed = 0.0f;
         float rampLength = 0.0f;
         int numSteps = 0;
-        float factor =  jmri.InstanceManager.getDefault(SignalSpeedMap.class).getDefaultThrottleFactor();
         while (speed < _maxSpeed) {
             float dist;
             if (speedProfile != null) {
                 dist = speedProfile.getSpeed((speed + _minSpeed/2), _forward.isSelected())*_intervalTime/1000;
             } else {
-                dist = (speed + _minSpeed/2)*_intervalTime*factor;                    
+                dist = (speed + _minSpeed/2)*_intervalTime*_throttleFactor;                    
             }
             if (rampLength + dist <= totalLen/2) {
                 if ((speed + _minSpeed)>_maxSpeed) {
@@ -567,7 +571,7 @@ public class NXFrame extends WarrantRoute {
             }
         }            
         // add the smidge of distance needed to reach _maxSpeed
-//        rampLength += (_maxSpeed - speed)*_intervalTime*scaleFactor;
+//        rampLength += (_maxSpeed - speed)*_intervalTime*_throttleFactor;
         if (log.isDebugEnabled()) log.debug(numSteps+" speed steps of delta= "+
                 _minSpeed+" for rampLength = "+rampLength+" to reach speed "+_maxSpeed);
         return rampLength;
@@ -597,7 +601,6 @@ public class NXFrame extends WarrantRoute {
         
         // estimate for blocks of zero length - an estimate of ramp length
         boolean isForward = _forward.isSelected();
-        float scaleFactor =  jmri.InstanceManager.getDefault(SignalSpeedMap.class).getDefaultThrottleFactor();
         jmri.jmrit.roster.RosterEntry ent = getTrain();
         RosterSpeedProfile speedProfile = null;
         if (ent!=null) {
@@ -605,16 +608,14 @@ public class NXFrame extends WarrantRoute {
             if (speedProfile!=null) {
                 float s = speedProfile.getSpeed(_maxSpeed, isForward);
                 if (log.isDebugEnabled()) log.debug("SpeedProfile _maxSpeed setting= "+_maxSpeed+" speed= "+s+"mps");
-                if (s<=0.0f) {
+                if (s<=0.0f || s==Float.POSITIVE_INFINITY) {
                     speedProfile = null;
-                } else {
-                    scaleFactor = s/(_maxSpeed*1000);                    
                 }
             }
         }
-        if (log.isDebugEnabled()) log.debug("scaleFactor= "+scaleFactor+" from "+(speedProfile!=null?"SpeedProfile":"Default"));
+        if (log.isDebugEnabled()) log.debug("throttle Factor= "+_throttleFactor+" from "+(speedProfile!=null?"SpeedProfile":"Default"));
         
-        float defaultBlockLen = 6*_maxSpeed*_intervalTime/scaleFactor;      // just a wild guess
+        float defaultBlockLen = 6*_maxSpeed*_intervalTime/_throttleFactor;      // just a wild guess
         float totalLen = getTotalLength(defaultBlockLen);
         float rampLength = getRampLength(totalLen, speedProfile);
 
@@ -639,14 +640,14 @@ public class NXFrame extends WarrantRoute {
             if (speedProfile != null) {
                 curDistance = speedProfile.getSpeed(curSpeed, isForward)*speedTime/1000;
             } else {
-                curDistance = curSpeed*speedTime*scaleFactor;
+                curDistance = curSpeed*speedTime*_throttleFactor;
             }
             while (curDistance < blockLen && curSpeed < _maxSpeed) {             
                 float dist;
                 if (speedProfile != null) {
                     dist = speedProfile.getSpeed((curSpeed + _minSpeed/2), isForward)*_intervalTime/1000;
                 } else {
-                    dist = (curSpeed + _minSpeed/2)*_intervalTime*scaleFactor;
+                    dist = (curSpeed + _minSpeed/2)*_intervalTime*_throttleFactor;
                 }
                 float prevSpeed = curSpeed;
                 if ((curSpeed + _minSpeed)>_maxSpeed) {
@@ -681,10 +682,10 @@ public class NXFrame extends WarrantRoute {
                 }
             } else {
                 if (curDistance>=blockLen) {
-                    noopTime = (blockLen)/(curSpeed*scaleFactor);  // time to next block
-                    speedTime = (curDistance-blockLen)/(curSpeed*scaleFactor);                
+                    noopTime = (blockLen)/(curSpeed*_throttleFactor);  // time to next block
+                    speedTime = (curDistance-blockLen)/(curSpeed*_throttleFactor);                
                 } else {
-                    noopTime = (blockLen-curDistance)/(curSpeed*scaleFactor);  // time to next block
+                    noopTime = (blockLen-curDistance)/(curSpeed*_throttleFactor);  // time to next block
                     speedTime = _intervalTime - noopTime;   // time to next speed change                
                 }
             }
@@ -696,7 +697,7 @@ public class NXFrame extends WarrantRoute {
             if (remRamp >0.0f && nextIdx < orders.size()) {
                 totalLen -= blockLen;
                 if (log.isDebugEnabled()) log.debug("Leave RampUp block \""+blockName+"\" noopTime= "+noopTime+
-                        ", in distance="+curSpeed*noopTime*scaleFactor+", blockLen= "+blockLen+
+                        ", in distance="+curSpeed*noopTime*_throttleFactor+", blockLen= "+blockLen+
                         ", remRamp= "+remRamp);
                 bo = orders.get(nextIdx++);
                 blockName = bo.getBlock().getDisplayName();
@@ -735,7 +736,7 @@ public class NXFrame extends WarrantRoute {
                 if (speedProfile != null) {
                     noopTime = Math.round(1000*speedProfile.getDurationOfTravelInSeconds(isForward, curSpeed, Math.round(blockLen-curDistance)));
                 } else {
-                    noopTime = (blockLen-curDistance)/(curSpeed*scaleFactor);                                
+                    noopTime = (blockLen-curDistance)/(curSpeed*_throttleFactor);                                
                 }
                 if (log.isDebugEnabled()) log.debug("Leave MidRoute block \""+blockName+"\" noopTime= "+noopTime+
                         ", curDistance="+curDistance+", blockLen= "+blockLen+", totalLen= "+totalLen);
@@ -759,7 +760,7 @@ public class NXFrame extends WarrantRoute {
         if (speedProfile != null) {
             speedTime = Math.round(1000*speedProfile.getDurationOfTravelInSeconds(isForward, curSpeed, Math.round(totalLen-rampLength)));
         } else {
-            speedTime = (totalLen-rampLength)/(curSpeed*scaleFactor);
+            speedTime = (totalLen-rampLength)/(curSpeed*_throttleFactor);
         }
         curDistance = totalLen - rampLength;
         if (log.isDebugEnabled()) log.debug("Begin Ramp Down at block \""+blockName+"\" curDistance= "
@@ -781,7 +782,7 @@ public class NXFrame extends WarrantRoute {
                 if (speedProfile != null) {
                     dist = speedProfile.getSpeed((curSpeed+nextSpeed)/2, isForward)*_intervalTime/1000;
                 } else {
-                    dist = (curSpeed+nextSpeed)/2*_intervalTime*scaleFactor;
+                    dist = (curSpeed+nextSpeed)/2*_intervalTime*_throttleFactor;
                 }
                 curDistance += dist;
                 curSpeed = nextSpeed;
@@ -793,7 +794,7 @@ public class NXFrame extends WarrantRoute {
                     if (speedProfile != null) {
                         speedTime = Math.round(1000*speedProfile.getDurationOfTravelInSeconds(isForward, curSpeed, Math.round(curDistance-blockLen)));                        
                     } else {
-                        speedTime = (curDistance-blockLen)/(curSpeed*scaleFactor);                                        
+                        speedTime = (curDistance-blockLen)/(curSpeed*_throttleFactor);                                        
                     }                    
                 } else {
                     speedTime = _intervalTime;                    
@@ -804,7 +805,7 @@ public class NXFrame extends WarrantRoute {
             if (nextIdx < orders.size()) {
                 totalLen -= blockLen;
                 if (log.isDebugEnabled()) log.debug("Leave RampDown block \""+blockName+"\" noopTime= "+noopTime+
-                        ", in distance="+curSpeed*noopTime*scaleFactor+", blockLen= "+blockLen+
+                        ", in distance="+curSpeed*noopTime*_throttleFactor+", blockLen= "+blockLen+
                         ", totalLen= "+totalLen+", remRamp= "+remRamp);
                 bo = orders.get(nextIdx++);
                 blockName = bo.getBlock().getDisplayName();
@@ -820,7 +821,7 @@ public class NXFrame extends WarrantRoute {
                 if (speedProfile != null) {
                     curDistance = speedProfile.getSpeed(curSpeed, isForward)*speedTime/1000;
                 } else {
-                    curDistance = curSpeed*speedTime*scaleFactor;
+                    curDistance = curSpeed*speedTime*_throttleFactor;
                 }
             } else {
                 if (blockLen==0) {

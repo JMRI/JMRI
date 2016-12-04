@@ -32,7 +32,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(JMRIClientReporterTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientTurnoutManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientSensorManagerTest.class));
-        suite.addTest(new TestSuite(JMRIClientReporterManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientReporterManagerTest.class));
         suite.addTest(new TestSuite(JMRIClientTrafficControllerTest.class));
         suite.addTest(new TestSuite(JMRIClientSystemConnectionMemoTest.class));
         suite.addTest(new TestSuite(JMRIClientPowerManagerTest.class));
@@ -41,9 +41,6 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.jmriclient.configurexml.PackageTest.class));
         suite.addTest(jmri.jmrix.jmriclient.json.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.jmriclient.swing.PackageTest.class));
-// if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
-        // there are currently no swing tests.
-        // }
         return suite;
     }
 

@@ -1,12 +1,14 @@
 package jmri.jmrix.lenz.swing.lzv100;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * LZV100FrameTest.java
@@ -15,9 +17,11 @@ import junit.framework.TestSuite;
  *
  * @author	Paul Bender
  */
-public class LZV100FrameTest extends TestCase {
+public class LZV100FrameTest {
 
+    @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // infrastructure objects
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
 
@@ -25,29 +29,13 @@ public class LZV100FrameTest extends TestCase {
         Assert.assertNotNull(f);
     }
 
-    // from here down is testing infrastructure
-    public LZV100FrameTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LZV100FrameTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LZV100FrameTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 

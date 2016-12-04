@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.Component;
+import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.operations.OperationsSwingTestCase;
@@ -22,9 +23,9 @@ import jmri.jmrit.operations.trains.tools.TrainByCarTypeFrame;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations Trains GUI class
@@ -36,6 +37,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
     private final int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
 
     public void testTrainsTableFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         TrainManager tmanager = TrainManager.instance();
 
         TrainsTableFrame f = new TrainsTableFrame();
@@ -90,7 +94,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
      * the train fields.
      */
     public void testTrainEditFrame() {
-
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         TrainEditFrame trainEditFrame = new TrainEditFrame(null);
         trainEditFrame.setTitle("Test Edit Train Frame");
         ThreadingUtil.runOnGUI(()->{
@@ -254,6 +260,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
     }
 
     public void testTrainEditFrameBuildOptionFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         // test build options
         TrainManager tmanager = TrainManager.instance();
         Train t = tmanager.newTrain("Test Train New Name");
@@ -556,6 +565,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 //    }
 
     public void testTrainSwitchListEditFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         // check defaults
         Assert.assertTrue("All Trains", Setup.isSwitchListAllTrainsEnabled());
         Assert.assertTrue("Page per Train", Setup.getSwitchListPageFormat().equals(Setup.PAGE_NORMAL));
@@ -623,6 +635,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
      * Test that delete train works
      */
     public void testTrainEditFrameDelete() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         TrainManager tmanager = TrainManager.instance();
         Train t = tmanager.getTrainByName("Test_Train 1");
         Assert.assertNotNull(t);
@@ -648,6 +663,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
     }
 
     public void testTrainByCarTypeFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         TrainManager tmanager = TrainManager.instance();
         Train train = tmanager.getTrainByName("Test Train Name");
         TrainByCarTypeFrame f = new TrainByCarTypeFrame();
@@ -658,6 +676,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
     }
 
     public void testTrainsScheduleTableFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         TrainsScheduleTableFrame f = new TrainsScheduleTableFrame();
         ThreadingUtil.runOnGUI(()->{
             f.setVisible(true);
@@ -693,6 +714,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
     // test TrainIcon attributes
     public void testTrainIconAttributes() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         Train train1 = new Train("TESTTRAINID", "TESTNAME");
 
         Assert.assertEquals("Train Id", "TESTTRAINID", train1.getId());
@@ -715,6 +739,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
     }
 
     public void testTrainIcon() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         TrainManager tmanager = TrainManager.instance();
         RouteManager rmanager = RouteManager.instance();
         LocationManager lmanager = LocationManager.instance();

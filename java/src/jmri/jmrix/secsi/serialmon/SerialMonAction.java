@@ -12,11 +12,6 @@ import org.slf4j.LoggerFactory;
   */
 public class SerialMonAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4020943026749845219L;
-
     public SerialMonAction(String s) {
         super(s);
     }

@@ -50,16 +50,19 @@ public class RunTrainAction extends Action {
             }
             setRunning(true);
             // this can wait thread
-            if (!new TrainCustomSwitchList().checkProcessReady()) {
+            if (!TrainCustomSwitchList.instance().checkProcessReady()) {
                 log.warn(
                         "Timeout waiting for excel switch list program to complete previous opeation, train ({}), timeout value: {} seconds",
                         train.getName(), Control.excelWaitTime);
             }
             // this can wait thread
-            if (!new TrainCustomManifest().checkProcessReady()) {
+            if (!TrainCustomManifest.instance().checkProcessReady()) {
                 log.warn(
                         "Timeout waiting for excel manifest program to complete previous opeation, train ({}), timeout value: {} seconds",
                         train.getName(), Control.excelWaitTime);
+            }
+            if (TrainCustomManifest.instance().doesCommonFileExist()) {
+                log.warn("Manifest CSV common file exists!");
             }
             TrainCustomManifest.instance().addCVSFile(train.createCSVManifestFile());
             boolean status = TrainCustomManifest.instance().process();

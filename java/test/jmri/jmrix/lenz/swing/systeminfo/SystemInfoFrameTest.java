@@ -1,9 +1,11 @@
 package jmri.jmrix.lenz.swing.systeminfo;
 
+import java.awt.GraphicsEnvironment;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * SystemInfoFrameTest.java
@@ -13,9 +15,11 @@ import junit.framework.TestSuite;
  *
  * @author	Paul Bender
  */
-public class SystemInfoFrameTest extends TestCase {
+public class SystemInfoFrameTest {
 
+    @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.jmrix.lenz.XNetInterfaceScaffold t = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
         jmri.jmrix.lenz.XNetSystemConnectionMemo memo = new jmri.jmrix.lenz.XNetSystemConnectionMemo(t);
 
@@ -23,29 +27,14 @@ public class SystemInfoFrameTest extends TestCase {
         Assert.assertNotNull(f);
     }
 
-    // from here down is testing infrastructure
-    public SystemInfoFrameTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SystemInfoFrameTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SystemInfoFrameTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 

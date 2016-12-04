@@ -1,49 +1,37 @@
 package jmri.jmrix.pricom.pockettester;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.awt.GraphicsEnvironment;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
 
 /**
  * JUnit tests for the MonitorFrame class
  *
  * @author	Bob Jacobsen Copyright 2005
-  */
-public class PacketTableFrameTest extends TestCase {
+ */
+public class PacketTableFrameTest {
 
+    @Test
     public void testCreate() {
-        new PacketTableFrame();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        PacketTableFrame packetTableFrame = new PacketTableFrame();
+        Assert.assertNotNull(packetTableFrame);
     }
 
     // create and show, with some data present
+    @Test
     public void testShow() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PacketTableFrame f = new PacketTableFrame();
         f.initComponents();
         f.setVisible(true);
-        f.asciiFormattedMessage(PocketTesterTest.speed012A);
-        f.asciiFormattedMessage(PocketTesterTest.speed0123A);
-        f.asciiFormattedMessage(PocketTesterTest.speed012A);
-        f.asciiFormattedMessage(PocketTesterTest.acc0222A);
+        f.asciiFormattedMessage(PackageTest.speed012A);
+        f.asciiFormattedMessage(PackageTest.speed0123A);
+        f.asciiFormattedMessage(PackageTest.speed012A);
+        f.asciiFormattedMessage(PackageTest.acc0222A);
 
         // close frame
         f.dispose();
     }
-
-    // from here down is testing infrastructure
-    public PacketTableFrameTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {PacketTableFrameTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(PacketTableFrameTest.class);
-        return suite;
-    }
-
 }

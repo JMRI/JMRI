@@ -1,6 +1,7 @@
 package jmri;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
 /**
@@ -511,16 +512,23 @@ public interface Conditional extends NamedBean {
      * set the logic type (all AND's all OR's or mixed AND's and OR's set the
      * antecedent expression - should be a well formed boolean statement with
      * parenthesis indicating the order of evaluation
+     *
+     * @param type       the type
+     * @param antecedent the expression
      */
     public void setLogicType(int type, String antecedent);
 
     /**
      * Get antecedent (boolean expression) of Conditional
+     *
+     * @return the expression
      */
     public String getAntecedentExpression();
 
     /**
      * Get type of operators in the antecedent statement
+     *
+     * @return the type
      */
     public int getLogicType();
 
@@ -539,11 +547,15 @@ public interface Conditional extends NamedBean {
 
     /**
      * Set list of actions
+     *
+     * @param arrayList the actions
      */
     public void setAction(ArrayList<ConditionalAction> arrayList);
 
     /**
      * Make deep clone of actions
+     *
+     * @return a list of copies of actionss
      */
     public ArrayList<ConditionalAction> getCopyOfActions();
 
@@ -552,11 +564,15 @@ public interface Conditional extends NamedBean {
      * evaluate either True or False when this Conditional is calculated.
      * <P>
      * This method assumes that all information has been validated.
+     *
+     * @param arrayList the list of variables
      */
     public void setStateVariables(ArrayList<ConditionalVariable> arrayList);
 
     /**
      * Make deep clone of variables
+     *
+     * @return a list containing copies of variables
      */
     public ArrayList<ConditionalVariable> getCopyOfStateVariables();
 
@@ -564,24 +580,36 @@ public interface Conditional extends NamedBean {
      * Calculate this Conditional, triggering either or both actions if the user
      * specified conditions are met, and the Logix is enabled. Sets the state of
      * the conditional. Returns the calculated state of this Conditional.
+     *
+     * @param enabled true if Logix should be enabled; false otherwise
+     * @param evt     event to trigger if true
+     * @return the new state
      */
     public int calculate(boolean enabled, PropertyChangeEvent evt);
 
     /**
      * Check that an antecedent is well formed. If not, returns an error
      * message. Otherwise returns null.
+     *
+     * @param ant          the expression
+     * @param variableList list of variables
+     * @return true if well formed; false otherwise
      */
     public String validateAntecedent(String ant, ArrayList<ConditionalVariable> variableList);
 
     /**
      * Stop a sensor timer if one is actively delaying setting of the specified
      * sensor
+     *
+     * @param sname the name of the timer
      */
     public void cancelSensorTimer(String sname);
 
     /**
      * Stop a turnout timer if one is actively delaying setting of the specified
      * turnout
+     *
+     * @param sname the name of the timer
      */
     public void cancelTurnoutTimer(String sname);
 
@@ -590,22 +618,30 @@ public interface Conditional extends NamedBean {
      *
      * @return state value
      */
+    @Override
     public int getState();
 
     /**
      * Request a call-back when the bound KnownState property changes.
+     *
+     * @param l the listener
      */
-    public void addPropertyChangeListener(java.beans.PropertyChangeListener l);
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener l);
 
     /**
      * Remove a request for a call-back when a bound property changes.
+     *
+     * @param l the listener
      */
-    public void removePropertyChangeListener(java.beans.PropertyChangeListener l);
+    @Override
+    public void removePropertyChangeListener(PropertyChangeListener l);
 
     /**
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
      */
+    @Override
     public void dispose();  // remove _all_ connections!
 
 }

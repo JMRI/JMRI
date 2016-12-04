@@ -21,5 +21,6 @@
         </qualifier>
     <decVal/>
     <label xml:lang="de">Fernlicht-Schwelle</label>
+    <label xml:lang="cs">Mez zapnutí dálkových světel</label>
   </variable>
 </variables>

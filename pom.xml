@@ -18,6 +18,7 @@
         <jetty.version>9.2.17.v20160517</jetty.version>
         <powermock.version>1.6.5</powermock.version>
         <slf4j.version>1.7.21</slf4j.version>
+        <ant.jvm.args></ant.jvm.args>
     </properties>
     <scm>
         <connection>scm:git:https://github.com/JMRI/JMRI.git</connection>
@@ -40,6 +41,7 @@
                                 <phase>test</phase>
                                 <configuration>
                                     <target>
+                                        <property name="jvm.args">${ant.jvm.args}</property>
                                         <ant antfile="${basedir}/build.xml">
                                             <target name="travis-ci"/>
                                         </ant>
@@ -51,61 +53,43 @@
                             </execution>
                         </executions>  
                     </plugin>
-                    <!-- prevent maven's default compiler from being used -->
+                    <!-- prevent surefire (maven default test harness) from running tests -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <version>2.3.2</version>
-                        <executions>
-                            <execution>
-                                <id>default-compile</id>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>compile</goal>
-                                </goals>
-                                <configuration>
-                                    <skip>true</skip>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>default-testCompile</id>
-                                <phase>test-compile</phase>
-                                <goals>
-                                    <goal>testCompile</goal>
-                                </goals>
-                                <configuration>
-                                    <skip>true</skip>
-                                </configuration>
-                            </execution>
-                        </executions>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.19.1</version>
+                        <configuration>
+                            <skipTests>true</skipTests>
+                        </configuration>
                     </plugin>
-                    <!-- prevent maven's default resources handler from being used -->
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>travis-coverage</id>
+            <build>
+                <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-resources-plugin</artifactId>
-                        <version>2.6</version>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.8</version>
                         <executions>
                             <execution>
-                                <id>default-resources</id>
-                                <phase>resources</phase>
-                                <goals>
-                                    <goal>resources</goal>
-                                </goals>
+                                <id>test</id>
+                                <phase>test</phase>
                                 <configuration>
-                                    <skip>true</skip>
+                                    <target>
+                                        <property name="jvm.args">${ant.jvm.args}</property>
+                                        <ant antfile="${basedir}/build.xml">
+                                            <target name="travis-ci-coverage"/>
+                                        </ant>
+                                    </target>
                                 </configuration>
-                            </execution>
-                            <execution>
-                                <id>default-testResources</id>
-                                <phase>test-resources</phase>
                                 <goals>
-                                    <goal>testResources</goal>
+                                    <goal>run</goal>
                                 </goals>
-                                <configuration>
-                                    <skip>true</skip>
-                                </configuration>
                             </execution>
-                        </executions>
+                        </executions>  
                     </plugin>
                     <!-- prevent surefire (maven default test harness) from running tests -->
                     <plugin>
@@ -143,62 +127,6 @@
                                 </goals>
                             </execution>
                         </executions>  
-                    </plugin>
-                    <!-- prevent maven's default compiler from being used -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <version>2.3.2</version>
-                        <executions>
-                            <execution>
-                                <id>default-compile</id>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>compile</goal>
-                                </goals>
-                                <configuration>
-                                    <skip>true</skip>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>default-testCompile</id>
-                                <phase>test-compile</phase>
-                                <goals>
-                                    <goal>testCompile</goal>
-                                </goals>
-                                <configuration>
-                                    <skip>true</skip>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <!-- prevent maven's default resources handler from being used -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-resources-plugin</artifactId>
-                        <version>2.6</version>
-                        <executions>
-                            <execution>
-                                <id>default-resources</id>
-                                <phase>resources</phase>
-                                <goals>
-                                    <goal>resources</goal>
-                                </goals>
-                                <configuration>
-                                    <skip>true</skip>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>default-testResources</id>
-                                <phase>test-resources</phase>
-                                <goals>
-                                    <goal>testResources</goal>
-                                </goals>
-                                <configuration>
-                                    <skip>true</skip>
-                                </configuration>
-                            </execution>
-                        </executions>
                     </plugin>
                     <!-- prevent surefire (maven default test harness) from running tests -->
                     <plugin>
@@ -590,7 +518,7 @@
         <dependency>
             <groupId>org.openlcb</groupId>
             <artifactId>openlcb</artifactId>
-            <version>0.7.7</version>
+            <version>0.7.10</version>
         </dependency>
         <dependency>
             <groupId>ch.ntb</groupId>
@@ -632,6 +560,12 @@
             <groupId>org.powermock</groupId>
             <artifactId>powermock-api-mockito</artifactId>
             <version>${powermock.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans</groupId>
+            <artifactId>jemmy</artifactId>
+            <version>2.2.7.5</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

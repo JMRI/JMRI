@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year>
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-09-024</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+    <revision>
+      <revnumber>1.01</revnumber>
+      <date>2016-06-24</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Corrected spelling in mapping</revremark>
+    </revision>
+  </revhistory>
+  <aspecttable>B&amp;O-Semaphore</aspecttable>
+  <name>B&amp;O single arm semaphore</name>
+  <reference>As described by Joseph Hoevet from 1969 rules</reference>
+  <description>Appearances for a single arm permissive semaphore.</description>
+  <appearances>
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <reference>Rule 281</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-Semaphore/SE-1-high/rule-281.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <reference>Rule 285</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-Semaphore/SE-1-high/rule-285.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Restricted Proceed</aspectname>
+      <show>red</show>
+      <reference>Rule 291</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-Semaphore/SE-1-high/rule-291.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Unlit</aspectname>
+      <show>dark</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-Semaphore/SE-1-high/unlit.gif</imagelink>
+    </appearance>
+  </appearances>
+  <specificappearances>
+    <danger>
+      <aspect>Restricted Proceed</aspect>
+    </danger>
+    <permissive>
+      <aspect>Restricted Proceed</aspect>
+    </permissive>
+    <held>
+      <aspect>Restricted Proceed</aspect>
+    </held>
+    <dark>
+      <aspect>Unlit</aspect>
+    </dark>
+  </specificappearances>
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Limited</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Limited Clear</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Medium</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium Clear</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium Approach Medium</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium Approach Slow</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Slow</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium Approach</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Slow Clear</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Slow Approach Slow</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricted Proceed</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+</appearancetable>

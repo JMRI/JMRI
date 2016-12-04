@@ -5,13 +5,16 @@
   <enumChoice choice="Off">
     <choice>Off</choice>
     <choice xml:lang="it">Off</choice>
+    <choice xml:lang="cs">Zhasnuto</choice>
   </enumChoice>
   <enumChoice choice="Dim">
     <choice>Dim</choice>
     <choice xml:lang="it">Smorzato</choice>
+    <choice xml:lang="cs">Tlumené</choice>
   </enumChoice>
   <enumChoice choice="Bright">
     <choice>Bright</choice>
     <choice xml:lang="it">Luminoso</choice>
+    <choice xml:lang="cs">Jasný</choice>
   </enumChoice>
 </enumVal>

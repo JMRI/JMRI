@@ -27,6 +27,7 @@ public class ConsistController extends AbstractController implements ProgListene
         //  writeFile needs to be separate method
         if (WiThrottleManager.withrottlePreferencesInstance().isUseWiFiConsist()) {
             manager = new WiFiConsistManager();
+            jmri.InstanceManager.store(manager,jmri.ConsistManager.class);
             log.debug("Using WiFiConsisting");
         } else {
             manager = jmri.InstanceManager.getNullableDefault(jmri.ConsistManager.class);

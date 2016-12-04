@@ -20,6 +20,7 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusAddress;
+import jmri.jmrix.openlcb.swing.ClientActions;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
 import jmri.util.javaworld.GridLayout2;
@@ -33,6 +34,7 @@ import org.openlcb.IdentifyProducersMessage;
 import org.openlcb.Message;
 import org.openlcb.MimicNodeStore;
 import org.openlcb.NodeID;
+import org.openlcb.OlcbInterface;
 import org.openlcb.ProducerConsumerEventReportMessage;
 import org.openlcb.VerifyNodeIDNumberMessage;
 import org.openlcb.can.AliasMap;
@@ -89,6 +91,8 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     NodeID srcNodeID;
     MemoryConfigurationService mcs;
     MimicNodeStore store;
+    OlcbInterface iface;
+    ClientActions actions;
 
     public OpenLcbCanSendPane() {
         // most of the action is in initComponents
@@ -96,6 +100,8 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
+        iface = memo.get(OlcbInterface.class);
+        actions = new ClientActions(iface);
         tc = memo.getTrafficController();
         tc.addCanListener(this);
         connection = memo.get(org.openlcb.Connection.class);
@@ -465,80 +471,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     public void openCdiPane() {
-
-        CdiMemConfigReader cmcr = new CdiMemConfigReader(destNodeID(), store, mcs);
-
-        CdiMemConfigReader.ReaderAccess rdr = new CdiMemConfigReader.ReaderAccess() {
-            @Override
-            public void progressNotify(long bytesRead, long totalBytes) {
-                // TODO: 7/14/16 Add some visual progress indicator for reading the CDI.
-            }
-
-            public void provideReader(java.io.Reader r) {
-                JmriJFrame f = new JmriJFrame();
-                f.setTitle("Configure " + destNodeID());
-
-                CdiPanel m = new CdiPanel();
-                JScrollPane scrollPane = new JScrollPane(m, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-                Dimension minScrollerDim = new Dimension(800, 12);
-                scrollPane.setMinimumSize(minScrollerDim);
-
-                // create an adapter for reading and writing
-                CdiPanel.ReadWriteAccess accessor = new CdiPanel.ReadWriteAccess() {
-                    public void doWrite(long address, int space, byte[] data) {
-                        mcs.requestWrite(destNodeID(), space, address, data, new MemoryConfigurationService.McsWriteHandler() {
-                            @Override
-                            public void handleSuccess() {
-                            }
-
-                            @Override
-                            public void handleFailure(int errorCode) {
-                                log.warn("OpenLCB write failed: 0x{}", Integer.toHexString
-                                        (errorCode));
-                            }
-                        });
-                    }
-
-                    public void doRead(long address, int space, int length, final CdiPanel.ReadReturn handler) {
-                        mcs.requestRead(destNodeID(), space, address, length, new MemoryConfigurationService.McsReadHandler() {
-                            @Override
-                            public void handleReadData(NodeID dest, int space, long address,
-                                                       byte[] data) {
-                                log.debug("Read data received " + data.length + " bytes");
-                                handler.returnData(data);
-                            }
-
-                            @Override
-                            public void handleFailure(int errorCode) {
-                                log.warn("OpenLCB read failed: 0x{}", Integer.toHexString
-                                        (errorCode));
-                                // TODO: 7/14/16 somehow propagate the failure or make it visible
-                                // to the user.
-                            }
-                        });
-                    }
-                };
-
-                m.initComponents(accessor);
-
-                try {
-                    m.loadCDI(
-                            new org.openlcb.cdi.jdom.JdomCdiRep(
-                                    JdomCdiReader.getHeadFromReader(r)
-                            )
-                    );
-                } catch (Exception e) {
-                    log.error("caught exception while parsing CDI", e);
-                }
-
-                f.add(scrollPane);
-
-                f.pack();
-                f.setVisible(true);
-            }
-        };
-
-        cmcr.startLoadReader(rdr);
+        actions.openCdiWindow(destNodeID());
     }
 
     // control sequence operation

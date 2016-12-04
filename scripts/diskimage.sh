@@ -6,6 +6,11 @@
 #   The contents of the image are the same either way, and the tools are similar in capability, so we do it this way
 #   for consistency of the final product.
 #
+# arguments are:
+#    Release version string e.g. "4.5.5", "${release.version-string}" in Ant
+#    Output DMG file pathname e.g. dist/release/JMRI.4.5.5.dmg, "${dist.release}/JMRI.${release.version-string}.dmg" in Ant
+#    Input OS X build directory e.g. dist/MacOSX, "${dist.macosx}" in Ant
+#
 # Copyright 2007,2011 Bob Jacobsen, david d zuhn
 #
 

@@ -8,11 +8,13 @@
     <choice xml:lang="it">normale</choice>
     <choice xml:lang="fr">normal</choice>
     <choice xml:lang="de">Normal</choice>
+    <choice xml:lang="cs">normální</choice>
   </enumChoice>
   <enumChoice choice="reversed">
     <choice>reversed</choice>
     <choice xml:lang="it">invertita</choice>
     <choice xml:lang="fr">inversé</choice>
     <choice xml:lang="de">Invertiert</choice>
+    <choice xml:lang="cs">otočený</choice>
   </enumChoice>
 </enumVal>
