@@ -1,4 +1,4 @@
-package jmri.jmrix.loconet.duplexgroup.swing;
+package jmri.util.swing;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;

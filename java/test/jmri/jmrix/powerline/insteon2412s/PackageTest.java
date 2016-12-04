@@ -1,37 +1,47 @@
 package jmri.jmrix.powerline.insteon2412s;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+   ConnectionConfigTest.class,
+   jmri.jmrix.powerline.insteon2412s.configurexml.PackageTest.class,
+   SpecificDriverAdapterTest.class,
+   SpecificInsteonLightTest.class,
+   SpecificX10LightTest.class,
+   SpecificLightManagerTest.class,
+   SpecificSensorManagerTest.class,
+   SpecificMessageTest.class,
+   SpecificReplyTest.class,
+   SpecificSystemConnectionMemoTest.class,
+   SpecificTrafficControllerTest.class
+})
 /**
  * Tests for the jmri.jmrix.powerline.insteon2412s package.
  *
  * @author Bob Jacobsen Copyright 2003, 2007, 2008, 2009
+ *
+ * @author Paul Bender Copyright (C) 2016
  */
-public class PackageTest extends TestCase {
-
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
+public class PackageTest {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+        org.junit.runner.Result result = org.junit.runner.JUnitCore
+                 .runClasses(PackageTest.class);
+        for(org.junit.runner.notification.Failure fail: result.getFailures()) {
+            log.error(fail.toString());
+        }
+        //junit.textui.TestRunner.main(testCaseName);
+        if (result.wasSuccessful()) {
+            log.info("Success");
+        }
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite("jmri.jmrix.powerline.insteon2412s");
-        suite.addTest(SpecificMessageTest.suite());
-        suite.addTest(SpecificReplyTest.suite());
-        suite.addTest(SpecificTrafficControllerTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.powerline.insteon2412s.configurexml.PackageTest.class));
-        return suite;
-    }
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
 
 }
