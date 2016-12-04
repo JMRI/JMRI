@@ -1,4 +1,3 @@
-// Dcc4PcReporterManager.java
 package jmri.jmrix.dcc4pc;
 
 import jmri.Reporter;
@@ -35,5 +34,3 @@ public class Dcc4PcReporterManager extends jmri.managers.AbstractReporterManager
         return r;
     }
 }
-
-/* @(#)Dcc4PcReporterManager.java */

@@ -33,11 +33,6 @@ import org.slf4j.LoggerFactory;
  */
 public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements PropertyChangeListener, Dcc4PcPanelInterface {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8283443350770492724L;
-
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.dcc4pc.swing.boardlists.BoardListBundle");
 
     jmri.jmrix.dcc4pc.Dcc4PcSensorManager senMan;
@@ -95,11 +90,6 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
     private List<Integer> _boardListCount;
 
     public class ReaderBoardModel extends AbstractTableModel implements PropertyChangeListener {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -3477572258901807384L;
 
         ReaderBoardModel() {
             super();
@@ -336,11 +326,6 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.dcc4pc.swing.Dcc4PcNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6085890861522428975L;
 
         public Default() {
             super("Dcc4PC Command Monitor",

@@ -1,4 +1,3 @@
-// Dcc4PcSensorManager.java
 package jmri.jmrix.dcc4pc;
 
 import java.util.ArrayList;
@@ -1202,5 +1201,3 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
 
     private final static Logger log = LoggerFactory.getLogger(Dcc4PcSensorManager.class.getName());
 }
-
-/* @(#)Dcc4PcSensorManager.java */
