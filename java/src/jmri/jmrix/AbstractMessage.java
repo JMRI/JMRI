@@ -68,10 +68,11 @@ public abstract class AbstractMessage implements Message {
 
 
     /*
-     * equals operator.
+     * Equals operator compares only base data
      */
     @Override
     public boolean equals(Object obj){
+        if (obj == null) return false; // basic contract
         if( this.getClass() != obj.getClass() ) {
             return false;
         }
@@ -85,6 +86,17 @@ public abstract class AbstractMessage implements Message {
             }
         }
         return true;
+    }
+
+    /**
+     * Hash code from base data
+     */
+    public int hashCode() {
+        int retval = 0;
+        for(int i = 0;i<this.getNumDataElements();i++){ 
+            retval += this.getElement(i);
+        }
+        return retval;
     }
 
     private static Logger log = LoggerFactory.getLogger(AbstractMessage.class.getName());
