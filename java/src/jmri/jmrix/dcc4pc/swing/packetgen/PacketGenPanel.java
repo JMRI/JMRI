@@ -1,4 +1,3 @@
-// PacketGenFrame.java
 package jmri.jmrix.dcc4pc.swing.packetgen;
 
 import java.awt.Dimension;
@@ -16,10 +15,6 @@ import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
  */
 public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements Dcc4PcListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3220732618500304699L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
@@ -123,11 +118,6 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.dcc4pc.swing.Dcc4PcNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -82246637685914738L;
 
         public Default() {
             super("Dcc4PC Command Monitor",
