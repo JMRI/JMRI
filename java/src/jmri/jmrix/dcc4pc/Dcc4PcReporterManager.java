@@ -3,9 +3,7 @@ package jmri.jmrix.dcc4pc;
 import jmri.Reporter;
 
 /**
- * Dcc4PcReporterManager implements the ReporterManager.
- * <P>
- * Description:	Implement Reporter manager for dcc4pc
+ * Dcc4PcReporterManager implements the ReporterManage for dcc4pc
  *
  * @author	Kevin Dickerson Copyright (C) 2012
  */
