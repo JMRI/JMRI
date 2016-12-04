@@ -1527,9 +1527,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     @Override
     public String getDisplayName() {
         if (this.getRoadName() != null && !this.getRoadName().isEmpty()) { // NOI18N
-            return Bundle.getMessage("RosterEntryDisplayName", this.getId(), this.getRoadName(), this.getRoadNumber()); // NOI18N
+            return Bundle.getMessage("RosterEntryDisplayName", this.getDccAddress(), this.getRoadName(), this.getRoadNumber()); // NOI18N
         } else {
-            return this.getId();
+            return Bundle.getMessage("RosterEntryDisplayName", this.getDccAddress(), this.getId(), ""); // NOI18N
         }
     }
 

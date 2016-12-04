@@ -8,8 +8,6 @@ import org.junit.Test;
 
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioProvider;
-import com.pi4j.io.gpio.WiringPiGpioProviderBase;
-
 
 /**
  * Tests for ConnectionConfig class.
@@ -27,13 +25,7 @@ public class ConnectionConfigTest {
    @Before
    public void setUp(){
        apps.tests.Log4JFixture.setUp();
-       GpioProvider myprovider = new WiringPiGpioProviderBase(){
-           @Override
-           public String getName(){
-              return "RaspberryPi GPIO Provider";
-           }
-       };
-
+       GpioProvider myprovider = new PiGpioProviderScaffold();
        GpioFactory.setDefaultProvider(myprovider);
 
        jmri.util.JUnitUtil.resetInstanceManager();

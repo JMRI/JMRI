@@ -33,48 +33,56 @@
         <label>Total PWM Period (Motor Drive Frequency)</label>
         <label xml:lang="fr">Total PWM Period(fr)</label>
         <label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
+        <label xml:lang="ca">Període PWM (Freqüència de Control del Motor)</label>
       </variable>
       <variable item="EMF Feedback Cutout" CV="10">
         <decVal/>
         <label>EMF Feedback Cutout</label>
         <label xml:lang="fr">EMF Feedback Cutout(fr)</label>
         <label xml:lang="it">Limitazione Retroazione EMF</label>
+        <label xml:lang="ca">Limitació de retroacció de EMF</label>
       </variable>
       <variable item="Packet Time-out Value" CV="11">
         <decVal/>
         <label>Packet Time-out Value</label>
         <label xml:lang="fr">Packet Time-out Value(fr)</label>
         <label xml:lang="it">Valore Time-out Packet</label>
+         <label xml:lang="ca">Valor del Time-Out del Paquet</label>
       </variable>
       <variable item="Analog Power Conversion" CV="12" mask="XXXXXXXV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Power Conversion</label>
         <label xml:lang="fr">Analog Power Conversion(fr)</label>
         <label xml:lang="it">Conversione Alimentazione Analogica</label>
+         <label xml:lang="ca">Converció Alimentació Analògica</label>
       </variable>
       <variable item="Radio Power Conversion" CV="12" mask="XXXXXXVX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Radio Power Conversion</label>
         <label xml:lang="fr">Radio Power Conversion(fr)</label>
         <label xml:lang="it">Conversione Alimentazione Radio</label>
+         <label xml:lang="ca">Conversió Alimentació Ràdio</label>
       </variable>
       <variable item="Zero-1 Power Conversion" CV="12" mask="XXXXXVXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Zero-1 Power Conversion</label>
         <label xml:lang="fr">Zero-1 Power Conversion(fr)</label>
         <label xml:lang="it">Zero-1 Conversione Alimentazione</label>
+         <label xml:lang="ca">Conversió Alimentació Zero-1 </label>
       </variable>
       <variable item="Trix Power Conversion" CV="12" mask="XXXXVXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Trix Power Conversion</label>
         <label xml:lang="fr">Trix Power Conversion(fr)</label>
         <label xml:lang="it">Trix Conversione Alimentazione</label>
+         <label xml:lang="ca">Conversió Alimentació Trix</label>
       </variable>
       <variable item="CTC/Railcommand Power Conversion" CV="12" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>CTC/Railcommand Power Conversion</label>
         <label xml:lang="fr">CTC/Railcommand Power Conversion(fr)</label>
         <label xml:lang="it">CTC/Railcommand Conversione Alimentazione</label>
+         <label xml:lang="ca">Conversió Alimetnació CTC/Railcommand</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
@@ -87,6 +95,7 @@
         <label>Speed Table/Mid Range Cab Speed Step</label>
         <label xml:lang="fr">Speed Table/Mid Range Cab Speed Step(fr)</label>
         <label xml:lang="it">Tabella Velocità/Comando Palmare intermedio</label>
+         <label xml:lang="ca">Taula Velocitat / Comandament Regulador Intermig</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
@@ -103,6 +112,7 @@
         <label>Speed Table</label>
         <label xml:lang="fr">Speed Table(fr)</label>
         <label xml:lang="it">Tabella Velocità</label>
+         <label xml:lang="ca">Taula de Velocitats</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>

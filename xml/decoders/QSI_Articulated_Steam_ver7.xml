@@ -46,9 +46,7 @@
     <family name="QSI Articulated Steam Ver. 7" mfg="QSIndustries" lowVersionID="7">
       <model model="QSI Revolution Articulated Steam" numFns="14" numOuts="0" productID="4050">
       </model>
-      <model model="QSI Magnum Articulated Steam" numFns="14" numOuts="0" productID="4000">
-      </model>
-      <model model="QSI Magnum Articulated Steam" numFns="14" numOuts="0" productID="4004">
+      <model model="QSI Magnum Articulated Steam" numFns="14" numOuts="0" productID="4000,4004">
       </model>
       <model model="Q1 Pot" numFns="14" numOuts="0" productID="4048">
 	  </model>

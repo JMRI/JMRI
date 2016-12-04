@@ -491,7 +491,7 @@ public class ListedTableFrame extends BeanTableFrame {
     /**
      * ActionJList This deals with handling non-default mouse operations on the
      * List panel and allows for right click popups and double click to open new
-     * windows of over the items we are hovering over.
+     * windows of the items we are hovering over.
      */
     class ActionJList extends MouseAdapter {
 
@@ -503,7 +503,7 @@ public class ListedTableFrame extends BeanTableFrame {
         ActionJList(BeanTableFrame f) {
             frame = f;
             popUp = new JPopupMenu();
-            menuItem = new JMenuItem("Open in New Window");
+            menuItem = new JMenuItem("Open in New Window"); // TODO I18N
             popUp.add(menuItem);
             menuItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -546,7 +546,7 @@ public class ListedTableFrame extends BeanTableFrame {
 
         javax.swing.Timer clickTimer = null;
 
-        //Records the item index that the mouse is currenlty over
+        //Records the item index that the mouse is currently over
         int mouseItem;
 
         void showPopUp(MouseEvent e) {
