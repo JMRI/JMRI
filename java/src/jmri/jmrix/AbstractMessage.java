@@ -4,7 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Add description of class here.
+ * Base for various message implementations used by the 
+ * various abstract TrafficController classes.
  *
  * @author Bob Jacobsen Copyright 2007, 2008
  */
@@ -71,19 +72,19 @@ public abstract class AbstractMessage implements Message {
      */
     @Override
     public boolean equals(Object obj){
-       if( this.getClass() != obj.getClass() ) {
-          return false;
-       }
-       AbstractMessage m = (AbstractMessage) obj;
-       if(this.getNumDataElements() != m.getNumDataElements()){
-          return false;
-       }
-       for(int i = 0;i<this.getNumDataElements();i++){
-          if(this.getElement(i)!=m.getElement(i)){
-             return false;
-          }
-       }
-       return true;
+        if( this.getClass() != obj.getClass() ) {
+            return false;
+        }
+        AbstractMessage m = (AbstractMessage) obj;
+        if(this.getNumDataElements() != m.getNumDataElements()){
+            return false;
+        }
+        for(int i = 0;i<this.getNumDataElements();i++){
+            if(this.getElement(i)!=m.getElement(i)){
+                return false;
+            }
+        }
+        return true;
     }
 
     private static Logger log = LoggerFactory.getLogger(AbstractMessage.class.getName());
