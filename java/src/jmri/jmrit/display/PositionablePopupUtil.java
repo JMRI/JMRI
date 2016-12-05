@@ -388,11 +388,6 @@ public class PositionablePopupUtil {
     protected JMenu makeFontStyleMenu() {
         JMenu styleMenu = new JMenu(Bundle.getMessage("FontStyle"));
         styleMenu.add(italic = newStyleMenuItem(new AbstractAction(Bundle.getMessage("Italic")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -9122936163045992381L;
-
             public void actionPerformed(ActionEvent e) {
                 if (log.isDebugEnabled()) { // Avoid action lookup unless needed
                     log.debug("When style item selected {} italic state is {}", ((String) getValue(NAME)), italic.isSelected());
@@ -406,11 +401,6 @@ public class PositionablePopupUtil {
         }, Font.ITALIC));
 
         styleMenu.add(bold = newStyleMenuItem(new AbstractAction(Bundle.getMessage("Bold")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 6493363758504326865L;
-
             public void actionPerformed(ActionEvent e) {
                 if (log.isDebugEnabled()) { // Avoid action lookup unless needed
                     log.debug("When style item selected {} bold state is {}",

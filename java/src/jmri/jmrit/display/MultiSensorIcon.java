@@ -30,10 +30,6 @@ import org.slf4j.LoggerFactory;
  */
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6367789273498688886L;
     String _iconFamily;
 
     public MultiSensorIcon(Editor editor) {
@@ -225,11 +221,6 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("MultiSensor"));
         popup.add(new javax.swing.AbstractAction(txt) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -1982221537127335781L;
-
             public void actionPerformed(ActionEvent e) {
                 editItem();
             }
@@ -301,11 +292,6 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     public boolean setEditIconMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("MultiSensor"));
         popup.add(new AbstractAction(txt) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -7056802867889464742L;
-
             public void actionPerformed(ActionEvent e) {
                 edit();
             }

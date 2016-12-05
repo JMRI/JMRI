@@ -206,37 +206,19 @@
         <output name="3" label="" connection="other"/>
         <output name="4" label="" connection="other"/>
       </model>
-      <model model="BLI E3/E6 w/Mars" numFns="14" numOuts="14" productID="115">
+      <model model="BLI E3/E6 w/Mars" numFns="14" numOuts="14" productID="115,121">
         <output name="1" label="" connection="other"/>
         <output name="2" label="" connection="other"/>
         <output name="3" label="" connection="other"/>
         <output name="4" label="" connection="other"/>
       </model>
-      <model model="BLI E3/E6 wo/Mars" numFns="14" numOuts="14" productID="116">
+      <model model="BLI E3/E6 wo/Mars" numFns="14" numOuts="14" productID="116,122">
         <output name="1" label="" connection="other"/>
         <output name="2" label="" connection="other"/>
         <output name="3" label="" connection="other"/>
         <output name="4" label="" connection="other"/>
       </model>
-      <model model="BLI E3/E6 w/Mars" numFns="14" numOuts="14" productID="121">
-        <output name="1" label="" connection="other"/>
-        <output name="2" label="" connection="other"/>
-        <output name="3" label="" connection="other"/>
-        <output name="4" label="" connection="other"/>
-      </model>
-      <model model="BLI E3/E6 wo/Mars" numFns="14" numOuts="14" productID="122">
-        <output name="1" label="" connection="other"/>
-        <output name="2" label="" connection="other"/>
-        <output name="3" label="" connection="other"/>
-        <output name="4" label="" connection="other"/>
-      </model>
-      <model model="BLI E7 w/Mars" numFns="14" numOuts="14" productID="100">
-        <output name="1" label="" connection="other"/>
-        <output name="2" label="" connection="other"/>
-        <output name="3" label="" connection="other"/>
-        <output name="4" label="" connection="other"/>
-      </model>
-      <model model="BLI E7 w/Mars" numFns="14" numOuts="14" productID="119">
+      <model model="BLI E7 w/Mars" numFns="14" numOuts="14" productID="100,119">
         <output name="1" label="" connection="other"/>
         <output name="2" label="" connection="other"/>
         <output name="3" label="" connection="other"/>
@@ -428,7 +410,7 @@
         <output name="3" label="" connection="other"/>
         <output name="4" label="" connection="other"/>
       </model>
-      <model model="P2k F7B" numFns="14" numOuts="14" productID="178">
+      <model model="P2k F7B" numFns="14" numOuts="14" productID="160,178">
         <output name="1" label="" connection="other"/>
         <output name="2" label="" connection="other"/>
         <output name="3" label="" connection="other"/>
@@ -441,12 +423,6 @@
         <output name="4" label="" connection="other"/>
       </model>
       <model model="P2k F7A" numFns="14" numOuts="14" productID="159">
-        <output name="1" label="" connection="other"/>
-        <output name="2" label="" connection="other"/>
-        <output name="3" label="" connection="other"/>
-        <output name="4" label="" connection="other"/>
-      </model>
-      <model model="P2k F7B" numFns="14" numOuts="14" productID="160">
         <output name="1" label="" connection="other"/>
         <output name="2" label="" connection="other"/>
         <output name="3" label="" connection="other"/>
