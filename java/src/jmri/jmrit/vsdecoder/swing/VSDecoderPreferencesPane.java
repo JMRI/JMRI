@@ -115,8 +115,8 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
         });
 
         // Audio Mode
-        audioModeRoomButton = new JRadioButton("Room Ambient");
-        audioModeHeadphoneButton = new JRadioButton("Headphones");
+        audioModeRoomButton = new JRadioButton(Bundle.getMessage("ButtonAudioModeRoom"));
+        audioModeHeadphoneButton = new JRadioButton(Bundle.getMessage("ButtonAudioModeHeadphone"));
         audioModeGroup = new ButtonGroup();
         audioModeGroup.add(audioModeRoomButton);
         audioModeGroup.add(audioModeHeadphoneButton);
@@ -147,7 +147,7 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
         tfDefaultVSDFileName.addActionListener(al);
 
         // Set action listeners for save / cancel / reset buttons
-        jbSave.setText(Bundle.getMessage("VSDecoderPrefsSave"));
+        jbSave.setText(Bundle.getMessage("ButtonSave"));
         jbSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbSaveActionPerformed(evt);
@@ -162,7 +162,7 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
             }
         });
 
-        jbApply.setText(Bundle.getMessage("VSDecoderPrefsApply"));
+        jbApply.setText(Bundle.getMessage("ButtonApply"));
         jbApply.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbApplyActionPerformed(evt);
@@ -330,7 +330,7 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
     public void setContainer(JFrame f) {
         m_container = f;
         jbSave.setVisible(true);
-        jbCancel.setText(Bundle.getMessage("VSDecoderPrefsCancel"));
+        jbCancel.setText(Bundle.getMessage("ButtonCancel"));
     }
 
     public void propertyChange(PropertyChangeEvent evt) {
