@@ -2169,10 +2169,8 @@
             <antcall target="checknonascii" />
             <sequential>
                 <antcall target="compile-generated-source" />
-                <parallel>
-                    <antcall target="javadoc" />
-                    <antcall target="ci-test-travis" />
-                </parallel>
+                <antcall target="javadoc" />
+                <antcall target="ci-test-travis" />
             </sequential>
         </parallel>
     </target>
@@ -2183,10 +2181,8 @@
             <antcall target="checknonascii" />
             <sequential>
                 <antcall target="compile-generated-source" />
-                <parallel>
-                    <antcall target="javadoc" />
-                    <antcall target="ci-test-travis-coveragecheck" />
-                </parallel>
+                <antcall target="javadoc" />
+                <antcall target="ci-test-travis-coveragecheck" />
             </sequential>
         </parallel>
     </target>
