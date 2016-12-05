@@ -1317,8 +1317,6 @@
 
             <classpath refid="test.class.path"/>
 
-            <sysproperty key="jmri.skipschematests" value="true"/>  <!-- skip schema checks to improve speed -->
-
             <test name="apps.tests.AllTest" outfile="junit-results">
                 <formatter type="xml"/>
                 <formatter usefile="no" type="brief"/>
