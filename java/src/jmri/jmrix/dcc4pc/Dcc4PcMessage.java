@@ -1,4 +1,3 @@
-// Dcc4PcMessage.java
 package jmri.jmrix.dcc4pc;
 
 import org.slf4j.Logger;
@@ -192,5 +191,3 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
     private final static Logger log = LoggerFactory.getLogger(Dcc4PcMessage.class.getName());
 
 }
-
-/* @(#)Dcc4PcMessage.java */
