@@ -1,4 +1,3 @@
-// Dcc4PcConnectionTypeList.java
 package jmri.jmrix.dcc4pc;
 
 /**
