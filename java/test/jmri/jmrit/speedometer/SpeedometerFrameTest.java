@@ -1,0 +1,105 @@
+package jmri.jmrit.speedometer;
+
+import apps.tests.Log4JFixture;
+import jmri.InstanceManager;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+import java.awt.GraphicsEnvironment;
+import javax.swing.JFrame;
+import org.netbeans.jemmy.operators.JFrameOperator;
+
+/**
+ * Test simple functioning of SpeedometerFrame
+ *
+ * @author	Paul Bender Copyright (C) 2016
+ */
+public class SpeedometerFrameTest {
+
+    @Test
+    public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        SpeedometerFrame frame = new SpeedometerFrame();
+        Assert.assertNotNull("exists", frame);
+    }
+
+    @Test
+    public void testSetInputs(){
+        // this test only checks to see that we don't throw an exception when
+        // setting the input values.
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        SpeedometerFrame frame = new SpeedometerFrame();
+        frame.setInputs("IS1","IS2","IS3","5280","5280");
+    }
+
+    @Test
+    public void testVerifyInputsValid() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        SpeedometerFrame frame = new SpeedometerFrame();
+        // set the input values
+        frame.setInputs("IS1","IS2","IS3","5280","5280");
+        // then use reflection to call verifyInputs
+        java.lang.reflect.Method verifyInputsValidMethod = null;
+        try {
+            verifyInputsValidMethod = frame.getClass().getDeclaredMethod("verifyInputs", boolean.class);
+        } catch (java.lang.NoSuchMethodException nsm) {
+            Assert.fail("Could not find method verifyInputsValid in SpeedometerFrame class ");
+        }
+
+        // override the default permissions.
+        Assert.assertNotNull(verifyInputsValidMethod);
+        verifyInputsValidMethod.setAccessible(true);
+        try {
+           int valid = (int) verifyInputsValidMethod.invoke(frame,false);
+           Assert.assertEquals("Expected Valid Sensors",2,valid);
+        } catch(java.lang.IllegalAccessException ite){
+             Assert.fail("could not access method verifyInputsValid in SpeedometerFrame class");
+        } catch(java.lang.reflect.InvocationTargetException ite){
+             Throwable cause = ite.getCause();
+             Assert.fail("verifyInputsValid execution failed reason: " + cause.getMessage());
+        }
+    }
+
+    @Test
+    public void testVerifyInputsInValid() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        SpeedometerFrame frame = new SpeedometerFrame();
+        // don't set any values in the inputs.
+        // then use reflection to call verifyInputs
+        java.lang.reflect.Method verifyInputsValidMethod = null;
+        try {
+            verifyInputsValidMethod = frame.getClass().getDeclaredMethod("verifyInputs", boolean.class);
+        } catch (java.lang.NoSuchMethodException nsm) {
+            Assert.fail("Could not find method verifyInputsValid in SpeedometerFrame class ");
+        }
+
+        // override the default permissions.
+        Assert.assertNotNull(verifyInputsValidMethod);
+        verifyInputsValidMethod.setAccessible(true);
+        try {
+           int valid = (int) verifyInputsValidMethod.invoke(frame,false);
+           Assert.assertEquals("Expected Valid Sensors",0,valid);
+        } catch(java.lang.IllegalAccessException ite){
+             Assert.fail("could not access method verifyInputsValid in SpeedometerFrame class");
+        } catch(java.lang.reflect.InvocationTargetException ite){
+             Throwable cause = ite.getCause();
+             Assert.fail("verifyInputsValid execution failed reason: " + cause.getMessage());
+        }
+    }
+
+    @Before
+    public void setUp() {
+        Log4JFixture.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalSensorManager();
+    }
+
+    @After
+    public void tearDown() {
+        JUnitUtil.resetInstanceManager();
+        Log4JFixture.tearDown();
+    }
+}
