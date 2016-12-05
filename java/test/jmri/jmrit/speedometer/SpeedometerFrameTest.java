@@ -88,6 +88,7 @@ public class SpeedometerFrameTest {
              Throwable cause = ite.getCause();
              Assert.fail("verifyInputsValid execution failed reason: " + cause.getMessage());
         }
+        jmri.util.JUnitAppender.assertErrorMessage("Start sensor invalid:");
     }
 
     @Before
