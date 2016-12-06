@@ -46,10 +46,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SlipIconAdder extends IconAdder {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1180321824458466527L;
     HashMap<String, NamedBeanHandle<Turnout>> _turnoutMap = new HashMap<String, NamedBeanHandle<Turnout>>();
     int _lastIndex = 0;
 
@@ -446,11 +442,6 @@ public class SlipIconAdder extends IconAdder {
 
     class ExportHandler extends TransferHandler {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2774793567795135795L;
-
         public int getSourceActions(JComponent c) {
             return COPY;
         }
@@ -615,10 +606,6 @@ public class SlipIconAdder extends IconAdder {
      */
     class DropPanel extends JPanel implements DropTargetListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6045000647236056541L;
         DataFlavor dataFlavor;
 
         DropPanel() {

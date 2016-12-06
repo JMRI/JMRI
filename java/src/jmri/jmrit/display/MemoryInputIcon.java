@@ -162,11 +162,6 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     public boolean setEditIconMenu(javax.swing.JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameMemory"));
         popup.add(new javax.swing.AbstractAction(txt) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 7705138120207378262L;
-
             public void actionPerformed(ActionEvent e) {
                 edit();
             }
@@ -181,10 +176,6 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
 
     protected void edit() {
         _iconEditor = new IconAdder("Memory") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 7574333287425397624L;
             JSpinner spinner = new JSpinner(_spinModel);
 
             protected void addAdditionalButtons(JPanel p) {
