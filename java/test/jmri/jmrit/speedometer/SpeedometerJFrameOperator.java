@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 
 /*
  *  Helper class for operating the Speedometer Frame.
+ *
+ *  @author Paul Bender Copyright (C) 2016
  */
 public class SpeedometerJFrameOperator extends JFrameOperator{
 
