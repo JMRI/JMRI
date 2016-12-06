@@ -57,7 +57,8 @@
 	<label>Speed Table</label>
 	<label xml:lang="it">Tabella velocità</label>
 	<label xml:lang="de">Geschwindikeitskennlinie</label>
-        <label xml:lang="cs">Rychlostní tabulka</label>
+    <label xml:lang="cs">Rychlostní tabulka</label>
+    <label xml:lang="ca">Taula de Velocitats</label>
   </variable>
   
 </variables>
