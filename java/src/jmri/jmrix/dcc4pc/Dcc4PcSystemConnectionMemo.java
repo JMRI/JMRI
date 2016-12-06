@@ -1,4 +1,3 @@
-// Dcc4PcSystemConnectionMemo.javaf
 package jmri.jmrix.dcc4pc;
 
 import java.util.List;
@@ -209,6 +208,3 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
         progManager = prog;
     }
 }
-
-
-/* @(#)Dcc4PcSystemConnectionMemo.java */
