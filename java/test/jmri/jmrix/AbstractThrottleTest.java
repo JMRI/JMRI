@@ -1501,7 +1501,7 @@ public class AbstractThrottleTest extends TestCase {
         assertEquals("Full Speed", 127, instance.intSpeed(1.0F));
         float incre = 0.007874016f;
         float speed = incre;
-        // for normal non-zero settings, range is only 2 to 127
+        // Cannot get speeedStep 1. range is 2 to 127
         int i = 2;
         while (speed < 0.999f) {
             int result = instance.intSpeed(speed);

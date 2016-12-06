@@ -409,8 +409,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         return throttleSpeed;
     }
 
-    protected void setSpeed(float speed) {
-        if (log.isTraceEnabled()) log.trace("setSpeed("+speed+")");
+    protected void setSpeed(float s) {
+        if (log.isTraceEnabled()) log.trace("setSpeed("+s+")");
+        float speed = s;
         _throttle.setSpeedSetting(speed);
         // Do asynchronously, already within a synchronized block
         ThreadingUtil.runOnLayoutEventually(() -> {

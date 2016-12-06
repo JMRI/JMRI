@@ -476,6 +476,7 @@ public class NXFrame extends WarrantRoute {
         }
         String speedErr;
         switch ( jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation()) {
+            // _throttleFactor*100 is the first approximation for km/sec
             case SignalSpeedMap.SPEED_MPH:
                 _maxSpeed = maxSpeed/(_throttleFactor*223.69363f);
                 _minSpeed = minSpeed/(_throttleFactor*223.69363f);
