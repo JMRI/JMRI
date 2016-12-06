@@ -12,9 +12,9 @@ import javax.swing.JLabel;
  *
  *  @author Paul Bender Copyright (C) 2016
  */
-public class SpeedometerJFrameOperator extends JFrameOperator{
+public class SpeedometerScaffold extends JFrameOperator{
 
-   public SpeedometerJFrameOperator(){
+   public SpeedometerScaffold(){
         super(Bundle.getMessage("TitleSpeedometer"));
    }
 

@@ -96,7 +96,7 @@ public class SpeedometerFrameTest {
         // pressing the buttons and all information is filled in.
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpeedometerFrame frame = new SpeedometerFrame();
-        SpeedometerJFrameOperator operator = new SpeedometerJFrameOperator();
+        SpeedometerScaffold operator = new SpeedometerScaffold();
         operator.setStartSensorValue("IS1");
         operator.setStopSensor1Value("IS2");
         operator.setDistance1Value("200");
