@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
-import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Test simple functioning of SpeedometerFrame
@@ -89,6 +88,21 @@ public class SpeedometerFrameTest {
              Assert.fail("verifyInputsValid execution failed reason: " + cause.getMessage());
         }
         jmri.util.JUnitAppender.assertErrorMessage("Start sensor invalid:");
+    }
+
+    @Test
+    public void testStartButton(){
+        // this test only checks to see that we don't throw an exception when
+        // pressing the buttons and all information is filled in.
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        SpeedometerFrame frame = new SpeedometerFrame();
+        SpeedometerJFrameOperator operator = new SpeedometerJFrameOperator();
+        operator.setStartSensorValue("IS1");
+        operator.setStopSensor1Value("IS2");
+        operator.setDistance1Value("200");
+        operator.setStopSensor2Value("IS3");
+        operator.setDistance2Value("400");
+        operator.pushStartButton();
     }
 
     @Before
