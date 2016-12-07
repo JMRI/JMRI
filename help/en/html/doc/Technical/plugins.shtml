@@ -57,7 +57,7 @@
       <p>The details of scripting are <a href="../../tools/scripting">covered
         elsewhere</a>.
       </p>
-      <p>Examples of scripts that modify JMRI behavor are:</p>
+      <p>Examples of scripts that modify JMRI behavior are:</p>
       <ul>
         <li><a href="http://jmri.org/jython/AddButton.py">AddButton.py</a>
           sample script adds a script button to the main window.
@@ -72,12 +72,12 @@
         </li>
       </ul>
 
-      <h2 id="service">Implement a Service Loader<h2>
+      <h2 id="service">Implement a Service Loader</h2>
 
       <p>Java contains a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html">Service Loader</a>
         that allows classes implementing a specific API to provide a service to
         a Java application without requiring that the application have prior
-        dependencies defined for tha service.
+        dependencies defined for that service.
       </p>
       <p>Services are provided by creating a JAR for that service and appending
         it to the JMRI classpath. See <a href="StartUpScripts.html">Startup Scripts</a>
@@ -105,7 +105,7 @@
           retrieve, and validate preferences within a JMRI configuration
           profile. If a plugin needs to take action very early in the JMRI
           application startup sequence, it would need to provide a
-          PrefencesManager service.
+          PreferencesManager service.
         </dd>
         <dt><a href="http://jmri.org/JavaDoc/doc/jmri/swing/PreferencesPanel.html">PreferencesPanel</a></dt>
         <dd>Additional preferences can be displayed in the preferences window by
