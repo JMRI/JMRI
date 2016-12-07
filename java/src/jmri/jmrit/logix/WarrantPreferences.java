@@ -20,10 +20,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Hold configuration data for Warrants, includes Speed Map
- * 
+ *
  * @author Pete Cressman Copyright (C) 2015
  */
-public class WarrantPreferences  {
+public class WarrantPreferences {
 
     public static final String layoutParams = "layoutParams";   // NOI18N
     public static final String LayoutScale = "layoutScale";     // NOI18N
@@ -38,50 +38,50 @@ public class WarrantPreferences  {
     public static final String Interpretation = "interpretation"; // NOI18N
     public static final String AppearancePrefs = "appearancePrefs"; // NOI18N
 
-    private String  _fileName;
-    private float   _scale = 87.1f;
-    private int     _searchDepth = 20;      // How many tree nodes (blocks) to walk in finding routes
-    private float   _throttleScale = 0.5f;  // factor to approximate throttle setting to track speed
-    
+    private String _fileName;
+    private float _scale = 87.1f;
+    private int _searchDepth = 20;      // How many tree nodes (blocks) to walk in finding routes
+    private float _throttleScale = 0.5f;  // factor to approximate throttle setting to track speed
+
     private OrderedHashtable<String, Float> _speedNames;
     private OrderedHashtable<String, String> _headAppearances;
     private int _interpretation = SignalSpeedMap.PERCENT_NORMAL;    // Interpretation of values in speed name table
-    
+
     private int _msIncrTime = 1000;         // time in milliseconds between speed changes ramping up or down
     private float _throttleIncr = 0.04f;    // throttle increment for each ramp speed change
-    
+
     WarrantPreferences(String fileName) {
         openFile(fileName);
     }
-    
-    public void openFile(String name){
+
+    public void openFile(String name) {
         _fileName = name;
         WarrantPreferencesXml prefsXml = new WarrantPreferencesXml();
         File file = new File(_fileName);
         Element root;
         try {
             root = prefsXml.rootFromFile(file);
-        }catch (java.io.FileNotFoundException ea) {
+        } catch (java.io.FileNotFoundException ea) {
             log.debug("Could not find Warrant preferences file.  Normal if preferences have not been saved before.");
             root = null;
-        }catch (Exception eb) {
+        } catch (Exception eb) {
             log.error("Exception while loading warrant preferences: " + eb);
             root = null;
         }
-        if (root != null){
+        if (root != null) {
             log.info("Found Warrant preferences file: {}", _fileName);
             loadLayoutParams(root.getChild(layoutParams));
             if (!loadSpeedMap(root.getChild(SpeedMapParams))) {
                 loadSpeedMapFromOldXml();
-                log.error("Unable to read ramp parameters. Setting to default values.");                            
+                log.error("Unable to read ramp parameters. Setting to default values.");
             }
         } else {
             loadSpeedMapFromOldXml();
         }
     }
-    
+
     public void loadLayoutParams(Element child) {
-        if (child==null) {
+        if (child == null) {
             return;
         }
         Attribute a;
@@ -102,10 +102,10 @@ public class WarrantPreferences  {
             }
         }
     }
-    
+
     private void loadSpeedMapFromOldXml() {
         SignalSpeedMap map = jmri.InstanceManager.getNullableDefault(SignalSpeedMap.class);
-        if (map==null) {
+        if (map == null) {
             log.error("Cannot find signalSpeeds.xml file.");
             return;
         }
@@ -113,10 +113,10 @@ public class WarrantPreferences  {
         _speedNames = new jmri.util.OrderedHashtable<String, Float>();
         while (it.hasNext()) {
             String name = it.next();
-            _speedNames.put(name, Float.valueOf(map.getSpeed(name))); 
+            _speedNames.put(name, Float.valueOf(map.getSpeed(name)));
         }
-        
-         Enumeration<String> en = map.getAppearanceIterator();
+
+        Enumeration<String> en = map.getAppearanceIterator();
         _headAppearances = new OrderedHashtable<String, String>();
         while (en.hasMoreElements()) {
             String name = en.nextElement();
@@ -125,13 +125,13 @@ public class WarrantPreferences  {
         setTimeIncre(map.getStepDelay());
         setThrottleIncre(map.getStepIncrement());
     }
-    
+
     public boolean loadSpeedMap(Element child) {
-        if (child==null) {
+        if (child == null) {
             return false;
         }
         Element rampParms = child.getChild(StepIncrements);
-        if (rampParms==null) {
+        if (rampParms == null) {
             return false;
         }
         Attribute a;
@@ -159,16 +159,16 @@ public class WarrantPreferences  {
                 log.error("Unable to read throttle scale. Setting to default value (0.70f).", ex);
             }
         }
-                
+
         rampParms = child.getChild(SpeedNamePrefs);
-        if (rampParms==null) {
+        if (rampParms == null) {
             return false;
         }
         if ((a = rampParms.getAttribute("percentNormal")) != null) {
             if (a.getValue().equals("yes")) {
                 setInterpretation(1);
             } else {
-                setInterpretation(2);               
+                setInterpretation(2);
             }
         }
         if ((a = rampParms.getAttribute(Interpretation)) != null) {
@@ -187,14 +187,16 @@ public class WarrantPreferences  {
             try {
                 speed = Float.valueOf(list.get(i).getText());
             } catch (NumberFormatException nfe) {
-                log.error(SpeedNamePrefs+" has invalid content for "+name+" = "+list.get(i).getText());
+                log.error(SpeedNamePrefs + " has invalid content for " + name + " = " + list.get(i).getText());
             }
-            if (log.isDebugEnabled()) log.debug("Add "+name+", "+speed+" to AspectSpeed Table");
+            if (log.isDebugEnabled()) {
+                log.debug("Add " + name + ", " + speed + " to AspectSpeed Table");
+            }
             _speedNames.put(name, speed);
         }
 
         rampParms = child.getChild(AppearancePrefs);
-        if (rampParms==null) {
+        if (rampParms == null) {
             return false;
         }
         _headAppearances = new OrderedHashtable<String, String>();
@@ -204,31 +206,34 @@ public class WarrantPreferences  {
             String speed = list.get(i).getText();
             _headAppearances.put(name, speed);
         }
-        
+
         setSpeedMap();
         return true;
-}       
-    
+    }
+
     public void save() {
         if (_fileName == null) {
             log.error("_fileName null. Could not create warrant preferences file.");
             return;
         }
 
-        XmlFile xmlFile = new XmlFile(){};
+        XmlFile xmlFile = new XmlFile() {
+        };
         xmlFile.makeBackupFile(_fileName);
-        File file=new File(_fileName);
+        File file = new File(_fileName);
         try {
-            File parentDir=file.getParentFile();
-            if(!parentDir.exists()){
+            File parentDir = file.getParentFile();
+            if (!parentDir.exists()) {
                 if (!parentDir.mkdir()) {
-                    log.warn("Could not create parent directory for prefs file :"+_fileName);
+                    log.warn("Could not create parent directory for prefs file :" + _fileName);
                     return;
                 }
             }
-            if (file.createNewFile()) log.debug("Creating new warrant prefs file: "+_fileName);
-        }catch (Exception ea) {
-            log.error("Could not create warrant preferences file at "+_fileName+". "+ea);
+            if (file.createNewFile()) {
+                log.debug("Creating new warrant prefs file: " + _fileName);
+            }
+        } catch (Exception ea) {
+            log.error("Could not create warrant preferences file at " + _fileName + ". " + ea);
         }
 
         try {
@@ -237,8 +242,8 @@ public class WarrantPreferences  {
             if (store(root)) {
                 xmlFile.writeXML(file, doc);
             }
-        }catch (Exception eb){
-            log.warn("Exception in storing warrant xml: "+eb);
+        } catch (Exception eb) {
+            log.warn("Exception in storing warrant xml: " + eb);
         }
     }
 
@@ -248,57 +253,57 @@ public class WarrantPreferences  {
             prefs.setAttribute(LayoutScale, Float.toString(getScale()));
             prefs.setAttribute(SearchDepth, Integer.toString(getSearchDepth()));
             root.addContent(prefs);
-            
+
             prefs = new Element(SpeedMapParams);
             Element rampPrefs = new Element(StepIncrements);
             rampPrefs.setAttribute(TimeIncrement, Integer.toString(getTimeIncre()));
             rampPrefs.setAttribute(RampIncrement, Float.toString(getThrottleIncre()));
             rampPrefs.setAttribute(ThrottleScale, Float.toString(getThrottleScale()));
             prefs.addContent(rampPrefs);
-            
+
             rampPrefs = new Element(SpeedNamePrefs);
             rampPrefs.setAttribute(Interpretation, Integer.toString(getInterpretation()));
-            
+
             Iterator<Entry<String, Float>> it = getSpeedNameEntryIterator();
             while (it.hasNext()) {
                 Entry<String, Float> ent = it.next();
-                Element step =  new Element(ent.getKey());
+                Element step = new Element(ent.getKey());
                 step.setText(ent.getValue().toString());
                 rampPrefs.addContent(step);
             }
             prefs.addContent(rampPrefs);
-        
+
             rampPrefs = new Element(AppearancePrefs);
-            Element step =  new Element("SignalHeadStateRed");
+            Element step = new Element("SignalHeadStateRed");
             step.setText(_headAppearances.get(Bundle.getMessage("SignalHeadStateRed")));
             rampPrefs.addContent(step);
-            step =  new Element("SignalHeadStateFlashingRed");
+            step = new Element("SignalHeadStateFlashingRed");
             step.setText(_headAppearances.get(Bundle.getMessage("SignalHeadStateFlashingRed")));
             rampPrefs.addContent(step);
-            step =  new Element("SignalHeadStateGreen");
+            step = new Element("SignalHeadStateGreen");
             step.setText(_headAppearances.get(Bundle.getMessage("SignalHeadStateGreen")));
             rampPrefs.addContent(step);
-            step =  new Element("SignalHeadStateFlashingGreen");
+            step = new Element("SignalHeadStateFlashingGreen");
             step.setText(_headAppearances.get(Bundle.getMessage("SignalHeadStateFlashingGreen")));
             rampPrefs.addContent(step);
-            step =  new Element("SignalHeadStateYellow");
+            step = new Element("SignalHeadStateYellow");
             step.setText(_headAppearances.get(Bundle.getMessage("SignalHeadStateYellow")));
             rampPrefs.addContent(step);
-            step =  new Element("SignalHeadStateFlashingYellow");
+            step = new Element("SignalHeadStateFlashingYellow");
             step.setText(_headAppearances.get(Bundle.getMessage("SignalHeadStateFlashingYellow")));
             rampPrefs.addContent(step);
-            step =  new Element("SignalHeadStateLunar");
+            step = new Element("SignalHeadStateLunar");
             step.setText(_headAppearances.get(Bundle.getMessage("SignalHeadStateLunar")));
             rampPrefs.addContent(step);
-            step =  new Element("SignalHeadStateFlashingLunar");
+            step = new Element("SignalHeadStateFlashingLunar");
             step.setText(_headAppearances.get(Bundle.getMessage("SignalHeadStateFlashingLunar")));
             rampPrefs.addContent(step);
-            prefs.addContent(rampPrefs);            
+            prefs.addContent(rampPrefs);
         } catch (Exception ex) {
-            log.warn("Exception in storing warrant xml: "+ex);
+            log.warn("Exception in storing warrant xml: " + ex);
             ex.printStackTrace();
             return false;
-        }       
+        }
         root.addContent(prefs);
         return true;
     }
@@ -310,6 +315,7 @@ public class WarrantPreferences  {
         setSpeedMap();
         setNXdata();
     }
+
     private void setNXdata() {
         NXFrame._scale = _scale;
         WarrantRoute._depth = _searchDepth;
@@ -318,43 +324,48 @@ public class WarrantPreferences  {
         NXFrame._throttleFactor = _throttleScale;
         if (!GraphicsEnvironment.isHeadless()) {
             NXFrame frame = NXFrame.getInstance();
-            frame.updatePanel(_interpretation);            
+            frame.updatePanel(_interpretation);
         }
     }
+
     private void setSpeedMap() {
         SignalSpeedMap map = new SignalSpeedMap();
-        map.setAspectTable(getSpeedNameEntryIterator(), _interpretation);       
+        map.setAspectTable(getSpeedNameEntryIterator(), _interpretation);
         map.setAppearanceTable(getAppearanceEntryIterator());
         map.setRampParams(_throttleIncr, _msIncrTime);
         map.setDefaultThrottleFactor(_throttleScale);
         map.setLayoutScale(_scale);
-        jmri.InstanceManager.setDefault(SignalSpeedMap.class, map);        
+        jmri.InstanceManager.setDefault(SignalSpeedMap.class, map);
     }
 
     float getScale() {
         return _scale;
     }
+
     void setScale(float s) {
         _scale = s;
     }
-    
+
     public float getThrottleScale() {
         return _throttleScale;
     }
+
     void setThrottleScale(float f) {
         _throttleScale = f;
     }
-    
+
     int getSearchDepth() {
         return _searchDepth;
     }
+
     void setSearchDepth(int d) {
         _searchDepth = d;
     }
-    
+
     int getTimeIncre() {
         return _msIncrTime;
     }
+
     void setTimeIncre(int t) {
         _msIncrTime = t;
     }
@@ -362,64 +373,73 @@ public class WarrantPreferences  {
     float getThrottleIncre() {
         return _throttleIncr;
     }
+
     void setThrottleIncre(float ti) {
         _throttleIncr = ti;
     }
-    
+
     Iterator<Entry<String, Float>> getSpeedNameEntryIterator() {
         java.util.Enumeration<String> keys = _speedNames.keys();
         java.util.Vector<Entry<String, Float>> vec = new java.util.Vector<Entry<String, Float>>();
         while (keys.hasMoreElements()) {
             String key = keys.nextElement();
-            vec.add( new java.util.AbstractMap.SimpleEntry<String, Float>(key, _speedNames.get(key)));
+            vec.add(new java.util.AbstractMap.SimpleEntry<String, Float>(key, _speedNames.get(key)));
         }
-        return vec.iterator();  
+        return vec.iterator();
     }
+
     int getSpeedNamesSize() {
         return _speedNames.size();
     }
+
     Float getSpeedNameValue(String key) {
         return _speedNames.get(key);
     }
+
     void setSpeedNames(ArrayList<DataPair<String, Float>> speedNameMap) {
         _speedNames = new jmri.util.OrderedHashtable<String, Float>();
-        for (int i=0; i<speedNameMap.size(); i++) {
+        for (int i = 0; i < speedNameMap.size(); i++) {
             DataPair<String, Float> dp = speedNameMap.get(i);
-            _speedNames.put(dp.getKey(), dp.getValue()); 
+            _speedNames.put(dp.getKey(), dp.getValue());
         }
     }
-    
+
     Iterator<Entry<String, String>> getAppearanceEntryIterator() {
         java.util.Enumeration<String> keys = _headAppearances.keys();
         java.util.Vector<Entry<String, String>> vec = new java.util.Vector<Entry<String, String>>();
         while (keys.hasMoreElements()) {
             String key = keys.nextElement();
-            vec.add( new java.util.AbstractMap.SimpleEntry<String, String>(key, _headAppearances.get(key)));
+            vec.add(new java.util.AbstractMap.SimpleEntry<String, String>(key, _headAppearances.get(key)));
         }
-        return vec.iterator();          
+        return vec.iterator();
     }
+
     int getAppeaancesSize() {
         return _headAppearances.size();
     }
+
     String getAppearanceValue(String key) {
         return _headAppearances.get(key);
     }
+
     void setAppearances(ArrayList<DataPair<String, String>> appearanceMap) {
         _headAppearances = new jmri.util.OrderedHashtable<String, String>();
-        for (int i=0; i<appearanceMap.size(); i++) {
+        for (int i = 0; i < appearanceMap.size(); i++) {
             DataPair<String, String> dp = appearanceMap.get(i);
-            _headAppearances.put(dp.getKey(), dp.getValue()); 
+            _headAppearances.put(dp.getKey(), dp.getValue());
         }
     }
-    
-    int getInterpretation()  {
+
+    int getInterpretation() {
         return _interpretation;
     }
+
     void setInterpretation(int interp) {
         _interpretation = interp;
     }
-    
-    public static class WarrantPreferencesXml extends XmlFile{}
+
+    public static class WarrantPreferencesXml extends XmlFile {
+    }
 
     private final static Logger log = LoggerFactory.getLogger(WarrantPreferences.class.getName());
 }
