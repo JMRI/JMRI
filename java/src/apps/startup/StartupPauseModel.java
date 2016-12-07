@@ -20,7 +20,7 @@ public class StartupPauseModel extends AbstractStartupModel {
     /**
      * {@inheritDoc}
      * 
-     * @return true if duration >= 0; false otherwise
+     * @return true if duration greater than or equal to 0; false otherwise
      */
     @Override
     public boolean isValid() {
