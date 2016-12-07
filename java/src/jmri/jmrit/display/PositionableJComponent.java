@@ -1,7 +1,5 @@
 package jmri.jmrit.display;
 
-//import java.awt.event.MouseListener;
-//import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
@@ -16,10 +14,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PositionableJComponent extends JComponent implements Positionable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4906476926163826709L;
     protected Editor _editor = null;
 
     private ToolTip _tooltip;

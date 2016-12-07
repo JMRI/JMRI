@@ -1,6 +1,7 @@
 package jmri.swing;
 
 import javax.swing.JComponent;
+import jmri.spi.JmriServiceProviderInterface;
 
 /**
  * An interface to define methods that the Preferences Window can and should
@@ -13,7 +14,7 @@ import javax.swing.JComponent;
  *
  * @author Randall Wood (C) 2012, 2014
  */
-public interface PreferencesPanel {
+public interface PreferencesPanel extends JmriServiceProviderInterface {
 
     /**
      * Get the Preferences Item identifier.

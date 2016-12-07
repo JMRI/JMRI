@@ -158,10 +158,6 @@ abstract public class AbstractMRReply extends AbstractMessage {
         }
 
         return -1;
-
-        // find a specific string in the reply
-        //String rep = new String(_dataChars, 0, _nDataChars);
-        //return rep.indexOf(s);
     }
 
     public int skipWhiteSpace(int index) {
@@ -184,6 +180,3 @@ abstract public class AbstractMRReply extends AbstractMessage {
     private final static Logger log = LoggerFactory.getLogger(AbstractMRReply.class.getName());
 
 }
-
-
-/* @(#)AbstractMRReply.java */

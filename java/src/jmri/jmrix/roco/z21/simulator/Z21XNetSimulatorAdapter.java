@@ -206,9 +206,14 @@ public class Z21XNetSimulatorAdapter {
                 }
                 break;
             case XNetConstants.ALL_ESTOP:
-            case XNetConstants.EMERGENCY_STOP_XNETV1V2:
                 log.debug("Emergency Stop Received");
                 reply = emergencyStopReply();
+                break;
+            case XNetConstants.EMERGENCY_STOP:
+                reply = okReply();
+                break;
+            case XNetConstants.EMERGENCY_STOP_XNETV1V2:
+                reply = okReply();
                 break;
            case XNetConstants.ACC_OPER_REQ:
                 log.debug("Accessory Operations Request Received");
