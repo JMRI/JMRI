@@ -311,9 +311,14 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                 }
                 break;
             case XNetConstants.ALL_ESTOP:    // ALL_ESTOP is XNet V4
-            case XNetConstants.EMERGENCY_STOP_XNETV1V2:
                 csStatus=csEmergencyStop;
                 reply = emergencyStopReply();
+                break;
+            case XNetConstants.EMERGENCY_STOP:
+                reply = okReply();
+                break;
+            case XNetConstants.EMERGENCY_STOP_XNETV1V2:
+                reply = okReply();
                 break;
             case XNetConstants.ACC_OPER_REQ:
                 reply = okReply();

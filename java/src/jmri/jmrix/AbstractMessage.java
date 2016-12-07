@@ -4,7 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Add description of class here.
+ * Base for various message implementations used by the 
+ * various abstract TrafficController classes.
  *
  * @author Bob Jacobsen Copyright 2007, 2008
  */
@@ -67,23 +68,35 @@ public abstract class AbstractMessage implements Message {
 
 
     /*
-     * equals operator.
+     * Equals operator compares only base data
      */
     @Override
     public boolean equals(Object obj){
-       if( this.getClass() != obj.getClass() ) {
-          return false;
-       }
-       AbstractMessage m = (AbstractMessage) obj;
-       if(this.getNumDataElements() != m.getNumDataElements()){
-          return false;
-       }
-       for(int i = 0;i<this.getNumDataElements();i++){
-          if(this.getElement(i)!=m.getElement(i)){
-             return false;
-          }
-       }
-       return true;
+        if (obj == null) return false; // basic contract
+        if( this.getClass() != obj.getClass() ) {
+            return false;
+        }
+        AbstractMessage m = (AbstractMessage) obj;
+        if(this.getNumDataElements() != m.getNumDataElements()){
+            return false;
+        }
+        for(int i = 0;i<this.getNumDataElements();i++){
+            if(this.getElement(i)!=m.getElement(i)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Hash code from base data
+     */
+    public int hashCode() {
+        int retval = 0;
+        for(int i = 0;i<this.getNumDataElements();i++){ 
+            retval += this.getElement(i);
+        }
+        return retval;
     }
 
     private static Logger log = LoggerFactory.getLogger(AbstractMessage.class.getName());

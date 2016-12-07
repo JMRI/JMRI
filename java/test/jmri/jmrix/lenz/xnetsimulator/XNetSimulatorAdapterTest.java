@@ -53,7 +53,7 @@ public class XNetSimulatorAdapterTest {
     }
 
     @Test
-    public void testGenerateREsumeOperationsReply(){
+    public void testGenerateResumeOperationsReply(){
         XNetSimulatorAdapter a = new XNetSimulatorAdapter();
         // NOTE: this test uses reflection to test a private method.
         java.lang.reflect.Method generateReplyMethod = null;
@@ -132,6 +132,61 @@ public class XNetSimulatorAdapterTest {
              Assert.fail("generateReply execution failed reason: " + cause.getMessage());
         }
     }
+
+    @Test
+    public void testEmergencyStopLocoReply(){
+        XNetSimulatorAdapter a = new XNetSimulatorAdapter();
+        // NOTE: this test uses reflection to test a private method.
+        java.lang.reflect.Method generateReplyMethod = null;
+        try {
+            generateReplyMethod = a.getClass().getDeclaredMethod("generateReply", XNetMessage.class);
+        } catch (java.lang.NoSuchMethodException nsm) {
+            Assert.fail("Could not find method generateReply in XNetSimulatorAdapter class: ");
+        }
+
+        // override the default permissions.
+        Assert.assertNotNull(generateReplyMethod);
+        generateReplyMethod.setAccessible(true);
+
+        try {
+           XNetReply r = (XNetReply) generateReplyMethod.invoke(a,new XNetMessage("92 00 02 90"));
+
+           Assert.assertEquals("CS Emergency Specific Loco (XNetV4) Reply ",new XNetReply("01 04 05"),r);
+        } catch(java.lang.IllegalAccessException ite){
+             Assert.fail("could not access method generateReply in XNetSimulatoradapter class");
+        } catch(java.lang.reflect.InvocationTargetException ite){
+             Throwable cause = ite.getCause();
+             Assert.fail("generateReply execution failed reason: " + cause.getMessage());
+        }
+    }
+
+    @Test
+    public void testEmergencyStopLocoReplyV1V2(){
+        XNetSimulatorAdapter a = new XNetSimulatorAdapter();
+        // NOTE: this test uses reflection to test a private method.
+        java.lang.reflect.Method generateReplyMethod = null;
+        try {
+            generateReplyMethod = a.getClass().getDeclaredMethod("generateReply", XNetMessage.class);
+        } catch (java.lang.NoSuchMethodException nsm) {
+            Assert.fail("Could not find method generateReply in XNetSimulatorAdapter class: ");
+        }
+
+        // override the default permissions.
+        Assert.assertNotNull(generateReplyMethod);
+        generateReplyMethod.setAccessible(true);
+
+        try {
+           XNetReply r = (XNetReply) generateReplyMethod.invoke(a,new XNetMessage("91 02 93"));
+
+           Assert.assertEquals("CS Emergency Specific Loco (XNetV1,V2) Reply ",new XNetReply("01 04 05"),r);
+        } catch(java.lang.IllegalAccessException ite){
+             Assert.fail("could not access method generateReply in XNetSimulatoradapter class");
+        } catch(java.lang.reflect.InvocationTargetException ite){
+             Throwable cause = ite.getCause();
+             Assert.fail("generateReply execution failed reason: " + cause.getMessage());
+        }
+    }
+
 
     // The minimal setup for log4J
     @Before
