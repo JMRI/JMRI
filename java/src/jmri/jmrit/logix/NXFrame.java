@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Box;
@@ -17,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import org.slf4j.Logger;
@@ -72,23 +72,29 @@ public class NXFrame extends WarrantRoute {
     protected JPanel    _controlPanel;
     private JPanel          _autoRunPanel;
     private JPanel          _manualPanel;
-    
-    private static NXFrame _instance;
 
+    /**
+     * Get the default instance of the NXFrame.
+     * 
+     * @return the default instance or null if in headless mode
+     */
     static public NXFrame getInstance() {
         if (GraphicsEnvironment.isHeadless()) {
             return null;
         }
-        if (_instance == null) {
-            _instance = new NXFrame();
+        NXFrame instance = InstanceManager.getOptionalDefault(NXFrame.class).orElseGet(()->{
+            return InstanceManager.setDefault(NXFrame.class, new NXFrame());
+        });
+        if (!instance.isVisible()) {
+            instance.setTrainInfo(null);
+            instance.clearRoute();
         }
-        if (!_instance.isVisible()) {
-            _instance.setTrainInfo(null);
-            _instance.clearRoute();            
-        }
-        return _instance;
+        return instance;
     }
 
+    /**
+     * Prevent multiple NXFrames from being created
+     */
     private NXFrame() {
         super();
     }
@@ -103,10 +109,8 @@ public class NXFrame extends WarrantRoute {
         _controlPanel.add(makeBlockPanels());
         _controlPanel.add(searchDepthPanel(false));
 
-        _maxSpeedBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                getBoxData();
-            }
+        _maxSpeedBox.addActionListener((ActionEvent e) -> {
+            getBoxData();
         });
         _autoRunPanel = makeAutoRunPanel(jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation());
 
@@ -121,18 +125,14 @@ public class NXFrame extends WarrantRoute {
         JPanel p = new JPanel();
         p.add(Box.createGlue());
         JButton button = new JButton(Bundle.getMessage("ButtonRunNX"));
-        button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                makeAndRunWarrant();
-            }
+        button.addActionListener((ActionEvent e) -> {
+            makeAndRunWarrant();
         });
         p.add(button);
         p.add(Box.createHorizontalStrut(2*STRUT_SIZE));
         button = new JButton(Bundle.getMessage("ButtonCancel"));
-        button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                closeFrame();
-            }
+        button.addActionListener((ActionEvent e) -> {
+            closeFrame();
         });
         p.add(button);
         p.add(Box.createGlue());
@@ -175,15 +175,11 @@ public class NXFrame extends WarrantRoute {
         ButtonGroup bg = new ButtonGroup();
         bg.add(_runAuto);
         bg.add(_runManual);
-        _runAuto.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                enableAuto(true);
-            }
+        _runAuto.addActionListener((ActionEvent event) -> {
+            enableAuto(true);
         });
-        _runManual.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                enableAuto(false);
-            }
+        _runManual.addActionListener((ActionEvent event) -> {
+            enableAuto(false);
         });
         _runAuto.setSelected(true);
         JPanel pp = new JPanel();
@@ -300,7 +296,7 @@ public class NXFrame extends WarrantRoute {
                    break;
                }
                idx++;
-            };
+            }
             _controlPanel.remove(idx);
             _autoRunPanel = makeAutoRunPanel(jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation());
             _controlPanel.add(_autoRunPanel, idx);
@@ -311,7 +307,7 @@ public class NXFrame extends WarrantRoute {
                    break;
                }
                idx++;
-            };
+            }
             _controlPanel.remove(idx);
             _manualPanel = makeTrainIdPanel(null);
             _controlPanel.add(_manualPanel, idx);
@@ -331,8 +327,10 @@ public class NXFrame extends WarrantRoute {
     }
 
     /**
-     * Callback from RouteFinder.findRoute()
-     * if all goes well, WarrantTableFrame.runTrain(warrant) will run the warrant
+     * Called by {@link jmri.jmrit.logix.RouteFinder#run()}. If all goes well,
+     * WarrantTableFrame.runTrain(warrant) will run the warrant
+     *
+     * @param orders list of block orders
      */
     @Override
     public void selectedRoute(ArrayList<BlockOrder> orders) {
@@ -396,6 +394,7 @@ public class NXFrame extends WarrantRoute {
                     Halter (Warrant w) {
                         war = w;
                     }
+                    @Override
                     public void run() {
                         int limit = 0;  
                         try {
