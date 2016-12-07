@@ -129,7 +129,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
   <td class="descr">Une s&#233;rie d'instructions stock&#233;es sur le disque et lues dans JMRI pour interpr&#233;tation, &#233;crites en langage Python. <a href="../html/tools/scripting/index.shtml">...</a></td>
   <td class="de">Skripteingabe</td>
   <td class="it">Ingresso Script</td>
-  <td class="fr">Scipt d'Entr&#233;e</td>
+  <td class="fr">Script d'Entr&#233;e</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
@@ -157,7 +157,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 <tr>
   <td class="app">All</td>
   <td class="en">Turnout</td>
-  <td class="descr">1. Une installation m&#233;chanique installation permettant &#225; des trains d'&#234;tre guid&#233;s d'une voie &#225; une autre.<br>
+  <td class="descr">1. Une installation m&#233;chanique, installation permettant &#225; des trains d'&#234;tre guid&#233;s d'une voie &#225; une autre.<br>
   2. Dans JMRI n'importe quelle sortie On/Off vers le r&#233;seau, command&#233;e par des d&#233;codeurs d'acc&#233;ssoires DCC. les pins individuelles de sortie sur un syst&#232;me C/MRI sont aussi appel&#233;es Aiguillage. Les deux &#233;tats de sortie sont appel&#233;s " Direct"(off, inactif, &#233;tat non command&#233; ) and "D&#233;vi&#233;" (on, actif, &#233;tat command&#233;). Pour la r&#233;trosignalisation depuis le r&#233;seau, des entr&#233;es Capteur peuvent &#234;tre assign&#233;es &#225; un aiguillage <a href="../html/tools/Turnouts.shtml">...</a></td>
   <td class="de">Weiche</td>
   <td class="it">Scambio</td>
@@ -211,7 +211,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
   <td class="descr"></td>
   <td class="de">Eigner</td>
   <td class="it">Proprietario</td>
-  <td class="fr">Propri&eacute;tiare</td>
+  <td class="fr">Propri&eacute;taire</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
@@ -231,7 +231,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
   <td class="descr"></td>
   <td class="de">Programmierer</td>
   <td class="it">Programmatore</td>
-  <td class="fr">Programmeur</td>
+  <td class="fr">Programmateur</td>
   <td class="en_UK"></td>
   <td class="da">Programmer</td>
 </tr>
@@ -411,7 +411,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
   <td class="descr"></td>
   <td class="de">Abfahrtgleis</td>
   <td class="it"></td>
-  <td class="fr">Voie de d&eacute;part</td>
+  <td class="fr">Voie de D&eacute;part</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
