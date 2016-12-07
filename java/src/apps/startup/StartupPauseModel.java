@@ -8,11 +8,23 @@ package apps.startup;
  */
 public class StartupPauseModel extends AbstractStartupModel {
 
-    private int delay = 10; // default to ten seconds
+    public static final int DEFAULT_DELAY = 10;
+
+    private int delay = -1; // default to invalid duration
 
     @Override
     public String getName() {
         return Bundle.getMessage("StartupPauseModel.name", this.getDelay()); // NOI18N
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @return true if duration >= 0; false otherwise
+     */
+    @Override
+    public boolean isValid() {
+        return this.getDelay() >= 0;
     }
 
     /**

@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    apps.startup.configurexml.PackageTest.class,
-   BundleTest.class
+   BundleTest.class,
+   AbstractStartupModelTest.class,
+   StartupPauseModelTest.class
 })
 /**
  * Tests for the apps.startup.configurexml package.
