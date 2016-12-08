@@ -718,6 +718,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
      * @param row Index number (in TableDataModel)
      * @return A combobox containing the valid aspect names for this mast
      */
+    //@Override
     JComboBox getEditorBox(int row) {
         JComboBox editCombo = editorMap.get(this.getValueAt(row, SYSNAMECOL));
         if (editCombo == null) {

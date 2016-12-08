@@ -639,7 +639,6 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         popupMenu.add(menuItem);
 
         popupMenu.show(e.getComponent(), e.getX(), e.getY());
-
     }
 
     public void copyName(int row, int column) {
@@ -1220,7 +1219,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
             }
             //the user selected another row (or initially no row was selected)
             this.editor.removeAll();  // remove the combobox from the panel
-            JComboBox editorbox = table.getTableDataModel().getEditorBox(table.convertRowIndexToModel(row));
+            JComboBox editorbox = this.table.getTableDataModel().getEditorBox(table.convertRowIndexToModel(row));
             log.debug("getRendererComponent>notSelected (row={}, value={})", row, value);
             if (value != null) {
                 editorbox.setSelectedItem(value); // display current Value
@@ -1231,7 +1230,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                     Object choice = editorbox.getSelectedItem();
                     log.debug("actionPerformed (event={}, choice={}", evt.toString(), choice.toString());
                     if (choice != null) {
-                        eventRowComboBoxActionPerformed(choice); // try a special method for this source
+                        eventRowComboBoxActionPerformed(choice); // signal the changed row
                     }
                 }
             });
@@ -1292,7 +1291,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         private void updateData(int row, boolean isSelected, JTable table) {
             // get valid Value options for ComboBox
             log.debug("updateData (row={})", row);
-            JComboBox eb = table.getTableDataModel().getEditorBox(table.convertRowIndexToModel(row));
+            JComboBox eb = this.table.getTableDataModel().getEditorBox(table.convertRowIndexToModel(row));
             this.editor.add(eb);
             if (isSelected) {
                 editor.setBackground(table.getSelectionBackground());
@@ -1343,7 +1342,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         }
 
         final void eventEditorMousePressed() {
-            this.editor.add(table.getTableDataModel().getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add eb to JPanel
+            this.editor.add(this.table.getTableDataModel().getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add eb to JPanel
             this.editor.revalidate();
             SwingUtilities.invokeLater(this.comboBoxFocusRequester);
             log.debug("eventEditorMousePressed in row: {})", this.currentRow);
@@ -1372,6 +1371,16 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
             return this.currentRow;
         }
     }
+    // end of RowComboBoxPanel class
 
-    private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class.getName());
+    /**
+     * Allow subclasses to create a row specific JComboBox
+     * @param row in BeanTable
+     * @return a row specific JComboBox to be added to a JPanel
+     */
+    JComboBox getEditorBox(int row) {
+        return null;
+    }
+
+        private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class.getName());
 }
