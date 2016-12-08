@@ -1,4 +1,4 @@
-package jmri.jmrix.mrc.swing.packetgen;
+package jmri.jmrix.mrc.swing.monitor;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -12,9 +12,10 @@ import org.slf4j.LoggerFactory;
 })
 
 /**
- * Tests for the jmri.jmrix.mrc.swing.packetgen package
+ * Tests for the jmri.jmrix.mrc.swing.monitor package
  *
  * @author	Bob Jacobsen
  */
 public class PackageTest {
+
 }
