@@ -2,6 +2,7 @@ package jmri.jmrit.logix;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -15,6 +16,7 @@ import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,18 +27,78 @@ import org.slf4j.LoggerFactory;
  */
 public class WarrantPreferences {
 
-    public static final String layoutParams = "layoutParams";   // NOI18N
-    public static final String LayoutScale = "layoutScale";     // NOI18N
-    public static final String SearchDepth = "searchDepth";     // NOI18N
-    public static final String SpeedMapParams = "speedMapParams"; // NOI18N
-    public static final String RampPrefs = "rampPrefs";         // NOI18N
-    public static final String TimeIncrement = "timeIncrement"; // NOI18N
-    public static final String ThrottleScale = "throttleScale"; // NOI18N
-    public static final String RampIncrement = "rampIncrement"; // NOI18N
-    public static final String StepIncrements = "stepIncrements"; // NOI18N
-    public static final String SpeedNamePrefs = "speedNames";   // NOI18N
-    public static final String Interpretation = "interpretation"; // NOI18N
-    public static final String AppearancePrefs = "appearancePrefs"; // NOI18N
+    public static final String LAYOUT_PARAMS = "layoutParams"; // NOI18N
+    public static final String LAYOUT_SCALE = "layoutScale"; // NOI18N
+    public static final String SEARCH_DEPTH = "searchDepth"; // NOI18N
+    public static final String SPEED_MAP_PARAMS = "speedMapParams"; // NOI18N
+    public static final String RAMP_PREFS = "rampPrefs";         // NOI18N
+    public static final String TIME_INCREMENT = "timeIncrement"; // NOI18N
+    public static final String THROTTLE_SCALE = "throttleScale"; // NOI18N
+    public static final String RAMP_INCREMENT = "rampIncrement"; // NOI18N
+    public static final String STEP_INCREMENTS = "stepIncrements"; // NOI18N
+    public static final String SPEED_NAME_PREFS = "speedNames";   // NOI18N
+    public static final String INTERPRETATION = "interpretation"; // NOI18N
+    public static final String APPEARANCE_PREFS = "appearancePrefs"; // NOI18N
+    /**
+     * @deprecated since 4.7.1; use {@link #LAYOUT_PARAMS} instead
+     */
+    @Deprecated
+    public static final String layoutParams = LAYOUT_PARAMS;
+    /**
+     * @deprecated since 4.7.1; use {@link #LAYOUT_SCALE} instead
+     */
+    @Deprecated
+    public static final String LayoutScale = LAYOUT_SCALE;
+    /**
+     * @deprecated since 4.7.1; use {@link #SEARCH_DEPTH} instead
+     */
+    @Deprecated
+    public static final String SearchDepth = SEARCH_DEPTH;
+    /**
+     * @deprecated since 4.7.1; use {@link #SPEED_MAP_PARAMS} instead
+     */
+    @Deprecated
+    public static final String SpeedMapParams = SPEED_MAP_PARAMS;
+    /**
+     * @deprecated since 4.7.1; use {@link #RAMP_PREFS} instead
+     */
+    @Deprecated
+    public static final String RampPrefs = RAMP_PREFS;
+    /**
+     * @deprecated since 4.7.1; use {@link #TIME_INCREMENT} instead
+     */
+    @Deprecated
+    public static final String TimeIncrement = TIME_INCREMENT;
+    /**
+     * @deprecated since 4.7.1; use {@link #THROTTLE_SCALE} instead
+     */
+    @Deprecated
+    public static final String ThrottleScale = THROTTLE_SCALE;
+    /**
+     * @deprecated since 4.7.1; use {@link #RAMP_INCREMENT} instead
+     */
+    @Deprecated
+    public static final String RampIncrement = RAMP_INCREMENT;
+    /**
+     * @deprecated since 4.7.1; use {@link #STEP_INCREMENTS} instead
+     */
+    @Deprecated
+    public static final String StepIncrements = STEP_INCREMENTS;
+    /**
+     * @deprecated since 4.7.1; use {@link #SPEED_NAME_PREFS} instead
+     */
+    @Deprecated
+    public static final String SpeedNamePrefs = SPEED_NAME_PREFS;
+    /**
+     * @deprecated since 4.7.1; use {@link #INTERPRETATION} instead
+     */
+    @Deprecated
+    public static final String Interpretation = INTERPRETATION;
+    /**
+     * @deprecated since 4.7.1; use {@link #APPEARANCE_PREFS} instead
+     */
+    @Deprecated
+    public static final String AppearancePrefs = APPEARANCE_PREFS;
 
     private String _fileName;
     private float _scale = 87.1f;
@@ -64,14 +126,14 @@ public class WarrantPreferences {
         } catch (java.io.FileNotFoundException ea) {
             log.debug("Could not find Warrant preferences file.  Normal if preferences have not been saved before.");
             root = null;
-        } catch (Exception eb) {
+        } catch (IOException | JDOMException eb) {
             log.error("Exception while loading warrant preferences: " + eb);
             root = null;
         }
         if (root != null) {
             log.info("Found Warrant preferences file: {}", _fileName);
-            loadLayoutParams(root.getChild(layoutParams));
-            if (!loadSpeedMap(root.getChild(SpeedMapParams))) {
+            loadLayoutParams(root.getChild(LAYOUT_PARAMS));
+            if (!loadSpeedMap(root.getChild(SPEED_MAP_PARAMS))) {
                 loadSpeedMapFromOldXml();
                 log.error("Unable to read ramp parameters. Setting to default values.");
             }
@@ -85,7 +147,7 @@ public class WarrantPreferences {
             return;
         }
         Attribute a;
-        if ((a = child.getAttribute(LayoutScale)) != null) {
+        if ((a = child.getAttribute(LAYOUT_SCALE)) != null) {
             try {
                 setScale(a.getFloatValue());
             } catch (DataConversionException ex) {
@@ -93,7 +155,7 @@ public class WarrantPreferences {
                 log.error("Unable to read layout scale. Setting to default value.", ex);
             }
         }
-        if ((a = child.getAttribute(SearchDepth)) != null) {
+        if ((a = child.getAttribute(SEARCH_DEPTH)) != null) {
             try {
                 setSearchDepth(a.getIntValue());
             } catch (DataConversionException ex) {
@@ -110,14 +172,14 @@ public class WarrantPreferences {
             return;
         }
         Iterator<String> it = map.getValidSpeedNames().iterator();
-        _speedNames = new jmri.util.OrderedHashtable<String, Float>();
+        _speedNames = new jmri.util.OrderedHashtable<>();
         while (it.hasNext()) {
             String name = it.next();
-            _speedNames.put(name, Float.valueOf(map.getSpeed(name)));
+            _speedNames.put(name, map.getSpeed(name));
         }
 
         Enumeration<String> en = map.getAppearanceIterator();
-        _headAppearances = new OrderedHashtable<String, String>();
+        _headAppearances = new OrderedHashtable<>();
         while (en.hasMoreElements()) {
             String name = en.nextElement();
             _headAppearances.put(name, map.getAppearanceSpeed(name));
@@ -130,12 +192,12 @@ public class WarrantPreferences {
         if (child == null) {
             return false;
         }
-        Element rampParms = child.getChild(StepIncrements);
+        Element rampParms = child.getChild(STEP_INCREMENTS);
         if (rampParms == null) {
             return false;
         }
         Attribute a;
-        if ((a = rampParms.getAttribute(TimeIncrement)) != null) {
+        if ((a = rampParms.getAttribute(TIME_INCREMENT)) != null) {
             try {
                 setTimeIncre(a.getIntValue());
             } catch (DataConversionException ex) {
@@ -143,7 +205,7 @@ public class WarrantPreferences {
                 log.error("Unable to read ramp time increment. Setting to default value (750ms).", ex);
             }
         }
-        if ((a = rampParms.getAttribute(RampIncrement)) != null) {
+        if ((a = rampParms.getAttribute(RAMP_INCREMENT)) != null) {
             try {
                 setThrottleIncre(a.getFloatValue());
             } catch (DataConversionException ex) {
@@ -151,7 +213,7 @@ public class WarrantPreferences {
                 log.error("Unable to read ramp throttle increment. Setting to default value (0.05).", ex);
             }
         }
-        if ((a = rampParms.getAttribute(ThrottleScale)) != null) {
+        if ((a = rampParms.getAttribute(THROTTLE_SCALE)) != null) {
             try {
                 setThrottleScale(a.getFloatValue());
             } catch (DataConversionException ex) {
@@ -160,7 +222,7 @@ public class WarrantPreferences {
             }
         }
 
-        rampParms = child.getChild(SpeedNamePrefs);
+        rampParms = child.getChild(SPEED_NAME_PREFS);
         if (rampParms == null) {
             return false;
         }
@@ -171,7 +233,7 @@ public class WarrantPreferences {
                 setInterpretation(2);
             }
         }
-        if ((a = rampParms.getAttribute(Interpretation)) != null) {
+        if ((a = rampParms.getAttribute(INTERPRETATION)) != null) {
             try {
                 setInterpretation(a.getIntValue());
             } catch (DataConversionException ex) {
@@ -179,27 +241,25 @@ public class WarrantPreferences {
                 log.error("Unable to read interpetation of Speed Map. Setting to default value % normal.", ex);
             }
         }
-        _speedNames = new OrderedHashtable<String, Float>();
+        _speedNames = new OrderedHashtable<>();
         List<Element> list = rampParms.getChildren();
         for (int i = 0; i < list.size(); i++) {
             String name = list.get(i).getName();
-            Float speed = Float.valueOf(0f);
+            Float speed = 0f;
             try {
                 speed = Float.valueOf(list.get(i).getText());
             } catch (NumberFormatException nfe) {
-                log.error(SpeedNamePrefs + " has invalid content for " + name + " = " + list.get(i).getText());
+                log.error("Speed names has invalid content for {} = ", name, list.get(i).getText());
             }
-            if (log.isDebugEnabled()) {
-                log.debug("Add " + name + ", " + speed + " to AspectSpeed Table");
-            }
+            log.debug("Add {}, {} to AspectSpeed Table", name, speed);
             _speedNames.put(name, speed);
         }
 
-        rampParms = child.getChild(AppearancePrefs);
+        rampParms = child.getChild(APPEARANCE_PREFS);
         if (rampParms == null) {
             return false;
         }
-        _headAppearances = new OrderedHashtable<String, String>();
+        _headAppearances = new OrderedHashtable<>();
         list = rampParms.getChildren();
         for (int i = 0; i < list.size(); i++) {
             String name = Bundle.getMessage(list.get(i).getName());
@@ -225,15 +285,15 @@ public class WarrantPreferences {
             File parentDir = file.getParentFile();
             if (!parentDir.exists()) {
                 if (!parentDir.mkdir()) {
-                    log.warn("Could not create parent directory for prefs file :" + _fileName);
+                    log.warn("Could not create parent directory for prefs file :{}", _fileName);
                     return;
                 }
             }
             if (file.createNewFile()) {
-                log.debug("Creating new warrant prefs file: " + _fileName);
+                log.debug("Creating new warrant prefs file: {}", _fileName);
             }
-        } catch (Exception ea) {
-            log.error("Could not create warrant preferences file at " + _fileName + ". " + ea);
+        } catch (IOException ea) {
+            log.error("Could not create warrant preferences file at {}.", _fileName, ea);
         }
 
         try {
@@ -242,27 +302,27 @@ public class WarrantPreferences {
             if (store(root)) {
                 xmlFile.writeXML(file, doc);
             }
-        } catch (Exception eb) {
-            log.warn("Exception in storing warrant xml: " + eb);
+        } catch (IOException eb) {
+            log.warn("Exception in storing warrant xml: {}", eb);
         }
     }
 
     public boolean store(Element root) {
-        Element prefs = new Element(layoutParams);
+        Element prefs = new Element(LAYOUT_PARAMS);
         try {
-            prefs.setAttribute(LayoutScale, Float.toString(getScale()));
-            prefs.setAttribute(SearchDepth, Integer.toString(getSearchDepth()));
+            prefs.setAttribute(LAYOUT_SCALE, Float.toString(getScale()));
+            prefs.setAttribute(SEARCH_DEPTH, Integer.toString(getSearchDepth()));
             root.addContent(prefs);
 
-            prefs = new Element(SpeedMapParams);
-            Element rampPrefs = new Element(StepIncrements);
-            rampPrefs.setAttribute(TimeIncrement, Integer.toString(getTimeIncre()));
-            rampPrefs.setAttribute(RampIncrement, Float.toString(getThrottleIncre()));
-            rampPrefs.setAttribute(ThrottleScale, Float.toString(getThrottleScale()));
+            prefs = new Element(SPEED_MAP_PARAMS);
+            Element rampPrefs = new Element(STEP_INCREMENTS);
+            rampPrefs.setAttribute(TIME_INCREMENT, Integer.toString(getTimeIncre()));
+            rampPrefs.setAttribute(RAMP_INCREMENT, Float.toString(getThrottleIncre()));
+            rampPrefs.setAttribute(THROTTLE_SCALE, Float.toString(getThrottleScale()));
             prefs.addContent(rampPrefs);
 
-            rampPrefs = new Element(SpeedNamePrefs);
-            rampPrefs.setAttribute(Interpretation, Integer.toString(getInterpretation()));
+            rampPrefs = new Element(SPEED_NAME_PREFS);
+            rampPrefs.setAttribute(INTERPRETATION, Integer.toString(getInterpretation()));
 
             Iterator<Entry<String, Float>> it = getSpeedNameEntryIterator();
             while (it.hasNext()) {
@@ -273,7 +333,7 @@ public class WarrantPreferences {
             }
             prefs.addContent(rampPrefs);
 
-            rampPrefs = new Element(AppearancePrefs);
+            rampPrefs = new Element(APPEARANCE_PREFS);
             Element step = new Element("SignalHeadStateRed");
             step.setText(_headAppearances.get(Bundle.getMessage("SignalHeadStateRed")));
             rampPrefs.addContent(step);
@@ -380,10 +440,10 @@ public class WarrantPreferences {
 
     Iterator<Entry<String, Float>> getSpeedNameEntryIterator() {
         java.util.Enumeration<String> keys = _speedNames.keys();
-        java.util.Vector<Entry<String, Float>> vec = new java.util.Vector<Entry<String, Float>>();
+        java.util.Vector<Entry<String, Float>> vec = new java.util.Vector<>();
         while (keys.hasMoreElements()) {
             String key = keys.nextElement();
-            vec.add(new java.util.AbstractMap.SimpleEntry<String, Float>(key, _speedNames.get(key)));
+            vec.add(new java.util.AbstractMap.SimpleEntry<>(key, _speedNames.get(key)));
         }
         return vec.iterator();
     }
@@ -397,7 +457,7 @@ public class WarrantPreferences {
     }
 
     void setSpeedNames(ArrayList<DataPair<String, Float>> speedNameMap) {
-        _speedNames = new jmri.util.OrderedHashtable<String, Float>();
+        _speedNames = new jmri.util.OrderedHashtable<>();
         for (int i = 0; i < speedNameMap.size(); i++) {
             DataPair<String, Float> dp = speedNameMap.get(i);
             _speedNames.put(dp.getKey(), dp.getValue());
@@ -406,10 +466,10 @@ public class WarrantPreferences {
 
     Iterator<Entry<String, String>> getAppearanceEntryIterator() {
         java.util.Enumeration<String> keys = _headAppearances.keys();
-        java.util.Vector<Entry<String, String>> vec = new java.util.Vector<Entry<String, String>>();
+        java.util.Vector<Entry<String, String>> vec = new java.util.Vector<>();
         while (keys.hasMoreElements()) {
             String key = keys.nextElement();
-            vec.add(new java.util.AbstractMap.SimpleEntry<String, String>(key, _headAppearances.get(key)));
+            vec.add(new java.util.AbstractMap.SimpleEntry<>(key, _headAppearances.get(key)));
         }
         return vec.iterator();
     }
@@ -423,7 +483,7 @@ public class WarrantPreferences {
     }
 
     void setAppearances(ArrayList<DataPair<String, String>> appearanceMap) {
-        _headAppearances = new jmri.util.OrderedHashtable<String, String>();
+        _headAppearances = new jmri.util.OrderedHashtable<>();
         for (int i = 0; i < appearanceMap.size(); i++) {
             DataPair<String, String> dp = appearanceMap.get(i);
             _headAppearances.put(dp.getKey(), dp.getValue());
@@ -441,5 +501,5 @@ public class WarrantPreferences {
     public static class WarrantPreferencesXml extends XmlFile {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantPreferences.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantPreferences.class);
 }
