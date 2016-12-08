@@ -40,7 +40,7 @@
       <ul>
         <li><a href="#linux">Linux</a></li>
 
-        <li><a href="#macosx">OS X</a></li>
+        <li><a href="#macosx">macOS and OS X</a></li>
 
         <li><a href="#windows">Windows</a></li>
       </ul>
@@ -104,7 +104,7 @@
         <dt><code>--debug</code></dt>
 
         <dd>Print debugging statements within the launcher script
-        itself to the console. On OS X, this is always on, and
+        itself to the console. On macOS, this is always on, and
         debugging output is available through the Console.app.</dd>
 
         <dt><code>-D<em>PROPERTY</em></code></dt>
@@ -131,7 +131,7 @@
 
         <dd>Set the names of usable serial ports to the comma
         separated list of ports in <em>SERIAL_PORTS</em>. This is
-        ignored on OS X.</dd>
+        ignored on macOS.</dd>
 
         <dt><code>--settingsdir=<em>SETTINGS_DIR</em></code></dt>
 
@@ -147,7 +147,7 @@
 
             <dd><code>${HOME}/.jmri</code></dd>
 
-            <dt>OS X</dt>
+            <dt>macOS</dt>
 
             <dd><code>${HOME}/Library/Preferences/JMRI</code></dd>
           </dl>
@@ -165,15 +165,17 @@
       exception of the <code>--settingsdir=<em>PATH</em></code>
       parameter. An example is:</p>
 
-      <p><code>default_options="-J-Xmx2048m"</code></p><a name=
-      "macosx" id="macosx"></a>
+      <p><code>default_options="-J-Xmx2048m"</code></p>
+      
+      <a name="macosx" id="macosx"></a>
 
-      <h2>Mac OS X</h2>JMRI distributions for Mac OS X contain
-      application bundles for each of the main applications:
-      DecoderPro, PanelPro, etc. These provide familiar application
-      icons for the user.
+      <h2>macOS</h2>
+      
+      JMRI distributions for macOS contain application bundles for each of the
+      main applications: DecoderPro, PanelPro, etc. These provide familiar
+      application icons for the user.
 
-      <p>To register the bundles with Mac OS X, they need to be
+      <p>To register the bundles with macOS, they need to be
       copied from the distributed disk image onto the user's disk
       drive.</p>
 
@@ -220,40 +222,48 @@
       parameters.
 
       <dl>
-        <dt>/debug (Optional - from JMRI 2.5.1)</dt>
+          <dt><code>/debug</code></dt>
 
         <dd>If this option is set on the command line, a window is
         opened that displays various useful information for
-        debugging purposes.</dd>
+        debugging purposes. (since JMRI 2.5.1)</dd>
 
-        <dt>/noisy (Optional - from JMRI 2.5.1)</dt>
+        <dt><code>/noisy</code></dt>
 
-        <dd>If this option is set on the command line, the launcher
-        does not attempt to minimise the Java Console window - as
-        from JMRI 2.5.1, the default behaviour is to minimise the
-        Java Console window.<br>
-        Starting with JMRI 2.11.1, the behaviour of this option has
-        changed - this now determines if the Java Console window is
-        enabled or not. System messages are now available via the
+        <dd>Set this option to enable the Java Console window.
+            System messages are now available via the
         'Help &gt; System Console ...' menu option in the main JMRI
-        window.</dd>
+        window. (since JMRI 2.5.1)</dd>
 
-        <dt>/32bit (Optional - from JMRI 2.99.4)</dt>
+        <dt><code>/32bit</code></dt>
 
         <dd>If this option is set on the command line, the launcher
         will force the use of a 32-bit Java Runtime Environment on
         64-bit machines. This option has no effect on 32-bit
-        machines.</dd>
+        machines. (since JMRI 2.99.4)</dd>
 
-        <dt>/profile &lt;profileID&gt; (Optional - from JMRI
-        3.7.1)</dt>
+        <dt><code>/profile <em>PROFILEID</em></code></dt>
 
         <dd>If this option is set on the command line, the launcher
-        will use profile &lt;profileID&gt; as the <a href=
+            will use profile <em>PROFILEID</em> as the <a href=
         "/help/en/html/profiles.shtml">JMRI configuration
-        profile</a> to use instead of the default one.</dd>
+        profile</a> to use instead of the default one. (since JMRI 3.7.1)</dd>
+        
+        <dt><code>--cp:a=<em>CLASSPATH</em></code></dt>
 
-        <dt>Class Parameter</dt>
+        <dd>Append the JARs and directories in <em>CLASSPATH</em>
+        to the end of the standard JMRI classpath. This is the
+        recommended way to add additional Java classes to
+        JMRI. (since JMRI 4.5.7)</dd>
+
+        <dt><code>--cp:p=<em>CLASSPATH</em></code></dt>
+
+        <dd>Prepend the JARs and directories in <em>CLASSPATH</em>
+        to the beginning of the standard JMRI classpath. This is
+        the recommended way to override existing Java classes in
+        JMRI. (since JMRI 4.5.7)</dd>
+
+        <dt>Class Parameter (Required)</dt>
 
         <dd>The first parameter of LaunchJMRI.exe, after any of the
         above options, is the name of the main class to
@@ -262,7 +272,7 @@
         <dd>An example to launch DecoderPro would be
         "apps.DecoderPro.DecoderPro"</dd>
 
-        <dt>Configuration File Parameter (Optional)</dt>
+        <dt>Configuration File Parameter</dt>
 
         <dd>If there's a second argument to the launcher, it will
         be used as the name of the preferences file used to
