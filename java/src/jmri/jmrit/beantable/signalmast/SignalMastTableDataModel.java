@@ -1,40 +1,39 @@
 package jmri.jmrit.beantable.signalmast;
 
-import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.Component;
-import java.awt.BorderLayout;
+import java.awt.BorderLayout; // comment when AspectComboBoxPanel class is no longer used
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.EventObject;
+import java.awt.Point; // comment when AspectComboBoxPanel class is no longer used
+import java.awt.Rectangle; // comment when AspectComboBoxPanel class is no longer used
+import java.util.EventObject; // comment when AspectComboBoxPanel class is no longer used
 import java.util.Hashtable;
 import java.util.Vector;
-import javax.annotation.Nonnull;
-import javax.swing.DefaultCellEditor;
+import javax.annotation.Nonnull; // comment when AspectComboBoxPanel class is no longer used
+import javax.swing.DefaultCellEditor; // comment when AspectComboBoxPanel class is no longer used
+import javax.swing.event.ListSelectionEvent; // comment when AspectComboBoxPanel class is no longer used
+import javax.swing.event.ListSelectionListener; // comment when AspectComboBoxPanel class is no longer used
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.ListCellRenderer;
+import javax.swing.ListCellRenderer; // comment when AspectComboBoxPanel class is no longer used
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.SignalMast;
-import jmri.jmrit.beantable.BeanTableDataModel;
-import jmri.jmrit.beantable.SignalMastTableAction.MyComboBoxEditor;
-import jmri.jmrit.beantable.SignalMastTableAction.MyComboBoxRenderer;
+import jmri.jmrit.beantable.BeanTableDataModel; // includes access to class RowComboBoxPanel()
+import jmri.jmrit.beantable.SignalMastTableAction.MyComboBoxEditor; // deprecated
+import jmri.jmrit.beantable.SignalMastTableAction.MyComboBoxRenderer; // deprecated
 import jmri.jmrit.signalling.SignallingSourceAction;
-import jmri.util.swing.XTableColumnModel;
+import jmri.util.swing.XTableColumnModel; // deprecated
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -769,7 +768,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
 
     Hashtable<Object, Vector<String>> boxMap = new Hashtable<Object, Vector<String>>();
 
-    // end of methods to display VALUECOL ComboBox
+    // end of methods to display VALUECOL (Aspect) ComboBox
 
     protected String getClassName() {
         return jmri.jmrit.beantable.SignalMastTableAction.class.getName();
