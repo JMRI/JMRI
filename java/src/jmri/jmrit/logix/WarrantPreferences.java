@@ -3,14 +3,18 @@ package jmri.jmrit.logix;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import jmri.InstanceManager;
+import jmri.beans.Bean;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.logix.WarrantPreferencesPanel.DataPair;
+import jmri.util.FileUtil;
 import jmri.util.OrderedHashtable;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
@@ -25,7 +29,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (C) 2015
  */
-public class WarrantPreferences {
+public class WarrantPreferences extends Bean {
 
     public static final String LAYOUT_PARAMS = "layoutParams"; // NOI18N
     public static final String LAYOUT_SCALE = "layoutScale"; // NOI18N
@@ -116,6 +120,18 @@ public class WarrantPreferences {
         openFile(fileName);
     }
 
+    /**
+     * Get the default instance.
+     *
+     * @return the default instance, creating it if necessary
+     */
+    public static WarrantPreferences getDefault() {
+        return InstanceManager.getOptionalDefault(WarrantPreferences.class).orElseGet(() -> {
+            return InstanceManager.setDefault(WarrantPreferences.class, new WarrantPreferences(FileUtil.getUserFilesPath()
+                    + "signal" + File.separator + "WarrantPreferences.xml"));
+        });
+    }
+
     public void openFile(String name) {
         _fileName = name;
         WarrantPreferencesXml prefsXml = new WarrantPreferencesXml();
@@ -184,8 +200,8 @@ public class WarrantPreferences {
             String name = en.nextElement();
             _headAppearances.put(name, map.getAppearanceSpeed(name));
         }
-        setTimeIncre(map.getStepDelay());
-        setThrottleIncre(map.getStepIncrement());
+        setTimeIncrement(map.getStepDelay());
+        setThrottleIncrement(map.getStepIncrement());
     }
 
     public boolean loadSpeedMap(Element child) {
@@ -199,17 +215,17 @@ public class WarrantPreferences {
         Attribute a;
         if ((a = rampParms.getAttribute(TIME_INCREMENT)) != null) {
             try {
-                setTimeIncre(a.getIntValue());
+                setTimeIncrement(a.getIntValue());
             } catch (DataConversionException ex) {
-                setTimeIncre(750);
+                setTimeIncrement(750);
                 log.error("Unable to read ramp time increment. Setting to default value (750ms).", ex);
             }
         }
         if ((a = rampParms.getAttribute(RAMP_INCREMENT)) != null) {
             try {
-                setThrottleIncre(a.getFloatValue());
+                setThrottleIncrement(a.getFloatValue());
             } catch (DataConversionException ex) {
-                setThrottleIncre(0.05f);
+                setThrottleIncrement(0.05f);
                 log.error("Unable to read ramp throttle increment. Setting to default value (0.05).", ex);
             }
         }
@@ -316,8 +332,8 @@ public class WarrantPreferences {
 
             prefs = new Element(SPEED_MAP_PARAMS);
             Element rampPrefs = new Element(STEP_INCREMENTS);
-            rampPrefs.setAttribute(TIME_INCREMENT, Integer.toString(getTimeIncre()));
-            rampPrefs.setAttribute(RAMP_INCREMENT, Float.toString(getThrottleIncre()));
+            rampPrefs.setAttribute(TIME_INCREMENT, Integer.toString(getTimeIncrement()));
+            rampPrefs.setAttribute(RAMP_INCREMENT, Float.toString(getThrottleIncrement()));
             rampPrefs.setAttribute(THROTTLE_SCALE, Float.toString(getThrottleScale()));
             prefs.addContent(rampPrefs);
 
@@ -360,8 +376,7 @@ public class WarrantPreferences {
             rampPrefs.addContent(step);
             prefs.addContent(rampPrefs);
         } catch (Exception ex) {
-            log.warn("Exception in storing warrant xml: " + ex);
-            ex.printStackTrace();
+            log.warn("Exception in storing warrant xml.", ex);
             return false;
         }
         root.addContent(prefs);
@@ -378,7 +393,7 @@ public class WarrantPreferences {
 
     private void setNXdata() {
         NXFrame._scale = _scale;
-        WarrantRoute._depth = _searchDepth;
+        // WarrantRoute._depth = _searchDepth; // set by propertyChange
         NXFrame._intervalTime = _msIncrTime;
         NXFrame._throttleIncr = _throttleIncr;
         NXFrame._throttleFactor = _throttleScale;
@@ -398,53 +413,106 @@ public class WarrantPreferences {
         jmri.InstanceManager.setDefault(SignalSpeedMap.class, map);
     }
 
+    /**
+     * @return the scale
+     * @deprecated since 4.7.1; use {@link #getLayoutScale()} instead
+     */
+    @Deprecated
     float getScale() {
         return _scale;
     }
 
+    /**
+     * @param s the scale
+     * @deprecated since 4.7.1; use {@link #setLayoutScale(float)} instead
+     */
+    @Deprecated
     void setScale(float s) {
-        _scale = s;
+        this.setLayoutScale(s);
+    }
+
+    /**
+     * Get the layout scale.
+     *
+     * @return the scale
+     */
+    public float getLayoutScale() {
+        return _scale;
+    }
+
+    /**
+     * Set the layout scale.
+     *
+     * @param scale the scale
+     */
+    public void setLayoutScale(float scale) {
+        float oldScale = this._scale;
+        _scale = scale;
+        propertyChangeSupport.firePropertyChange(LAYOUT_SCALE, oldScale, scale);
     }
 
     public float getThrottleScale() {
         return _throttleScale;
     }
 
-    void setThrottleScale(float f) {
-        _throttleScale = f;
+    void setThrottleScale(float scale) {
+        float oldScale = this._throttleScale;
+        _throttleScale = scale;
+        propertyChangeSupport.firePropertyChange(THROTTLE_SCALE, oldScale, scale);
     }
 
     int getSearchDepth() {
         return _searchDepth;
     }
 
-    void setSearchDepth(int d) {
-        _searchDepth = d;
+    void setSearchDepth(int depth) {
+        int oldDepth = this._searchDepth;
+        _searchDepth = depth;
+        propertyChangeSupport.firePropertyChange(SEARCH_DEPTH, oldDepth, depth);
     }
 
+    /**
+     * @return the time increment
+     * @deprecated since 4.7.1; use {@link #getTimeIncrement()} instead
+     */
+    @Deprecated
     int getTimeIncre() {
-        return _msIncrTime;
+        return getTimeIncrement();
     }
 
+    /**
+     * @int t the time increment
+     * @deprecated since 4.7.1; use {@link #setTimeIncrement(int)} instead
+     */
+    @Deprecated
     void setTimeIncre(int t) {
-        _msIncrTime = t;
+        setTimeIncrement(t);
     }
 
+    /**
+     * @return the throttle increment
+     * @deprecated since 4.7.1; use {@link #getThrottleIncrement()} instead
+     */
+    @Deprecated
     float getThrottleIncre() {
-        return _throttleIncr;
+        return getThrottleIncrement();
     }
 
+    /**
+     * @param ti the throttle increment
+     * @deprecated since 4.7.1; use {@link #setThrottleIncrement(float)s}
+     * instead
+     */
+    @Deprecated
     void setThrottleIncre(float ti) {
-        _throttleIncr = ti;
+        setThrottleIncrement(ti);
     }
 
     Iterator<Entry<String, Float>> getSpeedNameEntryIterator() {
-        java.util.Enumeration<String> keys = _speedNames.keys();
-        java.util.Vector<Entry<String, Float>> vec = new java.util.Vector<>();
-        while (keys.hasMoreElements()) {
-            String key = keys.nextElement();
-            vec.add(new java.util.AbstractMap.SimpleEntry<>(key, _speedNames.get(key)));
-        }
+        List<Entry<String, Float>> vec = new java.util.ArrayList<>();
+        _speedNames.entrySet().forEach((entry) -> {
+            vec.add(new AbstractMap.SimpleEntry<>(entry.getKey(), entry.getValue()));
+        });
         return vec.iterator();
     }
 
@@ -465,12 +533,10 @@ public class WarrantPreferences {
     }
 
     Iterator<Entry<String, String>> getAppearanceEntryIterator() {
-        java.util.Enumeration<String> keys = _headAppearances.keys();
-        java.util.Vector<Entry<String, String>> vec = new java.util.Vector<>();
-        while (keys.hasMoreElements()) {
-            String key = keys.nextElement();
-            vec.add(new java.util.AbstractMap.SimpleEntry<>(key, _headAppearances.get(key)));
-        }
+        List<Entry<String, String>> vec = new ArrayList<>();
+        _headAppearances.entrySet().stream().forEach((entry) -> {
+            vec.add(new AbstractMap.SimpleEntry<>(entry.getKey(), entry.getValue()));
+        });
         return vec.iterator();
     }
 
@@ -495,11 +561,53 @@ public class WarrantPreferences {
     }
 
     void setInterpretation(int interp) {
+        int oldInterpretation = this._interpretation;
         _interpretation = interp;
+        propertyChangeSupport.firePropertyChange(INTERPRETATION, oldInterpretation, interp);
     }
 
     public static class WarrantPreferencesXml extends XmlFile {
     }
 
     private final static Logger log = LoggerFactory.getLogger(WarrantPreferences.class);
+
+    /**
+     * Get the time increment.
+     *
+     * @return the time increment in milliseconds
+     */
+    public int getTimeIncrement() {
+        return _msIncrTime;
+    }
+
+    /**
+     * Set the time increment.
+     *
+     * @param increment the time increment in milliseconds
+     */
+    public void setTimeIncrement(int increment) {
+        int oldIncrement = this._msIncrTime;
+        this._msIncrTime = increment;
+        propertyChangeSupport.firePropertyChange(TIME_INCREMENT, oldIncrement, increment);
+    }
+
+    /**
+     * Get the throttle increment.
+     *
+     * @return the throttle increment
+     */
+    public float getThrottleIncrement() {
+        return _throttleIncr;
+    }
+
+    /**
+     * Set the throttle increment.
+     *
+     * @param increment the throttle increment
+     */
+    public void setThrottleIncrement(float increment) {
+        float oldIncrement = this._throttleIncr;
+        this._throttleIncr = increment;
+        propertyChangeSupport.firePropertyChange(RAMP_INCREMENT, oldIncrement, increment);
+    }
 }

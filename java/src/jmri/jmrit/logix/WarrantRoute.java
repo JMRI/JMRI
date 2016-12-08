@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +69,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     RouteLocation _focusedField;
 
     static int STRUT_SIZE = 10;
-    static int _depth = 20;
+    private int _depth = 20;
 
     static String PAD = "               ";
     private JDialog _pickRouteDialog;
@@ -84,10 +85,21 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     private final JTextField _dccNumBox = new JTextField();
     private final JTextField _trainNameBox = new JTextField(6);
 
-    WarrantRoute() {
+    /**
+     * Only subclasses can create this
+     */
+    protected WarrantRoute() {
         super(false, true);
         _routeModel = new RouteTableModel();
         getRoster();
+        WarrantPreferences.getDefault().addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            switch (evt.getPropertyName()) {
+                case WarrantPreferences.SEARCH_DEPTH:
+                    this.setDepth((int) evt.getNewValue());
+                default:
+                    // do nothing
+            }
+        });
     }
 
     public abstract void selectedRoute(ArrayList<BlockOrder> orders);
@@ -828,6 +840,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
 
     /**
      * Callback from RouteFinder - several routes found
+     *
      * @param destNodes the destination blocks
      * @param routeTree the routes
      */
@@ -955,8 +968,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
 
     /**
      * Callback from RouteFinder - exactly one route found
+     *
      * @param destNode destination block
-     * @param tree possible routes
+     * @param tree     possible routes
      */
     protected void showRoute(DefaultMutableTreeNode destNode, DefaultTreeModel tree) {
         TreeNode[] nodes = tree.getPathToRoot(destNode);
@@ -993,9 +1007,10 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
 
     /**
      * Callback from RouteFinder - no routes found
-     * @param tree routes
+     *
+     * @param tree   routes
      * @param origin starting block
-     * @param dest ending block
+     * @param dest   ending block
      */
     protected void debugRoute(DefaultTreeModel tree, BlockOrder origin, BlockOrder dest) {
         if (JOptionPane.NO_OPTION == JOptionPane.showConfirmDialog(this, Bundle.getMessage("NoRoute",
@@ -1071,7 +1086,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         return msg;
     }
 
-    static private String pathIsValid(OBlock block, String pathName) {
+    private String pathIsValid(OBlock block, String pathName) {
         List<Path> list = block.getPaths();
         if (list.isEmpty()) {
             return Bundle.getMessage("WarningTitle");
@@ -1197,7 +1212,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                     bo.setExitName((String) value);
                     break;
                 default:
-                    // do nothing
+                // do nothing
             }
             fireTableRowsUpdated(row, row);
         }
