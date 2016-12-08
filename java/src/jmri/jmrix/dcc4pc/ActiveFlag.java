@@ -1,4 +1,3 @@
-// ActiveFlag.java
 package jmri.jmrix.dcc4pc;
 
 
@@ -27,5 +26,3 @@ abstract public class ActiveFlag {
 
 }
 
-
-/* @(#)AbstractMRReply.java */

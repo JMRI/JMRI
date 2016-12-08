@@ -25,7 +25,7 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.lenz.xnetsimulator");  // no tests in this class itself
-        suite.addTest(new TestSuite(XNetSimulatorAdapterTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XNetSimulatorAdapterTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.lenz.xnetsimulator.configurexml.PackageTest.class));
         return suite;

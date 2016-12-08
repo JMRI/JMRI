@@ -1,4 +1,3 @@
-// Dcc4PcReply.java
 package jmri.jmrix.dcc4pc;
 
 import jmri.jmrix.AbstractMRReply;
@@ -154,6 +153,3 @@ public class Dcc4PcReply extends AbstractMRReply {
     private final static Logger log = LoggerFactory.getLogger(Dcc4PcReply.class.getName());
 
 }
-
-
-/* @(#)Dcc4PcReply.java */
