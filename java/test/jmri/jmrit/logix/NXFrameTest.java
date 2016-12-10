@@ -150,6 +150,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         // OBlock sensor names
         String[] route = {"OB0", "OB1", "OB2", "OB3", "OB7", "OB5", "OB10"};
         block = _OBlockMgr.getOBlock("OB10");
+        // runtimes() in next line runs the train, then checks location
         Assert.assertEquals("Train in last block", block.getSensor().getDisplayName(), runtimes(route).getDisplayName());
 
         flushAWT();
@@ -228,7 +229,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
                 int state = blk.getState();
                 return  state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.OCCUPIED) ||
                         state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.DARK);
-            }, "Train occupies block");
+            }, "Train occupies block "+i+" of "+route.length);
             flushAWT();
 
             block = _OBlockMgr.getOBlock(route[i]);
@@ -249,7 +250,14 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
             } else {
                 nextSensor = null;
             }
-            sensor.setState(Sensor.INACTIVE);
+            final Sensor tsensor = sensor;
+            jmri.util.ThreadingUtil.runOnLayout(() -> {
+                try {
+                    tsensor.setState(Sensor.INACTIVE);
+                } catch (jmri.JmriException e) {
+                    Assert.fail("Unexpected Exception: " + e);
+                }
+            });
             if (!dark) {
                 sensor = nextSensor;                
             }

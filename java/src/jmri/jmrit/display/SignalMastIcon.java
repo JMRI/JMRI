@@ -1,4 +1,3 @@
-// SignalMastIcon.java
 package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
@@ -294,11 +293,6 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             for (int i = 0; i < aspects.size(); i++) {
                 final int index = i;
                 aspect.add(new AbstractAction(aspects.elementAt(index)) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -2880512365482915995L;
-
                     public void actionPerformed(ActionEvent e) {
                         getSignalMast().setAspect(aspects.elementAt(index));
                     }
@@ -311,11 +305,6 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             for (int i = 0; i < aspects.size(); i++) {
                 final int index = i;
                 popup.add(new AbstractAction(aspects.elementAt(index)) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -5139716882196677458L;
-
                     public void actionPerformed(ActionEvent e) {
                         getSignalMast().setAspect(aspects.elementAt(index));
                     }
@@ -338,11 +327,6 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
                 addString = Bundle.getMessage("MenuTransitAddTo");
             }
             popup.add(new AbstractAction(addString) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 8999105169303183319L;
-
                 public void actionPerformed(ActionEvent e) {
                     try {
                         tct.addNamedBean(getSignalMast());
@@ -353,11 +337,6 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             });
             if (tct.isToolInUse()) {
                 popup.add(new AbstractAction(Bundle.getMessage("MenuTransitAddComplete")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 4260649479001420722L;
-
                     public void actionPerformed(ActionEvent e) {
                         Transit created;
                         try {
@@ -371,11 +350,6 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
                     }
                 });
                 popup.add(new AbstractAction(Bundle.getMessage("MenuTransitCancel")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -388638543659271424L;
-
                     public void actionPerformed(ActionEvent e) {
                         tct.cancelTransitCreate();
                     }
@@ -414,11 +388,6 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSignalMast"));
         popup.add(new AbstractAction(txt) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -4184564062800372222L;
-
             public void actionPerformed(ActionEvent e) {
                 editItem();
             }
