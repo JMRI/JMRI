@@ -46,10 +46,10 @@ import org.slf4j.LoggerFactory;
  */
 public class NXFrame extends WarrantRoute {
 
-    static float _scale = 87.1f;
-    static float _intervalTime = 0.0f;     // milliseconds
-    static float _throttleIncr = 0.0f;
-    static float _throttleFactor = 0.0f;
+    private float _scale = 87.1f;
+    private float _intervalTime = 0.0f;     // milliseconds
+    private float _throttleIncr = 0.0f;
+    private float _throttleFactor = 0.0f;
 
     JTextField _maxSpeedBox = new JTextField(6);
     JTextField _rampInterval = new JTextField(6);
@@ -77,8 +77,19 @@ public class NXFrame extends WarrantRoute {
      * Get the default instance of the NXFrame.
      *
      * @return the default instance or null if in headless mode
+     * @deprecated since 4.7.1; use {@link #getDefault()} instead
      */
+    @Deprecated
     static public NXFrame getInstance() {
+        return getDefault();
+    }
+
+    /**
+     * Get the default instance of the NXFrame.
+     *
+     * @return the default instance or null if in headless mode
+     */
+    public static NXFrame getDefault() {
         if (GraphicsEnvironment.isHeadless()) {
             return null;
         }
@@ -93,7 +104,8 @@ public class NXFrame extends WarrantRoute {
     }
 
     /**
-     * Prevent multiple NXFrames from being created
+     * Prevent multiple NXFrames from being created by limiting access to the
+     * constructor to the {@link #getDefault()} method.
      */
     private NXFrame() {
         super();
@@ -451,8 +463,13 @@ public class NXFrame extends WarrantRoute {
         _intervalTime = s;
     }
 
-    public void setRampIncrement(float throttleIncr) {
-        _throttleIncr = throttleIncr;
+    /**
+     * @param increment the throttle increment
+     * @deprecated since 4.7.1; use {@link #setThrottleIncrement(float)} instead
+     */
+    @Deprecated
+    public void setRampIncrement(float increment) {
+        setThrottleIncrement(increment);
     }
 
     public void setStartHalt(boolean s) {
@@ -912,6 +929,34 @@ public class NXFrame extends WarrantRoute {
             return false;
         }
         return true;
+    }
+
+    /**
+     * @return the throttle increment
+     */
+    public float getThrottleIncrement() {
+        return _throttleIncr;
+    }
+
+    /**
+     * @param increment the throttle increment
+     */
+    public void setThrottleIncrement(float increment) {
+        this._throttleIncr = increment;
+    }
+
+    /**
+     * @return the throttle factor
+     */
+    public float getThrottleFactor() {
+        return _throttleFactor;
+    }
+
+    /**
+     * @param factor the throttle factor
+     */
+    public void setThrottleFactor(float factor) {
+        this._throttleFactor = factor;
     }
 
     private final static Logger log = LoggerFactory.getLogger(NXFrame.class.getName());

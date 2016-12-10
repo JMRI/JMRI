@@ -3,7 +3,6 @@ package jmri.jmrit.logix;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//import java.util.EventObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -62,7 +61,6 @@ public class WarrantTableAction extends AbstractAction {
     private static boolean _hasErrors = false;
     private static JDialog _errorDialog;
     protected static WarrantFrame _openFrame;
-    protected static NXFrame _nxFrame;
     private static boolean _logging = false;
     private static boolean _edit;
     static ShutDownTask     _shutDownTask = null;
@@ -278,7 +276,7 @@ public class WarrantTableAction extends AbstractAction {
             return;
         }
         
-        NXFrame nxFrame = NXFrame.getInstance();
+        NXFrame nxFrame = NXFrame.getDefault();
         if (nxFrame.isVisible()) {
             nxFrame.mouseClickedOnBlock(block);
             return;

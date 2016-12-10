@@ -392,13 +392,13 @@ public class WarrantPreferences extends Bean {
     }
 
     private void setNXdata() {
-        NXFrame._scale = _scale;
-        // WarrantRoute._depth = _searchDepth; // set by propertyChange
-        NXFrame._intervalTime = _msIncrTime;
-        NXFrame._throttleIncr = _throttleIncr;
-        NXFrame._throttleFactor = _throttleScale;
         if (!GraphicsEnvironment.isHeadless()) {
-            NXFrame frame = NXFrame.getInstance();
+            NXFrame frame = NXFrame.getDefault();
+            frame.setScale(_scale);
+            frame.setDepth(_searchDepth);
+            frame.setTimeInterval(_msIncrTime);
+            frame.setThrottleIncrement(_throttleIncr);
+            frame.setThrottleFactor(_throttleScale);
             frame.updatePanel(_interpretation);
         }
     }
