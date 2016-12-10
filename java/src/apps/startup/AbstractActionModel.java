@@ -65,7 +65,7 @@ public abstract class AbstractActionModel extends AbstractStartupModel {
         String name = this.getName();
         if (name != null) {
             if (!this.systemPrefix.isEmpty()) {
-                return Bundle.getMessage("AbstractActionModel.ToolTip", this.getName(), ConnectionNameFromSystemName.getConnectionName(this.systemPrefix)); // NOI18N
+                return Bundle.getMessage("AbstractActionModel.ToolTip", name, ConnectionNameFromSystemName.getConnectionName(this.systemPrefix)); // NOI18N
             }
             return name;
         }
