@@ -2,6 +2,7 @@ package apps.startup;
 
 import java.util.Locale;
 import javax.annotation.Nonnull;
+import jmri.spi.JmriServiceProviderInterface;
 
 /**
  * Provide an SPI for registering potential startup actions with the
@@ -17,7 +18,7 @@ import javax.annotation.Nonnull;
  *
  * @author Randall Wood (C) 2016;
  */
-public interface StartupActionFactory {
+public interface StartupActionFactory extends JmriServiceProviderInterface {
 
     /**
      * Get the title for the given class using the default locale.

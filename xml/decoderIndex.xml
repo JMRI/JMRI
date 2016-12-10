@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.5.7ish-201611272226-heap-R57e723c on Mon Nov 28 09:26:08 AEDT 2016 $Id$-->
-  <decoderIndex version="782">
+  <!--Written by JMRI version 4.7.1ish-201612020039-heap-Rafd2a22 on Fri Dec 02 11:39:26 AEDT 2016 $Id$-->
+  <decoderIndex version="784">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -4058,7 +4058,7 @@
         </model>
       </family>
       <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokPilotV4.0.xml">
-        <model model="LokPilot V4.0" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554495">
+        <model model="LokPilot V4.0" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554495,33554564">
           <output name="61" label="|" />
           <output name="62" label="|" />
           <output name="63" label="|" />
@@ -4076,7 +4076,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="LokPilot V4.0 DCC" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554498">
+        <model model="LokPilot V4.0 DCC" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554498,33554565">
           <output name="61" label="|" />
           <output name="62" label="|" />
           <output name="63" label="|" />

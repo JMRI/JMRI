@@ -1,4 +1,3 @@
-/* Dcc4PcProgrammerManager.java */
 package jmri.jmrix.dcc4pc;
 
 import jmri.AddressedProgrammer;
@@ -88,5 +87,3 @@ public class Dcc4PcProgrammerManager extends DefaultProgrammerManager {
         defaultManager.releaseGlobalProgrammer(p);
     }
 }
-
-/* @(#)DefaultProgrammerManager.java */

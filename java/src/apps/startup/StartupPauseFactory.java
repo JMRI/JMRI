@@ -11,7 +11,7 @@ import jmri.InstanceManager;
 
 /**
  * Factory for {@link apps.startup.StartupPauseModel} objects.
- * 
+ *
  * @author Randall Wood (c) 2016
  */
 public class StartupPauseFactory implements StartupModelFactory {
@@ -40,7 +40,11 @@ public class StartupPauseFactory implements StartupModelFactory {
     public void editModel(StartupModel model, Component parent) {
         if (this.getModelClass().isInstance(model)) {
             int delay = ((StartupPauseModel) model).getDelay();
-            SpinnerNumberModel snm = new SpinnerNumberModel(delay, 0, 600, 1);
+            SpinnerNumberModel snm = new SpinnerNumberModel(
+                    delay >= 0 ? delay : StartupPauseModel.DEFAULT_DELAY,
+                    0,
+                    600,
+                    1);
             JSpinner spinner = new JSpinner(snm);
             int result = JOptionPane.showConfirmDialog(parent,
                     this.getDialogMessage(spinner),

@@ -468,6 +468,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             _oBlockTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
         _oBlockTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
         ROW_HEIGHT = _oBlockTable.getRowHeight();
         int tableWidth = _desktop.getPreferredSize().width;
         _oBlockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, ROW_HEIGHT * 10));
@@ -518,7 +519,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _portalTable.setRowSorter(sorter);
         _portalTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(new int[]{PortalTableModel.DELETE_COL}));
         _portalTable.setDragEnabled(true);
-
+        
         _portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         _portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
         for (int i = 0; i < _portalModel.getColumnCount(); i++) {
@@ -551,7 +552,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _blockPortalTable = new JTable(_blockPortalXRefModel);
         _blockPortalTable.setTransferHandler(new jmri.util.DnDTableExportHandler());
         _blockPortalTable.setDragEnabled(true);
-
+        
         _blockPortalTable.setDefaultRenderer(String.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         _blockPortalTable.setDefaultEditor(String.class, new jmri.jmrit.symbolicprog.ValueEditor());
         for (int i = 0; i < _blockPortalXRefModel.getColumnCount(); i++) {
@@ -587,7 +588,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _signalTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(
                 new int[]{SignalTableModel.UNITSCOL, SignalTableModel.DELETE_COL}));
         _signalTable.setDragEnabled(true);
-
+        
         _signalTable.getColumnModel().getColumn(SignalTableModel.UNITSCOL).setCellRenderer(
                 new MyBooleanRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
         _signalTable.getColumnModel().getColumn(SignalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
@@ -654,7 +655,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         blockPathTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(new int[]{
                 BlockPathTableModel.EDIT_COL, BlockPathTableModel.DELETE_COL, BlockPathTableModel.UNITSCOL}));
         blockPathTable.setDragEnabled(true);
-
+        
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.UNITSCOL).setCellRenderer(
                 new MyBooleanRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.EDIT_COL).setCellEditor(new ButtonEditor(new JButton()));

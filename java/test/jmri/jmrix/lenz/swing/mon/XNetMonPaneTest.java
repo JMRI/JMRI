@@ -14,37 +14,39 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2014,2016
  */
-public class XNetMonPaneTest {
+public class XNetMonPaneTest extends jmri.jmrix.AbstractMonPaneTest {
+        
+    private jmri.jmrix.lenz.XNetSystemConnectionMemo memo = null;
 
     @Test
     public void testCtor() {
-        XNetMonPane f = new XNetMonPane();
-        Assert.assertNotNull(f);
+        Assert.assertNotNull(pane);
     }
 
     @Test
     public void testDefault() {
-        jmri.jmrix.lenz.XNetInterfaceScaffold t = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
-        jmri.jmrix.lenz.XNetSystemConnectionMemo memo = new jmri.jmrix.lenz.XNetSystemConnectionMemo(t);
-
-        jmri.InstanceManager.store(memo, jmri.jmrix.lenz.XNetSystemConnectionMemo.class);
-
         jmri.util.swing.JmriNamedPaneAction f = new XNetMonPane.Default();
         Assert.assertNotNull(f);
-        jmri.InstanceManager.deregister(memo, jmri.jmrix.lenz.XNetSystemConnectionMemo.class);
     }
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.jmrix.lenz.XNetInterfaceScaffold t = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
+        jmri.jmrix.lenz.XNetSystemConnectionMemo memo = new jmri.jmrix.lenz.XNetSystemConnectionMemo(t);
+        jmri.InstanceManager.store(memo, jmri.jmrix.lenz.XNetSystemConnectionMemo.class);
+        pane = new XNetMonPane();
     }
 
     @After
+    @Override
     public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.InstanceManager.deregister(memo, jmri.jmrix.lenz.XNetSystemConnectionMemo.class);
     }
 
 }
