@@ -144,7 +144,7 @@ public class WarrantTableAction extends AbstractAction {
                 editWarrantMenu.add(mi);
             }
         }
-        _warrantMenu.add(new WarrantTableAction(Bundle.getMessage("CreateWarrant")));
+        _warrantMenu.add(new WarrantTableAction("CreateWarrant")); // NOI18N
         _warrantMenu.add(_trackerTable);
         _warrantMenu.add(new AbstractAction(Bundle.getMessage("CreateNXWarrant")) {
 
