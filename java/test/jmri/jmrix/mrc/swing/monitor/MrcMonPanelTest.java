@@ -1,4 +1,4 @@
-package jmri.jmrix.ecos.swing.monitor;
+package jmri.jmrix.mrc.swing.monitor;
 
 import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
@@ -15,13 +15,13 @@ import jmri.jmrix.AbstractMonPaneScaffold;
 
 
 /**
- * Test simple functioning of EcosMonPane
+ * Test simple functioning of MrcMonPanel
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class EcosMonPaneTest extends jmri.jmrix.AbstractMonPaneTest {
+public class MrcMonPanelTest extends jmri.jmrix.AbstractMonPaneTest {
 
-    jmri.jmrix.ecos.EcosSystemConnectionMemo memo = null;
+    jmri.jmrix.mrc.MrcSystemConnectionMemo memo = null;
 
     @Test
     public void testCtor() {
@@ -29,15 +29,13 @@ public class EcosMonPaneTest extends jmri.jmrix.AbstractMonPaneTest {
     }
 
     // Test checking the AutoScroll checkbox.
-    // for some reason the EcosMonPane has the checkbox value reversed on
+    // for some reason the MrcMonPanel has the checkbox value reversed on
     // startup compared to other AbstractMonPane derivatives.
     @Override
     @Test
     public void checkAutoScrollCheckBox(){
          Assume.assumeFalse(GraphicsEnvironment.isHeadless());
          AbstractMonPaneScaffold s = new AbstractMonPaneScaffold(pane);
-
-         // for Jemmy to work, we need the pane inside of a frame
          JmriJFrame f = new JmriJFrame();
          try{
             pane.initComponents();
@@ -64,11 +62,12 @@ public class EcosMonPaneTest extends jmri.jmrix.AbstractMonPaneTest {
         Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initDefaultUserMessagePreferences();
-        jmri.jmrix.ecos.EcosInterfaceScaffold tc = new jmri.jmrix.ecos.EcosInterfaceScaffold();
-        memo = new jmri.jmrix.ecos.EcosSystemConnectionMemo(tc);
-        jmri.InstanceManager.store(memo, jmri.jmrix.ecos.EcosSystemConnectionMemo.class);
-        pane = new EcosMonPane();
-        ((EcosMonPane)pane).initContext(memo); 
+        memo = new jmri.jmrix.mrc.MrcSystemConnectionMemo();
+        jmri.jmrix.mrc.MrcInterfaceScaffold tc = new jmri.jmrix.mrc.MrcInterfaceScaffold();
+        memo.setMrcTrafficController(tc);
+        jmri.InstanceManager.store(memo, jmri.jmrix.mrc.MrcSystemConnectionMemo.class);
+        pane = new MrcMonPanel();
+        ((MrcMonPanel)pane).initContext(memo); 
     }
 
     @Override

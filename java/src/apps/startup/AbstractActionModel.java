@@ -13,27 +13,26 @@ import jmri.util.ConnectionNameFromSystemName;
  * @author Bob Jacobsen Copyright 2003, 2007, 2014
  * @see apps.startup.AbstractActionModelFactory
  */
-public abstract class AbstractActionModel implements StartupModel {
+public abstract class AbstractActionModel extends AbstractStartupModel {
 
     private String systemPrefix = ""; // NOI18N
-    private String className = ""; // NOI18N
 
     public String getClassName() {
-        return className;
+        return this.getName();
     }
 
     @Override
     public String getName() {
-        return StartupActionModelUtil.getDefault().getActionName(className);
+        return StartupActionModelUtil.getDefault().getActionName(super.getName());
     }
 
     @Override
     public void setName(@Nonnull String n) {
-        this.className = StartupActionModelUtil.getDefault().getClassName(n);
+        super.setName(StartupActionModelUtil.getDefault().getClassName(n));
     }
 
     public void setClassName(@Nonnull String n) {
-        className = n;
+        this.setName(n);
     }
 
     @Nonnull
@@ -41,16 +40,16 @@ public abstract class AbstractActionModel implements StartupModel {
         return this.systemPrefix;
     }
 
-    public void setSystemPrefix(@Nullable String name) {
-        if (name == null) {
+    public void setSystemPrefix(@Nullable String prefix) {
+        if (prefix == null) {
             this.systemPrefix = ""; // NOI18N
         } else {
-            this.systemPrefix = name;
+            this.systemPrefix = prefix;
         }
     }
 
     public boolean isSystemConnectionAction() {
-        return StartupActionModelUtil.getDefault().isSystemConnectionAction(className);
+        return StartupActionModelUtil.getDefault().isSystemConnectionAction(this.getName());
     }
 
     @Override
