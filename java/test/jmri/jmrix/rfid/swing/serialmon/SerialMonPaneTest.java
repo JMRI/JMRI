@@ -13,20 +13,22 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class SerialMonPaneTest {
+public class SerialMonPaneTest extends jmri.jmrix.AbstractMonPaneTest {
 
     @Test
     public void testMemoCtor() {
-        SerialMonPane action = new SerialMonPane();
-        Assert.assertNotNull("exists", action);
+        Assert.assertNotNull("exists", pane);
     }
 
+    @Override
     @Before
     public void setUp() {
         Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
+        pane = new SerialMonPane();
     }
 
+    @Override
     @After
     public void tearDown() {
         JUnitUtil.resetInstanceManager();

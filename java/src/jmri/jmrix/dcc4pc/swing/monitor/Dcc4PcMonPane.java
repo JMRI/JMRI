@@ -1,10 +1,3 @@
-/**
- * Dcc4PcMonPane.java
- *
- * Description:	Swing action to create and register a MonFrame object
- *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- */
 package jmri.jmrix.dcc4pc.swing.monitor;
 
 import jmri.jmrix.dcc4pc.Dcc4PcListener;
@@ -15,12 +8,12 @@ import jmri.jmrix.dcc4pc.swing.Dcc4PcPanelInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Swing action to create and register a MonFrame object
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ */
 public class Dcc4PcMonPane extends jmri.jmrix.AbstractMonPane implements Dcc4PcListener, Dcc4PcPanelInterface {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5843358285941449913L;
 
     public Dcc4PcMonPane() {
         super();
@@ -110,11 +103,6 @@ public class Dcc4PcMonPane extends jmri.jmrix.AbstractMonPane implements Dcc4PcL
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.dcc4pc.swing.Dcc4PcNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -1315928416102283355L;
 
         public Default() {
             super("Dcc4PC Command Monitor",
