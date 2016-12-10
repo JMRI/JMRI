@@ -82,7 +82,11 @@ public class LinkingLabelXml extends PositionableLabelXml {
                     }
                 }
             }
-            // allow null icons for now
+            // abort if name != yes and have null icon
+            if (icon == null && !name.equals("yes")) {
+                log.info("LinkingLabel icon removed for url= " + name);
+                return;
+            }
             l = new LinkingLabel(icon, editor, url);
             l.setPopupUtility(null);        // no text
             try {
@@ -103,12 +107,7 @@ public class LinkingLabelXml extends PositionableLabelXml {
                     return;
                 }
             } else {
-                if (icon == null) {
-                    log.info("LinkingLabel icon removed for url= " + name);
-                    return;
-                } else {
-                    l.updateIcon(icon);
-                }
+                l.updateIcon(icon);
             }
 
             //l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
