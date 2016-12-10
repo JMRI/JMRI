@@ -191,7 +191,7 @@ public class FnMapPanelESU extends JPanel {
             itemDescESU[item++] = Bundle.getMessage("FnMap_HL") + "[2]";
             itemDescESU[item++] = Bundle.getMessage("FnMap_RL") + "[2]";
             for (int i = 1; i <= 2; i++) {
-                itemDescESU[item++] = Bundle.getMessage("FnMap_A") + " " + i + (i <= 2 ? "[2]" : "");
+                itemDescESU[item++] = Bundle.getMessage("FnMap_A") + " " + i + "[2]";
             }
             for (int i = 1; i <= outBlockLength[2]; i++) {
                 try {

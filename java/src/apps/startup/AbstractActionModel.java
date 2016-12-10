@@ -23,7 +23,11 @@ public abstract class AbstractActionModel extends AbstractStartupModel {
 
     @Override
     public String getName() {
-        return StartupActionModelUtil.getDefault().getActionName(super.getName());
+        String name = super.getName();
+        if (name != null) {
+            return StartupActionModelUtil.getDefault().getActionName(name);
+        }
+        return null;
     }
 
     @Override
@@ -49,14 +53,22 @@ public abstract class AbstractActionModel extends AbstractStartupModel {
     }
 
     public boolean isSystemConnectionAction() {
-        return StartupActionModelUtil.getDefault().isSystemConnectionAction(this.getName());
+        String name = this.getName();
+        if (name != null) {
+            return StartupActionModelUtil.getDefault().isSystemConnectionAction(name);
+        }
+        return false;
     }
 
     @Override
     public String toString() {
-        if (!this.systemPrefix.isEmpty()) {
-            return Bundle.getMessage("AbstractActionModel.ToolTip", this.getName(), ConnectionNameFromSystemName.getConnectionName(this.systemPrefix)); // NOI18N
+        String name = this.getName();
+        if (name != null) {
+            if (!this.systemPrefix.isEmpty()) {
+                return Bundle.getMessage("AbstractActionModel.ToolTip", name, ConnectionNameFromSystemName.getConnectionName(this.systemPrefix)); // NOI18N
+            }
+            return name;
         }
-        return this.getName();
+        return super.toString();
     }
 }

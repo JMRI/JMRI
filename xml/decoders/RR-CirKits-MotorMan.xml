@@ -13,12 +13,12 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-  <version author="dick@rr-cirkits.com" version="1.2" lastUpdated="20161103"/>
+  <version author="dick@rr-cirkits.com" version="1.3" lastUpdated="20161209"/>
   <!-- Version 0.01  Working version modified from TowerMan -->
   <!-- Version 1.0   Removed Stepper code references -->
   <!-- Version 1.1   Fixed bugs and added flasher option -->
   <!-- Version 1.2   Fixed boot code errors to prevent shorting output drivers during firmware upgrade, added Inv option to outputs, and added trigger options in logic -->
-  
+  <!-- Version 1.3   Fixed initialize error to prevent lock up of the LocoNet -->
 
   <decoder>
     <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The MotorMan is programmed in OPs mode">
@@ -166,6 +166,11 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/></variable>
 
       <variable label="PA1 Inv" CV="132" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA1 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="Norm"/>
           <enumChoice choice="Inv"/>
@@ -289,6 +294,11 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/></variable>
 
       <variable label="PA2 Inv" CV="140" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA2 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="Norm"/>
           <enumChoice choice="Inv"/>
@@ -412,6 +422,11 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/></variable>
 
       <variable label="PA3 Inv" CV="148" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA3 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="Norm"/>
           <enumChoice choice="Inv"/>
@@ -535,6 +550,11 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/></variable>
 
       <variable label="PA4 Inv" CV="156" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA4 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="Norm"/>
           <enumChoice choice="Inv"/>
@@ -663,6 +683,11 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/></variable>
 
       <variable label="PA5 Inv" CV="164" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA5 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="Norm"/>
           <enumChoice choice="Inv"/>
@@ -786,6 +811,11 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/></variable>
 
       <variable label="PA6 Inv" CV="172" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA6 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="Norm"/>
           <enumChoice choice="Inv"/>
@@ -909,6 +939,11 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/></variable>
 
       <variable label="PA7 Inv" CV="180" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA7 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="Norm"/>
           <enumChoice choice="Inv"/>
@@ -1032,6 +1067,11 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/></variable>
 
       <variable label="PA8 Inv" CV="188" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA8 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="Norm"/>
           <enumChoice choice="Inv"/>

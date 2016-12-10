@@ -120,7 +120,7 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
                 update();
             }
 	    };
-        meter.addDataUpdateListener(du_listener);
+        meter.addPropertyChangeListener(MultiMeter.CURRENT, du_listener);
 
         // Add component listener to handle frame resizing event
         this.addComponentListener(

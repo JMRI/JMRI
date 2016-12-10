@@ -34,7 +34,7 @@
           <text> </text>
         </label>
         <label>
-          <text>TowerMan Input/Output Port Configuration settings. All numbers are entered as their actual</text>
+          <text>Input/Output Port Configuration settings. All numbers are entered as their actual</text>
         </label>
         <label>
           <text>event numbers. For example LS9 is entered as event number 9. Paired inputs or outputs respond</text>
