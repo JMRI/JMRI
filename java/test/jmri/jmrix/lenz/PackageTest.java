@@ -65,6 +65,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.lenz.swing.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.lenz.configurexml.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(XNetNetworkPortControllerTest.class));
 
         return suite;
     }
