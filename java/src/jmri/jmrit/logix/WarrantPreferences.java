@@ -481,7 +481,7 @@ public class WarrantPreferences extends Bean {
     }
 
     /**
-     * @int t the time increment
+     * @param t the time increment
      * @deprecated since 4.7.1; use {@link #setTimeIncrement(int)} instead
      */
     @Deprecated
@@ -500,7 +500,7 @@ public class WarrantPreferences extends Bean {
 
     /**
      * @param ti the throttle increment
-     * @deprecated since 4.7.1; use {@link #setThrottleIncrement(float)s}
+     * @deprecated since 4.7.1; use {@link #setThrottleIncrement(float)}
      * instead
      */
     @Deprecated
