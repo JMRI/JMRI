@@ -42,7 +42,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(DCCppLightTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppLightManagerTest.class));
         suite.addTest(new TestSuite(DCCppOpsModeProgrammerTest.class));
-        suite.addTest(new TestSuite(DCCppStreamPortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppStreamPortControllerTest.class));
         suite.addTest(new TestSuite(DCCppSensorTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppSensorManagerTest.class));
         suite.addTest(jmri.jmrix.dccpp.network.PackageTest.suite());

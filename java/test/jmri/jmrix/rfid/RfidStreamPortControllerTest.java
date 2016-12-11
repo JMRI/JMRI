@@ -23,6 +23,7 @@ import org.junit.Test;
  */
 public class RfidStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortControllerTest {
 
+    @Test
     public void testCtor() {
         Assert.assertNotNull("exists", apc);
     }
