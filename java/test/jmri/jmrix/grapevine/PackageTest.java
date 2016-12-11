@@ -50,6 +50,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.grapevine.configurexml.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(GrapevineMenuTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.grapevine.serialmon.SerialMonTest.class));
+        suite.addTest(new JUnit4TestAdapter(GrapevineSystemConnectionMemoTest.class));
+        suite.addTest(new JUnit4TestAdapter(SerialPortControllerTest.class));
         return suite;
     }
 

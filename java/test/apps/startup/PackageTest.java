@@ -8,7 +8,8 @@ import org.junit.runners.Suite;
    apps.startup.configurexml.PackageTest.class,
    BundleTest.class,
    AbstractStartupModelTest.class,
-   StartupPauseModelTest.class
+   StartupPauseModelTest.class,
+   AbstractActionModelTest.class
 })
 /**
  * Tests for the apps.startup.configurexml package.

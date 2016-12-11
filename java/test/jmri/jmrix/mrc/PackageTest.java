@@ -12,7 +12,9 @@ import org.slf4j.LoggerFactory;
    jmri.jmrix.mrc.swing.PackageTest.class,
    jmri.jmrix.mrc.simulator.PackageTest.class,
    jmri.jmrix.mrc.serialdriver.PackageTest.class,
-   jmri.jmrix.mrc.configurexml.PackageTest.class
+   jmri.jmrix.mrc.configurexml.PackageTest.class,
+   MrcSystemConnectionMemoTest.class,
+   MrcPortControllerTest.class
 })
 
 /**
