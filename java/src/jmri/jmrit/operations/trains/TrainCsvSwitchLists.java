@@ -107,7 +107,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                 // the departure location
                 // the departure time
                 // the train's direction when it arrives
-                // if it terminate at this location
+                // if it terminates at this location
                 if (stops == 1) {
                     // newLine(fileOut);
                     addLine(fileOut, TN + train.getName());
@@ -214,17 +214,26 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                     }
                 }
                 stops++;
+                if (rl != train.getRoute().getTerminatesRouteLocation()) {
+                    addLine(fileOut, TL +
+                            train.getTrainLength(rl) +
+                            DEL +
+                            train.getNumberEmptyCarsInTrain(rl) +
+                            DEL +
+                            train.getNumberCarsInTrain(rl));
+                    addLine(fileOut, TW + train.getTrainWeight(rl));
+                }
             }
             if (trainDone && pickupCars == 0 && dropCars == 0) {
                 addLine(fileOut, TDONE);
-            } else {
-                if (stops > 1 && pickupCars == 0) {
+            } else if (stops > 1) {
+                if (pickupCars == 0) {
                     addLine(fileOut, NCPU);
                 }
-
-                if (stops > 1 && dropCars == 0) {
+                if (dropCars == 0) {
                     addLine(fileOut, NCSO);
                 }
+                addLine(fileOut, TEND + train.getName()); // done with this train
             }
         }
         addLine(fileOut, END); // done with switch list

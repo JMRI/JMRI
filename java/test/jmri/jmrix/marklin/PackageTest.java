@@ -17,7 +17,8 @@ import org.slf4j.LoggerFactory;
    jmri.jmrix.marklin.swing.PackageTest.class,
    MarklinConnectionTypeListTest.class,
    MarklinSystemConnectionMemoTest.class,
-   MarklinTrafficControllerTest.class
+   MarklinTrafficControllerTest.class,
+   MarklinPortControllerTest.class
 })
 /**
  * Tests for the jmri.jmrix.marklin package

@@ -57,7 +57,7 @@
     <version author="Dave Heap" version="13" lastUpdated="20161101"/>
     <decoder>
         <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
-            <model model="LokPilot V4.0" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554495">
+            <model model="LokPilot V4.0" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554495,33554564">
                 <output name="61" label="|"/>
                 <output name="62" label="|"/>
                 <output name="63" label="|"/>
@@ -75,7 +75,7 @@
                     <protocol>motorola</protocol>
                 </protocols>
             </model>
-            <model model="LokPilot V4.0 DCC" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554498">
+            <model model="LokPilot V4.0 DCC" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554498,33554565">
                 <output name="61" label="|"/>
                 <output name="62" label="|"/>
                 <output name="63" label="|"/>

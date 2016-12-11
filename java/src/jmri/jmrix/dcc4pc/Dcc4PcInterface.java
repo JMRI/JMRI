@@ -1,4 +1,3 @@
-// Dcc4PcInterface.java
 package jmri.jmrix.dcc4pc;
 
 /**
@@ -30,6 +29,3 @@ public interface Dcc4PcInterface {
      */
     void sendDcc4PcMessage(Dcc4PcMessage m, Dcc4PcListener l);
 }
-
-
-/* @(#)Dcc4PcInterface.java */

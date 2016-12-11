@@ -33,13 +33,15 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialSensorManagerTest.class));
         suite.addTest(SerialNodeTest.suite());
         suite.addTest(SerialAddressTest.suite());
-        suite.addTest(jmri.jmrix.powerline.cm11.PackageTest.suite());
-        suite.addTest(jmri.jmrix.powerline.insteon2412s.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.powerline.cm11.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.powerline.insteon2412s.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.powerline.simulator.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.powerline.cp290.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.powerline.serialdriver.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.powerline.configurexml.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.powerline.swing.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialSystemConnectionMemoTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialPortControllerTest.class));
 
         return suite;
     }

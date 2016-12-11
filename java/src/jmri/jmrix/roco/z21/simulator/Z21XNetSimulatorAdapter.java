@@ -205,9 +205,15 @@ public class Z21XNetSimulatorAdapter {
                         break;
                 }
                 break;
-            case XNetConstants.EMERGENCY_STOP:
+            case XNetConstants.ALL_ESTOP:
                 log.debug("Emergency Stop Received");
                 reply = emergencyStopReply();
+                break;
+            case XNetConstants.EMERGENCY_STOP:
+                reply = okReply();
+                break;
+            case XNetConstants.EMERGENCY_STOP_XNETV1V2:
+                reply = okReply();
                 break;
            case XNetConstants.ACC_OPER_REQ:
                 log.debug("Accessory Operations Request Received");
@@ -346,7 +352,7 @@ public class Z21XNetSimulatorAdapter {
     private XNetReply emergencyStopReply() {
         XNetReply r = new XNetReply();
         r.setOpCode(XNetConstants.BC_EMERGENCY_STOP);
-        r.setElement(1, XNetConstants.BC_EVERYTHING_OFF);
+        r.setElement(1, XNetConstants.BC_EVERYTHING_STOP);
         r.setElement(2, 0x00); // set the parity byte to 0
         r.setParity();
         return r;
