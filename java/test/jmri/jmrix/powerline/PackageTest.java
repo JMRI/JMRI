@@ -40,6 +40,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.powerline.serialdriver.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.powerline.configurexml.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.powerline.swing.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialSystemConnectionMemoTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialPortControllerTest.class));
 
         return suite;
     }
