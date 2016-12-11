@@ -51,7 +51,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(XNetThrottleManagerTest.class));
         suite.addTest(new TestSuite(XNetExceptionTest.class));
         suite.addTest(new TestSuite(XNetMessageExceptionTest.class));
-        suite.addTest(new TestSuite(XNetStreamPortControllerTest.class));
+        suite.addTest(new JUnit4TestAdapter(XNetStreamPortControllerTest.class));
         suite.addTest(jmri.jmrix.lenz.li100.PackageTest.suite());
         suite.addTest(jmri.jmrix.lenz.li100f.PackageTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.lenz.li101.PackageTest.class));
@@ -66,6 +66,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.lenz.swing.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.lenz.configurexml.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(XNetNetworkPortControllerTest.class));
+        suite.addTest(new JUnit4TestAdapter(XNetSerialPortControllerTest.class));
 
         return suite;
     }
