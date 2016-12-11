@@ -30,7 +30,8 @@ import org.slf4j.LoggerFactory;
      TimeoutRfidSensorTest.class,
      TimeoutRfidReporterTest.class,
      jmri.jmrix.rfid.swing.PackageTest.class,
-     RfidNetworkPortControllerTest.class
+     RfidNetworkPortControllerTest.class,
+     RfidPortControllerTest.class
 })
 
 /**

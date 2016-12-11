@@ -38,6 +38,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.tmcc.packetgen.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(TMCCMenuTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.tmcc.serialmon.SerialMonFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(TMCCSystemConnectionMemoTest.class));
+        suite.addTest(new JUnit4TestAdapter(SerialPortControllerTest.class));
         return suite;
     }
 
