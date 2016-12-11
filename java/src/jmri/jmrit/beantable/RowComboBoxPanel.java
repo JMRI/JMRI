@@ -175,7 +175,7 @@ public class      RowComboBoxPanel
         //JComboBox editorbox = btdm.getEditorBox(table.convertRowIndexToModel(row));
         String[] petStrings = { "Clear", "Stop" }; // testing EBR
         JComboBox editorbox = new JComboBox(petStrings); // testing EBR
-        log.debug("getRendererComponent>notSelected (row={}, value={})", row, value);
+        log.debug("getEditorComponent>notSelected (row={}, value={})", row, value);
         if (value != null) {
             editorbox.setSelectedItem(value); // display current Value
         }

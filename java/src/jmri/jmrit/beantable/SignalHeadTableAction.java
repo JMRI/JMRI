@@ -337,7 +337,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
              * @param row Index number (in TableDataModel)
              * @return A combobox containing the valid appearance names for this mast
              */
-            JComboBox getEditorBox(int row) {
+            public JComboBox getEditorBox(int row) {
                 JComboBox editCombo = editorMap.get(this.getValueAt(row, SYSNAMECOL));
                 if (editCombo == null) {
                     // create a new one with correct appearance
