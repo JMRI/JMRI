@@ -10,7 +10,9 @@ import org.slf4j.LoggerFactory;
    jmri.jmrix.dcc4pc.serialdriver.PackageTest.class,
    jmri.jmrix.dcc4pc.configurexml.PackageTest.class,
    jmri.jmrix.dcc4pc.swing.PackageTest.class,
-   Dcc4PcReporterManagerTest.class
+   Dcc4PcReporterManagerTest.class,
+   Dcc4PcSystemConnectionMemoTest.class,
+   Dcc4PcPortControllerTest.class
 })
 /**
  * Tests for the jmri.jmrix.pi package

@@ -3,41 +3,35 @@ package jmri.jmrix;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.ResourceBundle;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.InstanceManager;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Bob Jacobsen Copyright (C) 2015
  */
-public class AbstractPortControllerTest extends TestCase {
+public class AbstractPortControllerTest {
 
+    @Test
     public void testisDirtyNotNPE() {
         apc.isDirty();
     }
 
     // from here down is testing infrastructure
-    AbstractPortController apc;
+    protected AbstractPortController apc;
 
-    public AbstractPortControllerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {AbstractPortControllerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(AbstractPortControllerTest.class);
-        return suite;
-    }
-
-    @Override
+    @Before
     public void setUp() {
         apc = new AbstractPortControllerScaffold();
+    }
+
+    @After
+    public void tearDown(){
+       apc = null;
     }
 
     public static class AbstractPortControllerScaffold extends AbstractPortController {

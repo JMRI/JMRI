@@ -28,10 +28,11 @@ public abstract class AbstractStartupModel implements StartupModel {
     @Override
     @Nonnull
     public String toString() {
-        if (this.getName() == null) {
+        String string = this.getName();
+        if (string == null) {
             return super.toString();
         }
-        return this.getName();
+        return string;
     }
 
     /**
