@@ -1,5 +1,6 @@
 package apps.startup;
 
+import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jmri.util.ConnectionNameFromSystemName;
@@ -13,30 +14,32 @@ import jmri.util.ConnectionNameFromSystemName;
  * @author Bob Jacobsen Copyright 2003, 2007, 2014
  * @see apps.startup.AbstractActionModelFactory
  */
-public abstract class AbstractActionModel extends AbstractStartupModel {
+public abstract class AbstractActionModel implements StartupModel {
 
     private String systemPrefix = ""; // NOI18N
+    private String className = ""; // NOI18N
 
     public String getClassName() {
-        return this.getName();
+        return this.className;
     }
 
     @Override
     public String getName() {
-        String name = super.getName();
-        if (name != null) {
-            return StartupActionModelUtil.getDefault().getActionName(name);
+        if (className != null) {
+            return StartupActionModelUtil.getDefault().getActionName(className);
         }
         return null;
     }
 
     @Override
     public void setName(@Nonnull String n) {
-        super.setName(StartupActionModelUtil.getDefault().getClassName(n));
+        // can set className to null if no class found for n
+        this.className = StartupActionModelUtil.getDefault().getClassName(n);
     }
 
     public void setClassName(@Nonnull String n) {
-        this.setName(n);
+        Objects.requireNonNull(n, "Class name cannot be null");
+        this.className = n;
     }
 
     @Nonnull
@@ -61,6 +64,20 @@ public abstract class AbstractActionModel extends AbstractStartupModel {
     }
 
     @Override
+    public boolean isValid() {
+        if (this.className != null && !this.className.isEmpty()) {
+            try {
+                // don't need return value, just want to know if exception is triggered
+                Class.forName(className);
+                return true;
+            } catch (ClassNotFoundException ex) {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public String toString() {
         String name = this.getName();
         if (name != null) {
@@ -69,6 +86,11 @@ public abstract class AbstractActionModel extends AbstractStartupModel {
             }
             return name;
         }
-        return super.toString();
+        if (this.className != null && this.isValid()) {
+            return Bundle.getMessage("AbstractActionModel.UnknownClass", this.className);
+        } else if (this.className != null && !this.className.isEmpty()) {
+            return Bundle.getMessage("AbstractActionModel.InvalidClass", this.className);
+        }
+        return Bundle.getMessage("AbstractActionModel.InvalidAction", super.toString());
     }
 }

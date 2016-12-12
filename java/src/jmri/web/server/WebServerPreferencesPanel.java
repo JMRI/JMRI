@@ -82,7 +82,7 @@ public class WebServerPreferencesPanel extends JPanel implements PreferencesPane
                     manager.setActions(this.startupActionPosition, model);
                 }
             } else {
-                manager.getActions(PerformActionModel.class).stream().filter((model) -> (model.getClassName().equals(WebServerAction.class.getName()))).forEach((model) -> {
+                manager.getActions(PerformActionModel.class).stream().filter((model) -> (WebServerAction.class.getName().equals(model.getClassName()))).forEach((model) -> {
                     this.startupActionPosition = Arrays.asList(manager.getActions()).indexOf(model);
                     manager.removeAction(model);
                 });
@@ -178,6 +178,6 @@ public class WebServerPreferencesPanel extends JPanel implements PreferencesPane
 
     private boolean isStartupAction() {
         return InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformActionModel.class).stream()
-                .anyMatch((model) -> (model.getClassName().equals(WebServerAction.class.getName())));
+                .anyMatch((model) -> (WebServerAction.class.getName().equals(model.getClassName())));
     }
 }
