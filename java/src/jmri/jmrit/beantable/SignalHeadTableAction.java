@@ -190,7 +190,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                     if ((String) value != null) {
                         //row = table.convertRowIndexToModel(row); // find the right row in model instead of table (not needed)
                         log.debug("SignalHead setValueAt (rowConverted={}; value={})", row, value);
-                        s.setAppearance((int) 1); //  convert value to int
+                        s.setAppearance((int) 1); //  convert value to int TEST EBR always RED, whatever user chooses TODO
                         fireTableRowsUpdated(row, row);
                     }
                 } else if (col == LITCOL) {
@@ -245,6 +245,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             }
 
             // no longer used, but have to override
+            @Deprecated
             @Override
             public void clickOn(NamedBean t) {
                 int oldState = ((SignalHead) t).getAppearance();
@@ -316,15 +317,28 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 // Set more things?
             }
 
+            /**
+             * A row specific Appearance combobox cell editor/renderer
+             */
             class AppearanceComboBoxPanel extends RowComboBoxPanel {
 
                 @Override
                 protected final void eventEditorMousePressed() {
-                    this.editor.add(this.getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add eb to JPanel
+                    this.editor.add(getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add editorBox to JPanel
                     this.editor.revalidate();
                     SwingUtilities.invokeLater(this.comboBoxFocusRequester);
                     log.debug("eventEditorMousePressed in row: {})", this.currentRow);
                 }
+
+                /**
+                 * Call the method in the surrounding method for the SignalHeadTable
+                 * @param row the user clicked on in the table
+                 */
+                @Override
+                protected JComboBox getEditorBox(int row) {
+                    return getAppearanceEditorBox(row);
+                }
+
             }
 
             // Methods to display VALUECOL (appearance) ComboBox in the Signal Head Table
@@ -344,12 +358,12 @@ public class SignalHeadTableAction extends AbstractTableAction {
             // we need two different Hashtables for Editors and Renderers
 
             /**
-             * Provide a JComboBox element to display inside the JPanel CellEditor
-             * when not yet present, create, store and return a new one.
+             * Provide a JComboBox element to display inside the JPanel CellEditor.
+             * When not yet present, create, store and return a new one.
              * @param row Index number (in TableDataModel)
              * @return A combobox containing the valid appearance names for this mast
              */
-            public JComboBox getEditorBox(int row) {
+            public JComboBox getAppearanceEditorBox(int row) {
                 JComboBox editCombo = editorMap.get(this.getValueAt(row, SYSNAMECOL));
                 if (editCombo == null) {
                     // create a new one with correct appearance

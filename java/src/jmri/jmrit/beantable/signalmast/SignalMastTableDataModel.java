@@ -398,15 +398,30 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         return b;
     }
 
+    /**
+     * A row specific Aspect combobox cell editor/renderer
+     */
     public class AspectComboBoxPanel extends RowComboBoxPanel {
 
         @Override
         protected final void eventEditorMousePressed() {
-            this.editor.add(this.getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add eb to JPanel
+            this.editor.add(getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add eb to JPanel
             this.editor.revalidate();
             SwingUtilities.invokeLater(this.comboBoxFocusRequester);
-            log.debug("eventEditorMousePressed in row: {})", this.currentRow);
+            log.debug("eventEditorMousePressed in row: {}; me = {})", this.currentRow, this.toString());
         }
+
+        /**
+         * Call the method in the surrounding method for the SignalMastTable
+         * @param row the user clicked on in the table
+         */
+        @Override
+        protected JComboBox getEditorBox(int row) {
+//            String [] list = {"Stop", "Clear"};
+//            return new JComboBox(list);
+            return getApectEditorBox(row);
+        }
+
     }
 
     // Methods to display VALUECOL (aspect) ComboBox in the Signal Mast Table
@@ -426,12 +441,12 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     // we need two different Hashtables for Editors and Renderers
 
     /**
-     * Provide a JComboBox element to display inside the JPanel CellEditor
-     * when not yet present, create, store and return a new one.
+     * Provide a JComboBox element to display inside the JPanel CellEditor.
+     * When not yet present, create, store and return a new one.
      * @param row Index number (in TableDataModel)
      * @return A combobox containing the valid aspect names for this mast
      */
-    public JComboBox getEditorBox(int row) {
+    JComboBox getApectEditorBox(int row) {
         JComboBox editCombo = editorMap.get(this.getValueAt(row, SYSNAMECOL));
         if (editCombo == null) {
             // create a new one with correct aspects
