@@ -188,7 +188,7 @@ public class VSDControl extends JPanel {
         configPanel.setLayout(new BoxLayout(configPanel, BoxLayout.PAGE_AXIS));
         configButton = new JButton(Bundle.getMessage("ConfigButtonLabel"));
         optionButton = new JButton(Bundle.getMessage("OptionsButtonLabel"));
-        deleteButton = new JButton(Bundle.getMessage("DeleteButtonLabel"));
+        deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
         configPanel.add(configButton); // maybe don't allow this anymore.
         configPanel.add(Box.createHorizontalGlue());
         configPanel.add(optionButton);
