@@ -34,6 +34,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import jmri.UserPreferencesManager;
 import jmri.util.JmriJFrame;
+import jmri.util.HelpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -201,6 +202,9 @@ public final class SystemConsole extends JTextArea {
         frame = new JmriJFrame(Bundle.getMessage("TitleConsole"));
 
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+
+        // Add Help menu (Windows menu automaitically added)
+        frame.addHelpMenu("package.apps.SystemConsole", true); // NOI18N
 
         // Grab a reference to the system clipboard
         final Clipboard clipboard = frame.getToolkit().getSystemClipboard();

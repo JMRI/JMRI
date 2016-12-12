@@ -1,6 +1,5 @@
 package jmri.jmrix.lenz.li101;
 
-import java.awt.GraphicsEnvironment;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -18,7 +17,6 @@ public class LI101AdapterTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LI101Adapter a = new LI101Adapter();
         Assert.assertNotNull(a);
     }
