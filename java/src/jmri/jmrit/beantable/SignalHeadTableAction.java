@@ -188,9 +188,30 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 }
                 if (col == VALUECOL) {
                     if ((String) value != null) {
-                        //row = table.convertRowIndexToModel(row); // find the right row in model instead of table (not needed)
+                        //row = table.convertRowIndexToModel(row); // find the right row in model instead of table (not needed here)
                         log.debug("SignalHead setValueAt (rowConverted={}; value={})", row, value);
-                        s.setAppearance((int) 1); //  convert value to int TEST EBR always RED, whatever user chooses TODO
+                        // convert from String (selected item) to int
+                        int newState = 99;
+                        String oldAppearanceName = ((SignalHead) s).getAppearanceName();
+                        String[] stateNameList = ((SignalHead) s).getValidStateNames(); // Array of valid appearance names
+                        int[] validStateList = ((SignalHead) s).getValidStates(); // Array of valid appearance numbers
+                        for (int i = 0; i < stateNameList.length; i++) {
+                            if (value == stateNameList[i]) {
+                                newState = validStateList [i];
+                                break;
+                            }
+                        }
+                        if (newState == 99) {
+                            if (stateNameList.length == 0) {
+                                newState = SignalHead.DARK;
+                                log.warn("New signal state not found so setting to Dark " + s.getDisplayName());
+                            } else {
+                                newState = validStateList[0];
+                                log.warn("New signal state not found so setting to the first available " + s.getDisplayName());
+                            }
+                        }
+                        log.debug("Signal Head was: {}; set to: {}", oldAppearanceName, newState);
+                        ((SignalHead) s).setAppearance((int) newState);
                         fireTableRowsUpdated(row, row);
                     }
                 } else if (col == LITCOL) {
@@ -244,13 +265,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 return getClassName();
             }
 
-            // no longer used, but have to override
+            // no longer used since 4.7.1, but have to override
             @Deprecated
             @Override
             public void clickOn(NamedBean t) {
                 int oldState = ((SignalHead) t).getAppearance();
                 int newState = 99;
-                int[] stateList = ((SignalHead) t).getValidStates();
+                int[] stateList = ((SignalHead) t).getValidStates(); // getValidAppearances((String)
                 for (int i = 0; i < stateList.length; i++) {
                     if (oldState == stateList[i]) {
                         if (i < stateList.length - 1) {
@@ -263,7 +284,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
                     }
                 }
                 if (newState == 99) {
-
                     if (stateList.length == 0) {
                         newState = SignalHead.DARK;
                         log.warn("New signal state not found so setting to Dark " + t.getDisplayName());
@@ -333,6 +353,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 /**
                  * Call the method in the surrounding method for the SignalHeadTable
                  * @param row the user clicked on in the table
+                 * @return an appropriate combobox for this signal head
                  */
                 @Override
                 protected JComboBox getEditorBox(int row) {
@@ -393,7 +414,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
             Hashtable<Object, JComboBox> rendererMap = new Hashtable<Object, JComboBox>();
 
             /**
-             * returns a list of all the valid appearances, that have not been disabled
+             * returns a list of all the valid appearances that have not been disabled
+             * @param head the name of the signal head
+             * @return List of valid signal head appearance names
              */
             public Vector<String> getValidAppearances(String head) {
                 // convert String[] validStateNames to Vector

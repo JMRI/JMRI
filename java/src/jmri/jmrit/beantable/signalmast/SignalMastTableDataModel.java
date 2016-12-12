@@ -181,7 +181,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         }
         if (col == VALUECOL) {
             if ((String) value != null) {
-                //row = table.convertRowIndexToModel(row); // find the right row in model instead of table (not needed)
+                //row = table.convertRowIndexToModel(row); // find the right row in model instead of table (not needed here)
                 log.debug("setValueAt (rowConverted={}; value={})", row, value);
                 s.setAspect((String) value);
                 fireTableRowsUpdated(row, row);
@@ -412,13 +412,12 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         }
 
         /**
-         * Call the method in the surrounding method for the SignalMastTable
+         * Call method getApectEditorBox() in the surrounding method for the SignalMastTable
          * @param row the user clicked on in the table
+         * @return an appropriate combobox for this signal mast
          */
         @Override
         protected JComboBox getEditorBox(int row) {
-//            String [] list = {"Stop", "Clear"};
-//            return new JComboBox(list);
             return getApectEditorBox(row);
         }
 
