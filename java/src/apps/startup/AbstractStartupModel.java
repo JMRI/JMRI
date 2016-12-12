@@ -45,6 +45,7 @@ public abstract class AbstractStartupModel implements StartupModel {
      */
     @Override
     public boolean isValid() {
-        return this.name != null && !this.name.isEmpty();
+        String s = this.getName();
+        return s != null && !s.isEmpty();
     }
 }
