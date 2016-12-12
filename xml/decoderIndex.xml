@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.5.7ish-201611272226-heap-R57e723c on Mon Nov 28 09:26:08 AEDT 2016 $Id$-->
-  <decoderIndex version="782">
+  <!--Written by JMRI version 4.5.7ish-201612120312-jake-R115eec1 on Sun Dec 11 19:12:22 PST 2016 $Id$-->
+  <decoderIndex version="784">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -10555,7 +10555,7 @@
       <family name="Tower Controller" mfg="RR-CirKits" type="stationary" comment="The TowerController Mark-II is normally programmed in OPs mode" file="RR-CirKits-TowerController-Mark-II.xml">
         <model model="Mark-II" comment="64 Line I/O Driver" lowVersionID="11" />
       </family>
-      <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The TowerMan is normally programmed in OPs mode" file="RR-CirKits-TowerMan-basic.xml">
+      <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The TowerMan is programmed in OPs mode" file="RR-CirKits-TowerMan-basic.xml">
         <model model="TowerMan" comment="16 Line I/O Driver" lowVersionID="10" />
       </family>
       <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The WatchMan is normally programmed in OPs mode" file="RR-CirKits-WatchMan-basic.xml">
