@@ -200,7 +200,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
             public void actionPerformed(ActionEvent e) {
                 String msg =_shape.setControlSensor(_sensorName.getText(), _hideShape.isSelected(), _shape.getChangeLevel());                
                 if (msg != null) {
-                    JOptionPane.showMessageDialog(null, msg, Bundle.getMessage("ErrorSensorMsg"), JOptionPane.INFORMATION_MESSAGE); // NOI18N
+                    JOptionPane.showMessageDialog(null, msg, Bundle.getMessage("MakeLabel", Bundle.getMessage("ErrorSensor")), JOptionPane.INFORMATION_MESSAGE); // NOI18N
                     _sensorName.setText("");
                 }
             }
@@ -212,7 +212,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
             public void mouseMoved(MouseEvent e) {
                 String msg =_shape.setControlSensor(_sensorName.getText(), _hideShape.isSelected(), _shape.getChangeLevel());                
                 if (msg != null) {
-                    JOptionPane.showMessageDialog(null, msg, Bundle.getMessage("ErrorSensorMsg"), JOptionPane.INFORMATION_MESSAGE); // NOI18N
+                    JOptionPane.showMessageDialog(null, msg, Bundle.getMessage("MakeLabel", Bundle.getMessage("ErrorSensor")), JOptionPane.INFORMATION_MESSAGE); // NOI18N
                     _sensorName.setText("");
                 }
             }
