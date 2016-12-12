@@ -240,7 +240,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     }
 
     protected static void nxAction() {
-        NXFrame nxFrame = NXFrame.getInstance();
+        NXFrame nxFrame = NXFrame.getDefault();
         if (nxFrame._controlPanel == null) {
             nxFrame.init();
         }
