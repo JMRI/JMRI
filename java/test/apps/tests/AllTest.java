@@ -41,8 +41,10 @@ public class AllTest extends TestCase {
         // all tests from here down in heirarchy
         TestSuite suite = new TestSuite("AllTest");  // no tests in this class itself
         // all tests from other classes
-        suite.addTest(jmri.PackageTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(apps.PackageTest.class));
+        suite.addTest(jmri.jmrit.logix.OBlockTest.suite());
+//        suite.addTest(jmri.jmrit.logix.PackageTest.suite());
+//        suite.addTest(jmri.PackageTest.suite());
+//        suite.addTest(new junit.framework.JUnit4TestAdapter(apps.PackageTest.class));
         // at the end, we check for Log4J messages again
         suite.addTest(jmri.util.Log4JErrorIsErrorTest.suite());
         return suite;

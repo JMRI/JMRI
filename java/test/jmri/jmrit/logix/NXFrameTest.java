@@ -228,13 +228,13 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
             JUnitUtil.waitFor(() -> {
                 int state = blk.getState();
                 return  state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.OCCUPIED) ||
-                        state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.DARK);
+                        state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.UNDETECTED);
             }, "Train occupies block "+i+" of "+route.length);
             flushAWT();
 
             block = _OBlockMgr.getOBlock(route[i]);
             Sensor nextSensor;
-            boolean dark = (block.getState() & OBlock.DARK) != 0;
+            boolean dark = (block.getState() & OBlock.UNDETECTED) != 0;
             if (!dark) {
                 nextSensor = block.getSensor();
                 jmri.util.ThreadingUtil.runOnLayout(() -> {

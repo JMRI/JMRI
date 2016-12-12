@@ -146,7 +146,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
 
     static protected String getValue(int state) {
         StringBuilder sb = new StringBuilder();
-        if ((state & OBlock.DARK) != 0) {
+        if ((state & OBlock.UNDETECTED) != 0) {
             sb.append(Bundle.getMessage("Dark"));
         }
         if ((state & OBlock.OCCUPIED) != 0) {
