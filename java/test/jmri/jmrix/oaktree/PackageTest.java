@@ -45,6 +45,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.oaktree.packetgen.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.oaktree.serialmon.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(OakTreeMenuTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OakTreeSystemConnectionMemoTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialPortControllerTest.class));
         return suite;
     }
 

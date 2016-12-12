@@ -7,7 +7,11 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    BundleTest.class
+    BundleTest.class,
+    DieselPaneTest.class,
+    VSDecoderPreferencesPaneTest.class,
+    ManageLocationsActionTest.class,
+    VSDPreferencesActionTest.class
 })
 
 

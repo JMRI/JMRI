@@ -84,12 +84,12 @@
       <manufacturer mfg="MRC" mfgID="143" />
       <manufacturer mfg="MTB Model" mfgID="72" />
       <manufacturer mfg="MTH Electric Trains, Inc." mfgID="27" />
-      <manufacturer mfg="MÜT GmbH" mfgID="118" />
+      <manufacturer mfg="MÜT GmbH" mfgID="118" />
       <manufacturer mfg="Massoth Elektronik, GmbH" mfgID="123" />
       <manufacturer mfg="Mistral Train Models" mfgID="29" />
       <manufacturer mfg="MoBaTrain.de" mfgID="24" />
       <manufacturer mfg="Modelleisenbahn GmbH" mfgID="161" />
-      <manufacturer mfg="Möllehem Gårdsproduktion" mfgID="126" />
+      <manufacturer mfg="Möllehem Gårdsproduktion" mfgID="126" />
       <manufacturer mfg="MyLocoSound" mfgID="116" />
       <manufacturer mfg="N&amp;Q Electronics" mfgID="50" />
       <manufacturer mfg="NAC Services, Inc" mfgID="37" />
@@ -4058,7 +4058,7 @@
         </model>
       </family>
       <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokPilotV4.0.xml">
-        <model model="LokPilot V4.0" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554495">
+        <model model="LokPilot V4.0" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554495,33554564">
           <output name="61" label="|" />
           <output name="62" label="|" />
           <output name="63" label="|" />
@@ -4076,7 +4076,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="LokPilot V4.0 DCC" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554498">
+        <model model="LokPilot V4.0 DCC" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554498,33554565">
           <output name="61" label="|" />
           <output name="62" label="|" />
           <output name="63" label="|" />

@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.duplexgroup.LnDplxGrpInfoImplConstants;
+import jmri.util.swing.ValidatedTextField;
 
 /**
  * Provides a JPanel for querying and configuring Digitrax Duplex (radio)
