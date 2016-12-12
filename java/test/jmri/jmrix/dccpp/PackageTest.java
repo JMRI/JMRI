@@ -53,6 +53,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.dccpp.configurexml.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppNetworkPortControllerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppSerialPortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppSimulatorPortControllerTest.class));
 
         return suite;
     }

@@ -50,6 +50,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.packetgen.EasyDccPacketGenFrameTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccNetworkPortControllerTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccSystemConnectionMemoTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccPortControllerTest.class));
         return suite;
     }
 
