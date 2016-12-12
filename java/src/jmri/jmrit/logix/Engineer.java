@@ -242,13 +242,26 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         _idxCurrentCommand = idx;
     }
 
-    private void setSpeedStepMode(int stepMode) {
-        _lock.lock();
-        try {
-            _throttle.setSpeedStepMode(stepMode);
-        } finally {
-            _lock.unlock();
+    private void setSpeedStepMode(int step) {
+        int stepMode = DccThrottle.SpeedStepMode128;
+        switch (step) {
+            case 14:
+                stepMode = DccThrottle.SpeedStepMode14;
+                break;
+            case 27:
+                stepMode = DccThrottle.SpeedStepMode27;
+                break;
+            case 28:
+                stepMode = DccThrottle.SpeedStepMode28;
+                break;
+            case 128:
+                stepMode = DccThrottle.SpeedStepMode128;
+                break;
+            case DccThrottle.SpeedStepMode28Mot:
+                stepMode = DccThrottle.SpeedStepMode28Mot;
+                break;
         }
+        _throttle.setSpeedStepMode(stepMode);
     }
 
     /**

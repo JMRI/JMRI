@@ -150,7 +150,7 @@ public class ListedTableFrame extends BeanTableFrame {
         cardHolder.setDividerSize(8);
         if (lastdivider != 0) {
             cardHolder.setDividerLocation(lastdivider);
-        } else { //Else if no specific size has been given we set it to the lists preferred width
+        } else { // if no specific size has been given we set it to the lists preferred width
             cardHolder.setDividerLocation(listScroller.getPreferredSize().width);
         }
         cardHolder.addPropertyChangeListener(new PropertyChangeListener() {
@@ -280,8 +280,8 @@ public class ListedTableFrame extends BeanTableFrame {
     TabbedTableItem lastSelectedItem = null;
 
     /* This is a bit of a bodge to add the contents to the bottom box and keep
-     * it backwardly compatable with the original views, if the original views
-     * are depreciated then this can be re-written
+     * it backwardly compatible with the original views. When the original views
+     * are deprecated then this can be re-written
      */
     //@TODO Sort out the procedure to add to bottom box
     protected void addToBottomBox(Component comp, String c) {
