@@ -380,8 +380,8 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         setColumnToHoldButton(table, VALUECOL, configureButton());
         // add extras, override BeanTableDataModel
         log.debug("Mast configValueColumn (I am {})", super.toString());
-        table.setDefaultEditor(RowComboBoxPanel.class, new RowComboBoxPanel(this)); // provide BeanTableDataModel
-        table.setDefaultRenderer(RowComboBoxPanel.class, new RowComboBoxPanel(this)); // create a separate class for the renderer
+        table.setDefaultEditor(RowComboBoxPanel.class, new AspectComboBoxPanel()); // provide BeanTableDataModel
+        table.setDefaultRenderer(RowComboBoxPanel.class, new AspectComboBoxPanel()); // create a separate class for the renderer
         // Set more things?
     }
 
@@ -398,7 +398,18 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         return b;
     }
 
-    // Methods to display VALUECOL (aspect) ComboBox in Signal Mast Table
+    public class AspectComboBoxPanel extends RowComboBoxPanel {
+
+        @Override
+        protected final void eventEditorMousePressed() {
+            this.editor.add(this.getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add eb to JPanel
+            this.editor.revalidate();
+            SwingUtilities.invokeLater(this.comboBoxFocusRequester);
+            log.debug("eventEditorMousePressed in row: {})", this.currentRow);
+        }
+    }
+
+    // Methods to display VALUECOL (aspect) ComboBox in the Signal Mast Table
     // Derived from the SignalMastJTable class (deprecated since 4.5.5):
     // All row values are in terms of the Model, not the Table as displayed.
 

@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.EventObject;
+import java.util.Hashtable;
 import javax.annotation.Nonnull;
 import javax.swing.DefaultCellEditor;
 import javax.swing.event.ListSelectionEvent;
@@ -33,55 +34,55 @@ import org.slf4j.LoggerFactory;
  * @author Egbert Broerse 2016
  * @since 4.5.7
  */
-public class      RowComboBoxPanel
+public abstract class      RowComboBoxPanel
         extends    DefaultCellEditor
         implements TableCellEditor, TableCellRenderer {
 
     /**
      * The surrounding panel for the combobox.
      */
-    private JPanel editor;
+    protected JPanel editor;
 
     /**
      * The surrounding panel for the combobox.
      */
-    private JPanel renderer;
+    protected JPanel renderer;
 
     /**
      * Listeners for the table added?
      */
-    private boolean tableListenerAdded = false;
+    protected boolean tableListenerAdded = false;
 
     /**
      * The table.
      */
-    private JTable table;
+    protected JTable table;
 
     /**
      *  To request the focus for the combobox (with SwingUtilities.invokeLater())
      */
-    private Runnable comboBoxFocusRequester;
+    protected Runnable comboBoxFocusRequester;
 
     /**
      *  The current row.
      */
-    private int currentRow = -1;
+    protected int currentRow = -1;
 
     /**
      *  The previously selected value in the editor.
      */
-    private Object prevItem;
+    protected Object prevItem;
 
     /**
      *  React on action events on the combobox?
      */
-    private boolean consumeComboBoxActionEvent = true;
+    protected boolean consumeComboBoxActionEvent = true;
 
     /**
      *  The event that causes the editing to start. We need it to know
      *  if we should open the popup automatically.
      */
-    private EventObject startEditingEvent = null;
+    protected EventObject startEditingEvent = null;
 
     /**
      *  Create a new CellEditor and CellRenderer
@@ -89,8 +90,7 @@ public class      RowComboBoxPanel
      *  @param customRenderer renderer to display things
      */
     public RowComboBoxPanel(Object [] values,
-                            ListCellRenderer customRenderer,
-                            Object source) {
+                            ListCellRenderer customRenderer) {
         super (new JComboBox());
         // is being filled from HashMap
         this.editor = new JPanel(new BorderLayout ());
@@ -104,23 +104,21 @@ public class      RowComboBoxPanel
         {
             public final void mousePressed (MouseEvent evt)
             {
-                eventEditorMousePressed(source);
+                eventEditorMousePressed();
             }
         });
     }
 
-    public RowComboBoxPanel(Object [] values,
-                            Object source) {
-        this(values, null, source);
+    public RowComboBoxPanel(Object [] values) {
+        this(values, null);
     }
 
-    public RowComboBoxPanel(Object source) {
-        this(new Object [0], source);
-    } // as defined in configValueColumn()
+    public RowComboBoxPanel() {
+        this(new Object [0]);
+    } // as it is defined in configValueColumn()
 
-    public RowComboBoxPanel(ListCellRenderer customRenderer,
-                            Object source) {
-        this(new Object [0], customRenderer, source);
+    public RowComboBoxPanel(ListCellRenderer customRenderer) {
+        this(new Object [0], customRenderer);
     }
 
     /**
@@ -172,9 +170,9 @@ public class      RowComboBoxPanel
         this.editor.removeAll();  // remove the combobox from the panel
         TableModel btdm = table.getModel();
         log.debug("getEditorComponent (table model={})", btdm.toString());
-        //JComboBox editorbox = btdm.getEditorBox(table.convertRowIndexToModel(row));
-        String[] petStrings = { "Clear", "Stop" }; // testing EBR
-        JComboBox editorbox = new JComboBox(petStrings); // testing EBR
+        JComboBox editorbox = this.getEditorBox(table.convertRowIndexToModel(row));
+        //String[] petStrings = { "Clear", "Stop" }; // testing EBR
+        //JComboBox editorbox = new JComboBox(petStrings); // testing EBR
         log.debug("getEditorComponent>notSelected (row={}, value={})", row, value);
         if (value != null) {
             editorbox.setSelectedItem(value); // display current Value
@@ -243,12 +241,10 @@ public class      RowComboBoxPanel
         return this.renderer;
     }
 
-    // activate once we know how to find getEditorBox()
-/*    private void updateData(int row, boolean isSelected, JTable table) {
+    protected void updateData(int row, boolean isSelected, JTable table) {
         // get valid Value options for ComboBox
         log.debug("RCBP updateData (row={})", row);
-        TableModel btdm = table.getModel();
-        JComboBox editorbox = btdm.getEditorBox(table.convertRowIndexToModel(row));
+        JComboBox editorbox = this.getEditorBox(table.convertRowIndexToModel(row));
         //JComboBox editorbox = new JComboBox(); // testing
         this.editor.add(editorbox);
         if (isSelected) {
@@ -256,7 +252,7 @@ public class      RowComboBoxPanel
         } else {
             editor.setBackground(table.getBackground());
         }
-    }*/
+    }
 
     /**
      *  Is the cell editable? If the mouse was pressed at a margin
@@ -300,8 +296,8 @@ public class      RowComboBoxPanel
         this.editor.add(editorbox);
     }
 
-    final void eventEditorMousePressed(Object source) {
-        //this.editor.add(source.getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add eb to JPanel
+    protected void eventEditorMousePressed() {
+        this.editor.add(this.getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add eb to JPanel
         this.editor.revalidate();
         SwingUtilities.invokeLater(this.comboBoxFocusRequester);
         log.debug("eventEditorMousePressed in row: {})", this.currentRow);
@@ -326,8 +322,14 @@ public class      RowComboBoxPanel
         prevItem = choice; // passed as cell value
         if (consumeComboBoxActionEvent) stopCellEditing();
     }
-    public final int getCurrentRow() {
+
+    protected int getCurrentRow() {
         return this.currentRow;
+    }
+
+    // dummy method, override in application
+    public JComboBox getEditorBox(int row) {
+        return new JComboBox();
     }
 
     private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class.getName());

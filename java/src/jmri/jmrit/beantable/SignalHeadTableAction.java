@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import jmri.InstanceManager;
@@ -310,12 +311,23 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 setColumnToHoldButton(table, VALUECOL, configureButton());
                 // add extras, override BeanTableDataModel
                 log.debug("Head configValueColumn (I am {})", super.toString());
-                table.setDefaultEditor(RowComboBoxPanel.class, new RowComboBoxPanel(this)); // m didn't work
-                table.setDefaultRenderer(RowComboBoxPanel.class, new RowComboBoxPanel(this)); // create a separate class for the renderer
+                table.setDefaultEditor(RowComboBoxPanel.class, new AppearanceComboBoxPanel());
+                table.setDefaultRenderer(RowComboBoxPanel.class, new AppearanceComboBoxPanel()); // create a separate class for the renderer
                 // Set more things?
             }
 
-            // Methods to display VALUECOL (appearance) ComboBox in Signal Head Table
+            class AppearanceComboBoxPanel extends RowComboBoxPanel {
+
+                @Override
+                protected final void eventEditorMousePressed() {
+                    this.editor.add(this.getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add eb to JPanel
+                    this.editor.revalidate();
+                    SwingUtilities.invokeLater(this.comboBoxFocusRequester);
+                    log.debug("eventEditorMousePressed in row: {})", this.currentRow);
+                }
+            }
+
+            // Methods to display VALUECOL (appearance) ComboBox in the Signal Head Table
             // Derived from the SignalMastJTable class (deprecated since 4.5.5):
             // All row values are in terms of the Model, not the Table as displayed.
 
