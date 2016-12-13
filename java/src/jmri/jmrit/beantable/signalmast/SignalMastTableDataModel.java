@@ -1,10 +1,6 @@
 package jmri.jmrit.beantable.signalmast;
 
 import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Hashtable;
 import java.util.Vector;
 import javax.swing.JButton;

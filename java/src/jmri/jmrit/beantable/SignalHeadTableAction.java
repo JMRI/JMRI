@@ -36,7 +36,6 @@ import jmri.implementation.QuadOutputSignalHead;
 import jmri.implementation.SingleTurnoutSignalHead;
 import jmri.implementation.TripleOutputSignalHead;
 import jmri.implementation.TripleTurnoutSignalHead;
-//import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.beantable.RowComboBoxPanel; // access to RowComboBoxPanel()
 import jmri.jmrix.acela.AcelaAddress;
 import jmri.jmrix.acela.AcelaNode;
@@ -192,7 +191,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
                         log.debug("SignalHead setValueAt (rowConverted={}; value={})", row, value);
                         // convert from String (selected item) to int
                         int newState = 99;
-                        String oldAppearanceName = ((SignalHead) s).getAppearanceName();
                         String[] stateNameList = ((SignalHead) s).getValidStateNames(); // Array of valid appearance names
                         int[] validStateList = ((SignalHead) s).getValidStates(); // Array of valid appearance numbers
                         for (int i = 0; i < stateNameList.length; i++) {
@@ -210,7 +208,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
                                 log.warn("New signal state not found so setting to the first available " + s.getDisplayName());
                             }
                         }
-                        log.debug("Signal Head was: {}; set to: {}", oldAppearanceName, newState);
+                        if (log.isDebugEnabled()) {
+                            String oldAppearanceName = ((SignalHead) s).getAppearanceName();
+                            log.debug("Signal Head set from: {} to: {} [{}]", oldAppearanceName, value, newState);
+                        }
                         ((SignalHead) s).setAppearance((int) newState);
                         fireTableRowsUpdated(row, row);
                     }
@@ -431,7 +432,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             }
 
             /**
-             * Holds a Hashtable of valid appearances per signal head
+             * Holds a Hashtable of valid appearances per signal head,
              * used by getEditorBox()
              * (and by getRendererBox when the table is being called directly, not via ListedTableAction)
              * @param row Index number (in TableDataModel)

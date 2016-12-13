@@ -2,16 +2,13 @@ package jmri.jmrit.beantable;
 
 import java.awt.Component;
 import java.awt.BorderLayout;
-import java.awt.Font;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.EventObject;
-import java.util.Hashtable;
 import javax.annotation.Nonnull;
 import javax.swing.DefaultCellEditor;
 import javax.swing.event.ListSelectionEvent;
@@ -23,13 +20,12 @@ import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Table cell editor abstract class with a custom ComboBox per row as the editing component.
- * used as TableCellRenderer from JTable, declared in ConfigValueColumn()
+ * Used as TableCellRenderer from JTable, declared in ConfigValueColumn()
  * Based on: http://alvinalexander.com/java/jwarehouse/netbeans-src/monitor/src/org/netbeans/modules/web/monitor/client/ComboBoxTableCellEditor.java.shtml
  * @author Egbert Broerse 2016
  * @since 4.7.1
