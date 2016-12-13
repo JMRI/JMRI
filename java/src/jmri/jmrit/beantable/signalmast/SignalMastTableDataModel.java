@@ -429,7 +429,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
      */
     public void clearAspectVector(int row) {
         boxMap.remove(this.getValueAt(row, SYSNAMECOL));
-        rendererMap.remove(this.getValueAt(row, SYSNAMECOL));
+        //rendererMap.remove(this.getValueAt(row, SYSNAMECOL));
         editorMap.remove(this.getValueAt(row, SYSNAMECOL));
     }
 
@@ -452,12 +452,12 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     }
     Hashtable<Object, JComboBox> editorMap = new Hashtable<Object, JComboBox>();
 
-    /**
+/*    *//**
      * Provide a JComboBox element to display inside the JPanel CellRenderer
      * when not yet present, create, store and return a new one.
      * @param row Index number (in TableDataModel)
      * @return A combobox containing the valid aspect names for this mast
-     */
+     *//*
     JComboBox getRendererBox(int row) {
         JComboBox renderCombo = rendererMap.get(this.getValueAt(row, SYSNAMECOL));
         log.debug("Combo row: {}", row);
@@ -468,12 +468,11 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         }
         return renderCombo;
     }
-    Hashtable<Object, JComboBox> rendererMap = new Hashtable<Object, JComboBox>();
+    Hashtable<Object, JComboBox> rendererMap = new Hashtable<Object, JComboBox>();*/
 
     /**
      * Holds a Hashtable of valid aspects per signal mast
      * used by getEditorBox()
-     * (and by getRendererBox when the table is being called directly, not via ListedTableAction)
      * @param row Index number (in TableDataModel)
      * @return The Vector of valid aspect names for this mast to show in the JComboBox
      */

@@ -373,7 +373,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
              */
             public void clearRowVector(int row) {
                 boxMap.remove(this.getValueAt(row, SYSNAMECOL));
-                rendererMap.remove(this.getValueAt(row, SYSNAMECOL));
+                //rendererMap.remove(this.getValueAt(row, SYSNAMECOL));
                 editorMap.remove(this.getValueAt(row, SYSNAMECOL));
             }
 
@@ -396,12 +396,12 @@ public class SignalHeadTableAction extends AbstractTableAction {
             }
             Hashtable<Object, JComboBox> editorMap = new Hashtable<Object, JComboBox>();
 
-            /**
+/*            *//**
              * Provide a JComboBox element to display inside the JPanel CellRenderer
              * when not yet present, create, store and return a new one.
              * @param row Index number (in TableDataModel)
              * @return A combobox containing the valid appearance names for this mast
-             */
+             *//*
             JComboBox getRendererBox(int row) {
                 JComboBox renderCombo = rendererMap.get(this.getValueAt(row, SYSNAMECOL));
                 log.debug("Combo row: {}", row);
@@ -412,7 +412,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 }
                 return renderCombo;
             }
-            Hashtable<Object, JComboBox> rendererMap = new Hashtable<Object, JComboBox>();
+            Hashtable<Object, JComboBox> rendererMap = new Hashtable<Object, JComboBox>();*/
 
             /**
              * returns a list of all the valid appearances that have not been disabled
@@ -434,7 +434,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
             /**
              * Holds a Hashtable of valid appearances per signal head,
              * used by getEditorBox()
-             * (and by getRendererBox when the table is being called directly, not via ListedTableAction)
              * @param row Index number (in TableDataModel)
              * @return The Vector of valid appearance names for this mast to show in the JComboBox
              */
