@@ -78,6 +78,7 @@ public class Metadata {
 
     /**
      * Get the list of known meta-data names.
+     * @return the list of names
      */
     public static List<String> getSystemNameList() {
         return Arrays.asList(Metadata.getSystemNameArray());

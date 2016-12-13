@@ -137,7 +137,7 @@ public class FunctionButtonPropertyEditor extends JDialog {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2, 4, 4));
 
-        JButton saveButton = new JButton(Bundle.getMessage("ButtonOk"));
+        JButton saveButton = new JButton(Bundle.getMessage("ButtonOK"));
         saveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 saveProperties();

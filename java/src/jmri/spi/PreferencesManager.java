@@ -9,14 +9,16 @@ import jmri.util.prefs.InitializationException;
  * strongly recommended that PreferencesManagers use
  * {@link jmri.util.prefs.JmriConfigurationProvider} or
  * {@link jmri.util.prefs.JmriPreferencesProvider} to store preferences.
- *
+ * <p>
  * PreferencesManagers must provide a default public constructor, but must also
  * not perform any initialization until
  * {@link #initialize(jmri.profile.Profile)} is called as the PreferencesManager
  * may be constructed before the {@link jmri.profile.Profile} is known.
- *
- * @see jmri.util.prefs.AbstractPreferencesManager for an abstract
+ * <p>
+ * {@link jmri.util.prefs.AbstractPreferencesManager} provides an abstract
  * implementation that is ready to extend.
+ *
+ * @see jmri.util.prefs.AbstractPreferencesManager
  * @author Randall Wood 2015
  */
 public interface PreferencesManager extends JmriServiceProviderInterface {

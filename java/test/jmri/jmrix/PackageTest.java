@@ -27,9 +27,11 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.PackageTest");
 
         suite.addTest(jmri.jmrix.ActiveSystemFlagTest.suite());
-        suite.addTest(jmri.jmrix.AbstractMonPaneTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMonPaneTest.class));
         suite.addTest(jmri.jmrix.AbstractProgrammerTest.suite());
-        suite.addTest(jmri.jmrix.AbstractPortControllerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractPortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractNetworkPortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractStreamPortControllerTest.class));
         suite.addTest(jmri.jmrix.AbstractMRReplyTest.suite());
         suite.addTest(new TestSuite(jmri.jmrix.AbstractThrottleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
@@ -56,7 +58,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.maple.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.marklin.PackageTest.class));
         suite.addTest(jmri.jmrix.modbus.PackageTest.suite());
-        suite.addTest(jmri.jmrix.mrc.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.mrc.PackageTest.class));
         suite.addTest(jmri.jmrix.nce.PackageTest.suite());
         suite.addTest(jmri.jmrix.oaktree.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.openlcb.PackageTest.class));
