@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -28,14 +29,14 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.logix.PackageTest");   // no tests in this class itself
 
 //		Something wrong in the xsd files?  maybe using -2-9-6 version?
-        suite.addTest(SchemaTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SchemaTest.class));
         suite.addTest(OBlockTest.suite());
         suite.addTest(OBlockManagerTest.suite());
         suite.addTest(OPathTest.suite());
         suite.addTest(WarrantTest.suite());
         suite.addTest(LogixActionTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.logix.configurexml.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.logix.configurexml.PackageTest.class));
         suite.addTest(NXFrameTest.suite()); //formerly NXWarrantTest        
         suite.addTest(LearnWarrantTest.suite());
         return suite;

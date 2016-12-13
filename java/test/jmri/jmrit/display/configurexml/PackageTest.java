@@ -1,5 +1,6 @@
 package jmri.jmrit.display.configurexml;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -27,30 +28,30 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.display.configurexml");   // no tests in this class itself
-        suite.addTest(SchemaTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SchemaTest.class));
         suite.addTest(LoadAndStoreTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(AnalogClock2DisplayXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(BlockContentsIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(IndicatorTrackIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(LayoutBlockManagerXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(LayoutTurnoutXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(LayoutTurntableXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(LightIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(MemoryComboIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(MemoryIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(MemoryInputIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(MemorySpinnerIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(MultiSensorIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(PositionableLabelXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(PositionablePointXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(ReporterIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(RpsPositionIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SensorIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SignalHeadIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SignalMastIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SlipTurnoutIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(TrackSegmentXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(TurnoutIconXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(AnalogClock2DisplayXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(BlockContentsIconXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(IndicatorTrackIconXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(LayoutBlockManagerXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(LayoutTurnoutXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(LayoutTurntableXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(LightIconXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(MemoryComboIconXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(MemoryIconXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(MemoryInputIconXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(MemorySpinnerIconXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(MultiSensorIconXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(PositionableLabelXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(PositionablePointXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(ReporterIconXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(RpsPositionIconXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(SensorIconXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(SignalHeadIconXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(SignalMastIconXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(SlipTurnoutIconXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(TrackSegmentXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(TurnoutIconXmlTest.class));
         return suite;
     }
 

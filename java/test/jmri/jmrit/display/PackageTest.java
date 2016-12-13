@@ -27,7 +27,7 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.display");   // no tests in this class itself
-        suite.addTest(SchemaTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SchemaTest.class));
         suite.addTest(PositionableLabelTest.suite());
         suite.addTest(LinkingLabelTest.suite());
         suite.addTest(MemoryIconTest.suite());
@@ -37,7 +37,7 @@ public class PackageTest extends TestCase {
         suite.addTest(RpsPositionIconTest.suite());
         suite.addTest(SensorIconWindowTest.suite());
         suite.addTest(SignalMastIconTest.suite());
-        suite.addTest(SignalSystemTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SignalSystemTest.class));
         suite.addTest(TurnoutIconWindowTest.suite());
         suite.addTest(TurnoutIconTest.suite());
         suite.addTest(IndicatorTurnoutIconTest.suite());

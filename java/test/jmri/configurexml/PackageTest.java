@@ -1,5 +1,6 @@
 package jmri.configurexml;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -26,7 +27,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.configurexml.PackageTest");  // no tests in this class itself
 
-        suite.addTest(SchemaTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SchemaTest.class));
         suite.addTest(LoadAndCheckTest.suite());
         suite.addTest(LoadAndStoreTest.suite());
 
@@ -37,8 +38,8 @@ public class PackageTest extends TestCase {
         suite.addTest(SectionManagerXmlTest.suite());
 
         suite.addTest(DefaultJavaBeanConfigXMLTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(DccLocoAddressXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new JUnit4TestAdapter(DccLocoAddressXmlTest.class));
 
         return suite;
     }
