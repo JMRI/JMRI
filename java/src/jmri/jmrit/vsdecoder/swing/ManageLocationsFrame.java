@@ -239,7 +239,7 @@ public class ManageLocationsFrame extends JmriJFrame {
 
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
-        JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
+        JButton closeButton = new JButton(Bundle.getMessage("ButtonCancel"));
         closeButton.setToolTipText(Bundle.getMessage("ToolTipButtonMLFClose"));
         closeButton.setMnemonic(Mnemonics.get("CloseButton")); // NOI18N
         closeButton.addActionListener(new ActionListener() {
