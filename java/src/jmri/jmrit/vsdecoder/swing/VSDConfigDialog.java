@@ -228,7 +228,7 @@ public class VSDConfigDialog extends JDialog {
         rosterSaveButton.setMnemonic(Mnemonics.get("RosterSave"));
 
         JPanel cbPanel = new JPanel();
-        closeButton = new JButton(Bundle.getMessage("CloseButtonLabel"));
+        closeButton = new JButton(Bundle.getMessage("ButtonOK"));
         closeButton.setEnabled(false);
         closeButton.setToolTipText(Bundle.getMessage("CD_CloseButtonToolTip"));
         closeButton.setMnemonic(Mnemonics.get("CloseButton"));
@@ -238,7 +238,7 @@ public class VSDConfigDialog extends JDialog {
             }
         });
 
-        JButton cancelButton = new JButton(Bundle.getMessage("CancelButtonLabel"));
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.setToolTipText(Bundle.getMessage("CD_CancelButtonToolTip"));
         cancelButton.setMnemonic(Mnemonics.get("CancelButton"));
         cancelButton.addActionListener(new java.awt.event.ActionListener() {

@@ -1198,12 +1198,17 @@ public class TurnoutTableAction extends AbstractTableAction {
         columnModel.setColumnVisible(column, showTurnoutSpeed);
     }
 
-    // Add Operations menu items
+    /**
+     * Insert a table specific Operations menu.
+     * Account for the Window and Help menus, which are already added to the menu bar
+     * as part of the creation of the JFrame, by adding the Operations menu 2 places earlier
+     * unless the table is part of the ListedTableFrame, that adds the Help menu later on.
+     * @param f the JFrame of this table
+     */
     @Override
     public void setMenuBar(BeanTableFrame f) {
         final jmri.util.JmriJFrame finalF = f;			// needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
-        // check for menu
         // check for menu
         boolean menuAbsent = true;
         for (int m = 0; m < menuBar.getMenuCount(); ++m) {
@@ -1215,6 +1220,16 @@ public class TurnoutTableAction extends AbstractTableAction {
             }
         }
         if (menuAbsent) { // create it
+            int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenu before 'Window' and 'Help'
+            int offset = 1;
+            log.debug("setMenuBar number of menu items = " + pos);
+            for (int i = 0; i <= pos; i++) {
+                if (menuBar.getComponent(i) instanceof JMenu) {
+                    if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
+                        offset = -1; // correct for use as part of ListedTableAction where the Help Menu is not yet present
+                    }
+                }
+            }
             JMenu opsMenu = new JMenu(Bundle.getMessage("TurnoutAutomationMenu"));
             JMenuItem item = new JMenuItem(Bundle.getMessage("TurnoutAutomationMenuItemEdit"));
             opsMenu.add(item);
@@ -1223,7 +1238,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     new TurnoutOperationFrame(finalF);
                 }
             });
-            menuBar.add(opsMenu);
+            menuBar.add(opsMenu, pos + offset);
 
             JMenu speedMenu = new JMenu(Bundle.getMessage("SpeedsMenu"));
             item = new JMenuItem(Bundle.getMessage("SpeedsMenuItemDefaults"));
@@ -1233,7 +1248,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     setDefaultSpeeds(finalF);
                 }
             });
-            menuBar.add(speedMenu);
+            menuBar.add(speedMenu, pos + offset + 1); // add this menu to the right of the previous
         }
     }
 

@@ -39,6 +39,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.acela.nodeconfig.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.acela.acelamon.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.acela.packetgen.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AcelaSystemConnectionMemoTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AcelaPortControllerTest.class));
         return suite;
     }
 }
