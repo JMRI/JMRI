@@ -169,7 +169,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         p.add(Box.createVerticalGlue());
 
-        JButton cancelButton = new JButton(rb.getString("ButtonCancel"));
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.setAlignmentX(CENTER_ALIGNMENT);
         cancelButton.setToolTipText(rb.getString("ToolTipCancel"));
         cancelButton.addActionListener(new ActionListener() {
