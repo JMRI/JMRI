@@ -1,10 +1,8 @@
-// TrainsScheduleTableModel.java
 package jmri.jmrit.operations.trains.timetable;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
-import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
@@ -18,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of train schedules (Timetable) used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2012
- * @version $Revision$
  */
 public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -50,15 +47,13 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
     private int _sort = SORTBYTIME;
 
     public void setSort(int sort) {
-        synchronized (this) {
-            _sort = sort;
-        }
+        _sort = sort;
         updateList();
         fireTableStructureChanged();
         initTable();
     }
 
-    private synchronized void updateList() {
+    private void updateList() {
         // first, remove listeners from the individual objects
         removePropertyChangeTrains();
 
@@ -80,7 +75,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
         addPropertyChangeTrains();
     }
 
-    public synchronized List<Train> getSelectedTrainList() {
+    public List<Train> getSelectedTrainList() {
         return sysList;
     }
 
@@ -94,6 +89,9 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
         initTable();
     }
 
+    // only the first three columns of the table have defaults
+    private int[] tableScheduleColumnWidths = {50, 70, 120};
+
     void initTable() {
         if (_table == null) {
             return;
@@ -102,24 +100,15 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
         TableColumnModel tcm = _table.getColumnModel();
         _table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
 
-        if (!_frame.loadTableDetails(_table)) {
-            // set column preferred widths, note that columns can be deleted
-            int[] widths = trainManager.getTrainScheduleFrameTableColumnWidths();
-            int numCol = widths.length;
-            if (widths.length > getColumnCount()) {
-                numCol = getColumnCount();
-            }
-            for (int i = 0; i < numCol; i++) {
-                tcm.getColumn(i).setPreferredWidth(widths[i]);
-            }
+        // set column preferred widths
+        for (int i = 0; i < tableScheduleColumnWidths.length; i++) {
+            tcm.getColumn(i).setPreferredWidth(tableScheduleColumnWidths[i]);
         }
-        _table.setRowHeight(new JComboBox<>().getPreferredSize().height);
-        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        _frame.loadTableDetails(_table);
     }
 
     @Override
-    public synchronized int getRowCount() {
+    public int getRowCount() {
         return sysList.size();
     }
 
@@ -136,12 +125,10 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
     public String getColumnName(int col) {
         switch (col) {
             case IDCOLUMN:
-                synchronized (this) {
-                    if (_sort == SORTBYID) {
-                        return Bundle.getMessage("Id");
-                    }
-                    return Bundle.getMessage("Time");
+                if (_sort == SORTBYID) {
+                    return Bundle.getMessage("Id");
                 }
+                return Bundle.getMessage("Time");
             case NAMECOLUMN:
                 return Bundle.getMessage("Name");
             case DESCRIPTIONCOLUMN:
@@ -183,7 +170,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
     }
 
     @Override
-    public synchronized Object getValueAt(int row, int col) {
+    public Object getValueAt(int row, int col) {
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
@@ -211,7 +198,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
     }
 
     @Override
-    public synchronized void setValueAt(Object value, int row, int col) {
+    public void setValueAt(Object value, int row, int col) {
         TrainSchedule ts = getSchedule(col);
         if (ts != null) {
             Train train = sysList.get(row);
@@ -233,12 +220,12 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
-        if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(TrainManager.TRAIN_ACTION_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(TrainManager.TRAIN_ACTION_CHANGED_PROPERTY)) {
             updateList();
             fireTableDataChanged();
-        } else if (e.getPropertyName().equals(TrainScheduleManager.LISTLENGTH_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(TrainSchedule.NAME_CHANGED_PROPERTY)) {
+        } else if (e.getPropertyName().equals(TrainScheduleManager.LISTLENGTH_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(TrainSchedule.NAME_CHANGED_PROPERTY)) {
             // update property change
             removePropertyChangeTrainSchedules();
             addPropertyChangeTrainSchedules();
@@ -248,14 +235,12 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
             fireTableDataChanged();
         } else if (e.getSource().getClass().equals(Train.class)) {
             Train train = (Train) e.getSource();
-            synchronized (this) {
-                int row = sysList.indexOf(train);
-                if (Control.SHOW_PROPERTY) {
-                    log.debug("Update train table row: " + row + " name: " + train.getName());
-                }
-                if (row >= 0) {
-                    fireTableRowsUpdated(row, row);
-                }
+            int row = sysList.indexOf(train);
+            if (Control.SHOW_PROPERTY) {
+                log.debug("Update train table row: " + row + " name: " + train.getName());
+            }
+            if (row >= 0) {
+                fireTableRowsUpdated(row, row);
             }
         }
     }
@@ -283,7 +268,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
         }
     }
 
-    private synchronized void removePropertyChangeTrains() {
+    private void removePropertyChangeTrains() {
         if (sysList != null) {
             for (Train train : sysList) {
                 train.removePropertyChangeListener(this);
@@ -291,7 +276,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
         }
     }
 
-    private synchronized void addPropertyChangeTrains() {
+    private void addPropertyChangeTrains() {
         if (sysList != null) {
             for (Train train : sysList) {
                 train.addPropertyChangeListener(this);
@@ -300,9 +285,6 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
     }
 
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
         trainManager.removePropertyChangeListener(this);
         scheduleManager.removePropertyChangeListener(this);
         removePropertyChangeTrains();

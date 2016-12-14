@@ -6,26 +6,31 @@
     <decVal min="0" max="255"/>
     <label>Max drive Time after signal loss</label>
     <label xml:lang="it">Tempo massimo percorrenza dopo perdita segnale</label>
+    <label xml:lang="cs">Maximální doba jízdy po ztrátě signálu</label>
   </variable>
   <variable item="Special Output Configuration" CV="154" mask="XXXXXXXV" default="0">
     <enumVal>
       <enumChoice choice="No Special Configuration">
         <choice>No Special Configuration</choice>
         <choice xml:lang="it">Nessuna configurazione Speciale</choice>
+        <choice xml:lang="cs">Bez speciální konfigurace</choice>
       </enumChoice>
       <enumChoice choice="Pantograph Operation (Zimo/Roco BR110)">
         <choice>Pantograph Operation (Zimo/Roco BR110)</choice>
         <choice xml:lang="it">Pantografo (Zimo/Roco BR110)(</choice>
+        <choice xml:lang="cs">Ovládání sběrače (Zimo/Roco BR110)</choice>
       </enumChoice>
     </enumVal>
     <label>Special Output Configuration</label>
     <label xml:lang="it">Configurazione Speciale Uscita</label>
+    <label xml:lang="cs">Speciální konfigurace výstupu</label>
   </variable>
   <variable item="Shunt Function Key Extension" CV="155" default="0">
     <enumVal>
       <enumChoice choice="Use Setting in CV124 above">
         <choice>Setting in CV124</choice>
         <choice xml:lang="it">parametri in CV124</choice>
+        <choice xml:lang="cs">Nastavení v CV124</choice>
       </enumChoice>
       <enumChoice choice="F1">
         <choice>F1</choice>
@@ -87,12 +92,14 @@
     </enumVal>
     <label>Shunt Function Key Extension</label>
     <label xml:lang="it">Estensione tasto funzione Manovra</label>
+    <label xml:lang="cs">Rozšíření funkční klávesy posun</label>
   </variable>
   <variable item="Half Speed Key Extension" CV="156" default="0">
     <enumVal>
       <enumChoice choice="Use Setting in CV124 above">
         <choice>Setting in CV124</choice>
         <choice xml:lang="it">parametri in CV124</choice>
+        <choice xml:lang="cs">Nastavení v CV124</choice>
       </enumChoice>
       <enumChoice choice="F1">
         <choice>F1</choice>
@@ -154,12 +161,14 @@
     </enumVal>
     <label>Half Speed Key Extension</label>
     <label xml:lang="it">Estensione tasto funzione Mezza velocità</label>
+    <label xml:lang="cs">Rozšíření funkční klávesy poloviční rychlost</label>
   </variable>
   <variable item="MAN Key Extension (Disable HLU or ABC signal control)" CV="157" default="0" tooltip="Disables ABC and HLU Signal Control">
     <enumVal>
       <enumChoice choice="MAN (Zimo)">
         <choice>Setting in CV124</choice>
         <choice xml:lang="it">parametri in CV124</choice>
+        <choice xml:lang="cs">Nastavení v CV124</choice>
       </enumChoice>
       <enumChoice choice="F1">
         <choice>F1</choice>
@@ -221,5 +230,6 @@
     </enumVal>
     <label>MAN Key Extension (Disable HLU or ABC signal control)</label>
     <label xml:lang="it">Estensione tasto funzione MAN (disabilita controllo segnale HLU o ABC)</label>
+    <label xml:lang="cs">Rozšíření funkční klávesy MAN (zakázání řízení signálem HLU nebo ABC)</label>
   </variable>
 </variables>

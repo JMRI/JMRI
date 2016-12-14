@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * accuracy that's needed here.
  *
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  */
 public class LocoNetThrottledTransmitter implements LocoNetInterface {
 

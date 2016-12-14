@@ -8,8 +8,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.ieee802154.serialdriver package
  *
  * @author	Paul Bender
- * @version	$Revision$
- */
+  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
@@ -30,6 +29,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(SerialTrafficControllerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialNodeTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialDriverAdapterTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ieee802154.serialdriver.configurexml.PackageTest.class));
         return suite;
     }
 

@@ -9,14 +9,8 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a SerialMonFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
- * @version	$Revision$
- */
+  */
 public class SerialMonAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4020943026749845219L;
 
     public SerialMonAction(String s) {
         super(s);

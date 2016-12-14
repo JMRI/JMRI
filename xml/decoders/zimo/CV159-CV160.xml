@@ -12,13 +12,21 @@
     </enumVal>
     <label>Function output 7 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 7</label>
+<<<<<<< HEAD
     <label xml:lang="de">FA7 Effekt</label>
+=======
+    <label xml:lang="cs">Generátor efektů funkční výstup 7</label>
+>>>>>>> JMRI/master
   </variable>
   <variable CV="159" mask="XXXXXXVV" item="Output 9 behavior" minOut="9">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 7 behavior</label>
     <label xml:lang="it">Comportamento uscita Funzione 7</label>
+<<<<<<< HEAD
     <label xml:lang="de">FA7 Verhalten</label>
+=======
+    <label xml:lang="cs">Chování funkční výstup 7</label>
+>>>>>>> JMRI/master
   </variable>
   <variable CV="160" mask="VVVVVVXX" item="Output 10 effect generated" minOut="10">
      <enumVal>
@@ -29,12 +37,20 @@
     </enumVal>
     <label>Function output 8 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 8</label>
+<<<<<<< HEAD
     <label xml:lang="de">FA8 Effekt</label>
+=======
+    <label xml:lang="cs">Generátor efektů funkční výstup 8</label>
+>>>>>>> JMRI/master
   </variable>
   <variable CV="160" mask="XXXXXXVV" item="Output 10 behavior" minOut="10">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 8 behavior</label>
     <label xml:lang="it">Comportamento uscita Funzione 8</label>
+<<<<<<< HEAD
     <label xml:lang="de">FA8 Verhalten</label>
+=======
+    <label xml:lang="cs">Chování funkční výstup 8</label>
+>>>>>>> JMRI/master
   </variable>
 </variables>

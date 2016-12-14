@@ -1,4 +1,3 @@
-// MrcSystemConnectionMemo.java
 package jmri.jmrix.mrc;
 
 import java.util.ResourceBundle;
@@ -14,7 +13,7 @@ import jmri.ProgrammerManager;
  *
  * @author Ken Cameron Copyright (C) 2014
  * @author	Kevin Dickerson Copyright (C) 2014
- * @version $Revision: 23001 $
+ * 
  */
 public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -195,7 +194,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     /*public MrcConsistManager  getConsistManager() { return consistManager; }*/
 
     protected ResourceBundle getActionModelResourceBundle() {
-        return ResourceBundle.getBundle("jmri.jmrix.mrc.MrcActionListBundle"); //IN18N
+        return ResourceBundle.getBundle("jmri.jmrix.mrc.MrcActionListBundle"); //NO18N
     }
 
     public void dispose() {
@@ -224,5 +223,3 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
 }
 
-
-/* @(#)MrcSystemConnectionMemo.java */

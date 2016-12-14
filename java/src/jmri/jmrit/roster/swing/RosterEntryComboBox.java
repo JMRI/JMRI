@@ -48,7 +48,7 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
      * roster group.
      */
     public RosterEntryComboBox() {
-        this(Roster.instance(), Roster.instance().getDefaultRosterGroup(), null, null, null, null, null, null, null);
+        this(Roster.getDefault(), Roster.getDefault().getDefaultRosterGroup(), null, null, null, null, null, null, null);
     }
 
     /**
@@ -57,7 +57,7 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
      *
      */
     public RosterEntryComboBox(Roster roster) {
-        this(roster, Roster.instance().getDefaultRosterGroup(), null, null, null, null, null, null, null);
+        this(roster, Roster.getDefault().getDefaultRosterGroup(), null, null, null, null, null, null, null);
     }
 
     /**
@@ -66,7 +66,7 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
      *
      */
     public RosterEntryComboBox(String rosterGroup) {
-        this(Roster.instance(), rosterGroup, null, null, null, null, null, null, null);
+        this(Roster.getDefault(), rosterGroup, null, null, null, null, null, null, null);
     }
 
     /**
@@ -91,8 +91,8 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
             String decoderMfgID,
             String decoderVersionID,
             String id) {
-        this(Roster.instance(),
-                Roster.instance().getDefaultRosterGroup(),
+        this(Roster.getDefault(),
+                Roster.getDefault().getDefaultRosterGroup(),
                 roadName,
                 roadNumber,
                 dccAddress,
@@ -117,7 +117,7 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
             String decoderVersionID,
             String id) {
         this(roster,
-                Roster.instance().getDefaultRosterGroup(),
+                Roster.getDefault().getDefaultRosterGroup(),
                 roadName,
                 roadNumber,
                 dccAddress,
@@ -142,7 +142,7 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
             String decoderMfgID,
             String decoderVersionID,
             String id) {
-        this(Roster.instance(),
+        this(Roster.getDefault(),
                 rosterGroup,
                 roadName,
                 roadNumber,

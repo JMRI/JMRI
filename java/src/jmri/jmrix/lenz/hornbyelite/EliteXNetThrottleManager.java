@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * AbstractThrottleManager.
  *
  * @author Paul Bender Copyright (C) 2008
- * @version $Revision$
  */
 public class EliteXNetThrottleManager extends jmri.jmrix.lenz.XNetThrottleManager implements ThrottleManager {
 

@@ -52,7 +52,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
             item.addActionListener((ActionEvent e) -> {
                 StartupModel model = factory.newModel();
                 factory.editModel(model, this.getTopLevelAncestor());
-                if (model.getName() != null && !model.getName().isEmpty()) {
+                if (model.isValid()) {
                     InstanceManager.getDefault(StartupActionsManager.class).addAction(model);
                 }
             });
@@ -356,7 +356,6 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
             } else {
                 this.fireTableDataChanged();
             }
-            this.manager.setRestartRequired();
         }
     }
 }

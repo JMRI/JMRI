@@ -1,5 +1,6 @@
 package jmri.jmrix.pricom;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -26,11 +27,9 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.pricom.PricomTest");
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(jmri.jmrix.pricom.pockettester.PocketTesterTest.suite());
-            suite.addTest(jmri.jmrix.pricom.downloader.DownloaderTest.suite());
-        }
-
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.pricom.pockettester.PackageTest.class));
+        suite.addTest(jmri.jmrix.pricom.downloader.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(PricomMenuTest.class));
         return suite;
     }
 

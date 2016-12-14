@@ -189,6 +189,7 @@ public class DirectoryResource extends Resource {
     }
 
     @Override
+    @Deprecated
     public URL getURL() {
         return this.resource.getURL();
     }

@@ -14,8 +14,7 @@ package jmri.jmrix.dccpp;
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author	Bob Jacobsen Copyright (C) 2010
  * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- *
+  *
  * Based on XNetListener by Bob Jacobsen
  */
 public interface DCCppListener extends jmri.jmrix.AbstractMRListener {

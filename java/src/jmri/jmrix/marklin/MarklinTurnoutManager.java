@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Based on work by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 19646 $
+ * 
  */
 public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 

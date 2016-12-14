@@ -987,13 +987,36 @@ your own.
           anything.</p>
         </dd>
 
+        <dt id="AppVeyorRestart">Restarting a Failed AppVeyor test</dt>
+        <dd>
+        AppVeyor CI can have transient failures when processing a Pull Request.  When it 
+        does, it looks like this:
+        <br><img src="images/AppVeyorRestart1.png"><br>
+        In that case, you can sign on and restart the build to have AppVeyor try again.
+        To do that, click the "Details" link indicated above.  This will take you to:
+        <br><img src="images/AppVeyorRestart2.png"><br>
+        Click the indicated sign in link (if you're already signed in, click sign off, then sign in)
+        You'll get choices of methods:
+        <br><img src="images/AppVeyorRestart3.png"><br>
+        Pick GitHub. You'll get a choice of accounts. DO NOT select your own
+        or anybody elses; select JMRI.
+        <br><img src="images/AppVeyorRestart4.png"><br>
+        Then click the "GitHub" bar again to finish the sign in.
+        <p>
+        Now, go back to the original pull request and click the "Details" link again.
+        This will again take you to the summary, but this time it will have extra controls:
+        <br><img src="images/AppVeyorRestart5.png"><br>
+        Click "Re-build PR" and off it will go.
+        
+        </dd>
         <dt id="CVSCookies">Embedded CVS, RCS and SVN cookies</dt>
 
         <dd>
           <p>When JMRI was originally using CVS, we used lines
-          like: <code># The next line is maintained by CVS, please
+          like: <br>
+          <code># The next line is maintained by CVS, please
           don't change it<br>
-          # $Revision$</code> as an additional way of tracking file
+          # $Revision$</code><br> as an additional way of tracking file
           versions. When we migrated to SVN, we kept those lines in
           certain files, like decoder XML, properties files, etc,
           that users are likely to edit and submit back for

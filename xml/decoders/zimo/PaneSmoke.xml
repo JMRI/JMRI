@@ -94,4 +94,9 @@
       </column>
     </row>
   </column>
+<<<<<<< HEAD
+=======
+  <name xml:lang="it">Fumo</name>
+  <name xml:lang="cs">Kouř</name>
+>>>>>>> JMRI/master
 </pane>

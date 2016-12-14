@@ -28,14 +28,11 @@ public class PackageTest extends TestCase {
 
         suite.addTest(AutomationManagerTest.suite());
         suite.addTest(AutomationItemTest.suite());
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(jmri.jmrit.operations.automation.actions.PackageTest.suite());
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(AutomationTableFrameGuiTest.suite());
-            suite.addTest(AutomationsTableFrameGuiTest.suite());
-            suite.addTest(AutomationCopyFrameGuiTest.suite());
-        }
+        suite.addTest(AutomationTableFrameGuiTest.suite());
+        suite.addTest(AutomationsTableFrameGuiTest.suite());
+        suite.addTest(AutomationCopyFrameGuiTest.suite());
 
         return suite;
     }

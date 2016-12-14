@@ -110,6 +110,10 @@ public final class JSON {
      * {@value #STATUS_CODE}
      */
     public static final String STATUS_CODE = "statusCode"; // NOI18N
+    /**
+     * {@value #PROPERTIES}
+     */
+    public static final String PROPERTIES = "properties"; // NOI18N
 
     /* JSON hello and metadata */
     /**
@@ -155,33 +159,9 @@ public final class JSON {
 
     /* JSON list types */
     /**
-     * {@value #BLOCKS}
-     */
-    public static final String BLOCKS = "blocks"; // NOI18N
-    /**
-     * {@value #CARS}
-     */
-    public static final String CARS = "cars"; // NOI18N
-    /**
-     * {@value #CONSISTS}
-     */
-    public static final String CONSISTS = "consists"; // NOI18N
-    /**
      * {@value #ENGINES}
      */
     public static final String ENGINES = "engines"; // NOI18N
-    /**
-     * {@value #LIGHTS}
-     */
-    public static final String LIGHTS = "lights"; // NOI18N
-    /**
-     * {@value #LOCATIONS}
-     */
-    public static final String LOCATIONS = "locations"; // NOI18N
-    /**
-     * {@value #MEMORIES}
-     */
-    public static final String MEMORIES = "memories"; // NOI18N
     /**
      * {@value #METADATA}
      */
@@ -195,59 +175,11 @@ public final class JSON {
      */
     public static final String ROUTES = "routes"; // NOI18N
     /**
-     * {@value #SENSORS}
-     */
-    public static final String SENSORS = "sensors"; // NOI18N
-    /**
-     * {@value #SIGNAL_HEADS}
-     */
-    public static final String SIGNAL_HEADS = "signalHeads"; // NOI18N
-    /**
-     * {@value #SIGNAL_MASTS}
-     */
-    public static final String SIGNAL_MASTS = "signalMasts"; // NOI18N
-    /**
-     * {@value #TRAINS}
-     */
-    public static final String TRAINS = "trains"; // NOI18N
-    /**
      * {@value #NETWORK_SERVICES}
      */
     public static final String NETWORK_SERVICES = "networkServices"; // NOI18N
 
     /* JSON data types */
-    /**
-     * {@value #BLOCK}
-     */
-    public static final String BLOCK = "block"; // NOI18N
-    /**
-     * {@value #CAR}
-     */
-    public static final String CAR = "car"; // NOI18N
-    /**
-     * {@value #CONSIST}
-     */
-    public static final String CONSIST = "consist"; // NOI18N
-    /**
-     * {@value #ENGINE}
-     */
-    public static final String ENGINE = "engine"; // NOI18N
-    /**
-     * {@value #LIGHT}
-     */
-    public static final String LIGHT = "light"; // NOI18N
-    /**
-     * {@value #LOCATION}
-     */
-    public static final String LOCATION = "location"; // NOI18N
-    /**
-     * {@value #LOCATION_ID}
-     */
-    public static final String LOCATION_ID = "locationId"; // NOI18N
-    /**
-     * {@value #MEMORY}
-     */
-    public static final String MEMORY = "memory"; // NOI18N
     /**
      * {@value #NETWORK_SERVICE}
      *
@@ -267,53 +199,9 @@ public final class JSON {
      */
     public static final String ROUTE = "route"; // NOI18N
     /**
-     * {@value #SENSOR}
-     */
-    public static final String SENSOR = "sensor"; // NOI18N
-    /**
-     * {@value #SIGNAL_HEAD}
-     */
-    public static final String SIGNAL_HEAD = "signalHead"; // NOI18N
-    /**
-     * {@value #SIGNAL_MAST}
-     */
-    public static final String SIGNAL_MAST = "signalMast"; // NOI18N
-    /**
      * {@value #THROTTLE}
      */
     public static final String THROTTLE = "throttle"; // NOI18N
-    /**
-     * {@value #TRAIN}
-     */
-    public static final String TRAIN = "train"; // NOI18N
-    /**
-     * {@value #USE_EXTRA_COLOR}
-     */
-    public static final String USE_EXTRA_COLOR = "useExtraColor"; // NOI18N
-    /**
-     * {@value #BLOCK_COLOR}
-     */
-    public static final String BLOCK_COLOR = "blockColor"; // NOI18N
-    /**
-     * {@value #TRACK_COLOR}
-     */
-    public static final String TRACK_COLOR = "trackColor"; // NOI18N
-    /**
-     * {@value #OCCUPIED_COLOR}
-     */
-    public static final String OCCUPIED_COLOR = "occupiedColor"; // NOI18N
-    /**
-     * {@value #EXTRA_COLOR}
-     */
-    public static final String EXTRA_COLOR = "extraColor"; // NOI18N
-    /**
-    * {@value #OCCUPANCY_SENSOR}
-    */
-   public static final String OCCUPANCY_SENSOR = "occupancySensor"; // NOI18N
-   /**
-   * {@value #OCCUPIED_SENSE}
-   */
-  public static final String OCCUPIED_SENSE = "occupiedSense"; // NOI18N
 
     /* JSON operations tokens */
     /**
@@ -324,35 +212,7 @@ public final class JSON {
      * {@value #LENGTH}
      */
     public static final String LENGTH = "length"; // NOI18N
-    /**
-     * {@value #WEIGHT}
-     */
-    public static final String WEIGHT = "weight"; // NOI18N
-    /**
-     * {@value #LEAD_ENGINE}
-     */
-    public static final String LEAD_ENGINE = "leadEngine"; // NOI18N
-    /**
-     * {@value #CABOOSE}
-     */
-    public static final String CABOOSE = "caboose"; // NOI18N
-    /**
-     * {@value #TERMINATE}
-     */
-    public static final String TERMINATE = "terminate"; // NOI18N
-    /**
-     * {@value #TRACK}
-     *
-     * @since 1.1
-     */
-    public static final String TRACK = "track";
-    /**
-     * {@value #DATE}
-     *
-     * @since 1.1
-     */
-    public static final String DATE = "date";
-
+    
     /* JSON panel tokens */
     /**
      * {@value #CONTROL_PANEL}
@@ -426,18 +286,6 @@ public final class JSON {
      * {@value #NUMBER}
      */
     public static final String NUMBER = "number"; // NOI18N
-    /**
-     * {@value #DESTINATION}
-     */
-    public static final String DESTINATION = "destination"; // NOI18N
-    /**
-     * {@value #DESTINATION_TRACK}
-     */
-    public static final String DESTINATION_TRACK = "dest&track"; // NOI18N
-    /**
-     * {@value #LOCATION_TRACK}
-     */
-    public static final String LOCATION_TRACK = "locationTrack"; // NOI18N
     /**
      * {@value #IS_LONG_ADDRESS}
      */
@@ -793,7 +641,7 @@ public final class JSON {
      * JSON State (an unsigned integer)
      */
 
-    /* Common state */
+ /* Common state */
     /**
      * {@value #UNKNOWN}
      * <p>

@@ -19,11 +19,15 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.swing.CanPanelInterface;
+import jmri.jmrix.openlcb.swing.ClientActions;
 import jmri.util.JmriJFrame;
 import org.openlcb.Connection;
 import org.openlcb.MimicNodeStore;
 import org.openlcb.NodeID;
+import org.openlcb.OlcbInterface;
+import org.openlcb.cdi.impl.ConfigRepresentation;
 import org.openlcb.cdi.jdom.CdiMemConfigReader;
+import org.openlcb.cdi.jdom.JdomCdiReader;
 import org.openlcb.cdi.swing.CdiPanel;
 import org.openlcb.implementations.MemoryConfigurationService;
 import org.openlcb.swing.memconfig.MemConfigDescriptionPane;
@@ -37,7 +41,6 @@ import org.slf4j.LoggerFactory;
  * Frame displaying tree of OpenLCB nodes
  *
  * @author	Bob Jacobsen Copyright (C) 2009, 2010, 2012
- * @version $Revision: 17977 $
  */
 public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanListener, CanPanelInterface {
 
@@ -72,10 +75,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                 (MimicNodeStore) memo.get(MimicNodeStore.class),
                 (Connection) memo.get(Connection.class),
                 (NodeID) memo.get(NodeID.class),
-                new ActionLoader(
-                        (MimicNodeStore) memo.get(MimicNodeStore.class),
-                        (MemoryConfigurationService) memo.get(MemoryConfigurationService.class)
-                )
+                new ActionLoader(memo.get(OlcbInterface.class))
         );
         add(treePane);
 
@@ -138,12 +138,15 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
      * Nested class to open specific windows when proper tree element is picked
      */
     class ActionLoader extends NodeTreeRep.SelectionKeyLoader {
-
-        ActionLoader(MimicNodeStore store, MemoryConfigurationService mcs) {
-            this.store = store;
-            this.mcs = mcs;
+        private final ClientActions actions;
+        ActionLoader(OlcbInterface iface) {
+            this.iface = iface;
+            actions = new ClientActions(iface);
+            this.store = iface.getNodeStore();
+            this.mcs = iface.getMemoryConfigurationService();
         }
 
+        OlcbInterface iface;
         MimicNodeStore store;
         MemoryConfigurationService mcs;
 
@@ -185,229 +188,8 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
         }
 
         public void openCdiPane(final NodeID destNode) {
-
-            final java.util.ArrayList<JButton> readList = new java.util.ArrayList<JButton>();
-            final java.util.ArrayList<JButton> sensorButtonList = new java.util.ArrayList<JButton>();
-            final java.util.ArrayList<JButton> turnoutButtonList = new java.util.ArrayList<JButton>();
-
-            CdiMemConfigReader cmcr = new CdiMemConfigReader(destNode, store, mcs);
-
-            CdiMemConfigReader.ReaderAccess rdr = new CdiMemConfigReader.ReaderAccess() {
-                @Override
-                public void progressNotify(long bytesRead, long totalBytes) {
-                    // TODO: 7/14/16 add user-visible feedback for loading the CDI.
-                }
-
-                public void provideReader(java.io.Reader r) {
-                    JmriJFrame f = new JmriJFrame();
-                    f.setTitle("Configure " + destNode);
-                    f.setLayout(new javax.swing.BoxLayout(f.getContentPane(), javax.swing.BoxLayout.Y_AXIS));
-
-                    CdiPanel m = new CdiPanel();
-                    JScrollPane scrollPane = new JScrollPane(m, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-                    Dimension minScrollerDim = new Dimension(800, 12);
-                    scrollPane.setMinimumSize(minScrollerDim);
-
-                    // create an object to add "New Sensor" buttons
-                    CdiPanel.GuiItemFactory factory = new CdiPanel.GuiItemFactory() {
-                        public JButton handleReadButton(JButton button) {
-                            readList.add(button);
-                            return button;
-                        }
-
-                        public JButton handleWriteButton(JButton button) {
-                            return button;
-                        }
-
-                        public void handleGroupPaneStart(JPanel pane) {
-                            this.gpane = pane;
-                            evt1 = null;
-                            evt2 = null;
-                            desc = null;
-                            return;
-                        }
-
-                        public void handleGroupPaneEnd(JPanel pane) {
-                            if (gpane != null && evt1 != null && evt2 != null && desc != null) {
-                                JPanel p = new JPanel();
-                                p.setLayout(new FlowLayout());
-                                p.setAlignmentX(-1.0f);
-                                pane.add(p);
-                                JButton button = new JButton("Make Sensor");
-                                p.add(button);
-                                sensorButtonList.add(button);
-                                button.addActionListener(new java.awt.event.ActionListener() {
-                                    @Override
-                                    public void actionPerformed(java.awt.event.ActionEvent e) {
-                                        jmri.Sensor sensor = jmri.InstanceManager.sensorManagerInstance()
-                                                .provideSensor("MS" + mevt1.getText() + ";" + mevt2.getText());
-                                        if (mdesc.getText().length() > 0) {
-                                            sensor.setUserName(mdesc.getText());
-                                        }
-                                        log.info("make sensor MS" + mevt1.getText() + ";" + mevt2.getText() + " [" + mdesc.getText() + "]");
-                                    }
-                                    JTextField mdesc = desc;
-                                    JFormattedTextField mevt1 = evt1;
-                                    JFormattedTextField mevt2 = evt2;
-                                });
-                                button = new JButton("Make Turnout");
-                                p.add(button);
-                                turnoutButtonList.add(button);
-                                button.addActionListener(new java.awt.event.ActionListener() {
-                                    @Override
-                                    public void actionPerformed(java.awt.event.ActionEvent e) {
-                                        jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance()
-                                                .provideTurnout("MT" + mevt1.getText() + ";" + mevt2.getText());
-                                        if (mdesc.getText().length() > 0) {
-                                            turnout.setUserName(mdesc.getText());
-                                        }
-                                        log.info("make turnout MT" + mevt1.getText() + ";" + mevt2.getText() + " [" + mdesc.getText() + "]");
-                                    }
-                                    JTextField mdesc = desc;
-                                    JFormattedTextField mevt1 = evt1;
-                                    JFormattedTextField mevt2 = evt2;
-                                });
-
-                                gpane = null;
-                                evt1 = null;
-                                evt2 = null;
-                                desc = null;
-                            }
-                            return;
-                        }
-
-                        public JFormattedTextField handleEventIdTextField(JFormattedTextField field) {
-                            if (evt1 == null) {
-                                evt1 = field;
-                            } else if (evt2 == null) {
-                                evt2 = field;
-                            } else {
-                                gpane = null;  // flag too many
-                            }
-                            return field;
-                        }
-
-                        public JTextField handleStringValue(JTextField value) {
-                            desc = value;
-                            return value;
-                        }
-                        JPanel gpane = null;
-                        JTextField desc = null;
-                        JFormattedTextField evt1 = null;
-                        JFormattedTextField evt2 = null;
-                    };
-                    // create an adapter for reading and writing
-                    CdiPanel.ReadWriteAccess accessor = new CdiPanel.ReadWriteAccess() {
-                        public void doWrite(long address, int space, byte[] data) {
-                            mcs.requestWrite(destNode, space, address, data, new MemoryConfigurationService.McsWriteHandler() {
-                                @Override
-                                public void handleSuccess() {
-                                    // TODO: 7/14/16 color background of editbox that's being
-                                    // written.
-                                }
-
-                                @Override
-                                public void handleFailure(int errorCode) {
-                                    // TODO: 7/14/16 color background of editbox being written.
-                                }
-                            });
-                        }
-
-                        public void doRead(long address, int space, int length, final CdiPanel.ReadReturn handler) {
-                            mcs.requestRead(destNode, space, address, length, new MemoryConfigurationService.McsReadHandler() {
-                                @Override
-                                public void handleReadData(NodeID dest, int space, long address,
-                                                           byte[] data) {
-                                    log.debug("Read data received " + data.length + " bytes");
-                                    handler.returnData(data);
-                                }
-
-                                @Override
-                                public void handleFailure(int errorCode) {
-                                    // TODO: 7/14/16 color background of editbox being written.
-                                }
-                            });
-                        }
-                    };
-
-                    m.initComponents(accessor, factory);
-
-                    try {
-                        m.loadCDI(
-                                new org.openlcb.cdi.jdom.JdomCdiRep(
-                                        (new org.openlcb.cdi.jdom.JdomCdiReader()).getHeadFromReader(r)
-                                )
-                        );
-                    } catch (Exception e) {
-                        log.error("caught exception while parsing CDI", e);
-                    }
-
-                    JButton b = new JButton("Read All");
-                    b.addActionListener(new java.awt.event.ActionListener() {
-                        @Override
-                        public void actionPerformed(java.awt.event.ActionEvent e) {
-                            int delay = 0; //milliseconds
-                            for (final JButton b : readList) {
-
-                                ActionListener taskPerformer = new ActionListener() {
-                                    public void actionPerformed(ActionEvent evt) {
-                                        target.doClick();
-                                    }
-                                    JButton target = b;
-                                };
-                                Timer t = new Timer(delay, taskPerformer);
-                                t.setRepeats(false);
-                                t.start();
-                                delay = delay + 150;
-                            }
-                        }
-                    });
-
-                    f.add(scrollPane);
-                    JPanel bottomPane = new JPanel();
-                    bottomPane.setLayout(new FlowLayout());
-                    f.add(bottomPane);
-                    bottomPane.add(b);
-
-                    if (sensorButtonList.size() > 0) {
-                        bottomPane.add(buttonForList(sensorButtonList, "Make All Sensors"));
-                    }
-
-                    if (turnoutButtonList.size() > 0) {
-                        bottomPane.add(buttonForList(turnoutButtonList, "Make All Turnouts"));
-                    }
-
-                    f.pack();
-                    f.setVisible(true);
-                }
-            };
-
-            cmcr.startLoadReader(rdr);
+            actions.openCdiWindow(destNode);
         }
-    }
-
-    JButton buttonForList(final java.util.ArrayList<JButton> list, String label) {
-        JButton b = new JButton(label);
-        b.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                int delay = 0; //milliseconds
-                for (final JButton b : list) {
-
-                    ActionListener taskPerformer = new ActionListener() {
-                        public void actionPerformed(ActionEvent evt) {
-                            target.doClick();
-                        }
-                        JButton target = b;
-                    };
-                    Timer t = new Timer(delay, taskPerformer);
-                    t.setRepeats(false);
-                    t.start();
-                    delay = delay + 150;
-                }
-            }
-        });
-        return b;
     }
 
 }

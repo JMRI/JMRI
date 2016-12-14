@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
  * payload.
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2006, 2007, 2008
- * @version $Revision$
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 

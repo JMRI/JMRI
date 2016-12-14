@@ -131,4 +131,5 @@
   </column>
   <name>Sound</name>
   <name xml:lang="it">Suono</name>
+  <name xml:lang="cs">Zvuk</name>
 </pane>

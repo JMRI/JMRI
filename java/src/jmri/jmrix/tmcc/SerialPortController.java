@@ -1,4 +1,3 @@
-// SerialPortController.java
 package jmri.jmrix.tmcc;
 
 import jmri.jmrix.SystemConnectionMemo;
@@ -7,8 +6,7 @@ import jmri.jmrix.SystemConnectionMemo;
  * Abstract base for classes representing a TMCC communications port
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2006
- * @version	$Revision$
- */
+  */
 public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPortController {
 
     // base class. Implementations will provide InputStream and OutputStream
@@ -16,7 +14,8 @@ public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPort
     protected SerialPortController(SystemConnectionMemo connectionMemo) {
         super(connectionMemo);
     }
+    @Override
+    public TMCCSystemConnectionMemo getSystemConnectionMemo() {
+        return (TMCCSystemConnectionMemo) super.getSystemConnectionMemo();
+    }
 }
-
-
-/* @(#)SerialPortController.java */

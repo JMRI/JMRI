@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 class IndicatorTrackPaths {
 
     protected ArrayList<String> _paths;      // list of paths that this icon displays
-    private boolean _showTrain; 		// this track icon should display _loco when occupied
+    private boolean _showTrain;         // this track icon should display _loco when occupied
     private LocoLabel _loco = null;
 
     protected IndicatorTrackPaths() {
@@ -79,7 +79,7 @@ class IndicatorTrackPaths {
         return _showTrain;
     }
 
-    protected String setStatus(OBlock block, int state) {
+    protected String getStatus(OBlock block, int state) {
         String pathName = block.getAllocatedPathName();
         String status;
         removeLocoIcon();
@@ -90,7 +90,9 @@ class IndicatorTrackPaths {
         } else if ((state & OBlock.ALLOCATED) != 0) {
             if (_paths != null && _paths.contains(pathName)) {
                 if ((state & OBlock.RUNNING) != 0) {
-                    status = "PositionTrack";
+                    status = "PositionTrack";   //occupied by train on a warrant
+                } else if ((state & OBlock.OCCUPIED) != 0) {
+                    status = "OccupiedTrack";   // occupied by rouge train
                 } else {
                     status = "AllocatedTrack";
                 }
@@ -134,7 +136,7 @@ class IndicatorTrackPaths {
             font = ed.getFont();
         }
         int width = ed.getFontMetrics(font).stringWidth(trainName);
-        int height = ed.getFontMetrics(ed.getFont()).getHeight();	// limit height to locoIcon height
+        int height = ed.getFontMetrics(ed.getFont()).getHeight();   // limit height to locoIcon height
         _loco.setLineWidth(1);
         _loco.setLineColor(Color.BLACK);
         _loco.setFillColor(block.getMarkerBackground());
@@ -151,14 +153,10 @@ class IndicatorTrackPaths {
         ed.putItem(_loco);
     }
 
-    /**
-     * This method seems basically wrong.  It doesn't set
-     * anything, it just converts an int status into a String status value.
-     * Note that it has no internal side-effects.
-     * See also comment in IndicatorTurnoutIcon.setStatus(..) which FindBugs
-     * points out is messed up because of this.
+    /*
+     * Return track name for known state of occupancy sensor
      */
-    protected String setStatus(int state) {
+    protected String getStatus(int state) {
         String status;
         if (state == Sensor.ACTIVE) {
             status = "OccupiedTrack";

@@ -1,4 +1,3 @@
-// Dcc4PcSystemConnectionMemo.javaf
 package jmri.jmrix.dcc4pc;
 
 import java.util.List;
@@ -17,7 +16,6 @@ import jmri.managers.DefaultRailComManager;
  * activate their particular system.
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 18322 $
  */
 public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -210,6 +208,3 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
         progManager = prog;
     }
 }
-
-
-/* @(#)Dcc4PcSystemConnectionMemo.java */

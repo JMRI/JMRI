@@ -37,32 +37,67 @@
         <label>
           <text> </text>
         </label>
+<<<<<<< HEAD
         <display item="Servo 1 Function Allocation">
+=======
+        <display item="Servo 1 Function Allocation" label="Function Allocation">
+          <label>Function Allocation</label>
+          <label xml:lang="it">Allocazione Funzioni</label>
+          <label xml:lang="cs">Přiřazení funkcí</label>
+>>>>>>> JMRI/master
         </display>
         <label>
           <text> </text>
         </label>
         <row>
           <column>
+<<<<<<< HEAD
             <display item="Servo 1 Rotation Speed">
+=======
+            <display item="Servo 1 Rotation Speed" label="Rotation Speed">
+              <label>Rotation Speed</label>
+              <label xml:lang="it">Velocità di Rotazione</label>
+              <label xml:lang="cs">Rychlost otáčení</label>
+>>>>>>> JMRI/master
             </display>
           </column>
           <column>
             <label>
               <text>Tenths of a second</text>
               <text xml:lang="it">Decimi di secondo</text>
+<<<<<<< HEAD
               <text xml:lang="de">Zehntelsekunden</text>
+=======
+              <text xml:lang="cs"> desetiny vteřiny</text>
+>>>>>>> JMRI/master
             </label>
           </column>
         </row>
         <label>
           <text> </text>
         </label>
+<<<<<<< HEAD
         <display item="Servo 1 Left Stop">
         </display>
         <display item="Servo 1 Centre">
         </display>
         <display item="Servo 1 Right Stop">
+=======
+        <display item="Servo 1 Left Stop" label="Left Stop">
+          <label>Left Stop</label>
+          <label xml:lang="it">Stop Sinistro</label>
+          <label xml:lang="cs">Levá pozice</label>
+        </display>
+        <display item="Servo 1 Centre" label="Centre">
+          <label>Centre</label>
+          <label xml:lang="it">Centro</label>
+          <label xml:lang="cs">Střed</label>
+        </display>
+        <display item="Servo 1 Right Stop" label="Right Stop">
+          <label>Right Stop</label>
+          <label xml:lang="it">Stop destro</label>
+          <label xml:lang="cs">Pravá pozice</label>
+>>>>>>> JMRI/master
         </display>
         <label>
           <text> </text>
@@ -83,32 +118,67 @@
         <label>
           <text> </text>
         </label>
+<<<<<<< HEAD
         <display item="Servo 2 Function Allocation">
+=======
+        <display item="Servo 2 Function Allocation" label="Function Allocation">
+          <label>Function Allocation</label>
+          <label xml:lang="it">Allocazione Funzioni</label>
+          <label xml:lang="cs">Přiřazení funkcí</label>
+>>>>>>> JMRI/master
         </display>
         <label>
           <text> </text>
         </label>
         <row>
           <column>
+<<<<<<< HEAD
             <display item="Servo 2 Rotation Speed">
+=======
+            <display item="Servo 2 Rotation Speed" label="Rotation Speed">
+              <label>Rotation Speed</label>
+              <label xml:lang="it">Velocità di Rotazione</label>
+              <label xml:lang="cs">Rychlost otáčení</label>
+>>>>>>> JMRI/master
             </display>
           </column>
           <column>
             <label>
               <text>Tenths of a second</text>
               <text xml:lang="it">Decimi di secondo</text>
+<<<<<<< HEAD
               <text xml:lang="de">Zehntelsekunden</text>
+=======
+              <text xml:lang="cs"> desetiny vteřiny</text>
+>>>>>>> JMRI/master
             </label>
           </column>
         </row>
         <label>
           <text> </text>
         </label>
+<<<<<<< HEAD
         <display item="Servo 2 Left Stop">
         </display>
         <display item="Servo 2 Centre">
         </display>
         <display item="Servo 2 Right Stop">
+=======
+        <display item="Servo 2 Left Stop" label="Left Stop">
+          <label>Left Stop</label>
+          <label xml:lang="it">Stop Sinistro</label>
+          <label xml:lang="cs">Levá pozice</label>
+        </display>
+        <display item="Servo 2 Centre" label="Centre">
+          <label>Centre</label>
+          <label xml:lang="it">Centro</label>
+          <label xml:lang="cs">Střed</label>
+        </display>
+        <display item="Servo 2 Right Stop" label="Right Stop">
+          <label>Right Stop</label>
+          <label xml:lang="it">Stop destro</label>
+          <label xml:lang="cs">Pravá pozice</label>
+>>>>>>> JMRI/master
         </display>
         <label>
           <text> </text>
@@ -116,4 +186,10 @@
       </column>
     </row>
   </column>
+<<<<<<< HEAD
+=======
+  <name>Servos</name>
+  <name xml:lang="it">Comandi Servo</name>
+  <name xml:lang="cs">Serva</name>
+>>>>>>> JMRI/master
 </pane>

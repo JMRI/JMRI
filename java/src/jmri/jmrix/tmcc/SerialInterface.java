@@ -1,12 +1,10 @@
-// SerialInterface.java
 package jmri.jmrix.tmcc;
 
 /**
  * Interface to send/receive serial TMCC information
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2006
- * @version	$Revision$
- */
+  */
 public interface SerialInterface {
 
     public void addSerialListener(SerialListener l);
@@ -17,6 +15,3 @@ public interface SerialInterface {
 
     void sendSerialMessage(SerialMessage m, SerialListener l);  // 2nd arg gets the reply
 }
-
-
-/* @(#)SerialInterface.java */

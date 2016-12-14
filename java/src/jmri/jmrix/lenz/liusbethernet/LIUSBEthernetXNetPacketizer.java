@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * received.
  *
  * @author	Paul Bender, Copyright (C) 2011
- * @version $Revision$
  *
  */
 public class LIUSBEthernetXNetPacketizer extends jmri.jmrix.lenz.liusb.LIUSBXNetPacketizer {

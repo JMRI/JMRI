@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Paul Bender Copyright (C) 2005
  * @author	Mark Underwood Copyright (C) 2015
- * @version $Revision$
  *
  * Based on LIUSBXNetPacketizer by Paul Bender
  */

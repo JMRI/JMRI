@@ -265,12 +265,12 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
             case UNITSCOL:
                 if (b != null) {
                     if (log.isDebugEnabled()) {
-                        log.debug("getValueAt: row= "+row+", col= "+col+", "+b.getDisplayName()+" isMetric= "+b.isMetric());
+                        log.debug("getValueAt: row= {}, col= {}, \"{}\" isMetric= {}", row, col, b.getDisplayName(), b.isMetric());
                     }
                     return b.isMetric();
                 }
                 if (log.isDebugEnabled()) {
-                    log.debug("getValueAt: row= "+row+", col= "+col+", is cm= "+tempRow[UNITSCOL].equals(Bundle.getMessage("cm")));
+                    log.debug("getValueAt: row= {}, col= {}, isMetric= {}", row, col, tempRow[UNITSCOL].equals(Bundle.getMessage("cm")));
                 }
                 return Boolean.valueOf(tempRow[UNITSCOL].equals(Bundle.getMessage("cm")));
             case CURVECOL:
@@ -341,7 +341,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
     @Override
     public void setValueAt(Object value, int row, int col) {
         if (log.isDebugEnabled()) {
-            log.debug("setValueAt: row= " + row + ", col= " + col + ", value= " + value);
+            log.debug("setValueAt: row= {}, col= {}, value= {}", row, col, value);
         }
         if (super.getRowCount() == row) {
             switch (col) {
@@ -535,19 +535,19 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 fireTableRowsUpdated(row, row);
                 return;
             case ERR_SENSORCOL:
-                boolean err = false;
+                boolean ok = false;
                 try {
                     if (((String) value).trim().length() == 0) {
                         block.setErrorSensor(null);
-                        err = true;
+                        ok = true;
                     } else {
-                        err = block.setErrorSensor((String) value);
+                        ok = block.setErrorSensor((String) value);
                         fireTableRowsUpdated(row, row);
                     }
                 } catch (Exception ex) {
                     log.error("getSensor(" + (String) value + ") threw exception: " + ex);
                 }
-                if (err) {
+                if (!ok) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchSensorErr", (String) value),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                 }
@@ -642,11 +642,11 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
     void deleteBean(OBlock bean) {
         int count = bean.getNumPropertyChangeListeners() - 2; // one is this table, other is manager
         if (log.isDebugEnabled()) {
-            log.debug("Delete with " + count + " remaining listenner");
+            log.debug("Delete with {} remaining listeners", count);
             //java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(bean);
             PropertyChangeListener[] listener = ((jmri.implementation.AbstractNamedBean) bean).getPropertyChangeListeners();
             for (int i = 0; i < listener.length; i++) {
-                log.debug(i + ") " + listener[i].getClass().getName());
+                log.debug("{}) {}", i, listener[i].getClass().getName());
             }
         }
         if (!noWarnDelete) {
@@ -750,9 +750,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
     public void propertyChange(PropertyChangeEvent e) {
         super.propertyChange(e);
         String property = e.getPropertyName();
-        if (log.isDebugEnabled()) {
-            log.debug("PropertyChange = " + property);
-        }
+        if (log.isDebugEnabled()) log.debug("PropertyChange = {}", property);
         _parent.getXRefModel().propertyChange(e);
         _parent.getSignalModel().propertyChange(e);
 

@@ -82,7 +82,7 @@ public class ThrottleWindow extends JmriJFrame {
     public ThrottleWindow() {
         super();
         throttlePanelsCyclingKeyListener = new ThrottlePanelCyclingKeyListener();
-        powerMgr = InstanceManager.getOptionalDefault(PowerManager.class);
+        powerMgr = InstanceManager.getNullableDefault(PowerManager.class);
         if (powerMgr == null) {
             log.info("No power manager instance found, panel not active");
         }

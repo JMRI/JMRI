@@ -7,11 +7,13 @@
     <choice xml:lang="it">avanti</choice>
     <choice xml:lang="fr">avant</choice>
     <choice xml:lang="de">Vorwärts</choice>
+    <choice xml:lang="cs">vpřed</choice>
   </enumChoice>
   <enumChoice choice="reverse">
     <choice>reverse</choice>
     <choice xml:lang="it">indietro</choice>
     <choice xml:lang="fr">arrière</choice>
     <choice xml:lang="de">Rückwärts</choice>
+    <choice xml:lang="cs">vzad</choice>
   </enumChoice>
 </enumVal>

@@ -16,7 +16,7 @@ package jmri.jmrit.vsdecoder;
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
+ * 
  */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -215,7 +215,7 @@ public class VSDecoderPreferences {
              doc.addContent(0,p);*/
             root.setContent(store());
             xf.writeXML(file, doc);
-        } catch (Exception ex) {
+        } catch (Exception ex) { // TODO fix null value for Attribute
             log.warn("Exception in storing vsdecoder preferences xml: " + ex);
         }
     }

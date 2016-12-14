@@ -70,6 +70,12 @@ EOM
 # except --settingsdir argument
 function parse_args() {
     while [ $# -gt 0 ] ; do
+        if [ -z "${1}" ] ; then
+            shift
+            continue
+        fi
+        # note: set DEBUG=yes in environment to see at this point
+        [ -n "${DEBUG}" ] && echo "Parsing Arg: '${1}'"
         case "${1}" in
             # append to classpath
             --cp:a) post_classpath="${post_classpath}:${2}" ; shift ;;
@@ -78,7 +84,7 @@ function parse_args() {
             --cp:p) pre_classpath="${pre_classpath}:${2}" ; shift ;;
             --cp:p=*) pre_classpath="${pre_classpath}:${1#*=}" ;;
             # use named configuration
-            -c|--config) CONFIGNAME="$2" ; shift ;;
+            -c|--config) CONFIGNAME="${2}" ; shift ;;
             --config=*) CONFIGNAME="${1#*=}" ;;
             # Java system properties
             -D*) jmri_options="${jmri_options} ${1}" ;;
@@ -92,14 +98,14 @@ function parse_args() {
             # JVM arguments other than max memory
             -J*) jmri_options="${jmri_options} ${1#-J}" ;;
             # main class
-            -m|--main) CLASSNAME="$2" ; shift ;;
+            -m|--main) CLASSNAME="${2}" ; shift ;;
             --main=*) CLASSNAME="${1#*=}" ;;
             # JMRI configuration profile
-            -p|--profile) jmri_options="${jmri_options} -Dorg.jmri.profile=$2" ; shift ;;
+            -p|--profile) jmri_options="${jmri_options} -Dorg.jmri.profile=${2}" ; shift ;;
             --profile=*) jmri_options="${jmri_options} -Dorg.jmri.profile=${1#*=}" ;;
             # serial ports
-            --serial-ports) JMRI_SERIAL_PORTS="${2}" ;;
-            --serial-ports=*) JMRI_SERIAL_PORTS="${1#*=}" ; shift ;;
+            --serial-ports) JMRI_SERIAL_PORTS="${2}" ; shift ;;
+            --serial-ports=*) JMRI_SERIAL_PORTS="${1#*=}" ;;
             # ignore and do not pass the settingsdir argument
             --settingsdir) shift ;;
             --settingsdir=*) ;;
@@ -120,7 +126,7 @@ function parse_args() {
 # - with an absolute minimum of 192MB
 function heap_size() {
     # get Java heap size
-    heap=$( java -XX:+PrintFlagsFinal -version 2>/dev/null | grep MaxHeapSize | awk '{print $4}' )
+    heap=$( "${JAVACMD}" -XX:+PrintFlagsFinal -version 2>/dev/null | grep MaxHeapSize | awk '{print $4}' )
     heap=$( expr ${heap} / 1048576 ) # bytes to MB
     # Java heap defaults to 1/4 total memory size
     # if <= 768MB (1/4 of 3MB), set it ourselves
@@ -163,10 +169,11 @@ SCRIPTDIR=$(cd "$( dirname "${0}" )" && pwd)
 DEFAULT_APP_NAME="@NAME@"
 CLASSNAME="@CLASS@"
 
-# define empty default_options, if not in the configuration file
-default_options=""
 # define empty jmri_options
 jmri_options=""
+
+# define empty array of passed in options
+declare -a all_options=()
 
 # ensure JMRI environment options are always set
 JMRI_OPTIONS=${JMRI_OPTIONS:-}
@@ -234,25 +241,30 @@ for opt in "$@"; do
     fi
 done
 
-# set default_options from the launcher configuration file
-if [ -f "${settingsdir}/jmri.conf" ] ; then
-    source "${settingsdir}/jmri.conf"
-fi
-
 # process arguments, stored arguments first, so CLI arguments can override
-parse_args "$default_options"
-parse_args $JMRI_OPTIONS # support JMRI_OPTIONS if someone is using it
-parse_args $@
 
-# set if -J-Xmx=... is not in options or arguments
-if [ -z "${jmri_xmx:-}" ] ; then
-    jmri_xmx="-Xmx$( heap_size )m"
+# process default_options from the launcher configuration file
+if [ -f "${settingsdir}/jmri.conf" ] ; then
+    default_options=""
+    source "${settingsdir}/jmri.conf"
+    if [ -n "${default_options}" ] ; then
+        IFS=' ' read -a all_options <<< "${default_options}"
+    fi
 fi
-# set if -J-Xms=... is not in options or arguments
-if [ -z "${jmri_xms:-}" ] ; then
-    # initial heap size = default for 6 GB RAM (default = 1/64 installed RAM)
-    jmri_xms="-Xms96m"
+
+# process environment and command line arguments
+if [ -n "${JMRI_OPTIONS}" ] ; then
+    IFS=' ' read -a options <<< "${JMRI_OPTIONS}"
+    for option in "${options[@]}" ; do
+        all_options=("${all_options[@]-}" "${option}")
+    done
 fi
+if [ $# -gt 0 ] ; then
+    for option in "$@"; do
+        all_options=("${all_options[@]-}" "${option}")
+    done
+fi
+parse_args "${all_options[@]:-}"
 
 # define JAVA_HOME if needed
 if [ -z "${JAVA_HOME}" ] ; then
@@ -284,9 +296,12 @@ if [ -z "${JAVA_HOME}" ] ; then
         if [ -x "${JAVA_HOME}/bin/java" ] ; then
             JAVACMD="${JAVA_HOME}/bin/java"
             # Test if java is present and version 1.8 or 1.9
-            if [[ -x "${JAVACMD}" && "$( "${JAVACMD}" -version 2>&1 )" =~ 1.[89] ]] ; then
+            if [[ ! "$( "${JAVACMD}" -version 2>&1 )" =~ 1.[89] ]] ; then
                 JAVA_HOME=""
             fi
+        else
+            # Reset JAVA_HOME since there is no java executable in it
+            JAVA_HOME=""
         fi
         if [[ -z "${JAVA_HOME}" && -x /usr/libexec/java_home ]] ; then
             # Test for any JDKs of version 1.8 or newer
@@ -327,6 +342,16 @@ else
 fi
 # make JAVA_HOME available to spawned processes
 export JAVA_HOME
+
+# set if -J-Xmx=... is not in options or arguments
+if [ -z "${jmri_xmx:-}" ] ; then
+    jmri_xmx="-Xmx$( heap_size )m"
+fi
+# set if -J-Xms=... is not in options or arguments
+if [ -z "${jmri_xms:-}" ] ; then
+    # initial heap size = default for 6 GB RAM (default = 1/64 installed RAM)
+    jmri_xms="-Xms96m"
+fi
 
 # define JMRI_HOME if it is not defined
 if [ -z "${JMRI_HOME}" ] ; then
@@ -418,7 +443,7 @@ if [ -n "${pre_classpath}" ] ; then
     pre_classpath="${pre_classpath#:}"
     CP="${pre_classpath}:"
 fi
-CP="${CP}.:classes:java/classes:jmri.jar"
+CP="${CP}.:classes:target/classes:jmri.jar"
 # add contents of lib
 CP="${CP}:$( ls -m ${LIBDIR}/*.jar | tr -d ' \n' | tr ',' ':' )"
 
@@ -475,7 +500,7 @@ fi
 
 OPTIONS="${jmri_options} -noverify"
 OPTIONS="${OPTIONS} -Djava.security.policy=${LIBDIR}/security.policy"
-OPTIONS="${OPTIONS} -Djava.rmi.server.codebase=file:java/classes/"
+OPTIONS="${OPTIONS} -Djava.rmi.server.codebase=file:target/classes/"
 OPTIONS="${OPTIONS} -Djava.library.path=.:$SYSLIBPATH:${LIBDIR}"
 
 # memory start and max limits

@@ -60,6 +60,23 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
         value = val;
         progState = DCCppProgrammer.REQUESTSENT;
         restartTimer(msg.getTimeout());
+        /* Issue #2423 (GitHub) -- DCC++ base station does not respond to Ops Mode
+         * writes, so waiting for a response just means JMRI times out after a long delay.
+        /* Proposed Fix: Don't go to REQUESTSENT state... just stay in NOTPROGRAMMING
+         * Risk... the state change introduces a 250ms delay to keep the UI from sending
+         * write commands too frequently... so we'd have to do that here too.
+        */
+        // Before we set the programmer state to not programming, 
+        // delay for a short time to give the decoder a chance to 
+        // process the request.
+        try {
+            this.wait(250);
+        } catch (java.lang.InterruptedException ie) {
+            log.debug("Interupted Durring Delay");
+        }
+        progState = DCCppProgrammer.NOTPROGRAMMING;
+        stopTimer();
+        progListener.programmingOpReply(value, jmri.ProgListener.OK);
     }
 
     synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {

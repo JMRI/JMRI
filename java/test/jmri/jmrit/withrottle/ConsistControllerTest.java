@@ -1,9 +1,14 @@
 package jmri.jmrit.withrottle;
 
-import junit.framework.Assert;
+import jmri.ConsistManager;
+import jmri.InstanceManager;
+import jmri.NamedBeanHandleManager;
+import jmri.jmrit.consisttool.TestConsistManager;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Test simple functioning of ConsistController
@@ -38,11 +43,14 @@ public class ConsistControllerTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
+        InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
+        InstanceManager.setDefault(NamedBeanHandleManager.class, new NamedBeanHandleManager());
     }
     
     @Override
     public void tearDown() throws Exception {
         super.tearDown();
+        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 }

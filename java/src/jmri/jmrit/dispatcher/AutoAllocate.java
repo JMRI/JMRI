@@ -88,6 +88,20 @@ public class AutoAllocate {
     private ConnectivityUtil _conUtil = null;
     private ArrayList<AllocationPlan> _planList = new ArrayList<AllocationPlan>();
     private int nextPlanNum = 1;
+    // Jay Janzen
+    // Flag to control type of allocations (classic or NX)
+    // Currently there are no methods provided to set or change this flag.
+    // It is created here in anticipation of future capabilities.
+    // Terms classic and NX are my descriptions only. Classic refers to 
+    // allowing Dispatcher to allocate no more than three blocks ahead (which 
+    // has always been therefore I label it classic). NX (which has no 
+    // connection with the "Entry/Exit (NX) Routing" feature of JMRI) refers to
+    // allowing Dispatcher to allocate without bounds as to the number of blocks.
+    // I label this NX because that best describes the way I am using transits.
+    // The starting block of the transit is the N and the ending block of the transit
+    // is the X. Most of the time these two blocks are NOT the very first block or 
+    // the very last block of the transit.
+    private boolean allocateAllTheWay = false;   
     private ArrayList<AllocationRequest> orderedRequests = new ArrayList<AllocationRequest>();
 
     /**
@@ -225,13 +239,43 @@ public class AutoAllocate {
             }
             log.warn("Failure of prepared choice of next Section in AutoAllocate");
         }
+        // Jay Janzen 
+        // If there is an AP check to see if the AP's target is on the list of choices
+        // and if so, return that.
+        ActiveTrain at = ar.getActiveTrain();
+        AllocationPlan ap = getPlanThisTrain(at);
+        Section as = null;
+        if (ap != null) {
+            if      (ap.getActiveTrain(1) == at) {
+                as = ap.getTargetSection(1);
+            }
+            else if (ap.getActiveTrain(2) == at) {
+                as = ap.getTargetSection(2);
+            }
+            else {
+                return null;
+            }
+            for (int i = 0; i < sList.size(); i++) {
+                if (as != null && as == sList.get(i)) return as;
+            }
+        }
+        // If our end block section is on the list of choices
+        // return that occupied or not. In the list of choices the primary occurs
+        // ahead any alternates, so if our end block is an alternate and its
+        // primary is unoccupied, the search will select the primary and
+        // we wind up skipping right over our end section.
+        for (int i = 0; i < sList.size(); i++) {
+            if (at.getEndBlockSection().getSystemName().equals(sList.get(i).getSystemName())) {
+                return sList.get(i);
+            }
+        }        
         // no prepared choice, or prepared choice failed, is there an unoccupied Section available
         for (int i = 0; i < sList.size(); i++) {
             if ((sList.get(i).getOccupancy() == Section.UNOCCUPIED)
                     && (sList.get(i).getState() == Section.FREE)
                     && (_dispatcher.getSignalType() == DispatcherFrame.SIGNALHEAD
                     || (_dispatcher.getSignalType() == DispatcherFrame.SIGNALMAST
-                    && _dispatcher.checkBlocksNotInAllocatedSection(ar.getSection(), ar) == null))) {
+                    && _dispatcher.checkBlocksNotInAllocatedSection(sList.get(i), ar) == null))) {
                 return sList.get(i);
             }
         }
@@ -345,6 +389,13 @@ public class AutoAllocate {
     }
 
     private boolean allocateIfLessThanThreeAhead(AllocationRequest ar) {
+        // Jay Janzen for NX type operation we want to allocate from eNtrance to eXit
+        // regardless of the number of sections allocated. 
+        // See comments on declaration of allocateAllTheWay.
+        if (allocateAllTheWay == true) {
+            _dispatcher.allocateSection(ar, null);
+            return true;
+        }        
         // test how far ahead of occupied track this requested section is
         ArrayList<AllocatedSection> aSectionList = ar.getActiveTrain().getAllocatedSectionList();
         if (aSectionList.size() >= 4) {
@@ -510,37 +561,37 @@ public class AutoAllocate {
             }
             // already in a PASSING_MEET Allocation Plan - find target Section and sequence
             Section oSection = null;
-            ActiveTrain oTrain = null;
+//            ActiveTrain oTrain = null;
             if (apx.getActiveTrain(1) == nt) {
                 nSecSeq = apx.getTargetSectionSequenceNum(1);
                 nSec = apx.getTargetSection(1);
                 oSection = apx.getTargetSection(2);
-                oTrain = apx.getActiveTrain(2);
+//                oTrain = apx.getActiveTrain(2);
             } else {
                 nSecSeq = apx.getTargetSectionSequenceNum(2);
                 nSec = apx.getTargetSection(2);
                 oSection = apx.getTargetSection(1);
-                oTrain = apx.getActiveTrain(1);
+//                oTrain = apx.getActiveTrain(1);
             }
             int aCurrentSeq = getCurrentSequenceNumber(at);
             aSecSeq = willTraverse(nSec, at, aCurrentSeq);
             if (aSecSeq == 0) {
                 return false;
             }
-            int tnSecSeq = nSecSeq;
-            if (nt.getPriority() > oTrain.getPriority()) {
-                if (!nt.isAllocationReversed()) {
-                    tnSecSeq--;
-                    if (tnSecSeq <= 0) {
-                        tnSecSeq = nSecSeq;
-                    }
-                } else {
-                    tnSecSeq++;
-                    if (tnSecSeq > nt.getTransit().getMaxSequence()) {
-                        tnSecSeq = nSecSeq;
-                    }
-                }
-            }
+//            int tnSecSeq = nSecSeq;
+//            if (nt.getPriority() > oTrain.getPriority()) {
+//                if (!nt.isAllocationReversed()) {
+//                    tnSecSeq--;
+//                    if (tnSecSeq <= 0) {
+//                        tnSecSeq = nSecSeq;
+//                    }
+//                } else {
+//                    tnSecSeq++;
+//                    if (tnSecSeq > nt.getTransit().getMaxSequence()) {
+//                        tnSecSeq = nSecSeq;
+//                    }
+//                }
+//            }
             ArrayList<Section> nSections = nt.getTransit().getSectionListBySeq(nSecSeq);
             if (nSections.size() <= 1) {
                 return false;

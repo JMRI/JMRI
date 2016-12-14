@@ -29,8 +29,9 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.can.adapters.AdapterTest");
-        suite.addTest(jmri.jmrix.can.adapters.lawicell.LawicellTest.suite());
-        suite.addTest(jmri.jmrix.can.adapters.gridconnect.GridConnectTest.suite());
+        suite.addTest(jmri.jmrix.can.adapters.lawicell.PackageTest.suite());
+        suite.addTest(jmri.jmrix.can.adapters.gridconnect.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.can.adapters.loopback.PackageTest.class));
         return suite;
     }
 

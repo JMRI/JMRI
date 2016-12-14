@@ -4,7 +4,7 @@ import java.beans.PropertyChangeListener;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -13,8 +13,7 @@ import junit.framework.TestSuite;
  * Test the ProxyLightManager
  *
  * @author	Bob Jacobsen 2003, 2006, 2008
- * @version	$Revision$
- */
+  */
 public class ProxyLightManagerTest extends TestCase {
 
     public String getSystemName(int i) {

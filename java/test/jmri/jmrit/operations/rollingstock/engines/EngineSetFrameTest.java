@@ -1,25 +1,29 @@
 //EngineSetFrameTest.java
 package jmri.jmrit.operations.rollingstock.engines;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations EnginesSetFrame class
  *
  * @author	Dan Boudreau Copyright (C) 2010
- * @version $Revision: 28746 $
+ * 
  */
 public class EngineSetFrameTest extends OperationsSwingTestCase {
 
     public void testEngineSetFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         EngineSetFrame f = new EngineSetFrame();
         f.setTitle("Test Engine Set Frame");
         f.initComponents();

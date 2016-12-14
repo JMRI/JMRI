@@ -6,9 +6,11 @@
   <enumChoice choice="Not used">
     <choice xml:lang="fr">Not used(fr)</choice>
     <choice xml:lang="it">Non usato</choice>
+    <choice xml:lang="cs">Nepoužito</choice>
   </enumChoice>
   <enumChoice choice="Enabled">
     <choice xml:lang="fr">Enabled(fr)</choice>
     <choice xml:lang="it">Abilitato</choice>
+    <choice xml:lang="cs">Zpřístupněno</choice>
   </enumChoice>
 </enumVal>

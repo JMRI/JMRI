@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
  */
 public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDefault {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
+    //ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle"); // seems not to be used
 
     public int routingMethod = LayoutBlockConnectivityTools.METRIC;
 
@@ -115,7 +115,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     public int turnoutSetDelay = 0;
 
     public EntryExitPairs() {
-        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerUser(this);
         }
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
@@ -850,7 +850,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
             runWhenStablised = true;
             toUseWhenStable = editor;
             interlockTypeToUseWhenStable = interlockType;
-            log.debug("Layout block routing has not yet stabilsed, discovery will happen once it has");
+            log.debug("Layout block routing has not yet stabilised, discovery will happen once it has");
             return;
         }
         Hashtable<NamedBean, ArrayList<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(editor, Sensor.class, LayoutBlockConnectivityTools.SENSORTOSENSOR);

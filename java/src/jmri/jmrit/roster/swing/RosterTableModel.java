@@ -2,6 +2,7 @@ package jmri.jmrit.roster.swing;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javax.annotation.Nullable;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -10,6 +11,7 @@ import javax.swing.table.TableColumn;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterIconFactory;
+import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
@@ -50,7 +52,20 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
 
     public RosterTableModel(boolean editable) {
         this.editable = editable;
-        Roster.instance().addPropertyChangeListener(this);
+        Roster.getDefault().addPropertyChangeListener(this);
+    }
+
+    /**
+     * Create a table model for a Roster group.
+     *
+     * @param group the roster group to show; if null, behaves the same as
+     *              {@link #RosterTableModel()}
+     */
+    public RosterTableModel(@Nullable RosterGroup group) {
+        this(false);
+        if (group != null) {
+            this.setRosterGroup(group.getName());
+        }
     }
 
     @Override
@@ -62,7 +77,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
         } else if (e.getPropertyName().equals(Roster.SAVED)) {
             //TODO This really needs to do something like find the index of the roster entry here
             if (e.getSource() instanceof RosterEntry) {
-                int row = Roster.instance().getGroupIndex(rosterGroup, (RosterEntry) e.getSource());
+                int row = Roster.getDefault().getGroupIndex(rosterGroup, (RosterEntry) e.getSource());
                 fireTableRowsUpdated(row, row);
             } else {
                 fireTableDataChanged();
@@ -70,7 +85,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
         } else if (e.getPropertyName().equals(RosterGroupSelector.SELECTED_ROSTER_GROUP)) {
             setRosterGroup((e.getNewValue() != null) ? e.getNewValue().toString() : null);
         } else if (e.getPropertyName().startsWith("attribute") && e.getSource() instanceof RosterEntry) { // NOI18N
-            int row = Roster.instance().getGroupIndex(rosterGroup, (RosterEntry) e.getSource());
+            int row = Roster.getDefault().getGroupIndex(rosterGroup, (RosterEntry) e.getSource());
             fireTableRowsUpdated(row, row);
         } else if (e.getPropertyName().equals(Roster.ROSTER_GROUP_ADDED) && e.getNewValue().equals(rosterGroup)) {
             fireTableDataChanged();
@@ -79,7 +94,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
 
     @Override
     public int getRowCount() {
-        return Roster.instance().numGroupEntries(rosterGroup);
+        return Roster.getDefault().numGroupEntries(rosterGroup);
     }
 
     @Override
@@ -168,7 +183,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
             return false;
         }
         if (editable) {
-            RosterEntry re = Roster.instance().getGroupEntry(rosterGroup, row);
+            RosterEntry re = Roster.getDefault().getGroupEntry(rosterGroup, row);
             if (re != null) {
                 return (!re.isOpen());
             }
@@ -191,7 +206,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     @Override
     public Object getValueAt(int row, int col) {
         // get roster entry for row
-        RosterEntry re = Roster.instance().getGroupEntry(rosterGroup, row);
+        RosterEntry re = Roster.getDefault().getGroupEntry(rosterGroup, row);
         if (re == null) {
             log.debug("roster entry is null!");
             return null;
@@ -232,7 +247,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     @Override
     public void setValueAt(Object value, int row, int col) {
         // get roster entry for row
-        RosterEntry re = Roster.instance().getGroupEntry(rosterGroup, row);
+        RosterEntry re = Roster.getDefault().getGroupEntry(rosterGroup, row);
         if (re == null) {
             log.warn("roster entry is null!");
             return;
@@ -312,11 +327,11 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     }
 
     public final void setRosterGroup(String rosterGroup) {
-        for (RosterEntry re : Roster.instance().getEntriesInGroup(rosterGroup)) {
+        for (RosterEntry re : Roster.getDefault().getEntriesInGroup(rosterGroup)) {
             re.removePropertyChangeListener(this);
         }
         this.rosterGroup = rosterGroup;
-        for (RosterEntry re : Roster.instance().getEntriesInGroup(rosterGroup)) {
+        for (RosterEntry re : Roster.getDefault().getEntriesInGroup(rosterGroup)) {
             re.addPropertyChangeListener(this);
         }
         fireTableDataChanged();

@@ -1,4 +1,3 @@
-// SerialTurnout.java
 package jmri.jmrix.secsi;
 
 import jmri.Turnout;
@@ -17,14 +16,8 @@ import org.slf4j.LoggerFactory;
  * Description:	extend jmri.AbstractTurnout for SECSI serial layouts
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007
- * @version	$Revision$
- */
+  */
 public class SerialTurnout extends AbstractTurnout {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3108640348293672974L;
 
     /**
      * Create a Turnout object, with both system and user names.
@@ -93,5 +86,3 @@ public class SerialTurnout extends AbstractTurnout {
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
 }
-
-/* @(#)SerialTurnout.java */

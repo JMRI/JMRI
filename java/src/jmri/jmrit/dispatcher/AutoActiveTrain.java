@@ -1511,45 +1511,12 @@ public class AutoActiveTrain implements ThrottleListener {
 //                    _lastAllocatedSection = _currentAllocatedSection;
 //                }
                 // Give other threads a chance to work
-//                try { Thread.sleep(50); } catch(Exception ex) {}
+                try { Thread.sleep(DispatcherFrame.instance().getMinThrottleInterval()); } catch(Exception ex) {}
                 
-                // delay
-                synchronized (this) {
-                    try {
-                        wait(DispatcherFrame.instance().getMinThrottleInterval());
-                    } catch (InterruptedException ie) {
-                        log.error("InterruptedException in AutoEngineer: " + ie);
-                    }
-                }
             } //while !abort
             // shut down
         }
 
-//        private void setSpeedStep(int step) {
-//            switch (step) {
-//                case DccThrottle.SpeedStepMode14:
-//                    _minSpeedStep = 1.0f / 15;
-//                    for (int i = 1; i < 5; i++) {
-//                        _targetCount[i] *= 6;
-//                    }
-//                    break;
-//                case DccThrottle.SpeedStepMode27:
-//                    _minSpeedStep = 1.0f / 28;
-//                    for (int i = 1; i < 5; i++) {
-//                        _targetCount[i] *= 4;
-//                    }
-//                    break;
-//                case DccThrottle.SpeedStepMode28:
-//                    _minSpeedStep = 1.0f / 29;
-//                    for (int i = 1; i < 5; i++) {
-//                        _targetCount[i] *= 4;
-//                    }
-//                    break;
-//                default:
-//                    _minSpeedStep = 1.0f / 127;
-//                    break;
-//            }
-//        }
 
         public synchronized void slowToStop(boolean toStop) {
             _slowToStop = toStop;
@@ -1697,6 +1664,25 @@ public class AutoActiveTrain implements ThrottleListener {
                     break;
             }
         }
+    }
+    
+    /** routine to convert ramp rate name, stored as a string into the constant value assigned
+     * 
+     * @param rampRate - name of ramp rate, such as "RAMP_FAST"
+     * @return integer representing a ramprate constant value
+     */
+    
+    public static int getRampRateFromName(String rampRate) {
+        if (rampRate.equals(rb.getString("RAMP_FAST"))) {
+            return RAMP_FAST;
+        } else if (rampRate.equals(rb.getString("RAMP_MEDIUM"))) {
+            return RAMP_MEDIUM;
+        } else if (rampRate.equals(rb.getString("RAMP_MED_SLOW"))) {
+            return RAMP_MED_SLOW;
+        } else if (rampRate.equals(rb.getString("RAMP_SLOW"))) {
+            return RAMP_SLOW;
+        }
+        return RAMP_NONE;
     }
 
     private final static Logger log = LoggerFactory.getLogger(AutoActiveTrain.class.getName());

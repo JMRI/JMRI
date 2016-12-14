@@ -15,14 +15,9 @@ import jmri.util.StringUtil;
  * Frame for user input of serial messages
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2003, 2006, 2007, 2008
- * @version	$Revision$
- */
+  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.secsi.SerialListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5550602463045125600L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();

@@ -6,43 +6,43 @@ import java.io.FileInputStream;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 import org.openlcb.cdi.swing.CdiPanel;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import java.awt.GraphicsEnvironment;
+
+import jmri.jmrix.openlcb.SampleFactory;
+
+import static org.openlcb.cdi.impl.DemoReadWriteAccess.demoRepFromFile;
+import static org.openlcb.cdi.impl.DemoReadWriteAccess.demoRepFromSample;
 
 /**
+ * NOTE: This file actually Demonstrates the openLCB CdiPanel class.
  * @author Bob Jacobsen Copyright 2012
- * @version $Revision: 2175 $
+ * 
  */
-public class CdiPanelDemo extends TestCase {
+public class CdiPanelDemo {
 
-    // from here down is testing infrastructure
-    public CdiPanelDemo(String s) {
-        super(s);
+    public void testCtor(){
+        CdiPanel m = new CdiPanel();
+        Assert.assertNotNull(m);
     }
 
+    @Test
     public void testDisplay() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame f = new JFrame();
         f.setTitle("Configuration Demonstration");
         CdiPanel m = new CdiPanel();
 
-        m.initComponents(new CdiPanel.ReadWriteAccess() {
-            @Override
-            public void doWrite(long address, int space, byte[] data) {
-                System.out.println(data.length);
-                System.out.println("write " + address + " " + space + ": " + org.openlcb.Utilities.toHexDotsString(data));
-            }
-
-            @Override
-            public void doRead(long address, int space, int length, CdiPanel.ReadReturn handler) {
-                handler.returnData(new byte[]{1, 2, 3, 4, 5, 6, 7, 8});
-                System.out.println("read " + address + " " + space);
-            }
-        },
+        m.initComponents(demoRepFromSample(SampleFactory.getBasicSample()),
                 new CdiPanel.GuiItemFactory() {
                     public JButton handleReadButton(JButton button) {
                         //System.out.println("process button");
@@ -50,11 +50,6 @@ public class CdiPanelDemo extends TestCase {
                         return button;
                     }
                 }
-        );
-        m.loadCDI(
-                new org.openlcb.cdi.jdom.JdomCdiRep(
-                        jmri.jmrix.openlcb.SampleFactory.getBasicSample()
-                )
         );
 
         f.add(m);
@@ -64,20 +59,26 @@ public class CdiPanelDemo extends TestCase {
         f.setVisible(true);
     }
 
+    @Test
     public void testDisplaySample1() {
-        JFrame f = makeFrame(getRootFromFile("java/test/jmri/jmrix/openlcb/sample1.xml"));
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JFrame f = makeFrameFromFile("java/test/jmri/jmrix/openlcb/sample1.xml");
         f.setTitle("Sample1 XML");
         f.setVisible(true);
     }
 
+    @Test
     public void testDisplaySample2() {
-        JFrame f = makeFrame(getRootFromFile("java/test/jmri/jmrix/openlcb/sample2.xml"));
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JFrame f = makeFrameFromFile("java/test/jmri/jmrix/openlcb/sample2.xml");
         f.setTitle("Sample 2 XML");
         f.setVisible(true);
     }
 
+    @Test
     public void testLocoCdiDisplay() {
-        JFrame f = makeFrame(getRootFromFile("java/test/jmri/jmrix/openlcb/NMRAnetDatabaseTrainNode.xml"));
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JFrame f = makeFrameFromFile("java/test/jmri/jmrix/openlcb/NMRAnetDatabaseTrainNode.xml");
         f.setTitle("Locomotive CDI Demonstration");
         f.setVisible(true);
     }
@@ -94,23 +95,11 @@ public class CdiPanelDemo extends TestCase {
         return root;
     }
 
-    JFrame makeFrame(Element root) {
+    JFrame makeFrameFromFile(String fileName) {
         JFrame f = new JFrame();
         CdiPanel m = new CdiPanel();
 
-        m.initComponents(new CdiPanel.ReadWriteAccess() {
-            @Override
-            public void doWrite(long address, int space, byte[] data) {
-                System.out.println(data.length);
-                System.out.println("write " + address + " " + space + ": " + org.openlcb.Utilities.toHexDotsString(data));
-            }
-
-            @Override
-            public void doRead(long address, int space, int length, CdiPanel.ReadReturn handler) {
-                handler.returnData(new byte[]{1, 2, 3, 4, 5, 6, 7, 8});
-                System.out.println("read " + address + " " + space);
-            }
-        },
+        m.initComponents(demoRepFromFile(new File(fileName)),
                 new CdiPanel.GuiItemFactory() {
                     public JButton handleReadButton(JButton button) {
                         //System.out.println("process button");
@@ -120,25 +109,22 @@ public class CdiPanelDemo extends TestCase {
                 }
         );
 
-        m.loadCDI(
-                new org.openlcb.cdi.jdom.JdomCdiRep(root)
-        );
-
         f.add(m);
 
         f.pack();
         return f;
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {CdiPanelDemo.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Before
+    public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(CdiPanelDemo.class);
-        return suite;
+    @After
+    public  void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
+        apps.tests.Log4JFixture.tearDown();
     }
+
 }

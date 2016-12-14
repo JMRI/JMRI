@@ -90,7 +90,7 @@ public class SimpleClockFrame extends JmriJFrame
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
         // Determine current state of the clock
-        clock = InstanceManager.getOptionalDefault(jmri.Timebase.class);
+        clock = InstanceManager.getNullableDefault(jmri.Timebase.class);
         if (clock == null) {
             // could not initialize clock
             log.error("Could not obtain a Timebase instance.");
@@ -250,12 +250,16 @@ public class SimpleClockFrame extends JmriJFrame
         clockStartBox.addItem(Bundle.getMessage("MenuItemAnalogClock"));
         clockStartBox.addItem(Bundle.getMessage("MenuItemLcdClock"));
         clockStartBox.setSelectedIndex(startNone);
-        if (clock.getStartClockOption() == InstanceManager.getDefault(jmri.Timebase.class).NIXIE_CLOCK) {
+        if (clock.getStartClockOption() == Timebase.NIXIE_CLOCK) {
             clockStartBox.setSelectedIndex(startNixieClock);
-        } else if (clock.getStartClockOption() == InstanceManager.getDefault(jmri.Timebase.class).ANALOG_CLOCK) {
-            clockStartBox.setSelectedIndex(startAnalogClock);
-        } else if (clock.getStartClockOption() == InstanceManager.getDefault(jmri.Timebase.class).LCD_CLOCK) {
-            clockStartBox.setSelectedIndex(startLcdClock);
+        } else {
+            if (clock.getStartClockOption() == Timebase.ANALOG_CLOCK) {
+                clockStartBox.setSelectedIndex(startAnalogClock);
+            } else {
+                if (clock.getStartClockOption() == Timebase.LCD_CLOCK) {
+                    clockStartBox.setSelectedIndex(startLcdClock);
+                }
+            }
         }
         clockStartBox.setToolTipText(Bundle.getMessage("TipClockStartOption"));
         clockStartBox.addActionListener(new java.awt.event.ActionListener() {
@@ -360,7 +364,12 @@ public class SimpleClockFrame extends JmriJFrame
     public void setRateButtonActionPerformed() {
         double rate = 1.0;
         try {
-            rate = Double.valueOf(factorField.getText()).doubleValue();
+            String factorFieldText = factorField.getText() ;
+            char decimalSeparator = threeDigits.getDecimalFormatSymbols().getDecimalSeparator() ;
+            if (decimalSeparator != '.') {
+                factorFieldText = factorFieldText.replace(decimalSeparator, '.') ;
+            }
+            rate = Double.valueOf(factorFieldText).doubleValue();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, (Bundle.getMessage("ParseRateError") + "\n" + e),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -545,13 +554,13 @@ public class SimpleClockFrame extends JmriJFrame
      * Method to handle start clock combo box change
      */
     private void setClockStartChanged() {
-        int sel = InstanceManager.getDefault(jmri.Timebase.class).NONE;
+        int sel = Timebase.NONE;
         if (clockStartBox.getSelectedIndex() == startNixieClock) {
-            sel = InstanceManager.getDefault(jmri.Timebase.class).NIXIE_CLOCK;
+            sel = Timebase.NIXIE_CLOCK;
         } else if (clockStartBox.getSelectedIndex() == startAnalogClock) {
-            sel = InstanceManager.getDefault(jmri.Timebase.class).ANALOG_CLOCK;
+            sel = Timebase.ANALOG_CLOCK;
         } else if (clockStartBox.getSelectedIndex() == startLcdClock) {
-            sel = InstanceManager.getDefault(jmri.Timebase.class).LCD_CLOCK;
+            sel = Timebase.LCD_CLOCK;
         }
         clock.setStartClockOption(sel);
         changed = true;

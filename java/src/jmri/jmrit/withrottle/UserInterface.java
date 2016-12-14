@@ -49,7 +49,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Brett Hoffman Copyright (C) 2009, 2010
  * @author Randall Wood Copyright (C) 2013
- * @version $Revision$
  */
 public class UserInterface extends JmriJFrame implements DeviceListener, DeviceManager, ZeroConfServiceListener {
 
@@ -373,7 +372,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
 
     @Override
     protected void setShutDownTask() {
-        if (jmri.InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
             task = new jmri.implementation.AbstractShutDownTask(getTitle()) {
                 @Override
                 public boolean execute() {

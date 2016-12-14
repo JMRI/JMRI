@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import java.awt.GraphicsEnvironment;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.JButton;
@@ -14,9 +15,9 @@ import junit.extensions.jfcunit.eventdata.EventDataConstants;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.AbstractButtonFinder;
 import junit.extensions.jfcunit.finder.DialogFinder;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Swing jfcUnit tests for the TurnoutIcon
@@ -29,7 +30,9 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
 
     @SuppressWarnings("unchecked")
     public void testPanelEditor() throws Exception {
-
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         jmri.jmrit.display.panelEditor.PanelEditor panel
                 = new jmri.jmrit.display.panelEditor.PanelEditor("TurnoutIconWindowTest.testPanelEditor");
 
@@ -113,7 +116,9 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
 
     @SuppressWarnings("unchecked")
     public void testLayoutEditor() throws Exception {
-
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         jmri.jmrit.display.layoutEditor.LayoutEditor panel
                 = new jmri.jmrit.display.layoutEditor.LayoutEditor("TurnoutIconWindowTest.testLayoutEditor");
 

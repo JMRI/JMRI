@@ -1,70 +1,42 @@
 //SimpleServerTest.java
 package jmri.jmris.simpleserver;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+
 
 /**
- * Tests for the jmri.jmris.simpleserver package
+ * Tests for the jmri.jmris.simpleserver.SimpleServer class 
  *
- * @author Paul Bender
+ * @author Paul Bender Copyright (C) 2012,2016
  */
-public class SimpleServerTest extends TestCase {
+public class SimpleServerTest {
 
+    @Test
     public void testCtor() {
         SimpleServer a = new SimpleServer();
         Assert.assertNotNull(a);
         jmri.util.JUnitAppender.suppressErrorMessage("Failed to connect to port 2048");
     }
 
+    @Test
     public void testCtorwithParameter() {
         SimpleServer a = new SimpleServer(2048);
         Assert.assertNotNull(a);
         jmri.util.JUnitAppender.suppressErrorMessage("Failed to connect to port 2048");
     }
 
-    // from here down is testing infrastructure
-    public SimpleServerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SimpleServerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(jmri.jmris.simpleserver.SimpleServerTest.class);
-        suite.addTest(jmri.jmris.simpleserver.parser.JmriServerParserTests.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SimpleTurnoutServerTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SimplePowerServerTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SimpleReporterServerTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SimpleSensorServerTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SimpleLightServerTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SimpleSignalHeadServerTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SimpleOperationsServerTest.class));
-        suite.addTest(jmri.jmris.simpleserver.SimpleServerManagerTest.suite());
-        suite.addTest(BundleTest.suite());
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            // put any tests that require a UI here.
-            suite.addTest(jmri.jmris.simpleserver.SimpleServerFrameTest.suite());
-        }
-
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
-        super.setUp();
     }
 
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         apps.tests.Log4JFixture.tearDown();
     }
 

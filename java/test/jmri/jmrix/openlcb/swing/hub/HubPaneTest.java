@@ -1,20 +1,21 @@
 package jmri.jmrix.openlcb.swing.hub;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * @author Bob Jacobsen Copyright 2013
  */
-public class HubPaneTest extends TestCase {
+public class HubPaneTest {
 
     HubPane hub;
     jmri.jmrix.can.CanSystemConnectionMemo memo;
     jmri.jmrix.can.TrafficController tc;
 
-    
+    @Test
     public void testCtor() {
         hub = new HubPane();
         Assert.assertNotNull("Connection memo object non-null", memo);
@@ -22,29 +23,11 @@ public class HubPaneTest extends TestCase {
         //hub.initContext(memo);
     }
 
-    // from here down is testing infrastructure
-    public HubPaneTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        apps.tests.AllTest.initLogging();
-        String[] testCaseName = {"-noloading", HubPaneTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite(HubPaneTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
-        jmri.util.JUnitUtil.resetInstanceManager();
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
 
         memo = new jmri.jmrix.can.CanSystemConnectionMemo();
         Assert.assertNotNull("Connection memo object non-null", memo);
@@ -54,8 +37,10 @@ public class HubPaneTest extends TestCase {
 
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         hub.stopHubThread();
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 }

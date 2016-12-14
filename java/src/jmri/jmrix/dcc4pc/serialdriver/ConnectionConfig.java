@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.dcc4pc.serialdriver;
 
 /**
@@ -6,7 +5,6 @@ package jmri.jmrix.dcc4pc.serialdriver;
  * SerialDriverAdapter object.
  *
  * @author Kevin Dickerson Copyright (C) 2001, 2003
- * @version	$Revision: 17977 $
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 

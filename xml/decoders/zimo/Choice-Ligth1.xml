@@ -5,61 +5,109 @@
       <enumChoice choice="Standard on/off function output">
        <choice>Standard on/off function output</choice>
        <choice xml:lang="it">Uscita Standard On/Off</choice>
+<<<<<<< HEAD
        <choice xml:lang="de">Standard An/Aus</choice>
+=======
+       <choice xml:lang="cs">Standardní zapnout/vypnout funkční výstup</choice>
+>>>>>>> JMRI/master
       </enumChoice>
       <enumChoice choice="Mars light">
         <choice>Mars light</choice>
         <choice xml:lang="it">Luci Mars</choice>
+<<<<<<< HEAD
         <choice xml:lang="de">Mars light</choice>
+=======
+        <choice xml:lang="cs">Mars světlo</choice>
+>>>>>>> JMRI/master
       </enumChoice>
       <enumChoice choice="Random Flicker">
         <choice>Random Flicker</choice>
         <choice xml:lang="it">Sfarfallio casuale (caldaia)</choice>
+<<<<<<< HEAD
         <choice xml:lang="de">Random Flicker</choice>
+=======
+        <choice xml:lang="cs">Náhodné blikání</choice>
+>>>>>>> JMRI/master
       </enumChoice>
       <enumChoice choice="Flashing Headlight">
         <choice>Flashing Headlight</choice>
         <choice xml:lang="it">Luci Lampeggianti</choice>
+<<<<<<< HEAD
         <choice xml:lang="de">Flashing Headlight</choice>
+=======
+        <choice xml:lang="cs">Zábleskové dálkové světlo</choice>
+>>>>>>> JMRI/master
       </enumChoice>
       <enumChoice choice="Single Pulse Strobe">
         <choice>Single Pulse Strobe</choice>
         <choice xml:lang="it">Lampeggiante Singolo Impulso</choice>
+<<<<<<< HEAD
         <choice xml:lang="de">Single Pulse Strobe</choice>
+=======
+        <choice xml:lang="cs">Jednoimpulsový stroboskop</choice>
+>>>>>>> JMRI/master
       </enumChoice>
       <enumChoice choice="Double Pulse Strobe">
         <choice>Double Pulse Strobe</choice>
         <choice xml:lang="it">Lampeggiante Doppio Impulso</choice>
+<<<<<<< HEAD
         <choice xml:lang="de">Double Pulse Strobe</choice>
+=======
+        <choice xml:lang="cs">Dvouimpulsový stroboskop</choice>
+>>>>>>> JMRI/master
       </enumChoice>
       <enumChoice choice="Rotary Beacon">
         <choice>Rotary Beacon</choice>
         <choice xml:lang="it">Faro Rotante</choice>
+<<<<<<< HEAD
         <choice xml:lang="de">Rotary Beacon</choice>
+=======
+        <choice xml:lang="cs">Rotační maják</choice>
+>>>>>>> JMRI/master
       </enumChoice>
       <enumChoice choice="Gyralite">
         <choice>Gyralite</choice>
         <choice xml:lang="it">Faro Gyra-Light</choice>
+<<<<<<< HEAD
         <choice xml:lang="de">Gyralite</choice>
+=======
+        <choice xml:lang="cs">Gyroskopické světlo</choice>
+>>>>>>> JMRI/master
       </enumChoice>
       <enumChoice choice="Ditch Light Type 1, right">
         <choice>Ditch Light Type 1, right</choice>
         <choice xml:lang="it">Luce Ditch tipo 1, destro</choice>
+<<<<<<< HEAD
         <choice xml:lang="de">Ditch Light Type 1, rechts</choice>
+=======
+        <choice xml:lang="cs">Návěstní světlo typ 1, pravé</choice>
+>>>>>>> JMRI/master
       </enumChoice>
       <enumChoice choice="Ditch Light Type 1, left">
         <choice>Ditch Light Type 1, left</choice>
         <choice xml:lang="it">Luce Ditch tipo 1, sinistro</choice>
+<<<<<<< HEAD
         <choice xml:lang="de">Ditch Light Type 1, links</choice>
+=======
+        <choice xml:lang="cs">Návěstní světlo typ 1, levé</choice>
+>>>>>>> JMRI/master
       </enumChoice>
       <enumChoice choice="Ditch Light Type 2, right">
         <choice>Ditch Light Type 2, right</choice>
         <choice xml:lang="it">Luce Ditch tipo 2, destro</choice>
+<<<<<<< HEAD
         <choice xml:lang="de">Ditch Light Type 2, rechts</choice>
+=======
+        <choice xml:lang="cs">Návěstní světlo typ 2, pravé</choice>
+>>>>>>> JMRI/master
       </enumChoice>
       <enumChoice choice="Ditch Light Type 2, left">
         <choice>Ditch Light Type 2, left</choice>
         <choice xml:lang="it">Luce Ditch tipo 2, sinistro</choice>
+<<<<<<< HEAD
         <choice xml:lang="de">Ditch Light Type 2, links</choice>
+=======
+        <choice xml:lang="cs">Návěstní světlo typ 2, levé</choice>
+>>>>>>> JMRI/master
       </enumChoice>
 </enumChoiceGroup>

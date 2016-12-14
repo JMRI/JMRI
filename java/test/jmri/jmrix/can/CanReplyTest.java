@@ -1,6 +1,6 @@
 package jmri.jmrix.can;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
  *
  * @author Bob Jacobsen Copyright 2008, 2009
  */
-public class CanReplyTest extends CanMRCommonTest {
+public class CanReplyTest extends CanMRCommonTestBase {
 
     public void testCopyCtor() {
         CanReply m1 = new CanReply();

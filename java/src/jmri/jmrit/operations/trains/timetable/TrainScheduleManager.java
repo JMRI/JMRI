@@ -1,4 +1,3 @@
-// TrainScheduleManager.java
 package jmri.jmrit.operations.trains.timetable;
 
 import java.util.ArrayList;
@@ -20,13 +19,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Manages train schedules.  The default is the days of the week,
- * but can be anything the user wants when defining when trains will
- * run.
+ * Manages train schedules. The default is the days of the week, but can be
+ * anything the user wants when defining when trains will run.
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision$
  */
 public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 
@@ -44,9 +41,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 
     public static synchronized TrainScheduleManager instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("TrainScheduleManager creating instance");
-            }
+            log.debug("TrainScheduleManager creating instance");
             // create and load
             _instance = new TrainScheduleManager();
             TrainManagerXml.instance(); // load trains
@@ -72,6 +67,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     }
 
     /**
+     * @param name The schedule string name to search for. 
      * @return requested TrainSchedule object or null if none exists
      */
     public TrainSchedule getScheduleByName(String name) {
@@ -93,6 +89,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     /**
      * Finds an existing schedule or creates a new schedule if needed requires
      * schedule's name creates a unique id for this schedule
+     * @param name The string name of the schedule.
      *
      *
      * @return new TrainSchedule or existing TrainSchedule
@@ -104,13 +101,15 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
             schedule = new TrainSchedule(Integer.toString(_id), name);
             Integer oldSize = Integer.valueOf(_scheduleHashTable.size());
             _scheduleHashTable.put(schedule.getId(), schedule);
-            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_scheduleHashTable.size()));
+            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
+                    Integer.valueOf(_scheduleHashTable.size()));
         }
         return schedule;
     }
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     * @param schedule The TrainSchedule to add.
      */
     public void register(TrainSchedule schedule) {
         Integer oldSize = Integer.valueOf(_scheduleHashTable.size());
@@ -125,6 +124,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 
     /**
      * Forget a NamedBean Object created outside the manager.
+     * @param schedule The TrainSchedule to delete.
      */
     public void deregister(TrainSchedule schedule) {
         if (schedule == null) {
@@ -234,7 +234,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
             box.addItem(sch);
         }
     }
-    
+
     public void buildSwitchLists() {
         TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
         String locationName = ""; // only create switch lists once for locations with similar names
@@ -255,6 +255,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-trains.dtd.
+     * @param root The common Element for operations-trains.dtd.
      *
      */
     public void store(Element root) {
@@ -272,9 +273,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
         if (e != null) {
             @SuppressWarnings("unchecked")
             List<Element> eSchedules = root.getChild(Xml.SCHEDULES).getChildren(Xml.SCHEDULE);
-            if (log.isDebugEnabled()) {
-                log.debug("TrainScheduleManager sees " + eSchedules.size() + " train schedules");
-            }
+            log.debug("TrainScheduleManager sees {} train schedules", eSchedules.size());
             for (Element eSchedule : eSchedules) {
                 register(new TrainSchedule(eSchedule));
             }

@@ -16,11 +16,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ReporterIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 729371636139026298L;
-
     public ReporterIcon(Editor editor) {
         // super ctor call to make sure this is a String label
         super("???", editor);
@@ -67,7 +62,7 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
      * @param pName Used as a system/user name to lookup the Reporter object
      */
     public void setReporter(String pName) {
-        if (InstanceManager.getOptionalDefault(jmri.ReporterManager.class) != null) {
+        if (InstanceManager.getNullableDefault(jmri.ReporterManager.class) != null) {
             try {
                 reporter = InstanceManager.getDefault(jmri.ReporterManager.class).
                     provideReporter(pName);

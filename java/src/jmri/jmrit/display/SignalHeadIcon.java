@@ -1,4 +1,3 @@
-// SignalHeadIcon.java
 package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
@@ -32,11 +31,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public class SignalHeadIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -457104828248662262L;
 
     String[] _validKey;
 
@@ -289,11 +283,6 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             popup.add(litMenu);
 
             popup.add(new AbstractAction(Bundle.getMessage("EditLogic")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -5336135816787933108L;
-
                 public void actionPerformed(ActionEvent e) {
                     jmri.jmrit.blockboss.BlockBossFrame f = new jmri.jmrit.blockboss.BlockBossFrame();
                     String name = getNameString();
@@ -380,13 +369,8 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     SignalHeadItemPanel _itemPanel;
 
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("SignalHead"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSignalHead"));
         popup.add(new AbstractAction(txt) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 7671614414680069967L;
-
             public void actionPerformed(ActionEvent e) {
                 editItem();
             }
@@ -395,9 +379,9 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     protected void editItem() {
-        makePalettteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("SignalHead")));
+        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSignalHead")));
         _itemPanel = new SignalHeadItemPanel(_paletteFrame, "SignalHead", getFamily(),
-                PickListModel.signalHeadPickModelInstance(), _editor);
+                PickListModel.signalHeadPickModelInstance(), _editor); //NOI18N
         ActionListener updateAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateItem();
@@ -435,6 +419,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             Iterator<Entry<String, NamedIcon>> it = map1.entrySet().iterator();
             while (it.hasNext()) {
                 Entry<String, NamedIcon> entry = it.next();
+                // TODO I18N use existing NamedBeanBundle keys before calling convertText(entry.getKey())?
                 map2.put(jmri.jmrit.display.palette.ItemPalette.convertText(entry.getKey()), entry.getValue());
             }
             setIcons(map2);
@@ -449,13 +434,8 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     public boolean setEditIconMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("SignalHead"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSignalHead"));
         popup.add(new AbstractAction(txt) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 4598688048130978173L;
-
             public void actionPerformed(ActionEvent e) {
                 edit();
             }

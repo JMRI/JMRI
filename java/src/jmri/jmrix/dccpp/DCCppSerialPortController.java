@@ -14,8 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  * @author	Paul Bender Copyright (C) 2004,2010
  * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- *
+  *
  * Based on XNetSerialPortController by Bob Jacobsen and Paul Bender
  */
 public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSerialPortController implements DCCppPortController {

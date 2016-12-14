@@ -1,22 +1,24 @@
 package jmri.jmrix.rps.swing.debugger;
 
+import java.awt.GraphicsEnvironment;
 import javax.vecmath.Point3d;
 import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.Receiver;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.rps.swing.debugger package
  *
  * @author Bob Jacobsen Copyright 2008
  */
-public class DebuggerTest extends TestCase {
+public class DebuggerTest {
 
+    @Test
     public void testCtor() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // create a context
         Engine.instance().setMaxReceiverNumber(2);
@@ -37,24 +39,6 @@ public class DebuggerTest extends TestCase {
 
         // close
         f.dispose();
-    }
-
-    // from here down is testing infrastructure
-    public DebuggerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {DebuggerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite(DebuggerTest.class);
-        return suite;
     }
 
 }

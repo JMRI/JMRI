@@ -7,7 +7,6 @@ import java.awt.HeadlessException;
  * until end if needed.
  *
  * @author Bob Jacobsen Copyright (c) 2010
- * @version $Revision$
  */
 public class DialogErrorHandler extends jmri.configurexml.ErrorHandler {
 

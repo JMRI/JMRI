@@ -1,6 +1,6 @@
 package jmri;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -59,10 +59,12 @@ public class ApplicationTest extends TestCase {
     @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetApplication();
     }
 
     @Override
     protected void tearDown() {
+        jmri.util.JUnitUtil.resetApplication();
         apps.tests.Log4JFixture.tearDown();
     }
 

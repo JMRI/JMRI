@@ -23,10 +23,6 @@ import org.slf4j.LoggerFactory;
  */
 public class BlockContentsIcon extends MemoryIcon implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6349689048434263633L;
     NamedIcon defaultIcon = null;
     java.util.HashMap<String, NamedIcon> map = null;
     private NamedBeanHandle<Block> namedBlock;
@@ -80,7 +76,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
      * @param pName Used as a system/user name to lookup the Block object
      */
     public void setBlock(String pName) {
-        if (InstanceManager.getOptionalDefault(jmri.BlockManager.class) != null) {
+        if (InstanceManager.getNullableDefault(jmri.BlockManager.class) != null) {
             Block block = InstanceManager.getDefault(jmri.BlockManager.class).
                     provideBlock(pName);
             setBlock(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, block));
@@ -147,11 +143,6 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
                 String key = iterator.next();
                 //String value = ((NamedIcon)map.get(key)).getName();
                 popup.add(new AbstractAction(key) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 2613104551820677934L;
-
                     public void actionPerformed(ActionEvent e) {
                         String key = e.getActionCommand();
                         setValue(key);
@@ -162,11 +153,6 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         }  // end of selectable
         if (re != null) {
             popup.add(new AbstractAction("Open Throttle") {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -859591989199216083L;
-
                 public void actionPerformed(ActionEvent e) {
                     ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
                     tf.toFront();
@@ -174,26 +160,16 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
                 }
             });
 
-            final jmri.jmrit.dispatcher.DispatcherFrame df = jmri.InstanceManager.getOptionalDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
+            final jmri.jmrit.dispatcher.DispatcherFrame df = jmri.InstanceManager.getNullableDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
             if (df != null) {
                 final jmri.jmrit.dispatcher.ActiveTrain at = df.getActiveTrainForRoster(re);
                 if (at != null) {
                     popup.add(new AbstractAction(Bundle.getMessage("MenuTerminateTrain")) {
-                        /**
-                         *
-                         */
-                        private static final long serialVersionUID = 4001162492450407545L;
-
                         public void actionPerformed(ActionEvent e) {
                             df.terminateActiveTrain(at);
                         }
                     });
                     popup.add(new AbstractAction(Bundle.getMessage("MenuAllocateExtra")) {
-                        /**
-                         *
-                         */
-                        private static final long serialVersionUID = 472510057229208127L;
-
                         public void actionPerformed(ActionEvent e) {
                             //Just brings up the standard allocate extra frame, this could be expanded in the future 
                             //As a point and click operation.
@@ -202,11 +178,6 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
                     });
                     if (at.getStatus() == jmri.jmrit.dispatcher.ActiveTrain.DONE) {
                         popup.add(new AbstractAction("Restart") {
-                            /**
-                             *
-                             */
-                            private static final long serialVersionUID = 5747492639001397948L;
-
                             public void actionPerformed(ActionEvent e) {
                                 at.allocateAFresh();
                             }
@@ -214,11 +185,6 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
                     }
                 } else {
                     popup.add(new AbstractAction(Bundle.getMessage("MenuNewTrain")) {
-                        /**
-                         *
-                         */
-                        private static final long serialVersionUID = 4050624129195613788L;
-
                         public void actionPerformed(ActionEvent e) {
                             if (!df.getNewTrainActive()) {
                                 df.getActiveTrainFrame().initiateTrain(e, re, getBlock());
@@ -241,11 +207,6 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
      */
     public boolean setTextEditMenu(JPopupMenu popup) {
         popup.add(new AbstractAction(Bundle.getMessage("EditBlockValue")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -9209945179881340682L;
-
             public void actionPerformed(ActionEvent e) {
                 editBlockValue();
             }
@@ -274,13 +235,8 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
     }
 
     public boolean setEditIconMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Block"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameBlock"));
         popup.add(new AbstractAction(txt) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -2787240864269582728L;
-
             public void actionPerformed(ActionEvent e) {
                 edit();
             }
@@ -289,7 +245,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
     }
 
     protected void edit() {
-        makeIconEditorFrame(this, "Block", true, null);
+        makeIconEditorFrame(this, "Block", true, null); // NOI18N
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.blockPickModelInstance());
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
@@ -332,7 +288,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         if (getBlock().getValue() != null) {
             newBlock.setText(getBlock().getValue().toString());
         }
-        Object[] options = {"Cancel", "OK", newBlock};
+        Object[] options = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), newBlock};
         int retval = JOptionPane.showOptionDialog(this,
                 Bundle.getMessage("EditCurrentBlockValue"), namedBlock.getName(),
                 0, JOptionPane.INFORMATION_MESSAGE, null,

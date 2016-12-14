@@ -4,7 +4,7 @@ import java.awt.Component;
 import java.util.HashMap;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.slf4j.Logger;

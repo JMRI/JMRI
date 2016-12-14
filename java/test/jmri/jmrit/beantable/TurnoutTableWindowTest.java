@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import java.awt.GraphicsEnvironment;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -9,9 +10,9 @@ import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.AbstractButtonFinder;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Swing jfcUnit tests for the turnout table
@@ -21,6 +22,9 @@ import junit.framework.TestSuite;
 public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
 
     public void testShowAndClose() throws Exception {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
 
        // ask for the window to open
         TurnoutTableAction a = new TurnoutTableAction();
@@ -102,6 +106,7 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
@@ -111,6 +116,7 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         jmri.util.JUnitUtil.initInternalSensorManager();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         apps.tests.Log4JFixture.tearDown();
         super.tearDown();

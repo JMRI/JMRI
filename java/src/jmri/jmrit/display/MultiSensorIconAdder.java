@@ -54,10 +54,6 @@ import org.slf4j.LoggerFactory;
  */
 public class MultiSensorIconAdder extends IconAdder {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6135920336395495628L;
     JRadioButton _updown;
     JRadioButton _rightleft;
 
@@ -156,7 +152,7 @@ public class MultiSensorIconAdder extends IconAdder {
             p1.add(_iconMap.get(key));
 
             JPanel p2 = new JPanel();
-            JButton delete = new JButton(Bundle.getMessage("ButtonDeleteIcon"));
+            JButton delete = new JButton(Bundle.getMessage("ButtonDelete"));
             ActionListener action = new ActionListener() {
                 String key;
 
@@ -179,7 +175,7 @@ public class MultiSensorIconAdder extends IconAdder {
             k.setVisible(false);
             p3.add(k);
             JPanel p4 = new JPanel();
-            p4.add(new JLabel(Bundle.getMessage("Sensor")));
+            p4.add(new JLabel(Bundle.getMessage("BeanNameSensor")));
             p3.add(p4);
             p4 = new JPanel();
             NamedBeanHandle<Sensor> sensor = _sensorMap.get(key);
@@ -282,11 +278,6 @@ public class MultiSensorIconAdder extends IconAdder {
     }
 
     class ExportHandler extends TransferHandler {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1457006609475522778L;
 
         public int getSourceActions(JComponent c) {
             return COPY;
@@ -402,7 +393,7 @@ public class MultiSensorIconAdder extends IconAdder {
         if (index >= _order.size()) {
             JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                     Bundle.getMessage("NoIconAt"), index - 2),
-                    Bundle.getMessage("errorTitle"),
+                    Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return null;
         }
@@ -420,7 +411,7 @@ public class MultiSensorIconAdder extends IconAdder {
         if (index >= _order.size()) {
             JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                     Bundle.getMessage("NoSensorAt"), index - 2),
-                    Bundle.getMessage("errorTitle"),
+                    Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return null;
         }
@@ -442,7 +433,7 @@ public class MultiSensorIconAdder extends IconAdder {
                 JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                         Bundle.getMessage("DupSensorName"),
                         new Object[]{name}),
-                        Bundle.getMessage("errorTitle"),
+                        Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
                 return false;
             }
@@ -456,10 +447,6 @@ public class MultiSensorIconAdder extends IconAdder {
      */
     class DropPanel extends JPanel implements DropTargetListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7051687527703065869L;
         DataFlavor dataFlavor;
 
         DropPanel() {

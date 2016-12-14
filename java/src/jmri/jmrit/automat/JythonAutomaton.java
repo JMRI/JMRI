@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * This sample Automaton invokes a Jython interpreter to handle a script.
  * <P>
  * Access is via Java reflection so that both users and developers can work
- * without the jython.jar file in the classpath. To make it easier to read the
+ * without the jython-standalone-2.7.0.jar file in the classpath. To make it easier to read the
  * code, the "non-reflection" statements are in the comments
  *
  * @author	Bob Jacobsen Copyright (C) 2003
@@ -50,7 +50,7 @@ public class JythonAutomaton extends AbstractAutomaton {
             // load some general objects
             java.lang.reflect.Method set
                     = interp.getClass().getMethod("set", new Class[]{String.class, Object.class});
-            set.invoke(interp, new Object[]{"dcc", InstanceManager.getOptionalDefault(jmri.CommandStation.class)});
+            set.invoke(interp, new Object[]{"dcc", InstanceManager.getNullableDefault(jmri.CommandStation.class)});
             set.invoke(interp, new Object[]{"self", this});
 
             // set up the method to exec python functions

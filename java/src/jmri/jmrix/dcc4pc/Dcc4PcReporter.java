@@ -1,4 +1,3 @@
-// Dcc4PcReporter.java
 package jmri.jmrix.dcc4pc;
 
 import java.util.Hashtable;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * rail com tag.
  * <P>
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 17977 $
  */
 public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocationReporter {
 
@@ -53,8 +51,6 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
 
     // data members
     transient RailComPacket[] rcPacket = new RailComPacket[3];
-
-    private static final long serialVersionUID = 120905L;
 
     void setPacket(int[] arraytemp, int dcc_addr_type, int dcc_addr, int cvNumber, int speed, int packetTypeCmd) {
         if (log.isDebugEnabled()) {
@@ -575,5 +571,3 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
     private final static Logger log = LoggerFactory.getLogger(Dcc4PcReporter.class.getName());
 
 }
-
-/* @(#)Dcc4PcReporter.java */

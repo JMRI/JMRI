@@ -80,13 +80,11 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
      * @param pName Used as a system/user name to lookup the Memory object
      */
     public void setMemory(String pName) {
-        if (debug) {
-            log.debug("setMemory for memory= " + pName);
-        }
-        if (InstanceManager.getOptionalDefault(jmri.MemoryManager.class) != null) {
+        log.debug("setMemory for memory= {}", pName);
+        if (InstanceManager.getNullableDefault(jmri.MemoryManager.class) != null) {
             try {
                 Memory memory = InstanceManager.memoryManagerInstance().
-                    provideMemory(pName);
+                        provideMemory(pName);
                 setMemory(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, memory));
             } catch (IllegalArgumentException e) {
                 log.error("Memory '" + pName + "' not available, icon won't see changes");
@@ -162,13 +160,8 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     }
 
     public boolean setEditIconMenu(javax.swing.JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Memory"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameMemory"));
         popup.add(new javax.swing.AbstractAction(txt) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 7705138120207378262L;
-
             public void actionPerformed(ActionEvent e) {
                 edit();
             }
@@ -177,16 +170,12 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     }
 
     /**
-     * Poppup menu iconEditor's ActionListener
+     * Popup menu iconEditor's ActionListener
      */
     SpinnerNumberModel _spinModel = new SpinnerNumberModel(3, 1, 100, 1);
 
     protected void edit() {
         _iconEditor = new IconAdder("Memory") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 7574333287425397624L;
             JSpinner spinner = new JSpinner(_spinModel);
 
             protected void addAdditionalButtons(JPanel p) {
@@ -230,9 +219,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
      * Drive the current state of the display from the state of the Memory.
      */
     public void displayState() {
-        if (debug) {
-            log.debug("displayState");
-        }
+        log.debug("displayState");
         if (namedMemory == null) {  // leave alone if not connected yet
             return;
         }

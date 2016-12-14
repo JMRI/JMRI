@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author Dave Duchamp Copyright (c) 2006
  * @author Mark Underwood Copyright (c) 2006
- * @version $Revision$
  *
  * Based on XNetLightManagerXml by Dave Duchamp
  */

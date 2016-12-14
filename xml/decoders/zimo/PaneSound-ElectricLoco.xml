@@ -6,10 +6,12 @@
   <name>Sound - Electric Loco</name>
   <name xml:lang="it">Suoni - Elettrico</name>
   <name xml:lang="de">Sound - Elektrolok</name>
+  <name xml:lang="cs">Zvuk - elektrická lokomotiva</name>
   <column>
     <label>
       <text>Thyristor control</text>
       <text xml:lang="de">Thyristor</text>
+      <text xml:lang="cs">Tyristorová regulace</text>
     </label>
     <separator/>
     <label>
@@ -67,6 +69,7 @@
       <text>Motor sound</text>
       <text xml:lang="it">Suoni Motore</text>
       <text xml:lang="de">Motor</text>
+      <text xml:lang="cs">Zvuk trakčního motoru</text>
     </label>
     <separator/>
     <label>
@@ -161,6 +164,7 @@
       <text>Switchgear sound</text>
       <text xml:lang="it">Suoni Cambio</text>
       <text xml:lang="de">Schaltanlage</text>
+      <text xml:lang="cs">Zvuk kontroleru</text>
     </label>
     <separator/>
     <label>

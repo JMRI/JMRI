@@ -14,33 +14,18 @@ import jmri.jmrit.display.Positionable;
  */
 public class PositionableCircle extends PositionableShape {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1016948514119727789L;
-
     public PositionableCircle(Editor editor) {
         super(editor);
-        _height = _width = 100;
+        makeShape();
     }
 
     public PositionableCircle(Editor editor, Shape shape) {
         super(editor, shape);
-        _height = _width = 100;
     }
 
-    @Override
     public void setHeight(int h) {
         super.setHeight(h);
         _width = _height;
-    }
-
-    public void setRadius(int r) {
-        setWidth(r);
-    }
-
-    public int getRadius() {
-        return _width;
     }
 
     /**
@@ -57,22 +42,18 @@ public class PositionableCircle extends PositionableShape {
         return finishClone(pos);
     }
 
-    protected Positionable finishClone(PositionableCircle pos) {
+    protected Positionable finishClone(PositionableShape pos) {
         pos._width = _width;
+        pos._height = _height;
         return super.finishClone(pos);
     }
 
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = Bundle.getMessage("editShape", Bundle.getMessage("circle"));
+        String txt = Bundle.getMessage("editShape", Bundle.getMessage("Circle"));
         popup.add(new javax.swing.AbstractAction(txt) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 4014472244175717813L;
-
             public void actionPerformed(ActionEvent e) {
                 if (_editFrame == null) {
-                    _editFrame = new DrawCircle("editShape", "circle", null);
+                    _editFrame = new DrawCircle("editShape", "Circle", null);
                     setEditParams();
                 }
             }

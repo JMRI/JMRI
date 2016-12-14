@@ -14,14 +14,11 @@ import jmri.jmrit.display.Positionable;
  */
 public class PositionableRoundRect extends PositionableRectangle {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8833172771959196146L;
-    protected int _radius = 10;
+    protected int _radius = 40;
 
     public PositionableRoundRect(Editor editor) {
         super(editor);
+        makeShape();
     }
 
     public PositionableRoundRect(Editor editor, Shape shape) {
@@ -50,25 +47,20 @@ public class PositionableRoundRect extends PositionableRectangle {
         return finishClone(pos);
     }
 
-    protected Positionable finishClone(PositionableRoundRect pos) {
-        pos._radius = _radius;
+    protected Positionable finishClone(PositionableShape pos) {
+        ((PositionableRoundRect)pos)._radius = _radius;
         return super.finishClone(pos);
     }
 
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = Bundle.getMessage("editShape", Bundle.getMessage("roundRect"));
         popup.add(new javax.swing.AbstractAction(txt) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -1360281223318437388L;
-
             public void actionPerformed(ActionEvent e) {
                 if (_editFrame == null) {
                     _editFrame = new DrawRoundRect("editShape", "roundRect", null);
                     setEditParams();
                 }
-            }
+             }
         });
         return true;
     }

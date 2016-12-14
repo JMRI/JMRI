@@ -4,7 +4,7 @@ package jmri.jmrit.operations.trains;
  * A convenient place to access operations xml element and attribute names.
  *
  * @author Daniel Boudreau Copyright (C) 2013
- * @version $Revision: 22156 $
+ * 
  *
  */
 public class Xml {
@@ -115,8 +115,6 @@ public class Xml {
     static final String OPEN_FILE = "openFile"; // NOI18N
     static final String RUN_FILE = "runFile"; // NOI18N
     static final String TRAIN_ACTION = "trainAction"; // NOI18N
-
-    static final String COLUMN_WIDTHS = "columnWidths"; // TODO This here is for backwards compatibility, remove after next major release // NOI18N
 
     static final String TRAIN_SCHEDULE_OPTIONS = "trainScheduleOptions"; // NOI18N
     static final String ACTIVE_ID = "activeId"; // NOI18N

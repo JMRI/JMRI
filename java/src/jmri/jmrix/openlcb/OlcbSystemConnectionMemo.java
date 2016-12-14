@@ -1,6 +1,9 @@
 // OlcbSystemConnectionMemo.java
 package jmri.jmrix.openlcb;
 
+import org.openlcb.NodeID;
+import org.openlcb.OlcbInterface;
+
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.ProgrammerManager;
@@ -13,7 +16,6 @@ import jmri.ProgrammerManager;
  * activate their particular system.
  *
  * @author	Bob Jacobsen Copyright (C) 2015
- * @version $Revision$
  */
 public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnectionMemo {
 
@@ -76,6 +78,9 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
         if (T.equals(jmri.TurnoutManager.class)) {
             return (T) getTurnoutManager();
         }
+        if (T.equals(OlcbInterface.class)) {
+            return (T) getInterface();
+        }
         return null; // nothing, by default
     }
 
@@ -135,6 +140,16 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
             sensorManager = new OlcbSensorManager(this);
         }
         return sensorManager;
+    }
+
+    protected OlcbInterface olcbInterface;
+
+    public OlcbInterface getInterface() {
+        return olcbInterface;
+    }
+
+    public void setInterface(OlcbInterface iface) {
+        olcbInterface = iface;
     }
 
     protected ResourceBundle getActionModelResourceBundle() {

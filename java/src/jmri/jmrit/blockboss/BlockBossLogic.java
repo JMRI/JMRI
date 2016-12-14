@@ -3,6 +3,8 @@ package jmri.jmrit.blockboss;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import javax.annotation.Nonnull;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
@@ -10,9 +12,6 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.jmrit.automat.Siglet;
-
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1104,7 +1103,10 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     private static void setup() {
         if (bblList == null) {
             bblList = new ArrayList<BlockBossLogic>();
-            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerConfig(new BlockBossLogic(), jmri.Manager.BLOCKBOSS);
+            ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+            if (cm != null) {
+                cm.registerConfig(new BlockBossLogic(), jmri.Manager.BLOCKBOSS);
+            }
         }
     }
 

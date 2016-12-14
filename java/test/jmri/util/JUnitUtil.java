@@ -15,6 +15,7 @@ import jmri.RouteManager;
 import jmri.ShutDownManager;
 import jmri.SignalHeadManager;
 import jmri.SignalMastLogicManager;
+import jmri.SignalMastManager;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
@@ -25,7 +26,9 @@ import jmri.managers.DefaultConditionalManager;
 import jmri.managers.DefaultIdTagManager;
 import jmri.managers.DefaultLogixManager;
 import jmri.managers.DefaultMemoryManager;
+import jmri.managers.DefaultRailComManager;
 import jmri.managers.DefaultSignalMastLogicManager;
+import jmri.managers.DefaultSignalMastManager;
 import jmri.managers.InternalReporterManager;
 import jmri.managers.InternalSensorManager;
 import org.junit.Assert;
@@ -286,49 +289,49 @@ public class JUnitUtil {
 
     public static void initMemoryManager() {
         MemoryManager m = new DefaultMemoryManager();
-        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.MEMORIES);
         }
     }
 
     public static void initReporterManager() {
         ReporterManager m = new InternalReporterManager();
-        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.REPORTERS);
         }
     }
 
     public static void initOBlockManager() {
         OBlockManager b = new OBlockManager();
-        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(b, jmri.Manager.OBLOCKS);
         }
     }
 
     public static void initWarrantManager() {
         WarrantManager w = new WarrantManager();
-        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(w, jmri.Manager.WARRANTS);
         }
     }
 
     public static void initSignalMastLogicManager() {
         SignalMastLogicManager w = new DefaultSignalMastLogicManager();
-        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(w, jmri.Manager.SIGNALMASTLOGICS);
         }
     }
 
     public static void initLayoutBlockManager() {
         LayoutBlockManager w = new LayoutBlockManager();
-        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(w, jmri.Manager.LAYOUTBLOCKS);
         }
     }
 
     public static void initSectionManager() {
         jmri.SectionManager w = new jmri.SectionManager();
-        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(w, jmri.Manager.SECTIONS);
         }
     }
@@ -336,9 +339,13 @@ public class JUnitUtil {
     public static void initInternalSignalHeadManager() {
         SignalHeadManager m = new AbstractSignalHeadManager();
         InstanceManager.setSignalHeadManager(m);
-        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.SIGNALHEADS);
         }
+    }
+
+    public static void initDefaultSignalMastManager() {
+        InstanceManager.setDefault(SignalMastManager.class, new DefaultSignalMastManager());
     }
 
     public static void initDebugThrottleManager() {
@@ -355,22 +362,27 @@ public class JUnitUtil {
         InstanceManager.store(new DefaultIdTagManager(), jmri.IdTagManager.class);
     }
 
+    public static void initRailComManager() {
+        InstanceManager.reset(jmri.RailComManager.class);
+        InstanceManager.store(new DefaultRailComManager(), jmri.RailComManager.class);
+    }
+
     public static void initLogixManager() {
         LogixManager m = new DefaultLogixManager();
-        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.LOGIXS);
         }
     }
 
     public static void initConditionalManager() {
         ConditionalManager m = new DefaultConditionalManager();
-        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.CONDITIONALS);
         }
     }
 
     public static void initShutDownManager() {
-        if (InstanceManager.getOptionalDefault(ShutDownManager.class) == null) {
+        if (InstanceManager.getNullableDefault(ShutDownManager.class) == null) {
             InstanceManager.setDefault(ShutDownManager.class, new MockShutDownManager());
         }
     }
@@ -379,6 +391,21 @@ public class JUnitUtil {
         InstanceManager.store(
                 new apps.StartupActionsManager(),
                 apps.StartupActionsManager.class);
+    }
+
+    /*
+     * Use reflection to reset the jmri.Application instance
+     */
+    public static void resetApplication() {
+       try {
+          Class<?> c = jmri.Application.class;
+          java.lang.reflect.Field f = c.getDeclaredField("name");
+          f.setAccessible(true);
+          f.set(new jmri.Application(),null);
+       } catch(NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) { 
+         log.error("Failed to reset jmri.Application static field");
+         x.printStackTrace();
+       }
     }
 
     private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class.getName());

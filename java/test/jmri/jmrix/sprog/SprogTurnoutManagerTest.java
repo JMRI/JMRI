@@ -12,23 +12,34 @@ import org.junit.Test;
  * </P>
  * @author Paul Bender Copyright (C) 2016
  */
-public class SprogTurnoutManagerTest {
+public class SprogTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+   private SprogSystemConnectionMemo m = null;
+
+   @Override
+   public String getSystemName(int i){
+      return "ST" + i;
+   }
 
    @Test
    public void ConstructorTest(){
-       SprogSystemConnectionMemo m = new SprogSystemConnectionMemo();
-       SprogTurnoutManager tc = new SprogTurnoutManager(m);
-       Assert.assertNotNull(tc);
+       Assert.assertNotNull(l);
    }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+       apps.tests.Log4JFixture.setUp();
+       jmri.util.JUnitUtil.resetInstanceManager();
+       m = new SprogSystemConnectionMemo();
+       l = new SprogTurnoutManager(m);
     }
 
     @After
     public void tearDown() {
+        m=null;
+        l=null;
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

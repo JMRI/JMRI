@@ -149,13 +149,12 @@ public class Calibrater extends jmri.util.JmriJFrame {
                     
             }
         }
-       if (_addBox.isSelected()) {
+        if (_addBox.isSelected()) {
             jmri.jmrit.roster.RosterEntry ent = _warrant.getRosterEntry();
             if (ent==null) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("trainInfo6", _warrant.getTrainId()),
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("trainInfo7", _warrant.getTrainId()),
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-                return;
-            }
+            } else {
             if (_speedProfile == null) {
                 _speedProfile = new RosterSpeedProfile(ent);
                 ent.setSpeedProfile(_speedProfile);
@@ -169,8 +168,9 @@ public class Calibrater extends jmri.util.JmriJFrame {
             if (log.isDebugEnabled()) log.debug("Made speed profile setting for "+ _warrant.getTrainId()+
                     ": "+(_isForward ? "Forward":"Reverse")+" step= "+Math.round(_maxSpeed*1000)+", speed= "+_rawSpeed*1000);
             _warrant.getRosterEntry().updateFile();
-            Roster.writeRosterFile();
-         }
+            Roster.getDefault().writeRoster();
+            }
+        }
         dispose();
     }
     

@@ -10,7 +10,6 @@ import jmri.jmrit.logix.OBlock;
 
     public class LocoLabel extends PositionableRoundRect {
 
-        private static final long serialVersionUID = -5874790860514345475L;
         OBlock _block;
 
         public LocoLabel(Editor editor) {

@@ -24,7 +24,6 @@ import org.jdom2.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  * @author Bob Jacobsen, Dave Duchamp Copyright (c) 2009 - Maple modifications
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 

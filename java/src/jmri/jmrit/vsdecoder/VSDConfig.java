@@ -23,7 +23,7 @@ package jmri.jmrit.vsdecoder;
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision: 21510 $
+ * 
  */
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;

@@ -1,4 +1,3 @@
-// Dcc4PcNamedPaneAction.java
 package jmri.jmrix.dcc4pc.swing;
 
 import javax.swing.Icon;
@@ -12,14 +11,8 @@ import org.slf4j.LoggerFactory;
  * Action to create and load a JmriPanel from just its name.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision: 17977 $
  */
 public class Dcc4PcNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7611126087064298478L;
 
     /**
      * Enhanced constructor for placing the pane in various GUIs
@@ -56,5 +49,3 @@ public class Dcc4PcNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     private final static Logger log = LoggerFactory.getLogger(Dcc4PcNamedPaneAction.class.getName());
 }
-
-/* @(#)Dcc4PcNamedPaneAction.java */

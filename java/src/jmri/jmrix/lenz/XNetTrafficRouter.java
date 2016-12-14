@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author	Paul Bender Copyright (C) 2004-2010
- * @version $Revision$
  *
  */
 public class XNetTrafficRouter extends XNetTrafficController implements XNetListener {

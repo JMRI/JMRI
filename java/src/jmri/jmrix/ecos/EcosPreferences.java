@@ -24,20 +24,20 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
             @Override
             public boolean execute() {
                 if (getChangeMade()) {
-                    jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).storePrefs();
+                    InstanceManager.getDefault(jmri.ConfigureManager.class).storePrefs();
                 }
                 return true;
             }
         };
-        if (jmri.InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
-            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(ecosPreferencesShutDownTask);
-        }
+        InstanceManager.getOptionalDefault(jmri.ShutDownManager.class).ifPresent(sdm -> {
+            sdm.register(ecosPreferencesShutDownTask);
+        });
 
         adaptermemo = memo;
-        InstanceManager.tabbedPreferencesInstance().addPreferencesPanel(new PreferencesPane(this));
+        InstanceManager.store(new PreferencesPane(this),jmri.swing.PreferencesPanel.class);
     }
 
-    private EcosSystemConnectionMemo adaptermemo;
+    private final EcosSystemConnectionMemo adaptermemo;
 
     boolean preferencesLoaded = false;
 

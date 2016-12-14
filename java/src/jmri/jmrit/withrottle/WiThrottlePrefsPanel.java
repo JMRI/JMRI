@@ -26,7 +26,6 @@ import jmri.util.FileUtil;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010
- * @version $Revision$
  */
 public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
@@ -51,7 +50,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     JFrame parentFrame = null;
 
     public WiThrottlePrefsPanel() {
-        if (InstanceManager.getOptionalDefault(WiThrottlePreferences.class) == null) {
+        if (InstanceManager.getNullableDefault(WiThrottlePreferences.class) == null) {
             InstanceManager.store(new WiThrottlePreferences(FileUtil.getUserFilesPath() + "throttle" + File.separator + "WiThrottlePreferences.xml"), WiThrottlePreferences.class);
         }
         localPrefs = InstanceManager.getDefault(WiThrottlePreferences.class);
@@ -89,7 +88,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         consistCB.setSelected(localPrefs.isAllowConsist());
         InstanceManager.getDefault(StartupActionsManager.class).addPropertyChangeListener((PropertyChangeEvent evt) -> {
             startupCB.setSelected(isStartUpAction());
-        }); 
+        });
         wifiRB.setSelected(localPrefs.isUseWiFiConsist());
         dccRB.setSelected(!localPrefs.isUseWiFiConsist());
     }
@@ -195,7 +194,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
                     manager.setActions(this.startupActionPosition, model);
                 }
             } else {
-                manager.getActions(PerformActionModel.class).stream().filter((model) -> (model.getClassName().equals(WiThrottleCreationAction.class.getName()))).forEach((model) -> {
+                manager.getActions(PerformActionModel.class).stream().filter((model) -> (WiThrottleCreationAction.class.getName().equals(model.getClassName()))).forEach((model) -> {
                     this.startupActionPosition = Arrays.asList(manager.getActions()).indexOf(model);
                     manager.removeAction(model);
                 });
@@ -302,9 +301,9 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
     private boolean isStartUpAction() {
         return InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformActionModel.class).stream()
-                .anyMatch((model) -> (model.getClassName().equals(WiThrottleCreationAction.class.getName())));
+                .anyMatch((model) -> (WiThrottleCreationAction.class.getName().equals(model.getClassName())));
 //        for (PerformActionModel model : InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformActionModel.class)) {
-//            if (model.getClassName().equals(WiThrottleCreationAction.class.getName())) {
+//            if (WiThrottleCreationAction.class.getName().equals(model.getClassName()))) {
 //                return true;
 //            }
 //        }

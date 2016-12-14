@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.tams package.
  *
  * @author Bob Jacobsen Copyright 2003, 2016
- * @author  Paul Bender	
+ * @author  Paul Bender Copyright (C) 2016	
  */
 public class PackageTest extends TestCase {
 
@@ -27,9 +27,13 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.tams.PackageTest");
-        suite.addTest(TamsTurnoutManagerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TamsTurnoutManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.tams.simulator.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.tams.serialdriver.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.tams.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.tams.swing.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TamsSystemConnectionMemoTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TamsPortControllerTest.class));
 
         return suite;
     }

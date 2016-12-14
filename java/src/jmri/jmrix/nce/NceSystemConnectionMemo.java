@@ -1,4 +1,3 @@
-// LocoNetSystemConnectionMemo.java
 package jmri.jmrix.nce;
 
 import java.util.ResourceBundle;
@@ -14,7 +13,6 @@ import jmri.ProgrammerManager;
  *
  * @author	Bob Jacobsen Copyright (C) 2010
  * @author ken cameron Copyright (C) 2013
- * @version $Revision$
  */
 public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -295,6 +293,3 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
 }
-
-
-/* @(#)NceSystemConnectionMemo.java */

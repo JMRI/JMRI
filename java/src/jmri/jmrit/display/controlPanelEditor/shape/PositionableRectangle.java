@@ -14,13 +14,9 @@ import jmri.jmrit.display.Positionable;
  */
 public class PositionableRectangle extends PositionableShape {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2917538746616969278L;
-
     public PositionableRectangle(Editor editor) {
         super(editor);
+        makeShape();
     }
 
     public PositionableRectangle(Editor editor, Shape shape) {
@@ -39,23 +35,18 @@ public class PositionableRectangle extends PositionableShape {
         return finishClone(pos);
     }
 
-    protected Positionable finishClone(PositionableRectangle pos) {
+    protected Positionable finishClone(PositionableShape pos) {
         pos._width = _width;
         pos._height = _height;
         return super.finishClone(pos);
     }
 
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = Bundle.getMessage("editShape", Bundle.getMessage("rectangle"));
+        String txt = Bundle.getMessage("editShape", Bundle.getMessage("Rectangle"));
         popup.add(new javax.swing.AbstractAction(txt) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -5327546757439187531L;
-
             public void actionPerformed(ActionEvent e) {
                 if (_editFrame == null) {
-                    _editFrame = new DrawRectangle("editShape", "rectangle", null);
+                    _editFrame = new DrawRectangle("editShape", "Rectangle", null);
                     setEditParams();
                 }
             }

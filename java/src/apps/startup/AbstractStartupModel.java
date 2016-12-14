@@ -1,5 +1,7 @@
 package apps.startup;
 
+import javax.annotation.Nonnull;
+
 /**
  * Abstract startup action model.
  *
@@ -24,7 +26,26 @@ public abstract class AbstractStartupModel implements StartupModel {
     }
 
     @Override
+    @Nonnull
     public String toString() {
-        return this.getName();
+        String string = this.getName();
+        if (string == null) {
+            return super.toString();
+        }
+        return string;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * The default behavior is to return true if {@link #getName()} returns a
+     * non-null, non-empty String.
+     *
+     * @return true if valid; false otherwise
+     */
+    @Override
+    public boolean isValid() {
+        String s = this.getName();
+        return s != null && !s.isEmpty();
     }
 }

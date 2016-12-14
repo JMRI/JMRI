@@ -35,16 +35,12 @@ public class PackageTest extends TestCase {
         suite.addTest(KernelTest.suite());
         suite.addTest(CarManagerTest.suite());
         suite.addTest(XmlTest.suite());
-        suite.addTest(BundleTest.suite());
-
-        // GUI tests start here
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(CarsTableFrameTest.suite());
-            suite.addTest(CarEditFrameTest.suite());
-            suite.addTest(CarAttributeEditFrameTest.suite());
-            suite.addTest(CarLoadEditFrameTest.suite());
-            suite.addTest(CarSetFrameTest.suite());
-        }
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(CarsTableFrameTest.suite());
+        suite.addTest(CarEditFrameTest.suite());
+        suite.addTest(CarAttributeEditFrameTest.suite());
+        suite.addTest(CarLoadEditFrameTest.suite());
+        suite.addTest(CarSetFrameTest.suite());
 
         return suite;
     }

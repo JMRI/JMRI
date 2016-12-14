@@ -1,4 +1,3 @@
-// Dcc4PcPanelInterface.java
 package jmri.jmrix.dcc4pc.swing;
 
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
@@ -9,7 +8,6 @@ import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
  *
  * @author Kevin Dickerson Copyright 2010
  * @since 2.11.3
- * @version $Revision: 17977 $
  */
 public interface Dcc4PcPanelInterface {
 

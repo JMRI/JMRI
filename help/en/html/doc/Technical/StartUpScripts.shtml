@@ -40,7 +40,7 @@
       <ul>
         <li><a href="#linux">Linux</a></li>
 
-        <li><a href="#macosx">OS X</a></li>
+        <li><a href="#macosx">macOS and OS X</a></li>
 
         <li><a href="#windows">Windows</a></li>
       </ul>
@@ -62,9 +62,9 @@
 
         <li>The file <em>python.properties</em> to configure the
         Jython interpreter</li>
-      </ul>
+      </ul><a name="linux" id="linux"></a>
 
-      <a name="linux"></a><h2>Linux</h2>
+      <h2>Linux</h2>
 
       <p>JMRI distributions for Linux contain bash shell scripts
       for each of the main applications: DecoderPro, PanelPro, etc.
@@ -104,13 +104,14 @@
         <dt><code>--debug</code></dt>
 
         <dd>Print debugging statements within the launcher script
-        itself to the console. On OS X, this is always on, and
+        itself to the console. On macOS, this is always on, and
         debugging output is available through the Console.app.</dd>
 
         <dt><code>-D<em>PROPERTY</em></code></dt>
 
         <dd>Pass a Java System Property to the Java Virtual
-        Machine. This will be available to the JMRI application while running.</dd>
+        Machine. This will be available to the JMRI application
+        while running.</dd>
 
         <dt><code>-J<em>OPTION</em></code></dt>
 
@@ -130,7 +131,7 @@
 
         <dd>Set the names of usable serial ports to the comma
         separated list of ports in <em>SERIAL_PORTS</em>. This is
-        ignored on OS X.</dd>
+        ignored on macOS.</dd>
 
         <dt><code>--settingsdir=<em>SETTINGS_DIR</em></code></dt>
 
@@ -146,15 +147,16 @@
 
             <dd><code>${HOME}/.jmri</code></dd>
 
-            <dt>OS X</dt>
+            <dt>macOS</dt>
 
             <dd><code>${HOME}/Library/Preferences/JMRI</code></dd>
           </dl>
         </dd>
-        
+
         <dt><code>--help</code></dt>
-        
-        <dd>Print a consise list of all options the launcher handles.</dd>
+
+        <dd>Print a consise list of all options the launcher
+        handles.</dd>
       </dl>
 
       <p>If you need to set one or more of these parameters
@@ -163,15 +165,17 @@
       exception of the <code>--settingsdir=<em>PATH</em></code>
       parameter. An example is:</p>
 
-      <p><code>default_options="-J-Xmx2048m"</code></p><a name=
-      "macosx" id="macosx"></a>
+      <p><code>default_options="-J-Xmx2048m"</code></p>
+      
+      <a name="macosx" id="macosx"></a>
 
-      <h2>Mac OS X</h2>JMRI distributions for Mac OS X contain
-      application bundles for each of the main applications:
-      DecoderPro, PanelPro, etc. These provide familiar application
-      icons for the user.
+      <h2>macOS</h2>
+      
+      JMRI distributions for macOS contain application bundles for each of the
+      main applications: DecoderPro, PanelPro, etc. These provide familiar
+      application icons for the user.
 
-      <p>To register the bundles with Mac OS X, they need to be
+      <p>To register the bundles with macOS, they need to be
       copied from the distributed disk image onto the user's disk
       drive.</p>
 
@@ -204,7 +208,7 @@
       script in the Contents/MacOSX directory what does the actual
       startup. This is the same script as used for Linux, see
       please see <a href="#linux">that section</a> for details.
-      <a name="windows"></a>
+      <a name="windows" id="windows"></a>
 
       <h2>Windows</h2>Upto and including JMRI version 2.3.2, the
       Windows .bat files just create a fixed java command and
@@ -218,40 +222,48 @@
       parameters.
 
       <dl>
-        <dt>/debug (Optional - from JMRI 2.5.1)</dt>
+          <dt><code>/debug</code></dt>
 
         <dd>If this option is set on the command line, a window is
         opened that displays various useful information for
-        debugging purposes.</dd>
+        debugging purposes. (since JMRI 2.5.1)</dd>
 
-        <dt>/noisy (Optional - from JMRI 2.5.1)</dt>
+        <dt><code>/noisy</code></dt>
 
-        <dd>If this option is set on the command line, the launcher
-        does not attempt to minimise the Java Console window - as
-        from JMRI 2.5.1, the default behaviour is to minimise the
-        Java Console window.<br>
-        Starting with JMRI 2.11.1, the behaviour of this option has
-        changed - this now determines if the Java Console window is
-        enabled or not. System messages are now available via the
+        <dd>Set this option to enable the Java Console window.
+            System messages are now available via the
         'Help &gt; System Console ...' menu option in the main JMRI
-        window.</dd>
+        window. (since JMRI 2.5.1)</dd>
 
-        <dt>/32bit (Optional - from JMRI 2.99.4)</dt>
+        <dt><code>/32bit</code></dt>
 
         <dd>If this option is set on the command line, the launcher
         will force the use of a 32-bit Java Runtime Environment on
         64-bit machines. This option has no effect on 32-bit
-        machines.</dd>
+        machines. (since JMRI 2.99.4)</dd>
 
-        <dt>/profile &lt;profileID&gt; (Optional - from JMRI
-        3.7.1)</dt>
+        <dt><code>/profile <em>PROFILEID</em></code></dt>
 
         <dd>If this option is set on the command line, the launcher
-        will use profile &lt;profileID&gt; as the <a href=
+            will use profile <em>PROFILEID</em> as the <a href=
         "/help/en/html/profiles.shtml">JMRI configuration
-        profile</a> to use instead of the default one.</dd>
+        profile</a> to use instead of the default one. (since JMRI 3.7.1)</dd>
+        
+        <dt><code>--cp:a=<em>CLASSPATH</em></code></dt>
 
-        <dt>Class Parameter</dt>
+        <dd>Append the JARs and directories in <em>CLASSPATH</em>
+        to the end of the standard JMRI classpath. This is the
+        recommended way to add additional Java classes to
+        JMRI. (since JMRI 4.5.7)</dd>
+
+        <dt><code>--cp:p=<em>CLASSPATH</em></code></dt>
+
+        <dd>Prepend the JARs and directories in <em>CLASSPATH</em>
+        to the beginning of the standard JMRI classpath. This is
+        the recommended way to override existing Java classes in
+        JMRI. (since JMRI 4.5.7)</dd>
+
+        <dt>Class Parameter (Required)</dt>
 
         <dd>The first parameter of LaunchJMRI.exe, after any of the
         above options, is the name of the main class to
@@ -260,7 +272,7 @@
         <dd>An example to launch DecoderPro would be
         "apps.DecoderPro.DecoderPro"</dd>
 
-        <dt>Configuration File Parameter (Optional)</dt>
+        <dt>Configuration File Parameter</dt>
 
         <dd>If there's a second argument to the launcher, it will
         be used as the name of the preferences file used to
@@ -499,63 +511,53 @@
         <dt>Icon</dt>
 
         <dd>"C:\Program Files\JMRI\decpro5.ico"</dd>
-      </dl>
+      </dl><a name="old_DecoderPro" id="old_DecoderPro"></a>
 
-      <a name="old_DecoderPro"></a><h4>Retrieving
-      "legacy" DecoderPro from versions prior to 4.0.x</h4>
+      <h4>Retrieving "legacy" DecoderPro from versions prior to
+      4.0.x</h4>
 
-      <p>The "legacy"
-      DecoderPro that was existing prior to version 4.0.x has been
-      removed from the distribution package and the former
-      "DecoderPro 3" has been promoted to be the only available
-      DecoderPro version.</p>
+      <p>The "legacy" DecoderPro that was existing prior to version
+      4.0.x has been removed from the distribution package and the
+      former "DecoderPro 3" has been promoted to be the only
+      available DecoderPro version.</p>
 
-      <p>If you
-      absolutely cannot use the new DecoderPro user interface
-      (roster view), we suggest one of the following
+      <p>If you absolutely cannot use the new DecoderPro user
+      interface (roster view), we suggest one of the following
       methods:</p>
 
       <ol>
-        <li><b>Using
-        PanelPro with script</b>: With the exception of a different
-        icon and different fixed buttons on the main window,
-        PanelPro has an identical user interface to the legacy
-        DecoderPro.</li>
+        <li><b>Using PanelPro with script</b>: With the exception
+        of a different icon and different fixed buttons on the main
+        window, PanelPro has an identical user interface to the
+        legacy DecoderPro.</li>
 
         <li style="list-style: none">
           <ul>
-            <li>You
-            can add the 3 fixed buttons (Open Roster, Service Mode,
-            Operations Mode) that used to be on the legacy
-            DecoderPro by adding a script at start-up.</li>
+            <li>You can add the 3 fixed buttons (Open Roster,
+            Service Mode, Operations Mode) that used to be on the
+            legacy DecoderPro by adding a script at start-up.</li>
 
-            <li>Go to
-            Edit &gt; Preferences &gt; Start-up &gt; Scripts &gt;
-            Add Script. Select file "C:\Program
+            <li>Go to Edit &gt; Preferences &gt; Start-up &gt;
+            Scripts &gt; Add Script. Select file "C:\Program
             Files\JMRI\jython\jython/MakeOriginalDecoderPro.py"</li>
 
-            <li>Then,
-            save and restart.</li>
+            <li>Then, save and restart.</li>
           </ul>
         </li>
 
-        <li><b>Using
-        PanelPro with buttons</b>:</li>
+        <li><b>Using PanelPro with buttons</b>:</li>
 
         <li style="list-style: none">
           <ul>
-            <li>You
-            can add several fixed buttons of your choice on the
-            PanelPro interface.</li>
+            <li>You can add several fixed buttons of your choice on
+            the PanelPro interface.</li>
 
-            <li>Go to
-            Edit &gt; Preferences &gt; Start-up &gt; Buttons &gt;
-            Add Button. Select the action of your choice. Repeat
-            for as many buttons as you wish.</li>
+            <li>Go to Edit &gt; Preferences &gt; Start-up &gt;
+            Buttons &gt; Add Button. Select the action of your
+            choice. Repeat for as many buttons as you wish.</li>
 
-            <li>For
-            same buttons as on legacy DecoderPro, select "Open
-            Roster", "DecoderPro service programmer" and
+            <li>For same buttons as on legacy DecoderPro, select
+            "Open Roster", "DecoderPro service programmer" and
             "DecoderPro ops-mode programmer"</li>
 
             <li>Then, save and restart.</li>

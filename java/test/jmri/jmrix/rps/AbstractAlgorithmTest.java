@@ -1,8 +1,10 @@
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
-import junit.framework.Assert;
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Common test scaffolding for Algorithm implementations.
@@ -14,9 +16,8 @@ import junit.framework.TestCase;
  * Implementing subclasses should provide static "main" and "suite" methods.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision$
  */
-abstract public class AbstractAlgorithmTest extends TestCase {
+abstract public class AbstractAlgorithmTest {
 
     abstract Calculator getAlgorithm(Point3d[] pts, double vs);
 
@@ -33,6 +34,7 @@ abstract public class AbstractAlgorithmTest extends TestCase {
     Point3d result1 = new Point3d(3.0, 2.0, 1.0);
     double[] distances1 = distances(receivers1, vs, result1);
 
+    @Test
     public void testCalc1() {
         testCalc(receivers1, distances1, result1, "Test 1", distances1.length, 3);
     }
@@ -48,6 +50,7 @@ abstract public class AbstractAlgorithmTest extends TestCase {
     Point3d result2 = new Point3d(3.0, 2.0, 1.0);
     double[] distances2 = distances(receivers2, vs, result2);
 
+    @Test
     public void testCalc2() {
         testCalc(receivers2, distances2, result2, "Test 2", distances2.length, 3);
     }
@@ -70,6 +73,7 @@ abstract public class AbstractAlgorithmTest extends TestCase {
     Point3d result3 = new Point3d(3.0, 2.0, 1.0);
     double[] distances3 = distances(receivers3, vs, result3);
 
+    @Test
     public void testCalc3() {
         testCalc(receivers3, distances3, result3, "Test 3", distances3.length, 3);
     }
@@ -86,6 +90,7 @@ abstract public class AbstractAlgorithmTest extends TestCase {
     Point3d result4 = new Point3d(3.0, 2.0, 1.0);
     double[] distances4 = distances(receivers4, vs, result4);
 
+    @Test
     public void testCalc4() {
         distances4[distances4.length - 1] = 9999.;
         testCalc(receivers4, distances4, result4, "Test 4", distances4.length - 1, 3);
@@ -101,6 +106,7 @@ abstract public class AbstractAlgorithmTest extends TestCase {
     Point3d result5 = new Point3d(3.0, 2.0, 1.0);
     double[] distances5 = distances(receivers5, vs, result5);
 
+    @Test
     public void testCalc5() {
         testCalc(receivers5, distances5, result5, "Test 5", distances5.length, 3);
     }
@@ -115,6 +121,7 @@ abstract public class AbstractAlgorithmTest extends TestCase {
     Point3d result6 = new Point3d(3.0, 2.0, 1.0);
     double[] distances6 = distances(receivers6, vs, result6);
 
+    @Test
     public void testCalc6() {
         testCalc(receivers6, distances6, result6, "Test 6", distances6.length, 3);
     }
@@ -129,6 +136,7 @@ abstract public class AbstractAlgorithmTest extends TestCase {
     Point3d result7 = new Point3d(3.0, 2.0, 1.0);
     double[] distances7 = distances(receivers7, vs, result7);
 
+    @Test
     public void testCalc7() {
         testCalc(receivers7, distances7, result7, "Test 7", distances7.length, 3);
     }
@@ -191,6 +199,16 @@ abstract public class AbstractAlgorithmTest extends TestCase {
         }
         Assert.assertTrue(label + " code > min", m.getCode() >= codemin);
         Assert.assertTrue(label + " code <= max", m.getCode() <= codemax);
+    }
+
+    @Before
+    public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    @After
+    public void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
     }
 
 }

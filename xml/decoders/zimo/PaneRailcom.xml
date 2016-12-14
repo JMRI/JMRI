@@ -15,4 +15,9 @@
     </label>
     <display item="RailCom speed reporting method"/>
   </column>
+<<<<<<< HEAD
+=======
+  <name xml:lang="it">Railcom</name>
+  <name xml:lang="cs">Railcom</name>
+>>>>>>> JMRI/master
 </pane>

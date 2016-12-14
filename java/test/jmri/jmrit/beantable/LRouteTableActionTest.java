@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
 import jmri.Conditional;
 import jmri.InstanceManager;
@@ -28,6 +29,9 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
     private LogixTableAction _logixTable;
 
     public void testCreate() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         _lRouteTable.actionPerformed(null);
         _lRouteTable.addPressed(null);
         _lRouteTable._userName.setText("TestLRoute");
@@ -138,7 +142,7 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
             Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional(
                     "Conditional" + i, "Conditional" + i);
             assertNotNull(i + "th Conditional is null!", c);
-            SignalHead sh = new jmri.implementation.VirtualSignalHead("Signal" + i);
+            SignalHead sh = new jmri.implementation.VirtualSignalHead("SignalHead" + i);
             assertNotNull(i + "th SignalHead is null!", sh);
             InstanceManager.getDefault(jmri.SignalHeadManager.class).register(sh);
             Route r = new jmri.implementation.DefaultRoute("Route" + i);

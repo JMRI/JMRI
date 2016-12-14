@@ -30,10 +30,17 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.acela.AcelaTest");  // no tests in this class itself
         suite.addTest(new TestSuite(AcelaNodeTest.class));
-//        suite.addTest(new TestSuite(AcelaLightManagerTest.class));
-//        suite.addTest(new TestSuite(AcelaLightTest.class));
-        suite.addTest(new TestSuite(AcelaTurnoutManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AcelaLightManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AcelaLightTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AcelaTurnoutManagerTest.class));
         suite.addTest(new TestSuite(AcelaTurnoutTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.acela.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.acela.serialdriver.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.acela.nodeconfig.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.acela.acelamon.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.acela.packetgen.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AcelaSystemConnectionMemoTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AcelaPortControllerTest.class));
         return suite;
     }
 }

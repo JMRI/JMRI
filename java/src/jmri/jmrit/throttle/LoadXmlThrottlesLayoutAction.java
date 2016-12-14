@@ -26,7 +26,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
     public LoadXmlThrottlesLayoutAction(String s) {
         super(s);
         // disable the ourselves if there is no throttle Manager
-        if (jmri.InstanceManager.getOptionalDefault(jmri.ThrottleManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -59,7 +59,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
         if (ThrottleFrameManager.instance().getThrottleWindows().hasNext()) {
             Object[] possibleValues = {Bundle.getMessage("LabelMerge"),
                 Bundle.getMessage("LabelReplace"),
-                Bundle.getMessage("LabelCancel")};
+                Bundle.getMessage("ButtonCancel")};
             int selectedValue = JOptionPane.showOptionDialog(null,
                     Bundle.getMessage("DialogMergeOrReplace"),
                     Bundle.getMessage("OptionLoadingThrottles"),

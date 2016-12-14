@@ -1,71 +1,62 @@
 package jmri.jmrit.beantable;
 
+import java.awt.GraphicsEnvironment;
+import javax.swing.JFrame;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import junit.extensions.jfcunit.TestHelper;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Tests for the jmri.jmrit.beantable.BlockTableAction class
  *
  * @author	Bob Jacobsen Copyright 2004, 2007, 2008
- * @version	$Revision$
  */
-public class BlockTableActionTest extends jmri.util.SwingTestCase {
+public class BlockTableActionTest {
 
+    @Test
     public void testCreate() {
         BlockTableAction ba = new BlockTableAction();
-        assertNotNull("BlockTableAction is null!", ba);
-        TestHelper.disposeWindow(ba.f, this);
+        Assert.assertNotNull(ba);
+        Assert.assertNull(ba.f); // frame should be null until action invoked
     }
 
+    @Test
     public void testInvoke() {
-        BlockTableAction ba = new BlockTableAction();
-        ba.actionPerformed(null);
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        new BlockTableAction().actionPerformed(null);
 
+        JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleBlockTable"), true, true);
+        Assert.assertNotNull(f);
         // create a couple blocks, and see if they show
         InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("IB1", "block 1");
 
         Block b2 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("IB2", "block 2");
+        Assert.assertNotNull(b2);
         b2.setDirection(jmri.Path.EAST);
-        TestHelper.disposeWindow(ba.f, this);
+        // TODO: assert blocks show in frame
+        f.dispose();
     }
 
-    // from here down is testing infrastructure
-    public BlockTableActionTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", BlockTableActionTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(BlockTableActionTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
-
-        super.setUp();
         JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSignalHeadManager();
     }
 
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         JUnitUtil.resetInstanceManager();
-        super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
 }

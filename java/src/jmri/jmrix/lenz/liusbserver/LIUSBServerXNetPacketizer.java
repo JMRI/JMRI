@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * received.
  *
  * @author	Paul Bender, Copyright (C) 2009
- * @version $Revision$
  *
  */
 public class LIUSBServerXNetPacketizer extends XNetPacketizer {

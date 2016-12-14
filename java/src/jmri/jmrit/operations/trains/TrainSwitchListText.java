@@ -7,7 +7,7 @@ import org.jdom2.Element;
  * Loads and stores the switch list text strings.
  *
  * @author Daniel Boudreau Copyright (C) 2013
- * @version $Revision: 21846 $
+ * 
  *
  */
 public class TrainSwitchListText {

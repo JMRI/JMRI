@@ -1,5 +1,6 @@
 package jmri.jmrix.tmcc;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -27,16 +28,18 @@ public class PackageTest extends TestCase {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.tmcc.SerialTest");
         suite.addTest(SerialTurnoutTest.suite());
-        suite.addTest(SerialTurnoutManagerTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SerialTurnoutManagerTest.class));
         suite.addTest(SerialMessageTest.suite());
         suite.addTest(SerialReplyTest.suite());
         suite.addTest(SerialTrafficControllerTest.suite());
         suite.addTest(SerialAddressTest.suite());
- 	suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.tmcc.serialdriver.PackageTest.class));
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(jmri.jmrix.tmcc.serialmon.SerialMonFrameTest.suite());
-        }
-
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.tmcc.serialdriver.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.tmcc.configurexml.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.tmcc.packetgen.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(TMCCMenuTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.tmcc.serialmon.SerialMonFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(TMCCSystemConnectionMemoTest.class));
+        suite.addTest(new JUnit4TestAdapter(SerialPortControllerTest.class));
         return suite;
     }
 

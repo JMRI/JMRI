@@ -45,6 +45,8 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * @see apps.GuiLafConfigPane#MAX_DISPLAYED_FONT_SIZE
      */
     public static final int MAX_FONT_SIZE = 36;
+    public static final String PROP_DIRTY = "dirty";
+    public static final String PROP_RESTARTREQUIRED = "restartRequired";
 
     // preferences with default values
     private Locale locale = Locale.getDefault();
@@ -53,6 +55,8 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     private boolean nonStandardMouseEvent = false;
     private String lookAndFeel = UIManager.getLookAndFeel().getClass().getName();
     private int toolTipDismissDelay = ToolTipManager.sharedInstance().getDismissDelay();
+    private boolean dirty = false;
+    private boolean restartRequired = false;
 
     /*
      * Unlike most PreferencesProviders, the GUI Look & Feel preferences should
@@ -78,6 +82,8 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             this.applyLookAndFeel();
             this.applyFontSize();
             SwingSettings.setNonStandardMouseEvent(this.isNonStandardMouseEvent());
+            this.setDirty(false);
+            this.setRestartRequired(false);
             this.initialized = true;
         }
     }
@@ -118,6 +124,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         } catch (BackingStoreException ex) {
             log.error("Unable to save preferences.", ex);
         }
+        this.setDirty(false);
     }
 
     /**
@@ -133,6 +140,8 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public void setLocale(Locale locale) {
         Locale oldLocale = this.locale;
         this.locale = locale;
+        this.setDirty(true);
+        this.setRestartRequired(true);
         firePropertyChange(LOCALE, oldLocale, locale);
     }
 
@@ -154,17 +163,20 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         if (this.fontSize != oldFontSize) {
             firePropertyChange(FONT_SIZE, oldFontSize, this.fontSize);
         }
+        this.setDirty(true);
+        this.setRestartRequired(true);
     }
 
-   /**
+    /**
      * @return the current {@literal Look & Feel} default font size
      */
     public int getDefaultFontSize() {
         return defaultFontSize;
     }
 
-   /**
-     * Called to load the current {@literal Look & Feel} default font size, based on looking up the "List.font" size
+    /**
+     * Called to load the current {@literal Look & Feel} default font size,
+     * based on looking up the "List.font" size
      * <br><br>
      * The value can be can be read by calling {@link #getDefaultFontSize()}
      */
@@ -184,15 +196,22 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         defaultFontSize = 11;	// couldn't find the default return a reasonable font size
     }
 
-    private void listLAFfonts() {
-        log.trace("******** LAF=" + UIManager.getLookAndFeel().getClass().getName());
-        java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
-        while (keys.hasMoreElements()) {
-            Object key = keys.nextElement();
-            Object value = UIManager.get(key);
-            if (value instanceof javax.swing.plaf.FontUIResource || value instanceof java.awt.Font || key.toString().endsWith(".font")) {
-                Font f = UIManager.getFont(key);
-                log.trace("Class=" + value.getClass().getName() + ";Key:" + key.toString() + " Font: " + f.getName() + " size: " + f.getSize());
+    /**
+     * Logs LAF fonts at the TRACE level.
+     */
+    private void logAllFonts() {
+        // avoid any activity if logging at this level is disabled to avoid
+        // the unnessesary overhead of getting the fonts 
+        if (log.isTraceEnabled()) {
+            log.trace("******** LAF={}", UIManager.getLookAndFeel().getClass().getName());
+            java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
+            while (keys.hasMoreElements()) {
+                Object key = keys.nextElement();
+                Object value = UIManager.get(key);
+                if (value instanceof javax.swing.plaf.FontUIResource || value instanceof java.awt.Font || key.toString().endsWith(".font")) {
+                    Font f = UIManager.getFont(key);
+                    log.trace("Class={}; Key: {} Font: {} size: {}", value.getClass().getName(), key, f.getName(), f.getSize());
+                }
             }
         }
     }
@@ -207,6 +226,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public void setToolTipDismissDelay(int time) {
         this.toolTipDismissDelay = time;
         ToolTipManager.sharedInstance().setDismissDelay(time);
+        this.setDirty(true);
     }
 
     /**
@@ -230,6 +250,8 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public void setNonStandardMouseEvent(boolean nonStandardMouseEvent) {
         boolean oldNonStandardMouseEvent = this.nonStandardMouseEvent;
         this.nonStandardMouseEvent = nonStandardMouseEvent;
+        this.setDirty(true);
+        this.setRestartRequired(true);
         firePropertyChange(NONSTANDARD_MOUSE_EVENT, oldNonStandardMouseEvent, nonStandardMouseEvent);
     }
 
@@ -246,6 +268,8 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public void setLookAndFeel(String lookAndFeel) {
         String oldLookAndFeel = this.lookAndFeel;
         this.lookAndFeel = lookAndFeel;
+        this.setDirty(true);
+        this.setRestartRequired(true);
         firePropertyChange(LOOK_AND_FEEL, oldLookAndFeel, lookAndFeel);
     }
 
@@ -281,11 +305,12 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     /**
      * Applies a new calculated font size to all found fonts.
      * <br><br>
-     * Calls {@link #getCalcFontSize(int) getCalcFontSize} to calculate new size for each.
+     * Calls {@link #getCalcFontSize(int) getCalcFontSize} to calculate new size
+     * for each.
      */
     private void applyFontSize() {
-        if (log.isDebugEnabled()) {
-            listLAFfonts();
+        if (log.isTraceEnabled()) {
+            logAllFonts();
         }
         if (this.getFontSize() != this.getDefaultFontSize()) {
 //            UIManager.getDefaults().keySet().stream().forEach((key) -> {
@@ -297,19 +322,64 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
                     UIManager.put(key, UIManager.getFont(key).deriveFont(((Font) value).getStyle(), getCalcFontSize(((Font) value).getSize())));
                 }
             }
-            if (log.isDebugEnabled()) {
-                listLAFfonts();
+            if (log.isTraceEnabled()) {
+                logAllFonts();
             }
         }
     }
 
     /**
      * @return a new calculated font size based on difference between default
-     * size and selected size
+     *         size and selected size
      *
      * @param oldSize the old font size
      */
     private int getCalcFontSize(int oldSize) {
         return oldSize + (this.getFontSize() - this.getDefaultFontSize());
+    }
+
+    /**
+     * Check if preferences need to be saved.
+     *
+     * @return true if preferences need to be saved
+     */
+    public boolean isDirty() {
+        return dirty;
+    }
+
+    /**
+     * Set dirty state.
+     *
+     * @param dirty true if preferences need to be saved
+     */
+    private void setDirty(boolean dirty) {
+        boolean oldDirty = this.dirty;
+        this.dirty = dirty;
+        if (oldDirty != dirty) {
+            propertyChangeSupport.firePropertyChange(PROP_DIRTY, oldDirty, dirty);
+        }
+    }
+
+    /**
+     * Check if application needs to restart to apply preferences.
+     *
+     * @return true if preferences are only applied on application start
+     */
+    public boolean isRestartRequired() {
+        return restartRequired;
+    }
+
+    /**
+     * Set restart required state.
+     *
+     * @param restartRequired true if application needs to restart to apply
+     *                        preferences
+     */
+    private void setRestartRequired(boolean restartRequired) {
+        boolean oldRestartRequired = this.restartRequired;
+        this.restartRequired = restartRequired;
+        if (oldRestartRequired != restartRequired) {
+            propertyChangeSupport.firePropertyChange(PROP_RESTARTREQUIRED, oldRestartRequired, restartRequired);
+        }
     }
 }

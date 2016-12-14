@@ -1,4 +1,3 @@
-// Dcc4PcListener.java
 package jmri.jmrix.dcc4pc;
 
 /**
@@ -7,7 +6,7 @@ package jmri.jmrix.dcc4pc;
  *
  * @author	Kevin Dickerson Copyright (C) 2001
  * @author	Bob Jacobsen Copyright (C) 2012
- * @version	$Revision: 18133 $
+ * 
  */
 public interface Dcc4PcListener extends jmri.jmrix.AbstractMRListener {
 
@@ -19,5 +18,3 @@ public interface Dcc4PcListener extends jmri.jmrix.AbstractMRListener {
 
     public void processingData();
 }
-
-/* @(#)Dcc4PcListener.java */

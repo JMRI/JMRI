@@ -1,5 +1,11 @@
 package jmri.managers;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.beans.PropertyVetoException;
+import java.beans.VetoableChangeListener;
+import java.beans.VetoableChangeSupport;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -20,8 +26,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
-abstract public class AbstractManager
-        implements Manager, java.beans.PropertyChangeListener, java.beans.VetoableChangeListener {
+abstract public class AbstractManager implements Manager, PropertyChangeListener, VetoableChangeListener {
 
     public AbstractManager() {
         registerSelf();
@@ -39,30 +44,33 @@ abstract public class AbstractManager
      */
     protected void registerSelf() {
         log.debug("registerSelf for config of type {}", getClass());
-        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
-            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerConfig(this, getXMLOrder());
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerConfig(this, getXMLOrder());
             log.debug("registering for config of type {}", getClass());
         }
     }
 
+    @Override
     abstract public int getXMLOrder();
 
+    @Override
     public String makeSystemName(String s) {
         return getSystemPrefix() + typeLetter() + s;
     }
 
-    // abstract methods to be extended by subclasses
-    // to free resources when no longer used
+    @Override
     public void dispose() {
-        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
-            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).deregister(this);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.deregister(this);
         }
         _tsys.clear();
         _tuser.clear();
     }
 
-    protected Hashtable<String, NamedBean> _tsys = new Hashtable<String, NamedBean>();   // stores known Turnout instances by system name
-    protected Hashtable<String, NamedBean> _tuser = new Hashtable<String, NamedBean>();   // stores known Turnout instances by user name
+    protected Hashtable<String, NamedBean> _tsys = new Hashtable<>();   // stores known Turnout instances by system name
+    protected Hashtable<String, NamedBean> _tuser = new Hashtable<>();   // stores known Turnout instances by user name
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
@@ -70,6 +78,7 @@ abstract public class AbstractManager
      * implement their getBySystemName method. We can't call it that here
      * because Java doesn't have polymorphic return types.
      *
+     * @param systemName the system name
      * @return requested Turnout object or null if none exists
      */
     protected Object getInstanceBySystemName(String systemName) {
@@ -82,6 +91,7 @@ abstract public class AbstractManager
      * implement their getBySystemName method. We cant call it that here because
      * Java doesn't have polymorphic return types.
      *
+     * @param userName the user name
      * @return requested Turnout object or null if none exists
      */
     protected Object getInstanceByUserName(String userName) {
@@ -107,6 +117,7 @@ abstract public class AbstractManager
      * @param userName System Name of the required NamedBean
      * @return requested NamedBean object or null if none exists
      */
+    @Override
     public NamedBean getBeanByUserName(String userName) {
         return _tuser.get(userName);
     }
@@ -118,6 +129,7 @@ abstract public class AbstractManager
      * @param name System Name of the required NamedBean
      * @return requested NamedBean object or null if none exists
      */
+    @Override
     public NamedBean getNamedBean(String name) {
         NamedBean b = getBeanByUserName(name);
         if (b != null) {
@@ -133,17 +145,17 @@ abstract public class AbstractManager
      * delete the bean, then it will be deregistered and disposed of.
      *
      * @param bean     The NamedBean to be deleted
-     * @param property The programmatic name of the property: 
-     *                  "CanDelete" will enquire with all listeners if
-     *                  the item can be deleted. "DoDelete" tells the listener to
-     *                  delete the item
-     * @throws java.beans.PropertyVetoException - If the recipient(s) wishes the
-     *                                          delete to be aborted.
+     * @param property The programmatic name of the property: "CanDelete" will
+     *                 enquire with all listeners if the item can be deleted.
+     *                 "DoDelete" tells the listener to delete the item
+     * @throws PropertyVetoException - If the recipient(s) wishes the delete to
+     *                               be aborted.
      */
-    public void deleteBean(@Nonnull NamedBean bean, @Nonnull String property) throws java.beans.PropertyVetoException {
+    @Override
+    public void deleteBean(@Nonnull NamedBean bean, @Nonnull String property) throws PropertyVetoException {
         try {
             fireVetoableChange(property, bean, null);
-        } catch (java.beans.PropertyVetoException e) {
+        } catch (PropertyVetoException e) {
             throw e;  // don't go on to check for delete.
         }
         if (property.equals("DoDelete")) { //IN18N
@@ -156,7 +168,10 @@ abstract public class AbstractManager
      * Remember a NamedBean Object created outside the manager.
      * <P>
      * The non-system-specific SignalHeadManagers use this method extensively.
+     *
+     * @param s the bean to register
      */
+    @Override
     public void register(NamedBean s) {
         String systemName = s.getSystemName();
         _tsys.put(systemName, s);
@@ -164,7 +179,7 @@ abstract public class AbstractManager
         if (userName != null) {
             _tuser.put(userName, s);
         }
-        firePropertyChange("length", null, Integer.valueOf(_tsys.size()));
+        firePropertyChange("length", null, _tsys.size());
         // listen for name and state changes to forward
         s.addPropertyChangeListener(this, "", "Manager");
     }
@@ -173,7 +188,10 @@ abstract public class AbstractManager
      * Forget a NamedBean Object created outside the manager.
      * <P>
      * The non-system-specific RouteManager uses this method.
+     *
+     * @param s the bean to forget
      */
+    @Override
     public void deregister(NamedBean s) {
         s.removePropertyChangeListener(this);
         String systemName = s.getSystemName();
@@ -182,7 +200,7 @@ abstract public class AbstractManager
         if (userName != null) {
             _tuser.remove(userName);
         }
-        firePropertyChange("length", null, Integer.valueOf(_tsys.size()));
+        firePropertyChange("length", null, _tsys.size());
         // listen for name and state changes to forward
     }
 
@@ -191,8 +209,11 @@ abstract public class AbstractManager
      * track of user name changes to individual NamedBeans. It is not completely
      * implemented yet. In particular, listeners are not added to newly
      * registered objects.
+     *
+     * @param e the event
      */
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
+    @Override
+    public void propertyChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals("UserName")) {
             String old = (String) e.getOldValue();  // OldValue is actually system name
             String now = (String) e.getNewValue();
@@ -209,6 +230,7 @@ abstract public class AbstractManager
         }
     }
 
+    @Override
     public String[] getSystemNameArray() {
         String[] arr = new String[_tsys.size()];
         Enumeration<String> en = _tsys.keys();
@@ -221,9 +243,10 @@ abstract public class AbstractManager
         return arr;
     }
 
+    @Override
     public List<String> getSystemNameList() {
         String[] arr = new String[_tsys.size()];
-        List<String> out = new ArrayList<String>();
+        List<String> out = new ArrayList<>();
         Enumeration<String> en = _tsys.keys();
         int i = 0;
         while (en.hasMoreElements()) {
@@ -237,19 +260,23 @@ abstract public class AbstractManager
         return out;
     }
 
+    @Override
     public List<NamedBean> getNamedBeanList() {
-        return new ArrayList<NamedBean>(_tsys.values());
+        return new ArrayList<>(_tsys.values());
     }
 
+    @Override
     abstract public String getBeanTypeHandled();
 
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+    PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+    @Override
+    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+    @Override
+    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
 
@@ -257,13 +284,15 @@ abstract public class AbstractManager
         pcs.firePropertyChange(p, old, n);
     }
 
-    java.beans.VetoableChangeSupport vcs = new java.beans.VetoableChangeSupport(this);
+    VetoableChangeSupport vcs = new VetoableChangeSupport(this);
 
-    public synchronized void addVetoableChangeListener(java.beans.VetoableChangeListener l) {
+    @Override
+    public synchronized void addVetoableChangeListener(VetoableChangeListener l) {
         vcs.addVetoableChangeListener(l);
     }
 
-    public synchronized void removeVetoableChangeListener(java.beans.VetoableChangeListener l) {
+    @Override
+    public synchronized void removeVetoableChangeListener(VetoableChangeListener l) {
         vcs.removeVetoableChangeListener(l);
     }
 
@@ -281,17 +310,17 @@ abstract public class AbstractManager
      *            be deleted. "DoDelete" tells the listerner to delete the item.
      * @param old The old value of the property.
      * @param n   The new value of the property.
-     * @throws java.beans.PropertyVetoException - if the recipients wishes the
-     *                                          delete to be aborted.
+     * @throws PropertyVetoException - if the recipients wishes the delete to be
+     *                               aborted.
      */
-    protected void fireVetoableChange(String p, Object old, Object n) throws java.beans.PropertyVetoException {
-        java.beans.PropertyChangeEvent evt = new java.beans.PropertyChangeEvent(this, p, old, n);
+    protected void fireVetoableChange(String p, Object old, Object n) throws PropertyVetoException {
+        PropertyChangeEvent evt = new PropertyChangeEvent(this, p, old, n);
         if (p.equals("CanDelete")) { //IN18N
             StringBuilder message = new StringBuilder();
-            for (java.beans.VetoableChangeListener vc : vcs.getVetoableChangeListeners()) {
+            for (VetoableChangeListener vc : vcs.getVetoableChangeListeners()) {
                 try {
                     vc.vetoableChange(evt);
-                } catch (java.beans.PropertyVetoException e) {
+                } catch (PropertyVetoException e) {
                     if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { //IN18N
                         log.info(e.getMessage());
                         throw e;
@@ -300,44 +329,47 @@ abstract public class AbstractManager
                     message.append("<hr>"); //IN18N
                 }
             }
-            throw new java.beans.PropertyVetoException(message.toString(), evt);
+            throw new PropertyVetoException(message.toString(), evt);
         } else {
             try {
                 vcs.fireVetoableChange(evt);
-            } catch (java.beans.PropertyVetoException e) {
-                e.printStackTrace();
+            } catch (PropertyVetoException e) {
+                log.error("Change vetoed.", e);
             }
         }
     }
 
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+    @Override
+    public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
 
         if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
             StringBuilder message = new StringBuilder();
-            message.append(Bundle.getMessage("VetoFoundIn", getBeanTypeHandled()));
-            message.append("<ul>");
+            message.append(Bundle.getMessage("VetoFoundIn", getBeanTypeHandled()))
+                    .append("<ul>");
             boolean found = false;
             for (NamedBean nb : _tsys.values()) {
                 try {
                     nb.vetoableChange(evt);
-                } catch (java.beans.PropertyVetoException e) {
+                } catch (PropertyVetoException e) {
                     if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { //IN18N
                         throw e;
                     }
                     found = true;
-                    message.append("<li>" + e.getMessage() + "</li>");
+                    message.append("<li>")
+                            .append(e.getMessage())
+                            .append("</li>");
                 }
             }
-            message.append("</ul>");
-            message.append(Bundle.getMessage("VetoWillBeRemovedFrom", getBeanTypeHandled()));
+            message.append("</ul>")
+                    .append(Bundle.getMessage("VetoWillBeRemovedFrom", getBeanTypeHandled()));
             if (found) {
-                throw new java.beans.PropertyVetoException(message.toString(), evt);
+                throw new PropertyVetoException(message.toString(), evt);
             }
         } else {
             for (NamedBean nb : _tsys.values()) {
                 try {
                     nb.vetoableChange(evt);
-                } catch (java.beans.PropertyVetoException e) {
+                } catch (PropertyVetoException e) {
                     throw e;
                 }
             }

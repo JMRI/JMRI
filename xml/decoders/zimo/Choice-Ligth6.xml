@@ -5,29 +5,36 @@
       <enumChoice choice="not active">
             <choice>not active</choice>
             <choice xml:lang="it">Non Attiva</choice>
+            <choice xml:lang="cs">Neaktivní</choice>
           </enumChoice>
           <enumChoice choice="Automatic stops, Signal controlled speed influence or Asymmetric DCC">
             <choice>Automatic stops, Signal controlled speed influence or Asymmetric DCC</choice>
             <choice xml:lang="it">Stop automatico, Controllato da segnale o DCC asimmetrica</choice>
+            <choice xml:lang="cs">Automatické zastavení, přizpůsobení řízení rychlosti návěstidlům nebo asymetrické DCC</choice>
           </enumChoice>
           <enumChoice choice="Manual stops using cab">
             <choice>Manual stops using cab</choice>
             <choice xml:lang="it">Stop manuale da Palmare</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic and Manual stops">
+            <choice xml:lang="cs">Ruční zastavení z ovladače</choice>
+        </enumChoice>
+        <enumChoice choice="Automatic and Manual stops">
             <choice>Automatic and Manual stops</choice>
             <choice xml:lang="it">Stop manuale e Automatico</choice>
+            <choice xml:lang="cs">Automatické a ruční zastavení</choice>
           </enumChoice>
           <enumChoice choice="Automatic stops with immediate braking" value="11">
             <choice>Automatic stops with immediate braking</choice>
             <choice xml:lang="it">Stop automatico immediato</choice>
+            <choice xml:lang="cs">Automatické zastavení s okamžitým bržděním</choice>
           </enumChoice>
           <enumChoice choice="Manual stops with immediate braking">
             <choice>Manual stops with immediate braking</choice>
             <choice xml:lang="it">Stop manuale immediato</choice>
-          </enumChoice>
+            <choice xml:lang="cs">Ruční zastavení s okamžitým bržděním</choice>
+      </enumChoice>
           <enumChoice choice="Automatic and Manual stops with immediate braking">
             <choice>Automatic and Manual stops with immediate braking</choice>
             <choice xml:lang="it">Stop automatico e manuale immediato</choice>
-          </enumChoice>
+            <choice xml:lang="cs">Automatické a ruční zastavení s okamžitým bržděním</choice>
+      </enumChoice>
 </enumChoiceGroup>
