@@ -373,11 +373,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
              */
             public void clearRowVector(int row) {
                 boxMap.remove(this.getValueAt(row, SYSNAMECOL));
-                //rendererMap.remove(this.getValueAt(row, SYSNAMECOL));
                 editorMap.remove(this.getValueAt(row, SYSNAMECOL));
             }
 
-            // we need two different Hashtables for Editors and Renderers
+            // Hashtables for Editors; not used for Renderer)
 
             /**
              * Provide a JComboBox element to display inside the JPanel CellEditor.
@@ -395,24 +394,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 return editCombo;
             }
             Hashtable<Object, JComboBox> editorMap = new Hashtable<Object, JComboBox>();
-
-/*            *//**
-             * Provide a JComboBox element to display inside the JPanel CellRenderer
-             * when not yet present, create, store and return a new one.
-             * @param row Index number (in TableDataModel)
-             * @return A combobox containing the valid appearance names for this mast
-             *//*
-            JComboBox getRendererBox(int row) {
-                JComboBox renderCombo = rendererMap.get(this.getValueAt(row, SYSNAMECOL));
-                log.debug("Combo row: {}", row);
-                if (renderCombo == null) {
-                    // create a new one with correct appearance
-                    renderCombo = new JComboBox(getRowVector(row));
-                    rendererMap.put(this.getValueAt(row, SYSNAMECOL), renderCombo);
-                }
-                return renderCombo;
-            }
-            Hashtable<Object, JComboBox> rendererMap = new Hashtable<Object, JComboBox>();*/
 
             /**
              * returns a list of all the valid appearances that have not been disabled
