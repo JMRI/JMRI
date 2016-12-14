@@ -3,18 +3,9 @@
   <name>Basic Speed Control</name>
   <name xml:lang="ca">Control bàsic de velocitat</name>
   <name xml:lang="it">Controllo Semplificato Velocità </name>
-<<<<<<< HEAD
-<<<<<<< HEAD
-  <name xml:lang="de">Einfache Geschwindigkeitseinstellung</name>
-=======
-  <name xml:lang="de">Einfache Geschwindikeitseinstellung</name>
-  <name xml:lang="da">Grundlæggende Speed Kontrol</name>
->>>>>>> JMRI/master
-=======
   <name xml:lang="de">Einfache Geschwindigkeitseinstellung</name>
   <name xml:lang="da">Grundlæggende Speed Kontrol</name>
   <name xml:lang="cs">Základní řízení rychlosti</name>
->>>>>>> JMRI/master
   <column>
     <row>
       <column>
