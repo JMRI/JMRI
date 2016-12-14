@@ -6,19 +6,14 @@
   <variable CV="158" item="RailCom speed reporting method" mask="XXXXXVXX" default="1">
     <enumVal>
       <enumChoice choice="Zimo for MX31ZL" value="0">
-<<<<<<< HEAD
       <choice>Zimo for MX31ZL</choice>
+      <choice xml:lang="cs">Zimo pro MX31ZL</choice>
       <choice xml:lang="de">„alte“ Variante (für MX31ZL)</choice>
       </enumChoice>
       <enumChoice choice="Standard Reporting" value="1">
       <choice>Standard Reporting</choice>
+      <choice xml:lang="cs">Standardní zprávy</choice>
       <choice xml:lang="de">Rückmeldung nach NMRA</choice>
-=======
-        <choice xml:lang="cs">Zimo pro MX31ZL</choice>
-      </enumChoice>
-      <enumChoice choice="Standard Reporting" value="1">
-        <choice xml:lang="cs">Standardní zprávy</choice>
->>>>>>> JMRI/master
       </enumChoice>
     </enumVal>
     <label>RailCom speed reporting method</label>
@@ -29,86 +24,59 @@
       <enumChoice choice="Present" value="0">
         <choice>Present</choice>
         <choice xml:lang="it">Presente</choice>
-<<<<<<< HEAD
-        <choice xml:lang="de">kein Abbruch</choice>
-=======
         <choice xml:lang="cs">Přítomný</choice>
->>>>>>> JMRI/master
+        <choice xml:lang="de">kein Abbruch</choice>
       </enumChoice>
       <enumChoice choice="Disappear" value="1">
         <choice>Disappear</choice>
         <choice xml:lang="it">Sparisce</choice>
-<<<<<<< HEAD
-        <choice xml:lang="de">Abbruch</choice>
-=======
         <choice xml:lang="cs">Zmizí</choice>
->>>>>>> JMRI/master
+        <choice xml:lang="de">Abbruch</choice>
       </enumChoice>
     </enumVal>
     <label>Standing Sound on premature shutdown</label>
     <label xml:lang="it">Suono distinto per arresto prematuro</label>
-<<<<<<< HEAD
-    <label xml:lang="de">Standgeräusch wird vorzeitig abgebrochen</label>
-=======
     <label xml:lang="cs">Zvuk stání při předčasném vypnutí</label>
->>>>>>> JMRI/master
+    <label xml:lang="de">Standgeräusch wird vorzeitig abgebrochen</label>
   </variable>
   <variable CV="158" item="Chuff rate at higher speed steps" mask="XXXVXXXX" default="0">
     <enumVal>
       <enumChoice choice="Normal" value="0">
         <choice>Normal</choice>
         <choice xml:lang="it">Normale</choice>
-<<<<<<< HEAD
-        <choice xml:lang="de">Normal</choice>
-=======
         <choice xml:lang="cs">Normální</choice>
->>>>>>> JMRI/master
+        <choice xml:lang="de">Normal</choice>
       </enumChoice>
       <enumChoice choice="Reduced" value="1">
         <choice>Reduced</choice>
         <choice xml:lang="it">Ridotta</choice>
-<<<<<<< HEAD
-        <choice xml:lang="de">Geringer</choice>
-=======
         <choice xml:lang="cs">Snížená</choice>
->>>>>>> JMRI/master
+        <choice xml:lang="de">Geringer</choice>
       </enumChoice>
     </enumVal>
     <label>Chuff rate at higher speed steps</label>
     <label xml:lang="it">Frequenza di Chuff a velocità massima</label>
-<<<<<<< HEAD
-    <label xml:lang="de">&lt;html&gt;DAMPFschlag Häufigkeit steigt&lt;br&gt;beim Schnellfahren unterproportional&lt;/html&gt;</label>
-=======
     <label xml:lang="cs">Frekvence výfuků páry při vyšších rychlostech</label>
->>>>>>> JMRI/master
+    <label xml:lang="de">&lt;html&gt;DAMPFschlag Häufigkeit steigt&lt;br&gt;beim Schnellfahren unterproportional&lt;/html&gt;</label>
   </variable>
   <variable CV="158" item="Drop one speed step to lower turbocharger" mask="XXVXXXXX" default="0">
     <enumVal>
       <enumChoice choice="Off (default)" value="0">
         <choice>Normal</choice>
         <choice xml:lang="it">Normale</choice>
-<<<<<<< HEAD
-        <choice xml:lang="de">Normal</choice>
-=======
         <choice xml:lang="cs">Normální</choice>
->>>>>>> JMRI/master
+        <choice xml:lang="de">Normal</choice>
       </enumChoice>
       <enumChoice choice="On" value="1">
         <choice>Reduced</choice>
         <choice xml:lang="it">Ridotta</choice>
-<<<<<<< HEAD
-        <choice xml:lang="de">Absenken</choice>
-=======
         <choice xml:lang="cs">Snížený</choice>
->>>>>>> JMRI/master
+        <choice xml:lang="de">Absenken</choice>
       </enumChoice>
     </enumVal>
     <label>Drop one speed step to lower turbocharger</label>
     <label xml:lang="it">Diminiusci di uno step di velocità per diminuire il Turbocompressore</label>
-<<<<<<< HEAD
-    <label xml:lang="de">Absenkung Diesel-Sound und Turbolader Sound</label>
-=======
     <label xml:lang="cs">Snížení jednoho rychlostního stupně sníží turbodmychadlo</label>
->>>>>>> JMRI/master
+    <label xml:lang="de">Absenkung Diesel-Sound und Turbolader Sound</label>
   </variable>
 </variables>

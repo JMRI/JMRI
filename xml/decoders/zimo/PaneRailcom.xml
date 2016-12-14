@@ -6,6 +6,7 @@
   <name>RailCom</name>
   <name xml:lang="it">RailCom</name>
   <name xml:lang="de">RailCom</name>
+  <name xml:lang="cs">RailCom</name>
   <column>
     <display item="Enable RailCom" format="checkbox"/>
     <display item="RailCom channel 1 (Broadcast)"/>
@@ -15,9 +16,4 @@
     </label>
     <display item="RailCom speed reporting method"/>
   </column>
-<<<<<<< HEAD
-=======
-  <name xml:lang="it">Railcom</name>
-  <name xml:lang="cs">Railcom</name>
->>>>>>> JMRI/master
 </pane>

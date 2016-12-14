@@ -8,48 +8,36 @@
     <decVal min="0" max="255"/>
     <label>Max drive Time after signal loss</label>
     <label xml:lang="it">Tempo massimo percorrenza dopo perdita segnale</label>
-<<<<<<< HEAD
-    <label xml:lang="de">Weiterfahrt ohne Signal</label>
-	<tooltip>When Energy storage cct connected, 0-255 (0-25 sec)</tooltip>
-	<tooltip xml:lang="de">Anhalten nach Nicht-mehr-DCC-Empfang (Zehntel-sec)</tooltip>
-=======
     <label xml:lang="cs">Maximální doba jízdy po ztrátě signálu</label>
->>>>>>> JMRI/master
+    <label xml:lang="de">Weiterfahrt ohne Signal</label>
+    <tooltip>When Energy storage cct connected, 0-255 (0-25 sec)</tooltip>
+    <tooltip xml:lang="de">Anhalten nach Nicht-mehr-DCC-Empfang (Zehntel-sec)</tooltip>
   </variable>
   <variable CV="154" item="Special Output Configuration" mask="XXXXXXXV" default="0">
     <enumVal>
       <enumChoice choice="No Special Configuration">
         <choice>No Special Configuration</choice>
         <choice xml:lang="it">Nessuna configurazione Speciale</choice>
-<<<<<<< HEAD
-        <choice xml:lang="de">keine spezielle Einstellung</choice>
-=======
         <choice xml:lang="cs">Bez speciální konfigurace</choice>
->>>>>>> JMRI/master
+        <choice xml:lang="de">keine spezielle Einstellung</choice>
       </enumChoice>
       <enumChoice choice="Pantograph Operation (Zimo/Roco BR110)">
         <choice>Pantograph Operation (Zimo/Roco BR110)</choice>
         <choice xml:lang="it">Pantografo (Zimo/Roco BR110)(</choice>
-<<<<<<< HEAD
-        <choice xml:lang="de">Pantograph (Zimo/Roco BR110)(</choice>
-=======
         <choice xml:lang="cs">Ovládání sběrače (Zimo/Roco BR110)</choice>
->>>>>>> JMRI/master
+        <choice xml:lang="de">Pantograph (Zimo/Roco BR110)(</choice>
       </enumChoice>
     </enumVal>
     <label>Special Output Configuration</label>
     <label xml:lang="it">Configurazione Speciale Uscita</label>
-<<<<<<< HEAD
-    <label xml:lang="de">Diverse Spezialbits</label>
-=======
     <label xml:lang="cs">Speciální konfigurace výstupu</label>
->>>>>>> JMRI/master
+    <label xml:lang="de">Diverse Spezialbits</label>
   </variable>
   <variable CV="154" item="Drive Away if Startup sound still playing" mask="XXXXXXVX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Drive Away if Startup sound still playing</label>
     <label xml:lang="it">Partenza anche se suono accensione ancora attivo</label>
-<<<<<<< HEAD
+    <label xml:lang="cs">Odjet když se ještě přehrává zvuk startování</label>
     <label xml:lang="de">&lt;html&gt;DIESEL: Sofort abfahren, auch wenn Stand-&lt;br&gt;geräusch noch nicht zu Ende abgespielt&lt;/html&gt;</label>
   </variable>
   <variable CV="154" item="Two Stage Air Compressor" mask="XXXVXXXX" default="0">
@@ -57,47 +45,31 @@
     <label>Two Stage Air Compressor</label>
     <label xml:lang="it">Compressore aria a due stadi</label>
     <label xml:lang="de">DAMPF: Zweistufige Luftpumpe</label>
+    <label xml:lang="cs">Dvoustupňový kompresor</label>
     <tooltip>Z1=fast, Z2=slow</tooltip>
     <tooltip xml:lang="de">Z1 nach Stehenbleiben, Z2 während Stehens</tooltip>
-=======
-    <label xml:lang="cs">Odjet když se ještě přehrává zvuk startování</label>
-  </variable>
-  <variable CV="154" mask="XXXXVXXX" default="0" item="Advanced Group 1 Option 5">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
-    <label>Second Motorola Address</label>
-    <label xml:lang="it">Secondo Indirizzo Motorola</label>
-    <label xml:lang="cs">Druhá adresa Motorola</label>
-  </variable>
-  <variable item="Two Stage Air Compressor" CV="154" mask="XXXVXXXX" default="0" tooltip="Z1=fast, Z2=slow">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-    <label>Two Stage Air Compressor</label>
-    <label xml:lang="it">Compressore aria a due stadi</label>
-    <label xml:lang="cs">Dvoustupňový kompresor</label>
->>>>>>> JMRI/master
   </variable>
   <variable CV="154" mask="XXVXXXXX" default="0" item="Advanced Group 1 Option 2">
     <enumVal>
       <enumChoice choice="Normal">
         <choice>Enabled</choice>
         <choice xml:lang="fr">Activé</choice>
-        <choice xml:lang="de">Aktiviert</choice>
+        <choice xml:lang="it">Abilitato</choice>
         <choice xml:lang="cs">Zpřístupněno</choice>
+        <choice xml:lang="de">Aktiviert</choice>
       </enumChoice>
       <enumChoice choice="Forward Only">
         <choice>Disabled</choice>
         <choice xml:lang="fr">Désactivé</choice>
         <choice xml:lang="it">Disabilitato</choice>
-        <choice xml:lang="de">Deaktiviert</choice>
         <choice xml:lang="cs">Znepřístupněno</choice>
+        <choice xml:lang="de">Deaktiviert</choice>
       </enumChoice>
     </enumVal>
     <label>ACKnoledgement Pulse 'Forward only'</label>
     <label xml:lang="it">Impulso ACK 'Solo in Avanti'</label>
-<<<<<<< HEAD
-    <label xml:lang="de">ACKnoledgement Pulse 'nur Vorwärts'</label>
-=======
     <label xml:lang="cs">Potvrzovací impuls 'Pouze vpřed'</label>
->>>>>>> JMRI/master
+    <label xml:lang="de">ACKnoledgement Pulse 'nur Vorwärts'</label>
   </variable>
   <variable CV="154" mask="XVXXXXXX" default="0" item="Advanced Group 1 Option 3">
     <enumVal>
@@ -105,51 +77,43 @@
         <choice>Enabled</choice>
         <choice xml:lang="fr">Activé</choice>
         <choice xml:lang="it">Abilitato</choice>
-        <choice xml:lang="de">Aktiviert</choice>
         <choice xml:lang="cs">Zpřístupněno</choice>
+        <choice xml:lang="de">Aktiviert</choice>
       </enumChoice>
       <enumChoice choice="Reverse Only">
         <choice>Disabled</choice>
         <choice xml:lang="fr">Désactivé</choice>
         <choice xml:lang="it">Disabilitato</choice>
-        <choice xml:lang="de">Deaktiviert</choice>
         <choice xml:lang="cs">Znepřístupněno</choice>
+        <choice xml:lang="de">Deaktiviert</choice>
       </enumChoice>
     </enumVal>
     <label>ACKnoledgement Pulse 'Reverse only'</label>
     <label xml:lang="it">Impulso ACK 'Solo in Retro'</label>
-<<<<<<< HEAD
+    <label xml:lang="cs">Potvrzovací impuls 'Pouze vzad'</label>
     <label xml:lang="de">ACKnoledgement Pulse 'nur Rückwärts'</label>
   </variable>
   <variable CV="154" mask="XXXXVXXX" default="0" item="Advanced Group 1 Option 5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
     <label>Second Motorola Address</label>
     <label xml:lang="it">Secondo Indirizzo Motorola</label>
+    <label xml:lang="cs">Druhá adresa Motorola</label>
     <label xml:lang="de">Zweite Motorola Adresse</label>
-=======
-    <label xml:lang="cs">Potvrzovací impuls 'Pouze vzad'</label>
->>>>>>> JMRI/master
   </variable>
   <variable CV="154" item="Delay Shutdown untill end of Starting Whistle" mask="VXXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Delay Shutdown</label>
     <label xml:lang="it">Ritardo Spegnimento</label>
-<<<<<<< HEAD
-    <label xml:lang="de">&lt;html&gt;DAMPF: Anfahrt verzögern, bis&lt;br&gt;„Anfahrpfiff“ vollständig abgespielt.&lt;/html&gt;</label>
-=======
     <label xml:lang="cs">Zpoždění vypnutí</label>
->>>>>>> JMRI/master
+    <label xml:lang="de">&lt;html&gt;DAMPF: Anfahrt verzögern, bis&lt;br&gt;„Anfahrpfiff“ vollständig abgespielt.&lt;/html&gt;</label>
   </variable>
   <variable CV="155" item="Half Speed Key Extension" default="0">
     <enumVal>
       <enumChoice choice="Use Setting in CV124 above">
         <choice>Setting in CV124</choice>
         <choice xml:lang="it">parametri in CV124</choice>
-<<<<<<< HEAD
-        <choice xml:lang="de">Einstellung aus CV124</choice>
-=======
         <choice xml:lang="cs">Nastavení v CV124</choice>
->>>>>>> JMRI/master
+        <choice xml:lang="de">Einstellung aus CV124</choice>
       </enumChoice>
       <enumChoice choice="F1">
         <choice>F1</choice>
@@ -211,22 +175,16 @@
     </enumVal>
     <label>Half Speed Key Extension</label>
     <label xml:lang="it">Estensione tasto funzione Mezza velocità</label>
-<<<<<<< HEAD
-    <label xml:lang="de">Halbgeschwindigkeit</label>
-=======
     <label xml:lang="cs">Rozšíření funkční klávesy poloviční rychlost</label>
->>>>>>> JMRI/master
+    <label xml:lang="de">Halbgeschwindigkeit</label>
   </variable>
   <variable CV="156" item="Shunt Function Key Extension" default="0">
     <enumVal>
       <enumChoice choice="Use Setting in CV124 above">
         <choice>Setting in CV124</choice>
         <choice xml:lang="it">parametri in CV124</choice>
-<<<<<<< HEAD
-        <choice xml:lang="de">Einstellung aus CV124</choice>
-=======
         <choice xml:lang="cs">Nastavení v CV124</choice>
->>>>>>> JMRI/master
+        <choice xml:lang="de">Einstellung aus CV124</choice>
       </enumChoice>
       <enumChoice choice="F1">
         <choice>F1</choice>
@@ -288,22 +246,16 @@
     </enumVal>
     <label>Shunt Function Key Extension</label>
     <label xml:lang="it">Estensione tasto funzione Manovra</label>
-<<<<<<< HEAD
-    <label xml:lang="de">Rangiergang</label>
-=======
     <label xml:lang="cs">Rozšíření funkční klávesy posun</label>
->>>>>>> JMRI/master
+    <label xml:lang="de">Rangiergang</label>
   </variable>
   <variable CV="157" item="MAN Key Extension (Disable HLU or ABC signal control)" default="0" tooltip="Disables ABC and HLU Signal Control">
     <enumVal>
       <enumChoice choice="MAN (Zimo)">
         <choice>Setting in CV124</choice>
         <choice xml:lang="it">parametri in CV124</choice>
-<<<<<<< HEAD
-        <choice xml:lang="de">Einstellung aus CV124</choice>
-=======
         <choice xml:lang="cs">Nastavení v CV124</choice>
->>>>>>> JMRI/master
+        <choice xml:lang="de">Einstellung aus CV124</choice>
       </enumChoice>
       <enumChoice choice="F1">
         <choice>F1</choice>
@@ -365,10 +317,7 @@
     </enumVal>
     <label>MAN Key Extension (Disable HLU or ABC signal control)</label>
     <label xml:lang="it">Estensione tasto funzione MAN (disabilita controllo segnale HLU o ABC)</label>
-<<<<<<< HEAD
-    <label xml:lang="de">Auswahl der MAN-Taste (Abschalten von HLU bzw. ABC)</label>
-=======
     <label xml:lang="cs">Rozšíření funkční klávesy MAN (zakázání řízení signálem HLU nebo ABC)</label>
->>>>>>> JMRI/master
+    <label xml:lang="de">Auswahl der MAN-Taste (Abschalten von HLU bzw. ABC)</label>
   </variable>
 </variables>

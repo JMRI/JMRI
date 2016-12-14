@@ -5,6 +5,7 @@
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Zimo Specific</name>
   <name xml:lang="it">Specifiche Zimo</name>
+  <name xml:lang="cs">Zimo zvláštnosti</name>
   <name xml:lang="de">ZIMO Spezifisch</name>
   <column>
     <display item="Pulse Chain Recognition (LGB)"/>
@@ -32,11 +33,8 @@
       <column>
         <label>
           <text>Signal Dependent Speed Limits</text>
-<<<<<<< HEAD
-          <text xml:lang="de">Signalabhängige (HLU) Geschwindigkeits-Limits</text>
-=======
           <text xml:lang="cs">Omezení rychlosti závislé na návěstidle</text>
->>>>>>> JMRI/master
+          <text xml:lang="de">Signalabhängige (HLU) Geschwindigkeits-Limits</text>
         </label>
         <separator/>
         <label>
@@ -54,16 +52,9 @@
     <label>
       <text> </text>
     </label>
-<<<<<<< HEAD
     <display item="MAN Key Extension (Disable HLU or ABC signal control)">
        <!--label>Set Function Key to Disable HLU Signal Control</label>
        <label xml:lang="it">Tasto funzione per disabilitare controllo segnale HLU</label-->
-=======
-    <display item="MAN Key Extension (Disable HLU or ABC signal control)" label="Set Function Key to Disable HLU Signal Control">
-       <label>Set Function Key to Disable HLU Signal Control</label>
-       <label xml:lang="it">Tasto funzione per disabilitare controllo segnale HLU</label>
-       <label xml:lang="cs">Nastavení funkční klávesy pro znepřístupnění řízení signálem HLU</label>
->>>>>>> JMRI/master
     </display>
     <display item="Distance controlled stopping"/>
     <label>
@@ -84,10 +75,4 @@
       </column>
     </row>
   </column>
-<<<<<<< HEAD
-=======
-  <name>Zimo Specific</name>
-  <name xml:lang="it">Specifiche Zimo</name>
-  <name xml:lang="cs">Zimo zvláštnosti</name>
->>>>>>> JMRI/master
 </pane>
