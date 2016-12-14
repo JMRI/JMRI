@@ -15,16 +15,17 @@ import org.junit.Test;
  * Tests for AbstractMRNodeTrafficController.
  * @author Paul Bender Copyright (C) 2016
  */
-public class AbstractMRNodeTrafficControllerTest {
+public class AbstractMRNodeTrafficControllerTest extends AbstractMRTrafficControllerTest {
     
-    // derived classes should set the value of tc appropriately.
-    protected AbstractMRNodeTrafficController tc;
-
     @Test
     public void testCtor() {
         Assert.assertNotNull(tc);
     }
 
+    @Test
+    public void testGetNumNodesZero(){
+        Assert.assertEquals("NumNodes at start",0,((AbstractMRNodeTrafficController)tc).getNumNodes());
+    }
 
     @Before
     public void setUp() {
