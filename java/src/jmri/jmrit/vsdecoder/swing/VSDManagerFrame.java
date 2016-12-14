@@ -136,7 +136,7 @@ public class VSDManagerFrame extends JmriJFrame {
         volumePane.setLayout(new BoxLayout(volumePane, BoxLayout.LINE_AXIS));
         JToggleButton muteButton = new JToggleButton(Bundle.getMessage("MuteButtonLabel"));
         JButton addButton = new JButton(Bundle.getMessage("AddButtonLabel"));
-        JButton closeButton = new JButton(Bundle.getMessage("MgrCloseButtonLabel"));
+        JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
         JSlider volume = new JSlider(0, 100);
         volume.setMinorTickSpacing(10);
         volume.setPaintTicks(true);
