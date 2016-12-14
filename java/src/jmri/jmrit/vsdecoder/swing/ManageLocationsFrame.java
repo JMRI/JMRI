@@ -224,10 +224,10 @@ public class ManageLocationsFrame extends JmriJFrame {
         opsScrollPanel.getViewport().add(opsTable);
 
         tabbedPane = new JTabbedPane();
-        tabbedPane.addTab(Bundle.getMessage("FieldReportersTabTitle"), reporterScrollPanel);
+        tabbedPane.addTab(Bundle.getMessage("Reporters"), reporterScrollPanel); // Reporters Tab Title
         tabbedPane.setToolTipTextAt(0, Bundle.getMessage("ToolTipReporterTab"));
         tabbedPane.setMnemonicAt(0, Mnemonics.get("ReporterTab")); // NOI18N
-        tabbedPane.addTab(Bundle.getMessage("FieldBlockTabTitle"), blockScrollPanel);
+        tabbedPane.addTab(Bundle.getMessage("Blocks"), blockScrollPanel);
         tabbedPane.setToolTipTextAt(0, Bundle.getMessage("ToolTipBlockTab"));
         tabbedPane.setMnemonicAt(0, Mnemonics.get("BlockTab")); // NOI18N
         tabbedPane.addTab(Bundle.getMessage("FieldOpsTabTitle"), opsScrollPanel);
@@ -268,12 +268,12 @@ public class ManageLocationsFrame extends JmriJFrame {
     private void buildMenu() {
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
 
-        fileMenu.add(new LoadVSDFileAction(Bundle.getMessage("MenuItemLoadVSDFile")));
-        fileMenu.add(new StoreXmlVSDecoderAction(Bundle.getMessage("MenuItemSaveProfile")));
-        fileMenu.add(new LoadXmlVSDecoderAction(Bundle.getMessage("MenuItemLoadProfile")));
+        fileMenu.add(new LoadVSDFileAction(Bundle.getMessage("VSDecoderFileMenuLoadVSDFile")));
+        fileMenu.add(new StoreXmlVSDecoderAction(Bundle.getMessage("VSDecoderFileMenuSaveProfile")));
+        fileMenu.add(new LoadXmlVSDecoderAction(Bundle.getMessage("VSDecoderFileMenuLoadProfile")));
 
         JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
-        editMenu.add(new VSDPreferencesAction(Bundle.getMessage("MenuItemEditPreferences")));
+        editMenu.add(new VSDPreferencesAction(Bundle.getMessage("VSDecoderFileMenuPreferences")));
 
         fileMenu.getItem(1).setEnabled(false); // disable XML store
         fileMenu.getItem(2).setEnabled(false); // disable XML load
