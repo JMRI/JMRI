@@ -27,7 +27,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.srcp.SRCPTest");  // no tests in this class itself
         suite.addTest(new TestSuite(SRCPReplyTest.class));
         suite.addTest(new TestSuite(SRCPMessageTest.class));
-        suite.addTest(new TestSuite(SRCPTrafficControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPTrafficControllerTest.class));
         suite.addTest(new TestSuite(SRCPSystemConnectionMemoTest.class));
         suite.addTest(new TestSuite(SRCPBusConnectionMemoTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPTurnoutManagerTest.class));
