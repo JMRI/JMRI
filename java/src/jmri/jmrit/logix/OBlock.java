@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * When an OBlock (Detection Circuit) has a Portal whose entrance to the OBlock
  * has a signal, then the OBlock and its chains of adjacent OBlocks up to the
  * next OBlock having an entrance Portal with a signal, can be considered a
- * "Block" in the sense of a prototypical railroad. Preferrably all entrances to
+ * "Block" in the sense of a prototypical railroad. Preferably all entrances to
  * the "Block" should have entrance Portals with a signal.
  *
  *
@@ -580,7 +580,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 removePropertyChangeListener(_warrant);
             } catch (Exception ex) {
                 // disposed warrant may throw null pointer - continue deallocation
-                log.warn("Perhaps normal? Code not clear.", ex);
+                if (log.isDebugEnabled()) log.debug("Perhaps normal? Code not clear.", ex);
             }
         }
         if (_pathName != null) {
@@ -625,8 +625,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
     /**
-     * Enforce unique portal names. Portals are managed beans since 2014
-     * to enforce unique names. 
+     * Enforce unique portal names. Portals are now managed beans since 2014
+     * This enforces unique names.
+     * @param portal the Portal 
      */
     public void addPortal(Portal portal) {
         String name = getDisplayName();
@@ -654,6 +655,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     /**
      * Remove portal from block and stub all paths using this portal to be dead
      * end spurs.
+     * @param portal the portal
      */
     public void removePortal(Portal portal) {
         int oldSize = _portals.size();
@@ -726,8 +728,11 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
     /**
-     * Enforce unique path names within block, but allow a duplicate path to be
-     * checked if it is also in one of the bloc's portals
+     * Enforce unique path names within block, but allow a duplicate 
+     * name of a path from another block to be
+     * checked if it is in one of the bloc's portals
+     * @param path the path
+     * @return true true if path is added to OBlock
      */
     public boolean addPath(OPath path) {
         String pName = path.getName();
@@ -737,11 +742,11 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         List<Path> list = getPaths();
         for (int i = 0; i < list.size(); i++) {
             if (((OPath) list.get(i)).equals(path)) {
-                log.warn("Path \"" + pName + "\" duplicated in OBlock " + getSystemName());
+                if (log.isDebugEnabled()) log.debug("Path \"" + pName + "\" duplicated in OBlock " + getSystemName());
                 return false;
             }
             if (pName.equals(((OPath) list.get(i)).getName())) {
-                log.warn("Path named \"" + pName + "\" already exists in OBlock " + getSystemName());
+                if (log.isDebugEnabled()) log.debug("Path named \"" + pName + "\" already exists in OBlock " + getSystemName());
                 return false;
             }
         }
@@ -749,14 +754,14 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         Portal portal = path.getFromPortal();
         if (portal != null) {
             if (!portal.addPath(path)) {
-                log.warn("Path \"" + pName + "\" rejected by portal  " + portal.getName());
+                if (log.isDebugEnabled()) log.debug("Path \"" + pName + "\" rejected by portal  " + portal.getName());
                 return false;
             }
         }
         portal = path.getToPortal();
         if (portal != null) {
             if (!portal.addPath(path)) {
-                log.warn("Path \"" + pName + "\" rejected by portal  " + portal.getName());
+                if (log.isDebugEnabled()) log.debug("Path \"" + pName + "\" rejected by portal  " + portal.getName());
                 return false;
             }
         }
@@ -830,7 +835,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return msg;
     }
 
-    /**
+    /*
      * Call for Circuit Builder to make icon color changes for its GUI
      */
     public void pseudoPropertyChange(String propName, Object old, Object n) {

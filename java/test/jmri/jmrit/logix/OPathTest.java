@@ -1,10 +1,10 @@
 package jmri.jmrit.logix;
 
 import jmri.Block;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the OPath class
@@ -12,6 +12,9 @@ import junit.framework.TestSuite;
  * @author	Bob Jacobsen Copyright 2010
  */
 public class OPathTest extends TestCase {
+    
+    OBlockManager blkMgr;
+    PortalManager portalMgr;
 
     public void testCtor() {
         Block b = new Block("IB1");
@@ -73,6 +76,16 @@ public class OPathTest extends TestCase {
         Assert.assertTrue("on contents", op1.equals(op2));
     }
     
+    public void testPortals() {
+        Portal entryP = portalMgr.providePortal("entryP");
+        Portal exitP = portalMgr.providePortal("exitP");
+        OBlock blk = blkMgr.provideOBlock("OB0");
+        OPath path = new OPath("path", blk, entryP, exitP, null);
+        Assert.assertFalse("Path not to Portals", path.validatePortals());
+        Assert.assertEquals("Get entry", entryP, path.getFromPortal());
+        Assert.assertEquals("Get exit", exitP, path.getToPortal());
+    }
+    
     // from here down is testing infrastructure
     public OPathTest(String s) {
         super(s);
@@ -92,6 +105,9 @@ public class OPathTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        blkMgr = new OBlockManager();
+        portalMgr = new PortalManager();
     }
 
     protected void tearDown() {

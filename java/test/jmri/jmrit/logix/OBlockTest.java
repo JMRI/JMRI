@@ -106,7 +106,7 @@ public class OBlockTest extends TestCase {
     public void testAllocate() {
         Warrant w1 = new Warrant("IW1", null);
         Warrant w2 = new Warrant("IW2", null);
-        OBlock b = blkMgr.createNewOBlock("OB101", "b");
+        OBlock b = blkMgr.createNewOBlock("OB102", "c");
         Assert.assertNull("Allocate w1", b.allocate(w1));
         Assert.assertEquals("state allocated & dark", OBlock.ALLOCATED|OBlock.UNDETECTED, b.getState());
         Assert.assertEquals("Allocate w2", Bundle.getMessage("AllocatedToWarrant", w1.getDisplayName(), b.getDisplayName()), b.allocate(w2));
@@ -118,7 +118,7 @@ public class OBlockTest extends TestCase {
     }
     
     public void testSensorChanges() {
-        OBlock b = blkMgr.createNewOBlock("OB102", "c");
+        OBlock b = blkMgr.createNewOBlock("OB103", null);
         Warrant w0 = new Warrant("IW0", "war0");
         b.setOutOfService(true);
         Assert.assertEquals("state OutOfService & dark", OBlock.UNDETECTED|OBlock.OUT_OF_SERVICE, b.getState());
@@ -152,7 +152,7 @@ public class OBlockTest extends TestCase {
     public void testAddPortal() {
         OBlock b = blkMgr.createNewOBlock("OB0", "");
         PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);;
-        Portal p = portalMgr.providePortal("foo");
+        Portal p = portalMgr.providePortal("foop");
         b.addPortal(p);
         Assert.assertEquals("No portals", 0, b.getPortals().size());
 
@@ -162,23 +162,33 @@ public class OBlockTest extends TestCase {
         p.setToBlock(b, true);
         b.addPortal(p);
         Assert.assertEquals("One portal only", 1, b.getPortals().size());
-        p = portalMgr.providePortal("bar");
+        p = portalMgr.providePortal("barp");
         b.addPortal(p);
         p.setToBlock(b, false);
         Assert.assertEquals("Two portals", 2, b.getPortals().size());
 
-        Assert.assertEquals("Same Portal", p, b.getPortalByName("bar"));
-        
-        OPath path1 = new OPath(b, "path1");
-        b.addPath(path1);
-        Assert.assertEquals("One path", 1, b.getPaths().size());
-        OBlock bb = blkMgr.createNewOBlock("OB1", "");
-        OPath path2 = new OPath(bb, "path2");
-        b.addPath(path2);
-        Assert.assertEquals("path not in block", 1, b.getPaths().size());
-        b.addPath(path1);
-        Assert.assertEquals("same path in block", 1, b.getPaths().size());
+        Assert.assertEquals("Same Portal", p, b.getPortalByName("barp"));
     }
+        
+    public void testAddPath() {
+        OBlock b = blkMgr.createNewOBlock("OB1", "");
+        OPath path1 = new OPath(b, "path1");
+        Assert.assertTrue("add path1 to block", b.addPath(path1));
+        Assert.assertEquals("One path", 1, b.getPaths().size());
+        OBlock bb = blkMgr.createNewOBlock("OB2", "");
+        OPath path2 = new OPath(bb, "path2");
+        Assert.assertFalse("path2 not in block", b.addPath(path2));
+        Assert.assertEquals("path2 not in block", 1, b.getPaths().size());
+        Assert.assertFalse("path1 already in block", b.addPath(path1));
+        Assert.assertEquals("path1 already in block", 1, b.getPaths().size());
+        OPath path11 = new OPath(b, "path1");
+        Assert.assertFalse("path with name \"path1\" already in block", b.addPath(path11));
+        Assert.assertEquals("path with name \"path1\" already in block", 1, b.getPaths().size());
+        
+        b.removePath(path1);
+        Assert.assertEquals("no paths", 0, b.getPaths().size());
+    }
+    
     // from here down is testing infrastructure
     public OBlockTest(String s) {
         super(s);

@@ -40,14 +40,6 @@ public class OPath extends jmri.Path {
         _name = name;
     }
 
-    public OPath(Block owner, int toBlockDirection, int fromBlockDirection) {
-        super(owner, toBlockDirection, fromBlockDirection);
-    }
-
-    public OPath(Block owner, int toBlockDirection, int fromBlockDirection, BeanSetting setting) {
-        super(owner, toBlockDirection, fromBlockDirection, setting);
-    }
-
     public OPath(String name, OBlock owner, Portal entry, Portal exit, ArrayList<BeanSetting> settings) {
         super(owner, 0, 0);
         _name = name;
