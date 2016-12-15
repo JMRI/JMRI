@@ -13,16 +13,10 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class ConcentratorTrafficControllerTest {
-
-    ConcentratorTrafficController tc = null;
-
-    @Test
-    public void testCtor() {
-        Assert.assertNotNull(tc);
-    }
+public class ConcentratorTrafficControllerTest extends jmri.jmrix.rfid.RfidTrafficControllerTest {
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
@@ -34,6 +28,7 @@ public class ConcentratorTrafficControllerTest {
         };
     }
 
+    @Override
     @After
     public void tearDown() {
         tc = null;
