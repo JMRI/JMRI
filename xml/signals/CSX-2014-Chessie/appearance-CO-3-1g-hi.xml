@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year>
+    <year>2016</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1.0</revnumber>
+      <date>2016-12-02</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial Version</revremark>
+    </revision>
+  </revhistory>
+  <aspecttable>CSX-2014-Chessie</aspecttable>
+  <name>Double head 3-1 permissive med/lim approach color light high signal</name>
+  <reference>As described in the CSX Transportation Signal Rules - C1281-C1298 January 2014.</reference>
+  <description>Appearances for a permissive double 3-1 lamp signal head mast with green lamp on lower head and a number plate</description>
+  <appearances>
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>dark</show>
+      <reference>C1281 (c)</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CSX-2014-Chessie/CO-3-1g-hi/rule-C1281.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach Limited</aspectname>
+      <show>yellow</show>
+      <show>flashgreen</show>
+      <reference>C1281B (b)</reference>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/CSX-2014-Chessie/CO-3-1g-hi/rule-C1281B.gif</imagelink>
+      <imagelink type="flash">../../../resources/icons/smallschematics/aspects/CSX-2014-Chessie/CO-3-1g-hi/rule-C1281Bf.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Limited Clear</aspectname>
+      <show>red</show>
+      <show>flashgreen</show>
+      <reference>C1281C (b) (sic)</reference>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/CSX-2014-Chessie/CO-3-1g-hi/rule-C1281C.gif</imagelink>
+      <imagelink type="flash">../../../resources/icons/smallschematics/aspects/CSX-2014-Chessie/CO-3-1g-hi/rule-C1281Cf.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach Medium</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <reference>C1282 (b)</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CSX-2014-Chessie/CO-3-1g-hi/rule-C1282.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Medium Clear</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <reference>C1283 (b)</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CSX-2014-Chessie/CO-3-1g-hi/rule-C1283.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <show>dark</show>
+      <reference>C1285 (c)</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CSX-2014-Chessie/CO-3-1g-hi/rule-C1285.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Restricted Proceed</aspectname>
+      <show>red</show>
+      <show>dark</show>
+      <reference>C1291 (a)</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CSX-2014-Chessie/CO-3-1g-hi/rule-C1291.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Unlit</aspectname>
+      <show>dark</show>
+      <show>dark</show>
+      <reference>-</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CSX-2014-Chessie/CO-3-1g-hi/CO-3-1g-hi.gif</imagelink>
+    </appearance>
+  </appearances>
+  <specificappearances>
+    <danger>
+      <aspect>Restricted Proceed</aspect>
+    </danger>
+    <permissive>
+      <aspect>Restricted Proceed</aspect>
+    </permissive>
+    <held>
+      <aspect>Restricted Proceed</aspect>
+    </held>
+    <dark>
+      <aspect>Unlit</aspect>
+    </dark>
+  </specificappearances>
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Limited Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Limited</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Limited Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Limited Clear</advancedAspect>
+      <ourAspect>Approach Limited</ourAspect>
+      <ourAspect>Limited Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Limited Approach</advancedAspect>
+      <ourAspect>Approach Limited</ourAspect>
+      <ourAspect>Limited Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Medium</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Limited Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium Clear</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium Approach Medium</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium Approach Slow</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Slow</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium Approach</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Slow Clear</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricted Proceed</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Unlit</advancedAspect>
+      <ourAspect>Restricted Proceed</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+</appearancetable>
