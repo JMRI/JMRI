@@ -152,6 +152,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                     setOperationAborted(true);
                     log.info(msg);
                 }
+                enableDownloadVerifyButtons();
             }
         });
     }
