@@ -1,6 +1,5 @@
 package jmri.jmrit.consisttool;
 
-import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ConsistDataModel extends AbstractTableModel {
 
-    final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.consisttool.ConsistTool");
     static private final int ADDRCOLUMN = 0;    // Locomotive address
     static private final int ROSTERCOLUMN = 1;  // Roster Entry, this exists
     static private final int DIRECTIONCOLUMN = 2;  // Relative Direction
@@ -82,11 +80,11 @@ public class ConsistDataModel extends AbstractTableModel {
     public String getColumnName(int col) {
         switch (col) {
             case ADDRCOLUMN:
-                return rb.getString("AddressColumnLabel");
+                return Bundle.getMessage("AddressColumnLabel");
             case ROSTERCOLUMN:
-                return rb.getString("RosterColumnLabel");
+                return Bundle.getMessage("RosterColumnLabel");
             case DIRECTIONCOLUMN:
-                return rb.getString("DirectionColumnLabel");
+                return Bundle.getMessage("DirectionColumnLabel");
             default:
                 return "";
         }
@@ -140,7 +138,7 @@ public class ConsistDataModel extends AbstractTableModel {
             case DIRECTIONCOLUMN:
                 return (Boolean.valueOf(_consist.getLocoDirection(_consist.getConsistList().get(row))));
             case DELCOLUMN:
-                return rb.getString("DeleteColumnButtonLabel");
+                return Bundle.getMessage("DeleteColumnButtonLabel");
             default:
                 return ("");
         }
