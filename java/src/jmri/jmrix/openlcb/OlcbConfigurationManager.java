@@ -436,6 +436,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
                     new Thread(() -> {
                         olcbCanInterface.initialize();
                     }).start();
+                    timer.stop();
                 }
             };
 
