@@ -46,6 +46,7 @@ public class SystemInfoActionTest {
         Assert.assertNotNull(frame);
         // verify the action provided the expected frame class
         Assert.assertEquals(SystemInfoFrame.class.getName(), frame.getClass().getName());
+        frame.dispose();
     }
 
     @Before
