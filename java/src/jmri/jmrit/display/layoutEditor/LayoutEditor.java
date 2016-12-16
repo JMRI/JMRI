@@ -113,7 +113,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     // size of point boxes
-    private static final double SIZE = 3.0;
+    //private static final double SIZE = 3.0;
+    private static final double SIZE = 1.0; //gaw - increase range by two steps
     private static final double SIZE2 = SIZE * 2.;  // must be twice SIZE
 
     // connection types
@@ -284,14 +285,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private Color[] textColors = new Color[13];
     private Color[] backgroundColors = new Color[13];
     private Color[] turnoutCircleColors = new Color[14];
-    private int[] turnoutCircleSizes = new int[8];
+    //private int[] turnoutCircleSizes = new int[8];
+    private int[] turnoutCircleSizes = new int[10]; //gaw - add two smaller circle sizes
     private JRadioButtonMenuItem[] trackColorMenuItems = new JRadioButtonMenuItem[13];
     private JRadioButtonMenuItem[] trackOccupiedColorMenuItems = new JRadioButtonMenuItem[13];
     private JRadioButtonMenuItem[] trackAlternativeColorMenuItems = new JRadioButtonMenuItem[13];
     private JRadioButtonMenuItem[] backgroundColorMenuItems = new JRadioButtonMenuItem[13];
     private JRadioButtonMenuItem[] textColorMenuItems = new JRadioButtonMenuItem[13];
     private JRadioButtonMenuItem[] turnoutCircleColorMenuItems = new JRadioButtonMenuItem[14];
-    private JRadioButtonMenuItem[] turnoutCircleSizeMenuItems = new JRadioButtonMenuItem[8];
+    //private JRadioButtonMenuItem[] turnoutCircleSizeMenuItems = new JRadioButtonMenuItem[8];
+    private JRadioButtonMenuItem[] turnoutCircleSizeMenuItems = new JRadioButtonMenuItem[10]; //gaw - add two smaller circle sizes
     private int trackColorCount = 0;
     private int trackOccupiedColorCount = 0;
     private int trackAlternativeColorCount = 0;
@@ -378,7 +381,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private Color defaultBackgroundColor = Color.lightGray;
     private Color defaultTextColor = Color.black;
     private Color turnoutCircleColor = defaultTrackColor; //matches earlier versions
-    private int turnoutCircleSize = 2;  //matches earlier versions
+    //private int turnoutCircleSize = 2;  //matches earlier versions
+    private int turnoutCircleSize = 4;  //gaw - bumped up so still pointing at same default size
     private String layoutName = "";
     private double xScale = 1.0;
     private double yScale = 1.0;
@@ -408,7 +412,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private boolean savedShowHelpBar = false;
 
     // zoom
-    private double maxZoom = 4.0;
+    //private double maxZoom = 4.0;
+    private double maxZoom = 6.0; //gaw - expand zoom range by two steps larger
     private double minZoom = 0.25;
     private double stepUnderOne = 0.25;
     private double stepOverOne = 0.5;
@@ -1478,6 +1483,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu, "6", 6);
         addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu, "7", 7);
         addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu, "8", 8);
+        addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu, "9", 9); //gaw - increase size choices by 1
+        addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu, "10", 10); //gaw - increase size choices by 2
         turnoutOptionsMenu.add(turnoutCircleSizeMenu);
 
         // enable drawing of unselected leg (helps when diverging angle is small)
@@ -1547,6 +1554,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JRadioButtonMenuItem noZoomItem = new JRadioButtonMenuItem(rb.getString("NoZoom"));
         JRadioButtonMenuItem zoom30Item = new JRadioButtonMenuItem("x 3.0");
         JRadioButtonMenuItem zoom40Item = new JRadioButtonMenuItem("x 4.0");
+        JRadioButtonMenuItem zoom50Item = new JRadioButtonMenuItem("x 5.0"); //gaw - add zoom to 5x
+        JRadioButtonMenuItem zoom60Item = new JRadioButtonMenuItem("x 6.0"); //gaw - add zoom to 6x
 
         JMenuItem zoomInItem = new JMenuItem(rb.getString("ZoomIn"));
         zoomInItem.setMnemonic(stringsToVTCodes.get(rb.getString("zoomInMnemonic")));
@@ -1577,6 +1586,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     case 300:   zoom30Item.setSelected(true);
                                 break;
                     case 400:   zoom40Item.setSelected(true);
+                                break;
+                    case 500:   zoom50Item.setSelected(true); //gaw - expand zoom
+                                break;
+                    case 600:   zoom60Item.setSelected(true); //gaw - expand zoom
                                 break;
                     default:
                         log.warn("Unexpected newZoom {}  in setupZoomMenu", newZoom);
@@ -1613,6 +1626,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     case 300:   zoom30Item.setSelected(true);
                                 break;
                     case 400:   zoom40Item.setSelected(true);
+                                break;
+                    case 500:   zoom50Item.setSelected(true); //gaw - expand zoom
+                                break;
+                    case 600:   zoom60Item.setSelected(true); //gaw - expand zoom
                                 break;
                     default:
                         log.warn("Unexpected newZoom {}  in setupZoomMenu", newZoom);
@@ -1684,6 +1701,23 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         });
         zoomButtonGroup.add(zoom40Item);
+
+        zoomMenu.add(zoom50Item); //gaw - expand zoom
+        zoom50Item.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                setZoom(5.0);
+            }
+        });
+        zoomButtonGroup.add(zoom50Item);
+
+        zoomMenu.add(zoom60Item); //gaw - expand zoom
+        zoom60Item.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                setZoom(6.0);
+            }
+        });
+        zoomButtonGroup.add(zoom60Item);
+        
         noZoomItem.setSelected(true);
     }
 
@@ -3204,12 +3238,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             selectedObject = null;
             for (int i = 0; i < turnoutList.size(); i++) {
                 LayoutTurnout t = turnoutList.get(i);
-                // check a rectangle as large as turnout circle, but at least size 4
+                //gaw - comment moved to where it belongs
                 Point2D pt = t.getCoordsCenter();
                 double size = SIZE * turnoutCircleSize;
-                if (size < SIZE2 * 2.0) {
-                    size = SIZE2 * 2.0;
-                }
+                //gaw - after comment moved whole if statement commented out
+                //// check a rectangle as large as turnout circle, but at least size 4
+                //if (size < SIZE2 * 2.0) {
+                //    size = SIZE2 * 2.0;
+                //}
                 Rectangle2D r = new Rectangle2D.Double(
                         pt.getX() - size, pt.getY() - size, size + size, size + size);
                 if (r.contains(dLoc)) {
