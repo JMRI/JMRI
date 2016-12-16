@@ -434,6 +434,8 @@
  </indexitem>
  <indexitem text="SRCP " target="html.hardware.SRCP.index"/>
 
+ <indexitem text="System Console " target="package.apps.SystemConsole"/>
+
  <indexitem text="Tables ">
   <indexitem text="Audio Table " target="package.jmri.jmrit.beantable.AudioTable"/>
 
