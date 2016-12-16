@@ -16,8 +16,8 @@ public interface WebServerConfiguration {
     /**
      * Get paths that are to be returned by the web server as individual files
      * or directory listings. Note that all files or directories listed must be
-     * in the
-     * {@link jmri.util.FileUtil#PREFERENCES}, {@link jmri.util.FileUtil#SETTINGS},
+     * in the {@link jmri.util.FileUtil#PREFERENCES},
+     * {@link jmri.util.FileUtil#PROFILE}, {@link jmri.util.FileUtil#SETTINGS},
      * or {@link jmri.util.FileUtil#PROGRAM} JMRI portable path.
      *
      * @return a map containing the web path as the key, and the path on disk as
