@@ -153,7 +153,10 @@ public final class WebServer implements LifeCycle.Listener {
      * Get the public URI for a portable path. This method returns public URIs
      * for only some portable paths, and does not check that the portable path
      * is actually sane. Note that this refuses to return portable paths that
-     * are outside of program: and preference:
+     * are outside of {@link jmri.util.FileUtil#PREFERENCES},
+     * {@link jmri.util.FileUtil#PROFILE},
+     * {@link jmri.util.FileUtil#SETTINGS}, or
+     * {@link jmri.util.FileUtil#PROGRAM}.
      *
      * @param path the JMRI portable path
      * @return The servable URI or null
@@ -162,6 +165,10 @@ public final class WebServer implements LifeCycle.Listener {
     public static String URIforPortablePath(String path) {
         if (path.startsWith(FileUtil.PREFERENCES)) {
             return path.replaceFirst(FileUtil.PREFERENCES, "/prefs/"); // NOI18N
+        } else if (path.startsWith(FileUtil.PROFILE)) {
+            return path.replaceFirst(FileUtil.PROFILE, "/project/"); // NOI18N
+        } else if (path.startsWith(FileUtil.SETTINGS)) {
+            return path.replaceFirst(FileUtil.SETTINGS, "/settings/"); // NOI18N
         } else if (path.startsWith(FileUtil.PROGRAM)) {
             return path.replaceFirst(FileUtil.PROGRAM, "/dist/"); // NOI18N
         } else {
@@ -192,12 +199,23 @@ public final class WebServer implements LifeCycle.Listener {
     }
 
     /**
-     * Register a URL pattern to return resources from the file system.
+     * Register a URL pattern to return resources from the file system. The
+     * filePath may start with any of the following:
+     * <ol>
+     * <ul>{@link jmri.util.FileUtil#PREFERENCES}</ul>
+     * <ul>{@link jmri.util.FileUtil#PROFILE}</ul>
+     * <ul>{@link jmri.util.FileUtil#SETTINGS}</ul>
+     * <ul>{@link jmri.util.FileUtil#PROGRAM}</ul>
+     * </ol>
+     * Note that the filePath can be overridden by an otherwise identical
+     * filePath starting with any of the portable paths above it in the
+     * preceding list.
      *
      * @param urlPattern the pattern to get resources for
      * @param filePath   the portable path for the resources
      * @throws IllegalArgumentException if urlPattern is already registered to
-     *                                  deny access or for a servlet
+     *                                  deny access or for a servlet or if
+     *                                  filePath is not allowed
      */
     public void registerResource(String urlPattern, String filePath) throws IllegalArgumentException {
         if (this.registeredUrls.get(urlPattern) != null) {
@@ -207,16 +225,33 @@ public final class WebServer implements LifeCycle.Listener {
         ServletContextHandler servletContext = new ServletContextHandler(ServletContextHandler.NO_SECURITY);
         servletContext.setContextPath(urlPattern);
         HandlerList handlers = new HandlerList();
-        if (filePath.startsWith("program:")) { // NOI18N
+        if (filePath.startsWith(FileUtil.PROGRAM) && !filePath.equals(FileUtil.PROGRAM)) {
+            // make it possible to override anything under program: with an identical path under preference:, profile:, or settings:
             log.debug("Setting up handler chain for {}", urlPattern);
-            // make it possible to override anything under program: with an identical path under preference:
-            ResourceHandler preferenceHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath.replace("program:", "preference:"))); // NOI18N
+            ResourceHandler preferenceHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath.replace(FileUtil.PROGRAM, FileUtil.PREFERENCES)));
+            ResourceHandler projectHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath.replace(FileUtil.PROGRAM, FileUtil.PROFILE)));
+            ResourceHandler settingsHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath.replace(FileUtil.PROGRAM, FileUtil.SETTINGS)));
             ResourceHandler programHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath));
-            handlers.setHandlers(new Handler[]{preferenceHandler, programHandler, new DefaultHandler()});
-        } else {
+            handlers.setHandlers(new Handler[]{preferenceHandler, projectHandler, settingsHandler, programHandler, new DefaultHandler()});
+        } else if (filePath.startsWith(FileUtil.SETTINGS) && !filePath.equals(FileUtil.SETTINGS)) {
+            // make it possible to override anything under settings: with an identical path under preference: or profile:
+            log.debug("Setting up handler chain for {}", urlPattern);
+            ResourceHandler preferenceHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath.replace(FileUtil.SETTINGS, FileUtil.PREFERENCES)));
+            ResourceHandler projectHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath.replace(FileUtil.PROGRAM, FileUtil.PROFILE)));
+            ResourceHandler settingsHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath));
+            handlers.setHandlers(new Handler[]{preferenceHandler, projectHandler, settingsHandler, new DefaultHandler()});
+        } else if (filePath.startsWith(FileUtil.PROFILE) && !filePath.equals(FileUtil.PROFILE)) {
+            // make it possible to override anything under profile: with an identical path under preference:
+            log.debug("Setting up handler chain for {}", urlPattern);
+            ResourceHandler preferenceHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath.replace(FileUtil.SETTINGS, FileUtil.PREFERENCES)));
+            ResourceHandler projectHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath.replace(FileUtil.PROGRAM, FileUtil.PROFILE)));
+            handlers.setHandlers(new Handler[]{preferenceHandler, projectHandler, new DefaultHandler()});
+        } else if (FileUtil.isPortableFilename(filePath)) {
             log.debug("Setting up handler chain for {}", urlPattern);
             ResourceHandler handler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath));
             handlers.setHandlers(new Handler[]{handler, new DefaultHandler()});
+        } else if (URIforPortablePath(filePath) == null) {
+            throw new IllegalArgumentException("\"" + filePath + "\" is not allowed.");
         }
         ContextHandler handlerContext = new ContextHandler();
         handlerContext.setContextPath(urlPattern);
