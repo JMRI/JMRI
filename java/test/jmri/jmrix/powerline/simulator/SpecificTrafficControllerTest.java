@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * connection
  * @author kcameron Copyright (C) 2011
  */
-public class SpecificTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
+public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTrafficControllerTest {
 
     SerialTrafficController t = null;
     SerialSystemConnectionMemo m = null;

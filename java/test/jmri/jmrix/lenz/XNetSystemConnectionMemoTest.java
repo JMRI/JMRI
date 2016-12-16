@@ -42,6 +42,36 @@ public class XNetSystemConnectionMemoTest extends TestCase {
         Assert.assertNotNull(tc.getSystemConnectionMemo());
     }
 
+    public void testProivdesConsistManagerMultiMaus() {
+        // infrastructure objects
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation(){
+          @Override
+          public int getCommandStationType(){
+              return(0x10); // MultiMaus
+          };
+        });
+
+        XNetSystemConnectionMemo t = new XNetSystemConnectionMemo();
+        t.setXNetTrafficController(tc);
+        t.setCommandStation(tc.getCommandStation());
+        Assert.assertFalse(t.provides(jmri.ConsistManager.class));
+    }
+
+    public void testProivdesConsistManagerLZV100() {
+        // infrastructure objects
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation(){
+          @Override
+          public int getCommandStationType(){
+              return(0x00); // LZV100
+          };
+        });
+
+        XNetSystemConnectionMemo t = new XNetSystemConnectionMemo();
+        t.setXNetTrafficController(tc);
+        t.setCommandStation(tc.getCommandStation());
+        Assert.assertTrue(t.provides(jmri.ConsistManager.class));
+    }
+
     // from here down is testing infrastructure
     public XNetSystemConnectionMemoTest(String s) {
         super(s);

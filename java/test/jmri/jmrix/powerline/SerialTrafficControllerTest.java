@@ -1,4 +1,4 @@
-package jmri.jmrix;
+package jmri.jmrix.powerline;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -10,61 +10,22 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.AbstractMRListener;
+import jmri.jmrix.AbstractMRMessage;
+import jmri.jmrix.AbstractMRReply;
 
 /**
- * Tests for AbstractMRTrafficController.
+ * Tests for SerialTrafficController.
  * @author Paul Bender Copyright (C) 2016
  */
-public class AbstractMRTrafficControllerTest {
+public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
     
-    // derived classes should set the value of tc appropriately.
-    protected AbstractMRTrafficController tc;
-
-    @Test
-    public void testCtor() {
-        Assert.assertNotNull(tc);
-    }
-
-    @Test(expected = java.lang.NullPointerException.class)
-    public void testAddNullListener(){
-        tc.addListener(null);
-    }
-
-    @Test
-    public void testPortReadyToSendNullController(){
-        try {
-            Assert.assertFalse(tc.portReadyToSend(null));
-        } catch (java.lang.Exception e){
-           e.printStackTrace();
-           Assert.fail("Unexpected Exception calling portReadyToSend");
-        }
-    }
-
-    @Test
-    public void testGetLastSenderNull(){
-           // new tc, so getLastSender should return null.
-           Assert.assertNull(tc.getLastSender());
-    }
-
-    @Test
-    public void testHasTimeouts(){
-           // new tc, so hasTimeouts should return false.
-           Assert.assertFalse(tc.hasTimeouts());
-    }
-
-    @Test
-    public void testStatus(){
-           // new tc, but unconnected, so status should return false.
-           Assert.assertFalse(tc.hasTimeouts());
-    }
-
+    @Override
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp(); 
         JUnitUtil.resetInstanceManager();
-        tc = new AbstractMRTrafficController(){
-           @Override
-           protected void setInstance() {};
+        tc = new SerialTrafficController(){
            @Override
            protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m){
            }
@@ -85,6 +46,7 @@ public class AbstractMRTrafficControllerTest {
         };
     }
 
+    @Override
     @After
     public void tearDown(){
        tc = null;
