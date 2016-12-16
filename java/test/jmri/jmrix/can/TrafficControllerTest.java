@@ -1,4 +1,4 @@
-package jmri.jmrix;
+package jmri.jmrix.can;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -10,59 +10,33 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.AbstractMRListener;
+import jmri.jmrix.AbstractMRMessage;
+import jmri.jmrix.AbstractMRReply;
 
 /**
- * Tests for AbstractMRTrafficController.
+ * Tests for TrafficController.
  * @author Paul Bender Copyright (C) 2016
  */
-public class AbstractMRTrafficControllerTest {
-    
-    // derived classes should set the value of tc appropriately.
-    protected AbstractMRTrafficController tc;
-
+public class TrafficControllerTest extends AbstractCanTrafficControllerTest {
+   
     @Test
-    public void testCtor() {
-        Assert.assertNotNull(tc);
-    }
-
-    @Test(expected = java.lang.NullPointerException.class)
-    public void testAddNullListener(){
-        tc.addListener(null);
+    public void testGetCanid(){
+        Assert.assertEquals("default canid value",120,((TrafficController)tc).getCanid());
     }
 
     @Test
-    public void testPortReadyToSendNullController(){
-        try {
-            Assert.assertFalse(tc.portReadyToSend(null));
-        } catch (java.lang.Exception e){
-           e.printStackTrace();
-           Assert.fail("Unexpected Exception calling portReadyToSend");
-        }
+    public void testSetCanid(){
+        ((TrafficController)tc).setCanId(240);
+        Assert.assertEquals("canid value after set",240,((TrafficController)tc).getCanid());
     }
-
-    @Test
-    public void testGetLastSenderNull(){
-           // new tc, so getLastSender should return null.
-           Assert.assertNull(tc.getLastSender());
-    }
-
-    @Test
-    public void testHasTimeouts(){
-           // new tc, so hasTimeouts should return false.
-           Assert.assertFalse(tc.hasTimeouts());
-    }
-
-    @Test
-    public void testStatus(){
-           // new tc, but unconnected, so status should return false.
-           Assert.assertFalse(tc.hasTimeouts());
-    }
-
+ 
+    @Override
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp(); 
         JUnitUtil.resetInstanceManager();
-        tc = new AbstractMRTrafficController(){
+        tc = new TrafficController(){
            @Override
            protected void setInstance() {};
            @Override
@@ -82,9 +56,21 @@ public class AbstractMRTrafficControllerTest {
            protected AbstractMRReply newReply() { return null; }
            @Override
            protected boolean endOfMessage(AbstractMRReply r) {return true; }
+           @Override
+           protected AbstractMRMessage newMessage() { return null; }
+           @Override
+           public CanReply decodeFromHardware(AbstractMRReply m) { return null; }
+           @Override
+           public AbstractMRMessage encodeForHardware(CanMessage m) { return null; }
+
+           public void sendCanMessage(CanMessage m, CanListener l) {}
+           public void addCanListener(CanListener l) {}
+           public void removeCanListener(CanListener l) {}
+
         };
     }
 
+    @Override
     @After
     public void tearDown(){
        tc = null;

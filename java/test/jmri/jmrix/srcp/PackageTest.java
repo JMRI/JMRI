@@ -45,6 +45,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.srcp.configurexml.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.srcp.swing.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPPortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPTrafficControllerTest.class));
 
         return suite;
     }
