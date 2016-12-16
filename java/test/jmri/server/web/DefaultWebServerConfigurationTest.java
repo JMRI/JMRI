@@ -33,6 +33,11 @@ public class DefaultWebServerConfigurationTest {
     public void tearDown() {
     }
 
+    @Test
+    public void testConstructor() {
+        DefaultWebServerConfiguration instance = new DefaultWebServerConfiguration();
+        Assert.assertNotNull("Default constructor", instance);
+    }
     /**
      * Test of getFilePaths method, of class DefaultWebServerConfiguration.
      */
