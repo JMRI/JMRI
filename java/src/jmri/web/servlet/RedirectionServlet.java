@@ -1,7 +1,6 @@
 package jmri.web.servlet;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Redirect traffic based on the values provided in a properties list.
+ * Redirect traffic to another location.
  *
  * @author Randall Wood (C) 2016
  */
@@ -23,19 +22,7 @@ public class RedirectionServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(RedirectionServlet.class);
 
     public RedirectionServlet() {
-        try {
-            InputStream in;
-            in = RedirectionServlet.class.getResourceAsStream("/jmri/web/server/FilePaths.properties"); // NOI18N
-            try {
-                redirections.load(in);
-            } catch (IOException e) {
-                log.error("Error in servlet creation IO", e);
-            } finally {
-                in.close();
-            }
-        } catch (IOException e) {
-            log.error("Error in servlet creation IO", e);
-        }
+        // do nothing
     }
 
     public RedirectionServlet(String urlPattern, String redirection) {
