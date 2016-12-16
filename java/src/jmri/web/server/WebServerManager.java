@@ -77,25 +77,25 @@ public class WebServerManager {
         };
         try {
             Element MSRoot = xmlFile.rootFromFile(MSFile);
-            Element WSRoot = new Element(WebServerPreferences.WebServerPreferences);
+            Element WSRoot = new Element(WebServerPreferences.WEB_SERVER_PREFERENCES);
             Element MSPrefs = MSRoot.getChild("MiniServerPreferences"); // NOI18N
             for (Object pref : MSPrefs.getChildren()) {
                 WSRoot.addContent((Element) pref);
             }
             for (Attribute attr : MSPrefs.getAttributes()) {
                 if (attr.getName().equals("getDisallowedFrames")) { // NOI18N
-                    Element DF = new Element(WebServerPreferences.DisallowedFrames);
+                    Element DF = new Element(WebServerPreferences.DISALLOWED_FRAMES);
                     String[] frames = attr.getValue().split("\\n"); // NOI18N
                     for (String frame : frames) {
-                        DF.addContent(new Element(WebServerPreferences.Frame).addContent(frame));
+                        DF.addContent(new Element(WebServerPreferences.FRAME).addContent(frame));
                     }
                     WSRoot.addContent(DF);
                 } else if (attr.getName().equals("getPort")) { // NOI18N
-                    WSRoot.setAttribute(WebServerPreferences.Port, attr.getValue());
+                    WSRoot.setAttribute(WebServerPreferences.PORT, attr.getValue());
                 } else if (attr.getName().equals("getClickDelay")) { // NOI18N
-                    WSRoot.setAttribute(WebServerPreferences.ClickDelay, attr.getValue());
+                    WSRoot.setAttribute(WebServerPreferences.CLICK_DELAY, attr.getValue());
                 } else if (attr.getName().equals("getRefreshDelay")) { // NOI18N
-                    WSRoot.setAttribute(WebServerPreferences.RefreshDelay, attr.getValue());
+                    WSRoot.setAttribute(WebServerPreferences.REFRESH_DELAY, attr.getValue());
                 } else {
                     // double cast because clone() is Protected on Object
                     WSRoot.setAttribute(attr.clone());
@@ -119,9 +119,7 @@ public class WebServerManager {
 
             xmlFile.writeXML(WSFile, WSDoc);
 
-        } catch (IOException ex) {
-            log.error("Error converting miniServer preferences to Web Server preferences.", ex);
-        } catch (JDOMException ex) {
+        } catch (IOException | JDOMException ex) {
             log.error("Error converting miniServer preferences to Web Server preferences.", ex);
         }
     }

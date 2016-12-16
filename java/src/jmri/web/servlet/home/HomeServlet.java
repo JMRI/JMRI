@@ -4,6 +4,7 @@ import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,14 +13,11 @@ import jmri.web.servlet.ServletUtil;
 
 /**
  *
- * @author Randall Wood (C) 2014
+ * @author Randall Wood (C) 2014, 2016
  */
+@WebServlet(name = "HomeServlet",
+        urlPatterns = {"/"})
 public class HomeServlet extends HttpServlet {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1852868042825396772L;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (!request.getRequestURI().equals("/")) {
