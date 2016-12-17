@@ -12,7 +12,7 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2016
  **/
 
-public class SpecificTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
+public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTrafficControllerTest {
         
    private SpecificSystemConnectionMemo memo = null;
 

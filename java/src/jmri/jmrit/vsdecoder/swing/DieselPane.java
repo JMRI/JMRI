@@ -120,6 +120,11 @@ public class DieselPane extends EnginePane {
                 engine_started,
                 start_button.isSelected()));
         engine_started = start_button.isSelected();
+        if (engine_started) { // switch button name to make the panel more responsive
+            start_button.setText(Bundle.getMessage("ButtonEngineStop"));
+        } else {
+            start_button.setText(Bundle.getMessage("ButtonEngineStart"));
+        }
     }
 
     /**

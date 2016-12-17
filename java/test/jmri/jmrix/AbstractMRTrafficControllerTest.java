@@ -46,6 +46,18 @@ public class AbstractMRTrafficControllerTest {
            Assert.assertNull(tc.getLastSender());
     }
 
+    @Test
+    public void testHasTimeouts(){
+           // new tc, so hasTimeouts should return false.
+           Assert.assertFalse(tc.hasTimeouts());
+    }
+
+    @Test
+    public void testStatus(){
+           // new tc, but unconnected, so status should return false.
+           Assert.assertFalse(tc.hasTimeouts());
+    }
+
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp(); 
