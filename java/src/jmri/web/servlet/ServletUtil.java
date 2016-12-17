@@ -67,7 +67,7 @@ public class ServletUtil {
     }
 
     /**
-     * Create a common navigation footer.
+     * Create a common navigation header.
      *
      * @param locale  If a template is not available in locale, will return US
      *                English.

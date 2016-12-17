@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
    ConsistFileTest.class,
    ConsistToolActionTest.class,
    ConsistDataModelTest.class,
-   ConsistToolFrameTest.class
+   ConsistToolFrameTest.class,
+   BundleTest.class
 })
 
 /**

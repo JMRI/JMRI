@@ -31,7 +31,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SerialTurnoutManagerTest.class));
         suite.addTest(SerialMessageTest.suite());
         suite.addTest(SerialReplyTest.suite());
-        suite.addTest(SerialTrafficControllerTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SerialTrafficControllerTest.class));
         suite.addTest(SerialAddressTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.tmcc.serialdriver.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.tmcc.configurexml.PackageTest.class));

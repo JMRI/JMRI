@@ -1,13 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.web.servlet;
 
 import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author rhwood
  */
+@WebServlet(name = "DenialServlet",
+        urlPatterns = {"/prefs/networkServices"})
 public class DenialServlet extends HttpServlet {
 
     @Override

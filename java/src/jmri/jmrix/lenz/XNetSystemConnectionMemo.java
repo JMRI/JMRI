@@ -224,7 +224,7 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         } else if (type.equals(jmri.LightManager.class)) {
             return true;
         } else if (type.equals(jmri.ConsistManager.class)) {
-            return true;
+            return (((LenzCommandStation)getCommandStation()).getCommandStationType()!=0x10);
         } else if (type.equals(jmri.CommandStation.class)) {
             return true;
         } else {
