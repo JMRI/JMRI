@@ -111,19 +111,9 @@ class SerialPortDevice(jmri.jmrit.automat.AbstractAutomaton) :
         
 # end of class definition
 
-# Example
+# Example of use
 
-# create one of these; provide the name of the serial port
-# a = SerialPortDevice()
-# a.open("COM1")
-
-# set the thread name, so easy to cancel if needed
-# a.setName("SerialPortTest sample script")
-
-# start running
-# a.start();
-
-#execfile("jython/SerialPortDevice.py")
+#execfile("jython/serialinput/SerialPortDevice.py")
 #a = SerialPortDevice()
 #a.open("/dev/cu.usbmodem1411")
 #a.start()
