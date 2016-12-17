@@ -202,10 +202,10 @@ public final class WebServer implements LifeCycle.Listener {
      * Register a URL pattern to return resources from the file system. The
      * filePath may start with any of the following:
      * <ol>
-     * <ul>{@link jmri.util.FileUtil#PREFERENCES}</ul>
-     * <ul>{@link jmri.util.FileUtil#PROFILE}</ul>
-     * <ul>{@link jmri.util.FileUtil#SETTINGS}</ul>
-     * <ul>{@link jmri.util.FileUtil#PROGRAM}</ul>
+     * <li>{@link jmri.util.FileUtil#PREFERENCES}
+     * <li>{@link jmri.util.FileUtil#PROFILE}
+     * <li>{@link jmri.util.FileUtil#SETTINGS}
+     * <li>{@link jmri.util.FileUtil#PROGRAM}
      * </ol>
      * Note that the filePath can be overridden by an otherwise identical
      * filePath starting with any of the portable paths above it in the

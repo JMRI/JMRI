@@ -5,10 +5,11 @@ import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.Vector;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,15 +18,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2006
  */
-public class SerialTrafficControllerTest extends TestCase {
+public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTrafficControllerTest {
 
-    public void testCreate() {
-        SerialTrafficController m = new SerialTrafficController();
-        Assert.assertNotNull("exists", m);
-    }
-
+    @Test
     public void testSerialNodeEnumeration() {
-        SerialTrafficController c = new SerialTrafficController();
+        SerialTrafficController c = (SerialTrafficController)tc;
         SerialNode b = new SerialNode(1, 0);
         SerialNode f = new SerialNode(3, 0);
         SerialNode d = new SerialNode(2, 0);
@@ -136,29 +133,17 @@ public class SerialTrafficControllerTest extends TestCase {
     static DataOutputStream tistream; // tests write to this
     static DataInputStream istream;  // so the traffic controller can read from this
 
-    // from here down is testing infrastructure
-    public SerialTrafficControllerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SerialTrafficControllerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialTrafficControllerTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
+    @Override
+    @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        tc = new SerialTrafficController();
     }
 
-    protected void tearDown() {
+    @Override
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 

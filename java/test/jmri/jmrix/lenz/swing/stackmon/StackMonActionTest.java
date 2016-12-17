@@ -42,6 +42,7 @@ public class StackMonActionTest {
         Assert.assertNotNull(frame);
         // verify the action provided the expected frame class
         Assert.assertEquals(StackMonFrame.class.getName(), frame.getClass().getName());
+        frame.dispose();
     }
 
     // The minimal setup for log4J

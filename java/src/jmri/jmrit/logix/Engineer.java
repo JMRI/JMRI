@@ -180,6 +180,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 if (command.equals("SPEED")) {
                     float speed = Float.parseFloat(ts.getValue());
                     _lock.lock();
+                    if (log.isTraceEnabled()) log.trace("SPEED CMD: speed= {} type= \"{}\"", speed, _speedType);
                     try {
                         _normalSpeed = speed;
                         float speedMod = modifySpeed(speed, _speedType);
@@ -370,6 +371,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     protected float modifySpeed(float tSpeed, String sType) {
+        if (log.isTraceEnabled()) log.trace("modifySpeed speed= {} for SpeedType= \"{}\"", tSpeed, sType);
         if (sType.equals(Warrant.Stop)) {
             return 0.0f;
         }
@@ -380,36 +382,35 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (sType.equals(Warrant.Normal)) {
             return throttleSpeed;
         }
-        float mapSpeed = _speedMap.getSpeed(sType);
+        float signalSpeed = _speedMap.getSpeed(sType);
+        if (log.isTraceEnabled()) log.trace("modifySpeed signalSpeed= {}", signalSpeed);
 
         switch (_speedMap.getInterpretation()) {
             case SignalSpeedMap.PERCENT_NORMAL:
-                throttleSpeed *= mapSpeed / 100;      // ratio of normal
+                throttleSpeed *= signalSpeed / 100;      // ratio of normal
                 break;
             case SignalSpeedMap.PERCENT_THROTTLE:
-                mapSpeed = mapSpeed / 100;            // ratio of full throttle setting
-                if (mapSpeed < throttleSpeed) {
-                    throttleSpeed = mapSpeed;
+                signalSpeed = signalSpeed / 100;            // ratio of full throttle setting
+                if (signalSpeed < throttleSpeed) {
+                    throttleSpeed = signalSpeed;
                 }
                 break;
 
             case SignalSpeedMap.SPEED_MPH:          // miles per hour
-                mapSpeed = mapSpeed / jmri.InstanceManager.getDefault(SignalSpeedMap.class
-                ).getLayoutScale();
-                mapSpeed = mapSpeed / 2.2369363f;  // layout track speed mph
-                mapSpeed = mapSpeed / getThrottleFactor(throttleSpeed);
-                if (mapSpeed < throttleSpeed) {
-                    throttleSpeed = mapSpeed;
+                signalSpeed = signalSpeed / _speedMap.getLayoutScale();
+                signalSpeed = signalSpeed / 2.2369363f;  // layout track speed mph
+                signalSpeed = signalSpeed / getThrottleFactor(throttleSpeed);
+                if (signalSpeed < throttleSpeed) {
+                    throttleSpeed = signalSpeed;
                 }
                 break;
 
             case SignalSpeedMap.SPEED_KMPH:
-                mapSpeed = mapSpeed / jmri.InstanceManager.getDefault(SignalSpeedMap.class
-                ).getLayoutScale();
-                mapSpeed = mapSpeed / 3.6f;  // layout track speed mm/ms = kmph
-                mapSpeed = mapSpeed / getThrottleFactor(throttleSpeed);
-                if (mapSpeed < throttleSpeed) {
-                    throttleSpeed = mapSpeed;
+                signalSpeed = signalSpeed / _speedMap.getLayoutScale();
+                signalSpeed = signalSpeed / 3.6f;  // layout track speed mm/ms = kmph
+                signalSpeed = signalSpeed / getThrottleFactor(throttleSpeed);
+                if (signalSpeed < throttleSpeed) {
+                    throttleSpeed = signalSpeed;
                 }
                 break;
             default:
@@ -422,6 +423,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     protected void setSpeed(float s) {
+        if (log.isTraceEnabled()) log.trace("setSpeed({}", s);
         float speed = s;
         _throttle.setSpeedSetting(speed);
         // Do asynchronously, already within a synchronized block
@@ -433,6 +435,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
     
     protected void setSpeedToType(String speedType) {
+        if (log.isTraceEnabled()) log.trace("setSpeedToType({})", speedType);
         float speed = _throttle.getSpeedSetting();
         if (speedType!=null) {
             if (speedType.equals(Warrant.Stop) || speedType.equals(Warrant.EStop)) {
@@ -487,18 +490,16 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     public String getSpeedRestriction() {
         float curSpeed = _throttle.getSpeedSetting();
         String units;
+        float scale = _speedMap.getLayoutScale();
         float speed;
         if (_speedProfile != null) {
-            speed = _speedProfile.getSpeed(curSpeed, _throttle.getIsForward()) / 1000;
+            speed = scale * _speedProfile.getSpeed(curSpeed, _throttle.getIsForward()) / 1000;
         } else {
-            speed = curSpeed * _speedMap.getDefaultThrottleFactor();
-
+            speed = curSpeed * _speedMap.getDefaultThrottleFactor() * 100;
         }
-        speed = speed * jmri.InstanceManager.getDefault(SignalSpeedMap.class
-        ).getLayoutScale();
+//        speed = speed * jmri.InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
 
-        if (jmri.InstanceManager.getDefault(SignalSpeedMap.class
-        ).getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
+        if (_speedMap.getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
             units = "Kmph";
             speed = speed * 3.6f;
         } else {
