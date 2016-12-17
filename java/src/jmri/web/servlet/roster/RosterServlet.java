@@ -71,8 +71,9 @@ public class RosterServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        super.init();
-        this.mapper = new ObjectMapper();
+        if (this.getServletContext().getContextPath().equals("/roster")) { // NOI18N
+            this.mapper = new ObjectMapper();
+        }
     }
 
     /**

@@ -14,7 +14,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import javax.annotation.CheckForNull;
 import javax.imageio.ImageIO;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -46,10 +45,11 @@ abstract class AbstractPanelServlet extends HttpServlet {
     abstract protected String getPanelType();
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        this.mapper = new ObjectMapper();
-        this.mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    public void init() throws ServletException {
+        if (!this.getServletContext().getContextPath().equals("/web/showPanel.html")) {
+            this.mapper = new ObjectMapper();
+            this.mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        }
     }
 
     /**

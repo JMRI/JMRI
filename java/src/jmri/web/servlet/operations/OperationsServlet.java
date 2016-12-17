@@ -45,21 +45,18 @@ import org.slf4j.LoggerFactory;
         })
 public class OperationsServlet extends HttpServlet {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5856610982342205832L;
-
     private ObjectMapper mapper;
 
     private final static Logger log = LoggerFactory.getLogger(OperationsServlet.class);
 
     @Override
     public void init() throws ServletException {
-        super.init();
-        this.mapper = new ObjectMapper();
-        // ensure all operations managers are functional before handling first request
-        OperationsManager.getInstance();
+        // only do complete initialization for default path, not redirections
+        if (this.getServletContext().getContextPath().equals("/operations")) { // NOI18N
+            this.mapper = new ObjectMapper();
+            // ensure all operations managers are functional before handling first request
+            OperationsManager.getInstance();
+        }
     }
 
     /*
