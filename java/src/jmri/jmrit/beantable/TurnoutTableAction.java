@@ -175,7 +175,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 } else if (col == STRAIGHTCOL) {
                     return Bundle.getMessage("ClosedSpeed");
                 } else if (col == VALUECOL) {
-                    return "Cmd";  // override default title
+                    return "Cmd";  // override default title TODO I18N
                 } else if (col == EDITCOL) {
                     return "";
                 } else {
