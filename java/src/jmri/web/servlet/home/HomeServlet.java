@@ -16,10 +16,18 @@ import jmri.web.servlet.ServletUtil;
  * @author Randall Wood (C) 2014, 2016
  */
 @WebServlet(name = "HomeServlet",
-        urlPatterns = {"/"})
+        urlPatterns = {
+            "/", // default
+            "/index.html", // redirect to default since ~ 1 FEB 2014
+            "/prefs/index.html" // some WiThrottle clients require this URL to show web services
+        })
 public class HomeServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (request.getRequestURI().equals("/index.html")
+                || request.getRequestURI().equals("/prefs/index.html")) {
+            response.sendRedirect("/");
+        }
         if (!request.getRequestURI().equals("/")) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
