@@ -16,11 +16,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ReporterIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 729371636139026298L;
-
     public ReporterIcon(Editor editor) {
         // super ctor call to make sure this is a String label
         super("???", editor);

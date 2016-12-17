@@ -100,11 +100,6 @@ public class LocoIcon extends PositionableLabel {
     public boolean showPopUp(JPopupMenu popup) {
         if (_entry != null) {
             popup.add(new AbstractAction("Throttle") {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -1098488345509610672L;
-
                 public void actionPerformed(ActionEvent e) {
                     tf = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
                     tf.getAddressPanel().setRosterEntry(_entry);

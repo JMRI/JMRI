@@ -1,9 +1,10 @@
 package jmri.jmrix.grapevine;
 
-import org.junit.Assert;
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.jmrix.grapevine package.
@@ -36,22 +37,21 @@ public class PackageTest extends TestCase {
         suite.addTest(SerialTurnoutTest1.suite());
         suite.addTest(SerialTurnoutTest2.suite());
         suite.addTest(SerialTurnoutTest3.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialTurnoutManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(SerialTurnoutManagerTest.class));
         suite.addTest(SerialLightTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialLightManagerTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialSensorManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(SerialLightManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(SerialSensorManagerTest.class));
         suite.addTest(SerialNodeTest.suite());
         suite.addTest(SerialMessageTest.suite());
         suite.addTest(SerialReplyTest.suite());
-        suite.addTest(SerialTrafficControllerTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SerialTrafficControllerTest.class));
         suite.addTest(SerialAddressTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.grapevine.serialdriver.PackageTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.grapevine.configurexml.PackageTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(GrapevineMenuTest.class));
-        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
-            suite.addTest(jmri.jmrix.grapevine.serialmon.SerialMonTest.suite());
-        }
-
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.grapevine.serialdriver.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.grapevine.configurexml.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(GrapevineMenuTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.grapevine.serialmon.SerialMonTest.class));
+        suite.addTest(new JUnit4TestAdapter(GrapevineSystemConnectionMemoTest.class));
+        suite.addTest(new JUnit4TestAdapter(SerialPortControllerTest.class));
         return suite;
     }
 

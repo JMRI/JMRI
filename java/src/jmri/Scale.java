@@ -27,8 +27,11 @@ public class Scale {
     public static final int NUM_SCALES = 10;
 
     /**
-     * scaleFactor is a number less than 1 representing the reduction from full
-     * size.
+     * Get the scaleFactor as a number less than 1 representing the reduction
+     * from full size.
+     *
+     * @param scale the scale constant
+     * @return the ratio expressed as a real number
      */
     public static double getScaleFactor(int scale) {
         switch (scale) {
@@ -60,6 +63,9 @@ public class Scale {
     /**
      * Provide a standard human-readable indication of scale that includes both
      * name (letter) and reduction ratio.
+     *
+     * @param scale the scale constant
+     * @return the scale name and ratio for presentation
      */
     public static String getScaleID(int scale) {
         switch (scale) {
@@ -90,6 +96,8 @@ public class Scale {
 
     /**
      * Provide the short name for the scale.
+     * @param scale the scale constant
+     * @return the scale name
      */
     public static String getShortScaleID(int scale) {
         switch (scale) {

@@ -31,6 +31,7 @@ import java.net.URLDecoder;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,6 +58,8 @@ import org.slf4j.LoggerFactory;
  * TODO: Include decoder defs and CVs in roster entry response.
  *
  */
+@WebServlet(name = "RosterServlet",
+        urlPatterns = {"/roster"})
 public class RosterServlet extends HttpServlet {
 
     private transient ObjectMapper mapper;

@@ -27,33 +27,26 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.display");   // no tests in this class itself
-
-        suite.addTest(jmri.jmrit.display.SchemaTest.suite());
-
-        suite.addTest(jmri.jmrit.display.PositionableLabelTest.suite());
-
-        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
-            suite.addTest(jmri.jmrit.display.LinkingLabelTest.suite());
-            suite.addTest(jmri.jmrit.display.MemoryIconTest.suite());
-            suite.addTest(jmri.jmrit.display.MemorySpinnerIconTest.suite());
-            suite.addTest(jmri.jmrit.display.PanelEditorTest.suite());
-            suite.addTest(jmri.jmrit.display.ReporterIconTest.suite());
-            suite.addTest(jmri.jmrit.display.RpsPositionIconTest.suite());
-            suite.addTest(jmri.jmrit.display.SensorIconWindowTest.suite());
-            suite.addTest(jmri.jmrit.display.SignalMastIconTest.suite());
-            suite.addTest(jmri.jmrit.display.SignalSystemTest.suite());
-            suite.addTest(jmri.jmrit.display.TurnoutIconWindowTest.suite());
-            suite.addTest(jmri.jmrit.display.TurnoutIconTest.suite());
-            suite.addTest(jmri.jmrit.display.IndicatorTurnoutIconTest.suite());
-            suite.addTest(jmri.jmrit.display.IconEditorWindowTest.suite());
-        }
-
+        suite.addTest(SchemaTest.suite());
+        suite.addTest(PositionableLabelTest.suite());
+        suite.addTest(LinkingLabelTest.suite());
+        suite.addTest(MemoryIconTest.suite());
+        suite.addTest(MemorySpinnerIconTest.suite());
+        suite.addTest(new JUnit4TestAdapter(PanelEditorTest.class));
+        suite.addTest(ReporterIconTest.suite());
+        suite.addTest(RpsPositionIconTest.suite());
+        suite.addTest(SensorIconWindowTest.suite());
+        suite.addTest(SignalMastIconTest.suite());
+        suite.addTest(SignalSystemTest.suite());
+        suite.addTest(TurnoutIconWindowTest.suite());
+        suite.addTest(TurnoutIconTest.suite());
+        suite.addTest(IndicatorTurnoutIconTest.suite());
+        suite.addTest(IconEditorWindowTest.suite());
         suite.addTest(jmri.jmrit.display.configurexml.PackageTest.suite());
         suite.addTest(jmri.jmrit.display.layoutEditor.PackageTest.suite());
         suite.addTest(jmri.jmrit.display.panelEditor.PackageTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.display.palette.PackageTest.class));
         suite.addTest(jmri.jmrit.display.controlPanelEditor.PackageTest.suite());
-
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new JUnit4TestAdapter(SensorTextEditTest.class));
         suite.addTest(new JUnit4TestAdapter(AnalogClock2DisplayTest.class));
@@ -75,15 +68,16 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SlipIconAdderTest.class));
         suite.addTest(new JUnit4TestAdapter(SlipTurnoutIconTest.class));
         suite.addTest(new JUnit4TestAdapter(SlipTurnoutTextEditTest.class));
-
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

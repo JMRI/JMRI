@@ -37,7 +37,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialSensorManagerTest.class));
         suite.addTest(SerialNodeTest.suite());
         suite.addTest(SerialMessageTest.suite());
-        suite.addTest(SerialTrafficControllerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialTrafficControllerTest.class));
         suite.addTest(SerialAddressTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.oaktree.serialdriver.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.oaktree.configurexml.PackageTest.class));
@@ -45,6 +45,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.oaktree.packetgen.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.oaktree.serialmon.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(OakTreeMenuTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OakTreeSystemConnectionMemoTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialPortControllerTest.class));
         return suite;
     }
 

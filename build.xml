@@ -1249,6 +1249,9 @@
                   <limit counter="LINE" value="COVEREDRATIO" minimum="0.28"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
               </rule>
+              <rule element="PACKAGE">
+                 <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
           </check>
        </jacoco:report>
     </target>
@@ -1313,8 +1316,6 @@
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>
-
-            <sysproperty key="jmri.skipschematests" value="true"/>  <!-- skip schema checks to improve speed -->
 
             <test name="apps.tests.AllTest" outfile="junit-results">
                 <formatter type="xml"/>
@@ -1409,6 +1410,9 @@
                   <limit counter="LINE" value="COVEREDRATIO" minimum="0.28"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
               </rule>
+              <rule element="PACKAGE">
+                 <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
           </check>
        </jacoco:report>
     </target>
@@ -1431,6 +1435,9 @@
               <rule> 
                   <limit counter="LINE" value="COVEREDRATIO" minimum="0.28"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
+              </rule>
+              <rule element="PACKAGE">
+                 <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
               </rule>
           </check>
        </jacoco:report>
@@ -1554,7 +1561,7 @@
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="4866"/><!-- change from default 100 warnings -->
+            <arg value="4500"/><!-- change from default 100 warnings -->
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
 
@@ -2160,10 +2167,8 @@
             <antcall target="checknonascii" />
             <sequential>
                 <antcall target="compile-generated-source" />
-                <parallel>
-                    <antcall target="javadoc" />
-                    <antcall target="ci-test-travis" />
-                </parallel>
+                <antcall target="javadoc" />
+                <antcall target="ci-test-travis" />
             </sequential>
         </parallel>
     </target>
@@ -2174,10 +2179,8 @@
             <antcall target="checknonascii" />
             <sequential>
                 <antcall target="compile-generated-source" />
-                <parallel>
-                    <antcall target="javadoc" />
-                    <antcall target="ci-test-travis-coveragecheck" />
-                </parallel>
+                <antcall target="javadoc" />
+                <antcall target="ci-test-travis-coveragecheck" />
             </sequential>
         </parallel>
     </target>

@@ -150,7 +150,7 @@ public class ListedTableFrame extends BeanTableFrame {
         cardHolder.setDividerSize(8);
         if (lastdivider != 0) {
             cardHolder.setDividerLocation(lastdivider);
-        } else { //Else if no specific size has been given we set it to the lists preferred width
+        } else { // if no specific size has been given we set it to the lists preferred width
             cardHolder.setDividerLocation(listScroller.getPreferredSize().width);
         }
         cardHolder.addPropertyChangeListener(new PropertyChangeListener() {
@@ -280,8 +280,8 @@ public class ListedTableFrame extends BeanTableFrame {
     TabbedTableItem lastSelectedItem = null;
 
     /* This is a bit of a bodge to add the contents to the bottom box and keep
-     * it backwardly compatable with the original views, if the original views
-     * are depreciated then this can be re-written
+     * it backwardly compatible with the original views. When the original views
+     * are deprecated then this can be re-written
      */
     //@TODO Sort out the procedure to add to bottom box
     protected void addToBottomBox(Component comp, String c) {
@@ -491,7 +491,7 @@ public class ListedTableFrame extends BeanTableFrame {
     /**
      * ActionJList This deals with handling non-default mouse operations on the
      * List panel and allows for right click popups and double click to open new
-     * windows of over the items we are hovering over.
+     * windows of the items we are hovering over.
      */
     class ActionJList extends MouseAdapter {
 
@@ -503,7 +503,7 @@ public class ListedTableFrame extends BeanTableFrame {
         ActionJList(BeanTableFrame f) {
             frame = f;
             popUp = new JPopupMenu();
-            menuItem = new JMenuItem("Open in New Window");
+            menuItem = new JMenuItem("Open in New Window"); // TODO I18N
             popUp.add(menuItem);
             menuItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -546,7 +546,7 @@ public class ListedTableFrame extends BeanTableFrame {
 
         javax.swing.Timer clickTimer = null;
 
-        //Records the item index that the mouse is currenlty over
+        //Records the item index that the mouse is currently over
         int mouseItem;
 
         void showPopUp(MouseEvent e) {

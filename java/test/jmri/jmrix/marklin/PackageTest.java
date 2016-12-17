@@ -14,7 +14,11 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
    jmri.jmrix.marklin.networkdriver.PackageTest.class,
    jmri.jmrix.marklin.configurexml.PackageTest.class,
-   jmri.jmrix.marklin.swing.PackageTest.class
+   jmri.jmrix.marklin.swing.PackageTest.class,
+   MarklinConnectionTypeListTest.class,
+   MarklinSystemConnectionMemoTest.class,
+   MarklinTrafficControllerTest.class,
+   MarklinPortControllerTest.class
 })
 /**
  * Tests for the jmri.jmrix.marklin package

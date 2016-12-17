@@ -143,8 +143,7 @@ fichier, qui contient des lettres diacritiques pour la traduction tch&#232;que.
 <P>
 Il y a plusieurs fichiers de propri&#233;t&#233;s qui sont utilis&#233;s pour le contr&#244;le interne,
 et ne devrait pas &#234;tre traduit. Ceux-ci sont marqu&#233;es par un commentaire au sommet
-du fichier. Les exemples sont les apps/AppsStructureBundle.properties,
-jmri/web/serveur/Services.properties et jmri/web/serveur/fichiers FilePaths.properties.
+du fichier. Le exemple sont le apps/AppsStructureBundle.properties.
 
 <p>
 Pour v&#233;rifier votre travail:

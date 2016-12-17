@@ -567,6 +567,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             }
         }
 
+        if (getOccupancySensor() == null)
+            return (UNKNOWN);
         if (getOccupancySensor().getKnownState() != occupiedSense) {
             return (EMPTY);
         } else if (getOccupancySensor().getKnownState() == occupiedSense) {

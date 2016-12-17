@@ -171,7 +171,7 @@ public class WarrantManagerXml //extends XmlFile
             return;
         }
         Element elem = new Element("nxparams");
-        NXFrame nxFrame = NXFrame.getInstance();
+        NXFrame nxFrame = NXFrame.getDefault();
         Element e = new Element("maxspeed");
         e.addContent(Float.toString(nxFrame.getMaxSpeed()));
         elem.addContent(e);
@@ -188,10 +188,12 @@ public class WarrantManagerXml //extends XmlFile
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
         
         // don't continue on to build NXFrame if no content
-        if (shared.getChildren().size() == 0) return true;
+        if (shared.getChildren().isEmpty()) {
+            return true;
+        }
         
         if (!GraphicsEnvironment.isHeadless()) {
-            NXFrame nxFrame = NXFrame.getInstance();
+            NXFrame nxFrame = NXFrame.getDefault();
             loadNXParams(nxFrame, shared.getChild("nxparams"));
 //            nxFrame.init();   don't make visible
         }
@@ -263,6 +265,20 @@ public class WarrantManagerXml //extends XmlFile
             List<Element> throttleCmds = elem.getChildren("throttleCommand");
             for (int k=0; k<throttleCmds.size(); k++) {
                 warrant.addThrottleCommand(loadThrottleCommand(throttleCmds.get(k)));
+            }
+            if (SCWa && throttleCmds.size()<2) {
+                // replicate SCWarrant's hard coded speeds
+                List <BlockOrder> bo = warrant.getBlockOrders();
+                warrant.addThrottleCommand(
+                        new ThrottleSetting(100, "Speed", "0.8", bo.get(0).getBlock().getDisplayName()));
+                for (BlockOrder o: bo) {
+                    warrant.addThrottleCommand(
+                            new ThrottleSetting(100, "NoOp", "Enter Block", o.getBlock().getDisplayName()));                 
+                }
+                warrant.addThrottleCommand(
+                        new ThrottleSetting(0, "Speed", "0.2", bo.get(0).getBlock().getDisplayName()));
+                warrant.addThrottleCommand(
+                        new ThrottleSetting(timeToPlatform, "Speed", "0.0", bo.get(0).getBlock().getDisplayName()));
             }
             Element train = elem.getChild("train");
             if (train!=null) {

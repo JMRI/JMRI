@@ -1,6 +1,7 @@
 //EnginesTableFrameTest.java
 package jmri.jmrit.operations.rollingstock.engines;
 
+import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -11,9 +12,9 @@ import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Setup;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations EnginesTableFrame class
@@ -24,7 +25,9 @@ import junit.framework.TestSuite;
 public class EnginesTableFrameTest extends OperationsSwingTestCase {
 
     public void testenginesTableFrame() throws Exception {
-
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         // enable rfid field
         Setup.setRfidEnabled(true);
 
