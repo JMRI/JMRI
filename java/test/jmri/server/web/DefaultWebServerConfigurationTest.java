@@ -46,7 +46,7 @@ public class DefaultWebServerConfigurationTest {
         DefaultWebServerConfiguration instance = new DefaultWebServerConfiguration();
         HashMap<String, String> result = instance.getFilePaths();
         Assert.assertNotNull("Default file paths", result);
-        Assert.assertEquals("Default file paths", 12, result.size());
+        Assert.assertEquals("Default file paths", 15, result.size());
     }
 
     /**
