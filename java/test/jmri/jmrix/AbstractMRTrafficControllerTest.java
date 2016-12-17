@@ -25,6 +25,38 @@ public class AbstractMRTrafficControllerTest {
         Assert.assertNotNull(tc);
     }
 
+    @Test(expected = java.lang.NullPointerException.class)
+    public void testAddNullListener(){
+        tc.addListener(null);
+    }
+
+    @Test
+    public void testPortReadyToSendNullController(){
+        try {
+            Assert.assertFalse(tc.portReadyToSend(null));
+        } catch (java.lang.Exception e){
+           e.printStackTrace();
+           Assert.fail("Unexpected Exception calling portReadyToSend");
+        }
+    }
+
+    @Test
+    public void testGetLastSenderNull(){
+           // new tc, so getLastSender should return null.
+           Assert.assertNull(tc.getLastSender());
+    }
+
+    @Test
+    public void testHasTimeouts(){
+           // new tc, so hasTimeouts should return false.
+           Assert.assertFalse(tc.hasTimeouts());
+    }
+
+    @Test
+    public void testStatus(){
+           // new tc, but unconnected, so status should return false.
+           Assert.assertFalse(tc.hasTimeouts());
+    }
 
     @Before
     public void setUp() {

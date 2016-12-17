@@ -5,11 +5,12 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.util.List;
+import javax.servlet.annotation.WebServlet;
 import javax.swing.JFrame;
 import jmri.configurexml.ConfigXmlManager;
-import jmri.server.json.JSON;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.panelEditor.PanelEditor;
+import jmri.server.json.JSON;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
@@ -19,8 +20,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood (C) 2016
  */
+@WebServlet(name = "PanelServlet",
+        urlPatterns = {"/panel", "/panel/Panel"})
 public class PanelServlet extends AbstractPanelServlet {
 
     private final static Logger log = LoggerFactory.getLogger(PanelServlet.class);

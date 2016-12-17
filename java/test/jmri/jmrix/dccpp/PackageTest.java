@@ -31,7 +31,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(DCCppMessageTest.class));
         suite.addTest(new TestSuite(DCCppReplyTest.class));
         suite.addTest(new TestSuite(DCCppPacketizerTest.class));
-        suite.addTest(new TestSuite(DCCppTrafficControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppTrafficControllerTest.class));
         suite.addTest(new TestSuite(DCCppSystemConnectionMemoTest.class));
         suite.addTest(new TestSuite(DCCppThrottleTest.class));
         suite.addTest(new TestSuite(DCCppInitializationManagerTest.class));
