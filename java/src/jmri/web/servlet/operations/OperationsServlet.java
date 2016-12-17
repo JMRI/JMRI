@@ -37,7 +37,12 @@ import org.slf4j.LoggerFactory;
  * @author Steve Todd (C) 2013
  */
 @WebServlet(name = "OperationsServlet",
-        urlPatterns = {"/operations"})
+        urlPatterns = {
+            "/operations", // default
+            "/web/operationsConductor.html", // redirect to default since ~ 13 May 2014
+            "/web/operationsManifest.html", // redirect to default since ~ 13 May 2014
+            "/web/operationsTrains.html" // redirect to default since ~ 13 May 2014
+        })
 public class OperationsServlet extends HttpServlet {
 
     /**
@@ -64,6 +69,12 @@ public class OperationsServlet extends HttpServlet {
      * /operations/conductor/id - get the conductor's screen for train with Id "id"
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (request.getRequestURI().equals("/web/operationsConductor.html") // NOI18N
+                || request.getRequestURI().equals("/web/operationsManifest.html") // NOI18N
+                || request.getRequestURI().equals("/web/operationsTrains.html")) { // NOI18N
+            response.sendRedirect("/operations"); // NOI18N
+            return;
+        }
         String[] pathInfo = request.getPathInfo().substring(1).split("/");
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
         if (pathInfo[0].equals("") || (pathInfo[0].equals(JsonOperations.TRAINS) && pathInfo.length == 1)) {
