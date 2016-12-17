@@ -68,8 +68,8 @@ public class RenameRosterGroupAction extends JmriAbstractAction {
         // so we have to check for null again.
         if (group == null) {
             group = (String) JOptionPane.showInputDialog(_who,
-                    "<html><b>Rename roster group</b><br>Select the roster group to rename.</html>",
-                    "Rename Roster Group",
+                    Bundle.getMessage("RenameRosterGroupDialog"),
+                    Bundle.getMessage("RenameRosterGroupTitle", ""),
                     JOptionPane.INFORMATION_MESSAGE,
                     null,
                     Roster.getDefault().getRosterGroupList().toArray(),
@@ -81,8 +81,8 @@ public class RenameRosterGroupAction extends JmriAbstractAction {
         }
 
         String entry = (String) JOptionPane.showInputDialog(_who,
-                "<html><b>Rename roster group</b><br>Enter the new name for roster group \"" + group + "\".</html>",
-                "Rename Roster Group " + group,
+                Bundle.getMessage("RenameRosterGroupNewName", group),
+                Bundle.getMessage("RenameRosterGroupTitle", group),
                 JOptionPane.INFORMATION_MESSAGE,
                 null,
                 null,
@@ -91,8 +91,8 @@ public class RenameRosterGroupAction extends JmriAbstractAction {
             return;
         } else if (Roster.getDefault().getRosterGroupList().contains(entry)) {
             JOptionPane.showMessageDialog(_who,
-                    "<html><b>Unable to rename roster group</b><br>The roster group named \"" + entry + "\" already exists.",
-                    "Rename Roster Group " + group,
+                    Bundle.getMessage("RenameRosterGroupSameName", entry),
+                    Bundle.getMessage("RenameRosterGroupTitle", group),
                     JOptionPane.ERROR_MESSAGE);
         }
 
