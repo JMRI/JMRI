@@ -25,6 +25,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.help.SwingHelpUtilities;
@@ -1433,7 +1434,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             locoImage.setImagePath(null);
         } else {
             filename.setText(re.getFileName());
-            dateUpdated.setText(re.getDateUpdated());
+            dateUpdated.setText((re.getDateModified() != null)
+                ? DateFormat.getDateTimeInstance().format(re.getDateModified())
+                : re.getDateUpdated());
             decoderModel.setText(re.getDecoderModel());
             decoderFamily.setText(re.getDecoderFamily());
             dccAddress.setText(re.getDccAddress());

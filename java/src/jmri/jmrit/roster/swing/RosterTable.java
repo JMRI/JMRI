@@ -7,7 +7,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 import javax.swing.BoxLayout;
@@ -23,6 +25,7 @@ import javax.swing.SortOrder;
 import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
@@ -84,6 +87,17 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         dataTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
+        // format the last updated date time
+        columnModel.getColumnByModelIndex(RosterTableModel.DATEUPDATECOL).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            protected void setValue(Object value) {
+                if (value != null && value instanceof Date) {
+                    super.setValue(DateFormat.getDateTimeInstance().format((Date) value));
+                } else {
+                    super.setValue(value);
+                }
+            }
+        });
         dataTable.setColumnModel(columnModel);
         dataModel.setColumnModel(columnModel);
         dataTable.createDefaultColumnsFromModel();
