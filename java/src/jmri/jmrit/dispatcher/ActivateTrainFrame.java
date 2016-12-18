@@ -367,7 +367,7 @@ public class ActivateTrainFrame {
             JPanel p7 = new JPanel();
             p7.setLayout(new FlowLayout());
             JButton cancelButton = null;
-            p7.add(cancelButton = new JButton(Bundle.getMessage("CancelButton")));
+            p7.add(cancelButton = new JButton(Bundle.getMessage("ButtonCancel")));
             cancelButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     cancelInitiateTrain(e);

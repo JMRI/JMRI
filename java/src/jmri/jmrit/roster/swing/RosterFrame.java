@@ -1220,7 +1220,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             rtable.getTable().changeSelection(row, 0, false, false);
         }
         JPopupMenu popupMenu = new JPopupMenu();
-        JMenuItem menuItem = new JMenuItem("Program");
+        JMenuItem menuItem = new JMenuItem(Bundle.getMessage("Program"));
         menuItem.addActionListener((ActionEvent e1) -> {
             startProgrammer(null, re, programmer1);
         });
@@ -1232,7 +1232,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         group.add(contextService);
         group.add(contextOps);
         group.add(contextEdit);
-        JMenu progMenu = new JMenu("Programmer type");
+        JMenu progMenu = new JMenu(Bundle.getMessage("ProgrammerType"));
         contextService.addActionListener((ActionEvent e1) -> {
             service.setSelected(true);
             updateProgMode();
@@ -1257,7 +1257,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         progMenu.add(contextEdit);
         popupMenu.add(progMenu);
         popupMenu.addSeparator();
-        menuItem = new JMenuItem("Labels and Media");
+        menuItem = new JMenuItem(Bundle.getMessage("LabelsAndMedia"));
         menuItem.addActionListener((ActionEvent e1) -> {
             editMediaButton();
         });
@@ -1265,7 +1265,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             menuItem.setEnabled(false);
         }
         popupMenu.add(menuItem);
-        menuItem = new JMenuItem("Throttle");
+        menuItem = new JMenuItem(Bundle.getMessage("Throttle"));
         menuItem.addActionListener((ActionEvent e1) -> {
             ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
             tf.toFront();
@@ -1277,7 +1277,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
         popupMenu.add(menuItem);
         popupMenu.addSeparator();
-        menuItem = new JMenuItem("Duplicate");
+        menuItem = new JMenuItem(Bundle.getMessage("Duplicateddd"));
         menuItem.addActionListener((ActionEvent e1) -> {
             copyLoco();
         });

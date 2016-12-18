@@ -157,7 +157,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
             }
         });
 
-        applyButton.setText(rb.getString("LightApplyButton"));
+        applyButton.setText(rb.getString("LightApplyButton")); // TODO reuse ButtonApply from NamedBeanBundle and add a Bundle() method here
         applyButton.setVisible(true);
         applyButton.setToolTipText(rb.getString("LightApplyButtonToolTip"));
         applyButton.addActionListener(new java.awt.event.ActionListener() {
