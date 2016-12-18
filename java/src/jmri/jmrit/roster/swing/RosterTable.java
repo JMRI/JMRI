@@ -87,6 +87,11 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         dataTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
+        dataTable.setColumnModel(columnModel);
+        dataModel.setColumnModel(columnModel);
+        dataTable.createDefaultColumnsFromModel();
+        dataTable.setAutoCreateColumnsFromModel(false);
+
         // format the last updated date time
         columnModel.getColumnByModelIndex(RosterTableModel.DATEUPDATECOL).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
@@ -98,10 +103,6 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
                 }
             }
         });
-        dataTable.setColumnModel(columnModel);
-        dataModel.setColumnModel(columnModel);
-        dataTable.createDefaultColumnsFromModel();
-        dataTable.setAutoCreateColumnsFromModel(false);
 
         TableColumn tc = columnModel.getColumnByModelIndex(RosterTableModel.PROTOCOL);
         columnModel.setColumnVisible(tc, false);
