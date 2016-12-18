@@ -370,7 +370,11 @@ public class JoalAudioSource extends AbstractAudioSource {
         if (_initialised) {
             al.alSourcei(_source[0], AL.AL_BYTE_OFFSET, byteOffset);
             if (JoalAudioFactory.checkALError()) {
-                log.warn("Error updating Byte Offset of JoalAudioSource (" + this.getSystemName() + ")"); 
+                log.warn("Error updating Byte Offset of JoalAudioSource (" + this.getSystemName() + ")");
+             }
+        }
+    }
+               
     @Override
     public void setMaximumDistance(float maximumDistance) {
         super.setMaximumDistance(maximumDistance);
