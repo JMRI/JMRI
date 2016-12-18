@@ -145,8 +145,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     public static final String ALLENTRIES = Bundle.getMessage("ALLENTRIES"); // NOI18N
 
     /**
-     * Create a default roster. Generally it is preferable to use the Roster
-     * returned by {@link #getDefault()}.
+     * Create a roster with default contents.
      */
     public Roster() {
         super();
@@ -158,7 +157,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         });
         this.preferences = InstanceManager.getNullableDefault(UserPreferencesManager.class);
         if (this.preferences != null) {
-            // for some reason, during JUnit testing, preferences is often null
+            // During JUnit testing, preferences is often null
             this.setDefaultRosterGroup((String) this.preferences.getProperty(Roster.class.getCanonicalName(), "defaultRosterGroup")); // NOI18N
         }
     }
@@ -174,7 +173,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             }
             this.readFile(rosterFilename);
         } catch (IOException | JDOMException e) {
-            log.error("Exception during roster reading: " + e);
+            log.error("Exception during reading while constructing roster", e);
             try {
                 JOptionPane.showMessageDialog(null,
                         Bundle.getMessage("ErrorReadingText") + "\n" + e.getMessage(),
@@ -988,7 +987,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         try {
             this.readFile(this.getRosterIndexPath());
         } catch (IOException | JDOMException e) {
-            log.error("Exception during roster reading: " + e);
+            log.error("Exception during reading while reloading roster", e);
         }
     }
 

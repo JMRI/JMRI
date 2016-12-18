@@ -13,24 +13,18 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class StandaloneTrafficControllerTest {
-
-    StandaloneTrafficController tc = null;
-
-    @Test
-    public void testCtor(){
-        Assert.assertNotNull(tc);
-    }
+public class StandaloneTrafficControllerTest extends jmri.jmrix.rfid.RfidTrafficControllerTest {
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
-        tc = new StandaloneTrafficController(new StandaloneSystemConnectionMemo(){
-        });
+        tc = new StandaloneTrafficController(new StandaloneSystemConnectionMemo());
     }
 
+    @Override
     @After
     public void tearDown() {
         tc = null;

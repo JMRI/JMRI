@@ -17,11 +17,12 @@ import org.eclipse.jetty.util.URIUtil;
 import org.eclipse.jetty.util.resource.Resource;
 
 /**
- * Override {@link org.eclipse.jetty.util.resource.Resource#getListHTML(java.lang.String, boolean)
- * } in {@link org.eclipse.jetty.util.resource.Resource} so that directory
+ * Override
+ * {@link org.eclipse.jetty.util.resource.Resource#getListHTML(java.lang.String, boolean)}
+ * in {@link org.eclipse.jetty.util.resource.Resource} so that directory
  * listings can include the complete JMRI look and feel.
  *
- * @author rhwood
+ * @author Randall Wood (C) 2016
  */
 public class DirectoryResource extends Resource {
 
