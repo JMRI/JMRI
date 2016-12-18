@@ -355,7 +355,18 @@ public class JoalAudioSource extends AbstractAudioSource {
         }
     }
 
+   
     @Override
+    public void setPitch(float pitch) {
+        super.setPitch(pitch);
+        if (_initialised) {
+            al.alSourcef(_source[0], AL.AL_PITCH, pitch);
+            if (JoalAudioFactory.checkALError()) {
+                log.warn("Error updating pitch of JoalAudioSource (" + this.getSystemName() + ")");
+            }
+        }
+    }
+ @Override
     public void setReferenceDistance(float referenceDistance) {
         super.setReferenceDistance(referenceDistance);
         if (_initialised) {
@@ -367,12 +378,11 @@ public class JoalAudioSource extends AbstractAudioSource {
     }
 
     @Override
-    public void setMaximumDistance(float maximumDistance) {
-        super.setMaximumDistance(maximumDistance);
+    public void setByteOffset(float byteoffset) {
         if (_initialised) {
-            al.alSourcef(_source[0], AL.AL_MAX_DISTANCE, maximumDistance);
+            al.alSourcei(_source[0], AL.AL_BYTE_OFFSET, byteoffset);
             if (JoalAudioFactory.checkALError()) {
-                log.warn("Error updating maximum distance of JoalAudioSource (" + this.getSystemName() + ")");
+                log.warn("Error updating byte offset of JoalAudioSource (" + this.getSystemName() + ")");
             }
         }
     }
