@@ -131,7 +131,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
             isCSConsist.setEnabled(true);
         }
 
-        deleteButton.setText(Bundle.getMessage("DeleteButtonText"));
+        deleteButton.setText(Bundle.getMessage("ButtonDelete"));
         deleteButton.setVisible(true);
         deleteButton.setToolTipText(Bundle.getMessage("DeleteButtonToolTip"));
         deleteButton.addActionListener(new ActionListener() {
@@ -142,7 +142,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
             }
         });
 
-        throttleButton.setText(Bundle.getMessage("ThrottleButtonText"));
+        throttleButton.setText(Bundle.getMessage("Throttle"));
         throttleButton.setVisible(true);
         throttleButton.setToolTipText(Bundle.getMessage("ThrottleButtonToolTip"));
         throttleButton.addActionListener(new ActionListener() {
