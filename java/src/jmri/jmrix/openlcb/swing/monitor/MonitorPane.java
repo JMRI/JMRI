@@ -105,7 +105,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                     formatted = prefix + ": (Start of Datagram)";
                 } else if ((header & 0x0F000000) == 0x0C000000) {
                     formatted = prefix + ": (Middle of Datagram)";
-                } else if (((header & 0xFFFF0000) == 0x19A00000) && (content.length > 0)) {
+                } else if (((header & 0x0FFFF000) == 0x09A08000) && (content.length > 0)) {
                     // SNIP multi frame reply
                     if ((content[0] & 0xF0) == 0x10) {
                         formatted = prefix + ": SNIP Reply 1st frame";
