@@ -87,7 +87,9 @@ public class RenameRosterGroupAction extends JmriAbstractAction {
                 null,
                 null,
                 null);
-        entry = entry.trim(); // remove white space around name, also prevent "Space" as a Group name
+        if (entry != null) {
+            entry = entry.trim(); // remove white space around name, also prevent "Space" as a Group name
+        }
         if (entry == null || entry.length() == 0 || entry.equals(Roster.ALLENTRIES)) {
             return;
         } else if (Roster.getDefault().getRosterGroupList().contains(entry)) {

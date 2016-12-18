@@ -1152,7 +1152,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             return;
         }
         this.rosterGroups.put(rg.getName(), rg);
-        log.debug("firePropertyChange Roster Groups model:" + rg.getName()); // test for panel redraw after duplication
+        log.debug("firePropertyChange Roster Groups model: {}", rg.getName()); // test for panel redraw after duplication
         firePropertyChange(ROSTER_GROUP_ADDED, null, rg.getName());
     }
 
@@ -1233,9 +1233,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             re.putAttribute(newGroup, "yes"); // NOI18N
         });
         this.addRosterGroup(new RosterGroup(newName));
-        // one might expect the firePropertyChange event also to be called by addRosterGroup()
-        // but it has to be initiated here for the Group list to redraw:
-        firePropertyChange(ROSTER_GROUP_ADDED, null, newName);
+        // the firePropertyChange event will be called by addRosterGroup()
     }
 
     public void rosterGroupRenamed(String oldName, String newName) {
