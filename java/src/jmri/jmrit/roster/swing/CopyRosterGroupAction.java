@@ -92,7 +92,8 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
                 null,
                 null,
                 null);
-        if (entry == null || entry.equals(Roster.ALLENTRIES)) {
+        entry = entry.trim(); // remove white space around name, also prevent "Space" as a Group name
+        if (entry == null || entry.length() == 0 || entry.equals(Roster.ALLENTRIES)) {
             return;
         } else if (Roster.getDefault().getRosterGroupList().contains(entry)) {
             JOptionPane.showMessageDialog(_who,

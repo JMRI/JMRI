@@ -57,13 +57,14 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
     public void actionPerformed(ActionEvent event) {
 
         String entry = (String) JOptionPane.showInputDialog(_who,
-                "<html><b>" + ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("MenuGroupCreate") + "</b></html>",
-                ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("MenuGroupCreate"),
+                Bundle.getMessage("CreateRosterGroupDialog", Bundle.getMessage("MenuGroupCreate")),
+                Bundle.getMessage("MenuGroupCreate"),
                 JOptionPane.INFORMATION_MESSAGE,
                 null, // icon
                 null, // initial values
                 null);// preselected initial value
-        if (entry == null || entry.equals(Roster.ALLENTRIES)) {
+        entry = entry.trim(); // remove white space around name, also prevent "Space" as a name
+        if (entry == null || entry.length() == 0 || entry.equals(Roster.ALLENTRIES)) {
             return;
         }
         if (rosterEntries != null) {
