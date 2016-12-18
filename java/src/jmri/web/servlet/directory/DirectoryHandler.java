@@ -14,14 +14,14 @@ import org.eclipse.jetty.util.resource.Resource;
 public class DirectoryHandler extends ResourceHandler {
 
     /**
-     * Construct a DirectoryHandler for the named resourceBase with common
+     * Construct a DirectoryHandler for the named directory with common
      * default settings.
      *
      * This constructor sets directory listings to true and returns the contents
      * of index.html within the directory instead of listing the contents of the
      * directory if index.html exists.
      *
-     * @param resourceBase
+     * @param resourceBase the directory to serve
      */
     public DirectoryHandler(String resourceBase) {
         this();
