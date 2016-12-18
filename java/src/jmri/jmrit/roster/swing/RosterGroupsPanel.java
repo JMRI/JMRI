@@ -487,6 +487,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
+            //log.debug(e.getPropertyName()); // seems a bit too much to keep active!
             if ((e.getPropertyName().equals("RosterGroupRemoved"))
                     || (e.getPropertyName().equals("RosterGroupAdded"))
                     || (e.getPropertyName().equals("RosterGroupRenamed"))) {

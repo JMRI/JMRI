@@ -1152,7 +1152,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             return;
         }
         this.rosterGroups.put(rg.getName(), rg);
-        log.debug("firePropertyChange Roster Groups model"); // test for panel redraw after duplication
+        log.debug("firePropertyChange Roster Groups model:" + rg.getName()); // test for panel redraw after duplication
         firePropertyChange(ROSTER_GROUP_ADDED, null, rg.getName());
     }
 
@@ -1164,7 +1164,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * if you need to add a subclass of RosterGroup. This method fires the
      * property change notification {@value #ROSTER_GROUP_ADDED}.
      *
-     * @param rg The group to be added
+     * @param rg The name of the group to be added
      */
     public void addRosterGroup(String rg) {
         // do a quick return without creating a new RosterGroup object
@@ -1233,8 +1233,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             re.putAttribute(newGroup, "yes"); // NOI18N
         });
         this.addRosterGroup(new RosterGroup(newName));
-        // would expect the firePropertyChange event to be called by addRosterGroup()
-        // but has to be repeated here for the Group list to redraw:
+        // one might expect the firePropertyChange event also to be called by addRosterGroup()
+        // but it has to be initiated here for the Group list to redraw:
         firePropertyChange(ROSTER_GROUP_ADDED, null, newName);
     }
 
