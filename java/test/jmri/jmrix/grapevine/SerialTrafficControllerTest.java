@@ -7,10 +7,11 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,26 +20,14 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2005, 2007, 2008
  */
-public class SerialTrafficControllerTest extends TestCase {
-
-    public void testCreate() {
-        SerialTrafficController m = new SerialTrafficController();
-        Assert.assertNotNull("exists", m);
-    }
+public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTrafficControllerTest {
 
     byte[] testBuffer;
     boolean invoked;
 
+    @Test
     public void testStateMachine1() throws java.io.IOException {
-        SerialTrafficController c = new SerialTrafficController() {
-            void loadBuffer(AbstractMRReply msg) {
-                testBuffer[0] = buffer[0];
-                testBuffer[1] = buffer[1];
-                testBuffer[2] = buffer[2];
-                testBuffer[3] = buffer[3];
-                invoked = true;
-            }
-        };
+        SerialTrafficController c = (SerialTrafficController) tc;
         testBuffer = new byte[4];
         invoked = false;
 
@@ -51,16 +40,9 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertEquals("not invoked", false, invoked);
     }
 
+    @Test
     public void testStateMachine2() throws java.io.IOException {
-        SerialTrafficController c = new SerialTrafficController() {
-            void loadBuffer(AbstractMRReply msg) {
-                testBuffer[0] = buffer[0];
-                testBuffer[1] = buffer[1];
-                testBuffer[2] = buffer[2];
-                testBuffer[3] = buffer[3];
-                invoked = true;
-            }
-        };
+        SerialTrafficController c = (SerialTrafficController) tc;
         testBuffer = new byte[4];
         invoked = false;
 
@@ -73,16 +55,9 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertEquals("not invoked", false, invoked);
     }
 
+    @Test
     public void testStateMachine3() throws java.io.IOException {
-        SerialTrafficController c = new SerialTrafficController() {
-            void loadBuffer(AbstractMRReply msg) {
-                testBuffer[0] = buffer[0];
-                testBuffer[1] = buffer[1];
-                testBuffer[2] = buffer[2];
-                testBuffer[3] = buffer[3];
-                invoked = true;
-            }
-        };
+        SerialTrafficController c = (SerialTrafficController) tc;
         testBuffer = new byte[4];
         invoked = false;
 
@@ -95,16 +70,9 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertEquals("not invoked", false, invoked);
     }
 
+    @Test
     public void testStateMachine4() throws java.io.IOException {
-        SerialTrafficController c = new SerialTrafficController() {
-            void loadBuffer(AbstractMRReply msg) {
-                testBuffer[0] = buffer[0];
-                testBuffer[1] = buffer[1];
-                testBuffer[2] = buffer[2];
-                testBuffer[3] = buffer[3];
-                invoked = true;
-            }
-        };
+        SerialTrafficController c = (SerialTrafficController) tc;
         testBuffer = new byte[4];
         invoked = false;
 
@@ -117,16 +85,9 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertEquals("not invoked", false, invoked);
     }
 
+    @Test
     public void testStateMachine5() throws java.io.IOException {
-        SerialTrafficController c = new SerialTrafficController() {
-            void loadBuffer(AbstractMRReply msg) {
-                testBuffer[0] = buffer[0];
-                testBuffer[1] = buffer[1];
-                testBuffer[2] = buffer[2];
-                testBuffer[3] = buffer[3];
-                invoked = true;
-            }
-        };
+        SerialTrafficController c = (SerialTrafficController) tc;
         testBuffer = new byte[4];
         invoked = false;
 
@@ -139,16 +100,9 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertEquals("not invoked", false, invoked);
     }
 
+    @Test
     public void testStateMachineOK1() throws java.io.IOException {
-        SerialTrafficController c = new SerialTrafficController() {
-            void loadBuffer(AbstractMRReply msg) {
-                testBuffer[0] = buffer[0];
-                testBuffer[1] = buffer[1];
-                testBuffer[2] = buffer[2];
-                testBuffer[3] = buffer[3];
-                invoked = true;
-            }
-        };
+        SerialTrafficController c = (SerialTrafficController) tc;
         testBuffer = new byte[4];
         invoked = false;
 
@@ -164,16 +118,9 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertEquals("byte 3", (byte) 31, testBuffer[3]);
     }
 
+    @Test
     public void testStateMachineOK2() throws java.io.IOException {
-        SerialTrafficController c = new SerialTrafficController() {
-            void loadBuffer(AbstractMRReply msg) {
-                testBuffer[0] = buffer[0];
-                testBuffer[1] = buffer[1];
-                testBuffer[2] = buffer[2];
-                testBuffer[3] = buffer[3];
-                invoked = true;
-            }
-        };
+        SerialTrafficController c = (SerialTrafficController) tc;
         testBuffer = new byte[4];
         invoked = false;
 
@@ -189,16 +136,9 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertEquals("byte 3", (byte) 119, testBuffer[3]);
     }
 
+    @Test
     public void testStateMachineOK3() throws java.io.IOException {
-        SerialTrafficController c = new SerialTrafficController() {
-            void loadBuffer(AbstractMRReply msg) {
-                testBuffer[0] = buffer[0];
-                testBuffer[1] = buffer[1];
-                testBuffer[2] = buffer[2];
-                testBuffer[3] = buffer[3];
-                invoked = true;
-            }
-        };
+        SerialTrafficController c = (SerialTrafficController) tc;
         testBuffer = new byte[4];
         invoked = false;
 
@@ -214,16 +154,9 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertEquals("byte 3", (byte) 88, testBuffer[3]);
     }
 
+    @Test
     public void testStateMachineOK4() throws java.io.IOException {
-        SerialTrafficController c = new SerialTrafficController() {
-            void loadBuffer(AbstractMRReply msg) {
-                testBuffer[0] = buffer[0];
-                testBuffer[1] = buffer[1];
-                testBuffer[2] = buffer[2];
-                testBuffer[3] = buffer[3];
-                invoked = true;
-            }
-        };
+        SerialTrafficController c = (SerialTrafficController) tc;
         testBuffer = new byte[4];
         invoked = false;
 
@@ -239,16 +172,9 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertEquals("byte 3", (byte) 86, testBuffer[3]);
     }
 
+    @Test
     public void testStateMachineOK5() throws java.io.IOException {
-        SerialTrafficController c = new SerialTrafficController() {
-            void loadBuffer(AbstractMRReply msg) {
-                testBuffer[0] = buffer[0];
-                testBuffer[1] = buffer[1];
-                testBuffer[2] = buffer[2];
-                testBuffer[3] = buffer[3];
-                invoked = true;
-            }
-        };
+        SerialTrafficController c = (SerialTrafficController) tc;
         testBuffer = new byte[4];
         invoked = false;
 
@@ -264,16 +190,9 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertEquals("byte 3", (byte) 84, testBuffer[3]);
     }
 
+    @Test
     public void testStateMachineRecover1() throws java.io.IOException {
-        SerialTrafficController c = new SerialTrafficController() {
-            void loadBuffer(AbstractMRReply msg) {
-                testBuffer[0] = buffer[0];
-                testBuffer[1] = buffer[1];
-                testBuffer[2] = buffer[2];
-                testBuffer[3] = buffer[3];
-                invoked = true;
-            }
-        };
+        SerialTrafficController c = (SerialTrafficController) tc;
         testBuffer = new byte[4];
         invoked = false;
 
@@ -291,16 +210,9 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertEquals("byte 3", (byte) 31, testBuffer[3]);
     }
 
+    @Test
     public void testStateMachineRecover2() throws java.io.IOException {
-        SerialTrafficController c = new SerialTrafficController() {
-            void loadBuffer(AbstractMRReply msg) {
-                testBuffer[0] = buffer[0];
-                testBuffer[1] = buffer[1];
-                testBuffer[2] = buffer[2];
-                testBuffer[3] = buffer[3];
-                invoked = true;
-            }
-        };
+        SerialTrafficController c = (SerialTrafficController) tc;
         testBuffer = new byte[4];
         invoked = false;
 
@@ -318,16 +230,9 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertEquals("byte 3", (byte) 31, testBuffer[3]);
     }
 
+    @Test
     public void testStateMachineRecover3() throws java.io.IOException {
-        SerialTrafficController c = new SerialTrafficController() {
-            void loadBuffer(AbstractMRReply msg) {
-                testBuffer[0] = buffer[0];
-                testBuffer[1] = buffer[1];
-                testBuffer[2] = buffer[2];
-                testBuffer[3] = buffer[3];
-                invoked = true;
-            }
-        };
+        SerialTrafficController c = (SerialTrafficController) tc;
         testBuffer = new byte[4];
         invoked = false;
 
@@ -345,16 +250,9 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertEquals("byte 3", (byte) 31, testBuffer[3]);
     }
 
+    @Test
     public void testStateMachineRecover4() throws java.io.IOException {
-        SerialTrafficController c = new SerialTrafficController() {
-            void loadBuffer(AbstractMRReply msg) {
-                testBuffer[0] = buffer[0];
-                testBuffer[1] = buffer[1];
-                testBuffer[2] = buffer[2];
-                testBuffer[3] = buffer[3];
-                invoked = true;
-            }
-        };
+        SerialTrafficController c = (SerialTrafficController) tc;
         testBuffer = new byte[4];
         invoked = false;
 
@@ -372,8 +270,9 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertEquals("byte 3", (byte) 31, testBuffer[3]);
     }
 
+    @Test
     public void testSerialNodeEnumeration() {
-        SerialTrafficController c = new SerialTrafficController();
+        SerialTrafficController c = (SerialTrafficController) tc;
         SerialNode b = new SerialNode(1, SerialNode.NODE2002V6);
         SerialNode f = new SerialNode(3, SerialNode.NODE2002V1);
         SerialNode d = new SerialNode(2, SerialNode.NODE2002V1);
@@ -400,8 +299,9 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertEquals("no more Nodes after del2", null, c.getNode(2));
     }
 
+    @Test
     public void testSerialOutput() {
-        SerialTrafficController c = new SerialTrafficController();
+        SerialTrafficController c = (SerialTrafficController) tc;
         SerialNode a = new SerialNode();
         SerialNode g = new SerialNode(5, SerialNode.NODE2002V1);
         Assert.assertTrue("must Send", g.mustSend());
@@ -514,29 +414,25 @@ public class SerialTrafficControllerTest extends TestCase {
     static DataOutputStream tistream; // tests write to this
     static DataInputStream istream;  // so the traffic controller can read from this
 
-    // from here down is testing infrastructure
-    public SerialTrafficControllerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SerialTrafficControllerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialTrafficControllerTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
+    @Override
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        tc = new SerialTrafficController() {
+            void loadBuffer(AbstractMRReply msg) {
+                testBuffer[0] = buffer[0];
+                testBuffer[1] = buffer[1];
+                testBuffer[2] = buffer[2];
+                testBuffer[3] = buffer[3];
+                invoked = true;
+            }
+        };
     }
 
-    protected void tearDown() {
+    @Override
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 

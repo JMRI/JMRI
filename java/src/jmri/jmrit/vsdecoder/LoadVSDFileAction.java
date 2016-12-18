@@ -46,7 +46,8 @@ public class LoadVSDFileAction extends AbstractAction {
     }
 
     public LoadVSDFileAction() {
-        this(Bundle.getMessage("LoadVSDFileChoserTitle")); // Shouldn't this be in the resource bundle?
+        this(Bundle.getMessage("VSDecoderFileMenuLoadVSDFile")); // File Chooser Title
+        // Shouldn't this be in the resource bundle?
     }
 
     JFileChooser fileChooser;
