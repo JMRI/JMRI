@@ -109,7 +109,7 @@ LS161 in this case.
       11 has number: <code>    number = 16 * (11) + (1) - 16 =
       161</code> as we saw in the example above.</p>
 
-      <p>If you want to calculate the address of a DS54 aux input,
+      <p>If you want to calculate the address of a DS64 or DS54 aux input,
       use: <code>    number = 2 * (turnout number - 1) + 1</code>
       For example, the aux input associated with turnout 81 has
       number: <code>    number = 2 * (81 - 1) + 1 = 161</code> If

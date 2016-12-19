@@ -1,5 +1,10 @@
 package jmri.web.servlet.panel;
 
+import static jmri.web.servlet.ServletUtil.IMAGE_PNG;
+import static jmri.web.servlet.ServletUtil.UTF8;
+import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
+import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import java.awt.Container;
@@ -9,25 +14,18 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import javax.annotation.CheckForNull;
 import javax.imageio.ImageIO;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.JComponent;
-import jmri.server.json.JSON;
 import jmri.jmrit.display.Editor;
+import jmri.server.json.JSON;
+import jmri.server.json.util.JsonUtilHttpService;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
 import jmri.web.server.WebServer;
 import jmri.web.servlet.ServletUtil;
-
-import static jmri.web.servlet.ServletUtil.IMAGE_PNG;
-import static jmri.web.servlet.ServletUtil.UTF8;
-import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
-import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
-
-import jmri.server.json.util.JsonUtilHttpService;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -47,10 +45,11 @@ abstract class AbstractPanelServlet extends HttpServlet {
     abstract protected String getPanelType();
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        this.mapper = new ObjectMapper();
-        this.mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    public void init() throws ServletException {
+        if (!this.getServletContext().getContextPath().equals("/web/showPanel.html")) {
+            this.mapper = new ObjectMapper();
+            this.mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        }
     }
 
     /**
@@ -84,17 +83,21 @@ abstract class AbstractPanelServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.debug("Handling GET request for {}", request.getRequestURI());
+        if (request.getRequestURI().equals("/web/showPanel.html")) { // NOI18N
+            response.sendRedirect("/panel/"); // NOI18N
+            return;
+        }
         if (request.getParameter(JSON.NAME) != null) {
             String panelName = StringUtil.unescapeString(request.getParameter(JSON.NAME));
             if (getEditor(panelName) != null) {
-                response.sendRedirect("/panel/" + StringUtil.escapeString(panelName));
+                response.sendRedirect("/panel/" + StringUtil.escapeString(panelName)); // NOI18N
             } else {
-                response.sendRedirect("/panel/");
+                response.sendRedirect("/panel/"); // NOI18N
             }
-        } else if (request.getRequestURI().endsWith("/")) {
+        } else if (request.getRequestURI().endsWith("/")) { // NOI18N
             listPanels(request, response);
         } else {
-            String[] path = request.getRequestURI().split("/");
+            String[] path = request.getRequestURI().split("/"); // NOI18N
             String panelName = StringUtil.unescapeString(path[path.length - 1]);
             if ("png".equals(request.getParameter("format"))) {
                 BufferedImage panel = getPanelImage(panelName);

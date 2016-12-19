@@ -295,7 +295,7 @@ public class OptionsMenu extends JMenu {
             JPanel p9 = new JPanel();
             p9.setLayout(new FlowLayout());
             JButton cancelButton = null;
-            p9.add(cancelButton = new JButton(rb.getString("CancelButton")));
+            p9.add(cancelButton = new JButton(Bundle.getMessage("ButtonCancel")));
             cancelButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     cancelOptions(e);
@@ -304,7 +304,7 @@ public class OptionsMenu extends JMenu {
             cancelButton.setToolTipText(rb.getString("CancelButtonHint2"));
             p9.add(new JLabel("     "));
             JButton applyButton = null;
-            p9.add(applyButton = new JButton(rb.getString("ApplyButton")));
+            p9.add(applyButton = new JButton(Bundle.getMessage("ButtonApply")));
             applyButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     applyOptions(e);

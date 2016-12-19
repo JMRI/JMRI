@@ -413,7 +413,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             } else if (msg.equals("warnStart")) {
                 msg = Bundle.getMessage("warnStart", w.getTrainName(), w.getCurrentBlockName());
             } else if (msg.equals("warnStartManual")) {
-                msg = Bundle.getMessage("warnStart", w.getTrainName(), w.getCurrentBlockName());
+                msg = Bundle.getMessage("warnStartManual", w.getTrainName(), w.getCurrentBlockName());
             }
         }
         setStatusText(msg, WarrantTableModel.myGold, false);
