@@ -382,7 +382,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         public LocationTableModel(Object[][] dataMap) {
             super();
             // Use i18n-ized column titles.
-            columnNames[0] = Bundle.getMessage("FieldTableNameColumn");
+            columnNames[0] = Bundle.getMessage("Name");
             columnNames[1] = Bundle.getMessage("FieldTableUseColumn");
             columnNames[2] = Bundle.getMessage("FieldTableXColumn");
             columnNames[3] = Bundle.getMessage("FieldTableYColumn");
@@ -456,7 +456,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         public ListenerTableModel(Object[][] dataMap) {
             super();
             // Use i18n-ized column titles.
-            columnNames[0] = Bundle.getMessage("FieldTableNameColumn");
+            columnNames[0] = Bundle.getMessage("Name");
             columnNames[1] = Bundle.getMessage("FieldTableUseColumn");
             columnNames[2] = Bundle.getMessage("FieldTableXColumn");
             columnNames[3] = Bundle.getMessage("FieldTableYColumn");

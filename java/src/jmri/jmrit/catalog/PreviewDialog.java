@@ -126,7 +126,7 @@ public class PreviewDialog extends JDialog {
                 JOptionPane.showMessageDialog(this,
                         java.text.MessageFormat.format(Bundle.getMessage("tooManyIcons"),
                                 new Object[]{_currentDir.getName()}),
-                        Bundle.getMessage("warn"), JOptionPane.INFORMATION_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JOptionPane.INFORMATION_MESSAGE);
                 msg.setText(Bundle.getMessage("moreMsg"));
             } else {
                 p.add(Box.createHorizontalStrut(5));
@@ -401,7 +401,7 @@ public class PreviewDialog extends JDialog {
                         JOptionPane.showMessageDialog(this,
                                 java.text.MessageFormat.format(Bundle.getMessage("OutOfMemory"),
                                         new Object[]{Integer.valueOf(_cnt)}),
-                                Bundle.getMessage("error"), JOptionPane.INFORMATION_MESSAGE);
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.INFORMATION_MESSAGE);
                         _noMemory = true;
                     }
                 }
@@ -426,7 +426,7 @@ public class PreviewDialog extends JDialog {
             JOptionPane.showMessageDialog(this,
                     java.text.MessageFormat.format(Bundle.getMessage("OutOfMemory"),
                             new Object[]{Integer.valueOf(_cnt)}),
-                    Bundle.getMessage("error"), JOptionPane.INFORMATION_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.INFORMATION_MESSAGE);
         }
         Thread.setDefaultUncaughtExceptionHandler(exceptionHandler);
         return _noMemory;
