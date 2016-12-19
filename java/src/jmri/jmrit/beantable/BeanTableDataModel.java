@@ -628,7 +628,6 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         popupMenu.add(menuItem);
 
         popupMenu.show(e.getComponent(), e.getX(), e.getY());
-
     }
 
     public void copyName(int row, int column) {
@@ -763,7 +762,6 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                     showInfoMessage("Reminder", getBeanType() + " " + Bundle.getMessage("UpdateComplete"), getMasterClassName(), "remindSaveReLoad");
             //JOptionPane.showMessageDialog(null, getBeanType() + " " + Bundle.getMessage("UpdateComplete"));
         }
-
     }
 
     protected void showTableHeaderPopup(MouseEvent e, JTable table) {
