@@ -33,11 +33,6 @@ import org.slf4j.LoggerFactory;
  */
 public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements PropertyChangeListener, Dcc4PcPanelInterface {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8283443350770492724L;
-
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.dcc4pc.swing.boardlists.BoardListBundle");
 
     jmri.jmrix.dcc4pc.Dcc4PcSensorManager senMan;
@@ -52,9 +47,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
     public void initComponents(Dcc4PcSystemConnectionMemo memo) {
         super.initComponents(memo);
         senMan = jmri.InstanceManager.getDefault(jmri.jmrix.dcc4pc.Dcc4PcSensorManager.class);
-        if (senMan != null) {
-            _boardListCount = senMan.getBoards();
-        }
+        _boardListCount = senMan.getBoards();
 
         setLayout(new BorderLayout());
 
@@ -95,11 +88,6 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
     private List<Integer> _boardListCount;
 
     public class ReaderBoardModel extends AbstractTableModel implements PropertyChangeListener {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -3477572258901807384L;
 
         ReaderBoardModel() {
             super();
@@ -154,9 +142,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
                 case INPUTS_COLUMN:
                     return new JTextField(5).getPreferredSize().width;
                 case ENCODING_COLUMN:
-                    return new JTextField(22).getPreferredSize().width;
                 case DESCRIPTION_COLUMN: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
-                    return new JTextField(22).getPreferredSize().width;
                 case EDIT_COLUMN: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
                     return new JTextField(22).getPreferredSize().width;
                 default:
@@ -336,11 +322,6 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.dcc4pc.swing.Dcc4PcNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6085890861522428975L;
 
         public Default() {
             super("Dcc4PC Command Monitor",

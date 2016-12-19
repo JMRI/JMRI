@@ -153,7 +153,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
     protected JPanel layoutRosterSelection() {
         JPanel pane2a = new JPanel();
         pane2a.setLayout(new BoxLayout(pane2a, BoxLayout.X_AXIS));
-        pane2a.add(new JLabel(Bundle.getMessage("USE LOCOMOTIVE SETTINGS FOR: ")));
+        pane2a.add(new JLabel(Bundle.getMessage("USE LOCOMOTIVE SETTINGS FOR:")));
         locoBox.setNonSelectedItem(Bundle.getMessage("<NONE - NEW LOCO>"));
         Roster.getDefault().addPropertyChangeListener(this);
         pane2a.add(locoBox);

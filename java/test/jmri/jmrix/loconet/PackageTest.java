@@ -79,6 +79,9 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(LnReporterManagerTest.class));
         suite.addTest(jmri.jmrix.loconet.locoio.PackageTest.suite());
         suite.addTest(jmri.jmrix.loconet.locogen.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(LnNetworkPortControllerTest.class));
+        suite.addTest(new JUnit4TestAdapter(LocoNetSystemConnectionMemoTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnPortControllerTest.class));
         return suite;
     }
 

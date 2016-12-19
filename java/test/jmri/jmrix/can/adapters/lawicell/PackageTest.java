@@ -33,6 +33,8 @@ public class PackageTest extends TestCase {
         suite.addTest(ReplyTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.can.adapters.lawicell.canusb.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialDriverAdapterTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LawicellTrafficControllerTest.class));
         return suite;
     }
 

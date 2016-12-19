@@ -109,13 +109,15 @@
             <dt>Disable Frames</dt>
 
             <dd>Disable the frame server. Disabling the frame
-            server disables most other preferences.</dd>
+            server disables most other preferences. The frame server
+            is disabled by default.</dd>
 
             <dt>Use Panels Instead</dt>
 
             <dd>If the frame server is disabled, requests for
             frames can be redirected to <a href=
-            "PanelServlet.shtml">panels</a>.</dd>
+            "PanelServlet.shtml">panels</a>.
+            Redirection to panels is enabled by default.</dd>
 
             <dt>Click Delay</dt>
 
@@ -242,7 +244,8 @@
       Access</a></h2>
 
       <p>If you create a directory <code>web</code> in your User
-      Files location, any file in that directory that has the same
+      Files directory, configuration profile root directory, or
+      settings directory, any file in that directory that has the same
       name and directory hierarchy as a file the <code>web</code>
       directory in the JMRI distribution directory will override
       the default file used for that purpose. This provides the
@@ -260,8 +263,8 @@
       <h2><a name="redirection" id="redirection">Request
       Redirection</a></h2>
 
-      <p>The JMRI web server will automatically redirect the
-      following requests:</p>
+      <p>Some requests are automatically redirected by one of the JMRI web
+          services to ensure that old bookmarks or software can still be used:</p>
 
       <dl>
         <dt>/index.html</dt>

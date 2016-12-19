@@ -1499,6 +1499,16 @@ public class AbstractThrottleTest extends TestCase {
     public void testGetSpeed_float() {
         AbstractThrottle instance = new AbstractThrottleImpl();
         assertEquals("Full Speed", 127, instance.intSpeed(1.0F));
+        float incre = 0.007874016f;
+        float speed = incre;
+        // Cannot get speeedStep 1. range is 2 to 127
+        int i = 2;
+        while (speed < 0.999f) {
+            int result = instance.intSpeed(speed);
+            System.out.println("speed= "+speed+" step= "+result);
+            assertEquals("speed step ", i++, result);
+            speed += incre;
+        }
     }
 
     /**

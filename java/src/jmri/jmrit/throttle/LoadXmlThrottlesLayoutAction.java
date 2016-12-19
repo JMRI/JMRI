@@ -59,7 +59,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
         if (ThrottleFrameManager.instance().getThrottleWindows().hasNext()) {
             Object[] possibleValues = {Bundle.getMessage("LabelMerge"),
                 Bundle.getMessage("LabelReplace"),
-                Bundle.getMessage("LabelCancel")};
+                Bundle.getMessage("ButtonCancel")};
             int selectedValue = JOptionPane.showOptionDialog(null,
                     Bundle.getMessage("DialogMergeOrReplace"),
                     Bundle.getMessage("OptionLoadingThrottles"),

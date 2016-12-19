@@ -48,7 +48,8 @@ public abstract class AbstractFileModelFactory implements StartupModelFactory {
             }
             if (this.chooser.showOpenDialog(parent) == JFileChooser.APPROVE_OPTION) {
                 try {
-                    if (model.getName() == null || !model.getName().equals(this.chooser.getSelectedFile().getCanonicalPath())) {
+                    String name = model.getName();
+                    if (name == null || !name.equals(this.chooser.getSelectedFile().getCanonicalPath())) {
                         model.setName(this.chooser.getSelectedFile().getCanonicalPath());
                         InstanceManager.getDefault(StartupActionsManager.class).setRestartRequired();
                     }

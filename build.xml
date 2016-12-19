@@ -1317,8 +1317,6 @@
 
             <classpath refid="test.class.path"/>
 
-            <sysproperty key="jmri.skipschematests" value="true"/>  <!-- skip schema checks to improve speed -->
-
             <test name="apps.tests.AllTest" outfile="junit-results">
                 <formatter type="xml"/>
                 <formatter usefile="no" type="brief"/>
@@ -1563,7 +1561,7 @@
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="4600"/><!-- change from default 100 warnings -->
+            <arg value="4500"/><!-- change from default 100 warnings -->
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
 
@@ -2169,10 +2167,8 @@
             <antcall target="checknonascii" />
             <sequential>
                 <antcall target="compile-generated-source" />
-                <parallel>
-                    <antcall target="javadoc" />
-                    <antcall target="ci-test-travis" />
-                </parallel>
+                <antcall target="javadoc" />
+                <antcall target="ci-test-travis" />
             </sequential>
         </parallel>
     </target>
@@ -2183,10 +2179,8 @@
             <antcall target="checknonascii" />
             <sequential>
                 <antcall target="compile-generated-source" />
-                <parallel>
-                    <antcall target="javadoc" />
-                    <antcall target="ci-test-travis-coveragecheck" />
-                </parallel>
+                <antcall target="javadoc" />
+                <antcall target="ci-test-travis-coveragecheck" />
             </sequential>
         </parallel>
     </target>

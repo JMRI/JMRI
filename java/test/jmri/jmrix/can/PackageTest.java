@@ -37,6 +37,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.can.swing.PackageTest.class));
 
         suite.addTest(jmri.jmrix.can.cbus.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractCanTrafficControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrafficControllerTest.class));
 
         return suite;
     }

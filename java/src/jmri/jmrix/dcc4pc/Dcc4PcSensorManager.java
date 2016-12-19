@@ -1,4 +1,3 @@
-// Dcc4PcSensorManager.java
 package jmri.jmrix.dcc4pc;
 
 import java.util.ArrayList;
@@ -14,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement sensor manager for Dcc4Pc systems. The Manager handles all the
+ * Implement SensorManager for Dcc4Pc systems. The Manager handles all the
  * state changes.
  * <P>
  * System names are "DPnn:yy", where nnn is the board id and yy is the port on
@@ -305,7 +304,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             } else {
                 errorCount = 0;
                 if (lastInstruction == GETINFO) {
-                    log.debug("last get Info");
+                    log.debug("Get Info for board {}: {}", lastAddressUsed, r.toString());
                     String version;
                     int inputs;
                     int encoding;
@@ -351,9 +350,8 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                     }
                 } else if (lastInstruction == 0x01) {
                     errorCount = 0;
-                    if (log.isDebugEnabled()) {
-                        log.debug("Get Description for board " + lastAddressUsed + " " + r.toString());
-                    }
+                    log.debug("Get Description for board {}: {}", lastAddressUsed, r.toString());
+
                     ActiveBoard board = activeBoards.get(lastAddressUsed);
                     board.setDescription(r.toString());
                     Dcc4PcMessage m = Dcc4PcMessage.getEnabledInputs(lastAddressUsed);
@@ -366,6 +364,8 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                     return;
                 } else if (lastInstruction == 0x07) {
                     errorCount = 0;
+                    log.debug("Make Sensors for board {}: {}", lastAddressUsed, r.toString());
+                    
                     class SensorMaker implements Runnable {
 
                         Dcc4PcReply reply;
@@ -599,9 +599,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     Hashtable<Integer, ActiveBoard> activeBoards = new Hashtable<Integer, ActiveBoard>(5);
 
     void createSensorsFromReply(int board, Dcc4PcReply r) {
-        if (log.isDebugEnabled()) {
-            log.debug("create sensor Get enabled inputs " + r.toHexString());
-        }
+        log.debug("createSensorsFromReply: Get enabled inputs {}", r.toHexString());
 
         String sensorPrefix = getSystemPrefix() + typeLetter() + board + ":";
         String reporterPrefix = getSystemPrefix() + "R" + board + ":";
@@ -623,6 +621,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             }
             x = x + 8;
         }
+        log.debug("     created {} sensors", x);
     }
 
     public void handleTimeout(Dcc4PcMessage m) {
@@ -1202,5 +1201,3 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
 
     private final static Logger log = LoggerFactory.getLogger(Dcc4PcSensorManager.class.getName());
 }
-
-/* @(#)Dcc4PcSensorManager.java */

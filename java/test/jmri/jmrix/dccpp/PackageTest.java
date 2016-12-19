@@ -31,7 +31,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(DCCppMessageTest.class));
         suite.addTest(new TestSuite(DCCppReplyTest.class));
         suite.addTest(new TestSuite(DCCppPacketizerTest.class));
-        suite.addTest(new TestSuite(DCCppTrafficControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppTrafficControllerTest.class));
         suite.addTest(new TestSuite(DCCppSystemConnectionMemoTest.class));
         suite.addTest(new TestSuite(DCCppThrottleTest.class));
         suite.addTest(new TestSuite(DCCppInitializationManagerTest.class));
@@ -42,7 +42,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(DCCppLightTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppLightManagerTest.class));
         suite.addTest(new TestSuite(DCCppOpsModeProgrammerTest.class));
-        suite.addTest(new TestSuite(DCCppStreamPortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppStreamPortControllerTest.class));
         suite.addTest(new TestSuite(DCCppSensorTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppSensorManagerTest.class));
         suite.addTest(jmri.jmrix.dccpp.network.PackageTest.suite());
@@ -51,6 +51,9 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.dccpp.simulator.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.dccpp.serial.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.dccpp.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppNetworkPortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppSerialPortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppSimulatorPortControllerTest.class));
 
         return suite;
     }

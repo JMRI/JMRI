@@ -175,9 +175,9 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame {
         tPane3.setLayout(new BoxLayout(tPane3, BoxLayout.X_AXIS));
         tPane3.add(selectFileButton);
         tPane3.add(Box.createHorizontalGlue());
-        tPane3.add(new JLabel("Decoder Manufacturer: "));
+        tPane3.add(new JLabel("Decoder Manufacturer:"));
         tPane3.add(decoderMfg);
-        tPane3.add(new JLabel(" Model: "));
+        tPane3.add(new JLabel("Model:"));
         tPane3.add(decoderModel);
         tPane3.add(Box.createHorizontalGlue());
         tPane3.add(storeFileButton);
