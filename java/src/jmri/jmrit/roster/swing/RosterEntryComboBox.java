@@ -38,7 +38,7 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
     protected String _decoderMfgID;
     protected String _decoderVersionID;
     protected String _id;
-    protected String _nonSelectedItem = "Select Loco";
+    protected String _nonSelectedItem = Bundle.getMessage("RosterEntryComboBoxNoSelection");
     protected RosterEntry[] _currentSelection = null;
 
     private final static Logger log = LoggerFactory.getLogger(RosterEntryComboBox.class.getName());
@@ -206,8 +206,8 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
             }
         });
 
-        ResourceBundle resources = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
-        _nonSelectedItem = resources.getString("RosterEntryComboBoxNoSelection");
+        //ResourceBundle resources = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
+        _nonSelectedItem = Bundle.getMessage("RosterEntryComboBoxNoSelection");
     }
 
     /**

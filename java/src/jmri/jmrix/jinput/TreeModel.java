@@ -1,4 +1,3 @@
-// TreeModel.java
 package jmri.jmrix.jinput;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -37,18 +36,13 @@ import org.slf4j.LoggerFactory;
   */
 public final class TreeModel extends DefaultTreeModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2231559816159123031L;
-
     private TreeModel() {
 
         super(new DefaultMutableTreeNode("Root"));
         dRoot = (DefaultMutableTreeNode) getRoot();  // this is used because we can't store the DMTN we just made during the super() call
 
         // load initial USB objects
-        loadSystem();
+        boolean pass = loadSystem();
 
         // If you don't call loadSystem, the following line was 
         // needed to get the display to start
@@ -216,11 +210,20 @@ public final class TreeModel extends DefaultTreeModel {
         }
     }
 
-    void loadSystem() {
+    /**
+     * @return true for success
+     */
+    boolean loadSystem() {
         // Get a list of the controllers JInput knows about and can interact with
-        ca = ControllerEnvironment.getDefaultEnvironment().getControllers();
-        log.info("Found " + ca.length + " controllers");
-
+        try {
+            ca = ControllerEnvironment.getDefaultEnvironment().getControllers();
+            log.info("Found " + ca.length + " controllers");
+        } catch (Exception ex) { // this is probably ClassNotFoundException, but that's not part of the interface
+            // could not load some component(s)
+            ca = null;
+            return false;
+        }
+        
         for (int i = 0; i < ca.length; i++) {
             // Get this controllers components (buttons and axis)
             Component[] components = ca[i].getComponents();
@@ -243,6 +246,8 @@ public final class TreeModel extends DefaultTreeModel {
                 dNode.setValue(0.0f);
             }
         }
+        
+        return true;
     }
 
     PropertyChangeSupport pcs = new PropertyChangeSupport(this);
