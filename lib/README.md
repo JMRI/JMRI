@@ -32,7 +32,7 @@ command after updating the pom.xml file, replacing the tokens in ALL CAPS with
 the correct values for that library:
 ```
 mvn deploy:deploy-file -DgroupId=GROUP -DartifactId=ARTIFACT -Dversion=VERSION -Durl=file:./lib -DrepositoryId=lib -DupdateReleaseInfo=true -Dfile=./lib/FILE.jar
-``` 
+```
 for example:
 ```
 mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplugin -Dversion=0.0 -Durl=file:./lib -DrepositoryId=lib -DupdateReleaseInfo=true -Dfile=./lib/jhidrawplugin.jar
@@ -101,11 +101,11 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 - version 2.0.5
 - from <jdom.org>
 
-##### jackson-annotations-2.0.6.jar, jackson-core-2.0.6.jar, jackson-databind-2.0.6.jar
+##### jackson-annotations-2.8.5.jar, jackson-core-2.8.5.jar, jackson-databind-2.8.5.jar
 - JSON processing library com.fasterxml.jackson
-- version 2.0.6
+- version 2.8.5
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
-- JavaDoc http://fasterxml.github.io/jackson-databind/javadoc/2.0.6
+- JavaDoc http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.8.5
 
 bluecove-2.1.1-SNAPSHOT.jar
 lib/bluecove-bluez-2.1.1-SNAPSHOT.jar
@@ -211,7 +211,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 
 NOTE: joal.jar is currently replaced by an own-built version with modifications to correct the load of WAV files with appended metadata - see [GitHub PR](https://github.com/sgothel/joal/pull/15) for details of modifications.
 
-##### jmdns.jar 
+##### jmdns.jar
 - Version 3.5.1 (4 August 2016)
 - from https://github.com/jmdns/jmdns/releases
 
