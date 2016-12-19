@@ -108,8 +108,17 @@
                                         <th>Remediation</th>
                                     </tr>
                                     <tr>
+                                        <td>Attribute "error" must be declared for element type "sensoricon"</td>
+                                        <td><ol>
+                                                <li>Remove the text <code>&lt;!DOCTYPE layout-config SYSTEM "layout-config.dtd"&gt;</code></li>
+                                                <li>Replace <code>&lt;layout-config&gt;</code> with <code>&lt;layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout.xsd"&gt;</code>.
+                                                </li>
+                                            </ol>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td>cvc-pattern-valid: Value 'resource:<em>something</em>' is not facet-valid with respect to pattern '(program:|preference:|settings:|home:|profile:|file:|http:|[a-zA-Z]:)[a-z A-Z0-9/\-_\.]*' for type 'urlType'.</td>
-                                        <td>Replace all instances of <em>resource:</em> in the XML file with <em>program:</em></td>
+                                        <td>Replace all instances of <code>resource:</code> in the XML file with <code>program:</code></td>
                                     </tr>
                                 </table>
                         </ol>
