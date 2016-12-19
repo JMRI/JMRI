@@ -149,13 +149,14 @@
           "images/MatrixMastPanel-3t.png" width="256" height="251"
           hspace="0" vspace="0" alt=
           "Output Matrix Decoder panel"></a><br>
-          This Driver creates a truth table to set from 1 to 5
+          This Driver creates a truth table to set from 1 to 6
           outputs per Aspect. To define 8 different patterns, you
           will need at least 3 on/off fields. The Output Matrix
           driver was developed to connect decoders configured to
           connect and drive signals, like a <a href=
           "../../../../html/hardware/digirails/index.shtml#dr4018">Digirails
-          DR4018</a>.<br>
+          DR4018</a> with built in aspect mapping set to match your JMRI 
+          signal system and mapping.<br>
           When selected from the Driver drop down list, the panel
           lets you:
 
