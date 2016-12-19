@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>10</revnumber>
+      <date>2016-07-14</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>correction german by F2</revremark>
+    </revision>
+    <revision>
       <revnumber>9</revnumber>
       <date>2016-10-22</date>
       <authorinitials>PS</authorinitials>
@@ -71,7 +77,7 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label xml:lang="it">Stato Funzioni in analogico - F2</label>
       <label xml:lang="fr">État de la fonction en analogique - F2</label>
-      <label xml:lang="de">Funktionsstatus im Analogbetrieb - F3</label>
+      <label xml:lang="de">Funktionsstatus im Analogbetrieb - F2</label>
       <label>Analog Mode Function Status - F2</label>
       <tooltip>Check to enable function F2 when the unit is operating in analog power mode</tooltip>
       <label xml:lang="cs">Stav funkce v analogovém režimu - F2</label>
