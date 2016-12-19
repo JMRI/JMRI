@@ -27,10 +27,6 @@ public class DCCppTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCont
         apps.tests.Log4JFixture.setUp();
         tc = new DCCppTrafficController(new DCCppCommandStation()){
             @Override
-            public boolean status(){
-                return true;
-            }
-            @Override
             public void sendDCCppMessage(DCCppMessage m, DCCppListener reply){
             }
         };

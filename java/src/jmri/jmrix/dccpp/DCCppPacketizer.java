@@ -39,10 +39,6 @@ public class DCCppPacketizer extends DCCppTrafficController {
     }
 
 // The methods to implement the DCCppInterface
-    public boolean status() {
-        return (ostream != null & istream != null);
-    }
-
     /**
      * Forward a preformatted DCCppMessage to the actual interface.
      *
