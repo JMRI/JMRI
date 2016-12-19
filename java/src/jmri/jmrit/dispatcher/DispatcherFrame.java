@@ -569,7 +569,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             JPanel p7 = new JPanel();
             p7.setLayout(new FlowLayout());
             JButton cancelButton = null;
-            p7.add(cancelButton = new JButton(rb.getString("CancelButton")));
+            p7.add(cancelButton = new JButton(Bundle.getMessage("ButtonCancel")));
             cancelButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     cancelExtraRequested(e);
@@ -938,7 +938,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         if (t == null) {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(rb.getString(
-                        "Error1"), new Object[]{transitID}), rb.getString("ErrorTitle"),
+                        "Error1"), new Object[]{transitID}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
             log.error("Bad Transit name '" + transitID + "' when attempting to create an Active Train");
@@ -947,7 +947,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         if (t.getState() != Transit.IDLE) {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(rb.getString(
-                        "Error2"), new Object[]{transitID}), rb.getString("ErrorTitle"),
+                        "Error2"), new Object[]{transitID}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
             log.error("Transit '" + transitID + "' not IDLE, cannot create an Active Train");
@@ -956,7 +956,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         if ((trainID == null) || trainID.equals("")) {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, rb.getString("Error3"),
-                        rb.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
             log.error("TrainID string not provided, cannot create an Active Train");
             return null;
@@ -965,7 +965,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 && (tSource != ActiveTrain.USER)) {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, rb.getString("Error21"),
-                        rb.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
             log.error("Train source is invalid - " + tSource + " - cannot create an Active Train");
             return null;
@@ -974,7 +974,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         if (startBlock == null) {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(rb.getString(
-                        "Error4"), new Object[]{startBlockName}), rb.getString("ErrorTitle"),
+                        "Error4"), new Object[]{startBlockName}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
             log.error("Bad startBlockName '" + startBlockName + "' when attempting to create an Active Train");
@@ -983,7 +983,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         if (isInAllocatedSection(startBlock)) {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(rb.getString(
-                        "Error5"), new Object[]{startBlock.getDisplayName()}), rb.getString("ErrorTitle"),
+                        "Error5"), new Object[]{startBlock.getDisplayName()}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
             log.error("Start block '" + startBlockName + "' in allocated Section, cannot create an Active Train");
@@ -992,7 +992,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         if (_HasOccupancyDetection && (!(startBlock.getState() == Block.OCCUPIED))) {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(rb.getString(
-                        "Error6"), new Object[]{startBlock.getDisplayName()}), rb.getString("ErrorTitle"),
+                        "Error6"), new Object[]{startBlock.getDisplayName()}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
             log.error("No train in start block '" + startBlockName + "', cannot create an Active Train");
@@ -1001,13 +1001,13 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         if (startBlockSectionSequenceNumber <= 0) {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, rb.getString("Error12"),
-                        rb.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
         } else if (startBlockSectionSequenceNumber > t.getMaxSequence()) {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(rb.getString(
                         "Error13"), new Object[]{"" + startBlockSectionSequenceNumber}),
-                        rb.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
             log.error("Invalid sequence number '" + startBlockSectionSequenceNumber + "' when attempting to create an Active Train");
             return null;
@@ -1016,7 +1016,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         if ((endBlock == null) || (!t.containsBlock(endBlock))) {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(rb.getString(
-                        "Error7"), new Object[]{endBlockName}), rb.getString("ErrorTitle"),
+                        "Error7"), new Object[]{endBlockName}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
             log.error("Bad endBlockName '" + endBlockName + "' when attempting to create an Active Train");
@@ -1024,12 +1024,12 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         }
         if ((endBlockSectionSequenceNumber <= 0) && (t.getBlockCount(endBlock) > 1)) {
             JOptionPane.showMessageDialog(frame, rb.getString("Error8"),
-                    rb.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
         } else if (endBlockSectionSequenceNumber > t.getMaxSequence()) {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(rb.getString(
                         "Error9"), new Object[]{"" + endBlockSectionSequenceNumber}),
-                        rb.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
             log.error("Invalid sequence number '" + endBlockSectionSequenceNumber + "' when attempting to create an Active Train");
             return null;
@@ -1038,7 +1038,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(rb.getString(
                         "Error26"), new Object[]{(t.getSystemName() + "(" + t.getUserName() + ")")}),
-                        rb.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
             log.error("Incompatible Transit set up and request to Reset When Done when attempting to create an Active Train");
             return null;
@@ -1046,7 +1046,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         if (autoRun && ((dccAddress == null) || dccAddress.equals(""))) {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, rb.getString("Error10"),
-                        rb.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
             log.error("AutoRun requested without a dccAddress when attempting to create an Active Train");
             return null;
@@ -1058,7 +1058,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 if (!_UseConnectivity || (_LE == null)) {
                     if (showErrorMessages) {
                         JOptionPane.showMessageDialog(frame, rb.getString("Error33"),
-                                rb.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                         log.error("AutoRun requested without a LayoutEditor panel for connectivity.");
                         return null;
                     }
@@ -1066,7 +1066,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 if (!_HasOccupancyDetection) {
                     if (showErrorMessages) {
                         JOptionPane.showMessageDialog(frame, rb.getString("Error35"),
-                                rb.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                         log.error("AutoRun requested without occupancy detection.");
                         return null;
                     }
@@ -1079,7 +1079,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 if (showErrorMessages) {
                     JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(rb.getString(
                             "Error34"), new Object[]{("" + numErrors)}),
-                            rb.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 }
                 return null;
             }
@@ -1093,7 +1093,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                     if (showErrorMessages) {
                         JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(rb.getString(
                                 "Error36"), new Object[]{("" + numErrors)}),
-                                rb.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     }
                     return null;
                 }
@@ -1116,7 +1116,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                     if (showErrorMessages) {
                         JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(rb.getString(
                                 "Error36"), new Object[]{("" + numErrors)}),
-                                rb.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     }
                     return null;
                 }
@@ -1127,7 +1127,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         //if (at==null) {
         //	if (showErrorMessages) {
         //		JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(rb.getString(
-        //				"Error11"),new Object[] { transitID, trainID }), rb.getString("ErrorTitle"),
+        //				"Error11"),new Object[] { transitID, trainID }), Bundle.getMessage("ErrorTitle"),
         //					JOptionPane.ERROR_MESSAGE);
         //	}
         //	log.error("Creating Active Train failed, Transit - "+transitID+", train - "+trainID);
@@ -1271,7 +1271,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         if (activeTrain == null) {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, rb.getString("Error16"),
-                        rb.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
             log.error("Missing ActiveTrain specification");
             return false;
@@ -1279,7 +1279,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         if (section == null) {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(rb.getString(
-                        "Error17"), new Object[]{activeTrain.getActiveTrainName()}), rb.getString("ErrorTitle"),
+                        "Error17"), new Object[]{activeTrain.getActiveTrainName()}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
             log.error("Missing Section specification in allocation request from " + activeTrain.getActiveTrainName());
@@ -1288,7 +1288,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         if (((seqNumber <= 0) || (seqNumber > (activeTrain.getTransit().getMaxSequence()))) && (seqNumber != -99)) {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(rb.getString(
-                        "Error19"), new Object[]{"" + seqNumber, activeTrain.getActiveTrainName()}), rb.getString("ErrorTitle"),
+                        "Error19"), new Object[]{"" + seqNumber, activeTrain.getActiveTrainName()}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
             log.error("Out-of-range sequence number *" + seqNumber + "* in allocation request");
@@ -1297,7 +1297,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         if ((direction != Section.FORWARD) && (direction != Section.REVERSE)) {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(rb.getString(
-                        "Error18"), new Object[]{"" + direction, activeTrain.getActiveTrainName()}), rb.getString("ErrorTitle"),
+                        "Error18"), new Object[]{"" + direction, activeTrain.getActiveTrainName()}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
             }
             log.error("Invalid direction '" + direction + "' specification in allocation request");
@@ -1392,7 +1392,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                     return null;  // autoAllocate never overrides occupancy
                 }
                 int selectedValue = JOptionPane.showOptionDialog(dispatcherFrame,
-                        rb.getString("Question1"), rb.getString("WarningTitle"),
+                        rb.getString("Question1"), Bundle.getMessage("WarningTitle"),
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                         new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo")}, rb.getString("ButtonNo"));
                 if (selectedValue == 1) {
@@ -1405,7 +1405,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                     return null;  // autoAllocate never overrides start time
                 }
                 int selectedValue = JOptionPane.showOptionDialog(dispatcherFrame,
-                        rb.getString("Question4"), rb.getString("WarningTitle"),
+                        rb.getString("Question4"), Bundle.getMessage("WarningTitle"),
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                         new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo")}, rb.getString("ButtonNo"));
                 if (selectedValue == 1) {
@@ -1707,7 +1707,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             } else {
                 // give the manual dispatcher a chance to override turnouts not OK
                 int selectedValue = JOptionPane.showOptionDialog(dispatcherFrame,
-                        rb.getString("Question2"), rb.getString("WarningTitle"),
+                        rb.getString("Question2"), Bundle.getMessage("WarningTitle"),
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                         new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo")}, rb.getString("ButtonNo"));
                 if (selectedValue == 1) {
@@ -1962,7 +1962,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         if (!terminatingTrain && (as.getSection().getOccupancy() == Section.OCCUPIED)) {
             // warn the manual dispatcher that Allocated Section is occupied
             int selectedValue = JOptionPane.showOptionDialog(dispatcherFrame, java.text.MessageFormat.format(
-                    rb.getString("Question5"), new Object[]{as.getSectionName()}), rb.getString("WarningTitle"),
+                    rb.getString("Question5"), new Object[]{as.getSectionName()}), Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                     new Object[]{rb.getString("ButtonYesX"), rb.getString("ButtonNoX")},
                     rb.getString("ButtonNoX"));
@@ -2279,7 +2279,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             mess = rb.getString("FastClockWarn2");
         }
         int selectedValue = JOptionPane.showOptionDialog(dispatcherFrame,
-                mess, rb.getString("WarningTitle"),
+                mess, Bundle.getMessage("WarningTitle"),
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                 new Object[]{rb.getString("ButtonYesStart"), rb.getString("ButtonNo")},
                 rb.getString("ButtonNo"));
@@ -2583,7 +2583,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 case ALLOCATEBUTTON_COLUMN:
                     return rb.getString("AllocateButton");
                 case CANCELBUTTON_COLUMN:
-                    return rb.getString("CancelButton");
+                    return Bundle.getMessage("ButtonCancel");
                 default:
                     return (" ");
             }

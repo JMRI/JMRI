@@ -260,7 +260,7 @@ public final class ImageIndexEditor extends JmriJFrame {
                 if (!_index.insertNodeIntoModel(name, selectedNode)) {
                     JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                             Bundle.getMessage("duplicateNodeName"), new Object[]{name}),
-                            Bundle.getMessage("error"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -279,7 +279,7 @@ public final class ImageIndexEditor extends JmriJFrame {
                 if (!_index.nodeChange(selectedNode, name)) {
                     JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                             Bundle.getMessage("duplicateNodeName"), new Object[]{name}),
-                            Bundle.getMessage("error"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 }
 
             }

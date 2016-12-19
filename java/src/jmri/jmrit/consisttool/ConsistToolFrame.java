@@ -131,7 +131,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
             isCSConsist.setEnabled(true);
         }
 
-        deleteButton.setText(Bundle.getMessage("DeleteButtonText"));
+        deleteButton.setText(Bundle.getMessage("ButtonDelete"));
         deleteButton.setVisible(true);
         deleteButton.setToolTipText(Bundle.getMessage("DeleteButtonToolTip"));
         deleteButton.addActionListener(new ActionListener() {
