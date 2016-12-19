@@ -284,14 +284,14 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
         line = new JPanel();
         line.setLayout(new FlowLayout());
-        line.add(new JLabel(rbt.getString("Comment:_")));
+        line.add(new JLabel(rbt.getString("Comment")));
         line.add(commentField = new JTextField(30));
         getContentPane().add(line);
 
         getContentPane().add(new JSeparator(JSeparator.HORIZONTAL));
 
         // add OK button at bottom
-        JButton b = new JButton(rbt.getString("Apply"));
+        JButton b = new JButton(rbt.getString("Apply")); // TODO add Bundle to folder and use ButtonApply from NBB
         b.setAlignmentX(0.5f);
         getContentPane().add(b);
         b.addActionListener(new ActionListener() {

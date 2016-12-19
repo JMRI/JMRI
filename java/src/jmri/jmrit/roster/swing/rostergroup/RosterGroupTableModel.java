@@ -44,19 +44,19 @@ public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel 
     public String getColumnName(int col) {
         switch (col) {
             case IDCOL:
-                return "ID";
+                return Bundle.getMessage("FieldID");
             case ROADNUMBERCOL:
-                return "Road Number";
+                return Bundle.getMessage("FieldRoadNumber");
             case ROADNAMECOL:
-                return "Road Name";
+                return Bundle.getMessage("FieldRoadName");
             case MFGCOL:
-                return "Manufacturer";
+                return Bundle.getMessage("FieldManufacturer");
             case ADDTOGROUPCOL:
-                return "Include";
+                return Bundle.getMessage("Include");
             case OWNERCOL:
-                return "Owner";
+                return Bundle.getMessage("FieldOwner");
             default:
-                return "<UNKNOWN>";
+                return "<UNKNOWN>"; // flags unforeseen case, NOI18N
         }
     }
 
