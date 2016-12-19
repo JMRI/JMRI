@@ -800,8 +800,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * Invoke common handling of errors that happen during the "load" process.
      * <p>
      * Generally, this is invoked by {@link XmlAdapter} implementations of their
-     * creationErrorEncountered() method (note different arguemments, though).
-     * The standard implemenation of that is in {@link AbstractXmlAdapter}.
+     * creationErrorEncountered() method (note different arguments, though).
+     * The standard implementation of that is in {@link AbstractXmlAdapter}.
      * <p>
      * Exceptions passed into this are absorbed.
      *
