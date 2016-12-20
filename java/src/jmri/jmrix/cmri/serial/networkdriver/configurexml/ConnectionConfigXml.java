@@ -52,33 +52,35 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     // though it would be good to fix it if you're working in this area
     protected void extendElement(Element e) {
         SerialTrafficController tc = ((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController();
-        SerialNode node = (SerialNode) tc.getNode(0);
-        int index = 1;
-        while (node != null) {
-            // add node as an element
-            Element n = new Element("node");
-            n.setAttribute("name", "" + node.getNodeAddress());
-            e.addContent(n);
-            // add parameters to the node as needed
-            n.addContent(makeParameter("nodetype", "" + node.getNodeType()));
-            n.addContent(makeParameter("bitspercard", "" + node.getNumBitsPerCard()));
-            n.addContent(makeParameter("transmissiondelay", "" + node.getTransmissionDelay()));
-            n.addContent(makeParameter("num2lsearchlights", "" + node.getNum2LSearchLights()));
-            n.addContent(makeParameter("pulsewidth", "" + node.getPulseWidth()));
-            String value = "";
-            for (int i = 0; i < node.getLocSearchLightBits().length; i++) {
-                value = value + Integer.toHexString(node.getLocSearchLightBits()[i] & 0xF);
+        if (tc != null) {
+            SerialNode node = (SerialNode) tc.getNode(0);
+            int index = 1;
+            while (node != null) {
+                // add node as an element
+                Element n = new Element("node");
+                n.setAttribute("name", "" + node.getNodeAddress());
+                e.addContent(n);
+                // add parameters to the node as needed
+                n.addContent(makeParameter("nodetype", "" + node.getNodeType()));
+                n.addContent(makeParameter("bitspercard", "" + node.getNumBitsPerCard()));
+                n.addContent(makeParameter("transmissiondelay", "" + node.getTransmissionDelay()));
+                n.addContent(makeParameter("num2lsearchlights", "" + node.getNum2LSearchLights()));
+                n.addContent(makeParameter("pulsewidth", "" + node.getPulseWidth()));
+                String value = "";
+                for (int i = 0; i < node.getLocSearchLightBits().length; i++) {
+                    value = value + Integer.toHexString(node.getLocSearchLightBits()[i] & 0xF);
+                }
+                n.addContent(makeParameter("locsearchlightbits", "" + value));
+                value = "";
+                for (int i = 0; i < node.getCardTypeLocation().length; i++) {
+                    value = value + Integer.toHexString(node.getCardTypeLocation()[i] & 0xF);
+                }
+                n.addContent(makeParameter("cardtypelocation", "" + value));
+    
+                // look for the next node
+                node = (SerialNode) tc.getNode(index);
+                index++;
             }
-            n.addContent(makeParameter("locsearchlightbits", "" + value));
-            value = "";
-            for (int i = 0; i < node.getCardTypeLocation().length; i++) {
-                value = value + Integer.toHexString(node.getCardTypeLocation()[i] & 0xF);
-            }
-            n.addContent(makeParameter("cardtypelocation", "" + value));
-
-            // look for the next node
-            node = (SerialNode) tc.getNode(index);
-            index++;
         }
     }
 
