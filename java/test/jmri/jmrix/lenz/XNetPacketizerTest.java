@@ -1,19 +1,22 @@
 package jmri.jmrix.lenz;
 
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.TestCase;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+
 
 /**
  * <p>
  * Title: XNetPacketizerTest </p>
  * <p>
- * Description: </p>
- * <p>
- * Copyright: Copyright (c) 2002</p>
  *
- * @author Bob Jacobsen
+ * @author Bob Jacobsen Copyrgiht (C) 2002
+ * @author Paul Bender Copyright (C) 2016
  */
-public class XNetPacketizerTest extends TestCase {
+public class XNetPacketizerTest extends XNetTrafficControllerTest {
 
     /**
      * Local test class to make XNetPacketizer more felicitous to test
@@ -40,9 +43,9 @@ public class XNetPacketizerTest extends TestCase {
         }
     }
 
+    @Test
     public void testOutbound() throws Exception {
-        LenzCommandStation lcs = new LenzCommandStation();
-        StoppingXNetPacketizer c = new StoppingXNetPacketizer(lcs);
+        XNetPacketizer c = (XNetPacketizer)tc;
         // connect to iostream via port controller scaffold
         XNetPortControllerScaffold p = new XNetPortControllerScaffold();
         c.connectPort(p);
@@ -62,9 +65,9 @@ public class XNetPacketizerTest extends TestCase {
         Assert.assertEquals("remaining ", 0, p.tostream.available());
     }
 
+    @Test
     public void testInbound() throws Exception {
-        LenzCommandStation lcs = new LenzCommandStation();
-        StoppingXNetPacketizer c = new StoppingXNetPacketizer(lcs);
+        XNetPacketizer c = (XNetPacketizer)tc;
 
         // connect to iostream via port controller
         XNetPortControllerScaffold p = new XNetPortControllerScaffold();
@@ -87,13 +90,13 @@ public class XNetPacketizerTest extends TestCase {
         Assert.assertTrue("reply received ", l.rcvdRply != null);
         Assert.assertEquals("first char of reply ", 0x52, l.rcvdRply.getElement(0));
     }
-
+   
+    @Test
     public void testInterference() throws Exception {
         // This test checks to make sure that when two listeners register for events
         // at the same time, the first listener is still the active listener until
         // it receives a message.
-        LenzCommandStation lcs = new LenzCommandStation();
-        StoppingXNetPacketizer c = new StoppingXNetPacketizer(lcs);
+        XNetPacketizer c = (XNetPacketizer)tc;
 
         // connect to iostream via port controller
         XNetPortControllerScaffold p = new XNetPortControllerScaffold();
@@ -193,22 +196,21 @@ public class XNetPacketizerTest extends TestCase {
 
     }
 
-    public XNetPacketizerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XNetPacketizerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    @Override 
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        LenzCommandStation lcs = new LenzCommandStation();
+        tc = new StoppingXNetPacketizer(lcs);
     }
 
-    protected void tearDown() {
+    @After
+    @Override
+    public void tearDown() {
+        tc=null;
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
-   jmri.jmrix.dccpp.dccppovertcp.configurexml.PackageTest.class
+   jmri.jmrix.dccpp.dccppovertcp.configurexml.PackageTest.class,
+   //DCCppOverTcpPacketizerTest.class
 })
 /**
  * Tests for the jmri.jmrix.dccpp.dccppovertcp package.
