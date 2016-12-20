@@ -1,34 +1,33 @@
-package jmri.jmrix.lenz.ztc640;
+package jmri.jmrix.dccpp.serial;
 
-import jmri.util.JUnitUtil;
+import org.junit.Assert;
+import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
-
 /**
  * <p>
- * Title: ZTC640XNetPacketizerTest </p>
+ * Title: SerialDCCppPacketizerTest </p>
  * <p>
  *
  * @author Paul Bender Copyright (C) 2009
  */
-public class ZTC640XNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest {
+public class SerialDCCppPacketizerTest extends jmri.jmrix.dccpp.DCCppPacketizerTest {
 
     // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        tc = new ZTC640XNetPacketizer(new jmri.jmrix.lenz.LenzCommandStation());
+        tc = new SerialDCCppPacketizer(new jmri.jmrix.dccpp.DCCppCommandStation());
     }
 
     @After
     @Override
     public void tearDown() {
-        tc = null;
         apps.tests.Log4JFixture.tearDown();
     }
 
