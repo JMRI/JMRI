@@ -103,7 +103,7 @@ public class DCCppPacketizer extends DCCppTrafficController {
      */
     @Override
     public boolean portReadyToSend(jmri.jmrix.AbstractPortController p) throws Exception {
-        if (((DCCppPortController) p).okToSend()) {
+        if (p!=null && ((DCCppPortController) p).okToSend()) {
             ((DCCppPortController) p).setOutputBufferEmpty(false);
             return true;
         } else {
