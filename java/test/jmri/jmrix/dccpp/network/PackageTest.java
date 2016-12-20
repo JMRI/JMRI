@@ -27,7 +27,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.dccpp.network");  // no tests in this class itself
         suite.addTest(new TestSuite(DCCppEthernetAdapterTest.class));
-        suite.addTest(new TestSuite(DCCppEthernetPacketizerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppEthernetPacketizerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.dccpp.network.configurexml.PackageTest.class));
         return suite;

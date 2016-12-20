@@ -29,6 +29,7 @@ public class PackageTest extends TestCase {
         suite.addTest(MergMessageTest.suite());
         suite.addTest(MergReplyTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.can.adapters.gridconnect.canrs.serialdriver.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(MergTrafficControllerTest.class));
         return suite;
     }
 

@@ -48,6 +48,7 @@ public class LZ100ActionTest {
         Assert.assertNotNull(frame);
         // verify the action provided the expected frame class
         Assert.assertEquals(LZ100Frame.class.getName(), frame.getClass().getName());
+        frame.dispose();
     }
 
     @Before

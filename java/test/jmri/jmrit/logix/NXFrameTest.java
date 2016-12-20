@@ -239,6 +239,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
                         state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.UNDETECTED);
             }, "Train occupies block "+i+" of "+route.length);
             flushAWT();
+            jmri.util.JUnitUtil.releaseThread(this);
 
             block = _OBlockMgr.getOBlock(route[i]);
             Sensor nextSensor;
@@ -253,8 +254,15 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
                     }
                 });
                 jmri.util.JUnitUtil.releaseThread(this);
-                nextSensor.setState(Sensor.ACTIVE);
+                jmri.util.ThreadingUtil.runOnLayout(() -> {
+                    try {
+                        nextSensor.setState(Sensor.ACTIVE);
+                    } catch (jmri.JmriException e) {
+                        Assert.fail("Unexpected Exception: " + e);
+                    }
+                });
                 flushAWT();                                
+                jmri.util.JUnitUtil.releaseThread(this);
             } else {
                 nextSensor = null;
             }

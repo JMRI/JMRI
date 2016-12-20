@@ -402,6 +402,7 @@ public class CbusThrottle extends AbstractThrottle {
      */
     @Override
     public void setSpeedSetting(float speed) {
+        if (log.isDebugEnabled()) log.debug("setSpeedSetting({}) ", speed);
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         if (speed < 0) {
@@ -412,7 +413,7 @@ public class CbusThrottle extends AbstractThrottle {
         if (this.isForward) {
             new_spd = new_spd | 0x80;
         }
-        log.debug("Sending speed/dir for speed: " + new_spd);
+        if (log.isDebugEnabled()) log.debug("Sending speed/dir for speed: " + new_spd);
         cs.setSpeedDir(_handle, new_spd);
 
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {

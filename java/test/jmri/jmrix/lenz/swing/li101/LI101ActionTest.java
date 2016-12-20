@@ -46,6 +46,7 @@ public class LI101ActionTest {
         Assert.assertNotNull(frame);
         // verify the action provided the expected frame class
         Assert.assertEquals(LI101Frame.class.getName(), frame.getClass().getName());
+        frame.dispose();
     }
 
     @Before
