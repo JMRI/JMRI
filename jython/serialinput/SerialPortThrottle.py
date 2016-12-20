@@ -74,8 +74,8 @@ class SerialPortThrottle(SerialPortDevice) :
 
 # Example
 
-#execfile("jython/SerialPortDevice.py")
-#execfile("jython/SerialPortThrottle.py")
+#execfile("jython/serialinput/SerialPortDevice.py")
+#execfile("jython/serialinput/SerialPortThrottle.py")
 #a = SerialPortThrottle()
 #a.open("/dev/cu.usbserial-A7006QP9")
 #a.long = True
