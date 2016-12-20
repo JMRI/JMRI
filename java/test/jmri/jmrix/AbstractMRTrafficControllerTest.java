@@ -55,7 +55,7 @@ public class AbstractMRTrafficControllerTest {
     @Test
     public void testStatus(){
            // new tc, but unconnected, so status should return false.
-           Assert.assertFalse(tc.hasTimeouts());
+           Assert.assertFalse(tc.status());
     }
 
     @Before
