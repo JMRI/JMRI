@@ -118,6 +118,6 @@
     <label xml:lang="it">Corto circuito Motore</label>
     <label xml:lang="de">Motor Kurzschluss</label>
     <label xml:lang="cs">Zkrat motoru</label>
-    <choice xml:lang="ca">Cort-circuit al motor</choice>
+    <label xml:lang="ca">Cort-circuit al motor</label>
   </variable>
 </variables>
