@@ -51,5 +51,3 @@ RemoteSystemsTempFiles
 [Tt]humbs.db
 *.DS_Store
 /jmri-fb.html
-
-xml/decoders/zimo/PaneServos2.xml.cs.xml
