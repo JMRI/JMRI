@@ -1,57 +1,37 @@
 package jmri.jmrit.display.layoutEditor;
 
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test simple functioning of TransitCreationTool
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class TransitCreationToolTest extends TestCase {
+public class TransitCreationToolTest {
 
+    @Test
     public void testCtor() {
         TransitCreationTool  t = new TransitCreationTool();
         Assert.assertNotNull("exists", t );
     }
 
     // from here down is testing infrastructure
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
         // reset the instance manager.
         JUnitUtil.resetInstanceManager();
     }
  
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
+    @After
+    public void tearDown() throws Exception {
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
-    }
-
-    public TransitCreationToolTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", TransitCreationToolTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(TransitCreationToolTest.class);
-        return suite;
     }
 
 }
