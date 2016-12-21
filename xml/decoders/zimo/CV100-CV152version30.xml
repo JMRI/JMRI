@@ -571,6 +571,10 @@
     </enumVal>
     <label>PWM Frequency</label>
     <label xml:lang="it">Frequenza PWM</label>
+<<<<<<< HEAD
+=======
+    <label xml:lang="cs">Frekvence PWM</label>
+>>>>>>> JMRI/master
     <label xml:lang="de">Motoransteuerungsfrequenz</label>
     <tooltip>Active if CV9=0</tooltip>
     <tooltip xml:lang="de">Aktiv wenn CV9=0</tooltip>
@@ -1137,13 +1141,13 @@
   <variable CV="133" item="Function Output as virtual Cam or Smoke Fan" default="0" minOut="4" include="217">
     <enumVal>
       <enumChoice choice="Function Output 2 Normal Output">
-        <choice>Function Ouptput 2 Normal Output</choice>
+        <choice>Function Output 2 Normal Output</choice>
         <choice xml:lang="it">Uscita Funzione 2 Uscita Normale</choice>
         <choice xml:lang="cs">Funkční výstup 2 normální výstup</choice>
         <choice xml:lang="de">FA2 - Normal</choice>
       </enumChoice>
       <enumChoice choice="Function Output 2 Cam Pulses or Smoke Fan">
-        <choice>Function Ouptput 2 Cam Pulses or Smoke Fan</choice>
+        <choice>Function Output 2 Cam Pulses or Smoke Fan</choice>
         <choice xml:lang="it">Uscita Funzione 2 Impulso Cam  o Ventola Fumo</choice>
         <choice xml:lang="cs">Funkční výstup 2 rytmus vaček nebo ventilátor kouře</choice>
         <choice xml:lang="de">FA2 - Rauchventilator</choice>
@@ -1157,13 +1161,13 @@
   <variable CV="133" item="Function Output as virtual Cam or Smoke Fan" default="0" minOut="6" include="201,203,210,211,212,213,214,215,216,218,219,220,221,222,225,233,237,240,234,243,246,253">
     <enumVal>
       <enumChoice choice="Function Output 4 Normal Output">
-        <choice>Function Ouptput 4 Normal Output</choice>
+        <choice>Function Output 4 Normal Output</choice>
         <choice xml:lang="it">Uscita Funzione 4 Uscita Normale</choice>
         <choice xml:lang="cs">Funkční výstup 4 normální výstup</choice>
         <choice xml:lang="de">FA4 - Normal</choice>
       </enumChoice>
       <enumChoice choice="Function Output 4 Cam Pulses or Smoke Fan">
-        <choice>Function Ouptput 4 Cam Pulses or Smoke Fan</choice>
+        <choice>Function Output 4 Cam Pulses or Smoke Fan</choice>
         <choice xml:lang="it">Uscita Funzione 4 Impulso Cam  o Ventola Fumo</choice>
         <choice xml:lang="cs">Funkční výstup 4 rytmus vaček nebo ventilátor kouře</choice>
         <choice xml:lang="de">FA4 - Rauchventilator</choice>
@@ -1177,12 +1181,12 @@
   <variable CV="133" item="Function Output as virtual Cam or Smoke Fan" default="0" minOut="12" include="208,209">
     <enumVal>
       <enumChoice choice="Function Output 10 Normal Output">
-        <choice>Function Ouptput 10 Normal Output</choice>
+        <choice>Function Output 10 Normal Output</choice>
         <choice xml:lang="it">Uscita Funzione 10 Uscita Normale</choice>
         <choice xml:lang="de">FA10 - Normal</choice>
       </enumChoice>
       <enumChoice choice="Function Output 10 Cam Pulses or Smoke Fan">
-        <choice>Function Ouptput 10 Cam Pulses or Smoke Fan</choice>
+        <choice>Function Output 10 Cam Pulses or Smoke Fan</choice>
         <choice xml:lang="it">Uscita Funzione 10 Impulso Cam  o Ventola Fumo</choice>
         <choice xml:lang="de">FA10 - Rauchventilator</choice>
         <choice xml:lang="cs">Funkční výstup 10 rytmus vaček nebo ventilátor kouře</choice>
@@ -1210,6 +1214,10 @@
       </enumChoice>
       <enumChoice choice="0.1" value="1">
         <choice>0.1</choice>
+<<<<<<< HEAD
+=======
+        <choice xml:lang="cs">0,1</choice>
+>>>>>>> JMRI/master
       </enumChoice>
       <enumChoice choice="0.2" value="2">
         <choice>0.2</choice>

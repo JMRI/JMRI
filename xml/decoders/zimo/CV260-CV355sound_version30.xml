@@ -402,6 +402,7 @@
     </enumVal>
     <label>Set sound program</label>
     <label xml:lang="it">Programma serie suoni</label>
+<<<<<<< HEAD
     <label xml:lang="de">Sound Collection</label>
 <<<<<<< HEAD
     <tooltip>See manual!</tooltip>
@@ -412,8 +413,16 @@
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+>>>>>>> JMRI/master
     <label xml:lang="cs">Nastavení zvukového programu</label>
+    <label xml:lang="de">Sound Collection</label>
+    <tooltip>See manual!</tooltip>
     <tooltip xml:lang="cs">Viz návod!</tooltip>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <tooltip xml:lang="de">Handbuch beachten!</tooltip>
 >>>>>>> JMRI/master
   </variable>
   <variable item="Total volume" CV="266" default="64">
@@ -421,6 +430,7 @@
     <label>Total volume</label>
     <label xml:lang="it">Volume generale</label>
     <label xml:lang="de">Gesamtlautstärke</label>
+<<<<<<< HEAD
 <<<<<<< HEAD
     <tooltip>64 is highest distortion-free play back, INC=5</tooltip>
     <tooltip xml:lang="de">Der Wert „64“ ergibt rechnerisch die lautest-mögliche verzerrungsfreie Wiedergabe.</tooltip>
@@ -430,7 +440,11 @@
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+>>>>>>> JMRI/master
     <label xml:lang="cs">Celková hlasitost</label>
+    <tooltip>64 is highest distortion-free play back, INC=5</tooltip>
+    <tooltip xml:lang="de">Der Wert „64“ ergibt rechnerisch die lautest-mögliche verzerrungsfreie Wiedergabe.</tooltip>
     <tooltip xml:lang="cs">Výchozí hodnota "64" udává nejhlasitější možnou nezkreslenou reprodukci. Použitelné hodnoty jsou asi do "100".</tooltip>
 >>>>>>> JMRI/master
   </variable>
@@ -440,13 +454,17 @@
     <label xml:lang="it">Frequenza Chuff Camma Virtuale</label>
     <label xml:lang="de">virtuelle Dampfschlag-Häufigkeit</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <tooltip>The lower the value the higher the chuff frequency and vice versa, INC=1</tooltip>
 =======
 	<tooltip>The lower the value the higher the chuff frequency and vice versa, INC=1</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+>>>>>>> JMRI/master
     <label xml:lang="cs">Frekvence výfuků páry z virtuální vačky</label>
+    <tooltip>The lower the value the higher the chuff frequency and vice versa, INC=1</tooltip>
     <tooltip xml:lang="cs">Snížení hodnoty způsobí vyšší frekvenci výfuků páry.</tooltip>
 >>>>>>> JMRI/master
   </variable>
@@ -461,13 +479,17 @@
     <label xml:lang="it">Frequenza Chuff Camma reale</label>
     <label xml:lang="de">Umschaltung Achsdetektor 1</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <tooltip>0 = virtual sensor, triggers/chuff, INC=1</tooltip>
 =======
 	<tooltip>0 = virtual sensor, triggers/chuff, INC=1</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+>>>>>>> JMRI/master
     <label xml:lang="cs">Frekvence výfuků páry z reálné vačky 1</label>
+    <tooltip>0 = virtual sensor, triggers/chuff, INC=1</tooltip>
     <tooltip xml:lang="cs">Počet signálů vačky na jeden výfuk páry. 0 přepne na virtuální vačku.</tooltip>
 >>>>>>> JMRI/master
   </variable>
@@ -482,13 +504,17 @@
     <label xml:lang="it">Frequenza Chuff Camma reale</label>
     <label xml:lang="de">Umschaltung Achsdetektor</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <tooltip>0 = virtual sensor, triggers/chuff (0-127), INC=1</tooltip>
 =======
 	<tooltip>0 = virtual sensor, triggers/chuff (0-127), INC=1</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+>>>>>>> JMRI/master
     <label xml:lang="cs">Frekvence výfuků páry z reálné vačky</label>
+    <tooltip>0 = virtual sensor, triggers/chuff (0-127), INC=1</tooltip>
     <tooltip xml:lang="cs">Počet signálů vačky na jeden výfuk páry. 0 přepne na virtuální vačku.</tooltip>
 >>>>>>> JMRI/master
   </variable>
@@ -1357,9 +1383,13 @@
         <choice xml:lang="cs">Pouze pohybující se</choice>
       </enumChoice>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <enumChoice choice="Stop and moving">
 =======
 	    <enumChoice choice="Stop and moving">
+>>>>>>> JMRI/master
+=======
+        <enumChoice choice="Stop and moving">
 >>>>>>> JMRI/master
         <choice>bei Stand- und Fahrtsound</choice>
         <choice xml:lang="cs">Stojící a pohybující se</choice>

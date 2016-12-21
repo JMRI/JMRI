@@ -35,7 +35,7 @@ public class SignallingGuiTools {
      * mast to the new one..
      */
     static public void updateSignalMastLogic(JmriJFrame frame, SignalMast oldMast, SignalMast newMast) {
-        Object[] options = {rb.getString("UpdateButton"),
+        Object[] options = {Bundle.getMessage("ButtonUpdate"),
             rb.getString("LeaveButton")};
         int n = JOptionPane.showOptionDialog(frame,
                 java.text.MessageFormat.format(rb.getString("UpdateLogic"),
@@ -57,7 +57,7 @@ public class SignallingGuiTools {
      * signal masts over.
      */
     static public void swapSignalMastLogic(JmriJFrame frame, SignalMast oldMast, SignalMast newMast) {
-        Object[] options = {rb.getString("UpdateButton"),
+        Object[] options = {Bundle.getMessage("ButtonUpdate"),
             rb.getString("LeaveButton")};
         int n = JOptionPane.showOptionDialog(frame,
                 java.text.MessageFormat.format(rb.getString("SwapLogic"),

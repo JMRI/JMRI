@@ -616,17 +616,23 @@
         <text> </text>
       </label>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> JMRI/master
       <display item="Maximum Volume"/>
       <display item="Function Key to Increase Volume"/>
       <display item="Function Key to Reduce Volume"/>
       
       <label>
+<<<<<<< HEAD
 =======
 	  <display item="Maximum Volume"/>
 	  <display item="Function Key to Increase Volume"/>
 	  <display item="Function Key to Reduce Volume"/>
 	  
 	  <label>
+>>>>>>> JMRI/master
+=======
 >>>>>>> JMRI/master
         <text> </text>
       </label>

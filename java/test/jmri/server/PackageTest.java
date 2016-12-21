@@ -11,7 +11,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
     BundleTest.class,
-    jmri.server.json.PackageTest.class
+    jmri.server.json.PackageTest.class,
+    jmri.server.web.PackageTest.class
 })
 public class PackageTest {
 }

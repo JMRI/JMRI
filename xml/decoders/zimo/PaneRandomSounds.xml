@@ -21,14 +21,26 @@
     <display item="Minimum interval for random generator Z1">
       <!--label>Minimum interval</label-->
       <!--label xml:lang="it">Intervallo Minimo</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Minimální interval</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Maximum interval for random generator Z1">
       <!--label>Maximum interval</label-->
       <!--label xml:lang="it">Intervallo Massimo</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Maximální interval</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Playback length for random generator Z1">
       <!--label>Playback length</label-->
       <!--label xml:lang="it">Durata riproduzione</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Délka přehrávání</label-->
+>>>>>>> JMRI/master
     </display>
     <label>
       <text> </text>
@@ -49,14 +61,26 @@
     <display item="Minimum interval for random generator Z2">
       <!--label>Minimum interval</label-->
       <!--label xml:lang="it">Intervallo Minimo</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Minimální interval</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Maximum interval for random generator Z2">
       <!--label>Maximum interval</label-->
       <!--label xml:lang="it">Intervallo Massimo</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Maximální interval</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Playback length for random generator Z2">
       <!--label>Playback length</label-->
       <!--label xml:lang="it">Durata riproduzione</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Délka přehrávání</label-->
+>>>>>>> JMRI/master
     </display>
     <label>
       <text> </text>
@@ -77,14 +101,26 @@
     <display item="Minimum interval for random generator Z3">
       <!--label>Minimum interval</label-->
       <!--label xml:lang="it">Intervallo Minimo</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Minimální interval</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Maximum interval for random generator Z3">
       <!--label>Maximum interval</label-->
       <!--label xml:lang="it">Intervallo Massimo</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Maximální interval</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Playback length for random generator Z3">
       <!--label>Playback length</label-->
       <!--label xml:lang="it">Durata riproduzione</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Délka přehrávání</label-->
+>>>>>>> JMRI/master
     </display>
     <label>
       <text> </text>
@@ -105,14 +141,26 @@
     <display item="Minimum interval for random generator Z4">
       <!--label>Minimum interval</label-->
       <!--label xml:lang="it">Intervallo Minimo</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Minimální interval</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Maximum interval for random generator Z4">
       <!--label>Maximum interval</label-->
       <!--label xml:lang="it">Intervallo Massimo</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Maximální interval</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Playback length for random generator Z4">
       <!--label>Playback length</label-->
       <!--label xml:lang="it">Durata riproduzione</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Délka přehrávání</label-->
+>>>>>>> JMRI/master
     </display>
   </column>
   <column>
@@ -129,14 +177,26 @@
     <display item="Minimum interval for random generator Z5">
       <!--label>Minimum interval</label-->
       <!--label xml:lang="it">Intervallo Minimo</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Minimální interval</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Maximum interval for random generator Z5">
       <!--label>Maximum interval</label-->
       <!--label xml:lang="it">Intervallo Massimo</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Maximální interval</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Playback length for random generator Z5">
       <!--label>Playback length</label-->
       <!--label xml:lang="it">Durata riproduzione</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Délka přehrávání</label-->
+>>>>>>> JMRI/master
     </display>
     <label>
       <text> </text>
@@ -157,14 +217,26 @@
     <display item="Minimum interval for random generator Z6">
       <!--label>Minimum interval</label-->
       <!--label xml:lang="it">Intervallo Minimo</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Minimální interval</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Maximum interval for random generator Z6">
       <!--label>Maximum interval</label-->
       <!--label xml:lang="it">Intervallo Massimo</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Maximální interval</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Playback length for random generator Z6">
       <!--label>Playback length</label-->
       <!--label xml:lang="it">Durata riproduzione</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Délka přehrávání</label-->
+>>>>>>> JMRI/master
     </display>
     <label>
       <text> </text>
@@ -185,14 +257,26 @@
     <display item="Minimum interval for random generator Z7">
       <!--label>Minimum interval</label-->
       <!--label xml:lang="it">Intervallo Minimo</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Minimální interval</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Maximum interval for random generator Z7">
       <!--label>Maximum interval</label-->
       <!--label xml:lang="it">Intervallo Massimo</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Maximální interval</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Playback length for random generator Z7">
       <!--label>Playback length</label-->
       <!--label xml:lang="it">Durata riproduzione</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Délka přehrávání</label-->
+>>>>>>> JMRI/master
     </display>
     <label>
       <text> </text>
@@ -213,14 +297,26 @@
     <display item="Minimum interval for random generator Z8">
       <!--label>Minimum interval</label-->
       <!--label xml:lang="it">Intervallo Minimo</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Minimální interval</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Maximum interval for random generator Z8">
       <!--label>Maximum interval</label-->
       <!--label xml:lang="it">Intervallo Massimo</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Maximální interval</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Playback length for random generator Z8">
       <!--label>Playback length</label-->
       <!--label xml:lang="it">Durata riproduzione</label-->
+<<<<<<< HEAD
+=======
+      <!--label xml:lang="cs">Délka přehrávání</label-->
+>>>>>>> JMRI/master
     </display>
   </column>
 </pane>

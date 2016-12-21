@@ -11,7 +11,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     ProgServiceModePaneTest.class,
-    BundleTest.class
+    BundleTest.class,
+    ProgModeExceptionTest.class
 })
 public class PackageTest {
 }

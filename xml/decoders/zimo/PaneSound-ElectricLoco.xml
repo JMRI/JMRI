@@ -92,6 +92,9 @@
       <!--label xml:lang="it">Dipendenza del pitch da velocità</label-->
     </display>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> JMRI/master
     
     <display item="Volume dependent on Speed">
     </display>
@@ -99,6 +102,7 @@
     </display>
     
     <label>
+<<<<<<< HEAD
       <text> </text>
     </label>
     <display item="Electric brake function key">
@@ -131,30 +135,36 @@
 	</display>
 	
 	<label>
+=======
+>>>>>>> JMRI/master
       <text> </text>
     </label>
-	<display item="Electric brake function key">
+    <display item="Electric brake function key">
       <!--label>Electric brake function key</label-->
     </display>
-	<display item="Electric brake minimum speed">
+    <display item="Electric brake minimum speed">
       <!--label>Electric brake minimum speed</label-->
     </display>
-	<display item="Electric brake maximum speed">
+    <display item="Electric brake maximum speed">
       <!--label>Electric brake maximum speed</label-->
     </display>
-	<display item="Electric brake pitch">
+    <display item="Electric brake pitch">
       <!--label>Electric brake pitch</label-->
     </display>
-	<display item="Electric brake deceleration threshold">
+    <display item="Electric brake deceleration threshold">
       <!--label>Electric brake deceleration threshold</label-->
     </display>
-	<display item="Electric brake downhill">
+    <display item="Electric brake downhill">
       <!--label>Electric brake downhill</label-->
     </display>
-	<display item="Electric brake loop time interval">
+    <display item="Electric brake loop time interval">
       <!--label>Electric brake loop time interval</label-->
     </display>
+<<<<<<< HEAD
 	<display item="Electric brake loop cutoff">
+>>>>>>> JMRI/master
+=======
+    <display item="Electric brake loop cutoff">
 >>>>>>> JMRI/master
       <!--label>Electric brake loop cutoff</label-->
     </display>
@@ -191,6 +201,7 @@
       <!--label xml:lang="it">Distribuzione Marce nelle velocità di manovra</label-->
     </display>
 <<<<<<< HEAD
+<<<<<<< HEAD
     
     <display item="Likeihood of switchgear sparks">
       <!--label>Likeihood of switchgear sparks</label-->
@@ -202,6 +213,13 @@
       <!--label>Likeihood of switchgear sparks</label-->
     </display>
 	<display item="Lights flash with switchgear sound">
+>>>>>>> JMRI/master
+=======
+    
+    <display item="Likeihood of switchgear sparks">
+      <!--label>Likeihood of switchgear sparks</label-->
+    </display>
+    <display item="Lights flash with switchgear sound">
 >>>>>>> JMRI/master
       <!--label>Lights flash with switchgear sound</label-->
     </display>

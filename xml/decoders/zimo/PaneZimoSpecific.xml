@@ -54,7 +54,12 @@
     </label>
     <display item="MAN Key Extension (Disable HLU or ABC signal control)">
        <!--label>Set Function Key to Disable HLU Signal Control</label>
+<<<<<<< HEAD
        <label xml:lang="it">Tasto funzione per disabilitare controllo segnale HLU</label-->
+=======
+       <label xml:lang="it">Tasto funzione per disabilitare controllo segnale HLU</label>
+       <label xml:lang="cs">Nastavení funkční klávesy pro znepřístupnění řízení signálem HLU</label-->
+>>>>>>> JMRI/master
     </display>
     <display item="Distance controlled stopping"/>
     <label>

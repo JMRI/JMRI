@@ -298,6 +298,7 @@
         <label xml:lang="it">Frequenza controllo Motore</label>
         <label xml:lang="de">Motoransteuerfrequenz</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
             <tooltip>&lt;html&gt;15.6kHz = High frequency motor control for modern DC and coreless motors.&lt;br&gt; 120Hz = Low frequency motor control for older DC motors or AC/universal motors&lt;/html&gt;</tooltip>
             <tooltip xml:lang="it">&lt;html&gt;15.6kHz = Frequenza alta motore per moderni motori DC e coreless.&lt;br&gt; 120Hz = Frequenza bassa motore per vecchi motori DC o motori universali o in AC&lt;/html&gt;</tooltip>
             <tooltip xml:lang="de">&lt;html&gt;15.6kHz = für moderne DC- und Glockenankermotoren.&lt;br&gt;120Hz = für ältere DC-Motoren und Wechselstrommotoren.&lt;/html&gt;</tooltip>
@@ -305,6 +306,11 @@
 		    <tooltip>&lt;html&gt;15.6kHz = High frequency motor control for modern DC and coreless motors.&lt;br&gt; 120Hz = Low frequency motor control for older DC motors or AC/universal motors&lt;/html&gt;</tooltip>
 		    <tooltip xml:lang="it">&lt;html&gt;15.6kHz = Frequenza alta motore per moderni motori DC e coreless.&lt;br&gt; 120Hz = Frequenza bassa motore per vecchi motori DC o motori universali o in AC&lt;/html&gt;</tooltip>
 		    <tooltip xml:lang="de">&lt;html&gt;15.6kHz = für moderne DC- und Glockenankermotoren.&lt;br&gt;120Hz = für ältere DC-Motoren und Wechselstrommotoren.&lt;/html&gt;</tooltip>
+>>>>>>> JMRI/master
+=======
+            <tooltip>&lt;html&gt;15.6kHz = High frequency motor control for modern DC and coreless motors.&lt;br&gt; 120Hz = Low frequency motor control for older DC motors or AC/universal motors&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="it">&lt;html&gt;15.6kHz = Frequenza alta motore per moderni motori DC e coreless.&lt;br&gt; 120Hz = Frequenza bassa motore per vecchi motori DC o motori universali o in AC&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="de">&lt;html&gt;15.6kHz = für moderne DC- und Glockenankermotoren.&lt;br&gt;120Hz = für ältere DC-Motoren und Wechselstrommotoren.&lt;/html&gt;</tooltip>
 >>>>>>> JMRI/master
         <comment>Range 0 / 1</comment>
         <label xml:lang="cs">Frekvence řízení motoru</label>
@@ -319,25 +325,41 @@
       <!-- Light effects -->
       <variable CV="49" mask="XXXXVVVV" default="0" item="Function F0F effect generated">
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> JMRI/master
         <enumVal>
           <enumChoice choice="No effect">
             <choice>No effect</choice>
             <choice xml:lang="it">Nessun effetto</choice>
             <choice xml:lang="de">kein Effekt</choice>
+<<<<<<< HEAD
+=======
+            <choice xml:lang="cs">Bez efektů</choice>
+>>>>>>> JMRI/master
           </enumChoice>
           <enumChoice choice="Pulsing">
             <choice>Pulsing</choice>
             <choice xml:lang="it">Luce Pulsante</choice>
             <choice xml:lang="de">Mars-Licht (pulsierend)</choice>
+<<<<<<< HEAD
+=======
+            <choice xml:lang="cs">Pulzující</choice>
+>>>>>>> JMRI/master
           </enumChoice>
           <enumChoice choice="Flashing">
             <choice>Flashing</choice>
             <choice xml:lang="it">Flash</choice>
             <choice xml:lang="de">Blitzlicht (Strobe)</choice>
+<<<<<<< HEAD
+=======
+            <choice xml:lang="cs">Zábleskové</choice>
+>>>>>>> JMRI/master
           </enumChoice>
           <enumChoice choice="Blink Phase B" value="4">
           <choice>Blink Phase B</choice>
             <choice xml:lang="it">Lampeggiante fase B</choice>
+<<<<<<< HEAD
             <choice xml:lang="de">Blinken Phase B</choice>          </enumChoice>
           <enumChoice choice="Blink Phase A" value="8">
             <choice>Blink Phase A</choice>
@@ -378,6 +400,18 @@
                   </enumChoice>
 		</enumVal>
 >>>>>>> JMRI/master
+=======
+            <choice xml:lang="de">Blinken Phase B</choice>
+            <choice xml:lang="cs">Blikající fáze B</choice>
+          </enumChoice>
+          <enumChoice choice="Blink Phase A" value="8">
+            <choice>Blink Phase A</choice>
+            <choice xml:lang="it">Lampeggiante fase A</choice>
+            <choice xml:lang="de">Blinken Phase A</choice>
+            <choice xml:lang="cs">Blikající fáze A</choice>
+          </enumChoice>
+        </enumVal>
+>>>>>>> JMRI/master
         <label>Effects Output A (White)</label>
         <label xml:lang="it">Effetti uscita A (bianco)</label>
         <label xml:lang="de">Ausgang A (Weiß) Effekt</label>
@@ -393,10 +427,16 @@
 =======
 =======
         <tooltip xml:lang="cs">&lt;html&gt;Jsou možné všechny kombinace efektů.&lt;br&gt;V praxi se mohou vzájemně vyřazovat z činnosti proto je lepší používat současně jenom jeden efekt.&lt;br&gt;Pokud je chcete přesto kombinovat je lepší je nastavit přímo v CV.&lt;/html&gt;</tooltip>
+<<<<<<< HEAD
 >>>>>>> JMRI/master
       </variable>	  
       <!--variable CV="49" mask="XXXXXXXV" default="0" item="A Pulsing Light">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+>>>>>>> JMRI/master
+=======
+      </variable>
+      <!--variable CV="49" mask="XXXXXXXV" default="0" item="A Pulsing Light">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 >>>>>>> JMRI/master
         <label>A Pulsing Light</label>
         <label xml:lang="it">Uscita A Luce pulsante</label>
@@ -466,25 +506,41 @@
       </variable>
       <variable CV="50" mask="XXXXVVVV" default="0" item="Function F0R effect generated">
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> JMRI/master
         <enumVal>
           <enumChoice choice="No effect">
             <choice>No effect</choice>
             <choice xml:lang="it">Nessun effetto</choice>
             <choice xml:lang="de">kein Effekt</choice>
+<<<<<<< HEAD
+=======
+            <choice xml:lang="cs">Bez efektů</choice>
+>>>>>>> JMRI/master
           </enumChoice>
           <enumChoice choice="Pulsing">
             <choice>Pulsing</choice>
             <choice xml:lang="it">Luce Pulsante</choice>
             <choice xml:lang="de">Mars-Licht (pulsierend)</choice>
+<<<<<<< HEAD
+=======
+            <choice xml:lang="cs">Pulzující</choice>
+>>>>>>> JMRI/master
           </enumChoice>
           <enumChoice choice="Flashing">
             <choice>Flashing</choice>
             <choice xml:lang="it">Flash</choice>
             <choice xml:lang="de">Blitzlicht (Strobe)</choice>
+<<<<<<< HEAD
+=======
+            <choice xml:lang="cs">Zábleskové</choice>
+>>>>>>> JMRI/master
           </enumChoice>
           <enumChoice choice="Blink Phase B" value="4">
             <choice>Blink Phase B</choice>
             <choice xml:lang="it">Lampeggiante fase B</choice>
+<<<<<<< HEAD
             <choice xml:lang="de">Blinken Phase B</choice>          </enumChoice>
           <enumChoice choice="Blink Phase A" value="8">
             <choice>Blink Phase A</choice>
@@ -525,6 +581,18 @@
                   </enumChoice>
 		</enumVal>
 >>>>>>> JMRI/master
+=======
+            <choice xml:lang="de">Blinken Phase B</choice>
+            <choice xml:lang="cs">Blikající fáze B</choice>
+          </enumChoice>
+          <enumChoice choice="Blink Phase A" value="8">
+            <choice>Blink Phase A</choice>
+            <choice xml:lang="it">Lampeggiante fase A</choice>
+            <choice xml:lang="de">Blinken Phase A</choice>
+            <choice xml:lang="cs">Blikající fáze A</choice>
+          </enumChoice>
+        </enumVal>
+>>>>>>> JMRI/master
         <label>Effects Output B (Yellow)</label>
         <label xml:lang="it">Effetti uscita B (giallo)</label>
         <label xml:lang="de">Ausgang B (Gelb) Effekt</label>
@@ -536,9 +604,13 @@
       </variable>
       <!--variable CV="50" mask="XXXXXXXV" default="0" item="B Pulsing Light">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 =======
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+>>>>>>> JMRI/master
+=======
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 >>>>>>> JMRI/master
         <label>B Pulsing Light</label>
         <label xml:lang="it">Uscita B Luce pulsante</label>
@@ -608,25 +680,41 @@
       </variable>
       <variable CV="51" mask="XXXXVVVV" default="0" minOut="4" item="Function 1 effect generated">
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> JMRI/master
         <enumVal>
           <enumChoice choice="No effect">
             <choice>No effect</choice>
             <choice xml:lang="it">Nessun effetto</choice>
             <choice xml:lang="de">kein Effekt</choice>
+<<<<<<< HEAD
+=======
+            <choice xml:lang="cs">Bez efektů</choice>
+>>>>>>> JMRI/master
           </enumChoice>
           <enumChoice choice="Pulsing">
             <choice>Pulsing</choice>
             <choice xml:lang="it">Luce Pulsante</choice>
             <choice xml:lang="de">Mars-Licht (pulsierend)</choice>
+<<<<<<< HEAD
+=======
+            <choice xml:lang="cs">Pulzující</choice>
+>>>>>>> JMRI/master
           </enumChoice>
           <enumChoice choice="Flashing">
             <choice>Flashing</choice>
             <choice xml:lang="it">Flash</choice>
             <choice xml:lang="de">Blitzlicht (Strobe)</choice>
+<<<<<<< HEAD
+=======
+            <choice xml:lang="cs">Zábleskové</choice>
+>>>>>>> JMRI/master
           </enumChoice>
           <enumChoice choice="Blink Phase B" value="4">
             <choice>Blink Phase B</choice>
             <choice xml:lang="it">Lampeggiante fase B</choice>
+<<<<<<< HEAD
             <choice xml:lang="de">Blinken Phase B</choice>          </enumChoice>
           <enumChoice choice="Blink Phase A" value="8">
             <choice>Blink Phase A</choice>
@@ -667,6 +755,18 @@
                   </enumChoice>
 		</enumVal>
 >>>>>>> JMRI/master
+=======
+            <choice xml:lang="de">Blinken Phase B</choice>
+            <choice xml:lang="cs">Blikající fáze B</choice>
+          </enumChoice>
+          <enumChoice choice="Blink Phase A" value="8">
+            <choice>Blink Phase A</choice>
+            <choice xml:lang="it">Lampeggiante fase A</choice>
+            <choice xml:lang="de">Blinken Phase A</choice>
+            <choice xml:lang="cs">Blikající fáze A</choice>
+          </enumChoice>
+        </enumVal>
+>>>>>>> JMRI/master
         <label>Effects Output C (Green)</label>
         <label xml:lang="it">Effetti uscita C (verde)</label>
         <label xml:lang="de">Ausgang C (Grün) Effekt</label>
@@ -682,10 +782,16 @@
 =======
         <label xml:lang="cs">Efekty pro výstup C (zelená)</label>
         <tooltip xml:lang="cs">&lt;html&gt;Jsou možné všechny kombinace efektů.&lt;br&gt;V praxi se mohou vzájemně vyřazovat z činnosti proto je lepší používat současně jenom jeden efekt.&lt;br&gt;Pokud je chcete přesto kombinovat je lepší je nastavit přímo v CV.&lt;/html&gt;</tooltip>
+<<<<<<< HEAD
 >>>>>>> JMRI/master
       </variable>	  
       <!--variable CV="51" mask="XXXXXXXV" default="0" minOut="4" item="C Pulsing Light">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+>>>>>>> JMRI/master
+=======
+      </variable>
+      <!--variable CV="51" mask="XXXXXXXV" default="0" minOut="4" item="C Pulsing Light">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 >>>>>>> JMRI/master
         <label>C Pulsing Light</label>
         <label xml:lang="it">Luce Pulsante uscita C</label>
@@ -755,25 +861,41 @@
       </variable>
       <variable CV="52" mask="XXXXVVVV" default="0" minOut="4" item="Function 2 effect generated">
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> JMRI/master
         <enumVal>
           <enumChoice choice="No effect">
             <choice>No effect</choice>
             <choice xml:lang="it">Nessun effetto</choice>
             <choice xml:lang="de">kein Effekt</choice>
+<<<<<<< HEAD
+=======
+            <choice xml:lang="cs">Bez efektů</choice>
+>>>>>>> JMRI/master
           </enumChoice>
           <enumChoice choice="Pulsing">
             <choice>Pulsing</choice>
             <choice xml:lang="it">Luce Pulsante</choice>
             <choice xml:lang="de">Mars-Licht (pulsierend)</choice>
+<<<<<<< HEAD
+=======
+            <choice xml:lang="cs">Pulzující</choice>
+>>>>>>> JMRI/master
           </enumChoice>
           <enumChoice choice="Flashing">
             <choice>Flashing</choice>
             <choice xml:lang="it">Flash</choice>
             <choice xml:lang="de">Blitzlicht (Strobe)</choice>
+<<<<<<< HEAD
+=======
+            <choice xml:lang="cs">Zábleskové</choice>
+>>>>>>> JMRI/master
           </enumChoice>
           <enumChoice choice="Blink Phase B" value="4">
             <choice>Blink Phase B</choice>
             <choice xml:lang="it">Lampeggiante fase B</choice>
+<<<<<<< HEAD
             <choice xml:lang="de">Blinken Phase B</choice>          </enumChoice>
           <enumChoice choice="Blink Phase A" value="8">
             <choice>Blink Phase A</choice>
@@ -819,6 +941,18 @@
 		  </enumChoice>
                 </enumVal>
 >>>>>>> JMRI/master
+=======
+            <choice xml:lang="de">Blinken Phase B</choice>
+            <choice xml:lang="cs">Blikající fáze B</choice>
+          </enumChoice>
+          <enumChoice choice="Blink Phase A" value="8">
+            <choice>Blink Phase A</choice>
+            <choice xml:lang="it">Lampeggiante fase A</choice>
+            <choice xml:lang="de">Blinken Phase A</choice>    
+            <choice xml:lang="cs">Blikající fáze A</choice>
+          </enumChoice>
+        </enumVal>
+>>>>>>> JMRI/master
         <label>Effects Output D (Violet)</label>
         <label xml:lang="it">Effetti uscita D (viola)</label>
         <label xml:lang="de">Ausgang D (Violett) Effekt</label>
@@ -830,11 +964,16 @@
       </variable>
       <!--variable CV="52" mask="XXXXXXXV" default="0" minOut="4" item="D Pulsing Light">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>D Pulsing Light</label>        
 =======
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>D Pulsing Light</label>		
+>>>>>>> JMRI/master
+=======
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>D Pulsing Light</label>        
 >>>>>>> JMRI/master
         <label xml:lang="de">Effects Output D Violett</label>
         <label xml:lang="it">Effetti uscita D (viola)</label>
@@ -965,9 +1104,13 @@
       </variable>
       <variable CV="56" mask="XXXXXXVX" default="1" item="EMF Enable">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 =======
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+>>>>>>> JMRI/master
+=======
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 >>>>>>> JMRI/master
         <label>EMK divider</label>
         <label xml:lang="it">Compensazione Carico BEMF</label>
@@ -1001,12 +1144,16 @@
         <label>F1 controls output 2</label>
         <label xml:lang="it">F1 controlla uscita 2</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F1 steuert Ausgang 2</tooltip>
 =======
 	    <tooltip xml:lang="de">F1 steuert Ausgang 2</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F1 steuert Ausgang 2</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F1 řídí výstup 2</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1015,12 +1162,16 @@
         <label>F2 controls output 2</label>
         <label xml:lang="it">F2 controlla uscita 2</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F2 steuert Ausgang 2</tooltip>
 =======
 	    <tooltip xml:lang="de">F2 steuert Ausgang 2</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F2 steuert Ausgang 2</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F2 řídí výstup 2</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1029,12 +1180,16 @@
         <label>F3 controls output 2</label>
         <label xml:lang="it">F3 controlla uscita 2</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F3 steuert Ausgang 2</tooltip>
 =======
 	    <tooltip xml:lang="de">F3 steuert Ausgang 2</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F3 steuert Ausgang 2</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F3 řídí výstup 2</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1043,12 +1198,16 @@
         <label>F4 controls output 2</label>
         <label xml:lang="it">F4 controlla uscita 2</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F4 steuert Ausgang 2</tooltip>
 =======
 	    <tooltip xml:lang="de">F4 steuert Ausgang 2</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F4 steuert Ausgang 2</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F4 řídí výstup 2</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1057,12 +1216,16 @@
         <label>F5 controls output 2</label>
         <label xml:lang="it">F5 controlla uscita 2</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F5 steuert Ausgang 2</tooltip>
 =======
 	    <tooltip xml:lang="de">F5 steuert Ausgang 2</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F5 steuert Ausgang 2</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F5 řídí výstup 2</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1071,12 +1234,16 @@
         <label>F6 controls output 2</label>
         <label xml:lang="it">F6 controlla uscita 2</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F6 steuert Ausgang 2</tooltip>
 =======
 	    <tooltip xml:lang="de">F6 steuert Ausgang 2</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F6 steuert Ausgang 2</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F6 řídí výstup 2</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1085,12 +1252,16 @@
         <label>F7 controls output 2</label>
         <label xml:lang="it">F7 controlla uscita 2</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F7 steuert Ausgang 2</tooltip>
 =======
 	    <tooltip xml:lang="de">F7 steuert Ausgang 2</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F7 steuert Ausgang 2</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F7 řídí výstup 2</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1099,12 +1270,16 @@
         <label>F8 controls output 2</label>
         <label xml:lang="it">F8 controlla uscita 2</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F8 steuert Ausgang 2</tooltip>
 =======
 	    <tooltip xml:lang="de">F8 steuert Ausgang 2</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F8 steuert Ausgang 2</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F8 řídí výstup 2</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1113,12 +1288,16 @@
         <label>F1 controls output 3</label>
         <label xml:lang="it">F1 controlla uscita 3</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F1 steuert Ausgang 3</tooltip>
 =======
 	    <tooltip xml:lang="de">F1 steuert Ausgang 3</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F1 steuert Ausgang 3</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F1 řídí výstup 3</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1127,12 +1306,16 @@
         <label>F2 controls output 3</label>
         <label xml:lang="it">F2 controlla uscita 3</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F2 steuert Ausgang 3</tooltip>
 =======
 	    <tooltip xml:lang="de">F2 steuert Ausgang 3</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F2 steuert Ausgang 3</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F2 řídí výstup 3</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1141,12 +1324,16 @@
         <label>F3 controls output 3</label>
         <label xml:lang="it">F3 controlla uscita 3</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F3 steuert Ausgang 3</tooltip>
 =======
 	    <tooltip xml:lang="de">F3 steuert Ausgang 3</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F3 steuert Ausgang 3</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F3 řídí výstup 3</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1155,12 +1342,16 @@
         <label>F4 controls output 3</label>
         <label xml:lang="it">F4 controlla uscita 3</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F4 steuert Ausgang 3</tooltip>
 =======
 	    <tooltip xml:lang="de">F4 steuert Ausgang 3</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F4 steuert Ausgang 3</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F4 řídí výstup 3</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1169,12 +1360,16 @@
         <label>F5 controls output 3</label>
         <label xml:lang="it">F5 controlla uscita 3</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F5 steuert Ausgang 3</tooltip>
 =======
 	    <tooltip xml:lang="de">F5 steuert Ausgang 3</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F5 steuert Ausgang 3</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F5 řídí výstup 3</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1183,12 +1378,16 @@
         <label>F6 controls output 3</label>
         <label xml:lang="it">F6 controlla uscita 3</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F6 steuert Ausgang 3</tooltip>
 =======
 	    <tooltip xml:lang="de">F6 steuert Ausgang 3</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F6 steuert Ausgang 3</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F6 řídí výstup 3</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1197,12 +1396,16 @@
         <label>F7 controls output 3</label>
         <label xml:lang="it">F7 controlla uscita 3</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F7 steuert Ausgang 3</tooltip>
 =======
 	    <tooltip xml:lang="de">F7 steuert Ausgang 3</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F7 steuert Ausgang 3</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F7 řídí výstup 3</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1211,12 +1414,16 @@
         <label>F8 controls output 3</label>
         <label xml:lang="it">F8 controlla uscita 3</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F8 steuert Ausgang 3</tooltip>
 =======
 	    <tooltip xml:lang="de">F8 steuert Ausgang 3</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F8 steuert Ausgang 3</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F8 řídí výstup 3</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1225,12 +1432,16 @@
         <label>F1 controls output 4</label>
         <label xml:lang="it">F1 controlla uscita 4</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F1 steuert Ausgang 4</tooltip>
 =======
 	    <tooltip xml:lang="de">F1 steuert Ausgang 4</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F1 steuert Ausgang 4</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F1 řídí výstup 4</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1239,12 +1450,16 @@
         <label>F2 controls output 4</label>
         <label xml:lang="it">F2 controlla uscita 4</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F2 steuert Ausgang 4</tooltip>
 =======
 	    <tooltip xml:lang="de">F2 steuert Ausgang 4</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F2 steuert Ausgang 4</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F2 řídí výstup 4</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1253,12 +1468,16 @@
         <label>F3 controls output 4</label>
         <label xml:lang="it">F3 controlla uscita 4</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F3 steuert Ausgang 4</tooltip>
 =======
 	    <tooltip xml:lang="de">F3 steuert Ausgang 4</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F3 steuert Ausgang 4</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F3 řídí výstup 4</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1267,12 +1486,16 @@
         <label>F4 controls output 4</label>
         <label xml:lang="it">F4 controlla uscita 4</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F4 steuert Ausgang 4</tooltip>
 =======
 	    <tooltip xml:lang="de">F4 steuert Ausgang 4</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F4 steuert Ausgang 4</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F4 řídí výstup 4</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1281,12 +1504,16 @@
         <label>F5 controls output 4</label>
         <label xml:lang="it">F5 controlla uscita 4</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F5 steuert Ausgang 4</tooltip>
 =======
 	    <tooltip xml:lang="de">F5 steuert Ausgang 4</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F5 steuert Ausgang 4</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F5 řídí výstup 4</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1295,12 +1522,16 @@
         <label>F6 controls output 4</label>
         <label xml:lang="it">F6 controlla uscita 4</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F6 steuert Ausgang 4</tooltip>
 =======
 	    <tooltip xml:lang="de">F6 steuert Ausgang 4</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F6 steuert Ausgang 4</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F6 řídí výstup 4</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1309,12 +1540,16 @@
         <label>F7 controls output 4</label>
         <label xml:lang="it">F7 controlla uscita 4</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F7 steuert Ausgang 4</tooltip>
 =======
 	    <tooltip xml:lang="de">F7 steuert Ausgang 4</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F7 steuert Ausgang 4</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F7 řídí výstup 4</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1323,12 +1558,16 @@
         <label>F8 controls output 4</label>
         <label xml:lang="it">F8 controlla uscita 4</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <tooltip xml:lang="de">F8 steuert Ausgang 4</tooltip>
 =======
 	    <tooltip xml:lang="de">F8 steuert Ausgang 4</tooltip>
 <<<<<<< HEAD
 >>>>>>> JMRI/master
 =======
+=======
+        <tooltip xml:lang="de">F8 steuert Ausgang 4</tooltip>
+>>>>>>> JMRI/master
         <label xml:lang="cs">F8 řídí výstup 4</label>
 >>>>>>> JMRI/master
       </variable>
@@ -1345,8 +1584,12 @@
 =======
 =======
         <label xml:lang="cs">Rychlostní tabulka</label>
+<<<<<<< HEAD
 >>>>>>> JMRI/master
       </variable>	  
+>>>>>>> JMRI/master
+=======
+      </variable>      
 >>>>>>> JMRI/master
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>

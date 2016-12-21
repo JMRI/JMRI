@@ -112,7 +112,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
                             null,
                             new Object[]{Bundle.getMessage("CancelImports"),
                                 Bundle.getMessage("Skip"),
-                                Bundle.getMessage("OK")},
+                                Bundle.getMessage("ButtonOK")},
                             null);
                     if (retval == 0) {
                         break;
@@ -133,7 +133,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
                                 null,
                                 new Object[]{Bundle.getMessage("CancelImports"),
                                     Bundle.getMessage("Skip"),
-                                    Bundle.getMessage("OK")},
+                                    Bundle.getMessage("ButtonOK")},
                                 null);
                         if (retval == 0) {
                             break;

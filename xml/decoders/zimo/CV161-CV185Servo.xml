@@ -15,6 +15,10 @@
     <label xml:lang="de">Servo Protokoll</label>
 =======
     <label xml:lang="cs">Protokol serva</label>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <label xml:lang="de">Servo Protokoll</label>
 >>>>>>> JMRI/master
   </variable>
   <variable item="Servo Control Signal" CV="161" mask="XXXXXXVX" default="0">
@@ -26,6 +30,10 @@
         <choice xml:lang="de">aktiv während Bewegung</choice>
 =======
         <choice xml:lang="cs">Aktivní pouze během pohybu</choice>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+        <choice xml:lang="de">aktiv während Bewegung</choice>
 >>>>>>> JMRI/master
       </enumChoice>
       <enumChoice choice="Allways Active" value="1">
@@ -35,6 +43,10 @@
         <choice xml:lang="de">immer aktiv</choice>
 =======
         <choice xml:lang="cs">Aktivní vždy</choice>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+        <choice xml:lang="de">immer aktiv</choice>
 >>>>>>> JMRI/master
       </enumChoice>
     </enumVal>
@@ -44,6 +56,10 @@
     <label xml:lang="de">Servo Steuersignal</label>
 =======
     <label xml:lang="cs">Řídící signál serva</label>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <label xml:lang="de">Servo Steuersignal</label>
 >>>>>>> JMRI/master
   </variable>
   <variable item="Servo Centering" CV="161" mask="VVVVVXVV" default="0">
@@ -55,6 +71,10 @@
         <choice xml:lang="de">bei Zweitastenbedienung: Mittelstellung, wenn beide Funktionen 0.</choice>
 =======
         <choice xml:lang="cs">Při dvouklávesovém ovládání jsou obě Fn vypnuté potom se přesune do středové polohy</choice>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+        <choice xml:lang="de">bei Zweitastenbedienung: Mittelstellung, wenn beide Funktionen 0.</choice>
 >>>>>>> JMRI/master
       </enumChoice>
       <enumChoice choice="Only moves if function key pressed">
@@ -64,6 +84,10 @@
         <choice xml:lang="de">nur wenn Taste gedrückt ist</choice>
 =======
         <choice xml:lang="cs">Servo se přestavuje pouze pokud je funkční klávesa stisknuta</choice>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+        <choice xml:lang="de">nur wenn Taste gedrückt ist</choice>
 >>>>>>> JMRI/master
       </enumChoice>
     </enumVal>
@@ -73,6 +97,10 @@
     <label xml:lang="de">Servo Mittelstellung</label>
 =======
     <label xml:lang="cs">Středová poloha serva</label>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <label xml:lang="de">Servo Mittelstellung</label>
 >>>>>>> JMRI/master
   </variable>
   <variable item="Servo 1 Left Stop" CV="162" default="49">
@@ -83,6 +111,10 @@
     <label xml:lang="de">Endstellung links</label>
 =======
     <label xml:lang="cs">Koncová poloha vlevo servo 1</label>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <label xml:lang="de">Endstellung links</label>
 >>>>>>> JMRI/master
   </variable>
   <variable item="Servo 1 Right Stop" CV="163" default="205">
@@ -93,6 +125,10 @@
     <label xml:lang="de">Endstellung rechts</label>
 =======
     <label xml:lang="cs">Koncová poloha vpravo servo 1</label>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <label xml:lang="de">Endstellung rechts</label>
 >>>>>>> JMRI/master
   </variable>
   <variable item="Servo 1 Centre" CV="164" default="127">
@@ -103,6 +139,10 @@
     <label xml:lang="de">Mittelstellung</label>
 =======
     <label xml:lang="cs">Středová poloha servo 1</label>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <label xml:lang="de">Mittelstellung</label>
 >>>>>>> JMRI/master
   </variable>
   <variable item="Servo 1 Rotation Speed" CV="165" default="30">
@@ -113,6 +153,10 @@
     <label xml:lang="de">Umlaufzeit</label>
 =======
     <label xml:lang="cs">Rychlost přestavování servo 1</label>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <label xml:lang="de">Umlaufzeit</label>
 >>>>>>> JMRI/master
   </variable>
   <variable item="Servo 2 Left Stop" CV="166" default="49">
@@ -123,6 +167,10 @@
     <label xml:lang="de">Endstellung links</label>
 =======
     <label xml:lang="cs">Koncová poloha vlevo servo 2</label>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <label xml:lang="de">Endstellung links</label>
 >>>>>>> JMRI/master
   </variable>
   <variable item="Servo 2 Right Stop" CV="167" default="205">
@@ -133,6 +181,10 @@
     <label xml:lang="de">Endstellung rechts</label>
 =======
     <label xml:lang="cs">Koncová poloha vpravo servo 2</label>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <label xml:lang="de">Endstellung rechts</label>
 >>>>>>> JMRI/master
   </variable>
   <variable item="Servo 2 Centre" CV="168" default="127">
@@ -143,6 +195,10 @@
     <label xml:lang="de">Mittelstellung</label>
 =======
     <label xml:lang="cs">Středová poloha servo 2</label>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <label xml:lang="de">Mittelstellung</label>
 >>>>>>> JMRI/master
   </variable>
   <variable item="Servo 2 Rotation Speed" CV="169" default="30">
@@ -153,6 +209,10 @@
     <label xml:lang="de">Umlaufzeit</label>
 =======
     <label xml:lang="cs">Rychlost přestavování servo 2</label>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <label xml:lang="de">Umlaufzeit</label>
 >>>>>>> JMRI/master
   </variable>
   <variable item="Servo 3 Left Stop" CV="170" default="49" include="208,209,224">
@@ -163,6 +223,10 @@
     <label xml:lang="de">Endstellung links</label>
 =======
     <label xml:lang="cs">Koncová poloha vlevo servo 3</label>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <label xml:lang="de">Endstellung links</label>
 >>>>>>> JMRI/master
   </variable>
   <variable item="Servo 3 Right Stop" CV="171" default="205" include="208,209,224">
@@ -173,6 +237,10 @@
     <label xml:lang="de">Endstellung rechts</label>
 =======
     <label xml:lang="cs">Koncová poloha vpravo servo 3</label>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <label xml:lang="de">Endstellung rechts</label>
 >>>>>>> JMRI/master
   </variable>
   <variable item="Servo 3 Centre" CV="172" default="127" include="208,209,224">
@@ -183,6 +251,10 @@
     <label xml:lang="de">Mittelstellung</label>
 =======
     <label xml:lang="cs">Středová poloha servo 3</label>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <label xml:lang="de">Mittelstellung</label>
 >>>>>>> JMRI/master
   </variable>
   <variable item="Servo 3 Rotation Speed" CV="173" default="30" include="208,209,224">
@@ -193,6 +265,10 @@
     <label xml:lang="de">Umlaufzeit</label>
 =======
     <label xml:lang="cs">Rychlost přestavování servo 3</label>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <label xml:lang="de">Umlaufzeit</label>
 >>>>>>> JMRI/master
   </variable>
   <variable item="Servo 4 Left Stop" CV="174" default="49" include="208,209,224">
@@ -203,6 +279,10 @@
     <label xml:lang="de">Endstellung links</label>
 =======
     <label xml:lang="cs">Koncová poloha vlevo servo 4</label>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <label xml:lang="de">Endstellung links</label>
 >>>>>>> JMRI/master
   </variable>
   <variable item="Servo 4 Right Stop" CV="175" default="205" include="208,209,224">
@@ -213,6 +293,10 @@
     <label xml:lang="de">Endstellung rechts</label>
 =======
     <label xml:lang="cs">Koncová poloha vpravo servo 4</label>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <label xml:lang="de">Endstellung rechts</label>
 >>>>>>> JMRI/master
   </variable>
   <variable item="Servo 4 Centre" CV="176" default="127" include="208,209,224">
@@ -223,6 +307,10 @@
     <label xml:lang="de">Mittelstellung</label>
 =======
     <label xml:lang="cs">Středová poloha servo 4</label>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <label xml:lang="de">Mittelstellung</label>
 >>>>>>> JMRI/master
   </variable>
   <variable item="Servo 4 Rotation Speed" CV="177" default="30" include="208,209,224">
@@ -233,6 +321,10 @@
     <label xml:lang="de">Umlaufzeit</label>
 =======
     <label xml:lang="cs">Rychlost přestavování servo 4</label>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <label xml:lang="de">Umlaufzeit</label>
 >>>>>>> JMRI/master
   </variable>
   <variable item="Servo 1 Function Allocation" CV="181" default="0">
@@ -243,6 +335,10 @@
     <label xml:lang="de">Funktionszuordnung</label>
 =======
     <label xml:lang="cs">Přiřazení funkcí servo 1</label>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <label xml:lang="de">Funktionszuordnung</label>
 >>>>>>> JMRI/master
   </variable>
   <variable item="Servo 2 Function Allocation" CV="182" default="0">
@@ -253,6 +349,10 @@
     <label xml:lang="de">Funktionszuordnung</label>
 =======
     <label xml:lang="cs">Přiřazení funkcí servo 2</label>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <label xml:lang="de">Funktionszuordnung</label>
 >>>>>>> JMRI/master
   </variable>
   <variable item="Servo 3 Function Allocation" CV="183" default="0" include="208,209,224">
@@ -263,6 +363,10 @@
     <label xml:lang="de">Funktionszuordnung</label>
 =======
     <label xml:lang="cs">Přiřazení funkcí servo 3</label>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <label xml:lang="de">Funktionszuordnung</label>
 >>>>>>> JMRI/master
   </variable>
   <variable item="Servo 4 Function Allocation" CV="184" default="0" include="208,209,224">
@@ -273,6 +377,10 @@
     <label xml:lang="de">Funktionszuordnung</label>
 =======
     <label xml:lang="cs">Přiřazení funkcí servo 4</label>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
+    <label xml:lang="de">Funktionszuordnung</label>
 >>>>>>> JMRI/master
   </variable>
 </variables>

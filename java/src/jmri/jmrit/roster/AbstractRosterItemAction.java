@@ -98,7 +98,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
         int retval = JOptionPane.showOptionDialog(mParent,
                 "Select one roster entry", "Select roster entry",
                 0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{"Cancel", "OK", selections}, null);
+                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), selections}, null);
         log.debug("Dialog value " + retval + " selected " + selections.getSelectedIndex() + ":\""
                 + selections.getSelectedItem() + "\"");
         if (retval != 1) {
