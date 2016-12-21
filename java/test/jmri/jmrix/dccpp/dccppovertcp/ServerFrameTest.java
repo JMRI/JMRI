@@ -2,9 +2,12 @@ package jmri.jmrix.dccpp.dccppovertcp;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import java.awt.GraphicsEnvironment;
+
 
 /**
  * Tests for ServerFrame class.
@@ -16,6 +19,7 @@ public class ServerFrameTest {
 
    @Test
    public void getInstanceTest(){
+      Assume.assumeFalse(GraphicsEnvironment.isHeadless());
       Assert.assertNotNull("ServerFrame getInstance",ServerFrame.getInstance());
    }
 
