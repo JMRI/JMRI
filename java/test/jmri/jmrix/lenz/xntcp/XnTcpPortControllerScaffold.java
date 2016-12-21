@@ -1,4 +1,4 @@
-package jmri.jmrix.lenz;
+package jmri.jmrix.lenz.xntcp;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -8,14 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of XNetPortController that eases
+ * Implementation of XnTcpAdapter that eases
  * checking whether data was forwarded or not
  * 
  * @author	Bob Jacobsen Copyright (C) 2006, 2015
  */
-public class XNetPortControllerScaffold extends XNetSimulatorPortController {
+class XnTcpPortControllerScaffold extends XnTcpAdapter {
 
-    private final static Logger log = LoggerFactory.getLogger(XNetPortControllerScaffold.class);
+    private final static Logger log = LoggerFactory.getLogger(XnTcpPortControllerScaffold.class);
 
     public java.util.Vector<String> getPortNames() {
         return null;
@@ -38,7 +38,7 @@ public class XNetPortControllerScaffold extends XNetSimulatorPortController {
     PipedInputStream itempIPipe;
     PipedOutputStream itempOPipe;
     
-    public XNetPortControllerScaffold() throws Exception {
+    protected XnTcpPortControllerScaffold() throws Exception {
         otempIPipe = new PipedInputStream(200);
         tostream = new DataInputStream(otempIPipe);
         otempOPipe = new PipedOutputStream(otempIPipe);
@@ -100,12 +100,12 @@ public class XNetPortControllerScaffold extends XNetSimulatorPortController {
     /**
      * Can read test data from this.
      */
-    public DataInputStream tostream;
+    DataInputStream tostream;
 
     /**
      * Tests write to this.
      */
-    public DataOutputStream tistream;
+    DataOutputStream tistream;
     /**
      * The traffic controller can read test data from this.
      */
