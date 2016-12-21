@@ -11,6 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
+<!-- version 1.3, add german translation by Ronald Kuhn -->
 <!-- version 1.2, include statments for CV341 CV342 CV343 edited for new decoders and corrections by Mark Waters -->
 <!-- many additions for v34 firmware,  Nigel Cliffe, 23 Jan 2015, edited with qualifiers to be included in this file instead of a seperate v34 file -->  
 <!-- version 1.1, correction to CV354 by Nigel Cliffe -->
@@ -402,29 +403,52 @@
     <label>Set sound program</label>
     <label xml:lang="it">Programma serie suoni</label>
     <label xml:lang="de">Sound Collection</label>
+<<<<<<< HEAD
+    <tooltip>See manual!</tooltip>
+    <tooltip xml:lang="de">Handbuch beachten!</tooltip>
+=======
 	<tooltip>See manual!</tooltip>
 	<tooltip xml:lang="de">Handbuch beachten!</tooltip>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
     <label xml:lang="cs">Nastavení zvukového programu</label>
     <tooltip xml:lang="cs">Viz návod!</tooltip>
+>>>>>>> JMRI/master
   </variable>
   <variable item="Total volume" CV="266" default="64">
     <decVal min="0" max="255"/>
     <label>Total volume</label>
     <label xml:lang="it">Volume generale</label>
     <label xml:lang="de">Gesamtlautstärke</label>
+<<<<<<< HEAD
+    <tooltip>64 is highest distortion-free play back, INC=5</tooltip>
+    <tooltip xml:lang="de">Der Wert „64“ ergibt rechnerisch die lautest-mögliche verzerrungsfreie Wiedergabe.</tooltip>
+=======
 	<tooltip>64 is highest distortion-free play back, INC=5</tooltip>
 	<tooltip xml:lang="de">Der Wert „64“ ergibt rechnerisch die lautest-mögliche verzerrungsfreie Wiedergabe.</tooltip>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
     <label xml:lang="cs">Celková hlasitost</label>
     <tooltip xml:lang="cs">Výchozí hodnota "64" udává nejhlasitější možnou nezkreslenou reprodukci. Použitelné hodnoty jsou asi do "100".</tooltip>
+>>>>>>> JMRI/master
   </variable>
   <variable item="Virtual cam chuff frequency" CV="267" default="70">
     <decVal min="0" max="255"/>
     <label>Virtual cam chuff frequency</label>
     <label xml:lang="it">Frequenza Chuff Camma Virtuale</label>
     <label xml:lang="de">virtuelle Dampfschlag-Häufigkeit</label>
+<<<<<<< HEAD
+    <tooltip>The lower the value the higher the chuff frequency and vice versa, INC=1</tooltip>
+=======
 	<tooltip>The lower the value the higher the chuff frequency and vice versa, INC=1</tooltip>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
     <label xml:lang="cs">Frekvence výfuků páry z virtuální vačky</label>
     <tooltip xml:lang="cs">Snížení hodnoty způsobí vyšší frekvenci výfuků páry.</tooltip>
+>>>>>>> JMRI/master
   </variable>
   <variable item="Real cam sensor chuff rate 1" CV="268" default="0">
         <qualifier>
@@ -436,9 +460,16 @@
     <label>Real cam sensor chuff rate 1</label>
     <label xml:lang="it">Frequenza Chuff Camma reale</label>
     <label xml:lang="de">Umschaltung Achsdetektor 1</label>
+<<<<<<< HEAD
+    <tooltip>0 = virtual sensor, triggers/chuff, INC=1</tooltip>
+=======
 	<tooltip>0 = virtual sensor, triggers/chuff, INC=1</tooltip>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
     <label xml:lang="cs">Frekvence výfuků páry z reálné vačky 1</label>
     <tooltip xml:lang="cs">Počet signálů vačky na jeden výfuk páry. 0 přepne na virtuální vačku.</tooltip>
+>>>>>>> JMRI/master
   </variable>
   <variable item="Real cam sensor chuff rate 2" CV="268" mask="XVVVVVVV" default="0">
         <qualifier>
@@ -450,9 +481,16 @@
     <label>Real cam sensor chuff rate</label>
     <label xml:lang="it">Frequenza Chuff Camma reale</label>
     <label xml:lang="de">Umschaltung Achsdetektor</label>
+<<<<<<< HEAD
+    <tooltip>0 = virtual sensor, triggers/chuff (0-127), INC=1</tooltip>
+=======
 	<tooltip>0 = virtual sensor, triggers/chuff (0-127), INC=1</tooltip>
+<<<<<<< HEAD
+>>>>>>> JMRI/master
+=======
     <label xml:lang="cs">Frekvence výfuků páry z reálné vačky</label>
     <tooltip xml:lang="cs">Počet signálů vačky na jeden výfuk páry. 0 přepne na virtuální vačku.</tooltip>
+>>>>>>> JMRI/master
   </variable>
   <variable item="Chuff for Articulated Locomotives" CV="268" mask="VXXXXXXX" default="0" tooltip="With and without axle sensor on 2 channels with 2 sets">
         <qualifier>
@@ -1303,26 +1341,30 @@
         </qualifier>
   <variable item="Condition for switching sound sets" CV="346" default="0" mask="XXXXXXVV" tooltip="CV346">
     <enumVal>
-	  <enumChoice choice="ignore">
+      <enumChoice choice="ignore">
         <choice>ignore</choice>
         <choice xml:lang="de">ignorieren</choice>
         <choice xml:lang="cs">Nevšímat si</choice>
       </enumChoice>
-	    <enumChoice choice="Stop only">
+        <enumChoice choice="Stop only">
         <choice>Stop only</choice>
         <choice xml:lang="de">nur bei Sound AUS</choice>
         <choice xml:lang="cs">Pouze stojící</choice>
       </enumChoice>
-	    <enumChoice choice="Moving only">
+        <enumChoice choice="Moving only">
         <choice>Moving only</choice>
         <choice xml:lang="de">auch bei Standsound</choice>
         <choice xml:lang="cs">Pouze pohybující se</choice>
       </enumChoice>
+<<<<<<< HEAD
+        <enumChoice choice="Stop and moving">
+=======
 	    <enumChoice choice="Stop and moving">
+>>>>>>> JMRI/master
         <choice>bei Stand- und Fahrtsound</choice>
         <choice xml:lang="cs">Stojící a pohybující se</choice>
       </enumChoice>
-	</enumVal>
+    </enumVal>
     <label>Condition for switching sound sets</label>
     <label xml:lang="de">Set-Umschalt-Bedingungen</label>
     <label xml:lang="cs">Podmínka pro přepínání zvukových sad</label>
@@ -1392,31 +1434,31 @@
       <enumChoice choice="F19">
         <choice>F19</choice>
       </enumChoice>
-	  <enumChoice choice="F20">
+      <enumChoice choice="F20">
         <choice>F20</choice>
       </enumChoice>
-	  <enumChoice choice="F21">
+      <enumChoice choice="F21">
         <choice>F21</choice>
       </enumChoice>
-	  <enumChoice choice="F22">
+      <enumChoice choice="F22">
         <choice>F22</choice>
       </enumChoice>
-	  <enumChoice choice="F23">
+      <enumChoice choice="F23">
         <choice>F23</choice>
       </enumChoice>
-	  <enumChoice choice="F24">
+      <enumChoice choice="F24">
         <choice>F24</choice>
       </enumChoice>
-	  <enumChoice choice="F25">
+      <enumChoice choice="F25">
         <choice>F25</choice>
       </enumChoice>
-	  <enumChoice choice="F26">
+      <enumChoice choice="F26">
         <choice>F26</choice>
       </enumChoice>
-	  <enumChoice choice="F27">
+      <enumChoice choice="F27">
         <choice>F27</choice>
       </enumChoice>
-	  <enumChoice choice="F28">
+      <enumChoice choice="F28">
         <choice>F28</choice>
       </enumChoice>
     </enumVal>
@@ -1426,17 +1468,17 @@
   </variable>
   <variable item="Solo unhindered rpm" CV="348" default="0" mask="XXXXXXXV">
     <enumVal>
-	  <enumChoice choice="no">
+      <enumChoice choice="no">
         <choice>no</choice>
         <choice xml:lang="de">nein</choice>
         <choice xml:lang="cs">neomezeno</choice>
       </enumChoice>
-	    <enumChoice choice="limited">
+        <enumChoice choice="limited">
         <choice>limited</choice>
         <choice xml:lang="de">eingeschränkt</choice>
         <choice xml:lang="cs">omezeno</choice>
       </enumChoice>
-	</enumVal>
+    </enumVal>
     <label>Solo unhindered rpm</label>
     <label xml:lang="de">Verhaltensdefinition für Lokfahrt 1</label>
     <tooltip>CV348 bit 0</tooltip>
@@ -1446,17 +1488,17 @@
   </variable>
   <variable item="Solo change momentum" CV="348" default="0" mask="XXXXXXVX">
     <enumVal>
-	  <enumChoice choice="no">
+      <enumChoice choice="no">
         <choice>no</choice>
         <choice xml:lang="de">nein</choice>
         <choice xml:lang="cs">nesníženo</choice>
       </enumChoice>
-	    <enumChoice choice="reduced">
+        <enumChoice choice="reduced">
         <choice>reduced</choice>
         <choice xml:lang="de">reduziert</choice>
         <choice xml:lang="cs">sníženo</choice>
       </enumChoice>
-	</enumVal>
+    </enumVal>
     <label>Solo change momentum</label>
     <label xml:lang="de">Verhaltensdefinition für Lokfahrt 2</label>
     <tooltip>CV348 bit 1</tooltip>
@@ -1465,17 +1507,17 @@
   </variable>
   <variable item="Solo change idle only" CV="348" default="0" mask="XXXXXVXX">
     <enumVal>
-	  <enumChoice choice="no">
+      <enumChoice choice="no">
         <choice>no</choice>
         <choice xml:lang="de">nein</choice>
         <choice xml:lang="cs">Ne</choice>
       </enumChoice>
-	    <enumChoice choice="idle">
+        <enumChoice choice="idle">
         <choice>idle</choice>
         <choice xml:lang="de">verschieben</choice>
         <choice xml:lang="cs">Volnoběh</choice>
       </enumChoice>
-	</enumVal>
+    </enumVal>
     <label>Solo change idle only</label>
     <label xml:lang="de">Verhaltensdefinition für Lokfahrt 3</label>
     <tooltip>CV348 bit 2</tooltip>

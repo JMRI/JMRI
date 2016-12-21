@@ -13,7 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="ronald@wirkuhns.de" version="2" lastUpdated="2016/05/06"/>
+  <version author="ronald@wirkuhns.de" version="2" lastUpdated="2016/12/14"/>
   <!-- add translation to german in splitted files -->
   <version author="Mark Waters mark16jmri@mybtinternet.com" version="1" lastUpdated="20160123"/>
   <!-- This decoder configuration file is based on the Zimo_MX640_v9.xml                     -->
@@ -173,30 +173,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV159-CV160.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
-      <variable item="Decoder ID 1" CV="250" default="225" readOnly="yes">
-        <decVal/>
-        <label>Decoder ID 1</label>
-        <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
-      </variable>
-      <variable item="Decoder ID 2" CV="251" readOnly="yes">
-        <decVal/>
-        <label>Decoder ID 2</label>
-        <label xml:lang="it">ID 2 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 2:</label>
-      </variable>
-      <variable item="Decoder ID 3" CV="252" readOnly="yes">
-        <decVal/>
-        <label>Decoder ID 3</label>
-        <label xml:lang="it">ID 3 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 3:</label>
-      </variable>
-      <variable item="Decoder ID 4" CV="253" readOnly="yes">
-        <decVal/>
-        <label>Decoder ID 4</label>
-        <label xml:lang="it">ID 4 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 4:</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV250-CV253.xml"/>
       <!-- Begin sound-only variables -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV355sound_version30.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV357-CV365sound_version28.xml"/>
