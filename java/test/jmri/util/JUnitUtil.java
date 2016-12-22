@@ -16,6 +16,7 @@ import jmri.ShutDownManager;
 import jmri.SignalHeadManager;
 import jmri.SignalMastLogicManager;
 import jmri.SignalMastManager;
+import jmri.UserPreferencesManager;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
@@ -31,6 +32,7 @@ import jmri.managers.DefaultSignalMastLogicManager;
 import jmri.managers.DefaultSignalMastManager;
 import jmri.managers.InternalReporterManager;
 import jmri.managers.InternalSensorManager;
+import jmri.managers.TestUserPreferencesManager;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -257,9 +259,7 @@ public class JUnitUtil {
     }
 
     public static void initDefaultUserMessagePreferences() {
-        InstanceManager.store(
-                new jmri.managers.TestUserPreferencesManager(),
-                jmri.UserPreferencesManager.class);
+        InstanceManager.setDefault(UserPreferencesManager.class, new TestUserPreferencesManager());
     }
 
     public static void initInternalTurnoutManager() {
@@ -397,15 +397,15 @@ public class JUnitUtil {
      * Use reflection to reset the jmri.Application instance
      */
     public static void resetApplication() {
-       try {
-          Class<?> c = jmri.Application.class;
-          java.lang.reflect.Field f = c.getDeclaredField("name");
-          f.setAccessible(true);
-          f.set(new jmri.Application(),null);
-       } catch(NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) { 
-         log.error("Failed to reset jmri.Application static field");
-         x.printStackTrace();
-       }
+        try {
+            Class<?> c = jmri.Application.class;
+            java.lang.reflect.Field f = c.getDeclaredField("name");
+            f.setAccessible(true);
+            f.set(new jmri.Application(), null);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
+            log.error("Failed to reset jmri.Application static field");
+            x.printStackTrace();
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class.getName());
