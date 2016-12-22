@@ -11,7 +11,6 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.TurnoutManager;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 import junit.extensions.jfcunit.TestHelper;
@@ -33,9 +32,9 @@ import org.junit.Assert;
 public class NXFrameTest extends jmri.util.SwingTestCase {
 
     OBlockManager _OBlockMgr;
-    PortalManager _portalMgr;
+//    PortalManager _portalMgr;
     SensorManager _sensorMgr;
-    TurnoutManager _turnoutMgr;
+//    TurnoutManager _turnoutMgr;
 
     public void testGetDefault() {
         if (GraphicsEnvironment.isHeadless()) {

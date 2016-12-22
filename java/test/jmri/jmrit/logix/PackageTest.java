@@ -32,6 +32,7 @@ public class PackageTest extends TestCase {
         suite.addTest(OBlockTest.suite());
         suite.addTest(OBlockManagerTest.suite());
         suite.addTest(OPathTest.suite());
+        suite.addTest(PortalTest.suite());
         suite.addTest(WarrantTest.suite());
         suite.addTest(LogixActionTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));

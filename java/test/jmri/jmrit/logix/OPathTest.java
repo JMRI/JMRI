@@ -1,6 +1,7 @@
 package jmri.jmrit.logix;
 
 import jmri.Block;
+import jmri.Turnout;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -13,8 +14,9 @@ import org.junit.Assert;
  */
 public class OPathTest extends TestCase {
     
-    OBlockManager blkMgr;
-    PortalManager portalMgr;
+    OBlockManager _blkMgr;
+    PortalManager _portalMgr;
+    jmri.TurnoutManager _turnoutMgr;
 
     public void testCtor() {
         Block b = new Block("IB1");
@@ -77,13 +79,27 @@ public class OPathTest extends TestCase {
     }
     
     public void testPortals() {
-        Portal entryP = portalMgr.providePortal("entryP");
-        Portal exitP = portalMgr.providePortal("exitP");
-        OBlock blk = blkMgr.provideOBlock("OB0");
+        Portal entryP = _portalMgr.providePortal("entryP");
+        Portal exitP = _portalMgr.providePortal("exitP");
+        OBlock blk = _blkMgr.provideOBlock("OB0");
         OPath path = new OPath("path", blk, entryP, exitP, null);
-        Assert.assertFalse("Path not to Portals", path.validatePortals());
-        Assert.assertEquals("Get entry", entryP, path.getFromPortal());
-        Assert.assertEquals("Get exit", exitP, path.getToPortal());
+        Assert.assertEquals("Get entry portal", entryP, path.getFromPortal());
+        Assert.assertEquals("Get exit portal", exitP, path.getToPortal());
+    }
+    
+    public void testNameChange() {
+        Portal exitP = _portalMgr.providePortal("exitP");
+        OBlock blk = _blkMgr.provideOBlock("OB0");
+        Turnout to = _turnoutMgr.provideTurnout("turnout_1");
+        OPath path = new OPath("path", blk, null, null, null);
+        path.setToPortal(exitP);
+        path.addSetting(new jmri.BeanSetting(to, Turnout.CLOSED));
+        Assert.assertEquals("Get exit portal", exitP, path.getToPortal());
+        path.setName("OtherPath");
+        Assert.assertEquals("path name change", "OtherPath", path.getName());
+        Assert.assertEquals("turnout unknown", Turnout.UNKNOWN, to.getCommandedState());
+        path.setTurnouts(0, true, 0, false);
+        Assert.assertEquals("path name change", Turnout.CLOSED, to.getCommandedState());
     }
     
     // from here down is testing infrastructure
@@ -106,8 +122,9 @@ public class OPathTest extends TestCase {
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
-        blkMgr = new OBlockManager();
-        portalMgr = new PortalManager();
+        _blkMgr = new OBlockManager();
+        _portalMgr = new PortalManager();
+        _turnoutMgr = jmri.InstanceManager.turnoutManagerInstance();
     }
 
     protected void tearDown() {

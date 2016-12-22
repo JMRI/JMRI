@@ -33,13 +33,23 @@ public class OPath extends jmri.Path {
     private TimeTurnout _listener;
 
     /**
-     * Create an object with default directions of NONE, and no setting element.
+     * Create an OPath object with default directions of NONE, and no setting element.
+     * @param owner Block owning the path
+     * @param name name of the path
      */
     public OPath(Block owner, String name) {
         super(owner, 0, 0);
         _name = name;
     }
 
+    /**
+     * Create an OPath object with default directions of NONE, and no setting element.
+     * @param owner Block owning the path
+     * @param name name of the path
+     * @param entry Portal where path enters
+     * @param exit Portal where path exits
+     * @param settings array of turnout settings of the path
+     */
     public OPath(String name, OBlock owner, Portal entry, Portal exit, ArrayList<BeanSetting> settings) {
         super(owner, 0, 0);
         _name = name;
@@ -86,13 +96,6 @@ public class OPath extends jmri.Path {
             }
         }
         return null;
-    }
-
-    protected boolean validatePortals() {
-        if (!_fromPortal.isValid()) {
-            return false;
-        }
-        return _toPortal.isValid();
     }
 
     public void setName(String name) {
