@@ -963,6 +963,11 @@
 <a href="package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor </a>
 <ul></ul>
 </li>
+  
+<li>
+<a href="">Handling Errors</a>
+<ul></ul>
+</li>
 
  
 </ul>
@@ -1323,6 +1328,12 @@
  
 <li>
 <a href="html/hardware/SRCP/index.shtml">SRCP </a>
+<ul></ul>
+</li>
+
+ 
+<li>
+<a href="package/apps/SystemConsole.shtml">System Console </a>
 <ul></ul>
 </li>
 
