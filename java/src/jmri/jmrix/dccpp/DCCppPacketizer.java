@@ -39,10 +39,6 @@ public class DCCppPacketizer extends DCCppTrafficController {
     }
 
 // The methods to implement the DCCppInterface
-    public boolean status() {
-        return (ostream != null & istream != null);
-    }
-
     /**
      * Forward a preformatted DCCppMessage to the actual interface.
      *
@@ -107,7 +103,7 @@ public class DCCppPacketizer extends DCCppTrafficController {
      */
     @Override
     public boolean portReadyToSend(jmri.jmrix.AbstractPortController p) throws Exception {
-        if (((DCCppPortController) p).okToSend()) {
+        if (p!=null && ((DCCppPortController) p).okToSend()) {
             ((DCCppPortController) p).setOutputBufferEmpty(false);
             return true;
         } else {

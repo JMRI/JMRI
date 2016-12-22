@@ -9,6 +9,8 @@ import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.ThrottleListener;
 import junit.framework.TestCase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -1505,7 +1507,7 @@ public class AbstractThrottleTest extends TestCase {
         int i = 2;
         while (speed < 0.999f) {
             int result = instance.intSpeed(speed);
-            System.out.println("speed= "+speed+" step= "+result);
+            log.debug("speed= {} step= {}",speed,result);
             assertEquals("speed step ", i++, result);
             speed += incre;
         }
@@ -1562,5 +1564,7 @@ public class AbstractThrottleTest extends TestCase {
             return this.locoAddress;
         }
     }
+
+    private final static Logger log = LoggerFactory.getLogger(AbstractThrottleTest.class.getName());
 
 }

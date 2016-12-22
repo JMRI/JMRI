@@ -72,15 +72,15 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read decoder ID CV 250");
             readCV(250);
             return false;
-        } else if (mfgID == 141 && (modelID == 70 || modelID == 71)) {  // SoundTraxx
-            statusUpdate("Read productID CV256");
-            readCV(256);
+        } else if (mfgID == 141 && (modelID == 70 || modelID == 71)) {  // SoundTraxx Econami and Tsunami2
+            statusUpdate("Read productID high CV253");
+            readCV(253);
             return false;
         } else if (mfgID == 98) {  // Harman
             statusUpdate("Read decoder ID high CV 112");
             readCV(112);
             return false;
-        } else if (mfgID == 151) {  // ESU
+        } else if (mfgID == 151 && modelID == 255) {  // ESU recent
             statusUpdate("Set PI for Read productID");
             writeCV(31, 0);
             return false;
@@ -103,9 +103,10 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             productID = value;
             return true;
         } else if (mfgID == 141 && (modelID == 70 || modelID == 71)) {  // SoundTraxx
-            productID = value;
-            log.info("Decoder returns mfgID:" + mfgID + ";modelID:" + modelID + ";productID:" + productID);
-            return true;
+            productIDhigh = value;
+            statusUpdate("Read decoder productID low CV256");
+            readCV(256);
+            return false;
         } else if (mfgID == 98) {  // Harman
             productIDhigh = value;
             statusUpdate("Read decoder ID low CV 113");
@@ -125,6 +126,11 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read Product ID High Byte");
             readCV(56);
             return false;
+        } else if (mfgID == 141 && (modelID == 70 || modelID == 71)) {  // SoundTraxx
+            productIDlow = value;
+            productID = (productIDhigh << 8) | productIDlow;
+            log.info("Decoder returns mfgID:" + mfgID + ";modelID:" + modelID + ";productID:" + productID);
+            return true;
         } else if (mfgID == 98) {  // Harman
             productIDlow = value;
             productID = (productIDhigh << 8) | productIDlow;

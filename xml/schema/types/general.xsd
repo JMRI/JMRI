@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- Test schema for JMRI I/O support. Not for use before JMRI 2.9.1        -->
-
-<!-- $Id$ -->
+<!-- Schema for JMRI I/O support. Not for use before JMRI 2.9.1             -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -244,7 +242,7 @@
         </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:normalizedString">
-      <xs:pattern value="(program:|preference:|settings:|home:|profile:|resource:|file:|http:|[a-zA-Z]:)[a-z A-Z0-9/\-_\.]*"/>
+      <xs:pattern value="(program:|preference:|settings:|home:|profile:|file:|http:|[a-zA-Z]:)[a-z A-Z0-9/\-_\.]*"/>
     </xs:restriction>
   </xs:simpleType>
 

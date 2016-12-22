@@ -35,6 +35,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmris.json.JsonLightServerTest.suite());
         suite.addTest(jmri.jmris.json.JsonOperationsServerTest.suite());
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new JUnit4TestAdapter(JsonExceptionTest.class));
         return suite;
     }
 

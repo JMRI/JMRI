@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 Ronald Kuhn --> 
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable item="Decoder ID 1" CV="250" default="228" readOnly="yes" exclude="226,232,235,247,MX689_v30">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
+      </variable>
+      <variable item="Decoder ID 1" CV="250" default="226" readOnly="yes" exclude="228,232,235,247,MX689_v30">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
+      </variable>
+      <variable item="Decoder ID 1" CV="250" default="232" readOnly="yes" exclude="228,226,235,247,MX689_v30">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
+      </variable>
+      <variable item="Decoder ID 1" CV="250" default="235" readOnly="yes" exclude="228,226,232,247,MX689_v30">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
+      </variable>
+      <variable item="Decoder ID 2" CV="251" readOnly="yes">
+        <decVal/>
+        <label>Decoder ID 2</label>
+        <label xml:lang="it">ID 2 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 2:</label>
+      </variable>
+      <variable item="Decoder ID 3" CV="252" readOnly="yes">
+        <decVal/>
+        <label>Decoder ID 3</label>
+        <label xml:lang="it">ID 3 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 3:</label>
+      </variable>
+      <variable item="Decoder ID 4" CV="253" readOnly="yes">
+        <decVal/>
+        <label>Decoder ID 4</label>
+        <label xml:lang="it">ID 4 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 4:</label>
+      </variable>
+</variables>
+<!--
+228=MX681
+226=MX685
+232=MX686
+235=MX687
+-->
