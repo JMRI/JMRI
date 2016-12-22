@@ -30,11 +30,11 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-AddSubtract2.xml"/>
         <label>Train Brake Rate Sign</label>
     </variable>
-    <variable CV="138" mask="VVVVVVVV" item="Sound Setting 11" default="128" exclude="40,41,42">
+    <variable CV="138" mask="VVVVVVVV" item="Sound Setting 11" default="128" exclude="296,297,298"> <!-- should this be ="Tsunami2 Electric"? -->
         <decVal/>
         <label>Train Brake Apply/Release Volume</label>
     </variable>
-    <variable CV="138" mask="VVVVVVVV" item="Sound Setting 11" default="65" include="40,41,42"> <!-- Steam -->
+    <variable CV="138" mask="VVVVVVVV" item="Sound Setting 11" default="65" include="296,297,298"> <!-- should this be ="Tsunami2 Electric"? --> <!-- Steam -->
         <decVal/>
         <label>Train Brake Apply/Release Volume</label>
     </variable>
@@ -46,11 +46,11 @@
         <decVal/>
         <label>Sander Valve Volume</label>
     </variable>
-    <variable CV="155" mask="VVVVVVVV" item="Sound Setting 28" default="50" exclude="40,41,42">
+    <variable CV="155" mask="VVVVVVVV" item="Sound Setting 28" default="50" exclude="296,297,298"> <!-- should this be ="Tsunami2 Electric"? -->
         <decVal/>
         <label>Fuel Loading Volume</label>
     </variable>
-    <variable CV="155" mask="VVVVVVVV" item="Sound Setting 28" default="55" include="40,41,42"> <!-- Electrical -->
+    <variable CV="155" mask="VVVVVVVV" item="Sound Setting 28" default="55" include="296,297,298"> <!-- should this be ="Tsunami2 Electric"? --> <!-- Electrical -->
         <decVal/>
         <label>Electrical Arcing</label>
     </variable>
@@ -103,11 +103,11 @@
         <decVal/>
         <label>Sander Valve Reverb Level</label>
     </variable>
-    <variable CV="187" mask="VVVVVVVV" item="Reverb187" default="0" exclude="40,41,42">
+    <variable CV="187" mask="VVVVVVVV" item="Reverb187" default="0" exclude="296,297,298"> <!-- should this be ="Tsunami2 Electric"? -->
         <decVal/>
         <label>Fuel Loading Reverb Level</label>
     </variable>
-    <variable CV="187" mask="VVVVVVVV" item="Reverb187" default="0" include="40,41,42"> <!-- Electrical -->
+    <variable CV="187" mask="VVVVVVVV" item="Reverb187" default="0" include="296,297,298"> <!-- should this be ="Tsunami2 Electric"? --> <!-- Electrical -->
         <decVal/>
         <label>Electrical Arcing Reverb Level</label>
     </variable>
@@ -115,7 +115,7 @@
         <decVal/>
         <label>Wrenches Reverb Level</label>
     </variable>
-    <variable CV="190" mask="VVVVVVVV" item="Reverb190" default="0" exclude="40,41,42"> <!-- exclude Electrical -->
+    <variable CV="190" mask="VVVVVVVV" item="Reverb190" default="0" exclude="296,297,298"> <!-- should this be ="Tsunami2 Electric"? --> <!-- exclude Electrical -->
         <decVal/>
         <label>Pneumatic Oilers Reverb Level</label>
     </variable>
