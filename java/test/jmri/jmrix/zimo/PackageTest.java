@@ -31,6 +31,9 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.zimo.mxulf.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(Mx1SystemConnectionMemoTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(Mx1PortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Mx1TrafficControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Mx1ExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Mx1MessageExceptionTest.class));
 
         return suite;
     }

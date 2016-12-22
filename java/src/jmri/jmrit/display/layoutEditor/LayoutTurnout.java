@@ -1542,11 +1542,9 @@ public class LayoutTurnout {
     }
 
     private void reCalculateCenter() {
-        double centreX = (pointC.getX() - pointA.getX()) / 2;
-        double centreY = (pointC.getY() - pointA.getY()) / 2;
-        centreX = pointA.getX() + centreX;
-        centreY = pointA.getY() + centreY;
-        center = new Point2D.Double(centreX, centreY);
+    	double centerX = (pointC.getX() + pointA.getX()) / 2;
+        double centerY = (pointC.getY() + pointA.getY()) / 2;
+        center = new Point2D.Double(centerX, centerY);
     }
 
     public void setCoordsA(Point2D p) {
@@ -2410,6 +2408,7 @@ public class LayoutTurnout {
     // variables for Edit Layout Turnout pane
     protected JmriJFrame editLayoutTurnoutFrame = null;
     private JTextField turnoutNameField = new JTextField(16);
+    private JmriBeanComboBox firstTurnoutComboBox;
     private JmriBeanComboBox secondTurnoutComboBox;
     private JLabel secondTurnoutLabel;
     protected JTextField blockNameField = new JTextField(16);
@@ -2455,6 +2454,20 @@ public class LayoutTurnout {
             turnoutNameField.setToolTipText(rb.getString("EditTurnoutNameHint"));
             contentPane.add(panel1);
 
+            // add combobox to select turnout
+            JPanel panel0 = new JPanel();
+            panel0.setLayout(new BoxLayout(panel0, BoxLayout.Y_AXIS));
+            firstTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DISPLAYNAME);
+            firstTurnoutComboBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    // copy selected turnout (name) to turnoutNameField
+                    String newName = firstTurnoutComboBox.getSelectedDisplayName();
+                    turnoutNameField.setText(newName);
+                }
+            });
+            panel0.add(firstTurnoutComboBox);
+            contentPane.add(panel0);
+
             JPanel panel1a = new JPanel();
             panel1a.setLayout(new BoxLayout(panel1a, BoxLayout.Y_AXIS));
             secondTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getSecondTurnout(), JmriBeanComboBox.DISPLAYNAME);
@@ -2474,6 +2487,7 @@ public class LayoutTurnout {
             }
             panel1a.add(additionalTurnout);
             contentPane.add(panel1a);
+
             secondTurnoutLabel = new JLabel(Bundle.getMessage("Supporting", Bundle.getMessage("BeanNameTurnout")));
             secondTurnoutLabel.setEnabled(false);
             secondTurnoutComboBox.setEnabled(false);

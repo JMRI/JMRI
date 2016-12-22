@@ -37,6 +37,14 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
     SensorManager _sensorMgr;
     TurnoutManager _turnoutMgr;
 
+    public void testGetDefault() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
+        NXFrame nxFrame = NXFrame.getDefault();
+        Assert.assertNotNull("NXFrame", nxFrame);
+    }
+
     public void testGetInstance() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't Assume in TestCase
@@ -57,12 +65,12 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
         OBlock block = _OBlockMgr.getBySystemName("OB0");
 
-        NXFrame nxFrame = NXFrame.getInstance();
+        NXFrame nxFrame = NXFrame.getDefault();
         nxFrame.init();
         nxFrame.setVisible(true);
-        nxFrame.setRampIncrement(0.075f);
+        nxFrame.setThrottleIncrement(0.075f);
         nxFrame.setTimeInterval(1000);
-        NXFrame._throttleFactor = 0.75f;
+        nxFrame.setThrottleFactor(0.75f);
         flushAWT();
         pressButton(nxFrame, Bundle.getMessage("ButtonCancel"));
 
@@ -71,7 +79,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         flushAWT();
 
         // after cancel, try again
-        nxFrame = NXFrame.getInstance();
+        nxFrame = NXFrame.getDefault();
         nxFrame.init();
         nxFrame.setVisible(true);
         nxFrame._maxSpeedBox.setText("0.30");
@@ -231,6 +239,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
                         state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.DARK);
             }, "Train occupies block "+i+" of "+route.length);
             flushAWT();
+            jmri.util.JUnitUtil.releaseThread(this);
 
             block = _OBlockMgr.getOBlock(route[i]);
             Sensor nextSensor;
@@ -245,8 +254,15 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
                     }
                 });
                 jmri.util.JUnitUtil.releaseThread(this);
-                nextSensor.setState(Sensor.ACTIVE);
+                jmri.util.ThreadingUtil.runOnLayout(() -> {
+                    try {
+                        nextSensor.setState(Sensor.ACTIVE);
+                    } catch (jmri.JmriException e) {
+                        Assert.fail("Unexpected Exception: " + e);
+                    }
+                });
                 flushAWT();                                
+                jmri.util.JUnitUtil.releaseThread(this);
             } else {
                 nextSensor = null;
             }
