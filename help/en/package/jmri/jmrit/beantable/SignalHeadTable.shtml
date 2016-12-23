@@ -11,7 +11,7 @@
   "text/html; charset=us-ascii">
   <meta name="Author" content=
   "Bob Jacobsen, Kevin Dickerson, Egbert Broerse">
-  <meta name="Date.Modified" content="20140515">
+  <meta name="Date.Modified" content="20161218">
   <meta name="keywords" content="JMRI help Signal Head Table">
   <!--#include virtual="/Style" -->
 </head>
@@ -22,13 +22,13 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h1>The Signal Head Table</h1><a href=
-      "SignalHeads.png"><img src="SignalHeads.png" align="right"
-      width="554" height="184" hspace="0" vspace="0" alt=
+      "images/SigHeadTable.png"><img src="images/SigHeadTable.png" align="right"
+      width="447" height="176" hspace="0" vspace="0" alt=
       "Signal Head Table"></a>
 
       <p>All the Signal Heads that JMRI knows about can be
-      referenced using the "Signal Head Table" tool in the Tools
-      menu of most JMRI programs. Signal Heads are also referenced
+      referenced using the "Signal Head Table" tool in the Tools &gt; Tables
+      menu of most JMRI programs. Signal Heads may also be used
       to build Signal Masts in a later step. There are eight
       columns in the Signal Head Table:</p>
 
@@ -42,10 +42,10 @@
         want.</li>
 
         <li>As the Signal Head changes, for whatever reason, the
-        current Appearance will show in the table in the "State"
-        column. You can also click on a State button to cycle
-        through the available appearances: Red, Yellow, Green,
-        Flashing red, Flashing Yellow, Flashing Green, and Dark.
+        current Appearance will show in the table in the "Appearance"
+        column. Change the Appearance of a head by choosing one of the 
+        available states from the combo box: Red, Yellow, Green,
+        Flashing red, Flashing Yellow, Flashing Green, or Dark.
         Some Signal Heads may also have Lunar and Flashing Lunar
         available.</li>
 

@@ -159,8 +159,13 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         }
     }
 
+    @Override()
     public boolean status() {
-        return (controller.status());
+        if(controller == null) {
+           return false;
+        } else {
+           return (controller.status());
+        }
     }
 
     /**

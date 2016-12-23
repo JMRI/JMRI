@@ -62,8 +62,6 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     }
 
     // Abstract methods for the XNetInterface
-    abstract public boolean status();
-
     /**
      * Forward a preformatted XNetMessage to the actual interface.
      *
