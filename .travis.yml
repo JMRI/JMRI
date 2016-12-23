@@ -20,7 +20,7 @@ script:
   - export MAVEN_OPTS=-Xmx640m
   - export MAVEN_PROFILE=travis-coverage
   - if [[ "${HEADLESS}" == "true" ]] ; then MAVEN_PROFILE=travis ; fi
-  - travis_wait 30 mvn test -U -P ${MAVEN_PROFILE} --batch-mode -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" -Djava.awt.headless=${HEADLESS}
+  - mvn test -U -P ${MAVEN_PROFILE} --batch-mode -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" -Djava.awt.headless=${HEADLESS}
 
 cache:
   directories:
