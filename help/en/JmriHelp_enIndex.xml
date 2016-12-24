@@ -314,7 +314,8 @@
   <indexitem text="Panel Controls " target="package.jmri.jmrit.display.PanelTarget"/>
 
   <indexitem text="Panel Editor " target="package.jmri.jmrit.display.PanelEditor"/>
-  <indexitem text="Handling Errors" target="package.jmri.configurexml.ErrorHander"/>
+
+  <indexitem text="Handling Errors " target="package.jmri.configurexml.ErrorHander"/>
 
  </indexitem>
  <indexitem text="Panels Menu " target="package.jmri.jmrit.display.PanelMenuHelp"/>
