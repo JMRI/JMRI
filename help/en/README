@@ -38,3 +38,22 @@ the main web site.
 
 html/hardware needs to be carefully checked
 
+JHELPDEV:
+
+The JHelpDev included here is 0.63 from jhelpdev.sf.net, 
+with the following modifications to 
+(a) allow .shtml files
+(b) handle <a name="foo" id="foo">
+
+javasrc/net/sourceforge/jhelpdev/action/CreateMapAction.java 
+54c54
+<  * directory and all subdirectories for files with .html, .htm, .shtml, .jsp or .gif suffixes.
+---
+>  * directory and all subdirectories for files with .html, .htm, .jsp or .gif suffixes.
+85c85
+<     public static final Pattern VALUE_PATTERN = Pattern.compile("\".*?\"",
+---
+>     public static final Pattern VALUE_PATTERN = Pattern.compile("\".*\"",
+256d255
+<                     || filesInDir[i].toUpperCase().endsWith(".SHTML")
+
