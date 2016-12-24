@@ -7,11 +7,13 @@
     <choice xml:lang="it">Risponde solo a Indirizzo Loco</choice>
     <choice xml:lang="fr">Adresse locomotive seulement</choice>
     <choice xml:lang="de">Nur Lok Adresse</choice>
+    <choice xml:lang="cs">Pouze adresa lokomotivy</choice>
   </enumChoice>
   <enumChoice choice="Respond to Consist Address">
     <choice>Respond to Consist Address</choice>
     <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
     <choice xml:lang="fr">Répondre à l'adresse d'UM</choice>
     <choice xml:lang="de">Verbund-Befehle akzeptieren</choice>
+    <choice xml:lang="cs">Reagovat na adresu soupravy</choice>
   </enumChoice>
 </enumVal>

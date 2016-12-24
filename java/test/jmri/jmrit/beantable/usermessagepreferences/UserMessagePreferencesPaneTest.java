@@ -4,10 +4,8 @@ import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Test simple functioning of UserMessagePreferencesPane
@@ -18,7 +16,6 @@ public class UserMessagePreferencesPaneTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         UserMessagePreferencesPane p = new UserMessagePreferencesPane(); 
         Assert.assertNotNull("exists", p);
     }

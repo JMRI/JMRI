@@ -6,25 +6,22 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.Vector;
 import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Description:	JUnit tests for the EasyDccTrafficController class
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2007, 2015
  */
-public class EasyDccTrafficControllerTest extends TestCase {
+public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
-    public void testCreate() {
-        EasyDccTrafficController m = new EasyDccTrafficController();
-        Assert.assertNotNull("exists", m);
-    }
-
+    @Test
     public void testSendThenRcvReply() throws Exception {
-        EasyDccTrafficController c = new EasyDccTrafficController() {
+        EasyDccTrafficController c = (EasyDccTrafficController)tc;
+        /*EasyDccTrafficController c = new EasyDccTrafficController() {
             // skip timeout message
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
             }
@@ -34,7 +31,7 @@ public class EasyDccTrafficControllerTest extends TestCase {
 
             protected void portWarn(Exception e) {
             }
-        };
+        };*/
 
         // connect to iostream via port controller
         EasyDccPortControllerScaffold p = new EasyDccPortControllerScaffold();
@@ -145,30 +142,17 @@ public class EasyDccTrafficControllerTest extends TestCase {
     DataOutputStream tistream; // tests write to this
     DataInputStream istream;  // so the traffic controller can read from this
 
-    // from here down is testing infrastructure
-
-    public EasyDccTrafficControllerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", EasyDccTrafficControllerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(EasyDccTrafficControllerTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
+    @Override
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        tc = new EasyDccTrafficController();
     }
 
-    protected void tearDown() {
+    @Override
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 

@@ -7,21 +7,36 @@
 >
   <name>NS-2008</name>
   <date>2008</date>
-  <reference>As described in the January 2008 version of the NS Operating Rules Book - 271-272'.</reference>
+  <reference>Conrail aspects as described in the January 2008 version of the NS Operating Rules Book - 271-272'.</reference>
 
   <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2012</year><year>2012</year><holder>JMRI</holder>
+    <year>2012</year>
+    <year>2012</year>
+    <holder>JMRI</holder>
   </copyright>
 
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
-        <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
+        <personname>
+          <firstname>Bob</firstname>
+          <surname>Jacobsen</surname>
+        </personname>
         <email>jake@physics.berkeley.edu</email>
-    </author>    
+    </author>
     <author>
-        <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
+        <personname>
+          <firstname>Dick</firstname>
+          <surname>Bronson</surname>
+        </personname>
         <email>dick@rr-cirkits.com</email>
-    </author>    
+    </author>
+    <author>
+        <personname>
+          <firstname>Suzie</firstname>
+          <surname>Tall</surname>
+        </personname>
+        <email>suzie_tall@yahoo.co.uk</email>
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -30,13 +45,19 @@
         <date>2012-10-09</date>
         <authorinitials>DB</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>1.1</revnumber>
         <date>2013-01-26</date>
         <authorinitials>DB</authorinitials>
         <revremark>Added Dark (171))</revremark>
-    </revision>    
+    </revision>
+    <revision>
+        <revnumber>1.2</revnumber>
+        <date>2016-12-01</date>
+        <authorinitials>ST</authorinitials>
+        <revremark>Added Conrail references and aspect numbers</revremark>
+    </revision>
   </revhistory>
 
   <aspects>
@@ -48,6 +69,7 @@
       <speed>Normal</speed>
       <speed2>Normal</speed2>
       <route>Normal</route>
+      <dccAspect>23</dccAspect>
     </aspect>
 
     <aspect>
@@ -57,6 +79,7 @@
       <speed>Normal</speed>
       <speed2>Limited</speed2>
       <route>Normal</route>
+      <dccAspect>22</dccAspect>
     </aspect>
 
     <aspect>
@@ -66,6 +89,7 @@
       <speed>Limited</speed>
       <speed2>Normal</speed2>
       <route>Diverging</route>
+      <dccAspect>15</dccAspect>
     </aspect>
 
     <aspect>
@@ -75,6 +99,7 @@
       <speed>Normal</speed>
       <speed2>Medium</speed2>
       <route>Normal</route>
+      <dccAspect>21</dccAspect>
     </aspect>
 
     <aspect>
@@ -84,6 +109,7 @@
       <speed>Normal</speed>
       <speed2>Medium</speed2>
       <route>Normal</route>
+      <dccAspect>20</dccAspect>
     </aspect>
 
     <aspect>
@@ -93,6 +119,7 @@
       <speed>Medium</speed>
       <speed2>Normal</speed2>
       <route>Diverging</route>
+      <dccAspect>14</dccAspect>
     </aspect>
 
     <aspect>
@@ -102,6 +129,7 @@
       <speed>Medium</speed>
       <speed2>Medium</speed2>
       <route>Diverging</route>
+      <dccAspect>11</dccAspect>
     </aspect>
 
     <aspect>
@@ -111,6 +139,7 @@
       <speed>Medium</speed>
       <speed2>Slow</speed2>
       <route>Normal</route>
+      <dccAspect>19</dccAspect>
     </aspect>
 
     <aspect>
@@ -120,6 +149,7 @@
       <speed>Medium</speed>
       <speed2>Slow</speed2>
       <route>Normal</route>
+      <dccAspect>17</dccAspect>
     </aspect>
 
     <aspect>
@@ -129,6 +159,7 @@
       <speed>Medium</speed>
       <speed2>Slow</speed2>
       <route>Diverging</route>
+      <dccAspect>8</dccAspect>
     </aspect>
 
     <aspect>
@@ -138,6 +169,7 @@
       <speed>Slow</speed>
       <speed2>Normal</speed2>
       <route>Diverging</route>
+      <dccAspect>13</dccAspect>
     </aspect>
 
     <aspect>
@@ -147,6 +179,7 @@
       <speed>Slow</speed>
       <speed2>Medium</speed2>
       <route>Diverging</route>
+      <dccAspect>9</dccAspect>
     </aspect>
 
     <aspect>
@@ -156,6 +189,7 @@
       <speed>Restricted</speed>
       <speed2>Restricted</speed2>
       <route>Either</route>
+      <dccAspect>7</dccAspect>
     </aspect>
 
     <aspect>
@@ -165,6 +199,7 @@
       <speed>Restricted</speed>
       <speed2>Restricted</speed2>
       <route>Either</route>
+      <dccAspect>31</dccAspect>
     </aspect>
 
     <aspect>
@@ -174,6 +209,7 @@
       <speed>Stop</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
+      <dccAspect>0</dccAspect>
     </aspect>
 
   </aspects>
@@ -186,6 +222,6 @@
     <appearancefile href="appearance-CLS-3-lo.xml"/>
     <appearancefile href="appearance-171.xml"/>
   </appearancefiles>
-  
+
 </aspecttable>
-  
+

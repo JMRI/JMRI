@@ -123,6 +123,7 @@ public class Location implements java.beans.PropertyChangeListener {
         String old = _name;
         _name = name;
         if (!old.equals(name)) {
+            LocationManager.instance().resetNameLengths(); // recalculate max location name length for manifests
             setDirtyAndFirePropertyChange(NAME_CHANGED_PROPERTY, old, name);
         }
     }
@@ -685,6 +686,7 @@ public class Location implements java.beans.PropertyChangeListener {
             String id = _id + "s" + Integer.toString(_IdNumber);
             log.debug("Adding new ({}) to ({}) track name ({}) id: {}", type, getName(), name, id);
             track = new Track(id, name, type, this);
+            LocationManager.instance().resetNameLengths(); // recalculate max track name length for manifests
             register(track);
         }
         resetMoves(); // give all of the tracks equal weighting

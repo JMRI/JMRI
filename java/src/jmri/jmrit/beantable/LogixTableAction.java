@@ -302,11 +302,29 @@ public class LogixTableAction extends AbstractTableAction {
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleLogixTable"));
     }
-    
+
+    /**
+     * Insert 2 table specific menus.
+     * Account for the Window and Help menus, which are already added to the menu bar
+     * as part of the creation of the JFrame, by adding the menus 2 places earlier
+     * unless the table is part of the ListedTableFrame, that adds the Help menu later on.
+     * @param f the JFrame of this table
+     */
+    @Override
     public void setMenuBar(BeanTableFrame f) {
         JMenu menu = new JMenu(Bundle.getMessage("MenuOptions"));
         menu.setMnemonic(KeyEvent.VK_O);
         javax.swing.JMenuBar menuBar = f.getJMenuBar();
+        int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenus before 'Window' and 'Help'
+        int offset = 1;
+        log.debug("setMenuBar number of menu items = " + pos);
+        for (int i = 0; i <= pos; i++) {
+            if (menuBar.getComponent(i) instanceof JMenu) {
+                if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
+                    offset = -1; // correct for use as part of ListedTableAction where the Help Menu is not yet present
+                }
+            }
+        }
 
         ButtonGroup enableButtonGroup = new ButtonGroup();
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(rbx.getString("EnableAll"));
@@ -326,7 +344,7 @@ public class LogixTableAction extends AbstractTableAction {
         });
         enableButtonGroup.add(r);
         menu.add(r);
-        menuBar.add(menu);
+        menuBar.add(menu, pos + offset);
 
         menu = new JMenu(Bundle.getMessage("MenuTools"));
         menu.setMnemonic(KeyEvent.VK_T);
@@ -369,7 +387,7 @@ public class LogixTableAction extends AbstractTableAction {
             }
         }.init(f));
         menu.add(item);
-        menuBar.add(menu);
+        menuBar.add(menu, pos + offset + 1); // add this menu to the right of the previous
     }
 
     void OpenPickListTable() {

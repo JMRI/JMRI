@@ -25,7 +25,15 @@ import org.junit.runners.Suite;
    jmri.jmrix.sprog.sprog.PackageTest.class,
    jmri.jmrix.sprog.sprogCS.PackageTest.class,
    jmri.jmrix.sprog.sprognano.PackageTest.class,
-   jmri.jmrix.sprog.configurexml.PackageTest.class
+   jmri.jmrix.sprog.configurexml.PackageTest.class,
+   jmri.jmrix.sprog.swing.PackageTest.class,
+   jmri.jmrix.sprog.packetgen.PackageTest.class,
+   jmri.jmrix.sprog.console.PackageTest.class,
+   jmri.jmrix.sprog.sprogmon.PackageTest.class,
+   jmri.jmrix.sprog.sprogslotmon.PackageTest.class,
+   SPROGMenuTest.class,
+   SPROGCSMenuTest.class,
+   SprogPortControllerTest.class
 })
 public class PackageTest {
 }

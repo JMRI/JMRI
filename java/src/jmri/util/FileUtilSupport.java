@@ -1,11 +1,9 @@
 package jmri.util;
 
-import static jmri.util.FileUtil.FILE;
 import static jmri.util.FileUtil.HOME;
 import static jmri.util.FileUtil.PREFERENCES;
 import static jmri.util.FileUtil.PROFILE;
 import static jmri.util.FileUtil.PROGRAM;
-import static jmri.util.FileUtil.RESOURCE;
 import static jmri.util.FileUtil.SCRIPTS;
 import static jmri.util.FileUtil.SEPARATOR;
 import static jmri.util.FileUtil.SETTINGS;
@@ -354,9 +352,7 @@ public class FileUtilSupport extends Bean {
                 || filename.startsWith(PREFERENCES)
                 || filename.startsWith(SCRIPTS)
                 || filename.startsWith(PROFILE)
-                || filename.startsWith(SETTINGS)
-                || filename.startsWith(FILE)
-                || filename.startsWith(RESOURCE));
+                || filename.startsWith(SETTINGS));
     }
 
     /**
@@ -479,13 +475,16 @@ public class FileUtilSupport extends Bean {
     }
 
     /**
-     * Get the JMRI program directory.
+     * Get the JMRI program directory. If the program directory has not been
+     * previously sets, first sets the program directory to the value specified
+     * in the Java System property <code>jmri.path.program</code>, or
+     * <code>.</code> if that property is not set.
      *
      * @return JMRI program directory as a String.
      */
     public String getProgramPath() {
         if (programPath == null) {
-            this.setProgramPath("."); // NOI18N
+            this.setProgramPath(System.getProperty("jmri.path.program", ".")); // NOI18N
         }
         return programPath;
     }
@@ -494,7 +493,7 @@ public class FileUtilSupport extends Bean {
      * Set the JMRI program directory.
      *
      * Convenience method that calls
-     * {@link FileUtil#setProgramPath(java.io.File)} with the passed in path.
+     * {@link #setProgramPath(java.io.File)} with the passed in path.
      *
      * @param path the path to the JMRI installation
      */
@@ -597,10 +596,8 @@ public class FileUtilSupport extends Bean {
             log.debug("Finding {} and {}", location, path);
             switch (location) {
                 case FileUtil.PROGRAM:
-                case FileUtil.RESOURCE:
                     return this.findURI(path, FileUtil.Location.INSTALLED);
                 case FileUtil.PREFERENCES:
-                case FileUtil.FILE:
                     return this.findURI(path, FileUtil.Location.USER);
                 case FileUtil.PROFILE:
                 case FileUtil.SETTINGS:
@@ -1287,18 +1284,6 @@ public class FileUtilSupport extends Bean {
                 path = path.substring(HOME.length());
             } else {
                 path = path.replaceFirst(HOME, Matcher.quoteReplacement(this.getHomePath()));
-            }
-        } else if (path.startsWith(RESOURCE)) {
-            if (new File(path.substring(RESOURCE.length())).isAbsolute()) {
-                path = path.substring(RESOURCE.length());
-            } else {
-                path = path.replaceFirst(RESOURCE, Matcher.quoteReplacement(this.getProgramPath()));
-            }
-        } else if (path.startsWith(FILE)) {
-            if (new File(path.substring(FILE.length())).isAbsolute()) {
-                path = path.substring(FILE.length());
-            } else {
-                path = path.replaceFirst(FILE, Matcher.quoteReplacement(this.getUserFilesPath() + "resources" + File.separator));
             }
         } else if (!new File(path).isAbsolute()) {
             return null;

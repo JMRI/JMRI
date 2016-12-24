@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year>
+    <year>2016</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1.0</revnumber>
+      <date>2016-12-02</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial Version</revremark>
+    </revision>
+  </revhistory>
+  <aspecttable>CSX-2014-Chessie</aspecttable>
+  <name>Single head color light dwarf signal</name>
+  <reference>As described in the CSX Transportation Signal Rules - C1281-C1298 January 2014.</reference>
+  <description>Appearances for a permissive single head dwarf mast with no markings</description>
+  <appearances>
+    <appearance>
+      <aspectname>Medium Clear</aspectname>
+      <show>flashgreen</show>
+      <reference>C1283 (c)</reference>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/CSX-2014-Chessie/CO-3-lo/rule-C1283.gif</imagelink>
+      <imagelink type="flash">../../../resources/icons/smallschematics/aspects/CSX-2014-Chessie/CO-3-lo/rule-C1283f.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Medium Approach</aspectname>
+      <show>flashyellow</show>
+      <reference>C1286 (b)</reference>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/CSX-2014-Chessie/CO-3-lo/rule-C1286.gif</imagelink>
+      <imagelink type="flash">../../../resources/icons/smallschematics/aspects/CSX-2014-Chessie/CO-3-lo/rule-C1286f.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Slow Clear</aspectname>
+      <show>green</show>
+      <reference>C1287 (c)</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CSX-2014-Chessie/CO-3-lo/rule-C1287.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>yellow</show>
+      <reference>C1290 (k)</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CSX-2014-Chessie/CO-3-lo/rule-C1290.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <reference>C1292 (d)</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CSX-2014-Chessie/CO-3-lo/rule-C1292.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Unlit</aspectname>
+      <show>dark</show>
+      <reference>-</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CSX-2014-Chessie/CO-3-lo/CO-3-lo.gif</imagelink>
+    </appearance>
+  </appearances>
+  <specificappearances>
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+    <permissive>
+      <aspect>Restricting</aspect>
+    </permissive>
+    <held>
+      <aspect>Stop</aspect>
+    </held>
+    <dark>
+      <aspect>Unlit</aspect>
+    </dark>
+  </specificappearances>
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Limited</advancedAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Limited Clear</advancedAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Limited Approach</advancedAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Medium</advancedAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium Clear</advancedAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium Approach Medium</advancedAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium Approach Slow</advancedAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Slow</advancedAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium Approach</advancedAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Slow Clear</advancedAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricted Proceed</advancedAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Unlit</advancedAspect>
+      <ourAspect>Stop</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+</appearancetable>

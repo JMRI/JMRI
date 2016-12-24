@@ -281,11 +281,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt1A")));
             panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt1B")));
             panel.add(javax.swing.Box.createVerticalStrut(10));
-            panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt2")));
-            panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt3")));
+            panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt2", Bundle.getMessage("ButtonContinue"))));
+            panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt3", Bundle.getMessage("ButtonDelete"))));
             panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt3A")));
             panel.add(javax.swing.Box.createVerticalStrut(10));
-            panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt4")));
+            panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt4", Bundle.getMessage("ButtonIgnore"))));
             panel.add(javax.swing.Box.createVerticalStrut(10));
             _urlField = new JTextField(url);
             _urlField.setDragEnabled(true);
@@ -320,7 +320,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             doneButton.setToolTipText(Bundle.getMessage("TooltipContinue"));
             panel0.add(doneButton);
 
-            JButton deleteButton = new JButton(Bundle.getMessage("ButtonDeleteIcon"));
+            JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
             deleteButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent a) {
@@ -414,11 +414,21 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         return _targetPanel.getSize();
     }
 
+    /**
+     * Allow public access to the target (content) panel
+     * for external modification, particularly
+     * from scripts
+     */
     public final JComponent getTargetPanel() {
         return _targetPanel;
     }
 
-    protected final JScrollPane getPanelScrollPane() {
+    /**
+     * Allow public access to the scroll pane
+     * for external control of position, particularly
+     * from scripts
+     */
+    public final JScrollPane getPanelScrollPane() {
         return _panelScrollPane;
     }
 
@@ -1506,7 +1516,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         locoId.setText("");
         locoId.setToolTipText(Bundle.getMessage("EnterLocoID"));
         javax.swing.JButton okay = new javax.swing.JButton();
-        okay.setText(Bundle.getMessage("OK"));
+        okay.setText(Bundle.getMessage("ButtonOK"));
         okay.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -1515,7 +1525,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     addLocoIcon(nameID.trim());
                 } else {
                     JOptionPane.showMessageDialog(locoFrame, Bundle.getMessage("ErrorEnterLocoID"),
-                            Bundle.getMessage("errorTitle"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

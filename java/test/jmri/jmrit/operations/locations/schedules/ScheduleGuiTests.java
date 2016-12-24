@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.locations.schedules;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -16,6 +17,9 @@ import org.junit.Assert;
 public class ScheduleGuiTests extends OperationsSwingTestCase {
 
     public void testScheduleCopyFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         ScheduleCopyFrame f = new ScheduleCopyFrame();
         Assert.assertNotNull(f);
 
@@ -24,6 +28,9 @@ public class ScheduleGuiTests extends OperationsSwingTestCase {
     }
 
     public void testScheduleOptionsFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         LocationManager lManager = LocationManager.instance();
         Track track = lManager.getLocationByName("Test Loc E").getTrackByName("Test Track", null);
         ScheduleManager sManager = ScheduleManager.instance();
@@ -40,6 +47,9 @@ public class ScheduleGuiTests extends OperationsSwingTestCase {
     }
 
     public void testSchedulesByLoadFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         SchedulesByLoadFrame f = new SchedulesByLoadFrame();
         Assert.assertNotNull(f);
 
@@ -48,6 +58,9 @@ public class ScheduleGuiTests extends OperationsSwingTestCase {
     }
 
     public void testSchedulesTableFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         SchedulesTableFrame f = new SchedulesTableFrame();
         Assert.assertNotNull(f);
 

@@ -39,7 +39,7 @@
 
  
 <li>
-<a href="manual/index.shtml#Top">Manuals </a>
+<a href="">Manuals </a>
 <ul></ul>
 </li>
 
@@ -56,6 +56,12 @@
   
 <li>
 <a href="html/setup/profiles.shtml">Configuration Profiles </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/apps/SystemConsole.shtml">System Console </a>
 <ul></ul>
 </li>
 
@@ -514,31 +520,31 @@
 <ul>
     
 <li>
-<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#glossary">Glossary </a>
+<a href="">Glossary </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#transits">Using Transits and Sections </a>
+<a href="">Using Transits and Sections </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#window">Dispatcher Window </a>
+<a href="">Dispatcher Window </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#atrains">Active Train Table </a>
+<a href="">Active Train Table </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#arequests">Allocation Request Table </a>
+<a href="">Allocation Request Table </a>
 <ul></ul>
 </li>
 
@@ -578,41 +584,41 @@
 <ul>
    
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Settings">Settings </a>
+<a href="">Settings </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Locations">Locations </a>
+<a href="">Locations </a>
 <ul>
     
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Yards">Yard Tracks </a>
+<a href="">Yard Tracks </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Sidings">Spur Tracks </a>
+<a href="">Spur Tracks </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Interchange">Interchange Tracks </a>
+<a href="">Interchange Tracks </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Staging">Staging Tracks </a>
+<a href="">Staging Tracks </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Schedules">Schedules </a>
+<a href="">Schedules </a>
 <ul></ul>
 </li>
 
@@ -621,31 +627,31 @@
 </li>
    
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Cars">Cars </a>
+<a href="">Cars </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Locomotives">Locomotives </a>
+<a href="">Locomotives </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Routes">Routes </a>
+<a href="">Routes </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Trains">Trains </a>
+<a href="">Trains </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#SwitchList">Switch List </a>
+<a href="">Switch List </a>
 <ul></ul>
 </li>
 
@@ -726,7 +732,11 @@
 <a href="html/apps/PanelPro/ShowPanel.shtml">Displaying Panel Files </a>
 <ul></ul>
 </li>
-
+  
+<li>
+<a href="package/jmri/configurexml/ErrorHandler.shtml">Handling Errors</a>
+<ul></ul>
+</li>
  
 </ul>
 </li>
@@ -1285,7 +1295,7 @@
 
    
 <li>
-<a href="package/jmri/jmrit/logix/SCWarrant.shtml">Signal Controlled Warrants </a>
+<a href="">Signal Controlled Warrants </a>
 <ul></ul>
 </li>
 

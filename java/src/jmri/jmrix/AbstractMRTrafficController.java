@@ -727,7 +727,7 @@ abstract public class AbstractMRTrafficController {
             }
         }
         ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
-        log.error("Exit from rcv loop");
+        log.error("Exit from rcv loop in {}", this.getClass().toString());
         recovery();
     }
 
@@ -742,7 +742,7 @@ abstract public class AbstractMRTrafficController {
      * though message is asynchronous.
      */
     protected void reportReceiveLoopException(Exception e) {
-        log.error("run: Exception: {}", e.toString());
+        log.error("run: Exception: {} in {}", e.toString(), this.getClass().toString(), e);
         jmri.jmrix.ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
         if (controller instanceof AbstractNetworkPortController) {
             portWarnTCP(e);
@@ -769,6 +769,9 @@ abstract public class AbstractMRTrafficController {
      * EOFException at the end of the timeout. In that case, the read should be
      * repeated to get the next real character.
      *
+     * @param istream stream to read
+     * @return the byte read
+     * @throws java.io.IOException if unable to read
      */
     protected byte readByteProtected(DataInputStream istream) throws IOException {
         while (true) { // loop will repeat until character found

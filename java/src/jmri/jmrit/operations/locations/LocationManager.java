@@ -135,6 +135,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
             location = new Location(Integer.toString(_id), name);
             Integer oldSize = Integer.valueOf(_locationHashTable.size());
             _locationHashTable.put(location.getId(), location);
+            resetNameLengths();
             setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
                     Integer.valueOf(_locationHashTable.size()));
         }
@@ -357,10 +358,16 @@ public class LocationManager implements java.beans.PropertyChangeListener {
             }
         }
     }
-
+    
     protected int _maxLocationNameLength = 0;
     protected int _maxTrackNameLength = 0;
     protected int _maxLocationAndTrackNameLength = 0;
+    
+    public void resetNameLengths() {
+        _maxLocationNameLength = 0;
+        _maxTrackNameLength = 0;
+        _maxLocationAndTrackNameLength = 0;
+    }
 
     public int getMaxLocationNameLength() {
         calculateMaxNameLengths();

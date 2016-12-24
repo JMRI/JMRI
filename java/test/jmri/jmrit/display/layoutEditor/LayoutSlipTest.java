@@ -1,60 +1,44 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test simple functioning of LayoutSlip
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class LayoutSlipTest extends TestCase {
+public class LayoutSlipTest {
 
+    @Test
     public void testCtor() {
-        LayoutSlip  t = new LayoutSlip("test",new Point2D.Double(0.0,0.0),0.0,new LayoutEditor(),0);
-        Assert.assertNotNull("exists", t );
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        LayoutSlip t = new LayoutSlip("test", new Point2D.Double(0.0, 0.0), 0.0, new LayoutEditor(), 0);
+        Assert.assertNotNull("exists", t);
     }
 
     // from here down is testing infrastructure
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         // dispose of the single PanelMenu instance
         jmri.jmrit.display.PanelMenu.dispose();
         // reset the instance manager.
         JUnitUtil.resetInstanceManager();
     }
- 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+
+    @After
+    public void tearDown() throws Exception {
         // dispose of the single PanelMenu instance
         jmri.jmrit.display.PanelMenu.dispose();
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
-    }
-
-
-
-    public LayoutSlipTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LayoutSlipTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LayoutSlipTest.class);
-        return suite;
     }
 
 }

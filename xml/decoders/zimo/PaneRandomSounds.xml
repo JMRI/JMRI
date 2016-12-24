@@ -1,27 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
+<!-- version 1.1 - Ronald Kuhn - add german translation -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Random Sounds</name>
+  <name xml:lang="it">Suoni Casuali</name>
+  <name xml:lang="de">Zufalls Sounds</name>
+  <name xml:lang="cs">Náhodné zvuky</name>
   <column>
     <label>
       <text>Random Generator Z1</text>
       <text xml:lang="it">Generatore Casuale Z1</text>
+      <text xml:lang="cs">Náhodný generátor Z1</text>
+      <text xml:lang="de">Zufallsgenerator Z1</text>
     </label>
     <separator/>
     <label>
       <text> </text>
     </label>
-    <display item="Minimum interval for random generator Z1" label="Minimum interval">
-      <label>Minimum interval</label>
-      <label xml:lang="it">Intervallo Minimo</label>
+    <display item="Minimum interval for random generator Z1">
+      <!--label>Minimum interval</label-->
+      <!--label xml:lang="it">Intervallo Minimo</label-->
+      <!--label xml:lang="cs">Minimální interval</label-->
     </display>
-    <display item="Maximum interval for random generator Z1" label="Maximum interval">
-      <label>Maximum interval</label>
-      <label xml:lang="it">Intervallo Massimo</label>
+    <display item="Maximum interval for random generator Z1">
+      <!--label>Maximum interval</label-->
+      <!--label xml:lang="it">Intervallo Massimo</label-->
+      <!--label xml:lang="cs">Maximální interval</label-->
     </display>
-    <display item="Playback length for random generator Z1" label="Playback length">
-      <label>Playback length</label>
-      <label xml:lang="it">Durata riproduzione</label>
+    <display item="Playback length for random generator Z1">
+      <!--label>Playback length</label-->
+      <!--label xml:lang="it">Durata riproduzione</label-->
+      <!--label xml:lang="cs">Délka přehrávání</label-->
     </display>
     <label>
       <text> </text>
@@ -32,22 +42,27 @@
     <label>
       <text>Random Generator Z2</text>
       <text xml:lang="it">Generatore Casuale Z2</text>
+      <text xml:lang="cs">Náhodný generátor Z2</text>
+      <text xml:lang="de">Zufallsgenerator Z2</text>
     </label>
     <separator/>
     <label>
       <text> </text>
     </label>
-    <display item="Minimum interval for random generator Z2" label="Minimum interval">
-      <label>Minimum interval</label>
-      <label xml:lang="it">Intervallo Minimo</label>
+    <display item="Minimum interval for random generator Z2">
+      <!--label>Minimum interval</label-->
+      <!--label xml:lang="it">Intervallo Minimo</label-->
+      <!--label xml:lang="cs">Minimální interval</label-->
     </display>
-    <display item="Maximum interval for random generator Z2" label="Maximum interval">
-      <label>Maximum interval</label>
-      <label xml:lang="it">Intervallo Massimo</label>
+    <display item="Maximum interval for random generator Z2">
+      <!--label>Maximum interval</label-->
+      <!--label xml:lang="it">Intervallo Massimo</label-->
+      <!--label xml:lang="cs">Maximální interval</label-->
     </display>
-    <display item="Playback length for random generator Z2" label="Playback length">
-      <label>Playback length</label>
-      <label xml:lang="it">Durata riproduzione</label>
+    <display item="Playback length for random generator Z2">
+      <!--label>Playback length</label-->
+      <!--label xml:lang="it">Durata riproduzione</label-->
+      <!--label xml:lang="cs">Délka přehrávání</label-->
     </display>
     <label>
       <text> </text>
@@ -58,22 +73,27 @@
     <label>
       <text>Random Generator Z3</text>
       <text xml:lang="it">Generatore Casuale Z3</text>
+      <text xml:lang="cs">Náhodný generátor Z3</text>
+      <text xml:lang="de">Zufallsgenerator Z3</text>
     </label>
     <separator/>
     <label>
       <text> </text>
     </label>
-    <display item="Minimum interval for random generator Z3" label="Minimum interval">
-      <label>Minimum interval</label>
-      <label xml:lang="it">Intervallo Minimo</label>
+    <display item="Minimum interval for random generator Z3">
+      <!--label>Minimum interval</label-->
+      <!--label xml:lang="it">Intervallo Minimo</label-->
+      <!--label xml:lang="cs">Minimální interval</label-->
     </display>
-    <display item="Maximum interval for random generator Z3" label="Maximum interval">
-      <label>Maximum interval</label>
-      <label xml:lang="it">Intervallo Massimo</label>
+    <display item="Maximum interval for random generator Z3">
+      <!--label>Maximum interval</label-->
+      <!--label xml:lang="it">Intervallo Massimo</label-->
+      <!--label xml:lang="cs">Maximální interval</label-->
     </display>
-    <display item="Playback length for random generator Z3" label="Playback length">
-      <label>Playback length</label>
-      <label xml:lang="it">Durata riproduzione</label>
+    <display item="Playback length for random generator Z3">
+      <!--label>Playback length</label-->
+      <!--label xml:lang="it">Durata riproduzione</label-->
+      <!--label xml:lang="cs">Délka přehrávání</label-->
     </display>
     <label>
       <text> </text>
@@ -84,44 +104,54 @@
     <label>
       <text>Random Generator Z4</text>
       <text xml:lang="it">Generatore Casuale Z4</text>
+      <text xml:lang="cs">Náhodný generátor Z4</text>
+      <text xml:lang="de">Zufallsgenerator Z4</text>
     </label>
     <separator/>
     <label>
       <text> </text>
     </label>
-    <display item="Minimum interval for random generator Z4" label="Minimum interval">
-      <label>Minimum interval</label>
-      <label xml:lang="it">Intervallo Minimo</label>
+    <display item="Minimum interval for random generator Z4">
+      <!--label>Minimum interval</label-->
+      <!--label xml:lang="it">Intervallo Minimo</label-->
+      <!--label xml:lang="cs">Minimální interval</label-->
     </display>
-    <display item="Maximum interval for random generator Z4" label="Maximum interval">
-      <label>Maximum interval</label>
-      <label xml:lang="it">Intervallo Massimo</label>
+    <display item="Maximum interval for random generator Z4">
+      <!--label>Maximum interval</label-->
+      <!--label xml:lang="it">Intervallo Massimo</label-->
+      <!--label xml:lang="cs">Maximální interval</label-->
     </display>
-    <display item="Playback length for random generator Z4" label="Playback length">
-      <label>Playback length</label>
-      <label xml:lang="it">Durata riproduzione</label>
+    <display item="Playback length for random generator Z4">
+      <!--label>Playback length</label-->
+      <!--label xml:lang="it">Durata riproduzione</label-->
+      <!--label xml:lang="cs">Délka přehrávání</label-->
     </display>
   </column>
   <column>
     <label>
       <text>Random Generator Z5</text>
       <text xml:lang="it">Generatore Casuale Z5</text>
+      <text xml:lang="cs">Náhodný generátor Z5</text>
+      <text xml:lang="de">Zufallsgenerator Z5</text>
     </label>
     <separator/>
     <label>
       <text> </text>
     </label>
-    <display item="Minimum interval for random generator Z5" label="Minimum interval">
-      <label>Minimum interval</label>
-      <label xml:lang="it">Intervallo Minimo</label>
+    <display item="Minimum interval for random generator Z5">
+      <!--label>Minimum interval</label-->
+      <!--label xml:lang="it">Intervallo Minimo</label-->
+      <!--label xml:lang="cs">Minimální interval</label-->
     </display>
-    <display item="Maximum interval for random generator Z5" label="Maximum interval">
-      <label>Maximum interval</label>
-      <label xml:lang="it">Intervallo Massimo</label>
+    <display item="Maximum interval for random generator Z5">
+      <!--label>Maximum interval</label-->
+      <!--label xml:lang="it">Intervallo Massimo</label-->
+      <!--label xml:lang="cs">Maximální interval</label-->
     </display>
-    <display item="Playback length for random generator Z5" label="Playback length">
-      <label>Playback length</label>
-      <label xml:lang="it">Durata riproduzione</label>
+    <display item="Playback length for random generator Z5">
+      <!--label>Playback length</label-->
+      <!--label xml:lang="it">Durata riproduzione</label-->
+      <!--label xml:lang="cs">Délka přehrávání</label-->
     </display>
     <label>
       <text> </text>
@@ -132,22 +162,27 @@
     <label>
       <text>Random Generator Z6</text>
       <text xml:lang="it">Generatore Casuale Z6</text>
+      <text xml:lang="cs">Náhodný generátor Z6</text>
+      <text xml:lang="de">Zufallsgenerator Z6</text>
     </label>
     <separator/>
     <label>
       <text> </text>
     </label>
-    <display item="Minimum interval for random generator Z6" label="Minimum interval">
-      <label>Minimum interval</label>
-      <label xml:lang="it">Intervallo Minimo</label>
+    <display item="Minimum interval for random generator Z6">
+      <!--label>Minimum interval</label-->
+      <!--label xml:lang="it">Intervallo Minimo</label-->
+      <!--label xml:lang="cs">Minimální interval</label-->
     </display>
-    <display item="Maximum interval for random generator Z6" label="Maximum interval">
-      <label>Maximum interval</label>
-      <label xml:lang="it">Intervallo Massimo</label>
+    <display item="Maximum interval for random generator Z6">
+      <!--label>Maximum interval</label-->
+      <!--label xml:lang="it">Intervallo Massimo</label-->
+      <!--label xml:lang="cs">Maximální interval</label-->
     </display>
-    <display item="Playback length for random generator Z6" label="Playback length">
-      <label>Playback length</label>
-      <label xml:lang="it">Durata riproduzione</label>
+    <display item="Playback length for random generator Z6">
+      <!--label>Playback length</label-->
+      <!--label xml:lang="it">Durata riproduzione</label-->
+      <!--label xml:lang="cs">Délka přehrávání</label-->
     </display>
     <label>
       <text> </text>
@@ -158,22 +193,27 @@
     <label>
       <text>Random Generator Z7</text>
       <text xml:lang="it">Generatore Casuale Z7</text>
+      <text xml:lang="cs">Náhodný generátor Z7</text>
+      <text xml:lang="de">Zufallsgenerator Z7</text>
     </label>
     <separator/>
     <label>
       <text> </text>
     </label>
-    <display item="Minimum interval for random generator Z7" label="Minimum interval">
-      <label>Minimum interval</label>
-      <label xml:lang="it">Intervallo Minimo</label>
+    <display item="Minimum interval for random generator Z7">
+      <!--label>Minimum interval</label-->
+      <!--label xml:lang="it">Intervallo Minimo</label-->
+      <!--label xml:lang="cs">Minimální interval</label-->
     </display>
-    <display item="Maximum interval for random generator Z7" label="Maximum interval">
-      <label>Maximum interval</label>
-      <label xml:lang="it">Intervallo Massimo</label>
+    <display item="Maximum interval for random generator Z7">
+      <!--label>Maximum interval</label-->
+      <!--label xml:lang="it">Intervallo Massimo</label-->
+      <!--label xml:lang="cs">Maximální interval</label-->
     </display>
-    <display item="Playback length for random generator Z7" label="Playback length">
-      <label>Playback length</label>
-      <label xml:lang="it">Durata riproduzione</label>
+    <display item="Playback length for random generator Z7">
+      <!--label>Playback length</label-->
+      <!--label xml:lang="it">Durata riproduzione</label-->
+      <!--label xml:lang="cs">Délka přehrávání</label-->
     </display>
     <label>
       <text> </text>
@@ -184,24 +224,27 @@
     <label>
       <text>Random Generator Z8</text>
       <text xml:lang="it">Generatore Casuale Z8</text>
+      <text xml:lang="cs">Náhodný generátor Z8</text>
+      <text xml:lang="de">Zufallsgenerator Z8</text>
     </label>
     <separator/>
     <label>
       <text> </text>
     </label>
-    <display item="Minimum interval for random generator Z8" label="Minimum interval">
-      <label>Minimum interval</label>
-      <label xml:lang="it">Intervallo Minimo</label>
+    <display item="Minimum interval for random generator Z8">
+      <!--label>Minimum interval</label-->
+      <!--label xml:lang="it">Intervallo Minimo</label-->
+      <!--label xml:lang="cs">Minimální interval</label-->
     </display>
-    <display item="Maximum interval for random generator Z8" label="Maximum interval">
-      <label>Maximum interval</label>
-      <label xml:lang="it">Intervallo Massimo</label>
+    <display item="Maximum interval for random generator Z8">
+      <!--label>Maximum interval</label-->
+      <!--label xml:lang="it">Intervallo Massimo</label-->
+      <!--label xml:lang="cs">Maximální interval</label-->
     </display>
-    <display item="Playback length for random generator Z8" label="Playback length">
-      <label>Playback length</label>
-      <label xml:lang="it">Durata riproduzione</label>
+    <display item="Playback length for random generator Z8">
+      <!--label>Playback length</label-->
+      <!--label xml:lang="it">Durata riproduzione</label-->
+      <!--label xml:lang="cs">Délka přehrávání</label-->
     </display>
   </column>
-  <name>Random Sounds</name>
-  <name xml:lang="it">Suoni Casuali</name>
 </pane>

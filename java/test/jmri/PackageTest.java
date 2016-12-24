@@ -56,11 +56,18 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.PackageTest.suite());  // last due to classloader issues?
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.swing.PackageTest.class));
         suite.addTest(jmri.util.PackageTest.suite());
-        suite.addTest(jmri.web.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.web.PackageTest.class));
         suite.addTest(jmri.jmris.PackageTest.suite());
         suite.addTest(jmri.profile.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.server.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.plaf.PackageTest.class));
         suite.addTest(jmri.script.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AudioExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JmriExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ProgrammerExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ProgReadExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ProgWriteExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TimebaseRateExceptionTest.class));
         return suite;
     }
 

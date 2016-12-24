@@ -30,10 +30,9 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.jmriclient.json.swing.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.jmriclient.json.configurexml.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(JsonNetworkConnectionConfigTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JsonNetworkPortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JsonClientTrafficControllerTest.class));
 
-        // if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
-        // there are currently no swing tests.
-        // }
         return suite;
     }
 

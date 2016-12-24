@@ -2,6 +2,8 @@ package jmri.jmrit.roster.swing;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Date;
+import javax.annotation.Nullable;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -10,6 +12,7 @@ import javax.swing.table.TableColumn;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterIconFactory;
+import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
@@ -51,6 +54,19 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     public RosterTableModel(boolean editable) {
         this.editable = editable;
         Roster.getDefault().addPropertyChangeListener(this);
+    }
+
+    /**
+     * Create a table model for a Roster group.
+     *
+     * @param group the roster group to show; if null, behaves the same as
+     *              {@link #RosterTableModel()}
+     */
+    public RosterTableModel(@Nullable RosterGroup group) {
+        this(false);
+        if (group != null) {
+            this.setRosterGroup(group.getName());
+        }
     }
 
     @Override
@@ -138,17 +154,26 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
 
     @Override
     public Class<?> getColumnClass(int col) {
-        if (col == ADDRESSCOL) {
-            return Integer.class;
+        switch (col) {
+            case ADDRESSCOL:
+                return Integer.class;
+            case ICONCOL:
+                return ImageIcon.class;
+            case DATEUPDATECOL:
+                return Date.class;
+            default:
+                return String.class;
         }
-        if (col == ICONCOL) {
-            return ImageIcon.class;
-        }
-        return String.class;
     }
 
     /**
-     * Editable state must be set in ctor.
+     * {@inheritDoc}
+     * <p>
+     * Note that the table can be set to be non-editable when constructed, in
+     * which case this always returns false.
+     *
+     * @return true if cell is editable in roster entry model and table allows
+     *         editing
      */
     @Override
     public boolean isCellEditable(int row, int col) {
@@ -186,7 +211,10 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     }
 
     /**
-     * Provides the empty String if attribute doesn't exist.
+     * {@inheritDoc}
+     *
+     * Provides an empty string for a column if the model returns null for that
+     * value.
      */
     @Override
     public Object getValueAt(int row, int col) {
@@ -216,7 +244,8 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
             case OWNERCOL:
                 return re.getOwner();
             case DATEUPDATECOL:
-                return re.getDateUpdated();
+                // will not display last update if not parsable as date
+                return re.getDateModified();
             case PROTOCOL:
                 return re.getProtocolAsString();
             default:
@@ -312,13 +341,13 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     }
 
     public final void setRosterGroup(String rosterGroup) {
-        for (RosterEntry re : Roster.getDefault().getEntriesInGroup(rosterGroup)) {
+        Roster.getDefault().getEntriesInGroup(this.rosterGroup).forEach((re) -> {
             re.removePropertyChangeListener(this);
-        }
+        });
         this.rosterGroup = rosterGroup;
-        for (RosterEntry re : Roster.getDefault().getEntriesInGroup(rosterGroup)) {
+        Roster.getDefault().getEntriesInGroup(rosterGroup).forEach((re) -> {
             re.addPropertyChangeListener(this);
-        }
+        });
         fireTableDataChanged();
     }
 

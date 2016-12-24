@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
 import jmri.Conditional;
 import jmri.InstanceManager;
@@ -28,6 +29,9 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
     private LogixTableAction _logixTable;
 
     public void testCreate() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         _lRouteTable.actionPerformed(null);
         _lRouteTable.addPressed(null);
         _lRouteTable._userName.setText("TestLRoute");

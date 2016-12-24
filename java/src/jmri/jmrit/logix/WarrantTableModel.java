@@ -142,11 +142,22 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
     }
 
     protected void haltAllTrains() {
+        ArrayList<Warrant> abortList = new ArrayList<Warrant>();
         Iterator<Warrant> iter = _warList.iterator();
         while (iter.hasNext()) {
-            iter.next().controlRunTrain(Warrant.STOP);
+            Warrant w = iter.next();
+            if (w.getState() >= 0) {
+                abortList.add(w);
+            }
         }
         iter = _warNX.iterator();
+        while (iter.hasNext()) {
+            Warrant w = iter.next();
+            if (w.getState() >= 0) {
+                abortList.add(w);
+            }
+        }
+        iter = abortList.iterator();
         while (iter.hasNext()) {
             iter.next().controlRunTrain(Warrant.STOP);
         }
@@ -476,37 +487,10 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             }
             break;
         case AUTO_RUN_COLUMN:
-            msg = _frame.runTrain(w);
+            msg = _frame.runTrain(w, Warrant.MODE_RUN);
             break;
         case MANUAL_RUN_COLUMN:
-            if (w.getRunMode() == Warrant.MODE_NONE) {
-                if (w.getBlockOrders().size() == 0) {
-                    msg = Bundle.getMessage("EmptyRoute");
-                    break;
-                }
-                msg = w.setRoute(0, null);
-                if (msg == null) {
-                    msg = w.setRunMode(Warrant.MODE_MANUAL, null, null, null,
-                            false);
-                }
-                if (msg != null) {
-                    w.deAllocate();
-                } else {
-                    msg = w.checkStartBlock(Warrant.MODE_RUN);
-                    if (msg != null) {
-                        if (msg.equals("BlockDark")) {
-                            msg = Bundle.getMessage("BlockDark", w.getCurrentBlockName(), w.getTrainName());                            
-                        } else if (msg.equals("warnStart")) {
-                            msg = Bundle.getMessage("warnStart", w.getTrainName(), w.getCurrentBlockName());
-                        }
-                        _frame.setStatusText(msg, WarrantTableModel.myGold, false);
-                    }
-                }
-                if (log.isDebugEnabled())
-                    log.debug("w.runManualTrain= " + msg);
-            } else {
-                msg = w.getRunModeMessage();
-            }
+            msg = _frame.runTrain(w, Warrant.MODE_MANUAL);
             break;
         case CONTROL_COLUMN:
             // Message is set when propertyChangeEvent (below) is received from

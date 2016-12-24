@@ -25,6 +25,22 @@ public class ConsistToolFrameTest {
         Assert.assertNotNull("exists", frame );
     }
 
+    @Test
+    public void testCtorWithCSpossible() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // overwrite the default consist manager set in setUp for this test
+        // so that we can check initilization with CSConsists possible.
+        InstanceManager.setDefault(ConsistManager.class, new TestConsistManager(){
+             @Override
+             public boolean isCommandStationConsistPossible(){
+                 return true;
+             }
+        });
+
+        ConsistToolFrame frame = new ConsistToolFrame();
+        Assert.assertNotNull("exists", frame );
+    }
+
     @Before
     public void setUp() {
         Log4JFixture.setUp();

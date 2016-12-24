@@ -1,14 +1,15 @@
 package jmri.util.swing.multipane;
 
+import java.awt.GraphicsEnvironment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import jmri.util.swing.SamplePane;
 import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.AbstractButtonFinder;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Swing jfcUnit tests for the Multipane (IDE) GUI
@@ -18,6 +19,9 @@ import junit.framework.TestSuite;
 public class MultiJfcUnitTest extends jmri.util.SwingTestCase {
 
     public void testShow() throws Exception {
+        if (GraphicsEnvironment.isHeadless()) {
+            return ; // Can't assume in TestCase
+        }
         // show the window
         JFrame f1 = new MultiPaneWindow("test",
                 "java/test/jmri/util/swing/xml/Gui3LeftTree.xml",
@@ -113,16 +117,18 @@ public class MultiJfcUnitTest extends jmri.util.SwingTestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         //jmri.util.JUnitUtil.initInternalTurnoutManager();
         //jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.swing.SamplePane.disposed = new java.util.ArrayList<Integer>();
+        jmri.util.swing.SamplePane.disposed = new java.util.ArrayList<>();
         jmri.util.swing.SamplePane.index = 0;
     }
 
+    @Override
     protected void tearDown() throws Exception {
         apps.tests.Log4JFixture.tearDown();
         super.tearDown();
