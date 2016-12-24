@@ -179,43 +179,43 @@ public class Maintenance {
                 DefaultListModel<String> model = (DefaultListModel<String>) list.getModel();
                 while (index >= min) {
                     String[] names = getTypeAndNames(n.get(index));
-                    if (names[0].equals("Sensor")) {
+                    if (names[0].equals("Sensor")) { // NOI18N
                         Sensor s = InstanceManager.sensorManagerInstance().getBySystemName(names[2]);
                         if (s == null) {
                             s = InstanceManager.sensorManagerInstance().getBySystemName(names[1]);
                         }
                         InstanceManager.sensorManagerInstance().deregister(s);
-                    } else if (names[0].equals("Turnout")) {
+                    } else if (names[0].equals("Turnout")) { // NOI18N
                         Turnout t = InstanceManager.turnoutManagerInstance().getBySystemName(names[2]);
                         if (t == null) {
                             t = InstanceManager.turnoutManagerInstance().getBySystemName(names[1]);
                         }
                         InstanceManager.turnoutManagerInstance().deregister(t);
-                    } else if (names[0].equals("SignalHead")) {
+                    } else if (names[0].equals("SignalHead")) { // NOI18N
                         SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(names[2]);
                         if (sh == null) {
                             sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(names[1]);
                         }
                         InstanceManager.getDefault(jmri.SignalHeadManager.class).deregister(sh);
-                    } else if (names[0].equals("Light")) {
+                    } else if (names[0].equals("Light")) { // NOI18N
                         Light l = InstanceManager.lightManagerInstance().getBySystemName(names[2]);
                         if (l == null) {
                             l = InstanceManager.lightManagerInstance().getBySystemName(names[1]);
                         }
                         InstanceManager.lightManagerInstance().deregister(l);
-                    } else if (names[0].equals("Conditional")) {
+                    } else if (names[0].equals("Conditional")) { // NOI18N
                         Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(names[2]);
                         if (c == null) {
                             c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(names[1]);
                         }
                         InstanceManager.getDefault(jmri.ConditionalManager.class).deregister(c);
-                    } else if (names[0].equals("Section")) {
+                    } else if (names[0].equals("Section")) { // NOI18N
                         jmri.Section sec = InstanceManager.getDefault(jmri.SectionManager.class).getBySystemName(names[2]);
                         if (sec == null) {
                             sec = InstanceManager.getDefault(jmri.SectionManager.class).getBySystemName(names[1]);
                         }
                         InstanceManager.getDefault(jmri.SectionManager.class).deregister(sec);
-                    } else if (names[0].equals("Block")) {
+                    } else if (names[0].equals("Block")) { // NOI18N
                         jmri.Block b = InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(names[2]);
                         if (b == null) {
                             b = InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(names[1]);
@@ -330,10 +330,10 @@ public class Maintenance {
      * Find type of element and its names from a name that may be a user name or
      * a system name. (Maybe this can be done at a generic manager level, but
      * there seem to be two kinds of implemetation of Managers and I don't know
-     * the which is the preferred kind or why they need to be different.)
+     * which is the preferred kind or why they need to be different.)
      *
-     * Searches each Manager for a reference to the "name" returns 4 element
-     * String: {Type, userName, sysName, numListeners}
+     * Searches each Manager for a reference to the "name"
+     * @return 4 element String: {Type, userName, sysName, numListeners}
      */
     static String[] getTypeAndNames(String name) {
         String userName = name.trim();
@@ -365,7 +365,7 @@ public class Maintenance {
         }
         if (found) {
             return (new String[]{"Sensor", userName, sysName,
-                Integer.toString(sen.getNumPropertyChangeListeners())});
+                Integer.toString(sen.getNumPropertyChangeListeners())}); // NOI18N
         }
         jmri.TurnoutManager turnoutManager = InstanceManager.turnoutManagerInstance();
         Turnout t = turnoutManager.getBySystemName(sysName);
@@ -388,7 +388,7 @@ public class Maintenance {
         }
         if (found) {
             return (new String[]{"Turnout", userName, sysName,
-                Integer.toString(t.getNumPropertyChangeListeners())});
+                Integer.toString(t.getNumPropertyChangeListeners())}); // NOI18N
         }
 
         jmri.LightManager lightManager = InstanceManager.lightManagerInstance();
@@ -412,7 +412,7 @@ public class Maintenance {
         }
         if (found) {
             return (new String[]{"Light", userName, sysName,
-                Integer.toString(l.getNumPropertyChangeListeners())});
+                Integer.toString(l.getNumPropertyChangeListeners())}); // NOI18N
         }
 
         jmri.SignalHeadManager signalManager = InstanceManager.getDefault(jmri.SignalHeadManager.class);
@@ -436,7 +436,7 @@ public class Maintenance {
         }
         if (found) {
             return (new String[]{"SignalHead", userName, sysName,
-                Integer.toString(sh.getNumPropertyChangeListeners())});
+                Integer.toString(sh.getNumPropertyChangeListeners())}); // NOI18N
         }
 
         jmri.ConditionalManager cm = InstanceManager.getDefault(jmri.ConditionalManager.class);
@@ -460,7 +460,7 @@ public class Maintenance {
         }
         if (found) {
             return (new String[]{"Conditional", userName, sysName,
-                Integer.toString(c.getNumPropertyChangeListeners())});
+                Integer.toString(c.getNumPropertyChangeListeners())}); // NOI18N
         }
 
         jmri.BlockManager blockManager = InstanceManager.getDefault(jmri.BlockManager.class);
@@ -484,7 +484,7 @@ public class Maintenance {
         }
         if (found) {
             return (new String[]{"Block", userName, sysName,
-                Integer.toString(b.getNumPropertyChangeListeners())});
+                Integer.toString(b.getNumPropertyChangeListeners())}); // NOI18N
         }
 
         jmri.SectionManager sectionManager = InstanceManager.getDefault(jmri.SectionManager.class);
@@ -508,7 +508,7 @@ public class Maintenance {
         }
         if (found) {
             return (new String[]{"Block", userName, sysName,
-                Integer.toString(sec.getNumPropertyChangeListeners())});
+                Integer.toString(sec.getNumPropertyChangeListeners())}); // NOI18N
         }
         log.warn(" No type found for " + userName + " (" + sysName + ").");
 
@@ -533,7 +533,7 @@ public class Maintenance {
         }
         if (found) {
             return (new String[]{"OBlock", userName, sysName,
-                Integer.toString(blk.getNumPropertyChangeListeners())});
+                Integer.toString(blk.getNumPropertyChangeListeners())}); // NOI18N
         }
         log.warn(" No type found for " + userName + " (" + sysName + ").");
 

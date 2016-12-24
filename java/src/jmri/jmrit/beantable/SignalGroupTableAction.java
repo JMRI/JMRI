@@ -407,7 +407,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             ps.setLayout(new FlowLayout());
             ps.add(nameLabel);
             ps.add(_systemName);
-            _systemName.setToolTipText("Enter system name for new SignalGroup, e.g. R12.");
+            _systemName.setToolTipText("Enter system name for new SignalGroup, e.g. R12."); // TODO I18N
             ps.add(fixedSystemName);
             fixedSystemName.setVisible(false);
             contentPane.add(ps);
@@ -416,7 +416,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             p.setLayout(new FlowLayout());
             p.add(userLabel);
             p.add(_userName);
-            _userName.setToolTipText("Enter user name for new SignalGroup, e.g. Junction Indicator on Signal 1.");
+            _userName.setToolTipText("Enter user name for new SignalGroup, e.g. Junction Indicator on Signal 1."); // TODO I18N
 
             contentPane.add(p);
             // add Turnout Display Choice
@@ -695,7 +695,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             g = jmri.InstanceManager.getDefault(jmri.SignalGroupManager.class).getByUserName(uName);
             if (g != null) {
                 // SignalGroup with this user name already exists
-                javax.swing.JOptionPane.showMessageDialog(null, "Signal Group with this username already exists", "User Name Error", javax.swing.JOptionPane.WARNING_MESSAGE);
+                javax.swing.JOptionPane.showMessageDialog(null, "Signal Group with this username already exists", "User Name Error", javax.swing.JOptionPane.WARNING_MESSAGE); // TODO I18N
                 return false;
             } else {
                 return true;
@@ -705,7 +705,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         g = jmri.InstanceManager.getDefault(jmri.SignalGroupManager.class).getBySystemName(sName);
         if (g != null) {
             // SignalGroup already exists
-            javax.swing.JOptionPane.showMessageDialog(null, "A SignalGroup with this system name already exists", "System Name Error", javax.swing.JOptionPane.WARNING_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(null, "A SignalGroup with this system name already exists", "System Name Error", javax.swing.JOptionPane.WARNING_MESSAGE); // TODO I18N
             return false;
         }
         return true;
@@ -715,7 +715,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         SignalMast mMast = (SignalMast) mainSignal.getSelectedBean();
         if (mMast == null) {
             log.warn("Signal Mast not selected");
-            javax.swing.JOptionPane.showMessageDialog(null, "SignalMast not selected.", "Error", javax.swing.JOptionPane.WARNING_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(null, "SignalMast not selected.", "Error", javax.swing.JOptionPane.WARNING_MESSAGE); // TODO I18N
             return false;
         }
         return true;
@@ -726,7 +726,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         String sName = _systemName.getText().toUpperCase();
         String uName = _userName.getText();
         if (sName.length() == 0) {
-            javax.swing.JOptionPane.showMessageDialog(null, "Please enter a System Name and User Name.", "Error", javax.swing.JOptionPane.WARNING_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(null, "Please enter a System Name and User Name.", "Error", javax.swing.JOptionPane.WARNING_MESSAGE); // TODO I18N
             return null;
         }
         try {
