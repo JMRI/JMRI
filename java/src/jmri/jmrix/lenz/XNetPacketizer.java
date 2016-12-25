@@ -34,10 +34,6 @@ public class XNetPacketizer extends XNetTrafficController {
     }
 
 // The methods to implement the XNetInterface
-    public boolean status() {
-        return (ostream != null && istream != null);
-    }
-
     /**
      * Forward a preformatted XNetMessage to the actual interface.
      *

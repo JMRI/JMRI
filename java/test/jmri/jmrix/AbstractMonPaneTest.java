@@ -98,8 +98,7 @@ public class AbstractMonPaneTest {
         // there is no label on the entryField, so we access that directly.
         pane.entryField.setText("foo");
         s.clickEnterButton();
-        
-	s.clickFreezeButton();
+        s.clickFreezeButton();
         Assert.assertTrue(s.getFreezeButtonState());
         
         pane.entryField.setText("bar");
