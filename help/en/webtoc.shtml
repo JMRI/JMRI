@@ -39,7 +39,7 @@
 
  
 <li>
-<a href="">Manuals </a>
+<a href="manual/index.shtml#Top">Manuals </a>
 <ul></ul>
 </li>
 
@@ -325,13 +325,13 @@
 <ul>
      
 <li>
-<a href="">Set Up </a>
+<a href="manual/DecoderPro3/Programmer_Setup.shtml#newloco">Set Up </a>
 <ul></ul>
 </li>
 
      
 <li>
-<a href="">Choose Decoder </a>
+<a href="manual/DecoderPro3/Programmer_Setup.shtml#newloco">Choose Decoder </a>
 <ul></ul>
 </li>
 
@@ -378,7 +378,7 @@
 
      
 <li>
-<a href="">What Next? </a>
+<a href="manual/DecoderPro3/Basic_BasicPane.shtml#DoMore">What Next? </a>
 <ul></ul>
 </li>
 
@@ -520,31 +520,31 @@
 <ul>
     
 <li>
-<a href="">Glossary </a>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#glossary">Glossary </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="">Using Transits and Sections </a>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#transits">Using Transits and Sections </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="">Dispatcher Window </a>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#window">Dispatcher Window </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="">Active Train Table </a>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#atrains">Active Train Table </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="">Allocation Request Table </a>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#arequests">Allocation Request Table </a>
 <ul></ul>
 </li>
 
@@ -584,41 +584,41 @@
 <ul>
    
 <li>
-<a href="">Settings </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Settings">Settings </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="">Locations </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Locations">Locations </a>
 <ul>
     
 <li>
-<a href="">Yard Tracks </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Yards">Yard Tracks </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="">Spur Tracks </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Sidings">Spur Tracks </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="">Interchange Tracks </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Interchange">Interchange Tracks </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="">Staging Tracks </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Staging">Staging Tracks </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="">Schedules </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Schedules">Schedules </a>
 <ul></ul>
 </li>
 
@@ -627,31 +627,31 @@
 </li>
    
 <li>
-<a href="">Cars </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Cars">Cars </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="">Locomotives </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Locomotives">Locomotives </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="">Routes </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Routes">Routes </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="">Trains </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Trains">Trains </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="">Switch List </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#SwitchList">Switch List </a>
 <ul></ul>
 </li>
 
@@ -732,11 +732,13 @@
 <a href="html/apps/PanelPro/ShowPanel.shtml">Displaying Panel Files </a>
 <ul></ul>
 </li>
+
   
 <li>
-<a href="package/jmri/configurexml/ErrorHandler.shtml">Handling Errors</a>
+<a href="package/jmri/configurexml/ErrorHandler.shtml">Handling Errors </a>
 <ul></ul>
 </li>
+
  
 </ul>
 </li>
@@ -839,7 +841,7 @@
 
    
 <li>
-<a href="">Add/Edit Blocks </a>
+<a href="html/tools/Blocks.shtml#addBlock">Add/Edit Blocks </a>
 <ul></ul>
 </li>
 
