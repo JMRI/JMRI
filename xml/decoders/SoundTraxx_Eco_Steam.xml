@@ -98,6 +98,12 @@
             <authorinitials>MJM</authorinitials>
             <revremark>Add ID CV 253,254,255,256 and change product ID to values in CV256</revremark>
         </revision>
+        <revision>
+            <revnumber>3.1</revnumber>
+            <date>2016-12-21</date>
+            <authorinitials>DGH</authorinitials>
+            <revremark>Change product ID to values in CVs 253(high byte) and 256(low byte)</revremark>
+        </revision>
     </revhistory>
     <version author="Michael Mosher" version="1" lastUpdated="20150725"/>
     <version author="Alain Le Marchand" version="1.1" lastUpdated="20150726"/>
@@ -113,7 +119,7 @@
     <!-- Decoder Model information follows -->
     <decoder>
         <family name="Econami Steam" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Econami Steam decoders">
-            <model model="ECO-100 Steam" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="9pin" productID="1" comment="Model 881001">
+            <model model="ECO-100 Steam" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="9pin" productID="257" comment="Model 881001">
                 <versionCV lowVersionID="70"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -148,7 +154,7 @@
                 </output>
                 <size length="27" width="10.5" height="5" units="mm"/>
             </model>
-            <model model="ECO-200 Steam" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="10" comment="Model 881002">
+            <model model="ECO-200 Steam" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="266" comment="Model 881002">
                 <versionCV lowVersionID="70"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -183,7 +189,7 @@
                 </output>
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="ECO-21P Steam" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21pin" productID="7" comment="Model 881003">
+            <model model="ECO-21P Steam" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21pin" productID="263" comment="Model 881003">
                 <versionCV lowVersionID="70"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -218,7 +224,7 @@
                 </output>
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
-            <model model="ECO-400 Steam" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="4" comment="Model 881005">
+            <model model="ECO-400 Steam" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="260" comment="Model 881005">
                 <versionCV lowVersionID="70"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -253,7 +259,7 @@
                 </output>
                 <size length="69" width="30.5" height="14" units="mm"/>
             </model>
-            <model model="ECO-PNP Steam" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="13" comment="Model 881004">
+            <model model="ECO-PNP Steam" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="269" comment="Model 881004">
                 <versionCV lowVersionID="70"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>

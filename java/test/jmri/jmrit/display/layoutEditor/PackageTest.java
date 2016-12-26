@@ -55,6 +55,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(PositionablePointTest.class));
         suite.addTest(new JUnit4TestAdapter(TrackNodeTest.class));
         suite.addTest(new JUnit4TestAdapter(TrackSegmentTest.class));
+        suite.addTest(new JUnit4TestAdapter(TransitCreationToolTest.class));
         suite.addTest(LayoutEditorWindowTest.suite());
         suite.addTest(LEConnectivityTest.suite());
         return suite;

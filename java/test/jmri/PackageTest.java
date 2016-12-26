@@ -63,6 +63,12 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.server.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.plaf.PackageTest.class));
         suite.addTest(jmri.script.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AudioExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JmriExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ProgrammerExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ProgReadExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ProgWriteExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TimebaseRateExceptionTest.class));
         return suite;
     }
 

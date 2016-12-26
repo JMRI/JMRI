@@ -252,7 +252,7 @@ public class FrameServletPreferencesPanel extends JPanel implements ListDataList
     }// </editor-fold>//GEN-END:initComponents
 
     private void preferencesPropertyChange(PropertyChangeEvent evt) {//GEN-FIRST:event_preferencesPropertyChange
-        if (evt.getPropertyName().equals(WebServerPreferences.DisallowedFrames)) {
+        if (evt.getPropertyName().equals(WebServerPreferences.DISALLOWED_FRAMES)) {
             DefaultEditableListModel<String> model = (DefaultEditableListModel<String>) disallowedFrames.getModel();
             model.removeListDataListener(this);
             model.removeAllElements();

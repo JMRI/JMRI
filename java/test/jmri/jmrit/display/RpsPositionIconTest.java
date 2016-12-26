@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.Reading;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -29,8 +30,6 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
 
         RpsPositionIcon rpsIcon = new RpsPositionIcon(panel);
         jf.getContentPane().add(rpsIcon);
-
-        jmri.util.JUnitUtil.resetInstanceManager();
 
         // test buttons
         JButton originButton = new JButton("Set 0,0");
@@ -106,6 +105,8 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
         if (!GraphicsEnvironment.isHeadless()) {
             panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test RpsPositionIcon Panel");
         }
@@ -121,6 +122,7 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
             }
             junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
         }
+        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

@@ -40,15 +40,18 @@ public class PackageTest extends TestCase {
         suite.addTest(DefaultJavaBeanConfigXMLTest.suite());
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new JUnit4TestAdapter(DccLocoAddressXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(JmriConfigureXmlExceptionTest.class));
 
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

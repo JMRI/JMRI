@@ -31,6 +31,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.jmriclient.json.configurexml.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(JsonNetworkConnectionConfigTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(JsonNetworkPortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JsonClientTrafficControllerTest.class));
 
         return suite;
     }
