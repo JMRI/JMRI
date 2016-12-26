@@ -1274,7 +1274,7 @@ public class Maintenance {
                     jmri.jmrit.display.IndicatorTurnoutIcon ito = (jmri.jmrit.display.IndicatorTurnoutIcon) o;
                     name = ito.getTurnout().getSystemName();
                     String line = MessageFormat.format(rbm.getString("PanelReference"),
-                            new Object[]{"\t", rbm.getString("IndicatorTurnout")});
+                            new Object[]{"\t", Bundle.getMessage("IndicatorTO")});
                     if (testName(name, found, names, line1, null, line, tempText)) {
                         found = true;
                         referenceCount++;
@@ -1283,7 +1283,7 @@ public class Maintenance {
                     if (sensor != null) {
                         name = sensor.getSystemName();
                         line = MessageFormat.format(rbm.getString("PanelReference"),
-                                new Object[]{"\t", rbm.getString("IndicatorTurnout")});
+                                new Object[]{"\t", Bundle.getMessage("IndicatorTO")});
                         if (testName(name, found, names, line1, null, line, tempText)) {
                             found = true;
                             referenceCount++;
@@ -1295,7 +1295,7 @@ public class Maintenance {
                         if (sensor != null) {
                             name = sensor.getSystemName();
                             line = MessageFormat.format(rbm.getString("PanelReference"),
-                                    new Object[]{"\t", rbm.getString("IndicatorTurnout")});
+                                    new Object[]{"\t", Bundle.getMessage("IndicatorTO")});
                             if (testName(name, found, names, line1, null, line, tempText)) {
                                 found = true;
                                 referenceCount++;
@@ -1308,7 +1308,7 @@ public class Maintenance {
                     if (sensor != null) {
                         name = sensor.getSystemName();
                         String line = MessageFormat.format(rbm.getString("PanelReference"),
-                                new Object[]{"\t", rbm.getString("IndicatorTrack")});
+                                new Object[]{"\t", Bundle.getMessage("IndicatorTrack")});
                         if (testName(name, found, names, line1, null, line, tempText)) {
                             found = true;
                             referenceCount++;
@@ -1320,7 +1320,7 @@ public class Maintenance {
                         if (sensor != null) {
                             name = sensor.getSystemName();
                             String line = MessageFormat.format(rbm.getString("PanelReference"),
-                                    new Object[]{"\t", rbm.getString("IndicatorTrack")});
+                                    new Object[]{"\t", Bundle.getMessage("IndicatorTrack")});
                             if (testName(name, found, names, line1, null, line, tempText)) {
                                 found = true;
                                 referenceCount++;
