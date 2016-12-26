@@ -85,6 +85,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMRTrafficControllerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NetworkConfigExceptionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialConfigExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionStatusTest.class));
         return suite;
 
     }
