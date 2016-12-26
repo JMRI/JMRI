@@ -688,9 +688,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         int oldMode = _runMode;
         _runMode = MODE_NONE;
         if (abort) {
-            firePropertyChange("runMode", Integer.valueOf(oldMode), Integer.valueOf(_runMode));            
-        } else {
             firePropertyChange("runMode", Integer.valueOf(oldMode), Integer.valueOf(MODE_ABORT));            
+        } else {
+            firePropertyChange("runMode", Integer.valueOf(oldMode), Integer.valueOf(_runMode));            
         }
         if (log.isDebugEnabled()) {
             log.debug("Warrant \"{}\" terminated.", getDisplayName());
