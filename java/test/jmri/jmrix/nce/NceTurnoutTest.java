@@ -4,29 +4,39 @@
  * Description:	tests for the jmri.jmrix.nce.NceTurnout class
  *
  * @author	Bob Jacobsen
-  */
+ */
 package jmri.jmrix.nce;
 
+import apps.tests.Log4JFixture;
 import jmri.implementation.AbstractTurnoutTest;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 public class NceTurnoutTest extends AbstractTurnoutTest {
 
     private NceTrafficControlScaffold tcis = null;
 
+    @Override
     public void setUp() {
+        Log4JFixture.setUp();
         // prepare an interface
         tcis = new NceTrafficControlScaffold();
 
         t = new NceTurnout(tcis, "NT", 4);
     }
 
+    @Override
+    public void tearDown() {
+        Log4JFixture.tearDown();
+    }
+
+    @Override
     public int numListeners() {
         return tcis.numListeners();
     }
 
+    @Override
     public void checkThrownMsgSent() {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
         // 2004 eprom output:
@@ -34,6 +44,7 @@ public class NceTurnoutTest extends AbstractTurnoutTest {
         Assert.assertEquals("content", "AD 00 04 04 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROWN message
     }
 
+    @Override
     public void checkClosedMsgSent() {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
         // 2004 eprom output:

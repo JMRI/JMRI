@@ -36,10 +36,12 @@ public class ValidateConfigFilesTest extends jmri.util.swing.GuiUtilBaseTest {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

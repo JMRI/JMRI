@@ -164,6 +164,19 @@ public class SchemaTestBase extends TestCase {
         public void runTest() {
             validate(file);
         }
+
+        // The minimal setup for log4J
+        @Override
+        protected void setUp() throws Exception {
+            super.setUp();
+            apps.tests.Log4JFixture.setUp();
+        }
+
+        @Override
+        protected void tearDown() throws Exception {
+            super.tearDown();
+            apps.tests.Log4JFixture.tearDown();
+        }
     }
 
     /**
@@ -182,6 +195,19 @@ public class SchemaTestBase extends TestCase {
         @Override
         public void runTest() {
             validateFail(file);
+        }
+
+        // The minimal setup for log4J
+        @Override
+        protected void setUp() throws Exception {
+            super.setUp();
+            apps.tests.Log4JFixture.setUp();
+        }
+
+        @Override
+        protected void tearDown() throws Exception {
+            super.tearDown();
+            apps.tests.Log4JFixture.tearDown();
         }
     }
 

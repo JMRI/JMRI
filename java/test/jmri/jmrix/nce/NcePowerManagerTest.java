@@ -1,5 +1,6 @@
 package jmri.jmrix.nce;
 
+import apps.tests.Log4JFixture;
 import java.util.Vector;
 import jmri.JmriException;
 import jmri.jmrix.AbstractPowerManagerTest;
@@ -10,7 +11,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the NcePowerManager class.
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class NcePowerManagerTest extends AbstractPowerManagerTest {
 
     /**
@@ -22,6 +23,7 @@ public class NcePowerManagerTest extends AbstractPowerManagerTest {
         }
 
         // override some NceInterfaceController methods for test purposes
+        @Override
         public boolean status() {
             return true;
         }
@@ -29,8 +31,9 @@ public class NcePowerManagerTest extends AbstractPowerManagerTest {
         /**
          * record messages sent, provide access for making sure they are OK
          */
-        public Vector<NceMessage> outbound = new Vector<NceMessage>();  // public OK here, so long as this is a test class
+        public Vector<NceMessage> outbound = new Vector<>();  // public OK here, so long as this is a test class
 
+        @Override
         public void sendNceMessage(NceMessage m, jmri.jmrix.nce.NceListener l) {
             // save a copy
             outbound.addElement(m);
@@ -39,17 +42,17 @@ public class NcePowerManagerTest extends AbstractPowerManagerTest {
         // test control member functions
         /**
          * forward a message to the listeners, e.g. test receipt
+         *
+         * @param m the message
          */
         protected void sendTestMessage(NceMessage m) {
             // forward a test message to Listeners
             notifyMessage(m, null);
-            return;
         }
 
         protected void sendTestReply(NceReply m) {
             // forward a test message to Listeners
             notifyReply(m, null);
-            return;
         }
 
         /*
@@ -62,44 +65,59 @@ public class NcePowerManagerTest extends AbstractPowerManagerTest {
     }
 
     // service routines to simulate receiving on, off from interface
+    @Override
     protected void hearOn() {
         // this does nothing, as there is no unsolicited on
     }
 
+    @Override
     protected void sendOnReply() {
         NceReply l = new NceReply(controller);
         controller.sendTestReply(l);
     }
 
+    @Override
     protected void sendOffReply() {
         NceReply l = new NceReply(controller);
         controller.sendTestReply(l);
     }
 
+    @Override
     protected void hearOff() {
         // this does nothing, as there is no unsolicited on
     }
 
+    @Override
     protected int numListeners() {
         return controller.numListeners();
     }
 
+    @Override
     protected int outboundSize() {
         return controller.outbound.size();
     }
 
+    @Override
     protected boolean outboundOnOK(int index) {
         return controller.outbound.elementAt(index).isEnableMain();
     }
 
+    @Override
     protected boolean outboundOffOK(int index) {
         return controller.outbound.elementAt(index).isKillMain();
     }
 
     // setup a default NceTrafficController interface
+    @Override
     public void setUp() {
+        Log4JFixture.setUp();
         controller = new NceInterfaceScaffold();
         p = new NcePowerManager(controller, "N");
+    }
+
+    @Override
+    public void tearDown() {
+        Log4JFixture.tearDown();
     }
 
     NceInterfaceScaffold controller;  // holds dummy NceTrafficController for testing
