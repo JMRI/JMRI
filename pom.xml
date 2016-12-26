@@ -41,8 +41,8 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>2.19.1</version>
                         <configuration>
-                            <!-- force each test into new context -->
-                            <reuseForks>false</reuseForks>
+                            <!-- set to false to force each test into new context -->
+                            <reuseForks>true</reuseForks>
                         </configuration>
                     </plugin>
                     <plugin>
@@ -79,8 +79,8 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>2.19.1</version>
                         <configuration>
-                            <!-- force each test into new context -->
-                            <reuseForks>false</reuseForks>
+                            <!-- set to false to force each test into new context -->
+                            <reuseForks>true</reuseForks>
                         </configuration>
                     </plugin>
                     <plugin>
@@ -117,8 +117,8 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>2.19.1</version>
                         <configuration>
-                            <!-- force each test into new context -->
-                            <reuseForks>false</reuseForks>
+                            <!-- set to false to force each test into new context -->
+                            <reuseForks>true</reuseForks>
                         </configuration>
                     </plugin>
                     <plugin>
