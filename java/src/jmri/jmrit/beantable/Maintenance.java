@@ -272,7 +272,7 @@ public class Maintenance {
         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         JButton button = new JButton(Bundle.getMessage("ButtonDelete"));
-        button.setToolTipText(rbm.getString("OrphanDeleteHint"));
+        button.setToolTipText(rbm.getString("OrphanDeleteHint") + Bundle.getMessage("ButtonDelete"));
 
         class EmptyListener implements ActionListener {
 
@@ -657,7 +657,7 @@ public class Maintenance {
         }
         if (text != null) {
             if (empty) {
-                text.append(MessageFormat.format(rbm.getString("NoReference"), "Logix"));
+                text.append("\t" + MessageFormat.format(rbm.getString("NoReference"), "Logix")); // cannot put escaped tab at start of getString
             } else {
                 text.append("\n");
             }
@@ -715,7 +715,7 @@ public class Maintenance {
             String line1 = MessageFormat.format(rbm.getString("ReferenceTitle"),
                     new Object[]{" ", Bundle.getMessage("BeanNameRoute"), uName, sName});
             for (int i = 0; i < jmri.Route.MAX_CONTROL_SENSORS; i++) {
-                String line = MessageFormat.format(rbm.getString("ControlReference"), Bundle.getMessage("BeanNameSensor"));
+                String line = "\t" + MessageFormat.format(rbm.getString("ControlReference"), Bundle.getMessage("BeanNameSensor"));
                 if (testName(r.getRouteSensorName(i), found, names, line1, null, line, tempText)) {
                     found = true;
                     referenceCount++;
@@ -726,7 +726,7 @@ public class Maintenance {
                 found = true;
                 referenceCount++;
             }
-            line = MessageFormat.format(rbm.getString("ControlReference"), Bundle.getMessage("BeanNameTurnout"));
+            line = "\t" + MessageFormat.format(rbm.getString("ControlReference"), Bundle.getMessage("BeanNameTurnout"));
             if (testName(r.getControlTurnout(), found, names, line1, null, line, tempText)) {
                 found = true;
                 referenceCount++;
@@ -737,14 +737,14 @@ public class Maintenance {
                 referenceCount++;
             }
             for (int i = 0; i < r.getNumOutputTurnouts(); i++) {
-                line = MessageFormat.format(rbm.getString("OutputReference"), Bundle.getMessage("BeanNameTurnout"));
+                line = "\t" + MessageFormat.format(rbm.getString("OutputReference"), Bundle.getMessage("BeanNameTurnout"));
                 if (testName(r.getOutputTurnoutByIndex(i), found, names, line1, null, line, tempText)) {
                     found = true;
                     referenceCount++;
                 }
             }
             for (int i = 0; i < r.getNumOutputSensors(); i++) {
-                line = MessageFormat.format(rbm.getString("OutputReference"), Bundle.getMessage("BeanNameSensor"));
+                line = "\t" +  MessageFormat.format(rbm.getString("OutputReference"), Bundle.getMessage("BeanNameSensor"));
                 if (testName(r.getOutputSensorByIndex(i), found, names, line1, null, line, tempText)) {
                     found = true;
                     referenceCount++;
@@ -1264,7 +1264,7 @@ public class Maintenance {
                     for (int j = 0; j < msi.getNumEntries(); j++) {
                         name = msi.getSensorName(j);
                         String line = MessageFormat.format(rbm.getString("PanelReference"),
-                                new Object[]{"\t", rbm.getString("MultiSensor")});
+                                new Object[]{"\t", Bundle.getMessage("MultiSensor")});
                         if (testName(name, found, names, line1, null, line, tempText)) {
                             found = true;
                             referenceCount++;
@@ -1357,7 +1357,7 @@ public class Maintenance {
             // PickLists are also listeners
             numListeners = numListeners - jmri.jmrit.picker.PickListModel.getNumInstances(names[0]);
             if (names[0].equals("Sensor")) {
-                numListeners = numListeners - jmri.jmrit.picker.PickListModel.getNumInstances("MultiSensor");
+                numListeners = numListeners - jmri.jmrit.picker.PickListModel.getNumInstances("MultiSensor"); // NOI18N
             }
 
             if (numListeners > referenceCount) {
