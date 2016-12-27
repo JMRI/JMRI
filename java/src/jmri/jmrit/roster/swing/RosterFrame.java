@@ -1575,6 +1575,14 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 ops.setVisible(true);
                 firePropertyChange("setprogops", "setEnabled", true);
             }
+        } else if (apm.isAddressedModePossible()) {
+            if (oldOpsMode == null) {
+                contextOps.setEnabled(true);
+                contextOps.setVisible(true);
+                ops.setEnabled(true);
+                ops.setVisible(true);
+                firePropertyChange("setprogops", "setEnabled", true);
+            }
         } else {
             operationsModeProgrammerLabel.setText(Bundle.getMessage("NoOpsProgrammerAvailable"));
             operationsModeProgrammerLabel.setForeground(Color.red);
