@@ -36,6 +36,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.operations.trains.timetable.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.operations.trains.configurexml.PackageTest.class));
         suite.addTest(OperationsTrainsGuiTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BuildFailedExceptionTest.class));
 
         return suite;
     }

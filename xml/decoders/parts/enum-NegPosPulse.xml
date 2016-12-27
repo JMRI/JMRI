@@ -12,7 +12,7 @@
   <enumChoice choice="Positive Pulse">
    <choice>Positive Pulse</choice>
    <choice xml:lang="it">Impulso positivo</choice>
-   <choice xml:lang="de">poitiver Impuls</choice>
+   <choice xml:lang="de">positiver Impuls</choice>
    <choice xml:lang="cs">Kladný pulz</choice>
   </enumChoice>
 </enumVal>
