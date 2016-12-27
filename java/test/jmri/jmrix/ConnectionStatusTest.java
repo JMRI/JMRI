@@ -22,6 +22,41 @@ public class ConnectionStatusTest {
         Assert.assertNotNull("exists", cs);
     }
 
+    @Test
+    public void testInstance() {
+        ConnectionStatus cs = ConnectionStatus.instance();
+        Assert.assertNotNull("exists", cs);
+    }
+
+    @Test
+    public void testGetState(){
+        ConnectionStatus cs = new ConnectionStatus();
+        Assert.assertEquals("connection status",ConnectionStatus.CONNECTION_UNKNOWN,cs.getConnectionState("Bar"));
+    }
+
+    @Test
+    public void testAddAndGetState(){
+        ConnectionStatus cs = new ConnectionStatus();
+        cs.addConnection("Foo","Bar");
+        Assert.assertEquals("connection status",ConnectionStatus.CONNECTION_UNKNOWN,cs.getConnectionState("Bar"));
+    }
+
+    @Test
+    public void testSetAndGetState(){
+        ConnectionStatus cs = new ConnectionStatus();
+        cs.setConnectionState("Bar",ConnectionStatus.CONNECTION_UP);
+        Assert.assertEquals("connection status",ConnectionStatus.CONNECTION_UP,cs.getConnectionState("Bar"));
+    }
+
+    @Test
+    public void testIsConnectionOk(){
+        ConnectionStatus cs = new ConnectionStatus();
+        cs.setConnectionState("Bar",ConnectionStatus.CONNECTION_UP);
+        Assert.assertTrue("connection OK",cs.isConnectionOk("Bar"));
+        cs.setConnectionState("Bar",ConnectionStatus.CONNECTION_DOWN);
+        Assert.assertFalse("connection OK",cs.isConnectionOk("Bar"));
+    }
+
     @Before
     public void setUp() {
         Log4JFixture.setUp();
