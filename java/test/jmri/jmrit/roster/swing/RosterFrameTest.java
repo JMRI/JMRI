@@ -41,6 +41,31 @@ public class RosterFrameTest {
         Assert.assertNotNull("exists", frame );
     }
 
+    @Test
+    public void testIdentifyEnabled() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        RosterFrame frame = new RosterFrame(){
+            // for now, don't show the status bar in the test, so
+            // we can sort out how to initialize the ProfileManager
+            // for tests.
+            @Override
+            protected void statusBar(){
+            };
+
+            // remoteCalls shouldn't need to be overridden, but if
+            // we don't do this, we get a large number of runtime error
+            // messages stating it doesn't exist.
+            @Override
+            public void remoteCalls(String[] args){
+                super.remoteCalls(args);
+            }
+            
+        };
+        frame.setVisible(true);
+        RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
+        Assert.assertTrue("Identify Button Enabled", operator.isIdentifyButtonEnabled() );
+    }
+
     @Before
     public void setUp() {
         Log4JFixture.setUp();
