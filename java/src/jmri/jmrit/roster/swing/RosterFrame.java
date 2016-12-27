@@ -1531,6 +1531,14 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 service.setVisible(true);
                 firePropertyChange("setprogservice", "setEnabled", true);
             }
+        } else if(gpm.isGlobalProgrammerAvailable()) {
+            if (oldServMode == null) {
+                contextService.setEnabled(true);
+                contextService.setVisible(true);
+                service.setEnabled(true);
+                service.setVisible(true);
+                firePropertyChange("setprogservice", "setEnabled", true);
+            }
         } else {
             // No service programmer available, disable interface sections not available
             serviceModeProgrammerLabel.setText(Bundle.getMessage("NoServiceProgrammerAvailable"));
