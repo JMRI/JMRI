@@ -28,8 +28,8 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.configurexml.PackageTest");  // no tests in this class itself
 
         suite.addTest(new JUnit4TestAdapter(SchemaTest.class));
-        suite.addTest(LoadAndCheckTest.suite());
-        suite.addTest(LoadAndStoreTest.suite());
+        suite.addTest(new JUnit4TestAdapter(LoadAndCheckTest.class));
+        suite.addTest(new JUnit4TestAdapter(LoadAndStoreTest.class));
 
         suite.addTest(ConfigXmlManagerTest.suite());
 
