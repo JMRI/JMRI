@@ -118,7 +118,7 @@
                         <version>2.19.1</version>
                         <configuration>
                             <!-- set to false to force each test into new context -->
-                            <reuseForks>true</reuseForks>
+                            <reuseForks>false</reuseForks>
                         </configuration>
                     </plugin>
                     <plugin>
