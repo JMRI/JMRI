@@ -3395,13 +3395,18 @@
    <a name="Routes" id="Routes"></a>
    <h2>Routes</h2>
    A route is a list of locations (stations) that a train will visit. Later you can decide if the
-   train stops at a location for work. Routes can be point to point or out and back. To build a
-   route, select "Tools-&gt;Operations-&gt;Routes". The Routes window also provides route status,
-   for example, "Orphan" means the route hasn't been assigned to a train.
+   train stops at a location for work. Routes can be point to point or out and back. A route that
+   returns to its origin is often referred to as a "turn". To build a route, select
+   "Tools-&gt;Operations-&gt;Routes".
 
    <p>
     <img src="images/Routes.png">
    </p>
+
+   <p>The "Routes" window shows for every route created the id, name, comment, shortest route
+    length, longest route length, and status of the route. If there's a problem with the route, the
+    status will be reported as "Error". If the route hasn't been assigned to a train, the status for
+    the route is reported as "Orphan". Use the "Edit" button to modify an existing route.</p>
 
    <a name="AddRoute" id="AddRoute"></a>
    <h3>Add Route</h3>
@@ -3537,7 +3542,8 @@
     an Eastbound train. The second "Hillsboro" provides the departure direction for the train, and
     the amount of work for tracks that can only be access by a Westbound train. Even though
     "Hillsboro" appears twice in the route, it will only appear once on your Manifests and switch
-    lists.</p>
+    lists. Also when you enter a location twice in a row in the route with a change in direction,
+    the location's switch list will add a note that the train's departure direction has changed.</p>
 
    <a name="PassengerTrainRoute" id="PassengerTrainRoute"></a>
    <h3>Passenger Train Route</h3>
