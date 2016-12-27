@@ -234,6 +234,20 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
 
         // register a connection config object for this stream port.
         //jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).registerPref(new Z21XNetConnectionConfig(xsc));
+        jmri.InstanceManager.getDefault(jmri.jmrix.ConnectionConfigManager.class).add(new Z21XNetConnectionConfig(xsc));
+    }
+
+
+    public void dispose(){
+       if(xsc != null){
+          xsc.dispose();
+       }
+       sourceThread.stop();
+       try {
+          sourceThread.join();
+       } catch (InterruptedException ie){
+          // interrupted durring cleanup.
+       }
     }
 
     private final static Logger log = LoggerFactory.getLogger(Z21XPressNetTunnel.class.getName());

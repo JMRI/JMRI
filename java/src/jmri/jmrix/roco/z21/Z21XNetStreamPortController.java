@@ -25,6 +25,13 @@ public class Z21XNetStreamPortController extends jmri.jmrix.lenz.XNetStreamPortC
         this.getSystemConnectionMemo().setThrottleManager(new Z21XNetThrottleManager(this.getSystemConnectionMemo()));
 
         new Z21XNetInitializationManager(this.getSystemConnectionMemo());
+        jmri.jmrix.ConnectionStatus.instance().setConnectionState(getCurrentPortName(),jmri.jmrix.ConnectionStatus.CONNECTION_UP);
     }
+
+  @Override
+  public void dispose(){
+     this.getSystemConnectionMemo().dispose();
+     super.dispose();
+  }
 
 }
