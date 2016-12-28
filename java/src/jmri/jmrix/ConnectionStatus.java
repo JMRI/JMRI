@@ -115,6 +115,30 @@ public class ConnectionStatus {
     }
 
     /**
+     * get the status of a communication port based on the system name.
+     *
+     * @param systemName String containing the system name
+     * @return status string
+     */
+    public synchronized String getSystemState(String systemName) {
+        ConnectionKey newKey = new ConnectionKey(systemName,null);
+        if(portStatus.containsKey(newKey)) {
+           return getConnectionState(systemName,null);
+        } else {
+           // we have to see if there is a key that has systemName as the port value.
+           for( ConnectionKey c :portStatus.keySet()) {
+              if(c.getSystemName() == systemName) {
+                // if we find a match, return it.
+                return getConnectionState(c.getSystemName(),c.getPortName());
+              }
+           }
+        }
+        // and if we still don't find a match, go ahead and try with null as
+        // the port name.
+        return getConnectionState(systemName,null);
+    }
+
+    /**
      * get the status of a communication port
      *
      * @param systemName String containing the system name
@@ -156,6 +180,30 @@ public class ConnectionStatus {
         } else {
             return true;
         }
+    }
+
+    /**
+     * get the status of a communication port based on the system name.
+     *
+     * @param systemName String containing the system name
+     * @return true if port connection is operational or unknown, false if not
+     */
+    public synchronized boolean getIsSystemOk(String systemName) {
+        ConnectionKey newKey = new ConnectionKey(systemName,null);
+        if(portStatus.containsKey(newKey)) {
+           return isConnectionOk(systemName,null);
+        } else {
+           // we have to see if there is a key that has systemName as the port value.
+           for( ConnectionKey c :portStatus.keySet()) {
+              if(c.getSystemName() == systemName) {
+                // if we find a match, return it.
+                return isConnectionOk(c.getSystemName(),c.getPortName());
+              }
+           }
+        }
+        // and if we still don't find a match, go ahead and try with null as
+        // the port name.
+        return isConnectionOk(systemName,null);
     }
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);

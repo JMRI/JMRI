@@ -1513,7 +1513,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
 
         if (serModeProCon != null && gpm.isGlobalProgrammerAvailable()) {
-            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getInfo())) {
+            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getConnectionName(),serModeProCon.getInfo())) {
                 log.debug("GPM Connection online");
                 serviceModeProgrammerLabel.setText(
                         Bundle.getMessage("ServiceModeProgOnline", serModeProCon.getConnectionName()));
@@ -1532,6 +1532,17 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 firePropertyChange("setprogservice", "setEnabled", true);
             }
         } else if(gpm.isGlobalProgrammerAvailable()) {
+            if (ConnectionStatus.instance().getIsSystemOk(gpm.getUserName())) {
+                log.debug("GPM Connection online");
+                serviceModeProgrammerLabel.setText(
+                        Bundle.getMessage("ServiceModeProgOnline", gpm.getUserName()));
+                serviceModeProgrammerLabel.setForeground(new Color(0, 128, 0));
+            } else {
+                log.debug("GPM Connection onffline");
+                serviceModeProgrammerLabel.setText(
+                        Bundle.getMessage("ServiceModeProgOffline", gpm.getUserName()));
+                serviceModeProgrammerLabel.setForeground(Color.red);
+            }
             if (oldServMode == null) {
                 contextService.setEnabled(true);
                 contextService.setVisible(true);
@@ -1557,7 +1568,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
 
         if (opsModeProCon != null && apm.isAddressedModePossible()) {
-            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getInfo())) {
+            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getConnectionName(),opsModeProCon.getInfo())) {
                 log.debug("Ops Mode Connection online");
                 operationsModeProgrammerLabel.setText(
                         Bundle.getMessage("OpsModeProgOnline", opsModeProCon.getConnectionName()));
@@ -1576,6 +1587,17 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 firePropertyChange("setprogops", "setEnabled", true);
             }
         } else if (apm.isAddressedModePossible()) {
+            if (ConnectionStatus.instance().getIsSystemOk(apm.getUserName())) {
+                log.debug("Ops Mode Connection online");
+                operationsModeProgrammerLabel.setText(
+                        Bundle.getMessage("OpsModeProgOnline", apm.getUserName()));
+                operationsModeProgrammerLabel.setForeground(new Color(0, 128, 0));
+            } else {
+                log.debug("Ops Mode Connection offline");
+                operationsModeProgrammerLabel.setText(
+                        Bundle.getMessage("OpsModeProgOffline", apm.getUserName()));
+                operationsModeProgrammerLabel.setForeground(Color.red);
+            }
             if (oldOpsMode == null) {
                 contextOps.setEnabled(true);
                 contextOps.setVisible(true);
