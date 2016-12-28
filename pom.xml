@@ -67,6 +67,9 @@
         </profile>
         <profile>
             <id>travis-coverage</id>
+            <properties>
+                <findbugs.skip>true</findbugs.skip>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
