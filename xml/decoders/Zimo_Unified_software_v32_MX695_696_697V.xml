@@ -156,7 +156,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV1-CV99.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152version30.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV152bit7version27.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV152-CV157version28.xml"/>      
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version28.xml"/>      
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV159-CV160.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
