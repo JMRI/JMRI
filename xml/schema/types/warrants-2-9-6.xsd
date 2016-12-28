@@ -128,6 +128,7 @@
             </xs:sequence>
             <xs:attribute name="systemName" type="systemNameType" use="required"/>
             <xs:attribute name="userName" type="userNameType" />
+            <xs:attribute name="wtype" type="xs:string"/>
           </xs:complexType>
         </xs:element>
             
