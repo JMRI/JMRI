@@ -169,8 +169,8 @@ public class TurnoutOperationManager {
      * @deprecated since 4.7.1; use {@link #getDefault()} instead
      */
     @Deprecated
-    public synchronized static @Nonnull
-    TurnoutOperationManager getInstance() {
+    @Nonnull
+    public synchronized static TurnoutOperationManager getInstance() {
         return getDefault();
     }
 
