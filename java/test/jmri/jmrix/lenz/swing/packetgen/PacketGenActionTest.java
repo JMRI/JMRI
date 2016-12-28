@@ -49,6 +49,7 @@ public class PacketGenActionTest {
         Assert.assertNotNull(frame);
         // verify the action provided the expected frame class
         Assert.assertEquals(PacketGenFrame.class.getName(), frame.getClass().getName());
+        frame.dispose();
     }
 
     @Before

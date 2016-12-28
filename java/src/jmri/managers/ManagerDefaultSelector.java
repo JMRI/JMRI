@@ -166,8 +166,10 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                     found = true;
                     // match, store
                     try {
-                        log.debug("   setting default for \"{}\" to \"{}\" in configure", c, memo.get(c));
-                        InstanceManager.setDefault(c, memo.get(c));
+                        if(memo.provides(c)) {
+                           log.debug("   setting default for \"{}\" to \"{}\" in configure", c, memo.get(c));
+                           InstanceManager.setDefault(c, memo.get(c));
+                        }
                     } catch (NullPointerException ex) {
                         String englishMsg = Bundle.getMessage(Locale.ENGLISH, "ErrorNullDefault", memo.getUserName(), c); // NOI18N
                         String localizedMsg = Bundle.getMessage("ErrorNullDefault", memo.getUserName(), c); // NOI18N

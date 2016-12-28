@@ -1,5 +1,4 @@
-French
- JavaHelp files for JMRI
+French JavaHelp files for JMRI
 
 This directory contains metadata for the javahelp sub-system,
 plus the actual content.
@@ -14,7 +13,7 @@ to copy when making a new file.
 
 For more information on maintaining the various metadata in the 
 help system, please see:
-<http://jmri.org/doc/Technical/Help.shtml>
+<http://jmri.org/help/en/html/doc/Technical/Help.shtml>
 
 The JHelpDev.xml file is a convenient project definition for
 JHelpDev (http:jhelpdev.sf.net), a tool for maintaining index,
@@ -38,4 +37,23 @@ The html/tools directory is only partially converted - get it from
 the main web site.
 
 html/hardware needs to be carefully checked
+
+JHELPDEV:
+
+The JHelpDev included here is 0.63 from jhelpdev.sf.net, 
+with the following modifications to 
+(a) allow .shtml files
+(b) handle <a name="foo" id="foo">
+
+javasrc/net/sourceforge/jhelpdev/action/CreateMapAction.java 
+54c54
+<  * directory and all subdirectories for files with .html, .htm, .shtml, .jsp or .gif suffixes.
+---
+>  * directory and all subdirectories for files with .html, .htm, .jsp or .gif suffixes.
+85c85
+<     public static final Pattern VALUE_PATTERN = Pattern.compile("\".*?\"",
+---
+>     public static final Pattern VALUE_PATTERN = Pattern.compile("\".*\"",
+256d255
+<                     || filesInDir[i].toUpperCase().endsWith(".SHTML")
 

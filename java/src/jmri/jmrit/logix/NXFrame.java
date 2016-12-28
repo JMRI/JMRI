@@ -220,15 +220,15 @@ public class NXFrame extends WarrantRoute {
                 throttleIncrLabel = "RampIncrement";
                 break;
             case SignalSpeedMap.SPEED_MPH:
-                maxSpeed = _maxSpeed * _throttleFactor * _scale * 2.2369363f; // 2.2369363 is 3.6 converted by mile/km
+                maxSpeed = _maxSpeed * _throttleFactor * 223.69363f; // 2.2369363 is 3.6 converted by mile/km
                 maxSpeedLabel = "MaxMph";
-                throttleIncr = _throttleIncr * _throttleFactor * _scale * 2.2369363f;
+                throttleIncr = _throttleIncr * _throttleFactor * 223.69363f;
                 throttleIncrLabel = "MinMph";
                 break;
             case SignalSpeedMap.SPEED_KMPH:
-                maxSpeed = _maxSpeed * _throttleFactor * _scale * 3.6f;
+                maxSpeed = _maxSpeed * _throttleFactor * 360f;
                 maxSpeedLabel = "MaxKMph";
-                throttleIncr = _throttleIncr * _throttleFactor * _scale * 3.6f;
+                throttleIncr = _throttleIncr * _throttleFactor * 360f;
                 throttleIncrLabel = "MinKMph";
                 break;
             default:
@@ -506,13 +506,13 @@ public class NXFrame extends WarrantRoute {
         String speedErr;
         switch (jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation()) {
             case SignalSpeedMap.SPEED_MPH:
-                _maxSpeed = maxSpeed / (_throttleFactor * _scale * 2.2369363f);
-                _minSpeed = minSpeed / (_throttleFactor * _scale * 2.2369363f);
+                _maxSpeed = maxSpeed / (_throttleFactor * 223.69363f);
+                _minSpeed = minSpeed / (_throttleFactor * 223.69363f);
                 speedErr = Bundle.getMessage("speedMph");
                 break;
             case SignalSpeedMap.SPEED_KMPH:
-                _maxSpeed = maxSpeed / (_throttleFactor * _scale * 3.6f);
-                _minSpeed = minSpeed / (_throttleFactor * _scale * 3.6f);
+                _maxSpeed = maxSpeed / (_throttleFactor * 360f);
+                _minSpeed = minSpeed / (_throttleFactor * 360f);
                 speedErr = Bundle.getMessage("speedKmph");
                 break;
             default:

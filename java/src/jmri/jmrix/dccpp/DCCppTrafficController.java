@@ -65,8 +65,6 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     }
 
     // Abstract methods for the DCCppInterface
-    abstract public boolean status();
-
     /**
      * Forward a preformatted DCCppMessage to the actual interface.
      *

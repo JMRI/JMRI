@@ -159,8 +159,13 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         }
     }
 
+    @Override()
     public boolean status() {
-        return (controller.status());
+        if(controller == null) {
+           return false;
+        } else {
+           return (controller.status());
+        }
     }
 
     /**
@@ -382,9 +387,13 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                      justification = "Wait is for external hardware, which doesn't necessarilly respond, to process the data.")
     @Override
     protected void terminate() {
-        if (log.isDebugEnabled()) {
+        if (controller == null) {
+            log.debug("terminate called while not connected");
+            return;
+        } else {
             log.debug("Cleanup Starts");
         }
+
         Z21Message logoffMessage = Z21Message.getLanLogoffRequestMessage();
         forwardToPort(logoffMessage, null);
         // wait for reply
@@ -397,6 +406,9 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); // retain if needed later
             log.error("transmit interrupted");
+        } finally {
+           // set the controller to null, even if terminate fails.
+           controller = null;
         }
     }
 
