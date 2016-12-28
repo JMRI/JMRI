@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<!-- version 1.4, corrected CV313 "inverted" output labels, which corrects bug in displayed file. Nigel Cliffe, 27Dec 2016 -->    
+<!-- version 1.4, corrected CV313 "inverted" output labels, which corrects bug in displayed file. Nigel Cliffe, 27Dec 2016 -->
 <!-- version 1.3, add german translation by Ronald Kuhn -->
 <!-- version 1.2, include statments for CV341 CV342 CV343 edited for new decoders and corrections by Mark Waters -->
 <!-- many additions for v34 firmware,  Nigel Cliffe, 23 Jan 2015, edited with qualifiers to be included in this file instead of a seperate v34 file -->  
