@@ -32,9 +32,11 @@ public class TurnoutOperationManager {
     private boolean initialized = false;
 
     private void initialize() {
-        initialized = true;
-        // create the default instances of each of the known operation types
-        loadOperationTypes();
+        if (!initialized) {
+            initialized = true;
+            // create the default instances of each of the known operation types
+            loadOperationTypes();
+        }
     }
 
     public void dispose() {
@@ -42,9 +44,7 @@ public class TurnoutOperationManager {
 
     public TurnoutOperation[] getTurnoutOperations() {
         synchronized (this) {
-            if (!initialized) {
-                initialize();
-            }
+            initialize();
             Collection<TurnoutOperation> entries = turnoutOperations.values();
             return entries.toArray(new TurnoutOperation[0]);
         }
@@ -63,9 +63,7 @@ public class TurnoutOperationManager {
             log.warn("null operation name in addOperation");
         } else {
             synchronized (this) {
-                if (!initialized) {
-                    initialize();
-                }
+                initialize();
                 previous = turnoutOperations.put(op.getName(), op);
                 if (op.isDefinitive()) {
                     updateTypes(op);
@@ -84,9 +82,7 @@ public class TurnoutOperationManager {
             log.warn("null operation name in removeOperation");
         } else {
             synchronized (this) {
-                if (!initialized) {
-                    initialize();
-                }
+                initialize();
                 turnoutOperations.remove(op.getName());
             }
         }
@@ -101,9 +97,7 @@ public class TurnoutOperationManager {
      */
     public TurnoutOperation getOperation(@Nonnull String name) {
         synchronized (this) {
-            if (!initialized) {
-                initialize();
-            }
+            initialize();
             return turnoutOperations.get(name);
         }
     }
@@ -116,9 +110,7 @@ public class TurnoutOperationManager {
      * @param op new or updated operation
      */
     private void updateTypes(@Nonnull TurnoutOperation op) {
-        if (!initialized) {
-            initialize();
-        }
+        initialize();
         LinkedList<TurnoutOperation> newTypes = new LinkedList<>();
         Iterator<TurnoutOperation> iter = operationTypes.iterator();
         boolean found = false;
@@ -218,9 +210,7 @@ public class TurnoutOperationManager {
      * @return the turnout operation
      */
     public TurnoutOperation getMatchingOperationAlways(@Nonnull Turnout t, int apparentMode) {
-        if (!initialized) {
-            initialize();
-        }
+        initialize();
         Iterator<TurnoutOperation> iter = operationTypes.iterator();
         TurnoutOperation currentMatch = null;
         /* The loop below always returns the LAST operation 
@@ -250,9 +240,7 @@ public class TurnoutOperationManager {
      * @return operation
      */
     public TurnoutOperation getMatchingOperation(@Nonnull Turnout t, int apparentMode) {
-        if (!initialized) {
-            initialize();
-        }
+        initialize();
         if (doOperations) {
             return getMatchingOperationAlways(t, apparentMode);
         }
@@ -267,16 +255,12 @@ public class TurnoutOperationManager {
      * get/change status of whether operations are in use
      */
     public boolean getDoOperations() {
-        if (!initialized) {
-            initialize();
-        }
+        initialize();
         return doOperations;
     }
 
     public void setDoOperations(boolean b) {
-        if (!initialized) {
-            initialize();
-        }
+        initialize();
         boolean oldValue = doOperations;
         doOperations = b;
         firePropertyChange("doOperations", oldValue, b);
