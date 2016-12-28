@@ -33,6 +33,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.roster.swing.rostergroup.PackageTest.suite());
         suite.addTest(jmri.jmrit.roster.swing.speedprofile.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.roster.swing.rostertree.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RosterFrameTest.class));
 
         return suite;
     }

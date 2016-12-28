@@ -41,6 +41,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.managers.configurexml.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(InternalReporterManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ProxyReporterManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ManagerDefaultSelectorTest.class));
 
         return suite;
     }
