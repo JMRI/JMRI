@@ -16,7 +16,7 @@
   <version author="Mark Waters mark16jmri@mybtinternet.com" version="1" lastUpdated="20150103"/>
   <version author="Mark Waters mark16jmri@mybtinternet.com" version="1.1" lastUpdated="20150103"/>
   <version author="Mark Waters mark16jmri@mybtinternet.com" version="1.2" lastUpdated="20160311"/>
-  <version author="Nigel Cliffe" version="1.3" lastUpdated="20161228" />  
+  <version author="Nigel Cliffe" version="1.3" lastUpdated="20161228" />
   <!-- This decoder configuration file is based on the Zimo_MX640_v9.xml                     -->
   <!-- V 1 file, dated 20090222. With the Sound tabs from Jeff Schmaltz' MX69/MX690 file.    -->
   <!--                                                                                       -->
@@ -156,7 +156,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV1-CV99.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152version30.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV152bit7version27.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version28.xml"/>      
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version28.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV159-CV160.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
