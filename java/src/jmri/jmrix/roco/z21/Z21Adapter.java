@@ -72,18 +72,22 @@ public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
             log.error("Socket Exception creating connection.");
             if (m_port != 0) {
                 ConnectionStatus.instance().setConnectionState(
+                        this.getSystemConnectionMemo().getUserName(),
                         m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
             } else {
                 ConnectionStatus.instance().setConnectionState(
+                        this.getSystemConnectionMemo().getUserName(),
                         m_HostName, ConnectionStatus.CONNECTION_DOWN);
             }
             throw (se);
         }
         if (opened && m_port != 0) {
             ConnectionStatus.instance().setConnectionState(
+                    this.getSystemConnectionMemo().getUserName(),
                     m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_UP);
         } else if (opened) {
             ConnectionStatus.instance().setConnectionState(
+                    this.getSystemConnectionMemo().getUserName(),
                     m_HostName, ConnectionStatus.CONNECTION_UP);
         }
 

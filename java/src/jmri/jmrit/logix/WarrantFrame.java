@@ -870,7 +870,7 @@ public class WarrantFrame extends WarrantRoute {
                     OBlock lastBlock = orders.get(orders.size() - 1).getBlock();
                     OBlock currentBlock = bo.getBlock();
                     if (!lastBlock.equals(currentBlock)) {
-                        if ((lastBlock.getState() & OBlock.DARK) != 0
+                        if ((lastBlock.getState() & OBlock.UNDETECTED) != 0
                                 && currentBlock.equals(orders.get(orders.size() - 2).getBlock())) {
                             setThrottleCommand("NoOp", Bundle.getMessage("Mark"), lastBlock.getDisplayName());
                             setStatusText(Bundle.getMessage("LearningStop"), myGreen);
