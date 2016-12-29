@@ -61,13 +61,17 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
         JPanel pane0 = new JPanel();
         pane0.setLayout(new FlowLayout());
-        pane0.add(new JLabel(rb.getString("LV102Track")));
+        JLabel voltLabel = new JLabel(Bundle.getMessage("LV102Track"));
+        pane0.add(voltLabel);
+        voltLabel.setLabelFor(voltBox);
         pane0.add(voltBox);
         pane0.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
         getContentPane().add(pane0);
 
         JPanel pane1 = new JPanel();
-        pane1.add(new JLabel(rb.getString("LV102ELine")));
+        JLabel eLineLabel = new JLabel(Bundle.getMessage("LV102ELine"));
+        pane1.add(eLineLabel);
+        eLineLabel.setLabelFor(eLineBox);
         pane1.add(eLineBox);
         pane1.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
         getContentPane().add(pane1);
