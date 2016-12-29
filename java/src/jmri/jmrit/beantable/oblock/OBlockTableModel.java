@@ -58,7 +58,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
     static public final String severeText = Bundle.getMessage("BlockSevere");
     static final String[] curveOptions = {noneText, gradualText, tightText, severeText};
 
-    static String ZEROS = "00000000";
+    static String ZEROS = "000000000";      // 9 bits have state info
 
     java.text.DecimalFormat twoDigit = new java.text.DecimalFormat("0.00");
 
@@ -146,7 +146,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
 
     static protected String getValue(int state) {
         StringBuilder sb = new StringBuilder();
-        if ((state & OBlock.DARK) != 0) {
+        if ((state & OBlock.UNDETECTED) != 0) {
             sb.append(Bundle.getMessage("Dark"));
         }
         if ((state & OBlock.OCCUPIED) != 0) {
@@ -166,6 +166,12 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 sb.append('-');
             }
             sb.append(Bundle.getMessage("Inconsistent"));
+        }
+        if ((state & OBlock.UNKNOWN) != 0) {
+            if (sb.length() > 0) {
+                sb.append('-');
+            }
+            sb.append(Bundle.getMessage("Unknown"));
         }
         if ((state & OBlock.ALLOCATED) != 0) {
             if (sb.length() > 0) {
@@ -192,7 +198,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
             sb.append(Bundle.getMessage("TrackError"));
         }
         if (sb.length() == 0) {
-            sb.append(Bundle.getMessage("Unknown"));
+            sb.append(Bundle.getMessage("UnDefined"));
         }
         return sb.toString();
     }
@@ -236,7 +242,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
             case STATECOL:
                 if (b != null) {
                     int state = b.getState();
-                    int num = Integer.numberOfLeadingZeros(state) - 24;
+                    int num = Integer.numberOfLeadingZeros(state) - 23;
                     if (num>=0) {
                         return ZEROS.substring(0, num) + Integer.toBinaryString(state);                        
                     }
@@ -484,18 +490,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 fireTableRowsUpdated(row, row);
                 return;
             case STATECOL:
-                /* currently STATECOL is not editable.  Maybe allow it and (or not) set the sensor?  Why?
-                int state = 0;
-                try {
-                    state = Integer.valueOf((String) value);
-                } catch (NumberFormatException nfe) {
-                }
-                if (state < 0) {
-                    state = -state;
-                }
-                block.setState(state % 255);
-                fireTableRowsUpdated(row, row); */
-                return;
+                return;     //  STATECOL is not editable
             case SENSORCOL:
                 if (!block.setSensor((String) value)) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchSensorErr", (String) value),
