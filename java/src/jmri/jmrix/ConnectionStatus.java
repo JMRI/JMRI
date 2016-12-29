@@ -188,7 +188,7 @@ public class ConnectionStatus {
      * @param systemName String containing the system name
      * @return true if port connection is operational or unknown, false if not
      */
-    public synchronized boolean getIsSystemOk(String systemName) {
+    public synchronized boolean isSystemOk(String systemName) {
         ConnectionKey newKey = new ConnectionKey(systemName,null);
         if(portStatus.containsKey(newKey)) {
            return isConnectionOk(systemName,null);

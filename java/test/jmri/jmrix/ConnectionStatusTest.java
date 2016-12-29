@@ -65,9 +65,9 @@ public class ConnectionStatusTest {
     public void testIsSystemOk(){
         ConnectionStatus cs = new ConnectionStatus();
         cs.setConnectionState("Foo","Bar",ConnectionStatus.CONNECTION_UP);
-        Assert.assertTrue("connection OK",cs.getIsSystemOk("Foo"));
+        Assert.assertTrue("connection OK",cs.isSystemOk("Foo"));
         cs.setConnectionState("Foo","Bar",ConnectionStatus.CONNECTION_DOWN);
-        Assert.assertFalse("connection OK",cs.getIsSystemOk("Foo"));
+        Assert.assertFalse("connection OK",cs.isSystemOk("Foo"));
     }
 
     @Test
