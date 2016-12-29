@@ -104,6 +104,56 @@ public class IdentifyDecoderTest extends TestCase {
 
     }
 
+    public void testIdentifyTsu2() {
+        // initialize the system
+        jmri.progdebugger.ProgDebugger p = new jmri.progdebugger.ProgDebugger() {
+            public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+                cvRead = CV;
+            }
+        };
+        jmri.InstanceManager.setProgrammerManager(new jmri.managers.DefaultProgrammerManager(p));
+
+        // create our test object
+        IdentifyDecoder i = new IdentifyDecoder(p) {
+            public void done(int mfgID, int modelID, int productID) {
+            }
+
+            public void message(String m) {
+            }
+
+            public void error() {
+            }
+        };
+
+        i.start();
+        Assert.assertEquals("step 1 reads CV ", 8, cvRead);
+        Assert.assertEquals("running after 1 ", true, i.isRunning());
+
+        // simulate CV read complete on CV8, start 7
+        i.programmingOpReply(141, 0);
+        Assert.assertEquals("step 2 reads CV ", 7, cvRead);
+        Assert.assertEquals("running after 2 ", true, i.isRunning());
+
+        // simulate CV read complete on CV7, start 253
+        i.programmingOpReply(71, 0);
+        Assert.assertEquals("step 3 reads CV ", 253, cvRead);
+        Assert.assertEquals("running after 3 ", true, i.isRunning());
+
+        // simulate CV read complete on CV253, does 256 and ends
+        i.programmingOpReply(1, 0);
+        Assert.assertEquals("step 4 reads CV ", 256, cvRead);
+        Assert.assertEquals("running after 4 ", true, i.isRunning());
+
+        // simulate CV read complete on CV256, ends
+        i.programmingOpReply(29, 0);
+        Assert.assertEquals("running after 5 ", false, i.isRunning());
+
+        Assert.assertEquals("found mfg ID ", 141, i.mfgID);
+        Assert.assertEquals("found model ID ", 71, i.modelID);
+        Assert.assertEquals("found product ID ", 285, i.productID);
+
+    }
+
     // from here down is testing infrastructure
     public IdentifyDecoderTest(String s) {
         super(s);

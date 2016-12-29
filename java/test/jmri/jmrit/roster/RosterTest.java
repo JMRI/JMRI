@@ -258,6 +258,8 @@ public class RosterTest {
         // create a test roster & store in file
         Roster r = createTestRoster();
         Assert.assertNotNull("exists", r);
+        // write it
+        r.writeFile(r.getRosterIndexPath());
 
         // create new roster & read
         Roster t = new Roster();
@@ -375,7 +377,7 @@ public class RosterTest {
         r.addEntry(e);
 
         // write it
-        r.writeFile(r.getRosterIndexPath());
+        //r.writeFile(r.getRosterIndexPath());
 
         return r;
     }
