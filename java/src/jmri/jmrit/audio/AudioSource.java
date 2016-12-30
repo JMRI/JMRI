@@ -387,6 +387,34 @@ public interface AudioSource extends Audio {
     public void setReferenceDistance(float referenceDistance);
 
     /**
+     * Set the offset in which to start playback of this AudioSource.
+     * <p>
+     * Default value = 0
+     * <p>
+     * Value is clamped between 0 and length of attached AudioBuffer
+     * <p>
+     * Applies only to sub-types:
+     * </p><ul>
+     * <li>Source
+     * </ul>
+     * @param offset the offset in samples marking the point to commence playback
+     */
+    public void setOffset(long offset);
+
+    /**
+     * Return the offset in which to start playback of this AudioSource.
+     * <p>
+     * Default value = 0
+     * <p>
+     * Applies only to sub-types:
+     * </p><ul>
+     * <li>Source
+     * </ul>
+     * @return the offset in samples marking the point to commence playback
+     */
+    public long getOffset();
+
+    /**
      * Return the current maximum distance setting
      * <p>
      * Default value = Audio.MAX_DISTANCE
