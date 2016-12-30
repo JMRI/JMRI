@@ -19,6 +19,7 @@ import jmri.ShutDownManager;
 import jmri.SignalHeadManager;
 import jmri.SignalMastLogicManager;
 import jmri.SignalMastManager;
+import jmri.TurnoutOperationManager;
 import jmri.UserPreferencesManager;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
@@ -254,11 +255,8 @@ public class JUnitUtil {
     }
 
     public static void resetTurnoutOperationManager() {
-        new jmri.TurnoutOperationManager() {
-            {
-                resetTheInstance();
-            }
-        };
+        InstanceManager.reset(TurnoutOperationManager.class);
+        TurnoutOperationManager.getDefault();
     }
 
     public static void initConfigureManager() {
