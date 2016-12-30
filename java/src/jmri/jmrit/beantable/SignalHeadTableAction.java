@@ -36,7 +36,6 @@ import jmri.implementation.QuadOutputSignalHead;
 import jmri.implementation.SingleTurnoutSignalHead;
 import jmri.implementation.TripleOutputSignalHead;
 import jmri.implementation.TripleTurnoutSignalHead;
-import jmri.jmrit.beantable.RowComboBoxPanel; // access to RowComboBoxPanel()
 import jmri.jmrix.acela.AcelaAddress;
 import jmri.jmrix.acela.AcelaNode;
 import jmri.util.ConnectionNameFromSystemName;
