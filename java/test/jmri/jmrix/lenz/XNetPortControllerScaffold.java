@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author	Bob Jacobsen Copyright (C) 2006, 2015
  */
-class XNetPortControllerScaffold extends XNetSimulatorPortController {
+public class XNetPortControllerScaffold extends XNetSimulatorPortController {
 
     private final static Logger log = LoggerFactory.getLogger(XNetPortControllerScaffold.class);
 
@@ -38,7 +38,7 @@ class XNetPortControllerScaffold extends XNetSimulatorPortController {
     PipedInputStream itempIPipe;
     PipedOutputStream itempOPipe;
     
-    protected XNetPortControllerScaffold() throws Exception {
+    public XNetPortControllerScaffold() throws Exception {
         otempIPipe = new PipedInputStream(200);
         tostream = new DataInputStream(otempIPipe);
         otempOPipe = new PipedOutputStream(otempIPipe);
@@ -100,12 +100,12 @@ class XNetPortControllerScaffold extends XNetSimulatorPortController {
     /**
      * Can read test data from this.
      */
-    DataInputStream tostream;
+    public DataInputStream tostream;
 
     /**
      * Tests write to this.
      */
-    DataOutputStream tistream;
+    public DataOutputStream tistream;
     /**
      * The traffic controller can read test data from this.
      */

@@ -66,7 +66,7 @@ public class MatrixSignalMastXml
             e.addContent(outps);
         }
 
-        // string of max. 5 chars "00101" describing matrix row per aspect
+        // string of max. 6 chars "001010" describing matrix row per aspect
         SignalAppearanceMap appMap = p.getAppearanceMap();
         if (appMap != null) {
             Element bss = new Element("bitStrings");

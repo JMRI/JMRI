@@ -18,11 +18,7 @@ import org.junit.Test;
  */
 public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
-    public void testCreate() {
-        EasyDccTrafficController m = new EasyDccTrafficController();
-        Assert.assertNotNull("exists", m);
-    }
-
+    @Test
     public void testSendThenRcvReply() throws Exception {
         EasyDccTrafficController c = (EasyDccTrafficController)tc;
         /*EasyDccTrafficController c = new EasyDccTrafficController() {

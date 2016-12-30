@@ -15,7 +15,9 @@ import org.slf4j.LoggerFactory;
    jmri.jmrix.mrc.configurexml.PackageTest.class,
    MrcSystemConnectionMemoTest.class,
    MrcPortControllerTest.class,
-   MrcTrafficControllerTest.class
+   MrcTrafficControllerTest.class,
+   MrcExceptionTest.class,
+   MrcMessageExceptionTest.class
 })
 
 /**

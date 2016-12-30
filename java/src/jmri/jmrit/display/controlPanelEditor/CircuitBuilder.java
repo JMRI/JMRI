@@ -715,6 +715,7 @@ public class CircuitBuilder {
     private boolean doOpenAction() {
         int row = _oblockModel.getTable().getSelectedRow();
         if (row >= 0) {
+            row = _oblockModel.getTable().convertRowIndexToModel(row);
             _currentBlock = (OBlock) _oblockModel.getBeanAt(row);
             return true;
         }
@@ -1278,10 +1279,17 @@ public class CircuitBuilder {
         finishConvert(t);
     }
 
+    /*
+     * Replace references to _oldIcon with pos 
+     */
     private void finishConvert(Positionable pos) {
+        ArrayList<Positionable> selectionGroup = _editor.getSelectionGroup();
+        selectionGroup.remove(_oldIcon);
+        selectionGroup.add(pos);
         _circuitIcons.remove(_oldIcon);
-        _oldIcon.remove();
+        _circuitIcons.add(pos);
         pos.setLocation(_oldIcon.getLocation());
+        _oldIcon.remove();
         _editor.putItem(pos);
         _circuitIcons.add(pos);
         pos.updateSize();

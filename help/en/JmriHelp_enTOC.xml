@@ -237,6 +237,8 @@
 
   <tocitem text="Displaying Panel Files " target="html.apps.PanelPro.ShowPanel"/>
 
+  <tocitem text="Handling Errors " target="package.jmri.configurexml.ErrorHandler"/>
+
  </tocitem>
  <tocitem text="Tables ">
   <tocitem text="Turnout Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>

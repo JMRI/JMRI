@@ -21,10 +21,6 @@ public class XNetTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContr
         JUnitUtil.resetInstanceManager();
         tc = new XNetTrafficController(new LenzCommandStation()){
             @Override
-            public boolean status(){
-                return true;
-            }
-            @Override
             public void sendXNetMessage(XNetMessage m, XNetListener reply){
             }
         };
