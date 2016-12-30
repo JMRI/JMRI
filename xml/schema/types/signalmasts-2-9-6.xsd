@@ -93,7 +93,7 @@
     <xs:complexType name="SignalMastPropertyType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a single property within a signalmast element's properties element.
+          Define the XML structure for storing a single property within a signalmast element's properties element.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="true">jmri.managers.configurexml.DefaultSignalMastManagerXml</jmri:usingclass>
@@ -162,7 +162,7 @@
               <xs:element name="turnout" type="xs:string"/>
               <xs:element name="turnoutstate" type="xs:string" />
             </xs:sequence>
-            <xs:attribute name="defines"  use="required">
+            <xs:attribute name="defines" use="required">
                 <xs:annotation><xs:documentation>Specifies which appearance the turnout drives</xs:documentation></xs:annotation>
             </xs:attribute>
           </xs:complexType>
@@ -184,10 +184,10 @@
     <xs:complexType name="DccSignalMastType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of one DCC Based Signal Mast implementation.
+          Define the XML structure for storing the contents of one DCC Based Signal Mast implementation.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.implementation.configurexml.DccSignalMastXml</jmri:usingclass>
+          <jmri:usingclass configurexml="true">jmri.implementation.configurexml.DccSignalMastXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence minOccurs="1" maxOccurs="unbounded">
@@ -200,7 +200,7 @@
               <xs:element name="aspect" type="xs:string" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
             <xs:attribute name="allowed"  use="required">
-                <xs:annotation><xs:documentation>Specifies if the signal can go unlit</xs:documentation></xs:annotation>
+              <xs:annotation><xs:documentation>Specifies if the signal can go unlit</xs:documentation></xs:annotation>
             </xs:attribute>
           </xs:complexType>
         </xs:element>
@@ -227,8 +227,62 @@
       </xs:attribute>
       <xs:attribute name="class" type="classType" use="required" />
     </xs:complexType>
-    
-    <xs:complexType name="SignalMastRepeater">
+
+  <xs:complexType name="MatrixSignalMastType">
+    <xs:annotation>
+      <xs:documentation>
+        Define the XML structure for storing the contents of one Matrix Output Signal Mast implementation.
+      </xs:documentation>
+      <xs:appinfo>
+        <jmri:usingclass configurexml="true">jmri.implementation.configurexml.MatrixSignalMastXml</jmri:usingclass>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+      <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="unlit" minOccurs="0" maxOccurs="1" >
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="bitString" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          </xs:sequence>
+          <xs:attribute name="allowed" use="required">
+            <xs:annotation><xs:documentation>Specifies if the signal can go unlit</xs:documentation></xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="outputs" minOccurs="1" maxOccurs="1" >
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="output" type="xs:string" minOccurs="1" maxOccurs="6"/>
+          </xs:sequence>
+          <xs:attribute name="matrixCol" use="required" >
+            <xs:annotation><xs:documentation>Specifies the configured Turnout outputs for this mast by name</xs:documentation></xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="bitStrings" minOccurs="1" maxOccurs="1" >
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="bitString" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+          </xs:sequence>
+          <xs:attribute name="aspect" use="required" >
+            <xs:annotation><xs:documentation>Specifies the state of the outputs (1 = ON) for this Aspect</xs:documentation></xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="disabledAspects" minOccurs="0" maxOccurs="1" >
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="disabledAspect" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="class" type="classType" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="SignalMastRepeater">
       <xs:annotation>
         <xs:documentation>
           Define the XML stucture for storing the contents of one Signal Mast Repeater implementation.

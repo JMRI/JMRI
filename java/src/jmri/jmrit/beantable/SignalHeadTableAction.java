@@ -323,6 +323,29 @@ public class SignalHeadTableAction extends AbstractTableAction {
             }
 
             /**
+             * Respond to change from bean. Prevent Appearance change when Signal Head is set to Hold or Unlit.
+             * @Param e A property change of any bean
+             */
+/*            @Override
+            // Might be useful to show only a Dark option in the comboBox if head is Held
+            // At present, does not work/change when head Lit/Held checkboxes are (de)activated
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                if (e.getPropertyName().indexOf("Lit") < 0 || e.getPropertyName().indexOf("Held") >= 0 || e.getPropertyName().indexOf("ValidStatesChanged") >= 0) {
+                    if (e.getSource() instanceof NamedBean) {
+                        String name = ((NamedBean) e.getSource()).getSystemName();
+                        if (log.isDebugEnabled()) {
+                            log.debug("Update cell {}, {} for {}", sysNameList.indexOf(name), VALUECOL, name);
+                        }
+                        // since we can add columns, the entire row is marked as updated
+                        int row = sysNameList.indexOf(name);
+                        this.fireTableRowsUpdated(row, row);
+                        clearAppearanceVector(row); // activate this method below
+                    }
+                }
+                super.propertyChange(e);
+            }*/
+
+            /**
              * Customize the SignalHead Value (Appearance) column to show an appropriate ComboBox of available Appearances
              * when the TableDataModel is being called from ListedTableAction.
              * @param table a JTable of Signal Head
@@ -369,12 +392,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
             /**
              * Clear the old appearance comboboxes and force them to be rebuilt
+             * At present (4.7.1) not used.
              * @param row Index of the signal mast (in TableDataModel) to be rebuilt in the Hashtables
              */
-            public void clearRowVector(int row) {
+/*            public void clearAppearanceVector(int row) {
                 boxMap.remove(this.getValueAt(row, SYSNAMECOL));
                 editorMap.remove(this.getValueAt(row, SYSNAMECOL));
-            }
+            }*/
 
             // Hashtables for Editors; not used for Renderer)
 
