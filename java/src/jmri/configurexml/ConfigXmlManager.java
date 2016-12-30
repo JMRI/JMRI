@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import jmri.InstanceManager;
+import jmri.jmrit.XmlFile;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.util.FileUtil;
 import org.jdom2.Document;
@@ -597,7 +598,9 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
          */
         Map<Element, Integer> loadlist = Collections.synchronizedMap(new LinkedHashMap<Element, Integer>());
 
+        boolean verify = XmlFile.getVerify();
         try {
+            XmlFile.setVerify(true);
             root = super.rootFromURL(url);
             // get the objects to load
             List<Element> items = root.getChildren();
@@ -699,6 +702,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             result = false;
         } finally {
             // no matter what, close error reporting
+            XmlFile.setVerify(verify);
             handler.done();
         }
 
@@ -716,7 +720,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         } else {
             log.info("Not recording file history");
         }
-
+        XmlFile.setVerify(verify);
         return result;
     }
 
@@ -796,8 +800,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * Invoke common handling of errors that happen during the "load" process.
      * <p>
      * Generally, this is invoked by {@link XmlAdapter} implementations of their
-     * creationErrorEncountered() method (note different arguemments, though).
-     * The standard implemenation of that is in {@link AbstractXmlAdapter}.
+     * creationErrorEncountered() method (note different arguments, though).
+     * The standard implementation of that is in {@link AbstractXmlAdapter}.
      * <p>
      * Exceptions passed into this are absorbed.
      *

@@ -36,6 +36,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>9</revnumber>
+      <date>2016-12-22</date>
+      <authorinitials>JCA</authorinitials>
+      <revremark>Catalan translation</revremark>
+    </revision>
+    <revision>
       <revnumber>8</revnumber>
       <date>2016-10-22</date>
       <authorinitials>PS</authorinitials>
@@ -67,6 +73,7 @@
           <text>RailCom Configuration</text>
           <text xml:lang="de">RailCom Einstellungen</text>
           <text xml:lang="cs">Konfigurace RailCom</text>
+          <text xml:lang="ca">Configuració RailCom</text>
         </label>
         <display item="RailCom Address"/>
         <display item="RailCom Data"/>
@@ -114,7 +121,7 @@
           <text>Braking Configuration</text>
           <text xml:lang="de">Bremseinstellungen</text>
           <text xml:lang="cs">Konfigurace brždění</text>
-          <text xml:lang="cs">Configuració de la Frenada</text>
+          <text xml:lang="ca">Configuració de la Frenada</text>
         </label>
         <display item="Constant Braking"/>
         <display item="ABC"/>

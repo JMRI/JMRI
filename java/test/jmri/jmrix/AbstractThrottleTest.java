@@ -9,6 +9,8 @@ import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.ThrottleListener;
 import junit.framework.TestCase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -1499,6 +1501,16 @@ public class AbstractThrottleTest extends TestCase {
     public void testGetSpeed_float() {
         AbstractThrottle instance = new AbstractThrottleImpl();
         assertEquals("Full Speed", 127, instance.intSpeed(1.0F));
+        float incre = 0.007874016f;
+        float speed = incre;
+        // Cannot get speeedStep 1. range is 2 to 127
+        int i = 2;
+        while (speed < 0.999f) {
+            int result = instance.intSpeed(speed);
+            log.debug("speed= {} step= {}",speed,result);
+            assertEquals("speed step ", i++, result);
+            speed += incre;
+        }
     }
 
     /**
@@ -1552,5 +1564,7 @@ public class AbstractThrottleTest extends TestCase {
             return this.locoAddress;
         }
     }
+
+    private final static Logger log = LoggerFactory.getLogger(AbstractThrottleTest.class.getName());
 
 }

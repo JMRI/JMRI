@@ -1152,13 +1152,28 @@ public class SectionTableAction extends AbstractTableAction {
     }
 
     /**
-     * Add the Tools menu item
+     * Insert 2 table specific menus.
+     * Account for the Window and Help menus, which are already added to the menu bar
+     * as part of the creation of the JFrame, by adding the menus 2 places earlier
+     * unless the table is part of the ListedTableFrame, that adds the Help menu later on.
+     * @param f the JFrame of this table
      */
+    @Override
     public void setMenuBar(BeanTableFrame f) {
         frame = f;
         JMenuBar menuBar = f.getJMenuBar();
+        int pos = menuBar.getMenuCount() -1; // count the number of menus to insert the TableMenu before 'Window' and 'Help'
+        int offset = 1;
+        log.debug("setMenuBar number of menu items = " + pos);
+        for (int i = 0; i <= pos; i++) {
+            if (menuBar.getComponent(i) instanceof JMenu) {
+                if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
+                    offset = -1; // correct for use as part of ListedTableAction where the Help Menu is not yet present
+                }
+            }
+        }
         JMenu toolsMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        menuBar.add(toolsMenu);
+        menuBar.add(toolsMenu, pos + offset);
         JMenuItem validate = new JMenuItem(rbx.getString("ValidateAllSections") + "...");
         toolsMenu.add(validate);
         validate.addActionListener(new ActionListener() {

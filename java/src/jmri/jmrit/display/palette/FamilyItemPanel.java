@@ -212,7 +212,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (!_suppressNamePrompts) {
             if (_family == null || _family.trim().length() == 0) {
                 _family = JOptionPane.showInputDialog(_paletteFrame, Bundle.getMessage("NoFamilyName"),
-                        Bundle.getMessage("questionTitle"), JOptionPane.QUESTION_MESSAGE);
+                        Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE);
                 if (_family == null || _family.trim().length() == 0) {
                     // bail out
                     _family = null;
@@ -221,7 +221,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                 }
             }
             int result = JOptionPane.showConfirmDialog(_paletteFrame,
-                    Bundle.getMessage("UnkownFamilyName", _family), Bundle.getMessage("questionTitle"),
+                    Bundle.getMessage("UnkownFamilyName", _family), Bundle.getMessage("QuestionTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (result == JOptionPane.YES_OPTION) {
                 ItemPalette.addFamily(_paletteFrame, _itemType, _family, iconMap);
@@ -407,7 +407,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
     protected void familiesMissing() {
         int result = JOptionPane.showConfirmDialog(_paletteFrame,
-                Bundle.getMessage("AllFamiliesDeleted", _itemType), Bundle.getMessage("questionTitle"),
+                Bundle.getMessage("AllFamiliesDeleted", _itemType), Bundle.getMessage("QuestionTitle"),
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.YES_OPTION) {
             ItemPalette.loadMissingItemType(_itemType, _editor);

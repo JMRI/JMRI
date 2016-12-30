@@ -1,37 +1,30 @@
 package jmri.jmrix.mrc;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+   BundleTest.class,
+   jmri.jmrix.mrc.swing.PackageTest.class,
+   jmri.jmrix.mrc.simulator.PackageTest.class,
+   jmri.jmrix.mrc.serialdriver.PackageTest.class,
+   jmri.jmrix.mrc.configurexml.PackageTest.class,
+   MrcSystemConnectionMemoTest.class,
+   MrcPortControllerTest.class,
+   MrcTrafficControllerTest.class,
+   MrcExceptionTest.class,
+   MrcMessageExceptionTest.class
+})
 
 /**
  * Tests for the jmri.jmrix.mrc package
  *
  * @author	Bob Jacobsen
  */
-public class PackageTest extends TestCase {
-
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.mrc.PackageTest");  // no tests in this class itself
-        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-        suite.addTest(jmri.jmrix.mrc.swing.PackageTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.mrc.simulator.PackageTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.mrc.serialdriver.PackageTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.mrc.configurexml.PackageTest.class));
-
-        return suite;
-    }
+public class PackageTest {
 
 }

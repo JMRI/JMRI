@@ -1,5 +1,8 @@
 package jmri.util;
 
+import apps.gui.GuiLafPreferencesManager;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import jmri.ConditionalManager;
 import jmri.ConfigureManager;
@@ -16,6 +19,7 @@ import jmri.ShutDownManager;
 import jmri.SignalHeadManager;
 import jmri.SignalMastLogicManager;
 import jmri.SignalMastManager;
+import jmri.UserPreferencesManager;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
@@ -31,6 +35,11 @@ import jmri.managers.DefaultSignalMastLogicManager;
 import jmri.managers.DefaultSignalMastManager;
 import jmri.managers.InternalReporterManager;
 import jmri.managers.InternalSensorManager;
+import jmri.managers.TestUserPreferencesManager;
+import jmri.profile.NullProfile;
+import jmri.profile.Profile;
+import jmri.profile.ProfileManager;
+import jmri.progdebugger.DebugProgrammerManager;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -257,24 +266,22 @@ public class JUnitUtil {
     }
 
     public static void initDefaultUserMessagePreferences() {
-        InstanceManager.store(
-                new jmri.managers.TestUserPreferencesManager(),
-                jmri.UserPreferencesManager.class);
+        InstanceManager.setDefault(UserPreferencesManager.class, new TestUserPreferencesManager());
     }
 
     public static void initInternalTurnoutManager() {
         // now done automatically by InstanceManager's autoinit
-        jmri.InstanceManager.turnoutManagerInstance();
+        InstanceManager.turnoutManagerInstance();
     }
 
     public static void initInternalLightManager() {
         // now done automatically by InstanceManager's autoinit
-        jmri.InstanceManager.lightManagerInstance();
+        InstanceManager.lightManagerInstance();
     }
 
     public static void initInternalSensorManager() {
         // now done automatically by InstanceManager's autoinit
-        jmri.InstanceManager.sensorManagerInstance();
+        InstanceManager.sensorManagerInstance();
         InternalSensorManager.setDefaultStateForNewSensors(jmri.Sensor.UNKNOWN);
     }
 
@@ -353,6 +360,11 @@ public class JUnitUtil {
         InstanceManager.setThrottleManager(m);
     }
 
+    public static void initDebugProgrammerManager() {
+        DebugProgrammerManager m = new DebugProgrammerManager();
+        InstanceManager.setProgrammerManager(m);
+    }
+
     public static void initDebugPowerManager() {
         InstanceManager.setDefault(PowerManager.class, new PowerManagerScaffold());
     }
@@ -397,15 +409,58 @@ public class JUnitUtil {
      * Use reflection to reset the jmri.Application instance
      */
     public static void resetApplication() {
-       try {
-          Class<?> c = jmri.Application.class;
-          java.lang.reflect.Field f = c.getDeclaredField("name");
-          f.setAccessible(true);
-          f.set(new jmri.Application(),null);
-       } catch(NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) { 
-         log.error("Failed to reset jmri.Application static field");
-         x.printStackTrace();
-       }
+        try {
+            Class<?> c = jmri.Application.class;
+            java.lang.reflect.Field f = c.getDeclaredField("name");
+            f.setAccessible(true);
+            f.set(new jmri.Application(), null);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
+            log.error("Failed to reset jmri.Application static field", x);
+        }
+    }
+
+    public static void initGuiLafPreferencesManager() {
+        GuiLafPreferencesManager m = new GuiLafPreferencesManager();
+        InstanceManager.setDefault(GuiLafPreferencesManager.class, m);
+    }
+
+    /**
+     * Use only if profile contents are not to be verified or modified in test.
+     * If a profile will be written to and its contents verified as part of a
+     * test use {@link #resetProfileManager(jmri.profile.Profile)} with a
+     * provided profile.
+     *
+     * The new profile will have the name {@literal TestProfile }, the id
+     * {@literal 00000000 }, and will be in the directory {@literal temp }
+     * within the sources working copy.
+     */
+    public static void resetProfileManager() {
+        try {
+            Profile profile = new NullProfile("TestProfile", "00000000", FileUtil.getFile(FileUtil.SETTINGS));
+            resetProfileManager(profile);
+        } catch (FileNotFoundException ex) {
+            log.error("Settings directory \"{}\" does not exist", FileUtil.SETTINGS);
+        } catch (IOException | IllegalArgumentException ex) {
+            log.error("Unable to create profile", ex);
+        }
+    }
+
+    /**
+     * Use if the profile needs to be written to or cleared as part of the test.
+     * Suggested use in the {@link org.junit.Before} annotated method is: {@code
+     *
+     * @Rule public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
+     *
+     * @Before
+     * public void setUp() {
+     *     resetProfileManager(new jmri.profile.NullProfile(new java.io.File(folder.newFolder(jmri.profile.Profile.PROFILE), "test")));
+     * }
+     * }
+     *
+     * @param profile the provided profile
+     */
+    public static void resetProfileManager(Profile profile) {
+        ProfileManager.getDefault().setActiveProfile(profile);
     }
 
     private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class.getName());

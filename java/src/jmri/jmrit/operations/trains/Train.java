@@ -606,10 +606,10 @@ public class Train implements java.beans.PropertyChangeListener {
      * @return Train's route name.
      */
     public String getTrainRouteName() {
-        if (_route == null) {
+        if (getRoute() == null) {
             return NONE;
         }
-        return _route.getName();
+        return getRoute().getName();
     }
 
     /**
@@ -625,10 +625,10 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     protected RouteLocation getTrainDepartsRouteLocation() {
-        if (_route == null) {
+        if (getRoute() == null) {
             return null;
         }
-        return _route.getDepartsRouteLocation();
+        return getRoute().getDepartsRouteLocation();
     }
 
     public String getTrainDepartsDirection() {
@@ -652,10 +652,10 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     protected RouteLocation getTrainTerminatesRouteLocation() {
-        if (_route == null) {
+        if (getRoute() == null) {
             return null;
         }
-        return _route.getTerminatesRouteLocation();
+        return getRoute().getTerminatesRouteLocation();
     }
 
     /**
@@ -3868,21 +3868,21 @@ public class Train implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute(Xml.COMMENT)) != null) {
             _comment = OperationsXml.convertFromXmlComment(a.getValue());
         }
-        if (_route != null) {
+        if (getRoute() != null) {
             if ((a = e.getAttribute(Xml.CURRENT)) != null) {
-                _current = _route.getLocationById(a.getValue());
+                _current = getRoute().getLocationById(a.getValue());
             }
             if ((a = e.getAttribute(Xml.LEG2_START)) != null) {
-                _leg2Start = _route.getLocationById(a.getValue());
+                _leg2Start = getRoute().getLocationById(a.getValue());
             }
             if ((a = e.getAttribute(Xml.LEG3_START)) != null) {
-                _leg3Start = _route.getLocationById(a.getValue());
+                _leg3Start = getRoute().getLocationById(a.getValue());
             }
             if ((a = e.getAttribute(Xml.LEG2_END)) != null) {
-                _end2Leg = _route.getLocationById(a.getValue());
+                _end2Leg = getRoute().getLocationById(a.getValue());
             }
             if ((a = e.getAttribute(Xml.LEG3_END)) != null) {
-                _leg3End = _route.getLocationById(a.getValue());
+                _leg3End = getRoute().getLocationById(a.getValue());
             }
             if ((a = e.getAttribute(Xml.DEPARTURE_TRACK)) != null) {
                 Location location = LocationManager.instance().getLocationByName(getTrainDepartsName());

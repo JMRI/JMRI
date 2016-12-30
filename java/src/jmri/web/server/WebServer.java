@@ -1,16 +1,24 @@
 package jmri.web.server;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Properties;
+import java.util.List;
+import java.util.Map;
+import java.util.ServiceLoader;
+import javax.annotation.Nonnull;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
 import jmri.server.json.JSON;
+import jmri.server.web.spi.WebServerConfiguration;
 import jmri.util.FileUtil;
 import jmri.util.zeroconf.ZeroConfService;
+import jmri.web.servlet.DenialServlet;
+import jmri.web.servlet.RedirectionServlet;
 import jmri.web.servlet.directory.DirectoryHandler;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Handler;
@@ -22,6 +30,7 @@ import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.slf4j.Logger;
@@ -30,31 +39,64 @@ import org.slf4j.LoggerFactory;
 /**
  * An HTTP server that handles requests for HTTPServlets.
  *
+ * This server loads HttpServlets registered as
+ * {@link javax.servlet.http.HttpServlet} service providers and annotated with
+ * the {@link javax.servlet.annotation.WebServlet} annotation. It also loads the
+ * registered {@link jmri.server.web.spi.WebServerConfiguration} objects to get
+ * configuration for file handling, redirection, and denial of access to
+ * resources.
+ *
+ * When there is a conflict over how a path should be handled, denials take
+ * precedence, followed by servlets, redirections, and lastly direct access to
+ * files.
+ *
  * @author Bob Jacobsen Copyright 2005, 2006
  * @author Randall Wood Copyright 2012, 2016
  */
 public final class WebServer implements LifeCycle.Listener {
 
+    private static enum Registration {
+        DENIAL, REDIRECTION, RESOURCE, SERVLET
+    };
     private Server server;
     private ZeroConfService zeroConfService = null;
     private WebServerPreferences preferences = null;
     private ShutDownTask shutDownTask = null;
+    private final HashMap<String, Registration> registeredUrls = new HashMap<>();
     private final static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
 
+    /**
+     * Create a WebServer instance with the default preferences.
+     */
     public WebServer() {
         this(WebServerPreferences.getDefault());
     }
 
+    /**
+     * Create a WebServer instance with the specified preferences.
+     *
+     * @param preferences the preferences
+     */
     protected WebServer(WebServerPreferences preferences) {
         this.preferences = preferences;
     }
 
+    /**
+     * Get the default web server instance.
+     *
+     * @return a WebServer instance, either the existing instance or a new
+     *         instance created with the default constructor.
+     */
+    @Nonnull
     public static WebServer getDefault() {
         return InstanceManager.getOptionalDefault(WebServer.class).orElseGet(() -> {
             return InstanceManager.setDefault(WebServer.class, new WebServer());
         });
     }
 
+    /**
+     * Start the web server.
+     */
     public void start() {
         if (server == null) {
             QueuedThreadPool threadPool = new QueuedThreadPool();
@@ -66,68 +108,28 @@ public final class WebServer implements LifeCycle.Listener {
             connector.setSoLingerTime(-1);
             connector.setPort(preferences.getPort());
             server.setConnectors(new Connector[]{connector});
+            server.setHandler(new ContextHandlerCollection());
 
             ContextHandlerCollection contexts = new ContextHandlerCollection();
-            Properties services = new Properties();
-            Properties filePaths = new Properties();
-            try (InputStream in = this.getClass().getResourceAsStream("Services.properties")) { // NOI18N
-                services.load(in);
-                in.close();
-            } catch (IOException ex) {
-                log.error(ex.getMessage());
-            }
-            try (InputStream in = this.getClass().getResourceAsStream("FilePaths.properties")) { // NOI18N
-                filePaths.load(in);
-                in.close();
-            } catch (IOException ex) {
-                log.error(ex.getMessage());
-            }
-            for (String path : services.stringPropertyNames()) {
-                ServletContextHandler servletContext = new ServletContextHandler(ServletContextHandler.NO_SECURITY);
-                servletContext.setContextPath(path);
-                if (services.getProperty(path).equals("fileHandler")) { // NOI18N
-                    if (filePaths.getProperty(path).startsWith("program:web")) { // NOI18N
-                        log.debug("Setting up handler chain for {}", path);
-                        // make it possible to override anything under program:web/ with an identical path under preference:web/
-                        ResourceHandler preferenceHandler = new DirectoryHandler();
-                        preferenceHandler.setDirectoriesListed(true);
-                        preferenceHandler.setWelcomeFiles(new String[]{"index.html"}); // NOI18N
-                        preferenceHandler.setResourceBase(FileUtil.getAbsoluteFilename(filePaths.getProperty(path).replace("program:", "preference:"))); // NOI18N
-                        ResourceHandler programHandler = new DirectoryHandler();
-                        programHandler.setDirectoriesListed(true);
-                        programHandler.setWelcomeFiles(new String[]{"index.html"}); // NOI18N
-                        programHandler.setResourceBase(FileUtil.getAbsoluteFilename(filePaths.getProperty(path)));
-                        HandlerList handlers = new HandlerList();
-                        handlers.setHandlers(new Handler[]{preferenceHandler, programHandler, new DefaultHandler()});
-                        ContextHandler handlerContext = new ContextHandler();
-                        handlerContext.setContextPath(path);
-                        handlerContext.setHandler(handlers);
-                        contexts.addHandler(handlerContext);
-                        continue;
-                    }
-                    ResourceHandler handler = new DirectoryHandler();
-                    handler.setDirectoriesListed(true);
-                    handler.setWelcomeFiles(new String[]{"index.html"});
-                    handler.setResourceBase(FileUtil.getAbsoluteFilename(filePaths.getProperty(path)));
-                    HandlerList handlers = new HandlerList();
-                    handlers.setHandlers(new Handler[]{handler, new DefaultHandler()});
-                    ContextHandler handlerContext = new ContextHandler();
-                    handlerContext.setContextPath(path);
-                    handlerContext.setHandler(handlers);
-                    contexts.addHandler(handlerContext);
-                    continue;
-                } else if (services.getProperty(path).equals("redirectHandler")) { // NOI18N
-                    servletContext.addServlet("jmri.web.servlet.RedirectionServlet", ""); // NOI18N
-                } else if (services.getProperty(path).startsWith("jmri.web.servlet.config.ConfigServlet") && !this.preferences.allowRemoteConfig()) { // NOI18N
-                    // if not allowRemoteConfig, use DenialServlet for any path configured to use ConfigServlet
-                    servletContext.addServlet("jmri.web.servlet.DenialServlet", "/*"); // NOI18N
-                } else {
-                    servletContext.addServlet(services.getProperty(path), "/*"); // NOI18N
+            // Load all path handlers
+            ServiceLoader.load(WebServerConfiguration.class).forEach((configuration) -> {
+                Map<String, String> filePaths = configuration.getFilePaths();
+                for (String key : filePaths.keySet()) {
+                    this.registerResource(key, filePaths.get(key));
                 }
-                contexts.addHandler(servletContext);
-            }
-            server.setHandler(contexts);
-
+                Map<String, String> redirections = configuration.getRedirectedPaths();
+                for (String key : redirections.keySet()) {
+                    this.registerRedirection(key, redirections.get(key));
+                }
+                List<String> denials = configuration.getForbiddenPaths();
+                for (String key : denials) {
+                    this.registerDenial(key);
+                }
+            });
+            // Load all classes that provide the HttpServlet service.
+            ServiceLoader.load(HttpServlet.class).forEach((servlet) -> {
+                this.registerServlet(servlet.getClass(), servlet);
+            });
             server.addLifeCycleListener(this);
 
             Thread serverThread = new ServerThread(server);
@@ -138,6 +140,11 @@ public final class WebServer implements LifeCycle.Listener {
 
     }
 
+    /**
+     * Stop the server.
+     *
+     * @throws Exception if there is an error stopping the server
+     */
     public void stop() throws Exception {
         server.stop();
     }
@@ -146,7 +153,10 @@ public final class WebServer implements LifeCycle.Listener {
      * Get the public URI for a portable path. This method returns public URIs
      * for only some portable paths, and does not check that the portable path
      * is actually sane. Note that this refuses to return portable paths that
-     * are outside of program: and preference:
+     * are outside of {@link jmri.util.FileUtil#PREFERENCES},
+     * {@link jmri.util.FileUtil#PROFILE},
+     * {@link jmri.util.FileUtil#SETTINGS}, or
+     * {@link jmri.util.FileUtil#PROGRAM}.
      *
      * @param path the JMRI portable path
      * @return The servable URI or null
@@ -155,6 +165,10 @@ public final class WebServer implements LifeCycle.Listener {
     public static String URIforPortablePath(String path) {
         if (path.startsWith(FileUtil.PREFERENCES)) {
             return path.replaceFirst(FileUtil.PREFERENCES, "/prefs/"); // NOI18N
+        } else if (path.startsWith(FileUtil.PROFILE)) {
+            return path.replaceFirst(FileUtil.PROFILE, "/project/"); // NOI18N
+        } else if (path.startsWith(FileUtil.SETTINGS)) {
+            return path.replaceFirst(FileUtil.SETTINGS, "/settings/"); // NOI18N
         } else if (path.startsWith(FileUtil.PROGRAM)) {
             return path.replaceFirst(FileUtil.PROGRAM, "/dist/"); // NOI18N
         } else {
@@ -166,13 +180,179 @@ public final class WebServer implements LifeCycle.Listener {
         return preferences.getPort();
     }
 
+    public WebServerPreferences getPreferences() {
+        return preferences;
+    }
+
+    /**
+     * Register a URL pattern to be denied access.
+     *
+     * @param urlPattern the pattern to deny access to
+     */
+    public void registerDenial(String urlPattern) {
+        this.registeredUrls.put(urlPattern, Registration.DENIAL);
+        ServletContextHandler servletContext = new ServletContextHandler(ServletContextHandler.NO_SECURITY);
+        servletContext.setContextPath(urlPattern);
+        DenialServlet servlet = new DenialServlet();
+        servletContext.addServlet(new ServletHolder(servlet), "/*"); // NOI18N
+        ((ContextHandlerCollection) this.server.getHandler()).addHandler(servletContext);
+    }
+
+    /**
+     * Register a URL pattern to return resources from the file system. The
+     * filePath may start with any of the following:
+     * <ol>
+     * <li>{@link jmri.util.FileUtil#PREFERENCES}
+     * <li>{@link jmri.util.FileUtil#PROFILE}
+     * <li>{@link jmri.util.FileUtil#SETTINGS}
+     * <li>{@link jmri.util.FileUtil#PROGRAM}
+     * </ol>
+     * Note that the filePath can be overridden by an otherwise identical
+     * filePath starting with any of the portable paths above it in the
+     * preceding list.
+     *
+     * @param urlPattern the pattern to get resources for
+     * @param filePath   the portable path for the resources
+     * @throws IllegalArgumentException if urlPattern is already registered to
+     *                                  deny access or for a servlet or if
+     *                                  filePath is not allowed
+     */
+    public void registerResource(String urlPattern, String filePath) throws IllegalArgumentException {
+        if (this.registeredUrls.get(urlPattern) != null) {
+            throw new IllegalArgumentException("urlPattern \"" + urlPattern + "\" is already registered.");
+        }
+        this.registeredUrls.put(urlPattern, Registration.RESOURCE);
+        ServletContextHandler servletContext = new ServletContextHandler(ServletContextHandler.NO_SECURITY);
+        servletContext.setContextPath(urlPattern);
+        HandlerList handlers = new HandlerList();
+        if (filePath.startsWith(FileUtil.PROGRAM) && !filePath.equals(FileUtil.PROGRAM)) {
+            // make it possible to override anything under program: with an identical path under preference:, profile:, or settings:
+            log.debug("Setting up handler chain for {}", urlPattern);
+            ResourceHandler preferenceHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath.replace(FileUtil.PROGRAM, FileUtil.PREFERENCES)));
+            ResourceHandler projectHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath.replace(FileUtil.PROGRAM, FileUtil.PROFILE)));
+            ResourceHandler settingsHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath.replace(FileUtil.PROGRAM, FileUtil.SETTINGS)));
+            ResourceHandler programHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath));
+            handlers.setHandlers(new Handler[]{preferenceHandler, projectHandler, settingsHandler, programHandler, new DefaultHandler()});
+        } else if (filePath.startsWith(FileUtil.SETTINGS) && !filePath.equals(FileUtil.SETTINGS)) {
+            // make it possible to override anything under settings: with an identical path under preference: or profile:
+            log.debug("Setting up handler chain for {}", urlPattern);
+            ResourceHandler preferenceHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath.replace(FileUtil.SETTINGS, FileUtil.PREFERENCES)));
+            ResourceHandler projectHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath.replace(FileUtil.PROGRAM, FileUtil.PROFILE)));
+            ResourceHandler settingsHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath));
+            handlers.setHandlers(new Handler[]{preferenceHandler, projectHandler, settingsHandler, new DefaultHandler()});
+        } else if (filePath.startsWith(FileUtil.PROFILE) && !filePath.equals(FileUtil.PROFILE)) {
+            // make it possible to override anything under profile: with an identical path under preference:
+            log.debug("Setting up handler chain for {}", urlPattern);
+            ResourceHandler preferenceHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath.replace(FileUtil.SETTINGS, FileUtil.PREFERENCES)));
+            ResourceHandler projectHandler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath.replace(FileUtil.PROGRAM, FileUtil.PROFILE)));
+            handlers.setHandlers(new Handler[]{preferenceHandler, projectHandler, new DefaultHandler()});
+        } else if (FileUtil.isPortableFilename(filePath)) {
+            log.debug("Setting up handler chain for {}", urlPattern);
+            ResourceHandler handler = new DirectoryHandler(FileUtil.getAbsoluteFilename(filePath));
+            handlers.setHandlers(new Handler[]{handler, new DefaultHandler()});
+        } else if (URIforPortablePath(filePath) == null) {
+            throw new IllegalArgumentException("\"" + filePath + "\" is not allowed.");
+        }
+        ContextHandler handlerContext = new ContextHandler();
+        handlerContext.setContextPath(urlPattern);
+        handlerContext.setHandler(handlers);
+        ((ContextHandlerCollection) this.server.getHandler()).addHandler(handlerContext);
+    }
+
+    /**
+     * Register a URL pattern to be redirected to another resource.
+     *
+     * @param urlPattern  the pattern to be redirected
+     * @param redirection the path to which the pattern is redirected
+     * @throws IllegalArgumentException if urlPattern is already registered for
+     *                                  any other purpose
+     */
+    public void registerRedirection(String urlPattern, String redirection) throws IllegalArgumentException {
+        Registration registered = this.registeredUrls.get(urlPattern);
+        if (registered != null && registered != Registration.REDIRECTION) {
+            throw new IllegalArgumentException("\"" + urlPattern + "\" registered to " + registered);
+        }
+        this.registeredUrls.put(urlPattern, Registration.REDIRECTION);
+        ServletContextHandler servletContext = new ServletContextHandler(ServletContextHandler.NO_SECURITY);
+        servletContext.setContextPath(urlPattern);
+        RedirectionServlet servlet = new RedirectionServlet(urlPattern, redirection);
+        servletContext.addServlet(new ServletHolder(servlet), ""); // NOI18N
+        ((ContextHandlerCollection) this.server.getHandler()).addHandler(servletContext);
+    }
+
+    /**
+     * Register a {@link javax.servlet.http.HttpServlet } that is annotated with
+     * the {@link javax.servlet.annotation.WebServlet } annotation.
+     *
+     * This method calls
+     * {@link #registerServlet(java.lang.Class, javax.servlet.http.HttpServlet)}
+     * with a null HttpServlet.
+     *
+     * @param type The actual class of the servlet.
+     */
+    public void registerServlet(Class<? extends HttpServlet> type) {
+        this.registerServlet(type, null);
+    }
+
+    /**
+     * Register a {@link javax.servlet.http.HttpServlet } that is annotated with
+     * the {@link javax.servlet.annotation.WebServlet } annotation.
+     *
+     * Registration reads the WebServlet annotation to get the list of paths the
+     * servlet should handle and creates instances of the Servlet to handle each
+     * path.
+     *
+     * Note that all HttpServlets registered using this mechanism must have a
+     * default constructor.
+     *
+     * @param type     The actual class of the servlet.
+     * @param instance An un-initialized, un-registered instance of the servlet.
+     */
+    public void registerServlet(Class<? extends HttpServlet> type, HttpServlet instance) {
+        try {
+            for (ServletContextHandler handler : this.registerServlet(
+                    ServletContextHandler.NO_SECURITY,
+                    type,
+                    instance
+            )) {
+                ((ContextHandlerCollection) this.server.getHandler()).addHandler(handler);
+            }
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
+            log.error("Unable to register servlet", ex);
+        }
+    }
+
+    private List<ServletContextHandler> registerServlet(int options, Class<? extends HttpServlet> type, HttpServlet instance)
+            throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+        WebServlet info = type.getAnnotation(WebServlet.class);
+        List<ServletContextHandler> handlers = new ArrayList<>(info.urlPatterns().length);
+        for (String pattern : info.urlPatterns()) {
+            if (this.registeredUrls.get(pattern) != Registration.DENIAL) {
+                // DenialServlet gets special handling
+                if (info.name().equals("DenialServlet")) { // NOI18N
+                    this.registeredUrls.put(pattern, Registration.DENIAL);
+                } else {
+                    this.registeredUrls.put(pattern, Registration.SERVLET);
+                }
+                ServletContextHandler context = new ServletContextHandler(options);
+                context.setContextPath(pattern);
+                log.debug("Creating new {} for URL pattern {}", type.getName(), pattern);
+                context.addServlet(type, "/*"); // NOI18N
+                handlers.add(context);
+            } else {
+                log.error("Unable to register servlet \"{}\" to provide denied URL {}", info.name(), pattern);
+            }
+        }
+        return handlers;
+    }
+
     @Override
     public void lifeCycleStarting(LifeCycle lc) {
         shutDownTask = new ServerShutDownTask(this);
         InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(manager -> {
             manager.register(shutDownTask);
         });
-        log.info("Starting Web Server on port " + preferences.getPort());
+        log.info("Starting Web Server on port {}", preferences.getPort());
     }
 
     @Override
@@ -221,7 +401,7 @@ public final class WebServer implements LifeCycle.Listener {
                 server.start();
                 server.join();
             } catch (Exception ex) {
-                log.error("Exception starting Web Server: " + ex);
+                log.error("Exception starting Web Server", ex);
             }
         }
     }

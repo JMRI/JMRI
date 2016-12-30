@@ -31,6 +31,7 @@ import java.net.URLDecoder;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,6 +58,11 @@ import org.slf4j.LoggerFactory;
  * TODO: Include decoder defs and CVs in roster entry response.
  *
  */
+@WebServlet(name = "RosterServlet",
+        urlPatterns = {
+            "/roster", // default
+            "/prefs/roster.xml", // redirect to /roster?format=xml since ~ 9 Apr 2012
+        })
 public class RosterServlet extends HttpServlet {
 
     private transient ObjectMapper mapper;
@@ -65,8 +71,9 @@ public class RosterServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        super.init();
-        this.mapper = new ObjectMapper();
+        if (this.getServletContext().getContextPath().equals("/roster")) { // NOI18N
+            this.mapper = new ObjectMapper();
+        }
     }
 
     /**
@@ -78,6 +85,10 @@ public class RosterServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (request.getRequestURI().equals("/prefs/roster.xml")) { // NOI18N
+            response.sendRedirect("/roster?format=xml"); // NOI18N
+            return;
+        }
         if (request.getPathInfo().length() == 1) {
             this.doList(request, response);
         } else {

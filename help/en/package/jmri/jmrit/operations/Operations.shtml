@@ -1958,6 +1958,14 @@
     of routes that can service the track. If you only want to prevent certain trains or routes from
     serving the track select the "Exclude Trains" or "Exclude Routes" options.</p>
 
+   <p>If you restrict a track to certain trains or routes, the table in the <a href="#AddLocation">Edit Location</a>
+    window for that track will have an additional column called "Restrictions". If you've built a
+    list of trains or routes that can only set out cars to the track, you will see "SO" followed by the
+    number of trains or routes that are allowed to place cars onto that track. For car pickup
+    restrictions, you will see "PU" followed by the number of trains or routes that are allowed to
+    pull cars from that track. A small "x" appears before the number if you built of list of train
+    or route exclusions for that track.</p>
+
    <a name="Schedules" id="Schedules"></a>
    <h3>Schedules</h3>
    If you would like to see cars delivered in a particular sequence, or with a specific load for
@@ -2511,6 +2519,14 @@
     remove a load name from the list, select the load name you want to remove, and press "Delete
     Load". "Delete All" will remove all load names from the load list.</p>
 
+   <p>
+    If you decide to restrict a track to certain loads, the table in the <a href="#AddLocation">Edit
+     Location</a> window for that track will have an additional column called "Loads". If you've built a
+    list of loads that can be accepted by the track, you will see "A" followed by the number of
+    loads that are accepted by that track. If you've built a list of loads that the track will not
+    allow, you will see "E" and the number of loads that you want to exclude from this track.
+   </p>
+
    <a name="SpurOption" id="SpurOption"></a>
    <h5>Spur Option</h5>
 
@@ -2540,6 +2556,14 @@
     road you want, and then press the "Add Road" button. To remove a road from the list, select the
     road you want to remove, and press "Delete Road". "Delete All" will remove all roads from the
     road list.</p>
+
+   <p>
+    If you decide to restrict a track to certain roads, the table in the <a href="#AddLocation">Edit
+     Location</a> window for that track will have an additional column called "Roads". If you've built a
+    list of roads that can be accepted by the track, you will see "A" followed by the number of
+    roads that are accepted by that track. If you've built a list of roads that the track will not
+    service, you will see "E" and the number of roads that you want to exclude from this track.
+   </p>
 
    <a name="Pools" id="Pools"></a>
    <h4>Track Pools</h4>
@@ -3371,13 +3395,18 @@
    <a name="Routes" id="Routes"></a>
    <h2>Routes</h2>
    A route is a list of locations (stations) that a train will visit. Later you can decide if the
-   train stops at a location for work. Routes can be point to point or out and back. To build a
-   route, select "Tools-&gt;Operations-&gt;Routes". The Routes window also provides route status,
-   for example, "Orphan" means the route hasn't been assigned to a train.
+   train stops at a location for work. Routes can be point to point or out and back. A route that
+   returns to its origin is often referred to as a "turn". To build a route, select
+   "Tools-&gt;Operations-&gt;Routes".
 
    <p>
     <img src="images/Routes.png">
    </p>
+
+   <p>The "Routes" window shows for every route created the id, name, comment, shortest route
+    length, longest route length, and status of the route. If there's a problem with the route, the
+    status will be reported as "Error". If the route hasn't been assigned to a train, the status for
+    the route is reported as "Orphan". Use the "Edit" button to modify an existing route.</p>
 
    <a name="AddRoute" id="AddRoute"></a>
    <h3>Add Route</h3>
@@ -3513,7 +3542,8 @@
     an Eastbound train. The second "Hillsboro" provides the departure direction for the train, and
     the amount of work for tracks that can only be access by a Westbound train. Even though
     "Hillsboro" appears twice in the route, it will only appear once on your Manifests and switch
-    lists.</p>
+    lists. Also when you enter a location twice in a row in the route with a change in direction,
+    the location's switch list will add a note that the train's departure direction has changed.</p>
 
    <a name="PassengerTrainRoute" id="PassengerTrainRoute"></a>
    <h3>Passenger Train Route</h3>

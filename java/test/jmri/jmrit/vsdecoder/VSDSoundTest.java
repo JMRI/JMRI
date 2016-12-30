@@ -1,10 +1,13 @@
 package jmri.jmrit.vsdecoder;
 
-import org.junit.Assert;
+import apps.tests.Log4JFixture;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.jdom2.Element;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 
 /**
  * Tests for the VSDSound class
@@ -24,7 +27,7 @@ public class VSDSoundTest extends TestCase {
         Assert.assertFalse("is playing", uut.isPlaying());
     }
 
-    public void TestSetGet() {
+    public void testSetGet() {
         VSDSound uut = new SoundBite("unitUnderTest");
         uut.setName("new name");
         Assert.assertEquals("set name", "new name", uut.getName());
@@ -62,4 +65,15 @@ public class VSDSoundTest extends TestCase {
         return suite;
     }
 
+    @Before
+    @Override
+    public void setUp() {
+        Log4JFixture.setUp();
+    }
+
+    @After
+    @Override
+    public void tearDown() {
+        Log4JFixture.tearDown();
+    }
 }

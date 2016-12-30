@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>8</revnumber>
+      <date>2016-12-22</date>
+      <authorinitials>JCA</authorinitials>
+      <revremark>Catalan translation</revremark>
+    </revision>
+    <revision>
       <revnumber>7</revnumber>
       <date>2016-10-22</date>
       <authorinitials>PS</authorinitials>
@@ -105,7 +111,7 @@
         <choice xml:lang="it">Guasto</choice>
         <choice xml:lang="de">Fehler</choice>
         <choice xml:lang="cs">Závada</choice>
-        <choice xml:lang="cs">Error</choice>
+        <choice xml:lang="ca">Error</choice>
       </enumChoice>
     </enumVal>
     <label>Motor short-circuit</label>
