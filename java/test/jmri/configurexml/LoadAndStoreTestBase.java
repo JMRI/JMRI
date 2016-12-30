@@ -1,5 +1,6 @@
 package jmri.configurexml;
 
+
 import apps.tests.Log4JFixture;
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,12 +23,21 @@ import org.slf4j.LoggerFactory;
 /**
  * Base for testing load-and-store of configuration files.
  * <p>
- * Including
- * "LoadAndStoreTestBase.makeSuite("java/test/jmri/jmrit/display/configurexml/")"
- * in a subclass's test suite will test each file in a "load" directory by
- * loading it, then storing it, then comparing (with certain lines skipped)
- * against either a file by the same name in the "loadref" directory, or against
- * the original file itself.
+ * Creating a parameterized test class that extends this class will test each
+ * file in a "load" directory by loading it, then storing it, then comparing
+ * (with certain lines skipped) against either a file by the same name in the
+ * "loadref" directory, or against the original file itself. A minimal test
+ * class is: {@code
+ * @RunWith(Parameterized.class)
+ * public class LoadAndStoreTest extends LoadAndStoreTestBase {
+ *
+ * @Parameterized.Parameters(name = "{0} (pass={1})")
+ * public static Iterable<Object[]> data() { return getFiles(new
+ * File("java/test/jmri/configurexml"), false, true); }
+ *
+ * public LoadAndStoreTest(File file, boolean pass) { super(file, pass); }
+ * }
+ * }
  *
  * @author Bob Jacobsen Copyright 2009, 2014
  * @since 2.5.5 (renamed & reworked in 3.9 series)
@@ -63,6 +73,27 @@ public class LoadAndStoreTestBase {
         // tests itself, we can use SchemaTestBase.getFiles() by adding "load"
         // to the directory to test
         return SchemaTestBase.getFiles(new File(directory, "load"), recurse, pass);
+    }
+
+    /**
+     * Get all XML files in the immediate subdirectories of a directory and
+     * validate them.
+     *
+     * @param directory the directory containing subdirectories containing XML
+     *                  files
+     * @param recurse   if true, will recurse into subdirectories
+     * @param pass      if true, successful validation will pass; if false,
+     *                  successful validation will fail
+     * @return a collection of Object arrays, where each array contains the
+     *         {@link java.io.File} with a filename ending in {@literal .xml} to
+     *         validate and a boolean matching the pass parameter
+     * @throws IllegalArgumentException if directory is a file
+     */
+    public static Collection<Object[]> getDirectories(File directory, boolean recurse, boolean pass) throws IllegalArgumentException {
+        // since this method gets the files to test, but does not trigger any
+        // tests itself, we can use SchemaTestBase.getDirectories() by adding "load"
+        // to the directory to test
+        return SchemaTestBase.getDirectories(new File(directory, "load"), recurse, pass);
     }
 
     static void checkFile(File inFile, File outFile) throws Exception {
