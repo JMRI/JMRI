@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 @RunWith(Parameterized.class)
 public class SchemaTestBase {
 
+    private boolean verifySchema;
     private final File file;
     private final boolean pass;
     private final static Logger log = LoggerFactory.getLogger(SchemaTestBase.class);
@@ -114,10 +115,12 @@ public class SchemaTestBase {
     public void setUp() throws Exception {
         Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
+        this.verifySchema = XmlFile.getVerify();
     }
 
     @After
     public void tearDown() throws Exception {
+        XmlFile.setVerify(this.verifySchema);
         JUnitUtil.resetInstanceManager();
         Log4JFixture.tearDown();
     }
