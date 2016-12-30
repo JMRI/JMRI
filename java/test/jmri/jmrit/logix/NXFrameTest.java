@@ -11,7 +11,6 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.TurnoutManager;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 import junit.extensions.jfcunit.TestHelper;
@@ -33,9 +32,9 @@ import org.junit.Assert;
 public class NXFrameTest extends jmri.util.SwingTestCase {
 
     OBlockManager _OBlockMgr;
-    PortalManager _portalMgr;
+//    PortalManager _portalMgr;
     SensorManager _sensorMgr;
-    TurnoutManager _turnoutMgr;
+//    TurnoutManager _turnoutMgr;
 
     public void testGetDefault() {
         if (GraphicsEnvironment.isHeadless()) {
@@ -236,14 +235,14 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
             JUnitUtil.waitFor(() -> {
                 int state = blk.getState();
                 return  state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.OCCUPIED) ||
-                        state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.DARK);
+                        state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.UNDETECTED);
             }, "Train occupies block "+i+" of "+route.length);
             flushAWT();
             jmri.util.JUnitUtil.releaseThread(this);
 
             block = _OBlockMgr.getOBlock(route[i]);
             Sensor nextSensor;
-            boolean dark = (block.getState() & OBlock.DARK) != 0;
+            boolean dark = (block.getState() & OBlock.UNDETECTED) != 0;
             if (!dark) {
                 nextSensor = block.getSensor();
                 jmri.util.ThreadingUtil.runOnLayout(() -> {

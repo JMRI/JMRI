@@ -95,7 +95,13 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 
 - Commit any changes in your local web site directory, as these can end up in help, xml, etc (See the JMRI page on local web sites for details)
 
-- Remake the help index (need a command line approach, so can put in ant!)
+- Remake the help map, search, index and TOC by doing
+```
+        cd help/en/
+        ant
+```
+
+That will pop some frames, etc, but should be entirely automatic.  If you have to do it manually for some reason:
 
 ```
         cd help/en/
@@ -104,12 +110,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
         (navigate to JHelpDev.xml in release html/en/ & open it; might take a while)
         (click "Create All", takes a bit of time, wait for button to release)
         (quit)
-```
-
-- In that same directory, also remake the index and toc web pages by doing invoking ant (no argument needed).
-
-```
-        ant
+        ant index TOC
 ```
 
 - [ ] We need to consider whether to do this in help/fr, the French translation; there will perhaps be eventually other translations too, so keep that in mind
