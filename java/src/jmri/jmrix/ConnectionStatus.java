@@ -21,7 +21,7 @@ public class ConnectionStatus {
     public static final String CONNECTION_DOWN = "Not Connected";
 
     // hashmap of ConnectionKey objects and their status
-    private HashMap<ConnectionKey,String> portStatus = new HashMap<ConnectionKey,String>();
+    private final HashMap<ConnectionKey,String> portStatus = new HashMap<>();
 
     /**
      * record the single instance *
@@ -43,27 +43,28 @@ public class ConnectionStatus {
     }
 
     /**
-     * sets the connection state of a communication port
+     * Set the connection state of a communication port.
      *
-     * @param systemName String containing the system name
-     * @param portName String containing the port name
+     * @param systemName the system name
+     * @param portName   the port name
      */
     public synchronized void addConnection(String systemName, String portName) {
         log.debug("add connection to monitor " + systemName + " " + portName);
         ConnectionKey newKey = new ConnectionKey(systemName,portName);
-        if (portStatus.containsKey(newKey)) {
-            return;
-        } else {
+        if (!portStatus.containsKey(newKey)) {
             portStatus.put(newKey,CONNECTION_UNKNOWN);
             firePropertyChange("add", null, portName);
         }
     }
 
     /**
-     * sets the connection state of a communication port
+     * Set the connection state of a communication port.
      *
-     * @param portName = communication port name
-     * @deprecated since 4.7.1 use setConnectionSTate(String,String,String) instead.
+     * @param portName communication port name
+     * @param state    port state
+     * @deprecated since 4.7.1 use
+     * {@link #setConnectionState(java.lang.String, java.lang.String, java.lang.String)}
+     * instead.
      */
     @Deprecated
     public synchronized void setConnectionState(String portName, String state) {
@@ -71,12 +72,12 @@ public class ConnectionStatus {
     }
 
     /**
-     * sets the connection state of a communication port
+     * Set the connection state of a communication port.
      *
-     * @param systemName String containing the system name
-     * @param portName String containing the port name
-     * @param state one of ConnectionStatus.UP, ConnectionStatus.DOWN, 
-     *        or ConnectionStatus.UNKNOWN.
+     * @param systemName the system name
+     * @param portName   the port name
+     * @param state      one of ConnectionStatus.UP, ConnectionStatus.DOWN, or
+     *                   ConnectionStatus.UNKNOWN.
      */
     public synchronized void setConnectionState(String systemName,String portName, String state) {
         log.debug("set " + portName + " connection status: " + state);
@@ -90,10 +91,12 @@ public class ConnectionStatus {
     }
 
     /**
-     * get the status of a communication port
+     * Get the status of a communication port.
      *
-     * @return status string
-     * @deprecated since 4.7.1 use getConnectionState(String,String) instead.
+     * @param portName the port name
+     * @return status
+     * @deprecated since 4.7.1 use
+     * {@link #getConnectionState(java.lang.String, java.lang.String)} instead.
      */
     @Deprecated
     public synchronized String getConnectionState(String portName) {
@@ -103,7 +106,7 @@ public class ConnectionStatus {
         } else {
            // we have to see if there is a key that has portName as the port value.
            for( ConnectionKey c :portStatus.keySet()) {
-              if(c.getPortName() == portName) {
+              if(c.getPortName().equals(portName)) {
                 // if we find a match, return it.
                 return getConnectionState(c.getSystemName(),c.getPortName());
               }
@@ -117,8 +120,8 @@ public class ConnectionStatus {
     /**
      * get the status of a communication port based on the system name.
      *
-     * @param systemName String containing the system name
-     * @return status string
+     * @param systemName the system name
+     * @return the status
      */
     public synchronized String getSystemState(String systemName) {
         ConnectionKey newKey = new ConnectionKey(systemName,null);
@@ -127,7 +130,7 @@ public class ConnectionStatus {
         } else {
            // we have to see if there is a key that has systemName as the port value.
            for( ConnectionKey c :portStatus.keySet()) {
-              if(c.getSystemName() == systemName) {
+              if(c.getSystemName().equals(systemName)) {
                 // if we find a match, return it.
                 return getConnectionState(c.getSystemName(),c.getPortName());
               }
@@ -139,11 +142,11 @@ public class ConnectionStatus {
     }
 
     /**
-     * get the status of a communication port
+     * Get the status of a communication port.
      *
-     * @param systemName String containing the system name
-     * @param portName String containing the port name
-     * @return status string
+     * @param systemName the system name
+     * @param portName the port name
+     * @return the status
      */
     public synchronized String getConnectionState(String systemName,String portName) {
         String stateText = CONNECTION_UNKNOWN;
@@ -156,10 +159,12 @@ public class ConnectionStatus {
     }
 
     /**
-     * Returns status of a communication port
+     * Get the status of a communication port.
      *
+     * @param portName the port name
      * @return true if port connection is operational or unknown, false if not
-     * @deprecated since 4.7.1.  use isConnectionOk(String,String) instead.
+     * @deprecated since 4.7.1; use
+     * {@link #isConnectionOk(java.lang.String, java.lang.String)} instead.
      */
     @Deprecated
     public synchronized boolean isConnectionOk(String portName) {
@@ -167,25 +172,21 @@ public class ConnectionStatus {
     }
 
     /**
-     * Returns status of a communication port
+     * Get the status of a communication port.
      *
-     * @param systemName String containing the system name
-     * @param portName String containing the port name
+     * @param systemName the system name
+     * @param portName the port name
      * @return true if port connection is operational or unknown, false if not
      */
     public synchronized boolean isConnectionOk(String systemName,String portName) { 
         String stateText = getConnectionState(systemName,portName);
-        if (stateText.equals(CONNECTION_DOWN)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !stateText.equals(CONNECTION_DOWN);
     }
 
     /**
-     * get the status of a communication port based on the system name.
+     * Get the status of a communication port based on the system name.
      *
-     * @param systemName String containing the system name
+     * @param systemName the system name
      * @return true if port connection is operational or unknown, false if not
      */
     public synchronized boolean isSystemOk(String systemName) {
@@ -195,7 +196,7 @@ public class ConnectionStatus {
         } else {
            // we have to see if there is a key that has systemName as the port value.
            for( ConnectionKey c :portStatus.keySet()) {
-              if(c.getSystemName() == systemName) {
+              if(c.getSystemName().equals(systemName)) {
                 // if we find a match, return it.
                 return isConnectionOk(c.getSystemName(),c.getPortName());
               }
@@ -267,10 +268,7 @@ public class ConnectionStatus {
           }
           ConnectionKey other = (ConnectionKey)o;
 
-          if(systemName == other.systemName && portName == other.portName ) {
-             return true;
-          }
-          return false;
+          return systemName.equals(other.systemName) && portName.equals(other.portName);
        }
 
        @Override
