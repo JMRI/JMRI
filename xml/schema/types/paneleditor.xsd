@@ -61,6 +61,7 @@
         <xs:element name="indicatortrackicon" type="EditorIndicatorTrackIconType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="indicatorturnouticon" type="EditorIndicatorTurnoutIconType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="PortalIcon"    	 type="EditorPortalIconType"    	minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="linkinglabel"		  type="EditorLinkingLabelType"		 minOccurs="0" maxOccurs="unbounded" />
             
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required" />
