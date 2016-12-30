@@ -106,7 +106,7 @@ public class ConnectionStatus {
         } else {
             // we have to see if there is a key that has portName as the port value.
             for (ConnectionKey c : portStatus.keySet()) {
-                if (c.getPortName().equals(portName)) {
+                if (c.getPortName() == null ? portName == null : c.getPortName().equals(portName)) {
                     // if we find a match, return it.
                     return getConnectionState(c.getSystemName(), c.getPortName());
                 }
@@ -130,7 +130,7 @@ public class ConnectionStatus {
         } else {
             // we have to see if there is a key that has systemName as the port value.
             for (ConnectionKey c : portStatus.keySet()) {
-                if (c.getSystemName().equals(systemName)) {
+                if (c.getSystemName() == null ? systemName == null : c.getSystemName().equals(systemName)) {
                     // if we find a match, return it.
                     return getConnectionState(c.getSystemName(), c.getPortName());
                 }
@@ -196,7 +196,7 @@ public class ConnectionStatus {
         } else {
             // we have to see if there is a key that has systemName as the port value.
             for (ConnectionKey c : portStatus.keySet()) {
-                if (c.getSystemName().equals(systemName)) {
+                if (c.getSystemName() == null ? systemName == null : c.getSystemName().equals(systemName)) {
                     // if we find a match, return it.
                     return isConnectionOk(c.getSystemName(), c.getPortName());
                 }
