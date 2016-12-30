@@ -1282,6 +1282,52 @@
       <xs:attribute name="degrees" type="xs:string" />
 
     </xs:complexType>
+    <xs:complexType name="EditorBlockContentsIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing a BlockContentsIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.LocoIconXML??
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
+       	<xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1" />
+      </xs:sequence>
+      
+      <xs:attributeGroup ref="EditorCommonAttributesGroup" />
+
+      <xs:attribute name="class" type="classType" use="required" />
+      <xs:attribute name="blockcontents" type="xs:string" />
+      <xs:attribute name="size" type="xs:string" />
+      <xs:attribute name="style" type="xs:string" />
+      <xs:attribute name="red" type="xs:unsignedByte" />
+      <xs:attribute name="green" type="xs:unsignedByte" />
+      <xs:attribute name="blue" type="xs:unsignedByte" />
+      <xs:attribute name="hasBackground" type="xs:string" />
+      <xs:attribute name="justification" default="left" >
+      
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="centre"/>
+            <xs:enumeration value="right"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="margin" type="xs:int" />
+      <xs:attribute name="borderSize" type="xs:int" />
+      <xs:attribute name="redBorder" type="xs:int" />
+      <xs:attribute name="greenBorder" type="xs:int" />
+      <xs:attribute name="blueBorder" type="xs:int" />
+      <xs:attribute name="fixedWidth" type="xs:string" />
+      <xs:attribute name="fixedHeight" type="xs:string" />
+      <xs:attribute name="selectable" type="xs:string" />
+      <xs:attribute name="rosterentry" type="xs:string" />
+      <xs:attribute name="degrees" type="xs:string" />
+
+     </xs:complexType>
 
     <xs:complexType name="EditorTrackSegmentType">
       <xs:annotation>
