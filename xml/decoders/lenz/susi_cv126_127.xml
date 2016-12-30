@@ -74,8 +74,8 @@
 	<comment xml:lang="de">Wertebereich 0-255</comment>
 	<label xml:lang="cs">CV ukazatel pro SUSI, offset 800</label>
 	<comment xml:lang="cs">Meze 0-255</comment>
-	<label xml:lang="ca">Indicador de CV per SUSI, offset 800</label>
-	<comment xml:lang="ca">Rang 0-255</comment>
+	<label xml:lang="ca">Adreça CV de SUSI, offset 800</label>
+	<comment xml:lang="ca">RANG 0-255</comment>
   </variable>
   <variable CV="127" item="SUSI transport" default="0" comment="Range 0-255">
 	<decVal min="0" max="255"/>
