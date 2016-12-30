@@ -17,31 +17,26 @@ import org.junit.Test;
 public class CheckProgrammerNamesTest {
 
     @Test
-    @Ignore("Preexisting failing condition")
     public void testAdvanced() {
         checkAgainstNames(new File("xml/programmers/Advanced.xml"));
     }
 
     @Test
-    @Ignore("Preexisting failing condition")
     public void testComprehensive() {
         checkAgainstNames(new File("xml/programmers/Comprehensive.xml"));
     }
 
     @Test
-    @Ignore("Preexisting failing condition")
     public void testBasic() {
         checkAgainstNames(new File("xml/programmers/Basic.xml"));
     }
 
     @Test
-    @Ignore("Preexisting failing condition")
     public void testTrainShowBasic() {
         checkAgainstNames(new File("xml/programmers/TrainShowBasic.xml"));
     }
 
     @Test
-    @Ignore("Preexisting failing condition")
     public void testSampleClub() {
         checkAgainstNames(new File("xml/programmers/Sample Club.xml"));
     }
@@ -52,13 +47,11 @@ public class CheckProgrammerNamesTest {
     }
 
     @Test
-    @Ignore("Preexisting failing condition")
     public void testTutorial() {
         checkAgainstNames(new File("xml/programmers/Tutorial.xml"));
     }
 
     @Test
-    @Ignore("Preexisting failing condition")
     public void testRegisters() {
         checkAgainstNames(new File("xml/programmers/Registers.xml"));
     }
@@ -81,7 +74,6 @@ public class CheckProgrammerNamesTest {
     }
 
     @Test
-    @Ignore("Preexisting failing condition")
     public void testAdvancedComplete() {
         checkComplete(new File("xml/programmers/Advanced.xml"));
     }
