@@ -23,11 +23,8 @@ public class SchemaTest extends SchemaTestBase {
         files.addAll(getFiles(new File("java/test/jmri/jmrit/decoderdefn/pass"), true, true));
         // check that the schema detects errors
         files.addAll(getFiles(new File("java/test/jmri/jmrit/decoderdefn/fail"), true, false));
-        // check that XML files in xml/decoders and immediate subdirectories are
-        // valid, but ignore further subdirectories
-        File decoders = new File("xml/decoders/");
-        files.addAll(getFiles(decoders, false, true));
-        files.addAll(getDirectories(decoders, false, true));
+        // check that decoder definitions are valid
+        files.addAll(getFiles(new File("xml/decoders/"), true, true));
         return files;
     }
 

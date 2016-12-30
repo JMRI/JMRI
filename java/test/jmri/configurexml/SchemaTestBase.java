@@ -15,8 +15,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Base for XML schema testing
@@ -30,7 +28,6 @@ public class SchemaTestBase {
     private boolean verifySchema;
     private final File file;
     private final boolean pass;
-    private final static Logger log = LoggerFactory.getLogger(SchemaTestBase.class);
 
     public SchemaTestBase(File file, boolean pass) {
         this.file = file;
