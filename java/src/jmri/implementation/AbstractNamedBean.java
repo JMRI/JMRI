@@ -42,7 +42,11 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
      */
     public void setComment(String comment) {
         String old = this.comment;
-        this.comment = comment;
+        if ( comment.isEmpty() || comment.trim().length() < 1 ) {
+            this.comment = null;
+        } else {
+            this.comment = comment;
+        }
         firePropertyChange("Comment", old, comment);
     }
     private String comment;
