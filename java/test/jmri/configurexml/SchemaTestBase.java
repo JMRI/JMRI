@@ -15,6 +15,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Base for XML schema testing
@@ -27,6 +29,7 @@ public class SchemaTestBase {
 
     private final File file;
     private final boolean pass;
+    private final static Logger log = LoggerFactory.getLogger(SchemaTestBase.class);
 
     public SchemaTestBase(File file, boolean pass) {
         this.file = file;
@@ -58,8 +61,8 @@ public class SchemaTestBase {
      * @param pass      if true, successful validation will pass; if false,
      *                  successful validation will fail
      * @return a collection of Object arrays, where each array contains the
-     *         {@link java.io.File} to validate and a boolean matching the pass
-     *         parameter
+     *         {@link java.io.File} with a filename ending in {@literal .xml} to
+     *         validate and a boolean matching the pass parameter
      */
     public static Collection<Object[]> getFiles(File directory, boolean recurse, boolean pass) {
         ArrayList<Object[]> files = new ArrayList<>();
@@ -75,6 +78,34 @@ public class SchemaTestBase {
             }
         } else if (directory.getName().endsWith(".xml")) {
             files.add(new Object[]{directory, pass});
+        }
+        return files;
+    }
+
+    /**
+     * Get all XML files in the immediate subdirectories of a directory and
+     * validate them.
+     *
+     * @param directory the directory containing subdirectories containing XML
+     *                  files
+     * @param recurse   if true, will recurse into subdirectories
+     * @param pass      if true, successful validation will pass; if false,
+     *                  successful validation will fail
+     * @return a collection of Object arrays, where each array contains the
+     *         {@link java.io.File} with a filename ending in {@literal .xml} to
+     *         validate and a boolean matching the pass parameter
+     * @throws IllegalArgumentException if directory is a file
+     */
+    public static Collection<Object[]> getDirectories(File directory, boolean recurse, boolean pass) throws IllegalArgumentException {
+        ArrayList<Object[]> files = new ArrayList<>();
+        if (directory.isDirectory()) {
+            for (File file : directory.listFiles()) {
+                if (file.isDirectory()) {
+                    files.addAll(getFiles(file, recurse, pass));
+                }
+            }
+        } else {
+            throw new IllegalArgumentException("directory must be a directory, not a file");
         }
         return files;
     }
