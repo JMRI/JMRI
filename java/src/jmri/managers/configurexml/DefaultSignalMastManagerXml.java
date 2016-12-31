@@ -156,6 +156,23 @@ public class DefaultSignalMastManagerXml
             }
         }
 
+        list = shared.getChildren("matrixsignalmast");
+        if (list != null) {
+            for (int i = 0; i < list.size(); i++) {
+                Element e = list.get(i);
+                String adapterName = e.getAttribute("class").getValue();
+                log.debug("load via " + adapterName);
+                try {
+                    XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
+                    // and do it
+                    adapter.load(e, null);
+                } catch (Exception ex) {
+                    log.error("Exception while loading " + e.getName() + ":" + ex);
+                    ex.printStackTrace();
+                }
+            }
+        }
+
         list = shared.getChildren("dccsignalmast");
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {

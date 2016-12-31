@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle XML configuration for a DefaultSignalMastManager object.
+ * Handle XML configuration for DefaultSignalMastManager objects.
  *
  * @author Bob Jacobsen Copyright: (C) 2009
  * @author Egbert Broerse Copyright: (C) 2016
@@ -30,7 +30,7 @@ public class MatrixSignalMastXml
     public Element store(Object o) { // from mast p to XML
         MatrixSignalMast p = (MatrixSignalMast) o;
 
-        Element e = new Element("signalmast");
+        Element e = new Element("matrixsignalmast");
         e.setAttribute("class", this.getClass().getName());
 
         // include content
@@ -143,8 +143,9 @@ public class MatrixSignalMastXml
         Element bss = shared.getChild("bitStrings"); // multiple
         if (bss != null) {
             List<Element> list = bss.getChildren("bitString"); // singular
+            String set;
             for (Element bs : list) {
-                m.setBitstring(bs.getAttribute("aspect").getValue(), bs.getText());
+                m.setBitstring(bs.getAttribute("aspect").getValue(), bs.getText()); // OK if value is null
             }
         }
 

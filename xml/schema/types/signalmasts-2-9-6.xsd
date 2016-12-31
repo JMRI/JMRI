@@ -36,6 +36,7 @@
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:element name="turnoutsignalmast" type="TurnoutSignalMastType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="dccsignalmast" type="DccSignalMastType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="matrixsignalmast" type="MatrixSignalMastType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="signalmast" type="SignalMastType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="virtualsignalmast" type="SignalMastType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="signalmastrepeater" type="SignalMastRepeater" minOccurs="0" maxOccurs="unbounded" />
@@ -251,24 +252,39 @@
           </xs:attribute>
         </xs:complexType>
       </xs:element>
+
       <xs:element name="outputs" minOccurs="1" maxOccurs="1" >
         <xs:complexType>
           <xs:sequence>
-            <xs:element name="output" type="xs:string" minOccurs="1" maxOccurs="6"/>
+            <xs:element name="output" minOccurs="1" maxOccurs="6" >
+              <xs:complexType>
+              <xs:simpleContent>
+                <xs:extension base="xs:string">
+                  <xs:attribute name="matrixCol" use="required" type="xs:string" >
+                    <xs:annotation><xs:documentation>Specifies the configured Turnout outputs for this mast by name</xs:documentation></xs:annotation>
+                  </xs:attribute>
+                </xs:extension>
+              </xs:simpleContent>
+              </xs:complexType>
+            </xs:element>
           </xs:sequence>
-          <xs:attribute name="matrixCol" use="required" >
-            <xs:annotation><xs:documentation>Specifies the configured Turnout outputs for this mast by name</xs:documentation></xs:annotation>
-          </xs:attribute>
         </xs:complexType>
       </xs:element>
       <xs:element name="bitStrings" minOccurs="1" maxOccurs="1" >
         <xs:complexType>
           <xs:sequence>
-            <xs:element name="bitString" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+            <xs:element name="bitString" minOccurs="1" maxOccurs="unbounded" >
+              <xs:complexType>
+                <xs:simpleContent>
+                  <xs:extension base="xs:string">
+                    <xs:attribute name="aspect" use="required" type="xs:string" >
+                      <xs:annotation><xs:documentation>Specifies the state of the outputs (1 = ON) for this Aspect</xs:documentation></xs:annotation>
+                    </xs:attribute>
+                  </xs:extension>
+                </xs:simpleContent>
+              </xs:complexType>
+            </xs:element>
           </xs:sequence>
-          <xs:attribute name="aspect" use="required" >
-            <xs:annotation><xs:documentation>Specifies the state of the outputs (1 = ON) for this Aspect</xs:documentation></xs:annotation>
-          </xs:attribute>
         </xs:complexType>
       </xs:element>
       <xs:element name="disabledAspects" minOccurs="0" maxOccurs="1" >
@@ -279,6 +295,9 @@
         </xs:complexType>
       </xs:element>
     </xs:sequence>
+    <xs:attribute name="userName" type="userNameType">
+      <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
+    </xs:attribute>
     <xs:attribute name="class" type="classType" use="required" />
   </xs:complexType>
 
