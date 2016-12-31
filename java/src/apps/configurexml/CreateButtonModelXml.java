@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle XML persistance of CreateButtonModel objects.
+ * Handle XML persistence of CreateButtonModel objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @see apps.startup.CreateButtonModelFactory
@@ -31,6 +31,7 @@ public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
      * @param o Object to store, of type CreateButtonModel
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element element = new Element("perform");
         CreateButtonModel g = (CreateButtonModel) o;
@@ -111,10 +112,12 @@ public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @param o       ignored
      */
+    @Override
     public void load(Element element, Object o) {
         log.error("Unexpected call of load(Element, Object)");
     }
+    
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(CreateButtonModelXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CreateButtonModelXml.class);
 
 }
