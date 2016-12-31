@@ -486,7 +486,7 @@ public class SectionTableAction extends AbstractTableAction {
             JComboBox<String> directionCombo = new JComboBox<String>();
             directionCombo.addItem(rbx.getString("SectionForward"));
             directionCombo.addItem(rbx.getString("SectionReverse"));
-            directionCombo.addItem(rbx.getString("Unknown"));
+            directionCombo.addItem(Bundle.getMessage("BeanStateUnknown"));
             TableColumn directionColumn = entryPointColumnModel.getColumn(EntryPointTableModel.DIRECTION_COLUMN);
             directionColumn.setCellEditor(new DefaultCellEditor(directionCombo));
             entryPointTable.setRowHeight(directionCombo.getPreferredSize().height);
@@ -1367,7 +1367,7 @@ public class SectionTableAction extends AbstractTableAction {
                 case UNAME_COLUMN: //
                     return blockList.get(rx).getUserName();
                 default:
-                    return rbx.getString("Unknown");
+                    return Bundle.getMessage("BeanStateUnknown");
             }
         }
 
@@ -1480,7 +1480,7 @@ public class SectionTableAction extends AbstractTableAction {
                     } else if (entryPointList.get(rx).isReverseType()) {
                         return rbx.getString("SectionReverse");
                     } else {
-                        return rbx.getString("Unknown");
+                        return Bundle.getMessage("BeanStateUnknown");
                     }
             }
             return null;
@@ -1492,7 +1492,7 @@ public class SectionTableAction extends AbstractTableAction {
                     entryPointList.get(row).setTypeForward();
                 } else if (((String) value).equals(rbx.getString("SectionReverse"))) {
                     entryPointList.get(row).setTypeReverse();
-                } else if (((String) value).equals(rbx.getString("Unknown"))) {
+                } else if (((String) value).equals(Bundle.getMessage("BeanStateUnknown"))) {
                     entryPointList.get(row).setTypeUnknown();
                 }
             }
