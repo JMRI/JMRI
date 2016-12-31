@@ -67,6 +67,9 @@
         </profile>
         <profile>
             <id>travis-coverage</id>
+            <properties>
+                <findbugs.skip>true</findbugs.skip>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -242,6 +245,19 @@
                         </goals>
                     </execution>
                 </executions>            
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>3.0.4</version>
+                <!-- configured to fail on High priority bugs -->
+                <configuration>
+                    <excludeFilterFile>.findbugs.xml</excludeFilterFile>
+                    <effort>Max</effort>
+                    <threshold>High</threshold>
+                    <jvmArgs>-Xmx1536m</jvmArgs>
+                    <timeout>1200000</timeout><!-- 20 minutes -->
+                </configuration>            
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
