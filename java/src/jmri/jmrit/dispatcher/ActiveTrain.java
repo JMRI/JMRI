@@ -779,7 +779,7 @@ public class ActiveTrain {
 
     public String getLastAllocatedSectionName() {
         if (mLastAllocatedSection == null) {
-            return rb.getString("None");
+            return "<" + Bundle.getMessage("None").toLowerCase() + ">"; // <none>
         }
         return getSectionName(mLastAllocatedSection);
     }
@@ -794,7 +794,7 @@ public class ActiveTrain {
 
     public String getNextSectionToAllocateName() {
         if (mNextSectionToAllocate == null) {
-            return rb.getString("None");
+            return "<" + Bundle.getMessage("None").toLowerCase() + ">"; // <none>
         }
         return getSectionName(mNextSectionToAllocate);
     }

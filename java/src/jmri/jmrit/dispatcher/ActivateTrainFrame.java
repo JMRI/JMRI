@@ -410,7 +410,7 @@ public class ActivateTrainFrame {
 
     private void initializeTrainTypeBox() {
         trainTypeBox.removeAllItems();
-        trainTypeBox.addItem(Bundle.getMessage("None"));
+        trainTypeBox.addItem("<" + Bundle.getMessage("None").toLowerCase() + ">"); // <none>
         trainTypeBox.addItem(Bundle.getMessage("LOCAL_PASSENGER"));
         trainTypeBox.addItem(Bundle.getMessage("LOCAL_FREIGHT"));
         trainTypeBox.addItem(Bundle.getMessage("THROUGH_PASSENGER"));

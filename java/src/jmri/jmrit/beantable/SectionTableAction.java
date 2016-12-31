@@ -892,7 +892,7 @@ public class SectionTableAction extends AbstractTableAction {
             return false;
         }
         box.removeAllItems();
-        box.addItem(rbx.getString("None"));
+        box.addItem("<" + Bundle.getMessage("None").toLowerCase() + ">");
         for (int i = 0; i < lePanelList.size(); i++) {
             box.addItem(lePanelList.get(i).getTitle());
         }

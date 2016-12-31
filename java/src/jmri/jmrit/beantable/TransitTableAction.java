@@ -1465,7 +1465,7 @@ public class TransitTableAction extends AbstractTableAction {
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
-            JLabel sectionNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameSection");
+            JLabel sectionNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameSection")));
             panel1.add(sectionNameLabel);
             panel1.add(fixedSectionLabel);
             contentPane.add(panel1);
@@ -2407,7 +2407,7 @@ public class TransitTableAction extends AbstractTableAction {
                 case SEQUENCE_COLUMN:
                     return rbx.getString("SequenceColName");
                 case SECTIONNAME_COLUMN:
-                    return Bundle.getMessage(("BeanNameSection");
+                    return Bundle.getMessage("BeanNameSection");
                 case ACTION_COLUMN:
                     return rbx.getString("ActionColName");
                 case SEC_DIRECTION_COLUMN:
