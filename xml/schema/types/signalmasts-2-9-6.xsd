@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- This schema is part of JMRI. Copyright 2009.                           -->         -->
+<!-- This schema is part of JMRI. Copyright 2009.                           -->
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
@@ -56,11 +56,54 @@
         <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1" />
         <xs:element name="unlit" minOccurs="0" maxOccurs="1" >
           <xs:complexType>
+
+            <xs:sequence>
+              <xs:element name="bitString" type="xs:string" minOccurs="0" maxOccurs="1">
+                <xs:annotation><xs:documentation>Deprecated 4.7.2 in favor of a separate class for the matrixsignalmast</xs:documentation></xs:annotation>
+              </xs:element>
+            </xs:sequence>
+
             <xs:attribute name="allowed" use="required">
                 <xs:annotation><xs:documentation>Specifies if the signal can go unlit</xs:documentation></xs:annotation>
             </xs:attribute>
           </xs:complexType>
         </xs:element>
+
+        <xs:element name="outputs" minOccurs="0" maxOccurs="1" >
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="output" minOccurs="1" maxOccurs="6" >
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="matrixCol" use="required" type="xs:string" >
+                        <xs:annotation><xs:documentation>Specifies the configured Turnout outputs for this mast by name. Deprecated 4.7.2 in favor of a separate class for the matrixsignalmast</xs:documentation></xs:annotation>
+                      </xs:attribute>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="bitStrings" minOccurs="0" maxOccurs="1" >
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="bitString" minOccurs="1" maxOccurs="unbounded" >
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="aspect" use="required" type="xs:string" >
+                        <xs:annotation><xs:documentation>Specifies the state of the outputs (1 = ON) for this Aspect. Deprecated 4.7.2 in favor of a separate class for the matrixsignalmast</xs:documentation></xs:annotation>
+                      </xs:attribute>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
         <xs:element name="disabledAspects" minOccurs="0" maxOccurs="unbounded" >
           <xs:complexType>
             <xs:sequence>
