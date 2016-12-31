@@ -44,8 +44,8 @@ public class DefaultSignalMastManagerXml
                     if (e != null) {
                         element.addContent(e);
                     }
-                } catch (Exception e) {
-                    log.error("Error storing signalmast: {}", e);
+                } catch (Exception ex) {
+                    log.error("Error storing signalmast: {}", ex);
                 }
 
             }
@@ -115,7 +115,7 @@ public class DefaultSignalMastManagerXml
                     // and do it
                     adapter.load(e, null);
                 } catch (Exception ex) {
-                    log.error("Exception while loading {}: {}", e.getName(), ex);
+                    log.error("Exception while loading {}: {}", e.getName(), ex, ex);
                 }
             }
         }
@@ -131,7 +131,7 @@ public class DefaultSignalMastManagerXml
                     // and do it
                     adapter.load(e, null);
                 } catch (Exception ex) {
-                    log.error("Exception while loading {}: {}", e.getName(), ex);
+                    log.error("Exception while loading {}: {}", e.getName(), ex, ex);
                 }
             }
         }
@@ -147,7 +147,7 @@ public class DefaultSignalMastManagerXml
                     // and do it
                     adapter.load(e, null);
                 } catch (Exception ex) {
-                    log.error("Exception while loading {}: {}", e.getName(), ex);
+                    log.error("Exception while loading {}: {}", e.getName(), ex, ex);
                 }
             }
         }
@@ -163,7 +163,7 @@ public class DefaultSignalMastManagerXml
                     // and do it
                     adapter.load(e, null);
                 } catch (Exception ex) {
-                    log.error("Exception while loading {}: {}", e.getName(), ex);
+                    log.error("Exception while loading {}: {}", e.getName(), ex, ex);
                 }
             }
         }
@@ -179,7 +179,7 @@ public class DefaultSignalMastManagerXml
                     // and do it
                     adapter.load(e, null);
                 } catch (Exception ex) {
-                    log.error("Exception while loading {}: {}", e.getName(), ex);
+                    log.error("Exception while loading {}: {}", e.getName(), ex, ex);
                 }
             }
         }
