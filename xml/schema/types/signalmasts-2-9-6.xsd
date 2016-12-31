@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id$ -->
-
-<!-- This schema is part of JMRI. Copyright 2009.                           -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
+<!-- This schema is part of JMRI. Copyright 2009.                           -->         -->
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
@@ -48,7 +36,7 @@
       <xs:annotation>
         <xs:documentation>
           Define the XML structure for storing the contents of one SignalMast implementation.
-          Generally dealt with by the manager implemenation
+          Generally dealt with by the manager implementation
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="true">jmri.implementation.configurexml.SignalHeadSignalMastXml</jmri:usingclass>
@@ -252,7 +240,6 @@
           </xs:attribute>
         </xs:complexType>
       </xs:element>
-
       <xs:element name="outputs" minOccurs="1" maxOccurs="1" >
         <xs:complexType>
           <xs:sequence>

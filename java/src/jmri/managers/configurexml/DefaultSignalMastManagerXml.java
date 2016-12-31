@@ -45,8 +45,7 @@ public class DefaultSignalMastManagerXml
                         element.addContent(e);
                     }
                 } catch (Exception e) {
-                    log.error("Error storing signalmast: " + e);
-                    e.printStackTrace();
+                    log.error("Error storing signalmast: {}", e);
                 }
 
             }
@@ -116,8 +115,7 @@ public class DefaultSignalMastManagerXml
                     // and do it
                     adapter.load(e, null);
                 } catch (Exception ex) {
-                    log.error("Exception while loading " + e.getName() + ":" + ex);
-                    ex.printStackTrace();
+                    log.error("Exception while loading {}: {}", e.getName(), ex);
                 }
             }
         }
@@ -133,8 +131,7 @@ public class DefaultSignalMastManagerXml
                     // and do it
                     adapter.load(e, null);
                 } catch (Exception ex) {
-                    log.error("Exception while loading " + e.getName() + ":" + ex);
-                    ex.printStackTrace();
+                    log.error("Exception while loading {}: {}", e.getName(), ex);
                 }
             }
         }
@@ -150,8 +147,7 @@ public class DefaultSignalMastManagerXml
                     // and do it
                     adapter.load(e, null);
                 } catch (Exception ex) {
-                    log.error("Exception while loading " + e.getName() + ":" + ex);
-                    ex.printStackTrace();
+                    log.error("Exception while loading {}: {}", e.getName(), ex);
                 }
             }
         }
@@ -167,8 +163,7 @@ public class DefaultSignalMastManagerXml
                     // and do it
                     adapter.load(e, null);
                 } catch (Exception ex) {
-                    log.error("Exception while loading " + e.getName() + ":" + ex);
-                    ex.printStackTrace();
+                    log.error("Exception while loading {}: {}", e.getName(), ex);
                 }
             }
         }
@@ -184,8 +179,7 @@ public class DefaultSignalMastManagerXml
                     // and do it
                     adapter.load(e, null);
                 } catch (Exception ex) {
-                    log.error("Exception while loading " + e.getName() + ":" + ex);
-                    ex.printStackTrace();
+                    log.error("Exception while loading {}: {}", e.getName(), ex);
                 }
             }
         }
