@@ -200,53 +200,6 @@
       </xs:attribute>
     </xs:complexType>
  
-     <xs:complexType name="EditorLinkingLabelType">
-      <xs:annotation>
-        <xs:documentation>
-          Define the XML stucture for storing a LinkingLabel
-        </xs:documentation>
-        <xs:appinfo>
-          jmri.jmrit.display.configurexml.LinkingLabelXml
-        </xs:appinfo>
-      </xs:annotation>
-      <xs:sequence>
-        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
-        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
-            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
-        </xs:element>
-        <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
-        <xs:element name="url" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
-      </xs:sequence>
-
-      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
-      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
-      <xs:attribute name="icon" type="yesNoType"></xs:attribute>
-      <xs:attribute name="text" type="xs:string"></xs:attribute>
-      <xs:attribute name="size" type="xs:string"></xs:attribute>
-      <xs:attribute name="style" type="xs:string"></xs:attribute>
-      <xs:attribute name="margin" type="xs:int"></xs:attribute>
-      <xs:attribute name="red" type="xs:unsignedByte"></xs:attribute>
-      <xs:attribute name="green" type="xs:unsignedByte"></xs:attribute>
-      <xs:attribute name="blue" type="xs:unsignedByte"></xs:attribute>
-      <xs:attribute name="redBack" type="xs:int"></xs:attribute>
-      <xs:attribute name="hasBackground" type="yesNoType"></xs:attribute>
-      <xs:attribute name="greenBack" type="xs:int"></xs:attribute>
-      <xs:attribute name="blueBack" type="xs:int"></xs:attribute>
-      <xs:attribute name="borderSize" type="xs:int"></xs:attribute>
-      <xs:attribute name="redBorder" type="xs:int"></xs:attribute>
-      <xs:attribute name="greenBorder" type="xs:int"></xs:attribute>
-      <xs:attribute name="blueBorder" type="xs:int"></xs:attribute>
-      <xs:attribute name="justification" default="left">
-        <xs:simpleType>
-          <xs:restriction base="xs:token">
-            <xs:enumeration value="left"></xs:enumeration>
-            <xs:enumeration value="centre"></xs:enumeration>
-            <xs:enumeration value="right"></xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:attribute>
-     </xs:complexType>
-  
     <xs:complexType name="EditorPositionablePointType">
       <xs:annotation>
         <xs:documentation>
@@ -1410,40 +1363,40 @@ pointid" type="xs:string"></xs:attribute>
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence>
-        <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
-       	<xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+       	<xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
       </xs:sequence>
       
-      <xs:attributeGroup ref="EditorCommonAttributesGroup" />
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
 
-      <xs:attribute name="class" type="classType" use="required" />
-      <xs:attribute name="blockcontents" type="xs:string" />
-      <xs:attribute name="size" type="xs:string" />
-      <xs:attribute name="style" type="xs:string" />
-      <xs:attribute name="red" type="xs:unsignedByte" />
-      <xs:attribute name="green" type="xs:unsignedByte" />
-      <xs:attribute name="blue" type="xs:unsignedByte" />
-      <xs:attribute name="hasBackground" type="xs:string" />
-      <xs:attribute name="justification" default="left" >
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="blockcontents" type="xs:string"></xs:attribute>
+      <xs:attribute name="size" type="xs:string"></xs:attribute>
+      <xs:attribute name="style" type="xs:string"></xs:attribute>
+      <xs:attribute name="red" type="xs:unsignedByte"></xs:attribute>
+      <xs:attribute name="green" type="xs:unsignedByte"></xs:attribute>
+      <xs:attribute name="blue" type="xs:unsignedByte"></xs:attribute>
+      <xs:attribute name="hasBackground" type="xs:string"></xs:attribute>
+      <xs:attribute name="justification" default="left">
       
         <xs:simpleType>
           <xs:restriction base="xs:token">
-            <xs:enumeration value="left"/>
-            <xs:enumeration value="centre"/>
-            <xs:enumeration value="right"/>
+            <xs:enumeration value="left"></xs:enumeration>
+            <xs:enumeration value="centre"></xs:enumeration>
+            <xs:enumeration value="right"></xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
-      <xs:attribute name="margin" type="xs:int" />
-      <xs:attribute name="borderSize" type="xs:int" />
-      <xs:attribute name="redBorder" type="xs:int" />
-      <xs:attribute name="greenBorder" type="xs:int" />
-      <xs:attribute name="blueBorder" type="xs:int" />
-      <xs:attribute name="fixedWidth" type="xs:string" />
-      <xs:attribute name="fixedHeight" type="xs:string" />
-      <xs:attribute name="selectable" type="xs:string" />
-      <xs:attribute name="rosterentry" type="xs:string" />
-      <xs:attribute name="degrees" type="xs:string" />
+      <xs:attribute name="margin" type="xs:int"></xs:attribute>
+      <xs:attribute name="borderSize" type="xs:int"></xs:attribute>
+      <xs:attribute name="redBorder" type="xs:int"></xs:attribute>
+      <xs:attribute name="greenBorder" type="xs:int"></xs:attribute>
+      <xs:attribute name="blueBorder" type="xs:int"></xs:attribute>
+      <xs:attribute name="fixedWidth" type="xs:string"></xs:attribute>
+      <xs:attribute name="fixedHeight" type="xs:string"></xs:attribute>
+      <xs:attribute name="selectable" type="xs:string"></xs:attribute>
+      <xs:attribute name="rosterentry" type="xs:string"></xs:attribute>
+      <xs:attribute name="degrees" type="xs:string"></xs:attribute>
 
      </xs:complexType>
 
@@ -1571,70 +1524,70 @@ pointid" type="xs:string"></xs:attribute>
           jmri.jmrit.display.configurexml.LinkingLabelXml
         </xs:appinfo>
       </xs:annotation>
-      <xs:sequence>
-        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:all>
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
             <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
         </xs:element>
-        <xs:element name="url" type="xs:string" minOccurs="0" maxOccurs="1" />
-        <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
-      </xs:sequence>
+        <xs:element name="url" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+      </xs:all>
 
-      <xs:attributeGroup ref="EditorCommonAttributesGroup" />
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
 
-      <xs:attribute name="class" type="classType" use="required" />
-      <xs:attribute name="fixedWidth" type="xs:string" />
-      <xs:attribute name="fixedHeight" type="xs:string" />
-      <xs:attribute name="rotate" type="xs:string" />
-      <xs:attribute name="degrees" type="xs:string" />
-      <xs:attribute name="icon" type="xs:string" />
-      <xs:attribute name="text" type="xs:string" />
-      <xs:attribute name="size" type="xs:string" />
-      <xs:attribute name="style" type="xs:string" />
-      <xs:attribute name="margin" type="xs:int" />
-      <xs:attribute name="red" type="xs:unsignedByte" />
-      <xs:attribute name="green" type="xs:unsignedByte" />
-      <xs:attribute name="blue" type="xs:unsignedByte" />
-      <xs:attribute name="hasBackground" type="yesNoType" />
-      <xs:attribute name="redBack" type="xs:int" />
-      <xs:attribute name="greenBack" type="xs:int" />
-      <xs:attribute name="blueBack" type="xs:int" />
-      <xs:attribute name="borderSize" type="xs:int" />
-      <xs:attribute name="redBorder" type="xs:int" />
-      <xs:attribute name="greenBorder" type="xs:int" />
-      <xs:attribute name="blueBorder" type="xs:int" />
-      <xs:attribute name="justification" default="left" >
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="fixedWidth" type="xs:string"></xs:attribute>
+      <xs:attribute name="fixedHeight" type="xs:string"></xs:attribute>
+      <xs:attribute name="rotate" type="xs:string"></xs:attribute>
+      <xs:attribute name="degrees" type="xs:string"></xs:attribute>
+      <xs:attribute name="icon" type="xs:string"></xs:attribute>
+      <xs:attribute name="text" type="xs:string"></xs:attribute>
+      <xs:attribute name="size" type="xs:string"></xs:attribute>
+      <xs:attribute name="style" type="xs:string"></xs:attribute>
+      <xs:attribute name="margin" type="xs:int"></xs:attribute>
+      <xs:attribute name="red" type="xs:unsignedByte"></xs:attribute>
+      <xs:attribute name="green" type="xs:unsignedByte"></xs:attribute>
+      <xs:attribute name="blue" type="xs:unsignedByte"></xs:attribute>
+      <xs:attribute name="hasBackground" type="yesNoType"></xs:attribute>
+      <xs:attribute name="redBack" type="xs:int"></xs:attribute>
+      <xs:attribute name="greenBack" type="xs:int"></xs:attribute>
+      <xs:attribute name="blueBack" type="xs:int"></xs:attribute>
+      <xs:attribute name="borderSize" type="xs:int"></xs:attribute>
+      <xs:attribute name="redBorder" type="xs:int"></xs:attribute>
+      <xs:attribute name="greenBorder" type="xs:int"></xs:attribute>
+      <xs:attribute name="blueBorder" type="xs:int"></xs:attribute>
+      <xs:attribute name="justification" default="left">
         <xs:simpleType>
           <xs:restriction base="xs:token">
-            <xs:enumeration value="left"/>
-            <xs:enumeration value="centre"/>
-            <xs:enumeration value="right"/>
+            <xs:enumeration value="left"></xs:enumeration>
+            <xs:enumeration value="centre"></xs:enumeration>
+            <xs:enumeration value="right"></xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
-      <xs:attribute name="orientation" default="horizontal" >
+      <xs:attribute name="orientation" default="horizontal">
         <xs:simpleType>
           <xs:restriction base="xs:token">
-            <xs:enumeration value="horizontal"/>
-            <xs:enumeration value="vertical_up"/>
-            <xs:enumeration value="vertical_down"/>
+            <xs:enumeration value="horizontal"></xs:enumeration>
+            <xs:enumeration value="vertical_up"></xs:enumeration>
+            <xs:enumeration value="vertical_down"></xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
-      <xs:attribute name="fixed" type="trueFalseType" />
+      <xs:attribute name="fixed" type="trueFalseType"></xs:attribute>
 
-      <xs:attribute name="height" type="xs:integer" >
+      <xs:attribute name="height" type="xs:integer">
         <xs:annotation><xs:documentation>
           Deprecated since JMRI 2.2
         </xs:documentation></xs:annotation>
       </xs:attribute>
-      <xs:attribute name="width" type="xs:integer" >
+      <xs:attribute name="width" type="xs:integer">
         <xs:annotation><xs:documentation>
           Deprecated since JMRI 2.2
         </xs:documentation></xs:annotation>
       </xs:attribute>
-
     </xs:complexType>
+
 
     <xs:complexType name="EditorIndicatorTrackIconType">
       <xs:annotation>

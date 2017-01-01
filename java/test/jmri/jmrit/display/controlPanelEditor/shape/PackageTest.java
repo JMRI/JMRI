@@ -1,5 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -27,9 +28,10 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.display.controlPanelEditor.shape");
         
-        suite.addTest(SchemaTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.display.controlPanelEditor.shape.configurexml.PackageTest.class));
+//        suite.addTest(SchemaTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SchemaTest.class));
+//        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+//        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.display.controlPanelEditor.shape.configurexml.PackageTest.class));
 
         return suite;
     }

@@ -51,24 +51,6 @@ public class DrawRectangle extends DrawFrame {
                 updateShape();
             }
         });
-/*        _widthText.addMouseMotionListener( new MouseMotionListener() {
-            public void mouseDragged( MouseEvent e) {               
-                updateShape();
-            }
-            public void mouseMoved(MouseEvent e) {
-                _shape.setWidth(Integer.parseInt(_widthText.getText()));
-                updateShape();
-            }
-        });
-/*        _widthText.addFocusListener( new FocusListener() {
-            public void focusGained(FocusEvent e) {               
-                updateShape();
-            }
-            public void focusLost(FocusEvent e) {
-                _shape.setWidth(Integer.parseInt(_widthText.getText()));                
-                updateShape();                
-            }
-        });*/
 
         pp = new JPanel();
         _heightText = new JTextField(6);
