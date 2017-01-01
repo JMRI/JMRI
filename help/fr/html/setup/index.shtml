@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<!-- Translated by Herv&#233; BLOREC bzh56420@yahoo.fr on 2017-01-01 -->
+<head>
+<title>JMRI: Setup</title>
+<!-- Style -->
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+<a name="Top"></a>
+<h1>JMRI&reg;: Configuration</h1>
+<h2>General Installation</h2>
+	<ul class="snav"><!-- TOC -->
+	<li><a href="#install">Installation</a>
+	<li><a href="#startprog">D&#233;marrage JMRI</a>
+	<li><a href="#setprefs">R&#233;glages des Setting Pr&#233;f&#233;rences</a>
+	<li><a href="#debug">R&#233;soudre les Probl&#232;mes</a>
+	</ul>
+<a name="install"></a><h3>Installation</h3>
+<p>Des instructions compl&#232;tes pour l'installation de JMRI sur diffrentes plateforme peuvent &#234;tre trouv&#233;es ici:</p>
+	<ul>
+	<li><a href="http://jmri.org/install/WindowsNew.shtml">Windows</a>
+	<li><a href="http://jmri.org/install/MacOSX.shtml">Mac OS X</a>
+	<li><a href="http://jmri.org/install/Linux.shtml">Linux</a>
+	    <ul>
+	    <li><a href="http://jmri.org/install/Raspbian.shtml">RasPi</a>
+	    </ul>
+	</ul>
+<p>JMRI&reg; n&#233;cessite au pr&#233;alable l'installation de Java:
+<ul>
+<li>Version 2.12 peut s'ex&#233;cuter sur n'importe quel syst&#232;me avec la version Java 1;5 ou plus r&#233;cent.</li>
+<li>Version 2.14.1 n&#233;cessite Java 1.5 (ou 1.6 si vous voulez glissez et d&#233;poser)</li>
+<li>Version 3.10.1 n&#233;cessite Java 1.7 ou plus r&#233;cent.</li>
+<li>Version 4.2 n&#233;cessite Java 1.8.</li>
+</ul>
+
+<a name="startprog"></a><h2>D&#233;marrage du programme</h2>
+<p>
+Une fois que vous avez t&#233;l&#233;charg&#233; et install&#233; le logiciel JMRI&reg;, simplement
+ouvrir le programme de la mani&#232;re habituelle pour votre syst&#232;me. Windows montrera une ic&#244;ne sur le bureau (avec les options s&#233;lectionn&#233;es et install&#233;es par d&#233;faut).
+</p><p><img src="images/JMRIDesktopIcons42.png" alt="windows desktop icons" height="138" width="231"> 
+</p><p>Double clic sur l'ic&#244;ne pour ouvrir le programme. dans ce cas nous ouvrirons DecoderPro&reg;
+</p><p>Ce dialogue apparaitra bri&#232;vement pendant le chargement du programme:
+</p><p>
+  <img src="../../manual/DecoderPro/images/StartDialog.png" alt="Start dialog" height="167" width="170">
+</p><p>Vous pouvez voir celui-ci ou un &#233;cran d'ouverture similaire apr&#232;s le d&#233;marrage du programme:</p>
+  
+<p><img style="width: 456px; height: 282px;" alt="Splash screen" src="../../manual/DecoderPro/images/Splash_Screen.png"></p>
+<p>Si c'est la premi&#232;re fois que vous lancez le programme apr&#232;s l'avoir install&#233;, l'&#233;cran des Pr&#233;f&#233;rences s'affichera automatiquement, vous permettant de r&#233;gler le syst&#232;me pour une configuration particuli&#232;re. Aussi si vous changez votre configuration OU si vous avez votre ordinateur portable loin du r&#233;seau, mais que vous vouliez jouer avec JMRI, il y a une m&#233;thode similaire que vous poyvez essayer.<br>
+[À suivre]</p>
+<a name="setprefs"></a><h2>R&#233;glages des Pr&#233;f&#233;rences</h2>
+	<ul>
+	<li>Le <a href="../../package/apps/TabbedPreferences.shtml">Volet Pr&#233;f&#233;rences</a></li>
+	<li><a href="profiles.shtml">Configuration Profils</a></li>
+	<li><a href="Files.shtml">Emplacements de Fichier</a></li>
+	</ul>
+<a name="debug"></a><h2>R&#233;soudre les Probl&#232;mes</h2>	
+	<ul>
+  <li><a href="http://jmri.org/install/Debug.shtml">D&#233;bogage d'une installation</a>
+  <li><a href="../setup/Errors.shtml">Codes Erreurs</a></li>
+	<li><a href="http://jmri.org/install/WindowsNew.shtml#installtest">InstallTest</a> (Windows seulement)</li>
+	<li><a href="Faq.shtml">Questions Fr&#233;quemment Pos&#233;es</a></li>
+	</ul>
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>
