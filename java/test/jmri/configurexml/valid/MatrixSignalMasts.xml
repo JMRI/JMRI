@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>7</minor>
+    <test>1</test>
+    <modifier>.1ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor systemName="IS10" inverted="false" userName="occupancy sensor">
+      <systemName>IS10</systemName>
+      <userName>occupancy sensor</userName>
+    </sensor>
+    <sensor systemName="ISCLOCKRUNNING" inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout systemName="LT10" feedback="MONITORING" inverted="false" automate="Off">
+      <systemName>LT10</systemName>
+    </turnout>
+    <turnout systemName="LT11" feedback="MONITORING" inverted="false" automate="Off">
+      <systemName>LT11</systemName>
+    </turnout>
+    <turnout systemName="LT12" feedback="MONITORING" inverted="false" automate="Off">
+      <systemName>LT12</systemName>
+    </turnout>
+    <turnout systemName="LT2" feedback="MONITORING" inverted="false" automate="Off">
+      <systemName>LT2</systemName>
+    </turnout>
+    <turnout systemName="LT20" feedback="MONITORING" inverted="false" automate="Off">
+      <systemName>LT20</systemName>
+    </turnout>
+    <turnout systemName="LT21" feedback="MONITORING" inverted="false" automate="Off">
+      <systemName>LT21</systemName>
+    </turnout>
+    <turnout systemName="LT22" feedback="MONITORING" inverted="false" automate="Off">
+      <systemName>LT22</systemName>
+    </turnout>
+    <turnout systemName="LT3" feedback="MONITORING" inverted="false" automate="Off">
+      <systemName>LT3</systemName>
+    </turnout>
+    <turnout systemName="LT4" feedback="MONITORING" inverted="false" automate="Off">
+      <systemName>LT4</systemName>
+    </turnout>
+  </turnouts>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory systemName="IMCURRENTTIME" value="4:23 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory systemName="IMRATEFACTOR" value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.implementation.configurexml.DoubleTurnoutSignalHeadXml" systemName="LH1" userName="test1">
+      <systemName>LH1</systemName>
+      <userName>test1</userName>
+      <turnoutname defines="green">LT10</turnoutname>
+      <turnoutname defines="red">LT11</turnoutname>
+    </signalhead>
+  </signalheads>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="test10">
+      <systemName>IF$vsm:AAR-1946:PL-2-high($0001)</systemName>
+      <userName>test10</userName>
+      <unlit allowed="no" />
+      <disabledAspects>
+        <disabledAspect>Slow Approach</disabledAspect>
+      </disabledAspects>
+    </virtualsignalmast>
+    <signalmast class="jmri.implementation.configurexml.MatrixSignalMastXml" userName="test33">
+      <systemName>IF$xsm:basic:one-low($0001)-3t</systemName>
+      <userName>test33</userName>
+      <unlit allowed="yes">
+        <bitString>nnnnn</bitString>
+      </unlit>
+      <outputs>
+        <output matrixCol="output1">LT2</output>
+        <output matrixCol="output2">LT3</output>
+        <output matrixCol="output3">LT4</output>
+      </outputs>
+      <bitStrings>
+        <bitString aspect="Clear">000</bitString>
+        <bitString aspect="Approach">000</bitString>
+        <bitString aspect="Stop">000</bitString>
+        <bitString aspect="Unlit">000</bitString>
+      </bitStrings>
+    </signalmast>
+    <signalmast class="jmri.implementation.configurexml.MatrixSignalMastXml" userName="test34">
+      <systemName>IF$xsm:basic:one-low($0002)-3t</systemName>
+      <userName>test34</userName>
+      <unlit allowed="no" />
+      <outputs>
+        <output matrixCol="output1">LT10</output>
+        <output matrixCol="output2">LT11</output>
+        <output matrixCol="output3">LT12</output>
+      </outputs>
+      <bitStrings>
+        <bitString aspect="Clear">110</bitString>
+        <bitString aspect="Approach">010</bitString>
+        <bitString aspect="Stop">100</bitString>
+        <bitString aspect="Unlit">011</bitString>
+      </bitStrings>
+    </signalmast>
+    <signalmast class="jmri.implementation.configurexml.MatrixSignalMastXml" userName="test35">
+      <systemName>IF$xsm:basic:one-low($0003)-3t</systemName>
+      <userName>test35</userName>
+      <unlit allowed="no" />
+      <outputs>
+        <output matrixCol="output1">LT20</output>
+        <output matrixCol="output2">LT21</output>
+        <output matrixCol="output3">LT22</output>
+      </outputs>
+      <bitStrings>
+        <bitString aspect="Clear">111</bitString>
+        <bitString aspect="Approach">010</bitString>
+        <bitString aspect="Stop">100</bitString>
+        <bitString aspect="Unlit">010</bitString>
+      </bitStrings>
+    </signalmast>
+  </signalmasts>
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <blocks class="jmri.configurexml.BlockManagerXml">
+    <defaultspeed>Normal</defaultspeed>
+    <block systemName="IB:AUTO:0001">
+      <systemName>IB:AUTO:0001</systemName>
+      <userName>blok1</userName>
+    </block>
+    <block systemName="IB:AUTO:0001" length="0.0" curve="0" userName="blok1">
+      <systemName>IB:AUTO:0001</systemName>
+      <userName>blok1</userName>
+      <comment />
+      <permissive>no</permissive>
+      <occupancysensor>occupancy sensor</occupancysensor>
+    </block>
+  </blocks>
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+  <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">
+    <route systemName="IR:AUTO:0001" userName="test">
+      <systemName>IR:AUTO:0001</systemName>
+      <userName>test</userName>
+      <routeOutputTurnout systemName="LT4" state="CLOSED" />
+    </route>
+  </routes>
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+    <signalmastlogic source="test34">
+      <sourceSignalMast>test34</sourceSignalMast>
+      <destinationMast destination="test33">
+        <destinationSignalMast>test33</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <blocks>
+          <block>
+            <blockName>blok1</blockName>
+            <blockState>anyState</blockState>
+          </block>
+        </blocks>
+        <sensors>
+          <sensor>
+            <sensorName>occupancy sensor</sensorName>
+            <sensorState>active</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="test33">
+      <sourceSignalMast>test33</sourceSignalMast>
+      <destinationMast destination="test35">
+        <destinationSignalMast>test35</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <masts>
+          <mast>
+            <mastName>test35</mastName>
+            <mastState>Stop</mastState>
+          </mast>
+        </masts>
+      </destinationMast>
+    </signalmastlogic>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri May 27 20:29:20 CEST 2016" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Sun Dec 11 16:08:56 CET 2016</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Sun Dec 11 16:09:00 CET 2016</date>
+      <filename>/Users/me/Library/Preferences/JMRI/My2/testMastPanel.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Thu Dec 01 22:34:16 CET 2016</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Thu Dec 01 22:34:21 CET 2016</date>
+          <filename>/Users/me/Library/Preferences/JMRI/My2/testMastPanel.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Sat Nov 19 17:18:45 CET 2016</date>
+              <filename>JMRI program</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Sat Nov 19 17:18:50 CET 2016</date>
+              <filename>/Users/me/Library/Preferences/JMRI/My2/testMastPanel.xml</filename>
+              <filehistory>
+                <operation>
+                  <type>app</type>
+                  <date>Sat Nov 19 17:15:32 CET 2016</date>
+                  <filename>JMRI program</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Sat Nov 19 17:16:04 CET 2016</date>
+                  <filename>/Users/me/Library/Preferences/JMRI/My2/testMastPanel.xml</filename>
+                  <filehistory>
+                    <operation>
+                      <type>app</type>
+                      <date>Wed Nov 16 20:49:02 CET 2016</date>
+                      <filename>JMRI program</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Wed Nov 16 20:49:15 CET 2016</date>
+                      <filename>/Users/me/Library/Preferences/JMRI/My2/testMastPanel.xml</filename>
+                      <filehistory>
+                        <operation>
+                          <type>app</type>
+                          <date>Mon Nov 14 20:59:49 CET 2016</date>
+                          <filename>JMRI program</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Mon Nov 14 21:00:08 CET 2016</date>
+                          <filename>/Users/me/Library/Preferences/JMRI/My2/testMastPanel.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Store</type>
+                          <date>Mon Nov 14 21:00:53 CET 2016</date>
+                          <filename />
+                        </operation>
+                      </filehistory>
+                    </operation>
+                    <operation>
+                      <type>Store</type>
+                      <date>Wed Nov 16 20:49:32 CET 2016</date>
+                      <filename />
+                    </operation>
+                  </filehistory>
+                </operation>
+                <operation>
+                  <type>Store</type>
+                  <date>Sat Nov 19 17:18:16 CET 2016</date>
+                  <filename />
+                </operation>
+              </filehistory>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Sat Nov 19 17:20:29 CET 2016</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Thu Dec 01 22:35:51 CET 2016</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Sun Dec 11 16:23:29 CET 2016</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.7.1ish-201612111508-me-Rdef6a68 on Sun Dec 11 16:23:29 CET 2016 $Id$-->
+</layout-config>
