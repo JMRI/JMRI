@@ -231,7 +231,7 @@ public class PositionableShape extends PositionableJComponent
         pos.setWidth(_width);
         pos.setHeight(_height);
         pos.makeShape();
-        pos.repaint();
+        pos.rotate(getDegrees());       // must be after makeShape due to updateSize call
         return super.finishClone(pos);
     }
     
@@ -431,6 +431,7 @@ public class PositionableShape extends PositionableJComponent
 
     protected void setEditParams() {
         _editFrame.setDisplayParams(this);
+        _editFrame.makeCopy(this);
         drawHandles();
     }
 

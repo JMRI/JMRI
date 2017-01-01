@@ -277,8 +277,9 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         return panel;
     }
 
-    /*
+    /**
      * Set parameters on the popup that will edit the PositionableShape
+     * Called both for creation and editing. (don't make copy)
      */
     protected void setDisplayParams(PositionableShape ps) {
         _shape = ps;
@@ -305,8 +306,17 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         add(makeParamsPanel(_shape));
         add(makeDoneButtonPanel());
         pack();
+    }
+
+    /**
+     * Editing an existing shape (only make copy for cancel of edits)
+     * @param ps shape
+     */
+    protected void makeCopy(PositionableShape ps) {
+        // make a copy, but keep it out of editor's content
         _originalShape = (PositionableShape)ps.deepClone();
-        _originalShape.remove();
+        // cloning adds to editor's targetPane
+        _originalShape.remove();        
     }
 
     private JPanel makeDoneButtonPanel() {
@@ -400,14 +410,9 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         _dim = getSize(_dim);
         if (_shape!=null) {
             if (cancel) {
+                _shape.remove();
                 if (_originalShape!=null) {
-                    _shape.remove();
-                    _originalShape.finishClone(_shape);
-                    _originalShape.remove();
-                    _shape.getEditor().putItem(_shape);                                                
-                }
-                if (_parent != null) {  // canceling from creation
-                    _shape.remove();
+                    _originalShape.getEditor().putItem(_originalShape);
                 }
             }
             _shape.closeEditFrame();            

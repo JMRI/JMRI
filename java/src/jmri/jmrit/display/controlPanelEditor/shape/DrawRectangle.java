@@ -51,12 +51,13 @@ public class DrawRectangle extends DrawFrame {
                 updateShape();
             }
         });
-        _widthText.addMouseMotionListener( new MouseMotionListener() {
+/*        _widthText.addMouseMotionListener( new MouseMotionListener() {
             public void mouseDragged( MouseEvent e) {               
                 updateShape();
             }
             public void mouseMoved(MouseEvent e) {
                 _shape.setWidth(Integer.parseInt(_widthText.getText()));
+                updateShape();
             }
         });
 /*        _widthText.addFocusListener( new FocusListener() {
@@ -83,13 +84,18 @@ public class DrawRectangle extends DrawFrame {
                 updateShape();
             }
         });
-        _heightText.addMouseMotionListener( new MouseMotionListener() {
+        p.addMouseMotionListener( new MouseMotionListener() {
             public void mouseDragged( MouseEvent e) {               
                 updateShape();
             }
             public void mouseMoved(MouseEvent e) {
-                _shape.setHeight(Integer.parseInt(_heightText.getText()));
-                updateShape();
+                int w = Integer.parseInt(_widthText.getText());
+                int h = Integer.parseInt(_heightText.getText());
+                if (w!=_shape.getWidth() || h!=_shape.getHeight()) {
+                    _shape.setHeight(h);
+                    _shape.setWidth(w);
+                    updateShape();                    
+                }
             }
         });
 

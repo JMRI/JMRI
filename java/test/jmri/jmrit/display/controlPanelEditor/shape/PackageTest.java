@@ -25,8 +25,9 @@ public class PackageTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrit.display.controlPanelEditor.shape");   // no tests in this class itself
-
+        TestSuite suite = new TestSuite("jmri.jmrit.display.controlPanelEditor.shape");
+        
+        suite.addTest(SchemaTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.display.controlPanelEditor.shape.configurexml.PackageTest.class));
 
