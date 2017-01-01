@@ -1,15 +1,8 @@
 package apps.configurexml;
 
-import apps.Apps;
 import apps.CreateButtonModel;
 import apps.StartupActionsManager;
-import apps.gui3.Apps3;
-import javax.swing.Action;
-import javax.swing.JButton;
 import jmri.InstanceManager;
-import jmri.jmrix.SystemConnectionMemo;
-import jmri.jmrix.swing.SystemConnectionAction;
-import jmri.util.ConnectionNameFromSystemName;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,38 +62,6 @@ public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
                     && child.getAttributeValue("value") != null) { // NOI18N
                 model.setSystemPrefix(child.getAttributeValue("value")); // NOI18N
             }
-        }
-        log.debug("Invoke Action from {}", className);
-        try {
-            Action action = (Action) Class.forName(className).newInstance();
-            if (SystemConnectionAction.class.isAssignableFrom(action.getClass())) {
-                SystemConnectionMemo memo = ConnectionNameFromSystemName.getSystemConnectionMemoFromSystemPrefix(model.getSystemPrefix());
-                if (memo != null) {
-                    ((SystemConnectionAction) action).setSystemConnectionMemo(memo);
-                } else {
-                    log.error("Connection {} does not exist. Cannot be assigned to action {}", model.getSystemPrefix(), className);
-                    result = false;
-                }
-            }
-            JButton b = new JButton(action);
-            b.setToolTipText(model.toString());
-            if (Apps.buttonSpace() != null) {
-                Apps.buttonSpace().add(b);
-            } else if (Apps3.buttonSpace() != null) {
-                Apps3.buttonSpace().add(b);
-            }
-        } catch (ClassNotFoundException ex1) {
-            log.error("Could not find specified class: {}", className);
-            result = false;
-        } catch (IllegalAccessException ex2) {
-            log.error("Unexpected access exception for class: {}", className, ex2);
-            result = false;
-        } catch (InstantiationException ex3) {
-            log.error("Could not instantiate specified class: {}", className, ex3);
-            result = false;
-        } catch (Exception ex4) {
-            log.error("Exception while performing startup action for class: {}", className, ex4);
-            result = false;
         }
         InstanceManager.getDefault(StartupActionsManager.class).addAction(model);
         return result;

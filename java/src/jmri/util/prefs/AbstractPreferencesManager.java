@@ -108,8 +108,10 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
     /**
      * Require that instances of the specified classes have initialized
      * correctly. This method should only be called from within
-     * {@link #initialize(jmri.profile.Profile)} and must not be within a
-     * try-catch block.
+     * {@link #initialize(jmri.profile.Profile)}, generally immediately after
+     * the PreferencesManager verifies that it is not already initialized. If
+     * this method is within a try-catch block, the exception it generates
+     * should be re-thrown by initialize(profile).
      *
      * @param profile the profile against which the manager is being initialized
      * @param classes the manager classes for which all calling
@@ -142,8 +144,10 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
     /**
      * Require that instances of the specified classes have initialized
      * correctly. This method should only be called from within
-     * {@link #initialize(jmri.profile.Profile)} and must not be within a
-     * try-catch block. This calls
+     * {@link #initialize(jmri.profile.Profile)}, generally immediately after
+     * the PreferencesManager verifies that it is not already initialized. If
+     * this method is within a try-catch block, the exception it generates
+     * should be re-thrown by initialize(profile). This calls
      * {@link #requiresNoInitializedWithExceptions(jmri.profile.Profile, java.util.Set)}
      * with the result of {@link #getRequires()} as the set of classes to
      * require.
