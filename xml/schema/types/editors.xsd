@@ -1376,7 +1376,10 @@ pointid" type="xs:string"></xs:attribute>
       <xs:attribute name="red" type="xs:unsignedByte"></xs:attribute>
       <xs:attribute name="green" type="xs:unsignedByte"></xs:attribute>
       <xs:attribute name="blue" type="xs:unsignedByte"></xs:attribute>
-      <xs:attribute name="hasBackground" type="xs:string"></xs:attribute>
+      <xs:attribute name="hasBackground" type="yesNoType"></xs:attribute>
+      <xs:attribute name="redBack" type="xs:int"></xs:attribute>
+      <xs:attribute name="greenBack" type="xs:int"></xs:attribute>
+      <xs:attribute name="blueBack" type="xs:int"></xs:attribute>
       <xs:attribute name="justification" default="left">
       
         <xs:simpleType>
@@ -1387,6 +1390,16 @@ pointid" type="xs:string"></xs:attribute>
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
+      <xs:attribute name="orientation" default="horizontal">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="horizontal"></xs:enumeration>
+            <xs:enumeration value="vertical_up"></xs:enumeration>
+            <xs:enumeration value="vertical_down"></xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="fixed" type="trueFalseType"></xs:attribute>
       <xs:attribute name="margin" type="xs:int"></xs:attribute>
       <xs:attribute name="borderSize" type="xs:int"></xs:attribute>
       <xs:attribute name="redBorder" type="xs:int"></xs:attribute>
@@ -1397,7 +1410,6 @@ pointid" type="xs:string"></xs:attribute>
       <xs:attribute name="selectable" type="xs:string"></xs:attribute>
       <xs:attribute name="rosterentry" type="xs:string"></xs:attribute>
       <xs:attribute name="degrees" type="xs:string"></xs:attribute>
-
      </xs:complexType>
 
     <xs:complexType name="EditorTrackSegmentType">
@@ -1529,8 +1541,8 @@ pointid" type="xs:string"></xs:attribute>
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
             <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
         </xs:element>
-        <xs:element name="url" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="url" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
       </xs:all>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
