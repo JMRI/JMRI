@@ -315,6 +315,11 @@ public class PositionableShape extends PositionableJComponent
                     super.setDisplayLevel(_saveLevel);
                     setVisible(true);
                 }
+                ((ControlPanelEditor)_editor).mouseMoved(new MouseEvent(this, 
+                        MouseEvent.MOUSE_MOVED, System.currentTimeMillis(), 
+                        0, getX(), getY(), 0, false));
+                repaint();
+                _editor.getTargetPanel().revalidate();
             }
         } else {
             super.setDisplayLevel(_saveLevel);
@@ -339,6 +344,7 @@ public class PositionableShape extends PositionableJComponent
      * @param pName Used as a system/user name to lookup the sensor object
      * @param hide true if sensor should be hidden
      * @param level level at which sensor is placed
+     * @return error message, if any
      */
     public String setControlSensor(String pName, boolean hide, int level) {
         String msg = null;
