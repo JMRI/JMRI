@@ -36,6 +36,7 @@ public class ScriptButtonModelXml extends AbstractXmlAdapter {
      * @param o Object to store, of type PerformActonModel
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element element = new Element("perform"); // NOI18N
         element.setAttribute("name", ((StartupModel) o).getName()); // NOI18N

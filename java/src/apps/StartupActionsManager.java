@@ -53,6 +53,15 @@ public class StartupActionsManager extends AbstractPreferencesManager {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * Loads the startup action preferences and, if all required managers have
+     * initialized without exceptions, performs those actions. Startup actions
+     * are only performed if {@link apps.startup.StartupModel#isValid()} is true
+     * for the action. It is assumed that the action has retained an Exception
+     * that can be used to explain why isValid() is false.
+     */
     @Override
     public void initialize(Profile profile) throws InitializationException {
         if (!this.isInitialized(profile)) {
@@ -101,7 +110,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
                 log.debug("No element to read");
             }
             if (perform) {
-                this.actions.forEach((action) -> {
+                this.actions.stream().filter((action) -> (action.isValid())).forEachOrdered((action) -> {
                     try {
                         action.performAction();
                     } catch (JmriException ex) {
