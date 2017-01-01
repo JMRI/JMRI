@@ -367,6 +367,17 @@ public class JoalAudioSource extends AbstractAudioSource {
     }
 
     @Override
+    public void setOffset(long offset) {
+        super.setOffset(offset);
+        if (_initialised) {
+            al.alSourcei(_source[0], AL.AL_SAMPLE_OFFSET, (int) getOffset());
+            if (JoalAudioFactory.checkALError()) {
+                log.warn("Error updating Sample Offset of JoalAudioSource (" + this.getSystemName() + ")");
+             }
+        }
+    }
+
+    @Override
     public void setMaximumDistance(float maximumDistance) {
         super.setMaximumDistance(maximumDistance);
         if (_initialised) {

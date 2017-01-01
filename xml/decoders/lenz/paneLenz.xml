@@ -36,6 +36,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>9</revnumber>
+      <date>2016-12-22</date>
+      <authorinitials>JCA</authorinitials>
+      <revremark>Catalan translation</revremark>
+    </revision>
+    <revision>
       <revnumber>8</revnumber>
       <date>2016-10-22</date>
       <authorinitials>PS</authorinitials>
@@ -67,6 +73,7 @@
           <text>RailCom Configuration</text>
           <text xml:lang="de">RailCom Einstellungen</text>
           <text xml:lang="cs">Konfigurace RailCom</text>
+          <text xml:lang="ca">Configuració RailCom</text>
         </label>
         <display item="RailCom Address"/>
         <display item="RailCom Data"/>
@@ -79,6 +86,7 @@
           <text>Fault Indication</text>
           <text xml:lang="de">Fehleranzeige</text>
           <text xml:lang="cs">Hlášení závad</text>
+          <text xml:lang="ca">Indicació d'Error</text>
         </label>
         <display item="Light Short"/>
         <display item="Overheating"/>
@@ -90,6 +98,7 @@
           <text>Motor Configuration</text>
           <text xml:lang="de">Motor Einstellungen</text>
           <text xml:lang="cs">Konfigurace motoru</text>
+          <text xml:lang="ca">Configuració del Motor</text>
         </label>
         <display item="Motor type"/>
         <display item="EMF Switch"/>
@@ -112,6 +121,7 @@
           <text>Braking Configuration</text>
           <text xml:lang="de">Bremseinstellungen</text>
           <text xml:lang="cs">Konfigurace brždění</text>
+          <text xml:lang="ca">Configuració de la Frenada</text>
         </label>
         <display item="Constant Braking"/>
         <display item="ABC"/>
@@ -169,6 +179,7 @@
           <text xml:lang="it">Nota: frenata costante funziona solo se è abilitata l'inerzia e non in velocità da manovra</text>
           <text xml:lang="de">Hinweis: Konstanter Bremsweg funktioniert nur wenn "Anfahr- / Bremsverzögerung" eingeschaltet und der Rangiergang ausgeschaltet ist.</text>
           <text xml:lang="cs">Tip: Konstantní brzdná dráha funguje pouze tehdy, když je zpřístupněno zrychlení/zpomalení, a není zapnut posun</text>
+		  <text xml:lang="ca">Nota: La frenada constant només funciona amb inèrcia connectada i sense marxa de maniobres</text>
         </label>
         <label>
           <text> </text>
