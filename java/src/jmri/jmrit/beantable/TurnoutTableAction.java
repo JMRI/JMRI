@@ -315,9 +315,9 @@ public class TurnoutTableAction extends AbstractTableAction {
                         return thrownText;
                     }
                     if (t.getKnownState() == Turnout.INCONSISTENT) {
-                        return "Inconsistent";
+                        return Bundle.getMessage("BeanStateInconsistent");
                     } else {
-                        return "Unknown";
+                        return Bundle.getMessage("BeanStateUnknown"); // was: "Unknown"
                     }
                 } else if (col == MODECOL) {
                     JComboBox<String> c = new JComboBox<String>(t.getValidFeedbackNames());
