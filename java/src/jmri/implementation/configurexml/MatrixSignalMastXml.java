@@ -143,7 +143,6 @@ public class MatrixSignalMastXml
         Element bss = shared.getChild("bitStrings"); // multiple
         if (bss != null) {
             List<Element> list = bss.getChildren("bitString"); // singular
-            String set;
             for (Element bs : list) {
                 m.setBitstring(bs.getAttribute("aspect").getValue(), bs.getText()); // OK if value is null
             }
