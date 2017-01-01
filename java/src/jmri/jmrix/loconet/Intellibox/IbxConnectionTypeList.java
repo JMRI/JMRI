@@ -1,4 +1,3 @@
-// LnConnectionTypeList.java
 package jmri.jmrix.loconet.Intellibox;
 
 /**

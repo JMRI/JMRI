@@ -1,4 +1,3 @@
-// LnTurnout.java
 package jmri.jmrix.loconet;
 
 import jmri.NmraPacket;
@@ -36,11 +35,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001
   */
 public class LnTurnout extends AbstractTurnout implements LocoNetListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8838048326340434647L;
 
     public LnTurnout(String prefix, int number, LocoNetInterface controller) throws IllegalArgumentException {
         // a human-readable turnout number must be specified!
@@ -376,5 +370,3 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     private final static Logger log = LoggerFactory.getLogger(LnTurnout.class.getName());
 
 }
-
-/* @(#)LnTurnout.java */

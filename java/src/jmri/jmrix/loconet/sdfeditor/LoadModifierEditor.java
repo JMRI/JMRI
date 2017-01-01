@@ -1,4 +1,3 @@
-// LoadModifierEditor.java
 package jmri.jmrix.loconet.sdfeditor;
 
 import javax.swing.JLabel;
@@ -15,11 +14,6 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  */
 class LoadModifierEditor extends SdfMacroEditor {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8107914840589271502L;
-
     public LoadModifierEditor(SdfMacro inst) {
         super(inst);
 
@@ -30,5 +24,3 @@ class LoadModifierEditor extends SdfMacroEditor {
         add(new JLabel("No editor defined for this instruction yet."));
     }
 }
-
-/* @(#)LoadModifierEditor.java */
