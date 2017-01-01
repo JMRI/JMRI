@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides the mechanisms for storing an entire layout configuration to XML.
- * "Layout" refers to the hardware: Specific communcation systems, etc.
+ * "Layout" refers to the hardware: Specific communication systems, etc.
  *
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen Copyright (c) 2002, 2008
@@ -33,7 +33,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * See the <A HREF="package-summary.html#schema">Schema versioning
      * discussion</a>. Also controls the stylesheet file version.
      */
-    static final public String schemaVersion = "-2-9-6";
+    static final public String schemaVersion = "-4-7-2";
 
     public ConfigXmlManager() {
     }

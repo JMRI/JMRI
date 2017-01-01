@@ -124,13 +124,13 @@
 
       <p>In practical terms, versioning consists of having
       multiple-but-related versions of the schema definition files
-      which are label by the first JMRI version that can read
+      which are labeled by the first JMRI version that can read
       them.</p>
 
       <p>When do you need to create a new version?</p>
 
       <ul>
-        <li>You <em>do not</em> need to create a new version the
+        <li>You <em>do not</em> need to create a new version of the
         schema if you add or change things such that existing files
         will continue to validate.
 
@@ -139,7 +139,7 @@
           code repository.</p>
         </li>
 
-        <li>You <em>do</em> need to version a schema you make a
+        <li>You <em>do</em> need to version a schema when you make a
         change to the schema such that previous files will no
         longer validate with the current schema.
 

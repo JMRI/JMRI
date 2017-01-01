@@ -25,6 +25,8 @@
             uri="schema/docbook/xml.xsd"/>
     <system systemId="http://jmri.org/xml/schema/guinode.xsd"
             uri="schema/guinode.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/layout-4-7-2.xsd"
+            uri="schema/layout-4-7-2.xsd"/>
     <system systemId="http://jmri.org/xml/schema/layout-2-9-6.xsd"
             uri="schema/layout-2-9-6.xsd"/>
     <system systemId="http://jmri.org/xml/schema/locomotive-config.xsd"
