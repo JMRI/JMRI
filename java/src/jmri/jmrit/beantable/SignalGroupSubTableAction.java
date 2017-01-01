@@ -185,7 +185,7 @@ public class SignalGroupSubTableAction {
     JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
     JButton updateSubButton = new JButton(Bundle.getMessage("ButtonApply"));
 
-    static String updateInst = Bundle.getMessage("ClickToApply");
+    static String updateInst = Bundle.getMessage("ClickToApply", Bundle.getMessage("ButtonApply"));
 
     JLabel status1 = new JLabel(updateInst);
 
