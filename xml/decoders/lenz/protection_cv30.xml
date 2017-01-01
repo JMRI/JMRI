@@ -58,7 +58,7 @@
         <choice xml:lang="it">OK</choice>
         <choice xml:lang="de">Okay</choice>
         <choice xml:lang="cs">V pořádku</choice>
-        <choice xml:lang="ca">Correcte</choice>
+        <choice xml:lang="ca">OK</choice>
       </enumChoice>
       <enumChoice choice="Fault">
         <choice>Fault</choice>
@@ -72,7 +72,7 @@
     <label xml:lang="it">Luce per corto-circuito</label>
     <label xml:lang="de">Lampen Kurzschluss</label>
     <label xml:lang="cs">Zkrat osvětlení</label>
-    <label xml:lang="ca">Curt-Circuit a les llums</label>
+    <label xml:lang="ca">Curt-Circuit als Llums</label>
   </variable>
   <variable CV="30" mask="XXXXXXVX" item="Overheating" default="0">
     <enumVal>
@@ -81,7 +81,7 @@
         <choice xml:lang="it">OK</choice>
         <choice xml:lang="de">Okay</choice>
         <choice xml:lang="cs">V pořádku</choice>
-        <choice xml:lang="ca">Correcte</choice>
+        <choice xml:lang="ca">OK</choice>
       </enumChoice>
       <enumChoice choice="Fault">
         <choice>Fault</choice>
@@ -95,7 +95,7 @@
     <label xml:lang="it">Sovratemperatura</label>
     <label xml:lang="de">Übertemperatur</label>
     <label xml:lang="cs">Přehřátí</label>
-    <label xml:lang="ca">Sobreescalfament</label>
+    <label xml:lang="ca">Sobre escalfament</label>
   </variable>
   <variable CV="30" mask="XXXXXVXX" item="Motor Short" default="0">
     <enumVal>
@@ -104,7 +104,7 @@
         <choice xml:lang="it">OK</choice>
         <choice xml:lang="de">Okay</choice>
         <choice xml:lang="cs">V pořádku</choice>
-        <choice xml:lang="ca">Correcte</choice>
+        <choice xml:lang="ca">OK</choice>
       </enumChoice>
       <enumChoice choice="Fault">
         <choice>Fault</choice>
@@ -118,6 +118,6 @@
     <label xml:lang="it">Corto circuito Motore</label>
     <label xml:lang="de">Motor Kurzschluss</label>
     <label xml:lang="cs">Zkrat motoru</label>
-    <label xml:lang="ca">Cort-circuit al motor</label>
+    <label xml:lang="ca">Curt-Circuit al motor</label>
   </variable>
 </variables>
