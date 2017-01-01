@@ -148,7 +148,7 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
      * the PreferencesManager verifies that it is not already initialized. If
      * this method is within a try-catch block, the exception it generates
      * should be re-thrown by initialize(profile). This calls
-     * {@link #requiresNoInitializedWithExceptions(jmri.profile.Profile, java.util.Set)}
+     * {@link #requiresNoInitializedWithExceptions(jmri.profile.Profile, java.util.Set, java.lang.String)}
      * with the result of {@link #getRequires()} as the set of classes to
      * require.
      *
