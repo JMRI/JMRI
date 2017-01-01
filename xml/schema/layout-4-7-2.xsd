@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- This schema is part of JMRI. Copyright 2009, 2010                -->
+<!-- This schema is part of JMRI. Copyright 2009, 2010, 2016          -->
 
 <!-- Not in Venetian blind form                                       -->
 <!-- 'operation' element not complete                                 -->
@@ -41,8 +41,8 @@ signals - obsolete, EMPTY, never used
           both the panels themselves and configuration information.
           <p/>
           This version of the schema is for files created by JMRI
-          version 2.9.6 and later.  
-          Version 4.7.2 is the current development version.
+          version 4.7.2 and later.
+          It is the current development version.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="yes" />  <!-- too many to list -->
@@ -62,7 +62,7 @@ signals - obsolete, EMPTY, never used
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/transits-2-9-6.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/timebase.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalheads-2-9-6.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalmasts-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalmasts-4-7-2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalgroups-2-9-6.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalmastlogics.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/layoutblocks-2-9-6.xsd"/>
