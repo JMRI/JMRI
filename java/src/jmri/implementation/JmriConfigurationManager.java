@@ -182,16 +182,16 @@ public class JmriConfigurationManager implements ConfigureManager {
                 if (!this.initializationExceptions.isEmpty()) {
                     if (!GraphicsEnvironment.isHeadless()) {
                         ArrayList<String> errors = new ArrayList<>();
-                        for (PreferencesManager provider : this.initialized) {
+                        this.initialized.forEach((provider) -> {
                             List<Exception> exceptions = provider.getInitializationExceptions(profile);
                             if (!exceptions.isEmpty()) {
-                                for (Exception exception : exceptions) {
+                                exceptions.forEach((exception) -> {
                                     errors.add(exception.getLocalizedMessage());
-                                }
+                                });
                             } else if (this.initializationExceptions.get(provider) != null) {
                                 errors.add(this.initializationExceptions.get(provider).getLocalizedMessage());
                             }
-                        }
+                        });
                         Object list;
                         if (errors.size() == 1) {
                             list = errors.get(0);
