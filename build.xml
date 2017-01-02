@@ -1410,9 +1410,11 @@
                   <limit counter="LINE" value="COVEREDRATIO" minimum="0.28"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
               </rule>
+<!-- 
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
               </rule>
+ -->
           </check>
        </jacoco:report>
     </target>
@@ -1436,9 +1438,11 @@
                   <limit counter="LINE" value="COVEREDRATIO" minimum="0.28"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
               </rule>
+<!-- 
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
               </rule>
+ -->
           </check>
        </jacoco:report>
     </target>
