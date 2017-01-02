@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -66,7 +65,7 @@
       "#devschema">Developing JMRI Schema</a>".
 
       <p>Every time you change what JMRI writes (and therefore
-      reads) in an XML file, there are things you must do.</p>
+      reads) in an XML file, you must also do the following:</p>
 
       <ol>
         <li>You need to change the code that does the reading and
@@ -169,6 +168,18 @@
             "-3-7-3"</code><br>
             line and change it to your new version number
             suffix.</li>
+
+            <li>Run "ant headlesstest" and when tests fail, fix them.
+                If a LoadAndStoreTest flags a compare inLine/outLine
+                error, update the schema version in the header of the
+                reference file. For example in
+                <code>java/test/jmri/configurexml/loadref/BlockAndSignalMastTest.xml</code>
+                point to the most recent layout.xsd version in line 3:<br>
+                <code>&lt;layout-config
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-7-2.xsd"&gt;
+                </code>
+            </li>
 
             <li>If there's an associated XML stylesheet(s), its
             name has to be changed in a coordinated way. (You
