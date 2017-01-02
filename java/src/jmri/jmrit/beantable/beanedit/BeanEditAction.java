@@ -403,7 +403,7 @@ abstract class BeanEditAction extends AbstractAction {
                 if (!nbMan.inUse(nBean.getSystemName(), nBean)) {
                     return;
                 }
-                String msg = java.text.MessageFormat.format(Bundle.getMessage("UpdateToUserName"),
+                String msg = Bundle.getMessage("UpdateToUserName",
                         new Object[]{getBeanType(), value, nBean.getSystemName()});
                 int optionPane = JOptionPane.showConfirmDialog(null,
                         msg, Bundle.getMessage("UpdateToUserNameTitle"),

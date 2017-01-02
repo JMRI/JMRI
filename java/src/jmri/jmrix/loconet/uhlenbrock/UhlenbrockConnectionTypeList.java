@@ -1,4 +1,3 @@
-// UhlenbrockConnectionTypeList.java.java
 package jmri.jmrix.loconet.uhlenbrock;
 
 /**

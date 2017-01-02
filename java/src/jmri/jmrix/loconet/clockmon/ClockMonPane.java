@@ -135,11 +135,6 @@ public class ClockMonPane extends LnPanel implements SlotListener {
      */
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2901473960804245354L;
-
         public Default() {
             super(Bundle.getMessage("MenuItemClockMon"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),

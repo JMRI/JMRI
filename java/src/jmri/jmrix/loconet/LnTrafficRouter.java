@@ -1,4 +1,3 @@
-// LnTrafficRouter.java
 package jmri.jmrix.loconet;
 
 import org.slf4j.Logger;
@@ -97,6 +96,3 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
 
     private final static Logger log = LoggerFactory.getLogger(LnTrafficRouter.class.getName());
 }
-
-
-/* @(#)LnTrafficRouter.java */

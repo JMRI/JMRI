@@ -1,4 +1,3 @@
-// LocoBufferAdapter.java
 package jmri.jmrix.loconet.uhlenbrock;
 
 import gnu.io.SerialPort;
