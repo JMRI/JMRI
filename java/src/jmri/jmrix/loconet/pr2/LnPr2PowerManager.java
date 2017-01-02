@@ -1,4 +1,3 @@
-// LnPr2PowerManager.java
 package jmri.jmrix.loconet.pr2;
 
 import jmri.DccLocoAddress;
@@ -149,5 +148,3 @@ public class LnPr2PowerManager extends LnPowerManager {
     javax.swing.Timer timer = null;
 }
 
-
-/* @(#)LnPr2PowerManager.java */

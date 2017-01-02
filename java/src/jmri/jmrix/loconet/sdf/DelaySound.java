@@ -1,4 +1,3 @@
-// DelaySound.java
 package jmri.jmrix.loconet.sdf;
 
 /**
@@ -65,5 +64,3 @@ public class DelaySound extends SdfMacro {
         return indent + oneInstructionString();
     }
 }
-
-/* @(#)DelaySound.java */

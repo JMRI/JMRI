@@ -770,6 +770,7 @@
       <xs:attribute name="y" type="xs:int" use="required" />
       <xs:attribute name="scale" type="xs:float" use="required" />
       <xs:attribute name="color" type="screenColorType" />
+      <xs:attribute name="link" type="xs:string" />
  
     </xs:complexType>
 
@@ -1305,7 +1306,10 @@
       <xs:attribute name="red" type="xs:unsignedByte" />
       <xs:attribute name="green" type="xs:unsignedByte" />
       <xs:attribute name="blue" type="xs:unsignedByte" />
-      <xs:attribute name="hasBackground" type="xs:string" />
+      <xs:attribute name="hasBackground" type="yesNoType" />
+      <xs:attribute name="redBack" type="xs:int" />
+      <xs:attribute name="greenBack" type="xs:int" />
+      <xs:attribute name="blueBack" type="xs:int" />
       <xs:attribute name="justification" default="left" >
       
         <xs:simpleType>
@@ -1316,6 +1320,16 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
+      <xs:attribute name="orientation" default="horizontal" >
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="horizontal"/>
+            <xs:enumeration value="vertical_up"/>
+            <xs:enumeration value="vertical_down"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="fixed" type="trueFalseType" />
       <xs:attribute name="margin" type="xs:int" />
       <xs:attribute name="borderSize" type="xs:int" />
       <xs:attribute name="redBorder" type="xs:int" />
@@ -1458,8 +1472,8 @@
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
             <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
         </xs:element>
-        <xs:element name="url" type="xs:string" minOccurs="0" maxOccurs="1" />
         <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="url" type="xs:string" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup" />

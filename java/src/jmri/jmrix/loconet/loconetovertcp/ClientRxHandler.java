@@ -1,4 +1,3 @@
-// ClientRxHandler.java
 package jmri.jmrix.loconet.loconetovertcp;
 
 import java.io.BufferedReader;

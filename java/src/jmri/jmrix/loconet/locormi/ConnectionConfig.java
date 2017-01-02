@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.loconet.locormi;
 
 import javax.swing.JLabel;

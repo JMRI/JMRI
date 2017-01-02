@@ -1,4 +1,3 @@
-// LnComponentFactory.java
 package jmri.jmrix.loconet.swing;
 
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -27,6 +26,3 @@ public class LnComponentFactory extends jmri.jmrix.swing.ComponentFactory {
         return new LocoNetMenu(memo);
     }
 }
-
-
-/* @(#)LnComponentFactory.java */

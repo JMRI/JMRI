@@ -1,4 +1,3 @@
-// LnPowerManager.java
 package jmri.jmrix.loconet;
 
 import jmri.JmriException;
@@ -165,5 +164,3 @@ public class LnPowerManager
     }
     private final static Logger log = LoggerFactory.getLogger(LnPowerManager.class.getName());
 }
-
-/* @(#)LnPowerManager.java */

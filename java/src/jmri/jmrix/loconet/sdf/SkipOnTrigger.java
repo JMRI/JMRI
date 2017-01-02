@@ -1,4 +1,3 @@
-// SkipOnTrigger.java
 package jmri.jmrix.loconet.sdf;
 
 /**
@@ -74,5 +73,3 @@ public class SkipOnTrigger extends SdfMacro {
         return indent + oneInstructionString();
     }
 }
-
-/* @(#)SkipOnTrigger.java */

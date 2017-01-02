@@ -1,4 +1,3 @@
-// PlayEditor.java
 package jmri.jmrix.loconet.sdfeditor;
 
 import java.awt.event.ActionListener;
@@ -21,11 +20,6 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  * @author	Bob Jacobsen Copyright (C) 2007
  */
 class PlayEditor extends SdfMacroEditor {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6609198608813676953L;
 
     public PlayEditor(SdfMacro inst) {
         super(inst);
@@ -119,5 +113,3 @@ class PlayEditor extends SdfMacroEditor {
         wavbrk2.setSelected((flags & 0x02) != 0);
     }
 }
-
-/* @(#)PlayEditor.java */

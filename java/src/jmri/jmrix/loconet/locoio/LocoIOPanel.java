@@ -1,4 +1,3 @@
-// LocoIOPanel.java
 package jmri.jmrix.loconet.locoio;
 
 import java.awt.event.ActionEvent;
@@ -33,11 +32,6 @@ import org.slf4j.LoggerFactory;
   */
 public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2652944223325097266L;
 
     public LocoIOPanel() {
         super();

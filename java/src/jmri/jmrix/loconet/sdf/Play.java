@@ -1,4 +1,3 @@
-// Play.java
 package jmri.jmrix.loconet.sdf;
 
 import jmri.util.StringUtil;
@@ -119,5 +118,3 @@ public class Play extends SdfMacro {
         return indent + oneInstructionString();
     }
 }
-
-/* @(#)Play.java */
