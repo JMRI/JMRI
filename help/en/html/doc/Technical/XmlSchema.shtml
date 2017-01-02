@@ -117,7 +117,7 @@
 
       <h3 id="versioning">Schema Versioning</h3>"Versioning" schema
       allows us to have different schema for older and newer files.
-      This lets newer versions of JMRI to continue to check and
+      This lets newer versions of JMRI continue to check and
       read files that were written by older versions of JMRI. This
       backward compatibility is an important JMRI feature which we
       don't want to lose.
@@ -195,7 +195,7 @@
       tool</a> is a very good tool for checking that changes to the
       JMRI schema are still technically correct. You should check
       your changes with it before commiting them to the repository.
-      Unfortunately, it doesn't seem to to check compliance with
+      Unfortunately, it doesn't seem to check compliance with
       nested schema elements, e.g. from DocBook (see below) or JMRI
       schema, but it's still a very useful check.
 
