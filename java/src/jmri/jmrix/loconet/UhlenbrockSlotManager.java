@@ -1,4 +1,3 @@
-/* UhlenbrockSlotManager.java */
 package jmri.jmrix.loconet;
 
 import jmri.CommandStation;
@@ -341,4 +340,3 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
     private final static Logger log = LoggerFactory.getLogger(UhlenbrockSlotManager.class.getName());
 
 }
-/* @(#)UhlenbrockSlotManager.java */

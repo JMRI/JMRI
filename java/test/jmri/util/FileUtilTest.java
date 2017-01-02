@@ -49,21 +49,6 @@ public class FileUtilTest {
         Assert.assertEquals(f.getAbsolutePath(), name);
     }
 
-    // resource: prefix with relative path, convert to relative in system-specific form
-    @Test
-    public void testGEFResourceRel() {
-        String name = FileUtil.getExternalFilename("resource:resources/non-existant-file-foo");
-        Assert.assertEquals(new File("resources/non-existant-file-foo").getAbsolutePath(), name);
-    }
-
-    // resource: prefix with absolute path, convert to absolute in system-specific form
-    @Test
-    public void testGEFResourceAbs() {
-        File f = new File("resources/non-existant-file-foo");
-        String name = FileUtil.getExternalFilename("resource:" + f.getAbsolutePath());
-        Assert.assertEquals(f.getAbsolutePath(), name);
-    }
-
     // program: prefix with relative path, convert to relative in system-specific form
     @Test
     public void testGEFProgramRel() {
@@ -91,21 +76,6 @@ public class FileUtilTest {
     public void testGEFPrefAbs() {
         File f = new File("resources/non-existant-file-foo");
         String name = FileUtil.getExternalFilename("preference:" + f.getAbsolutePath());
-        Assert.assertEquals(f.getAbsolutePath(), name);
-    }
-
-    // file: prefix with relative path, convert to absolute in system-specific form
-    @Test
-    public void testGEFFileRel() {
-        String name = FileUtil.getExternalFilename("file:non-existant-file-foo");
-        Assert.assertEquals(new File(FileUtil.getUserFilesPath() + "resources" + File.separator + "non-existant-file-foo").getAbsolutePath(), name);
-    }
-
-    // file: prefix with absolute path, convert to absolute in system-specific form
-    @Test
-    public void testGEFFileAbs() {
-        File f = new File("resources/non-existant-file-foo");
-        String name = FileUtil.getExternalFilename("file:" + f.getAbsolutePath());
         Assert.assertEquals(f.getAbsolutePath(), name);
     }
 
@@ -148,12 +118,6 @@ public class FileUtilTest {
     }
 
     @Test
-    public void testGetpfResourceS() {
-        String name = FileUtil.getPortableFilename("resource:resources/non-existant-file-foo");
-        Assert.assertEquals("program:resources/non-existant-file-foo", name);
-    }
-
-    @Test
     public void testGetpfPrefF() throws IOException {
         File f = new File(FileUtil.getUserFilesPath() + "resources" + File.separator + "non-existant-file-foo");
         String name = FileUtil.getPortableFilename(f);
@@ -183,18 +147,6 @@ public class FileUtilTest {
     }
 
     @Test
-    public void testGetpfFileS() {
-        String name = FileUtil.getPortableFilename("file:non-existant-file-foo");
-        Assert.assertEquals("preference:resources/non-existant-file-foo", name);
-    }
-
-    @Test
-    public void testGetpfFileS2() {
-        String name = FileUtil.getPortableFilename("resource:resources/non-existant-file-foo");
-        Assert.assertEquals("program:resources/non-existant-file-foo", name);
-    }
-
-    @Test
     public void testGetpfHomeS() {
         String name = FileUtil.getPortableFilename("home:non-existant-file-foo");
         Assert.assertEquals("home:non-existant-file-foo", name);
@@ -210,24 +162,12 @@ public class FileUtilTest {
 
     /*
      * test getAbsoluteFilename()
-     *
-     * There are no tests for resource: and file: since getAbsoluteFilename()
-     * uses getPortableFilename() to convert these prefixes to one of the
-     * other prefixes.
      */
     // relative file with no prefix: Should become null
     @Test
     public void testGAFRel() {
         String name = FileUtil.getAbsoluteFilename("resources/non-existant-file-foo");
         Assert.assertEquals(null, name);
-    }
-
-    // absolute file: Should become canonical path
-    @Test
-    public void testGAFAbs() throws IOException {
-        File f = new File("resources/non-existant-file-foo");
-        String name = FileUtil.getAbsoluteFilename(f.getAbsolutePath());
-        Assert.assertEquals(f.getCanonicalPath(), name);
     }
 
     // program: prefix with relative path, convert to relative in system-specific form

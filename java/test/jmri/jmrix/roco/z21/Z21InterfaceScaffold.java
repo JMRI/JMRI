@@ -36,8 +36,6 @@ public class Z21InterfaceScaffold extends Z21TrafficController {
         }
         // save a copy
         outbound.addElement(m);
-
-        Z21Reply testReply = new Z21Reply();
     }
 
     // test control member functions

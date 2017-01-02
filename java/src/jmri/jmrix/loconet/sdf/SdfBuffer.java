@@ -1,4 +1,3 @@
-// SdfBuffer.java
 package jmri.jmrix.loconet.sdf;
 
 import java.io.File;
@@ -146,5 +145,3 @@ public class SdfBuffer {
     private final static Logger log = LoggerFactory.getLogger(SdfBuffer.class.getName());
 
 }
-
-/* @(#)SdfBuffer.java */

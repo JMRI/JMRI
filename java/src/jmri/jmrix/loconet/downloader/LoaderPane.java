@@ -1,4 +1,3 @@
-// LoaderPane.java
 package jmri.jmrix.loconet.downloader;
 
 import java.awt.Color;

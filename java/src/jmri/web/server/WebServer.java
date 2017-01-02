@@ -4,7 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ServiceLoader;
 import javax.annotation.Nonnull;
 import javax.servlet.annotation.WebServlet;
@@ -112,19 +111,16 @@ public final class WebServer extends AbstractLifeCycle implements LifeCycle.List
             server.setConnectors(new Connector[]{connector});
             server.setHandler(new ContextHandlerCollection());
 
-            ContextHandlerCollection contexts = new ContextHandlerCollection();
             // Load all path handlers
             ServiceLoader.load(WebServerConfiguration.class).forEach((configuration) -> {
-                Map<String, String> filePaths = configuration.getFilePaths();
-                filePaths.keySet().forEach((key) -> {
-                    this.registerResource(key, filePaths.get(key));
+                configuration.getFilePaths().entrySet().forEach((resource) -> {
+                    this.registerResource(resource.getKey(), resource.getValue());
                 });
-                Map<String, String> redirections = configuration.getRedirectedPaths();
-                redirections.keySet().forEach((key) -> {
-                    this.registerRedirection(key, redirections.get(key));
+                configuration.getRedirectedPaths().entrySet().forEach((redirection) -> {
+                    this.registerRedirection(redirection.getKey(), redirection.getValue());
                 });
-                configuration.getForbiddenPaths().forEach((key) -> {
-                    this.registerDenial(key);
+                configuration.getForbiddenPaths().forEach((denial) -> {
+                    this.registerDenial(denial);
                 });
             });
             // Load all classes that provide the HttpServlet service.

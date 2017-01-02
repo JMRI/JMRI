@@ -1,4 +1,3 @@
-// CommentMacroEditor.java
 package jmri.jmrix.loconet.sdfeditor;
 
 import javax.swing.JLabel;
@@ -11,11 +10,6 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  */
 class CommentMacroEditor extends SdfMacroEditor {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5917155143113013316L;
-
     public CommentMacroEditor(SdfMacro inst) {
         super(inst);
 
@@ -26,5 +20,3 @@ class CommentMacroEditor extends SdfMacroEditor {
         add(new JLabel("No editor defined for this instruction yet."));
     }
 }
-
-/* @(#)CommentMacroEditor.java */
