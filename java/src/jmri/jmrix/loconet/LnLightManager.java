@@ -1,4 +1,3 @@
-// LnLightManager.java
 package jmri.jmrix.loconet;
 
 import jmri.Light;
@@ -16,11 +15,6 @@ import org.slf4j.LoggerFactory;
  * @author	Dave Duchamp Copyright (C) 2006
   */
 public class LnLightManager extends AbstractLightManager {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2149079067924117653L;
 
     public LnLightManager(LnTrafficController tc, String prefix) {
         _trafficController = tc;
@@ -117,5 +111,3 @@ public class LnLightManager extends AbstractLightManager {
     private final static Logger log = LoggerFactory.getLogger(LnLightManager.class.getName());
 
 }
-
-/* @(#)LnLightManager.java */

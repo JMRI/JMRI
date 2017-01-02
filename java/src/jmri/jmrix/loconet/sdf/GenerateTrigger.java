@@ -1,4 +1,3 @@
-// GenerateTrigger.java
 package jmri.jmrix.loconet.sdf;
 
 /**
@@ -63,5 +62,3 @@ public class GenerateTrigger extends SdfMacro {
         return indent + oneInstructionString();
     }
 }
-
-/* @(#)GenerateTrigger.java */

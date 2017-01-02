@@ -1,4 +1,3 @@
-// PM4Panel.java
 package jmri.jmrix.loconet.pm4;
 
 import java.awt.FlowLayout;
@@ -28,11 +27,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2002, 2004, 2007, 2010
   */
 public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1373713395993058042L;
 
     public PM4Panel() {
         this(1);
