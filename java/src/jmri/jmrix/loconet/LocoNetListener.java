@@ -1,4 +1,3 @@
-// LocoNetListener.java
 package jmri.jmrix.loconet;
 
 /**
@@ -25,6 +24,3 @@ public interface LocoNetListener extends java.util.EventListener {
      */
     public void message(LocoNetMessage msg);
 }
-
-
-/* @(#)LocoNetListener.java */

@@ -1,4 +1,3 @@
-// LocoNetBluetoothAdapter.java
 package jmri.jmrix.loconet.bluetooth;
 
 import java.io.DataInputStream;

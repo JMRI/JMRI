@@ -1,4 +1,3 @@
-// LocoBufferAdapter.java
 package jmri.jmrix.loconet.locobufferii;
 
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;

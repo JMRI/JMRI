@@ -1,4 +1,3 @@
-// InitiateSound.java
 package jmri.jmrix.loconet.sdf;
 
 import java.util.ArrayList;
@@ -137,5 +136,3 @@ public class InitiateSound extends SdfMacro {
         return output;
     }
 }
-
-/* @(#)InitiateSound.java */
