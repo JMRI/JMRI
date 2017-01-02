@@ -1,4 +1,3 @@
-// UhlenbrockSlot.java
 package jmri.jmrix.loconet;
 
 
@@ -84,6 +83,3 @@ public class UhlenbrockSlot extends LocoNetSlot {
         }
     }
 }
-
-
-/* @(#)UhlenbrockSlot.java */

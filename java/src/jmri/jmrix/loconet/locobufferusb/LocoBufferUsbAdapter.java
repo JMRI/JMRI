@@ -1,4 +1,3 @@
-// LocoBufferUsbAdapter.java
 package jmri.jmrix.loconet.locobufferusb;
 
 import gnu.io.SerialPort;
