@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
+import java.util.Set;
 import java.util.jar.JarFile;
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
 /**
@@ -131,6 +133,55 @@ public final class FileUtil {
      */
     static public URL getURL(URI uri) {
         return FileUtilSupport.getDefault().getURL(uri);
+    }
+
+    /**
+     * Find all files matching the given name under the given root directory
+     * within both the user and installed file locations.
+     *
+     * @param name the name of the file to find
+     * @param root the relative path to a directory in either or both of the
+     *             user or installed file locations; use a single period
+     *             character to refer to the root of the user or installed file
+     *             locations
+     * @return a set of found files or an empty set if no matching files were
+     *         found
+     * @throws IllegalArgumentException if the name is not a relative path, is
+     *                                  empty, or contains path separators; or
+     *                                  if the root is not a relative path, is
+     *                                  empty, or contains a parent directory
+     *                                  (..)
+     * @throws NullPointerException     if any parameter is null
+     */
+    @Nonnull
+    @CheckReturnValue
+    static public Set<File> findFiles(@Nonnull String name, @Nonnull String root) throws IllegalArgumentException {
+        return FileUtilSupport.getDefault().findFiles(name, root);
+    }
+
+    /**
+     * Find all files matching the given name under the given root directory
+     * within the specified location.
+     *
+     * @param name     the name of the file to find
+     * @param root     the relative path to a directory in either or both of the
+     *                 user or installed file locations; use a single period
+     *                 character to refer to the root of the location
+     * @param location the location to search within
+     * @return a set of found files or an empty set if no matching files were
+     *         found
+     * @throws IllegalArgumentException if the name is not a relative path, is
+     *                                  empty, or contains path separators; if
+     *                                  the root is not a relative path, is
+     *                                  empty, or contains a parent directory
+     *                                  (..); or if the location is
+     *                                  {@link Location#NONE}
+     * @throws NullPointerException     if any parameter is null
+     */
+    @Nonnull
+    @CheckReturnValue
+    static public Set<File> findFiles(@Nonnull String name, @Nonnull String root, @Nonnull Location location) {
+        return FileUtilSupport.getDefault().findFiles(name, root, location);
     }
 
     /**
@@ -833,11 +884,11 @@ public final class FileUtil {
      * @param extension The extension to use for the rotations. If null or an
      *                  empty string, the rotation number is used as the
      *                  extension.
-     * @throws java.io.IOException if a backup cannot be created
+     * @throws java.io.IOException      if a backup cannot be created
      * @throws IllegalArgumentException if max is less than one
      * @see jmri.util.FileUtilSupport#rotate(java.io.File, int,
      * java.lang.String)
-     * @see jmri.util.FileUtilSupport#backup(java.io.File) 
+     * @see jmri.util.FileUtilSupport#backup(java.io.File)
      */
     public static void rotate(File file, int max, String extension) throws IOException {
         FileUtilSupport.getDefault().rotate(file, max, extension);

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -389,6 +390,10 @@ public class FileUtilTest {
     @BeforeClass
     public static void setUpClass() {
         new File(FileUtil.getProfilePath()).mkdir();
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
     }
 
     @Before
