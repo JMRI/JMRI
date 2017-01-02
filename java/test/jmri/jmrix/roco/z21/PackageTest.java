@@ -10,12 +10,14 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+
+    // Ignore classes which might be triggering persistent false positive, see https://github.com/JMRI/JMRI/issues/2671 
     Z21AdapterTest.class,
     Z21MessageTest.class,
     Z21ReplyTest.class,
-    Z21TrafficControllerTest.class,
-    Z21SystemConnectionMemoTest.class,
-    Z21XPressNetTunnelTest.class,
+    // Z21TrafficControllerTest.class,
+    // Z21SystemConnectionMemoTest.class,
+    // Z21XPressNetTunnelTest.class,
     Z21XNetProgrammerTest.class,
     Z21XNetThrottleManagerTest.class,
     Z21XNetThrottleTest.class,
@@ -28,8 +30,8 @@ import org.junit.runners.Suite;
     Z21ReporterTest.class,
     Z21ReporterManagerTest.class,
     RocoZ21CommandStationTest.class,
-    jmri.jmrix.roco.z21.swing.PackageTest.class,
-    Z21XNetStreamPortControllerTest.class
+    jmri.jmrix.roco.z21.swing.PackageTest.class //,
+    // Z21XNetStreamPortControllerTest.class
 })
 public class PackageTest {
 
