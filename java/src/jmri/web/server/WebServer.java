@@ -31,6 +31,7 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.util.component.AbstractLifeCycle;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.slf4j.Logger;
@@ -53,7 +54,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright 2005, 2006
  * @author Randall Wood Copyright 2012, 2016
  */
-public final class WebServer implements LifeCycle.Listener {
+public final class WebServer extends AbstractLifeCycle implements LifeCycle.Listener {
 
     private static enum Registration {
         DENIAL, REDIRECTION, RESOURCE, SERVLET
@@ -97,7 +98,8 @@ public final class WebServer implements LifeCycle.Listener {
     /**
      * Start the web server.
      */
-    public void start() {
+    @Override
+    public void doStart() {
         if (server == null) {
             QueuedThreadPool threadPool = new QueuedThreadPool();
             threadPool.setName("WebServer");
@@ -114,17 +116,16 @@ public final class WebServer implements LifeCycle.Listener {
             // Load all path handlers
             ServiceLoader.load(WebServerConfiguration.class).forEach((configuration) -> {
                 Map<String, String> filePaths = configuration.getFilePaths();
-                for (String key : filePaths.keySet()) {
+                filePaths.keySet().forEach((key) -> {
                     this.registerResource(key, filePaths.get(key));
-                }
+                });
                 Map<String, String> redirections = configuration.getRedirectedPaths();
-                for (String key : redirections.keySet()) {
+                redirections.keySet().forEach((key) -> {
                     this.registerRedirection(key, redirections.get(key));
-                }
-                List<String> denials = configuration.getForbiddenPaths();
-                for (String key : denials) {
+                });
+                configuration.getForbiddenPaths().forEach((key) -> {
                     this.registerDenial(key);
-                }
+                });
             });
             // Load all classes that provide the HttpServlet service.
             ServiceLoader.load(HttpServlet.class).forEach((servlet) -> {
@@ -145,7 +146,8 @@ public final class WebServer implements LifeCycle.Listener {
      *
      * @throws Exception if there is an error stopping the server
      */
-    public void stop() throws Exception {
+    @Override
+    public void doStop() throws Exception {
         server.stop();
     }
 
