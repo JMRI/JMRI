@@ -450,11 +450,158 @@ public class NmraPacketTest {
         Assert.assertEquals("Long Loco", 2060, NmraPacket.extractAddressNumber(bl));
     }
 
+    /**
+     * Test the 28 speed step forward throttle Note that this has not been
+     * independently verified
+     */
+    @Test
+    public void testSpeedStep28PacketOld() {
+        int address = 100;
+        // results for speed steps 0-28 when forward
+        byte[][] speeds = {
+            {-64, 100, 96, -60}, //   0
+            {-64, 100, 113, -43}, //  1
+            {-64, 100, 98, -58}, //   2
+            {-64, 100, 114, -42}, //  3
+            {-64, 100, 99, -57}, //   4
+            {-64, 100, 115, -41}, //  5
+            {-64, 100, 100, -64}, //  6
+            {-64, 100, 116, -48}, //  7
+            {-64, 100, 101, -63}, //  8
+            {-64, 100, 117, -47}, //  9
+            {-64, 100, 102, -62}, // 10
+            {-64, 100, 118, -46}, // 11
+            {-64, 100, 103, -61}, // 12
+            {-64, 100, 119, -45}, // 13
+            {-64, 100, 104, -52}, // 14
+            {-64, 100, 120, -36}, // 15
+            {-64, 100, 105, -51}, // 16
+            {-64, 100, 121, -35}, // 17
+            {-64, 100, 106, -50}, // 18
+            {-64, 100, 122, -34}, // 19
+            {-64, 100, 107, -49}, // 20
+            {-64, 100, 123, -33}, // 21
+            {-64, 100, 108, -56}, // 22
+            {-64, 100, 124, -40}, // 23
+            {-64, 100, 109, -55}, // 24
+            {-64, 100, 125, -39}, // 25
+            {-64, 100, 110, -54}, // 26
+            {-64, 100, 126, -38}, // 27
+            {-64, 100, 111, -53} //  28
+        };
+        for (int speed = 0; speed < 29; speed++) {
+            byte[] packet = NmraPacket.speedStep28Packet(address, true, speed, true);
+            Assert.assertNotNull(packet);
+            Assert.assertArrayEquals("Speed step " + speed, speeds[speed], packet);
+        }
+        // invalid inputs should result in null output
+        Assert.assertNull("Speed step -1", NmraPacket.speedStep28Packet(address, true, -1, true));
+        JUnitAppender.assertErrorMessage("invalid speed -1");
+        Assert.assertNull("Speed step 29", NmraPacket.speedStep28Packet(address, true, 29, true));
+        JUnitAppender.assertErrorMessage("invalid speed 29");
     }
 
+    /**
+     * Test the 28 speed step forward throttle Note that this has not been
+     * independently verified
+     */
+    @Test
+    public void testSpeedStep28Packet() {
+        int address = 100;
+        // results for speed steps 0-31 when forward
+        byte[][] forward = {
+            {-64, 100, 96, -60}, //   0
+            {-64, 100, 112, -44}, //  1
+            {-64, 100, 97, -59}, //   2
+            {-64, 100, 113, -43}, //  3
+            {-64, 100, 98, -58}, //   4
+            {-64, 100, 114, -42}, //  5
+            {-64, 100, 99, -57}, //   6
+            {-64, 100, 115, -41}, //  7
+            {-64, 100, 100, -64}, //  8
+            {-64, 100, 116, -48}, //  9
+            {-64, 100, 101, -63}, // 10
+            {-64, 100, 117, -47}, // 11
+            {-64, 100, 102, -62}, // 12
+            {-64, 100, 118, -46}, // 13
+            {-64, 100, 103, -61}, // 14
+            {-64, 100, 119, -45}, // 15
+            {-64, 100, 104, -52}, // 16
+            {-64, 100, 120, -36}, // 17
+            {-64, 100, 105, -51}, // 18
+            {-64, 100, 121, -35}, // 19
+            {-64, 100, 106, -50}, // 20
+            {-64, 100, 122, -34}, // 21
+            {-64, 100, 107, -49}, // 22
+            {-64, 100, 123, -33}, // 23
+            {-64, 100, 108, -56}, // 24
+            {-64, 100, 124, -40}, // 25
+            {-64, 100, 109, -55}, // 26
+            {-64, 100, 125, -39}, // 27
+            {-64, 100, 110, -54}, // 28
+            {-64, 100, 126, -38}, // 29
+            {-64, 100, 111, -53}, // 30
+            {-64, 100, 127, -37} //  31
+        };
+        for (int speed = 0; speed < 32; speed++) {
+            byte[] packet = NmraPacket.speedStep28Packet(true, address, true, speed, true);
+            Assert.assertNotNull(packet);
+            Assert.assertArrayEquals("Speed step " + speed, forward[speed], packet);
+        }
+        // results for speed steps 0-31 when reversed
+        byte[][] reverse = {
+            {-64, 100, 64, -28}, //  0
+            {-64, 100, 80, -12}, //  1
+            {-64, 100, 65, -27}, //  2
+            {-64, 100, 81, -11}, //  3
+            {-64, 100, 66, -26}, //  4
+            {-64, 100, 82, -10}, //  5
+            {-64, 100, 67, -25}, //  6
+            {-64, 100, 83, -9}, //   7
+            {-64, 100, 68, -32}, //  8
+            {-64, 100, 84, -16}, //  9
+            {-64, 100, 69, -31}, // 10
+            {-64, 100, 85, -15}, // 11
+            {-64, 100, 70, -30}, // 12
+            {-64, 100, 86, -14}, // 13
+            {-64, 100, 71, -29}, // 14
+            {-64, 100, 87, -13}, // 15
+            {-64, 100, 72, -20}, // 16
+            {-64, 100, 88, -4}, //  17
+            {-64, 100, 73, -19}, // 18
+            {-64, 100, 89, -3}, //  19
+            {-64, 100, 74, -18}, // 20
+            {-64, 100, 90, -2}, //  21
+            {-64, 100, 75, -17}, // 22
+            {-64, 100, 91, -1}, //  23
+            {-64, 100, 76, -24}, // 24
+            {-64, 100, 92, -8}, //  25
+            {-64, 100, 77, -23}, // 26
+            {-64, 100, 93, -7}, //  27
+            {-64, 100, 78, -22}, // 28
+            {-64, 100, 94, -6}, //  29
+            {-64, 100, 79, -21}, // 30
+            {-64, 100, 95, -5} //   31
+        };
+        for (int speed = 0; speed < 32; speed++) {
+            byte[] packet = NmraPacket.speedStep28Packet(true, address, true, speed, false);
+            Assert.assertNotNull(packet);
+            Assert.assertArrayEquals("Speed step " + speed, reverse[speed], packet);
+        }
+        // invalid inputs should result in null output
+        Assert.assertNull("Speed step -1", NmraPacket.speedStep28Packet(true, address, true, -1, true));
+        JUnitAppender.assertErrorMessage("invalid speed -1");
+        Assert.assertNull("Speed step 32", NmraPacket.speedStep28Packet(true, address, true, 32, true));
+        JUnitAppender.assertErrorMessage("invalid speed 32");
+    }
+
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 
