@@ -29,7 +29,9 @@ import org.slf4j.LoggerFactory;
      RfidSensorManagerTest.class,
      TimeoutRfidSensorTest.class,
      TimeoutRfidReporterTest.class,
-     jmri.jmrix.rfid.swing.PackageTest.class
+     jmri.jmrix.rfid.swing.PackageTest.class,
+     RfidNetworkPortControllerTest.class,
+     RfidPortControllerTest.class
 })
 
 /**

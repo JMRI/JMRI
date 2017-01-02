@@ -1,4 +1,3 @@
-// LocoNetMessage.java
 package jmri.jmrix.loconet;
 
 import java.io.Serializable;
@@ -33,8 +32,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class LocoNetMessage implements Serializable {
-
-    static final long serialVersionUID = -7904918731667071828L;
 
     /**
      * Create a new object, representing a specific-length message.
@@ -424,5 +421,3 @@ public class LocoNetMessage implements Serializable {
     private final static Logger log = LoggerFactory.getLogger(LocoNetMessage.class.getName());
 
 }
-
-/* @(#)LocoNetMessage.java */

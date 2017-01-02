@@ -870,7 +870,7 @@ public class WarrantFrame extends WarrantRoute {
                     OBlock lastBlock = orders.get(orders.size() - 1).getBlock();
                     OBlock currentBlock = bo.getBlock();
                     if (!lastBlock.equals(currentBlock)) {
-                        if ((lastBlock.getState() & OBlock.DARK) != 0
+                        if ((lastBlock.getState() & OBlock.UNDETECTED) != 0
                                 && currentBlock.equals(orders.get(orders.size() - 2).getBlock())) {
                             setThrottleCommand("NoOp", Bundle.getMessage("Mark"), lastBlock.getDisplayName());
                             setStatusText(Bundle.getMessage("LearningStop"), myGreen);
@@ -1103,7 +1103,16 @@ public class WarrantFrame extends WarrantRoute {
         if (msg==null) {
             if (_throttleCommands.size()==0) {
                 msg = Bundle.getMessage("NoCommands", _warrant.getDisplayName());
-            }            
+            } else {
+                for (int i=0; i<_throttleCommands.size(); i++) {
+                    ThrottleSetting ts = _throttleCommands.get(i);
+                    if (ts.getValue()==null || ts.getCommand()==null || ts.getBlockName()==null) {
+                        JOptionPane.showMessageDialog(this, Bundle.getMessage("BadThrottleSetting", i+1)+" - "+ts.toString(),
+                                Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                        return false;
+                    }
+                }
+            }
         }
         if (msg!=null) {
             int result = JOptionPane.showConfirmDialog(this, msg+Bundle.getMessage("SaveQuestion"), Bundle.getMessage("QuestionTitle"), 
@@ -1248,17 +1257,7 @@ public class WarrantFrame extends WarrantRoute {
                 case COMMAND_COLUMN:
                     return ts.getCommand();
                 case VALUE_COLUMN:
-                    if ("SpeedStep".equalsIgnoreCase(ts.getCommand())) {
-                        switch (Integer.parseInt(ts.getValue())) {
-                            case DccThrottle.SpeedStepMode14:
-                                return Integer.toString(14);
-                            case DccThrottle.SpeedStepMode27:
-                                return Integer.toString(27);
-                            case DccThrottle.SpeedStepMode28:
-                                return Integer.toString(28);
-                        }
-                        return Integer.toString(128);
-                    } else if ("Mark".equalsIgnoreCase(ts.getValue())) {
+                    if ("Mark".equalsIgnoreCase(ts.getValue())) {
                         return Bundle.getMessage("Mark");
                     }
                     return ts.getValue();
@@ -1351,56 +1350,64 @@ public class WarrantFrame extends WarrantRoute {
                     if ("SPEED".equals(cmd)) {
                         try {
                             float speed = Float.parseFloat((String) value);
-                            if (speed < 0.0f || 1.0f < speed) {
-                                msg = Bundle.getMessage("throttlesetting", speed);
+                            if (0.0f <= speed && speed <= 1.0f) {
+                                ts.setValue((String) value);
+                                break;
                             }
-                        } catch (Exception e) {
                             msg = Bundle.getMessage("throttlesetting", value);
-                        }
-                        ts.setValue((String) value);
-                    } else if ("SPEEDSTEP".equals(cmd)) {
-                        int stepMode = DccThrottle.SpeedStepMode128;
-                        try {
-                            switch (Integer.parseInt((String) value)) {
-                                case 14:
-                                    stepMode = DccThrottle.SpeedStepMode14;
-                                    break;
-                                case 27:
-                                    stepMode = DccThrottle.SpeedStepMode27;
-                                    break;
-                                case 28:
-                                    stepMode = DccThrottle.SpeedStepMode28;
-                                    break;
-                                case 128:
-                                    stepMode = DccThrottle.SpeedStepMode128;
-                                    break;
-                            }
-                            msg = Bundle.getMessage("badStepMode");
                         } catch (Exception e) {
                             msg = Bundle.getMessage("invalidNumber");
                         }
-                        ts.setValue(Integer.toString(stepMode));
+                        ts.setValue(null);
+                    } else if ("SPEEDSTEP".equals(cmd)) {
+                        int stepMode = Integer.parseInt((String) value);
+                        try {
+                            switch (stepMode) {
+                                case 14:
+                                case 27:
+                                case 28:
+                                case 128:
+                                case DccThrottle.SpeedStepMode28Mot:
+                                    ts.setValue((String) value);
+                                    break;
+                                default:
+                                    msg = Bundle.getMessage("badStepMode");
+                                    ts.setValue(null);
+                            }
+                        } catch (Exception e) {
+                            msg = Bundle.getMessage("invalidNumber");
+                            ts.setValue(null);
+                        }
                     } else if ("FORWARD".equalsIgnoreCase(cmd)) {
                         try {
-                            Boolean.parseBoolean((String) value);
-                        } catch (Exception e) {
+                            if (Boolean.parseBoolean((String) value)) {
+                                ts.setValue("true");
+                            } else {
+                                ts.setValue("false");                                
+                            }
+                       } catch (Exception e) {
                             msg = Bundle.getMessage("invalidBoolean");
                         }
-                        ts.setValue((String) value);
                     } else if (cmd.startsWith("F")) {
                         try {
-                            Boolean.parseBoolean((String) value);
+                            if (Boolean.parseBoolean((String) value)) {
+                                ts.setValue("true");
+                            } else {
+                                ts.setValue("false");                                
+                            }
                         } catch (Exception e) {
                             msg = Bundle.getMessage("invalidBoolean");
                         }
-                        ts.setValue((String) value);
                     } else if (cmd.startsWith("LOCKF")) {
                         try {
-                            Boolean.parseBoolean((String) value);
+                            if (Boolean.parseBoolean((String) value)) {
+                                ts.setValue("true");
+                            } else {
+                                ts.setValue("false");                                
+                            }
                         } catch (Exception e) {
                             msg = Bundle.getMessage("invalidBoolean");
                         }
-                        ts.setValue((String) value);
                     } else if ("SET SENSOR".equals(cmd) || "WAIT SENSOR".equals(cmd)) {
                         String v = ((String) value).toUpperCase();
                         if ("ACTIVE".equals(v) || "INACTIVE".equals(v)) {
@@ -1417,6 +1424,8 @@ public class WarrantFrame extends WarrantRoute {
                             msg = Bundle.getMessage("badValue", value, cmd);
                         }
                         resetBlockColumn = false;
+                    } else {
+                        ts.setValue(null);                        
                     }
                     if (resetBlockColumn) {
                         ts.setBlockName(getPreviousBlockName(row));

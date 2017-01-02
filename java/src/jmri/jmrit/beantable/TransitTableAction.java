@@ -1465,8 +1465,7 @@ public class TransitTableAction extends AbstractTableAction {
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
-            JLabel sectionNameLabel = new JLabel(rbx
-                    .getString("SectionName") + ": ");
+            JLabel sectionNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameSection")));
             panel1.add(sectionNameLabel);
             panel1.add(fixedSectionLabel);
             contentPane.add(panel1);
@@ -2408,7 +2407,7 @@ public class TransitTableAction extends AbstractTableAction {
                 case SEQUENCE_COLUMN:
                     return rbx.getString("SequenceColName");
                 case SECTIONNAME_COLUMN:
-                    return rbx.getString("SectionName");
+                    return Bundle.getMessage("BeanNameSection");
                 case ACTION_COLUMN:
                     return rbx.getString("ActionColName");
                 case SEC_DIRECTION_COLUMN:
@@ -2454,14 +2453,14 @@ public class TransitTableAction extends AbstractTableAction {
                     } else if (direction[rx] == Section.REVERSE) {
                         return rbx.getString("SectionReverse");
                     }
-                    return rbx.getString("Unknown");
+                    return Bundle.getMessage("BeanStateUnknown");
                 case ALTERNATE_COLUMN:
                     if (alternate[rx]) {
                         return rbx.getString("Alternate");
                     }
                     return rbx.getString("Primary");
                 default:
-                    return rbx.getString("Unknown");
+                    return Bundle.getMessage("BeanStateUnknown");
             }
         }
 
@@ -2574,7 +2573,7 @@ public class TransitTableAction extends AbstractTableAction {
                 case REMOVE_COLUMN:
                     return Bundle.getMessage("ButtonDelete");
                 default:
-                    return rbx.getString("Unknown");
+                    return Bundle.getMessage("BeanStateUnknown"); // normally not in use
             }
         }
 

@@ -1,4 +1,3 @@
-// JsonServlet.java
 package jmri.web.servlet.json;
 
 import static jmri.server.json.JSON.DATA;
@@ -23,6 +22,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.ServiceLoader;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.server.json.JsonException;
@@ -57,6 +57,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood Copyright (C) 2012, 2013, 2016
  */
+@WebServlet(name = "JsonServlet",
+        urlPatterns = {"/json"})
 public class JsonServlet extends WebSocketServlet {
 
     private transient ObjectMapper mapper;

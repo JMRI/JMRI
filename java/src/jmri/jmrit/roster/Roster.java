@@ -145,8 +145,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     public static final String ALLENTRIES = Bundle.getMessage("ALLENTRIES"); // NOI18N
 
     /**
-     * Create a default roster. Generally it is preferable to use the Roster
-     * returned by {@link #getDefault()}.
+     * Create a roster with default contents.
      */
     public Roster() {
         super();
@@ -158,7 +157,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         });
         this.preferences = InstanceManager.getNullableDefault(UserPreferencesManager.class);
         if (this.preferences != null) {
-            // for some reason, during JUnit testing, preferences is often null
+            // During JUnit testing, preferences is often null
             this.setDefaultRosterGroup((String) this.preferences.getProperty(Roster.class.getCanonicalName(), "defaultRosterGroup")); // NOI18N
         }
     }
@@ -174,7 +173,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             }
             this.readFile(rosterFilename);
         } catch (IOException | JDOMException e) {
-            log.error("Exception during roster reading: " + e);
+            log.error("Exception during reading while constructing roster", e);
             try {
                 JOptionPane.showMessageDialog(null,
                         Bundle.getMessage("ErrorReadingText") + "\n" + e.getMessage(),
@@ -988,7 +987,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         try {
             this.readFile(this.getRosterIndexPath());
         } catch (IOException | JDOMException e) {
-            log.error("Exception during roster reading: " + e);
+            log.error("Exception during reading while reloading roster", e);
         }
     }
 
@@ -1153,6 +1152,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             return;
         }
         this.rosterGroups.put(rg.getName(), rg);
+        log.debug("firePropertyChange Roster Groups model: {}", rg.getName()); // test for panel redraw after duplication
         firePropertyChange(ROSTER_GROUP_ADDED, null, rg.getName());
     }
 
@@ -1164,7 +1164,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * if you need to add a subclass of RosterGroup. This method fires the
      * property change notification {@value #ROSTER_GROUP_ADDED}.
      *
-     * @param rg The group to be added
+     * @param rg The name of the group to be added
      */
     public void addRosterGroup(String rg) {
         // do a quick return without creating a new RosterGroup object
@@ -1233,6 +1233,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             re.putAttribute(newGroup, "yes"); // NOI18N
         });
         this.addRosterGroup(new RosterGroup(newName));
+        // the firePropertyChange event will be called by addRosterGroup()
     }
 
     public void rosterGroupRenamed(String oldName, String newName) {

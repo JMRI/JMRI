@@ -27,10 +27,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7189862416509314863L;
     static public final int SLOTCOLUMN = 0;
     static public final int ESTOPCOLUMN = 1;
     static public final int ADDRCOLUMN = 2;

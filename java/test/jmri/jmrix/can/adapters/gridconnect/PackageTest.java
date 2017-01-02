@@ -33,6 +33,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.can.adapters.gridconnect.net.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.can.adapters.gridconnect.canusb.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.can.adapters.gridconnect.can2usbino.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(GcPortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(GcTrafficControllerTest.class));
         return suite;
     }
 

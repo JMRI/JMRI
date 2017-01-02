@@ -1,4 +1,3 @@
-// MaskCompareEditor.java
 package jmri.jmrix.loconet.sdfeditor;
 
 import javax.swing.JLabel;
@@ -12,11 +11,6 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  */
 class MaskCompareEditor extends SdfMacroEditor {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1823359711169229533L;
-
     public MaskCompareEditor(SdfMacro inst) {
         super(inst);
 
@@ -27,5 +21,3 @@ class MaskCompareEditor extends SdfMacroEditor {
         add(new JLabel("No editor defined for this instruction yet."));
     }
 }
-
-/* @(#)MaskCompareEditor.java */

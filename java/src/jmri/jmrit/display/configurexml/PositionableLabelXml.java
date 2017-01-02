@@ -203,7 +203,11 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                     }
                 }
             }
-            // allow null icons for now
+            // abort if name != yes and have null icon
+            if (icon == null && !name.equals("yes")) {
+                log.info("PositionableLabel icon removed for url= " + name);
+                return;
+            }
             l = new PositionableLabel(icon, editor);
             try {
                 Attribute a = element.getAttribute("rotate");
@@ -223,22 +227,17 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                     return;
                 }
             } else {
-                if (icon == null) {
-                    log.info("PositionableLabel icon removed for url= " + name);
-                    return;
-                } else {
-                    l.updateIcon(icon);
-                }
+                l.updateIcon(icon);
             }
         }
-        
+
         if (element.getAttribute("text") != null) {
-            if (l==null) {
-                l = new PositionableLabel(element.getAttribute("text").getValue(), editor);                
+            if (l == null) {
+                l = new PositionableLabel(element.getAttribute("text").getValue(), editor);
             }
             loadTextInfo(l, element);
 
-        } else if (l==null){
+        } else if (l == null) {
             log.error("PositionableLabel is null!");
             if (log.isDebugEnabled()) {
                 java.util.List<Attribute> attrs = element.getAttributes();
@@ -310,10 +309,10 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         }
 
         a = element.getAttribute("hasBackground");
-        if (a!=null) {
-            util.setHasBackground("yes".equals(a.getValue()));            
+        if (a != null) {
+            util.setHasBackground("yes".equals(a.getValue()));
         } else {
-            util.setHasBackground(true); 
+            util.setHasBackground(true);
         }
         if (util.hasBackground()) {
             try {
@@ -325,9 +324,9 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                 log.warn("Could not parse background color attributes!");
             } catch (NullPointerException e) {
                 util.setHasBackground(false);// if the attributes are not listed, we consider the background as clear.
-            }            
+            }
         }
-        
+
         int fixedWidth = 0;
         int fixedHeight = 0;
         try {
@@ -391,7 +390,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             log.warn("invalid 'degrees' value (non integer)");
         }
         if (deg == 0 && util.hasBackground()) {
-            l.setOpaque(true);                    
+            l.setOpaque(true);
         }
     }
 

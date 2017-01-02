@@ -319,8 +319,16 @@ public class SensorTableAction extends AbstractTableAction {
 
     }
 
+    /**
+     * Insert a table specific Defaults menu.
+     * Account for the Window and Help menus, which are already added to the menu bar
+     * as part of the creation of the JFrame, by adding the Tools menu 2 places earlier
+     * unless the table is part of the ListedTableFrame, that adds the Help menu later on.
+     * @param f the JFrame of this table
+     */
+    @Override
     public void setMenuBar(BeanTableFrame f) {
-        final jmri.util.JmriJFrame finalF = f;			// needed for anonymous ActionListener class
+        final jmri.util.JmriJFrame finalF = f; // needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
         // check for menu
         boolean menuAbsent = true;
@@ -348,7 +356,17 @@ public class SensorTableAction extends AbstractTableAction {
                     setDefaultState(finalF);
                 }
             });
-            menuBar.add(optionsMenu);
+            int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenus before 'Window' and 'Help'
+            int offset = 1;
+            log.debug("setMenuBar number of menu items = " + pos);
+            for (int i = 0; i <= pos; i++) {
+                if (menuBar.getComponent(i) instanceof JMenu) {
+                    if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
+                        offset = -1; // correct for use as part of ListedTableAction where the Help Menu is not yet present
+                    }
+                }
+            }
+            menuBar.add(optionsMenu, pos + offset);
         }
     }
 

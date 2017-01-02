@@ -46,6 +46,7 @@
         <xs:element name="positionablelabel" type="EditorPositionableLabelType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="positionablepoint" type="EditorPositionablePointType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="positionableRectangle" type="EditorPositionableRectangleType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="positionableRoundRect" type="EditorPositionableRoundRectType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="turnouticon"       type="EditorTurnoutIconType"       minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="sensoricon"        type="EditorSensorIconType"        minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="memoryicon"        type="EditorMemoryIconType"        minOccurs="0" maxOccurs="unbounded" />
@@ -60,6 +61,7 @@
         <xs:element name="indicatortrackicon" type="EditorIndicatorTrackIconType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="indicatorturnouticon" type="EditorIndicatorTurnoutIconType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="PortalIcon"    	 type="EditorPortalIconType"    	minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="linkinglabel"		  type="EditorLinkingLabelType"		 minOccurs="0" maxOccurs="unbounded" />
             
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required" />
