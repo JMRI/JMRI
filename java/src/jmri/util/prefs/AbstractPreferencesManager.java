@@ -1,9 +1,12 @@
 package jmri.util.prefs;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.annotation.Nonnull;
+import jmri.InstanceManager;
 import jmri.beans.Bean;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.profile.Profile;
@@ -18,10 +21,23 @@ import jmri.spi.PreferencesManager;
 public abstract class AbstractPreferencesManager extends Bean implements PreferencesManager {
 
     private final HashMap<Profile, Boolean> initialized = new HashMap<>();
+    private final HashMap<Profile, List<Exception>> exceptions = new HashMap<>();
 
     @Override
     public boolean isInitialized(@Nonnull Profile profile) {
-        return this.initialized.getOrDefault(profile, false);
+        return this.initialized.getOrDefault(profile, false)
+                && this.exceptions.getOrDefault(profile, new ArrayList<>()).isEmpty();
+    }
+
+    @Override
+    public boolean isInitializedWithExceptions(@Nonnull Profile profile) {
+        return this.initialized.getOrDefault(profile, false)
+                && !this.exceptions.getOrDefault(profile, new ArrayList<>()).isEmpty();
+    }
+
+    @Override
+    public List<Exception> getInitializationExceptions(@Nonnull Profile profile) {
+        return new ArrayList<>(this.exceptions.getOrDefault(profile, new ArrayList<>()));
     }
 
     /**
@@ -65,7 +81,84 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
         return provides;
     }
 
+    /**
+     * Set the initialized state for the given profile.
+     *
+     * @param profile     the profile to set initialized against
+     * @param initialized the initialized state to set
+     */
     protected void setInitialized(@Nonnull Profile profile, boolean initialized) {
         this.initialized.put(profile, initialized);
+    }
+
+    /**
+     * Add an error to the list of exceptions.
+     *
+     * @param profile   the profile against which the manager is being
+     *                  initialized
+     * @param exception the exception to add
+     */
+    protected void addInitializationException(@Nonnull Profile profile, @Nonnull Exception exception) {
+        if (this.exceptions.get(profile) == null) {
+            this.exceptions.put(profile, new ArrayList<>());
+        }
+        this.exceptions.get(profile).add(exception);
+    }
+
+    /**
+     * Require that instances of the specified classes have initialized
+     * correctly. This method should only be called from within
+     * {@link #initialize(jmri.profile.Profile)}, generally immediately after
+     * the PreferencesManager verifies that it is not already initialized. If
+     * this method is within a try-catch block, the exception it generates
+     * should be re-thrown by initialize(profile).
+     *
+     * @param profile the profile against which the manager is being initialized
+     * @param classes the manager classes for which all calling
+     *                {@link #isInitialized(jmri.profile.Profile)} must return
+     *                true against all instances of
+     * @param message the localized message to display if an
+     *                InitializationExcpetion is thrown
+     * @throws InitializationException  if any instance of any class in classes
+     *                                  returns false on isIntialized(profile)
+     * @throws IllegalArgumentException if any member of classes is not also in
+     *                                  the set of classes returned by
+     *                                  {@link #getRequires()}
+     */
+    protected void requiresNoInitializedWithExceptions(@Nonnull Profile profile, @Nonnull Set<Class<? extends PreferencesManager>> classes, @Nonnull String message) throws InitializationException {
+        classes.stream().filter((clazz) -> (!this.getRequires().contains(clazz))).forEach((clazz) -> {
+            throw new IllegalArgumentException("Class " + clazz.getClass().getName() + " not marked as required by " + this.getClass().getName());
+        });
+        for (Class<? extends PreferencesManager> clazz : classes) {
+            for (PreferencesManager instance : InstanceManager.getList(clazz)) {
+                if (instance.isInitializedWithExceptions(profile)) {
+                    InitializationException exception = new InitializationException("Refusing to initialize", message);
+                    this.addInitializationException(profile, exception);
+                    this.setInitialized(profile, true);
+                    throw exception;
+                }
+            }
+        }
+    }
+
+    /**
+     * Require that instances of the specified classes have initialized
+     * correctly. This method should only be called from within
+     * {@link #initialize(jmri.profile.Profile)}, generally immediately after
+     * the PreferencesManager verifies that it is not already initialized. If
+     * this method is within a try-catch block, the exception it generates
+     * should be re-thrown by initialize(profile). This calls
+     * {@link #requiresNoInitializedWithExceptions(jmri.profile.Profile, java.util.Set, java.lang.String)}
+     * with the result of {@link #getRequires()} as the set of classes to
+     * require.
+     *
+     * @param profile the profile against which the manager is being initialized
+     * @param message the localized message to display if an
+     *                InitializationExcpetion is thrown
+     * @throws InitializationException if any instance of any class in classes
+     *                                 returns false on isIntialized(profile)
+     */
+    protected void requiresNoInitializedWithExceptions(@Nonnull Profile profile, @Nonnull String message) throws InitializationException {
+        this.requiresNoInitializedWithExceptions(profile, this.getRequires(), message);
     }
 }
