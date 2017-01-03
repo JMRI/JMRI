@@ -4,7 +4,7 @@
 <!-- Used by default when the panel file is displayed in a web browser      -->
 <!-- This version corresponds to the 2.9.6 schema update                    -->
 
-<!-- This file is part of JMRI.  Copyright 2007-2011-2016.                       -->
+<!-- This file is part of JMRI.  Copyright 2007-2011, 2016.                 -->
  
 <xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
       <xsl:param name="JmriCopyrightYear"/>
@@ -73,7 +73,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 
 <xsl:template match="turnout">
 <tr> 
-  <td><xsl:value-of select="systemName"/></td>
+  <td><xsl:value-of select="systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
   <td><xsl:value-of select="userName"/></td>
   <td> <xsl:value-of select="@feedback"/> </td>
   <td><xsl:if test="( @inverted = 'true' )" >Yes</xsl:if></td>
@@ -169,8 +169,8 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 
 <xsl:template match="route">
 <tr>
-<td><xsl:value-of select="systemName"/></td>
-<td><xsl:value-of select="userName"/></td>
+<td><xsl:value-of select="@systemName"/></td> <!--names still stored as attributes in routes as of 2.9.6 up to 4.6-->
+<td><xsl:value-of select="@userName"/></td>
 <td><xsl:for-each select="routeSensor">
         <xsl:value-of select="@systemName"/>:&#160;&#160;&#160;<xsl:value-of select="@mode"/><br/>
     </xsl:for-each></td>
@@ -188,7 +188,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Index through logixs elements -->
 <!-- each one becomes a separate section -->
 <xsl:template match="layout-config/logixs/logix">
-<h3>Logix <xsl:value-of select="@systemName"/>
+<h3>Logix <xsl:value-of select="systemName"/> <!--names as attributes deprecated since 2.9.6-->
 <xsl:if test="string-length(@userName)!=0" > (<xsl:value-of select="@userName"/>)</xsl:if>
 </h3>
     <!-- index through individual logix elements -->
@@ -369,15 +369,15 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 
 <xsl:template match="layoutblock">
 <tr>
-    <td><xsl:value-of select="@systemName"/></td>
-    <td><xsl:value-of select="@userName"/></td>
+    <td><xsl:value-of select="systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
+    <td><xsl:value-of select="userName"/></td>
     <td><xsl:value-of select="@occupancysensor"/></td>
     <td><xsl:value-of select="@memory"/></td>
 </tr>
 </xsl:template>
 
 <xsl:template match="signalhead">
-<tr><td><xsl:value-of select="systemName"/></td>
+<tr><td><xsl:value-of select="systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
   <td><xsl:value-of select="userName"/></td>
   <td><xsl:choose>
     <xsl:when test="( @class = 'jmri.configurexml.VirtualSignalHeadXml' )" >Virtual</xsl:when>
@@ -403,7 +403,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 </xsl:template>
 
 <xsl:template match="signalmast">
-    <tr><td><xsl:value-of select="systemName"/></td>
+    <tr><td><xsl:value-of select="systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
         <td><xsl:value-of select="userName"/></td>
         <td><xsl:choose>
             <xsl:when test="( @class = 'jmri.implementation.configurexml.SignalHeadSignalMastXml' )" >SH Mast</xsl:when>
@@ -485,8 +485,8 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 
 <xsl:template match="signalgroup">
     <tr>
-        <td><xsl:value-of select="systemName"/></td>
-        <td><xsl:value-of select="@userName"/></td>
+        <td><xsl:value-of select="systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
+        <td><xsl:value-of select="userName"/></td>
         <td><xsl:value-of select="@signalMast"/></td>
         <td>
             <xsl:for-each select="signalHead">
@@ -498,7 +498,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 </xsl:template>
 
 <xsl:template match="sensor">
-<tr><td><xsl:value-of select="systemName"/></td>
+<tr><td><xsl:value-of select="systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
     <td><xsl:value-of select="userName"/></td>
     <td><xsl:if test='(@inverted = "true")'>Yes</xsl:if></td>
     <td><xsl:value-of select="comment"/></td>
@@ -507,7 +507,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 
 <xsl:template match="memory">
 <tr>
-  <td><xsl:value-of select="systemName"/></td>
+  <td><xsl:value-of select="systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
   <td><xsl:value-of select="userName"/></td>
   <td><xsl:value-of select="comment"/></td>
 </tr>
@@ -515,7 +515,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 
 <xsl:template match="reporter">
 <tr>
-  <td><xsl:value-of select="systemName"/></td>
+  <td><xsl:value-of select="systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
   <td><xsl:value-of select="userName"/></td>
   <td><xsl:value-of select="comment"/></td>
 </tr>
@@ -523,7 +523,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 
 <xsl:template match="logix">
 <tr>
-  <td><xsl:value-of select="systemName"/></td>
+  <td><xsl:value-of select="systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
   <td><xsl:value-of select="userName"/></td>
 </tr>
 </xsl:template>
@@ -537,8 +537,8 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 
 <xsl:template match="warrant">
     <tr>
-        <td><xsl:value-of select="systemName"/></td>
-        <td><xsl:value-of select="userName"/></td>
+        <td><xsl:value-of select="@systemName"/></td> <!--names still stored as attributes in warrants as of 2.9.6 up to 4.6-->
+        <td><xsl:value-of select="@userName"/></td>
     </tr>
 </xsl:template>
 
