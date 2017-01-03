@@ -1,4 +1,3 @@
-// SkemeStart.java
 package jmri.jmrix.loconet.sdf;
 
 import java.util.ArrayList;
@@ -113,5 +112,3 @@ public class SkemeStart extends SdfMacro {
         return output;
     }
 }
-
-/* @(#)SdfMacro.java */

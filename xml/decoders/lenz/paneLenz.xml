@@ -86,7 +86,7 @@
           <text>Fault Indication</text>
           <text xml:lang="de">Fehleranzeige</text>
           <text xml:lang="cs">Hlášení závad</text>
-          <text xml:lang="ca">Indicaciño de Falta</text>
+          <text xml:lang="ca">Indicació d'Error</text>
         </label>
         <display item="Light Short"/>
         <display item="Overheating"/>
@@ -179,7 +179,7 @@
           <text xml:lang="it">Nota: frenata costante funziona solo se è abilitata l'inerzia e non in velocità da manovra</text>
           <text xml:lang="de">Hinweis: Konstanter Bremsweg funktioniert nur wenn "Anfahr- / Bremsverzögerung" eingeschaltet und der Rangiergang ausgeschaltet ist.</text>
           <text xml:lang="cs">Tip: Konstantní brzdná dráha funguje pouze tehdy, když je zpřístupněno zrychlení/zpomalení, a není zapnut posun</text>
-		  <text xml:lang="ca">Tip: La frenada constant només funciona amb inèrcia activada i sense marxa de maniobres</text>
+		  <text xml:lang="ca">Nota: La frenada constant només funciona amb inèrcia connectada i sense marxa de maniobres</text>
         </label>
         <label>
           <text> </text>

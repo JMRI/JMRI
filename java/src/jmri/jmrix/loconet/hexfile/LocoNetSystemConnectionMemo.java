@@ -1,4 +1,3 @@
-// LocoNetSystemConnectionMemo.java
 package jmri.jmrix.loconet.hexfile;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -26,6 +25,3 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.loconet.LocoNetSyste
         return /*(jmri.jmrix.loconet.LnSensorManager)*/ sensorManager;
     }
 }
-
-
-/* @(#)LocoNetSystemConnectionMemo.java */

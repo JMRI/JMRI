@@ -1,4 +1,3 @@
-// LocoGenPanel.java
 package jmri.jmrix.loconet.locogen;
 
 import java.awt.GridLayout;
@@ -32,10 +31,6 @@ import org.slf4j.LoggerFactory;
 public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements LocoNetListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8721664131869665655L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();

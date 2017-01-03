@@ -165,13 +165,13 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
             if (sb.length() > 0) {
                 sb.append('-');
             }
-            sb.append(Bundle.getMessage("Inconsistent"));
+            sb.append(Bundle.getMessage("BeanStateInconsistent"));
         }
         if ((state & OBlock.UNKNOWN) != 0) {
             if (sb.length() > 0) {
                 sb.append('-');
             }
-            sb.append(Bundle.getMessage("Unknown"));
+            sb.append(Bundle.getMessage("BeanStateUnknown"));
         }
         if ((state & OBlock.ALLOCATED) != 0) {
             if (sb.length() > 0) {
