@@ -296,7 +296,7 @@
                     <excludeFilterFile>.findbugs.xml</excludeFilterFile>
                     <effort>Max</effort>
                     <threshold>High</threshold>
-                    <jvmArgs>-Xmx1536m</jvmArgs>
+                    <maxHeap>1536</maxHeap>
                     <timeout>1200000</timeout><!-- 20 minutes -->
                 </configuration>            
             </plugin>
