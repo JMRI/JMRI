@@ -164,12 +164,6 @@ public class LoaderEngine {
     }
 
     static class DelayException extends Exception {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5382070125978390478L;
-
         DelayException(String s) {
             super(s);
         }

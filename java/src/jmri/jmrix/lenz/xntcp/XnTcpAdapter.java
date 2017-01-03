@@ -126,7 +126,9 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
                 socketConn = new Socket(m_HostName, m_port);
                 socketConn.setSoTimeout(READ_TIMEOUT);
             } catch (UnknownHostException e) {
-                ConnectionStatus.instance().setConnectionState(outName, ConnectionStatus.CONNECTION_DOWN);
+                ConnectionStatus.instance().setConnectionState(
+                        this.getSystemConnectionMemo().getUserName(),
+                        outName, ConnectionStatus.CONNECTION_DOWN);
                 throw (e);
             }
             // get and save input stream
@@ -137,17 +139,23 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
 
             // Connection established.
             opened = true;
-            ConnectionStatus.instance().setConnectionState(outName, ConnectionStatus.CONNECTION_UP);
+            ConnectionStatus.instance().setConnectionState(
+                        this.getSystemConnectionMemo().getUserName(),
+                        outName, ConnectionStatus.CONNECTION_UP);
 
         } // Report possible errors encountered while opening the connection
         catch (SocketException se) {
             log.error("Socket exception while opening TCP connection with " + outName + " trace follows: " + se);
-            ConnectionStatus.instance().setConnectionState(outName, ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(
+                        this.getSystemConnectionMemo().getUserName(),
+                        outName, ConnectionStatus.CONNECTION_DOWN);
             throw (se);
         }
         catch (IOException e) {
             log.error("Unexpected exception while opening TCP connection with " + outName + " trace follows: " + e);
-            ConnectionStatus.instance().setConnectionState(outName, ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(
+                        this.getSystemConnectionMemo().getUserName(),
+                        outName, ConnectionStatus.CONNECTION_DOWN);
             throw (e);
         }
     }
@@ -231,7 +239,9 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
     synchronized protected void xnTcpError() {
         // If the error message was already posted, simply ignore this call
         if (opened) {
-            ConnectionStatus.instance().setConnectionState(outName, ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(
+                        this.getSystemConnectionMemo().getUserName(),
+                        outName, ConnectionStatus.CONNECTION_DOWN);
             // Clear open status, in order to avoid issuing the error 
             // message more than than once.
             opened = false;

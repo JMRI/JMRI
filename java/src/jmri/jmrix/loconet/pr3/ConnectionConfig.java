@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.loconet.pr3;
 
 import jmri.util.SystemType;

@@ -30,7 +30,8 @@ public class PackageTest extends TestCase {
 
         suite.addTest(new JUnit4TestAdapter(PaneProgPaneTest.class));
         suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrameTest.suite());
-        suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.CheckProgrammerNames.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.symbolicprog.tabbedframe.CheckProgrammerNamesTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.symbolicprog.tabbedframe.SchemaTest.class));
         suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.QualifiedVarTest.suite());
 
         return suite;

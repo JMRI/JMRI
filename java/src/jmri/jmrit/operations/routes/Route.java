@@ -116,7 +116,7 @@ public class Route implements java.beans.PropertyChangeListener {
 
     /**
      * Add a location at a specific place (sequence) in the route Allowable
-     * sequence numbers are 1 to max size of route. 1 = start of route.
+     * sequence numbers are 1 to max size of route. 1 = start of route, or Route.START
      * 
      * @param location The Location to add.
      * @param sequence Where in the route to add the location.

@@ -503,10 +503,6 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     private class duplexGroupChannelScanGuiCanvas extends java.awt.Canvas {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3311247866128360812L;
         private int barWidth = 7;
         private int barSpace = barWidth + 8;
         private int barOffset = (barSpace - barWidth) / 2;

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2016 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new include file for SoundTraxx Tsunami2                   -->
+<enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2016</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Michael</firstname>
+        <surname>Mosher</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2016-12-22</date>
+      <authorinitials>MJM</authorinitials>
+      <revremark>New file, initial ECO OEM Athearn Diesel file.</revremark>
+    </revision>
+  </revhistory>
+    <enumChoice>
+          <choice>Nathan K3LA</choice>
+    </enumChoice>
+    <enumChoice>
+          <choice>Nathan K3L</choice>
+    </enumChoice>
+    <enumChoice>
+          <choice>Nathan K5LA (1)</choice>
+    </enumChoice>
+    <enumChoice>
+          <choice>Nathan K5LA (2)</choice>
+    </enumChoice>
+    <enumChoice>
+          <choice>Nathan M3</choice>
+    </enumChoice>
+    <enumChoice>
+          <choice>Nathan M5</choice>
+    </enumChoice>
+    <enumChoice>
+          <choice>Nathan P3</choice>
+    </enumChoice>
+    <enumChoice>
+          <choice>Nathan P5 Early</choice>
+    </enumChoice>
+    <enumChoice>
+          <choice>Nathan P5A</choice>
+    </enumChoice>
+    <enumChoice>
+          <choice>Leslie A125</choice>
+    </enumChoice>
+    <enumChoice>
+          <choice>Leslie RS3L</choice>
+    </enumChoice>
+    <enumChoice>
+          <choice>Leslie S2M</choice>
+    </enumChoice>
+    <enumChoice>
+          <choice>Leslie S3L</choice>
+    </enumChoice>
+    <enumChoice>
+          <choice>Leslie S5T </choice>
+    </enumChoice>
+    <enumChoice>
+          <choice>Hancock 4700 Air Whistle</choice>
+    </enumChoice>
+</enumChoiceGroup>

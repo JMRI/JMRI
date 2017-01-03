@@ -46,10 +46,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4164148406541743498L;
     int CONFIG_SLOT = 127;
     int MIN_OPTION = 1;
     int MAX_OPTION = 72;

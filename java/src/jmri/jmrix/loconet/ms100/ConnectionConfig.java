@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.loconet.ms100;
 
 import jmri.util.SystemType;

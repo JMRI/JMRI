@@ -1,4 +1,3 @@
-// SdfConstants.java
 package jmri.jmrix.loconet.sdf;
 
 /**
