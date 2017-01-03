@@ -1,4 +1,3 @@
-/* SlotManager.java */
 package jmri.jmrix.loconet;
 
 import java.util.ArrayList;
@@ -1188,6 +1187,3 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(SlotManager.class.getName());
 }
-
-
-/* @(#)SlotManager.java */
