@@ -38,7 +38,7 @@
 
                 <xsl:apply-templates/>
 
-<br/>
+        <p></p>
 <hr/>
 This page was produced by <a href="http://jmri.org">JMRI</a>.
 <p/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear" /> JMRI Community.
@@ -71,20 +71,23 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     </table>
 </xsl:template>
 
-<xsl:template match="turnout">
-<tr> 
-  <td><xsl:value-of select="systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
-  <td><xsl:value-of select="userName"/></td>
-  <td> <xsl:value-of select="@feedback"/> </td>
-  <td><xsl:if test="( @inverted = 'true' )" >Yes</xsl:if></td>
-  <td><xsl:if test="( @locked = 'true' )" >Yes</xsl:if></td>
-  <td><xsl:if test="( @automate != 'Default' )" >Yes</xsl:if></td>
-  <td><xsl:value-of select="comment"/></td>
-</tr>
+<!-- Index through lights elements -->
+<!-- each one becomes a table      -->
+<xsl:template match="layout-config/lights">
+    <h3>Lights</h3>
+    <table border="1">
+        <tr>
+            <th>System Name</th>
+            <th>User Name</th>
+            <th>Comment</th>
+        </tr>
+        <!-- index through individual light elements -->
+        <xsl:apply-templates/>
+    </table>
 </xsl:template>
 
 <!-- Index through signalheads elements -->
-<!-- each one becomes a table -->
+<!-- each one becomes a table           -->
 <xsl:template match="layout-config/signalheads">
 <h3>Signal Heads</h3>
     <table border="1">
@@ -95,7 +98,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 </xsl:template>
 
 <!-- Index through signalmasts elements -->
-<!-- each one becomes a table -->
+<!-- each one becomes a table           -->
 <xsl:template match="layout-config/signalmasts">
     <h3>Signal Masts</h3>
     <table border="1">
@@ -107,7 +110,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 </xsl:template>
 
 <!-- Index through signalgroups elements -->
-<!-- each one becomes a table -->
+<!-- each one becomes a table            -->
 <xsl:template match="layout-config/signalgroups">
     <h3>Signal Groups</h3>
     <table border="1">
@@ -117,8 +120,17 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     </table>
 </xsl:template>
 
+<!-- Index through signalmastlogics elements -->
+<!-- each one becomes a separate table       -->
+<xsl:template match="layout-config/signalmastlogics">
+<h3>Signal Mast Logics</h3>
+Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
+    <!-- index through individual signalmastlogic elements -->
+    <xsl:call-template name="oneSML"/>
+</xsl:template>
+
 <!-- Index through sensors elements -->
-<!-- each one becomes a table -->
+<!-- each one becomes a table       -->
 <xsl:template match="layout-config/sensors">
 <h3>Sensors</h3>
     Default sensor state: <xsl:value-of select="@defaultInitialState"/>
@@ -130,7 +142,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 </xsl:template>
 
 <!-- Index through memories elements -->
-<!-- each one becomes a table -->
+<!-- each one becomes a table        -->
 <xsl:template match="layout-config/memories">
 <h3>Memories</h3>
     <table border="1">
@@ -141,7 +153,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 </xsl:template>
 
 <!-- Index through reporters elements -->
-<!-- each one becomes a table -->
+<!-- each one becomes a table         -->
 <xsl:template match="layout-config/reporters">
 <h3>Reporters</h3>
     <table border="1">
@@ -152,7 +164,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 </xsl:template>
 
 <!-- Index through routes elements -->
-<!-- each one becomes a table -->
+<!-- each one becomes a table      -->
 <xsl:template match="layout-config/routes">
 <h3>Routes</h3>
     <table border="1">
@@ -167,25 +179,45 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     </table>
 </xsl:template>
 
-<xsl:template match="route">
-<tr>
-<td><xsl:value-of select="@systemName"/></td> <!--names still stored as attributes in routes as of 2.9.6 up to 4.6-->
-<td><xsl:value-of select="@userName"/></td>
-<td><xsl:for-each select="routeSensor">
-        <xsl:value-of select="@systemName"/>:&#160;&#160;&#160;<xsl:value-of select="@mode"/><br/>
-    </xsl:for-each></td>
-<td><xsl:value-of select="@controlTurnout"/>&#160;&#160;&#160;<xsl:value-of select="@controlTurnoutState"/></td>
-<td><xsl:for-each select="routeOutputTurnout">
-        <xsl:value-of select="@systemName"/>:&#160;&#160;&#160;<xsl:value-of select="@state"/><br/>
-    </xsl:for-each></td>
-<td><xsl:for-each select="routeOutputSensor">
-        <xsl:value-of select="@systemName"/>:&#160;&#160;&#160;<xsl:value-of select="@state"/><br/>
-    </xsl:for-each></td>
-<td><xsl:value-of select="comment"/></td>
-</tr>
+<!-- Index through layoutblocks elements -->
+<!-- each one becomes a table -->
+<xsl:template match="layout-config/layoutblocks">
+    <h3>Layout Blocks</h3>
+    <table border="1">
+        <tr>
+            <th>System Name</th>
+            <th>User Name</th>
+            <th>Occupancy Sensor</th>
+            <th>Memory</th>
+        </tr>
+        <!-- index through individual turnout elements -->
+        <xsl:apply-templates/>
+    </table>
 </xsl:template>
 
-<!-- Index through logixs elements -->
+<!-- Index through warrants elements -->
+<!-- each one becomes a table -->
+<xsl:template match="layout-config/warrants">
+    <h3>Warrants</h3>
+    <table border="1">
+        <tr><th>System Name</th><th>User Name</th><th>Comment</th></tr>
+        <!-- index through individual warrant elements -->
+        <xsl:apply-templates/>
+    </table>
+</xsl:template>
+
+<!-- Index through audio elements -->
+<!-- each one becomes a table           -->
+<xsl:template match="layout-config/audio">
+    <h3>Audio</h3>
+    <table border="1">
+        <tr><th>Class</th><th>System Name</th><th>User Name</th><th>Type</th><th>URL</th><th>Comment</th></tr>
+        <!-- index through individual audio elements -->
+        <xsl:apply-templates/>
+    </table>
+</xsl:template>
+
+<!-- Index through logixs elements       -->
 <!-- each one becomes a separate section -->
 <xsl:template match="layout-config/logixs/logix">
 <h3>Logix <xsl:value-of select="systemName"/> <!--names as attributes deprecated since 2.9.6-->
@@ -338,35 +370,51 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     </xsl:if>
 </xsl:template>
 
-<!-- Index through layoutblock elements -->
-<!-- each one becomes a table -->
-<xsl:template match="layout-config/layoutblocks">
-<h3>Layout Blocks</h3>
-    <table border="1">
+
+<!--Table cell contents for the different types-->
+
+<!-- Index through turnout elements -->
+<xsl:template match="turnout">
     <tr>
-        <th>System Name</th>
-        <th>User Name</th>
-        <th>Occupancy Sensor</th>
-        <th>Memory</th>
+        <td><xsl:value-of select="systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
+        <td><xsl:value-of select="userName"/></td>
+        <td> <xsl:value-of select="@feedback"/> </td>
+        <td><xsl:if test="( @inverted = 'true' )" >Yes</xsl:if></td>
+        <td><xsl:if test="( @locked = 'true' )" >Yes</xsl:if></td>
+        <td><xsl:if test="( @automate != 'Default' )" >Yes</xsl:if></td>
+        <td><xsl:value-of select="comment"/></td>
     </tr>
-    <!-- index through individual turnout elements -->
-    <xsl:apply-templates/>
-    </table>
 </xsl:template>
 
-<!-- Index through warrant elements -->
-<!-- each one becomes a table -->
-<xsl:template match="layout-config/warrants">
-    <h3>Warrants</h3>
-    <table border="1">
-        <tr><th>System Name</th><th>User Name</th><th>Comment</th></tr>
-        <!-- index through individual warrant elements -->
-        <xsl:apply-templates/>
-    </table>
+<!-- Index through light elements -->
+<xsl:template match="light">
+    <tr>
+        <td><xsl:value-of select="systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
+        <td><xsl:value-of select="userName"/></td>
+        <td><xsl:value-of select="comment"/></td>
+    </tr>
 </xsl:template>
 
-<!--Tables for the different types-->
+<!-- Index through route elements -->
+<xsl:template match="route">
+    <tr>
+        <td><xsl:value-of select="@systemName"/></td> <!--names still stored as attributes in routes as of 2.9.6 up to 4.6-->
+        <td><xsl:value-of select="@userName"/></td>
+        <td><xsl:for-each select="routeSensor">
+            <xsl:value-of select="@systemName"/>:&#160;&#160;&#160;<xsl:value-of select="@mode"/><br/>
+        </xsl:for-each></td>
+        <td><xsl:value-of select="@controlTurnout"/>&#160;&#160;&#160;<xsl:value-of select="@controlTurnoutState"/></td>
+        <td><xsl:for-each select="routeOutputTurnout">
+            <xsl:value-of select="@systemName"/>:&#160;&#160;&#160;<xsl:value-of select="@state"/><br/>
+        </xsl:for-each></td>
+        <td><xsl:for-each select="routeOutputSensor">
+            <xsl:value-of select="@systemName"/>:&#160;&#160;&#160;<xsl:value-of select="@state"/><br/>
+        </xsl:for-each></td>
+        <td><xsl:value-of select="comment"/></td>
+    </tr>
+</xsl:template>
 
+<!-- Index through layoutblock elements -->
 <xsl:template match="layoutblock">
 <tr>
     <td><xsl:value-of select="systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
@@ -376,6 +424,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 </tr>
 </xsl:template>
 
+<!-- Index through signalhead elements -->
 <xsl:template match="signalhead">
 <tr><td><xsl:value-of select="systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
   <td><xsl:value-of select="userName"/></td>
@@ -402,6 +451,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 </tr>
 </xsl:template>
 
+<!-- Index through signalmast elements, several classes -->
 <xsl:template match="signalmast">
     <tr><td><xsl:value-of select="systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
         <td><xsl:value-of select="userName"/></td>
@@ -495,6 +545,36 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
         </td>
         <td><xsl:value-of select="comment"/></td>
     </tr>
+</xsl:template>
+
+<!-- template to show a particular signalmastlogic -->
+<xsl:template name="oneSML"> <!--1 table per SML-->
+    <!-- index through individual signalmastlogic elements -->
+    <xsl:for-each select="signalmastlogic">
+        <!--table header-->
+        <h4>Source mast: <xsl:value-of select="sourceSignalMast"/></h4>
+        <table border="1">
+            <tr><th>Destination Mast</th><th>Turnouts</th><th>Sensors</th><th>Enabled</th><th>Use LE</th><th>Comment</th></tr>
+            <xsl:for-each select="destinationMast">
+                <tr> <!--1 row per destination mast-->
+                    <td><xsl:value-of select="destinationSignalMast"/></td>
+                    <td>
+                        <xsl:for-each select="turnouts/turnout">
+                            <xsl:value-of select="turnoutName"/>: <xsl:value-of select="turnoutState"/><br/>
+                        </xsl:for-each>
+                    </td>
+                    <td>
+                        <xsl:for-each select="sensors/sensor">
+                            <xsl:value-of select="sensorName"/>: <xsl:value-of select="sensorState"/><br/>
+                        </xsl:for-each>
+                    </td>
+                    <td><xsl:value-of select="enabled"/></td>
+                    <td><xsl:value-of select="useLayoutEditor"/></td>
+                    <td><xsl:value-of select="comment"/></td>
+                </tr>
+            </xsl:for-each>
+        </table>
+    </xsl:for-each>
 </xsl:template>
 
 <xsl:template match="sensor">
@@ -837,6 +917,32 @@ value="<xsl:value-of select="@dataString"/>"
 </xsl:if>
 </xsl:template>
 
+<!-- Index through audio elements, several classes -->
+<xsl:template match="audiobuffer">
+    <tr><td>Buffer</td>
+        <td><xsl:value-of select="systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
+        <td><xsl:value-of select="userName"/></td>
+        <td><xsl:value-of select="url"/></td>
+        <td><xsl:value-of select="comment"/></td>
+    </tr>
+</xsl:template>
+<xsl:template match="audiolistener">
+    <tr><td>Listener</td>
+        <td><xsl:value-of select="systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
+        <td><xsl:value-of select="userName"/></td>
+        <td><xsl:value-of select="url"/></td>
+        <td><xsl:value-of select="comment"/></td>
+    </tr>
+</xsl:template>
+<xsl:template match="audiosource">
+    <tr><td>Source</td>
+        <td><xsl:value-of select="systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
+        <td><xsl:value-of select="userName"/></td>
+        <td><xsl:value-of select="url"/></td>
+        <td><xsl:value-of select="comment"/></td>
+    </tr>
+</xsl:template>
+
 <xsl:template match="paneleditor">
 <h3>Panel: <xsl:value-of select="@name"/></h3>
 
@@ -847,26 +953,28 @@ value="<xsl:value-of select="@dataString"/>"
 
 <xsl:template match="LayoutEditor">
 <h3>Layout Panel: <xsl:value-of select="@name"/></h3>
-
     <!-- index through individual panel elements -->
     <xsl:apply-templates/>
-
 </xsl:template>
 
 <xsl:template match="signalheadicon">
-Signalhead Icon <xsl:value-of select="@signalhead"/><br/>
+Signalhead Icon "<xsl:value-of select="@signalhead"/>"<br/>
+</xsl:template>
+
+<xsl:template match="signalmasticon">
+Signalmast Icon "<xsl:value-of select="@signalmast"/>"<br/>
 </xsl:template>
 
 <xsl:template match="turnouticon">
-Turnout Icon <xsl:value-of select="@turnout"/><br/>
+Turnout Icon "<xsl:value-of select="@turnout"/>"<br/>
 </xsl:template>
 
 <xsl:template match="sensoricon">
-Sensor Icon <xsl:value-of select="@sensor"/><br/>
+Sensor Icon "<xsl:value-of select="@sensor"/>"<br/>
 </xsl:template>
 
 <xsl:template match="positionablelabel">
-Positionable Label <xsl:value-of select="@icon"/><br/>
+Positionable Label "<xsl:value-of select="@icon"/>"<br/>
 </xsl:template>
 
 <xsl:template match="layoutturnout">
@@ -891,8 +999,35 @@ connects to "<xsl:value-of select="@connect2name"/>" (type=<xsl:value-of select=
 
 <xsl:template match="locoicon">
 Loco icon "<xsl:value-of select="@text"/>"<br/>
-
 </xsl:template>
 
+<xsl:template match="LightIcon">
+Light Icon "<xsl:value-of select="@light"/>"<br/>
+</xsl:template>
+
+<!-- Display version number in header -->
+<xsl:template match="layout-config/jmriversion">
+    JMRI version # <xsl:value-of select="major"/>.<xsl:value-of select="minor"/>.<xsl:value-of select="test"/><xsl:value-of select="modifier"/>
+</xsl:template>
+
+<!-- At the bottom, display JMRI load history -->
+<xsl:template match="filehistory">
+    <h3>History</h3>
+    <table border="1">
+    <tr><th>Date</th><th>File</th><th>Result</th></tr>
+    <xsl:for-each select="operation">
+        <tr>
+            <td><xsl:value-of select="date"/></td>
+            <td><xsl:value-of select="filename"/></td>
+            <td>
+                <xsl:choose>
+                    <xsl:when test="type = 'app'" >Started JMRI</xsl:when>
+                    <xsl:otherwise><xsl:value-of select="type"/></xsl:otherwise>
+                </xsl:choose>
+            </td>
+        </tr>
+    </xsl:for-each>
+    </table>
+</xsl:template>
 
 </xsl:stylesheet>
