@@ -15,6 +15,7 @@ import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,10 +24,9 @@ import org.junit.rules.TemporaryFolder;
 /**
  * Tests for the jmrit.roster.Roster class.
  *
- * This separates tests of the DefaultRoster functionality
- * from tests of Roster objects individually.  Roster itself
- * doesn't (yet) do go a good job of separating, those, so 
- * this is somewhat arbitrary.
+ * This separates tests of the DefaultRoster functionality from tests of Roster
+ * objects individually. Roster itself doesn't (yet) do go a good job of
+ * separating, those, so this is somewhat arbitrary.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2012
  */
@@ -204,16 +204,16 @@ public class RosterTest {
         File backupDir = folder.newFolder();
         FileUtil.createDirectory(rosterDir);
         File f = new File(rosterDir, "roster.xml");
-        
+
         // failure of test infrastructure if it exists already
         Assert.assertTrue("test roster.xml should not exist in new folder", !f.exists());
-        
+
         // load a new one to ensure it exists
         String contents = "stuff" + "           ";
         PrintStream p = new PrintStream(new FileOutputStream(f));
         p.println(contents);
         p.close();
-        
+
         File bf = new File(rosterDir, "rosterBackupTest");
         // failure of test infrastructure if backup exists already
         Assert.assertTrue("test backup file should not exist in new folder", !bf.exists());
@@ -260,7 +260,9 @@ public class RosterTest {
         Assert.assertNotNull("exists", r);
         // write it
         r.writeFile(r.getRosterIndexPath());
-
+        Assume.assumeTrue("Roster written to file", JUnitUtil.waitFor(() -> {
+            return r.isDirty() == false;
+        }));
         // create new roster & read
         Roster t = new Roster();
         t.readFile(r.getRosterIndexPath());
@@ -321,14 +323,13 @@ public class RosterTest {
 
     @Test
     public void testDefaultLocation() {
-        Assert.assertTrue("creates a default", Roster.getDefault()!=null);
+        Assert.assertTrue("creates a default", Roster.getDefault() != null);
         Assert.assertEquals("always same", Roster.getDefault(), Roster.getDefault());
-        
+
         // since we created it when we referenced it, should be in InstanceManager
         Assert.assertTrue("registered a default", jmri.InstanceManager.getNullableDefault(Roster.class) != null);
     }
-    
-    
+
     public Roster createTestRoster() throws IOException, FileNotFoundException {
         // this uses explicit filenames intentionally, to ensure that
         // the resulting files go into the test tree area.
