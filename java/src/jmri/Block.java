@@ -598,15 +598,23 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                     goingInactive();
                     break;
                 case Sensor.UNKNOWN:
-                    setValue(null);
-                    setState(UNKNOWN);
+                    goingUnknown();
                     break;
                 default:
-                    setValue(null);
-                    setState(INCONSISTENT);
+                    goingInconsistent();
                     break;
             }
         }
+    }
+    
+    public void goingUnknown() {
+        setValue(null);
+        setState(UNKNOWN);       
+    }
+    
+    public void goingInconsistent() {
+        setValue(null);
+        setState(INCONSISTENT);        
     }
 
     /**

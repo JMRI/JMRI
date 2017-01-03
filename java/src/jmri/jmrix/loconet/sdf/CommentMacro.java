@@ -1,4 +1,3 @@
-// CommentMacro.java
 package jmri.jmrix.loconet.sdf;
 
 /**
@@ -39,5 +38,3 @@ public class CommentMacro extends SdfMacro {
         return indent + oneInstructionString();
     }
 }
-
-/* @(#)CommentMacro.java */

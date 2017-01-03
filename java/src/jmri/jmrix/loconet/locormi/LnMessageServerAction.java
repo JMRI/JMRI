@@ -14,11 +14,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LnMessageServerAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5248571475794161828L;
-
     public LnMessageServerAction(String s) {
         super(s);
     }

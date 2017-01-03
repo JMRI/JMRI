@@ -1,4 +1,3 @@
-// LocoNetInterface
 package jmri.jmrix.loconet;
 
 /**
@@ -105,6 +104,3 @@ public interface LocoNetInterface {
     public static final int POWER = 16;
 
 }
-
-
-/* @(#)LocoNetInterface.java */

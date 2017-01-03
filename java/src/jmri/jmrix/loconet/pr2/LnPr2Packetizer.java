@@ -1,4 +1,3 @@
-// LnPr2Packetizer.java
 package jmri.jmrix.loconet.pr2;
 
 import org.slf4j.Logger;
@@ -24,5 +23,3 @@ public class LnPr2Packetizer extends jmri.jmrix.loconet.LnPacketizer {
 
     private final static Logger log = LoggerFactory.getLogger(LnPr2Packetizer.class.getName());
 }
-
-/* @(#)LnPr2Packetizer.java */

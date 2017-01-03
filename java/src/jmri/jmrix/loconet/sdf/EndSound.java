@@ -1,4 +1,3 @@
-// EndSound.java
 package jmri.jmrix.loconet.sdf;
 
 /**
@@ -56,5 +55,3 @@ public class EndSound extends SdfMacro {
         return indent + oneInstructionString();
     }
 }
-
-/* @(#)EndSound.java */

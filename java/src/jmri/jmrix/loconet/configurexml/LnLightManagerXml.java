@@ -1,4 +1,3 @@
-// LnLightManagerXml.java
 package jmri.jmrix.loconet.configurexml;
 
 import org.jdom2.Element;

@@ -1,4 +1,3 @@
-// PR3Adapter.java
 package jmri.jmrix.loconet.pr3;
 
 import gnu.io.SerialPort;

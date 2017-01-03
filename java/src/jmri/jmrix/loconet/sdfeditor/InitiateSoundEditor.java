@@ -1,4 +1,3 @@
-// InitiateSoundEditor.java
 package jmri.jmrix.loconet.sdfeditor;
 
 import java.awt.FlowLayout;
@@ -18,11 +17,6 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  * @author	Bob Jacobsen Copyright (C) 2007
  */
 class InitiateSoundEditor extends SdfMacroEditor {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7107120240412402003L;
 
     public InitiateSoundEditor(SdfMacro inst) {
         super(inst);
@@ -113,5 +107,3 @@ class InitiateSoundEditor extends SdfMacroEditor {
     JCheckBox nottrig = new JCheckBox("Not triggered");
 
 }
-
-/* @(#)InitiateSoundEditor.java */
