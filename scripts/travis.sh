@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # be verbose and exit on any non-zero exit code
 # see https://docs.travis-ci.com/user/customizing-the-build/#Implementing-Complex-Build-Steps
