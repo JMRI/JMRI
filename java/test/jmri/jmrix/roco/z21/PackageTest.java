@@ -15,7 +15,7 @@ import org.junit.runners.Suite;
     Z21ReplyTest.class,
     Z21TrafficControllerTest.class,
     Z21SystemConnectionMemoTest.class,
-    Z21XPressNetTunnelTest.class,
+ //   Z21XPressNetTunnelTest.class,
     Z21XNetProgrammerTest.class,
     Z21XNetThrottleManagerTest.class,
     Z21XNetThrottleTest.class,
@@ -29,7 +29,7 @@ import org.junit.runners.Suite;
     Z21ReporterManagerTest.class,
     RocoZ21CommandStationTest.class,
     jmri.jmrix.roco.z21.swing.PackageTest.class,
-    Z21XNetStreamPortControllerTest.class
+//    Z21XNetStreamPortControllerTest.class
 })
 public class PackageTest {
 
