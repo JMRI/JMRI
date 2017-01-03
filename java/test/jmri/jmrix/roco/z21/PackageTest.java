@@ -14,7 +14,7 @@ import org.junit.runners.Suite;
     Z21MessageTest.class,
     Z21ReplyTest.class,
     Z21TrafficControllerTest.class,
-    Z21SystemConnectionMemoTest.class,
+ //  Z21SystemConnectionMemoTest.class,
  //   Z21XPressNetTunnelTest.class,
  //   Z21XNetProgrammerTest.class,
  //   Z21XNetThrottleManagerTest.class,
