@@ -18,7 +18,7 @@ public class Z21XNetStreamPortController extends jmri.jmrix.lenz.XNetStreamPortC
     @Override
     public void configure() {
         // connect to a packetizing traffic controller
-        jmri.jmrix.lenz.XNetTrafficController packets = new jmri.jmrix.lenz.XNetPacketizer(new jmri.jmrix.lenz.LenzCommandStation());
+        jmri.jmrix.lenz.XNetTrafficController packets = new Z21XNetPacketizer(new jmri.jmrix.lenz.LenzCommandStation());
         packets.connectPort(this);
 
         this.getSystemConnectionMemo().setXNetTrafficController(packets);

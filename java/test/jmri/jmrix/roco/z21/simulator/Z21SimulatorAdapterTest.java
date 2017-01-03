@@ -40,6 +40,8 @@ public class Z21SimulatorAdapterTest {
         // connect the port
         try {
            a.connect();
+        } catch(java.net.BindException be) {
+            Assert.fail("Exception binding to Socket");
         } catch (java.lang.Exception e) {
            Assert.fail("Exception configuring server port");
         }
@@ -80,6 +82,7 @@ public class Z21SimulatorAdapterTest {
         } catch(java.net.SocketException se) {
             Assert.fail("Failure Creating Socket");
         }
+        a.dispose();
     }
 
     @Test
@@ -107,6 +110,7 @@ public class Z21SimulatorAdapterTest {
             Throwable cause = ite.getCause();
             Assert.fail("getZ21RailComDataChangedReply  executon failed reason: " + cause.getMessage());
         }
+        a.dispose();
 
     }
 

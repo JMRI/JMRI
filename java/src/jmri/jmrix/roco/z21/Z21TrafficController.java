@@ -397,10 +397,6 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
             log.debug("Cleanup Starts");
         }
 
-        // shut down the XPRessNet Tunnel before continuing.
-        ((Z21SystemConnectionMemo)controller.getSystemConnectionMemo()).shutdownTunnel();
-
-
         Z21Message logoffMessage = Z21Message.getLanLogoffRequestMessage();
         forwardToPort(logoffMessage, null);
         // wait for reply
