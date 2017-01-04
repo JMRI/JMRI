@@ -28,6 +28,9 @@ public class LV102InternalFrameTest {
     @Test
     public void testResetButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // skip this test on macos due to a problem with the Jemmy library 
+        // and internal frames.
+        Assume.assumeFalse(System.getProperty("os.name").toLowerCase().contains("macos"));
         // we are building an LV102Frame here, which automatically contains 
         // an LV102 Internal Frame
         LV102Frame f = new LV102Frame(Bundle.getMessage("LV102Config"));
@@ -41,6 +44,9 @@ public class LV102InternalFrameTest {
     @Test
     public void testDefaultButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // skip this test on macos due to a problem with the Jemmy library 
+        // and internal frames.
+        Assume.assumeFalse(System.getProperty("os.name").toLowerCase().contains("macos"));
         // we are building an LV102Frame here, which automatically contains 
         // an LV102 Internal Frame
         LV102Frame f = new LV102Frame(Bundle.getMessage("LV102Config"));
