@@ -444,7 +444,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         JComboBox editCombo = editorMap.get(this.getValueAt(row, SYSNAMECOL));
         if (editCombo == null) {
             // create a new one with correct aspects
-            editCombo = new JComboBox(getAspectVector(row));
+            JComboBox<String> editCombo = new JComboBox<String> (getAspectVector(row));
             editorMap.put(this.getValueAt(row, SYSNAMECOL), editCombo);
         }
         return editCombo;
