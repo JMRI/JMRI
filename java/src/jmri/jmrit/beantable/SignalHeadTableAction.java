@@ -368,12 +368,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
             /**
              * Clear the old appearance comboboxes and force them to be rebuilt
+             * At present (4.7.1) not used.
              * @param row Index of the signal mast (in TableDataModel) to be rebuilt in the Hashtables
              */
-            public void clearRowVector(int row) {
+/*          public void clearAppearanceVector(int row) {
                 boxMap.remove(this.getValueAt(row, SYSNAMECOL));
                 editorMap.remove(this.getValueAt(row, SYSNAMECOL));
-            }
+            }*/
 
             // Hashtables for Editors; not used for Renderer)
 
