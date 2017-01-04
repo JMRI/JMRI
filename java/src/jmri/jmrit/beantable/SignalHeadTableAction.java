@@ -36,7 +36,6 @@ import jmri.implementation.QuadOutputSignalHead;
 import jmri.implementation.SingleTurnoutSignalHead;
 import jmri.implementation.TripleOutputSignalHead;
 import jmri.implementation.TripleTurnoutSignalHead;
-import jmri.jmrit.beantable.RowComboBoxPanel; // access to RowComboBoxPanel()
 import jmri.jmrix.acela.AcelaAddress;
 import jmri.jmrix.acela.AcelaNode;
 import jmri.util.ConnectionNameFromSystemName;
@@ -369,12 +368,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
             /**
              * Clear the old appearance comboboxes and force them to be rebuilt
+             * At present (4.7.1) not used.
              * @param row Index of the signal mast (in TableDataModel) to be rebuilt in the Hashtables
              */
-            public void clearRowVector(int row) {
+/*          public void clearAppearanceVector(int row) {
                 boxMap.remove(this.getValueAt(row, SYSNAMECOL));
                 editorMap.remove(this.getValueAt(row, SYSNAMECOL));
-            }
+            }*/
 
             // Hashtables for Editors; not used for Renderer)
 
