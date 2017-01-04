@@ -195,10 +195,29 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
     </table>
 </xsl:template>
 
+<!-- Index through oblocks (occupancy blocks) elements -->
+<!-- each one becomes a table -->
+<xsl:template match="layout-config/oblocks">
+    <h3>Occupancy Blocks</h3>
+    <table border="1">
+        <tr>
+            <th>System Name</th>
+            <th>User Name</th>
+            <th>Portals</th>
+            <th>Length</th>
+            <th>Curve</th>
+            <th>Permiss.</th>
+        </tr>
+        <!-- index through individual turnout elements -->
+        <xsl:apply-templates/>
+    </table>
+</xsl:template>
+
 <!-- Index through warrants elements -->
 <!-- each one becomes a table -->
 <xsl:template match="layout-config/warrants">
     <h3>Warrants</h3>
+    Settings: Max.speed = "<xsl:value-of select="nxparams/maxspeed"/>", Haltstart = "<xsl:value-of select="nxparams/haltstart"/>"
     <table border="1">
         <tr><th>System Name</th><th>User Name</th><th>Comment</th></tr>
         <!-- index through individual warrant elements -->
@@ -424,6 +443,28 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
 </tr>
 </xsl:template>
 
+<!-- Index through oblock elements -->
+<xsl:template match="oblock">
+    <tr>
+        <td><xsl:value-of select="@systemName"/></td> <!--oblock system name still stored as attrib in 2.9.6-->
+        <td><xsl:value-of select="userName"/></td> <!-- user name as attributes deprecated since 2.9.6-->
+        <td><xsl:for-each select="portal">
+            <xsl:value-of select="@systemName"/> (<xsl:value-of select="portalName"/>) from
+            <xsl:for-each select="fromBlock">
+                <xsl:value-of select="@blockName"/>
+            </xsl:for-each>
+            to
+            <xsl:for-each select="toBlock">
+                <xsl:value-of select="@blockName"/>
+            </xsl:for-each>
+            <br/>
+        </xsl:for-each></td>
+        <td><xsl:value-of select="@length"/></td>
+        <td><xsl:value-of select="@curve"/></td>
+        <td><xsl:value-of select="@permissive"/></td>
+    </tr>
+</xsl:template>
+
 <!-- Index through signalhead elements -->
 <xsl:template match="signalhead">
 <tr><td><xsl:value-of select="systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
@@ -619,6 +660,7 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
     <tr>
         <td><xsl:value-of select="@systemName"/></td> <!--names still stored as attributes in warrants as of 2.9.6 up to 4.6-->
         <td><xsl:value-of select="@userName"/></td>
+        <td><xsl:value-of select="comment"/></td>
     </tr>
 </xsl:template>
 
