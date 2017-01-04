@@ -213,13 +213,26 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
     </table>
 </xsl:template>
 
+<!-- Index through sections elements -->
+<!-- each one becomes a table -->
+<xsl:template match="layout-config/sections">
+    <h3>Sections</h3>
+    <table border="1">
+        <tr><th>System Name</th><th>User Name</th><th>Entry (order)</th><th>Exit</th><th>Comment</th></tr>
+        <!-- index through individual section elements -->
+        <xsl:apply-templates/>
+    </table>
+</xsl:template>
+
 <!-- Index through warrants elements -->
 <!-- each one becomes a table -->
 <xsl:template match="layout-config/warrants">
     <h3>Warrants</h3>
-    Settings: Max.speed = "<xsl:value-of select="nxparams/maxspeed"/>", Haltstart = "<xsl:value-of select="nxparams/haltstart"/>"
+    Settings:
+    <!--Haltstart = <xsl:value-of select="nxparams/haltstart"/>-->
+    <!--Max.speed = <xsl:value-of select="nxparams/maxspeed"/>-->
     <table border="1">
-        <tr><th>System Name</th><th>User Name</th><th>Comment</th></tr>
+        <tr><th>System Name</th><th>User Name</th><th>Block Order</th></tr>
         <!-- index through individual warrant elements -->
         <xsl:apply-templates/>
     </table>
@@ -660,6 +673,28 @@ Logic delay: <xsl:value-of select="logicDelay"/> (ms)<br/>
     <tr>
         <td><xsl:value-of select="@systemName"/></td> <!--names still stored as attributes in warrants as of 2.9.6 up to 4.6-->
         <td><xsl:value-of select="@userName"/></td>
+        <td>
+            <xsl:for-each select="blockOrder">
+                Path: <xsl:value-of select="block/@pathname"/><br/>
+            </xsl:for-each>
+        </td>
+    </tr>
+</xsl:template>
+
+<xsl:template match="section">
+    <tr>
+        <td><xsl:value-of select="@systemName"/></td> <!--names as attributes deprecated since 2.9.6-->
+        <td><xsl:value-of select="userName"/></td>
+        <td>
+            <xsl:for-each select="blockentry">
+                <xsl:value-of select="@sName"/> (<xsl:value-of select="@order"/>)<br/>
+            </xsl:for-each>
+        </td>
+        <td>
+            <xsl:for-each select="entrypoint">
+                <xsl:value-of select="@fromblock"/> to <xsl:value-of select="@toblock"/><br/>
+            </xsl:for-each>
+        </td>
         <td><xsl:value-of select="comment"/></td>
     </tr>
 </xsl:template>

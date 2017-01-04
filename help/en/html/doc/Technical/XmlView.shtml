@@ -75,12 +75,12 @@
         "Start JMRI Web Server".</li>
 
         <li>Open your web browser and enter the URL "<a href=
-        "http://localhost:12080/index.html">http://localhost:12080/index.html</a>"</li>
+        "http://localhost:12080" target="_blank">http://localhost:12080</a>"</li>
 
-        <li>You should now see the JMRI logo on a index page. If
-        your XML file is within the JMRI distribution directory,
-        click on the "dist" link. If it's within the preferences
-        directory, click on the "prefs" link.</li>
+        <li>You should now see the JMRI web page for your layout. If
+        the XML file you wish to view is within the JMRI distribution
+        directory, click on the "/dist" link at bottom right. If it's within
+        the preferences directory, click on the "/prefs" link.</li>
 
         <li>Finally, click on any needed directory names to get to
         your file, then click on your file.</li>
