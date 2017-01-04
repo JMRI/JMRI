@@ -29,11 +29,13 @@ public class LV102FrameScaffold extends JFrameOperator{
    }
 
    public void pushResetButton(){
-        new JToggleButtonOperator(IFrameOperator,Bundle.getMessage("LV102ResetButtonLabel")).push();
+        //new JToggleButtonOperator(IFrameOperator,Bundle.getMessage("LV102ResetButtonLabel")).push();
+        new JToggleButtonOperator(this,Bundle.getMessage("LV102ResetButtonLabel")).push();
    }
 
    public void pushDefaultButton(){
-        new JToggleButtonOperator(IFrameOperator,Bundle.getMessage("LV102DefaultButtonLabel")).push();
+        //new JToggleButtonOperator(IFrameOperator,Bundle.getMessage("LV102DefaultButtonLabel")).push();
+        new JToggleButtonOperator(this,Bundle.getMessage("LV102DefaultButtonLabel")).push();
    }
 
    public void pushWriteSettingsButton(){
