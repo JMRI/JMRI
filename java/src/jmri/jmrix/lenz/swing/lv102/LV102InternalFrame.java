@@ -297,9 +297,9 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
     void writeLV102Settings() {
 
         // obtain the programmer Manager
-        jmri.ProgrammerManager pm = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class);
+        jmri.AddressedProgrammerManager pm = jmri.InstanceManager.getNullableDefault(jmri.AddressedProgrammerManager.class);
         if(pm == null) {
-           // no programmer manager, cannot proceed.
+           // no addressed programmer manager, cannot proceed.
            CurrentStatus.setText(Bundle.getMessage("LV102StatusNoPM"));
            log.error("No Programmer Manager Available, cannot configure LV102");
            return;
