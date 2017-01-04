@@ -13,7 +13,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
     BundleTest.class,
     EditableListTest.class,
-    JmriJTablePersistenceManagerTest.class
+    JmriJTablePersistenceManagerTest.class,
+    ConnectionLabelTest.class
 })
 public class PackageTest {
 }
