@@ -388,7 +388,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 JComboBox editCombo = editorMap.get(this.getValueAt(row, SYSNAMECOL));
                 if (editCombo == null) {
                     // create a new one with correct appearances
-                    JComboBox<String> editCombo = new JComboBox<String> (getRowVector(row));
+                    editCombo = new JComboBox<String> (getRowVector(row));
                     editorMap.put(this.getValueAt(row, SYSNAMECOL), editCombo);
                 }
                 return editCombo;
