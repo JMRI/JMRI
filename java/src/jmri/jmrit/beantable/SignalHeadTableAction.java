@@ -191,8 +191,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
                         log.debug("SignalHead setValueAt (rowConverted={}; value={})", row, value);
                         // convert from String (selected item) to int
                         int newState = 99;
-                        String[] stateNameList = ((SignalHead) s).getValidStateNames(); // Array of valid appearance names
-                        int[] validStateList = ((SignalHead) s).getValidStates(); // Array of valid appearance numbers
+                        String[] stateNameList = s.getValidStateNames(); // Array of valid appearance names
+                        int[] validStateList = s.getValidStates(); // Array of valid appearance numbers
                         for (int i = 0; i < stateNameList.length; i++) {
                             if (value == stateNameList[i]) {
                                 newState = validStateList [i];
@@ -209,10 +209,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
                             }
                         }
                         if (log.isDebugEnabled()) {
-                            String oldAppearanceName = ((SignalHead) s).getAppearanceName();
+                            String oldAppearanceName = s.getAppearanceName();
                             log.debug("Signal Head set from: {} to: {} [{}]", oldAppearanceName, value, newState);
                         }
-                        ((SignalHead) s).setAppearance((int) newState);
+                        s.setAppearance(newState);
                         fireTableRowsUpdated(row, row);
                     }
                 } else if (col == LITCOL) {
