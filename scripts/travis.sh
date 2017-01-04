@@ -9,9 +9,9 @@ export MAVEN_OPTS=-Xmx1536m
 if [[ "$HEADLESS" == "true" ]] ; then
     # run FindBugs only on headless, failing build if bugs are found
     # FindBugs configuration is in pom.xml
-    mvn test -U --batch-mode -DskipTests=true -Djava.awt.headless=${HEADLESS} findbugs:check
+    mvn test -U -P travis-findbugs --batch-mode
     # run headless tests
-    mvn test -U -P travis --batch-mode -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" -Djava.awt.headless=${HEADLESS}
+    mvn test -U -P travis-headless --batch-mode -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" -Djava.awt.headless=${HEADLESS}
 else
     # run full GUI test suite and fail on coverage issues
     mvn test -U -P travis-coverage --batch-mode -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" -Djava.awt.headless=${HEADLESS}

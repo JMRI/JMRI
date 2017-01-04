@@ -28,7 +28,7 @@
 
     <profiles>
         <profile>
-            <id>travis</id>
+            <id>travis-headless</id>
             <properties>
                 <findbugs.skip>true</findbugs.skip>
             </properties>
@@ -147,7 +147,7 @@
             </build>
         </profile>
         <profile>
-            <id>findbugs</id>
+            <id>travis-findbugs</id>
             <build>
                 <plugins>
                     <!-- prevent surefire (maven default test harness) from running tests -->
@@ -295,7 +295,6 @@
                 <configuration>
                     <excludeFilterFile>.findbugs.xml</excludeFilterFile>
                     <effort>Max</effort>
-                    <threshold>High</threshold>
                     <maxHeap>1536</maxHeap>
                     <timeout>1200000</timeout><!-- 20 minutes -->
                 </configuration>            
