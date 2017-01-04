@@ -30,7 +30,7 @@ public class LV102InternalFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // skip this test on macos due to a problem with the Jemmy library 
         // and internal frames.
-        Assume.assumeFalse(System.getProperty("os.name").toLowerCase().contains("macos"));
+        Assume.assumeFalse(jmri.util.SystemType.isMacOSX());
         // we are building an LV102Frame here, which automatically contains 
         // an LV102 Internal Frame
         LV102Frame f = new LV102Frame(Bundle.getMessage("LV102Config"));
@@ -46,7 +46,7 @@ public class LV102InternalFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // skip this test on macos due to a problem with the Jemmy library 
         // and internal frames.
-        Assume.assumeFalse(System.getProperty("os.name").toLowerCase().contains("macos"));
+        Assume.assumeFalse(jmri.util.SystemType.isMacOSX());
         // we are building an LV102Frame here, which automatically contains 
         // an LV102 Internal Frame
         LV102Frame f = new LV102Frame(Bundle.getMessage("LV102Config"));
