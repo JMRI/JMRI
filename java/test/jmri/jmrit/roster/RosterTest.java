@@ -263,6 +263,7 @@ public class RosterTest {
         Assume.assumeTrue("Roster written to file", JUnitUtil.waitFor(() -> {
             return r.isDirty() == false;
         }));
+        System.out.println(FileUtil.readFile(new File(r.getRosterIndexPath())));
         // create new roster & read
         Roster t = new Roster();
         t.readFile(r.getRosterIndexPath());
@@ -379,7 +380,6 @@ public class RosterTest {
 
         // write it
         //r.writeFile(r.getRosterIndexPath());
-
         return r;
     }
 
