@@ -244,6 +244,23 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     $widget["systemName"] = $widget.name;
                                 jmri.getSensor($widget["systemName"]);
                                 break;
+                            case "LightIcon" :
+                                $widget['name'] = $widget.light; //normalize name
+                                $widget.jsonType = "light"; // JSON object type
+                                $widget['icon' + UNKNOWN] = $(this).find('icons').find('unknown').attr('url');
+                                $widget['icon2'] = $(this).find('icons').find('on').attr('url');
+                                $widget['icon4'] = $(this).find('icons').find('off').attr('url');
+                                $widget['icon8'] = $(this).find('icons').find('inconsistent').attr('url');
+                                $widget['rotation'] = $(this).find('icons').find('unknown').find('rotation').text() * 1;
+                                $widget['degrees'] = ($(this).find('icons').find('unknown').attr('degrees') * 1) - ($widget.rotation * 90);
+                                $widget['scale'] = $(this).find('unknown').attr('scale');
+                                if ($widget.forcecontroloff != "true") {
+                                    $widget.classes += $widget.jsonType + " clickable ";
+                                }
+                                if (typeof $widget["systemName"] == "undefined")
+                                    $widget["systemName"] = $widget.name;
+                                jmri.getLight($widget["systemName"]);
+                                break;
                             case "signalheadicon" :
                                 $widget['name'] = $widget.signalhead; //normalize name
                                 $widget.jsonType = "signalHead"; // JSON object type
@@ -1528,6 +1545,7 @@ var $getWidgetFamily = function($widget, $element) {
         case "linkinglabel" :
         case "turnouticon" :
         case "sensoricon" :
+        case "LightIcon" :
         case "multisensoricon" :
         case "signalheadicon" :
         case "signalmasticon" :
