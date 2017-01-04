@@ -1,8 +1,10 @@
 package apps.gui;
 
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.prefs.BackingStoreException;
@@ -63,6 +65,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * be per-application instead of per-profile.
      */
     private boolean initialized = false;
+    private final List<InitializationException> exceptions = new ArrayList<>();
     private final static Logger log = LoggerFactory.getLogger(GuiLafPreferencesManager.class);
 
     @Override
@@ -90,7 +93,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
     @Override
     public boolean isInitialized(Profile profile) {
-        return this.initialized;
+        return this.initialized && this.exceptions.isEmpty();
     }
 
     @Override
@@ -381,5 +384,15 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         if (oldRestartRequired != restartRequired) {
             propertyChangeSupport.firePropertyChange(PROP_RESTARTREQUIRED, oldRestartRequired, restartRequired);
         }
+    }
+
+    @Override
+    public boolean isInitializedWithExceptions(Profile profile) {
+        return this.initialized && !this.exceptions.isEmpty();
+    }
+
+    @Override
+    public List<Exception> getInitializationExceptions(Profile profile) {
+        return new ArrayList<>(this.exceptions);
     }
 }

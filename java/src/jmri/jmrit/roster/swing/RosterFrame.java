@@ -1531,7 +1531,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 service.setVisible(true);
                 firePropertyChange("setprogservice", "setEnabled", true);
             }
-        } else if(gpm.isGlobalProgrammerAvailable()) {
+        } else if(gpm!=null && gpm.isGlobalProgrammerAvailable()) {
             if (ConnectionStatus.instance().isSystemOk(gpm.getUserName())) {
                 log.debug("GPM Connection online");
                 serviceModeProgrammerLabel.setText(
@@ -1586,7 +1586,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 ops.setVisible(true);
                 firePropertyChange("setprogops", "setEnabled", true);
             }
-        } else if (apm.isAddressedModePossible()) {
+        } else if (apm!=null && apm.isAddressedModePossible()) {
             if (ConnectionStatus.instance().isSystemOk(apm.getUserName())) {
                 log.debug("Ops Mode Connection online");
                 operationsModeProgrammerLabel.setText(
