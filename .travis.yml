@@ -14,8 +14,7 @@ before_script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]] ; then export DISPLAY=:99.0 ; sh -e /etc/init.d/xvfb start ; sleep 3 ; fi
 
 script:
-  - export -f travis_wait
-  - ./scripts/travis.sh
+  - travis_wait 40 ./scripts/travis.sh
 
 cache:
   directories:
