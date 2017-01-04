@@ -274,9 +274,9 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
     JLabel CurrentStatus = new JLabel(" ");
 
-    JToggleButton writeSettingsButton = new JToggleButton("Write to LV102");
-    JToggleButton resetButton = new JToggleButton("Reset to Initial Values");
-    JToggleButton defaultButton = new JToggleButton("Reset to Factory Defaults");
+    JToggleButton writeSettingsButton = new JToggleButton(Bundle.getMessage("LV102WriteSettingsButtonLabel"));
+    JToggleButton resetButton = new JToggleButton(Bundle.getMessage("LV102ResetButtonLabel"));
+    JToggleButton defaultButton = new JToggleButton("LV102DefaultButtonLabel");
 
     protected String[] validVoltage = new String[]{"11V", "11.5V", "12V", "12.5V", "13V", "13.5V", "14V", "14.5V", "15V", "15.5V", "16V (factory default)", "16.5V", "17V", "17.5V", "18V", "18.5V", "19V", "19.5V", "20V", "20.5V", "21V", "21.5V", "22V", ""};
     protected int[] validVoltageValues = new int[]{22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 0};
