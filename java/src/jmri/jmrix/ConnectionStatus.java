@@ -222,25 +222,27 @@ public class ConnectionStatus {
         pcs.removePropertyChangeListener(l);
     }
 
-    /*
-     *  ConnectionKey is an internal class containing the port name 
-     *  and system name of a connection.
-     *  <p>
-     *  ConnectionKey is used as a key in a hashmap of the connections
-     *  on the system.
-     *  <p>
-     *  It is allowable for either the port name or the system name to be null,      *  but not both.
+    /**
+     * ConnectionKey is an internal class containing the port name and system
+     * name of a connection.
+     * <p>
+     * ConnectionKey is used as a key in a hashmap of the connections on the
+     * system.
+     * <p>
+     * It is allowable for either the port name or the system name to be null,
+     * but not both.
      */
     private class ConnectionKey {
 
         String portName = null;
         String systemName = null;
 
-        /*
-        * constructor
-        * @param system String system name
-        * @param port String port name
-        * @throws IllegalArgumentException if both system and port are null;
+        /**
+         * constructor
+         *
+         * @param system String system name
+         * @param port   String port name
+         * @throws IllegalArgumentException if both system and port are null;
          */
         public ConnectionKey(String system, String port) {
             if (system == null && port == null) {
@@ -258,10 +260,6 @@ public class ConnectionStatus {
             return portName;
         }
 
-        /*
-        * Compares an object to see if it is equal to this obect.
-        * @return true if equal, false otherwise.
-         */
         @Override
         public boolean equals(Object o) {
             if (o == null || !(o instanceof ConnectionKey)) {
@@ -269,7 +267,8 @@ public class ConnectionStatus {
             }
             ConnectionKey other = (ConnectionKey) o;
 
-            return systemName.equals(other.systemName) && portName.equals(other.portName);
+            return (systemName == null ? other.getSystemName() == null : systemName.equals(other.getSystemName()))
+                    && (portName == null ? other.getPortName() == null : portName.equals(other.getPortName()));
         }
 
         @Override
