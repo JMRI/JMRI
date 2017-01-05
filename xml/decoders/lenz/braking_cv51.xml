@@ -28,6 +28,12 @@
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
       <revnumber>7</revnumber>
+      <date>2016-12-04</date>
+      <authorinitials>JC</authorinitials>
+      <revremark>Catalan translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>7</revnumber>
       <date>2016-10-06</date>
       <authorinitials>PS</authorinitials>
       <revremark>Czech translation</revremark>

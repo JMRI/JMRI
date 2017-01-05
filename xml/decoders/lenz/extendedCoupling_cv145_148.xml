@@ -33,6 +33,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>8</revnumber>
+      <date>2016-12-04</date>
+      <authorinitials>JC</authorinitials>
+      <revremark>Catalan translation</revremark>
+    </revision>
+    <revision>
       <revnumber>7</revnumber>
       <date>2016-10-09</date>
       <authorinitials>PS</authorinitials>
@@ -56,7 +62,7 @@
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 	<label>Enable forward coupling with F1</label>
 	<label xml:lang="de">Entkuppeln vorwärts mit F1</label>
-	<label xml:lang="cs">Zpřístupnit přední spřáhlo s F1</label>
+  <label xml:lang="cs">Zpřístupnit přední spřáhlo s F1</label>
 	<label xml:lang="ca">Activa desenganxall davanter amb F1</label>
   </variable>
   <variable item="Enable forward coupling with F2" CV="145" mask="XXXXXXVX">
@@ -114,6 +120,7 @@
 	<label xml:lang="de">Entkuppeln rückwärts mit F1</label>
 	<label xml:lang="cs">Zpřístupnit zadní spřáhlo s F1</label>
 	<label xml:lang="ca">Activa desenganxall posterior amb F1</label>
+	<label xml:lang="ca">Activa enganxall posterior amb F1</label>
   </variable>
   <variable item="Enable backward coupling with F2" CV="146" mask="XXXXXXVX">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -179,7 +186,7 @@
 	<label>    Decoupling movement</label>
 	<label xml:lang="de">Verfahrweg</label>
 	<tooltip xml:lang="de">Wertebereich 0-255</tooltip>
-    <label xml:lang="cs">    Poodjetí při rozpojení</label>
+  <label xml:lang="cs">    Poodjetí při rozpojení</label>
 	<tooltip xml:lang="cs">Meze 0-255</tooltip>
 	<label xml:lang="ca">    Moviment al desenganxar</label>
 	<tooltip xml:lang="ca">Rang 0-255</tooltip>
