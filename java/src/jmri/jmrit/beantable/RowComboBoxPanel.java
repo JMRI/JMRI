@@ -174,9 +174,7 @@ public abstract class RowComboBoxPanel
             public final void actionPerformed(ActionEvent evt) {
                 Object choice = editorbox.getSelectedItem();
                 log.debug("actionPerformed (event={}, choice={}", evt.toString(), choice.toString());
-                if (choice != null) {
-                    eventRowComboBoxActionPerformed(choice); // signal the changed row
-                }
+                eventRowComboBoxActionPerformed(choice); // signal the changed row
             }
         });
         this.editor.add(editorbox);
@@ -226,7 +224,7 @@ public abstract class RowComboBoxPanel
                                              int     col)
     {
         this.renderer.removeAll();  //remove the combobox from the panel
-        JComboBox renderbox = new JComboBox(); // create a fake comboBox with the current Value (Aspect of mast/Appearance of the Head) in this row
+        JComboBox renderbox = new JComboBox<>(); // create a fake comboBox with the current Value (Aspect of mast/Appearance of the Head) in this row
         log.debug("RCBP getRendererComponent (row={}, value={})", row, value);
         renderbox.addItem(value); // display (only) the current Value
         renderer.add(renderbox);
@@ -274,15 +272,17 @@ public abstract class RowComboBoxPanel
     }
 
     /**
-     *  Put contents of value in the combobox.
+     *  Put contents into the combobox.
      *  @param items array (list) of options to display
      */
     public final void setItems(Object [] items) {
-        JComboBox editorbox = new JComboBox();
-        final int n = (items != null  ?  items.length  :  0);
+        JComboBox editorbox = new JComboBox<> ();
+        final int n = (items != null  ?  items.length : 0);
         for  (int i = 0; i < n; i++)
         {
-            editorbox.addItem (items [i]);
+            if (items [i] != null) {
+                editorbox.addItem (items [i]);
+            }
         }
         this.editor.add(editorbox);
     }
@@ -321,7 +321,7 @@ public abstract class RowComboBoxPanel
     // dummy method, override in application
     protected JComboBox getEditorBox(int row) {
         String [] list = {"Error", "Not Valid"};
-        return new JComboBox(list);
+        return new JComboBox<String> (list);
     }
 
     private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class.getName());
