@@ -23,6 +23,8 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager {
      *             is associated with.
      *
      */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE",
+            justification = "False positive from findbugs.  The Value may not be null if there is another railcom manager installed")
     public Z21ReporterManager(Z21SystemConnectionMemo memo){
         _memo = memo;
         if(InstanceManager.getDefault(RailComManager.class)==null){
