@@ -76,8 +76,7 @@ public class AddRosterEntryToEcos extends AbstractAction {
         if (rosterEntry != null) {
             rosterEntry.removeAllItems();
         }
-        for (int i = 0; i < roster.numEntries(); i++) {
-            RosterEntry r = roster.getEntry(i);
+        for (RosterEntry r : roster.getAllEntries()) {
             if (r.getAttribute(adaptermemo.getPreferenceManager().getRosterAttribute()) == null) {
                 rosterEntry.addItem(r.titleString());
             }
