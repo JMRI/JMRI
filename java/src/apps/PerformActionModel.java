@@ -1,6 +1,9 @@
 package apps;
 
 import apps.startup.AbstractActionModel;
+import java.awt.event.ActionEvent;
+import javax.swing.Action;
+import jmri.JmriException;
 
 /**
  * Invokes a Swing Action when the program is started.
@@ -21,5 +24,10 @@ public class PerformActionModel extends AbstractActionModel {
 
     public PerformActionModel() {
         super();
+    }
+
+    @Override
+    protected void performAction(Action action) throws JmriException {
+        action.actionPerformed(new ActionEvent("prefs", 0, ""));
     }
 }
