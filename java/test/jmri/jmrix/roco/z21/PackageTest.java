@@ -28,7 +28,9 @@ import org.junit.runners.Suite;
     Z21ReporterTest.class,
     Z21ReporterManagerTest.class,
     RocoZ21CommandStationTest.class,
-    jmri.jmrix.roco.z21.swing.PackageTest.class
+    jmri.jmrix.roco.z21.swing.PackageTest.class,
+    Z21XNetStreamPortControllerTest.class,
+    Z21XNetPacketizerTest.class
 })
 public class PackageTest {
 

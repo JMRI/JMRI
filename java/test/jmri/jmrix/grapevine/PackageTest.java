@@ -44,12 +44,14 @@ public class PackageTest extends TestCase {
         suite.addTest(SerialNodeTest.suite());
         suite.addTest(SerialMessageTest.suite());
         suite.addTest(SerialReplyTest.suite());
-        suite.addTest(SerialTrafficControllerTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SerialTrafficControllerTest.class));
         suite.addTest(SerialAddressTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.grapevine.serialdriver.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.grapevine.configurexml.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(GrapevineMenuTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.grapevine.serialmon.SerialMonTest.class));
+        suite.addTest(new JUnit4TestAdapter(GrapevineSystemConnectionMemoTest.class));
+        suite.addTest(new JUnit4TestAdapter(SerialPortControllerTest.class));
         return suite;
     }
 

@@ -1,4 +1,3 @@
-// LnSensorAddress.java
 package jmri.jmrix.loconet;
 
 import org.slf4j.Logger;
@@ -242,6 +241,3 @@ public class LnSensorAddress {
     private final static Logger log = LoggerFactory.getLogger(LnSensorAddress.class.getName());
 
 }
-
-
-/* @(#)LnSensorAddress.java */

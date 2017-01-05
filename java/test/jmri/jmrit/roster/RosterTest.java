@@ -23,6 +23,11 @@ import org.junit.rules.TemporaryFolder;
 /**
  * Tests for the jmrit.roster.Roster class.
  *
+ * This separates tests of the DefaultRoster functionality
+ * from tests of Roster objects individually.  Roster itself
+ * doesn't (yet) do go a good job of separating, those, so 
+ * this is somewhat arbitrary.
+ *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2012
  */
 public class RosterTest {
@@ -198,18 +203,20 @@ public class RosterTest {
         File rosterDir = folder.newFolder();
         File backupDir = folder.newFolder();
         FileUtil.createDirectory(rosterDir);
-        Roster.getDefault().setRosterLocation(rosterDir.getAbsolutePath());
         File f = new File(rosterDir, "roster.xml");
-        // remove it if its there
-        f.delete();
-        // load a new one
+        
+        // failure of test infrastructure if it exists already
+        Assert.assertTrue("test roster.xml should not exist in new folder", !f.exists());
+        
+        // load a new one to ensure it exists
         String contents = "stuff" + "           ";
         PrintStream p = new PrintStream(new FileOutputStream(f));
         p.println(contents);
         p.close();
-        // delete previous backup file if there's one
+        
         File bf = new File(rosterDir, "rosterBackupTest");
-        bf.delete();
+        // failure of test infrastructure if backup exists already
+        Assert.assertTrue("test backup file should not exist in new folder", !bf.exists());
 
         // now do the backup
         Roster r = new Roster() {
@@ -251,10 +258,12 @@ public class RosterTest {
         // create a test roster & store in file
         Roster r = createTestRoster();
         Assert.assertNotNull("exists", r);
+        // write it
+        r.writeFile(r.getRosterIndexPath());
 
         // create new roster & read
         Roster t = new Roster();
-        t.readFile(Roster.getDefault().getRosterIndexPath());
+        t.readFile(r.getRosterIndexPath());
 
         // check contents
         Assert.assertEquals("search for 0 ", 0, t.matchingList(null, "321", null, null, null, null, null).size());
@@ -310,6 +319,16 @@ public class RosterTest {
 
     }
 
+    @Test
+    public void testDefaultLocation() {
+        Assert.assertTrue("creates a default", Roster.getDefault()!=null);
+        Assert.assertEquals("always same", Roster.getDefault(), Roster.getDefault());
+        
+        // since we created it when we referenced it, should be in InstanceManager
+        Assert.assertTrue("registered a default", jmri.InstanceManager.getNullableDefault(Roster.class) != null);
+    }
+    
+    
     public Roster createTestRoster() throws IOException, FileNotFoundException {
         // this uses explicit filenames intentionally, to ensure that
         // the resulting files go into the test tree area.
@@ -317,8 +336,6 @@ public class RosterTest {
         // store files in random temp directory
         File rosterDir = folder.newFolder();
         FileUtil.createDirectory(rosterDir);
-        Roster.getDefault().setRosterLocation(rosterDir.getAbsolutePath());
-        Roster.getDefault().setRosterIndexFileName("rosterTest.xml");
 
         File f = new File(rosterDir, "rosterTest.xml");
         // remove existing roster if its there
@@ -326,6 +343,9 @@ public class RosterTest {
 
         // create a roster with known contents
         Roster r = new Roster();
+        r.setRosterLocation(rosterDir.getAbsolutePath());
+        r.setRosterIndexFileName("rosterTest.xml");
+
         RosterEntry e;
         e = new RosterEntry("file name Bob");
         e.setId("Bob");
@@ -357,7 +377,7 @@ public class RosterTest {
         r.addEntry(e);
 
         // write it
-        r.writeFile(Roster.getDefault().getRosterIndexPath());
+        //r.writeFile(r.getRosterIndexPath());
 
         return r;
     }

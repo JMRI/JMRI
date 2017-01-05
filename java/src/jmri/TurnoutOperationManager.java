@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import javax.annotation.Nonnull;
@@ -16,32 +17,34 @@ import org.slf4j.LoggerFactory;
  * resources it deals with are not DCC system resources but rather purely
  * internal state
  *
- * @author John Harper	Copyright 2005
+ * @author John Harper Copyright 2005
  *
  */
 public class TurnoutOperationManager {
 
-    private SortedMap<String, TurnoutOperation> turnoutOperations = new TreeMap<String, TurnoutOperation>();
-    private List<TurnoutOperation> operationTypes = new LinkedList<TurnoutOperation>(); // array of the defining instances of each class, held in order of appearance
-    boolean doOperations = false;			// global on/off switch
-    private static TurnoutOperationManager theInstance;
+    private final SortedMap<String, TurnoutOperation> turnoutOperations = new TreeMap<>();
+    private List<TurnoutOperation> operationTypes = new LinkedList<>(); // array of the defining instances of each class, held in order of appearance
+    boolean doOperations = false; // global on/off switch
 
     public TurnoutOperationManager() {
     }
 
     private boolean initialized = false;
+
     private void initialize() {
-        initialized = true;
-        // create the default instances of each of the known operation types
-        loadOperationTypes();
+        if (!initialized) {
+            initialized = true;
+            // create the default instances of each of the known operation types
+            loadOperationTypes();
+        }
     }
-    
+
     public void dispose() {
     }
 
     public TurnoutOperation[] getTurnoutOperations() {
         synchronized (this) {
-            if (!initialized) initialize();
+            initialize();
             Collection<TurnoutOperation> entries = turnoutOperations.values();
             return entries.toArray(new TurnoutOperation[0]);
         }
@@ -54,12 +57,13 @@ public class TurnoutOperationManager {
      * @param op {@link TurnoutOperation} to add/replace
      */
     protected void addOperation(@Nonnull TurnoutOperation op) {
+        Objects.requireNonNull(op, "TurnoutOperations cannot be null");
         TurnoutOperation previous;
-        if (op == null || op.getName() == null) {
-            log.warn("null operation or name in addOperation");
+        if (op.getName() == null) {
+            log.warn("null operation name in addOperation");
         } else {
             synchronized (this) {
-                if (!initialized) initialize();
+                initialize();
                 previous = turnoutOperations.put(op.getName(), op);
                 if (op.isDefinitive()) {
                     updateTypes(op);
@@ -73,11 +77,12 @@ public class TurnoutOperationManager {
     }
 
     protected void removeOperation(@Nonnull TurnoutOperation op) {
-        if (op == null || op.getName() == null) {
-            log.warn("null operation or name in removeOperation");
+        Objects.requireNonNull(op, "TurnoutOperations cannot be null");
+        if (op.getName() == null) {
+            log.warn("null operation name in removeOperation");
         } else {
             synchronized (this) {
-                if (!initialized) initialize();
+                initialize();
                 turnoutOperations.remove(op.getName());
             }
         }
@@ -88,11 +93,11 @@ public class TurnoutOperationManager {
      * find a TurnoutOperation by its name
      *
      * @param name name of {@link TurnoutOperation} to retrieve
-     * @return	the operation
+     * @return the operation
      */
     public TurnoutOperation getOperation(@Nonnull String name) {
         synchronized (this) {
-            if (!initialized) initialize();
+            initialize();
             return turnoutOperations.get(name);
         }
     }
@@ -102,11 +107,11 @@ public class TurnoutOperationManager {
      * since order is important we retain the existing order, placing a new type
      * at the end if necessary
      *
-     * @param op	new or updated operation
+     * @param op new or updated operation
      */
     private void updateTypes(@Nonnull TurnoutOperation op) {
-        if (!initialized) initialize();
-        LinkedList<TurnoutOperation> newTypes = new LinkedList<TurnoutOperation>();
+        initialize();
+        LinkedList<TurnoutOperation> newTypes = new LinkedList<>();
         Iterator<TurnoutOperation> iter = operationTypes.iterator();
         boolean found = false;
         while (iter.hasNext()) {
@@ -127,6 +132,22 @@ public class TurnoutOperationManager {
     }
 
     /**
+     * Get the default instance.
+     *
+     * @return the default instance, created if necessary
+     */
+    public synchronized static @Nonnull
+    TurnoutOperationManager getDefault() {
+        return InstanceManager.getOptionalDefault(TurnoutOperationManager.class).orElseGet(() -> {
+            return InstanceManager.setDefault(TurnoutOperationManager.class, new TurnoutOperationManager());
+        });
+    }
+
+    /*
+     * Did not do most of the actions described below, so not sure comments are
+     * in wrong place.
+     */
+    /**
      * get the one-and-only instance of this class, if necessary creating it
      * first. At creation also preload the known TurnoutOperator subclasses
      * (done here to avoid constructor ordering problems).
@@ -136,21 +157,15 @@ public class TurnoutOperationManager {
      * proxy manager, which in turn invokes loadOperationTypes again. This is
      * bad.
      *
-     * @return	the TurnoutOperationManager
+     * @return the TurnoutOperationManager
+     * @deprecated since 4.7.1; use {@link #getDefault()} instead
      */
-    public synchronized static @Nonnull TurnoutOperationManager getInstance() {
-        if (theInstance == null) {
-
-            // and make available
-            theInstance = new TurnoutOperationManager();
-        }
-        return theInstance;
+    @Deprecated
+    @Nonnull
+    public synchronized static TurnoutOperationManager getInstance() {
+        return getDefault();
     }
 
-    protected void resetTheInstance() {
-        theInstance = null;
-    }
-    
     /**
      * Load the operation types given by the current TurnoutManager instance, in
      * the order given.
@@ -179,12 +194,8 @@ public class TurnoutOperationManager {
                     // turnoutOperations map.
                     thisClass.newInstance();
                     log.debug("loaded TurnoutOperation class {}", thisClassName);
-                } catch (ClassNotFoundException e1) {
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e1) {
                     log.error("during loadOperationTypes", e1);
-                } catch (InstantiationException e2) {
-                    log.error("during loadOperationTypes", e2);
-                } catch (IllegalAccessException e3) {
-                    log.error("during loadOperationTypes", e3);
                 }
             }
         }
@@ -194,11 +205,12 @@ public class TurnoutOperationManager {
      * Find a suitable operation for this turnout, based on its feedback type.
      * The mode is passed separately so the caller can transform it
      *
-     * @param t	           turnout
-     * @param apparentMode	mode(s) to be used when finding a matching operation
+     * @param t            turnout
+     * @param apparentMode mode(s) to be used when finding a matching operation
+     * @return the turnout operation
      */
     public TurnoutOperation getMatchingOperationAlways(@Nonnull Turnout t, int apparentMode) {
-        if (!initialized) initialize();
+        initialize();
         Iterator<TurnoutOperation> iter = operationTypes.iterator();
         TurnoutOperation currentMatch = null;
         /* The loop below always returns the LAST operation 
@@ -223,12 +235,12 @@ public class TurnoutOperationManager {
      * find the correct operation for this turnout. If operations are globally
      * disabled, return nothing
      *
-     * @param t	           turnout
-     * @param apparentMode	mode(s) to be used when finding a matching operation
+     * @param t            turnout
+     * @param apparentMode mode(s) to be used when finding a matching operation
      * @return operation
      */
     public TurnoutOperation getMatchingOperation(@Nonnull Turnout t, int apparentMode) {
-        if (!initialized) initialize();
+        initialize();
         if (doOperations) {
             return getMatchingOperationAlways(t, apparentMode);
         }
@@ -243,15 +255,15 @@ public class TurnoutOperationManager {
      * get/change status of whether operations are in use
      */
     public boolean getDoOperations() {
-        if (!initialized) initialize();
+        initialize();
         return doOperations;
     }
 
     public void setDoOperations(boolean b) {
-        if (!initialized) initialize();
+        initialize();
         boolean oldValue = doOperations;
         doOperations = b;
-        firePropertyChange("doOperations", Boolean.valueOf(oldValue), Boolean.valueOf(b));
+        firePropertyChange("doOperations", oldValue, b);
     }
 
     /**
@@ -260,19 +272,19 @@ public class TurnoutOperationManager {
      * ensuring that NoFeedback - which matches anything - comes at the end if
      * it is present at all.
      *
-     * @param types	list of types possibly containing dupliactes
+     * @param types list of types possibly containing dupliactes
      * @return list reduced as described above
      */
     static public String[] concatenateTypeLists(@Nonnull String[] types) {
-        List<String> outTypes = new LinkedList<String>();
+        List<String> outTypes = new LinkedList<>();
         boolean noFeedbackWanted = false;
-        for (int i = 0; i < types.length; ++i) {
-            if (types[i] == "NoFeedback") {
+        for (String type : types) {
+            if ("NoFeedback".equals(type)) {
                 noFeedbackWanted = true;
-            } else if (types[i] == null || types[i].equals("")) {
+            } else if (type == null || type.isEmpty()) {
                 log.warn("null or empty operation name returned from turnout manager");
-            } else if (!outTypes.contains(types[i])) {
-                outTypes.add(types[i]);
+            } else if (!outTypes.contains(type)) {
+                outTypes.add(type);
             }
         }
         if (noFeedbackWanted) {

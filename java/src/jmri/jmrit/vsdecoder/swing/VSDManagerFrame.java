@@ -136,7 +136,7 @@ public class VSDManagerFrame extends JmriJFrame {
         volumePane.setLayout(new BoxLayout(volumePane, BoxLayout.LINE_AXIS));
         JToggleButton muteButton = new JToggleButton(Bundle.getMessage("MuteButtonLabel"));
         JButton addButton = new JButton(Bundle.getMessage("AddButtonLabel"));
-        JButton closeButton = new JButton(Bundle.getMessage("MgrCloseButtonLabel"));
+        JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
         JSlider volume = new JSlider(0, 100);
         volume.setMinorTickSpacing(10);
         volume.setPaintTicks(true);
@@ -304,16 +304,16 @@ public class VSDManagerFrame extends JmriJFrame {
     }
 
     private void buildMenu() {
-        JMenu fileMenu = new JMenu(Bundle.getMessage("VSDecoderFileMenu"));
-        fileMenu.setMnemonic(Mnemonics.get("FileMenu"));
+        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile")); // uses NamedBeanBundle
+        fileMenu.setMnemonic(Mnemonics.get("FileMenu")); // OK to use this different key name for Mnemonics
 
         fileMenu.add(new LoadVSDFileAction(Bundle.getMessage("VSDecoderFileMenuLoadVSDFile")));
         fileMenu.add(new StoreXmlVSDecoderAction(Bundle.getMessage("VSDecoderFileMenuSaveProfile")));
         fileMenu.add(new LoadXmlVSDecoderAction(Bundle.getMessage("VSDecoderFileMenuLoadProfile")));
 
-        JMenu editMenu = new JMenu(Bundle.getMessage("VSDecoderEditMenu"));
-        editMenu.setMnemonic(Mnemonics.get("EditMenu"));
-        editMenu.add(new VSDPreferencesAction(Bundle.getMessage("VSDecoderEditMenuPreferences")));
+        JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
+        editMenu.setMnemonic(Mnemonics.get("EditMenu")); // OK to use this different key name for Mnemonics
+        editMenu.add(new VSDPreferencesAction(Bundle.getMessage("VSDecoderFileMenuPreferences")));
 
         fileMenu.getItem(1).setEnabled(false); // disable XML store
         fileMenu.getItem(2).setEnabled(false); // disable XML load

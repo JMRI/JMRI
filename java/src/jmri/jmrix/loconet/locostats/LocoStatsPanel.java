@@ -1,4 +1,3 @@
-// LocoStatsFrame.java
 package jmri.jmrix.loconet.locostats;
 
 import java.awt.event.ActionEvent;
@@ -40,10 +39,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LocoStatsPanel extends LnPanel implements LocoNetListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5940710123873302443L;
     JPanel lb2Panel;
     JPanel rawPanel;
     JPanel pr2Panel;
@@ -288,11 +283,6 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -5534308120479708337L;
 
         public Default() {
             super(Bundle.getMessage("MenuItemLocoStats"),

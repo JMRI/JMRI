@@ -26,7 +26,7 @@
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
-     <revision>
+    <revision>
       <revnumber>8</revnumber>
       <date>2016-12-22</date>
       <authorinitials>JCA</authorinitials>
@@ -73,8 +73,7 @@
     <label xml:lang="it">Canale.1 per Comando Ack.</label>
     <label xml:lang="de">Kanal 1 für Befehls-Ack.</label>
     <label xml:lang="cs">Kanál 1 pro potvrzení příkazu</label>
-     <label xml:lang="ca">Canal 1 per Ordres ACK.</label>
-
+    <label xml:lang="ca">Canal 1 per Ordres ACK.</label>
   </variable>
   <variable CV="29" mask="XXXXVXXX" item="Enable RailCom" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -82,6 +81,6 @@
     <label xml:lang="it">Abilita RailCom</label>
     <label xml:lang="de">RailCom Ein/Aus</label>
     <label xml:lang="cs">Zpřístupnit RailCom</label>
-    <label xml:lang="ca">Habilita RailCom</label>
+    <label xml:lang="ca">Activa RailCom</label>
   </variable>
 </variables>

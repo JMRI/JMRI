@@ -1,4 +1,3 @@
-// LocoNetMenu.java
 package jmri.jmrix.loconet.swing;
 
 import javax.swing.JMenu;
@@ -10,11 +9,6 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  * @author	Bob Jacobsen Copyright 2003, 2010
  */
 public class LocoNetMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5699192434035288187L;
 
     /**
      * Create a LocoNet menu. Preloads the TrafficController to certain actions.

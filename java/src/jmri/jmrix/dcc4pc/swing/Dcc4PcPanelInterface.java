@@ -1,4 +1,3 @@
-// Dcc4PcPanelInterface.java
 package jmri.jmrix.dcc4pc.swing;
 
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;

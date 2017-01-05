@@ -486,7 +486,7 @@ public class SectionTableAction extends AbstractTableAction {
             JComboBox<String> directionCombo = new JComboBox<String>();
             directionCombo.addItem(rbx.getString("SectionForward"));
             directionCombo.addItem(rbx.getString("SectionReverse"));
-            directionCombo.addItem(rbx.getString("Unknown"));
+            directionCombo.addItem(Bundle.getMessage("BeanStateUnknown"));
             TableColumn directionColumn = entryPointColumnModel.getColumn(EntryPointTableModel.DIRECTION_COLUMN);
             directionColumn.setCellEditor(new DefaultCellEditor(directionCombo));
             entryPointTable.setRowHeight(directionCombo.getPreferredSize().height);
@@ -892,7 +892,7 @@ public class SectionTableAction extends AbstractTableAction {
             return false;
         }
         box.removeAllItems();
-        box.addItem(rbx.getString("None"));
+        box.addItem("<" + Bundle.getMessage("None").toLowerCase() + ">");
         for (int i = 0; i < lePanelList.size(); i++) {
             box.addItem(lePanelList.get(i).getTitle());
         }
@@ -1152,13 +1152,28 @@ public class SectionTableAction extends AbstractTableAction {
     }
 
     /**
-     * Add the Tools menu item
+     * Insert 2 table specific menus.
+     * Account for the Window and Help menus, which are already added to the menu bar
+     * as part of the creation of the JFrame, by adding the menus 2 places earlier
+     * unless the table is part of the ListedTableFrame, that adds the Help menu later on.
+     * @param f the JFrame of this table
      */
+    @Override
     public void setMenuBar(BeanTableFrame f) {
         frame = f;
         JMenuBar menuBar = f.getJMenuBar();
+        int pos = menuBar.getMenuCount() -1; // count the number of menus to insert the TableMenu before 'Window' and 'Help'
+        int offset = 1;
+        log.debug("setMenuBar number of menu items = " + pos);
+        for (int i = 0; i <= pos; i++) {
+            if (menuBar.getComponent(i) instanceof JMenu) {
+                if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
+                    offset = -1; // correct for use as part of ListedTableAction where the Help Menu is not yet present
+                }
+            }
+        }
         JMenu toolsMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        menuBar.add(toolsMenu);
+        menuBar.add(toolsMenu, pos + offset);
         JMenuItem validate = new JMenuItem(rbx.getString("ValidateAllSections") + "...");
         toolsMenu.add(validate);
         validate.addActionListener(new ActionListener() {
@@ -1352,7 +1367,7 @@ public class SectionTableAction extends AbstractTableAction {
                 case UNAME_COLUMN: //
                     return blockList.get(rx).getUserName();
                 default:
-                    return rbx.getString("Unknown");
+                    return Bundle.getMessage("BeanStateUnknown");
             }
         }
 
@@ -1465,7 +1480,7 @@ public class SectionTableAction extends AbstractTableAction {
                     } else if (entryPointList.get(rx).isReverseType()) {
                         return rbx.getString("SectionReverse");
                     } else {
-                        return rbx.getString("Unknown");
+                        return Bundle.getMessage("BeanStateUnknown");
                     }
             }
             return null;
@@ -1477,7 +1492,7 @@ public class SectionTableAction extends AbstractTableAction {
                     entryPointList.get(row).setTypeForward();
                 } else if (((String) value).equals(rbx.getString("SectionReverse"))) {
                     entryPointList.get(row).setTypeReverse();
-                } else if (((String) value).equals(rbx.getString("Unknown"))) {
+                } else if (((String) value).equals(Bundle.getMessage("BeanStateUnknown"))) {
                     entryPointList.get(row).setTypeUnknown();
                 }
             }

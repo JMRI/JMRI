@@ -1,4 +1,3 @@
-// PR2Adapter.java
 package jmri.jmrix.loconet.pr2;
 
 import gnu.io.SerialPort;

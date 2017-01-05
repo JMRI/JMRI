@@ -1,4 +1,3 @@
-// StatusPanel.java
 package jmri.jmrix.dcc4pc.swing;
 
 import javax.swing.BoxLayout;
@@ -18,10 +17,6 @@ import jmri.jmrix.dcc4pc.Dcc4PcTrafficController;
  */
 public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements Dcc4PcListener, Dcc4PcPanelInterface {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1884301741261020275L;
     String appString = "Info        : ";
     String proString = "Description : ";
     String hrdString = "Serial No   : ";
@@ -167,6 +162,3 @@ public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements 
     }
 
 }
-
-
-/* @(#)StatusPane.java */

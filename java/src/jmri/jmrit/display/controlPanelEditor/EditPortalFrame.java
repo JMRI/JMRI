@@ -528,7 +528,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                 selects[i++] = iter.next().getDisplayName();
             }
             Object select = JOptionPane.showInputDialog(this, Bundle.getMessage("multipleBlockSelections",
-                    _homeBlock.getDisplayName()), Bundle.getMessage("questionTitle"),
+                    _homeBlock.getDisplayName()), Bundle.getMessage("QuestionTitle"),
                     JOptionPane.QUESTION_MESSAGE, null, selects, null);
             if (select != null) {
                 iter = neighbors.iterator();

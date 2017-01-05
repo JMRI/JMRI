@@ -195,7 +195,7 @@ public class ActivateTrainFrame {
                 }
             });
             saveButton.setToolTipText(Bundle.getMessage("SaveButtonHint"));
-            p0.add(deleteButton = new JButton(Bundle.getMessage("DeleteButton")));
+            p0.add(deleteButton = new JButton(Bundle.getMessage("ButtonDelete")));
             deleteButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     deleteTrainInfo(e);
@@ -367,7 +367,7 @@ public class ActivateTrainFrame {
             JPanel p7 = new JPanel();
             p7.setLayout(new FlowLayout());
             JButton cancelButton = null;
-            p7.add(cancelButton = new JButton(Bundle.getMessage("CancelButton")));
+            p7.add(cancelButton = new JButton(Bundle.getMessage("ButtonCancel")));
             cancelButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     cancelInitiateTrain(e);
@@ -410,7 +410,7 @@ public class ActivateTrainFrame {
 
     private void initializeTrainTypeBox() {
         trainTypeBox.removeAllItems();
-        trainTypeBox.addItem(Bundle.getMessage("None"));
+        trainTypeBox.addItem("<" + Bundle.getMessage("None").toLowerCase() + ">"); // <none>
         trainTypeBox.addItem(Bundle.getMessage("LOCAL_PASSENGER"));
         trainTypeBox.addItem(Bundle.getMessage("LOCAL_FREIGHT"));
         trainTypeBox.addItem(Bundle.getMessage("THROUGH_PASSENGER"));

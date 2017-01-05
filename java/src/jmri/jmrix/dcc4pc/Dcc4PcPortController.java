@@ -1,4 +1,3 @@
-// Dcc4PcPortController.java
 package jmri.jmrix.dcc4pc;
 
 /*
@@ -20,6 +19,3 @@ public abstract class Dcc4PcPortController extends jmri.jmrix.AbstractSerialPort
         return (Dcc4PcSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 }
-
-
-/* @(#)Dcc4PcPortController.java */

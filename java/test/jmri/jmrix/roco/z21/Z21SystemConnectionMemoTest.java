@@ -1,45 +1,54 @@
 package jmri.jmrix.roco.z21;
 
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.roco.z21.z21SystemConnectionMemo class
  *
  * @author	Paul Bender
  */
-public class Z21SystemConnectionMemoTest extends TestCase {
+public class Z21SystemConnectionMemoTest {
 
+    @Test
     public void testCtor() {
         Z21SystemConnectionMemo a = new Z21SystemConnectionMemo();
         Assert.assertNotNull(a);
     }
 
-    // from here down is testing infrastructure
-    public Z21SystemConnectionMemoTest(String s) {
-        super(s);
+    @Test
+    @Ignore("Not Ready Yet")
+    public void testConfigureManagers(){
+        Z21SystemConnectionMemo a = new Z21SystemConnectionMemo();
+        a.setTrafficController(new Z21InterfaceScaffold());
+        a.configureManagers();
+        Assert.assertNotNull(a);
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", Z21SystemConnectionMemoTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Test
+    public void testProvidesReporterManager() {
+        Z21SystemConnectionMemo a = new Z21SystemConnectionMemo();
+        Assert.assertTrue(a.provides(jmri.ReporterManager.class));
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(Z21SystemConnectionMemoTest.class);
-        return suite;
+    @Test
+    @Ignore("needs more setup")
+    public void testProvidesProgrammerManager() {
+        Z21SystemConnectionMemo a = new Z21SystemConnectionMemo();
+        Assert.assertTrue(a.provides(jmri.ProgrammerManager.class));
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 

@@ -111,7 +111,6 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
-//                restore();
                 closingEvent(true);
             }
         });
@@ -150,7 +149,6 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         bg.add(_fillColorButon);
         _lineColorButon.setSelected(true);
         panel.add(p);
-//	       _chooser = new JColorChooser(_parent.getEditor().getTargetPanel().getBackground());
         _chooser = new JColorChooser(Color.LIGHT_GRAY);
         _chooser.setColor(Color.green);
         _chooser.getSelectionModel().addChangeListener(
@@ -200,7 +198,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
             public void actionPerformed(ActionEvent e) {
                 String msg =_shape.setControlSensor(_sensorName.getText(), _hideShape.isSelected(), _shape.getChangeLevel());                
                 if (msg != null) {
-                    JOptionPane.showMessageDialog(null, msg, Bundle.getMessage("ErrorSensorMsg"), JOptionPane.INFORMATION_MESSAGE); // NOI18N
+                    JOptionPane.showMessageDialog(null, msg, Bundle.getMessage("MakeLabel", Bundle.getMessage("ErrorSensor")), JOptionPane.INFORMATION_MESSAGE); // NOI18N
                     _sensorName.setText("");
                 }
             }
@@ -212,7 +210,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
             public void mouseMoved(MouseEvent e) {
                 String msg =_shape.setControlSensor(_sensorName.getText(), _hideShape.isSelected(), _shape.getChangeLevel());                
                 if (msg != null) {
-                    JOptionPane.showMessageDialog(null, msg, Bundle.getMessage("ErrorSensorMsg"), JOptionPane.INFORMATION_MESSAGE); // NOI18N
+                    JOptionPane.showMessageDialog(null, msg, Bundle.getMessage("MakeLabel", Bundle.getMessage("ErrorSensor")), JOptionPane.INFORMATION_MESSAGE); // NOI18N
                     _sensorName.setText("");
                 }
             }
@@ -277,8 +275,10 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         return panel;
     }
 
-    /*
+    /**
      * Set parameters on the popup that will edit the PositionableShape
+     * Called both for creation and editing. (don't make a copy for Cancel)
+     * @param ps Shape being created or edited
      */
     protected void setDisplayParams(PositionableShape ps) {
         _shape = ps;
@@ -305,8 +305,17 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         add(makeParamsPanel(_shape));
         add(makeDoneButtonPanel());
         pack();
+    }
+
+    /**
+     * Editing an existing shape (only make copy for cancel of edits)
+     * @param ps shape
+     */
+    protected void makeCopy(PositionableShape ps) {
+        // make a copy, but keep it out of editor's content
         _originalShape = (PositionableShape)ps.deepClone();
-        _originalShape.remove();
+        // cloning adds to editor's targetPane - (fix needed in editor)
+        _originalShape.remove();        
     }
 
     private JPanel makeDoneButtonPanel() {
@@ -400,14 +409,9 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         _dim = getSize(_dim);
         if (_shape!=null) {
             if (cancel) {
+                _shape.remove();
                 if (_originalShape!=null) {
-                    _shape.remove();
-                    _originalShape.finishClone(_shape);
-                    _originalShape.remove();
-                    _shape.getEditor().putItem(_shape);                                                
-                }
-                if (_parent != null) {  // canceling from creation
-                    _shape.remove();
+                    _originalShape.getEditor().putItem(_originalShape);
                 }
             }
             _shape.closeEditFrame();            
