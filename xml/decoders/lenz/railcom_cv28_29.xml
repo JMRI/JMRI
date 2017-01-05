@@ -57,7 +57,7 @@
     <label xml:lang="it">Canale.1 per Indirizzo</label>
     <label xml:lang="de">Kanal 1 für Adressen</label>
     <label xml:lang="cs">Kanál 1 pro adresu</label>
-    <label xml:lang="ca">Canal 1 per a l'adreça</label>
+    <label xml:lang="ca">Canal 1 per adreça</label>
   </variable>
   <variable CV="28" mask="XXXXXXVX" item="RailCom Data" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
@@ -65,7 +65,7 @@
     <label xml:lang="it">Canale.2 per Dati</label>
     <label xml:lang="de">Kanal 2 für Daten</label>
     <label xml:lang="cs">Kanál 2 pro data</label>
-    <label xml:lang="ca">Canal 2 per a la informació</label>
+    <label xml:lang="ca">Canal 2 per dades</label>
   </variable>
   <variable CV="28" mask="XXXXXVXX" item="RailCom Command" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
@@ -73,7 +73,8 @@
     <label xml:lang="it">Canale.1 per Comando Ack.</label>
     <label xml:lang="de">Kanal 1 für Befehls-Ack.</label>
     <label xml:lang="cs">Kanál 1 pro potvrzení příkazu</label>
-    <label xml:lang="ca">CAnal 1 per ACK de comandes</label>
+     <label xml:lang="ca">Canal 1 per Ordres ACK.</label>
+
   </variable>
   <variable CV="29" mask="XXXXVXXX" item="Enable RailCom" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>

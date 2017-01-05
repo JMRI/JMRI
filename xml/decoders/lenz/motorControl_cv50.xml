@@ -136,8 +136,8 @@
 	  <enumChoice choice="On ">
 		<choice>On </choice>
 		<choice xml:lang="de">Ein </choice>
-        <choice xml:lang="cs">Zapnuto</choice>
-        <choice xml:lang="ca">Actiu</choice>
+    <choice xml:lang="cs">Zapnuto</choice>
+    <choice xml:lang="ca">Actiu</choice>
 	  </enumChoice>
 	  <enumChoice choice="Off">
 		<choice>Off</choice>

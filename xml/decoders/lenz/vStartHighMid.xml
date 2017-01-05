@@ -63,6 +63,7 @@
     <comment xml:lang="de">Wertebereich 0-255</comment>
     <label xml:lang="cs">Rozjezdové napětí</label>
     <comment xml:lang="cs">Meze 0-255</comment>
+    <label xml:lang="ca">Voltatge d'arrencada</label>
     <comment xml:lang="ca">Rang 0-255</comment>
   </variable>
   <variable CV="5" item="Vhigh" default="255" comment="Sets the maximum voltage at full throttle">
@@ -88,7 +89,7 @@
     <comment xml:lang="de">Wertebereich 0-255</comment>
     <label xml:lang="cs">Střední napětí</label>
     <comment xml:lang="cs">Meze 0-255</comment>
-    <label xml:lang="ca">Voltatge Intermedi (0-225)</label>
+    <label xml:lang="ca">Voltatge mitjà</label>
     <comment xml:lang="ca">Rang 0-255</comment>
   </variable>
 </variables>
