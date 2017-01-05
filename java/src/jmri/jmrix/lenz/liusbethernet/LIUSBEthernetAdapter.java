@@ -109,7 +109,7 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
                                               .getSystemConnectionMemo(); 
                     XNetTrafficController t = m.getXNetTrafficController();
                     jmri.jmrix.lenz.XNetProgrammer p = (jmri.jmrix.lenz.XNetProgrammer)(m.getProgrammerManager().getGlobalProgrammer());
-                    if(!(p.programmerBusy())) {
+                    if(p==null || !(p.programmerBusy())) {
                        t.sendXNetMessage(
                                     jmri.jmrix.lenz.XNetMessage.getCSStatusRequestMessage(),
                                     null);
