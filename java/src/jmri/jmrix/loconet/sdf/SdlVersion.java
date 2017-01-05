@@ -1,4 +1,3 @@
-// SdlVersion.java
 package jmri.jmrix.loconet.sdf;
 
 /**
@@ -54,5 +53,3 @@ public class SdlVersion extends SdfMacro {
         return indent + oneInstructionString();
     }
 }
-
-/* @(#)SdlVersion.java */

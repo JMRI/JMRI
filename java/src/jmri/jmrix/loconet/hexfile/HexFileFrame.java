@@ -1,4 +1,3 @@
-// HexFileFrame.java
 package jmri.jmrix.loconet.hexfile;
 
 import javax.swing.BoxLayout;
@@ -20,10 +19,6 @@ import org.slf4j.LoggerFactory;
  */
 public class HexFileFrame extends JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2625562807572301674L;
     // member declarations
     javax.swing.JButton openHexFileButton = new javax.swing.JButton();
     javax.swing.JButton filePauseButton = new javax.swing.JButton();

@@ -1,9 +1,17 @@
 package apps.startup;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.swing.Action;
+import jmri.JmriException;
+import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.swing.SystemConnectionAction;
 import jmri.util.ConnectionNameFromSystemName;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide services for invoking actions during configuration and startup.
@@ -18,6 +26,8 @@ public abstract class AbstractActionModel implements StartupModel {
 
     private String systemPrefix = ""; // NOI18N
     private String className = ""; // NOI18N
+    private final List<Exception> exceptions = new ArrayList<>();
+    private final static Logger log = LoggerFactory.getLogger(AbstractActionModel.class);
 
     public String getClassName() {
         return this.className;
@@ -93,4 +103,44 @@ public abstract class AbstractActionModel implements StartupModel {
         }
         return Bundle.getMessage("AbstractActionModel.InvalidAction", super.toString());
     }
+
+    @Override
+    public void performAction() throws JmriException {
+        log.debug("Invoke Action from {}", className);
+        try {
+            Action action = (Action) Class.forName(className).newInstance();
+            if (SystemConnectionAction.class.isAssignableFrom(action.getClass())) {
+                SystemConnectionMemo memo = ConnectionNameFromSystemName.getSystemConnectionMemoFromSystemPrefix(this.getSystemPrefix());
+                if (memo != null) {
+                    ((SystemConnectionAction) action).setSystemConnectionMemo(memo);
+                } else {
+                    log.error("Connection {} does not exist. Cannot be assigned to action {}", this.getSystemPrefix(), className);
+                }
+            }
+            this.performAction(action);
+        } catch (ClassNotFoundException ex) {
+            log.error("Could not find specified class: {}", className);
+        } catch (IllegalAccessException ex) {
+            log.error("Unexpected access exception for class: {}", className, ex);
+            throw new JmriException(ex);
+        } catch (InstantiationException ex) {
+            log.error("Could not instantiate specified class: {}", className, ex);
+            throw new JmriException(ex);
+        } catch (Exception ex) {
+            log.error("Error while performing startup action for class: {}", className, ex);
+            throw new JmriException(ex);
+        }
+    }
+
+    @Override
+    public List<Exception> getExceptions() {
+        return new ArrayList<>(this.exceptions);
+    }
+
+    @Override
+    public void addException(Exception exception) {
+        this.exceptions.add(exception);
+    }
+
+    protected abstract void performAction(Action action) throws JmriException;
 }

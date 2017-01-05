@@ -33,7 +33,10 @@
 
     <profiles>
         <profile>
-            <id>travis</id>
+            <id>travis-headless</id>
+            <properties>
+                <findbugs.skip>true</findbugs.skip>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -144,6 +147,44 @@
                                 </goals>
                             </execution>
                         </executions>  
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>travis-findbugs</id>
+            <build>
+                <plugins>
+                    <!-- prevent surefire (maven default test harness) from running tests -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.19.1</version>
+                        <configuration>
+                            <skipTests>true</skipTests>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>findbugs-maven-plugin</artifactId>
+                        <version>3.0.4</version>
+                        <!-- configured to fail on High priority bugs during test phase -->
+                        <executions>
+                            <execution>
+                                <id>failing-on-high</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                                <configuration>
+                                    <excludeFilterFile>.findbugs.xml</excludeFilterFile>
+                                    <effort>Max</effort>
+                                    <threshold>High</threshold>
+                                    <jvmArgs>-Xmx1536m</jvmArgs>
+                                    <timeout>1200000</timeout><!-- 20 minutes -->
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
@@ -260,7 +301,7 @@
                     <excludeFilterFile>.findbugs.xml</excludeFilterFile>
                     <effort>Max</effort>
                     <threshold>High</threshold>
-                    <jvmArgs>-Xmx1536m</jvmArgs>
+                    <maxHeap>1536</maxHeap>
                     <timeout>1200000</timeout><!-- 20 minutes -->
                 </configuration>            
             </plugin>
