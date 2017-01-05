@@ -476,8 +476,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
     int[] signalheadTypeValues = new int[]{AcelaNode.DOUBLE, AcelaNode.TRIPLE,
         AcelaNode.BPOLAR, AcelaNode.WIGWAG};
 
-    String[] ukSignalAspects = new String[]{"2", "3", "4"};
-    String[] ukSignalType = new String[]{"Home", "Distant"};
+    String[] ukSignalAspects = new String[]{"2", "3", "4"}; // NOI18N
+    String[] ukSignalType = new String[]{Bundle.getMessage("HomeSignal"), Bundle.getMessage("DistantSignal")};
 
     JmriJFrame addFrame = null;
     JComboBox<String> typeBox;
@@ -546,7 +546,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     String singleTurnout = Bundle.getMessage("StringSingle");
 
     JComboBox<String> prefixBox = new JComboBox<String>();
-    JLabel prefixBoxLabel = new JLabel("System : ");
+    JLabel prefixBoxLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("DCCSystem")));
 
     int turnoutStateFromBox(JComboBox<String> box) {
         String mode = (String) box.getSelectedItem();
@@ -565,7 +565,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
         } else if (state == iTurnoutStates[1]) {
             box.setSelectedIndex(1);
         } else {
-            log.error("unexpected  turnout state value: " + state);
+            log.error("unexpected turnout state value: " + state);
         }
     }
 
@@ -673,9 +673,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
     String ukSignalTypeFromBox(JComboBox<String> box) {
         //String mode = (String)box.getSelectedItem();
         if (box.getSelectedIndex() == 0) {
-            return "Home";
+            return "Home"; // NOI18N
         } else if (box.getSelectedIndex() == 1) {
-            return "Distant";
+            return "Distant"; // NOI18N
         } else {
             log.warn("unexpected appearance" + box.getSelectedItem());
             throw new IllegalArgumentException();
@@ -714,7 +714,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             to5 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
             to6 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
             to7 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            addFrame = new JmriJFrame(Bundle.getMessage("TitleAddSignal"), false, true);
+            addFrame = new JmriJFrame(Bundle.getMessage("TitleAddSignalHead"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalAddEdit", true);
             addFrame.getContentPane().setLayout(new BorderLayout());
 
@@ -919,7 +919,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v1Border.setTitle(Bundle.getMessage("LabelSignalheadNumber"));
             v1Panel.setVisible(true);
             ato1.setVisible(true);
-            vtLabel.setText(Bundle.getMessage("LabelAspectType") + ":");
+            vtLabel.setText(Bundle.getMessage("MakeLabel", Bundle.getMessage("HeadType")));
             vtLabel.setVisible(true);
             stBox.setVisible(true);
         } else if (quadOutput.equals(typeBox.getSelectedItem())) {
@@ -1036,7 +1036,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             s7Box.setVisible(true);
         } else if (dccSignalDecoder.equals(typeBox.getSelectedItem())) {
             //systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
-            systemNameLabel.setText("Hardware Address"); // TODO I18N
+            systemNameLabel.setText(Bundle.getMessage("LabelHardwareAddress"));
             systemNameLabel.setVisible(true);
             systemName.setVisible(true);
             prefixBox.setVisible(true);
@@ -1051,18 +1051,18 @@ public class SignalHeadTableAction extends AbstractTableAction {
             systemNameLabel.setVisible(true);
             systemName.setVisible(true);
             userNameLabel.setText(Bundle.getMessage("LabelUserName"));
-            v1Border.setTitle("Aspects"); // TODO I18N
+            v1Border.setTitle(Bundle.getMessage("NumberOfAppearances"));
             v1Panel.setVisible(true);
-            v2Border.setTitle("Home"); // TODO I18N
+            v2Border.setTitle(Bundle.getMessage("UseAs"));
             v2Panel.setVisible(true);
             mstBox.setVisible(true);
             msaBox.setVisible(true);
             setUkSignalAspectsFromBox(msaBox, 2);
-            v3Border.setTitle("Input1"); // TODO I18N
+            v3Border.setTitle(Bundle.getMessage("InputNum", " 1 ")); // space before and after to display nicely in Border
             v3Panel.setVisible(true);
             to3.setVisible(true);
-            v4Border.setTitle("Input2"); // TODO I18N
-            v5Border.setTitle("Input3"); // TODO I18N
+            v4Border.setTitle(Bundle.getMessage("InputNum", " 2 "));
+            v5Border.setTitle(Bundle.getMessage("InputNum", " 3 "));
             msaBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     ukAspectChange(false);
@@ -1567,7 +1567,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     }
 
     void handleSE8cUpdatePressed() {
-        // user name handled by common code; notthing else to change
+        // user name handled by common code; nothing else to change
     }
 
     @SuppressWarnings("fallthrough")
@@ -1584,7 +1584,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
         if (checkBeforeCreating(systemName.getText())) {
             switch (ukSignalAspectsFromBox(msaBox)) {
                 case 4:
-                    t3 = getTurnoutFromPanel(to5, "SignalHead:" + systemName.getText() + ":Input3"); // TODO I18N
+                    t3 = getTurnoutFromPanel(to5,
+                            (Bundle.getMessage("OutputComment", Bundle.getMessage("BeanNameSignalHead"), systemName.getText(), Bundle.getMessage("InputNum", "3"))));
                     if (t3 == null) {
                         addTurnoutMessage(v5Border.getTitle(), to5.getDisplayName());
                         log.warn("skipping creation of signal " + systemName.getText() + " due to error");
@@ -1595,7 +1596,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
                 // fall through
                 case 3:
-                    t2 = getTurnoutFromPanel(to4, "SignalHead:" + systemName.getText() + ":Input2"); // TODO I18N
+                    t2 = getTurnoutFromPanel(to4,
+                            (Bundle.getMessage("OutputComment", Bundle.getMessage("BeanNameSignalHead"), systemName.getText(), Bundle.getMessage("InputNum", "2"))));
                     if (t2 == null) {
                         addTurnoutMessage(v4Border.getTitle(), to4.getDisplayName());
                         log.warn("skipping creation of signal " + systemName.getText() + " due to error");
@@ -1605,7 +1607,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
                     }
                 // fall through
                 case 2:
-                    t1 = getTurnoutFromPanel(to3, "SignalHead:" + systemName.getText() + ":Input1"); // TODO I18N
+                    t1 = getTurnoutFromPanel(to3,
+                            (Bundle.getMessage("OutputComment", Bundle.getMessage("BeanNameSignalHead"), systemName.getText(), Bundle.getMessage("InputNum", "1"))));
                     if (t1 == null) {
                         addTurnoutMessage(v3Border.getTitle(), to3.getDisplayName());
                         log.warn("skipping creation of signal " + systemName.getText() + " due to error");
@@ -1744,7 +1747,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             eto6 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
             eto7 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
             // set up a new edit window
-            editFrame = new JmriJFrame(Bundle.getMessage("TitleEditSignal"), false, true);
+            editFrame = new JmriJFrame(Bundle.getMessage("TitleEditSignalHead"), false, true);
             editFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalAddEdit", true);
 
             editFrame.getContentPane().setLayout(new BorderLayout());
@@ -2116,32 +2119,32 @@ public class SignalHeadTableAction extends AbstractTableAction {
             eSysNameLabel.setText(curS.getSystemName());
             eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
             eUserName.setText(curS.getUserName());
-            ev1Border.setTitle("Aspects"); // TODO I18N
+            ev1Border.setTitle(Bundle.getMessage("NumberOfAppearances")); // same as line 1054
             ev1Panel.setVisible(true);
             setUkSignalAspectsFromBox(emsaBox, ((jmri.implementation.MergSD2SignalHead) curS).getAspects());
             eto1.setVisible(false);
             emsaBox.setVisible(true);
-            ev2Border.setTitle("Signal Type"); // TODO I18N
+            ev2Border.setTitle(Bundle.getMessage("UseAs")); // same as line 1065
             ev2Panel.setVisible(true);
             eto2.setVisible(false);
             emstBox.setVisible(true);
             if (((jmri.implementation.MergSD2SignalHead) curS).getHome()) {
-                setUkSignalType(emstBox, "Home");
+                setUkSignalType(emstBox, Bundle.getMessage("HomeSignal")); // "Home"
             } else {
-                setUkSignalType(emstBox, "Distant");
+                setUkSignalType(emstBox, Bundle.getMessage("DistantSignal")); //"Distant"
             }
             //setUKSignalTypeFromBox(emstBox, ((jmri.implementation.MergSD2SignalHead)curS).getAspects());
-            ev3Border.setTitle("Input1"); // TODO I18N
+            ev3Border.setTitle(Bundle.getMessage("InputNum", "1"));
             ev3Panel.setVisible(true);
             eto3.setVisible(true);
             eto3.setDefaultNamedBean(((jmri.implementation.MergSD2SignalHead) curS).getInput1().getBean());
-            ev4Border.setTitle("Input2"); // TODO I18N
+            ev4Border.setTitle(Bundle.getMessage("InputNum", "2"));
             ev4Panel.setVisible(true);
             eto4.setVisible(true);
             if (((jmri.implementation.MergSD2SignalHead) curS).getInput2() != null) {
                 eto4.setDefaultNamedBean(((jmri.implementation.MergSD2SignalHead) curS).getInput2().getBean());
             }
-            ev5Border.setTitle("Input3");
+            ev5Border.setTitle(Bundle.getMessage("InputNum", "3"));
             ev5Panel.setVisible(true);
             eto5.setVisible(true);
             if (((jmri.implementation.MergSD2SignalHead) curS).getInput3() != null) {
@@ -2188,7 +2191,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
         }
         // update according to class of signal head
         if (className.equals("jmri.implementation.QuadOutputSignalHead")) {
-            Turnout t1 = updateTurnoutFromPanel(eto1, "SignalHead:" + eSysNameLabel.getText() + ":Green", ((QuadOutputSignalHead) curS).getGreen().getBean(), ev1Border.getTitle());
+            Turnout t1 = updateTurnoutFromPanel(eto1,
+                    "SignalHead:" + eSysNameLabel.getText() + ":Green",
+                    ((QuadOutputSignalHead) curS).getGreen().getBean(),
+                    ev1Border.getTitle());
 
             if (t1 == null) {
                 return;
@@ -2196,28 +2202,40 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 ((QuadOutputSignalHead) curS).setGreen(nbhm.getNamedBeanHandle(eto1.getDisplayName(), t1));
             }
 
-            Turnout t2 = updateTurnoutFromPanel(eto2, "SignalHead:" + eSysNameLabel.getText() + ":Yellow", ((QuadOutputSignalHead) curS).getYellow().getBean(), ev2Border.getTitle());
+            Turnout t2 = updateTurnoutFromPanel(eto2,
+                    "SignalHead:" + eSysNameLabel.getText() + ":Yellow",
+                    ((QuadOutputSignalHead) curS).getYellow().getBean(),
+                    ev2Border.getTitle());
             if (t2 == null) {
                 return;
             } else {
                 ((QuadOutputSignalHead) curS).setYellow(nbhm.getNamedBeanHandle(eto2.getDisplayName(), t2));
             }
 
-            Turnout t3 = updateTurnoutFromPanel(eto3, "SignalHead:" + eSysNameLabel.getText() + ":Red", ((QuadOutputSignalHead) curS).getRed().getBean(), ev3Border.getTitle());
+            Turnout t3 = updateTurnoutFromPanel(eto3,
+                    "SignalHead:" + eSysNameLabel.getText() + ":Red",
+                    ((QuadOutputSignalHead) curS).getRed().getBean(),
+                    ev3Border.getTitle());
             if (t3 == null) {
                 return;
             } else {
                 ((QuadOutputSignalHead) curS).setRed(nbhm.getNamedBeanHandle(eto3.getDisplayName(), t3));
             }
 
-            Turnout t4 = updateTurnoutFromPanel(eto4, "SignalHead:" + eSysNameLabel.getText() + ":Lunar", ((QuadOutputSignalHead) curS).getLunar().getBean(), ev4Border.getTitle());
+            Turnout t4 = updateTurnoutFromPanel(eto4,
+                    "SignalHead:" + eSysNameLabel.getText() + ":Lunar",
+                    ((QuadOutputSignalHead) curS).getLunar().getBean(),
+                    ev4Border.getTitle());
             if (t4 == null) {
                 return;
             } else {
                 ((QuadOutputSignalHead) curS).setLunar(nbhm.getNamedBeanHandle(eto4.getDisplayName(), t4));
             }
         } else if (className.equals("jmri.implementation.TripleTurnoutSignalHead")) {
-            Turnout t1 = updateTurnoutFromPanel(eto1, "SignalHead:" + eSysNameLabel.getText() + ":Green", ((TripleTurnoutSignalHead) curS).getGreen().getBean(), ev1Border.getTitle());
+            Turnout t1 = updateTurnoutFromPanel(eto1,
+                    "SignalHead:" + eSysNameLabel.getText() + ":Green",
+                    ((TripleTurnoutSignalHead) curS).getGreen().getBean(),
+                    ev1Border.getTitle());
 
             if (t1 == null) {
                 return;
@@ -2225,21 +2243,30 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 ((TripleTurnoutSignalHead) curS).setGreen(nbhm.getNamedBeanHandle(eto1.getDisplayName(), t1));
             }
 
-            Turnout t2 = updateTurnoutFromPanel(eto2, "SignalHead:" + eSysNameLabel.getText() + ":Yellow", ((TripleTurnoutSignalHead) curS).getYellow().getBean(), ev2Border.getTitle());
+            Turnout t2 = updateTurnoutFromPanel(eto2,
+                    "SignalHead:" + eSysNameLabel.getText() + ":Yellow",
+                    ((TripleTurnoutSignalHead) curS).getYellow().getBean(),
+                    ev2Border.getTitle());
             if (t2 == null) {
                 return;
             } else {
                 ((TripleTurnoutSignalHead) curS).setYellow(nbhm.getNamedBeanHandle(eto2.getDisplayName(), t2));
             }
 
-            Turnout t3 = updateTurnoutFromPanel(eto3, "SignalHead:" + eSysNameLabel.getText() + ":Red", ((TripleTurnoutSignalHead) curS).getRed().getBean(), ev3Border.getTitle());
+            Turnout t3 = updateTurnoutFromPanel(eto3,
+                    "SignalHead:" + eSysNameLabel.getText() + ":Red",
+                    ((TripleTurnoutSignalHead) curS).getRed().getBean(),
+                    ev3Border.getTitle());
             if (t3 == null) {
                 return;
             } else {
                 ((TripleTurnoutSignalHead) curS).setRed(nbhm.getNamedBeanHandle(eto3.getDisplayName(), t3));
             }
         } else if (className.equals("jmri.implementation.TripleOutputSignalHead")) {
-            Turnout t1 = updateTurnoutFromPanel(eto1, "SignalHead:" + eSysNameLabel.getText() + ":Green", ((TripleOutputSignalHead) curS).getGreen().getBean(), ev1Border.getTitle());
+            Turnout t1 = updateTurnoutFromPanel(eto1,
+                    "SignalHead:" + eSysNameLabel.getText() + ":Green",
+                    ((TripleOutputSignalHead) curS).getGreen().getBean(),
+                    ev1Border.getTitle());
 
             if (t1 == null) {
                 return;
@@ -2247,22 +2274,34 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 ((TripleOutputSignalHead) curS).setGreen(nbhm.getNamedBeanHandle(eto1.getDisplayName(), t1));
             }
 
-            Turnout t2 = updateTurnoutFromPanel(eto2, "SignalHead:" + eSysNameLabel.getText() + ":Blue", ((TripleOutputSignalHead) curS).getBlue().getBean(), ev2Border.getTitle());
+            Turnout t2 = updateTurnoutFromPanel(eto2,
+                    "SignalHead:" + eSysNameLabel.getText() + ":Blue",
+                    ((TripleOutputSignalHead) curS).getBlue().getBean(),
+                    ev2Border.getTitle());
             if (t2 == null) {
                 return;
             } else {
                 ((TripleOutputSignalHead) curS).setBlue(nbhm.getNamedBeanHandle(eto2.getDisplayName(), t2));
             }
 
-            Turnout t3 = updateTurnoutFromPanel(eto3, "SignalHead:" + eSysNameLabel.getText() + ":Red", ((TripleOutputSignalHead) curS).getRed().getBean(), ev3Border.getTitle());
+            Turnout t3 = updateTurnoutFromPanel(eto3,
+                    "SignalHead:" + eSysNameLabel.getText() + ":Red",
+                    ((TripleOutputSignalHead) curS).getRed().getBean(),
+                    ev3Border.getTitle());
             if (t3 == null) {
                 return;
             } else {
                 ((TripleOutputSignalHead) curS).setRed(nbhm.getNamedBeanHandle(eto3.getDisplayName(), t3));
             }
         } else if (className.equals("jmri.implementation.DoubleTurnoutSignalHead")) {
-            Turnout t1 = updateTurnoutFromPanel(eto1, "SignalHead:" + eSysNameLabel.getText() + ":Green", ((DoubleTurnoutSignalHead) curS).getGreen().getBean(), ev1Border.getTitle());
-            Turnout t2 = updateTurnoutFromPanel(eto2, "SignalHead:" + eSysNameLabel.getText() + ":Red", ((DoubleTurnoutSignalHead) curS).getRed().getBean(), ev2Border.getTitle());
+            Turnout t1 = updateTurnoutFromPanel(eto1,
+                    "SignalHead:" + eSysNameLabel.getText() + ":Green",
+                    ((DoubleTurnoutSignalHead) curS).getGreen().getBean(),
+                    ev1Border.getTitle());
+            Turnout t2 = updateTurnoutFromPanel(eto2,
+                    "SignalHead:" + eSysNameLabel.getText() + ":Red",
+                    ((DoubleTurnoutSignalHead) curS).getRed().getBean(),
+                    ev2Border.getTitle());
             if (t1 == null) {
                 return;
             } else {
@@ -2274,8 +2313,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 ((DoubleTurnoutSignalHead) curS).setRed(nbhm.getNamedBeanHandle(eto2.getDisplayName(), t2));
             }
         } else if (className.equals("jmri.implementation.SingleTurnoutSignalHead")) {
-
-            Turnout t1 = updateTurnoutFromPanel(eto1, "SignalHead:" + eSysNameLabel.getText() + ":" + (String) es2aBox.getSelectedItem() + ":" + (String) es3aBox.getSelectedItem(), ((SingleTurnoutSignalHead) curS).getOutput().getBean(), ev1Border.getTitle());
+            Turnout t1 = updateTurnoutFromPanel(eto1,
+                    "SignalHead:" + eSysNameLabel.getText() + ":" + (String) es2aBox.getSelectedItem() + ":" + (String) es3aBox.getSelectedItem(),
+                    ((SingleTurnoutSignalHead) curS).getOutput().getBean(),
+                    ev1Border.getTitle());
             if (t1 == null) {
                 noTurnoutMessage(ev1Border.getTitle(), eto1.getDisplayName());
                 return;
@@ -2284,7 +2325,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
             ((SingleTurnoutSignalHead) curS).setOnAppearance(signalStateFromBox(es2aBox));
             ((SingleTurnoutSignalHead) curS).setOffAppearance(signalStateFromBox(es3aBox));
         } else if (className.equals("jmri.implementation.LsDecSignalHead")) {
-            Turnout t1 = updateTurnoutFromPanel(eto1, "SignalHead:" + eSysNameLabel.getText() + ":Green", ((jmri.implementation.LsDecSignalHead) curS).getGreen().getBean(), ev1Border.getTitle());
+            Turnout t1 = updateTurnoutFromPanel(eto1,
+                    "SignalHead:" + eSysNameLabel.getText() + ":Green",
+                    ((jmri.implementation.LsDecSignalHead) curS).getGreen().getBean(),
+                    ev1Border.getTitle());
             if (t1 == null) {
                 return;
             } else {
@@ -2292,7 +2336,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 ((jmri.implementation.LsDecSignalHead) curS).setGreenState(turnoutStateFromBox(es1Box));
             }
 
-            Turnout t2 = updateTurnoutFromPanel(eto2, "SignalHead:" + eSysNameLabel.getText() + ":Yellow", ((jmri.implementation.LsDecSignalHead) curS).getYellow().getBean(), ev2Border.getTitle());
+            Turnout t2 = updateTurnoutFromPanel(eto2,
+                    "SignalHead:" + eSysNameLabel.getText() + ":Yellow",
+                    ((jmri.implementation.LsDecSignalHead) curS).getYellow().getBean(),
+                    ev2Border.getTitle());
             if (t2 == null) {
                 return;
             } else {
@@ -2300,7 +2347,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 ((jmri.implementation.LsDecSignalHead) curS).setYellowState(turnoutStateFromBox(es2Box));
             }
 
-            Turnout t3 = updateTurnoutFromPanel(eto3, "SignalHead:" + eSysNameLabel.getText() + ":Red", ((jmri.implementation.LsDecSignalHead) curS).getRed().getBean(), ev3Border.getTitle());
+            Turnout t3 = updateTurnoutFromPanel(eto3,
+                    "SignalHead:" + eSysNameLabel.getText() + ":Red",
+                    ((jmri.implementation.LsDecSignalHead) curS).getRed().getBean(),
+                    ev3Border.getTitle());
             if (t3 == null) {
                 return;
             } else {
@@ -2308,7 +2358,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 ((jmri.implementation.LsDecSignalHead) curS).setRedState(turnoutStateFromBox(es3Box));
             }
 
-            Turnout t4 = updateTurnoutFromPanel(eto4, "SignalHead:" + eSysNameLabel.getText() + ":FlashGreen", ((jmri.implementation.LsDecSignalHead) curS).getFlashGreen().getBean(), ev4Border.getTitle());
+            Turnout t4 = updateTurnoutFromPanel(eto4,
+                    "SignalHead:" + eSysNameLabel.getText() + ":FlashGreen",
+                    ((jmri.implementation.LsDecSignalHead) curS).getFlashGreen().getBean(),
+                    ev4Border.getTitle());
             if (t4 == null) {
                 return;
             } else {
@@ -2316,7 +2369,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 ((jmri.implementation.LsDecSignalHead) curS).setFlashGreenState(turnoutStateFromBox(es4Box));
             }
 
-            Turnout t5 = updateTurnoutFromPanel(eto5, "SignalHead:" + eSysNameLabel.getText() + ":FlashYellow", ((jmri.implementation.LsDecSignalHead) curS).getFlashYellow().getBean(), ev5Border.getTitle());
+            Turnout t5 = updateTurnoutFromPanel(eto5,
+                    "SignalHead:" + eSysNameLabel.getText() + ":FlashYellow",
+                    ((jmri.implementation.LsDecSignalHead) curS).getFlashYellow().getBean(),
+                    ev5Border.getTitle());
             if (t5 == null) {
                 return;
             } else {
@@ -2324,7 +2380,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 ((jmri.implementation.LsDecSignalHead) curS).setFlashYellowState(turnoutStateFromBox(es5Box));
             }
 
-            Turnout t6 = updateTurnoutFromPanel(eto6, "SignalHead:" + eSysNameLabel.getText() + ":FlashRed", ((jmri.implementation.LsDecSignalHead) curS).getFlashRed().getBean(), ev6Border.getTitle());
+            Turnout t6 = updateTurnoutFromPanel(eto6,
+                    "SignalHead:" + eSysNameLabel.getText() + ":FlashRed",
+                    ((jmri.implementation.LsDecSignalHead) curS).getFlashRed().getBean(),
+                    ev6Border.getTitle());
             if (t6 == null) {
                 return;
             } else {
@@ -2332,7 +2391,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 ((jmri.implementation.LsDecSignalHead) curS).setFlashRedState(turnoutStateFromBox(es6Box));
             }
 
-            Turnout t7 = updateTurnoutFromPanel(eto7, "SignalHead:" + eSysNameLabel.getText() + ":Dark", ((jmri.implementation.LsDecSignalHead) curS).getDark().getBean(), ev7Border.getTitle());
+            Turnout t7 = updateTurnoutFromPanel(eto7,
+                    "SignalHead:" + eSysNameLabel.getText() + ":Dark",
+                    ((jmri.implementation.LsDecSignalHead) curS).getDark().getBean(),
+                    ev7Border.getTitle());
             if (t7 == null) {
                 return;
             } else {
@@ -2359,7 +2421,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             AcelaNode tNode = AcelaAddress.getNodeFromSystemName(curS.getSystemName(),jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
             if (tNode == null) {
                 // node does not exist, ignore call
-                log.error("Can't find new Acela Signal with name '" + curS.getSystemName());
+                log.error("Can't find new Acela Signal with name '{}'", curS.getSystemName());
                 return;
             }
             int headnumber = Integer.parseInt(curS.getSystemName().substring(2, curS.getSystemName().length()));
@@ -2369,7 +2431,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
         } else if (className.equals("jmri.implementation.MergSD2SignalHead")) {
             switch (ukSignalAspectsFromBox(emsaBox)) {
                 case 4:
-                    Turnout t3 = updateTurnoutFromPanel(eto5, "SignalHead:" + eSysNameLabel.getText() + ":Input3", ((jmri.implementation.MergSD2SignalHead) curS).getInput3().getBean(), ev5Border.getTitle());
+                    Turnout t3 = updateTurnoutFromPanel(eto5,
+                            (Bundle.getMessage("OutputComment", Bundle.getMessage("BeanNameSignalHead"), eSysNameLabel.getText(), Bundle.getMessage("InputNum", "3"))),
+                            ((jmri.implementation.MergSD2SignalHead) curS).getInput3().getBean(),
+                            ev5Border.getTitle());
                     if (t3 == null) {
                         return;
                     } else {
@@ -2377,7 +2442,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
                     }
                 // fall through
                 case 3:
-                    Turnout t2 = updateTurnoutFromPanel(eto4, "SignalHead:" + eSysNameLabel.getText() + ":Input2", ((jmri.implementation.MergSD2SignalHead) curS).getInput2().getBean(), ev4Border.getTitle());
+                    Turnout t2 = updateTurnoutFromPanel(eto4,
+                            (Bundle.getMessage("OutputComment", Bundle.getMessage("BeanNameSignalHead"), eSysNameLabel.getText(), Bundle.getMessage("InputNum", "2"))),
+                            ((jmri.implementation.MergSD2SignalHead) curS).getInput2().getBean(),
+                            ev4Border.getTitle());
                     if (t2 == null) {
                         return;
                     } else {
@@ -2385,7 +2453,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
                     }
                 // fall through
                 case 2:
-                    Turnout t1 = updateTurnoutFromPanel(eto3, "SignalHead:" + eSysNameLabel.getText() + ":Input1", ((jmri.implementation.MergSD2SignalHead) curS).getInput1().getBean(), ev3Border.getTitle());
+                    Turnout t1 = updateTurnoutFromPanel(eto3,
+                            (Bundle.getMessage("OutputComment", Bundle.getMessage("BeanNameSignalHead"), eSysNameLabel.getText(), Bundle.getMessage("InputNum", "1"))),
+                            ((jmri.implementation.MergSD2SignalHead) curS).getInput1().getBean(),
+                            ev3Border.getTitle());
                     if (t1 == null) {
                         return;
                     } else {
@@ -2575,30 +2646,44 @@ public class SignalHeadTableAction extends AbstractTableAction {
         super.dispose();
     }
 
+    /**
+     * Update Turnout object for a signal mast output
+     * @param bp Pane in which the new output/bean was entered by user
+     * @param reference Turnout application description
+     * @param oldTurnout Previously used output
+     * @param title for warning pane
+     * @return The newly defined output as Turnout object
+     */
     protected Turnout updateTurnoutFromPanel(BeanSelectCreatePanel bp, String reference, Turnout oldTurnout, String title) {
         Turnout newTurnout = getTurnoutFromPanel(bp, reference);
         if (newTurnout == null) {
             noTurnoutMessage(title, bp.getDisplayName());
         }
         if (newTurnout != null && (newTurnout.getComment() == null || newTurnout.getComment().equals(""))) {
-            newTurnout.setComment(reference);
+            newTurnout.setComment(reference); // enter turnout application description into new turnout Comment
         }
         if (oldTurnout == null || newTurnout == oldTurnout) {
             return newTurnout;
         }
         if (oldTurnout.getComment() != null && oldTurnout.getComment().equals(reference)) {
+            // wont delete old Turnout Comment if Locale or Bundle was changed in between, but user could have type something in the Comment as well
             oldTurnout.setComment(null);
         }
         return newTurnout;
-
     }
 
+    /**
+     * Create Turnout object for a signal mast output
+     * @param bp Pane in which the new output/bean was entered by user
+     * @param reference Turnout application description
+     * @return The new output as Turnout object
+     */
     protected Turnout getTurnoutFromPanel(BeanSelectCreatePanel bp, String reference) {
         if (bp == null) {
             return null;
         }
 
-        bp.setReference(reference);
+        bp.setReference(reference); // pass turnout application description to be put into turnout Comment
         try {
             return (Turnout) bp.getNamedBean();
         } catch (jmri.JmriException ex) {

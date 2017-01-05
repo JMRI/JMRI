@@ -104,7 +104,7 @@ public class BeanSelectCreatePanel extends JPanel {
         bean.add(existingCombo);
         bean.add(prefixBox);
         bean.add(hardwareAddress);
-        hardwareAddress.setToolTipText("Enter in the Hardware address");
+        hardwareAddress.setToolTipText(Bundle.getMessage("EnterHWaddressAsIntTooltip"));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(radio);
         add(bean);
