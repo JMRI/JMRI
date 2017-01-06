@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
@@ -19,6 +20,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -756,13 +759,16 @@ public class SignalHeadTableAction extends AbstractTableAction {
             p.setLayout(new FlowLayout());
             p.add(systemNameLabel);
             p.add(systemName);
+            systemName.setToolTipText(Bundle.getMessage("SignalHeadSysNameTooltip"));
             p.add(dccOffSetAddress);
+            dccOffSetAddress.setToolTipText(Bundle.getMessage("DccOffsetTooltip"));
             panelHeader.add(p);
 
             p = new JPanel();
             p.setLayout(new FlowLayout());
             p.add(userNameLabel);
             p.add(userName);
+            userName.setToolTipText(Bundle.getMessage("SignalHeadUserNameTooltip"));
             panelHeader.add(p);
 
             addFrame.getContentPane().add(panelHeader, BorderLayout.PAGE_START);
@@ -779,6 +785,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v1Panel.add(to1);
             v1Panel.add(stateLabel1);
             v1Panel.add(s1Box);
+            s1Box.setToolTipText(Bundle.getMessage("SignalHeadStateTooltip"));
             v1Panel.add(msaBox);
             v1Panel.setBorder(v1Border);
             panelCentre.add(v1Panel);
@@ -788,6 +795,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v2Panel.add(to2);
             v2Panel.add(stateLabel2);
             v2Panel.add(s2Box);
+            s2Box.setToolTipText(Bundle.getMessage("SignalHeadStateTooltip"));
             v2Panel.add(s2aBox);
             v2Panel.add(mstBox);
             v2Panel.add(dccSignalPanel);
@@ -799,6 +807,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v3Panel.add(to3);
             v3Panel.add(stateLabel3);
             v3Panel.add(s3Box);
+            s3Box.setToolTipText(Bundle.getMessage("SignalHeadStateTooltip"));
             v3Panel.add(s3aBox);
             v3Panel.setBorder(v3Border);
             panelCentre.add(v3Panel);
@@ -808,6 +817,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v4Panel.add(to4);
             v4Panel.add(stateLabel4);
             v4Panel.add(s4Box);
+            s4Box.setToolTipText(Bundle.getMessage("SignalHeadStateTooltip"));
             v4Panel.setBorder(v4Border);
             panelCentre.add(v4Panel);
 
@@ -816,6 +826,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v5Panel.add(to5);
             v5Panel.add(stateLabel5);
             v5Panel.add(s5Box);
+            s5Box.setToolTipText(Bundle.getMessage("SignalHeadStateTooltip"));
             v5Panel.setBorder(v5Border);
             panelCentre.add(v5Panel);
 
@@ -824,6 +835,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v6Panel.add(to6);
             v6Panel.add(stateLabel6);
             v6Panel.add(s6Box);
+            s6Box.setToolTipText(Bundle.getMessage("SignalHeadStateTooltip"));
             v6Panel.setBorder(v6Border);
             panelCentre.add(v6Panel);
 
@@ -832,6 +844,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v7Panel.add(to7);
             v7Panel.add(stateLabel7);
             v7Panel.add(s7Box);
+            s7Box.setToolTipText(Bundle.getMessage("SignalHeadStateTooltip"));
             v7Panel.setBorder(v7Border);
             panelCentre.add(v7Panel);
 
@@ -930,6 +943,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             handleSE8cTypeChanged();
         } else if (grapevine.equals(typeBox.getSelectedItem())) { // Need to see how this works with username
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
+            systemName.setToolTipText(Bundle.getMessage("SignalHeadSysNameTooltip"));
             systemNameLabel.setVisible(true);
             systemName.setVisible(true);
             userNameLabel.setText(Bundle.getMessage("LabelUserName"));
@@ -941,12 +955,14 @@ public class SignalHeadTableAction extends AbstractTableAction {
             userName.setVisible(true);
             v1Border.setTitle(Bundle.getMessage("LabelSignalheadNumber"));
             v1Panel.setVisible(true);
+            v1Panel.setToolTipText(Bundle.getMessage("SignalHeadAcelaTooltip"));
             ato1.setVisible(true);
             vtLabel.setText(Bundle.getMessage("MakeLabel", Bundle.getMessage("HeadType")));
             vtLabel.setVisible(true);
             stBox.setVisible(true);
         } else if (quadOutput.equals(typeBox.getSelectedItem())) {
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
+            systemName.setToolTipText(Bundle.getMessage("SignalHeadSysNameTooltip"));
             systemNameLabel.setVisible(true);
             systemName.setVisible(true);
             userNameLabel.setText(Bundle.getMessage("LabelUserName"));
@@ -964,6 +980,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             to4.setVisible(true);
         } else if (tripleTurnout.equals(typeBox.getSelectedItem())) {
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
+            systemName.setToolTipText(Bundle.getMessage("SignalHeadSysNameTooltip"));
             systemNameLabel.setVisible(true);
             systemName.setVisible(true);
             userNameLabel.setText(Bundle.getMessage("LabelUserName"));
@@ -978,6 +995,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             to3.setVisible(true);
         } else if (tripleOutput.equals(typeBox.getSelectedItem())) {
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
+            systemName.setToolTipText(Bundle.getMessage("SignalHeadSysNameTooltip"));
             systemNameLabel.setVisible(true);
             systemName.setVisible(true);
             userNameLabel.setText(Bundle.getMessage("LabelUserName"));
@@ -992,6 +1010,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             to3.setVisible(true);
         } else if (doubleTurnout.equals(typeBox.getSelectedItem())) {
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
+            systemName.setToolTipText(Bundle.getMessage("SignalHeadSysNameTooltip"));
             systemNameLabel.setVisible(true);
             systemName.setVisible(true);
             userNameLabel.setText(Bundle.getMessage("LabelUserName"));
@@ -1003,6 +1022,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             to2.setVisible(true);
         } else if (singleTurnout.equals(typeBox.getSelectedItem())) {
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
+            systemName.setToolTipText(Bundle.getMessage("SignalHeadSysNameTooltip"));
             systemNameLabel.setVisible(true);
             systemName.setVisible(true);
             userNameLabel.setText(Bundle.getMessage("LabelUserName"));
@@ -1017,11 +1037,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v3Panel.setVisible(true);
         } else if (virtualHead.equals(typeBox.getSelectedItem())) {
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
+            systemName.setToolTipText(Bundle.getMessage("SignalHeadSysNameTooltip"));
             systemNameLabel.setVisible(true);
             systemName.setVisible(true);
             userNameLabel.setText(Bundle.getMessage("LabelUserName"));
         } else if (lsDec.equals(typeBox.getSelectedItem())) { // LDT LS-DEC
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
+            systemName.setToolTipText(Bundle.getMessage("SignalHeadSysNameTooltip"));
             systemNameLabel.setVisible(true);
             systemName.setVisible(true);
             userNameLabel.setText(Bundle.getMessage("LabelUserName"));
@@ -1064,6 +1086,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
         } else if (dccSignalDecoder.equals(typeBox.getSelectedItem())) {
             systemNameLabel.setText(Bundle.getMessage("LabelHardwareAddress"));
             systemNameLabel.setVisible(true);
+            systemName.setToolTipText(Bundle.getMessage("HardwareAddressToolTip"));
             systemName.setVisible(true);
             prefixBox.setVisible(true);
             prefixBoxLabel.setVisible(true);
@@ -1072,8 +1095,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v2Panel.setVisible(true);
             dccSignalPanel.setVisible(true);
             dccOffSetAddress.setVisible(true);
+            dccOffSetAddress.setToolTipText(Bundle.getMessage("DccOffsetTooltip"));
         } else if (mergSignalDriver.equals(typeBox.getSelectedItem())) {
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
+            systemName.setToolTipText(Bundle.getMessage("SignalHeadSysNameTooltip"));
             systemNameLabel.setVisible(true);
             systemName.setVisible(true);
             userNameLabel.setText(Bundle.getMessage("LabelUserName"));
@@ -1162,13 +1187,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
         return result;
     }
 
-    private boolean checkDCCAspectValue(String s, String aspect) {
+/*    private boolean checkDCCAspectValue(String s, String aspect) { // not useful as we are now using JSpinners
         int number = 0;
         try {
             number = Integer.parseInt(s);
         } catch (Exception ex) {
-            /*String msg = java.text.MessageFormat.format(AbstractTableAction.rb
-             .getString("ShouldBeNumber"), new Object[] { "Aspect Numner" });*/
+            *//*String msg = java.text.MessageFormat.format(AbstractTableAction.rb
+             .getString("ShouldBeNumber"), new Object[] { "Aspect Numner" });*//*
             JOptionPane.showMessageDialog(addFrame, Bundle.getMessage("ShouldBeNumber", aspect),
                     Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
             return false;
@@ -1179,8 +1204,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
         JOptionPane.showMessageDialog(addFrame, Bundle.getMessage("DccAccessoryAspect", aspect),
                 Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
         return false;
-
-    }
+    }*/
 
     void addTurnoutMessage(String s1, String s2) {
         log.warn("Could not provide turnout " + s2);
@@ -1257,6 +1281,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             } else if (grapevine.equals(typeBox.getSelectedItem())) {
                 // the turnout field must hold a GH system name
                 if (systemName.getText().length() == 0) {
+                    // TODO Add user dialog
                     log.warn("must supply a signalhead number (i.e. GH23)");
                     return;
                 }
@@ -1504,19 +1529,12 @@ public class SignalHeadTableAction extends AbstractTableAction {
         if (checkBeforeCreating(systemNameText)) {
             s = new jmri.implementation.DccSignalHead(systemNameText);
             s.setUserName(userName.getText());
-            for (int i = 0; i < dccAspect.length; i++) {
-                JTextField jtf = dccAspect[i];
-                int number = 0;
-                if (checkDCCAspectValue(jtf.getText(), DccSignalHead.getDefaultValidStateNames()[i])) {
-                    try {
-                        number = Integer.parseInt(jtf.getText());
-                        s.setOutputForAppearance(s.getValidStates()[i], number);
-                    } catch (RuntimeException ex) {
-                        log.warn("error setting \"{}\" output for appearance \"{}\"", systemNameText, jtf.getText());
-                    }
-                } else {
-                    s.dispose();
-                    return;
+            for (int i = 0; i < dccAspect.size(); i++) { // no need to check when using JSpinner
+                int number = (Integer) dccAspect.get(i).getValue();
+                try {
+                    s.setOutputForAppearance(s.getValidStates()[i], number);
+                } catch (RuntimeException ex) {
+                    log.warn("error setting \"{}\" output for appearance \"{}\"", systemNameText, number);
                 }
             }
             InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
@@ -1796,6 +1814,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             p.add(eSystemName);
             p.add(eSysNameLabel);
             p.add(dccOffSetAddressEdt);
+            dccOffSetAddressEdt.setToolTipText(Bundle.getMessage("DccOffsetTooltip"));
             panelHeader.add(p);
             p = new JPanel();
             p.setLayout(new FlowLayout());
@@ -1814,6 +1833,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             ev1Panel.add(eto1);
             ev1Panel.add(es1Box);
             ev1Panel.add(emsaBox);
+            emsaBox.setToolTipText(Bundle.getMessage("SignalHeadMergTooltip"));
             ev1Panel.setBorder(ev1Border);
             panelCentre.add(ev1Panel);
             ev2Panel = new JPanel();
@@ -1823,6 +1843,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
             ev2Panel.add(es2Box);
             ev2Panel.add(es2aBox);
             ev2Panel.add(emstBox);
+            emstBox.setToolTipText(Bundle.getMessage("SignalHeadUseTooltip"));
+
             ev2Panel.add(dccSignalPanelEdt);
             ev2Panel.setBorder(ev2Border);
             panelCentre.add(ev2Panel);
@@ -1944,7 +1966,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
         estBox.setVisible(false);
         emstBox.setVisible(false);
         emsaBox.setVisible(false);
-        // determine class name of signal head and initialize this class of signal
+        // determine class name of signal head and initialize edit panel for this class of signal
         className = curS.getClass().getName();
         if (className.equals("jmri.implementation.QuadOutputSignalHead")) {
             signalType.setText(quadOutput);
@@ -2132,8 +2154,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
             eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
             eUserName.setText(curS.getUserName());
             for (int i = 0; i < DccSignalHead.getDefaultValidStates().length; i++) {
-                JTextField tmp = dccAspectEdt[i];
-                tmp.setText(Integer.toString(((DccSignalHead) curS).getOutputForAppearance(curS.getValidStates()[i])));
+                JSpinner tmp = dccAspectEdt.get(i);
+                tmp.setValue(Integer.toString(((DccSignalHead) curS).getOutputForAppearance(curS.getValidStates()[i])));
             }
             dccOffSetAddressEdt.setVisible(true);
             dccOffSetAddressEdt.setSelected(((DccSignalHead) curS).useAddressOffSet());
@@ -2152,7 +2174,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
             setUkSignalAspectsFromBox(emsaBox, ((jmri.implementation.MergSD2SignalHead) curS).getAspects());
             eto1.setVisible(false);
             emsaBox.setVisible(true);
-            ev2Border.setTitle(Bundle.getMessage("UseAs")); // same as line 1065
+//            emsaBox.setToolTipText(Bundle.getMessage("SignalHeadMergTooltip"));
+            ev2Border.setTitle(Bundle.getMessage("UseAs")); // same as line 1090
             ev2Panel.setVisible(true);
             eto2.setVisible(false);
             emstBox.setVisible(true);
@@ -2162,17 +2185,17 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 setUkSignalType(emstBox, Bundle.getMessage("DistantSignal")); //"Distant"
             }
             //setUKSignalTypeFromBox(emstBox, ((jmri.implementation.MergSD2SignalHead)curS).getAspects());
-            ev3Border.setTitle(Bundle.getMessage("InputNum", "1"));
+            ev3Border.setTitle(Bundle.getMessage("InputNum", " 1 "));
             ev3Panel.setVisible(true);
             eto3.setVisible(true);
             eto3.setDefaultNamedBean(((jmri.implementation.MergSD2SignalHead) curS).getInput1().getBean());
-            ev4Border.setTitle(Bundle.getMessage("InputNum", "2"));
+            ev4Border.setTitle(Bundle.getMessage("InputNum", " 2 "));
             ev4Panel.setVisible(true);
             eto4.setVisible(true);
             if (((jmri.implementation.MergSD2SignalHead) curS).getInput2() != null) {
                 eto4.setDefaultNamedBean(((jmri.implementation.MergSD2SignalHead) curS).getInput2().getBean());
             }
-            ev5Border.setTitle(Bundle.getMessage("InputNum", "3"));
+            ev5Border.setTitle(Bundle.getMessage("InputNum", " 3 "));
             ev5Panel.setVisible(true);
             eto5.setVisible(true);
             if (((jmri.implementation.MergSD2SignalHead) curS).getInput3() != null) {
@@ -2501,19 +2524,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
             }
             //Need to add the code here for update!
         } else if (className.equals("jmri.implementation.DccSignalHead")) {
-            for (int i = 0; i < dccAspectEdt.length; i++) {
-                JTextField jtf = dccAspectEdt[i];
-                int number = 0;
-                if (checkDCCAspectValue(jtf.getText(), DccSignalHead.getDefaultValidStateNames()[i])) {
-                    try {
-                        number = Integer.parseInt(jtf.getText());
-                        ((DccSignalHead) curS).setOutputForAppearance(((DccSignalHead) curS).getValidStates()[i], number);
-                    } catch (Exception ex) {
-                        //in theory the checkDCCAspectValue should of already of caught a number conversion error.
-                        log.error(ex.toString());
-                    }
-                } else {
-                    return;
+            for (int i = 0; i < dccAspectEdt.size(); i++) {
+                int number = (Integer) dccAspectEdt.get(i).getValue();
+                try {
+                    ((DccSignalHead) curS).setOutputForAppearance(((DccSignalHead) curS).getValidStates()[i], number);
+                } catch (Exception ex) {
+                    //in theory JSpinner should already have caught a number conversion error.
+                    log.error(ex.toString());
                 }
             }
             ((DccSignalHead) curS).useAddressOffSet(dccOffSetAddressEdt.isSelected());
@@ -2727,45 +2744,50 @@ public class SignalHeadTableAction extends AbstractTableAction {
         return Bundle.getMessage("TitleSignalTable");
     }
 
-    JTextField[] dccAspect;
+    ArrayList<JSpinner> dccAspect;
     JCheckBox dccOffSetAddress = new JCheckBox(Bundle.getMessage("DccAccessoryAddressOffSet"));
     JPanel dccSignalPanel = new JPanel();
 
     public void dccSignalPanel() {
 
         dccSignalPanel = new JPanel();
-
         dccSignalPanel.setLayout(new GridLayout(0, 2));
-        dccAspect = new JTextField[DccSignalHead.getDefaultValidStates().length];
+        ArrayList<JSpinner> dccAspect = new ArrayList<JSpinner>(DccSignalHead.getDefaultValidStates().length);
+        System.out.println("dccAspect size =" + dccAspect.size());
+
         for (int i = 0; i < DccSignalHead.getDefaultValidStates().length; i++) {
+            System.out.println(i);
             String aspect = DccSignalHead.getDefaultValidStateNames()[i];
-
             dccSignalPanel.add(new JLabel(aspect));
-            JTextField tmp = new JTextField(10);
-            tmp.setText("" + DccSignalHead.getDefaultNumberForApperance(DccSignalHead.getDefaultValidStates()[i]));
-            dccAspect[i] = tmp;
-            dccSignalPanel.add(tmp);
 
+            SpinnerNumberModel DccSpinnerModel = new SpinnerNumberModel(1, 1, 13, 1);
+            JSpinner tmp = new JSpinner(DccSpinnerModel);
+            //tmp.setFocusable(false);
+            tmp.setValue(DccSignalHead.getDefaultNumberForApperance(DccSignalHead.getDefaultValidStates()[i]));
+            dccAspect.add(i, tmp); // store the whole JSpinner
+            dccSignalPanel.add(tmp); // and display that copy on the JPanel
         }
     }
 
-    JTextField[] dccAspectEdt;
+    ArrayList<JSpinner> dccAspectEdt;
     JCheckBox dccOffSetAddressEdt = new JCheckBox(Bundle.getMessage("DccAccessoryAddressOffSet"));
     JPanel dccSignalPanelEdt = new JPanel();
 
     public void dccSignalPanelEdt() {
 
         dccSignalPanelEdt = new JPanel();
-
         dccSignalPanelEdt.setLayout(new GridLayout(0, 2));
-        dccAspectEdt = new JTextField[DccSignalHead.getDefaultValidStates().length];
+        ArrayList<JSpinner> dccAspectEdt = new ArrayList<JSpinner>(DccSignalHead.getDefaultValidStates().length);
+
         for (int i = 0; i < DccSignalHead.getDefaultValidStates().length; i++) {
             String aspect = DccSignalHead.getDefaultValidStateNames()[i];
-
             dccSignalPanelEdt.add(new JLabel(aspect));
-            JTextField tmp = new JTextField(10);
-            dccAspectEdt[i] = tmp;
-            dccSignalPanelEdt.add(tmp);
+
+            SpinnerNumberModel DccSpinnerModel = new SpinnerNumberModel(1, 1, 13, 1);
+            JSpinner tmp = new JSpinner(DccSpinnerModel);
+            dccAspectEdt.add(i, tmp); // store the whole JSpinner
+            dccSignalPanelEdt.add(tmp); // and display that copy on the JPanel
+            tmp.setToolTipText(Bundle.getMessage("DccAccessoryAspect", "x"));
         }
     }
 

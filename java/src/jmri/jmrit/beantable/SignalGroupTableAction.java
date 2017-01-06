@@ -407,7 +407,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             ps.setLayout(new FlowLayout());
             ps.add(nameLabel);
             ps.add(_systemName);
-            _systemName.setToolTipText("Enter system name for new SignalGroup, e.g. R12."); // TODO I18N
+            _systemName.setToolTipText(Bundle.getMessage("SignalGroupSysNameTooltip"));
             ps.add(fixedSystemName);
             fixedSystemName.setVisible(false);
             contentPane.add(ps);
@@ -416,7 +416,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             p.setLayout(new FlowLayout());
             p.add(userLabel);
             p.add(_userName);
-            _userName.setToolTipText("Enter user name for new SignalGroup, e.g. Junction Indicator on Signal 1."); // TODO I18N
+            _userName.setToolTipText(Bundle.getMessage("SignalGroupUserNameTooltip"));
 
             contentPane.add(p);
             // add Turnout Display Choice

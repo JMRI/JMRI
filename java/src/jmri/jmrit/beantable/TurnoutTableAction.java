@@ -99,7 +99,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     String thrownText;
     String defaultThrownSpeedText;
     String defaultClosedSpeedText;
-    // I18N TODO
+    // I18N TODO but note storing in xml independent from Locale
     String useBlockSpeed = Bundle.getMessage("UseGlobal", "Block Speed");
     String bothText = "Both";
     String cabOnlyText = "Cab only";
@@ -175,7 +175,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 } else if (col == STRAIGHTCOL) {
                     return Bundle.getMessage("ClosedSpeed");
                 } else if (col == VALUECOL) {
-                    return "Cmd";  // override default title TODO I18N
+                    return Bundle.getMessage("ColumnState");  // override default title
                 } else if (col == EDITCOL) {
                     return "";
                 } else {
@@ -317,7 +317,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     if (t.getKnownState() == Turnout.INCONSISTENT) {
                         return Bundle.getMessage("BeanStateInconsistent");
                     } else {
-                        return Bundle.getMessage("BeanStateUnknown"); // was: "Unknown"
+                        return Bundle.getMessage("BeanStateUnknown"); // "Unknown"
                     }
                 } else if (col == MODECOL) {
                     JComboBox<String> c = new JComboBox<String>(t.getValidFeedbackNames());
@@ -1269,13 +1269,13 @@ public class TurnoutTableAction extends AbstractTableAction {
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert " + numberToAdd.getText() + " to a number");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showErrorMessage("Error", "Number of turnouts to Add must be a number!", "" + ex, "", true, false); // I18N TODO
+                        showErrorMessage(Bundle.getMessage("ErrorTitle"), "Number of turnouts to Add must be a number!", "" + ex, "", true, false); // I18N TODO
                 return;
             }
         }
         if (numberOfTurnouts >= 65) {
             if (JOptionPane.showConfirmDialog(addFrame,
-                    "You are about to add " + numberOfTurnouts + " Turnouts into the configuration\nAre you sure?", "Warning",
+                    "You are about to add " + numberOfTurnouts + " Turnouts into the configuration\nAre you sure?", Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_OPTION) == 1) {
                 // I18N TODO
                 return;
@@ -1297,7 +1297,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 curAddress = InstanceManager.turnoutManagerInstance().getNextValidAddress(curAddress, prefix);
             } catch (jmri.JmriException ex) {
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showErrorMessage("Error", "Unable to convert '" + curAddress + "' to a valid Hardware Address", "" + ex, "", true, false);
+                        showErrorMessage(Bundle.getMessage("ErrorTitle"), "Unable to convert '" + curAddress + "' to a valid Hardware Address", "" + ex, "", true, false); // I18N TODO
                 return;
             }
             if (curAddress == null) {
@@ -1367,7 +1367,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     t.setUserName(user);
                 } else if (user != null && !user.equals("") && InstanceManager.turnoutManagerInstance().getByUserName(user) != null && !p.getPreferenceState(getClassName(), "duplicateUserName")) {
                     InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                            showErrorMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", getClassName(), "duplicateUserName", false, true);
+                            showErrorMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", getClassName(), "duplicateUserName", false, true); // I18N TODO
                     //p.showErrorMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, "", false, true);
                 }
                 t.setNumberOutputBits(iNum);
@@ -1377,7 +1377,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     if ((InstanceManager.turnoutManagerInstance().isControlTypeSupported(sName)) && (range.isSelected())) {
                         if (JOptionPane.showConfirmDialog(addFrame,
                                 "Do you want to use the last setting for all turnouts in this range? ", "Use Setting",
-                                JOptionPane.YES_NO_OPTION) == 0)// Add a pop up here asking if the user wishes to use the same value for all
+                                JOptionPane.YES_NO_OPTION) == 0) // Add a pop up here asking if the user wishes to use the same value for all, // I18N TODO see above for existing keys
                         {
                             useLastType = true;
                         }
