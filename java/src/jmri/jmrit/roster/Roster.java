@@ -408,40 +408,29 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     public List<RosterEntry> getEntriesWithAttributeKey(String key) {
-        // slow but effective algorithm
         ArrayList<RosterEntry> result = new ArrayList<>();
-        java.util.Iterator<RosterEntry> i = _list.iterator();
-        while (i.hasNext()) {
-            RosterEntry r = i.next();
-            if (r.getAttribute(key) != null) {
-                result.add(r);
-            }
-        }
+        _list.stream().filter((r) -> (r.getAttribute(key) != null)).forEachOrdered((r) -> {
+            result.add(r);
+        });
         return result;
     }
 
     public List<RosterEntry> getEntriesWithAttributeKeyValue(String key, String value) {
-        // slow but effective algorithm
         ArrayList<RosterEntry> result = new ArrayList<>();
-        java.util.Iterator<RosterEntry> i = _list.iterator();
-        while (i.hasNext()) {
-            RosterEntry r = i.next();
+        _list.forEach((r) -> {
             String v = r.getAttribute(key);
             if (v != null && v.equals(value)) {
                 result.add(r);
             }
-        }
+        });
         return result;
     }
 
     public Set<String> getAllAttributeKeys() {
-        // slow but effective algorithm
         Set<String> result = new TreeSet<>();
-        java.util.Iterator<RosterEntry> i = _list.iterator();
-        while (i.hasNext()) {
-            RosterEntry r = i.next();
+        _list.forEach((r) -> {
             result.addAll(r.getAttributes());
-        }
+        });
         return result;
     }
 
@@ -468,11 +457,9 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      */
     private List<RosterEntry> findMatchingEntries(RosterComparator c) {
         List<RosterEntry> l = new ArrayList<>();
-        for (RosterEntry r : _list) {
-            if (c.check(r)) {
-                l.add(r);
-            }
-        }
+        _list.stream().filter((r) -> (c.check(r))).forEachOrdered((r) -> {
+            l.add(r);
+        });
         return l;
     }
 
