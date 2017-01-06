@@ -2667,7 +2667,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
         }
         if (oldTurnout.getComment() != null && oldTurnout.getComment().equals(reference)) {
             // wont delete old Turnout Comment if Locale or Bundle was changed in between, but user could have type something in the Comment as well
-            oldTurnout.setComment(null);
+            oldTurnout.setComment(null); // deletes current Comment in bean
         }
         return newTurnout;
     }
@@ -2682,7 +2682,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
         if (bp == null) {
             return null;
         }
-
         bp.setReference(reference); // pass turnout application description to be put into turnout Comment
         try {
             return (Turnout) bp.getNamedBean();
