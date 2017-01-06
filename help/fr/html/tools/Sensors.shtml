@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Blorec Herv&#233; le 2016-09-03-->
+<!-- UpDated by Blorec Herv&#233; le 2017-01-06-->
 <html lang="fr">
 <head>
   <title>
@@ -37,10 +37,10 @@ JMRI utilise un Capteur pour repr&#233;senter l'&#233;tat d'un d&#233;tecteur d'
 ou un bouton poussoir sur le tableau de bord, ou &#224; peu pr&#232;s tout ce que vous pouvez joindre
 &#224; une entr&#233;e sur votre syst&#232;me DCC ou Syst&#232;me C/MRI.
 
-<h3>Contr&#244;ler un Capteur</h3>
+<h3>Commander un Capteur</h3>
 
 <p>
-G&#233;n&#233;ralement, vous ne contr&#244;lez pas l'&#233;tat d'un objet Capteur; JMRI, travaillant avec 
+G&#233;n&#233;ralement, vous ne commandez pas l'&#233;tat d'un objet Capteur; JMRI, travaillant avec 
 le mat&#233;riel de votre r&#233;seau le peut.
 <P>
 Mais il y a certaines occasions o&#249; vous aimeriez changer localement l'&#233;tat
@@ -57,9 +57,9 @@ Le changement prend effet imm&#233;diatement, sauf si une minuterie anti-rebond 
 mais ne dure que jusqu'&#224; la prochaine fois que vous le changer dans le programme, ou la prochaine fois
 que l'entr&#233;e mat&#233;riel sur le r&#233;seau change de valeur.
 
-<h2>Propriétés des Capteurs</h2>
+<h2>Propri&#233;t&#233;s des Capteurs</h2>
 
-<H3><A NAME="Debounce"> </A> Capteur Anti-Rebonds</H3>
+<H3><A NAME="Debounce"> </a> Capteur Anti-Rebonds</H3>
 <p>L'installation de Capteur Antirebond est l&#224; pour aider &#224; pr&#233;venir les faux d&#233;clenchements d'un capteur
  passant dans le syst&#232;me et d&#233;clenchant d'autres &#233;v&#233;nements dans le syst&#232;me. <br>
 Ces faux d&#233;clenchements pourraientt &#234;tre d&#251; &#224; un z&#244;ne sale de la voie ou des interf&#233;rences &#233;lectriques.
@@ -73,23 +73,47 @@ syst&#232;me va red&#233;marrer le processus, cette fois apr&#232;s que le minut
 v&#233;rifier si l'&#233;tat du capteur est dans le m&#234;me &#233;tat qu'il &#233;tait avant qu'il red&#233;marre
 le processus. Si ce n'est pas le cas le processus est relanc&#233; &#224; nouveau jusqu'&#224; ce que l'Etat soit le m&#234;me
 avant et apr&#232;s que le chronom&#232;tre ait &#233;t&#233; lanc&#233;.
+
+<h2>Comment configurer un Capteur</h2>
+
+<h3>Le Tableau Capteur</h3>
+Les capteurs peuvent &#234;tre vus et configur&#233;s en utilisant le <a href="../../package/jmri/jmrit/beantable/SensorTable.shtml">Tableau 
+Capteur</a>
+Il contient les colonnes suivantes:</p>
+	<ul>
+	<li>Nom Syst&#232;me</li>
+	<li>Nom Utilisateur ( option )</li>
+	<li>&#201;tat ( soit Actif, Inactif, Incoh&#233;rent ou - au d&#233;but - Inconnu</li>
+	<li>Commentaire ( option, double-clic pour &#233;diter</li>
+	<li>Invers&#233; ( case &#224; cocher )</li>
+	</ul>
+
+<h3> Commandes du Tableau Capteurs</h3>
+<p>Dans le bas du tableau il y a le bouton <b>Ajouter...</b><br>
+et une case &#224; cocher pour <b>Montrer l'Information Anti-Rebond du Capteur</b></p>
+<p>Le menu <b> Par D&#233;fauts</b> vous permet de d&#233;finir deux r&#233;glages du syst&#232;me:
+	<ul>
+	<li>Anti-Rebondds Total</li>
+	<li>&#201;tat Initial du Capteur</li>
+	</ul>
+
 <h3> Sauvegarde de configuration du capteur sur le disque </h3>
 
-<p>Les Capteurs ont enregistr&#233;s dans votre fichier de configuration de r&#233;seau, avec les aiguillages,
+<p>Les Capteurs sont sauvegard&#233;s dans votre fichier de configuration de r&#233;seau, avec les aiguillages,
 les lumi&#232;res, les t&#234;tes de signal, etc. Pour stocker ces informations sur le disque, utilisez <b>Stocker
-Configuration ...</b> dans le menu  <b>Fichier </b>  en haut du Tableau Lumi&#232;re
- (ou d'autres tableaux &#224; partir du menu Outils), ou s&#233;lectionnez  <b> Stocker Panneau...</b>
-dans le menu <b>Panneau  </b>.
+Configuration ...</b> dans le menu  <b>Fichier</b>  en haut du Tableau Capteur
+ (ou d'autres tableaux &#224; partir du menu Outils), ou s&#233;lectionnez  <b> Enregistrer Panneau...</b>
+dans le menu <b>Panneau</b>.
 
 <a name="add"> <H3> Ajout d'un nouveau Capteur </H3> </a>
-<p> Pour cr&#233;er un nouveau capteur, suivez cette proc&#233;dure: </p>
+<p> Pour cr&#233;er un nouveau Capteur, suivez cette proc&#233;dure: </p>
 <ol>
-Cliquez <p> <li>
-<a href="../../package/jmri/jmrit/beantable/SensorTable.shtml"> <b> Tableau Capteur </b> </a>
-dans le menu <b> Outils </b> pour faire appara&#238;tre
-le Tableau de Capteur, et cliquez sur le bouton
+<p> <li>Cliquez sur le menu <b>Outils</b> -&gt; <b>Tableaux</b> -&gt; <b>Capteurs</b> pour afficher le
+<a href="../../package/jmri/jmrit/beantable/SensorTable.shtml">Tableau Capteur</a>
+ et cliquez sur le bouton
 <a href="../../package/jmri/jmrit/beantable/SensorAddEdit.shtml"> <b> Ajouter ...</b> </a>
-au bas de le Tableau pour ouvrir la fen&#234;tre Ajouter/modifier Capteur. </p>
+au bas de le Tableau pour ouvrir la fen&#234;tre Ajouter/Modifier Capteur. </p>
+
 <p> <li> Depuis la liste d&#233;roulante <b>Syst&#232;me</b>, s&#233;lectionnez le syst&#232;me auquel le
     Capteur est connect&#233;. Dans la zone <b>Adresse mat&#233;rielle</b> entrez dans l'
      <a href="../doc/Technical/Names.shtml#systeminfo"> adresse mat&#233;rielle de la connexion d'entr&#233;e </a>
@@ -113,7 +137,7 @@ Vous pouvez laisser ce champ vide si vous le souhaitez. </P>
     </Li>
 
 <p> <li> Cliquez sur le bouton <b>OK</b> situ&#233; au bas de la fen&#234;tre.
-Si tout va bien, un message indiquant "Nouveau capteur ajout&#233; ...&#251;" sera
+Si tout va bien, un message indiquant "Nouveau capteur ajout&#233; ..." sera
 affich&#233; dans la zone des notes. S'il y a des probl&#232;mes avec quoi que ce soit, un
 message d'avertissement ou d'erreur sera affich&#233; dans la zone des notes; vous devez alors
 corriger l'erreur et cliquez sur <b>OK </b> &#224; nouveau. </p>
@@ -129,4 +153,3 @@ l'&#233;tat actuel du Capteur.
     </div> <!-- closes #mBody-->
   </div> <!-- closes #container -->
 </body>
-</html>
