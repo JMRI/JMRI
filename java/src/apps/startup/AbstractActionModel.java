@@ -114,7 +114,7 @@ public abstract class AbstractActionModel implements StartupModel {
                 if (memo != null) {
                     ((SystemConnectionAction) action).setSystemConnectionMemo(memo);
                 } else {
-                    log.error("Connection {} does not exist. Cannot be assigned to action {}", this.getSystemPrefix(), className);
+                    log.error("Connection \"{}\" does not exist. Cannot be assigned to action {}", this.getSystemPrefix(), className);
                 }
             }
             this.performAction(action);
