@@ -15,7 +15,6 @@ import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -260,10 +259,6 @@ public class RosterTest {
         Assert.assertNotNull("exists", r);
         // write it
         r.writeFile(r.getRosterIndexPath());
-        Assume.assumeTrue("Roster written to file", JUnitUtil.waitFor(() -> {
-            return r.isDirty() == false;
-        }));
-        System.out.println(FileUtil.readFile(new File(r.getRosterIndexPath())));
         // create new roster & read
         Roster t = new Roster();
         t.readFile(r.getRosterIndexPath());
