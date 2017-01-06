@@ -30,9 +30,9 @@ capacit&#233;s de programmation. Il s'agit notamment de:
 
 <DL>
 
-<DT><A  HREF="../signaling/index.shtml"> Logique Signal</A>
-<DD> JMRI fournit une logique int&#233;gr&#233;e de signalisation qui peut &#234;tre utilis&#233;e pour
-conduire vos t&#234;te signal dans de nombreuses applications.
+<DT><A  HREF="../signaling/index.shtml">Signalisation</A>
+<DD> JMRI fournit une logique de signalisation de simple &#224; r&#233;aliste qui peut &#234;tre utilis&#233;e pour
+conduire vos signaux dans de nombreuses applications.
 
 <DT> <A HREF="../Routes.shtml"> Itin&#233;raires</A>
 <DD> Une forme simple de l'automatisation est de d&#233;finir des itin&#233;raires, qui vous permettent
