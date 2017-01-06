@@ -181,11 +181,10 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['rotation'] = $(this).find('iconmap').find('ClearTrack').find('rotation').text() * 1;
                                 $widget['degrees'] = ($(this).find('iconmap').find('ClearTrack').attr('degrees') * 1) - ($widget.rotation * 90);
                                 $widget['scale'] = $(this).find('iconmap').find('ClearTrack').attr('scale');
-                                if ($(this).find('occupancysensor')) {  //store the occupancy sensor name and state
-                                    $widget['occupancysensor'] = $(this).find('occupancysensor').text();
-                                    $widget['occupancystate'] = UNKNOWN;
-                                    jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
-                                }
+                                //store the occupancy sensor name and state (NOTE: the id IS the systemname of the occupancysensor for this type) 
+                                $widget['occupancysensor'] = $widget.systemName;
+                                $widget['occupancystate'] = UNKNOWN;
+                                jmri.getSensor($widget.occupancysensor); //listen for occupancy changes
                                 break;
                             case "indicatorturnouticon" :
                                 $widget['name'] = $(this).find('turnout').text();
