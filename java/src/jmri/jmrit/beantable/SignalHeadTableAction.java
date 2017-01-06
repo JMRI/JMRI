@@ -548,6 +548,14 @@ public class SignalHeadTableAction extends AbstractTableAction {
     JComboBox<String> prefixBox = new JComboBox<String>();
     JLabel prefixBoxLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("DCCSystem")));
 
+    JLabel stateLabel1 = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")));
+    JLabel stateLabel2 = new JLabel(stateLabel1.getText()); // faster than Bundle?
+    JLabel stateLabel3 = new JLabel(stateLabel1.getText());
+    JLabel stateLabel4 = new JLabel(stateLabel1.getText());
+    JLabel stateLabel5 = new JLabel(stateLabel1.getText());
+    JLabel stateLabel6 = new JLabel(stateLabel1.getText());
+    JLabel stateLabel7 = new JLabel(stateLabel1.getText());
+
     int turnoutStateFromBox(JComboBox<String> box) {
         String mode = (String) box.getSelectedItem();
         int result = jmri.util.StringUtil.getStateFromName(mode, turnoutStateValues, turnoutStates);
@@ -762,12 +770,14 @@ public class SignalHeadTableAction extends AbstractTableAction {
             panelCentre.setLayout(new BoxLayout(panelCentre, BoxLayout.Y_AXIS));
             //typeBox.setSelectedIndex(7);
             //typeChanged();
+
             // create seven boxes for input information, and put into pane
 
             v1Panel = new JPanel();
             v1Panel.setLayout(new FlowLayout());
             v1Panel.add(ato1);
             v1Panel.add(to1);
+            v1Panel.add(stateLabel1);
             v1Panel.add(s1Box);
             v1Panel.add(msaBox);
             v1Panel.setBorder(v1Border);
@@ -776,6 +786,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v2Panel = new JPanel();
             v2Panel.setLayout(defaultFlow);
             v2Panel.add(to2);
+            v2Panel.add(stateLabel2);
             v2Panel.add(s2Box);
             v2Panel.add(s2aBox);
             v2Panel.add(mstBox);
@@ -786,6 +797,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v3Panel = new JPanel();
             v3Panel.setLayout(defaultFlow);
             v3Panel.add(to3);
+            v3Panel.add(stateLabel3);
             v3Panel.add(s3Box);
             v3Panel.add(s3aBox);
             v3Panel.setBorder(v3Border);
@@ -794,6 +806,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v4Panel = new JPanel();
             v4Panel.setLayout(defaultFlow);
             v4Panel.add(to4);
+            v4Panel.add(stateLabel4);
             v4Panel.add(s4Box);
             v4Panel.setBorder(v4Border);
             panelCentre.add(v4Panel);
@@ -801,6 +814,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v5Panel = new JPanel();
             v5Panel.setLayout(defaultFlow);
             v5Panel.add(to5);
+            v5Panel.add(stateLabel5);
             v5Panel.add(s5Box);
             v5Panel.setBorder(v5Border);
             panelCentre.add(v5Panel);
@@ -808,14 +822,15 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v6Panel = new JPanel();
             v6Panel.setLayout(defaultFlow);
             v6Panel.add(to6);
+            v6Panel.add(stateLabel6);
             v6Panel.add(s6Box);
             v6Panel.setBorder(v6Border);
             panelCentre.add(v6Panel);
 
             v7Panel = new JPanel();
             v7Panel.setLayout(defaultFlow);
-            //v7Panel.add(v7Label);
             v7Panel.add(to7);
+            v7Panel.add(stateLabel7);
             v7Panel.add(s7Box);
             v7Panel.setBorder(v7Border);
             panelCentre.add(v7Panel);
@@ -858,7 +873,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             to6.refresh();
             to7.refresh();
         }
-        typeBox.setSelectedIndex(2);  // force GUI status consistent Default set to Double Head
+        typeBox.setSelectedIndex(2);  // force GUI status consistent. Default set to Double Head type
         addFrame.pack();
         addFrame.setVisible(true);
     }
@@ -871,29 +886,36 @@ public class SignalHeadTableAction extends AbstractTableAction {
         systemName.setVisible(false);
         to1.setVisible(false);
         ato1.setVisible(false);
+        stateLabel1.setVisible(false); // label in front of s1Box
         s1Box.setVisible(false);
         dccOffSetAddress.setVisible(false);
         v1Panel.setVisible(false);
         v2Panel.setVisible(false);
         to2.setVisible(false);
+        stateLabel2.setVisible(false); // label in front of s2Box
         s2Box.setVisible(false);
         s2aBox.setVisible(false);
         dccSignalPanel.setVisible(false);
         v3Panel.setVisible(false);
         to3.setVisible(false);
+        stateLabel3.setVisible(false); // label in front of s3Box
         s3Box.setVisible(false);
         s3aBox.setVisible(false);
         v4Panel.setVisible(false);
         to4.setVisible(false);
+        stateLabel4.setVisible(false); // label in front of s4Box
         s4Box.setVisible(false);
         v5Panel.setVisible(false);
         to5.setVisible(false);
+        stateLabel5.setVisible(false); // label in front of s5Box
         s5Box.setVisible(false);
         v6Panel.setVisible(false);
         to6.setVisible(false);
+        stateLabel6.setVisible(false); // label in front of s6Box
         s6Box.setVisible(false);
         v7Panel.setVisible(false);
         to7.setVisible(false);
+        stateLabel7.setVisible(false); // label in front of s7Box
         s7Box.setVisible(false);
         vtLabel.setVisible(false);
         stBox.setVisible(false);
@@ -903,9 +925,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
     void typeChanged() {
         hideAllOptions();
+        // keep border and label names the same as in makeEditSignalWindow() below
         if (se8c4Aspect.equals(typeBox.getSelectedItem())) {
             handleSE8cTypeChanged();
-        } else if (grapevine.equals(typeBox.getSelectedItem())) {  //Need to see how this works with username
+        } else if (grapevine.equals(typeBox.getSelectedItem())) { // Need to see how this works with username
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
             systemNameLabel.setVisible(true);
             systemName.setVisible(true);
@@ -939,7 +962,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v4Border.setTitle(Bundle.getMessage("LabelLunarTurnoutNumber"));
             v4Panel.setVisible(true);
             to4.setVisible(true);
-
         } else if (tripleTurnout.equals(typeBox.getSelectedItem())) {
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
             systemNameLabel.setVisible(true);
@@ -954,7 +976,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v3Border.setTitle(Bundle.getMessage("LabelRedTurnoutNumber"));
             v3Panel.setVisible(true);
             to3.setVisible(true);
-
         } else if (tripleOutput.equals(typeBox.getSelectedItem())) {
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
             systemNameLabel.setVisible(true);
@@ -969,7 +990,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v3Border.setTitle(Bundle.getMessage("LabelRedTurnoutNumber"));
             v3Panel.setVisible(true);
             to3.setVisible(true);
-
         } else if (doubleTurnout.equals(typeBox.getSelectedItem())) {
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
             systemNameLabel.setVisible(true);
@@ -986,7 +1006,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             systemNameLabel.setVisible(true);
             systemName.setVisible(true);
             userNameLabel.setText(Bundle.getMessage("LabelUserName"));
-            v1Border.setTitle(Bundle.getMessage("LabelGreenTurnoutNumber"));
+            v1Border.setTitle(Bundle.getMessage("LabelTurnoutNumber"));
             v1Panel.setVisible(true);
             to1.setVisible(true);
             v2Border.setTitle(Bundle.getMessage("LabelTurnoutThrownAppearance"));
@@ -1000,7 +1020,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             systemNameLabel.setVisible(true);
             systemName.setVisible(true);
             userNameLabel.setText(Bundle.getMessage("LabelUserName"));
-        } else if (lsDec.equals(typeBox.getSelectedItem())) {
+        } else if (lsDec.equals(typeBox.getSelectedItem())) { // LDT LS-DEC
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
             systemNameLabel.setVisible(true);
             systemName.setVisible(true);
@@ -1008,34 +1028,40 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v1Border.setTitle(Bundle.getMessage("LabelGreenTurnoutNumber"));
             v1Panel.setVisible(true);
             to1.setVisible(true);
+            stateLabel1.setVisible(true); // label belongs with s1Box
             s1Box.setVisible(true);
             v2Border.setTitle(Bundle.getMessage("LabelYellowTurnoutNumber"));
             v2Panel.setVisible(true);
             to2.setVisible(true);
+            stateLabel2.setVisible(true);
             s2Box.setVisible(true);
             v3Border.setTitle(Bundle.getMessage("LabelRedTurnoutNumber"));
             v3Panel.setVisible(true);
             to3.setVisible(true);
+            stateLabel3.setVisible(true);
             s3Box.setVisible(true);
             s3aBox.setVisible(false);
             v4Border.setTitle(Bundle.getMessage("LabelFlashGreenTurnoutNumber"));
             v4Panel.setVisible(true);
             to4.setVisible(true);
+            stateLabel4.setVisible(true);
             s4Box.setVisible(true);
             v5Border.setTitle(Bundle.getMessage("LabelFlashYellowTurnoutNumber"));
             v5Panel.setVisible(true);
             to5.setVisible(true);
+            stateLabel5.setVisible(true);
             s5Box.setVisible(true);
             v6Border.setTitle(Bundle.getMessage("LabelFlashRedTurnoutNumber"));
             v6Panel.setVisible(true);
             to6.setVisible(true);
+            stateLabel6.setVisible(true);
             s6Box.setVisible(true);
             v7Border.setTitle(Bundle.getMessage("LabelDarkTurnoutNumber"));
             v7Panel.setVisible(true);
             to7.setVisible(true);
+            stateLabel7.setVisible(true);
             s7Box.setVisible(true);
         } else if (dccSignalDecoder.equals(typeBox.getSelectedItem())) {
-            //systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
             systemNameLabel.setText(Bundle.getMessage("LabelHardwareAddress"));
             systemNameLabel.setVisible(true);
             systemName.setVisible(true);
@@ -1058,7 +1084,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             mstBox.setVisible(true);
             msaBox.setVisible(true);
             setUkSignalAspectsFromBox(msaBox, 2);
-            v3Border.setTitle(Bundle.getMessage("InputNum", " 1 ")); // space before and after to display nicely in Border
+            v3Border.setTitle(Bundle.getMessage("InputNum", " 1 ")); // space before and after index number to display nicely in Border
             v3Panel.setVisible(true);
             to3.setVisible(true);
             v4Border.setTitle(Bundle.getMessage("InputNum", " 2 "));
@@ -1163,7 +1189,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
     }
 
-    //@TODO We could do with checking the to make sure that the user has entered a turnout into a turnout field if it has been presented. Otherwise an error is recorded in the console window
+    // @TODO We could add a check to make sure that the user has entered a turnout into a turnout field if it has been presented.
+    // For now only an error is recorded in the Console window
     void okPressed(ActionEvent e) {
         if (!checkUserName(userName.getText())) {
             return;
@@ -1354,7 +1381,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 }
             } else if (singleTurnout.equals(typeBox.getSelectedItem())) {
                 if (checkBeforeCreating(systemName.getText())) {
-                    Turnout t1 = getTurnoutFromPanel(to1, "SignalHead:" + systemName.getText() + ":" + (String) s2aBox.getSelectedItem() + ":" + (String) s3aBox.getSelectedItem());
+                    Turnout t1 = getTurnoutFromPanel(to1,
+                            "SignalHead:" + systemName.getText() + ":" + (String) s2aBox.getSelectedItem() + ":" + (String) s3aBox.getSelectedItem());
 
                     int on = signalStateFromBox(s2aBox);
                     int off = signalStateFromBox(s3aBox);
@@ -1375,7 +1403,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                     s = new jmri.implementation.VirtualSignalHead(systemName.getText(), userName.getText());
                     InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
                 }
-            } else if (lsDec.equals(typeBox.getSelectedItem())) {
+            } else if (lsDec.equals(typeBox.getSelectedItem())) { // LDT LS-DEC
                 if (checkBeforeCreating(systemName.getText())) {
                     Turnout t1 = getTurnoutFromPanel(to1, "SignalHead:" + systemName.getText() + ":Green");
                     Turnout t2 = getTurnoutFromPanel(to2, "SignalHead:" + systemName.getText() + ":Yellow");
@@ -1719,6 +1747,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     SignalHead _curSignal = null;
 
     void makeEditSignalWindow() {
+        // keep border and label names the same as in typeChanged() above
         String eSName = _curSignal.getSystemName();
         if (editingHead) {
             if (eSName.equals(editSysName)) {
@@ -1928,7 +1957,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
             eto1.setVisible(true);
             et1 = ((TripleTurnoutSignalHead) curS).getGreen().getBean();
             eto1.setDefaultNamedBean(et1);
-
             ev2Border.setTitle(Bundle.getMessage("LabelYellowTurnoutNumber"));
             ev2Panel.setVisible(true);
             eto2.setVisible(true);
@@ -2001,11 +2029,11 @@ public class SignalHeadTableAction extends AbstractTableAction {
             ev1Panel.setVisible(true);
             eto1.setVisible(true);
             eto1.setDefaultNamedBean(((SingleTurnoutSignalHead) curS).getOutput().getBean());
-            ev2Border.setTitle("On Appearance");
+            ev2Border.setTitle(Bundle.getMessage("LabelTurnoutClosedAppearance"));
             ev2Panel.setVisible(true);
             es2aBox.setVisible(true);
             setSignalStateInBox(es2aBox, ((SingleTurnoutSignalHead) curS).getOnAppearance());
-            ev3Border.setTitle("Off Appearance");
+            ev3Border.setTitle(Bundle.getMessage("LabelTurnoutClosedAppearance"));
             ev3Panel.setVisible(true);
             es3aBox.setVisible(true);
             setSignalStateInBox(es3aBox, ((SingleTurnoutSignalHead) curS).getOffAppearance());
@@ -2015,7 +2043,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             eSysNameLabel.setText(curS.getSystemName());
             eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
             eUserName.setText(curS.getUserName());
-        } else if (className.equals("jmri.implementation.LsDecSignalHead")) {
+        } else if (className.equals("jmri.implementation.LsDecSignalHead")) { // LDT LS-DEC
             signalType.setText(lsDec);
             eSystemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
             eSysNameLabel.setText(curS.getSystemName());
