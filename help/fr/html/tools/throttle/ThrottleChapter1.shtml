@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Blorec Herv&#233; le 2013-10-01-->
+<!-- UpDated by Blorec Herv&#233; le 2017-01-07-->
 <html lang="fr">
 <head>
  <title>Throttle: Getting Started</title>
@@ -32,20 +32,21 @@
 Mise &#224; jour de la Version de documentation du R&#233;gulateur
 </span></h1>
 
-<p>S'il vous pla&#238;t noter que cette documentation a &#233;t&#233; mise &#224; jour, reportez-vous aux liens ci-dessous:</p>
+<p>S'il vous pla&#238;t noter que cette documentation a &#233;t&#233; mise &#224; jour. Version Actuelle</p>
 <ul>
- <li>Le<a href="ToolsMenuThrottleEntry.shtml">menu R&#233;gulateur dans JMRI</a></li>
- <li>La<a href="BasicThrottleWindow.shtml">Fen&#232;tre R&#233;gulateur elle-m&#234;me</a></li>
- <li>Les<a href="ThrottleWindowMenus.shtml">menus Fen&#234;tre R&#233;gulateur</a></li>
- <li>La<a href="ThrottleToolBar.shtml">Fen&#234;tre barre d'outils R&#233;gulateur</a></li>
- <li>La<a href="AdvancedThrottleControl.shtml">Fen&#234;tre commandes R&#233;gulateur</a></li>
- <li>La<a href="ThrottlesListWindow.shtml">Fen&#234;tres Liste des R&#233;gulateurs</a></li>
+ <li>Le <a href="ToolsMenuThrottleEntry.shtml">menu R&#233;gulateur dans JMRI</a></li>
+ <li>La <a href="BasicThrottleWindow.shtml">Fen&#232;tre R&#233;gulateur elle-m&#234;me</a></li>
+ <li>Les <a href="ThrottleWindowMenus.shtml">menus Fen&#234;tre R&#233;gulateur</a></li>
+ <li>Les <a href="ThrottleToolBar.shtml">barre d'outils de la Fen&#234;tre R&#233;gulateur</a></li>
+ <li>La <a href="AdvancedThrottleControl.shtml">commandes de la Fen&#234;tre R&#233;gulateur</a></li>
+ <li>La <a href="ThrottlesListWindow.shtml">liste des Fen&#234;tres R&#233;gulateurs</a></li>
  <li><a href="ThrottlesListWindow.shtml"></a>
-Le<a href="ThrottlesPreferencesPane.shtml">Volet pr&#233;f&#233;rences R&#233;gulateurs</a><br>
+Le <a href="ThrottlesPreferencesPane.shtml">Volet pr&#233;f&#233;rences R&#233;gulateurs</a><br>
 </li>
 </ul>
 
-<h1>O&#249; puis-je trouver les  R&#233;gulateurs?</H1>
+<h1>R&#233;gulateurs dans JMRI v2.x</h1>
+<h2>O&#249; puis-je trouver les  R&#233;gulateurs?</H2>
 
 <p>Par chance , si vous lisez ce texte
 , alors vous avez probablement vu des r&#233;f&#233;rence
@@ -57,7 +58,7 @@ faire est de vous montrer comment acc&#233;der aux R&#233;gulateurs. Cette secti
 &#233;galement voir les options de menu qui sont disponibles.</p>
 
 <p> Premi&#232;rement, il est important de comprendre que le projet JMRI est un groupe 
-de nombreux<b>"outils"</b> pour vos chemins de fer avec de nombreuses contributions de diff&#233;rents
+de nombreux <b>"outils"</b> pour vos r&#233;seaux avec de nombreuses contributions de diff&#233;rents
  programmeurs. Il y a quatre principales applications de d&#233;marrage disponibles</p>
 
 <li><b>DecoderPro</b> (le morceau le plus largement et commun&#233;ment appel&#233; le
@@ -68,11 +69,11 @@ de nombreux<b>"outils"</b> pour vos chemins de fer avec de nombreuses contributi
 
 </ul>
 
-<p> Pour le sujet de ce guide, l'application de d&#233;marrage<b>JMRI d&#233;mo</b> 
+<p> Pour le sujet de ce guide utilisateur, l'application de d&#233;marrage<b>JMRI d&#233;mo</b> 
 a &#233;t&#233; utilis&#233;e aux fins de la r&#233;daction de ces pages. Toutefois, vous pourrez
 constater que de nombreux outils "cross over" ont de multiples applications de d&#233;marrage. L'
-<b>Outil R&#233;gulateur</b> est un bon exemple de cela. Peu importe les applications mentionn&#233;es qui pr&#233;c&#232;dent avec lesquelles
-vous commencez, vous serez capable de trouver les r&#233;gulateurs.</p>
+<b>Outil R&#233;gulateur</b> est un bon exemple de cela. Peu importe les applications mentionn&#233;es qui pr&#233;c&#232;dent avec 
+lesquelles vous commencez, vous serez capable de trouver les r&#233;gulateurs.</p>
 <br>
 
 <br>
@@ -129,14 +130,14 @@ Figure 1-1: structure menu principal JMRI</p><br>
     <br>
 
  </li>
-  <li><b>Enregistrer les Pr&#233;f&#233;rences R&#233;gulateurs ...</b>&#8212;Permet de configurer votre ensemble
+  <li><b>Sauvegarder les Pr&#233;f&#233;rences R&#233;gulateurs ...</b>&#8212;Permet de configurer votre ensemble
      pr&#233;f&#233;rences pour toutes les fen&#234;tres r&#233;gulateur.</li>
 </ul>
 
 <p style="text-align: center; font-size: xx-small"><img width="359"
 height="225" src="images/jmri009.jpg"
 title="JMRI Throttles sub-menu structure"><br>
-Figure 1-2: JMRI Throttles sub-menu structure</p><br>
+Figure 1-2: stucture sous-menu des R&#233;gulateurs JMRI</p><br>
 <br>
 
 <p> Utilisez les liens ci-dessous pour acc&#233;der au chapitre suivant pour vous d&#233;placer &#224; travers le
