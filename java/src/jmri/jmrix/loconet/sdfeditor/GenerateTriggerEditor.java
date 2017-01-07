@@ -1,4 +1,3 @@
-// GenerateTriggerEditor.java
 package jmri.jmrix.loconet.sdfeditor;
 
 import javax.swing.JLabel;
@@ -12,11 +11,6 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  */
 class GenerateTriggerEditor extends SdfMacroEditor {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4809270548383400410L;
-
     public GenerateTriggerEditor(SdfMacro inst) {
         super(inst);
 
@@ -28,5 +22,3 @@ class GenerateTriggerEditor extends SdfMacroEditor {
     }
 
 }
-
-/* @(#)GenerateTriggerEditor.java */

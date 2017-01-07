@@ -1,4 +1,3 @@
-// DelaySoundEditor.java
 package jmri.jmrix.loconet.sdfeditor;
 
 import javax.swing.JLabel;
@@ -12,11 +11,6 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  */
 class DelaySoundEditor extends SdfMacroEditor {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8584517409405023951L;
-
     public DelaySoundEditor(SdfMacro inst) {
         super(inst);
 
@@ -28,5 +22,3 @@ class DelaySoundEditor extends SdfMacroEditor {
     }
 
 }
-
-/* @(#)DelaySoundEditor.java */

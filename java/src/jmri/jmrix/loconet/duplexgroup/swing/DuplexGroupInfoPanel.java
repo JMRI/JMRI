@@ -633,11 +633,6 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
      */
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -7467617476118982830L;
-
         public Default() {
             super(Bundle.getMessage("MenuItemDuplexInfo"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),

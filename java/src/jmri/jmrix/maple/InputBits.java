@@ -1,4 +1,3 @@
-// InputBits.java
 package jmri.jmrix.maple;
 
 import jmri.JmriException;
@@ -183,10 +182,6 @@ public class InputBits {
             sensorLastSetting[i] = Sensor.UNKNOWN;
             sensorTempSetting[i] = Sensor.UNKNOWN;
             sensorORedSetting[i] = false;
-        } else {
-            // multiple registration of the same sensor
-            log.warn("multiple registration of same sensor: KS"
-                    + Integer.toString(i + 1));
         }
     }
 
@@ -200,5 +195,3 @@ public class InputBits {
 
     private final static Logger log = LoggerFactory.getLogger(InputBits.class.getName());
 }
-
-/* @(#)InputBits.java */

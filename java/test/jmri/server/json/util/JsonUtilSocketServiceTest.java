@@ -9,12 +9,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
 import jmri.jmris.json.JsonServerPreferences;
-import jmri.profile.NullProfile;
-import jmri.profile.Profile;
-import jmri.profile.ProfileManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonMockConnection;
-import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -48,8 +44,7 @@ public class JsonUtilSocketServiceTest {
 
     @Before
     public void setUp() throws IOException {
-        Profile profile = new NullProfile("TestProfile", null, FileUtil.getFile(FileUtil.SETTINGS));
-        ProfileManager.getDefault().setActiveProfile(profile);
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
     }
 

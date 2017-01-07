@@ -1,4 +1,3 @@
-// FourByteMacro.java
 package jmri.jmrix.loconet.sdf;
 
 /**
@@ -63,5 +62,3 @@ public class FourByteMacro extends SdfMacro {
         return indent + oneInstructionString();
     }
 }
-
-/* @(#)FourByteMacro.java */

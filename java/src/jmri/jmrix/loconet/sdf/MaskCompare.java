@@ -1,4 +1,3 @@
-// MaskCompare.java
 package jmri.jmrix.loconet.sdf;
 
 /**
@@ -98,5 +97,3 @@ public class MaskCompare extends SdfMacro {
         return indent + oneInstructionString();
     }
 }
-
-/* @(#)TwoByteMacro.java */

@@ -215,11 +215,13 @@ public final class TreeModel extends DefaultTreeModel {
      */
     boolean loadSystem() {
         // Get a list of the controllers JInput knows about and can interact with
+        log.debug("start looking for controllers");
         try {
             ca = ControllerEnvironment.getDefaultEnvironment().getControllers();
-            log.info("Found " + ca.length + " controllers");
+            log.debug("Found " + ca.length + " controllers");
         } catch (Exception ex) { // this is probably ClassNotFoundException, but that's not part of the interface
             // could not load some component(s)
+            log.debug("Found no controllers, handled Exception", ex);
             ca = null;
             return false;
         }

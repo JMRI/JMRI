@@ -1,4 +1,3 @@
-// LocoNetSlot.java
 package jmri.jmrix.loconet;
 
 import java.util.ArrayList;
@@ -607,6 +606,3 @@ public class LocoNetSlot {
 
     private final static Logger log = LoggerFactory.getLogger(LocoNetSlot.class.getName());
 }
-
-
-/* @(#)LocoNetSlot.java */
