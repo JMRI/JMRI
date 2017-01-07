@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
@@ -953,7 +952,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             userNameLabel.setText(Bundle.getMessage("LabelUserName"));
             userNameLabel.setVisible(true);
             userName.setVisible(true);
-            v1Border.setTitle(Bundle.getMessage("LabelSignalheadNumber"));
+            v1Border.setTitle(Bundle.getMessage("LabelSignalheadNumber")); // displays ID instead of -number
             v1Panel.setVisible(true);
             v1Panel.setToolTipText(Bundle.getMessage("SignalHeadAcelaTooltip"));
             ato1.setVisible(true);
@@ -1230,6 +1229,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 //int aspecttype;
 
                 if (inputsysname.length() == 0) {
+                    JOptionPane.showMessageDialog(addFrame, Bundle.getMessage("acelaWarning"));
                     log.warn("must supply a signalhead number (i.e. AH23)");
                     return;
                 }
@@ -1248,16 +1248,23 @@ public class SignalHeadTableAction extends AbstractTableAction {
                     headnumber = Integer.parseInt(inputsysname);
                 }
                 if (checkBeforeCreating("AH" + headnumber)) {
-                    if (inputusername.length() == 0) {
-                        s = new jmri.jmrix.acela.AcelaSignalHead("AH" + headnumber,jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
-                    } else {
-                        s = new jmri.jmrix.acela.AcelaSignalHead("AH" + headnumber, inputusername,jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
+                    //if (jmri.jmrix.acela.status()) { // check for an active Acela connection status
+                    try {
+                        if (inputusername.length() == 0) {
+                            s = new jmri.jmrix.acela.AcelaSignalHead("AH" + headnumber, jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
+                        } else {
+                            s = new jmri.jmrix.acela.AcelaSignalHead("AH" + headnumber, inputusername, jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
+                        }
+                        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
+                    } catch (java.lang.NullPointerException ex) {
+                        JOptionPane.showMessageDialog(addFrame, Bundle.getMessage("SystemNotActiveWarning", "Acela"));
+                        log.warn("No active Acela connection to create Signal Head");
+                        return;
                     }
-                    InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
                 }
 
                 int st = signalheadTypeFromBox(stBox);
-                //This bit returns null i think, will need to check through
+                // This bit returns null I think, will need to check though
                 AcelaNode sh = AcelaAddress.getNodeFromSystemName("AH" + headnumber,jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
                 switch (st) {
                     case 1:
@@ -1529,8 +1536,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
         if (checkBeforeCreating(systemNameText)) {
             s = new jmri.implementation.DccSignalHead(systemNameText);
             s.setUserName(userName.getText());
-            for (int i = 0; i < dccAspect.size(); i++) { // no need to check when using JSpinner
-                int number = (Integer) dccAspect.get(i).getValue();
+            log.debug("dccAspect Length = {}", dccAspect.length);
+            for (int i = 0; i < DccSignalHead.getDefaultValidStates().length; i++) { // no need to check DCC ID input when using JSpinner
+                log.debug("i = {}", i);
+                int number = (Integer) dccAspect[i].getValue();
                 try {
                     s.setOutputForAppearance(s.getValidStates()[i], number);
                 } catch (RuntimeException ex) {
@@ -1689,7 +1698,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
     JTextField eSystemName = new JTextField(5);
     JTextField eUserName = new JTextField(10);
-    //JTextField eato1 = new JTextField(5);
 
     JTextField etot = new JTextField(5);
 
@@ -2154,8 +2162,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
             eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
             eUserName.setText(curS.getUserName());
             for (int i = 0; i < DccSignalHead.getDefaultValidStates().length; i++) {
-                JSpinner tmp = dccAspectEdt.get(i);
-                tmp.setValue(Integer.toString(((DccSignalHead) curS).getOutputForAppearance(curS.getValidStates()[i])));
+                JSpinner tmp = dccAspectEdt[i];
+                tmp.setValue(((DccSignalHead) curS).getOutputForAppearance(curS.getValidStates()[i]));
+            //  tmp.setValue((Integer) DccSignalHead.getDefaultNumberForApperance(DccSignalHead.getDefaultValidStates()[i]))
             }
             dccOffSetAddressEdt.setVisible(true);
             dccOffSetAddressEdt.setSelected(((DccSignalHead) curS).useAddressOffSet());
@@ -2524,8 +2533,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
             }
             //Need to add the code here for update!
         } else if (className.equals("jmri.implementation.DccSignalHead")) {
-            for (int i = 0; i < dccAspectEdt.size(); i++) {
-                int number = (Integer) dccAspectEdt.get(i).getValue();
+            for (int i = 0; i < dccAspectEdt.length; i++) {
+                int number = (Integer) dccAspectEdt[i].getValue();
                 try {
                     ((DccSignalHead) curS).setOutputForAppearance(((DccSignalHead) curS).getValidStates()[i], number);
                 } catch (Exception ex) {
@@ -2744,7 +2753,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
         return Bundle.getMessage("TitleSignalTable");
     }
 
-    ArrayList<JSpinner> dccAspect;
+    JSpinner[] dccAspect;
     JCheckBox dccOffSetAddress = new JCheckBox(Bundle.getMessage("DccAccessoryAddressOffSet"));
     JPanel dccSignalPanel = new JPanel();
 
@@ -2752,24 +2761,23 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
         dccSignalPanel = new JPanel();
         dccSignalPanel.setLayout(new GridLayout(0, 2));
-        ArrayList<JSpinner> dccAspect = new ArrayList<JSpinner>(DccSignalHead.getDefaultValidStates().length);
-        System.out.println("dccAspect size =" + dccAspect.size());
+        dccAspect = new JSpinner[DccSignalHead.getDefaultValidStates().length];
 
         for (int i = 0; i < DccSignalHead.getDefaultValidStates().length; i++) {
-            System.out.println(i);
             String aspect = DccSignalHead.getDefaultValidStateNames()[i];
             dccSignalPanel.add(new JLabel(aspect));
 
             SpinnerNumberModel DccSpinnerModel = new SpinnerNumberModel(1, 1, 13, 1);
             JSpinner tmp = new JSpinner(DccSpinnerModel);
             //tmp.setFocusable(false);
-            tmp.setValue(DccSignalHead.getDefaultNumberForApperance(DccSignalHead.getDefaultValidStates()[i]));
-            dccAspect.add(i, tmp); // store the whole JSpinner
+            tmp.setValue((Integer) DccSignalHead.getDefaultNumberForApperance(DccSignalHead.getDefaultValidStates()[i]));
+            dccAspect[i] = tmp; // store the whole JSpinner
             dccSignalPanel.add(tmp); // and display that copy on the JPanel
+            tmp.setToolTipText(Bundle.getMessage("DccAccessoryAspect", i));
         }
     }
 
-    ArrayList<JSpinner> dccAspectEdt;
+    JSpinner[] dccAspectEdt;
     JCheckBox dccOffSetAddressEdt = new JCheckBox(Bundle.getMessage("DccAccessoryAddressOffSet"));
     JPanel dccSignalPanelEdt = new JPanel();
 
@@ -2777,7 +2785,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
         dccSignalPanelEdt = new JPanel();
         dccSignalPanelEdt.setLayout(new GridLayout(0, 2));
-        ArrayList<JSpinner> dccAspectEdt = new ArrayList<JSpinner>(DccSignalHead.getDefaultValidStates().length);
+        dccAspectEdt = new JSpinner[DccSignalHead.getDefaultValidStates().length];
 
         for (int i = 0; i < DccSignalHead.getDefaultValidStates().length; i++) {
             String aspect = DccSignalHead.getDefaultValidStateNames()[i];
@@ -2785,9 +2793,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
             SpinnerNumberModel DccSpinnerModel = new SpinnerNumberModel(1, 1, 13, 1);
             JSpinner tmp = new JSpinner(DccSpinnerModel);
-            dccAspectEdt.add(i, tmp); // store the whole JSpinner
+            dccAspectEdt[i] = tmp; // store the whole JSpinner
             dccSignalPanelEdt.add(tmp); // and display that copy on the JPanel
-            tmp.setToolTipText(Bundle.getMessage("DccAccessoryAspect", "x"));
+            tmp.setToolTipText(Bundle.getMessage("DccAccessoryAspect", i));
         }
     }
 

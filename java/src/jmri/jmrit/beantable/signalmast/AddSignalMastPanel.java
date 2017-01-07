@@ -81,7 +81,7 @@ public class AddSignalMastPanel extends JPanel {
     JPanel dccMastPanel = new JPanel();
     JLabel systemPrefixBoxLabel = new JLabel(Bundle.getMessage("DCCSystem") + ":");
     JComboBox<String> systemPrefixBox = new JComboBox<String>();
-    JLabel dccAspectAddressLabel = new JLabel(Bundle.getMessage("DCCMastAddress"));
+    JLabel dccAspectAddressLabel = new JLabel(Bundle.getMessage("DCCMastAddress")+ ":");
     JTextField dccAspectAddressField = new JTextField(5);
     JCheckBox allowUnLit = new JCheckBox();
     JPanel unLitSettingsPanel = new JPanel();
