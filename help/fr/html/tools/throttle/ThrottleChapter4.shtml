@@ -329,6 +329,8 @@ il suffit de cliquer sur le " <big>X</big>" dans le coin sup&eacute;rieur droit 
 <br>
 
 <!--#include virtual="/Footer" -->
-</div>
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
 </body>
 </html>
