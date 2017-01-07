@@ -417,7 +417,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     public List<RosterEntry> getEntriesWithAttributeKeyValue(String key, String value) {
         ArrayList<RosterEntry> result = new ArrayList<>();
-        _list.forEach((r) -> {
+        _list.stream().forEach((r) -> {
             String v = r.getAttribute(key);
             if (v != null && v.equals(value)) {
                 result.add(r);
@@ -428,7 +428,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     public Set<String> getAllAttributeKeys() {
         Set<String> result = new TreeSet<>();
-        _list.forEach((r) -> {
+        _list.stream().forEach((r) -> {
             result.addAll(r.getAttributes());
         });
         return result;
@@ -712,7 +712,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         Element values = new Element("roster"); // NOI18N
         root.addContent(values);
         // add entries
-        _list.forEach((entry) -> {
+        _list.stream().forEach((entry) -> {
             if (!entry.getId().equals(newLocoString)) {
                 values.addContent(entry.store());
             } else {
@@ -738,7 +738,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         //restore the RosterEntry object to its normal \n state for the
         //Comment and Decoder comment fields, otherwise it can cause problems in
         //other parts of the program (e.g. in copying a roster)
-        _list.forEach((entry) -> {
+        _list.stream().forEach((entry) -> {
             if (!entry.getId().equals(newLocoString)) {
                 String xmlComment = entry.getComment();
                 String tempComment = "";
