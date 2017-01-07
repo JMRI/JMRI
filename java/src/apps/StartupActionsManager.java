@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ServiceLoader;
 import java.util.Set;
+import jmri.JmriException;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
 import jmri.implementation.FileLocationsPreferences;
@@ -52,10 +53,24 @@ public class StartupActionsManager extends AbstractPreferencesManager {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * Loads the startup action preferences and, if all required managers have
+     * initialized without exceptions, performs those actions. Startup actions
+     * are only performed if {@link apps.startup.StartupModel#isValid()} is true
+     * for the action. It is assumed that the action has retained an Exception
+     * that can be used to explain why isValid() is false.
+     */
     @Override
     public void initialize(Profile profile) throws InitializationException {
         if (!this.isInitialized(profile)) {
-            InitializationException exception = null;
+            boolean perform = true;
+            try {
+                this.requiresNoInitializedWithExceptions(profile, Bundle.getMessage("StartupActionsManager.RefusalToInitialize"));
+            } catch (InitializationException ex) {
+                perform = false;
+            }
             try {
                 Element startup;
                 try {
@@ -64,51 +79,54 @@ public class StartupActionsManager extends AbstractPreferencesManager {
                     log.debug("Reading element from version 2.9.6 namespace...");
                     startup = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(STARTUP, NAMESPACE_OLD, true));
                 }
-                for (Element perform : startup.getChildren()) {
-                    String adapter = perform.getAttributeValue("class"); // NOI18N
-                    String name = perform.getAttributeValue("name"); // NOI18N
+                for (Element action : startup.getChildren()) {
+                    String adapter = action.getAttributeValue("class"); // NOI18N
+                    String name = action.getAttributeValue("name"); // NOI18N
                     String override = StartupActionModelUtil.getDefault().getOverride(name);
                     if (override != null) {
-                        perform.setAttribute("name", override);
+                        action.setAttribute("name", override);
                         log.info("Overridding statup action class {} with {}", name, override);
-                        exception = new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsOverriddenClasses", name, override),
-                                Bundle.getMessage(Locale.ENGLISH, "StartupActionsOverriddenClasses", name, override));
+                        this.addInitializationException(profile, new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsOverriddenClasses", name, override),
+                                Bundle.getMessage(Locale.ENGLISH, "StartupActionsOverriddenClasses", name, override)));
                         name = override; // after logging difference and creating error message
                     }
-                    String type = perform.getAttributeValue("type"); // NOI18N
+                    String type = action.getAttributeValue("type"); // NOI18N
                     log.debug("Read {} {} adapter {}", type, name, adapter);
                     try {
                         log.debug("Creating {} {} adapter {}...", type, name, adapter);
-                        ((XmlAdapter) Class.forName(adapter).newInstance()).load(perform, null); // no perNode preferences
+                        ((XmlAdapter) Class.forName(adapter).newInstance()).load(action, null); // no perNode preferences
                     } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-                        log.error("Unable to create {} for {}", adapter, perform, ex);
-                        if (exception != null) {
-                            exception = new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsMultipleErrors"),
-                                    Bundle.getMessage("StartupActionsMultipleErrors")); // NOI18N
-                        } else {
-                            exception = new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsCreationError", adapter, name),
-                                    Bundle.getMessage("StartupActionsCreationError", adapter, name)); // NOI18N
-                        }
+                        log.error("Unable to create {} for {}", adapter, action, ex);
+                        this.addInitializationException(profile, new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsCreationError", adapter, name),
+                                Bundle.getMessage("StartupActionsCreationError", adapter, name))); // NOI18N
                     } catch (Exception ex) {
-                        log.error("Unable to load {} into {}", perform, adapter, ex);
-                        if (exception != null) {
-                            exception = new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsMultipleErrors"),
-                                    Bundle.getMessage("StartupActionsMultipleErrors")); // NOI18N
-                        } else {
-                            exception = new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsLoadError", adapter, name),
-                                    Bundle.getMessage("StartupActionsLoadError", adapter, name)); // NOI18N
-                        }
+                        log.error("Unable to load {} into {}", action, adapter, ex);
+                        this.addInitializationException(profile, new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsLoadError", adapter, name),
+                                Bundle.getMessage("StartupActionsLoadError", adapter, name))); // NOI18N
                     }
                 }
             } catch (NullPointerException ex) {
                 // ignore - this indicates migration has not occured
                 log.debug("No element to read");
             }
+            if (perform) {
+                this.actions.stream().filter((action) -> (action.isValid())).forEachOrdered((action) -> {
+                    try {
+                        action.performAction();
+                    } catch (JmriException ex) {
+                        this.addInitializationException(profile, ex);
+                    }
+                });
+            }
             this.isDirty = false;
             this.restartRequired = false;
             this.setInitialized(profile, true);
-            if (exception != null) {
-                throw exception;
+            List<Exception> exceptions = this.getInitializationExceptions(profile);
+            if (exceptions.size() == 1) {
+                throw new InitializationException(exceptions.get(0));
+            } else if (exceptions.size() > 1) {
+                throw new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsMultipleErrors"),
+                        Bundle.getMessage("StartupActionsMultipleErrors")); // NOI18N
             }
         }
     }
