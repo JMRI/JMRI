@@ -38,7 +38,6 @@ import jmri.implementation.QuadOutputSignalHead;
 import jmri.implementation.SingleTurnoutSignalHead;
 import jmri.implementation.TripleOutputSignalHead;
 import jmri.implementation.TripleTurnoutSignalHead;
-import jmri.jmrit.beantable.RowComboBoxPanel; // access to RowComboBoxPanel()
 import jmri.jmrix.acela.AcelaAddress;
 import jmri.jmrix.acela.AcelaNode;
 import jmri.util.ConnectionNameFromSystemName;
@@ -193,8 +192,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
                         log.debug("SignalHead setValueAt (rowConverted={}; value={})", row, value);
                         // convert from String (selected item) to int
                         int newState = 99;
-                        String[] stateNameList = ((SignalHead) s).getValidStateNames(); // Array of valid appearance names
-                        int[] validStateList = ((SignalHead) s).getValidStates(); // Array of valid appearance numbers
+                        String[] stateNameList = s.getValidStateNames(); // Array of valid appearance names
+                        int[] validStateList = s.getValidStates(); // Array of valid appearance numbers
                         for (int i = 0; i < stateNameList.length; i++) {
                             if (value == stateNameList[i]) {
                                 newState = validStateList [i];
@@ -211,10 +210,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
                             }
                         }
                         if (log.isDebugEnabled()) {
-                            String oldAppearanceName = ((SignalHead) s).getAppearanceName();
+                            String oldAppearanceName = s.getAppearanceName();
                             log.debug("Signal Head set from: {} to: {} [{}]", oldAppearanceName, value, newState);
                         }
-                        ((SignalHead) s).setAppearance((int) newState);
+                        s.setAppearance(newState);
                         fireTableRowsUpdated(row, row);
                     }
                 } else if (col == LITCOL) {
@@ -371,12 +370,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
             /**
              * Clear the old appearance comboboxes and force them to be rebuilt
+             * At present (4.7.1) not used.
              * @param row Index of the signal mast (in TableDataModel) to be rebuilt in the Hashtables
              */
-            public void clearRowVector(int row) {
+/*          public void clearAppearanceVector(int row) {
                 boxMap.remove(this.getValueAt(row, SYSNAMECOL));
                 editorMap.remove(this.getValueAt(row, SYSNAMECOL));
-            }
+            }*/
 
             // Hashtables for Editors; not used for Renderer)
 
@@ -389,8 +389,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
             public JComboBox getAppearanceEditorBox(int row) {
                 JComboBox editCombo = editorMap.get(this.getValueAt(row, SYSNAMECOL));
                 if (editCombo == null) {
-                    // create a new one with correct appearance
-                    editCombo = new JComboBox(getRowVector(row));
+                    // create a new one with correct appearances
+                    editCombo = new JComboBox<String> (getRowVector(row));
                     editorMap.put(this.getValueAt(row, SYSNAMECOL), editCombo);
                 }
                 return editCombo;
