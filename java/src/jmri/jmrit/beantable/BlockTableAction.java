@@ -674,6 +674,7 @@ public class BlockTableAction extends AbstractTableAction {
                 public void actionPerformed(ActionEvent e) { cancelPressed(e); }
             };
             addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, _autoSystemName, "ButtonOK", oklistener, cancellistener));
+            //sys.setToolTipText(Bundle.getMessage("SysNameTooltip", "B")); // override tooltip with bean specific letter, doesn't work
         }
         if (pref.getSimplePreferenceState(systemNameAuto)) {
             _autoSystemName.setSelected(true);

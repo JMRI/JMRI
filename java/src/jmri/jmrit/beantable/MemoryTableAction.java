@@ -169,6 +169,7 @@ public class MemoryTableAction extends AbstractTableAction {
                 public void actionPerformed(ActionEvent e) { cancelPressed(e); }
             };
             addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, autoSystemName, "ButtonOK", okListener, cancelListener));
+            //sys.setToolTipText(Bundle.getMessage("SysNameTooltip", "M")); // override tooltip with bean specific letter, doesn't work
         }
         if (p.getSimplePreferenceState(systemNameAuto)) {
             autoSystemName.setSelected(true);

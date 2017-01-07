@@ -877,6 +877,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
             addFrame.getContentPane().add(panelBottom, BorderLayout.PAGE_END);
         } else {
+            // clear older entries
+            systemName.setText("");
+            userName.setText("");
             to1.refresh();
             to2.refresh();
             to3.refresh();
@@ -1554,13 +1557,31 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
     void handleSE8cOkPressed() {
         SignalHead s;
+/*        String msg;
+
+        // if no selection was made severeal exeptions as cast to the console, most start in the createbeanpane
+        try {
+            if (to1.getDisplayName() == "" || to2.getDisplayName() == "" || to1.getDisplayName() == null || to1.getDisplayName() == null) {
+                return;
+            }
+        } catch (NumberFormatException ex) {
+            if (to1.getDisplayName() == "") {
+                msg = Bundle.getMessage("se8c4SkippingDueToErrorInFirst");
+            } else {
+                msg = Bundle.getMessage("se8c4SkippingDueToErrorInSecond");
+            }
+            JOptionPane.showMessageDialog(addFrame, msg,
+                    Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+            log.error("No SE8C Turnouts selected in pane");
+            return;
+        }*/
 
         Turnout t1 = getTurnoutFromPanel(to1, "SignalHead:" + systemName.getText() + ":low");
         Turnout t2 = getTurnoutFromPanel(to2, "SignalHead:" + systemName.getText() + ":high");
 
         // check validity
         if (t1 != null && t2 != null) {
-            // OK process
+            // OK, process
             try {
                 s = new jmri.implementation.SE8cSignalHead(
                         nbhm.getNamedBeanHandle(t1.getSystemName(), t1),
