@@ -17,6 +17,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -641,8 +643,8 @@ public class BlockTableAction extends AbstractTableAction {
     }
 
     JmriJFrame addFrame = null;
-    JTextField sysName = new JTextField(5);
-    JTextField userName = new JTextField(5);
+    JTextField sysName = new JTextField(20);
+    JTextField userName = new JTextField(20);
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
 
@@ -651,7 +653,8 @@ public class BlockTableAction extends AbstractTableAction {
     JTextField blockSpeed = new JTextField(7);
     JCheckBox checkPerm = new JCheckBox(Bundle.getMessage("BlockPermColName"));
 
-    JTextField numberToAdd = new JTextField(10);
+    SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
+    JSpinner numberToAdd = new JSpinner(rangeSpinner);
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     jmri.UserPreferencesManager pref;
@@ -660,7 +663,7 @@ public class BlockTableAction extends AbstractTableAction {
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame == null) {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddBlock"), false, true);
-            addFrame.addHelpMenu("package.jmri.jmrit.beantable.BlockAddEdit", true); //IN18N
+            addFrame.addHelpMenu("package.jmri.jmrit.beantable.BlockAddEdit", true); //NOI18N
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             ActionListener oklistener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -746,17 +749,9 @@ public class BlockTableAction extends AbstractTableAction {
     void okPressed(ActionEvent e) {
         int intNumberToAdd = 1;
         if (range.isSelected()) {
-            try {
-                intNumberToAdd = Integer.parseInt(numberToAdd.getText());
-            } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + numberToAdd.getText() + " to a number");
-                String msg = Bundle.getMessage("ShouldBeNumber", new Object[]{Bundle.getMessage("LabelNumberToAdd")});
-                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showErrorMessage(Bundle.getMessage("ErrorTitle"), msg, "" + ex, "", true, false);
-                return;
-            }
+            intNumberToAdd = (Integer) numberToAdd.getValue();
         }
-        if (intNumberToAdd >= 65) {
+        if (intNumberToAdd >= 65) { // limited by JSpinnerModel to 100
             String msg = Bundle.getMessage("WarnExcessBeans", new Object[]{intNumberToAdd, Bundle.getMessage("BeanNameBlock")});
             if (JOptionPane.showConfirmDialog(addFrame,
                     msg, Bundle.getMessage("WarningTitle"),

@@ -1213,6 +1213,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     }
 
     // @TODO We could add a check to make sure that the user has entered a turnout into a turnout field if it has been presented.
+    // Done for: Acela
     // For now only an error is recorded in the Console window
     void okPressed(ActionEvent e) {
         if (!checkUserName(userName.getText())) {
