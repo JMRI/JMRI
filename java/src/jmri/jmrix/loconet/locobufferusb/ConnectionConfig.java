@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.loconet.locobufferusb;
 
 import jmri.util.SystemType;

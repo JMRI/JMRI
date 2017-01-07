@@ -364,11 +364,13 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         updateProgrammerStatus();
         ConnectionStatus.instance().addPropertyChangeListener((PropertyChangeEvent e) -> {
             if ((e.getPropertyName().equals("change")) || (e.getPropertyName().equals("add"))) {
+                log.debug("Received property {} with value {} ",e.getPropertyName(), e.getNewValue() );
                 updateProgrammerStatus();
             }
         });
         InstanceManager.addPropertyChangeListener((PropertyChangeEvent e) -> {
             if (e.getPropertyName().equals(InstanceManager.getDefaultsPropertyName(ProgrammerManager.class))) {
+                log.debug("Received property {} with value {} ",e.getPropertyName(), e.getNewValue() );
                 updateProgrammerStatus();
             }
         });
@@ -531,7 +533,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt_multiclick_time"));
             } catch (RuntimeException ex) {
                 clickDelay = 500;
-                log.error("Unable to get the double click speed, Using JMRI default of half a second" + e.toString());
+                log.warn("Unable to get the double click speed, Using JMRI default of half a second" + e.toString());
             }
         }
 
@@ -1478,6 +1480,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      * available.
      */
     protected void updateProgrammerStatus() {
+        log.debug("Updating Programmer Status");
         ConnectionConfig oldServMode = serModeProCon;
         ConnectionConfig oldOpsMode = opsModeProCon;
 
@@ -1485,8 +1488,11 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         GlobalProgrammerManager gpm = InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
         if (gpm != null) {
             String serviceModeProgrammerName = gpm.getUserName();
+            log.debug("GlobalProgrammerManager found of class {} name {} ",gpm.getClass(),serviceModeProgrammerName);
             for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
+                log.debug("Checking connection name {}", connection.getConnectionName());
                 if (connection.getConnectionName() != null && connection.getConnectionName().equals(serviceModeProgrammerName)) {
+                    log.debug("Connection found for GlobalProgrammermanager");
                     serModeProCon = connection;
                 }
             }
@@ -1496,21 +1502,45 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         AddressedProgrammerManager apm = InstanceManager.getNullableDefault(AddressedProgrammerManager.class);
         if (apm != null) {
             String opsModeProgrammerName = apm.getUserName();
+            log.debug("AddressedProgrammerManager found of class {} name {} ",apm.getClass(),opsModeProgrammerName);
             for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
+                log.debug("Checking connection name {}", connection.getConnectionName());
                 if (connection.getConnectionName() != null && connection.getConnectionName().equals(opsModeProgrammerName)) {
+                    log.debug("Connection found for AddressedProgrammermanager");
                     opsModeProCon = connection;
                 }
             }
         }
 
         if (serModeProCon != null && gpm.isGlobalProgrammerAvailable()) {
-            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getInfo())) {
+            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getConnectionName(),serModeProCon.getInfo())) {
+                log.debug("GPM Connection online");
                 serviceModeProgrammerLabel.setText(
                         Bundle.getMessage("ServiceModeProgOnline", serModeProCon.getConnectionName()));
                 serviceModeProgrammerLabel.setForeground(new Color(0, 128, 0));
             } else {
+                log.debug("GPM Connection onffline");
                 serviceModeProgrammerLabel.setText(
                         Bundle.getMessage("ServiceModeProgOffline", serModeProCon.getConnectionName()));
+                serviceModeProgrammerLabel.setForeground(Color.red);
+            }
+            if (oldServMode == null) {
+                contextService.setEnabled(true);
+                contextService.setVisible(true);
+                service.setEnabled(true);
+                service.setVisible(true);
+                firePropertyChange("setprogservice", "setEnabled", true);
+            }
+        } else if(gpm!=null && gpm.isGlobalProgrammerAvailable()) {
+            if (ConnectionStatus.instance().isSystemOk(gpm.getUserName())) {
+                log.debug("GPM Connection online");
+                serviceModeProgrammerLabel.setText(
+                        Bundle.getMessage("ServiceModeProgOnline", gpm.getUserName()));
+                serviceModeProgrammerLabel.setForeground(new Color(0, 128, 0));
+            } else {
+                log.debug("GPM Connection onffline");
+                serviceModeProgrammerLabel.setText(
+                        Bundle.getMessage("ServiceModeProgOffline", gpm.getUserName()));
                 serviceModeProgrammerLabel.setForeground(Color.red);
             }
             if (oldServMode == null) {
@@ -1538,13 +1568,34 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
 
         if (opsModeProCon != null && apm.isAddressedModePossible()) {
-            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getInfo())) {
+            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getConnectionName(),opsModeProCon.getInfo())) {
+                log.debug("Ops Mode Connection online");
                 operationsModeProgrammerLabel.setText(
                         Bundle.getMessage("OpsModeProgOnline", opsModeProCon.getConnectionName()));
                 operationsModeProgrammerLabel.setForeground(new Color(0, 128, 0));
             } else {
+                log.debug("Ops Mode Connection offline");
                 operationsModeProgrammerLabel.setText(
                         Bundle.getMessage("OpsModeProgOffline", opsModeProCon.getConnectionName()));
+                operationsModeProgrammerLabel.setForeground(Color.red);
+            }
+            if (oldOpsMode == null) {
+                contextOps.setEnabled(true);
+                contextOps.setVisible(true);
+                ops.setEnabled(true);
+                ops.setVisible(true);
+                firePropertyChange("setprogops", "setEnabled", true);
+            }
+        } else if (apm!=null && apm.isAddressedModePossible()) {
+            if (ConnectionStatus.instance().isSystemOk(apm.getUserName())) {
+                log.debug("Ops Mode Connection online");
+                operationsModeProgrammerLabel.setText(
+                        Bundle.getMessage("OpsModeProgOnline", apm.getUserName()));
+                operationsModeProgrammerLabel.setForeground(new Color(0, 128, 0));
+            } else {
+                log.debug("Ops Mode Connection offline");
+                operationsModeProgrammerLabel.setText(
+                        Bundle.getMessage("OpsModeProgOffline", apm.getUserName()));
                 operationsModeProgrammerLabel.setForeground(Color.red);
             }
             if (oldOpsMode == null) {

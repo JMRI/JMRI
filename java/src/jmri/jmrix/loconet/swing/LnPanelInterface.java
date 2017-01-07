@@ -1,4 +1,3 @@
-// LnPanelInterface.java
 package jmri.jmrix.loconet.swing;
 
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;

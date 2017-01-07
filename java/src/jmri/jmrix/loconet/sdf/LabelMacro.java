@@ -1,4 +1,3 @@
-// LabelMacro.java
 package jmri.jmrix.loconet.sdf;
 
 /**
@@ -48,5 +47,3 @@ public class LabelMacro extends SdfMacro {
         return oneInstructionString();
     }
 }
-
-/* @(#)LabelMacro.java */
