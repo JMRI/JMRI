@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- Translated by Herv&#233; Blorec 2013-10-04 -->
+<!-- Translated by Herv&#233; Blorec 2017-01-07 -->
 <html lang="fr">
 <head>
   <title>Throttle: Table of Contents </title>
@@ -30,21 +30,20 @@
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
-<h1 style="color:#ff0000">Mise &#224; Jour de la version documentaire R&#233;gulateur</h1>
+<h1> Documentation R&#233;gulateur</h1>
 
-<p>Notez que cette documentation a &#233;t&#233; mise &#224; jour, se r&#233;f&#233;rer au lien ci-dessous:</p>
+<p>Notez que cette documentation a &#233;t&#233; mise &#224; jour. Version actuelle:</p>
 <ul>
-  <li>Le <a href="ToolsMenuThrottleEntry.shtml">Menu R&#233;gulateur dans JMRI</a></li>
-  <li>La <a href="BasicThrottleWindow.shtml">Fen&#234;tre R&#233;gulateur elle-m&#234;me</a></li>
-  <li>La <a href="ThrottleWindowMenus.shtml">Menu Fen&#234;tre R&#233;gulateur</a></li>
-  <li>La <a href="ThrottleToolBar.shtml">Fen&#234;tre barre d'outils R&#233;gulateur</a></li>
-  <li>La <a href="AdvancedThrottleControl.shtml">Fen&#234;tre Commandes R&#233;gulateur</a></li>
-  <li>La <a href="ThrottlesListWindow.shtml">Fen�tre Liste R�gulateur</a></li>
-  <li>Le <a href="ThrottlesPreferencesPane.shtml">Volet des pr&#233;f&#233;rences R&#233;gulateur
-  </a></li>
+  <li>Le <a href="ToolsMenuThrottleEntry.shtml">Menu R&#233;gulateur JMRI</a></li>
+  <li>La <a href="BasicThrottleWindow.shtml">R&#233;gulateur</a></li>
+  <li>La <a href="ThrottleWindowMenus.shtml">Menu R&#233;gulateur</a></li>
+  <li>La <a href="ThrottleToolBar.shtml">Barre d'outils Fen&#234;tre R&#233;gulateur</a></li>
+  <li>La <a href="AdvancedThrottleControl.shtml">Commandes Fen&#234;tre R&#233;gulateur</a></li>
+  <li>La <a href="ThrottlesListWindow.shtml">Liste R&#233;gulateur</a></li>
+  <li>Le <a href="ThrottlesPreferencesPane.shtml">Pr&#233;f&#233;rences R&#233;gulateur</a></li>
 </ul>
-
-<h1>Tables des Mati&#232;res (TOC)</h1>
+<hr>
+<h2>r&#233;gulateurs dans JMTI v2.x</h2>
 <dl class="toc">
   <dt><a href="ThrottleMain.shtml"
   title="Introduction and table of contents (this page)">INTRODUCTION</a></dt>
@@ -140,13 +139,13 @@
   <dir>
   </dir>
   <dt>2. <a href="ThrottleChapter4.shtml#Merging"
-  title="Merging Throttle Windows">Fuusionner des Fen&#234;tres R&#233;gulateur</a></dt>
+  title="Merging Throttle Windows">Fusionner des Fen&#234;tres R&#233;gulateur</a></dt>
   <dt>C. <a href="ThrottleChapter4.shtml#CloseThrottle"
   title="Closing A Throttle Window">Fermeture d'une Fen&#234;tre R&#233;gulateur</a></dt>
 </dl>
-<br>
-<br>
-<br>
-<!--#include virtual="/Footer" --> </div>
+<!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
 </body>
 </html>
