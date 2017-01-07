@@ -338,8 +338,8 @@ public class RosterTest {
         FileUtil.createDirectory(rosterDir);
 
         File f = new File(rosterDir, "rosterTest.xml");
-        // remove existing roster if its there
-        f.delete();
+        // File should never be there is TemporaryFolder working
+        if (f.exists()) Assert.fail("rosterTest.xml in "+rosterDir+" already present: "+f);
 
         // create a roster with known contents
         Roster r = new Roster();
