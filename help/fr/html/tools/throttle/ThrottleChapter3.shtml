@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Blorec Herv&#233; 2013-10-02-->
+<!-- UpDated by Blorec Herv&#233; 2017-01-07-->
 <html lang="fr">
 <head>
   <title>Throttle: Advanced Configuration</title>
@@ -295,8 +295,9 @@ Vous pouvez utiliser la fl&#232;che de droite ci-dessous pour aller &#224; ce ch
  </tbody>
 </table>
 
-<br>
 <!--#include virtual="/Footer" -->
- </div>
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
 </body>
 </html>
