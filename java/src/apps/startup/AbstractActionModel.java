@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provide services for invoking actions during configuration and startup.
  * <p>
- * The action classes and corresponding human-readable names provided by
+ * The action classes and corresponding human-readable names are provided by
  * {@link apps.startup.StartupActionFactory} instances.
  *
  * @author Bob Jacobsen Copyright 2003, 2007, 2014
@@ -114,7 +114,7 @@ public abstract class AbstractActionModel implements StartupModel {
                 if (memo != null) {
                     ((SystemConnectionAction) action).setSystemConnectionMemo(memo);
                 } else {
-                    log.error("Connection {} does not exist. Cannot be assigned to action {}", this.getSystemPrefix(), className);
+                    log.warn("Connection \"{}\" does not exist and cannot be assigned to action {}\nThis warning can be silenced by configuring the connection associated with the startup action.", this.getSystemPrefix(), className);
                 }
             }
             this.performAction(action);
