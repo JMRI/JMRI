@@ -35,7 +35,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.DccLocoAddressTest.suite());
         suite.addTest(jmri.InstanceManagerTest.suite());
         suite.addTest(jmri.LightTest.suite());
-        suite.addTest(jmri.NmraPacketTest.suite());
+        suite.addTest(new JUnit4TestAdapter(NmraPacketTest.class));
         suite.addTest(jmri.ConditionalVariableTest.suite());
         suite.addTest(jmri.PathTest.suite());
         suite.addTest(jmri.PathLengthTest.suite());
