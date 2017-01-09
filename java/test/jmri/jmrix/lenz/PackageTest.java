@@ -30,7 +30,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(LenzConnectionTypeListTest.class));
         suite.addTest(new TestSuite(XNetMessageTest.class));
         suite.addTest(new TestSuite(XNetReplyTest.class));
-        suite.addTest(new TestSuite(XNetTurnoutTest.class));
+        suite.addTest(new JUnit4TestAdapter(XNetTurnoutTest.class));
         suite.addTest(new TestSuite(XNetSensorTest.class));
         suite.addTest(new TestSuite(XNetLightTest.class));
         suite.addTest(new JUnit4TestAdapter(XNetPacketizerTest.class));
