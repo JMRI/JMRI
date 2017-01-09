@@ -320,31 +320,34 @@ public class LayoutTurnout {
         dispC = pt;
     }
 
-    protected void rotateCoords(double rot) {
+    protected void rotateCoords(double rotDEG) {
         // rotate coordinates
-        double sineAng = Math.sin(rot * Math.PI / 180.0);
-        double cosineAng = Math.cos(rot * Math.PI / 180.0);
+		double rotRAD = rotDEG * Math.PI / 180.0;
+		double sineRot = Math.sin(rotRAD);
+		double cosineRot = Math.cos(rotRAD);
 
         if (version == 2) {
-            pointA = rotatePoint(pointA, sineAng, cosineAng);
-            pointB = rotatePoint(pointB, sineAng, cosineAng);
-            pointC = rotatePoint(pointC, sineAng, cosineAng);
-            pointD = rotatePoint(pointD, sineAng, cosineAng);
+            pointA = rotatePoint(pointA, sineRot, cosineRot);
+            pointB = rotatePoint(pointB, sineRot, cosineRot);
+            pointC = rotatePoint(pointC, sineRot, cosineRot);
+            pointD = rotatePoint(pointD, sineRot, cosineRot);
         } else {
-            double x = (cosineAng * dispB.getX()) - (sineAng * dispB.getY());
-            double y = (sineAng * dispB.getX()) + (cosineAng * dispB.getY());
+            double x = (cosineRot * dispB.getX()) - (sineRot * dispB.getY());
+            double y = (sineRot * dispB.getX()) + (cosineRot * dispB.getY());
             dispB = new Point2D.Double(x, y);
-            x = (cosineAng * dispC.getX()) - (sineAng * dispC.getY());
-            y = (sineAng * dispC.getX()) + (cosineAng * dispC.getY());
+            x = (cosineRot * dispC.getX()) - (sineRot * dispC.getY());
+            y = (sineRot * dispC.getX()) + (cosineRot * dispC.getY());
             dispC = new Point2D.Double(x, y);
         }
     }
 
-    protected Point2D rotatePoint(Point2D p, double sineAng, double cosineAng) {
+    protected Point2D rotatePoint(Point2D p, double sineRot, double cosineRot) {
         double cX = center.getX();
         double cY = center.getY();
-        double x = cX + cosineAng * (p.getX() - cX) - sineAng * (p.getY() - cY);
-        double y = cY + sineAng * (p.getX() - cX) + cosineAng * (p.getY() - cY);
+        double deltaX = p.getX() - cX;
+        double deltaY = p.getY() - cY;
+        double x = cX + cosineRot * deltaX - sineRot * deltaY;
+        double y = cY + sineRot * deltaX + cosineRot * deltaY;
         return new Point2D.Double(x, y);
     }
 
@@ -2407,7 +2410,6 @@ public class LayoutTurnout {
 
     // variables for Edit Layout Turnout pane
     protected JmriJFrame editLayoutTurnoutFrame = null;
-    private JTextField turnoutNameField = new JTextField(16);
     private JmriBeanComboBox firstTurnoutComboBox;
     private JmriBeanComboBox secondTurnoutComboBox;
     private JLabel secondTurnoutLabel;
@@ -2450,23 +2452,12 @@ public class LayoutTurnout {
             panel1.setLayout(new FlowLayout());
             JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout")));
             panel1.add(turnoutNameLabel);
-            panel1.add(turnoutNameField);
-            turnoutNameField.setToolTipText(rb.getString("EditTurnoutNameHint"));
-            contentPane.add(panel1);
 
             // add combobox to select turnout
-            JPanel panel0 = new JPanel();
-            panel0.setLayout(new BoxLayout(panel0, BoxLayout.Y_AXIS));
             firstTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DISPLAYNAME);
-            firstTurnoutComboBox.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    // copy selected turnout (name) to turnoutNameField
-                    String newName = firstTurnoutComboBox.getSelectedDisplayName();
-                    turnoutNameField.setText(newName);
-                }
-            });
-            panel0.add(firstTurnoutComboBox);
-            contentPane.add(panel0);
+            firstTurnoutComboBox.setEditable(true);
+            panel1.add(firstTurnoutComboBox);
+            contentPane.add(panel1);
 
             JPanel panel1a = new JPanel();
             panel1a.setLayout(new BoxLayout(panel1a, BoxLayout.Y_AXIS));
@@ -2616,7 +2607,7 @@ public class LayoutTurnout {
             blockCNameField.setText(blockCName);
             blockDNameField.setText(blockDName);
         }
-        turnoutNameField.setText(turnoutName);
+        firstTurnoutComboBox.setSelectedItem(turnoutName);
 
         if (secondNamedTurnout != null) {
             additionalTurnout.setSelected(true);
@@ -2785,16 +2776,15 @@ public class LayoutTurnout {
 
     void turnoutEditDonePressed(ActionEvent a) {
         // check if Turnout changed
-        if (!turnoutName.equals(turnoutNameField.getText().trim())) {
+		String newName = firstTurnoutComboBox.getEditor().getItem().toString().trim();
+        if (!turnoutName.equals(newName)) {
             // turnout has changed
-            String newName = turnoutNameField.getText().trim();
-            if (layoutEditor.validatePhysicalTurnout(newName,
-                    editLayoutTurnoutFrame)) {
+            if (layoutEditor.validatePhysicalTurnout(newName, editLayoutTurnoutFrame)) {
                 setTurnout(newName);
             } else {
                 namedTurnout = null;
                 turnoutName = "";
-                turnoutNameField.setText("");
+                firstTurnoutComboBox.getEditor().setItem("");
             }
             needRedraw = true;
         }
@@ -2811,7 +2801,6 @@ public class LayoutTurnout {
                         additionalTurnout.setSelected(false);
                         secondNamedTurnout = null;
                         secondTurnoutName = "";
-                        //secondTurnoutNameField.setText("");
                     }
                     needRedraw = true;
                 } else {
@@ -2843,8 +2832,7 @@ public class LayoutTurnout {
                 blockName = "";
             }
             // decrement use if block was already counted
-            if ((block != null) && ((block == blockB) || (block == blockC)
-                    || (block == blockD))) {
+            if ((block != null) && ((block == blockB) || (block == blockC) || (block == blockD))) {
                 block.decrementUse();
             }
             needRedraw = true;
