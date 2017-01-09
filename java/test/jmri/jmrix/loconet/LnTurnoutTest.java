@@ -1,9 +1,10 @@
 //LnTurnoutTest.java
 package jmri.jmrix.loconet;
 
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +15,8 @@ import org.slf4j.LoggerFactory;
  */
 public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 
+    @Override
+    @Before
     public void setUp() {
         // prepare an interface
         lnis = new LocoNetInterfaceScaffold();
@@ -30,6 +33,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
         t = new LnTurnout("L", 21, lnis);
     }
 
+    @Override
     public int numListeners() {
         return lnis.numListeners();
     }
@@ -42,6 +46,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
      * with the first one being a set 21 closed and off. Is it left over from
      * some previous test?
      */
+    @Override
     public void checkClosedMsgSent() throws InterruptedException {
         // Make sure that timed message has fired by waiting
         synchronized (this) {
@@ -60,6 +65,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
     /**
      * Check that last two messages correspond to thrown/on, then thrown/off
      */
+    @Override
     public void checkThrownMsgSent() throws InterruptedException {
         // Make sure that timed message has fired by waiting
         synchronized (this) {
@@ -75,6 +81,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
     }
 
+    @Test
     public void checkIncoming() {
         // notify the Ln that somebody else changed it...
         LocoNetMessage m = new LocoNetMessage(4);
@@ -95,6 +102,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
     }
 
     // LnTurnout test for incoming status message
+    @Test
     public void testLnTurnoutStatusMsg() {
         // prepare an interface
         // set closed
@@ -119,6 +127,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
     }
 
     // LnTurnout test for exact feedback
+    @Test
     public void testLnTurnoutExactFeedback() {
         LocoNetMessage m;
         // prepare a specific test
@@ -253,6 +262,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
     }
 
     // test that only one message is sent when binaryOutput is set
+    @Test
     public void testBasicSet() throws InterruptedException {
         t = new LnTurnout("L", 121, lnis);
         t.setBinaryOutput(true);
@@ -268,23 +278,6 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
         Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
                 "B0 78 10 00");  // THROWN/ON loconet message
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
-    }
-
-    // from here down is testing infrastructure
-    public LnTurnoutTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {LnTurnoutTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LnTurnoutTest.class);
-        return suite;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnTurnoutTest.class.getName());

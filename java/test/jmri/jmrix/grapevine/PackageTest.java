@@ -33,10 +33,10 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.grapevine.SerialTest");
-        suite.addTest(SerialTurnoutTest.suite());
-        suite.addTest(SerialTurnoutTest1.suite());
-        suite.addTest(SerialTurnoutTest2.suite());
-        suite.addTest(SerialTurnoutTest3.suite());
+        suite.addTest(new JUnit4TestAdapter(SerialTurnoutTest.class));
+        suite.addTest(new JUnit4TestAdapter(SerialTurnoutTest1.class));
+        suite.addTest(new JUnit4TestAdapter(SerialTurnoutTest2.class));
+        suite.addTest(new JUnit4TestAdapter(SerialTurnoutTest3.class));
         suite.addTest(new JUnit4TestAdapter(SerialTurnoutManagerTest.class));
         suite.addTest(SerialLightTest.suite());
         suite.addTest(new JUnit4TestAdapter(SerialLightManagerTest.class));
