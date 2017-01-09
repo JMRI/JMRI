@@ -1513,7 +1513,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
 
         if (serModeProCon != null && gpm.isGlobalProgrammerAvailable()) {
-            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getInfo())) {
+            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getConnectionName(),serModeProCon.getInfo())) {
                 log.debug("GPM Connection online");
                 serviceModeProgrammerLabel.setText(
                         Bundle.getMessage("ServiceModeProgOnline", serModeProCon.getConnectionName()));
@@ -1522,6 +1522,25 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 log.debug("GPM Connection onffline");
                 serviceModeProgrammerLabel.setText(
                         Bundle.getMessage("ServiceModeProgOffline", serModeProCon.getConnectionName()));
+                serviceModeProgrammerLabel.setForeground(Color.red);
+            }
+            if (oldServMode == null) {
+                contextService.setEnabled(true);
+                contextService.setVisible(true);
+                service.setEnabled(true);
+                service.setVisible(true);
+                firePropertyChange("setprogservice", "setEnabled", true);
+            }
+        } else if(gpm!=null && gpm.isGlobalProgrammerAvailable()) {
+            if (ConnectionStatus.instance().isSystemOk(gpm.getUserName())) {
+                log.debug("GPM Connection online");
+                serviceModeProgrammerLabel.setText(
+                        Bundle.getMessage("ServiceModeProgOnline", gpm.getUserName()));
+                serviceModeProgrammerLabel.setForeground(new Color(0, 128, 0));
+            } else {
+                log.debug("GPM Connection onffline");
+                serviceModeProgrammerLabel.setText(
+                        Bundle.getMessage("ServiceModeProgOffline", gpm.getUserName()));
                 serviceModeProgrammerLabel.setForeground(Color.red);
             }
             if (oldServMode == null) {
@@ -1549,7 +1568,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
 
         if (opsModeProCon != null && apm.isAddressedModePossible()) {
-            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getInfo())) {
+            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getConnectionName(),opsModeProCon.getInfo())) {
                 log.debug("Ops Mode Connection online");
                 operationsModeProgrammerLabel.setText(
                         Bundle.getMessage("OpsModeProgOnline", opsModeProCon.getConnectionName()));
@@ -1558,6 +1577,25 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 log.debug("Ops Mode Connection offline");
                 operationsModeProgrammerLabel.setText(
                         Bundle.getMessage("OpsModeProgOffline", opsModeProCon.getConnectionName()));
+                operationsModeProgrammerLabel.setForeground(Color.red);
+            }
+            if (oldOpsMode == null) {
+                contextOps.setEnabled(true);
+                contextOps.setVisible(true);
+                ops.setEnabled(true);
+                ops.setVisible(true);
+                firePropertyChange("setprogops", "setEnabled", true);
+            }
+        } else if (apm!=null && apm.isAddressedModePossible()) {
+            if (ConnectionStatus.instance().isSystemOk(apm.getUserName())) {
+                log.debug("Ops Mode Connection online");
+                operationsModeProgrammerLabel.setText(
+                        Bundle.getMessage("OpsModeProgOnline", apm.getUserName()));
+                operationsModeProgrammerLabel.setForeground(new Color(0, 128, 0));
+            } else {
+                log.debug("Ops Mode Connection offline");
+                operationsModeProgrammerLabel.setText(
+                        Bundle.getMessage("OpsModeProgOffline", apm.getUserName()));
                 operationsModeProgrammerLabel.setForeground(Color.red);
             }
             if (oldOpsMode == null) {

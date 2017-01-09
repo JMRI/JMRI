@@ -375,7 +375,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         if ((state & OBlock.OUT_OF_SERVICE) != 0) {
             stateText.append("OutOf Service ");
         }
-        if ((state & OBlock.DARK) != 0) {
+        if ((state & OBlock.UNDETECTED) != 0) {
             stateText.append("Dark ");
         }
         if ((state & OBlock.TRACK_ERROR) != 0) {

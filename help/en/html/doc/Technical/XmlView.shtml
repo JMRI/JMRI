@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -18,11 +17,12 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Viewing XML Files</h1>JMRI stores various
-      information in XML files. Although they're a text format that
-      is basically human-readable, it's a complicated format.
+      <h1>JMRI: Viewing XML Files</h1>
+      <p>JMRI stores various information in XML files. Although
+      they're a text format that is basically human-readable,
+      it's a complicated format.</p>
 
-      <p>To make them easier to read, print and understand, most
+      <p>To make this information easier to read, print and understand, most
       JMRI XML files can be displayed in a web browser. A technique
       called "XSLT stylesheets" is used to format them within the
       web browser. For an example of how this looks, please see the
@@ -33,7 +33,7 @@
       <p>To view an XML file that JMRI has created, just open the
       file with your favorite web browser. In many cases, you
       should be able to just double-click on it, or drag it to the
-      web browser's icon. On some computer types, you'll need to
+      web browser's icon. On some platforms, you'll need to
       open it from the "File" menu.</p>
 
       <p>Unfortunately, this simple approach doesn't always work,
@@ -46,7 +46,9 @@
       problematic. Mozilla, Safari and Opera seem to get this
       right, while Firefox seems to work properly on some platforms
       and not on others. (There might also be options that affect
-      whether it works)</p>
+      whether it works. Here's some
+      <a href="http://jmri.sourceforge.net/xml/XSLT/README">technical
+      background</a>)</p>
 
       <p>If none of the browsers available to you can display the
       file, you can get around this problem using the <a href=
@@ -56,7 +58,7 @@
       <p>To do this:</p>
 
       <ul>
-        <li>First, start JMRI.
+        <li>First, start JMRI:
 
           <ul>
             <li>Either DecoderPro or PanelPro can be used, and no
@@ -71,21 +73,25 @@
           </ul>
         </li>
 
-        <li>Start the JMRI web server. Under the Tools menu, select
+        <li>Start the JMRI Web Server: from the Tools menu, select
         "Start JMRI Web Server".</li>
 
         <li>Open your web browser and enter the URL "<a href=
-        "http://localhost:12080/index.html">http://localhost:12080/index.html</a>"</li>
+        "http://localhost:12080" target="_blank">http://localhost:12080</a>"</li>
 
-        <li>You should now see the JMRI logo on a index page. If
-        your XML file is within the JMRI distribution directory,
-        click on the "dist" link. If it's within the preferences
-        directory, click on the "prefs" link.</li>
-
+        <li>You should now see the JMRI web page for your layout, like the
+          example below.<br>
+        If the XML file you wish to view is within the JMRI distribution
+        directory, click on the "/dist" link at bottom right. If it's within
+        the preferences directory, click on the "/prefs" link.</li>
+        <a href="images/Webstartxml.png">
+          <img src="images/Webstartxml.png"
+               align="center" height="286" width="410"></a>
         <li>Finally, click on any needed directory names to get to
         your file, then click on your file.</li>
-      </ul>You can then use your browser to view, print, save, etc
-      as desired. <!--#include virtual="/Footer" -->
+      </ul>You can then use your browser to view, print, save, etc.
+      as desired.
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

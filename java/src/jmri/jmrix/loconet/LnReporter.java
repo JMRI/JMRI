@@ -1,4 +1,3 @@
-// LnReporter.java
 package jmri.jmrix.loconet;
 
 import java.util.regex.Matcher;
@@ -38,11 +37,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001, 2007
   */
 public class LnReporter extends AbstractReporter implements LocoNetListener, PhysicalLocationReporter {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4140421326633704317L;
 
     public LnReporter(int number, LnTrafficController tc, String prefix) {  // a human-readable Reporter number must be specified!
         super(prefix + "R" + number);  // can't use prefix here, as still in construction
@@ -220,5 +214,3 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
     private final static Logger log = LoggerFactory.getLogger(LnReporter.class.getName());
 
 }
-
-/* @(#)LnReporter.java */

@@ -11,6 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
+<!-- version 1.4, corrected CV313 "inverted" output labels, which corrects bug in displayed file. Nigel Cliffe, 27Dec 2016 -->
 <!-- version 1.3, add german translation by Ronald Kuhn -->
 <!-- version 1.2, include statments for CV341 CV342 CV343 edited for new decoders and corrections by Mark Waters -->
 <!-- many additions for v34 firmware,  Nigel Cliffe, 23 Jan 2015, edited with qualifiers to be included in this file instead of a seperate v34 file -->  
@@ -1021,64 +1022,7 @@
       </enumChoice>
       <enumChoice choice="F19 off=Fade">
         <choice>F19</choice>
-      </enumChoice>
-      <enumChoice choice="F1 on=Fade" value="101">
-        <choice>F1</choice>
-      </enumChoice>
-      <enumChoice choice="F2 on=Fade">
-        <choice>F2</choice>
-      </enumChoice>
-      <enumChoice choice="F3 on=Fade">
-        <choice>F3</choice>
-      </enumChoice>
-      <enumChoice choice="F4 on=Fade">
-        <choice>F4</choice>
-      </enumChoice>
-      <enumChoice choice="F5 on=Fade">
-        <choice>F5</choice>
-      </enumChoice>
-      <enumChoice choice="F6 on=Fade">
-        <choice>F6</choice>
-      </enumChoice>
-      <enumChoice choice="F7 on=Fade">
-        <choice>F7</choice>
-      </enumChoice>
-      <enumChoice choice="F8 on=Fade">
-        <choice>F8</choice>
-      </enumChoice>
-      <enumChoice choice="F9 on=Fade">
-        <choice>F9</choice>
-      </enumChoice>
-      <enumChoice choice="F10 on=Fade">
-        <choice>F10</choice>
-      </enumChoice>
-      <enumChoice choice="F11 on=Fade">
-        <choice>F11</choice>
-      </enumChoice>
-      <enumChoice choice="F12 on=Fade">
-        <choice>F12</choice>
-      </enumChoice>
-      <enumChoice choice="F13 on=Fade">
-        <choice>F13</choice>
-      </enumChoice>
-      <enumChoice choice="F14 on=Fade">
-        <choice>F14</choice>
-      </enumChoice>
-      <enumChoice choice="F15 on=Fade">
-        <choice>F15</choice>
-      </enumChoice>
-      <enumChoice choice="F16 on=Fade">
-        <choice>F16</choice>
-      </enumChoice>
-      <enumChoice choice="F17 on=Fade">
-        <choice>F17</choice>
-      </enumChoice>
-      <enumChoice choice="F18 on=Fade">
-        <choice>F18</choice>
-      </enumChoice>
-      <enumChoice choice="F19 on=Fade">
-        <choice>F19</choice>
-      </enumChoice>
+      </enumChoice>  
     </enumVal>
     <label>Mute key</label>
     <label xml:lang="it">Tasto Tacitazione</label>

@@ -30,7 +30,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(LenzConnectionTypeListTest.class));
         suite.addTest(new TestSuite(XNetMessageTest.class));
         suite.addTest(new TestSuite(XNetReplyTest.class));
-        suite.addTest(new TestSuite(XNetTurnoutTest.class));
+        suite.addTest(new JUnit4TestAdapter(XNetTurnoutTest.class));
         suite.addTest(new TestSuite(XNetSensorTest.class));
         suite.addTest(new TestSuite(XNetLightTest.class));
         suite.addTest(new JUnit4TestAdapter(XNetPacketizerTest.class));
@@ -47,7 +47,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(XNetProgrammerTest.class));
         suite.addTest(new TestSuite(XNetProgrammerManagerTest.class));
         suite.addTest(new TestSuite(XNetOpsModeProgrammerTest.class));
-        suite.addTest(new TestSuite(XNetPowerManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(XNetPowerManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(XNetThrottleManagerTest.class));
         suite.addTest(new TestSuite(XNetExceptionTest.class));
         suite.addTest(new TestSuite(XNetMessageExceptionTest.class));

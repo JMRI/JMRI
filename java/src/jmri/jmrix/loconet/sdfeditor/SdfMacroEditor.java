@@ -1,4 +1,3 @@
-// SdfMacroEditor.java
 package jmri.jmrix.loconet.sdfeditor;
 
 import javax.swing.JLabel;
@@ -28,11 +27,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2007
  */
 public abstract class SdfMacroEditor extends JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4518290766707658975L;
 
     public SdfMacroEditor(SdfMacro inst) {
         this.inst = inst;
@@ -134,4 +128,3 @@ public abstract class SdfMacroEditor extends JPanel {
     private final static Logger log = LoggerFactory.getLogger(SdfMacroEditor.class.getName());
 
 }
-/* @(#)SdfMacroEditor.java */
