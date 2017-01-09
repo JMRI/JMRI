@@ -1,5 +1,6 @@
 package jmri;
 
+import javax.annotation.CheckForNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,9 +57,14 @@ public class NmraPacket {
 
     /**
      * Create a packet containing a one-byte instruction.
+     *
+     * @param address  the address to send the instruction to
+     * @param longAddr true if address is long, false otherwise
+     * @param byte1    the byte to send as an instruction
+     * @return the packet as a byte array or null if the address is not valid
      */
-    public static byte[] oneBytePacket(int address, boolean longAddr,
-            byte arg1) {
+    @CheckForNull
+    public static byte[] oneBytePacket(int address, boolean longAddr, byte byte1) {
         if (!addressCheck(address, longAddr)) {
             return null;  // failed!
         }
@@ -70,13 +76,13 @@ public class NmraPacket {
             retVal = new byte[4];
             retVal[0] = (byte) (192 + ((address / 256) & 0x3F));
             retVal[1] = (byte) (address & 0xFF);
-            retVal[2] = arg1;
+            retVal[2] = byte1;
             retVal[3] = (byte) (retVal[0] ^ retVal[1] ^ retVal[2]);
         } else {
             // short address form
             retVal = new byte[3];
             retVal[0] = (byte) (address & 0xFF);
-            retVal[1] = arg1;
+            retVal[1] = byte1;
             retVal[2] = (byte) (retVal[0] ^ retVal[1]);
         }
         return retVal;
@@ -84,9 +90,15 @@ public class NmraPacket {
 
     /**
      * Create a packet containing a two-byte instruction.
+     *
+     * @param address  the address to send the instruction to
+     * @param longAddr true if address is long, false otherwise
+     * @param byte1    first byte in the instruction
+     * @param byte2    second byte in the instruction
+     * @return the packet as a byte array or null if the address is not valid
      */
-    public static byte[] twoBytePacket(int address, boolean longAddr,
-            byte arg1, byte arg2) {
+    @CheckForNull
+    public static byte[] twoBytePacket(int address, boolean longAddr, byte byte1, byte byte2) {
         if (!addressCheck(address, longAddr)) {
             return null;  // failed!
         }
@@ -98,15 +110,15 @@ public class NmraPacket {
             retVal = new byte[5];
             retVal[0] = (byte) (192 + ((address / 256) & 0x3F));
             retVal[1] = (byte) (address & 0xFF);
-            retVal[2] = arg1;
-            retVal[3] = arg2;
+            retVal[2] = byte1;
+            retVal[3] = byte2;
             retVal[4] = (byte) (retVal[0] ^ retVal[1] ^ retVal[2] ^ retVal[3]);
         } else {
             // short address form
             retVal = new byte[4];
             retVal[0] = (byte) (address & 0xFF);
-            retVal[1] = arg1;
-            retVal[2] = arg2;
+            retVal[1] = byte1;
+            retVal[2] = byte2;
             retVal[3] = (byte) (retVal[0] ^ retVal[1] ^ retVal[2]);
         }
         return retVal;
@@ -114,9 +126,16 @@ public class NmraPacket {
 
     /**
      * Create a packet containing a three-byte instruction.
+     *
+     * @param address  the address to send the instruction to
+     * @param longAddr true if address is long, false otherwise
+     * @param byte1    first byte in the instruction
+     * @param byte2    second byte in the instruction
+     * @param byte3    third byte in the instruction
+     * @return the packet as a byte array or null if the address is not valid
      */
-    public static byte[] threeBytePacket(int address, boolean longAddr,
-            byte arg1, byte arg2, byte arg3) {
+    @CheckForNull
+    public static byte[] threeBytePacket(int address, boolean longAddr, byte byte1, byte byte2, byte byte3) {
         if (!addressCheck(address, longAddr)) {
             return null;  // failed!
         }
@@ -128,17 +147,17 @@ public class NmraPacket {
             retVal = new byte[6];
             retVal[0] = (byte) (192 + ((address / 256) & 0x3F));
             retVal[1] = (byte) (address & 0xFF);
-            retVal[2] = arg1;
-            retVal[3] = arg2;
-            retVal[4] = arg3;
+            retVal[2] = byte1;
+            retVal[3] = byte2;
+            retVal[4] = byte3;
             retVal[5] = (byte) (retVal[0] ^ retVal[1] ^ retVal[2] ^ retVal[3] ^ retVal[4]);
         } else {
             // short address form
             retVal = new byte[5];
             retVal[0] = (byte) (address & 0xFF);
-            retVal[1] = arg1;
-            retVal[2] = arg2;
-            retVal[3] = arg3;
+            retVal[1] = byte1;
+            retVal[2] = byte2;
+            retVal[3] = byte3;
             retVal[4] = (byte) (retVal[0] ^ retVal[1] ^ retVal[2] ^ retVal[3]);
         }
         return retVal;
@@ -146,9 +165,17 @@ public class NmraPacket {
 
     /**
      * Create a packet containing a four-byte instruction.
+     *
+     * @param address  the address to send the instruction to
+     * @param longAddr true if address is long, false otherwise
+     * @param byte1    first byte in the instruction
+     * @param byte2    second byte in the instruction
+     * @param byte3    third byte in the instruction
+     * @param byte4    forth byte in the instruction
+     * @return the packet as a byte array or null if the address is not valid
      */
-    public static byte[] fourBytePacket(int address, boolean longAddr,
-            byte arg1, byte arg2, byte arg3, byte arg4) {
+    @CheckForNull
+    public static byte[] fourBytePacket(int address, boolean longAddr, byte byte1, byte byte2, byte byte3, byte byte4) {
         if (!addressCheck(address, longAddr)) {
             return null;  // failed!
         }
@@ -160,19 +187,19 @@ public class NmraPacket {
             retVal = new byte[7];
             retVal[0] = (byte) (192 + ((address / 256) & 0x3F));
             retVal[1] = (byte) (address & 0xFF);
-            retVal[2] = arg1;
-            retVal[3] = arg2;
-            retVal[4] = arg3;
-            retVal[5] = arg4;
+            retVal[2] = byte1;
+            retVal[3] = byte2;
+            retVal[4] = byte3;
+            retVal[5] = byte4;
             retVal[6] = (byte) (retVal[0] ^ retVal[1] ^ retVal[2] ^ retVal[3] ^ retVal[4] ^ retVal[5]);
         } else {
             // short address form
             retVal = new byte[6];
             retVal[0] = (byte) (address & 0xFF);
-            retVal[1] = arg1;
-            retVal[2] = arg2;
-            retVal[3] = arg3;
-            retVal[4] = arg4;
+            retVal[1] = byte1;
+            retVal[2] = byte2;
+            retVal[3] = byte3;
+            retVal[4] = byte4;
             retVal[5] = (byte) (retVal[0] ^ retVal[1] ^ retVal[2] ^ retVal[3] ^ retVal[4]);
         }
         return retVal;
@@ -317,19 +344,20 @@ public class NmraPacket {
     }
 
     /**
+     * Create a signal accessory instruction packet.
+     *
      * From the RP: Extended Accessory Decoder Control Packet Format The
      * Extended Accessory Decoder Control Packet is included for the purpose of
      * transmitting aspect control to signal decoders or data bytes to more
      * complex accessory decoders. Each signal head can display one aspect at a
      * time.
-     *
-     * <br><pre>{preamble} 0 10AAAAAA 0 0AAA0AA1 0 000XXXXX 0 EEEEEEEE 1</pre><br>
-     *
+     * <p>
+     * {@code{preamble} 0 10AAAAAA 0 0AAA0AA1 0 000XXXXX 0 EEEEEEEE 1}
+     * <p>
      * XXXXX is for a single head. A value of 00000 for XXXXX indicates the
      * absolute stop aspect. All other aspects represented by the values for
      * XXXXX are determined by the signaling system used and the prototype being
      * modeled.
-     *
      * <p>
      * Despite this being an NMRA standard, or perhaps because of it, the
      * addressing is not clear. The other form of packet generated by
@@ -339,6 +367,7 @@ public class NmraPacket {
      * @param outputAddr Address of accessory output, starting with 1 and a
      *                   maximum of 2044
      * @param aspect     Aspect Number starting with 0 and a maximum of 31
+     * @return the instruction packet
      */
     public static byte[] accSignalDecoderPkt(int outputAddr, int aspect) {
 
@@ -522,30 +551,11 @@ public class NmraPacket {
         }
 
         // end sanity checks, format output
-        byte[] retVal;
         int arg1 = 0xEC + (((cvNum - 1) >> 8) & 0x03);
         int arg2 = (cvNum - 1) & 0xFF;
         int arg3 = data & 0xFF;
 
-        if (longAddr) {
-            // long address form
-            retVal = new byte[6];
-            retVal[0] = (byte) (192 + ((address / 256) & 0x3F));
-            retVal[1] = (byte) (address & 0xFF);
-            retVal[2] = (byte) arg1;
-            retVal[3] = (byte) arg2;
-            retVal[4] = (byte) arg3;
-            retVal[5] = (byte) (retVal[0] ^ retVal[1] ^ retVal[2] ^ retVal[3] ^ retVal[4]);
-        } else {
-            // short address form
-            retVal = new byte[5];
-            retVal[0] = (byte) (address & 0xFF);
-            retVal[1] = (byte) arg1;
-            retVal[2] = (byte) arg2;
-            retVal[3] = (byte) arg3;
-            retVal[4] = (byte) (retVal[0] ^ retVal[1] ^ retVal[2] ^ retVal[3]);
-        }
-        return retVal;
+        return NmraPacket.threeBytePacket(address, longAddr, (byte) arg1, (byte) arg2, (byte) arg3);
     }
 
     public static byte[] speedStep128Packet(int address, boolean longAddr, int speed, boolean fwd) {
@@ -606,6 +616,12 @@ public class NmraPacket {
      * stop, speed U0001 is emergency stop, speed U0010 is the first speed step
      * and speed U1111 is full speed. This provides 14 discrete speed steps in
      * each direction.
+     *
+     * @param address  the DCC locomotive address
+     * @param longAddr true if the address is long; false if short
+     * @param speed    the speed from 0-28
+     * @param fwd      true for forward direction; false for reverse
+     * @return the instruction or null if address or speed is invalid
      */
     public static byte[] speedStep28Packet(int address, boolean longAddr, int speed, boolean fwd) {
         log.debug("28 step packet {} {}", address, speed);
@@ -627,29 +643,14 @@ public class NmraPacket {
         speedC = speedC + c;
 
         // end sanity checks, format output
-        byte[] retVal;
         int arg1 = (fwd ? 0x60 : 0x40) | speedC;
 
-        if (longAddr) {
-            // long address form
-            retVal = new byte[4];
-            retVal[0] = (byte) (192 + ((address / 256) & 0x3F));
-            retVal[1] = (byte) (address & 0xFF);
-            retVal[2] = (byte) arg1;
-            retVal[3] = (byte) (retVal[0] ^ retVal[1] ^ retVal[2] ^ retVal[3]);
-        } else {
-            // short address form
-            retVal = new byte[3];
-            retVal[0] = (byte) (address & 0xFF);
-            retVal[1] = (byte) arg1;
-            retVal[2] = (byte) (retVal[0] ^ retVal[1] ^ retVal[2]);
-        }
-        return retVal;
+        return NmraPacket.oneBytePacket(address, longAddr, (byte) arg1);
     }
 
     /**
      * New version of speedStep28Packet to allow access to the whole range of 28
-     * step speed packets
+     * step speed packets.
      *
      * Simply constructs a packet using the 5 bit speed value. This is
      * consistent with the 128 and 14 step methods which do no further
@@ -660,8 +661,10 @@ public class NmraPacket {
      * @param longAddr true if DCC address is long; false if short
      * @param speed    speed step value 0 - 31 for insertion into DC packet
      * @param fwd      true for forward direction; false for reverse
+     * @return the instruction or null if address or speed is invalid
      */
-    public static byte[] speedStep28Packet(Boolean full, int address, boolean longAddr, int speed, boolean fwd) {
+    @CheckForNull
+    public static byte[] speedStep28Packet(boolean full, int address, boolean longAddr, int speed, boolean fwd) {
         log.debug("28 step packet {} {}", address, speed);
 
         if (full != true) {
@@ -683,24 +686,9 @@ public class NmraPacket {
         speedC = speedC + c;
 
         // end sanity checks, format output
-        byte[] retVal;
         int arg1 = (fwd ? 0x60 : 0x40) | speedC;
 
-        if (longAddr) {
-            // long address form
-            retVal = new byte[4];
-            retVal[0] = (byte) (192 + ((address / 256) & 0x3F));
-            retVal[1] = (byte) (address & 0xFF);
-            retVal[2] = (byte) arg1;
-            retVal[3] = (byte) (retVal[0] ^ retVal[1] ^ retVal[2] ^ retVal[3]);
-        } else {
-            // short address form
-            retVal = new byte[3];
-            retVal[0] = (byte) (address & 0xFF);
-            retVal[1] = (byte) arg1;
-            retVal[2] = (byte) (retVal[0] ^ retVal[1] ^ retVal[2]);
-        }
-        return retVal;
+        return NmraPacket.oneBytePacket(address, longAddr, (byte) arg1);
     }
 
     public static byte[] speedStep14Packet(int address, boolean longAddr,
@@ -850,7 +838,6 @@ public class NmraPacket {
         }
 
         // end sanity check, format output
-        byte[] retVal;
         int arg1 = 0xDE;
         int arg2 = (f20 ? 0x80 : 0)
                 | (f19 ? 0x40 : 0)
@@ -861,23 +848,7 @@ public class NmraPacket {
                 | (f14 ? 0x02 : 0)
                 | (f13 ? 0x01 : 0);
 
-        if (longAddr) {
-            // long address form
-            retVal = new byte[5];
-            retVal[0] = (byte) (192 + ((address / 256) & 0x3F));
-            retVal[1] = (byte) (address & 0xFF);
-            retVal[2] = (byte) arg1;
-            retVal[3] = (byte) arg2;
-            retVal[4] = (byte) (retVal[0] ^ retVal[1] ^ retVal[2] ^ retVal[3]);
-        } else {
-            // short address form
-            retVal = new byte[4];
-            retVal[0] = (byte) (address & 0xFF);
-            retVal[1] = (byte) arg1;
-            retVal[2] = (byte) arg2;
-            retVal[3] = (byte) (retVal[0] ^ retVal[1] ^ retVal[2]);
-        }
-        return retVal;
+        return NmraPacket.twoBytePacket(address, longAddr, (byte)arg1, (byte)arg2);
     }
 
     public static byte[] function21Through28Packet(int address, boolean longAddr,
@@ -890,7 +861,6 @@ public class NmraPacket {
         }
 
         // end sanity check, format output
-        byte[] retVal;
         int arg1 = 0xDF;
         int arg2 = (f28 ? 0x80 : 0)
                 | (f27 ? 0x40 : 0)
@@ -901,27 +871,11 @@ public class NmraPacket {
                 | (f22 ? 0x02 : 0)
                 | (f21 ? 0x01 : 0);
 
-        if (longAddr) {
-            // long address form
-            retVal = new byte[5];
-            retVal[0] = (byte) (192 + ((address / 256) & 0x3F));
-            retVal[1] = (byte) (address & 0xFF);
-            retVal[2] = (byte) arg1;
-            retVal[3] = (byte) arg2;
-            retVal[4] = (byte) (retVal[0] ^ retVal[1] ^ retVal[2] ^ retVal[3]);
-        } else {
-            // short address form
-            retVal = new byte[4];
-            retVal[0] = (byte) (address & 0xFF);
-            retVal[1] = (byte) arg1;
-            retVal[2] = (byte) arg2;
-            retVal[3] = (byte) (retVal[0] ^ retVal[1] ^ retVal[2]);
-        }
-        return retVal;
+        return NmraPacket.twoBytePacket(address, longAddr, (byte)arg1, (byte)arg2);
     }
 
     /**
-     * Provide an NMRA analog control instruction
+     * Provide an NMRA analog control instruction.
      * <P>
      * Note that the NMRA draft of Fall 2004 only defines the value of "1" for
      * the "function parameter", calling that the value for "volume control".
@@ -932,6 +886,7 @@ public class NmraPacket {
      * @param longAddr true if this is a long address, false if short address
      * @param function see note above
      * @param value    value to be sent in analog control instruction
+     * @return the instruction or null if the address is not valid
      */
     public static byte[] analogControl(int address, boolean longAddr,
             int function, int value) {
@@ -969,14 +924,13 @@ public class NmraPacket {
      * Provide an NMRA consist control instruction
      *
      * @param address         DCC locomotive address
-     * @param longAddr        true if this is a long address, false if short
-     *                        address
-     * @param consist         the consist address to set for this locomotive.
-     *                        Send 00 as consist address if deleteing from
-     *                        consist.
+     * @param longAddr        true for a long address, false if short address
+     * @param consist         the consist address to set for this locomotive;
+     *                        Send 00 as consist address to remove from consist
      * @param directionNormal true if the normal direction of travel for this
      *                        address is the normal direction of travel for the
-     *                        consist.
+     *                        consist
+     * @return the instruction
      */
     public static byte[] consistControl(int address, boolean longAddr,
             int consist, boolean directionNormal) {
@@ -1017,6 +971,10 @@ public class NmraPacket {
     /**
      * Check if an address is (possibly) valid, e.g. fits within the NMRA space
      * definition
+     *
+     * @param address  the address
+     * @param longAddr true if address is long; false otherwise
+     * @return true if address is valid; false otherwise
      */
     static public boolean addressCheck(int address, boolean longAddr) {
         if (address < 0) {  // zero is valid broadcast
@@ -1049,6 +1007,9 @@ public class NmraPacket {
      * <P>
      * This finds and returns the type of address within a specific packet, e.g.
      * "the stationary decoder space".
+     *
+     * @param packet the packet
+     * @return the type or {@link jmri.NmraPacket.DccAddressType#NO_ADDRESS}
      */
     static public DccAddressType extractAddressType(byte[] packet) {
         if (packet[0] == 0x00) {
@@ -1074,12 +1035,16 @@ public class NmraPacket {
      * <P>
      * This finds and returns the numerical address within a specific type, e.g.
      * "first address within the stationary decoder space".
-     *
+     * <p>
      * As a special case, IDLE is returned as -1 instead of 255. Best to check
      * the address type first....
+     * <p>
+     * <strong>Note:</strong> This is not working for the ACCESSORY_ADDRESS
+     * type.
      *
-     * Note: This is not working for the ACCESSORY_ADDRESS type. The JUnit test
-     * is also commented out.
+     * @param packet the packet
+     * @return the address; -1 is returned if there is no address or the address
+     *         is an accessory address
      */
     static public int extractAddressNumber(byte[] packet) {
         switch (extractAddressType(packet)) {
@@ -1100,11 +1065,13 @@ public class NmraPacket {
     }
 
     /**
-     * Extract the instruction from an NMRA packet
+     * Extract the instruction from an NMRA packet.
      * <P>
-     * This finds and returns the instruction bytr within a specific type of
+     * This finds and returns the instruction byte within a specific type of
      * packet/instruction.
      *
+     * @param packet the packet
+     * @return the instruction or 0
      */
     static public int extractInstruction(byte[] packet) {
         switch (extractAddressType(packet)) {
@@ -1121,7 +1088,11 @@ public class NmraPacket {
     }
 
     /**
-     * Convert NMRA packet to a readable form
+     * Convert NMRA packet to a readable form as hexadecimal characters.
+     *
+     * @param p the raw packet
+     * @return the readable packet
+     * @see jmri.util.StringUtil#hexStringFromBytes(byte[])
      */
     static public String format(byte[] p) {
         return jmri.util.StringUtil.hexStringFromBytes(p);
