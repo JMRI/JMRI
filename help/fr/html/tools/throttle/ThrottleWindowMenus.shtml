@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- UpDated by Blorec Herv&#233; le 2013-10-04-->
+<!-- UpDated by Blorec Herv&#233; le 2011-01-09-->
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
 <html lang="fr">
   <meta content="text/html; charset=iso-8859-1" http-equiv="content-type" ><title>Throttle Window Menus</title>
@@ -34,14 +34,14 @@ Jynstruments le cas &#233;ch&#233;ant <br.>
 
 <a name="FileMenu">Cette entr&#233;e de menu permet de sauvegarder la configuration actuelle de la fen&#234;tre R&#233;gulateur, elle va sauvegarder les propri&#233;t&#233;s de fen&#234;tres int&#233;rieures et de
 Jynstruments le cas &#233;ch&#233;ant
-Quand une entr&#233;e de liste est s&#233;lectionn&#233;e, cette entr&#233;e de menu est automatiquement
+Quand une entr&#233;e d'inventaire est s&#233;lectionn&#233;e, cette entr&#233;e de menu est automatiquement
 activ&#233;e, elle va cr&#233;er en utilisant (ou mettant &#224; jour) un fichier par d&#233;faut pour le R&#233;gulateur
 dans l'entr&#233;e de liste dans &lt; JMRI Preferences Folder&gt;/throttle/XYZ.xml
 o&#249; XYZ est l'ID Liste. <br>
 <br>
 Notez que lorsque l'enregistrement d'un R&#233;gulateur qui est celui par d&#233;faut pour une liste
 personnalisation d'entr&#233;e, des boutons ne seront pas sauvegard&#233;s dans ce dossier, ils doivent &#234;tre
-export&#233;es vers l'entr&#233;e Liste (dans le menu Edition, voir ci-dessous). <br>
+export&#233;s vers l'entr&#233;e liste (dans le menu Edition, voir ci-dessous). <br>
 <br>
 
 <h3><a name="FileMenu">Enregistrer R&#233;gulateur actuel comme ...</h3>
@@ -88,7 +88,7 @@ Poussez la fen&#234;tre du r&#233;gulateur personnalis&#233; vers la Liste en pa
 
 <a name="ViewMenu"> <img src="images/ThrottlesMenu2.png" alt=""> <br
 <span style="font-weight: bold;"> <br>
-</Span> La premi&#232;re partie de la "<big>Vue </big>" menu affiche un petit menu de
+</Span> La premi&#232;re partie du menu "<big>Vue </big>"  affiche un petit menu de
 3 articles &#8212; par d&#233;faut, chacun avec une coche pr&#233;c&#233;dant l'article. Ceux-ci
 correspondent &#224; 3 sous-fen&#234;tres (Groupe d'adresses, Panneau de fonction, Panneau de contr&#244;le
 ) qui font partie de la fen&#234;tre du r&#233;gulateur. <br>
