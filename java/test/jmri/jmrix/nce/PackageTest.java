@@ -31,8 +31,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.nce.PackageTest");
-        suite.addTest(jmri.jmrix.nce.NceTurnoutTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(NceTurnoutManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NceTurnoutTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NceSensorManagerTest.class));
         suite.addTest(jmri.jmrix.nce.NceAIUTest.suite());
         suite.addTest(jmri.jmrix.nce.NceProgrammerTest.suite());
