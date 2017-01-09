@@ -2793,7 +2793,7 @@ public class LayoutTurnout {
             if (!secondTurnoutName.equals(secondTurnoutComboBox.getSelectedDisplayName())) {
                 if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
                     // turnout has changed
-                    String newName = secondTurnoutComboBox.getSelectedDisplayName();
+                    newName = secondTurnoutComboBox.getSelectedDisplayName();
                     if (layoutEditor.validatePhysicalTurnout(newName,
                             editLayoutTurnoutFrame)) {
                         setSecondTurnout(newName);
