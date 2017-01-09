@@ -389,7 +389,9 @@
         Hobbyist</a> emagazine for putting the <a href=
         "http://model-railroad-hobbyist.com/mrht_decoderpro">JMRI
         clinics from the NMRA 2008 Anaheim convention</a> on the
-        web. <a name="G" id="G"></a></li>
+        web. 
+        
+        <a name="G" id="G"></a></li>
 
         <li>William C Gage provided an MRC decoder definition</li>
 
@@ -421,6 +423,10 @@
 
         <li>Walter Griffin, who provided graphics for signals and
         CTC panels</li>
+        
+        <li>Steve Gigiel, who fixed the XML definition of the block contents icon,
+        and helped fix the Transit implementation of comments.
+        
 
         <li>Mark Gurries, who provided loaner equipment and great
         ideas. He's currently working on decoder definitions for
