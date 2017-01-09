@@ -140,6 +140,8 @@
         <li><a href="#Schedules">Schedules</a></li>
 
         <li><a href="#SchedulesAndLoads">Schedules and Loads</a></li>
+        
+        <li><a href="#ControllingCarsToSpur">Controlling Cars to the Spur / Industry</a></li> 
 
         <li><a href="#ShowSchedulesByCarTypeAndLoad">Show Schedules by Car Type and Load</a></li>
 
@@ -1977,6 +1979,12 @@
    up. For example, if you wanted two SP boxcars to be delivered followed by a tankcar loaded with
    "Oil", you can create a schedule that will do exactly that.
 
+   <p>You should note that adding schedules and custom loads is an optional feature and isn't
+    needed for good car movement, and in most cases will reduce car movement. So if you want the
+    most car movement don't use schedules or custom loads. This feature is here for those that want
+    specific car movement and custom loads. You also don't have to have schedules for all of your
+    spurs / industries, you can be selective and only add them to the spurs that you believe need them.</p>
+
    <p>
     To create a schedule press the "Add" button next to "Optional Schedule" pull down menu in the <a
      href="#Sidings">Edit Spur Track</a> window. Pressing the "Add" button should create the "Add
@@ -2099,6 +2107,7 @@
     three cars.
    </p>
 
+   <a name="ControllingCarsToSpur" id="ControllingCarsToSpur"></a>
    <h4>Controlling Cars to the Spur / Industry</h4>
 
    <p>If you need to adjust the number of cars "en route" to a spur with a schedule, select in
@@ -2128,19 +2137,19 @@
 
    <p>Schedules can operate in one of two modes, sequential as described above, or in match
     mode. Match mode eliminates the sequential aspects of a schedule. In match mode, the program
-    will search the entire schedule to find a car type, delivery day, and receive load that matches
-    the car that the program is trying to place. In match mode the pointer shows the last car type
-    that the program found acceptable for the spur. To change the schedule to match mode, select
-    "Match" in the edit schedule window and press "Save". Match mode is useful when the order cars
-    arrive isn't important, but you still want to receive or ship cars with a specific load, provide
-    the car's final destination, or have the car wait for a specific number of trains or pickup day.
-    In match mode the schedule item count is ignored as it isn't used. Instead, a hit count is
-    provided. The program increments the hit count for a schedule item each time it finds a match,
-    and plans on sending the car to that spur because of the match. In match mode, all of the
-    schedule item fields are available, and you can have the same type of car several times, with
-    each item in the schedule looking for a specific receive load or delivery date. Also in match
-    mode the car type selection box advances automatically to the next car type when adding a car
-    type. This makes it easy to quickly add car types to the table.</p>
+    when building a train will search the entire schedule to find a car type, delivery day, and
+    receive load that matches the car that the program is trying to place. In match mode the pointer
+    shows the last car type that the program found acceptable for the spur. To change the schedule
+    to match mode, select "Match" in the edit schedule window and press "Save". Match mode is useful
+    when the order cars arrive isn't important, but you still want to receive or ship cars with a
+    specific load, provide the car's final destination, or have the car wait for a specific number
+    of trains or pickup day. In match mode the schedule item count is ignored as it isn't used.
+    Instead, a hit count is provided. The program increments the hit count for a schedule item each
+    time it finds a match, and plans on sending the car to that spur because of the match. In match
+    mode, all of the schedule item fields are available, and you can have the same type of car
+    several times, with each item in the schedule looking for a specific receive load or delivery
+    date. Also in match mode the car type selection box advances automatically to the next car type
+    when adding a car type. This makes it easy to quickly add car types to the table.</p>
 
    <h4>Using the Same Schedule for Several Spurs</h4>
 
@@ -3395,13 +3404,18 @@
    <a name="Routes" id="Routes"></a>
    <h2>Routes</h2>
    A route is a list of locations (stations) that a train will visit. Later you can decide if the
-   train stops at a location for work. Routes can be point to point or out and back. To build a
-   route, select "Tools-&gt;Operations-&gt;Routes". The Routes window also provides route status,
-   for example, "Orphan" means the route hasn't been assigned to a train.
+   train stops at a location for work. Routes can be point to point or out and back. A route that
+   returns to its origin is often referred to as a "turn". To build a route, select
+   "Tools-&gt;Operations-&gt;Routes".
 
    <p>
     <img src="images/Routes.png">
    </p>
+
+   <p>The "Routes" window shows for every route created the id, name, comment, shortest route
+    length, longest route length, and status of the route. If there's a problem with the route, the
+    status will be reported as "Error". If the route hasn't been assigned to a train, the status for
+    the route is reported as "Orphan". Use the "Edit" button to modify an existing route.</p>
 
    <a name="AddRoute" id="AddRoute"></a>
    <h3>Add Route</h3>
@@ -3537,7 +3551,8 @@
     an Eastbound train. The second "Hillsboro" provides the departure direction for the train, and
     the amount of work for tracks that can only be access by a Westbound train. Even though
     "Hillsboro" appears twice in the route, it will only appear once on your Manifests and switch
-    lists.</p>
+    lists. Also when you enter a location twice in a row in the route with a change in direction,
+    the location's switch list will add a note that the train's departure direction has changed.</p>
 
    <a name="PassengerTrainRoute" id="PassengerTrainRoute"></a>
    <h3>Passenger Train Route</h3>

@@ -1,4 +1,3 @@
-// LnReporterManager.java
 package jmri.jmrix.loconet;
 
 import jmri.Reporter;
@@ -76,5 +75,3 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
 
     private final static Logger log = LoggerFactory.getLogger(LnReporterManager.class.getName());
 }
-
-/* @(#)LnReporterManager.java */

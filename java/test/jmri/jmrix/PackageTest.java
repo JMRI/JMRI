@@ -45,7 +45,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.configurexml.PackageTest.class));
         //suite.addTest(jmri.jmrix.cmri.serial.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.cmri.PackageTest.class));
-        suite.addTest(jmri.jmrix.dcc.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.dcc.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.dcc4pc.PackageTest.class));
         suite.addTest(jmri.jmrix.direct.PackageTest.suite());
         suite.addTest(jmri.jmrix.dccpp.PackageTest.suite());
@@ -85,6 +85,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMRTrafficControllerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NetworkConfigExceptionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialConfigExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionStatusTest.class));
         return suite;
 
     }

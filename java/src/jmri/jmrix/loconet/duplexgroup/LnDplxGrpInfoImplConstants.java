@@ -1,4 +1,3 @@
-// LnDplxGrpInfoImplConstants.java
 package jmri.jmrix.loconet.duplexgroup;
 
 /**

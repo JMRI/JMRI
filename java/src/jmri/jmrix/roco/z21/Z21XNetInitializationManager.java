@@ -1,5 +1,6 @@
 package jmri.jmrix.roco.z21;
 
+import jmri.InstanceManager;
 import jmri.jmrix.lenz.XNetConsistManager;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetLightManager;
@@ -34,24 +35,24 @@ public class Z21XNetInitializationManager extends XNetInitializationManager {
                 .getCommandStation()
                 .getCommandStationType();*/
 
-        jmri.InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
-        jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
+        InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
+        InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
         systemMemo.setProgrammerManager(new XNetProgrammerManager(new Z21XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
-        jmri.InstanceManager.setProgrammerManager(systemMemo.getProgrammerManager());
+        InstanceManager.setProgrammerManager(systemMemo.getProgrammerManager());
         /* the "raw" Command Station only works on systems that support   
          Ops Mode Programming */
         systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
-        jmri.InstanceManager.setCommandStation(systemMemo.getCommandStation());
+        InstanceManager.setCommandStation(systemMemo.getCommandStation());
         /* the consist manager has to be set up AFTER the programmer, to 
          prevent the default consist manager from being loaded on top of it */
         systemMemo.setConsistManager(new XNetConsistManager(systemMemo));
-        jmri.InstanceManager.setConsistManager(systemMemo.getConsistManager());
+        InstanceManager.setConsistManager(systemMemo.getConsistManager());
         systemMemo.setTurnoutManager(new Z21XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
-        jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
+        InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
         systemMemo.setLightManager(new XNetLightManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
-        jmri.InstanceManager.setLightManager(systemMemo.getLightManager());
+        InstanceManager.setLightManager(systemMemo.getLightManager());
         systemMemo.setSensorManager(new XNetSensorManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
-        jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
+        InstanceManager.setSensorManager(systemMemo.getSensorManager());
 
         if (log.isDebugEnabled()) {
             log.debug("XPressNet Initialization Complete");

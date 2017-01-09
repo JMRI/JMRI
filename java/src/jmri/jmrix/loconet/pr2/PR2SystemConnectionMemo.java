@@ -1,4 +1,3 @@
-// PR2SystemConnectionMemo.java
 package jmri.jmrix.loconet.pr2;
 
 import jmri.InstanceManager;
@@ -121,6 +120,3 @@ public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo {
     }
 
 }
-
-
-/* @(#)PR2SystemConnectionMemo.java */

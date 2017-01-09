@@ -90,10 +90,9 @@ public class AddSignalMastPanel extends JPanel {
     JPanel matrixMastPanel = new JPanel();
     char[] bitString;
     char[] unLitPanelBits;
-    String emptyChars = "00000";
+    String emptyChars = "000000"; // size of String = MAXMATRIXBITS; add 0 in order to set > 6
     char[] emptyBits = emptyChars.toCharArray();
     JLabel bitNumLabel = new JLabel(Bundle.getMessage("MatrixBitsLabel") + ":");
-    // JComboBox<String> columnChoice = new JComboBox<String>(new String[]{"1","2","3","4","5","6"});
     JComboBox<String> columnChoice = new JComboBox<String>(choiceArray());
     JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
     JButton apply = new JButton(Bundle.getMessage("ButtonApply"));
@@ -562,7 +561,7 @@ public class AddSignalMastPanel extends JPanel {
                 dccUnLitPanel.setVisible(true);
             } else if (Bundle.getMessage("MatrixCtlMast").equals(signalMastDriver.getSelectedItem())) {
                 if (unLitPanelBits == null || unLitPanelBits[1] == 'n') {
-                    unLitPanelBits = emptyBits; // start with '00000'
+                    unLitPanelBits = emptyBits; // start with '000000'
                 }
                 matrixUnLitPanel.setVisible(true);
             }
@@ -925,7 +924,7 @@ public class AddSignalMastPanel extends JPanel {
                 if (allowUnLit.isSelected()) {
                     // copy bits from UnLitPanel var unLitPanelBits
                     try {
-                        matrixMast.setUnLitBits(trimUnLitBits()); // same as line 1001,
+                        matrixMast.setUnLitBits(trimUnLitBits()); // same as line 1046,
                     } catch (Exception ex) {
                         log.error("failed to read and copy unLitPanelBits");
                     }
@@ -1042,7 +1041,7 @@ public class AddSignalMastPanel extends JPanel {
                 matrixMast.setAllowUnLit(allowUnLit.isSelected());
                 if (allowUnLit.isSelected()) {
                     try {
-                        matrixMast.setUnLitBits(trimUnLitBits()); // same as line 893
+                        matrixMast.setUnLitBits(trimUnLitBits()); // same as line 929
                     } catch (Exception ex) {
                         log.error("failed to read and copy unLitPanelBits");
                     }
@@ -1683,7 +1682,7 @@ public class AddSignalMastPanel extends JPanel {
         mastType = mastType.substring(11, mastType.indexOf(".xml"));
         jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
         java.util.Enumeration<String> aspects = sigMap.getAspects();
-        SignalSystem sigsys = InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem(sigsysname);
+        // SignalSystem sigsys = InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem(sigsysname); // not used in this class
         while (aspects.hasMoreElements()) {
             String aspect = aspects.nextElement();
             MatrixAspectPanel aspectpanel = new MatrixAspectPanel(aspect);
@@ -1921,7 +1920,7 @@ public class AddSignalMastPanel extends JPanel {
         mastType = mastType.substring(11, mastType.indexOf(".xml"));
         jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
         java.util.Enumeration<String> aspects = sigMap.getAspects();
-        SignalSystem sigsys = InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem(sigsysname);
+        // SignalSystem sigsys = InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem(sigsysname); // not used in this class
         while (aspects.hasMoreElements()) {
             String aspect = aspects.nextElement();
             MatrixAspectPanel aspectpanel = new MatrixAspectPanel(aspect, bitString); // build 1 line, picking up bitString
@@ -1952,9 +1951,10 @@ public class AddSignalMastPanel extends JPanel {
         if (bitNum < 1 || bitNum > MAXMATRIXBITS) {
             bitNum = 4; // default to 4 col for (first) new mast
         }
-        if (unLitPanelBits == null) {
+/*        if (unLitPanelBits == null) {
             char[] unLitPanelBits = emptyBits;
-        }
+            // if needed, assign panel var to enable setting separate items by clicking a UnLitCheck check box
+        }*/
         JPanel matrixUnLitDetails = new JPanel();
         matrixUnLitDetails.setLayout(new jmri.util.javaworld.GridLayout2(1, 1)); // stretch to full width
         //matrixUnLitDetails.setAlignmentX(matrixUnLitDetails.RIGHT_ALIGNMENT);
@@ -2011,7 +2011,7 @@ public class AddSignalMastPanel extends JPanel {
     /**
      * Updates the on/off positions for the unLitPanelBits char[]
      * called from bit checkboxes 1 to MAXMATRIXBITS on unLitPanel
-     * @param column int as index for an output (between 1 and 5)
+     * @param column int as index for an output (between 1 and 6)
      * @param state boolean for the output On (Closed) or Off (Thrown)
      */
     public void setUnLitBit(int column, boolean state) {

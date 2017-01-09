@@ -1,11 +1,5 @@
 package jmri.jmrix.loconet.locormi;
 
-/**
- * Title: Description: Copyright: Copyright (c) 2002 Company:
- *
- * @author Alex Shepherd
- */
- // -Djava.security.policy=lib/security.policy
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -14,9 +8,15 @@ import java.rmi.server.UnicastRemoteObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Copyright (c) 2002
+ *
+ * @author Alex Shepherd
+ */
 public class LnMessageServer extends UnicastRemoteObject implements LnMessageServerInterface {
 
     // versioned Jul 17, 2003 - was CVS revision 1.5
+    // This is required for RMI usage, do not remove
     static final long serialVersionUID = 8934498417916438203L;
 
     private static LnMessageServer self = null;

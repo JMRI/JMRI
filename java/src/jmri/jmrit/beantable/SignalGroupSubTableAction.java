@@ -185,7 +185,7 @@ public class SignalGroupSubTableAction {
     JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
     JButton updateSubButton = new JButton(Bundle.getMessage("ButtonApply"));
 
-    static String updateInst = Bundle.getMessage("ClickToApply");
+    static String updateInst = Bundle.getMessage("ClickToApply", Bundle.getMessage("ButtonApply"));
 
     JLabel status1 = new JLabel(updateInst);
 
@@ -362,7 +362,7 @@ public class SignalGroupSubTableAction {
 
             JPanel po = new JPanel();
             po.setLayout(new FlowLayout());
-            JLabel operLabel = new JLabel(Bundle.getMessage("ChooseOrAnd", Bundle.getMessage("Turnouts"), Bundle.getMessage("Sensors")));
+            JLabel operLabel = new JLabel(Bundle.getMessage("ChooseOrAnd"));
             po.add(operLabel);
             po.add(_SensorTurnoutOper);
             contentPane.add(po);

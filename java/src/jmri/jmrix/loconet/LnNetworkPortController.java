@@ -100,6 +100,3 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
         setTurnoutHandling(value);
     }
 }
-
-
-/* @(#)LnNetworkPortController.java */
