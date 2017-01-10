@@ -4,6 +4,8 @@ import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * TrainInfo is a temporary object specifying New Train information just read
@@ -39,6 +41,7 @@ public class TrainInfo {
     private int priority = 5;
     private boolean autoRun = false;
     private boolean resetWhenDone = false;
+    private boolean allocateAllTheWay = false;
     private boolean reverseAtEnd = false;
     private int delayedStart = ActiveTrain.NODELAY;
     private int delayedRestart = ActiveTrain.NODELAY;
@@ -168,6 +171,13 @@ public class TrainInfo {
         return resetWhenDone;
     }
 
+    protected void setAllocateAllTheWay(boolean b) {
+                allocateAllTheWay = b;
+    }
+
+    protected boolean getAllocateAllTheWay() {
+                return allocateAllTheWay;
+    }
     protected void setReverseAtEnd(boolean b) {
         reverseAtEnd = b;
     }
@@ -336,6 +346,8 @@ public class TrainInfo {
     protected float getMaxTrainLength() {
         return maxTrainLength;
     }
+    private final static Logger log = LoggerFactory.getLogger(TrainInfoFile.class.getName());
+
 }
 
 /* @(#)TrainInfo.java */
