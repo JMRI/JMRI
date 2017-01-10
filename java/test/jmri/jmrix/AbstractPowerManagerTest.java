@@ -4,21 +4,23 @@
  * Description:	AbsBaseClass for PowerManager tests in specific jmrix. packages
  *
  * @author	Bob Jacobsen Copyright 2007
+ * @author	Bob Jacobsen Copyright (C) 2017
   */
 package jmri.jmrix;
 
-//import jmri.*;
 import java.beans.PropertyChangeListener;
 import jmri.JmriException;
 import jmri.PowerManager;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
-public abstract class AbstractPowerManagerTest extends TestCase {
+public abstract class AbstractPowerManagerTest {
 
-    public AbstractPowerManagerTest(String s) {
-        super(s);
-    }
+    // required setup routine, must set p to an appropriate value.
+    @Before
+    abstract public void setUp();
 
     // service routines to simulate recieving on, off from interface
     protected abstract void hearOn();
@@ -49,26 +51,32 @@ public abstract class AbstractPowerManagerTest extends TestCase {
     }
 
     // test creation - real work is in the setup() routine
+    @Test
     public void testCreate() {
+       Assert.assertNotNull("Power Manager Created",p);
     }
 
     // test setting power on, off, then getting reply from system
+    @Test
     public void testSetPowerOn() throws JmriException {
+        int initialSent = outboundSize();
         p.setPower(PowerManager.ON);
         // check one message sent, correct form, unknown state
-        Assert.assertEquals("messages sent", 1, outboundSize());
-        Assert.assertTrue("message type OK", outboundOnOK(0));
+        Assert.assertEquals("messages sent", initialSent + 1, outboundSize());
+        Assert.assertTrue("message type OK", outboundOnOK(initialSent));
         Assert.assertEquals("state before reply ", PowerManager.UNKNOWN, p.getPower());
         // arrange for reply
         sendOnReply();
         Assert.assertEquals("state after reply ", PowerManager.ON, p.getPower());
     }
 
+    @Test
     public void testSetPowerOff() throws JmriException {
+        int startingMessages = outboundSize();
         p.setPower(PowerManager.OFF);
         // check one message sent, correct form
-        Assert.assertEquals("messages sent", 1, outboundSize());
-        Assert.assertTrue("message type OK", outboundOffOK(0));
+        Assert.assertEquals("messages sent", startingMessages + 1, outboundSize());
+        Assert.assertTrue("message type OK", outboundOffOK(startingMessages));
         Assert.assertEquals("state before reply ", PowerManager.UNKNOWN, p.getPower());
         // arrange for reply
         sendOffReply();
@@ -76,16 +84,19 @@ public abstract class AbstractPowerManagerTest extends TestCase {
 
     }
 
+    @Test
     public void testStateOn() throws JmriException {
         hearOn();
         Assert.assertEquals("power state", PowerManager.ON, p.getPower());
     }
 
+    @Test
     public void testStateOff() throws JmriException {
         hearOff();
         Assert.assertEquals("power state", PowerManager.OFF, p.getPower());
     }
 
+    @Test
     public void testAddListener() throws JmriException {
         p.addPropertyChangeListener(new Listen());
         listenerResult = false;
@@ -98,6 +109,7 @@ public abstract class AbstractPowerManagerTest extends TestCase {
         Assert.assertTrue("listener invoked by GPON", listenerResult);
     }
 
+    @Test
     public void testRemoveListener() {
         Listen ln = new Listen();
         p.addPropertyChangeListener(ln);
@@ -108,23 +120,27 @@ public abstract class AbstractPowerManagerTest extends TestCase {
                 !listenerResult);
     }
 
+    @Test
     public void testDispose1() throws JmriException {
         p.setPower(PowerManager.ON); // in case registration is deferred
+        int startingListeners = numListeners();
         p.getPower();
         p.dispose();
-        Assert.assertEquals("controller listeners remaining", 0, numListeners());
+        Assert.assertEquals("controller listeners remaining", startingListeners -1 , numListeners());
     }
 
+    @Test
     public void testDispose2() throws JmriException {
         p.addPropertyChangeListener(new Listen());
         p.setPower(PowerManager.ON);
         sendOnReply();
+        int initialOutboundSize = outboundSize();
         p.dispose();
         try {
             p.setPower(PowerManager.OFF);
         } catch (JmriException e) {
             // this is OK branch, check message not sent
-            Assert.assertEquals("messages sent", 1, outboundSize()); // just the first
+            Assert.assertEquals("messages sent", initialOutboundSize, outboundSize()); // just the first
             return;
         }
         Assert.fail("Should have thrown exception after dispose()");
