@@ -585,6 +585,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                         });
                         break;
                 }
+                //keep track of names for later conversion from username to systemname
                 if ($widget.systemName) {
                     if (!($widget.systemName in systemNames)) {
                         systemNames[$widget.systemName] = new Array();
@@ -1622,7 +1623,7 @@ var $drawAllIconWidgets = function() {
 function updateWidgets(name, state, data) {
     //if systemName not in systemNames list, replace userName with systemName
 	if (!systemNames[name] && name != data.userName) {
-		jmri.log("replacing userName " + data.userName + " with systemName " + name);    	
+//		jmri.log("replacing userName " + data.userName + " with systemName " + name);    	
 		if (systemNames[data.userName]) {  										  //if found by userName
 			systemNames[name] = systemNames[data.userName];  //copy entry over
 			delete systemNames[data.userName];  							 //delete old one
@@ -1633,12 +1634,23 @@ function updateWidgets(name, state, data) {
         $.each(systemNames[name], function(index, widgetId) {
             $setWidgetState(widgetId, state);
         });
-    } else {
-    	jmri.log("system name " + name + " not found, can't set state to " + state);
+//    } else {
+//    	jmri.log("system name " + name + " not found, can't set state to " + state);
     }
 }
 
-function updateOccupancy(occupancyName, state) {
+function updateOccupancy(occupancyName, state, data) {
+	//handle occupancy sensors by systemname
+	if (occupancyNames[occupancyName]) {
+		updateOccupancySub(occupancyName, state);
+	}
+	//handle occupancy sensors by username
+	if (occupancyNames[data.userName]) {
+		updateOccupancySub(data.userName, state);
+	}
+}
+
+function updateOccupancySub(occupancyName, state) {
 	if (occupancyNames[occupancyName]) {
 		jmri.log("setting occupancies for sensor " + occupancyName + " to " + state);
 		$.each(occupancyNames[occupancyName], function(index, widgetId) {
@@ -1775,7 +1787,7 @@ $(document).ready(function() {
             },
             sensor: function(name, state, data) {
                 updateWidgets(name, state, data);
-                updateOccupancy(name, state);
+                updateOccupancy(name, state, data);
             },
             signalHead: function(name, state, data) {
                 updateWidgets(name, state, data);
