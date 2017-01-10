@@ -120,7 +120,6 @@
 	<label xml:lang="de">Entkuppeln rückwärts mit F1</label>
 	<label xml:lang="cs">Zpřístupnit zadní spřáhlo s F1</label>
 	<label xml:lang="ca">Activa desenganxall posterior amb F1</label>
-	<label xml:lang="ca">Activa enganxall posterior amb F1</label>
   </variable>
   <variable item="Enable backward coupling with F2" CV="146" mask="XXXXXXVX">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
