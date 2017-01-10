@@ -3,7 +3,7 @@
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
 <!-- $Id$ -->
-<!-- Updated by Blorec Herv&#233; 2013-10-05-->
+<!-- Updated by Blorec Herv&#233; 2017-01-10-->
 
 <title>JMRI: USS CTC Tools</title>
 
@@ -24,12 +24,10 @@
     <div id="mainContent">
 
 
-<h2> 
-JMRI:Outils USS CTC </h2>
+<h2>JMRI:Outils USS CTC </h2>
 
 
-JMRI contient quelques outils pour aider &#224; l'automatisation des panneaux USS CTT
-.
+JMRI contient quelques outils pour aider &#224; l'automatisation des panneaux USS CTC.
 Ceux-ci peuvent &#234;tre utilis&#233;s soit pour les panneaux &#224; base d'&#233;cran , ou &#224;
 piloter un panneau physique avec de v&#233;ritables leviers et des voyants.
 
@@ -38,26 +36,26 @@ piloter un panneau physique avec de v&#233;ritables leviers et des voyants.
 <dt>
 <a href="../../../package/jmri/jmrit/ussctc/FollowerFrame.shtml"> Suiveur </a>
 <dd>
-Les esclaves d'un dispositif de sortie d'Aiguillage pour suivre l'&#233;tat d'un dispositif de capteur d'entr&#233;e.
+Asservissement d'un dispositif de sortie d'Aiguillage pour suivre l'&#233;tat d'un dispositif de capteur d'entr&#233;e.
 Cela pourrait, par exemple, &#234;tre un aiguillage du r&#233;seau suivi par un commutateur du panneau de contr&#244;le reli&#233; &#224; un Capteur.
 
 <dt>
 <a href="../../../package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml"> OS Indicateur </a>
 <dd>
-Piloter les voyants d'occupation sur le panneau. Cela prend l'entr&#233;e d'un capteur
+Pilotage des voyants d'occupation sur le panneau. Cela prend l'entr&#233;e d'un capteur
 pour montrer la section de voie occup&#233;e, et aussi &#233;ventuellement peut allumer le voyant
 si la section a &#233;t&#233; d&#233;bloqu&#233;e.
 
 <dt>
 <a href="../../../package/jmri/jmrit/ussctc/TurnoutLeverFrame.shtml"> Levier d' Aiguillage </a>
 <dd>
-Contr&#244;le un aiguillage depuis un levier situ&#233; sur le panneau, avec les deux
+Commande un aiguillage depuis un levier situ&#233; sur le panneau, avec les deux
 voyants. (Pas encore sorti)
 
 <dt>
 <a href="../../../package/jmri/jmrit/ussctc/SignalLeverFrame.shtml"> levier signal </a>
 <dd>
-Contr&#244;les d'un ensemble de signaux provenant d'un levier situ&#233; sur le panneau, avec les trois
+Commandes d'un ensemble de signaux provenant d'un levier situ&#233; sur le panneau, avec les trois
 voyants. (Pas encore sorti)
 
 <dt>
@@ -66,13 +64,10 @@ voyants. (Pas encore sorti)
 Impl&#233;mente le bouton de code et une lampe de code. (Pas encore sorti)
 <dl>
 
-
-
-
-
-
 </dl>
     
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
