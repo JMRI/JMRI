@@ -53,6 +53,18 @@ public class SRCPTrafficControlScaffold extends SRCPTrafficController {
         return;
     }
 
+    /**
+     * forward a message to the listeners, e.g. test receipt
+     */
+    protected void sendTestReply(SRCPReply m) {
+        // forward a test message to NceListeners
+        if (log.isDebugEnabled()) {
+            log.debug("sendTestReply [" + m + "]");
+        }
+        notifyReply(m,null);
+        return;
+    }
+
     /*
      * Check number of listeners, used for testing dispose()
      */
