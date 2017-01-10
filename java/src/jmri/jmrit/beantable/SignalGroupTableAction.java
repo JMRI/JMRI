@@ -685,8 +685,8 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         // Get system name and user name
         String sName = _systemName.getText().toUpperCase();
         String uName = _userName.getText();
-        if (sName.length() == 0) {
-            javax.swing.JOptionPane.showMessageDialog(null, "System Name field can not be left blank", "System Name Error", javax.swing.JOptionPane.WARNING_MESSAGE);
+        if (sName.length() == 0) { // false message when name is filled in (edit)
+            javax.swing.JOptionPane.showMessageDialog(null, "System Name field can not be left blank", "System Name Error", javax.swing.JOptionPane.WARNING_MESSAGE); // TODO I18N
             return false;
         }
         SignalGroup g = null;
@@ -836,7 +836,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                 _mastAppearancesList.add(new SignalMastAppearances(appear.get(i)));
             }
         } else {
-            log.error("Failed to get signal mast {}", g.getSignalMastName());
+            log.error("Failed to get signal mast {}", g.getSignalMastName()); // false indicates Can't find mast (but quoted name stands for a head) TODO
         }
 
         fixedSystemName.setText(sName);
@@ -1226,6 +1226,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
     void signalEditPressed(int row) {
         if (curSignalGroup == null) {
+            log.debug("From signalEditPressed");
             if (!checkNewNamesOK()) {
                 return;
             }
@@ -1242,7 +1243,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         editSignalHead.editSignal(curSignalGroup, _SignalGroupSignalModel.getDisplayName(row));
     }
 
-    private boolean showAll = true;   // false indicates show only included Turnouts
+    private boolean showAll = true;   // false indicates show only included Turnouts TODO
 
     private static int ROW_HEIGHT;
 
