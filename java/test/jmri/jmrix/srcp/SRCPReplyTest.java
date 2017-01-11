@@ -70,9 +70,9 @@ public class SRCPReplyTest {
         SRCPReply m2 = new SRCPReply(s2);
         String s3 = "12345678910 300 OK REASON GOES HERE\n\r";
         SRCPReply m3 = new SRCPReply(s3);
-        Assert.assertEquals("100 response code","100",m1.getREsponseCode());
-        Assert.assertEquals("200 response code","200",m2.getREsponseCode());
-        Assert.assertEquals("300 response code","300",m3.getREsponseCode());
+        Assert.assertEquals("100 response code","100",m1.getResponseCode());
+        Assert.assertEquals("200 response code","200",m2.getResponseCode());
+        Assert.assertEquals("300 response code","300",m3.getResponseCode());
     }
 
     @Test
