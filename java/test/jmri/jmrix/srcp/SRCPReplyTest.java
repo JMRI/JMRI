@@ -77,7 +77,7 @@ public class SRCPReplyTest {
 
     @Test
     public void checkValue(){
-        String s1 = "123456789 100 INFO 1 SM -1 8 99"
+        String s1 = "123456789 100 INFO 1 SM -1 8 99";
         SRCPReply m1 = new SRCPReply(s1);
         Assert.assertEquals("CV value",99,m1.value());
         String s2 = "12345678910 100 OK REASON GOES HERE\n\r";
