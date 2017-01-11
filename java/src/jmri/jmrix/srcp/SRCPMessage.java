@@ -63,7 +63,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     static public SRCPMessage getExitProgMode(int bus) {
-        String msg = "TERM " + bus + "  SM\n";
+        String msg = "TERM " + bus + " SM\n";
         SRCPMessage m = new SRCPMessage(msg);
         return m;
     }
@@ -98,7 +98,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     static public SRCPMessage getConfirmDirectBitCV(int bus, int cv, int bit, int val) {
-        String msg = "VERIFY " + bus + " SM 0 CV " + cv + " " + bit + " " + val + "\n";
+        String msg = "VERIFY " + bus + " SM 0 CVBIT " + cv + " " + bit + " " + val + "\n";
         SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
         return m;
@@ -106,7 +106,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     static public SRCPMessage getWriteDirectBitCV(int bus, int cv, int bit, int val) {
-        String msg = "SET " + bus + " SM 0 CV " + cv + " " + bit + " " + val + "\n";
+        String msg = "SET " + bus + " SM 0 CVBIT " + cv + " " + bit + " " + val + "\n";
         SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
         return m;
