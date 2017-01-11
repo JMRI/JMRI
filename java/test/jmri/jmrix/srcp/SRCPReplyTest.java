@@ -49,6 +49,42 @@ public class SRCPReplyTest {
         //Assert.assertTrue("Parser Constructor Correct", s.equals(m.toString()));
     }
 
+    @Test
+    public void checkIsResponseOK(){
+        String s1 = "12345678910 100 OK REASON GOES HERE\n\r";
+        SRCPReply m1 = new SRCPReply(s1);
+        String s2 = "12345678910 250 OK REASON GOES HERE\n\r";
+        SRCPReply m2 = new SRCPReply(s2);
+        String s3 = "12345678910 300 OK REASON GOES HERE\n\r";
+        SRCPReply m3 = new SRCPReply(s3);
+        Assert.assertTrue("100 message ok",m1.isResponseOK());
+        Assert.assertTrue("200 message ok",m2.isResponseOK());
+        Assert.assertFalse("300 message not ok",m3.isResponseOK());
+    }
+
+    @Test
+    public void getResponseCode(){
+        String s1 = "12345678910 100 OK REASON GOES HERE\n\r";
+        SRCPReply m1 = new SRCPReply(s1);
+        String s2 = "12345678910 250 OK REASON GOES HERE\n\r";
+        SRCPReply m2 = new SRCPReply(s2);
+        String s3 = "12345678910 300 OK REASON GOES HERE\n\r";
+        SRCPReply m3 = new SRCPReply(s3);
+        Assert.assertEquals("100 response code","100",m1.getREsponseCode());
+        Assert.assertEquals("200 response code","200",m2.getREsponseCode());
+        Assert.assertEquals("300 response code","300",m3.getREsponseCode());
+    }
+
+    @Test
+    public void checkValue(){
+        String s1 = "123456789 100 INFO 1 SM -1 8 99"
+        SRCPReply m1 = new SRCPReply(s1);
+        Assert.assertEquals("CV value",99,m1.value());
+        String s2 = "12345678910 100 OK REASON GOES HERE\n\r";
+        SRCPReply m2 = new SRCPReply(s2);
+        Assert.assertEquals("CV value",-1,m2.value());
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
