@@ -71,7 +71,7 @@ public class SRCPReplyTest {
         String s3 = "12345678910 300 OK REASON GOES HERE\n\r";
         SRCPReply m3 = new SRCPReply(s3);
         Assert.assertEquals("100 response code","100",m1.getResponseCode());
-        Assert.assertEquals("200 response code","200",m2.getResponseCode());
+        Assert.assertEquals("250 response code","250",m2.getResponseCode());
         Assert.assertEquals("300 response code","300",m3.getResponseCode());
     }
 
@@ -83,6 +83,7 @@ public class SRCPReplyTest {
         String s2 = "12345678910 100 OK REASON GOES HERE\n\r";
         SRCPReply m2 = new SRCPReply(s2);
         Assert.assertEquals("CV value",-1,m2.value());
+        jmri.util.JUnitAppender.assertErrorMessage("Unable to get number from reply: \"12345678910 100 OK REASON GOES HERE\"");
     }
 
     // The minimal setup for log4J
