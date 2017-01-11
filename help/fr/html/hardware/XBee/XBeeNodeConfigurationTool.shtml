@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<!-- Translated by Herv&#233; BLOREC <bzh56420@yahoo.fr>in 2017-01-11 -->
+<head>
+<title>JMRI Hardware Support - XBee Node Configuration Tool</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+  <div id="mainContent">
+
+<h1>Structure Mat&#233;rielle: Outil de Configuration de N&#339;ud XBee</h1>
+
+<a name="tools"></a><h2>Outils JMRI</h2>
+<h4>Configuration de N&#339;ud XBee</h4>
+<p>
+L'outil de Configuration de N&#339;ud XBee peut &#234;tre utilis&#233; pour ajouter des n&#339;ud XBee &#224; la configuration JMRI.<br>
+Vous pouvez acc&#233;der &#224; l'outil depuis le menu quand une <a href="index.shtml">connexion XBee</a> est active.</p>
+
+<img src="images/XBeeConfiguration.png" alt="XBee node Configuration Tool Image" height="437" width="400" align="right">
+<p>
+Au sommet se trouvent trois bo&#238;tes d&#233;roulantes pour:
+	<ul>
+	<li>l'adresse des n&#339;uds en 16 bit
+	<li>le GUID 64 bit 
+	<li>le champ d'identification du N&#339;ud (NI) .
+	</ul>
+<p>La s&#233;lection d'une adresse dans la premi&#232;re fen&#234;tre apportera l'information pour le  s&#233;lectionn&#233; dans la moiti&#233; moiti&#233; du volet outil
+
+<h4>Tableau</h4>
+<p>Il y a trois colonnes listant la configuration actuelle des broches E/S du n&#339;ud 
+	<ul>
+	<li>La premi&#232;re colonne liste les num&#233;ros des pin DIO.
+	<li>La seconde colonne liste le nom syst&#232;me associ&#233; avec la pin ou <code>- free -</code> si la pin n'est pas actuellement affect&#233;e &#224; un &#233;quipement.
+	<li>La troisi&#232;me colonne liste les Noms Utilisateur associ&#233;s aux Noms Syst&#232;mes.
+	</ul>
+
+<h4>Boutons</h4>
+<p>Le bouton libell&#233; "Ajouter N&#339;ud" ajoutera le n&#339;ud associ&#233; avec les 16 bits d'adresse &#224; la liste des N&#339;uds.
+<p>Le bouton libell&#233; "D&#233;couvrir N&#339;uds" qui lancera pour le Xbee une routine de d&#233;couverte de n&#339;ud et cherchera de nouveau n&#339;ud sur le r&#233;seau.
+<p>Le bouton libell&#233; "Modifer N&#339;ud" vous autorisera a modifier l'information n&#339;ud pour le n&#339;ud s&#233;lectionn&#233;e.
+<p>Le bouton libell&#233; "Effacer N&#339;ud" enl&#233;vera le n&#339;ud actuellement s&#233;lectionn&#233;.
+<p>Le bouton libell&#233; "Termin&#233;" fermera l'outil de Configuration de N&#339;ud XBee.
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Aide JMRI</h3>
+<p>Retour &#224; la page <a href="index.shtml">Aide XBee</a>
+
+<!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>
