@@ -1,60 +1,57 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- Updated  by Blorec Herv&#233;  2013-09-09-->
+<!-- Updated  by Blorec Herv&#233;  2017-01-11 -->
 <html lang="fr">
 <head>
- <TITLE>
- JMRI Install Guide: Using a PDA to Access JMRI Applications
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
-    <META content="Michael Beck" name=Author>
-    <META content="John Plocher" name=Author>
-    <META name="keywords" content="model railroad JMRI PDA">
+ <title>JMRI Hardware Support - Using a PDA</title>
+    <meta content="Michael Beck" name="Author">
+    <meta content="John Plocher" name="Author">
+    <meta name="keywords" content="model railroad JMRI PDA">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css"
+	media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css"
+	media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <H1> 
-     Guide d'Installalation JMRI: Utilisation d'un PDA pour acc&#233;der aux applications JMRI
-      </H1>
+      <H1>Guide d'Installalation JMRI: Utilisation d'un PDA pour acc&#233;der aux applications JMRI ( obsolète )</H1>
+<P>
+Cette page décrit une première tentative de connexion d'un PDA Axim à JMRI, qui présente quelques défauts et est obsolète.
 
+<a name="limitations"></a><h2>Limitations</h2>
+<p>Pour une approche prise en charge  impliquant l'exécution d'un programme spécifique
+Sur votre Smartphone, consultez la page
+<a href="../../package/jmri/jmrit/withrottle/UserInterface.shtml">WiThrottle</a>
+
+<a name="connecting"></a><h2>Connexion</h2>
 Daryl Kruse a exp&#233;riment&#233;
  un PDA Dell Axim pour une utilisation comme r&#233;gulateur Digitrax 2-voies r&#233;elles.
 Il a fourni l'information suivante
 sur la fa&#231;on dont il l'a mis en place:
 
-<P>
-
-1. Notre maison a un r&#233;seau local sans fil mis en place pour les membres de la famille pour acc&#233;der &#224;
+<P>1. Notre maison a un r&#233;seau local sans fil mis en place pour les membres de la famille pour acc&#233;der &#224;
 notre service Internet par c&#226;ble.
 
-<P>
-2. Mon ordinateur consacr&#233; au train est connect&#233; &#224; notre LAN et, bien s&#251;r, est
+<P>2. Mon ordinateur consacr&#233; au train est connect&#233; &#224; notre LAN et, bien s&#251;r, est
 connect&#233; &#224; JMRI et le LocoNet via une interface.
 
-<P>
-3. Mon Dell Axim est un terminal client sans fil.
+<P>3. Mon Dell Axim est un terminal client sans fil.
 
-<P>
-4. Apr&#232;s avoir jet&#233; un oeil sur les r&#233;gulateurs et les contr&#244;le d'aiguillage JMRI,
+<P>4. Apr&#232;s avoir jet&#233; un oeil sur les r&#233;gulateurs et les contr&#244;le d'aiguillage JMRI,
  j'utilise mon terminal Client Axim pour acc&#233;der &#224; l'&#233;cran de l'ordinateur.
 
-<P>
-5. Je peux alors contr&#244;ler le r&#233;seau avec l'Axim.
+<P>5. Je peux alors contr&#244;ler le r&#233;seau avec l'Axim.
 
 <P>
 J'utilise les Services Terminal Client qui ont &#233;t&#233; install&#233; sur mon
@@ -67,26 +64,27 @@ Le bouton principal &#224; quatre voies de l'Axim peut &#234;tre utilis&#233; po
 et diminuer (&#224; droite) la vitesse et fixer la direction du train (en avant- vers le haut
  vers le bas- en arri&#232;re)." I use the blunt end of my home made 
 uncoupling pic to" adresser &#224; l'&#233;cran afin de s&#233;lectionner et d'exp&#233;dier les
-locomotives, r&#233;aliser des fonctions et fixer des aiguillages. Tout ceci peut &#234;tre fait sans jamais se connecter &#224; Loconet.
+locomotives, r&#233;aliser des fonctions et commander des aiguillages. Tout ceci peut &#234;tre fait sans jamais se connecter &#224; 
+Loconet.
 <P>
-Une chose qui est un peu 'combersome' d'entrer le num&#233;ro de l'aiguillage 
+Une chose qui est un peu lourde est d'entrer le num&#233;ro de l'aiguillage 
 dans la commande de l'aiguillage. Pour cela, je dois utiliser le clavier de l'Axim
 . Je voudrais utiliser le tableau d'aiguillage, mais tous les commutateurs d'accessoires
  qui sont utilis&#233;s se montrent automatiquement sur le tableau. Comme j'utilise
 les contr&#244;les d'itin&#233;raires, beaucoup de chiffres inutiles d'aiguillages et d'accessoires s'affichent
 alors que je n'en ai pas besoin. Est-il possible tout de m&#234;me de mettre en place une table qui soit d&#233;finie
 avec juste les aiguillages et accessoire que vous voulez?
-. <P>
-I&#231;i se trouvent les image de l' 
-<A HREF="http://home.comcast.net/~dpkruse/pdathrottle.jpg"> &#233;cran axim</a>
-et de l'
-<A HREF="http://home.comcast.net/~dpkruse/axim50.jpg">axim lui-m&#234;me</a>.
 
-<p>
-Pour une autre approche, impliquant et ex&#233;cutant un programme sp&#233;cifique
-sur le PDA, voir la page
-<a href="../../package/jmri/jmrit/withrottle/UserInterface.shtml">r&#233;gulateur WiFi </a>.
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Aide JMRI</h3>
+
+<P>
+Pour une approche acruellement prise en charge, impliquant l'exécution d'un programme sp&#233;cifique
+sur le PDAvotre Smartphone, voir la page
+<a href="../../package/jmri/jmrit/withrottle/UserInterface.shtml">r&#233;gulateur Wi </a>.
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
