@@ -1,26 +1,25 @@
 /**
- * SRCPInterfaceScaffold.java
+ * XpaInterfaceScaffold.java
  *
- * Description:	Stands in for the SRCPTrafficController class
+ * Description:	Stands in for the XpaTrafficController class
  *
  * @author	Bob Jacobsen
   */
-package jmri.jmrix.srcp;
+package jmri.jmrix.xpa;
 
 import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SRCPTrafficControlScaffold extends SRCPTrafficController {
+public class XpaTrafficControlScaffold extends XpaTrafficController {
 
-    public SRCPTrafficControlScaffold() {
+    public XpaTrafficControlScaffold() {
         if (log.isDebugEnabled()) {
             log.debug("setting instance: " + this);
         }
-        self = this;
     }
 
-    // override some SRCPTrafficController methods for test purposes
+    // override some XpaTrafficController methods for test purposes
     public boolean status() {
         return true;
     }
@@ -28,11 +27,11 @@ public class SRCPTrafficControlScaffold extends SRCPTrafficController {
     /**
      * record messages sent, provide access for making sure they are OK
      */
-    public Vector<SRCPMessage> outbound = new Vector<SRCPMessage>();  // public OK here, so long as this is a test class
+    public Vector<XpaMessage> outbound = new Vector<XpaMessage>();  // public OK here, so long as this is a test class
 
-    public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
+    public void sendXpaMessage(XpaMessage m, XpaListener reply) {
         if (log.isDebugEnabled()) {
-            log.debug("sendSRCPMessage [" + m + "]");
+            log.debug("sendXpaMessage [" + m + "]");
         }
         // save a copy
         outbound.addElement(m);
@@ -44,24 +43,12 @@ public class SRCPTrafficControlScaffold extends SRCPTrafficController {
     /**
      * forward a message to the listeners, e.g. test receipt
      */
-    protected void sendTestMessage(SRCPMessage m, SRCPListener l) {
+    protected void sendTestMessage(XpaMessage m, XpaListener l) {
         // forward a test message to NceListeners
         if (log.isDebugEnabled()) {
             log.debug("sendTestMessage    [" + m + "]");
         }
         notifyMessage(m, l);
-        return;
-    }
-
-    /**
-     * forward a message to the listeners, e.g. test receipt
-     */
-    protected void sendTestReply(SRCPReply m) {
-        // forward a test message to NceListeners
-        if (log.isDebugEnabled()) {
-            log.debug("sendTestReply [" + m + "]");
-        }
-        notifyReply(m,null);
         return;
     }
 
@@ -72,6 +59,6 @@ public class SRCPTrafficControlScaffold extends SRCPTrafficController {
         return cmdListeners.size();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPTrafficControlScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XpaTrafficControlScaffold.class.getName());
 
 }

@@ -42,7 +42,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(LnPacketizerTest.class));
         suite.addTest(new TestSuite(LocoNetThrottleTest.class));
         suite.addTest(new JUnit4TestAdapter(LocoNetConsistTest.class));
-        suite.addTest(LnPowerManagerTest.suite());
+        suite.addTest(new JUnit4TestAdapter(LnPowerManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(LnTurnoutTest.class));
         suite.addTest(new JUnit4TestAdapter(LnTurnoutManagerTest.class));
         suite.addTest(LnReporterTest.suite());
