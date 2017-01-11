@@ -33,7 +33,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // diagnose format
-    /*
+    /**
      *  Detrmine if the message turns off track power
      *  @return true if the messages is a track power off message,false otherwise 
      */
@@ -42,7 +42,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         return s.contains("POWER OFF") && s.contains("SET");
     }
 
-    /*
+    /**
      *  Detrmine if the message turns on track power
      *  @return true if the messages is a track power on message,false otherwise 
      */
@@ -53,7 +53,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
 
     // static methods to return a formatted message
 
-    /*
+    /**
      * @return an SRCPMessage to turn the track power on
      */
     static public SRCPMessage getEnableMain() {
@@ -62,7 +62,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    /*
+    /**
      * @return an SRCPMessage to turn the track power off
      */
     static public SRCPMessage getKillMain() {
@@ -72,7 +72,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
 
-    /*
+    /**
      * @param bus - a bus number
      * @return an SRCPMessage to initialize programming on the given bus.
      */
@@ -82,7 +82,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    /*
+    /**
      * @param bus - a bus number
      * @return an SRCPMessage to terminate programming on the given bus.
      */
@@ -92,7 +92,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    /*
+    /**
      * @param bus - a bus number
      * @param cv - the CV to read.
      * @return an SRCPMessage to read the given CV in direct mode the given bus.
@@ -104,7 +104,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    /*
+    /**
      * @param bus - a bus number
      * @param cv - the CV to read.
      * @param val - a value for the CV.
@@ -118,7 +118,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
 
     }
 
-    /*
+    /**
      * @param bus - a bus number
      * @param cv - the CV to write.
      * @param val - a value for the CV.
@@ -131,7 +131,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    /*
+    /**
      * @param bus - a bus number
      * @param cv - the CV to read.
      * @param bit - the bit to read.
@@ -144,7 +144,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    /*
+    /**
      * @param bus - a bus number
      * @param cv - the CV to read.
      * @param bit - the bit to read.
@@ -159,7 +159,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
 
     }
 
-    /*
+    /**
      * @param bus - a bus number
      * @param cv - the CV to write.
      * @param bit - the bit to write
@@ -173,7 +173,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    /*
+    /**
      * @param bus - a bus number
      * @param reg - a register to read.  Restricted to valuse less than 8.
      * @return an SRCPMessage to read the provided register using the given bus.
@@ -189,7 +189,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    /*
+    /**
      * @param bus - a bus number
      * @param reg - a register to read.  Restricted to valuse less than 8.
      * @param val - a value for the register
@@ -206,7 +206,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    /*
+    /**
      * @param bus - a bus number
      * @param reg - a register to write.  Restricted to valuse less than 8.
      * @param val - a value for the register
