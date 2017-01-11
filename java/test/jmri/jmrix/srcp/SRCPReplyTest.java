@@ -3,10 +3,10 @@ package jmri.jmrix.srcp;
 import java.io.StringReader;
 import jmri.jmrix.srcp.parser.ParseException;
 import jmri.jmrix.srcp.parser.SRCPClientParser;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * SRCPReplyTest.java
@@ -14,15 +14,18 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.srcp.SRCPReply class
  *
  * @author	Bob Jacobsen
+ * @author  Paul Bender Copyright (C) 2017
  */
-public class SRCPReplyTest extends TestCase {
+public class SRCPReplyTest {
 
+    @Test
     public void testCtor() {
         SRCPReply m = new SRCPReply();
         Assert.assertNotNull(m);
     }
 
     // Test the string constructor.
+    @Test
     public void testStringCtor() {
         String s = "100 OK REASON GOES HERE\n\r";
         SRCPReply m = new SRCPReply(s);
@@ -31,6 +34,7 @@ public class SRCPReplyTest extends TestCase {
     }
 
     // Test the parser constructor.
+    @Test
     public void testParserCtor() {
         String s = "12345678910 400 ERROR Reason GOES HERE\n\r";
         SRCPClientParser p = new SRCPClientParser(new StringReader(s));
@@ -45,31 +49,14 @@ public class SRCPReplyTest extends TestCase {
         //Assert.assertTrue("Parser Constructor Correct", s.equals(m.toString()));
     }
 
-    // from here down is testing infrastructure
-    public SRCPReplyTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SRCPReplyTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SRCPReplyTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 }
