@@ -65,7 +65,7 @@ public class ConnectivityUtil {
     LayoutBlock nlb = null;
     LayoutBlock plb = null;
 
-	private boolean logInfoFor_trackSegmentLeadsTo = false;	//Debugging flag; set 'true' to spew trackSegmentLeadsTo info.
+    private boolean logInfoFor_trackSegmentLeadsTo = log.isDebugEnabled();
 
     /**
      * Provides a list of LayoutTurnouts in a specified Block (block), in order,
