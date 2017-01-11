@@ -211,7 +211,7 @@
     </dd>
 
     <dt class="im"><a href="http://www.marklin.com/digital/"><img src="images/marklin_logo.gif" width="101" height="22" alt="Marklin"></a></dt>
-    <dt><a href="marklin/index.shtml">Märklin</a></dt>
+    <dt><a href="marklin/index.shtml">M&#228;rklin</a></dt>
     <dd><p class="dl">Configurer la connexion &#224; la centrale
 			<a href="marklin/index.shtml">CS2</a></p>
 	    <a href="ecos/index.shtml">CS</a> Centrale - voir ESU ECoS
