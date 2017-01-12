@@ -96,6 +96,7 @@ public class ActivateTrainFrame {
     private JButton deleteButton = null;
     private JCheckBox autoRunBox = new JCheckBox(Bundle.getMessage("AutoRun"));
     private JCheckBox loadAtStartupBox = new JCheckBox(Bundle.getMessage("LoadAtStartup"));
+    private JCheckBox allocateAllTheWayBox = new JCheckBox(Bundle.getMessage("AllocateAllTheWay"));
     private JCheckBox terminateWhenDoneBox = new JCheckBox(Bundle.getMessage("TerminateWhenDone"));
     private JTextField priorityField = new JTextField(6);
     private JCheckBox resetWhenDoneBox = new JCheckBox(Bundle.getMessage("ResetWhenDone"));
@@ -255,6 +256,11 @@ public class ActivateTrainFrame {
             p4.add(destinationBlockBox);
             destinationBlockBox.setToolTipText(Bundle.getMessage("DestinationBlockBoxHint"));
             initiatePane.add(p4);
+            JPanel p4a = new JPanel();
+            p4a.setLayout(new FlowLayout());
+            p4a.add(allocateAllTheWayBox);
+            allocateAllTheWayBox.setToolTipText(Bundle.getMessage("AllocateAllTheWayBoxHint"));
+            initiatePane.add(p4a);
             JPanel p6 = new JPanel();
             p6.setLayout(new FlowLayout());
             p6.add(resetWhenDoneBox);
@@ -402,6 +408,7 @@ public class ActivateTrainFrame {
         setAutoRunDefaults();
         autoRunBox.setSelected(false);
         loadAtStartupBox.setSelected(false);
+        allocateAllTheWayBox.setSelected(false);
         initializeFreeTransitsCombo(new ArrayList<Transit>());
         initializeFreeTrainsCombo();
         initiateFrame.pack();
@@ -560,6 +567,7 @@ public class ActivateTrainFrame {
         }
         boolean resetWhenDone = resetWhenDoneBox.isSelected();
         boolean reverseAtEnd = reverseAtEndBox.isSelected();
+        boolean allocateAllTheWay = allocateAllTheWayBox.isSelected();
         int delayedStart = delayModeFromBox(delayedStartBox);
         int delayedReStart = delayModeFromBox(delayedReStartBox);
         int departureTimeHours = 8;
@@ -1069,6 +1077,7 @@ public class ActivateTrainFrame {
         setComboBox(trainTypeBox, info.getTrainType());
         autoRunBox.setSelected(info.getAutoRun());
         loadAtStartupBox.setSelected(info.getLoadAtStartup());
+        allocateAllTheWayBox.setSelected(info.getAllocateAllTheWay());
         autoTrainInfoToDialog(info);
     }
 
@@ -1098,6 +1107,7 @@ public class ActivateTrainFrame {
         info.setTrainType((String) trainTypeBox.getSelectedItem());
         info.setAutoRun(autoRunBox.isSelected());
         info.setLoadAtStartup(loadAtStartupBox.isSelected());
+        info.setAllocateAllTheWay(allocateAllTheWayBox.isSelected());
         info.setDelayedRestart(delayModeFromBox(delayedReStartBox));
         info.setRestartSensorName(delayReStartSensor.getSelectedDisplayName());
         info.setRestartDelayMin(Integer.parseInt(delayMinField.getText()));
