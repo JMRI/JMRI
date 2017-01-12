@@ -133,7 +133,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
                     return;  // just ignore this, since we are retransmitting 
                     // the message.
                 } else if (l.getElement(0) == XNetConstants.CS_INFO
-                        && l.getElement(2) == XNetConstants.CS_NOT_SUPPORTED) {
+                        && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
                     progState = XNetProgrammer.NOTPROGRAMMING;
                     stopTimer();
                     progListener.programmingOpReply(value, jmri.ProgListener.NotImplemented);
