@@ -721,7 +721,7 @@ public class ActivateTrainFrame {
         // create a new Active Train
         ActiveTrain at = _dispatcher.createActiveTrain(transitName, trainName, tSource, startBlockName,
                 startBlockSeq, endBlockName, endBlockSeq, autoRun, dccAddress, priority,
-                resetWhenDone, reverseAtEnd, true, initiateFrame);
+                resetWhenDone, reverseAtEnd, allocateAllTheWay, true, initiateFrame);
         if (at == null) {
             return;  // error message sent by createActiveTrain
         }
