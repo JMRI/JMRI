@@ -516,7 +516,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         itemGroup.add(blockContentsButton);
         itemGroup.add(iconLabelButton);
 
-        // This is used to enable/disable properties depending on which (radio) button is selected
+        // This is used to enable/disable property controls depending on which (radio) button is selected
         ActionListener selectionListAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 // turnout properties
@@ -601,25 +601,25 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         topEditBar = new JPanel();
         topEditBar.setLayout(new BoxLayout(topEditBar, BoxLayout.PAGE_AXIS));
 
-		boolean bordersFlag = false;
-		boolean leftToolbarFlag = false;	//TODO: not finished; work-in-progress (geowar1)
+        boolean bordersFlag = false;
+        boolean leftToolbarFlag = false;    //TODO: not finished; work-in-progress (geowar1)
 
-        // setup meta panel
+        // setup meta panel (to go around the first two rows… encapsulates the "Turnout", "Track" & "Block" panels.)
         JPanel metaPanel = null;
         if (bordersFlag) {
-	        metaPanel = new JPanel();
-	        metaPanel.setLayout(new BoxLayout(metaPanel, BoxLayout.PAGE_AXIS));
-	        metaPanel.setBorder(BorderFactory.createEtchedBorder());
+            metaPanel = new JPanel();
+            metaPanel.setLayout(new BoxLayout(metaPanel, BoxLayout.PAGE_AXIS));
+            metaPanel.setBorder(BorderFactory.createEtchedBorder());
         }
 
         // add first row of edit tool bar items
         JPanel top1 = new JPanel();
         top1.setLayout(new BoxLayout(top1, BoxLayout.LINE_AXIS));
         if (bordersFlag) {
-	        top1.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BeanNameTurnout")));
-		} else {
-	        top1.add(new JLabel("    " + Bundle.getMessage("BeanNameTurnout") + ": "));
-		}
+            top1.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BeanNameTurnout")));
+        } else {
+            top1.add(new JLabel("    " + Bundle.getMessage("BeanNameTurnout") + ": "));
+        }
 
         // add turnout items
         top1.add(turnoutRHButton);
@@ -649,10 +649,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         top1.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
 
         JPanel right1 = top1;
-		if (bordersFlag) {
-			right1 = new JPanel();
-		}
+        if (bordersFlag) {
+            right1 = new JPanel();
+        }
 
+		// this is enabled/disabled via selectionListAction above
         turnoutPropertiesPanel.add(new JLabel(Bundle.getMessage("Name")));
         turnoutPropertiesPanel.add(nextTurnout);
         nextTurnout.setToolTipText(rb.getString("TurnoutNameToolTip"));
@@ -661,6 +662,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         extraTurnLabel.setEnabled(false);
         extraTurnout.setEnabled(false);
 
+		// this is enabled/disabled via selectionListAction above
         extraTurnoutPanel.add(extraTurnLabel);
         extraTurnoutPanel.add(extraTurnout);
         extraTurnout.setToolTipText(rb.getString("TurnoutNameToolTip"));
@@ -671,12 +673,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         rotationField.setToolTipText(rb.getString("RotationToolTip"));
 
         right1.add(turnoutPropertiesPanel);
-		if (bordersFlag) {
-	        top1.add(right1);
-	        metaPanel.add(top1);
-		} else {
-			topEditBar.add(top1);
-		}
+        if (bordersFlag) {
+            top1.add(right1);
+            metaPanel.add(top1);
+        } else {
+            topEditBar.add(top1);
+        }
 
         // add second row of edit tool bar items
         JPanel top2 = new JPanel();
@@ -684,12 +686,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         JPanel left2 = top2;
         if (bordersFlag) {
-			left2 = new JPanel();
-	        left2.setBorder(BorderFactory.createTitledBorder(rb.getString("Track")));
-			left2.setLayout(new BoxLayout(left2, BoxLayout.LINE_AXIS));
-		} else {
-	        left2.add(new JLabel("    " + rb.getString("Track") + ":  "));
-		}
+            left2 = new JPanel();
+            left2.setBorder(BorderFactory.createTitledBorder(rb.getString("Track")));
+            left2.setLayout(new BoxLayout(left2, BoxLayout.LINE_AXIS));
+        } else {
+            left2.add(new JLabel("    " + rb.getString("Track") + ":  "));
+        }
 
         left2.add(levelXingButton);
         levelXingButton.setToolTipText(rb.getString("LevelCrossingToolTip"));
@@ -698,9 +700,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         trackButton.setToolTipText(rb.getString("TrackSegmentToolTip"));
 
         if (bordersFlag) {
-	        left2.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
-		}
+            left2.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
+        }
 
+		// this is enabled/disabled via selectionListAction above
         trackSegmentPropertiesPanel.add(mainlineTrack);
         mainlineTrack.setToolTipText(rb.getString("MainlineCheckBoxTip"));
         mainlineTrack.setEnabled(false);
@@ -711,22 +714,24 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         left2.add(trackSegmentPropertiesPanel);
         if (bordersFlag) {
-	        top2.add(left2);
-		}
+            top2.add(left2);
+        }
 
         top2.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
 
         JPanel right2 = top2;
         if (bordersFlag) {
-			right2 = new JPanel();
-		}
+            right2 = new JPanel();
+        }
 
         //right2.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
+
+		// this is enabled/disabled via selectionListAction above
         if (bordersFlag) {
-	        blockPanel.setBorder(BorderFactory.createTitledBorder(rb.getString("Block")));
-		} else {
-	        blockPanel.add(new JLabel("    " + rb.getString("BlockID")));
-		}
+            blockPanel.setBorder(BorderFactory.createTitledBorder(rb.getString("Block")));
+        } else {
+            blockPanel.add(new JLabel("    " + rb.getString("BlockID")));
+        }
         blockPanel.add(new JLabel(Bundle.getMessage("Name")));
         blockPanel.add(blockIDField);
         blockIDField.setToolTipText(rb.getString("BlockIDToolTip"));
@@ -739,24 +744,24 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         right2.add(blockPanel);
 
         if (bordersFlag) {
-			top2.add(right2);
-			metaPanel.add(top2);
-			topEditBar.add(metaPanel);
-		} else {
-			topEditBar.add(top2);
-		}
+            top2.add(right2);
+            metaPanel.add(top2);
+            topEditBar.add(metaPanel);
+        } else {
+            topEditBar.add(top2);
+        }
 
         // add third row of edit tool bar items
         JPanel top3 = new JPanel();
         top3.setLayout(new BoxLayout(top3, BoxLayout.LINE_AXIS));
 
-		JPanel left3 = top3;
+        JPanel left3 = top3;
         if (bordersFlag) {
-	        left3 = new JPanel();
-	        left3.setBorder(BorderFactory.createTitledBorder(rb.getString("Nodes")));
-		} else {
-	        left3.add(new JLabel("    " + rb.getString("Nodes") + ":  "));
-		}
+            left3 = new JPanel();
+            left3.setBorder(BorderFactory.createTitledBorder(rb.getString("Nodes")));
+        } else {
+            left3.add(new JLabel("    " + rb.getString("Nodes") + ":  "));
+        }
 
         left3.add(endBumperButton);
         endBumperButton.setToolTipText(rb.getString("EndBumperToolTip"));
@@ -769,18 +774,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         left3.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
 
         if (bordersFlag) {
-	        top3.add(left3);
-		}
+            top3.add(left3);
+        }
 
         top3.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
 
-		JPanel right3 = top3;
+        JPanel right3 = top3;
         if (bordersFlag) {
-			right3 = new JPanel();
-	        right3.setBorder(BorderFactory.createTitledBorder(rb.getString("Labels")));
-		} else {
-	        right3.add(new JLabel("    " + rb.getString("Labels") + ":  "));
-		}
+            right3 = new JPanel();
+            right3.setBorder(BorderFactory.createTitledBorder(rb.getString("Labels")));
+        } else {
+            right3.add(new JLabel("    " + rb.getString("Labels") + ":  "));
+        }
 
         right3.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
 
@@ -803,8 +808,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         blockContents.setToolTipText(rb.getString("BlockContentsButtonToolTip"));
 
         if (bordersFlag) {
-	        top3.add(right3);
-		}
+            top3.add(right3);
+        }
         topEditBar.add(top3);
 
         // add fourth row of edit tool bar items
@@ -813,9 +818,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         JPanel left4 = top4;;
         if (bordersFlag) {
-        	left4 = new JPanel();
-	        left4.setBorder(BorderFactory.createEtchedBorder());
-		}
+            left4 = new JPanel();
+            left4.setBorder(BorderFactory.createEtchedBorder());
+        }
 
         // multi sensor…
         left4.add(multiSensorButton);
@@ -827,15 +832,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         left4.add(nextSignalMast);
 
         if (bordersFlag) {
-	        top4.add(left4);
-		}
+            top4.add(left4);
+        }
         top4.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
 
         JPanel right4 = top4;
         if (bordersFlag) {
-	        right4 = new JPanel();
-	        right4.setBorder(BorderFactory.createEtchedBorder());
-		}
+            right4 = new JPanel();
+            right4.setBorder(BorderFactory.createEtchedBorder());
+        }
 
         right4.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
 
@@ -890,6 +895,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         iconLabelButton.setToolTipText(rb.getString("IconLabelToolTip"));
 
         // change icons…
+		// this is enabled/disabled via selectionListAction above
         changeIconsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 if (sensorButton.isSelected()) {
@@ -910,8 +916,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         changeIconsButton.setEnabled(false);
 
         if (bordersFlag) {
-	        top4.add(right4);
-		}
+            top4.add(right4);
+        }
         top4.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
 
         // ??
@@ -924,11 +930,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         JPanel locationPane = top4;
         if (bordersFlag) {
-	        locationPane = new JPanel();
-	        locationPane.setBorder(BorderFactory.createTitledBorder(rb.getString("Location")));
-		} else {
-	        locationPane.add(new JLabel("    " + rb.getString("Location") + " - "));
-		}
+            locationPane = new JPanel();
+            locationPane.setBorder(BorderFactory.createTitledBorder(rb.getString("Location")));
+        } else {
+            locationPane.add(new JLabel("    " + rb.getString("Location") + " - "));
+        }
 
         Dimension coordSize = xLabel.getPreferredSize();
         coordSize.width *= 2;
@@ -939,8 +945,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         locationPane.add(new JLabel("    y:"));
         locationPane.add(yLabel);
         if (bordersFlag) {
-	        top4.add(locationPane);
-		}
+            top4.add(locationPane);
+        }
 
         topEditBar.add(top4);
 
@@ -961,13 +967,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         super.setTargetPanelSize(width, height);
         setSize(screenDim.width, screenDim.height);
 
-		if (leftToolbarFlag) {
-			topEditBarContainer.setMinimumSize(new Dimension(topEditBarScroll.getPreferredSize().width, screenDim.height));
-			topEditBarContainer.setPreferredSize(new Dimension(topEditBarScroll.getPreferredSize().width, screenDim.height));
-		} else {
-			topEditBarContainer.setMinimumSize(new Dimension(screenDim.width, topEditBarScroll.getPreferredSize().height));
-			topEditBarContainer.setPreferredSize(new Dimension(screenDim.width, topEditBarScroll.getPreferredSize().height));
-		}
+        if (leftToolbarFlag) {
+            topEditBarContainer.setMinimumSize(new Dimension(topEditBarScroll.getPreferredSize().width, screenDim.height));
+            topEditBarContainer.setPreferredSize(new Dimension(topEditBarScroll.getPreferredSize().width, screenDim.height));
+        } else {
+            topEditBarContainer.setMinimumSize(new Dimension(screenDim.width, topEditBarScroll.getPreferredSize().height));
+            topEditBarContainer.setPreferredSize(new Dimension(screenDim.width, topEditBarScroll.getPreferredSize().height));
+        }
 
         super.setDefaultToolTip(new ToolTip(null, 0, 0, new Font("SansSerif", Font.PLAIN, 12),
                 Color.black, new Color(215, 225, 255), Color.black));
