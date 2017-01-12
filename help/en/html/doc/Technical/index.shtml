@@ -267,16 +267,22 @@
       </ul>If you have any questions about this, please <a href=
       "mailto:jmri@pacbell.net">contact us</a> directly.
 
-      <h2>Developer Code Swarm</h2>
-
-      <p>We have created a <a href=
+      <h2>JMRI Code Visualization</h2>
+      <p>To show how many code was written to make JMRI run and
+      provide help to users, here's a still from our 4.6 CodeFlower.
+      CodeFlower privides a dynamic view of the whole repository,
+      showing the relative size of each file. Take a look at the
+      <a href="/community/codeflower.shtml">JMRI CodeFlower</a>.
+      </p>
+      <p>A couple of years ago, Dennis Miller created a <a href=
       "/community/codeswarm.shtml">Code Swarm of JMRI
-      development</a> from its inception to January 2009. A Code
+      development</a> from its inception up to January 2009. A Code
       Swarm is a fascinating and dynamic visual representation of
       change as developers come and go and make changes to the
-      files that make up a project. More information is available
-      on the <a href="/community/codeswarm.shtml">Code Swarm</a>
-      page.</p><!--#include virtual="/Footer" -->
+      files that make up a project. Take a look at the
+      <a href="/community/codeswarm.shtml">JMRI Code Swarm</a>.
+      </p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
