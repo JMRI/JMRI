@@ -22,11 +22,7 @@ public class SprogPortControllerTest extends jmri.jmrix.AbstractSerialPortContro
        apps.tests.Log4JFixture.setUp();
        JUnitUtil.resetInstanceManager();
        SprogSystemConnectionMemo memo = new SprogSystemConnectionMemo();
-       SprogTrafficController tc = new SprogTrafficController(memo){
-          @Override
-          public void sendSprogMessage(SprogMessage m,SprogListener reply) {
-          }
-       };
+       SprogTrafficController tc = new SprogTrafficControlScaffold(memo);
        apc = new SprogPortController(memo){
             @Override
             public boolean status(){

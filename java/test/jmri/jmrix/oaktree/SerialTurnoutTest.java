@@ -21,8 +21,8 @@ public class SerialTurnoutTest extends AbstractTurnoutTest {
     public void setUp() {
         // prepare an interface
         tcis = new SerialTrafficControlScaffold();
-
-        t = new SerialTurnout("OT4", "t4");
+        SerialNode b = new SerialNode(1, SerialNode.IO48);
+        t = new SerialTurnout("OT0104", "t4");
     }
 
     @Override
@@ -32,16 +32,13 @@ public class SerialTurnoutTest extends AbstractTurnoutTest {
 
     @Override
     public void checkThrownMsgSent() {
-
-//                tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
-//		Assert.assertTrue("message sent", tcis.outbound.size()>0);
-//		Assert.assertEquals("content", "41 54 08", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
+    //    Assert.assertTrue("message sent", tcis.outbound.size()>0);
+    //    Assert.assertEquals("content", "41 54 08", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
     }
 
     @Override
     public void checkClosedMsgSent() {
-//                tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
-//		Assert.assertTrue("message sent", tcis.outbound.size()>0);
-//		Assert.assertEquals("content", "41 54 00", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
+    //    Assert.assertTrue("message sent", tcis.outbound.size()>0);
+    //    Assert.assertEquals("content", "41 54 00", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
     }
 }

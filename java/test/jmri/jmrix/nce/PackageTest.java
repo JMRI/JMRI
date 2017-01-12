@@ -40,7 +40,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.nce.NceSystemConnectionMemoTest.suite());
         suite.addTest(jmri.jmrix.nce.NceMessageTest.suite());
         suite.addTest(jmri.jmrix.nce.NceReplyTest.suite());
-        suite.addTest(jmri.jmrix.nce.NcePowerManagerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NcePowerManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.nce.clockmon.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NceConsistTest.class));
