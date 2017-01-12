@@ -1112,22 +1112,14 @@
     </target>
 
     <!-- check for bad line ends, e.g. not ready to go into Git -->
-    <!-- May not (probably will not) work on Windows -->
 
     <target name="checklineends" description="check text files for proper LF line ends (Linux, Mac only)">
-      <exec executable="sh" outputproperty="checklineeds.files">
-        <arg value="-c" />
-        <arg value="find xml help java/src java/test jython -not -type d -exec file '{}' ';' | grep CRLF" />
-      </exec>
-
-      <fail message="${checklineeds.files}">
-        <condition>
-          <length string="${checklineeds.files}" when="greater" length="0" />
-        </condition>
-      </fail>
+        <property name="test.includes" value="jmri.util.FileLineEndingsTest" />
+        <antcall target="test-single" />
     </target>
 
     <!-- end of file-checking targets -->
+    <!-- should match list in jmri.util.FileEncodingsTest -->
 
     <target name="fixlineends" description="convert specific files to LF line ends">
         <fixcrlf eol="unix" srcdir="." encoding="UTF-8" includes="
@@ -2185,6 +2177,7 @@
 	
     <target name="appveyor" description="Parallel execution of CI tasks on Appveyor">
         <parallel threadCount="4"> <!-- allow up to four tasks at once -->
+            <antcall target="checklineends" />
             <antcall target="checkPropertiesFiles" />
             <antcall target="ci-test-appveyor" />
         </parallel>
