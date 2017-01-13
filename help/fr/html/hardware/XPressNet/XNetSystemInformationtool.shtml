@@ -28,7 +28,7 @@ est connect&#233; au syst&#232;me.
 <P>
 Les deux premi&#232;res lignes indiquent le type de centrale et les version des logiciels
 qui sont connect&#233; &#224; votre ordinateur.
-Cette information est lu dans le cadre du processus de configuration automatique lorsque
+Cette information est lue dans le cadre du processus de configuration automatique lorsque
 JMRI d&#233;bute la premi&#232;re fois, mais peut &#234;tre relu &#224; l'aide du bouton "Get System Info" (Obtenir Infos Syst&#232;me).
 <P>
 Sous le champ Interface, la version du mat&#233;riel et des logiciels d'
