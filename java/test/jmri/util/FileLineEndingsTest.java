@@ -73,7 +73,7 @@ public class FileLineEndingsTest {
             "**/README*",
             "**/Sidebar",
             "**/TODO",
-            "**/.classpath"
+            // "**/.classpath" // does not appear to be openable by Jython on Windows
         });
     }
 
