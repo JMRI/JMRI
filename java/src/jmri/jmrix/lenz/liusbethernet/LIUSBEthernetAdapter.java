@@ -51,8 +51,9 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
     }
 
     /**
-     * Can the port accept additional characters? return true if the port is
-     * opened.
+     * Can the port accept additional characters?
+     *
+     * @return true if the port is opened
      */
     @Override
     public boolean okToSend() {
@@ -85,7 +86,10 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
     }
 
     /**
-     * Local method to do specific configuration
+     * Local method to do specific configuration.
+     *
+     * @return the single instance of the adapter
+     * @deprecated since 2011-12-18 (initial commit into JMRI)
      */
     @Deprecated
     static public LIUSBEthernetAdapter instance() {
@@ -101,25 +105,26 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
      */
     private void keepAliveTimer() {
         if (keepAliveTimer == null) {
-            keepAliveTimer = new java.util.TimerTask(){
+            keepAliveTimer = new java.util.TimerTask() {
+                @Override
                 public void run() {
                     // If the timer times out, and we are not currently 
                     // programming, send a request for status
                     jmri.jmrix.lenz.XNetSystemConnectionMemo m = LIUSBEthernetAdapter.this
-                                              .getSystemConnectionMemo(); 
+                            .getSystemConnectionMemo();
                     XNetTrafficController t = m.getXNetTrafficController();
-                    jmri.jmrix.lenz.XNetProgrammer p = (jmri.jmrix.lenz.XNetProgrammer)(m.getProgrammerManager().getGlobalProgrammer());
-                    if(p==null || !(p.programmerBusy())) {
-                       t.sendXNetMessage(
-                                    jmri.jmrix.lenz.XNetMessage.getCSStatusRequestMessage(),
-                                    null);
-                   }
+                    jmri.jmrix.lenz.XNetProgrammer p = (jmri.jmrix.lenz.XNetProgrammer) (m.getProgrammerManager().getGlobalProgrammer());
+                    if (p == null || !(p.programmerBusy())) {
+                        t.sendXNetMessage(
+                                jmri.jmrix.lenz.XNetMessage.getCSStatusRequestMessage(),
+                                null);
+                    }
                 }
             };
         } else {
-           keepAliveTimer.cancel();
+            keepAliveTimer.cancel();
         }
-        new java.util.Timer().schedule(keepAliveTimer,keepAliveTimeoutValue,keepAliveTimeoutValue);
+        new java.util.Timer().schedule(keepAliveTimer, keepAliveTimeoutValue, keepAliveTimeoutValue);
     }
 
     private boolean mDNSConfigure = false;
