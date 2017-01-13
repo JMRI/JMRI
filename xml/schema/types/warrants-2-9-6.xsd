@@ -115,6 +115,7 @@
                   <xs:attribute name="dccAddress" type="xs:string"></xs:attribute>
                   <xs:attribute name="dccType" type="xs:string"></xs:attribute>
                   <xs:attribute name="runBlind" type="xs:string"></xs:attribute>
+                  <xs:attribute name="noRamp" type="trueFalseType"></xs:attribute>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
