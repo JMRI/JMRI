@@ -41,6 +41,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -83,6 +84,7 @@ import jmri.jmrit.display.ToolTip;
 import jmri.util.ColorUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemType;
+import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -181,11 +183,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JRadioButton layoutDoubleSlipButton = new JRadioButton(rb.getString("LayoutDoubleSlip"));
 
     // top row of check boxes
-    private JTextField nextTurnout = new JTextField(5);
+    private JmriBeanComboBox turnoutNameComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(),
+            null, JmriBeanComboBox.DISPLAYNAME);
+
     private JPanel turnoutPropertiesPanel = new JPanel();
     private JPanel extraTurnoutPanel = new JPanel();
-    private JTextField extraTurnout = new JTextField(5);
-    private JTextField rotationField = new JTextField(4);
+    private JmriBeanComboBox extraTurnoutNameComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(),
+            null, JmriBeanComboBox.DISPLAYNAME);
+    private JComboBox rotationComboBox = null;
 
     // 2nd row of radio buttons
     private JRadioButton levelXingButton = new JRadioButton(rb.getString("LevelCrossing"));
@@ -653,24 +658,34 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             right1 = new JPanel();
         }
 
-		// this is enabled/disabled via selectionListAction above
+        // this is enabled/disabled via selectionListAction above
         turnoutPropertiesPanel.add(new JLabel(Bundle.getMessage("Name")));
-        turnoutPropertiesPanel.add(nextTurnout);
-        nextTurnout.setToolTipText(rb.getString("TurnoutNameToolTip"));
+        turnoutPropertiesPanel.add(turnoutNameComboBox);
+        turnoutNameComboBox.setEditable(true);
+        turnoutNameComboBox.getEditor().setItem("");
+        turnoutNameComboBox.setToolTipText(rb.getString("TurnoutNameToolTip"));
 
         JLabel extraTurnLabel = new JLabel(rb.getString("SecondName"));
         extraTurnLabel.setEnabled(false);
-        extraTurnout.setEnabled(false);
+        extraTurnoutNameComboBox.setEnabled(false);
 
-		// this is enabled/disabled via selectionListAction above
+        // this is enabled/disabled via selectionListAction above
         extraTurnoutPanel.add(extraTurnLabel);
-        extraTurnoutPanel.add(extraTurnout);
-        extraTurnout.setToolTipText(rb.getString("TurnoutNameToolTip"));
+        extraTurnoutPanel.add(extraTurnoutNameComboBox);
+        extraTurnoutNameComboBox.setEditable(true);
+        extraTurnoutNameComboBox.getEditor().setItem("");
+        extraTurnoutNameComboBox.setToolTipText(rb.getString("TurnoutNameToolTip"));
         turnoutPropertiesPanel.add(extraTurnoutPanel);
 
         turnoutPropertiesPanel.add(new JLabel(rb.getString("Rotation")));
-        turnoutPropertiesPanel.add(rotationField);
-        rotationField.setToolTipText(rb.getString("RotationToolTip"));
+
+        String[] angleStrings = {"-180", "-135", "-90", "-45", "0", "+45", "+90", "+135", "+180"};
+        JComboBox rotationComboBox = new JComboBox(angleStrings);
+        rotationComboBox.setEditable(true);
+        rotationComboBox.setSelectedIndex(4);
+
+        turnoutPropertiesPanel.add(rotationComboBox);
+        rotationComboBox.setToolTipText(rb.getString("RotationToolTip"));
 
         right1.add(turnoutPropertiesPanel);
         if (bordersFlag) {
@@ -703,7 +718,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             left2.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
         }
 
-		// this is enabled/disabled via selectionListAction above
+        // this is enabled/disabled via selectionListAction above
         trackSegmentPropertiesPanel.add(mainlineTrack);
         mainlineTrack.setToolTipText(rb.getString("MainlineCheckBoxTip"));
         mainlineTrack.setEnabled(false);
@@ -725,8 +740,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         //right2.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
-
-		// this is enabled/disabled via selectionListAction above
+        // this is enabled/disabled via selectionListAction above
         if (bordersFlag) {
             blockPanel.setBorder(BorderFactory.createTitledBorder(rb.getString("Block")));
         } else {
@@ -895,7 +909,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         iconLabelButton.setToolTipText(rb.getString("IconLabelToolTip"));
 
         // change icons…
-		// this is enabled/disabled via selectionListAction above
+        // this is enabled/disabled via selectionListAction above
         changeIconsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 if (sensorButton.isSelected()) {
@@ -933,17 +947,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             locationPane = new JPanel();
             locationPane.setBorder(BorderFactory.createTitledBorder(rb.getString("Location")));
         } else {
-            locationPane.add(new JLabel("    " + rb.getString("Location") + " - "));
+            locationPane.add(new JLabel("    " + rb.getString("Location") + ":"));
         }
 
         Dimension coordSize = xLabel.getPreferredSize();
         coordSize.width *= 2;
         xLabel.setPreferredSize(coordSize);
         yLabel.setPreferredSize(coordSize);
-        locationPane.add(new JLabel("x:"));
+        locationPane.add(new JLabel("{x:"));
         locationPane.add(xLabel);
-        locationPane.add(new JLabel("    y:"));
+        locationPane.add(new JLabel(", y:"));
         locationPane.add(yLabel);
+        locationPane.add(new JLabel("}  "));
         if (bordersFlag) {
             top4.add(locationPane);
         }
@@ -957,7 +972,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         contentPane.add(topEditBarContainer);
         topEditBarContainer.setVisible(false);
 
-        //log.info("rotationField.getSize(): " + rotationField.getSize());  //geowar
         // set to full screen
         Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
         height = screenDim.height - 120;
@@ -2561,35 +2575,31 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     boolean translateTrack(float xDel, float yDel) {
         // loop over all defined turnouts
-        for (int i = 0; i < turnoutList.size(); i++) {
-            LayoutTurnout t = turnoutList.get(i);
+        for (LayoutTurnout t : turnoutList) {
             Point2D center = t.getCoordsCenter();
             t.setCoordsCenter(new Point2D.Double(center.getX() + xDel, center.getY() + yDel));
         }
         // loop over all defined level crossings
-        for (int i = 0; i < xingList.size(); i++) {
-            LevelXing x = xingList.get(i);
+        for (LevelXing x : xingList) {
             Point2D center = x.getCoordsCenter();
             x.setCoordsCenter(new Point2D.Double(center.getX() + xDel, center.getY() + yDel));
         }
-        // loop over all defined level crossings
-        for (int i = 0; i < slipList.size(); i++) {
-            LayoutSlip x = slipList.get(i);
+        // loop over all defined slips
+        for (LayoutSlip x : slipList) {
             Point2D center = x.getCoordsCenter();
             x.setCoordsCenter(new Point2D.Double(center.getX() + xDel, center.getY() + yDel));
         }
         // loop over all defined turntables
-        for (int i = 0; i < turntableList.size(); i++) {
-            LayoutTurntable x = turntableList.get(i);
+        for (LayoutTurntable x : turntableList) {
             Point2D center = x.getCoordsCenter();
             x.setCoordsCenter(new Point2D.Double(center.getX() + xDel, center.getY() + yDel));
         }
         // loop over all defined Anchor Points and End Bumpers
-        for (int i = 0; i < pointList.size(); i++) {
-            PositionablePoint p = pointList.get(i);
+        for (PositionablePoint p : pointList) {
             Point2D coord = p.getCoords();
             p.setCoords(new Point2D.Double(coord.getX() + xDel, coord.getY() + yDel));
         }
+
         return true;
     }
 
@@ -2621,6 +2631,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             p.setCoords(new Point2D.Double(Math.round(coord.getX() * xFactor),
                     Math.round(coord.getY() * yFactor)));
         }
+
         // update the overall scale factors
         xScale = xScale * xFactor;
         yScale = yScale * yFactor;
@@ -4379,8 +4390,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     public void actionPerformed(ActionEvent e) {
                         deleteSelectedItems();
                     }
-                }
-                );
+                });
             } else {
                 if (p.doViemMenu()) {
                     popup.add(p.getNameString());
@@ -4440,7 +4450,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         popup.show((Component) p, p.getWidth() / 2 + (int) ((getPaintScale() - 1.0) * p.getX()),
                 p.getHeight() / 2 + (int) ((getPaintScale() - 1.0) * p.getY()));
         /*popup.show((Component)p, event.getX(), event.getY());*/
-    }
+    }   // showPopUp()
 
     private long whenReleased = 0;  // used to identify event that was popup trigger
     private boolean awaitingIconChange = false;
@@ -6388,7 +6398,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      */
     public void addLayoutSlip(int type) {
         double rot = 0.0;
-        String s = rotationField.getText().trim();
+        String s = rotationComboBox.getEditor().getItem().toString().trim();
         if (s.length() < 1) {
             rot = 0.0;
         } else {
@@ -6432,27 +6442,29 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }
         }
-        String turnoutName = nextTurnout.getText().trim();
+
+        String turnoutName = turnoutNameComboBox.getSelectedDisplayName().trim();
         if (validatePhysicalTurnout(turnoutName, this)) {
             // turnout is valid and unique.
             o.setTurnout(turnoutName);
             if (o.getTurnout().getSystemName().equals(turnoutName.toUpperCase())) {
-                nextTurnout.setText(turnoutName.toUpperCase());
+                turnoutNameComboBox.getEditor().setItem(turnoutName.toUpperCase());
             }
         } else {
             o.setTurnout("");
-            nextTurnout.setText("");
+            turnoutNameComboBox.getEditor().setItem("");
         }
-        turnoutName = extraTurnout.getText().trim();
+
+        turnoutName = extraTurnoutNameComboBox.getSelectedDisplayName().trim();
         if (validatePhysicalTurnout(turnoutName, this)) {
             // turnout is valid and unique.
             o.setTurnoutB(turnoutName);
             if (o.getTurnoutB().getSystemName().equals(turnoutName.toUpperCase())) {
-                extraTurnout.setText(turnoutName.toUpperCase());
+                extraTurnoutNameComboBox.getEditor().setItem(turnoutName.toUpperCase());
             }
         } else {
             o.setTurnoutB("");
-            extraTurnout.setText("");
+            extraTurnoutNameComboBox.getEditor().setItem("");
         }
     }   // addLayoutSlip
 
@@ -6462,7 +6474,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public void addLayoutTurnout(int type) {
         // get the rotation entry
         double rot = 0.0;
-        String s = rotationField.getText().trim();
+        String s = rotationComboBox.getEditor().getItem().toString().trim();
         if (s.length() < 1) {
             rot = 0.0;
         } else {
@@ -6488,9 +6500,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
         // create object
-        LayoutTurnout o = new LayoutTurnout(name, type,
-                currentPoint, rot, xScale, yScale, this);
-        //if (o!=null) {
+        LayoutTurnout o = new LayoutTurnout(name, type, currentPoint, rot, xScale, yScale, this);
         turnoutList.add(o);
         setDirty(true);
         // check on layout block
@@ -6510,16 +6520,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // set default continuing route Turnout State
         o.setContinuingSense(Turnout.CLOSED);
         // check on a physical turnout
-        String turnoutName = nextTurnout.getText().trim();
+        String turnoutName = turnoutNameComboBox.getSelectedDisplayName().trim();
         if (validatePhysicalTurnout(turnoutName, this)) {
             // turnout is valid and unique.
             o.setTurnout(turnoutName);
             if (o.getTurnout().getSystemName().equals(turnoutName.toUpperCase())) {
-                nextTurnout.setText(turnoutName.toUpperCase());
+                turnoutNameComboBox.getEditor().setItem(turnoutName.toUpperCase());
             }
         } else {
             o.setTurnout("");
-            nextTurnout.setText("");
+            turnoutNameComboBox.getEditor().setItem("");
         }
         //}
     }
@@ -6535,18 +6545,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             return false;
         }
         // ensure that this turnout is unique among Layout Turnouts
-        LayoutTurnout t = null;
-        for (int i = 0; i < turnoutList.size(); i++) {
-            t = turnoutList.get(i);
+        for (LayoutTurnout t : turnoutList) {
             log.debug("LT '" + t.getName() + "', Turnout tested '" + t.getTurnoutName() + "' ");
             Turnout to = t.getTurnout();
-            /*Only check for the second turnout if the type is a double cross over
-             otherwise the second turnout is used to throw an additional turnout at
-             the same time.*/
-            Turnout to2 = null;
-            if (t.getTurnoutType() >= LayoutTurnout.DOUBLE_XOVER) {
-                to2 = t.getSecondTurnout();
-            }
             if (to != null) {
                 String uname = to.getUserName();
                 if ((to.getSystemName().equals(turnoutName.toUpperCase()))
@@ -6558,15 +6559,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     return false;
                 }
             }
-            if (to2 != null) {
-                String uname = to2.getUserName();
-                if ((to2.getSystemName().equals(turnoutName.toUpperCase()))
-                        || ((uname != null) && (uname.equals(turnoutName)))) {
-                    JOptionPane.showMessageDialog(openPane,
-                            java.text.MessageFormat.format(rb.getString("Error4"),
-                                    new Object[]{turnoutName}),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                    return false;
+
+            /*Only check for the second turnout if the type is a double cross over
+             otherwise the second turnout is used to throw an additional turnout at
+             the same time.*/
+            if (t.getTurnoutType() >= LayoutTurnout.DOUBLE_XOVER) {
+                Turnout to2 = t.getSecondTurnout();
+                if (to2 != null) {
+                    String uname = to2.getUserName();
+                    if ((to2.getSystemName().equals(turnoutName.toUpperCase()))
+                            || ((uname != null) && (uname.equals(turnoutName)))) {
+                        JOptionPane.showMessageDialog(openPane,
+                                java.text.MessageFormat.format(rb.getString("Error4"),
+                                        new Object[]{turnoutName}),
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        return false;
+                    }
                 }
             }
         }
@@ -8284,40 +8292,28 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     // final initialization routine for loading a LayoutEditor
     public void setConnections() {
         // initialize TrackSegments if any
-        if (trackList.size() > 0) {
-            for (int i = 0; i < trackList.size(); i++) {
-                (trackList.get(i)).setObjects(this);
-            }
+        for (TrackSegment t : trackList) {
+            t.setObjects(this);
         }
         // initialize PositionablePoints if any
-        if (pointList.size() > 0) {
-            for (int i = 0; i < pointList.size(); i++) {
-                (pointList.get(i)).setObjects(this);
-            }
+        for (PositionablePoint p : pointList) {
+            p.setObjects(this);
         }
         // initialize LevelXings if any
-        if (xingList.size() > 0) {
-            for (int i = 0; i < xingList.size(); i++) {
-                (xingList.get(i)).setObjects(this);
-            }
+        for (LevelXing x : xingList) {
+            x.setObjects(this);
         }
         // initialize LevelXings if any
-        if (slipList.size() > 0) {
-            for (LayoutSlip l : slipList) {
-                l.setObjects(this);
-            }
+        for (LayoutSlip l : slipList) {
+            l.setObjects(this);
         }
         // initialize LayoutTurntables if any
-        if (turntableList.size() > 0) {
-            for (int i = 0; i < turntableList.size(); i++) {
-                (turntableList.get(i)).setObjects(this);
-            }
+        for (LayoutTurntable t : turntableList) {
+            t.setObjects(this);
         }
         // initialize LayoutTurnouts if any
-        if (turnoutList.size() > 0) {
-            for (int i = 0; i < turnoutList.size(); i++) {
-                (turnoutList.get(i)).setObjects(this);
-            }
+        for (LayoutTurnout l : turnoutList) {
+            l.setObjects(this);
         }
         auxTools.initializeBlockConnectivity();
         log.debug("Initializing Block Connectivity for " + layoutName);
@@ -8394,8 +8390,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     protected void drawTurnouts(Graphics2D g2) {
         //float trackWidth = sideTrackWidth;
         // loop over all defined turnouts
-        for (int i = 0; i < turnoutList.size(); i++) {
-            LayoutTurnout t = turnoutList.get(i);
+        for (LayoutTurnout t : turnoutList) {
             LayoutBlock b = t.getLayoutBlock();
             if (b != null) {
                 g2.setColor(b.getBlockColor());
