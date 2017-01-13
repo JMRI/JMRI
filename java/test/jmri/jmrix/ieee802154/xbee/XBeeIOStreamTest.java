@@ -71,6 +71,7 @@ public class XBeeIOStreamTest {
 
     @BeforeClass
     public static void setUp() {
+        apps.tests.Log4JFixture.setUp();
         tc = new XBeeInterfaceScaffold();
         byte uad[] = {(byte) 0x00, (byte) 0x02};
         tc.setAdapterMemo(new XBeeConnectionMemo());
@@ -83,6 +84,7 @@ public class XBeeIOStreamTest {
         tc.dispose();
         tc = null;
         node = null;
+        apps.tests.Log4JFixture.tearDown();
     }
 
 }
