@@ -362,7 +362,7 @@ public class SignalGroupSubTableAction {
 
             JPanel po = new JPanel();
             po.setLayout(new FlowLayout());
-            JLabel operLabel = new JLabel(Bundle.getMessage("ChooseOrAnd", Bundle.getMessage("Turnouts"), Bundle.getMessage("Sensors")));
+            JLabel operLabel = new JLabel(Bundle.getMessage("ChooseOrAnd"));
             po.add(operLabel);
             po.add(_SensorTurnoutOper);
             contentPane.add(po);

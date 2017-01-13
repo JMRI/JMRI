@@ -14,24 +14,24 @@ package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
 import jmri.Turnout;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
-public abstract class AbstractTurnoutTest extends TestCase {
+
+public abstract class AbstractTurnoutTest {
 
     // implementing classes must provide these abstract members:
     //
-    abstract protected void setUp();    	// load t with actual object; create scaffolds as needed
+    @Before
+    abstract public void setUp();    	// load t with actual object; create scaffolds as needed
 
     abstract public int numListeners();	// return number of listeners registered with the TrafficController
 
     abstract public void checkThrownMsgSent() throws InterruptedException;
 
     abstract public void checkClosedMsgSent() throws InterruptedException;
-
-    public AbstractTurnoutTest(String s) {
-        super(s);
-    }
 
     protected Turnout t = null;	// holds objects under test
 
@@ -46,6 +46,7 @@ public abstract class AbstractTurnoutTest extends TestCase {
 
     // start of common tests
     // test creation - real work is in the setup() routine
+    @Test
     public void testCreate() {
         // initial commanded state when created must be UNKNOWN
         Assert.assertEquals("initial commanded state", Turnout.UNKNOWN, t.getCommandedState());
@@ -53,6 +54,7 @@ public abstract class AbstractTurnoutTest extends TestCase {
         Assert.assertEquals("initial known state", Turnout.UNKNOWN, t.getKnownState());
     }
 
+    @Test
     public void testAddListener() {
         t.addPropertyChangeListener(new Listen());
         listenerResult = false;
@@ -63,6 +65,7 @@ public abstract class AbstractTurnoutTest extends TestCase {
         Assert.assertTrue("listener invoked by setCommandedState", listenerResult);
     }
 
+    @Test
     public void testRemoveListener() {
         Listen ln = new Listen();
         t.addPropertyChangeListener(ln);
@@ -73,6 +76,7 @@ public abstract class AbstractTurnoutTest extends TestCase {
                 !listenerResult);
     }
 
+    @Test
     public void testDispose() {
         t.setCommandedState(Turnout.CLOSED);  	// in case registration with TrafficController 
         //is deferred to after first use
@@ -80,6 +84,7 @@ public abstract class AbstractTurnoutTest extends TestCase {
         Assert.assertEquals("controller listeners remaining", 0, numListeners());
     }
 
+    @Test
     public void testCommandClosed() throws InterruptedException {
         t.setCommandedState(Turnout.CLOSED);
         // check
@@ -87,6 +92,7 @@ public abstract class AbstractTurnoutTest extends TestCase {
         checkClosedMsgSent();
     }
 
+    @Test
     public void testCommandThrown() throws InterruptedException {
         t.setCommandedState(Turnout.THROWN);
         // check
