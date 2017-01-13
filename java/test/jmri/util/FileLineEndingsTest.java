@@ -107,15 +107,20 @@ public class FileLineEndingsTest {
 
     @Test
     public void lineEndings() {
-        String script = "failing = False\nif \"\\r\\n\" in open(\"" + this.file.getAbsolutePath() + "\",\"rb\").read():\n    failing = True";
         try {
-            ScriptEngine engine = JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.PYTHON);
-            engine.eval(script);
-            Assert.assertFalse("File " + file.getPath() + " has incorrect line endings.",
-                    Boolean.valueOf(engine.get("failing").toString()));
-        } catch (ScriptException ex) {
-            log.error("Unable to execute script for test", ex);
-            Assert.fail("Unable to execute script for test");
+            String script = "failing = False\nif \"\\r\\n\" in open(\"" + this.file.getCanonicalPath() + "\",\"rb\").read():\n    failing = True";
+            try {
+                ScriptEngine engine = JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.PYTHON);
+                engine.eval(script);
+                Assert.assertFalse("File " + file.getPath() + " has incorrect line endings.",
+                        Boolean.valueOf(engine.get("failing").toString()));
+            } catch (ScriptException ex) {
+                log.error("Unable to execute script for test", ex);
+                Assert.fail("Unable to execute script for test");
+            }
+        } catch (IOException ex) {
+            log.error("Unable to get path for {}", this.file, ex);
+            Assert.fail("Unable to get get path for test");
         }
     }
 
