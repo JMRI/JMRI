@@ -85,21 +85,6 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
         new XNetInitializationManager(this.getSystemConnectionMemo());
     }
 
-    /**
-     * Local method to do specific configuration.
-     *
-     * @return the single instance of the adapter
-     * @deprecated since 2011-12-18 (initial commit into JMRI)
-     */
-    @Deprecated
-    static public LIUSBEthernetAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new LIUSBEthernetAdapter();
-        }
-        return mInstance;
-    }
-    volatile static LIUSBEthernetAdapter mInstance = null;
-
     /*
      * Set up the keepAliveTimer, and start it.
      */
