@@ -1,6 +1,12 @@
 package apps;
 
+import apps.gui3.Apps3;
 import apps.startup.AbstractActionModel;
+import javax.swing.Action;
+import javax.swing.JButton;
+import jmri.JmriException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Creates a button when the program is started.
@@ -19,7 +25,20 @@ import apps.startup.AbstractActionModel;
  */
 public class CreateButtonModel extends AbstractActionModel {
 
+    private final static Logger log = LoggerFactory.getLogger(CreateButtonModel.class);
+
     public CreateButtonModel() {
         super();
+    }
+
+    @Override
+    protected void performAction(Action action) throws JmriException {
+        JButton b = new JButton(action);
+        b.setToolTipText(this.toString());
+        if (Apps.buttonSpace() != null) {
+            Apps.buttonSpace().add(b);
+        } else if (Apps3.buttonSpace() != null) {
+            Apps3.buttonSpace().add(b);
+        }
     }
 }

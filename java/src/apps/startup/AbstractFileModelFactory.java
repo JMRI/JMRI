@@ -26,8 +26,8 @@ public abstract class AbstractFileModelFactory implements StartupModelFactory {
 
     /**
      * This factory simply displays a {@link javax.swing.JFileChooser} to allow
-     * users to configure the action. Subclasses to initialize the correct file
-     * chooser by implementing this method.
+     * users to configure the action. Subclasses to performAction the correct file
+ chooser by implementing this method.
      *
      * @return a configured file chooser.
      */

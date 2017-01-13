@@ -1,7 +1,10 @@
 package apps.startup;
 
+import java.util.List;
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import jmri.JmriException;
 
 /**
  * Startup object models all need to implement this interface. This allows the
@@ -34,4 +37,29 @@ public interface StartupModel {
      * @return true if valid; false otherwise
      */
     public boolean isValid();
+
+    /**
+     * Perform the startup action.
+     *
+     * @throws jmri.JmriException if there is an exception thrown initializing
+     *                            the startup item
+     */
+    public void performAction() throws JmriException;
+
+    /**
+     * Get the exceptions thrown by the startup model.
+     *
+     * @return the list of exceptions thrown during startup in order or an empty
+     *         list if no exceptions were thrown
+     */
+    @Nonnull
+    public List<Exception> getExceptions();
+
+    /**
+     * Add an exception to the list of exceptions thrown when loading the model
+     * or performing the action.
+     *
+     * @param exception the exception to retain with the model
+     */
+    public void addException(@Nonnull Exception exception);
 }
