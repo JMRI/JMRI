@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Carasso" version="7" lastUpdated="20170112"/>
   <version author="Nigel Cliffe" version="6" lastUpdated="20091016"/>
   <version author="Bob Jacobsen rgj1927@pacbell.net" version="4" lastUpdated="20070411"/>
   <version author="Mark Schutzer mark.schutzer@sbcglobal.net" version="2" lastUpdated="20060114"/>
@@ -24,6 +25,7 @@
                      Change high version for family to 78. (Paul Bender -->
   <!-- Version 6 - Add Silver 21 Pin to decoder family.  
                      Change high version for family to 82. (Nigel Cliffe) -->
+  <!-- Version 7 - Add the missing Function map pane (Alain Carasso) -->
   <!-- These are the Silver decoders, with "6th gen BEMF", "Precision Braking Control" -->
   <!-- and "Low Gear Switching Drive" -->
   <decoder>
@@ -322,6 +324,7 @@
     </resets>
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/lenz/paneLighting.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/lenz/paneFunctionMap.xml"/> 
   <pane>
     <name>Lenz</name>
     <name xml:lang="de">Lenz</name>
