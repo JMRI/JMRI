@@ -687,6 +687,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         String uName = _userName.getText();
         if (sName.length() == 0) {
             javax.swing.JOptionPane.showMessageDialog(null, "System Name field can not be left blank", "System Name Error", javax.swing.JOptionPane.WARNING_MESSAGE);
+            log.debug("Empty system name field for Signal Group bean [{}]", sName);
             return false;
         }
         SignalGroup g = null;
@@ -842,10 +843,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         fixedSystemName.setText(sName);
         fixedSystemName.setVisible(true);
         _systemName.setVisible(false);
-        //mainSignal.setText(g.getSignalMastName());
         mainSignal.setSelectedBean(g.getSignalMast());
-
         _userName.setText(g.getUserName());
+
         int setRow = 0;
 
         for (int i = _signalList.size() - 1; i >= 0; i--) {
@@ -899,7 +899,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Responds to the Update button - update to SignalGroup Table
+     * Responds to the Update button - store new properties in SignalGroup
      */
     void updatePressed(ActionEvent e, boolean newSignalGroup, boolean close) {
         // Check if the User Name has been changed
@@ -913,7 +913,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         }
         String uName = _userName.getText();
         SignalGroup g = checkNamesOK();
-        if (g == null) {
+        if (g == null) { // error logging/dialog handled in checkNamesOK()
             return;
         }
         curSignalGroup = g;
@@ -938,10 +938,11 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         fixedSystemName.setVisible(false);
         _systemName.setText("");
         _userName.setText("");
-        mainSignal.setSelectedBean(null);
+        mainSignal.setSelectedBean(null); // empty the "main mast" comboBox
         for (int i = _signalList.size() - 1; i >= 0; i--) {
             _signalList.get(i).setIncluded(false);
         }
+        log.debug("_mastAppearancesList.size = {} (should be at least 1)", _mastAppearancesList.size());
         for (int i = _mastAppearancesList.size() - 1; i >= 0; i--) {
             _mastAppearancesList.get(i).setIncluded(false);
         }
@@ -966,7 +967,8 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                 return Bundle.getMessage("Include");
             }
             if (col == APPEAR_COLUMN) {
-                return Bundle.getMessage("LabelAspectType"); // list contains Aspects not SignalMastAppearances
+                return Bundle.getMessage("LabelAspectType");
+                // list contains Signal Mast Aspects (not Signal Mast "Appearances")
             }
             return "";
         }
@@ -1232,7 +1234,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             if (!checkValidSignalMast()) {
                 return;
             }
-            updatePressed(null, true, false);
+            updatePressed(null, true, false); // exit Edit
         }
         if (!curSignalGroup.isSignalIncluded(_SignalGroupSignalModel.getBean(row))) {
             curSignalGroup.addSignalHead(_SignalGroupSignalModel.getBean(row));
