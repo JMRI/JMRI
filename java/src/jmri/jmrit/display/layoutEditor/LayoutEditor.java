@@ -665,6 +665,89 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         turnoutNameComboBox.getEditor().setItem("");
         turnoutNameComboBox.setToolTipText(rb.getString("TurnoutNameToolTip"));
 
+        // ActionListener to remove turnouts that are already assigned from turnoutNameComboBox & extraTurnoutNameComboBox
+        turnoutNameComboBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                log.debug("•••• turnoutNameComboBox::actionPerformed(" +
+                        event.getActionCommand() + ":" +
+                        event.paramString() +")");
+
+                ArrayList<NamedBean> usedTurnoutNames = new ArrayList<NamedBean>();
+                int nItems = turnoutNameComboBox.getItemCount();
+                log.debug("turnoutNameComboBox.getItemCount(): " + nItems);
+                for (int i = 0; i < nItems; i++) {
+                    String turnoutName = turnoutNameComboBox.getItemAt(i);
+                    log.debug("turnoutName["+ i + "]: " + turnoutName);
+                    //if (turnoutName.equals("LT32:Spare")) {
+                    //    log.debug("LT32:Spare");
+                    //}
+
+                    // check that the turnout name corresponds to a defined physical turnout
+                    Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
+
+                    // this shouldn't happen…
+                    if (turnout == null) {
+                        continue;   // but just in case… (skip it!)
+                    }
+
+                    // see if it's already linked to another turnout
+                    for (LayoutTurnout t : turnoutList) {
+                        Turnout to = t.getTurnout();
+                        if (to != null) {
+                            String uname = to.getUserName();
+                            if ((to.getSystemName().equals(turnoutName.toUpperCase()))
+                                || ((uname != null) && (uname.equals(turnoutName)))) {
+                                log.debug("used: " + to.getDisplayName());
+                                usedTurnoutNames.add(turnout);
+                                continue;
+                            }
+                        }
+                        // a double crossover may have a second turnout
+                        if (t.getTurnoutType() >= LayoutTurnout.DOUBLE_XOVER) {
+                            Turnout to2 = t.getSecondTurnout();
+                            if (to2 != null) {
+                                String uname = to2.getUserName();
+                                if ((to.getSystemName().equals(turnoutName.toUpperCase()))
+                                    || ((uname != null) && (uname.equals(turnoutName)))) {
+                                    log.debug("used: " + to.getDisplayName());
+                                    usedTurnoutNames.add(turnout);
+                                    continue;
+                                }
+                            }
+                        }
+                    }   // for (LayoutTurnout t : turnoutList)
+
+                    // check both turnouts on slips
+                    for (LayoutSlip s : slipList) {
+                        Turnout to = s.getTurnout();
+                        if (to != null) {
+                            String uname = to.getUserName();
+                            if (to.getSystemName().equals(turnoutName)
+                                || (uname != null && uname.equals(turnoutName))) {
+                                    log.debug("used: " + to.getDisplayName());
+                                    usedTurnoutNames.add(turnout);
+                                    continue;
+                            }
+                        }
+                        to = s.getTurnoutB();
+                        if (to != null) {
+                            String uname = to.getUserName();
+                            if (to.getSystemName().equals(turnoutName)
+                                || (uname != null && uname.equals(turnoutName))) {
+                                    log.debug("used: " + to.getDisplayName());
+                                    usedTurnoutNames.add(turnout);
+                                    continue;
+                            }
+                        }
+                    }   // for (LayoutSlip s : slipList)
+                }   // for (int i = 0; i < nItems; i++)
+
+                turnoutNameComboBox.excludeItems(usedTurnoutNames);
+                // the same exclusion list can be used for the extraTurnoutNameComboBox
+                extraTurnoutNameComboBox.excludeItems(usedTurnoutNames);
+            }   // public void actionPerformed(ActionEvent event)
+        }); // turnoutNameComboBox.addActionListener(...)
+
         JLabel extraTurnLabel = new JLabel(rb.getString("SecondName"));
         extraTurnLabel.setEnabled(false);
         extraTurnoutNameComboBox.setEnabled(false);
