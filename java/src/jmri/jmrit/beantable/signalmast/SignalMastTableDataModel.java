@@ -339,6 +339,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     /**
     * Respond to change from bean.
     */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().indexOf("aspectEnabled") >= 0 || e.getPropertyName().indexOf("aspectDisabled") >= 0) {
             if (e.getSource() instanceof NamedBean) {
