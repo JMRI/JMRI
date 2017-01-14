@@ -4,6 +4,8 @@ import javax.annotation.CheckForNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.Bundle;
+
 /**
  * Utilities for coding/decoding NMRA {@literal S&RP} DCC packets.
  * <P>
@@ -1058,8 +1060,11 @@ public class NmraPacket {
             case LOCO_LONG_ADDRESS:
                 return (packet[0] & 0x3F) << 8 | (packet[1] & 0xFF);
             case ACCESSORY_ADDRESS:
-                log.warn("extractAddressNumber can't handle ACCESSORY_ADDRESS in {}", format(packet));
-                return -1;
+                int partA1 = packet[0]&0x3F;
+                int partA2 = ((~(packet[1]&0x70))&0x70 >> 4)-1;
+                int partD = ((packet[1]+1)&0x06)>>1;
+                System.out.println(" A2, A1, D "+partA2+" "+partA1+" "+partD+" from "+format(packet));
+                return (partA1 | partD );
         }
         return 0;
     }
@@ -1098,6 +1103,20 @@ public class NmraPacket {
         return jmri.util.StringUtil.hexStringFromBytes(p);
     }
 
+    /**
+     * Convert NMRA packet to human readable form
+     * 
+     * Note: Only gives a summary now, should this completely decode?
+     * 
+     * @param p the raw packet
+     * @return the readable packet
+     * @throws IllegalArgumentException if packet array can't be decoded, e.g. is too short or null
+     */
+    static public String toString(byte[] p) throws IllegalArgumentException {
+        if (p == null || p.length ==0) throw new IllegalArgumentException("Content required");
+        return Bundle.getMessage("DccToStringFormat", extractAddressType(p), extractInstruction(p), extractAddressNumber(p));
+    }
+    
     /**
      * Objects of this class should not be created.
      */
