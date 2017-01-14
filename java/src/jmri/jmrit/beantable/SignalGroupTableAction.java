@@ -419,7 +419,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             _userName.setToolTipText("Enter user name for new SignalGroup, e.g. Junction Indicator on Signal 1."); // TODO I18N
 
             contentPane.add(p);
-            // add Turnout Display Choice
+            // add Signal Masts/Heads Display Choice
             JPanel py = new JPanel();
             py.add(new JLabel(Bundle.getMessage("Show")));
             selGroup = new ButtonGroup();
@@ -428,7 +428,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             py.add(allButton);
             allButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    // Setup for display of all Turnouts, if needed
+                    // Setup for display of all Signal Masts & SingleTO Heads, if needed
                     if (!showAll) {
                         showAll = true;
                         _SignalGroupSignalModel.fireTableDataChanged();
@@ -454,7 +454,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             py.add(new JLabel("  " + Bundle.getMessage("_and_", Bundle.getMessage("LabelAspects"), Bundle.getMessage("SignalHeads"))));
             contentPane.add(py);
 
-            // add control sensor table
+            // add main signal mast table
             JPanel p3 = new JPanel();
             p3.setLayout(new BoxLayout(p3, BoxLayout.Y_AXIS));
             JPanel p31 = new JPanel();
@@ -465,7 +465,6 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             p32.add(mainSignal);
             //p32.add(new JLabel("Appearance Logic"));
             //p32.add(mainSignalOperation);
-            //mainSignal.setText("");
             p3.add(p32);
 
             p3xsi = new JPanel();
@@ -777,21 +776,6 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         }
     }
 
-    /**
-     * Sets the Sensor, Turnout, and delay control information for adding or
-     * editting if any
-     */
-    /*void setControlInformation(SignalGroup g) {
-     // Get sensor control information if any
-     //Not sure about this...
-     String signalSystemName = mainSignal.getSelectedBean();
-     if(
-     if (signalSystemName.length() > 0) {
-     SignalHead s1 = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalSystemName);
-     if (s1!=null)
-     g.setSignalMast(signalSystemName);
-     }
-     }*/
     void setValidSignalAppearances() {
         jmri.SignalMast sh = (SignalMast) mainSignal.getSelectedBean();
         if (sh == null) {
@@ -828,9 +812,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         // SignalGroup was found, make its system name not changeable
         curSignalGroup = g;
 
-        jmri.SignalMast sh = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(g.getSignalMastName());
-        if (sh != null ) {
-            java.util.Vector<String> appear = sh.getValidAspects();
+        jmri.SignalMast sm = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(g.getSignalMastName());
+        if (sm != null ) {
+            java.util.Vector<String> appear = sm.getValidAspects();
             _mastAppearancesList = new ArrayList<SignalMastAppearances>(appear.size());
 
             for (int i = 0; i < appear.size(); i++) {
@@ -946,7 +930,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         for (int i = _mastAppearancesList.size() - 1; i >= 0; i--) {
             _mastAppearancesList.get(i).setIncluded(false);
         }
-        // mainSignal.setText("");
+        showAll = true;
         curSignalGroup = null;
         addFrame.setVisible(false);
 
@@ -1018,6 +1002,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             }
             // some error checking
             if (r >= appearList.size()) {
+                // NPE when clicking Add. in table to add new group (with 1 group existing using a different mast type)
                 log.debug("row is greater than turnout list size");
                 return null;
             }
@@ -1032,15 +1017,17 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         }
 
         public void setValueAt(Object type, int r, int c) {
+            //log.debug("SigGroupEditSet A; row = {}; appearList.size = {}.", r, appearList.size());
             ArrayList<SignalMastAppearances> appearList = null;
             if (showAll) {
                 appearList = _mastAppearancesList;
             } else {
                 appearList = _includedMastAppearancesList;
             }
+            log.debug("SigGroupEditSet B; row = {}; appearList.size() = {}.", r, appearList.size());
             switch (c) {
                 case INCLUDE_COLUMN:
-                    appearList.get(r).setIncluded(((Boolean) type).booleanValue());
+                    appearList.get(r).setIncluded(((Boolean) type).booleanValue()); // NPE
                     break;
                 case APPEAR_COLUMN:
                     appearList.get(r).setAppearance((String) type);
@@ -1244,7 +1231,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         editSignalHead.editSignal(curSignalGroup, _SignalGroupSignalModel.getDisplayName(row));
     }
 
-    private boolean showAll = true;   // false indicates show only included Turnouts
+    private boolean showAll = true; // false indicates: show only included Signal Masts & SingleTO Heads
 
     private static int ROW_HEIGHT;
 
@@ -1258,29 +1245,26 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             Bundle.getMessage("ColumnSystemName"),
             Bundle.getMessage("ColumnUserName"),
             Bundle.getMessage("Include"),
-            "On State", "Off State", ""
-    };
-        // No label above last (Edit) column
+            Bundle.getMessage("OnState"),
+            Bundle.getMessage("OffState"),
+            ""
+    }; // No label above last (Edit) column
 
     private static String[] signalStates = new String[]{rbx.getString("StateSignalHeadDark"), rbx.getString("StateSignalHeadRed"), rbx.getString("StateSignalHeadYellow"), rbx.getString("StateSignalHeadGreen"), rbx.getString("StateSignalHeadLunar")};
     private static int[] signalStatesValues = new int[]{SignalHead.DARK, SignalHead.RED, SignalHead.YELLOW, SignalHead.GREEN, SignalHead.LUNAR};
 
-    private ArrayList<SignalGroupSignal> _signalList;        // array of all Sensorsy
+    private ArrayList<SignalGroupSignal> _signalList;        // array of all single output signal heads
     private ArrayList<SignalGroupSignal> _includedSignalList;
 
-    private ArrayList<SignalMastAppearances> _mastAppearancesList;        // array of all Sensorsy
+    private ArrayList<SignalMastAppearances> _mastAppearancesList;        // array of all valid aspects of the main signal mast
     private ArrayList<SignalMastAppearances> _includedMastAppearancesList;
 
     private static class SignalGroupSignal {
 
-        //String _sysName=null;
-        //String _userName=null;
         SignalHead _signal = null;
         boolean _included;
 
         SignalGroupSignal(String sysName, String userName) {
-            /*_sysName = sysName;
-             _userName = userName;*/
             _included = false;
             SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(sysName);
             if (sh != null) {
