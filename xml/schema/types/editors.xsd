@@ -1351,8 +1351,39 @@ pointid" type="xs:string"></xs:attribute>
       </xs:attribute>
       <xs:attribute name="rosterentry" type="xs:string"></xs:attribute>
       <xs:attribute name="degrees" type="xs:string"></xs:attribute>
-
     </xs:complexType>
+
+    <xs:complexType name="EditorLocoLabelType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing a LocoLabel shape
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.controlPanelEditor.shape.configurexml.LocoLabelXML??
+        </xs:appinfo>
+      </xs:annotation>
+        <xs:all>
+        <xs:element name="OBlock" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:attribute name="systemName" type="xs:string"></xs:attribute>
+            <xs:attribute name="trainName" type="xs:string"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="size" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:attribute name="width" type="xs:int"></xs:attribute>
+            <xs:attribute name="height" type="xs:int"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="lineColor" type="ShapeColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="fillColor" type="ShapeColorType" minOccurs="0" maxOccurs="1"></xs:element>
+      </xs:all>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="ShapeCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+    </xs:complexType>
+
     <xs:complexType name="EditorBlockContentsIconType">
       <xs:annotation>
         <xs:documentation>
