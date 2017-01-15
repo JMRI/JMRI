@@ -4,8 +4,11 @@ import apps.tests.Log4JFixture;
 import java.util.Vector;
 import jmri.JmriException;
 import jmri.jmrix.AbstractPowerManagerTest;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * JUnit tests for the NcePowerManager class.
@@ -13,56 +16,6 @@ import junit.framework.TestSuite;
  * @author	Bob Jacobsen
  */
 public class NcePowerManagerTest extends AbstractPowerManagerTest {
-
-    /**
-     * provide an implementation to detect outbound messages
-     */
-    public class NceInterfaceScaffold extends NceTrafficController {
-
-        public NceInterfaceScaffold() {
-        }
-
-        // override some NceInterfaceController methods for test purposes
-        @Override
-        public boolean status() {
-            return true;
-        }
-
-        /**
-         * record messages sent, provide access for making sure they are OK
-         */
-        public Vector<NceMessage> outbound = new Vector<>();  // public OK here, so long as this is a test class
-
-        @Override
-        public void sendNceMessage(NceMessage m, jmri.jmrix.nce.NceListener l) {
-            // save a copy
-            outbound.addElement(m);
-        }
-
-        // test control member functions
-        /**
-         * forward a message to the listeners, e.g. test receipt
-         *
-         * @param m the message
-         */
-        protected void sendTestMessage(NceMessage m) {
-            // forward a test message to Listeners
-            notifyMessage(m, null);
-        }
-
-        protected void sendTestReply(NceReply m) {
-            // forward a test message to Listeners
-            notifyReply(m, null);
-        }
-
-        /*
-         * Check number of listeners, used for testing dispose()
-         */
-        public int numListeners() {
-            return cmdListeners.size();
-        }
-
-    }
 
     // service routines to simulate receiving on, off from interface
     @Override
@@ -108,44 +61,28 @@ public class NcePowerManagerTest extends AbstractPowerManagerTest {
     }
 
     // setup a default NceTrafficController interface
+    @Before
     @Override
     public void setUp() {
-        Log4JFixture.setUp();
-        controller = new NceInterfaceScaffold();
+        controller = new NceTrafficControlScaffold();
         p = new NcePowerManager(controller, "N");
     }
 
-    @Override
-    public void tearDown() {
-        Log4JFixture.tearDown();
-    }
-
-    NceInterfaceScaffold controller;  // holds dummy NceTrafficController for testing
+    NceTrafficControlScaffold controller;  // holds dummy NceTrafficController for testing
 
     // replace some standard tests, as there's no unsolicted message from the
     // master saying power has changed.  Instead, these test the
     // state readback by sending messages & getting a reply
+    @Override
+    @Test
+    @Ignore("no unsolicted message, so do not run test")
     public void testStateOn() throws JmriException {
     }
 
+    @Override
+    @Test
+    @Ignore("no unsolicted message, so do not run test")
     public void testStateOff() throws JmriException {
-    }
-
-    // from here down is testing infrastructure
-    public NcePowerManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {NcePowerManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(NcePowerManagerTest.class);
-        return suite;
     }
 
 }

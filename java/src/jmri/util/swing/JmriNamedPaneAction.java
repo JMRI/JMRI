@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 public class JmriNamedPaneAction extends JmriAbstractAction {
 
     /**
-     * Enhanced constructor for placing the pane in various GUIs
+     * Constructor that associates the panel with the given window.
      *
      * @param s         panel name
      * @param wi        window associated with pane

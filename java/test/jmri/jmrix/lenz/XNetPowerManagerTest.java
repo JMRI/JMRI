@@ -12,17 +12,63 @@ import org.junit.Test;
  *
  * @author	Paul Bender
  */
-public class XNetPowerManagerTest {
+public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTest {
 
     private XNetPowerManager pm = null;
     private XNetInterfaceScaffold tc = null;
     private int propertyChangeCount;
     private java.beans.PropertyChangeListener listener = null;
 
+    // service routines to simulate recieving on, off from interface
+    @Override
+    protected void hearOn() {
+        sendOnReply();
+    }
 
-    @Test
-    public void testCtor() {
-        Assert.assertNotNull(pm);
+    @Override
+    protected void sendOnReply() {
+       // send the reply.
+       XNetReply m = new XNetReply();
+       m.setElement(0, 0x61);
+       m.setElement(1, 0x01);
+       m.setElement(2, 0x60);
+       pm.message(m);
+    }
+
+    @Override
+    protected void sendOffReply() {
+       XNetReply m = new XNetReply();
+       m.setElement(0, 0x61);
+       m.setElement(1, 0x00);
+       m.setElement(2, 0x61);
+       pm.message(m);
+    }
+
+    @Override
+    protected void hearOff() {
+       sendOffReply();
+    }
+
+    @Override
+    protected int numListeners() {
+        return tc.numListeners();
+    }
+
+    @Override
+    protected int outboundSize() {
+        return tc.outbound.size();
+    }
+
+    @Override
+    protected boolean outboundOnOK(int index) {
+        XNetMessage m = XNetMessage.getResumeOperationsMsg();
+        return tc.outbound.elementAt(index).equals(m);
+    }
+
+    @Override
+    protected boolean outboundOffOK(int index) {
+        XNetMessage m = XNetMessage.getEmergencyOffMsg();
+        return tc.outbound.elementAt(index).equals(m);
     }
 
     @Test
@@ -47,12 +93,7 @@ public class XNetPowerManagerTest {
       // check that we actually sent a message.
       Assert.assertEquals("Message Sent",2,tc.outbound.size());
       // send the reply.
-      XNetReply m = new XNetReply();
-      m.setElement(0, 0x61);
-      m.setElement(1, 0x01);
-      m.setElement(2, 0x60);
-
-      pm.message(m);
+      sendOnReply();
       // and now verify power is set the right way.
       Assert.assertEquals("Power",jmri.PowerManager.ON,pm.getPower());
     }
@@ -69,12 +110,7 @@ public class XNetPowerManagerTest {
       // check that we actually sent a message.
       Assert.assertEquals("Message Sent",2,tc.outbound.size());
       // send the reply.
-      XNetReply m = new XNetReply();
-      m.setElement(0, 0x61);
-      m.setElement(1, 0x00);
-      m.setElement(2, 0x61);
-
-      pm.message(m);
+      sendOffReply();
       // and now verify power is set the right way.
       Assert.assertEquals("Power",jmri.PowerManager.OFF,pm.getPower());
     }
@@ -207,19 +243,11 @@ public class XNetPowerManagerTest {
         pm.addPropertyChangeListener(listener);
         Assert.assertEquals("PropertyChangeCount",0,propertyChangeCount);
         // trigger a property change, and make sure the count changes too.
-        XNetReply m = new XNetReply();
-        m.setElement(0, 0x61);
-        m.setElement(1, 0x01);
-        m.setElement(2, 0x60);
-        pm.message(m);
+        sendOnReply();
         Assert.assertEquals("PropertyChangeCount",1,propertyChangeCount);
         pm.removePropertyChangeListener(listener);
         // now trigger another change, and make sure the count doesn't change.
-        m = new XNetReply();
-        m.setElement(0, 0x61);
-        m.setElement(1, 0x00);
-        m.setElement(2, 0x61);
-        pm.message(m);
+        sendOnReply();
         Assert.assertEquals("PropertyChangeCount",1,propertyChangeCount);
     }
 
@@ -230,12 +258,12 @@ public class XNetPowerManagerTest {
         jmri.util.JUnitUtil.resetInstanceManager();
         // infrastructure objects
         tc = new XNetInterfaceScaffold(new LenzCommandStation());
-        pm = new XNetPowerManager(new XNetSystemConnectionMemo(tc));
+        p = pm = new XNetPowerManager(new XNetSystemConnectionMemo(tc));
     }
 
     @After
     public void tearDown() {
-        pm = null;
+        p = pm = null;
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }

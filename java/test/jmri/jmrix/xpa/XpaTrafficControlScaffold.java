@@ -1,24 +1,25 @@
-package jmri.jmrix.nce;
+/**
+ * XpaInterfaceScaffold.java
+ *
+ * Description:	Stands in for the XpaTrafficController class
+ *
+ * @author	Bob Jacobsen
+  */
+package jmri.jmrix.xpa;
 
 import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Stands in for the NceTrafficController class
- *
- * @author	Bob Jacobsen
-  */
-public class NceTrafficControlScaffold extends NceTrafficController {
+public class XpaTrafficControlScaffold extends XpaTrafficController {
 
-    public NceTrafficControlScaffold() {
+    public XpaTrafficControlScaffold() {
         if (log.isDebugEnabled()) {
             log.debug("setting instance: " + this);
         }
-        self = this;
     }
 
-    // override some NceTrafficController methods for test purposes
+    // override some XpaTrafficController methods for test purposes
     public boolean status() {
         return true;
     }
@@ -26,11 +27,11 @@ public class NceTrafficControlScaffold extends NceTrafficController {
     /**
      * record messages sent, provide access for making sure they are OK
      */
-    public Vector<NceMessage> outbound = new Vector<NceMessage>();  // public OK here, so long as this is a test class
+    public Vector<XpaMessage> outbound = new Vector<XpaMessage>();  // public OK here, so long as this is a test class
 
-    public void sendNceMessage(NceMessage m, NceListener reply) {
+    public void sendXpaMessage(XpaMessage m, XpaListener reply) {
         if (log.isDebugEnabled()) {
-            log.debug("sendNceMessage [" + m + "]");
+            log.debug("sendXpaMessage [" + m + "]");
         }
         // save a copy
         outbound.addElement(m);
@@ -42,7 +43,7 @@ public class NceTrafficControlScaffold extends NceTrafficController {
     /**
      * forward a message to the listeners, e.g. test receipt
      */
-    protected void sendTestMessage(NceMessage m, NceListener l) {
+    protected void sendTestMessage(XpaMessage m, XpaListener l) {
         // forward a test message to NceListeners
         if (log.isDebugEnabled()) {
             log.debug("sendTestMessage    [" + m + "]");
@@ -51,13 +52,6 @@ public class NceTrafficControlScaffold extends NceTrafficController {
         return;
     }
 
-    protected void sendTestReply(NceReply m) {
-        // forward a test message to Listeners
-        notifyReply(m, null);
-        return;
-   }
-
-
     /*
      * Check number of listeners, used for testing dispose()
      */
@@ -65,6 +59,6 @@ public class NceTrafficControlScaffold extends NceTrafficController {
         return cmdListeners.size();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceTrafficControlScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XpaTrafficControlScaffold.class.getName());
 
 }

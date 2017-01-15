@@ -44,9 +44,8 @@ public class DefaultSignalMastManagerXml
                     if (e != null) {
                         element.addContent(e);
                     }
-                } catch (Exception e) {
-                    log.error("Error storing signalmast: " + e);
-                    e.printStackTrace();
+                } catch (Exception ex) {
+                    log.error("Error storing signalmast: {}", ex);
                 }
 
             }
@@ -116,8 +115,7 @@ public class DefaultSignalMastManagerXml
                     // and do it
                     adapter.load(e, null);
                 } catch (Exception ex) {
-                    log.error("Exception while loading " + e.getName() + ":" + ex);
-                    ex.printStackTrace();
+                    log.error("Exception while loading {}: {}", e.getName(), ex, ex);
                 }
             }
         }
@@ -133,8 +131,7 @@ public class DefaultSignalMastManagerXml
                     // and do it
                     adapter.load(e, null);
                 } catch (Exception ex) {
-                    log.error("Exception while loading " + e.getName() + ":" + ex);
-                    ex.printStackTrace();
+                    log.error("Exception while loading {}: {}", e.getName(), ex, ex);
                 }
             }
         }
@@ -150,8 +147,23 @@ public class DefaultSignalMastManagerXml
                     // and do it
                     adapter.load(e, null);
                 } catch (Exception ex) {
-                    log.error("Exception while loading " + e.getName() + ":" + ex);
-                    ex.printStackTrace();
+                    log.error("Exception while loading {}: {}", e.getName(), ex, ex);
+                }
+            }
+        }
+
+        list = shared.getChildren("matrixsignalmast");
+        if (list != null) {
+            for (int i = 0; i < list.size(); i++) {
+                Element e = list.get(i);
+                String adapterName = e.getAttribute("class").getValue();
+                log.debug("load via " + adapterName);
+                try {
+                    XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
+                    // and do it
+                    adapter.load(e, null);
+                } catch (Exception ex) {
+                    log.error("Exception while loading {}: {}", e.getName(), ex, ex);
                 }
             }
         }
@@ -167,8 +179,7 @@ public class DefaultSignalMastManagerXml
                     // and do it
                     adapter.load(e, null);
                 } catch (Exception ex) {
-                    log.error("Exception while loading " + e.getName() + ":" + ex);
-                    ex.printStackTrace();
+                    log.error("Exception while loading {}: {}", e.getName(), ex, ex);
                 }
             }
         }
