@@ -39,6 +39,7 @@ public class LV102InternalFrameTest {
         operator.pushResetButton();
         Assert.assertEquals("Default Voltage","",operator.getSelectedVoltage());
         f.setVisible(false);
+        f.dispose();
     }
 
     @Test
@@ -55,6 +56,7 @@ public class LV102InternalFrameTest {
         operator.pushDefaultButton();
         Assert.assertEquals("Default Voltage","16V (factory default)",operator.getSelectedVoltage());
         f.setVisible(false);
+        f.dispose();
     }
 
 
