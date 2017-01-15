@@ -467,15 +467,35 @@ public class NmraPacketTest {
     }
 
     @Test
+    public void testExtractAddressNumberAccSignal32() {
+        byte[] ba = NmraPacket.accSignalDecoderPkt(32, 12);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(32, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAccSignal64() {
+        byte[] ba = NmraPacket.accSignalDecoderPkt(64, 12);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(64, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAccSignal128() {
+        byte[] ba = NmraPacket.accSignalDecoderPkt(128, 12);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(128, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAccSignal256() {
+        byte[] ba = NmraPacket.accSignalDecoderPkt(256, 12);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(256, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
     public void testExtractAddressNumberAcc1() {
-        for (int i = 0; i<6; i++) {
-            System.out.println();
-            System.out.println(" test "+i+" "+(1<<i));
-            byte[] ba = NmraPacket.accDecoderPkt(1<<i, true);
-            NmraPacket.extractAddressNumber(ba);
-            System.out.println();
-        }
-        
         byte[] ba = NmraPacket.accDecoderPkt(1, true);
         NmraPacket.extractAddressNumber(ba);
         Assert.assertEquals(1, NmraPacket.extractAddressNumber(ba));
@@ -520,7 +540,28 @@ public class NmraPacketTest {
     public void testExtractAddressNumberAcc64() {
         byte[] ba = NmraPacket.accDecoderPkt(64, true);
         NmraPacket.extractAddressNumber(ba);
-        Assert.assertEquals(32, NmraPacket.extractAddressNumber(ba));
+        Assert.assertEquals(64, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAcc128() {
+        byte[] ba = NmraPacket.accDecoderPkt(128, true);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(128, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAcc256() {
+        byte[] ba = NmraPacket.accDecoderPkt(256, true);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(256, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAcc512() {
+        byte[] ba = NmraPacket.accDecoderPkt(512, true);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(512, NmraPacket.extractAddressNumber(ba));
     }
 
     @Test
@@ -700,19 +741,13 @@ public class NmraPacketTest {
     @Test
     public void testToStringAccessoryPacket1() {
         String display = NmraPacket.toString(NmraPacket.accDecoderPkt(1, true));
-        Assert.assertEquals("ACCESSORY_ADDRESS type: 104 to addr 1", display);
+        Assert.assertEquals("ACCESSORY_ADDRESS type: 120 to addr 1", display);
     }
 
     @Test
     public void testToStringAccessoryPacket257() {
         String display = NmraPacket.toString(NmraPacket.accDecoderPkt(257, true));
         Assert.assertEquals("ACCESSORY_ADDRESS type: 104 to addr 257", display);
-    }
-
-    @Test
-    public void testToStringAccessoryPacketSample1() {
-        String display = NmraPacket.toString(new byte[]{(byte)0xA6, (byte)0x65, (byte)0x15});
-        Assert.assertEquals("ACCESSORY_ADDRESS type: 21 to addr -2", display);
     }
 
     @Before
