@@ -1,6 +1,5 @@
 package jmri.jmrit.logix;
 
-
 public class ThrottleSetting {
 
     long _time;
@@ -25,6 +24,8 @@ public class ThrottleSetting {
     /**
      * Time is an object so that a "synch to block entry" notation can be used
      * rather than elapsed time.
+     *
+     * @param time the time in some unit
      */
     public void setTime(long time) {
         _time = time;
@@ -58,6 +59,7 @@ public class ThrottleSetting {
         return _blockName;
     }
 
+    @Override
     public String toString() {
         return "ThrottleSetting: wait " + _time + "ms then set " + _command + " " + _value + " at block " + _blockName;
     }

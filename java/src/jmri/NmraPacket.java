@@ -258,6 +258,13 @@ public class NmraPacket {
      * resulting packet would be {preamble} 10AAAAAA 0 1AAACDDD 0 (1110CCVV 0
      * VVVVVVVV 0 DDDDDDDD) 0 EEEEEEEE 1 Accessory Decoder Address
      * (Configuration Variable Access Instruction) Error Byte
+     *
+     * @param addr          the accessory address
+     * @param active        1 or 0
+     * @param outputChannel the output on the accessory
+     * @param cvNum         the CV
+     * @param data          the data
+     * @return a packet
      */
     public static byte[] accDecoderPktOpsMode(int addr, int active, int outputChannel, int cvNum, int data) {
 
@@ -309,6 +316,11 @@ public class NmraPacket {
      *
      * This is the old "legacy" format, newer decoders use the "Basic Accessory
      * Decoder Packet"
+     *
+     * @param addr  the accessory address
+     * @param cvNum the CV
+     * @param data  the data
+     * @return a packet
      */
     public static byte[] accDecPktOpsModeLegacy(int addr, int cvNum, int data) {
 
@@ -389,6 +401,9 @@ public class NmraPacket {
      * <p>
      * This inverts the computation done by the {@link #accSignalDecoderPkt}
      * method.
+     *
+     * @param packet a DCC packet to inspect
+     * @return true if a Signal Decoder Packet; false otherwise
      */
     public static boolean isAccSignalDecoderPkt(byte[] packet) {
         if (packet.length != 3 && packet.length != 4) {
@@ -409,6 +424,9 @@ public class NmraPacket {
     /**
      * Recover the 1-based output address from an Extended Accessory Decoder
      * Control Packet otherwise known as a Signal Decoder Packet.
+     *
+     * @param packet the packet to extract the address from
+     * @return the address
      */
     public static int getAccSignalDecoderPktAddress(byte[] packet) {
         int midAddr = packet[0] & 0x3f;
@@ -431,6 +449,7 @@ public class NmraPacket {
      * @param outputAddr Address of accessory output, starting with 1 and a
      *                   maximum of 2044
      * @param aspect     Aspect Number starting with 0 and a maximum of 31
+     * @return a packet
      */
     public static byte[] altAccSignalDecoderPkt(int outputAddr, int aspect) {
 
@@ -471,6 +490,7 @@ public class NmraPacket {
      * @param number Address of accessory output, starting with 1
      * @param closed true if the output is to be configured to the "closed",
      *               a.k.a. the "normal" or "unset" position
+     * @return a packet
      */
     public static byte[] accDecoderPkt(int number, boolean closed) {
         // dBit is the "channel" info, least 7 bits, for the packet
@@ -499,6 +519,7 @@ public class NmraPacket {
      * @param number Address of accessory, starting with 1
      * @param cvNum  CV number to access
      * @param data   Data to be written
+     * @return a packet
      */
     public static byte[] accDecoderPktOpsMode(int number, int cvNum, int data) {
         // dBit is the "channel" info, least 7 bits, for the packet
@@ -523,6 +544,7 @@ public class NmraPacket {
      * @param number Address of accessory, starting with 1
      * @param cvNum  CV number to access
      * @param data   Data to be written
+     * @return a packet
      */
     public static byte[] accDecoderPktOpsModeLegacy(int number, int cvNum, int data) {
 
@@ -848,7 +870,7 @@ public class NmraPacket {
                 | (f14 ? 0x02 : 0)
                 | (f13 ? 0x01 : 0);
 
-        return NmraPacket.twoBytePacket(address, longAddr, (byte)arg1, (byte)arg2);
+        return NmraPacket.twoBytePacket(address, longAddr, (byte) arg1, (byte) arg2);
     }
 
     public static byte[] function21Through28Packet(int address, boolean longAddr,
@@ -871,7 +893,7 @@ public class NmraPacket {
                 | (f22 ? 0x02 : 0)
                 | (f21 ? 0x01 : 0);
 
-        return NmraPacket.twoBytePacket(address, longAddr, (byte)arg1, (byte)arg2);
+        return NmraPacket.twoBytePacket(address, longAddr, (byte) arg1, (byte) arg2);
     }
 
     /**
