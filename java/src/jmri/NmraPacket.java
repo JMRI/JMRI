@@ -467,6 +467,20 @@ public class NmraPacket {
         return retVal;
     }
 
+
+    /**
+     * Recover the 1-based output address from an Accessory Decoder
+     * Control Packet, typically considered a turnout control packaet
+     */
+    public static int getAccDecoderPktAddress(byte[] packet) {
+                // case turnout accessory decoder
+                // from Alex Shepherd
+                int boardAddress = ( ( (~packet[1]) & 0x70 ) << 2 ) | ( packet[0] & 0x3F ) ;
+                int outputAddress = packet[1] & 0x07 ;
+                int outputIndex = outputAddress >> 1;
+                return ( ( ( boardAddress - 1 ) << 2 ) | outputIndex ) + 1 ;
+    }
+    
     /**
      * Provide an accessory control packet via a simplified interface
      *
@@ -1041,12 +1055,11 @@ public class NmraPacket {
      * As a special case, IDLE is returned as -1 instead of 255. Best to check
      * the address type first....
      * <p>
-     * <strong>Note:</strong> This is not working for the ACCESSORY_ADDRESS
+     * <strong>Note:</strong> The decoding is not complete for the ACCESSORY_ADDRESS
      * type.
      *
      * @param packet the packet
-     * @return the address; -1 is returned if there is no address or the address
-     *         is an accessory address
+     * @return the address; -1 is returned if there is no address or the case isn't considered yet
      */
     static public int extractAddressNumber(byte[] packet) {
         switch (extractAddressType(packet)) {
@@ -1060,13 +1073,15 @@ public class NmraPacket {
             case LOCO_LONG_ADDRESS:
                 return (packet[0] & 0x3F) << 8 | (packet[1] & 0xFF);
             case ACCESSORY_ADDRESS:
-                int partA1 = packet[0]&0x3F;
-                int partA2 = ((~(packet[1]&0x70))&0x70 >> 4)-1;
-                int partD = ((packet[1]+1)&0x06)>>1;
-                System.out.println(" A2, A1, D "+partA2+" "+partA1+" "+partD+" from "+format(packet));
-                return (partA1 | partD );
+                // case signal packet
+                if (isAccSignalDecoderPkt(packet)) {
+                    return getAccSignalDecoderPktAddress(packet);
+                }
+                
+                // case turnout accessory decoder
+                return getAccDecoderPktAddress(packet);
         }
-        return 0;
+        return -1;
     }
 
     /**
@@ -1104,12 +1119,15 @@ public class NmraPacket {
     }
 
     /**
-     * Convert NMRA packet to human readable form
-     * 
-     * Note: Only gives a summary now, should this completely decode?
+     * Convert NMRA packet to human-readable form
+     * <p>
+     * Note: Only gives a summary now, should this completely decode?<p>
+     * 2nd Note:  The name may be a bad choice, as this is not the .toString() method
+     * of an object, but rather a procedure that takes a byte-array representation of a packet.
+     * But the analogy seems not so bad, until we have a true class for NmraPackets.
      * 
      * @param p the raw packet
-     * @return the readable packet
+     * @return the human-readable form for that packet
      * @throws IllegalArgumentException if packet array can't be decoded, e.g. is too short or null
      */
     static public String toString(byte[] p) throws IllegalArgumentException {
