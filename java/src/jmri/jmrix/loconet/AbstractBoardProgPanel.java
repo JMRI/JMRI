@@ -178,8 +178,8 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
         pane0.setLayout(new FlowLayout());
         pane0.add(new JLabel(rb.getString("LABEL_UNIT_ADDRESS") + " "));
         pane0.add(addrField);
-        readAllButton = new JToggleButton(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("READ FROM ") + " " + type);
-        writeAllButton = new JToggleButton(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("WRITE TO ") + " " + type);
+        readAllButton = new JToggleButton(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("READ FROM") + " " + type);
+        writeAllButton = new JToggleButton(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("WRITE TO") + " " + type);
 
         // make both buttons a little bit bigger, with identical (preferred) sizes
         // (width increased because some computers/displays trim the button text)
