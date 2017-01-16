@@ -180,7 +180,15 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private RocoZ21CommandStation z21CommandStation = null;
 
+    void shutdownTunnel(){
+        if (_xnettunnel!=null) {
+            _xnettunnel.dispose();
+            _xnettunnel=null;
+        }
+    }
+
     public void dispose() {
+        shutdownTunnel();
         InstanceManager.deregister(this, Z21SystemConnectionMemo.class);
         super.dispose();
     }
