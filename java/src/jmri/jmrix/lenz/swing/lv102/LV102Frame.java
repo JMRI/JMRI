@@ -17,7 +17,6 @@ import javax.swing.JToggleButton;
   */
 public class LV102Frame extends jmri.util.JmriJFrame {
 
-    //private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lv102.LV102Bundle");
     /**
      *
      */

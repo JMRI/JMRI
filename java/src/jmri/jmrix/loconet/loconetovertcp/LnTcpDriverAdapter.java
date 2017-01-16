@@ -1,4 +1,3 @@
-// LnTcpDriverAdapter.java
 package jmri.jmrix.loconet.loconetovertcp;
 
 import jmri.jmrix.loconet.LnNetworkPortController;

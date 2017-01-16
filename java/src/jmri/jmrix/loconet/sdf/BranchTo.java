@@ -1,4 +1,3 @@
-// BranchTo.java
 package jmri.jmrix.loconet.sdf;
 
 /**
@@ -61,5 +60,3 @@ public class BranchTo extends SdfMacro {
         return indent + oneInstructionString();
     }
 }
-
-/* @(#)BranchTo.java */

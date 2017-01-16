@@ -1,4 +1,3 @@
-// LnIPLImplementation.java
 package jmri.jmrix.loconet.duplexgroup.swing;
 
 import jmri.jmrix.loconet.LnConstants;
@@ -14,11 +13,6 @@ import jmri.jmrix.loconet.duplexgroup.LnDplxGrpInfoImplConstants;
  * @author B. Milhaupt Copyright 2010, 2011
  */
 public class LnIPLImplementation extends javax.swing.JComponent implements jmri.jmrix.loconet.LocoNetListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 451414694716197612L;
 
     /**
      * Constructor for LnIPMImplementation which uses a

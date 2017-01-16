@@ -470,8 +470,8 @@ public class LogixTableAction extends AbstractTableAction {
 
     // Add Logix Variables
     JmriJFrame addLogixFrame = null;
-    JTextField _systemName = new JTextField(10);
-    JTextField _addUserName = new JTextField(10);
+    JTextField _systemName = new JTextField(20);
+    JTextField _addUserName = new JTextField(20);
     JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     JLabel _sysNameLabel = new JLabel(Bundle.getMessage("BeanNameLogix") + " " + Bundle.getMessage("ColumnSystemName") + ":");
     JLabel _userNameLabel = new JLabel(Bundle.getMessage("BeanNameLogix") + " " + Bundle.getMessage("ColumnUserName") + ":");
@@ -5091,9 +5091,9 @@ public class LogixTableAction extends AbstractTableAction {
                             return rbx.getString("False");
                         }
                     }
-                    return rbx.getString("Unknown");
+                    return Bundle.getMessage("BeanStateUnknown");
                 default:
-                    return rbx.getString("Unknown");
+                    return Bundle.getMessage("BeanStateUnknown");
             }
         }
 
@@ -5276,7 +5276,7 @@ public class LogixTableAction extends AbstractTableAction {
                         case Conditional.FALSE:
                             return rbx.getString("False");
                         case Conditional.UNKNOWN:
-                            return rbx.getString("Unknown");
+                            return Bundle.getMessage("BeanStateUnknown");
                     }
                     break;
                 case TRIGGERS_COLUMN:

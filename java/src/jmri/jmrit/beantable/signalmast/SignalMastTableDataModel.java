@@ -339,6 +339,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     /**
     * Respond to change from bean.
     */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().indexOf("aspectEnabled") >= 0 || e.getPropertyName().indexOf("aspectDisabled") >= 0) {
             if (e.getSource() instanceof NamedBean) {
@@ -444,7 +445,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         JComboBox editCombo = editorMap.get(this.getValueAt(row, SYSNAMECOL));
         if (editCombo == null) {
             // create a new one with correct aspects
-            editCombo = new JComboBox(getAspectVector(row));
+            editCombo = new JComboBox<String> (getAspectVector(row));
             editorMap.put(this.getValueAt(row, SYSNAMECOL), editCombo);
         }
         return editCombo;

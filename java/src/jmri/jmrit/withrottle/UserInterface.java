@@ -174,7 +174,8 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         con.ipadx = 10;
         con.ipady = 10;
         con.gridheight = 3;
-        con.gridwidth = 3;
+        con.gridwidth = GridBagConstraints.REMAINDER;
+        con.fill = GridBagConstraints.BOTH;
         panel.add(scrollTable, con);
 
 //  Create the menu to use with WiThrottle window. Has to be before pack() for Windows.
@@ -184,7 +185,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         this.setTitle("WiThrottle");
         this.pack();
 
-        this.setResizable(false);
+        this.setResizable(true);
         Rectangle screenRect = new Rectangle(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
 
 //  Centers on top edge of screen
@@ -193,6 +194,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 
         setVisible(true);
+        setMinimumSize(getSize());
 
         rosterGroupSelector.addActionListener(new ActionListener() {
 

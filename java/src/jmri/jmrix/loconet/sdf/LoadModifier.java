@@ -1,4 +1,3 @@
-// LoadModifier.java
 package jmri.jmrix.loconet.sdf;
 
 import jmri.util.StringUtil;
@@ -249,5 +248,3 @@ public class LoadModifier extends SdfMacro {
         return indent + oneInstructionString();
     }
 }
-
-/* @(#)LoadModifier.java */

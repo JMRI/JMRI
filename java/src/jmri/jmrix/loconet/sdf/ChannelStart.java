@@ -1,4 +1,3 @@
-// ChannelStart.java
 package jmri.jmrix.loconet.sdf;
 
 import java.util.ArrayList;
@@ -84,5 +83,3 @@ public class ChannelStart extends SdfMacro {
         return output;
     }
 }
-
-/* @(#)ChannelStart.java */

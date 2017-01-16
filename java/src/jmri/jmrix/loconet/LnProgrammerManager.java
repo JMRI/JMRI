@@ -1,4 +1,3 @@
-/* LnProgrammerManager.java */
 package jmri.jmrix.loconet;
 
 import java.util.ArrayList;
@@ -60,6 +59,3 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
     }
 
 }
-
-
-/* @(#)DefaultProgrammerManager.java */

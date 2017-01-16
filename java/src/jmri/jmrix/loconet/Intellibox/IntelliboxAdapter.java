@@ -1,4 +1,3 @@
-// LocoBufferAdapter.java
 package jmri.jmrix.loconet.Intellibox;
 
 import jmri.jmrix.loconet.LnCommandStationType;

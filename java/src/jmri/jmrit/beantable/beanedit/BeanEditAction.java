@@ -219,7 +219,8 @@ abstract class BeanEditAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         if (bean == null) {
-            log.error("No bean set so unable to edit a null bean");  //IN18N
+            // add error dialog TODO
+            log.error("No bean set so unable to edit a null bean");  //NOI18N
             return;
         }
         if (f == null) {
@@ -403,7 +404,7 @@ abstract class BeanEditAction extends AbstractAction {
                 if (!nbMan.inUse(nBean.getSystemName(), nBean)) {
                     return;
                 }
-                String msg = java.text.MessageFormat.format(Bundle.getMessage("UpdateToUserName"),
+                String msg = Bundle.getMessage("UpdateToUserName",
                         new Object[]{getBeanType(), value, nBean.getSystemName()});
                 int optionPane = JOptionPane.showConfirmDialog(null,
                         msg, Bundle.getMessage("UpdateToUserNameTitle"),

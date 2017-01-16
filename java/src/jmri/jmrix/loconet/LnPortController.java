@@ -1,4 +1,3 @@
-// LnPortController.java
 package jmri.jmrix.loconet;
 
 import java.io.DataInputStream;
@@ -108,6 +107,3 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     }
     private final static Logger log = LoggerFactory.getLogger(LnPortController.class.getName());
 }
-
-
-/* @(#)LnPortController.java */

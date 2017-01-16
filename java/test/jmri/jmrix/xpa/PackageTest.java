@@ -31,7 +31,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(XpaTurnoutTest.class));
         suite.addTest(new TestSuite(XpaThrottleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XpaTurnoutManagerTest.class));
-        suite.addTest(new TestSuite(XpaPowerManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XpaPowerManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XpaThrottleManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.xpa.serialdriver.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.xpa.configurexml.PackageTest.class));

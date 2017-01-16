@@ -50,7 +50,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
 
 
 // The methods to implement the XpaInterface
-    private Vector<XpaListener> cmdListeners = new Vector<XpaListener>();
+    protected Vector<XpaListener> cmdListeners = new Vector<XpaListener>();
 
     public boolean status() {
         return (ostream != null && istream != null);

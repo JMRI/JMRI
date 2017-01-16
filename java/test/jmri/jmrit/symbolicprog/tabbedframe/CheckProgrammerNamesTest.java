@@ -1,60 +1,79 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import apps.tests.Log4JFixture;
 import java.io.File;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Check the names in an XML programmer file against the names.xml definitions
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2007, 2008
-  * @see jmri.jmrit.XmlFile
+ * @see jmri.jmrit.XmlFile
  */
-public class CheckProgrammerNames extends jmri.util.swing.GuiUtilBaseTest {
+public class CheckProgrammerNamesTest {
 
+    @Test
     public void testAdvanced() {
         checkAgainstNames(new File("xml/programmers/Advanced.xml"));
     }
 
+    @Test
     public void testComprehensive() {
         checkAgainstNames(new File("xml/programmers/Comprehensive.xml"));
     }
 
+    @Test
     public void testBasic() {
         checkAgainstNames(new File("xml/programmers/Basic.xml"));
     }
 
+    @Test
     public void testTrainShowBasic() {
         checkAgainstNames(new File("xml/programmers/TrainShowBasic.xml"));
     }
 
+    @Test
     public void testSampleClub() {
         checkAgainstNames(new File("xml/programmers/Sample Club.xml"));
     }
 
+    @Test
     public void testCustom() {
         checkAgainstNames(new File("xml/programmers/Custom.xml"));
     }
 
+    @Test
     public void testTutorial() {
         checkAgainstNames(new File("xml/programmers/Tutorial.xml"));
     }
 
+    @Test
     public void testRegisters() {
         checkAgainstNames(new File("xml/programmers/Registers.xml"));
     }
 
-    /*     public void testESU() { */
-    /*         checkAgainstNames(new File("xml/programmers/ESU.xml")); */
-    /*     } */
-    /*     public void testZimo() { */
-    /*         checkAgainstNames(new File("xml/programmers/Zimo.xml")); */
-    /*     } */
+    @Test
+    @Ignore("Preexisting failing condition")
+    public void testESU() {
+        checkAgainstNames(new File("xml/programmers/ESU.xml"));
+    }
+
+    @Test
+    @Ignore("Preexisting failing condition")
+    public void testZimo() {
+        checkAgainstNames(new File("xml/programmers/Zimo.xml"));
+    }
+
+    @Test
     public void testComprehensiveComplete() {
         checkComplete(new File("xml/programmers/Comprehensive.xml"));
     }
 
+    @Test
     public void testAdvancedComplete() {
         checkComplete(new File("xml/programmers/Advanced.xml"));
     }
@@ -74,32 +93,13 @@ public class CheckProgrammerNames extends jmri.util.swing.GuiUtilBaseTest {
         }
     }
 
-    // from here down is testing infrastructure
-    public CheckProgrammerNames(String s) {
-        super(s);
+    @Before
+    public void setUp() throws Exception {
+        Log4JFixture.setUp();
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", CheckProgrammerNames.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @After
+    public void tearDown() throws Exception {
+        Log4JFixture.tearDown();
     }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(CheckProgrammerNames.class);
-        validateDirectory(suite, "xml/programmers/");
-        validateSubdirectories(suite, "xml/programmers/");
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-    }
-
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
-    }
-
 }

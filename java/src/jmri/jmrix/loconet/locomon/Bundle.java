@@ -96,5 +96,3 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
     }
 
 }
-
-/* @(#)Bundle.java */

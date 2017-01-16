@@ -1,4 +1,3 @@
-// LNCPSignalMast.java
 package jmri.jmrix.loconet;
 
 import jmri.NmraPacket;
@@ -20,11 +19,6 @@ import org.slf4j.LoggerFactory;
  * @author	Kevin Dickerson Copyright (C) 2002
  */
 public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4564372505227894262L;
 
     public LNCPSignalMast(String sys, String user) {
         super(sys, user, "F$lncpsm");
@@ -140,6 +134,3 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
     private final static Logger log = LoggerFactory.getLogger(LNCPSignalMast.class.getName());
 
 }
-
-
-/* @(#)LNCPSignalMast.java */

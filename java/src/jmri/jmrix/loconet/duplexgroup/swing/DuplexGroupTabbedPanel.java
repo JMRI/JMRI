@@ -18,10 +18,6 @@ import jmri.util.JmriJFrame;
  */
 public class DuplexGroupTabbedPanel extends LnPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5891070481222820538L;
     javax.swing.JTabbedPane tabbedPane = null;
     DuplexGroupInfoPanel dgip = null;
     DuplexGroupScanPanel dgsp = null;
