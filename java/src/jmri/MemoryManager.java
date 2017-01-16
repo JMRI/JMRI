@@ -128,8 +128,8 @@ public interface MemoryManager extends Manager {
      * the user can optionally supply a username.
      * <P>
      * This will always return a valid object reference; a new object will be
-     * created if necessary. ( If a null reference is given for user name, no
-     * user name will be associated with the Memory object created
+     * created if necessary. (If a null reference is given for user name, no
+     * user name will be associated with the Memory object created)
      *
      * Note that it is possible to make an inconsistent request if both
      * addresses are provided, but the given values are associated with

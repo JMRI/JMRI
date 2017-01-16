@@ -39,6 +39,7 @@ public class TrainInfo {
     private int priority = 5;
     private boolean autoRun = false;
     private boolean resetWhenDone = false;
+    private boolean allocateAllTheWay = false;
     private boolean reverseAtEnd = false;
     private int delayedStart = ActiveTrain.NODELAY;
     private int delayedRestart = ActiveTrain.NODELAY;
@@ -168,6 +169,13 @@ public class TrainInfo {
         return resetWhenDone;
     }
 
+    protected void setAllocateAllTheWay(boolean b) {
+                allocateAllTheWay = b;
+    }
+
+    protected boolean getAllocateAllTheWay() {
+                return allocateAllTheWay;
+    }
     protected void setReverseAtEnd(boolean b) {
         reverseAtEnd = b;
     }

@@ -15,6 +15,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.JTextField;
 import jmri.Manager;
 import jmri.Sensor;
@@ -84,7 +86,8 @@ public class SensorTableAction extends AbstractTableAction {
     JTextField sysName = new JTextField(40);
     JTextField userName = new JTextField(40);
     JComboBox<String> prefixBox = new JComboBox<String>();
-    JTextField numberToAdd = new JTextField(5);
+    SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
+    JSpinner numberToAdd = new JSpinner(rangeSpinner);
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelHardwareAddress"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
@@ -152,30 +155,21 @@ public class SensorTableAction extends AbstractTableAction {
     }
 
     void okPressed(ActionEvent e) {
-        /*String user = userName.getText();
-         if (user.equals("")) user=null;*/
 
         int numberOfSensors = 1;
 
         if (range.isSelected()) {
-            try {
-                numberOfSensors = Integer.parseInt(numberToAdd.getText());
-            } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + numberToAdd.getText() + " to a number");
-                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showErrorMessage("Error", "Number to Sensors to Add must be a number!", "" + ex, "", true, false);
-                return;
-            }
+            numberOfSensors = (Integer) numberToAdd.getValue();
         }
-        if (numberOfSensors >= 65) {
+        if (numberOfSensors >= 65) { // limited by JSpinnerModel to 100
             if (JOptionPane.showConfirmDialog(addFrame,
-                    "You are about to add " + numberOfSensors + " Sensors into the configuration\nAre you sure?", "Warning",
+                    Bundle.getMessage("WarnExcessBeans", numberOfSensors),
+                    Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_OPTION) == 1) {
                 return;
             }
         }
         String sensorPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
-
         String sName = null;
         String curAddress = sysName.getText();
 
@@ -184,14 +178,14 @@ public class SensorTableAction extends AbstractTableAction {
                 curAddress = jmri.InstanceManager.sensorManagerInstance().getNextValidAddress(curAddress, sensorPrefix);
             } catch (jmri.JmriException ex) {
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showErrorMessage("Error", "Unable to convert '" + curAddress + "' to a valid Hardware Address", "" + ex, "", true, false);
+                        showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", curAddress), "" + ex, "", true, false);
                 return;
             }
             if (curAddress == null) {
                 //The next address is already in use, therefore we stop.
                 break;
             }
-            //We have found another turnout with the same address, therefore we need to go onto the next address.
+            //We have found another sensor with the same address, therefore we need to go onto the next address.
             sName = sensorPrefix + jmri.InstanceManager.sensorManagerInstance().typeLetter() + curAddress;
             Sensor s = null;
             try {
@@ -204,14 +198,13 @@ public class SensorTableAction extends AbstractTableAction {
 
             String user = userName.getText();
             if ((x != 0) && user != null && !user.equals("")) {
-                user = userName.getText() + ":" + x;
+                user = userName.getText() + ":" + x; // add :x to user name starting with 2nd item
             }
             if (user != null && !user.equals("") && (jmri.InstanceManager.sensorManagerInstance().getByUserName(user) == null)) {
                 s.setUserName(user);
             } else if (user != null && !user.equals("") && jmri.InstanceManager.sensorManagerInstance().getByUserName(user) != null && !p.getPreferenceState(getClassName(), "duplicateUserName")) {
-                // I18N TODO
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showErrorMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", getClassName(), "duplicateUserName", false, true);
+                        showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", user), getClassName(), "duplicateUserName", false, true);
             }
         }
         p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem());

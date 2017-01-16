@@ -432,10 +432,136 @@ public class NmraPacketTest {
     }
 
     @Test
-    public void testExtractAddressNumberAcc() {
-        byte[] ba = NmraPacket.accSignalDecoderPkt(123, 12);
+    public void testExtractAddressNumberAccSignal1() {
+        byte[] ba = NmraPacket.accSignalDecoderPkt(1, 12);
         NmraPacket.extractAddressNumber(ba);
-        jmri.util.JUnitAppender.assertWarnMessage("extractAddressNumber can't handle ACCESSORY_ADDRESS in 9F 75 0C E6 ");
+        Assert.assertEquals(1, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAccSignal2() {
+        byte[] ba = NmraPacket.accSignalDecoderPkt(2, 12);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(2, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAccSignal4() {
+        byte[] ba = NmraPacket.accSignalDecoderPkt(4, 12);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(4, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAccSignal8() {
+        byte[] ba = NmraPacket.accSignalDecoderPkt(8, 12);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(8, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAccSignal16() {
+        byte[] ba = NmraPacket.accSignalDecoderPkt(16, 12);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(16, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAccSignal32() {
+        byte[] ba = NmraPacket.accSignalDecoderPkt(32, 12);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(32, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAccSignal64() {
+        byte[] ba = NmraPacket.accSignalDecoderPkt(64, 12);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(64, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAccSignal128() {
+        byte[] ba = NmraPacket.accSignalDecoderPkt(128, 12);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(128, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAccSignal256() {
+        byte[] ba = NmraPacket.accSignalDecoderPkt(256, 12);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(256, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAcc1() {
+        byte[] ba = NmraPacket.accDecoderPkt(1, true);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(1, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAcc2() {
+        byte[] ba = NmraPacket.accDecoderPkt(2, true);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(2, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAcc4() {
+        byte[] ba = NmraPacket.accDecoderPkt(4, true);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(4, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAcc8() {
+        byte[] ba = NmraPacket.accDecoderPkt(8, true);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(8, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAcc16() {
+        byte[] ba = NmraPacket.accDecoderPkt(16, true);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(16, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAcc32() {
+        byte[] ba = NmraPacket.accDecoderPkt(32, true);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(32, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAcc64() {
+        byte[] ba = NmraPacket.accDecoderPkt(64, true);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(64, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAcc128() {
+        byte[] ba = NmraPacket.accDecoderPkt(128, true);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(128, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAcc256() {
+        byte[] ba = NmraPacket.accDecoderPkt(256, true);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(256, NmraPacket.extractAddressNumber(ba));
+    }
+
+    @Test
+    public void testExtractAddressNumberAcc512() {
+        byte[] ba = NmraPacket.accDecoderPkt(512, true);
+        NmraPacket.extractAddressNumber(ba);
+        Assert.assertEquals(512, NmraPacket.extractAddressNumber(ba));
     }
 
     @Test
@@ -593,6 +719,35 @@ public class NmraPacketTest {
         JUnitAppender.assertErrorMessage("invalid speed -1");
         Assert.assertNull("Speed step 32", NmraPacket.speedStep28Packet(true, address, true, 32, true));
         JUnitAppender.assertErrorMessage("invalid speed 32");
+    }
+
+    @Test
+    public void testToStringNoPacket() {
+        boolean thrown = false;
+        try {
+            String display = NmraPacket.toString(new byte[]{});
+        } catch (IllegalArgumentException e) { thrown = true; }
+        
+        Assert.assertTrue(thrown);
+    }
+
+    @Test
+    public void testToStringShortLocoPacket() {
+        // short address function set
+        String display = NmraPacket.toString(new byte[]{(byte)0x3C, (byte)0xDE, (byte)0x55, (byte)00});
+        Assert.assertEquals("LOCO_SHORT_ADDRESS type: 222 to addr 60", display);
+    }
+
+    @Test
+    public void testToStringAccessoryPacket1() {
+        String display = NmraPacket.toString(NmraPacket.accDecoderPkt(1, true));
+        Assert.assertEquals("ACCESSORY_ADDRESS type: 120 to addr 1", display);
+    }
+
+    @Test
+    public void testToStringAccessoryPacket257() {
+        String display = NmraPacket.toString(NmraPacket.accDecoderPkt(257, true));
+        Assert.assertEquals("ACCESSORY_ADDRESS type: 104 to addr 257", display);
     }
 
     @Before
