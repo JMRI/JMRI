@@ -25,6 +25,7 @@ public class SignalSystemTestUtil {
         // creates mock (no appearances) system
         // in the user area.
         try {
+            log.error("Creating {}", DUMMY.getAbsolutePath());
             FileUtil.createDirectory(DUMMY);
             {
                 Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/implementation"), "testAspects.xml").toPath();

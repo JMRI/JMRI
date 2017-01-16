@@ -1,6 +1,7 @@
 package jmri.jmrit.beantable.signalmast;
 
 import jmri.implementation.SignalSystemTestUtil;
+import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -33,7 +34,7 @@ public class AddSignalMastPanelTest {
     public void testSearch() throws Exception {
         try {  // need try-finally to ensure junk deleted from user area
             SignalSystemTestUtil.createMockSystem();
-
+            log.error("User files path is {}", FileUtil.getUserFilesPath());
             AddSignalMastPanel a = new AddSignalMastPanel();
 
             // check that mock (test) system is present
