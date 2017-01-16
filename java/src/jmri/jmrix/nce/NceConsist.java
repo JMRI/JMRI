@@ -1,13 +1,3 @@
-/**
- * NceConsist.java
- *
- * This is the Consist definition for a consist on a NCE system. it uses the NCE
- * specific commands to build a consist.
- *
- * @author Paul Bender Copyright (C) 2011
- * @author Daniel Boudreau Copyright (C) 2012
- * 
- */
 package jmri.jmrix.nce;
 
 import java.util.ArrayList;
@@ -18,6 +8,14 @@ import jmri.implementation.DccConsist;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * This is the Consist definition for a consist on a NCE system. it uses the NCE
+ * specific commands to build a consist.
+ *
+ * @author Paul Bender Copyright (C) 2011
+ * @author Daniel Boudreau Copyright (C) 2012
+ *
+ */
 public class NceConsist extends jmri.implementation.DccConsist implements jmri.jmrix.nce.NceListener {
 
     public static final int CONSIST_MIN = 1; 			// NCE doesn't use consist 0
@@ -169,7 +167,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
         startReadNCEconsistThread(true);
     }
 
-    private NceReadConsist mb=null;
+    private NceReadConsist mb = null;
 
     private void startReadNCEconsistThread(boolean check) {
         // read command station memory to get the current consist (can't be a USB, only PH)
@@ -182,10 +180,10 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
         }
     }
 
-    private void stopReadNCEconsistThread(){
-        if(mb!=null){
-           mb.stop();
-           mb=null;
+    private void stopReadNCEconsistThread() {
+        if (mb != null) {
+            mb.stop();
+            mb = null;
         }
     }
 
