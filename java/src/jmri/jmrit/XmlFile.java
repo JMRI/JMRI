@@ -630,13 +630,7 @@ public abstract class XmlFile {
         builder.setFeature("http://apache.org/xml/features/xinclude", true);
         builder.setFeature("http://apache.org/xml/features/xinclude/fixup-base-uris", false);
         builder.setFeature("http://apache.org/xml/features/allow-java-encodings", true);
-        
-        // even if validating,  don't validate DTD, just validate Schema
-        if (verify) {
-            builder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-            builder.setProperty("http://java.sun.com/xml/jaxp/properties/schemaLanguage", "http://www.w3.org/2001/XMLSchema");
-        }
-        
+                
         // for schema validation. Not needed for DTDs, so continue if not found now
         try {
             builder.setFeature("http://apache.org/xml/features/validation/schema", verify);
