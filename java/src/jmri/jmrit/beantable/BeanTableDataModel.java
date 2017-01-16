@@ -621,7 +621,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         });
         popupMenu.add(menuItem);
 
-        menuItem = new JMenuItem(Bundle.getMessage("Delete"));
+        menuItem = new JMenuItem(Bundle.getMessage("ButtonDelete"));
         menuItem.addActionListener((ActionEvent e1) -> {
             deleteBean(rowindex, 0);
         });

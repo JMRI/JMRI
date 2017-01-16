@@ -97,20 +97,97 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     protected boolean[] opsw = new boolean[65];
     private final static int HALF_A_SECOND = 500;
     private final static int FIFTIETH_OF_A_SECOND = 20; // 20 milliseconds = 1/50th of a second
+    
+    private String boardTypeName;
 
     /**
      * Constructor which assumes the board ID number is 1
+     * 
+     * @deprecated
      */
+    @Deprecated
     protected AbstractBoardProgPanel() {
         this(1, false);
     }
 
+    /**
+     * 
+     * @param readOnInit
+     * @deprecated
+     */
+    @Deprecated
     protected AbstractBoardProgPanel(boolean readOnInit) {
         this(1, readOnInit);
     }
 
+    /**
+     * 
+     * @param boardNum
+     * @param readOnInit
+     * @deprecated
+     */
+    @Deprecated
     protected AbstractBoardProgPanel(int boardNum, boolean readOnInit) {
         super();
+        boardTypeName = Bundle.getMessage("AbstractBoardProgPanel_GenericDeviceString");
+
+        // basic formatting: Create pane to hold contents
+        // within a scroll box
+        contents.setLayout(new BoxLayout(contents, BoxLayout.Y_AXIS));
+        JScrollPane scroll = new JScrollPane(contents);
+        add(scroll);
+
+        // and prep for display
+        addrField.setText(Integer.toString(boardNum));
+        this.readOnInit = readOnInit;
+    }
+
+    /**
+     * 
+     * Constructor which allows the caller to pass in the board ID number
+     * 
+     * @param boardNum
+     * @deprecated
+     */
+    @Deprecated
+    protected AbstractBoardProgPanel(int boardNum) {
+        this(boardNum, false);
+    }
+
+    /**
+     * Constructor which accepts a "board type" string.
+     * The board number defaults to 1, and the board will not
+     * be automatically read.
+     * 
+     * @param boardTypeName
+     */
+    protected AbstractBoardProgPanel(String boardTypeName) {
+        this(1, false, boardTypeName);
+    }
+
+    /**
+     * Constructor which accepts a boolean which specifies whether
+     * to automatically read the board, plus a string defining
+     * the "board type".  The board number defaults to 1.
+     * 
+     * @param readOnInit
+     * @param boardTypeName 
+     */
+    protected AbstractBoardProgPanel(boolean readOnInit, String boardTypeName) {
+        this(1, readOnInit, boardTypeName);
+    }
+
+    /**
+     * Constructor which accepts parameters for the initial board number, whether
+     * to automatically read the board, and a "board type" string.
+     * 
+     * @param boardNum
+     * @param readOnInit
+     * @param boardTypeName 
+     */
+    protected AbstractBoardProgPanel(int boardNum, boolean readOnInit, String boardTypeName) {
+        super();
+        this.boardTypeName = boardTypeName;
 
         // basic formatting: Create pane to hold contents
         // within a scroll box
@@ -125,9 +202,13 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
 
     /**
      * Constructor which allows the caller to pass in the board ID number
+     * and board type name
+     * 
+     * @param boardNum
+     * @param boardTypeName
      */
-    protected AbstractBoardProgPanel(int boardNum) {
-        this(boardNum, false);
+    protected AbstractBoardProgPanel(int boardNum, String boardTypeName) {
+        this(boardNum, false, boardTypeName);
     }
 
     public void initComponents(LocoNetSystemConnectionMemo memo) {
@@ -171,15 +252,29 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     }
 
     /**
-     * Provide GUI elements for read and write buttons and address entry field
+     * Creates a JPanel to allow the user to specify a board address.  Includes 
+     * a previously-defined board type name within the panel, or, if none has 
+     * been previously provided, a default board-type name.
+     * 
+     * @return
      */
-    protected JPanel provideAddressing(String type) {
+    protected JPanel provideAddressing() {
+        return this.provideAddressing(boardTypeName);
+    }
+        /**
+     * Creates a JPanel to allow the user to specify a board address and to
+     * read and write the device.  The "read" and "write" buttons have text which
+     * uses the specified "board type name" from the method parameter.
+     * 
+     * @param boardTypeName
+     */
+    protected JPanel provideAddressing(String boardTypeName) {
         JPanel pane0 = new JPanel();
         pane0.setLayout(new FlowLayout());
         pane0.add(new JLabel(rb.getString("LABEL_UNIT_ADDRESS") + " "));
         pane0.add(addrField);
-        readAllButton = new JToggleButton(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("READ FROM ") + " " + type);
-        writeAllButton = new JToggleButton(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("WRITE TO ") + " " + type);
+        readAllButton = new JToggleButton(Bundle.getMessage("AbstractBoardProgPanel_ReadFrom", boardTypeName)); // NOI18N
+        writeAllButton = new JToggleButton(Bundle.getMessage("AbstractBoardProgPanel_WriteTo", boardTypeName)); // NOI18N
 
         // make both buttons a little bit bigger, with identical (preferred) sizes
         // (width increased because some computers/displays trim the button text)
