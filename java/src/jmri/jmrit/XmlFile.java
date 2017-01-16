@@ -630,7 +630,7 @@ public abstract class XmlFile {
         builder.setFeature("http://apache.org/xml/features/xinclude", true);
         builder.setFeature("http://apache.org/xml/features/xinclude/fixup-base-uris", false);
         builder.setFeature("http://apache.org/xml/features/allow-java-encodings", true);
-        
+
         // for schema validation. Not needed for DTDs, so continue if not found now
         try {
             builder.setFeature("http://apache.org/xml/features/validation/schema", verify);
