@@ -27,6 +27,8 @@ os:
   - linux
   - osx
 
+sudo: required
+
 env:
   matrix:
   - HEADLESS=true
