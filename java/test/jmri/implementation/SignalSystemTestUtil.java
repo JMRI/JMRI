@@ -2,7 +2,6 @@ package jmri.implementation;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import jmri.util.FileUtil;
@@ -28,12 +27,12 @@ public class SignalSystemTestUtil {
         try {
             FileUtil.createDirectory(DUMMY);
             {
-                Path inPath = FileSystems.getDefault().getPath("java/test/jmri/implementation", "testAspects.xml");
+                Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/implementation"), "testAspects.xml").toPath();
                 Path outPath = new File(DUMMY, "aspects.xml").toPath();
                 Files.copy(inPath, outPath);
             }
             {
-                Path inPath = FileSystems.getDefault().getPath("java/test/jmri/implementation", "test-appearance-one-searchlight.xml");
+                Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/implementation"), "test-appearance-one-searchlight.xml").toPath();
                 Path outPath = new File(DUMMY, "appearance-one-searchlight.xml").toPath();
                 Files.copy(inPath, outPath);
             }
