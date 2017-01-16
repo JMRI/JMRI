@@ -2,6 +2,9 @@
 <?xml-stylesheet href="http://www.jmri.org/xml/XSLT/panelfile.xsl" type="text/xsl"?>
 <!DOCTYPE layout-config SYSTEM "layout-config-2-7-7.dtd">
 
+<!-- This is the original version of the LoadFileTest277.xml file, with the original -->
+<!-- format and class names. Please do not update/migrate to newer, as it tests old load -->
+
 <layout-config>
   <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">
     <operations automate="false">
