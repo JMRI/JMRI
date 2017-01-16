@@ -35,7 +35,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SignalHeadTableActionTest.class));
         suite.addTest(TurnoutTableWindowTest.suite());
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
-        suite.addTest(jmri.jmrit.beantable.signalmast.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.beantable.signalmast.PackageTest.class));
         suite.addTest(jmri.jmrit.beantable.sensor.PackageTest.suite());
         suite.addTest(jmri.jmrit.beantable.oblock.PackageTest.suite());
         suite.addTest(jmri.jmrit.beantable.beanedit.PackageTest.suite());
