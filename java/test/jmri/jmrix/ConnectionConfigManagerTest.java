@@ -61,6 +61,7 @@ public class ConnectionConfigManagerTest {
     public void tearDown() throws Exception {
         Log4JFixture.tearDown();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
         FileUtil.delete(this.workspace.toFile());
     }
 
