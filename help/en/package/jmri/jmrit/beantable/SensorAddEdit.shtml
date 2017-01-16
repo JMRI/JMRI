@@ -23,7 +23,7 @@
 
       <p>When adding a Sensor, you select from the drop down list
       the system to which the Sensor is attached to.</p><img src=
-      "AddSensor.png">
+      "images/AddSensor.png">
 
       <p>Enter a valid address for that Sensor and if desired enter
       a User Name which can be anything you wish to describe the
@@ -34,15 +34,17 @@
 
       <p>It is also possible to create a number of Sensors in one
       go.<br>
-      Where supported the "Add a range" check box will be
-      enabled.</p><img src="AddTurnoutNumber.png">
+      Where supported the "Add a sequential range" check box will be
+      enabled.</p><img src="images/AddSensorNumber.png">
 
-      <p>When checking the "Add Range" box, this will then enable
-      the "Number To Add" field. Here enter the number of Sensors
-      that you wish to add. Clicking "OK" will then create that
-      number of sequential Sensors.</p>If a User Name has been
+      <p>Checking this box will enable
+      the "Number of items" spinner. Click the small arrows
+      up or down to set the number of Sensors you wish to add.
+      Clicking "OK" will then create that
+      number of sequential Sensors in the table.<br>
+      If a User Name has been
       entered, a number will be added to the end of the name to
-      keep each Sensor User Name unique.
+        keep each Sensor User Name unique.</p>
 
       <h2>Hardware Specific Information</h2>
 

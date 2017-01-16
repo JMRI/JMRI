@@ -47,9 +47,9 @@
         existing Turnout. This can be pretty much anything you wish
         to describe the Turnout.</dd>
 
-        <dt>Cmd</dt>
+        <dt>State</dt>
 
-        <dd>Pushing one of the buttons in the "Cmd" column button
+        <dd>Pushing one of the buttons in the "State" column button
         will change the state of that particular Turnout.</dd>
 
         <dt>Delete</dt>
