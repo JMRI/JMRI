@@ -324,6 +324,8 @@
                         <exclude>jmri.util.SwingTestCase</exclude>
                         <exclude>jmri.jmrit.operations.OperationsTestCase</exclude>
                         <exclude>jmri.jmrit.operations.OperationsSwingTestCase</exclude>
+                        <!-- ignore until #2671 is resolved -->
+                        <exclude>jmri.jmrix.roco.z21.simulator.Z21SimulatorAdapterTest</exclude>
                     </excludes>
                     <systemPropertyVariables>
                         <jmri.path.program>${basedir}</jmri.path.program>
