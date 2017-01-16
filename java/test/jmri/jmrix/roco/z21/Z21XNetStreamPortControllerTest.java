@@ -4,11 +4,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -45,6 +43,7 @@ public class Z21XNetStreamPortControllerTest extends jmri.jmrix.AbstractStreamPo
     @Override
     @After
     public void tearDown() {
+        apc = null;
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
