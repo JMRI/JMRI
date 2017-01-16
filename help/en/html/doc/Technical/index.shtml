@@ -268,11 +268,12 @@
       "mailto:jmri@pacbell.net">contact us</a> directly.
 
       <h2>JMRI Code Visualization</h2>
-      <p>To show how many code was written to make JMRI run and
-      provide help to users, here's a still from our 4.6 CodeFlower.
-      CodeFlower privides a dynamic view of the whole repository,
-      showing the relative size of each file. Take a look at the
-      <a href="/community/codeflower.shtml">JMRI CodeFlower</a>.
+      <p>To show how much work goes into making JMRI run and
+      provide help to users, the 
+      <a href="/community/codeflower.shtml">JMRI CodeFlower</a>
+      provides a dynamic view of the whole GitHub repository.
+      It shows the relative size of the code in each file and the
+      structure in which the files are stored.
       </p>
       <p>A couple of years ago, Dennis Miller created a <a href=
       "/community/codeswarm.shtml">Code Swarm of JMRI
