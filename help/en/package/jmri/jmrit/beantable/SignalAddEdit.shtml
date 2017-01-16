@@ -53,6 +53,9 @@
         when you want to e.g. display a signal on a panel, but
         don't have a real one on the layout.</dd>
 
+        <a href="images/SignalHeadAddAcela.png">
+          <img src="images/SignalHeadAddAcela.png" align="right"
+               height="109" width="118"></a>
         <dt>Acela</dt>
 
         <dd>
@@ -119,8 +122,8 @@
           <em>possible</em> values differs.</p>
         </dd>
 
-        <dd><a href="SignalHeadAdd1.png"><img src=
-        "SignalHeadAdd1.png" align="right" width="137" height="181"
+        <dd><a href="images/SignalHeadAdd1.png"><img src=
+        "images/SignalHeadAdd1.png" align="right" width="127" height="200"
         hspace="0" vspace="0" alt=
         "Add Signal Head panel figure 1"></a></dd>
 
@@ -166,8 +169,8 @@
           the connection is in the Closed State.</p>
         </dd>
 
-        <dd><a href="SignalHeadAdd2.png"><img src=
-        "SignalHeadAdd2.png" align="right" width="135" height="173"
+        <dd><a href="images/SignalHeadAdd2.png"><img src=
+        "images/SignalHeadAdd2.png" align="right" width="130" height="169"
         hspace="0" vspace="0" alt=
         "Add Signal Head panel figure 2"></a></dd>
 
@@ -287,9 +290,9 @@
           "http://www.digitrax.com/static/apps/products/detection-signaling/se8c/documents/SE8C.pdf">
           Digitrax SE8C Manual</a>.</p>
 
-          <p><a href="Add_New_SE8C_Signal.png"><img src=
-          "Add_New_SE8C_Signal.png" align="right" height="147"
-          width="126"></a> You can optionally enter a more readable
+          <p><a href="images/Add_New_SE8C_Signal.png"><img src=
+          "images/Add_New_SE8C_Signal.png" align="right" height="153"
+          width="131"></a> You can optionally enter a more readable
           User Name if you'd like.</p>
 
           <p>In the "Turnout number" box, enter the appropriate DCC
@@ -332,9 +335,9 @@
           Examples</a> page.</p>
         </dd>
 
-        <dd><a href="SignalHeadAddMERG.png"><img src=
-        "SignalHeadAddMERG.png" align="right" width="141" height=
-        "190" hspace="0" vspace="0" alt=
+        <dd><a href="images/SignalHeadAddMERG.png"><img src=
+        "images/SignalHeadAddMERG.png" align="right" width="140" height=
+        "180" hspace="0" vspace="0" alt=
         "Add Signal Head panel MERG"></a></dd>
 
         <dt>MERG Signal Driver</dt>
