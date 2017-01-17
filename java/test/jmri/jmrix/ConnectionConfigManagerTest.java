@@ -62,6 +62,7 @@ public class ConnectionConfigManagerTest {
         Log4JFixture.tearDown();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.resetFileUtilSupport();
         FileUtil.delete(this.workspace.toFile());
     }
 
