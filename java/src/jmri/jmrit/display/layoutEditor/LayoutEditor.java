@@ -659,7 +659,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         extraTurnoutNameComboBox.setEditable(true);
         extraTurnoutNameComboBox.getEditor().setItem("");
         extraTurnoutNameComboBox.setToolTipText(rb.getString("TurnoutNameToolTip"));
-        extraTurnoutNameComboBox.addPopupMenuListener(turnoutNamePopupListener);
 
         // this is enabled/disabled via selectionListAction above
         extraTurnoutPanel.add(extraTurnLabel);
