@@ -150,7 +150,7 @@ public class SpjFile {
      */
     public void save(String name) throws java.io.IOException {
         if (name == null) {
-            throw new java.io.IOException("Null name during write");
+            throw new java.io.IOException("Null name during write"); // NOI18N
         }
         OutputStream s = new java.io.BufferedOutputStream(
                 new java.io.FileOutputStream(new java.io.File(name)));
@@ -212,7 +212,7 @@ public class SpjFile {
      */
     public void read() throws java.io.IOException {
         if (file == null) {
-            throw new java.io.IOException("Null file during read");
+            throw new java.io.IOException("Null file during read"); // NOI18N
         }
         InputStream s = new java.io.BufferedInputStream(new java.io.FileInputStream(file));
 
@@ -238,11 +238,11 @@ public class SpjFile {
         // first, scan for things we can't handle
         for (int i = 1; i < n; i++) {
             if (log.isDebugEnabled()) {
-                log.debug("Header " + i + " length " + headers[i].getDataLength() + " type " + headers[i].getType());
+                log.debug("Header " + i + " length " + headers[i].getDataLength() + " type " + headers[i].getType()); // NOI18N
             }
             if (headers[i].getDataLength() > headers[i].getRecordLength()) {
-                log.error("header " + i + " has data length " + headers[i].getDataLength()
-                        + " greater than record length " + headers[i].getRecordLength());
+                log.error("header " + i + " has data length " + headers[i].getDataLength() // NOI18N
+                        + " greater than record length " + headers[i].getRecordLength()); // NOI18N
             }
 
             for (int j = 1; j < i; j++) {
@@ -307,17 +307,17 @@ public class SpjFile {
         int n = numHeaders();
         for (int i = 1; i < n; i++) {
             if (headers[i].isWAV()) {
-                writeSubFile(i, "" + i + ".wav");
+                writeSubFile(i, "" + i + ".wav"); // NOI18N
             } else if (headers[i].isSDF()) {
-                writeSubFile(i, "" + i + ".sdf");
+                writeSubFile(i, "" + i + ".sdf"); // NOI18N
             } else if (headers[i].getType() == 3) {
-                writeSubFile(i, "" + i + ".cv");
+                writeSubFile(i, "" + i + ".cv"); // NOI18N
             } else if (headers[i].getType() == 4) {
-                writeSubFile(i, "" + i + ".txt");
+                writeSubFile(i, "" + i + ".txt"); // NOI18N
             } else if (headers[i].isMap()) {
-                writeSubFile(i, "" + i + ".map");
+                writeSubFile(i, "" + i + ".map"); // NOI18N
             } else if (headers[i].getType() == 6) {
-                writeSubFile(i, "" + i + ".uwav");
+                writeSubFile(i, "" + i + ".uwav"); // NOI18N
             }
         }
     }
@@ -604,11 +604,11 @@ public class SpjFile {
         }
 
         public String toString() {
-            return "type= " + typeAsString() + ", handle= " + handle + ", rs= " + recordStart + ", ds= " + dataStart
-                    + ", ds-rs = " + (dataStart - recordStart)
-                    + ", dl = " + dataLength + ", rl= " + recordLength
-                    + ", rl-dl = " + (recordLength - dataLength)
-                    + ", filename= " + filename;
+            return "type= " + typeAsString() + ", handle= " + handle + ", rs= " + recordStart + ", ds= " + dataStart // NOI18N
+                    + ", ds-rs = " + (dataStart - recordStart) // NOI18N
+                    + ", dl = " + dataLength + ", rl= " + recordLength // NOI18N
+                    + ", rl-dl = " + (recordLength - dataLength) // NOI18N
+                    + ", filename= " + filename; // NOI18N
         }
 
         public boolean isWAV() {
@@ -677,21 +677,21 @@ public class SpjFile {
 
         public String typeAsString() {
             if (type == -1) {
-                return " initial ";
+                return " initial "; // NOI18N
             }
             if ((type >= 0) && (type < 7)) {
-                String[] names = {"(unused) ", // 0
-                    "WAV      ", // 1
-                    "SDF      ", // 2
-                    " CV data ", // 3
-                    " comment ", // 4
-                    ".map file", // 5
-                    "WAV (mty)"}; // 6
+                String[] names = {"(unused) ", // 0 // NOI18N
+                    "WAV      ", // 1 // NOI18N
+                    "SDF      ", // 2 // NOI18N
+                    " CV data ", // 3 // NOI18N
+                    " comment ", // 4 // NOI18N
+                    ".map file", // 5 // NOI18N
+                    "WAV (mty)"}; // 6 // NOI18N
                 return names[type];
             }
             // unexpected answer
-            log.warn("Unexpected type = " + type);
-            return "Uknown " + type;
+            log.warn("Unexpected type = " + type); // NOI18N
+            return "Uknown " + type; // NOI18N
         }
     }
 
@@ -716,8 +716,8 @@ public class SpjFile {
         }
 
         public String toString() {
-            return "initial record, version=" + version() + " num headers = " + numHeaders()
-                    + ", comment= " + filename;
+            return "initial record, version=" + version() + " num headers = " + numHeaders() // NOI18N
+                    + ", comment= " + filename; // NOI18N
         }
     }
 

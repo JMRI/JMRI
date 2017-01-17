@@ -19,7 +19,7 @@ public class LnTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurn
     }
 
     public void setStoreElementClass(Element turnouts) {
-        turnouts.setAttribute("class", "jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml");
+        turnouts.setAttribute("class", "jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml"); // NOI18N
     }
 
     public void load(Element element, Object o) {

@@ -69,7 +69,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
         // message type OK, check address
         int addr = (l.getElement(1) & 0x1F) * 128 + l.getElement(2) + 1;
 
-        LnReporter r = (LnReporter) provideReporter("LR" + addr);
+        LnReporter r = (LnReporter) provideReporter("LR" + addr); // NOI18N
         r.message(l);	// make sure it got the message
     }
 

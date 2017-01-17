@@ -74,7 +74,7 @@ public class DuplexGroupTabbedPanel extends LnPanel {
 
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel";
+        return "package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel"; // NOI18N
     }
 
     @Override
