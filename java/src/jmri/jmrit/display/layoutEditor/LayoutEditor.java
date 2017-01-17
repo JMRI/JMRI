@@ -58,6 +58,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Memory;
@@ -67,6 +69,8 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
+import jmri.jmrit.beantable.BlockTableAction;
+import jmri.jmrit.beantable.TurnoutTableAction;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.AnalogClock2Display;
 import jmri.jmrit.display.Editor;
@@ -606,25 +610,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         topEditBar = new JPanel();
         topEditBar.setLayout(new BoxLayout(topEditBar, BoxLayout.PAGE_AXIS));
 
-        boolean bordersFlag = false;
-        boolean leftToolbarFlag = false;    //TODO: not finished; work-in-progress (geowar1)
-
         // setup meta panel (to go around the first two rows… encapsulates the "Turnout", "Track" & "Block" panels.)
         JPanel metaPanel = null;
-        if (bordersFlag) {
-            metaPanel = new JPanel();
-            metaPanel.setLayout(new BoxLayout(metaPanel, BoxLayout.PAGE_AXIS));
-            metaPanel.setBorder(BorderFactory.createEtchedBorder());
-        }
 
         // add first row of edit tool bar items
         JPanel top1 = new JPanel();
         top1.setLayout(new BoxLayout(top1, BoxLayout.LINE_AXIS));
-        if (bordersFlag) {
-            top1.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BeanNameTurnout")));
-        } else {
-            top1.add(new JLabel("    " + Bundle.getMessage("BeanNameTurnout") + ": "));
-        }
+        top1.add(new JLabel("    " + Bundle.getMessage("BeanNameTurnout") + ": "));
 
         // add turnout items
         top1.add(turnoutRHButton);
@@ -653,111 +645,25 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         top1.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
 
-        JPanel right1 = top1;
-        if (bordersFlag) {
-            right1 = new JPanel();
-        }
-
-        // this is enabled/disabled via selectionListAction above
-        turnoutPropertiesPanel.add(new JLabel(Bundle.getMessage("Name")));
+        // the turnoutPropertiesPanel is enabled/disabled via selectionListAction above
+        turnoutPropertiesPanel.add(new JLabel("    " + Bundle.getMessage("Name")));
         turnoutPropertiesPanel.add(turnoutNameComboBox);
         turnoutNameComboBox.setEditable(true);
         turnoutNameComboBox.getEditor().setItem("");
         turnoutNameComboBox.setToolTipText(rb.getString("TurnoutNameToolTip"));
 
-        // ActionListener to remove turnouts that are already assigned from turnoutNameComboBox & extraTurnoutNameComboBox
-        turnoutNameComboBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                log.debug("•••• turnoutNameComboBox::actionPerformed(" +
-                        event.getActionCommand() + ":" +
-                        event.paramString() +")");
-
-                ArrayList<NamedBean> usedTurnoutNames = new ArrayList<NamedBean>();
-                int nItems = turnoutNameComboBox.getItemCount();
-                log.debug("turnoutNameComboBox.getItemCount(): " + nItems);
-                for (int i = 0; i < nItems; i++) {
-                    String turnoutName = turnoutNameComboBox.getItemAt(i);
-                    log.debug("turnoutName["+ i + "]: " + turnoutName);
-                    //if (turnoutName.equals("LT32:Spare")) {
-                    //    log.debug("LT32:Spare");
-                    //}
-
-                    // check that the turnout name corresponds to a defined physical turnout
-                    Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
-
-                    // this shouldn't happen…
-                    if (turnout == null) {
-                        continue;   // but just in case… (skip it!)
-                    }
-
-                    // see if it's already linked to another turnout
-                    for (LayoutTurnout t : turnoutList) {
-                        Turnout to = t.getTurnout();
-                        if (to != null) {
-                            String uname = to.getUserName();
-                            if ((to.getSystemName().equals(turnoutName.toUpperCase()))
-                                || ((uname != null) && (uname.equals(turnoutName)))) {
-                                log.debug("used: " + to.getDisplayName());
-                                usedTurnoutNames.add(turnout);
-                                continue;
-                            }
-                        }
-                        // a double crossover may have a second turnout
-                        if (t.getTurnoutType() >= LayoutTurnout.DOUBLE_XOVER) {
-                            Turnout to2 = t.getSecondTurnout();
-                            if (to2 != null) {
-                                String uname = to2.getUserName();
-                                if ((to.getSystemName().equals(turnoutName.toUpperCase()))
-                                    || ((uname != null) && (uname.equals(turnoutName)))) {
-                                    log.debug("used: " + to.getDisplayName());
-                                    usedTurnoutNames.add(turnout);
-                                    continue;
-                                }
-                            }
-                        }
-                    }   // for (LayoutTurnout t : turnoutList)
-
-                    // check both turnouts on slips
-                    for (LayoutSlip s : slipList) {
-                        Turnout to = s.getTurnout();
-                        if (to != null) {
-                            String uname = to.getUserName();
-                            if (to.getSystemName().equals(turnoutName)
-                                || (uname != null && uname.equals(turnoutName))) {
-                                    log.debug("used: " + to.getDisplayName());
-                                    usedTurnoutNames.add(turnout);
-                                    continue;
-                            }
-                        }
-                        to = s.getTurnoutB();
-                        if (to != null) {
-                            String uname = to.getUserName();
-                            if (to.getSystemName().equals(turnoutName)
-                                || (uname != null && uname.equals(turnoutName))) {
-                                    log.debug("used: " + to.getDisplayName());
-                                    usedTurnoutNames.add(turnout);
-                                    continue;
-                            }
-                        }
-                    }   // for (LayoutSlip s : slipList)
-                }   // for (int i = 0; i < nItems; i++)
-
-                turnoutNameComboBox.excludeItems(usedTurnoutNames);
-                // the same exclusion list can be used for the extraTurnoutNameComboBox
-                extraTurnoutNameComboBox.excludeItems(usedTurnoutNames);
-            }   // public void actionPerformed(ActionEvent event)
-        }); // turnoutNameComboBox.addActionListener(...)
-
         JLabel extraTurnLabel = new JLabel(rb.getString("SecondName"));
         extraTurnLabel.setEnabled(false);
+
         extraTurnoutNameComboBox.setEnabled(false);
+        extraTurnoutNameComboBox.setEditable(true);
+        extraTurnoutNameComboBox.getEditor().setItem("");
+        extraTurnoutNameComboBox.setToolTipText(rb.getString("TurnoutNameToolTip"));
+        extraTurnoutNameComboBox.addPopupMenuListener(turnoutNamePopupListener);
 
         // this is enabled/disabled via selectionListAction above
         extraTurnoutPanel.add(extraTurnLabel);
         extraTurnoutPanel.add(extraTurnoutNameComboBox);
-        extraTurnoutNameComboBox.setEditable(true);
-        extraTurnoutNameComboBox.getEditor().setItem("");
-        extraTurnoutNameComboBox.setToolTipText(rb.getString("TurnoutNameToolTip"));
         turnoutPropertiesPanel.add(extraTurnoutPanel);
 
         turnoutPropertiesPanel.add(new JLabel(rb.getString("Rotation")));
@@ -770,36 +676,20 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         turnoutPropertiesPanel.add(rotationComboBox);
         rotationComboBox.setToolTipText(rb.getString("RotationToolTip"));
 
-        right1.add(turnoutPropertiesPanel);
-        if (bordersFlag) {
-            top1.add(right1);
-            metaPanel.add(top1);
-        } else {
-            topEditBar.add(top1);
-        }
+        top1.add(turnoutPropertiesPanel);
+        topEditBar.add(top1);
 
         // add second row of edit tool bar items
         JPanel top2 = new JPanel();
         top2.setLayout(new BoxLayout(top2, BoxLayout.LINE_AXIS));
 
-        JPanel left2 = top2;
-        if (bordersFlag) {
-            left2 = new JPanel();
-            left2.setBorder(BorderFactory.createTitledBorder(rb.getString("Track")));
-            left2.setLayout(new BoxLayout(left2, BoxLayout.LINE_AXIS));
-        } else {
-            left2.add(new JLabel("    " + rb.getString("Track") + ":  "));
-        }
+        top2.add(new JLabel("    " + rb.getString("Track") + ":  "));
 
-        left2.add(levelXingButton);
+        top2.add(levelXingButton);
         levelXingButton.setToolTipText(rb.getString("LevelCrossingToolTip"));
 
-        left2.add(trackButton);
+        top2.add(trackButton);
         trackButton.setToolTipText(rb.getString("TrackSegmentToolTip"));
-
-        if (bordersFlag) {
-            left2.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
-        }
 
         // this is enabled/disabled via selectionListAction above
         trackSegmentPropertiesPanel.add(mainlineTrack);
@@ -810,25 +700,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         dashedLine.setToolTipText(rb.getString("DashedCheckBoxTip"));
         dashedLine.setEnabled(false);
 
-        left2.add(trackSegmentPropertiesPanel);
-        if (bordersFlag) {
-            top2.add(left2);
-        }
+        top2.add(trackSegmentPropertiesPanel);
 
         top2.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
 
         JPanel right2 = top2;
-        if (bordersFlag) {
-            right2 = new JPanel();
-        }
 
-        //right2.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
-        // this is enabled/disabled via selectionListAction above
-        if (bordersFlag) {
-            blockPanel.setBorder(BorderFactory.createTitledBorder(rb.getString("Block")));
-        } else {
-            blockPanel.add(new JLabel("    " + rb.getString("BlockID")));
-        }
+        // the blockPanel is enabled/disabled via selectionListAction above
+        blockPanel.add(new JLabel("    " + rb.getString("BlockID")));
         blockPanel.add(new JLabel(Bundle.getMessage("Name")));
         blockPanel.add(blockIDField);
         blockIDField.setToolTipText(rb.getString("BlockIDToolTip"));
@@ -840,25 +719,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         right2.add(blockPanel);
 
-        if (bordersFlag) {
-            top2.add(right2);
-            metaPanel.add(top2);
-            topEditBar.add(metaPanel);
-        } else {
-            topEditBar.add(top2);
-        }
+        topEditBar.add(top2);
 
         // add third row of edit tool bar items
         JPanel top3 = new JPanel();
         top3.setLayout(new BoxLayout(top3, BoxLayout.LINE_AXIS));
 
         JPanel left3 = top3;
-        if (bordersFlag) {
-            left3 = new JPanel();
-            left3.setBorder(BorderFactory.createTitledBorder(rb.getString("Nodes")));
-        } else {
-            left3.add(new JLabel("    " + rb.getString("Nodes") + ":  "));
-        }
+        left3.add(new JLabel("    " + rb.getString("Nodes") + ":  "));
 
         left3.add(endBumperButton);
         endBumperButton.setToolTipText(rb.getString("EndBumperToolTip"));
@@ -870,81 +738,53 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         edgeButton.setToolTipText(rb.getString("EdgeConnectorToolTip"));
         left3.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
 
-        if (bordersFlag) {
-            top3.add(left3);
-        }
+        top3.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
+
+        top3.add(new JLabel("    " + rb.getString("Labels") + ":  "));
 
         top3.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
 
-        JPanel right3 = top3;
-        if (bordersFlag) {
-            right3 = new JPanel();
-            right3.setBorder(BorderFactory.createTitledBorder(rb.getString("Labels")));
-        } else {
-            right3.add(new JLabel("    " + rb.getString("Labels") + ":  "));
-        }
-
-        right3.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
-
-        right3.add(textLabelButton);
+        top3.add(textLabelButton);
         textLabelButton.setToolTipText(rb.getString("TextLabelToolTip"));
 
-        right3.add(textLabel);
+        top3.add(textLabel);
         textLabel.setToolTipText(rb.getString("TextToolTip"));
 
-        right3.add(memoryButton);
+        top3.add(memoryButton);
         memoryButton.setToolTipText(Bundle.getMessage("MemoryButtonToolTip", Bundle.getMessage("Memory")));
 
-        right3.add(textMemory);
+        top3.add(textMemory);
         textMemory.setToolTipText(rb.getString("MemoryToolTip"));
 
-        right3.add(blockContentsButton);
+        top3.add(blockContentsButton);
         blockContentsButton.setToolTipText(rb.getString("BlockContentsButtonToolTip"));
 
-        right3.add(blockContents);
+        top3.add(blockContents);
         blockContents.setToolTipText(rb.getString("BlockContentsButtonToolTip"));
 
-        if (bordersFlag) {
-            top3.add(right3);
-        }
         topEditBar.add(top3);
 
         // add fourth row of edit tool bar items
         JPanel top4 = new JPanel();
         top4.setLayout(new BoxLayout(top4, BoxLayout.LINE_AXIS));
 
-        JPanel left4 = top4;;
-        if (bordersFlag) {
-            left4 = new JPanel();
-            left4.setBorder(BorderFactory.createEtchedBorder());
-        }
-
         // multi sensor…
-        left4.add(multiSensorButton);
+        top4.add(multiSensorButton);
         multiSensorButton.setToolTipText(rb.getString("MultiSensorToolTip"));
 
         // Signal Mast & text
-        left4.add(signalMastButton);
+        top4.add(signalMastButton);
         signalMastButton.setToolTipText(rb.getString("SignalMastButtonToolTip"));
-        left4.add(nextSignalMast);
+        top4.add(nextSignalMast);
 
-        if (bordersFlag) {
-            top4.add(left4);
-        }
         top4.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
 
-        JPanel right4 = top4;
-        if (bordersFlag) {
-            right4 = new JPanel();
-            right4.setBorder(BorderFactory.createEtchedBorder());
-        }
-
-        right4.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
+        //top4.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
 
         // sensor icon & text
-        right4.add(sensorButton);
+        top4.add(sensorButton);
         sensorButton.setToolTipText(rb.getString("SensorButtonToolTip"));
-        right4.add(nextSensor);
+        top4.add(nextSensor);
         nextSensor.setToolTipText(rb.getString("SensorIconToolTip"));
 
         sensorIconEditor = new MultiIconEditor(4);
@@ -963,9 +803,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         sensorFrame.pack();
 
         // Signal icon & text
-        right4.add(signalButton);
+        top4.add(signalButton);
         signalButton.setToolTipText(rb.getString("SignalButtonToolTip"));
-        right4.add(nextSignalHead);
+        top4.add(nextSignalHead);
         nextSignalHead.setToolTipText(rb.getString("SignalIconToolTip"));
 
         signalIconEditor = new MultiIconEditor(10);
@@ -987,8 +827,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         signalFrame.setVisible(false);
 
         // icon label
-        right4.add(new JLabel("    "));
-        right4.add(iconLabelButton);
+        top4.add(new JLabel("    "));
+        top4.add(iconLabelButton);
         iconLabelButton.setToolTipText(rb.getString("IconLabelToolTip"));
 
         // change icons…
@@ -1008,13 +848,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }
         });
-        right4.add(changeIconsButton);
+        top4.add(changeIconsButton);
         changeIconsButton.setToolTipText(rb.getString("ChangeIconToolTip"));
         changeIconsButton.setEnabled(false);
 
-        if (bordersFlag) {
-            top4.add(right4);
-        }
         top4.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
 
         // ??
@@ -1025,26 +862,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         iconFrame.getContentPane().add(iconEditor);
         iconFrame.pack();
 
-        JPanel locationPane = top4;
-        if (bordersFlag) {
-            locationPane = new JPanel();
-            locationPane.setBorder(BorderFactory.createTitledBorder(rb.getString("Location")));
-        } else {
-            locationPane.add(new JLabel("    " + rb.getString("Location") + ":"));
-        }
+        top4.add(new JLabel("    " + rb.getString("Location") + ":"));
 
         Dimension coordSize = xLabel.getPreferredSize();
         coordSize.width *= 2;
         xLabel.setPreferredSize(coordSize);
         yLabel.setPreferredSize(coordSize);
-        locationPane.add(new JLabel("{x:"));
-        locationPane.add(xLabel);
-        locationPane.add(new JLabel(", y:"));
-        locationPane.add(yLabel);
-        locationPane.add(new JLabel("}  "));
-        if (bordersFlag) {
-            top4.add(locationPane);
-        }
+        top4.add(new JLabel("{x:"));
+        top4.add(xLabel);
+        top4.add(new JLabel(", y:"));
+        top4.add(yLabel);
+        top4.add(new JLabel("}  "));
 
         topEditBar.add(top4);
 
@@ -1064,13 +892,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         super.setTargetPanelSize(width, height);
         setSize(screenDim.width, screenDim.height);
 
-        if (leftToolbarFlag) {
-            topEditBarContainer.setMinimumSize(new Dimension(topEditBarScroll.getPreferredSize().width, screenDim.height));
-            topEditBarContainer.setPreferredSize(new Dimension(topEditBarScroll.getPreferredSize().width, screenDim.height));
-        } else {
-            topEditBarContainer.setMinimumSize(new Dimension(screenDim.width, topEditBarScroll.getPreferredSize().height));
-            topEditBarContainer.setPreferredSize(new Dimension(screenDim.width, topEditBarScroll.getPreferredSize().height));
-        }
+        topEditBarContainer.setMinimumSize(new Dimension(screenDim.width, topEditBarScroll.getPreferredSize().height));
+        topEditBarContainer.setPreferredSize(new Dimension(screenDim.width, topEditBarScroll.getPreferredSize().height));
 
         super.setDefaultToolTip(new ToolTip(null, 0, 0, new Font("SansSerif", Font.PLAIN, 12),
                 Color.black, new Color(215, 225, 255), Color.black));
