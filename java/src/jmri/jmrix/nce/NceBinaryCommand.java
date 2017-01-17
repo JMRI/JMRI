@@ -1,4 +1,3 @@
-// NceBinaryCommand.java
 package jmri.jmrix.nce;
 
 import jmri.NmraPacket;
@@ -464,6 +463,9 @@ public class NceBinaryCommand {
         return retVal;
     }
 
+    static {
+        // do nothing
+    }
+    
     private final static Logger log = LoggerFactory.getLogger(NceBinaryCommand.class.getName());
 }
-/* @(#)NceBinaryCommand.java */
