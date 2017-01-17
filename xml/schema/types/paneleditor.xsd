@@ -52,9 +52,11 @@
         <xs:element name="multisensoricon" type="EditorMultiSensorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="fastclock" type="EditorFastClockIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="locoicon" type="EditorLocoIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="LocoLabel" type="EditorLocoLabelType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="indicatortrackicon" type="EditorIndicatorTrackIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="indicatorturnouticon" type="EditorIndicatorTurnoutIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="PortalIcon" type="EditorPortalIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="LightIcon" type="EditorLightIconType" minOccurs="0" maxOccurs="unbounded" />
             
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>

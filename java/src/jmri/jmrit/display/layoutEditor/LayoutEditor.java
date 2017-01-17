@@ -2511,8 +2511,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     boolean scaleTrack(float xFactor, float yFactor) {
         // loop over all defined turnouts
-        for (int i = 0; i < turnoutList.size(); i++) {
-            LayoutTurnout t = turnoutList.get(i);
+        for (LayoutTurnout t : turnoutList) {
             t.scaleCoords(xFactor, yFactor);
         }
         // loop over all defined level crossings
@@ -2676,9 +2675,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }
             // loop over all defined turnouts
-            for (int i = 0; i < turnoutList.size(); i++) {
-                LayoutTurnout t = turnoutList.get(i);
-
+			for (LayoutTurnout t : turnoutList) {
                 if (t.getVersion() == 2 && ((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
                         || (t.getTurnoutType() == LayoutTurnout.LH_XOVER) || (t.getTurnoutType() == LayoutTurnout.RH_XOVER))) {
                     if (selectRect.contains(t.getCoordsA())) {
@@ -2774,8 +2771,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     c.setLocation(xNew, yNew);
                 }
             }
-            for (int i = 0; i < turnoutList.size(); i++) {
-                LayoutTurnout t = turnoutList.get(i);
+	        for (LayoutTurnout t : turnoutList) {
                 if (t.getVersion() == 2 && ((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
                         || (t.getTurnoutType() == LayoutTurnout.LH_XOVER) || (t.getTurnoutType() == LayoutTurnout.RH_XOVER))) {
                     if (undoRect.contains(t.getCoordsA())) {
@@ -3319,8 +3315,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (allControlling()) {
                     // check if mouse is on a turnout
                     selectedObject = null;
-                    for (int i = 0; i < turnoutList.size(); i++) {
-                        LayoutTurnout t = turnoutList.get(i);
+			        for (LayoutTurnout t : turnoutList) {
                         // check the center point
                         Point2D pt = t.getCoordsCenter();
                         Rectangle2D r = new Rectangle2D.Double(
@@ -3376,16 +3371,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 && (!event.isAltDown()) && (!event.isShiftDown()) && (!event.isControlDown())) {
             // not in edit mode - check if mouse is on a turnout (using wider search range)
             selectedObject = null;
-            for (int i = 0; i < turnoutList.size(); i++) {
-                LayoutTurnout t = turnoutList.get(i);
+	        for (LayoutTurnout t : turnoutList) {
                 // check a rectangle as large as turnout circle, but at least size 4
                 Point2D pt = t.getCoordsCenter();
-                double size = SIZE * turnoutCircleSize;
-                if (size < SIZE2 * 2.0) {
-                    size = SIZE2 * 2.0;
+				double circleRadius = SIZE * turnoutCircleSize;
+                if (circleRadius < SIZE2 * 2.0) {
+                    circleRadius = SIZE2 * 2.0;
                 }
+				double circleDiameter = 2.0 * circleRadius;
                 Rectangle2D r = new Rectangle2D.Double(
-                        pt.getX() - size, pt.getY() - size, size + size, size + size);
+                	pt.getX() - circleRadius, pt.getY() - circleRadius, circleDiameter, circleDiameter);
                 if (r.contains(dLoc)) {
                     // mouse was pressed on this turnout
                     selectedObject = t;
@@ -3479,8 +3474,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
         // check turnouts, if any
-        for (int i = 0; i < turnoutList.size(); i++) {
-            LayoutTurnout t = turnoutList.get(i);
+        for (LayoutTurnout t : turnoutList) {
             if (t != selectedObject) {
                 if (!requireUnconnected) {
                     // check the center point
@@ -4918,8 +4912,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
         // loop over all defined turnouts
-        for (int i = 0; i < turnoutList.size(); i++) {
-            LayoutTurnout t = turnoutList.get(i);
+        for (LayoutTurnout t : turnoutList) {
             if (t.getVersion() == 2 && ((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
                     || (t.getTurnoutType() == LayoutTurnout.LH_XOVER) || (t.getTurnoutType() == LayoutTurnout.RH_XOVER))) {
                 if (selectRect.contains(t.getCoordsA())) {
@@ -9063,58 +9056,59 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void drawTurnoutCircles(Graphics2D g2) {
         // loop over all defined turnouts
-        for (int i = 0; i < turnoutList.size(); i++) {
-            LayoutTurnout t = turnoutList.get(i);
+        for (LayoutTurnout t : turnoutList) {
             if (!(t.getHidden() && !isEditable())) {
                 Point2D pt = t.getCoordsCenter();
-                double size = SIZE * turnoutCircleSize;
+				double circleRadius = SIZE * turnoutCircleSize;
+				double circleDiameter = 2.0 * circleRadius;
                 g2.setColor(turnoutCircleColor != null ? turnoutCircleColor : defaultTrackColor);
                 g2.draw(new Ellipse2D.Double(
-                        pt.getX() - size, pt.getY() - size, size + size, size + size));
+                        pt.getX() - circleRadius, pt.getY() - circleRadius, circleDiameter, circleDiameter));
             }
         }
     }
 
     private void drawTurnoutRects(Graphics2D g2) {
         // loop over all defined turnouts
-        for (int i = 0; i < turnoutList.size(); i++) {
-            LayoutTurnout t = turnoutList.get(i);
+        for (LayoutTurnout t : turnoutList) {
             Point2D pt = t.getCoordsCenter();
             g2.setColor(turnoutCircleColor != null ? turnoutCircleColor : defaultTrackColor);
-            g2.draw(new Ellipse2D.Double(
-                    pt.getX() - SIZE2, pt.getY() - SIZE2, SIZE2 + SIZE2, SIZE2 + SIZE2));
+			double circleRadius = SIZE * turnoutCircleSize;
+			double circleDiameter = 2.0 * circleRadius;
+			g2.draw(new Ellipse2D.Double(
+					pt.getX() - circleRadius, pt.getY() - circleRadius, circleDiameter, circleDiameter));
+
             pt = t.getCoordsA();
-            if (t.getConnectA() == null) {
-                if (t.getTurnoutType() >= LayoutTurnout.DOUBLE_XOVER && t.getTurnoutType() <= LayoutTurnout.LH_XOVER) {
+			if (t.getTurnoutType() >= LayoutTurnout.DOUBLE_XOVER && t.getTurnoutType() <= LayoutTurnout.LH_XOVER) {
+	            if (t.getConnectA() == null) {
                     g2.setColor(Color.magenta);
                 } else {
-                    g2.setColor(Color.red);
-                }
-            } else {
-                if (t.getTurnoutType() >= LayoutTurnout.DOUBLE_XOVER && t.getTurnoutType() <= LayoutTurnout.LH_XOVER) {
                     g2.setColor(Color.blue);
+                }
+			} else {
+	            if (t.getConnectA() == null) {
+                    g2.setColor(Color.red);
                 } else {
                     g2.setColor(Color.green);
                 }
-            }
-            g2.draw(new Rectangle2D.Double(
-                    pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
+			}
+            g2.draw(new Rectangle2D.Double(pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
+
             pt = t.getCoordsB();
             if (t.getConnectB() == null) {
                 g2.setColor(Color.red);
             } else {
                 g2.setColor(Color.green);
             }
-            g2.draw(new Rectangle2D.Double(
-                    pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
+            g2.draw(new Rectangle2D.Double(pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
+
             pt = t.getCoordsC();
             if (t.getConnectC() == null) {
                 g2.setColor(Color.red);
             } else {
                 g2.setColor(Color.green);
             }
-            g2.draw(new Rectangle2D.Double(
-                    pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
+            g2.draw(new Rectangle2D.Double(pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
             if ((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
                     || (t.getTurnoutType() == LayoutTurnout.RH_XOVER)
                     || (t.getTurnoutType() == LayoutTurnout.LH_XOVER)) {
@@ -9124,8 +9118,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 } else {
                     g2.setColor(Color.green);
                 }
-                g2.draw(new Rectangle2D.Double(
-                        pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
+                g2.draw(new Rectangle2D.Double(pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
             }
         }
     }
@@ -9225,8 +9218,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             LayoutSlip x = slipList.get(i);
             Point2D pt = x.getCoordsCenter();
             g2.setColor(defaultTrackColor);
+			double circleRadius = SIZE * turnoutCircleSize;
+			double circleDiameter = 2.0 * circleRadius;
             g2.draw(new Ellipse2D.Double(
-                    pt.getX() - SIZE2, pt.getY() - SIZE2, SIZE2 + SIZE2, SIZE2 + SIZE2));
+            	pt.getX() - circleRadius, pt.getY() - circleRadius, circleDiameter, circleDiameter));
             pt = x.getCoordsA();
             if (x.getConnectA() == null) {
                 g2.setColor(Color.magenta);

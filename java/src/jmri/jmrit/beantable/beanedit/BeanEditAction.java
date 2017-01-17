@@ -219,7 +219,8 @@ abstract class BeanEditAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         if (bean == null) {
-            log.error("No bean set so unable to edit a null bean");  //IN18N
+            // add error dialog TODO
+            log.error("No bean set so unable to edit a null bean");  //NOI18N
             return;
         }
         if (f == null) {
