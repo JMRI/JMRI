@@ -804,7 +804,7 @@ public class SignalGroupSubTableAction {
     private static String SET_TO_CLOSED = InstanceManager.turnoutManagerInstance().getClosedText();
     private static String SET_TO_THROWN = InstanceManager.turnoutManagerInstance().getThrownText();
 
-    private static String[] sensorInputModes = new String[]{"Active", "Inactive"};
+    private static String[] sensorInputModes = new String[]{"Active", "Inactive"}; // TODO I19N
     private static int[] sensorInputModeValues = new int[]{SignalGroup.ONACTIVE, SignalGroup.ONINACTIVE};
 
     private static String[] signalStates = new String[]{rbx.getString("StateSignalHeadDark"), rbx.getString("StateSignalHeadRed"), rbx.getString("StateSignalHeadYellow"), rbx.getString("StateSignalHeadGreen"), rbx.getString("StateSignalHeadLunar")};
@@ -817,7 +817,7 @@ public class SignalGroupSubTableAction {
     private ArrayList<SignalGroupTurnout> _turnoutList;      // array of all Turnouts
     private ArrayList<SignalGroupTurnout> _includedTurnoutList;
 
-    private ArrayList<SignalGroupSensor> _sensorList;        // array of all Sensorsy
+    private ArrayList<SignalGroupSensor> _sensorList;        // array of all Sensors
     private ArrayList<SignalGroupSensor> _includedSensorList;
 
     private abstract class SignalGroupElement {

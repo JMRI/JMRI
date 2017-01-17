@@ -537,45 +537,50 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             _SignalGroupSignalModel = new SignalGroupSignalModel();
             JTable SignalGroupSignalTable = new JTable(_SignalGroupSignalModel);
             TableRowSorter<SignalGroupSignalModel> sgsSorter = new TableRowSorter<>(_SignalGroupSignalModel);
-            sgsSorter.setComparator(SignalGroupSignalModel.SNAME_COLUMN, new SystemNameComparator());
-            RowSorterUtil.setSortOrder(sgsSorter, SignalGroupSignalModel.SNAME_COLUMN, SortOrder.ASCENDING);
+            sgsSorter.setComparator(_SignalGroupSignalModel.SNAME_COLUMN, new SystemNameComparator()); // use instance _SignalGroupSignalModel, not class
+            RowSorterUtil.setSortOrder(sgsSorter, _SignalGroupSignalModel.SNAME_COLUMN, SortOrder.ASCENDING);
             SignalAppearanceTable.setRowSorter(sgsSorter);
             SignalGroupSignalTable.setRowSelectionAllowed(false);
             SignalGroupSignalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 160));
             TableColumnModel SignalGroupSignalColumnModel = SignalGroupSignalTable.getColumnModel();
+
             TableColumn includeColumnSi = SignalGroupSignalColumnModel.
-                    getColumn(SignalGroupSignalModel.INCLUDE_COLUMN);
+                    getColumn(_SignalGroupSignalModel.INCLUDE_COLUMN);
             includeColumnSi.setResizable(false);
             includeColumnSi.setMinWidth(30);
             includeColumnSi.setMaxWidth(60);
+
             TableColumn sNameColumnSi = SignalGroupSignalColumnModel.
-                    getColumn(SignalGroupSignalModel.SNAME_COLUMN);
+                    getColumn(_SignalGroupSignalModel.SNAME_COLUMN);
             sNameColumnSi.setResizable(true);
             sNameColumnSi.setMinWidth(75);
             sNameColumnSi.setMaxWidth(95);
+
             TableColumn uNameColumnSi = SignalGroupSignalColumnModel.
-                    getColumn(SignalGroupSignalModel.UNAME_COLUMN);
+                    getColumn(_SignalGroupSignalModel.UNAME_COLUMN);
             uNameColumnSi.setResizable(true);
             uNameColumnSi.setMinWidth(100);
             uNameColumnSi.setMaxWidth(260);
-            TableColumn stateColumnSi = SignalGroupSignalColumnModel.
-                    getColumn(SignalGroupSignalModel.STATE_ON_COLUMN);
-            stateColumnSi.setResizable(false);
-            stateColumnSi.setMinWidth(50);
-            stateColumnSi.setMaxWidth(100);
+
+            TableColumn stateOnColumnSi = SignalGroupSignalColumnModel.
+                    getColumn(_SignalGroupSignalModel.STATE_ON_COLUMN); // name changed from stateColumnSi to stateOnColumnSi (6 column table)
+            stateOnColumnSi.setResizable(false);
+            stateOnColumnSi.setMinWidth(100); // TODO I18N, was 50
+            stateOnColumnSi.setMaxWidth(100);
 
             TableColumn stateOffColumnSi = SignalGroupSignalColumnModel.
-                    getColumn(SignalGroupSignalModel.STATE_OFF_COLUMN);
+                    getColumn(_SignalGroupSignalModel.STATE_OFF_COLUMN);
             stateOffColumnSi.setResizable(false);
             stateOffColumnSi.setMinWidth(50);
             stateOffColumnSi.setMaxWidth(100);
-            JButton editButton = new JButton(Bundle.getMessage("ButtonEdit"));
+
             TableColumn editColumnSi = SignalGroupSignalColumnModel.
-                    getColumn(SignalGroupSignalModel.EDIT_COLUMN);
+                    getColumn(_SignalGroupSignalModel.EDIT_COLUMN);
             editColumnSi.setResizable(false);
             editColumnSi.setMinWidth(50);
             editColumnSi.setMaxWidth(100);
-            setColumnToHoldButton(SignalGroupSignalTable, SignalGroupSignalModel.EDIT_COLUMN, editButton);
+            JButton editButton = new JButton(Bundle.getMessage("ButtonEdit"));
+            setColumnToHoldButton(SignalGroupSignalTable, _SignalGroupSignalModel.EDIT_COLUMN, editButton);
 
             _SignalGroupSignalScrollPane = new JScrollPane(SignalGroupSignalTable);
             p2xsi.add(_SignalGroupSignalScrollPane, BorderLayout.CENTER);
@@ -1235,13 +1240,13 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
     private static int ROW_HEIGHT;
 
-    private static String[] COLUMN_NAMES = {
+    private static String[] COLUMN_NAMES = { // for class SignalGroupOutputModel
             Bundle.getMessage("ColumnSystemName"),
             Bundle.getMessage("ColumnUserName"),
             Bundle.getMessage("Include"),
             Bundle.getMessage("ColumnLabelSetState")
     };
-    private static String[] COLUMN_SIG_NAMES = {
+    private static String[] COLUMN_SIG_NAMES = { // for class SignalGroupSignalModel
             Bundle.getMessage("ColumnSystemName"),
             Bundle.getMessage("ColumnUserName"),
             Bundle.getMessage("Include"),
@@ -1256,7 +1261,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     private ArrayList<SignalGroupSignal> _signalList;        // array of all single output signal heads
     private ArrayList<SignalGroupSignal> _includedSignalList;
 
-    private ArrayList<SignalMastAppearances> _mastAppearancesList;        // array of all valid aspects of the main signal mast
+    private ArrayList<SignalMastAppearances> _mastAppearancesList;        // array of all valid aspects for the main signal mast
     private ArrayList<SignalMastAppearances> _includedMastAppearancesList;
 
     private static class SignalGroupSignal {
