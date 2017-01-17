@@ -6,15 +6,12 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author	Bob Jacobsen Copyright 2014
  */
 public class AddSignalMastPanelTest {
 
-    private final static Logger log = LoggerFactory.getLogger(AddSignalMastPanelTest.class);
     @Test
     public void testDefaultSystems() {
         AddSignalMastPanel a = new AddSignalMastPanel();
@@ -39,7 +36,6 @@ public class AddSignalMastPanelTest {
             // check that mock (test) system is present
             boolean found = false;
             for (int i = 0; i < a.sigSysBox.getItemCount(); i++) {
-                log.error("Signal System Box has {}", a.sigSysBox.getItemAt(i));
                 if (a.sigSysBox.getItemAt(i).equals(SignalSystemTestUtil.getMockUserName())) {
                     found = true;
                 }
