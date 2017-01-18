@@ -70,7 +70,7 @@ public class DuplexGroupTabbedPanel extends LnPanel {
         tmr.start();
         return;
     }
-    private static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbed");
+    private static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.duplexgroup.swing.DuplexGroupTabbed");
 
     @Override
     public String getHelpTarget() {
