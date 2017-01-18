@@ -21,7 +21,7 @@ public class MaskCompare extends SdfMacro {
     }
 
     public String name() {
-        return "MASK_COMPARE";
+        return "MASK_COMPARE"; // NOI18N
     }
 
     int src;
@@ -37,27 +37,27 @@ public class MaskCompare extends SdfMacro {
     }
 
     String srcVal() {
-        return "(src = " + src + ")";
+        return "(src = " + src + ")"; // NOI18N
     }
 
     String immedVal() {
         if (immed != 0) {
-            return "IMMED_DATA";
+            return "IMMED_DATA"; // NOI18N
         } else {
-            return "TARGET_DATA";
+            return "TARGET_DATA"; // NOI18N
         }
     }
 
     String targVal() {
-        return "(target = " + targ + ")";
+        return "(target = " + targ + ")"; // NOI18N
     }
 
     String maskVal() {
-        return "(mask = " + mask + ")";
+        return "(mask = " + mask + ")"; // NOI18N
     }
 
     String skipVal() {
-        return "(skip = " + skip + ")";
+        return "(skip = " + skip + ")"; // NOI18N
     }
 
     static public SdfMacro match(SdfBuffer buff) {
@@ -86,7 +86,7 @@ public class MaskCompare extends SdfMacro {
     }
 
     public String toString() {
-        return "Check Mask\n";
+        return "Check Mask\n"; // NOI18N
     }
 
     public String oneInstructionString() {

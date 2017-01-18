@@ -20,10 +20,8 @@ import org.slf4j.LoggerFactory;
   */
 public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements LocoNetListener {
 
-    static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.pr3.Pr3Bundle");
-
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.pr3.swing.Pr3Select";
+        return "package.jmri.jmrix.loconet.pr3.swing.Pr3Select"; // NOI18N
     }
 
     public String getTitle() {
@@ -35,7 +33,7 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         // first build GUI
         setLayout(new FlowLayout());
 
-        JButton b = new JButton(res.getString("ButtonPr2Mode"));
+        JButton b = new JButton(Bundle.getMessage("ButtonPr2Mode"));
         b.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 selectPR2mode();
@@ -43,7 +41,7 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         });
         add(b);
 
-        b = new JButton(res.getString("ButtonMs100Mode"));
+        b = new JButton(Bundle.getMessage("ButtonMs100Mode"));
         b.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 selectMS100mode();
@@ -70,11 +68,11 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         memo.getLnTrafficController().sendLocoNetMessage(msg);
     }
 
-    JLabel status = new JLabel(res.getString("StatusUnknown"));
+    JLabel status = new JLabel(Bundle.getMessage("StatusUnknown"));
 
     void selectPR2mode() {
         // set to PR2 mode
-        status.setText(res.getString("StatusPr2"));
+        status.setText(Bundle.getMessage("StatusPr2"));
         LocoNetMessage msg = new LocoNetMessage(6);
         msg.setOpCode(0xD3);
         msg.setElement(1, 0x10);
@@ -86,7 +84,7 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
 
     void selectMS100mode() {
         // set to MS100 mode
-        status.setText(res.getString("StatusMs100"));
+        status.setText(Bundle.getMessage("StatusMs100"));
         LocoNetMessage msg = new LocoNetMessage(6);
         msg.setOpCode(0xD3);
         msg.setElement(1, 0x10);
@@ -105,10 +103,10 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
             int mode = msg.getElement(8) & 0x0C;
             if (mode == 0x00) {
                 // PR2 format
-                status.setText(res.getString("StatusPr2"));
+                status.setText(Bundle.getMessage("StatusPr2"));
             } else {
                 // MS100 format
-                status.setText(res.getString("StatusMs100"));
+                status.setText(Bundle.getMessage("StatusMs100"));
             }
         }
     }

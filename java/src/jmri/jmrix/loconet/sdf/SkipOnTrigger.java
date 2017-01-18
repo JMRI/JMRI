@@ -16,7 +16,7 @@ public class SkipOnTrigger extends SdfMacro {
     }
 
     public String name() {
-        return "SKIP_ON_TRIGGER";
+        return "SKIP_ON_TRIGGER"; // NOI18N
     }
 
     int byte1, byte2;
@@ -37,7 +37,7 @@ public class SkipOnTrigger extends SdfMacro {
         if (trigName != null) {
             return trigName;
         }
-        return "(trigger = 0x" + jmri.util.StringUtil.twoHexFromInt(trigger) + ")";
+        return "(trigger = 0x" + jmri.util.StringUtil.twoHexFromInt(trigger) + ")"; // NOI18N
     }
 
     static public SdfMacro match(SdfBuffer buff) {
@@ -62,11 +62,11 @@ public class SkipOnTrigger extends SdfMacro {
     }
 
     public String toString() {
-        return "Skip on Trigger\n";
+        return "Skip on Trigger\n"; // NOI18N
     }
 
     public String oneInstructionString() {
-        return name() + ' ' + logicVal() + ", " + triggerVal() + '\n';
+        return name() + ' ' + logicVal() + ", " + triggerVal() + '\n'; // NOI18N
     }
 
     public String allInstructionString(String indent) {
