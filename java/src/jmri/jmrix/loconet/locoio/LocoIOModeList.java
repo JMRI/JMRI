@@ -78,7 +78,7 @@ public class LocoIOModeList {
         /**
          * This should go into a JUnit test
          */
-        log.debug("Starting test sequence");
+        log.debug("Starting test sequence"); // NOI18N
         for (int i = 0; i <= modeList.size() - 1; i++) {
             LocoIOMode m = modeList.elementAt(i);
 
@@ -88,8 +88,8 @@ public class LocoIOModeList {
                 int v1A = addressToValue1(m, i);
                 int v2A = addressToValue2(m, i);
 
-                log.debug(m.getFullMode() + "=> Address " + Integer.toHexString(i)
-                        + " encodes into "
+                log.debug(m.getFullMode() + "=> Address " + Integer.toHexString(i) // NOI18N
+                        + " encodes into " // NOI18N
                         + LnConstants.OPC_NAME(m.getOpcode()) + " "
                         + Integer.toHexString(svA) + " "
                         + Integer.toHexString(v1A) + " "
@@ -98,39 +98,39 @@ public class LocoIOModeList {
                 LocoIOMode lim = getLocoIOModeFor(svA, v1A, v2A);
                 if (lim == null) {
                     if (haderror == 0) {
-                        log.error("Testing " + m.getFullMode() + "      ERROR:");
+                        log.error("Testing " + m.getFullMode() + "      ERROR:"); // NOI18N
                     }
                     String err
-                            = "    Could Not find mode for Packet: "
+                            = "    Could Not find mode for Packet: " // NOI18N
                             + Integer.toHexString(svA) + " "
                             + Integer.toHexString(v1A) + " "
-                            + Integer.toHexString(v2A) + " <CHK>\n";
+                            + Integer.toHexString(v2A) + " <CHK>\n"; // NOI18N
                     log.error(err);
                     haderror++;
                 } else {
                     int decodedaddress = valuesToAddress(lim.getOpcode(), svA, v1A, v2A);
                     if ((i) != decodedaddress) {
                         if (haderror == 0) {
-                            log.error("Testing " + m.getFullMode() + "      ERROR:");
+                            log.error("Testing " + m.getFullMode() + "      ERROR:"); // NOI18N
                         }
                         String err
-                                = "    Could Not Match Address: ("
-                                + Integer.toHexString(i - 1) + "=>"
-                                + Integer.toHexString(decodedaddress) + ") from "
+                                = "    Could Not Match Address: (" // NOI18N
+                                + Integer.toHexString(i - 1) + "=>" // NOI18N
+                                + Integer.toHexString(decodedaddress) + ") from " // NOI18N
                                 + LnConstants.OPC_NAME(lim.getOpcode()) + " "
                                 + Integer.toHexString(svA) + " "
                                 + Integer.toHexString(v1A) + " "
-                                + Integer.toHexString(v2A) + "[mask=" + Integer.toHexString(lim.getV2()) + "]\n";
+                                + Integer.toHexString(v2A) + "[mask=" + Integer.toHexString(lim.getV2()) + "]\n"; // NOI18N
                         log.error(err);
                         haderror++;
                     }
                 }
             }
             if (haderror == 0) {
-                log.debug("Testing " + m.getFullMode() + "      **OK**");
+                log.debug("Testing " + m.getFullMode() + "      **OK**"); // NOI18N
             }
         }
-        log.debug("Finished test sequence\n");
+        log.debug("Finished test sequence\n"); // NOI18N
     }
 
     protected String[] getValidModes() {
