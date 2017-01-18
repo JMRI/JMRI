@@ -209,41 +209,40 @@ public class LayoutSlip extends LayoutTurnout {
     /**
      * Toggle slip states if clicked on, physical turnout exists, and not
      * disabled
+     * Slip state progression is BD -> AD -> AC -> [BC*] -> BD (*BC is skipped for Single slip)
      */
     public void toggleState() {
         switch (currentState) {
-            case STATE_AC:
+            case STATE_AC: {
                 if (singleSlipStraightEqual()) {
-                    setTurnoutState(turnoutStates.get(STATE_AD));
-                    currentState = STATE_AD;
-                } else {
                     setTurnoutState(turnoutStates.get(STATE_BD));
                     currentState = STATE_BD;
-                }
-                break;
-            case STATE_BD:
-                setTurnoutState(turnoutStates.get(STATE_AD));
-                currentState = STATE_AD;
-                break;
-            case STATE_AD:
-                if (type == SINGLE_SLIP) {
-                    setTurnoutState(turnoutStates.get(STATE_AC));
-                    currentState = STATE_AC;
                 } else {
                     setTurnoutState(turnoutStates.get(STATE_BC));
                     currentState = STATE_BC;
                 }
                 break;
-            case STATE_BC:
+            }
+
+            case STATE_BD: {
+                setTurnoutState(turnoutStates.get(STATE_AD));
+                currentState = STATE_AD;
+                break;
+            }
+
+            case STATE_AD: {
                 setTurnoutState(turnoutStates.get(STATE_AC));
                 currentState = STATE_AC;
                 break;
-            default:
+            }
+
+            case STATE_BC:
+            default: {
                 setTurnoutState(turnoutStates.get(STATE_BD));
                 currentState = STATE_BD;
                 break;
+            }
         }
-
     }
 
     void setTurnoutState(TurnoutState ts) {
@@ -972,17 +971,21 @@ public class LayoutSlip extends LayoutTurnout {
         int turnAState;
         int turnBState;
         switch (testState) {
-            case STATE_AC:
+            case STATE_AC: {
                 turnAState = turnoutStates.get(STATE_BD).getTestTurnoutAState();
                 turnBState = turnoutStates.get(STATE_BD).getTestTurnoutBState();
                 testState = STATE_BD;
                 break;
-            case STATE_BD:
+            }
+
+            case STATE_BD: {
                 turnAState = turnoutStates.get(STATE_AD).getTestTurnoutAState();
                 turnBState = turnoutStates.get(STATE_AD).getTestTurnoutBState();
                 testState = STATE_AD;
                 break;
-            case STATE_AD:
+            }
+
+            case STATE_AD: {
                 if (type == SINGLE_SLIP) {
                     turnAState = turnoutStates.get(STATE_AC).getTestTurnoutAState();
                     turnBState = turnoutStates.get(STATE_AC).getTestTurnoutBState();
@@ -993,17 +996,21 @@ public class LayoutSlip extends LayoutTurnout {
                     testState = STATE_BC;
                 }
                 break;
-            case STATE_BC:
+            }
+
+            case STATE_BC: {
                 turnAState = turnoutStates.get(STATE_AC).getTestTurnoutAState();
                 turnBState = turnoutStates.get(STATE_AC).getTestTurnoutBState();
                 testState = STATE_AC;
                 break;
-            default:
+            }
+
+            default: {
                 turnAState = turnoutStates.get(STATE_BD).getTestTurnoutAState();
                 turnBState = turnoutStates.get(STATE_BD).getTestTurnoutBState();
                 testState = STATE_BD;
                 break;
-
+            }
         }
         ((Turnout) turnoutAComboBox.getSelectedBean()).setCommandedState(turnAState);
         ((Turnout) turnoutBComboBox.getSelectedBean()).setCommandedState(turnBState);
@@ -1063,9 +1070,8 @@ public class LayoutSlip extends LayoutTurnout {
             // get new block, or null if block has been removed
             blockName = blockNameField.getText().trim();
 
-            try { 
+            try {
                 block = layoutEditor.provideLayoutBlock(blockName);
-
             } catch (IllegalArgumentException ex) {
                 blockName = "";
                 blockNameField.setText("");
