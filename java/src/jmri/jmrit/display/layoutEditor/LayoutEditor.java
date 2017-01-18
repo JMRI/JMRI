@@ -537,21 +537,21 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         || lhXoverButton.isSelected()
                         || layoutSingleSlipButton.isSelected()
                         || layoutDoubleSlipButton.isSelected());
-                log.info("turnoutPropertiesPanel is " + (e ? "enabled" : "disabled"));
+                log.debug("turnoutPropertiesPanel is " + (e ? "enabled" : "disabled"));
                 for (Component i : turnoutPropertiesPanel.getComponents()) {
                     i.setEnabled(e);
                 }
 
                 // second turnout property
                 e = (layoutSingleSlipButton.isSelected() || layoutDoubleSlipButton.isSelected());
-                log.info("extraTurnoutPanel is " + (e ? "enabled" : "disabled"));
+                log.debug("extraTurnoutPanel is " + (e ? "enabled" : "disabled"));
                 for (Component i : extraTurnoutPanel.getComponents()) {
                     i.setEnabled(e);
                 }
 
                 // track Segment properties
                 e = trackButton.isSelected();
-                log.info("trackSegmentPropertiesPanel is " + (e ? "enabled" : "disabled"));
+                log.debug("trackSegmentPropertiesPanel is " + (e ? "enabled" : "disabled"));
                 for (Component i : trackSegmentPropertiesPanel.getComponents()) {
                     i.setEnabled(e);
                 }
@@ -565,7 +565,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         || lhXoverButton.isSelected()
                         || levelXingButton.isSelected()
                         || trackButton.isSelected());
-                log.info("blockPanel is " + (e ? "enabled" : "disabled"));
+                log.debug("blockPanel is " + (e ? "enabled" : "disabled"));
                 for (Component i : blockPanel.getComponents()) {
                     i.setEnabled(e);
                 }
@@ -575,7 +575,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 e = (sensorButton.isSelected()
                         || signalButton.isSelected()
                         || iconLabelButton.isSelected());
-                log.info("changeIconsButton is " + (e ? "enabled" : "disabled"));
+                log.debug("changeIconsButton is " + (e ? "enabled" : "disabled"));
                 changeIconsButton.setEnabled(e);
             }
         };
