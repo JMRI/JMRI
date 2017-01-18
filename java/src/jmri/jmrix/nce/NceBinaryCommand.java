@@ -462,13 +462,6 @@ public class NceBinaryCommand {
 
         return retVal;
     }
-    
-    /**
-     * Private constructor to prevent documentation of a constructor
-     */
-    private NceBinaryCommand() {
-        // do nothing
-    }
 
     private final static Logger log = LoggerFactory.getLogger(NceBinaryCommand.class.getName());
 }
