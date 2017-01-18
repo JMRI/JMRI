@@ -621,11 +621,13 @@
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
       </xs:sequence>
+
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
       <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
       
       <xs:attribute name="reporter" type="beanNameType"></xs:attribute>
+      <xs:attribute name="text" type="xs:string"></xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="EditorMemoryIconType">
