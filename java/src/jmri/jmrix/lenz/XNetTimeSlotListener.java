@@ -7,12 +7,10 @@ import org.slf4j.LoggerFactory;
  * <p>
  * The XNetTimeSlotListener listens for two messages from the computer interface:
  * </p>
- * <p>
  * <ol>
  * <li>"Command Station No Longer Providing a timeslot for communications" (01 05 04)</li>
  * <li>"Command Station is providing a timeslot for communications again." (01 07 06)</li>
  * </ol>
- * </p>
  * <p>
  * when the first message is received, the associated port controller's 
  * setTimeSlot methodis called with a "false" parameter.  When the second 
