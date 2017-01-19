@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
  */
 public class LnPr2Packetizer extends jmri.jmrix.loconet.LnPacketizer {
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "Only used during system initialization")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", // NOI18N
+            justification = "Only used during system initialization") // NOI18N
     public LnPr2Packetizer() {
         super();
         self = this;

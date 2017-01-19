@@ -36,7 +36,7 @@ public class SkemeStart extends SdfMacro {
     }
 
     public String name() {
-        return "SKEME_START";
+        return "SKEME_START"; // NOI18N
     }
 
     public int length() {
@@ -92,11 +92,11 @@ public class SkemeStart extends SdfMacro {
     }
 
     public String toString() {
-        return "Scheme " + number + "\n";
+        return "Scheme " + number + "\n"; // NOI18N
     }
 
     public String oneInstructionString() {
-        return name() + ' ' + number + "; length=" + length + '\n';
+        return name() + ' ' + number + "; length=" + length + '\n'; // NOI18N
     }
 
     public String allInstructionString(String indent) {

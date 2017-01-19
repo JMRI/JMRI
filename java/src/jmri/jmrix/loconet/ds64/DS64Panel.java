@@ -31,7 +31,7 @@ public class DS64Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     public DS64Panel(int boardNum) {
         super(boardNum);
 
-        appendLine(provideAddressing("DS64"));  // add read/write buttons, address
+        appendLine(provideAddressing("DS64"));  // add read/write buttons, address // NOI18N
 
         appendLine(opsw1);
         appendLine(opsw2);
@@ -64,7 +64,7 @@ public class DS64Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.ds64.DS64Frame";
+        return "package.jmri.jmrix.loconet.ds64.DS64Frame"; // NOI18N
     }
 
     public String getTitle() {

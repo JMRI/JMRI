@@ -33,7 +33,7 @@ public class MessagePanel extends jmri.jmrix.loconet.swing.LnPanel {
     }
 
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.swing.throttlemsg.MessageFrame";
+        return "package.jmri.jmrix.loconet.swing.throttlemsg.MessageFrame"; // NOI18N
     }
 
     public String getTitle() {
