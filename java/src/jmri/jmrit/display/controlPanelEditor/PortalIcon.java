@@ -264,11 +264,6 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
 
     private void setRemoveMenu(JPopupMenu popup) {
         popup.add(new AbstractAction(Bundle.getMessage("Remove")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -45993184055488058L;
-
             public void actionPerformed(ActionEvent e) {
                 remove();
             }

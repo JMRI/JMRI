@@ -1,4 +1,3 @@
-// NixieClockAction.java
 package jmri.jmrit.nixieclock;
 
 import java.awt.event.ActionEvent;
@@ -10,11 +9,6 @@ import javax.swing.AbstractAction;
  * @author	Bob Jacobsen Copyright (C) 2004
   */
 public class NixieClockAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5653182277242573672L;
 
     public NixieClockAction() {
         this("Nixie Clock");

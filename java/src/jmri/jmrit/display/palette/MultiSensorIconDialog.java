@@ -1,4 +1,3 @@
-// MultiSensorIconDialog.java
 package jmri.jmrit.display.palette;
 
 import java.awt.FlowLayout;
@@ -19,11 +18,6 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (c) 2010
  */
 public class MultiSensorIconDialog extends IconDialog {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3597269148845925544L;
 
     /**
      * Constructor for existing family to change icons, add/delete icons, or to

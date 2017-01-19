@@ -2318,10 +2318,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     public class ActiveTrainsTableModel extends javax.swing.table.AbstractTableModel implements
             java.beans.PropertyChangeListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -612833010252140557L;
         public static final int TRANSIT_COLUMN = 0;
         public static final int TRAIN_COLUMN = 1;
         public static final int TYPE_COLUMN = 2;
@@ -2450,10 +2446,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     public class AllocationRequestTableModel extends javax.swing.table.AbstractTableModel implements
             java.beans.PropertyChangeListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1425670284957075595L;
         public static final int ACTIVE_COLUMN = 0;
         public static final int PRIORITY_COLUMN = 1;
         public static final int TRAINTYPE_COLUMN = 2;
@@ -2611,10 +2603,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     public class AllocatedSectionTableModel extends javax.swing.table.AbstractTableModel implements
             java.beans.PropertyChangeListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -7179461629851240834L;
         public static final int ACTIVE_COLUMN = 0;
         public static final int SECTION_COLUMN = 1;
         public static final int OCCUPANCY_COLUMN = 2;

@@ -1,6 +1,3 @@
-/**
- * SimpleServerMenu.java
- */
 package jmri.jmris.simpleserver;
 
 import java.util.ResourceBundle;
@@ -13,11 +10,6 @@ import javax.swing.JMenu;
  * @author	Paul Bender Copyright 2009
  */
 public class SimpleServerMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1335915650658048826L;
 
     public SimpleServerMenu(String name) {
         this();

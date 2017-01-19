@@ -78,10 +78,6 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
 
     public class ClockPanel extends JPanel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8721855316541244373L;
         // Create a Panel that has clockface drawn on it scaled to the size of the panel
         // Define common variables
         Image logo;

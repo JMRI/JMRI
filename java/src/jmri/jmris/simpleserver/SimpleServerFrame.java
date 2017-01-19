@@ -1,4 +1,3 @@
-// SimpleServerFrame.java
 package jmri.jmris.simpleserver;
 
 import java.awt.event.ActionEvent;
@@ -13,11 +12,6 @@ import javax.swing.JToggleButton;
  * @author	Paul Bender Copyright (C) 2009
   */
 public class SimpleServerFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8501305524191992037L;
 
     public SimpleServerFrame() {
         this("Jmri Simple Server Starter");
