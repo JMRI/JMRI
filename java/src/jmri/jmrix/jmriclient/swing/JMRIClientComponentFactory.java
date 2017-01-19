@@ -1,4 +1,3 @@
-// JMRIClientComponentFactory.java
 package jmri.jmrix.jmriclient.swing;
 
 import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;

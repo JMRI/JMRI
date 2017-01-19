@@ -1,4 +1,3 @@
-// SerialSensorManager.java
 package jmri.jmrix.maple;
 
 import jmri.JmriException;

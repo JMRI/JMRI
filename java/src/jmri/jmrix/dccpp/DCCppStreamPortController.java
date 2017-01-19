@@ -1,4 +1,3 @@
-// DCCppStreamPortController.java
 package jmri.jmrix.dccpp;
 
 import java.io.DataInputStream;

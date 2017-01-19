@@ -1,4 +1,3 @@
-// DCCppSerialPortController.java
 package jmri.jmrix.dccpp;
 
 import gnu.io.SerialPort;

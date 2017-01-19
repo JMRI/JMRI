@@ -1,4 +1,3 @@
-// NceTurnoutManager.java
 package jmri.jmrix.nce;
 
 import jmri.Turnout;

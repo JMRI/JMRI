@@ -1,4 +1,3 @@
-// InternalSensorManager.java
 package jmri.jmrix.internal;
 
 

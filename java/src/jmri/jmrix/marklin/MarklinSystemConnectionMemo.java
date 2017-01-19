@@ -1,4 +1,3 @@
-// MarklinSystemConnectionMemo.java
 package jmri.jmrix.marklin;
 
 import java.util.ResourceBundle;

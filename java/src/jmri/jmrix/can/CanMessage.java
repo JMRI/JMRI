@@ -1,4 +1,3 @@
-// CanMessage.java
 package jmri.jmrix.can;
 
 import javax.annotation.Nonnull;

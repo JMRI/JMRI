@@ -1,4 +1,3 @@
-// SprogPowerManager.java
 package jmri.jmrix.sprog;
 
 import jmri.JmriException;

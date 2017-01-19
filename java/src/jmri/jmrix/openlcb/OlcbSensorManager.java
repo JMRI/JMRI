@@ -1,4 +1,3 @@
-// OlcbSensorManager.java
 package jmri.jmrix.openlcb;
 
 import jmri.JmriException;

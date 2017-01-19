@@ -1,4 +1,3 @@
-// OlcbConstants.java
 package jmri.jmrix.openlcb;
 
 /**

@@ -1,4 +1,3 @@
-// CanInterface.java
 package jmri.jmrix.can;
 
 /**

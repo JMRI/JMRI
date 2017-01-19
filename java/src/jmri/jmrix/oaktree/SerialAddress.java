@@ -1,4 +1,3 @@
-// SerialAddress.java
 package jmri.jmrix.oaktree;
 
 import org.slf4j.Logger;

@@ -1,4 +1,3 @@
-// CbusComponentFactory.java
 package jmri.jmrix.can.cbus.swing;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;

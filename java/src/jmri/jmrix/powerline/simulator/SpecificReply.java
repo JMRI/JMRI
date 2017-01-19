@@ -1,4 +1,3 @@
-// SpecificReply.java
 package jmri.jmrix.powerline.simulator;
 
 import jmri.jmrix.powerline.SerialTrafficController;

@@ -1,4 +1,3 @@
-// SerialSystemConnectionMemo.java
 package jmri.jmrix.powerline;
 
 import java.util.ResourceBundle;

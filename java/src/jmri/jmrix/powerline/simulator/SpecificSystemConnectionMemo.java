@@ -1,4 +1,3 @@
-// SpecificSystemConnectionMemo.java
 package jmri.jmrix.powerline.simulator;
 
 import jmri.InstanceManager;

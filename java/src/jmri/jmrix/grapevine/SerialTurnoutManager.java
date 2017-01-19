@@ -1,4 +1,3 @@
-// SerialTurnoutManager.java
 package jmri.jmrix.grapevine;
 
 import jmri.JmriException;

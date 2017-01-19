@@ -1,4 +1,3 @@
-// MrcTurnoutManager.java
 package jmri.jmrix.mrc;
 
 import jmri.Turnout;

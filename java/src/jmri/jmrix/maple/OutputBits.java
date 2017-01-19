@@ -1,4 +1,3 @@
-// OutputBits.java
 package jmri.jmrix.maple;
 
 import org.slf4j.Logger;

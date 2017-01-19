@@ -1,4 +1,3 @@
-// Constants.java
 package jmri.jmrix.rps;
 
 /**

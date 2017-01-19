@@ -1,4 +1,3 @@
-// TamsPortController.java
 package jmri.jmrix.tams;
 
 /**

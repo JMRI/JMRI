@@ -1,4 +1,3 @@
-// MrcComponentFactory.java
 package jmri.jmrix.mrc.swing;
 
 import jmri.jmrix.mrc.MrcSystemConnectionMemo;

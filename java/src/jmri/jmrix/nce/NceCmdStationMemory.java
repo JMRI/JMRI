@@ -1,4 +1,3 @@
-// NceCmdStationMemory.java
 package jmri.jmrix.nce;
 
 

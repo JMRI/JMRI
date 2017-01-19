@@ -1,4 +1,3 @@
-// MeasurementListener.java
 package jmri.jmrix.rps;
 
 /**

@@ -1,4 +1,3 @@
-// AutomationManager.java
 package jmri.jmrit.operations.automation;
 
 import java.util.ArrayList;

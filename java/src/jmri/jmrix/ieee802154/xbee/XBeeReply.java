@@ -1,4 +1,3 @@
-// XBeeReply.java
 package jmri.jmrix.ieee802154.xbee;
 
 import com.digi.xbee.api.packet.XBeePacket;

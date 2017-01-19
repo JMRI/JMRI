@@ -1,4 +1,3 @@
-// SerialTurnoutManager.java
 package jmri.jmrix.maple;
 
 import jmri.Turnout;

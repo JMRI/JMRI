@@ -1,4 +1,3 @@
-// IEEE802154PortController.java
 package jmri.jmrix.ieee802154;
 
 /**

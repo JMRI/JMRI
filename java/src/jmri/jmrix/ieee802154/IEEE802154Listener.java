@@ -1,4 +1,3 @@
-// IEEE802154Listener.java
 package jmri.jmrix.ieee802154;
 
 /**

@@ -1,4 +1,3 @@
-// InternalTurnoutManager.java
 package jmri.jmrix.internal;
 
 

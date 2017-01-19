@@ -1,4 +1,3 @@
-// EasyDccNetworkPortController.java
 package jmri.jmrix.easydcc;
 
 import jmri.jmrix.SystemConnectionMemo;

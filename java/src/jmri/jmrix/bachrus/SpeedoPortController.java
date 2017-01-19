@@ -1,4 +1,3 @@
-// SpeedoPortController.java
 package jmri.jmrix.bachrus;
 
 import java.io.DataInputStream;

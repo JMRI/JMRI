@@ -1,4 +1,3 @@
-// MarklinTurnoutManager.java
 package jmri.jmrix.marklin;
 
 import jmri.Turnout;

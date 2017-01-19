@@ -1,4 +1,3 @@
-// SerialReply.java
 package jmri.jmrix.powerline;
 
 import org.slf4j.Logger;

@@ -1,4 +1,3 @@
-// SerialListener.java
 package jmri.jmrix.powerline;
 
 /**

@@ -1,4 +1,3 @@
-// SpeedoListener.java
 package jmri.jmrix.bachrus;
 
 /**

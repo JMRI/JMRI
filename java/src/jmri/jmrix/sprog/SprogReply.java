@@ -1,4 +1,3 @@
-// SprogReply.java
 package jmri.jmrix.sprog;
 
 import jmri.jmrix.AbstractMRReply;

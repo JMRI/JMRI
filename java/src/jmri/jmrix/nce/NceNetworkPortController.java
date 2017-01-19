@@ -1,4 +1,3 @@
-// NceNetworkPortController.java
 package jmri.jmrix.nce;
 
 /*

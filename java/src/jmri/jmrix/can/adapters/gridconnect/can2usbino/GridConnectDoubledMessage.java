@@ -1,4 +1,3 @@
-// GridConnectDoubledMessage.java
 package jmri.jmrix.can.adapters.gridconnect.can2usbino;
 
 import jmri.jmrix.can.CanMessage;

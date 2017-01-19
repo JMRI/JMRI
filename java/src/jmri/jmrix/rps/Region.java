@@ -1,4 +1,3 @@
-// Region.java
 package jmri.jmrix.rps;
 
 import java.awt.Shape;

@@ -1,4 +1,3 @@
-// XpaListener.java
 package jmri.jmrix.xpa;
 
 /**

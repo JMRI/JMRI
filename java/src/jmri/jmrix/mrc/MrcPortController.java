@@ -1,4 +1,3 @@
-// MrcPortController.java
 package jmri.jmrix.mrc;
 
 import java.io.DataInputStream;

@@ -1,4 +1,3 @@
-// SprogPortController.java
 package jmri.jmrix.sprog;
 
 /*

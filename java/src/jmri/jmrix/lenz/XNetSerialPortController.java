@@ -1,4 +1,3 @@
-// XNetSerialPortController.java
 package jmri.jmrix.lenz;
 
 import gnu.io.SerialPort;

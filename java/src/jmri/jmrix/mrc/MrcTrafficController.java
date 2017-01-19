@@ -1,4 +1,3 @@
-// MrcTrafficController.java
 package jmri.jmrix.mrc;
 
 import java.util.Date;

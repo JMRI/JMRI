@@ -1,4 +1,3 @@
-// MarklinListener.java
 package jmri.jmrix.marklin;
 
 /**

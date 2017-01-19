@@ -1,4 +1,3 @@
-// MrcComponentFactory.java
 package jmri.jmrix.zimo.swing;
 
 import jmri.jmrix.zimo.Mx1SystemConnectionMemo;

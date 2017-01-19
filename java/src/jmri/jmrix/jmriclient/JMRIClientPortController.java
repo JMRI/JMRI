@@ -1,4 +1,3 @@
-// JMRIClientPortController.java
 package jmri.jmrix.jmriclient;
 
 /**

@@ -1,4 +1,3 @@
-// RpsReporterManager.java
 package jmri.jmrix.rps;
 
 import jmri.Reporter;

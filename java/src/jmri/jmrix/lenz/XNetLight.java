@@ -1,4 +1,3 @@
-// XNetLight.java
 package jmri.jmrix.lenz;
 
 import jmri.implementation.AbstractLight;

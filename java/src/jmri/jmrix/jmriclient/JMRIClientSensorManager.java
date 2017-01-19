@@ -1,4 +1,3 @@
-// JMRIClientSensorManager.java
 package jmri.jmrix.jmriclient;
 
 import jmri.Sensor;

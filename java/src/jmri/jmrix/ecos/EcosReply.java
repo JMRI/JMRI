@@ -1,4 +1,3 @@
-// EcosReply.java
 package jmri.jmrix.ecos;
 
 import java.util.Arrays;

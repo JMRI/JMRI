@@ -1,4 +1,3 @@
-// MarklinPortController.java
 package jmri.jmrix.marklin;
 
 /*

@@ -1,4 +1,3 @@
-// XBeeListener.java
 package jmri.jmrix.ieee802154.xbee;
 
 /**

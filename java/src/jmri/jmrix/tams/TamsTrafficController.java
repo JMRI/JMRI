@@ -1,4 +1,3 @@
-// TamsTrafficController.java
 package jmri.jmrix.tams;
 
 import java.util.LinkedList;

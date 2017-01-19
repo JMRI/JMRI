@@ -1,4 +1,3 @@
-// MxTurnoutManager.java
 package jmri.jmrix.zimo;
 
 import jmri.Turnout;

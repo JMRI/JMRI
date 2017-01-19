@@ -1,4 +1,3 @@
-// SprogMessage.java
 package jmri.jmrix.sprog;
 
 import jmri.ProgrammingMode;

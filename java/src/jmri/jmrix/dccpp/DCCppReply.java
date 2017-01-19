@@ -1,4 +1,3 @@
-// DCCppReply.java
 package jmri.jmrix.dccpp;
 
 import java.util.ArrayList;

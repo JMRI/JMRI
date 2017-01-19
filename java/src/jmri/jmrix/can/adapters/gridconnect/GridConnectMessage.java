@@ -1,4 +1,3 @@
-// GridConnectMessage.java
 package jmri.jmrix.can.adapters.gridconnect;
 
 import jmri.jmrix.AbstractMRMessage;

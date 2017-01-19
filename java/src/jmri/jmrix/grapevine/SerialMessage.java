@@ -1,4 +1,3 @@
-// SerialMessage.java
 package jmri.jmrix.grapevine;
 
 import jmri.util.StringUtil;

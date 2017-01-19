@@ -1,4 +1,3 @@
-// JMRIClientReply.java
 package jmri.jmrix.jmriclient;
 
 import org.slf4j.Logger;

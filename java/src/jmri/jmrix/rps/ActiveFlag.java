@@ -1,4 +1,3 @@
-// ActiveFlag.java
 package jmri.jmrix.rps;
 
 /**

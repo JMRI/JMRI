@@ -1,4 +1,3 @@
-// XpaPowerManager.java
 package jmri.jmrix.xpa;
 
 import jmri.JmriException;

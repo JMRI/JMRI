@@ -1,4 +1,3 @@
-// EcosMessage.java
 package jmri.jmrix.ecos;
 
 

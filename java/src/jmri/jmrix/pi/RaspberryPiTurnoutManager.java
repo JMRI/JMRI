@@ -1,4 +1,3 @@
-// RaspberryPiTurnoutManager.java
 
 package jmri.jmrix.pi;
 

@@ -1,4 +1,3 @@
-// pricom.pockettester.DataListener.java
 package jmri.jmrix.pricom.pockettester;
 
 /**

@@ -1,4 +1,3 @@
-// SprogProgrammer.java
 package jmri.jmrix.sprog;
 
 import org.slf4j.Logger;

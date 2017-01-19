@@ -1,4 +1,3 @@
-// SerialTurnout.java
 package jmri.jmrix.oaktree;
 
 import jmri.Turnout;

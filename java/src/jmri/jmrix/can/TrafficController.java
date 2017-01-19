@@ -1,4 +1,3 @@
-// TrafficController.java
 package jmri.jmrix.can;
 
 /**

@@ -1,4 +1,3 @@
-// MarklinConstants.java
 package jmri.jmrix.marklin;
 
 /**

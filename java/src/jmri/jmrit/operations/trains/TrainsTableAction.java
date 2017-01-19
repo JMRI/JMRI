@@ -1,4 +1,3 @@
-// TrainsTableAction.java
 package jmri.jmrit.operations.trains;
 
 import java.awt.Frame;

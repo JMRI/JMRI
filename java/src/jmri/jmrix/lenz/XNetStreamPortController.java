@@ -1,4 +1,3 @@
-// XNetStreamPortController.java
 package jmri.jmrix.lenz;
 
 import java.io.DataInputStream;

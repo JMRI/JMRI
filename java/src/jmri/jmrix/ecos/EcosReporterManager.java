@@ -1,4 +1,3 @@
-// EcosReporterManager.java
 package jmri.jmrix.ecos;
 
 import jmri.Reporter;

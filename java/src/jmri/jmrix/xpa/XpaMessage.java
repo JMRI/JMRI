@@ -1,4 +1,3 @@
-// XpaMessage.java
 package jmri.jmrix.xpa;
 
 import org.slf4j.Logger;

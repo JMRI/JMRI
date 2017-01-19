@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.sprog.pi.pisprogonecs;
 
 import jmri.util.SystemType;

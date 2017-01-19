@@ -1,4 +1,3 @@
-// XBeeConnectionMemo.java
 package jmri.jmrix.ieee802154.xbee;
 
 import java.util.ResourceBundle;

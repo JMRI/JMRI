@@ -1,4 +1,3 @@
-// EasyDccPortController.java
 package jmri.jmrix.easydcc;
 
 import java.io.DataInputStream;

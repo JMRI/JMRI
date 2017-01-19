@@ -1,4 +1,3 @@
-// Bundle.java
 package jmri.server.json.signalMast;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;

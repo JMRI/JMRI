@@ -1,4 +1,3 @@
-// CbusLightManagerXml.java
 package jmri.jmrix.can.cbus.configurexml;
 
 import org.jdom2.Element;

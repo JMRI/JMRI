@@ -1,4 +1,3 @@
-// OlcbTurnoutManager.java
 package jmri.jmrix.openlcb;
 
 import org.openlcb.OlcbInterface;

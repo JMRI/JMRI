@@ -1,4 +1,3 @@
-// SpecificMessage.java
 package jmri.jmrix.powerline.insteon2412s;
 
 import jmri.jmrix.powerline.SerialMessage;

@@ -1,4 +1,3 @@
-// MrcInterface.java
 package jmri.jmrix.mrc;
 
 /**

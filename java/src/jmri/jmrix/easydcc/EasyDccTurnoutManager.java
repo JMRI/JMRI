@@ -1,4 +1,3 @@
-// EasyDccTurnoutManager.java
 package jmri.jmrix.easydcc;
 
 import jmri.Turnout;

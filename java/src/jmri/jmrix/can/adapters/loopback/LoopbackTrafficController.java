@@ -1,4 +1,3 @@
-// LoopbackTrafficController.java
 package jmri.jmrix.can.adapters.loopback;
 
 import jmri.jmrix.AbstractMRListener;

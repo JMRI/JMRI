@@ -1,4 +1,3 @@
-// Port.java
 package jmri.jmrix.can.adapters.loopback;
 
 import java.io.DataInputStream;

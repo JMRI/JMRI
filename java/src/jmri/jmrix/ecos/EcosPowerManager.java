@@ -1,4 +1,3 @@
-// EcosPowerManager.java
 package jmri.jmrix.ecos;
 
 import jmri.JmriException;

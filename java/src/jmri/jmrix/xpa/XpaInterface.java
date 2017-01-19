@@ -1,4 +1,3 @@
-// XpaInterface.java
 package jmri.jmrix.xpa;
 
 /**

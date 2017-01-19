@@ -1,4 +1,3 @@
-// EasyDccListener.java
 package jmri.jmrix.easydcc;
 
 /**

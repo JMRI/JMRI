@@ -1,4 +1,3 @@
-// TrainLoadOptionsAction.java
 package jmri.jmrit.operations.trains;
 
 import java.awt.event.ActionEvent;

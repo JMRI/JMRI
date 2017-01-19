@@ -1,4 +1,3 @@
-// RpsBlock.java
 package jmri.jmrix.rps;
 
 import java.util.List;

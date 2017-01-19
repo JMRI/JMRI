@@ -1,4 +1,3 @@
-// NmraNetComponentFactory.java
 package jmri.jmrix.can.nmranet.swing;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;

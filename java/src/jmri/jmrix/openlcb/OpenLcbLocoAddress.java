@@ -1,4 +1,3 @@
-// OpenLcbLocoAddress.java
 package jmri.jmrix.openlcb;
 
 import jmri.DccLocoAddress;

@@ -1,4 +1,3 @@
-// SerialPortController.java
 package jmri.jmrix.powerline;
 
 /**

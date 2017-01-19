@@ -1,4 +1,3 @@
-// SerialPortController.java
 package jmri.jmrix.secsi;
 
 import jmri.jmrix.SystemConnectionMemo;

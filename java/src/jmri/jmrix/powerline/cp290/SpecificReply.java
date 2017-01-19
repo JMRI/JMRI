@@ -1,4 +1,3 @@
-// SpecificReply.java
 package jmri.jmrix.powerline.cp290;
 
 import jmri.jmrix.powerline.SerialReply;

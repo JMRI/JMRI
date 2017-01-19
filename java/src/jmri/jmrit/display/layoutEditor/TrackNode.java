@@ -1,4 +1,3 @@
-// TrackNode.java
 package jmri.jmrit.display.layoutEditor;
 
 import jmri.Block;

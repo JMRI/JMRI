@@ -1,4 +1,3 @@
-// MarklinMessage.java
 package jmri.jmrix.marklin;
 
 

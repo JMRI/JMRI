@@ -1,4 +1,3 @@
-// Mx1Listener.java
 package jmri.jmrix.zimo;
 
 /**

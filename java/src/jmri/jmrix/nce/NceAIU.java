@@ -1,4 +1,3 @@
-// NceAIU.java
 package jmri.jmrix.nce;
 
 import jmri.JmriException;

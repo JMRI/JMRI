@@ -1,4 +1,3 @@
-// CanConstants.java
 package jmri.jmrix.can;
 
 /**

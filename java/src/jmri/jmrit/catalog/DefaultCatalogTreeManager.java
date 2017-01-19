@@ -1,4 +1,3 @@
-// DefaultCatalogTreeManager.java
 package jmri.jmrit.catalog;
 
 import jmri.CatalogTree;

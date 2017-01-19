@@ -1,4 +1,3 @@
-// EasyDccReply.java
 package jmri.jmrix.easydcc;
 
 import org.slf4j.Logger;

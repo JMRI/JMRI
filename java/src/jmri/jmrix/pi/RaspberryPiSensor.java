@@ -1,4 +1,3 @@
-// RaspberryPiSensor.java
 
 package jmri.jmrix.pi;
 

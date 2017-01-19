@@ -1,4 +1,3 @@
-// JMRIClientMessage.java
 package jmri.jmrix.jmriclient;
 
 

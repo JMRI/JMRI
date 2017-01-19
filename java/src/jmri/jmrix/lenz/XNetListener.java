@@ -1,4 +1,3 @@
-// XNetListener.java
 package jmri.jmrix.lenz;
 
 /**

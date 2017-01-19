@@ -1,4 +1,3 @@
-// QsiListener.java
 package jmri.jmrix.qsi;
 
 /**

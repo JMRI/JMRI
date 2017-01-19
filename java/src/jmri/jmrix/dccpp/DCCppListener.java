@@ -1,4 +1,3 @@
-// DCCppListener.java
 package jmri.jmrix.dccpp;
 
 /**

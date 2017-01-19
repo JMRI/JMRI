@@ -1,4 +1,3 @@
-// NceBinaryCommand.java
 package jmri.jmrix.nce;
 
 import jmri.NmraPacket;

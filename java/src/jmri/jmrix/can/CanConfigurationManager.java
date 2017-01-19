@@ -1,4 +1,3 @@
-// ConfigurationManager.java
 package jmri.jmrix.can;
 
 import java.util.ResourceBundle;

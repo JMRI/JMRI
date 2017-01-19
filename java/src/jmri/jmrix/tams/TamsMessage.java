@@ -1,4 +1,3 @@
-// TamsMessage.java
 package jmri.jmrix.tams;
 
 import org.slf4j.Logger;

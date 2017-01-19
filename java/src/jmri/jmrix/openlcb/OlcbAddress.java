@@ -1,4 +1,3 @@
-// OlcbAddress.java
 package jmri.jmrix.openlcb;
 
 import java.util.regex.Matcher;

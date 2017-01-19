@@ -1,4 +1,3 @@
-// PortController.java
 package jmri.jmrix.can.adapters.lawicell;
 
 import java.io.DataInputStream;

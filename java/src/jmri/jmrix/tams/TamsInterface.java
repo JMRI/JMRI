@@ -1,4 +1,3 @@
-// TamsInterface.java
 package jmri.jmrix.tams;
 
 /**

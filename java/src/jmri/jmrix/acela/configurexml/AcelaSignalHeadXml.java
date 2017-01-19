@@ -1,4 +1,3 @@
-// AcelaSignalHeadXml.java
 package jmri.jmrix.acela.configurexml;
 
 import jmri.InstanceManager;

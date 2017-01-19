@@ -1,4 +1,3 @@
-// TamsPowerManager.java
 package jmri.jmrix.tams;
 
 import jmri.JmriException;

@@ -1,4 +1,3 @@
-// Distributor.java
 package jmri.jmrix.rps;
 
 import java.util.Vector;

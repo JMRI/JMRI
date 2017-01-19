@@ -1,4 +1,3 @@
-// NceInterface.java
 package jmri.jmrix.nce;
 
 /**

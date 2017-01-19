@@ -1,4 +1,3 @@
-// XNetPortController.java
 package jmri.jmrix.lenz;
 
 /**

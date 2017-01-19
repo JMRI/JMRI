@@ -1,4 +1,3 @@
-// Mx1SystemConnectionMemo.javaf
 package jmri.jmrix.zimo;
 
 import java.util.ResourceBundle;

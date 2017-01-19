@@ -1,4 +1,3 @@
-// WebServerAction.java
 package jmri.web.server;
 
 import java.awt.event.ActionEvent;

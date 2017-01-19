@@ -1,4 +1,3 @@
-// SerialReply.java
 package jmri.jmrix.grapevine;
 
 import org.slf4j.Logger;

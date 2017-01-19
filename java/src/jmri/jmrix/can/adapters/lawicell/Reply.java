@@ -1,4 +1,3 @@
-// Reply.java
 package jmri.jmrix.can.adapters.lawicell;
 
 import jmri.jmrix.AbstractMRReply;

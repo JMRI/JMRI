@@ -1,4 +1,3 @@
-// QsiPortController.java
 package jmri.jmrix.qsi;
 
 /**

@@ -1,4 +1,3 @@
-// OlcbConfigurationManager.java
 package jmri.jmrix.openlcb;
 
 import java.net.InetAddress;

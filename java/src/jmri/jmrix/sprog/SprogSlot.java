@@ -1,4 +1,3 @@
-// SprogSlot.java
 package jmri.jmrix.sprog;
 
 import java.util.Arrays;

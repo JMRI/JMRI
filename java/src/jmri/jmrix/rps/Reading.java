@@ -1,4 +1,3 @@
-// Reading.java
 package jmri.jmrix.rps;
 
 

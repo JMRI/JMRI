@@ -1,4 +1,3 @@
-// XNetComponentFactory.java
 package jmri.jmrix.lenz.swing;
 
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;

@@ -1,4 +1,3 @@
-// SpecificMessage.java
 package jmri.jmrix.powerline.simulator;
 
 import jmri.jmrix.powerline.SerialMessage;

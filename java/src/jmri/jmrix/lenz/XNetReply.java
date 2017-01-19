@@ -1,4 +1,3 @@
-// XNetReply.java
 package jmri.jmrix.lenz;
 
 

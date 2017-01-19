@@ -1,4 +1,3 @@
-// SerialNode.java
 package jmri.jmrix.secsi;
 
 import jmri.JmriException;

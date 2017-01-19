@@ -1,4 +1,3 @@
-// GcTrafficController.java
 package jmri.jmrix.can.adapters.gridconnect;
 
 import java.io.DataInputStream;

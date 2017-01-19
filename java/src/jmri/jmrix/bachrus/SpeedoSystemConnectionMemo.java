@@ -1,4 +1,3 @@
-// SpeedoSystemConnectionMemo.java
 package jmri.jmrix.bachrus;
 
 import java.util.ResourceBundle;

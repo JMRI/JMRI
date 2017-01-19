@@ -1,4 +1,3 @@
-// SerialTrafficController.java
 package jmri.jmrix.powerline;
 
 import jmri.jmrix.AbstractMRListener;

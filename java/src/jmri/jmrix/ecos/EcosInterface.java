@@ -1,4 +1,3 @@
-// EcosInterface.java
 package jmri.jmrix.ecos;
 
 /**

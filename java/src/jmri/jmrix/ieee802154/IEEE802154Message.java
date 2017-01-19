@@ -1,4 +1,3 @@
-// IEEE802154Message.java
 package jmri.jmrix.ieee802154;
 
 /**

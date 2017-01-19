@@ -1,4 +1,3 @@
-// XpaPortController.java
 package jmri.jmrix.xpa;
 
 import jmri.jmrix.SystemConnectionMemo;

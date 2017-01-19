@@ -1,4 +1,3 @@
-// SerialReply.java
 package jmri.jmrix.maple;
 
 

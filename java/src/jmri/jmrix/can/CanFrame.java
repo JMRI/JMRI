@@ -1,4 +1,3 @@
-// CanFrame.java
 package jmri.jmrix.can;
 
 /**

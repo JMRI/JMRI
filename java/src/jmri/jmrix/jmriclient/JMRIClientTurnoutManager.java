@@ -1,4 +1,3 @@
-// JMRIClientTurnoutManager.java
 package jmri.jmrix.jmriclient;
 
 import jmri.Turnout;

@@ -1,4 +1,3 @@
-// SensorManager.java
 package jmri.jmrix.rps;
 
 import jmri.Sensor;

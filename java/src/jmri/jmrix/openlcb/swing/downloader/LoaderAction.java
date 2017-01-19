@@ -1,4 +1,3 @@
-// LoaderAction.java
 package jmri.jmrix.openlcb.swing.downloader;
 
 /**

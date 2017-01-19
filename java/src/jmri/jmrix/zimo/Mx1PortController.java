@@ -1,4 +1,3 @@
-// Mx1PortController.java
 package jmri.jmrix.zimo;
 
 /**

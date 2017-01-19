@@ -1,4 +1,3 @@
-// SprogListener.java
 package jmri.jmrix.sprog;
 
 /**

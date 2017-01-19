@@ -1,4 +1,3 @@
-// SetupExcelProgramSwitchListFrame.java
 package jmri.jmrit.operations.trains.excel;
 
 import java.io.File;

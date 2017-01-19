@@ -1,4 +1,3 @@
-// IEEE802154ComponentFactory.java
 package jmri.jmrix.ieee802154.swing;
 
 import jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo;

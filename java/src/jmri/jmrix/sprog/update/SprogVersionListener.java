@@ -1,4 +1,3 @@
-// SprogVersionListener.java
 package jmri.jmrix.sprog.update;
 
 /**

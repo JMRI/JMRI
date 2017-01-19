@@ -1,4 +1,3 @@
-// JMRIClientPowerManager.java
 package jmri.jmrix.jmriclient;
 
 import jmri.JmriException;

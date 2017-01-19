@@ -1,4 +1,3 @@
-// Bundle.java
 package jmri.jmrit.operations.locations.schedules;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;

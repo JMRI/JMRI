@@ -1,4 +1,3 @@
-// JMRIClientReporter.java
 package jmri.jmrix.jmriclient;
 
 import jmri.implementation.AbstractReporter;

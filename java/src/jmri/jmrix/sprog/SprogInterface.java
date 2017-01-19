@@ -1,4 +1,3 @@
-// SprogInterface.java
 package jmri.jmrix.sprog;
 
 /**

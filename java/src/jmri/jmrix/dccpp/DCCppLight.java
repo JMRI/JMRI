@@ -1,4 +1,3 @@
-// DCCppLight.java
 package jmri.jmrix.dccpp;
 
 import jmri.implementation.AbstractLight;

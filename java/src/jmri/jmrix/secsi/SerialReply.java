@@ -1,4 +1,3 @@
-// SerialReply.java
 package jmri.jmrix.secsi;
 
 import org.slf4j.Logger;
