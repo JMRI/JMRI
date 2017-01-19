@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides the mechanisms for storing an entire layout configuration to XML.
- * "Layout" refers to the hardware: Specific communcation systems, etc.
+ * "Layout" refers to the hardware: Specific communication systems, etc.
  *
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen Copyright (c) 2002, 2008
@@ -75,6 +75,18 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         }
     }
 
+    /**
+    * Handles classes who's location has migrated,
+    * e.g. so that it's now in a different package.
+    */
+    static public String currentClassName(String name) {
+        if (! classMigrationBundle.containsKey(name)) return name;
+        String migratedName = classMigrationBundle.getString(name);
+        log.debug("Using migrated class name {} for {}", migratedName, name);
+        return migratedName;
+    }
+    static java.util.ResourceBundle classMigrationBundle = java.util.ResourceBundle.getBundle("jmri.configurexml.ClassMigration");
+    
     /**
      * Remove the registered preference items. This is used e.g. when a GUI
      * wants to replace the preferences with new values.
@@ -616,6 +628,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 if (log.isDebugEnabled()) {
                     log.debug("attempt to get adapter {} for {}", adapterName, item);
                 }
+                adapterName = currentClassName(adapterName);
                 XmlAdapter adapter = null;
 
                 adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
@@ -634,6 +647,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             for (int i = 0; i < l.size(); i++) {
                 Element item = l.get(i).getKey();
                 String adapterName = item.getAttribute("class").getValue();
+                adapterName = currentClassName(adapterName);
                 if (log.isDebugEnabled()) {
                     log.debug("load " + item + " via " + adapterName);
                 }

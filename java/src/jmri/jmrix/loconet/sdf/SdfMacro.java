@@ -200,7 +200,7 @@ public abstract class SdfMacro implements SdfConstants {
     String decodeFlags(int input, int[] values, int[] masks, String[] labels) {
         String[] names = jmri.util.StringUtil.getNamesFromStateMasked(input, values, masks, labels);
         if (names == null) {
-            return "<ERROR>"; // unexpected case, internal error, should also log?
+            return "<ERROR>"; // unexpected case, internal error, should also log? // NOI18N
         } else if (names.length == 0) {
             return labels[labels.length - 1];  // last name is non-of-above special case
         } else if (names.length == 1) {

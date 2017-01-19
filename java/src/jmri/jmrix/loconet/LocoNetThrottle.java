@@ -262,7 +262,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             mRefreshTimer.start();
         }
         if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting); // NOI18N
         }
         record(speed);
     }
@@ -277,7 +277,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         log.debug("setIsForward to {}, old value {}", isForward, old);
         sendFunctionGroup1();
         if (old != this.isForward) {
-            notifyPropertyChangeListener("IsForward", old, this.isForward);
+            notifyPropertyChangeListener("IsForward", old, this.isForward); // NOI18N
         }
     }
 
@@ -355,8 +355,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         // handle change in each state
         if (this.speedSetting != floatSpeed(slot.speed())) {
             Float newSpeed = Float.valueOf(floatSpeed(slot.speed()));
-            log.debug("notifyChangedSlot: old speed: " + this.speedSetting + " new Speed: " + newSpeed);
-            notifyPropertyChangeListener("SpeedSetting", Float.valueOf(this.speedSetting), newSpeed);
+            log.debug("notifyChangedSlot: old speed: " + this.speedSetting + " new Speed: " + newSpeed); // NOI18N
+            notifyPropertyChangeListener("SpeedSetting", Float.valueOf(this.speedSetting), newSpeed); // NOI18N
             this.speedSetting = newSpeed.floatValue();
         }
 
@@ -364,17 +364,17 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         if (this.isForward != slot.isForward()) {
             temp = this.isForward;
             this.isForward = slot.isForward();
-            notifyPropertyChangeListener("IsForward", Boolean.valueOf(temp), Boolean.valueOf(slot.isForward()));
+            notifyPropertyChangeListener("IsForward", Boolean.valueOf(temp), Boolean.valueOf(slot.isForward())); // NOI18N
         }
 
         // Slot status        
         if (slotStatus != slot.slotStatus()) {
             int newStat = slot.slotStatus();
             if (log.isDebugEnabled()) {
-                log.debug("Slot status changed from " + LnConstants.LOCO_STAT(slotStatus) + " to " + LnConstants.LOCO_STAT(newStat));
+                log.debug("Slot status changed from " + LnConstants.LOCO_STAT(slotStatus) + " to " + LnConstants.LOCO_STAT(newStat)); // NOI18N
             }
             // PropertyChangeListeners notification: ThrottleConnected from True to False when disconnected
-            notifyPropertyChangeListener("ThrottleConnected", (slotStatus & LnConstants.LOCOSTAT_MASK) == LnConstants.LOCO_IN_USE,
+            notifyPropertyChangeListener("ThrottleConnected", (slotStatus & LnConstants.LOCOSTAT_MASK) == LnConstants.LOCO_IN_USE, // NOI18N
                     !((slotStatus & LnConstants.LOCOSTAT_MASK) == LnConstants.LOCO_IN_USE));
             slotStatus = newStat;
         }
@@ -550,17 +550,17 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setSpeedStepMode(int Mode) {
         int status = slot.slotStatus();
         if (log.isDebugEnabled()) {
-            log.debug("Speed Step Mode Change to Mode: " + Mode
-                    + " Current mode is: " + this.speedStepMode);
-            log.debug("Current Slot Mode: " + LnConstants.DEC_MODE(status));
+            log.debug("Speed Step Mode Change to Mode: " + Mode // NOI18N
+                    + " Current mode is: " + this.speedStepMode); // NOI18N
+            log.debug("Current Slot Mode: " + LnConstants.DEC_MODE(status)); // NOI18N
         }
         if (speedStepMode != Mode) {
-            notifyPropertyChangeListener("SpeedSteps", this.speedStepMode,
+            notifyPropertyChangeListener("SpeedSteps", this.speedStepMode, // NOI18N
                     this.speedStepMode = Mode);
         }
         if (Mode == DccThrottle.SpeedStepMode14) {
             speedIncrement = SPEED_STEP_14_INCREMENT;
-            log.debug("14 speed step change");
+            log.debug("14 speed step change"); // NOI18N
             status = status & ((~LnConstants.DEC_MODE_MASK)
                     | LnConstants.STAT1_SL_SPDEX)
                     | LnConstants.DEC_MODE_14;

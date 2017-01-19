@@ -168,15 +168,7 @@
       <xs:attribute name="redBorder" type="xs:int"></xs:attribute>
       <xs:attribute name="greenBorder" type="xs:int"></xs:attribute>
       <xs:attribute name="blueBorder" type="xs:int"></xs:attribute>
-      <xs:attribute name="justification" default="left">
-        <xs:simpleType>
-          <xs:restriction base="xs:token">
-            <xs:enumeration value="left"></xs:enumeration>
-            <xs:enumeration value="centre"></xs:enumeration>
-            <xs:enumeration value="right"></xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:attribute>
+      <xs:attribute name="justification" default="left" type="JustificationType"/>
       <xs:attribute name="orientation" default="horizontal">
         <xs:simpleType>
           <xs:restriction base="xs:token">
@@ -220,8 +212,7 @@
       <xs:attribute name="connect1name" type="xs:string"></xs:attribute>
       <xs:attribute name="connect2name" type="xs:string"></xs:attribute>
       <xs:attribute name="linkedpanel" type="xs:string"></xs:attribute>
-      <xs:attribute name="
-pointid" type="xs:string"></xs:attribute>
+      <xs:attribute name="linkpointid" type="xs:string"></xs:attribute>
       <xs:attribute name="eastboundsignal" type="xs:string"></xs:attribute>
       <xs:attribute name="westboundsignal" type="xs:string"></xs:attribute>
       <xs:attribute name="eastboundsignalmast" type="xs:string"></xs:attribute>
@@ -499,15 +490,7 @@ pointid" type="xs:string"></xs:attribute>
       <xs:attribute name="selectable" type="xs:string"></xs:attribute>
       <xs:attribute name="defaulticon" type="xs:string"></xs:attribute>
       
-      <xs:attribute name="justification" default="left">
-        <xs:simpleType>
-          <xs:restriction base="xs:token">
-            <xs:enumeration value="left"></xs:enumeration>
-            <xs:enumeration value="centre"></xs:enumeration>
-            <xs:enumeration value="right"></xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:attribute>
+      <xs:attribute name="justification" default="left" type="JustificationType"/>
       <xs:attribute name="orientation" default="horizontal">
         <xs:simpleType>
           <xs:restriction base="xs:token">
@@ -664,6 +647,9 @@ pointid" type="xs:string"></xs:attribute>
         </xs:appinfo>
       </xs:annotation>
 
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+      </xs:sequence>
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
 
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
@@ -683,15 +669,11 @@ pointid" type="xs:string"></xs:attribute>
       <xs:attribute name="width" type="xs:integer">
         <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
       </xs:attribute>
-      <xs:attribute name="justification" default="left">
-        <xs:simpleType>
-          <xs:restriction base="xs:token">
-            <xs:enumeration value="left"></xs:enumeration>
-            <xs:enumeration value="centre"></xs:enumeration>
-            <xs:enumeration value="right"></xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:attribute>
+      <xs:attribute name="hasBackground" type="yesNoType"></xs:attribute>
+      <xs:attribute name="redBack" type="xs:int"></xs:attribute>
+      <xs:attribute name="greenBack" type="xs:int"></xs:attribute>
+      <xs:attribute name="blueBack" type="xs:int"></xs:attribute>
+      <xs:attribute name="justification" default="left" type="JustificationType"/>
 
     </xs:complexType>
 
@@ -743,15 +725,7 @@ pointid" type="xs:string"></xs:attribute>
       <xs:attribute name="greenBorder" type="xs:int"></xs:attribute>
       <xs:attribute name="blueBorder" type="xs:int"></xs:attribute>
       <xs:attribute name="colWidth" type="xs:int"></xs:attribute>
-      <xs:attribute name="justification" default="left">
-        <xs:simpleType>
-          <xs:restriction base="xs:token">
-            <xs:enumeration value="left"></xs:enumeration>
-            <xs:enumeration value="centre"></xs:enumeration>
-            <xs:enumeration value="right"></xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:attribute>
+      <xs:attribute name="justification" default="left" type="JustificationType"/>
       <xs:attribute name="orientation" default="horizontal">
         <xs:simpleType>
           <xs:restriction base="xs:token">
@@ -798,15 +772,7 @@ pointid" type="xs:string"></xs:attribute>
 
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
       <xs:attribute name="memory" type="beanNameType"></xs:attribute>
-      <xs:attribute name="justification" default="left">
-        <xs:simpleType>
-          <xs:restriction base="xs:token">
-            <xs:enumeration value="left"></xs:enumeration>
-            <xs:enumeration value="centre"></xs:enumeration>
-            <xs:enumeration value="right"></xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:attribute>
+      <xs:attribute name="justification" default="left" type="JustificationType"/>
       <xs:attribute name="colWidth" type="xs:string"></xs:attribute>
       <xs:attribute name="size" type="xs:int"></xs:attribute>
       <xs:attribute name="style" type="xs:int"></xs:attribute>
@@ -1340,19 +1306,42 @@ pointid" type="xs:string"></xs:attribute>
       <xs:attribute name="green" type="xs:unsignedByte"></xs:attribute>
       <xs:attribute name="blue" type="xs:unsignedByte"></xs:attribute>
       <xs:attribute name="hasBackground" type="xs:string"></xs:attribute>
-      <xs:attribute name="justification" default="left">
-        <xs:simpleType>
-          <xs:restriction base="xs:token">
-            <xs:enumeration value="left"></xs:enumeration>
-            <xs:enumeration value="centre"></xs:enumeration>
-            <xs:enumeration value="right"></xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:attribute>
+      <xs:attribute name="justification" default="left" type="JustificationType"/>
       <xs:attribute name="rosterentry" type="xs:string"></xs:attribute>
       <xs:attribute name="degrees" type="xs:string"></xs:attribute>
-
     </xs:complexType>
+
+    <xs:complexType name="EditorLocoLabelType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing a LocoLabel shape
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.controlPanelEditor.shape.configurexml.LocoLabelXML??
+        </xs:appinfo>
+      </xs:annotation>
+        <xs:all>
+        <xs:element name="OBlock" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:attribute name="systemName" type="xs:string"></xs:attribute>
+            <xs:attribute name="trainName" type="xs:string"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="size" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:attribute name="width" type="xs:int"></xs:attribute>
+            <xs:attribute name="height" type="xs:int"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="lineColor" type="ShapeColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="fillColor" type="ShapeColorType" minOccurs="0" maxOccurs="1"></xs:element>
+      </xs:all>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="ShapeCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+    </xs:complexType>
+
     <xs:complexType name="EditorBlockContentsIconType">
       <xs:annotation>
         <xs:documentation>
@@ -1380,16 +1369,7 @@ pointid" type="xs:string"></xs:attribute>
       <xs:attribute name="redBack" type="xs:int"></xs:attribute>
       <xs:attribute name="greenBack" type="xs:int"></xs:attribute>
       <xs:attribute name="blueBack" type="xs:int"></xs:attribute>
-      <xs:attribute name="justification" default="left">
-      
-        <xs:simpleType>
-          <xs:restriction base="xs:token">
-            <xs:enumeration value="left"></xs:enumeration>
-            <xs:enumeration value="centre"></xs:enumeration>
-            <xs:enumeration value="right"></xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:attribute>
+      <xs:attribute name="justification" default="left" type="JustificationType"/>
       <xs:attribute name="orientation" default="horizontal">
         <xs:simpleType>
           <xs:restriction base="xs:token">
@@ -1568,15 +1548,7 @@ pointid" type="xs:string"></xs:attribute>
       <xs:attribute name="redBorder" type="xs:int"></xs:attribute>
       <xs:attribute name="greenBorder" type="xs:int"></xs:attribute>
       <xs:attribute name="blueBorder" type="xs:int"></xs:attribute>
-      <xs:attribute name="justification" default="left">
-        <xs:simpleType>
-          <xs:restriction base="xs:token">
-            <xs:enumeration value="left"></xs:enumeration>
-            <xs:enumeration value="centre"></xs:enumeration>
-            <xs:enumeration value="right"></xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:attribute>
+      <xs:attribute name="justification" default="left" type="JustificationType"/>
       <xs:attribute name="orientation" default="horizontal">
         <xs:simpleType>
           <xs:restriction base="xs:token">
@@ -1617,6 +1589,7 @@ pointid" type="xs:string"></xs:attribute>
             <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
         </xs:element>
         <xs:element name="occupancyblock" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="occupancysensor" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="showTrainName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
                
         <xs:element name="iconmap" minOccurs="0" maxOccurs="1">
@@ -1666,6 +1639,7 @@ pointid" type="xs:string"></xs:attribute>
         </xs:element>
         <xs:element name="turnout" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="occupancyblock" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="occupancysensor" type="xs:string" minOccurs="0" maxOccurs="1"/>
         <xs:element name="showTrainName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
                
         <xs:element name="iconmaps" minOccurs="0" maxOccurs="1">
@@ -1780,7 +1754,99 @@ pointid" type="xs:string"></xs:attribute>
       <xs:attribute name="arrowSwitch" type="yesNoType"></xs:attribute>
       <xs:attribute name="arrowHide" type="yesNoType"></xs:attribute>
       <xs:attribute name="rotate" type="xs:integer"></xs:attribute>
+    </xs:complexType>
 
+    <xs:complexType name="EditorLightIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing a Light Icon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.LightIconXml
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+          <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="icons" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="on" type="LightIconIconsType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="off" type="LightIconIconsType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="unknown" type="LightIconIconsType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="inconsistent" type="LightIconIconsType" minOccurs="0" maxOccurs="1" />
+            </xs:sequence>    
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+
+      <xs:attribute name="light" type="systemNameType" use="required" />
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="fixedWidth" type="xs:string"></xs:attribute>
+      <xs:attribute name="fixedHeight" type="xs:string"></xs:attribute>
+      <xs:attribute name="rotate" type="xs:string"></xs:attribute>
+      <xs:attribute name="degrees" type="xs:string"></xs:attribute>
+      <xs:attribute name="icon" type="xs:string"></xs:attribute>
+      <xs:attribute name="text" type="xs:string"></xs:attribute>
+      <xs:attribute name="size" type="xs:string"></xs:attribute>
+      <xs:attribute name="style" type="xs:string"></xs:attribute>
+      <xs:attribute name="margin" type="xs:int"></xs:attribute>
+      <xs:attribute name="red" type="xs:unsignedByte"></xs:attribute>
+      <xs:attribute name="green" type="xs:unsignedByte"></xs:attribute>
+      <xs:attribute name="blue" type="xs:unsignedByte"></xs:attribute>
+      <xs:attribute name="hasBackground" type="yesNoType"></xs:attribute>
+      <xs:attribute name="redBack" type="xs:int"></xs:attribute>
+      <xs:attribute name="greenBack" type="xs:int"></xs:attribute>
+      <xs:attribute name="blueBack" type="xs:int"></xs:attribute>
+      <xs:attribute name="borderSize" type="xs:int"></xs:attribute>
+      <xs:attribute name="redBorder" type="xs:int"></xs:attribute>
+      <xs:attribute name="greenBorder" type="xs:int"></xs:attribute>
+      <xs:attribute name="blueBorder" type="xs:int"></xs:attribute>
+      <xs:attribute name="justification" default="left" type="JustificationType"/>
+      <xs:attribute name="orientation" default="horizontal">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="horizontal"></xs:enumeration>
+            <xs:enumeration value="vertical_up"></xs:enumeration>
+            <xs:enumeration value="vertical_down"></xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="fixed" type="trueFalseType"></xs:attribute>
+
+      <xs:attribute name="height" type="xs:integer">
+        <xs:annotation><xs:documentation>
+          Deprecated since JMRI 2.2
+        </xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="width" type="xs:integer">
+        <xs:annotation><xs:documentation>
+          Deprecated since JMRI 2.2
+        </xs:documentation></xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+
+    <xs:simpleType name="JustificationType">
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="left"/>
+        <!-- allow US spelling even though JMRI only writes UK spelling -->
+        <xs:enumeration value="center"/>
+        <xs:enumeration value="centre"/>
+        <xs:enumeration value="right"/>
+      </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="LightIconIconsType">
+      <xs:sequence>
+        <xs:element name="rotation" minOccurs="1" maxOccurs="1" type="xs:integer" />
+      </xs:sequence>
+      <xs:attribute name="url" type="urlType" use="required" />
+      <xs:attribute name="degrees" type="xs:integer" use="required" />
+      <xs:attribute name="scale" type="xs:float" use="required" />
     </xs:complexType>
 
 </xs:schema>
