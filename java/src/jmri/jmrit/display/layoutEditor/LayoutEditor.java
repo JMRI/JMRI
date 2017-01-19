@@ -61,6 +61,7 @@ import jmri.BlockManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Memory;
+import jmri.MemoryManager;
 import jmri.NamedBean;
 import jmri.Reporter;
 import jmri.Sensor;
@@ -215,7 +216,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JTextField textLabel = new JTextField(8);
 
     private JRadioButton memoryButton = new JRadioButton(Bundle.getMessage("BeanNameMemory"));
-    private JTextField textMemory = new JTextField(8);
+    private JmriBeanComboBox textMemoryComboBox = new JmriBeanComboBox(
+        InstanceManager.getDefault(MemoryManager.class), null, JmriBeanComboBox.DISPLAYNAME);
 
     private JRadioButton blockContentsButton = new JRadioButton(Bundle.getMessage("BlockContentsLabel"));
     private JmriBeanComboBox blockContentsComboBox = new JmriBeanComboBox(
@@ -575,7 +577,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
                 // enable/disable text label, memory & block contents text fields
                 textLabel.setEnabled(textLabelButton.isSelected());
-                textMemory.setEnabled(memoryButton.isSelected());
+                textMemoryComboBox.setEnabled(memoryButton.isSelected());
                 blockContentsComboBox.setEnabled(blockContentsButton.isSelected());
 
                 // enable/disable signal mast, sensor & signal head text fields
@@ -767,9 +769,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         top3.add(memoryButton);
         memoryButton.setToolTipText(Bundle.getMessage("MemoryButtonToolTip", Bundle.getMessage("Memory")));
 
-        top3.add(textMemory);
-        textMemory.setToolTipText(rb.getString("MemoryToolTip"));
-        textMemory.setEnabled(false);
+        top3.add(textMemoryComboBox);
+        textMemoryComboBox.setEditable(true);
+        textMemoryComboBox.getEditor().setItem("");
+        textMemoryComboBox.setToolTipText(rb.getString("MemoryToolTip"));
+        textMemoryComboBox.setEnabled(false);
 
         top3.add(blockContentsButton);
         blockContentsButton.setToolTipText(rb.getString("BlockContentsButtonToolTip"));
@@ -7596,20 +7600,20 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * Add a memory label to the Draw Panel
      */
     void addMemory() {
-        if ((textMemory.getText()).trim().length() <= 0) {
+        String memoryName = textMemoryComboBox.getSelectedDisplayName().trim();
+        if (memoryName.length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error11"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         MemoryIcon l = new MemoryIcon("   ", this);
-        l.setMemory(textMemory.getText().trim());
+        l.setMemory(memoryName);
         Memory xMemory = l.getMemory();
         if (xMemory != null) {
             String uname = xMemory.getUserName();
-            if ((uname == null)
-                    || (!(uname.equals(textMemory.getText().trim())))) {
+            if ((uname == null) || (!(uname.equals(memoryName)))) {
                 // put the system name in the memory field
-                textMemory.setText(xMemory.getSystemName());
+                textMemoryComboBox.getEditor().setItem(xMemory.getSystemName());
             }
         }
         setNextLocation(l);
