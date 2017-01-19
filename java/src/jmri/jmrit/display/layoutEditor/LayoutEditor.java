@@ -217,24 +217,28 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JRadioButton memoryButton = new JRadioButton(Bundle.getMessage("BeanNameMemory"));
     private JRadioButton blockContentsButton = new JRadioButton(Bundle.getMessage("BlockContentsLabel"));
 
-    // 4th row of radio buttons
+    // 4th row of radio buttons (and any associated text fields)
     private JRadioButton multiSensorButton = new JRadioButton(Bundle.getMessage("MultiSensor") + "...");
+
     private JRadioButton signalMastButton = new JRadioButton(rb.getString("SignalMastIcon"));
+    private JTextField nextSignalMast = new JTextField(5);
+
     private JRadioButton sensorButton = new JRadioButton(rb.getString("SensorIcon"));
+    private JTextField nextSensor = new JTextField(5);
+
     private JRadioButton signalButton = new JRadioButton(rb.getString("SignalIcon"));
+    private JTextField nextSignalHead = new JTextField(5);
+
     private JRadioButton iconLabelButton = new JRadioButton(rb.getString("IconLabel"));
 
     private JButton changeIconsButton = new JButton(rb.getString("ChangeIcons") + "...");
 
-    private JTextField nextSensor = new JTextField(5);
     public MultiIconEditor sensorIconEditor = null;
     public JFrame sensorFrame;
 
-    private JTextField nextSignalHead = new JTextField(5);
     public MultiIconEditor signalIconEditor = null;
     public JFrame signalFrame;
 
-    private JTextField nextSignalMast = new JTextField(5);
 
     private JTextField textLabel = new JTextField(8);
 
@@ -571,6 +575,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
                 blockPanel.setEnabled(e);
 
+                // enable/disable text label, memory & block contents text fields
+                textLabel.setEnabled(textLabelButton.isSelected());
+                textMemory.setEnabled(memoryButton.isSelected());
+                blockContents.setEnabled(blockContentsButton.isSelected());
+
+                // enable/disable signal mast, sensor & signal head text fields
+                nextSignalMast.setEnabled(signalMastButton.isSelected());
+                nextSensor.setEnabled(sensorButton.isSelected());
+                nextSignalHead.setEnabled(signalButton.isSelected());
+
                 // changeIconsButton
                 e = (sensorButton.isSelected()
                         || signalButton.isSelected()
@@ -707,7 +721,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         // the blockPanel is enabled/disabled via selectionListAction above
         blockPanel.add(new JLabel("    " + rb.getString("BlockID")));
-        blockPanel.add(new JLabel(Bundle.getMessage("Name")));
+        //blockPanel.add(new JLabel(Bundle.getMessage("Name")));
         blockPanel.add(blockIDField);
         blockIDField.setToolTipText(rb.getString("BlockIDToolTip"));
 
@@ -748,18 +762,21 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         top3.add(textLabel);
         textLabel.setToolTipText(rb.getString("TextToolTip"));
+        textLabel.setEnabled(false);
 
         top3.add(memoryButton);
         memoryButton.setToolTipText(Bundle.getMessage("MemoryButtonToolTip", Bundle.getMessage("Memory")));
 
         top3.add(textMemory);
         textMemory.setToolTipText(rb.getString("MemoryToolTip"));
+        textMemory.setEnabled(false);
 
         top3.add(blockContentsButton);
         blockContentsButton.setToolTipText(rb.getString("BlockContentsButtonToolTip"));
 
         top3.add(blockContents);
         blockContents.setToolTipText(rb.getString("BlockContentsButtonToolTip"));
+        blockContents.setEnabled(false);
 
         topEditBar.add(top3);
 
@@ -775,6 +792,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         top4.add(signalMastButton);
         signalMastButton.setToolTipText(rb.getString("SignalMastButtonToolTip"));
         top4.add(nextSignalMast);
+        nextSignalMast.setEnabled(false);
 
         top4.add(Box.createHorizontalGlue()); // this is the flexible space between the left and right items
 
@@ -785,6 +803,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         sensorButton.setToolTipText(rb.getString("SensorButtonToolTip"));
         top4.add(nextSensor);
         nextSensor.setToolTipText(rb.getString("SensorIconToolTip"));
+        nextSensor.setEnabled(false);
 
         sensorIconEditor = new MultiIconEditor(4);
         sensorIconEditor.setIcon(0, Bundle.getMessage("MakeLabel", Bundle.getMessage("SensorStateActive")),
@@ -806,6 +825,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         signalButton.setToolTipText(rb.getString("SignalButtonToolTip"));
         top4.add(nextSignalHead);
         nextSignalHead.setToolTipText(rb.getString("SignalIconToolTip"));
+        nextSignalHead.setEnabled(false);
 
         signalIconEditor = new MultiIconEditor(10);
         signalIconEditor.setIcon(0, "Red:", "resources/icons/smallschematics/searchlights/left-red-short.gif");
