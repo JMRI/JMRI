@@ -45,7 +45,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
     JPanel ms100Panel;
 
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.locostats.LocoStatsFrame";
+        return "package.jmri.jmrix.loconet.locostats.LocoStatsFrame"; // NOI18N
     }
 
     public String getTitle() {

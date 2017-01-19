@@ -163,7 +163,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
                             Integer.valueOf(addrField.getText(), 16).intValue(),
                             Integer.valueOf(subAddrField.getText(), 16).intValue());
                 } catch (NullPointerException e) {
-                    log.error("Caught NullPointerException", e);
+                    log.error("Caught NullPointerException", e); // NOI18N
                 }
             }
         };
@@ -177,7 +177,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
                             Integer.valueOf(addrField.getText(), 16).intValue(),
                             Integer.valueOf(subAddrField.getText(), 16).intValue());
                 } catch (NullPointerException e) {
-                    log.error("Caught NullPointerException", e);
+                    log.error("Caught NullPointerException", e); // NOI18N
                 }
             }
         };
@@ -190,7 +190,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         try {
             data.setUnitAddress(0x51, 0x00);
         } catch (NullPointerException e) {
-            log.error("Caught NullPointerException", e);
+            log.error("Caught NullPointerException", e); // NOI18N
         }
 
     }
@@ -198,7 +198,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
     LnTrafficController ln;
 
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.locoio.LocoIOFrame";
+        return "package.jmri.jmrix.loconet.locoio.LocoIOFrame"; // NOI18N
     }
 
     public String getTitle() {
@@ -211,7 +211,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
      * with caution.
      */
     protected int cautionAddrSet() {
-        log.info("Caution: Set locoio address is a broadcast operation");
+        log.info("Caution: Set locoio address is a broadcast operation"); // NOI18N
         return JOptionPane.showOptionDialog(this,
                 "This will set the address of all attached LocoIO boards",
                 "Global operation!",
@@ -229,16 +229,16 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         int subAddress = Integer.valueOf(subAddrField.getText(), 16).intValue();
 
         if ((address & 0x7F00) != 0x0100) {
-            log.warn("High part of address should be 0x01, was "
+            log.warn("High part of address should be 0x01, was " // NOI18N
                     + (address & 0x7F00) / 256);
         }
         if ((address & 0x7FFF) == 0x0180) {
-            log.warn("Only a LocoBuffer can use address 0x80");
+            log.warn("Only a LocoBuffer can use address 0x80"); // NOI18N
         }
 
         if (subAddress > 126) {
-            log.warn("subAddress must be [1..126]"
-                    + ", was " + subAddress);
+            log.warn("subAddress must be [1..126]" // NOI18N
+                    + ", was " + subAddress); // NOI18N
         }
         address = 0x0100 | (address & 0x07F);  // range is [1..79, 81..127]
         subAddress = subAddress & 0x07F;	// range is [1..126]
@@ -248,7 +248,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
     public void propertyChange(PropertyChangeEvent evt) {
         // these messages can arrive without a complete
         // GUI, in which case we just ignore them
-        if (evt.getPropertyName().equals("UnitAddress")) {
+        if (evt.getPropertyName().equals("UnitAddress")) { // NOI18N
             Integer i = (Integer) evt.getNewValue();
             int v = i.intValue();
             v = v & 0xFF;
@@ -259,7 +259,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
                 firmware.setText("unknown  ");
             }
         }
-        if (evt.getPropertyName().equals("UnitSubAddress")) {
+        if (evt.getPropertyName().equals("UnitSubAddress")) { // NOI18N
             Integer i = (Integer) evt.getNewValue();
             int v = i.intValue();
             if (subAddrField != null) {
@@ -269,19 +269,19 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
                 firmware.setText("unknown  ");
             }
         }
-        if (evt.getPropertyName().equals("LBVersionChange")) {
+        if (evt.getPropertyName().equals("LBVersionChange")) { // NOI18N
             String v = (String) evt.getNewValue();
             if (locobuffer != null) {
                 locobuffer.setText(" " + v);
             }
         }
-        if (evt.getPropertyName().equals("LIOVersionChange")) {
+        if (evt.getPropertyName().equals("LIOVersionChange")) { // NOI18N
             String v = (String) evt.getNewValue();
             if (firmware != null) {
                 firmware.setText(v + "    ");
             }
         }
-        if (evt.getPropertyName().equals("StatusChange")) {
+        if (evt.getPropertyName().equals("StatusChange")) { // NOI18N
             String v = (String) evt.getNewValue();
             if (status != null) {
                 status.setText(v + " ");

@@ -20,7 +20,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
     public LocoNetSystemConnectionMemo(LnTrafficController lt,
             SlotManager sm) {
-        super("L", "LocoNet");
+        super("L", "LocoNet"); // NOI18N
         this.lt = lt;
 
         this.sm = sm; // doesn't full register, but fine for this purpose.
@@ -34,7 +34,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     }
 
     public LocoNetSystemConnectionMemo() {
-        super("L", "LocoNet");
+        super("L", "LocoNet"); // NOI18N
         register(); // registers general type
         InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
 

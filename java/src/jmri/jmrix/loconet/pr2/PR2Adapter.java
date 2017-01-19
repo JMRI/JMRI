@@ -44,9 +44,9 @@ public class PR2Adapter extends LocoBufferAdapter {
             flow = SerialPort.FLOWCONTROL_NONE;
         }
         activeSerialPort.setFlowControlMode(flow);
-        log.debug("Found flow control " + activeSerialPort.getFlowControlMode()
-                + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT
-                + " RTSCTS_IN= " + SerialPort.FLOWCONTROL_RTSCTS_IN);
+        log.debug("Found flow control " + activeSerialPort.getFlowControlMode() // NOI18N
+                + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT // NOI18N
+                + " RTSCTS_IN= " + SerialPort.FLOWCONTROL_RTSCTS_IN); // NOI18N
     }
 
     /**
@@ -81,7 +81,7 @@ public class PR2Adapter extends LocoBufferAdapter {
      * Get an array of valid baud rates.
      */
     public String[] validBaudRates() {
-        return new String[]{"57,600 baud"};
+        return new String[]{"57,600 baud"}; // NOI18N
     }
 
     /**

@@ -263,11 +263,11 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     @Override
     protected synchronized void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
         if (log.isDebugEnabled()) {
-            log.debug("Add Locomotive "
+            log.debug("Add Locomotive " // NOI18N
                     + LocoAddress.toString()
-                    + " to advanced consist "
+                    + " to advanced consist " // NOI18N
                     + ConsistAddress.toString()
-                    + " With Direction Normal "
+                    + " With Direction Normal " // NOI18N
                     + directionNormal + ".");
         }
         consistRequestState = LINKSTAGEONESTATE;
@@ -281,9 +281,9 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     @Override
     protected synchronized void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
         if (log.isDebugEnabled()) {
-            log.debug(" Remove Locomotive "
+            log.debug(" Remove Locomotive " // NOI18N
                     + LocoAddress.toString()
-                    + " from advanced consist "
+                    + " from advanced consist " // NOI18N
                     + ConsistAddress.toString());
         }
         slotManager.slotFromLocoAddress(LocoAddress.getNumber(), this);
@@ -298,11 +298,11 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
      */
     private synchronized void addToCSConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
         if (log.isDebugEnabled()) {
-            log.debug("Add Locomotive "
+            log.debug("Add Locomotive " // NOI18N
                     + LocoAddress.toString()
-                    + " to Standard Consist "
+                    + " to Standard Consist " // NOI18N
                     + ConsistAddress.toString()
-                    + " With Direction Normal "
+                    + " With Direction Normal " // NOI18N
                     + directionNormal + ".");
         }
         throttleManager.requestThrottle(LocoAddress, this);
@@ -316,9 +316,9 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
      */
     public synchronized void removeFromCSConsist(DccLocoAddress LocoAddress) {
         if (log.isDebugEnabled()) {
-            log.debug("Remove Locomotive "
+            log.debug("Remove Locomotive " // NOI18N
                     + LocoAddress.toString()
-                    + " from Standard Consist "
+                    + " from Standard Consist " // NOI18N
                     + ConsistAddress.toString()
                     + ".");
         }
@@ -387,9 +387,9 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
 
     // slot listener interface functions
     public void notifyChangedSlot(LocoNetSlot s) {
-        log.debug("Notified slot " + s.getSlot()
-                + " changed with mode " + consistRequestState
-                + " slot consist state: "
+        log.debug("Notified slot " + s.getSlot() // NOI18N
+                + " changed with mode " + consistRequestState // NOI18N
+                + " slot consist state: " // NOI18N
                 + LnConstants.CONSIST_STAT(s.consistStatus()));
         switch (consistRequestState) {
             case LEADREQUESTSTATE:

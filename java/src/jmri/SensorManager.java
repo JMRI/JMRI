@@ -116,7 +116,7 @@ public interface SensorManager extends Manager {
      * return the next free valid address up to a maximum of 10 address away
      * from the initial address.
      *
-     * @param curAddress - The hardware address of the turnout we which to
+     * @param curAddress - The hardware address of the sensor we wish to add
      * @param prefix     - The System Prefix used to make up the systemName
      *                   check.
      * @return           - null if the system name made from prefix and curAddress is in use
