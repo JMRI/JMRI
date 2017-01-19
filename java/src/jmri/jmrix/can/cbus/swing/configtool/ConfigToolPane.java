@@ -63,11 +63,6 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
 
         // add turnout
         makeTurnout = new MakeNamedBean("LabelEventThrown", "LabelEventClosed") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 5143711808149483844L;
-
             void create(String name) {
                 if (memo != null) {
                     ((jmri.TurnoutManager) memo.get(jmri.TurnoutManager.class)).provideTurnout("MS" + name);
@@ -134,10 +129,6 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
      */
     class MakeNamedBean extends JPanel implements CanListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7057190769757489242L;
         JTextField f1 = new JTextField(20);
         JTextField f2 = new JTextField(20);
 
@@ -231,11 +222,6 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
      * Class to handle recording and presenting one event.
      */
     static class CbusEventRecorder extends JPanel implements CanListener {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7826599461789753830L;
 
         CbusEventRecorder() {
             super();

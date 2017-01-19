@@ -1,4 +1,3 @@
-// SerialSignalHead.java
 package jmri.jmrix.grapevine;
 
 import jmri.implementation.DefaultSignalHead;
@@ -16,11 +15,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007
   */
 public class SerialSignalHead extends DefaultSignalHead {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -456123562360110180L;
 
     /**
      * Create a SignalHead object, with only a system name.

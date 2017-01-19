@@ -1,4 +1,3 @@
-// TreeFrame.java
 package jmri.jmrix.jinput.treecontrol;
 
 import java.awt.Container;
@@ -13,10 +12,6 @@ import jmri.util.JmriJFrame;
   */
 public class TreeFrame extends JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5687145517875452389L;
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.jinput.treecontrol.TreeBundle");
 
     @Override
@@ -39,5 +34,3 @@ public class TreeFrame extends JmriJFrame {
     }
 
 }
-
-/* @(#)TreeFrame.java */

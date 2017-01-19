@@ -1,4 +1,3 @@
-// XNetMessage.java
 package jmri.jmrix.lenz;
 
 import java.io.Serializable;
@@ -17,11 +16,6 @@ import org.slf4j.LoggerFactory;
   *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3422831570914017638L;
 
     static private int _nRetries = 5;
 

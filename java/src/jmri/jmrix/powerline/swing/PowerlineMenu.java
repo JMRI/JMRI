@@ -1,4 +1,3 @@
-// PowerlineMenu.java
 package jmri.jmrix.powerline.swing;
 
 import java.util.ResourceBundle;
@@ -13,11 +12,6 @@ import jmri.jmrix.powerline.SerialSystemConnectionMemo;
  * @author kcameron Copyright (C) 2011
  */
 public class PowerlineMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5098217284738165128L;
 
     /**
      * Create a Powerline menu. And loads the SerialSystemConnectionMemo to the

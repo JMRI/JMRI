@@ -1,4 +1,3 @@
-// AbstractPacketGenFrame.java
 package jmri.jmrix.swing;
 
 import javax.swing.Box;
@@ -11,10 +10,6 @@ import javax.swing.BoxLayout;
   */
 public abstract class AbstractPacketGenFrame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5082190885030718992L;
     // member declarations
     protected javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     protected javax.swing.JButton sendButton = new javax.swing.JButton();

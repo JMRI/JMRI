@@ -16,10 +16,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SRCPSensor extends AbstractSensor implements SRCPListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5107185740550775540L;
     // data members
     private int _number;   // sensor number
     private int _bus;      // bus number

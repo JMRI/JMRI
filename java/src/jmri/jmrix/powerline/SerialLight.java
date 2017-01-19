@@ -1,4 +1,3 @@
-// SerialLight.java
 package jmri.jmrix.powerline;
 
 import jmri.implementation.AbstractVariableLight;
@@ -29,11 +28,6 @@ import org.slf4j.LoggerFactory;
  * @author kcameron Copyright (C) 2011
  */
 abstract public class SerialLight extends AbstractVariableLight {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 544453820964921510L;
 
     /**
      * Create a Light object, with only system name.

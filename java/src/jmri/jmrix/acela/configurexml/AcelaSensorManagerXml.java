@@ -1,4 +1,3 @@
-// AcelaSensorManagerXml.java
 package jmri.jmrix.acela.configurexml;
 
 import jmri.jmrix.acela.AcelaSensorManager;
@@ -49,5 +48,3 @@ public class AcelaSensorManagerXml extends jmri.managers.configurexml.AbstractSe
 
     private final static Logger log = LoggerFactory.getLogger(AcelaSensorManagerXml.class.getName());
 }
-
-/* @(#)AcelaSensorManagerXml.java */

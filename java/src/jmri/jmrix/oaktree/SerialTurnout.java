@@ -21,11 +21,6 @@ import org.slf4j.LoggerFactory;
 public class SerialTurnout extends AbstractTurnout {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -5521009807673626376L;
-
-    /**
      * Create a Turnout object, with both system and user names.
      * <P>
      * 'systemName' was previously validated in SerialTurnoutManager

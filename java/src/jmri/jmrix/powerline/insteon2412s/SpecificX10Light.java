@@ -1,4 +1,3 @@
-// SpecificX10Light.java
 package jmri.jmrix.powerline.insteon2412s;
 
 import jmri.jmrix.powerline.SerialTrafficController;
@@ -29,11 +28,6 @@ import org.slf4j.LoggerFactory;
  * @author kcameron Copyright (C) 2011
  */
 public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8709986243133819987L;
 
     /**
      * Create a Light object, with only system name.

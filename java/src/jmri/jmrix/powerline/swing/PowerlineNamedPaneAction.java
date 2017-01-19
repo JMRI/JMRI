@@ -1,4 +1,3 @@
-// PowerlineNamedPaneAction.java
 package jmri.jmrix.powerline.swing;
 
 import javax.swing.Icon;
@@ -16,11 +15,6 @@ import org.slf4j.LoggerFactory;
  * @author kcameron Copyright (C) 2011
   */
 public class PowerlineNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3525473344131355146L;
 
     /**
      * Enhanced constructor for placing the pane in various GUIs

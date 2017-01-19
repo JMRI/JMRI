@@ -16,10 +16,6 @@ import org.slf4j.LoggerFactory;
  */
 public class JMRIClientSensor extends AbstractSensor implements JMRIClientListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7705766903549405578L;
     // data members
     private int _number;   // sensor number
     private JMRIClientTrafficController tc = null;

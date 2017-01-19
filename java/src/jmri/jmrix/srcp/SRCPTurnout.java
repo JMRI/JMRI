@@ -20,11 +20,6 @@ import org.slf4j.LoggerFactory;
 public class SRCPTurnout extends AbstractTurnout {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -5621580488773391864L;
-
-    /**
      * SRCP turnouts use the NMRA number (0-511) as their numerical
      * identification.
      */

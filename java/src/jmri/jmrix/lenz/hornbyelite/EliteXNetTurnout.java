@@ -1,3 +1,7 @@
+package jmri.jmrix.lenz.hornbyelite;
+
+import jmri.jmrix.lenz.XNetTrafficController;
+
 /**
  * EliteXNetTurnout.java
  *
@@ -7,16 +11,7 @@
  *
  * @author	Paul Bender Copyright (C) 2008
   */
-package jmri.jmrix.lenz.hornbyelite;
-
-import jmri.jmrix.lenz.XNetTrafficController;
-
 public class EliteXNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5782238848095109815L;
 
     public EliteXNetTurnout(String prefix, int pNumber, XNetTrafficController tc) {  // a human-readable turnout number must be specified!
         super(prefix, pNumber, tc);
@@ -35,6 +30,3 @@ public class EliteXNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
     }
 
 }
-
-
-/* @(#)EliteXNetTurnout.java */

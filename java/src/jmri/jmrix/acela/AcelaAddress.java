@@ -1,4 +1,3 @@
-// AcelaAddress.java
 package jmri.jmrix.acela;
 
 import org.slf4j.Logger;
@@ -348,5 +347,3 @@ public class AcelaAddress {
 
     private final static Logger log = LoggerFactory.getLogger(AcelaAddress.class.getName());
 }
-
-/* @(#)AcelaAddress.java */

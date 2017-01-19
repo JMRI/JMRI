@@ -1,4 +1,3 @@
-// MrcTurnout.java
 package jmri.jmrix.mrc;
 
 import java.util.Date;
@@ -19,10 +18,6 @@ import org.slf4j.LoggerFactory;
  */
 public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4101674471527804047L;
     // Private data member to keep track of what turnout we control.
     int _number;
     MrcTrafficController tc = null;
