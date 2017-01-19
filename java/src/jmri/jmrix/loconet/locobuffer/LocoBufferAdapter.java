@@ -31,9 +31,9 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 
     public LocoBufferAdapter(LocoNetSystemConnectionMemo adapterMemo) {
         super(adapterMemo);
-        option1Name = "FlowControl";
-        option2Name = "CommandStation";
-        option3Name = "TurnoutHandle";
+        option1Name = "FlowControl"; // NOI18N
+        option2Name = "CommandStation"; // NOI18N
+        option3Name = "TurnoutHandle"; // NOI18N
         options.put(option1Name, new Option("Connection uses:", validOption1));
         options.put(option2Name, new Option("Command station type:", commandStationNames, false));
         options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"}));
@@ -73,17 +73,19 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
             try {
                 setSerialPort(activeSerialPort);
             } catch (gnu.io.UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
-                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
+                log.error("Cannot set serial parameters on port " + portName + ": " + // NOI18N
+                        e.getMessage());
+                return "Cannot set serial parameters on port " + portName + ": " + // NOI18N
+                        e.getMessage();
             }
 
             // set timeout
             try {
                 activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
+                log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout() // NOI18N
                         + " " + activeSerialPort.isReceiveTimeoutEnabled());
             } catch (Exception et) {
-                log.info("failed to set serial timeout: " + et);
+                log.info("failed to set serial timeout: " + et); // NOI18N
             }
 
             // get and save stream
@@ -95,19 +97,19 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
             // report status?
             if (log.isInfoEnabled()) {
                 // report now
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud with"
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
+                log.info(portName + " port opened at " // NOI18N
+                        + activeSerialPort.getBaudRate() + " baud with" // NOI18N
+                        + " DTR: " + activeSerialPort.isDTR() // NOI18N
+                        + " RTS: " + activeSerialPort.isRTS() // NOI18N
+                        + " DSR: " + activeSerialPort.isDSR() // NOI18N
+                        + " CTS: " + activeSerialPort.isCTS() // NOI18N
+                        + "  CD: " + activeSerialPort.isCD() // NOI18N
                 );
             }
             if (log.isDebugEnabled()) {
                 // report additional status
-                log.debug(" port flow control shows "
-                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"));
+                log.debug(" port flow control shows " // NOI18N
+                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
             }
             if (log.isDebugEnabled()) {
                 // arrange to notify later
@@ -116,37 +118,37 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
                         int type = e.getEventType();
                         switch (type) {
                             case SerialPortEvent.DATA_AVAILABLE:
-                                log.info("SerialEvent: DATA_AVAILABLE is " + e.getNewValue());
+                                log.info("SerialEvent: DATA_AVAILABLE is " + e.getNewValue()); // NOI18N
                                 return;
                             case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
-                                log.info("SerialEvent: OUTPUT_BUFFER_EMPTY is " + e.getNewValue());
+                                log.info("SerialEvent: OUTPUT_BUFFER_EMPTY is " + e.getNewValue()); // NOI18N
                                 return;
                             case SerialPortEvent.CTS:
-                                log.info("SerialEvent: CTS is " + e.getNewValue());
+                                log.info("SerialEvent: CTS is " + e.getNewValue()); // NOI18N
                                 return;
                             case SerialPortEvent.DSR:
-                                log.info("SerialEvent: DSR is " + e.getNewValue());
+                                log.info("SerialEvent: DSR is " + e.getNewValue()); // NOI18N
                                 return;
                             case SerialPortEvent.RI:
-                                log.info("SerialEvent: RI is " + e.getNewValue());
+                                log.info("SerialEvent: RI is " + e.getNewValue()); // NOI18N
                                 return;
                             case SerialPortEvent.CD:
-                                log.info("SerialEvent: CD is " + e.getNewValue());
+                                log.info("SerialEvent: CD is " + e.getNewValue()); // NOI18N
                                 return;
                             case SerialPortEvent.OE:
-                                log.info("SerialEvent: OE (overrun error) is " + e.getNewValue());
+                                log.info("SerialEvent: OE (overrun error) is " + e.getNewValue()); // NOI18N
                                 return;
                             case SerialPortEvent.PE:
-                                log.info("SerialEvent: PE (parity error) is " + e.getNewValue());
+                                log.info("SerialEvent: PE (parity error) is " + e.getNewValue()); // NOI18N
                                 return;
                             case SerialPortEvent.FE:
-                                log.info("SerialEvent: FE (framing error) is " + e.getNewValue());
+                                log.info("SerialEvent: FE (framing error) is " + e.getNewValue()); // NOI18N
                                 return;
                             case SerialPortEvent.BI:
-                                log.info("SerialEvent: BI (break interrupt) is " + e.getNewValue());
+                                log.info("SerialEvent: BI (break interrupt) is " + e.getNewValue()); // NOI18N
                                 return;
                             default:
-                                log.info("SerialEvent of unknown type: " + type + " value: " + e.getNewValue());
+                                log.info("SerialEvent of unknown type: " + type + " value: " + e.getNewValue()); // NOI18N
                                 return;
                         }
                     }
@@ -155,25 +157,25 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
                 try {
                     activeSerialPort.notifyOnFramingError(true);
                 } catch (Exception e) {
-                    log.debug("Could not notifyOnFramingError: " + e);
+                    log.debug("Could not notifyOnFramingError: " + e); // NOI18N
                 }
 
                 try {
                     activeSerialPort.notifyOnBreakInterrupt(true);
                 } catch (Exception e) {
-                    log.debug("Could not notifyOnBreakInterrupt: " + e);
+                    log.debug("Could not notifyOnBreakInterrupt: " + e); // NOI18N
                 }
 
                 try {
                     activeSerialPort.notifyOnParityError(true);
                 } catch (Exception e) {
-                    log.debug("Could not notifyOnParityError: " + e);
+                    log.debug("Could not notifyOnParityError: " + e); // NOI18N
                 }
 
                 try {
                     activeSerialPort.notifyOnOverrunError(true);
                 } catch (Exception e) {
-                    log.debug("Could not notifyOnOverrunError: " + e);
+                    log.debug("Could not notifyOnOverrunError: " + e); // NOI18N
                 }
 
             }
@@ -183,7 +185,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         } catch (gnu.io.NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (Exception ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
+            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex); // NOI18N
             ex.printStackTrace();
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
@@ -228,7 +230,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     // base class methods for the LnPortController interface
     public DataInputStream getInputStream() {
         if (!opened) {
-            log.error("getInputStream called before load(), stream not available");
+            log.error("getInputStream called before load(), stream not available"); // NOI18N
             return null;
         }
         return new DataInputStream(serialStream);
@@ -236,12 +238,13 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 
     public DataOutputStream getOutputStream() {
         if (!opened) {
-            log.error("getOutputStream called before load(), stream not available");
+            log.error("getOutputStream called before load(), stream not available"); // NOI18N
         }
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e.getMessage());
+            log.error("getOutputStream exception: " +  // NOI18N
+                    e.getMessage());
         }
         return null;
     }
@@ -269,9 +272,9 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
             flow = SerialPort.FLOWCONTROL_NONE;
         }
         activeSerialPort.setFlowControlMode(flow);
-        log.debug("Found flow control " + activeSerialPort.getFlowControlMode()
-                + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT
-                + " RTSCTS_IN= " + SerialPort.FLOWCONTROL_RTSCTS_IN);
+        log.debug("Found flow control " + activeSerialPort.getFlowControlMode() // NOI18N
+                + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT // NOI18N
+                + " RTSCTS_IN= " + SerialPort.FLOWCONTROL_RTSCTS_IN); // NOI18N
     }
 
     /**

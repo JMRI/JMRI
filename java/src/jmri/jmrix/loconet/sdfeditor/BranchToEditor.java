@@ -18,6 +18,6 @@ class BranchToEditor extends SdfMacroEditor {
         this.removeAll();
 
         // and set up our own
-        add(new JLabel("No editor defined for this instruction yet."));
+        add(new JLabel("No editor defined for this instruction yet.")); // NOI18N
     }
 }
