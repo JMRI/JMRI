@@ -18,7 +18,7 @@ public class InitiateSound extends SdfMacro {
     }
 
     public String name() {
-        return "INITIATE_SOUND";
+        return "INITIATE_SOUND"; // NOI18N
     }
 
     int prempt;
@@ -57,7 +57,7 @@ public class InitiateSound extends SdfMacro {
         if (trigName != null) {
             return trigName;
         }
-        return "(trigger = 0x" + jmri.util.StringUtil.twoHexFromInt(trigger) + ")";
+        return "(trigger = 0x" + jmri.util.StringUtil.twoHexFromInt(trigger) + ")"; // NOI18N
     }
 
     static public SdfMacro match(SdfBuffer buff) {

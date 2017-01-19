@@ -4,6 +4,8 @@ import javax.annotation.CheckForNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.Bundle;
+
 /**
  * Utilities for coding/decoding NMRA {@literal S&RP} DCC packets.
  * <P>
@@ -258,6 +260,13 @@ public class NmraPacket {
      * resulting packet would be {preamble} 10AAAAAA 0 1AAACDDD 0 (1110CCVV 0
      * VVVVVVVV 0 DDDDDDDD) 0 EEEEEEEE 1 Accessory Decoder Address
      * (Configuration Variable Access Instruction) Error Byte
+     *
+     * @param addr          the accessory address
+     * @param active        1 or 0
+     * @param outputChannel the output on the accessory
+     * @param cvNum         the CV
+     * @param data          the data
+     * @return a packet
      */
     public static byte[] accDecoderPktOpsMode(int addr, int active, int outputChannel, int cvNum, int data) {
 
@@ -309,6 +318,11 @@ public class NmraPacket {
      *
      * This is the old "legacy" format, newer decoders use the "Basic Accessory
      * Decoder Packet"
+     *
+     * @param addr  the accessory address
+     * @param cvNum the CV
+     * @param data  the data
+     * @return a packet
      */
     public static byte[] accDecPktOpsModeLegacy(int addr, int cvNum, int data) {
 
@@ -389,6 +403,9 @@ public class NmraPacket {
      * <p>
      * This inverts the computation done by the {@link #accSignalDecoderPkt}
      * method.
+     *
+     * @param packet a DCC packet to inspect
+     * @return true if a Signal Decoder Packet; false otherwise
      */
     public static boolean isAccSignalDecoderPkt(byte[] packet) {
         if (packet.length != 3 && packet.length != 4) {
@@ -409,6 +426,9 @@ public class NmraPacket {
     /**
      * Recover the 1-based output address from an Extended Accessory Decoder
      * Control Packet otherwise known as a Signal Decoder Packet.
+     *
+     * @param packet the packet to extract the address from
+     * @return the address
      */
     public static int getAccSignalDecoderPktAddress(byte[] packet) {
         int midAddr = packet[0] & 0x3f;
@@ -431,6 +451,7 @@ public class NmraPacket {
      * @param outputAddr Address of accessory output, starting with 1 and a
      *                   maximum of 2044
      * @param aspect     Aspect Number starting with 0 and a maximum of 31
+     * @return a packet
      */
     public static byte[] altAccSignalDecoderPkt(int outputAddr, int aspect) {
 
@@ -465,12 +486,27 @@ public class NmraPacket {
         return retVal;
     }
 
+
+    /**
+     * Recover the 1-based output address from an Accessory Decoder
+     * Control Packet, typically considered a turnout control packaet
+     */
+    public static int getAccDecoderPktAddress(byte[] packet) {
+                // case turnout accessory decoder
+                // from Alex Shepherd
+                int boardAddress = ( ( (~packet[1]) & 0x70 ) << 2 ) | ( packet[0] & 0x3F ) ;
+                int outputAddress = packet[1] & 0x07 ;
+                int outputIndex = outputAddress >> 1;
+                return ( ( ( boardAddress - 1 ) << 2 ) | outputIndex ) + 1 ;
+    }
+    
     /**
      * Provide an accessory control packet via a simplified interface
      *
      * @param number Address of accessory output, starting with 1
      * @param closed true if the output is to be configured to the "closed",
      *               a.k.a. the "normal" or "unset" position
+     * @return a packet
      */
     public static byte[] accDecoderPkt(int number, boolean closed) {
         // dBit is the "channel" info, least 7 bits, for the packet
@@ -499,6 +535,7 @@ public class NmraPacket {
      * @param number Address of accessory, starting with 1
      * @param cvNum  CV number to access
      * @param data   Data to be written
+     * @return a packet
      */
     public static byte[] accDecoderPktOpsMode(int number, int cvNum, int data) {
         // dBit is the "channel" info, least 7 bits, for the packet
@@ -523,6 +560,7 @@ public class NmraPacket {
      * @param number Address of accessory, starting with 1
      * @param cvNum  CV number to access
      * @param data   Data to be written
+     * @return a packet
      */
     public static byte[] accDecoderPktOpsModeLegacy(int number, int cvNum, int data) {
 
@@ -848,7 +886,7 @@ public class NmraPacket {
                 | (f14 ? 0x02 : 0)
                 | (f13 ? 0x01 : 0);
 
-        return NmraPacket.twoBytePacket(address, longAddr, (byte)arg1, (byte)arg2);
+        return NmraPacket.twoBytePacket(address, longAddr, (byte) arg1, (byte) arg2);
     }
 
     public static byte[] function21Through28Packet(int address, boolean longAddr,
@@ -871,7 +909,7 @@ public class NmraPacket {
                 | (f22 ? 0x02 : 0)
                 | (f21 ? 0x01 : 0);
 
-        return NmraPacket.twoBytePacket(address, longAddr, (byte)arg1, (byte)arg2);
+        return NmraPacket.twoBytePacket(address, longAddr, (byte) arg1, (byte) arg2);
     }
 
     /**
@@ -1039,12 +1077,11 @@ public class NmraPacket {
      * As a special case, IDLE is returned as -1 instead of 255. Best to check
      * the address type first....
      * <p>
-     * <strong>Note:</strong> This is not working for the ACCESSORY_ADDRESS
+     * <strong>Note:</strong> The decoding is not complete for the ACCESSORY_ADDRESS
      * type.
      *
      * @param packet the packet
-     * @return the address; -1 is returned if there is no address or the address
-     *         is an accessory address
+     * @return the address; -1 is returned if there is no address or the case isn't considered yet
      */
     static public int extractAddressNumber(byte[] packet) {
         switch (extractAddressType(packet)) {
@@ -1058,10 +1095,15 @@ public class NmraPacket {
             case LOCO_LONG_ADDRESS:
                 return (packet[0] & 0x3F) << 8 | (packet[1] & 0xFF);
             case ACCESSORY_ADDRESS:
-                log.warn("extractAddressNumber can't handle ACCESSORY_ADDRESS in {}", format(packet));
-                return -1;
+                // case signal packet
+                if (isAccSignalDecoderPkt(packet)) {
+                    return getAccSignalDecoderPktAddress(packet);
+                }
+                
+                // case turnout accessory decoder
+                return getAccDecoderPktAddress(packet);
         }
-        return 0;
+        return -1;
     }
 
     /**
@@ -1098,6 +1140,23 @@ public class NmraPacket {
         return jmri.util.StringUtil.hexStringFromBytes(p);
     }
 
+    /**
+     * Convert NMRA packet to human-readable form
+     * <p>
+     * Note: Only gives a summary now, should this completely decode?<p>
+     * 2nd Note:  The name may be a bad choice, as this is not the .toString() method
+     * of an object, but rather a procedure that takes a byte-array representation of a packet.
+     * But the analogy seems not so bad, until we have a true class for NmraPackets.
+     * 
+     * @param p the raw packet
+     * @return the human-readable form for that packet
+     * @throws IllegalArgumentException if packet array can't be decoded, e.g. is too short or null
+     */
+    static public String toString(byte[] p) throws IllegalArgumentException {
+        if (p == null || p.length ==0) throw new IllegalArgumentException("Content required");
+        return Bundle.getMessage("DccToStringFormat", extractAddressType(p), extractInstruction(p), extractAddressNumber(p));
+    }
+    
     /**
      * Objects of this class should not be created.
      */

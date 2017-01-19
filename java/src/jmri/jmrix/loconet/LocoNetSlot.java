@@ -335,7 +335,7 @@ public class LocoNetSlot {
                 return;
             }
             default: {
-                throw new LocoNetException("message can't be parsed");
+                throw new LocoNetException("message can't be parsed"); // NOI18N
             }
         }
     }
@@ -477,8 +477,8 @@ public class LocoNetSlot {
             v = new ArrayList<SlotListener>(slotListeners);
         }
         if (log.isDebugEnabled()) {
-            log.debug("notify " + v.size()
-                    + " SlotListeners");
+            log.debug("notify " + v.size() // NOI18N
+                    + " SlotListeners"); // NOI18N
         }
         // forward to all listeners
         int cnt = v.size();

@@ -187,8 +187,9 @@
         behavior</a>, and wrote a scripting example page</li>
 
         <li>Egbert Broerse, who worked on translations, improved
-        the signaling help and website content and contributed the
-        Rio Grande 1965 signal definition</li>
+        the signaling help and website content, contributed the
+        Rio Grande 1965 signal definition and greatly improved the GUI
+        for adding turnouts and signals.</li>
 
         <li>Dick Bronson, who created the great LocoBuffer-II and
         worked hard to make sure it worked well with JMRI. He also
@@ -494,8 +495,9 @@
         <li>Martin Jahner, who built a replacement library for Mac
         OS X</li>
 
-        <li>Jay Janzen, who debugged a RobotThrottle problem and
-        provided improvements for Dispatcher.</li>
+        <li>Jay Janzen, who debugged a RobotThrottle problem, and
+        provided improvements for Dispatcher, including a fix to allow
+        dispatcher to allocate to the end block.</li>
 
         <li>Lionel Jeanson, who added images to the roster, updated
         the throttle to add preferences for displaying them,
@@ -947,6 +949,9 @@
 
         <li>Jack Walton, who created the Lenz LE080 decoder
         definition</li>
+
+        <li>George Warner, who fixed the turnout circle in the 
+        Layout Editor.</li>
 
         <li>Mark Waters, who provided numerous Zimo decoder
         definitions and new Zimo MX620 definitions.</li>

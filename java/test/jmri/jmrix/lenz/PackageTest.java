@@ -46,7 +46,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(XNetInitializationManagerTest.class));
         suite.addTest(new TestSuite(XNetProgrammerTest.class));
         suite.addTest(new TestSuite(XNetProgrammerManagerTest.class));
-        suite.addTest(new TestSuite(XNetOpsModeProgrammerTest.class));
+        suite.addTest(new JUnit4TestAdapter(XNetOpsModeProgrammerTest.class));
         suite.addTest(new JUnit4TestAdapter(XNetPowerManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(XNetThrottleManagerTest.class));
         suite.addTest(new TestSuite(XNetExceptionTest.class));

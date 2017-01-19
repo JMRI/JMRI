@@ -38,7 +38,7 @@ public class SE8Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     public SE8Panel(int boardNum) {
         super(boardNum);
 
-        appendLine(provideAddressing("SE8C"));  // add read/write buttons, address
+        appendLine(provideAddressing("SE8C"));  // add read/write buttons, address // NOI18N
 
         JPanel panel2;
         appendLine(fullmode);
@@ -76,7 +76,7 @@ public class SE8Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.se8.SE8Frame";
+        return "package.jmri.jmrix.loconet.se8.SE8Frame"; // NOI18N
     }
 
     public String getTitle() {
