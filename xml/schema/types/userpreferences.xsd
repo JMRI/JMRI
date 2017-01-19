@@ -72,13 +72,25 @@
             <xs:element name="properties" minOccurs="0" maxOccurs="1">
               <xs:complexType>
                 <xs:sequence>
-                  <xs:element name="property">
+                  <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
                     <xs:complexType>
                       <xs:sequence>
-                        <xs:element name="key" type="xs:string" minOccurs="1" maxOccurs="1" />
-                        <xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="1">
-                          <xs:complexType>
-                            <xs:attribute name="class" type="xs:string" use="required" />
+                        <xs:element name="key" minOccurs="1" maxOccurs="1">
+                          <xs:complexType>                          
+                            <xs:simpleContent>
+                              <xs:extension base="xs:string">
+                                <xs:attribute name="class" type="xs:string" use="required" />
+                              </xs:extension>
+                            </xs:simpleContent>
+                          </xs:complexType>
+                        </xs:element>
+                        <xs:element name="value" minOccurs="0" maxOccurs="1">
+                          <xs:complexType>                          
+                            <xs:simpleContent>
+                              <xs:extension base="xs:string">
+                                <xs:attribute name="class" type="xs:string" use="required" />
+                              </xs:extension>
+                            </xs:simpleContent>
                           </xs:complexType>
                         </xs:element>
                       </xs:sequence>
@@ -89,6 +101,30 @@
             </xs:element>
           </xs:sequence>
           <xs:attribute name="class" type="xs:string" use="required" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="tableDetails">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="table" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="column" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="order" type="xs:int" minOccurs="0" maxOccurs="1" />
+                        <xs:element name="width" type="xs:int" minOccurs="0" maxOccurs="1" />
+                        <xs:element name="sort" type="xs:int" minOccurs="0" maxOccurs="1" />
+                        <xs:element name="hidden" type="yesNoType" minOccurs="0" maxOccurs="1" />
+                      </xs:sequence>
+                      <xs:attribute name="name" type="xs:string" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+                <xs:attribute name="name" type="xs:string" use="required" />
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
         </xs:complexType>
       </xs:element>
     </xs:sequence>
