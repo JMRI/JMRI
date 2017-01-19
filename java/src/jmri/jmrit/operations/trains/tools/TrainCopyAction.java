@@ -38,4 +38,4 @@ public class TrainCopyAction extends AbstractAction {
     }
 }
 
-/* @(#)TrainCopyAction.java */
+

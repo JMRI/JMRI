@@ -33,4 +33,4 @@ public class EditCarTypeAction extends AbstractAction {
     }
 }
 
-/* @(#)EditCarTypeAction.java */
+

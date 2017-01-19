@@ -36,4 +36,4 @@ public class ShowCarsInTrainAction extends AbstractAction {
     }
 }
 
-/* @(#)ShowCarsInTrainAction.java */
+

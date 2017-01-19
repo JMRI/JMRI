@@ -219,4 +219,4 @@ public class SetPhysicalLocationAction extends AbstractAction {
             .getLogger(SetPhysicalLocationAction.class.getName());
 }
 
-/* @(#)SetPhysicalLocationAction.java */
+

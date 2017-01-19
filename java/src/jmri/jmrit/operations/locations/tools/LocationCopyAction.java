@@ -30,4 +30,4 @@ public class LocationCopyAction extends AbstractAction {
     }
 }
 
-/* @(#)LocationCopyAction.java */
+

@@ -30,4 +30,4 @@ public class AutomationsTableFrameAction extends AbstractAction {
     }
 }
 
-/* @(#)AutomationsTableAction.java */
+

@@ -34,4 +34,4 @@ public class TrainsByCarTypeAction extends AbstractAction {
     }
 }
 
-/* @(#)TrainsByCarTypeAction.java */
+

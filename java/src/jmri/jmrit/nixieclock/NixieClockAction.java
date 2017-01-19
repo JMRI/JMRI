@@ -33,4 +33,4 @@ public class NixieClockAction extends AbstractAction {
 
 }
 
-/* @(#)NixieClockAction.java */
+

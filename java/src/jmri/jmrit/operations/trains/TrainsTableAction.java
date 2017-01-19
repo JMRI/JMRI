@@ -35,4 +35,4 @@ public class TrainsTableAction extends AbstractAction {
     }
 }
 
-/* @(#)TrainsTableAction.java */
+

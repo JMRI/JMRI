@@ -37,4 +37,4 @@ public class SetTrainIconRouteAction extends AbstractAction {
     }
 }
 
-/* @(#)SetTrainIconRouteAction.java */
+

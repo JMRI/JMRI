@@ -33,4 +33,4 @@ public class CarsSetFrameAction extends AbstractAction {
     }
 }
 
-/* @(#)CarsSetFrameAction.java */
+

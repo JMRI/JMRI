@@ -33,4 +33,4 @@ public class TrainRoadOptionsAction extends AbstractAction {
     }
 }
 
-/* @(#)TrainRoadOptionsAction.java */
+

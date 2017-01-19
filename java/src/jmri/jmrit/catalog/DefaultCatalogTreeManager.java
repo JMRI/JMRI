@@ -185,4 +185,4 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
     private final static Logger log = LoggerFactory.getLogger(DefaultCatalogTreeManager.class.getName());
 }
 
-/* @(#)CatalogTreeFSManager.java */
+

@@ -31,4 +31,4 @@ public class SetupExcelProgramSwitchListFrameAction extends AbstractAction {
     }
 }
 
-/* @(#)SetupExcelProgramSwitchListFrameAction.java */
+

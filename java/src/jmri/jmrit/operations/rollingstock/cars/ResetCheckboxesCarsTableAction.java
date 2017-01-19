@@ -30,4 +30,4 @@ public class ResetCheckboxesCarsTableAction extends AbstractAction {
     }
 }
 
-/* @(#)ResetCheckboxesCarsTableAction.java */
+

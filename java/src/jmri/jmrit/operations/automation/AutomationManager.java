@@ -290,4 +290,4 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
 
 }
 
-/* @(#)AutomationManager.java */
+

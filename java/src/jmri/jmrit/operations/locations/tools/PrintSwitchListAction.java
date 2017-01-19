@@ -34,4 +34,4 @@ public class PrintSwitchListAction extends AbstractAction {
     }
 }
 
-/* @(#)ModifyLocationsAction.java */
+

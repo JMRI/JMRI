@@ -30,4 +30,4 @@ public class SetTrainIconPositionAction extends AbstractAction {
     }
 }
 
-/* @(#)SetTrainIconPositionAction.java */
+

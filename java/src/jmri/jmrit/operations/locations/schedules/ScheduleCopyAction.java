@@ -37,4 +37,4 @@ public class ScheduleCopyAction extends AbstractAction {
     }
 }
 
-/* @(#)ScheduleCopyAction.java */
+

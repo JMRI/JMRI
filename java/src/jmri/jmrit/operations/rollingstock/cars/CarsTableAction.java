@@ -27,4 +27,4 @@ public class CarsTableAction extends AbstractAction {
     }
 }
 
-/* @(#)CarsTableAction.java */
+

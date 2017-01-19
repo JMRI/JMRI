@@ -32,4 +32,4 @@ public class TrainEditBuildOptionsAction extends AbstractAction {
     }
 }
 
-/* @(#)TrainEditBuildOptionAction.java */
+

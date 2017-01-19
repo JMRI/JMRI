@@ -67,4 +67,4 @@ public class LoadDemoAction extends AbstractAction {
     }
 }
 
-/* @(#)LoadDemoAction.java */
+

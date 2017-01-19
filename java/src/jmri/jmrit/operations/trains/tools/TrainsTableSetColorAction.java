@@ -37,4 +37,4 @@ public class TrainsTableSetColorAction extends AbstractAction {
     }
 }
 
-/* @(#)TrainSetColorAction.java */
+

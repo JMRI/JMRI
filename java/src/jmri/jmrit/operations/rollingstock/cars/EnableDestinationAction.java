@@ -26,4 +26,4 @@ public class EnableDestinationAction extends AbstractAction {
     }
 }
 
-/* @(#)CarsSetFrameAction.java */
+

@@ -35,4 +35,4 @@ public class LocationsTableAction extends AbstractAction {
     }
 }
 
-/* @(#)LocationsTableAction.java */
+

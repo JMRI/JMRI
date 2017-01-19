@@ -36,4 +36,4 @@ public class OperationsSetupAction extends AbstractAction {
     }
 }
 
-/* @(#)OperationsSetupAction.java */
+

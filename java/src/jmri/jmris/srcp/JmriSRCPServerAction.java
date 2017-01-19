@@ -33,4 +33,4 @@ public class JmriSRCPServerAction extends AbstractAction {
 }
 
 
-/* @(#)JmriSRCPServerAction.java */
+

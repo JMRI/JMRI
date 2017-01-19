@@ -33,4 +33,4 @@ public class TrackCopyAction extends AbstractAction {
     }
 }
 
-/* @(#)TrackCopyAction.java */
+

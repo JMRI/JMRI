@@ -37,4 +37,4 @@ public class TrainScriptAction extends AbstractAction {
     }
 }
 
-/* @(#)TrainScriptAction.java */
+

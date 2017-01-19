@@ -39,4 +39,4 @@ public class EditSwitchListTextAction extends AbstractAction {
 //    private final static Logger log = LoggerFactory.getLogger(EditSwitchListTextAction.class.getName());
 }
 
-/* @(#)EditSwitchListTextAction.java */
+

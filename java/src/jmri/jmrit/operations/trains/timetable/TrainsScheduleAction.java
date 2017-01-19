@@ -29,4 +29,4 @@ public class TrainsScheduleAction extends AbstractAction {
     }
 }
 
-/* @(#)TrainsScheduleAction.java */
+

@@ -31,4 +31,4 @@ public class SetupExcelProgramFrameAction extends AbstractAction {
     }
 }
 
-/* @(#)SetupExcelProgramFrameAction.java */
+

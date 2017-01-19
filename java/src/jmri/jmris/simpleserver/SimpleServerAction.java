@@ -33,4 +33,4 @@ public class SimpleServerAction extends AbstractAction {
 }
 
 
-/* @(#)SimpleServerAction.java */
+

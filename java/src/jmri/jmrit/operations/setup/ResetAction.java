@@ -68,4 +68,4 @@ public class ResetAction extends AbstractAction {
 //    private final static Logger log = LoggerFactory.getLogger(ResetAction.class.getName());
 }
 
-/* @(#)ResetAction.java */
+

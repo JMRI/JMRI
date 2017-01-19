@@ -30,4 +30,4 @@ public class ShowCheckboxesCarsTableAction extends AbstractAction {
     }
 }
 
-/* @(#)ShowCheckboxesCarsTableAction.java */
+

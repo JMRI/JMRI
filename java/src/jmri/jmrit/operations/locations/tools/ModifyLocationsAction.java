@@ -42,4 +42,4 @@ public class ModifyLocationsAction extends AbstractAction {
     }
 }
 
-/* @(#)ModifyLocationsAction.java */
+

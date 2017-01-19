@@ -39,4 +39,4 @@ public class EditManifestHeaderTextAction extends AbstractAction {
 //    private final static Logger log = LoggerFactory.getLogger(EditManifestHeaderTextAction.class.getName());
 }
 
-/* @(#)EditManifestHeaderTextAction.java */
+

@@ -30,4 +30,4 @@ public class ChangeDepartureTimesAction extends AbstractAction {
     }
 }
 
-/* @(#)ChangeDepartureTimesAction.java */
+
