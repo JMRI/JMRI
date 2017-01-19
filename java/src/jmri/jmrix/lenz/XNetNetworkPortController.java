@@ -62,4 +62,4 @@ public abstract class XNetNetworkPortController extends jmri.jmrix.AbstractNetwo
 }
 
 
-/* @(#)XNetNetworkPortController.java */
+

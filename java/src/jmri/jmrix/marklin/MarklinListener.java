@@ -14,4 +14,4 @@ public interface MarklinListener extends jmri.jmrix.AbstractMRListener {
     public void reply(MarklinReply m);
 }
 
-/* @(#)MarklinListener.java */
+

@@ -103,4 +103,4 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
 }
 
 
-/* @(#)DCCppSerialPortController.java */
+

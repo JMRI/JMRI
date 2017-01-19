@@ -68,4 +68,4 @@ public class EasyDccReply extends jmri.jmrix.AbstractMRReply {
 }
 
 
-/* @(#)EasyDccReply.java */
+

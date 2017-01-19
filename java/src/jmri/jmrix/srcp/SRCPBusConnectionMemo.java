@@ -300,4 +300,4 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
 }
 
 
-/* @(#)SRCPBusConnectionMemo.java */
+

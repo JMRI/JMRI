@@ -30,4 +30,4 @@ public class OpenLcbComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 }
 
 
-/* @(#)OpenLcbComponentFactory.java */
+

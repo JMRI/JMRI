@@ -30,4 +30,4 @@ public interface CanFrame {
 
 }
 
-/* @(#)CanFrame.java */
+

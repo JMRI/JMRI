@@ -53,4 +53,4 @@ public abstract class DCCppSimulatorPortController extends jmri.jmrix.AbstractSe
 }
 
 
-/* @(#)DCCppSimulatorPortController.java */
+

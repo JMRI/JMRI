@@ -671,4 +671,4 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
 }
 
-/* @(#)XNetMessage.java */
+

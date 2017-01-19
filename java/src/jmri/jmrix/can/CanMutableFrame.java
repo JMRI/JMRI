@@ -28,4 +28,4 @@ public interface CanMutableFrame extends CanFrame {
 
 }
 
-/* @(#)CanMutableFrame.java */
+

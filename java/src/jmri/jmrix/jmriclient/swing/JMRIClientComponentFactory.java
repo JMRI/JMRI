@@ -30,4 +30,4 @@ public class JMRIClientComponentFactory extends jmri.jmrix.swing.ComponentFactor
 }
 
 
-/* @(#)JMRIClientComponentFactory.java */
+

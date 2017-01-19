@@ -31,4 +31,4 @@ public class DCCppComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 }
 
 
-/* @(#)DCCppComponentFactory.java */
+

@@ -30,4 +30,4 @@ public interface QsiInterface {
 }
 
 
-/* @(#)QsiInterface.java */
+

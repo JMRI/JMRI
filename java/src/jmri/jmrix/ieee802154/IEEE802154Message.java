@@ -107,4 +107,4 @@ public class IEEE802154Message extends jmri.jmrix.AbstractMRMessage {
     }
 
 }
-/* @(#)IEEE802154Message.java */
+

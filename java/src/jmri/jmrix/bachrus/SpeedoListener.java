@@ -12,4 +12,4 @@ public interface SpeedoListener extends java.util.EventListener {
     public void reply(SpeedoReply m);
 }
 
-/* @(#)SpeedoListener.java */
+

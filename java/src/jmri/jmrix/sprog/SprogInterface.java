@@ -30,4 +30,4 @@ public interface SprogInterface {
 }
 
 
-/* @(#)SprogInterface.java */
+

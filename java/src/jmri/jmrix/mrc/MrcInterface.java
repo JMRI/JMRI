@@ -62,4 +62,4 @@ public interface MrcInterface {
 }
 
 
-/* @(#)MrcInterface.java */
+

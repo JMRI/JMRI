@@ -107,4 +107,4 @@ public class EcosPowerManager implements PowerManager, EcosListener {
 }
 
 
-/* @(#)EcosPowerManager.java */
+

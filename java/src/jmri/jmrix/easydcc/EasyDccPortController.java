@@ -35,4 +35,4 @@ public abstract class EasyDccPortController extends jmri.jmrix.AbstractSerialPor
 }
 
 
-/* @(#)EasyDccPortController.java */
+

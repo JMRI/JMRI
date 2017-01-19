@@ -39,4 +39,4 @@ public class XNetProgrammerManager extends DefaultProgrammerManager {
     }
 }
 
-/* @(#)DefaultProgrammerManager.java */
+

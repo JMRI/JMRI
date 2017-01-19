@@ -28,4 +28,4 @@ abstract public class ActiveFlagCS {
 }
 
 
-/* @(#)ActiveFlagCS.java */
+

@@ -18,4 +18,4 @@ public interface EasyDccInterface {
 }
 
 
-/* @(#)EasyDccInterface.java */
+

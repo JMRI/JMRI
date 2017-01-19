@@ -91,4 +91,4 @@ public class JMRIClientPowerManager implements PowerManager, JMRIClientListener 
 }
 
 
-/* @(#)JMRIClientPowerManager.java */
+

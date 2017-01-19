@@ -28,4 +28,4 @@ public class IEEE802154ComponentFactory extends jmri.jmrix.swing.ComponentFactor
 }
 
 
-/* @(#)IEEE802154ComponentFactory.java */
+

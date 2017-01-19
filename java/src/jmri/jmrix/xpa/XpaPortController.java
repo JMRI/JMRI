@@ -18,4 +18,4 @@ public abstract class XpaPortController extends jmri.jmrix.AbstractSerialPortCon
 }
 
 
-/* @(#)XpaPortController.java */
+

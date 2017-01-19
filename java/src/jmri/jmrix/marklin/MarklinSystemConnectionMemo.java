@@ -184,4 +184,4 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 }
 
 
-/* @(#)InternalSystemConnectionMemo.java */
+

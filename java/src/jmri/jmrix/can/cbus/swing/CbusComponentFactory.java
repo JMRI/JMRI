@@ -30,4 +30,4 @@ public class CbusComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 }
 
 
-/* @(#)CbusComponentFactory.java */
+

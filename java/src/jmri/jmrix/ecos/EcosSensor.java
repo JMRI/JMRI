@@ -43,4 +43,4 @@ public class EcosSensor extends AbstractSensor {
     }
 }
 
-/* @(#)EcosSensor.java */
+

@@ -39,4 +39,4 @@ public abstract class GcPortController extends jmri.jmrix.AbstractSerialPortCont
 }
 
 
-/* @(#)GcPortController.java */
+

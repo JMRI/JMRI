@@ -94,4 +94,4 @@ public class SRCPTurnout extends AbstractTurnout {
 }
 
 
-/* @(#)SRCPTurnout.java */
+

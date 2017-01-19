@@ -223,4 +223,4 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 }
 
 
-/* @(#)InternalSystemConnectionMemo.java */
+

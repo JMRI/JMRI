@@ -54,4 +54,4 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
     }
 }
 
-/* @(#)RpsSensorManager.java */
+

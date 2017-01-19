@@ -115,4 +115,4 @@ public class Reading {
     final Object rawData;
 }
 
-/* @(#)Reading.java */
+

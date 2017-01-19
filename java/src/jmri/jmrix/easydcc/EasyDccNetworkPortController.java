@@ -23,4 +23,4 @@ public abstract class EasyDccNetworkPortController extends jmri.jmrix.AbstractNe
 }
 
 
-/* @(#)EasyDccPortController.java */
+

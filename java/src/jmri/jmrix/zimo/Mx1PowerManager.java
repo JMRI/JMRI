@@ -130,4 +130,4 @@ public class Mx1PowerManager implements PowerManager, Mx1Listener {
 }
 
 
-/* @(#)Mx1PowerManager.java */
+

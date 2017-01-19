@@ -29,4 +29,4 @@ public interface MarklinInterface {
     void sendMarklinMessage(MarklinMessage m, MarklinListener l);
 }
 
-/* @(#)MarklinInterface.java */
+

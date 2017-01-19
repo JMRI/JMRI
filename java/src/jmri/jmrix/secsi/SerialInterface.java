@@ -18,4 +18,4 @@ public interface SerialInterface {
 }
 
 
-/* @(#)SerialInterface.java */
+

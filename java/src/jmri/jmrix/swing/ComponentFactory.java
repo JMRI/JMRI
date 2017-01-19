@@ -21,4 +21,4 @@ abstract public class ComponentFactory {
 
 }
 
-/* @(#)ComponentFactory.java */
+

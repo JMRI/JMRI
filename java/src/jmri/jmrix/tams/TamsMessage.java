@@ -282,4 +282,4 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
     static Logger log = LoggerFactory.getLogger(TamsMessage.class.getName());
 }
 
-/* @(#)TamsMessage.java */
+

@@ -21,4 +21,4 @@ public interface SpeedoInterface {
     boolean status();
 }
 
-/* @(#)SpeedoInterface.java */
+

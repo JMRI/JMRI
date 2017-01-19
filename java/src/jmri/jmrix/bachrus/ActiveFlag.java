@@ -27,4 +27,4 @@ abstract public class ActiveFlag {
 
 }
 
-/* @(#)ActiveFlag.java */
+

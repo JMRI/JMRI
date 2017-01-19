@@ -110,4 +110,4 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
 }
 
 
-/* @(#)JMRIClientSensor.java */
+

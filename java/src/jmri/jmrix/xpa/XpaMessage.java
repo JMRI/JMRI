@@ -210,4 +210,4 @@ public class XpaMessage implements jmri.jmrix.Message {
 
 }
 
-/* @(#)XpaMessage.java */
+

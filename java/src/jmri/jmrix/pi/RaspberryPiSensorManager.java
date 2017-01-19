@@ -41,4 +41,4 @@ public class RaspberryPiSensorManager extends jmri.managers.AbstractSensorManage
 
 }
 
-/* @(#)RaspberryPiSensorManager.java */
+

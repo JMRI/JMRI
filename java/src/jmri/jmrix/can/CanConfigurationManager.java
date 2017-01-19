@@ -55,4 +55,4 @@ public class CanConfigurationManager extends ConfigurationManager {
 
 }
 
-/* @(#)ConfigurationManager.java */
+

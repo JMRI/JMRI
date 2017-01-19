@@ -42,4 +42,4 @@ public class EcosMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 }
-/* @(#)EcosMessage.java */
+

@@ -50,4 +50,4 @@ public abstract class XNetSimulatorPortController extends jmri.jmrix.AbstractSer
 }
 
 
-/* @(#)XNetSimulatorPortController.java */
+

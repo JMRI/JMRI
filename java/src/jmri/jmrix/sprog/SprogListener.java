@@ -14,4 +14,4 @@ public interface SprogListener extends java.util.EventListener {
     public void notifyReply(SprogReply m);
 }
 
-/* @(#)SprogListener.java */
+

@@ -34,4 +34,4 @@ public abstract class SpeedoPortController extends jmri.jmrix.AbstractSerialPort
 
 }
 
-/* @(#)SpeedoPortController.java */
+

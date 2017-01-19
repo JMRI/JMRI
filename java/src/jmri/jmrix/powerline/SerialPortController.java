@@ -24,4 +24,4 @@ public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPort
 }
 
 
-/* @(#)SerialPortController.java */
+

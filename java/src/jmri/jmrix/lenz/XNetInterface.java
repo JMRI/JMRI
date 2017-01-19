@@ -123,4 +123,4 @@ public interface XNetInterface {
 }
 
 
-/* @(#)XNetInterface.java */
+

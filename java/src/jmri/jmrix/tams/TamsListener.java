@@ -16,4 +16,4 @@ public interface TamsListener extends jmri.jmrix.AbstractMRListener {
     public void reply(TamsReply m);
 }
 
-/* @(#)TamsListener.java */
+

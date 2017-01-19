@@ -43,4 +43,4 @@ public class SerialMonAction extends AbstractAction {
 }
 
 
-/* @(#)SerialMonAction.java */
+

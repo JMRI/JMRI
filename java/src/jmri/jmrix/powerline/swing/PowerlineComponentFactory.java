@@ -29,4 +29,4 @@ public class PowerlineComponentFactory extends jmri.jmrix.swing.ComponentFactory
 }
 
 
-/* @(#)PowerlineComponentFactory.java */
+

@@ -38,4 +38,4 @@ public abstract class MrcPortController extends jmri.jmrix.AbstractSerialPortCon
 }
 
 
-/* @(#)MrcPortController.java */
+

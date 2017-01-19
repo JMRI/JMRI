@@ -71,4 +71,4 @@ public class SpeedoSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
 }
 
 
-/* @(#)InternalSystemConnectionMemo.java */
+

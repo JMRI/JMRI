@@ -68,4 +68,4 @@ public class JMRIClientMessage extends jmri.jmrix.AbstractMRMessage {
 
 }
 
-/* @(#)JMRIClientMessage.java */
+

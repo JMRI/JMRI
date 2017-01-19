@@ -70,4 +70,4 @@ public class PowerlineMenu extends JMenu {
     }
 }
 
-/* @(#)PowerlineMenu.java */
+

@@ -10,4 +10,4 @@ public class LoaderAction extends LoaderPane.Default {
 
 }
 
-/* @(#)LoaderAction.java */
+

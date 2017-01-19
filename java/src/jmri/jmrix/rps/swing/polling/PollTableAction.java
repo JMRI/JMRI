@@ -45,4 +45,4 @@ public class PollTableAction extends AbstractAction {
 }
 
 
-/* @(#)PollTableAction.java */
+

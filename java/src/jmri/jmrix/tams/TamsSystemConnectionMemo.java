@@ -209,4 +209,4 @@ public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 }
 
 
-/* @(#)InternalSystemConnectionMemo.java */
+

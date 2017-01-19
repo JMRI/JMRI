@@ -50,4 +50,4 @@ public class MarklinNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction 
     private final static Logger log = LoggerFactory.getLogger(MarklinNamedPaneAction.class.getName());
 }
 
-/* @(#)MarklinNamedPaneAction.java */
+

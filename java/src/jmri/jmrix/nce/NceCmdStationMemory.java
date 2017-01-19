@@ -124,4 +124,4 @@ public class NceCmdStationMemory {
     public static final int FUNC_H_F28 = 0x80;		// F28
 }
 
-/* @(#)NceCmdStationMemory.java */
+

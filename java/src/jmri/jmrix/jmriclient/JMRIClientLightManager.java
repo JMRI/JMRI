@@ -54,4 +54,4 @@ public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
 
 }
 
-/* @(#)JMRIClientLightManager.java */
+

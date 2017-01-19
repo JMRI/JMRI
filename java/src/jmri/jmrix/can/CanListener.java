@@ -13,4 +13,4 @@ public interface CanListener extends jmri.jmrix.AbstractMRListener {
     public void reply(CanReply m);
 }
 
-/* @(#)CanListener.java */
+

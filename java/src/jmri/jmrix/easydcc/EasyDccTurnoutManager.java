@@ -39,4 +39,4 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
 
 }
 
-/* @(#)EasyDccTurnoutManager.java */
+

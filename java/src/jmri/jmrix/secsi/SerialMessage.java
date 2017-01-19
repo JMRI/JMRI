@@ -85,4 +85,4 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
 }
 
-/* @(#)SerialMessage.java */
+

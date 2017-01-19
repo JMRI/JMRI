@@ -34,4 +34,4 @@ public abstract class PortController extends jmri.jmrix.AbstractSerialPortContro
         return (CanSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 }
-/* @(#)PortController.java */
+

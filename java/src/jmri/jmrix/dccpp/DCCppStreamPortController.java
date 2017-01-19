@@ -58,4 +58,4 @@ public class DCCppStreamPortController extends jmri.jmrix.AbstractStreamPortCont
 }
 
 
-/* @(#)DCCppStreamPortController.java */
+

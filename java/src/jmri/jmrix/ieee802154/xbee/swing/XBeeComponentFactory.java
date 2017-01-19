@@ -27,4 +27,4 @@ public class XBeeComponentFactory extends jmri.jmrix.swing.ComponentFactory {
     }
 }
 
-/* @(#)XBeeComponentFactory.java */
+

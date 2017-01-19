@@ -100,4 +100,4 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
 }
 
 
-/* @(#)XNetSerialPortController.java */
+

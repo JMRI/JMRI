@@ -14,4 +14,4 @@ public class DCCppMonAction extends DCCppMonPane.Default {
 }
 
 
-/* @(#)DCCppMonAction.java */
+

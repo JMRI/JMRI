@@ -13,4 +13,4 @@ public interface SprogVersionListener extends java.util.EventListener {
 
 }
 
-/* @(#)SprogVersionListener.java */
+

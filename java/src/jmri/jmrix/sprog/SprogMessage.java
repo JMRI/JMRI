@@ -544,4 +544,4 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
 
 }
 
-/* @(#)SprogMessage.java */
+

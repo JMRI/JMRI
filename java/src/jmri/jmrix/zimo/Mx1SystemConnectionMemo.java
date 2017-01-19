@@ -220,4 +220,4 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 }
 
 
-/* @(#)Mx1SystemConnectionMemo.java */
+

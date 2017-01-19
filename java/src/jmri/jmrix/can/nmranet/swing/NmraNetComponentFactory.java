@@ -30,4 +30,4 @@ public class NmraNetComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 }
 
 
-/* @(#)NmraNetComponentFactory.java */
+

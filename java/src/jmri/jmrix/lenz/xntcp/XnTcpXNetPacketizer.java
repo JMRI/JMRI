@@ -76,4 +76,4 @@ public class XnTcpXNetPacketizer extends XNetPacketizer {
     private final static Logger log = LoggerFactory.getLogger(XnTcpXNetPacketizer.class.getName());
 }
 
-/* @(#)XnTcpXNetPacketizer.java */
+

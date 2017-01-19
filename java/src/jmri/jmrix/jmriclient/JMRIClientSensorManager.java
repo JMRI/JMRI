@@ -44,4 +44,4 @@ public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager
 
 }
 
-/* @(#)JMRIClientSensorManager.java */
+

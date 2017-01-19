@@ -112,4 +112,4 @@ public class EasyDccPowerManager implements PowerManager, EasyDccListener {
 }
 
 
-/* @(#)EasyDccPowerManager.java */
+

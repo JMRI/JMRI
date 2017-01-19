@@ -14,4 +14,4 @@ public interface Constants {
 
 }
 
-/* @(#)Constants.java */
+

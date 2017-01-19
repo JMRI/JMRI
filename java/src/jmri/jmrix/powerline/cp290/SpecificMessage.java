@@ -222,4 +222,4 @@ public class SpecificMessage extends SerialMessage {
     }
 }
 
-/* @(#)SpecificMessage.java */
+

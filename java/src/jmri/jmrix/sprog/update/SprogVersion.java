@@ -163,4 +163,4 @@ public class SprogVersion {
     private final static Logger log = LoggerFactory.getLogger(SprogVersion.class.getName());
 }
 
-/* @(#)SprogVersion.java */
+

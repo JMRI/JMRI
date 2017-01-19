@@ -340,4 +340,4 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
     private final static Logger log = LoggerFactory.getLogger(Analytic_AAlgorithm.class.getName());
 }
 
-/* @(#)Analytic_AAlgorithm.java */
+

@@ -102,4 +102,4 @@ public class MarklinPowerManager implements PowerManager, MarklinListener {
 }
 
 
-/* @(#)MarklinPowerManager.java */
+

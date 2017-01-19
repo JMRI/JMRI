@@ -205,4 +205,4 @@ public class XNetLight extends AbstractLight implements XNetListener {
     private final static Logger log = LoggerFactory.getLogger(XNetLight.class.getName());
 }
 
-/* @(#)XNetLight.java */
+

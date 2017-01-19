@@ -91,4 +91,4 @@ public class SerialTurnout extends AbstractTurnout {
     private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
 }
 
-/* @(#)SerialTurnout.java */
+

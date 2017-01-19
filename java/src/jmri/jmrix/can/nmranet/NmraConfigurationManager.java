@@ -56,4 +56,4 @@ public class NmraConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
 }
 
-/* @(#)ConfigurationManager.java */
+

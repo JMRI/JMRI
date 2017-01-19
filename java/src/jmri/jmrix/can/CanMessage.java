@@ -197,4 +197,4 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
     boolean _isRtr;
 }
 
-/* @(#)CanMessage.java */
+

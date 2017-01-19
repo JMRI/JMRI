@@ -22,4 +22,4 @@ public final class OlcbConstants {
 
 }
 
-/* @(#)OlcbConstants.java */
+

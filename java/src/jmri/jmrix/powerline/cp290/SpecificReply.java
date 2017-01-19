@@ -53,4 +53,4 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 
 }
 
-/* @(#)SpecificReply.java */
+

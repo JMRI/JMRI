@@ -16,4 +16,4 @@ public class InternalTurnoutManager extends jmri.managers.InternalTurnoutManager
     }
 }
 
-/* @(#)InternalTurnoutManager.java */
+

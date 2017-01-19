@@ -74,4 +74,4 @@ public class Port extends AbstractSerialPortController {
     }
 }
 
-/* @(#)Port.java */
+

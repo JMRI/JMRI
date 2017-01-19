@@ -37,4 +37,4 @@ public class SpecificSystemConnectionMemo extends jmri.jmrix.powerline.SerialSys
 
 }
 
-/* @(#)SpecificSystemConnectionMemo.java */
+

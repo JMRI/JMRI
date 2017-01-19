@@ -25,4 +25,4 @@ abstract public class TrafficController extends AbstractCanTrafficController {
 }
 
 
-/* @(#)GcTrafficController.java */
+

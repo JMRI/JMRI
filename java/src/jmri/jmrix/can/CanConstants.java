@@ -24,4 +24,4 @@ public final class CanConstants {
     public static final int CAN232 = 2;
 }
 
-/* @(#)CanConstants.java */
+

@@ -109,4 +109,4 @@ public class JMRIClientLight extends AbstractLight implements JMRIClientListener
 }
 
 
-/* @(#)JMRIClientLight.java */
+

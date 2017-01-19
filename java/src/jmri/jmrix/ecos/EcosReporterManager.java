@@ -34,4 +34,4 @@ public class EcosReporterManager extends jmri.managers.AbstractReporterManager {
     }
 }
 
-/* @(#)EcosReporterManager.java */
+

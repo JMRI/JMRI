@@ -457,4 +457,4 @@ public class Ash1_0Algorithm implements Calculator {
     }
 }
 
-/* @(#)Ash1_0Algorithm.java */
+

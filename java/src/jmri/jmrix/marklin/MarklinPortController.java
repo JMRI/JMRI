@@ -20,4 +20,4 @@ public abstract class MarklinPortController extends jmri.jmrix.AbstractNetworkPo
 }
 
 
-/* @(#)MarklinPortController.java */
+

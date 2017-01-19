@@ -37,4 +37,4 @@ public class SerialSensor extends AbstractSensor {
 
 }
 
-/* @(#)SerialSensor.java */
+

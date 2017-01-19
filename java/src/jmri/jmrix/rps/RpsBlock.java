@@ -137,4 +137,4 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
 
 }
 
-/* @(#)RpsBlock.java */
+

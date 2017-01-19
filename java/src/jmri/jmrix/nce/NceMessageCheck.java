@@ -125,4 +125,4 @@ public class NceMessageCheck {
     private final static Logger log = LoggerFactory.getLogger(NceMessageCheck.class.getName());
 }
 
-/* @(#)NceMessageCheck.java */
+

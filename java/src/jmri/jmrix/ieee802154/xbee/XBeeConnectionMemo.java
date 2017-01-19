@@ -177,4 +177,4 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
 }
 
 
-/* @(#)XBeeConnectionMemo.java */
+

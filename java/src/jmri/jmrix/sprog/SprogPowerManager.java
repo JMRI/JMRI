@@ -108,4 +108,4 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
 
 }
 
-/* @(#)SprogPowerManager.java */
+

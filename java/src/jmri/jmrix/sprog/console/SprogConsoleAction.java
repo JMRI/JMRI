@@ -33,4 +33,4 @@ public class SprogConsoleAction extends AbstractAction {
 }
 
 
-/* @(#)SprogConsoleAction.java */
+

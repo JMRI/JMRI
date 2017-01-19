@@ -231,4 +231,4 @@ public class NceUSB {
 }
 
 
-/* @(#)NceUSB.java */
+

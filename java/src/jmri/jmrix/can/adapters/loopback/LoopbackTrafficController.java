@@ -136,4 +136,4 @@ public class LoopbackTrafficController extends jmri.jmrix.can.TrafficController 
 }
 
 
-/* @(#)LoopbackTrafficController.java */
+

@@ -172,4 +172,4 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
 }
 
 
-/* @(#)OlcbSystemConnectionMemo.java */
+

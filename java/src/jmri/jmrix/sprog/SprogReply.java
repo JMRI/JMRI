@@ -277,4 +277,4 @@ public class SprogReply extends AbstractMRReply {
 }
 
 
-/* @(#)SprogReply.java */
+

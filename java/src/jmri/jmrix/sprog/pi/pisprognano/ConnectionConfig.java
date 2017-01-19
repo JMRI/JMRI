@@ -53,4 +53,4 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 }
 
-/* @(#)ConnectionConfig.java */
+

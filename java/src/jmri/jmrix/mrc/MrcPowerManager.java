@@ -96,4 +96,4 @@ public class MrcPowerManager
     private final static Logger log = LoggerFactory.getLogger(MrcPowerManager.class.getName());
 }
 
-/* @(#)LnPowerManager.java */
+

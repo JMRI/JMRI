@@ -159,4 +159,4 @@ public class OutputBits {
     private final static Logger log = LoggerFactory.getLogger(OutputBits.class.getName());
 }
 
-/* @(#)OutputBits.java */
+

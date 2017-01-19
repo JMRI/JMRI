@@ -229,4 +229,4 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
 
 }
 
-/* @(#)SRCPMessage.java */
+

@@ -31,4 +31,4 @@ public interface TamsInterface {
     void sendTamsMessage(TamsMessage m, TamsListener l);
 }
 
-/* @(#)TamsInterface.java */
+

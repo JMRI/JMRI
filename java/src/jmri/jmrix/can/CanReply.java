@@ -172,4 +172,4 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
     boolean _isRtr;
 }
 
-/* @(#)CanReply.java */
+

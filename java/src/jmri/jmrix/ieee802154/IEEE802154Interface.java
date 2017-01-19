@@ -17,4 +17,4 @@ public interface IEEE802154Interface {
 }
 
 
-/* @(#)IEEE802154Interface.java */
+

@@ -46,4 +46,4 @@ public interface DCCppListener extends jmri.jmrix.AbstractMRListener {
     public void notifyTimeout(DCCppMessage msg);
 
 }
-/* @(#)DCCppListener.java */
+

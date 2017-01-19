@@ -39,4 +39,4 @@ public class SpecificLightManager extends jmri.jmrix.powerline.SerialLightManage
     }
 }
 
-/* @(#)SpecificLightManager.java */
+

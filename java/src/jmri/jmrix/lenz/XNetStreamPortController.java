@@ -57,4 +57,4 @@ public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortContr
 }
 
 
-/* @(#)XNetStreamPortController.java */
+

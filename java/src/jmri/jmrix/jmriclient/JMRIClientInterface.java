@@ -18,4 +18,4 @@ public interface JMRIClientInterface {
 }
 
 
-/* @(#)JMRIClientInterface.java */
+

@@ -89,4 +89,4 @@ public class JMRIClientReporter extends AbstractReporter implements JMRIClientLi
 }
 
 
-/* @(#)JMRIClientReporter.java */
+

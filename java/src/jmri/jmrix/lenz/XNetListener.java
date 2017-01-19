@@ -43,4 +43,4 @@ public interface XNetListener extends jmri.jmrix.AbstractMRListener {
     public void notifyTimeout(XNetMessage msg);
 
 }
-/* @(#)XNetListener.java */
+

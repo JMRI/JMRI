@@ -85,4 +85,4 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
 
 }
 
-/* @(#)EliteXNetTurnoutManager.java */
+

@@ -1411,4 +1411,4 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 
 }
 
-/* @(#)XNetMessage.java */
+

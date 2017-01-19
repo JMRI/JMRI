@@ -114,4 +114,4 @@ public class NcePowerManager implements PowerManager, NceListener {
 }
 
 
-/* @(#)NcePowerManager.java */
+

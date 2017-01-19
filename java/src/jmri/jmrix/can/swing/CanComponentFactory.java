@@ -30,4 +30,4 @@ public class CanComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 }
 
 
-/* @(#)CanComponentFactory.java */
+

@@ -288,4 +288,4 @@ public class MarklinMessage extends jmri.jmrix.AbstractMRMessage {
     }
 }
 
-/* @(#)MarklinMessage.java */
+

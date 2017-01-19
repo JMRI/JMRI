@@ -162,4 +162,4 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
 }
 
 
-/* @(#)JMRIClientTurnout.java */
+

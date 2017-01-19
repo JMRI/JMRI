@@ -16,4 +16,4 @@ public class InternalSensorManager extends jmri.managers.InternalSensorManager {
     }
 }
 
-/* @(#)InternalSensorManager.java */
+

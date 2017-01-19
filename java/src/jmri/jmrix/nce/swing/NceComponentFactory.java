@@ -29,4 +29,4 @@ public class NceComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 }
 
 
-/* @(#)LnComponentFactory.java */
+

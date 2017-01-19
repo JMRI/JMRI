@@ -150,4 +150,4 @@ public class Message extends AbstractMRMessage {
     private final static Logger log = LoggerFactory.getLogger(Message.class.getName());
 }
 
-/* @(#)Message.java */
+

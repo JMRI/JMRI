@@ -165,4 +165,4 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
 }
 
 
-/* @(#)SerialSystemConnectionMemo.java */
+

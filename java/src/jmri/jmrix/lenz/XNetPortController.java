@@ -29,4 +29,4 @@ public interface XNetPortController extends jmri.jmrix.PortAdapter {
 }
 
 
-/* @(#)XNetPortController.java */
+

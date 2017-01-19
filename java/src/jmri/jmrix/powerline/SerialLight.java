@@ -128,4 +128,4 @@ abstract public class SerialLight extends AbstractVariableLight {
     private final static Logger log = LoggerFactory.getLogger(SerialLight.class.getName());
 }
 
-/* @(#)SerialLight.java */
+

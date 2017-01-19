@@ -170,4 +170,4 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
 
 }
 
-/* @(#)XNetSensorManager.java */
+

@@ -158,4 +158,4 @@ public class LawicellTrafficController extends jmri.jmrix.can.TrafficController 
 }
 
 
-/* @(#)LawicellTrafficController.java */
+

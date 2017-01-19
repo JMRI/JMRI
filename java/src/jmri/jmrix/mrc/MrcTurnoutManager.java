@@ -36,4 +36,4 @@ public class MrcTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
 }
 
-/* @(#)MrcTurnoutManager.java */
+

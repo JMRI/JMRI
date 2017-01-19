@@ -500,4 +500,4 @@ public class Ash1_1Algorithm implements Calculator {
     }
 }
 
-/* @(#)Ash1_1Algorithm.java */
+

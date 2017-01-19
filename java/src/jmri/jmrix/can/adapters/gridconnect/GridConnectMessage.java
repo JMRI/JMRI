@@ -149,4 +149,4 @@ public class GridConnectMessage extends AbstractMRMessage {
     private final static Logger log = LoggerFactory.getLogger(GridConnectMessage.class.getName());
 }
 
-/* @(#)GridConnectMessage.java */
+

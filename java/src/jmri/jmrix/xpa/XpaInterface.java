@@ -30,4 +30,4 @@ public interface XpaInterface {
 }
 
 
-/* @(#)XpaInterface.java */
+

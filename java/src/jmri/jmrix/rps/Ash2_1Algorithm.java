@@ -404,4 +404,4 @@ public class Ash2_1Algorithm extends AbstractCalculator {
 
 }
 
-/* @(#)Ash2_1Algorithm.java */
+

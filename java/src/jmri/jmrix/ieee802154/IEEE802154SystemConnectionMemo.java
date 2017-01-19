@@ -110,4 +110,4 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
 }
 
 
-/* @(#)IEEE802154SystemConnectionMemo.java */
+

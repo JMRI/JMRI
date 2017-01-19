@@ -46,4 +46,4 @@ public class OpenLcbLocoAddress extends DccLocoAddress {
 }
 
 
-/* @(#)OpenLcbLocoAddress.java */
+

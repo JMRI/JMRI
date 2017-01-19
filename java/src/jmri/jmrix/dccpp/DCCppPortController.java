@@ -32,4 +32,4 @@ public interface DCCppPortController extends jmri.jmrix.PortAdapter {
 }
 
 
-/* @(#)DCCppPortController.java */
+

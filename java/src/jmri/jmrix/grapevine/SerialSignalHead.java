@@ -136,4 +136,4 @@ public class SerialSignalHead extends DefaultSignalHead {
     private final static Logger log = LoggerFactory.getLogger(SerialSignalHead.class.getName());
 }
 
-/* @(#)SerialSignalHead.java */
+

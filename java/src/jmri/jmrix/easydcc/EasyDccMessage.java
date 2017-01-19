@@ -221,4 +221,4 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
 }
 
 
-/* @(#)EasyDccMessage.java */
+

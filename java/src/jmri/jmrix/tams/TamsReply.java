@@ -81,4 +81,4 @@ public class TamsReply extends jmri.jmrix.AbstractMRReply {
 
 }
 
-/* @(#)TamsReply.java */
+

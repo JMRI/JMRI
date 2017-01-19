@@ -21,4 +21,4 @@ public abstract class QsiPortController extends jmri.jmrix.AbstractSerialPortCon
 }
 
 
-/* @(#)QsiPortController.java */
+

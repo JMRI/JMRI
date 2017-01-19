@@ -69,4 +69,4 @@ abstract public class ConfigurationManager {
     private final static Logger log = LoggerFactory.getLogger(ConfigurationManager.class.getName());
 }
 
-/* @(#)ConfigurationManager.java */
+

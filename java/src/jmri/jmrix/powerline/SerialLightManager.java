@@ -98,4 +98,4 @@ abstract public class SerialLightManager extends AbstractLightManager {
 
 }
 
-/* @(#)SerialLightManager.java */
+

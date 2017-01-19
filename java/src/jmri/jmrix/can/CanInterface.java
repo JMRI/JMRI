@@ -29,4 +29,4 @@ public interface CanInterface {
 }
 
 
-/* @(#)CanInterface.java */
+

@@ -94,4 +94,4 @@ public class XpaPowerManager implements PowerManager, XpaListener {
 
 }
 
-/* @(#)XpaPowerManager.java */
+

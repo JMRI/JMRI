@@ -35,4 +35,4 @@ public class Mx1TurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
 }
 
-/* @(#)Mx1TurnoutManager.java */
+

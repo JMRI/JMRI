@@ -13,4 +13,4 @@ abstract public interface IEEE802154Listener extends jmri.jmrix.AbstractMRListen
     public void reply(IEEE802154Reply m);
 }
 
-/* @(#)IEEE802154Listener.java */
+

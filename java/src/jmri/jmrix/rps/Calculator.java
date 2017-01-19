@@ -22,4 +22,4 @@ public interface Calculator {
 
 }
 
-/* @(#)Calculator.java */
+

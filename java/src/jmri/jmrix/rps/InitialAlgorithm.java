@@ -357,4 +357,4 @@ public class InitialAlgorithm implements Calculator {
 
 }
 
-/* @(#)InitialAlgorithm.java */
+
