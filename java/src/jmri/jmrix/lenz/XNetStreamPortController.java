@@ -3,6 +3,7 @@ package jmri.jmrix.lenz;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 /**
  * Abstract base for classes representing a XNet communications port
@@ -12,6 +13,8 @@ import java.io.DataOutputStream;
  * @author	Paul Bender Copyright (C) 2004,2010,2014
   */
 public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortController implements XNetPortController {
+
+    private boolean timeSlot = true;
 
     public XNetStreamPortController(DataInputStream in, DataOutputStream out, String pname) {
         super(new XNetSystemConnectionMemo(), in, out, pname);
@@ -42,9 +45,47 @@ public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortContr
     /**
      * Can the port accept additional characters?
      */
+    @Override
+    @OverridingMethodsMustInvokeSuper
     public boolean okToSend() {
-        return (true);
+        return ( status() && hasTimeSlot() );
     }
+
+    /**
+     * Indiciate the command station is currently providing a timeslot to this
+     * port controller.
+     *
+     * @return true if the command station is currently providing a timeslot.
+     */
+    @Override
+    public boolean hasTimeSlot(){
+        return timeSlot;
+    }
+
+    /**
+     * <p>
+     * Set a variable indicating whether or not the command station is
+     * providing a timeslot.
+     * </p>
+     * <p>
+     * This method should be called with the paramter set to false if
+     * a "Command Station No Longer Providing a timeslot for communications"
+     * (01 05 04) is received.
+     * </p>
+     * <p>
+     * This method should be called with the parameter set to true if
+     * a "Command Station is providing a timeslot for communications again."
+     * (01 07 06) is received.
+     * </p>
+     *
+     * @param timeslot true if a timeslot is being sent, false otherwise.
+     */
+    @Override
+    public void setTimeSlot(boolean timeslot){
+       timeSlot = timeslot;
+    }  
+
+    
 
     /**
      * we need a way to say if the output buffer is empty or full this should
