@@ -24,7 +24,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     public String name() {
-        return "LocoNet LocoBuffer-II";
+        return "LocoNet LocoBuffer-II"; // NOI18N
     }
 
     public boolean isOptList2Advanced() {

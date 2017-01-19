@@ -20,7 +20,7 @@ public class LnSensorManagerXml extends jmri.managers.configurexml.AbstractSenso
     }
 
     public void setStoreElementClass(Element sensors) {
-        sensors.setAttribute("class", this.getClass().getName());
+        sensors.setAttribute("class", this.getClass().getName()); // NOI18N
     }
 
     public void load(Element element, Object o) {

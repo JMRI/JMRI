@@ -40,13 +40,18 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
         } catch (java.io.IOException e) {
             log.error("init (pipe): Exception: " + e.toString());
         }
-        options.put("SensorDefaultState", new Option(Bundle.getMessage("DefaultSensorState") + ":", new String[]{Bundle.getMessage("BeanStateUnknown"), Bundle.getMessage("SensorStateInactive"), Bundle.getMessage("SensorStateActive")}, true));
+        options.put("SensorDefaultState",  // NOI18N
+                new Option(Bundle.getMessage("DefaultSensorState") + 
+                        ":",  // NOI18N
+                        new String[]{Bundle.getMessage("BeanStateUnknown"), 
+                            Bundle.getMessage("SensorStateInactive"), 
+                            Bundle.getMessage("SensorStateActive")}, true));
     }
 
     /* load(File) fills the contents from a file */
     public void load(File file) {
         if (log.isDebugEnabled()) {
-            log.debug("file: " + file);
+            log.debug("file: " + file); // NOI18N
         }
 
         // create the pipe stream for output, also store as the input stream if somebody wants to send
@@ -54,7 +59,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
         try {
             sFile = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
         } catch (Exception e) {
-            log.error("load (pipe): Exception: " + e.toString());
+            log.error("load (pipe): Exception: " + e.toString()); // NOI18N
         }
     }
 
@@ -73,7 +78,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
 
     public void run() { // invoked in a new thread
         if (log.isInfoEnabled()) {
-            log.info("LocoNet Simulator Started");
+            log.info("LocoNet Simulator Started"); // NOI18N
         }
         while (true) {
             while (sFile == null) {
@@ -82,16 +87,16 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
                 try {
                     Thread.sleep(10000);
                 } catch (InterruptedException e) {
-                    log.info("LnHexFilePort.run: woken from sleep");
+                    log.info("LnHexFilePort.run: woken from sleep"); // NOI18N
                     if (sFile == null) {
-                        log.error("LnHexFilePort.run: unexpected InterruptedException, exiting");
+                        log.error("LnHexFilePort.run: unexpected InterruptedException, exiting"); // NOI18N
                         Thread.currentThread().interrupt();
                         return;
                     }
                 }
             }
 
-            log.info("LnHexFilePort.run: changing input file...");
+            log.info("LnHexFilePort.run: changing input file..."); // NOI18N
 
             // process the input file into the output side of pipe
             _running = true;
@@ -123,19 +128,19 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
                 }
 
                 // here we're done processing the file
-                log.info("LnHexFDilePort.run: normal finish to file");
+                log.info("LnHexFDilePort.run: normal finish to file"); // NOI18N
 
             } catch (InterruptedException e) {
                 if (sFile != null) { // changed in another thread before the interrupt
-                    log.info("LnHexFilePort.run: user selected new file");
+                    log.info("LnHexFilePort.run: user selected new file"); // NOI18N
                     // swallow the exception since we have handled its intent
                 } else {
-                    log.error("LnHexFilePort.run: unexpected InterruptedException, exiting");
+                    log.error("LnHexFilePort.run: unexpected InterruptedException, exiting"); // NOI18N
                     Thread.currentThread().interrupt();
                     return;
                 }
             } catch (Exception e) {
-                log.error("run: Exception: " + e.toString());
+                log.error("run: Exception: " + e.toString()); // NOI18N
             }
             _running = false;
         }
@@ -151,14 +156,14 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
     // base class methods
     public DataInputStream getInputStream() {
         if (pin == null) {
-            log.error("getInputStream: called before load(), stream not available");
+            log.error("getInputStream: called before load(), stream not available"); // NOI18N
         }
         return pin;
     }
 
     public DataOutputStream getOutputStream() {
         if (pout == null) {
-            log.error("getOutputStream: called before load(), stream not available");
+            log.error("getOutputStream: called before load(), stream not available"); // NOI18N
         }
         return pout;
     }
@@ -190,24 +195,24 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
     private int delay = 100;  				// units are milliseconds; default is quiet a busy LocoNet
 
     public java.util.Vector<String> getPortNames() {
-        log.error("getPortNames should not have been invoked");
+        log.error("getPortNames should not have been invoked"); // NOI18N
         new Exception().printStackTrace();
         return null;
     }
 
     public String openPort(String portName, String appName) {
-        log.error("openPort should not have been invoked");
+        log.error("openPort should not have been invoked"); // NOI18N
         new Exception().printStackTrace();
         return null;
     }
 
     public void configure() {
-        log.error("configure should not have been invoked");
+        log.error("configure should not have been invoked"); // NOI18N
         //new Exception().printStackTrace();
     }
 
     public String[] validBaudRates() {
-        log.error("validBaudRates should not have been invoked");
+        log.error("validBaudRates should not have been invoked"); // NOI18N
         new Exception().printStackTrace();
         return null;
     }
@@ -235,7 +240,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
      */
     public void configureOption3(String value) {
         super.configureOption3(value);
-        log.debug("configureOption3: " + value);
+        log.debug("configureOption3: " + value); // NOI18N
         setTurnoutHandling(value);
     }
 

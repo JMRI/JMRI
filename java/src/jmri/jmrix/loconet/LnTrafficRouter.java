@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 public class LnTrafficRouter extends LnTrafficController implements LocoNetListener {
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "Only used during system initialization")
+            justification = "Only used during system initialization") // NOI18N
     public LnTrafficRouter() {
         // set the instance to point here
         self = this;

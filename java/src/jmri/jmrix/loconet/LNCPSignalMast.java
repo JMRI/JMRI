@@ -21,14 +21,14 @@ import org.slf4j.LoggerFactory;
 public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
 
     public LNCPSignalMast(String sys, String user) {
-        super(sys, user, "F$lncpsm");
+        super(sys, user, "F$lncpsm"); // NOI18N
         packetRepeatCount = 1;
         configureFromName(sys);
         init();
     }
 
     public LNCPSignalMast(String sys) {
-        super(sys, null, "F$lncpsm");
+        super(sys, null, "F$lncpsm"); // NOI18N
         packetRepeatCount = 1;
         configureFromName(sys);
         init();
@@ -110,8 +110,8 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
     public void setKnownState(String aspect) {
         String oldAspect = this.aspect;
         this.aspect = aspect;
-        this.speed = (String) getSignalSystem().getProperty(aspect, "speed");
-        firePropertyChange("Aspect", oldAspect, aspect);
+        this.speed = (String) getSignalSystem().getProperty(aspect, "speed"); // NOI18N
+        firePropertyChange("Aspect", oldAspect, aspect); // NOI18N
     }
 
     public void dispose() {

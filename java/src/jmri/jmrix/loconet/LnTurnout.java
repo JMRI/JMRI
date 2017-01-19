@@ -41,8 +41,8 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
         super(prefix + "T" + number);  // can't use prefix here, as still in construction
         log.debug("new turnout " + number);
         if (number < NmraPacket.accIdLowLimit || number > NmraPacket.accIdAltHighLimit) {
-            throw new IllegalArgumentException("Turnout value: " + number 
-                    + " not in the range " + NmraPacket.accIdLowLimit + " to " 
+            throw new IllegalArgumentException("Turnout value: " + number  // NOI18N
+                    + " not in the range " + NmraPacket.accIdLowLimit + " to "  // NOI18N
                     + NmraPacket.accIdAltHighLimit);
         }
 
@@ -71,7 +71,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     LocoNetInterface controller;
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "Only used during creation of 1st turnout")
+            justification = "Only used during creation of 1st turnout") // NOI18N
     private void initFeedbackModes() {
         if (_validFeedbackNames.length != _validFeedbackModes.length) {
             log.error("int and string feedback arrays different length");
@@ -82,11 +82,11 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
             tempModeNames[i] = _validFeedbackNames[i];
             tempModeValues[i] = _validFeedbackModes[i];
         }
-        tempModeNames[_validFeedbackNames.length] = "MONITORING";
+        tempModeNames[_validFeedbackNames.length] = "MONITORING"; // NOI18N
         tempModeValues[_validFeedbackNames.length] = MONITORING;
-        tempModeNames[_validFeedbackNames.length + 1] = "INDIRECT";
+        tempModeNames[_validFeedbackNames.length + 1] = "INDIRECT"; // NOI18N
         tempModeValues[_validFeedbackNames.length + 1] = INDIRECT;
-        tempModeNames[_validFeedbackNames.length + 2] = "EXACT";
+        tempModeNames[_validFeedbackNames.length + 2] = "EXACT"; // NOI18N
         tempModeValues[_validFeedbackNames.length + 2] = EXACT;
 
         modeNames = tempModeNames;

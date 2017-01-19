@@ -127,6 +127,13 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     } else {
                         log.error("Priority missing when reading TrainInfoFile " + name);
                     }
+                    if (traininfo.getAttribute("allocatealltheway") != null) {
+                        tInfo.setAllocateAllTheWay(true);
+                        if (traininfo.getAttribute("allocatealltheway").getValue().equals("no")) {
+                            tInfo.setAllocateAllTheWay(false);
+                        }
+                    }
+
                     if (traininfo.getAttribute("resetwhendone") != null) {
                         tInfo.setResetWhenDone(true);
                         if (traininfo.getAttribute("resetwhendone").getValue().equals("no")) {
@@ -284,6 +291,8 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         traininfo.setAttribute("traintype", tf.getTrainType());
         traininfo.setAttribute("autorun", "" + (tf.getAutoRun() ? "yes" : "no"));
         traininfo.setAttribute("loadatstartup", "" + (tf.getLoadAtStartup() ? "yes" : "no"));
+        traininfo.setAttribute("allocatealltheway", "" + (tf.getAllocateAllTheWay() ? "yes" : "no"));
+        
         // here save items related to automatically running active trains
         traininfo.setAttribute("speedfactor", Float.toString(tf.getSpeedFactor()));
         traininfo.setAttribute("maxspeed", Float.toString(tf.getMaxSpeed()));
