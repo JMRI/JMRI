@@ -69,6 +69,24 @@
             <xs:element name="locY" type="xs:float" minOccurs="0" maxOccurs="1"/>
             <xs:element name="width" type="xs:float" minOccurs="0" maxOccurs="1"/>
             <xs:element name="height" type="xs:float" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="properties" minOccurs="0" maxOccurs="1">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="property">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="key" type="xs:string" minOccurs="1" maxOccurs="1" />
+                        <xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="1">
+                          <xs:complexType>
+                            <xs:attribute name="class" type="xs:string" use="required" />
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
           </xs:sequence>
           <xs:attribute name="class" type="xs:string" use="required" />
         </xs:complexType>
