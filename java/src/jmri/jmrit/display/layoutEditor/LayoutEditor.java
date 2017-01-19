@@ -65,6 +65,7 @@ import jmri.MemoryManager;
 import jmri.NamedBean;
 import jmri.Reporter;
 import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
@@ -205,7 +206,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JPanel blockPanel = new JPanel();
     private JmriBeanComboBox blockIDComboBox = new JmriBeanComboBox(
         InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
-    private JTextField blockSensor = new JTextField(5);
+    private JmriBeanComboBox blockSensorComboBox = new JmriBeanComboBox(
+        InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DISPLAYNAME);
 
     // 3rd row of radio buttons (and any associated text fields)
     private JRadioButton endBumperButton = new JRadioButton(rb.getString("EndBumper"));
@@ -728,9 +730,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         blockIDComboBox.setToolTipText(rb.getString("BlockIDToolTip"));
 
         blockPanel.add(new JLabel(Bundle.getMessage("BeanNameSensor")));
-        blockPanel.add(blockSensor);
-        blockSensor.setText("");
-        blockSensor.setToolTipText(rb.getString("OccupancySensorToolTip"));
+        blockPanel.add(blockSensorComboBox);
+        blockSensorComboBox.setEditable(true);
+        blockSensorComboBox.getEditor().setItem("");
+        blockSensorComboBox.setToolTipText(rb.getString("OccupancySensorToolTip"));
 
         right2.add(blockPanel);
 
@@ -6264,12 +6267,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             newTrack.setLayoutBlock(b);
             auxTools.setBlockConnectivityChanged();
             // check on occupancy sensor
-            String sensorName = (blockSensor.getText().trim());
+            String sensorName = (blockSensorComboBox.getSelectedDisplayName().trim());
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
                     b.setOccupancySensorName("");
                 } else {
-                    blockSensor.setText(b.getOccupancySensorName());
+                    blockSensorComboBox.getEditor().setItem(b.getOccupancySensorName());
                 }
             }
             newTrack.updateBlockInfo();
@@ -6305,12 +6308,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             o.setLayoutBlockAC(b);
             o.setLayoutBlockBD(b);
             // check on occupancy sensor
-            String sensorName = (blockSensor.getText().trim());
+            String sensorName = (blockSensorComboBox.getSelectedDisplayName().trim());
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
                     b.setOccupancySensorName("");
                 } else {
-                    blockSensor.setText(b.getOccupancySensorName());
+                    blockSensorComboBox.getEditor().setItem(b.getOccupancySensorName());
                 }
             }
         }
@@ -6357,12 +6360,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (b != null) {
             o.setLayoutBlock(b);
             // check on occupancy sensor
-            String sensorName = (blockSensor.getText().trim());
+            String sensorName = (blockSensorComboBox.getSelectedDisplayName().trim());
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
                     b.setOccupancySensorName("");
                 } else {
-                    blockSensor.setText(b.getOccupancySensorName());
+                    blockSensorComboBox.getEditor().setItem(b.getOccupancySensorName());
                 }
             }
         }
@@ -6432,12 +6435,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (b != null) {
             o.setLayoutBlock(b);
             // check on occupancy sensor
-            String sensorName = (blockSensor.getText().trim());
+            String sensorName = (blockSensorComboBox.getSelectedDisplayName().trim());
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
                     b.setOccupancySensorName("");
                 } else {
-                    blockSensor.setText(b.getOccupancySensorName());
+                    blockSensorComboBox.getEditor().setItem(b.getOccupancySensorName());
                 }
             }
         }
