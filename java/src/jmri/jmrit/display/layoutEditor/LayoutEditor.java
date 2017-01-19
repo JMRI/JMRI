@@ -34,7 +34,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -58,8 +57,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
+import jmri.BlockManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Memory;
@@ -69,8 +67,6 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
-import jmri.jmrit.beantable.BlockTableAction;
-import jmri.jmrit.beantable.TurnoutTableAction;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.AnalogClock2Display;
 import jmri.jmrit.display.Editor;
@@ -187,13 +183,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JRadioButton layoutDoubleSlipButton = new JRadioButton(rb.getString("LayoutDoubleSlip"));
 
     // top row of check boxes
-    private JmriBeanComboBox turnoutNameComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(),
-            null, JmriBeanComboBox.DISPLAYNAME);
+    private JmriBeanComboBox turnoutNameComboBox = new JmriBeanComboBox(
+        InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.DISPLAYNAME);
 
     private JPanel turnoutPropertiesPanel = new JPanel();
     private JPanel extraTurnoutPanel = new JPanel();
-    private JmriBeanComboBox extraTurnoutNameComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(),
-            null, JmriBeanComboBox.DISPLAYNAME);
+    private JmriBeanComboBox extraTurnoutNameComboBox = new JmriBeanComboBox(
+        InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.DISPLAYNAME);
     private JComboBox rotationComboBox = null;
 
     // 2nd row of radio buttons
@@ -206,16 +202,24 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JCheckBox dashedLine = new JCheckBox(rb.getString("Dashed"));
 
     private JPanel blockPanel = new JPanel();
-    private JTextField blockIDField = new JTextField(8);
+    private JmriBeanComboBox blockIDComboBox = new JmriBeanComboBox(
+        InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
     private JTextField blockSensor = new JTextField(5);
 
-    // 3rd row of radio buttons
+    // 3rd row of radio buttons (and any associated text fields)
     private JRadioButton endBumperButton = new JRadioButton(rb.getString("EndBumper"));
     private JRadioButton anchorButton = new JRadioButton(rb.getString("Anchor"));
     private JRadioButton edgeButton = new JRadioButton(rb.getString("EdgeConnector"));
+
     private JRadioButton textLabelButton = new JRadioButton(Bundle.getMessage("TextLabel"));
+    private JTextField textLabel = new JTextField(8);
+
     private JRadioButton memoryButton = new JRadioButton(Bundle.getMessage("BeanNameMemory"));
+    private JTextField textMemory = new JTextField(8);
+
     private JRadioButton blockContentsButton = new JRadioButton(Bundle.getMessage("BlockContentsLabel"));
+    private JmriBeanComboBox blockContentsComboBox = new JmriBeanComboBox(
+        InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
 
     // 4th row of radio buttons (and any associated text fields)
     private JRadioButton multiSensorButton = new JRadioButton(Bundle.getMessage("MultiSensor") + "...");
@@ -238,12 +242,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     public MultiIconEditor signalIconEditor = null;
     public JFrame signalFrame;
-
-
-    private JTextField textLabel = new JTextField(8);
-
-    private JTextField blockContents = new JTextField(8);
-    private JTextField textMemory = new JTextField(8);
 
     private MultiIconEditor iconEditor = null;
     private JFrame iconFrame = null;
@@ -578,7 +576,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 // enable/disable text label, memory & block contents text fields
                 textLabel.setEnabled(textLabelButton.isSelected());
                 textMemory.setEnabled(memoryButton.isSelected());
-                blockContents.setEnabled(blockContentsButton.isSelected());
+                blockContentsComboBox.setEnabled(blockContentsButton.isSelected());
 
                 // enable/disable signal mast, sensor & signal head text fields
                 nextSignalMast.setEnabled(signalMastButton.isSelected());
@@ -722,8 +720,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // the blockPanel is enabled/disabled via selectionListAction above
         blockPanel.add(new JLabel("    " + rb.getString("BlockID")));
         //blockPanel.add(new JLabel(Bundle.getMessage("Name")));
-        blockPanel.add(blockIDField);
-        blockIDField.setToolTipText(rb.getString("BlockIDToolTip"));
+        blockPanel.add(blockIDComboBox);
+        blockIDComboBox.setEditable(true);
+        blockIDComboBox.getEditor().setItem("");
+        blockIDComboBox.setToolTipText(rb.getString("BlockIDToolTip"));
 
         blockPanel.add(new JLabel(Bundle.getMessage("BeanNameSensor")));
         blockPanel.add(blockSensor);
@@ -774,9 +774,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         top3.add(blockContentsButton);
         blockContentsButton.setToolTipText(rb.getString("BlockContentsButtonToolTip"));
 
-        top3.add(blockContents);
-        blockContents.setToolTipText(rb.getString("BlockContentsButtonToolTip"));
-        blockContents.setEnabled(false);
+        top3.add(blockContentsComboBox);
+        blockContentsComboBox.setEditable(true);
+        blockContentsComboBox.getEditor().setItem("");
+        blockContentsComboBox.setEnabled(false);
+        blockContentsComboBox.setToolTipText(rb.getString("BlockContentsButtonToolTip"));
 
         topEditBar.add(top3);
 
@@ -6253,7 +6255,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setLink(newTrack, TRACK, beginObject, beginPointType);
         setLink(newTrack, TRACK, foundObject, foundPointType);
         // check on layout block
-        LayoutBlock b = provideLayoutBlock(blockIDField.getText().trim());
+        LayoutBlock b = provideLayoutBlock(blockIDComboBox.getSelectedDisplayName().trim());
         if (b != null) {
             newTrack.setLayoutBlock(b);
             auxTools.setBlockConnectivityChanged();
@@ -6294,7 +6296,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         xingList.add(o);
         setDirty(true);
         // check on layout block
-        LayoutBlock b = provideLayoutBlock(blockIDField.getText().trim());
+        LayoutBlock b = provideLayoutBlock(blockIDComboBox.getSelectedDisplayName().trim());
         if (b != null) {
             o.setLayoutBlockAC(b);
             o.setLayoutBlockBD(b);
@@ -6347,7 +6349,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setDirty(true);
 
         // check on layout block
-        LayoutBlock b = provideLayoutBlock(blockIDField.getText().trim());
+        LayoutBlock b = provideLayoutBlock(blockIDComboBox.getSelectedDisplayName().trim());
         if (b != null) {
             o.setLayoutBlock(b);
             // check on occupancy sensor
@@ -6422,7 +6424,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         turnoutList.add(o);
         setDirty(true);
         // check on layout block
-        LayoutBlock b = provideLayoutBlock(blockIDField.getText().trim());
+        LayoutBlock b = provideLayoutBlock(blockIDComboBox.getSelectedDisplayName().trim());
         if (b != null) {
             o.setLayoutBlock(b);
             // check on occupancy sensor
@@ -7619,20 +7621,20 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     void addBlockContents() {
-        if ((blockContents.getText()).trim().length() <= 0) {
+        String blockName = blockContentsComboBox.getSelectedDisplayName().trim();
+        if (blockName.length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error11"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         BlockContentsIcon l = new BlockContentsIcon("   ", this);
-        l.setBlock(blockContents.getText().trim());
+        l.setBlock(blockName);
         jmri.Block xMemory = l.getBlock();
         if (xMemory != null) {
             String uname = xMemory.getUserName();
-            if ((uname == null)
-                    || (!(uname.equals(blockContents.getText().trim())))) {
+            if ((uname == null) || (!(uname.equals(blockName)))) {
                 // put the system name in the memory field
-                blockContents.setText(xMemory.getSystemName());
+                blockContentsComboBox.getEditor().setItem(xMemory.getSystemName());
             }
         }
         setNextLocation(l);
