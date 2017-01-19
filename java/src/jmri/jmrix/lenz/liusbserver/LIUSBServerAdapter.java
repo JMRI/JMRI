@@ -101,8 +101,9 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
      * Can the port accept additional characters? return true if the port is
      * opened.
      */
+    @Override
     public boolean okToSend() {
-        return status();
+        return (super.okToSend() && status());
     }
 
     // base class methods for the XNetNetworkPortController interface
