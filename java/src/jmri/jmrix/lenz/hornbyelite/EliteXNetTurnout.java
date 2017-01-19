@@ -3,11 +3,8 @@ package jmri.jmrix.lenz.hornbyelite;
 import jmri.jmrix.lenz.XNetTrafficController;
 
 /**
- * EliteXNetTurnout.java
- *
- * Description:	extend jmri.jmrix.XNetTurnout to handle turnouts on Hornby Elite
+ * Extend jmri.jmrix.XNetTurnout to handle turnouts on Hornby Elite
  * connections. See XNetTurnout for further documentation.
- * </P>
  *
  * @author	Paul Bender Copyright (C) 2008
   */
@@ -24,7 +21,8 @@ public class EliteXNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
     protected synchronized void sendOffMessage() {
         // The Elite appears to react to the on and off messages
         // in the same manner, and does not handle feedback properly
-        // Set the known state to the command state and the internalState               // to idlestate.
+        // Set the known state to the command state and the internalState
+        // to idlestate.
         newKnownState(getCommandedState());
         internalState = jmri.jmrix.lenz.XNetTurnout.IDLE;
     }
