@@ -57,13 +57,13 @@
                             </execution>
                         </executions>  
                     </plugin>
-                    <!-- prevent surefire (maven default test harness) from running tests -->
+                    <!-- use surefire (maven default test harness) only for line endings -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>2.19.1</version>
                         <configuration>
-                            <skipTests>true</skipTests>
+                            <test>jmri.util.FileLineEndingsTest</test>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -135,13 +135,13 @@
                             </execution>
                         </executions>  
                     </plugin>
-                    <!-- prevent surefire (maven default test harness) from running tests -->
+                    <!-- use surefire (maven default test harness) only for line endings -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>2.19.1</version>
                         <configuration>
-                            <skipTests>true</skipTests>
+                            <test>jmri.util.FileLineEndingsTest</test>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -176,7 +176,7 @@
                                     <excludeFilterFile>.findbugs.xml</excludeFilterFile>
                                     <effort>Max</effort>
                                     <threshold>High</threshold>
-                                    <jvmArgs>-Xmx1536m</jvmArgs>
+                                    <maxHeap>1536</maxHeap>
                                     <timeout>1200000</timeout><!-- 20 minutes -->
                                 </configuration>
                             </execution>

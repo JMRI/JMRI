@@ -2152,7 +2152,6 @@
     <!-- CI Test runners -->
     <target name="travis-ci" description="Parallel execution of CI tasks on Travis CI">
         <parallel threadCount="4"> <!-- allow up to four tasks at once -->
-            <antcall target="checklineends" />
             <antcall target="checknonascii" />
             <sequential>
                 <antcall target="compile-generated-source" />
@@ -2177,7 +2176,6 @@
 	
     <target name="appveyor" description="Parallel execution of CI tasks on Appveyor">
         <parallel threadCount="4"> <!-- allow up to four tasks at once -->
-            <antcall target="checklineends" />
             <antcall target="checkPropertiesFiles" />
             <antcall target="ci-test-appveyor" />
         </parallel>
