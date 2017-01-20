@@ -33,7 +33,10 @@ import org.junit.runners.Suite;
    jmri.jmrix.sprog.sprogslotmon.PackageTest.class,
    SPROGMenuTest.class,
    SPROGCSMenuTest.class,
-   SprogPortControllerTest.class
+   SprogPortControllerTest.class,
+   SprogOpsModeProgrammerTest.class,
+   SprogProgrammerTest.class,
+   SprogProgrammerManagerTest.class
 })
 public class PackageTest {
 }
