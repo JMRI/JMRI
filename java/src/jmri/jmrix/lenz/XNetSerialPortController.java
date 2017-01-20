@@ -20,6 +20,8 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
 
     private boolean OutputBufferEmpty = true;
 
+    private boolean timeSlot = true;
+
     public XNetSerialPortController() {
         super(new XNetSystemConnectionMemo());
         //option2Name = "Buffer";
@@ -46,6 +48,7 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
      * buffer length. This might go false for short intervals, but it might also
      * stick off if something goes wrong.
      */
+    @Override
     public boolean okToSend() {
         if ((activeSerialPort.getFlowControlMode() & SerialPort.FLOWCONTROL_RTSCTS_OUT) == SerialPort.FLOWCONTROL_RTSCTS_OUT) {
             if (checkBuffer) {
@@ -58,13 +61,48 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
         } else {
             if (checkBuffer) {
                 log.debug("Buffer Empty: " + OutputBufferEmpty);
-                return (OutputBufferEmpty);
+                return (OutputBufferEmpty && hasTimeSlot() );
             } else {
                 log.debug("No Flow Control or Buffer Check");
-                return (true);
+                return (hasTimeSlot());
             }
         }
     }
+
+    /**
+     * Indiciate the command station is currently providing a timeslot to this
+     * port controller.
+     *
+     * @return true if the command station is currently providing a timeslot.
+     */
+    @Override
+    public boolean hasTimeSlot(){
+        return timeSlot;
+    }
+    
+    /**
+     * <p>
+     * Set a variable indicating whether or not the command station is
+     * providing a timeslot.
+     * </p>
+     * <p>
+     * This method should be called with the paramter set to false if
+     * a "Command Station No Longer Providing a timeslot for communications"
+     * (01 05 04) is received.
+     * </p>
+     * <p>
+     * This method should be called with the parameter set to true if
+     * a "Command Station is providing a timeslot for communications again."
+     * (01 07 06) is received.
+     * </p>
+     *
+     * @param timeslot true if a timeslot is being sent, false otherwise.
+     */
+    @Override
+    public void setTimeSlot(boolean timeslot){
+       timeSlot = timeslot;
+    }    
+
 
     /**
      * we need a way to say if the output buffer is empty or full this should
