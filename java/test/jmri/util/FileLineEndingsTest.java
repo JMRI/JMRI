@@ -115,7 +115,11 @@ public class FileLineEndingsTest {
             if (File.pathSeparator.equals("\\")) {
                 path = path.replaceAll("\\", "/");
             }
-            String script = "failing = False\nif \"\\r\\n\" in open(os.path.normpath(\"" + path + "\"),\"rb\").read():\n    failing = True";
+            String script = String.join("\n",
+                    "import os",
+                    "failing = False",
+                    "if \"\\r\\n\" in open(os.path.normpath(\"" + path + "\"),\"rb\").read():",
+                    "    failing = True");
             try {
                 ScriptEngine engine = JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.PYTHON);
                 engine.eval(script);
