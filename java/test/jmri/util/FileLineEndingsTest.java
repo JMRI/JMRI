@@ -108,7 +108,11 @@ public class FileLineEndingsTest {
     @Test
     public void lineEndings() {
         try {
-            String script = "failing = False\nif \"\\r\\n\" in open(\"" + this.file.getCanonicalPath() + "\",\"rb\").read():\n    failing = True";
+            String path = this.file.getCanonicalPath();
+            if (File.pathSeparator.equals("\\")) {
+                path = path.replaceAll("\\", "\\\\");
+            }
+            String script = "failing = False\nif \"\\r\\n\" in open(\"" + path + "\",\"rb\").read():\n    failing = True";
             try {
                 ScriptEngine engine = JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.PYTHON);
                 engine.eval(script);
