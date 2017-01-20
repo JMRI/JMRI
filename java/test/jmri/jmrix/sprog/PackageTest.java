@@ -36,7 +36,11 @@ import org.junit.runners.Suite;
    SprogPortControllerTest.class,
    SprogOpsModeProgrammerTest.class,
    SprogProgrammerTest.class,
-   SprogProgrammerManagerTest.class
+   SprogProgrammerManagerTest.class,
+   SprogThrottleManagerTest.class,
+   SprogCSThrottleManagerTest.class,
+   SprogThrottleTest.class,
+   SprogCSThrottleTest.class
 })
 public class PackageTest {
 }
