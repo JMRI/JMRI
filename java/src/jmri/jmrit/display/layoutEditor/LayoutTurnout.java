@@ -120,7 +120,7 @@ public class LayoutTurnout {
     // turnout pair (closest to the throat)
     public static final int SECOND_3_WAY = 2;      // this turnout is the second turnout of a 3-way
     // turnout pair (furthest from the throat)
-    public static final int THROAT_TO_THROAT = 3;  // this turnout is one of two throat-to-throat 
+    public static final int THROAT_TO_THROAT = 3;  // this turnout is one of two throat-to-throat
     // turnouts - no signals at throat
 
     // operational instance variables (not saved between sessions)
@@ -181,12 +181,12 @@ public class LayoutTurnout {
     final public static int POINTD2 = 0x32;
 
     protected NamedBeanHandle<SignalMast> signalAMastNamed = null; // Throat
-    protected NamedBeanHandle<SignalMast> signalBMastNamed = null; // Continuing 
+    protected NamedBeanHandle<SignalMast> signalBMastNamed = null; // Continuing
     protected NamedBeanHandle<SignalMast> signalCMastNamed = null; // diverging
     protected NamedBeanHandle<SignalMast> signalDMastNamed = null; // single or double crossover only
 
     protected NamedBeanHandle<Sensor> sensorANamed = null; // Throat
-    protected NamedBeanHandle<Sensor> sensorBNamed = null; // Continuing 
+    protected NamedBeanHandle<Sensor> sensorBNamed = null; // Continuing
     protected NamedBeanHandle<Sensor> sensorCNamed = null; // diverging
     protected NamedBeanHandle<Sensor> sensorDNamed = null; // single or double crossover only
 
@@ -211,7 +211,7 @@ public class LayoutTurnout {
     public String linkedTurnoutName = ""; // name of the linked Turnout (as entered in tool)
     public int linkType = NO_LINK;
 
-    private boolean hidden = false;
+    protected boolean hidden = false;
 
     private boolean useBlockSpeed = false;
 
@@ -1485,8 +1485,8 @@ public class LayoutTurnout {
             } // must be RH, LH, or WYE turnout - A is the switch throat,
             //		B is normally the continuing straight
             else if (continuingSense == Turnout.CLOSED) {
-                // user hasn't changed the continuing turnout state 
-                if (connectA != null) // if throat is mainline, this leg must be also 
+                // user hasn't changed the continuing turnout state
+                if (connectA != null) // if throat is mainline, this leg must be also
                 {
                     return ((TrackSegment) connectA).getMainline();
                 }
@@ -1508,8 +1508,8 @@ public class LayoutTurnout {
             } // must be RH, LH, or WYE turnout - A is the switch throat,
             //		B is normally the continuing straight
             else if (continuingSense == Turnout.THROWN) {
-                // user has changed the continuing turnout state 
-                if (connectA != null) // if throat is mainline, this leg must be also 
+                // user has changed the continuing turnout state
+                if (connectA != null) // if throat is mainline, this leg must be also
                 {
                     return ((TrackSegment) connectA).getMainline();
                 }
@@ -1628,7 +1628,7 @@ public class LayoutTurnout {
             if ((dispC.getX() - x) != 0.0) {
                 if((-dispC.getX()+x)==0){
                     /* we can in some situations eg 90' vertical end up with a 0 value,
-                    so hence remove a small amount so that we 
+                    so hence remove a small amount so that we
                     don't have a divide by zero issue */
                     x = x-0.0000000001;
                 }
@@ -1672,9 +1672,9 @@ public class LayoutTurnout {
             if ((dispB.getX() + x) != 0.0) {
                 if((-dispB.getX()+x)==0){
                     /* we can in some situations eg 90' vertical end up with a 0 value,
-                    so hence remove a small amount so that we 
+                    so hence remove a small amount so that we
                     don't have a divide by zero issue */
-                    
+
                     x = x-0.0000000001;
                 }
                 a = (-dispB.getY() + y) / (-dispB.getX() + x);

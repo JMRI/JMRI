@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -60,7 +61,7 @@ public class LevelXing {
     // Defined text resource
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
-    // defined constants 
+    // defined constants
     // operational instance variables (not saved between sessions)
     private LayoutBlock blockAC = null;
     private LayoutBlock blockBD = null;
@@ -100,6 +101,8 @@ public class LevelXing {
     final public static int POINTC = 0x20;
     final public static int POINTD = 0x30;
 
+    private boolean hidden = false;
+
     /**
      * constructor method
      */
@@ -117,6 +120,14 @@ public class LevelXing {
         return ident;
     }
 
+    public boolean getHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hide) {
+        hidden = hide;
+    }
+
     public String getBlockNameAC() {
         return blockNameAC;
     }
@@ -124,6 +135,8 @@ public class LevelXing {
     public String getBlockNameBD() {
         return blockNameBD;
     }
+
+
 
     public SignalHead getSignalHead(int loc) {
         NamedBeanHandle<SignalHead> namedBean = null;
@@ -965,6 +978,13 @@ public class LevelXing {
                 popup.add(Bundle.getMessage("Block_ID", 2) + ": " + getLayoutBlockBD().getID());
                 blockBDAssigned = true;
             }
+
+            if (hidden) {
+                popup.add(rb.getString("Hidden"));
+            } else {
+                popup.add(rb.getString("NotHidden"));
+            }
+
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 /**
@@ -1152,16 +1172,17 @@ public class LevelXing {
     }
 
     // variables for Edit Level Crossing pane
-    JmriJFrame editLevelXingFrame = null;
-    JTextField block1Name = new JTextField(16);
-    JTextField block2Name = new JTextField(16);
-    JButton xingEditDone;
-    JButton xingEditCancel;
-    JButton xingEdit1Block;
-    JButton xingEdit2Block;
-    boolean editOpen = false;
-    boolean needsRedraw = false;
-    boolean needsBlockUpdate = false;
+    private JmriJFrame editLevelXingFrame = null;
+    private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideCrossing"));
+    private JTextField block1Name = new JTextField(16);
+    private JTextField block2Name = new JTextField(16);
+    private JButton xingEditDone;
+    private JButton xingEditCancel;
+    private JButton xingEdit1Block;
+    private JButton xingEdit2Block;
+    private boolean editOpen = false;
+    private boolean needsRedraw = false;
+    private boolean needsBlockUpdate = false;
 
     /**
      * Edit a Level Crossing
@@ -1178,6 +1199,13 @@ public class LevelXing {
             editLevelXingFrame.setLocation(50, 30);
             Container contentPane = editLevelXingFrame.getContentPane();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+
+            JPanel panel33 = new JPanel();
+            panel33.setLayout(new FlowLayout());
+            hiddenBox.setToolTipText(rb.getString("HiddenToolTip"));
+            panel33.add(hiddenBox);
+            contentPane.add(panel33);
+
             // setup block 1 name
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
@@ -1234,6 +1262,9 @@ public class LevelXing {
             xingEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
         }
+
+        hiddenBox.setSelected(hidden);
+
         // Set up for Edit
         block1Name.setText(blockNameAC);
         block2Name.setText(blockNameBD);
@@ -1380,6 +1411,14 @@ public class LevelXing {
             layoutEditor.auxTools.setBlockConnectivityChanged();
             needsBlockUpdate = true;
         }
+
+        // set hidden
+        boolean oldHidden = hidden;
+        hidden = hiddenBox.isSelected();
+        if (oldHidden != hidden) {
+            needsRedraw = true;
+        }
+
         editOpen = false;
         editLevelXingFrame.setVisible(false);
         editLevelXingFrame.dispose();

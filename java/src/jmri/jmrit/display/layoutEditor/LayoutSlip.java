@@ -20,6 +20,7 @@ import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -526,6 +527,12 @@ public class LayoutSlip extends LayoutTurnout {
                 blockAssigned = true;
             }
 
+            if (hidden) {
+                popup.add(rb.getString("Hidden"));
+            } else {
+                popup.add(rb.getString("NotHidden"));
+            }
+
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 /**
@@ -713,6 +720,7 @@ public class LayoutSlip extends LayoutTurnout {
     boolean editOpen = false;
     private JmriBeanComboBox turnoutAComboBox;
     private JmriBeanComboBox turnoutBComboBox;
+    private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideSlip"));
 
     /**
      * Edit a Slip
@@ -771,6 +779,13 @@ public class LayoutSlip extends LayoutTurnout {
             });
             panel2.add(testButton);
             contentPane.add(panel2);
+
+            JPanel panel33 = new JPanel();
+            panel33.setLayout(new FlowLayout());
+            hiddenBox.setToolTipText(rb.getString("HiddenToolTip"));
+            panel33.add(hiddenBox);
+            contentPane.add(panel33);
+
             // setup block name
             JPanel panel3 = new JPanel();
             panel3.setLayout(new FlowLayout());
@@ -812,6 +827,9 @@ public class LayoutSlip extends LayoutTurnout {
             slipEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
         }
+
+        hiddenBox.setSelected(hidden);
+
         // Set up for Edit
         blockNameField.setText(blockName);
 
@@ -1083,6 +1101,14 @@ public class LayoutSlip extends LayoutTurnout {
         for (TurnoutState ts : turnoutStates.values()) {
             ts.updateStatesFromCombo();
         }
+
+        // set hidden
+        boolean oldHidden = hidden;
+        hidden = hiddenBox.isSelected();
+        if (oldHidden != hidden) {
+            needRedraw = true;
+        }
+
         editOpen = false;
         editLayoutTurnoutFrame.setVisible(false);
         editLayoutTurnoutFrame.dispose();
