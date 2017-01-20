@@ -110,7 +110,7 @@ public class FileLineEndingsTest {
         try {
             String path = this.file.getCanonicalPath();
             if (File.pathSeparator.equals("\\")) {
-                path = path.replaceAll("\\", "\\\\");
+                path = path.replaceAll("\\([Uu])", "\\\\$1");
             }
             String script = "failing = False\nif \"\\r\\n\" in open(\"" + path + "\",\"rb\").read():\n    failing = True";
             try {
