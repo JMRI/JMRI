@@ -109,10 +109,13 @@ public class FileLineEndingsTest {
     public void lineEndings() {
         try {
             String path = this.file.getCanonicalPath();
+            // convert Windows path separators into POSIX path separators so
+            // Python can normalize the paths since the Windows path separator
+            // is also the escape character
             if (File.pathSeparator.equals("\\")) {
-                path = path.replaceAll("\\([Uu])", "\\\\$1");
+                path = path.replaceAll("\\", "/");
             }
-            String script = "failing = False\nif \"\\r\\n\" in open(\"" + path + "\",\"rb\").read():\n    failing = True";
+            String script = "failing = False\nif \"\\r\\n\" in open(os.path.normpath(\"" + path + "\"),\"rb\").read():\n    failing = True";
             try {
                 ScriptEngine engine = JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.PYTHON);
                 engine.eval(script);
@@ -124,7 +127,7 @@ public class FileLineEndingsTest {
             }
         } catch (IOException ex) {
             log.error("Unable to get path for {}", this.file, ex);
-            Assert.fail("Unable to get get path for test");
+            Assert.fail("Unable to get get path " + file.getPath() + " for test");
         }
     }
 
