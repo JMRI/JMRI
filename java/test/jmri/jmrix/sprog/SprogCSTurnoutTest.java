@@ -25,13 +25,11 @@ public class SprogCSTurnoutTest extends jmri.implementation.AbstractTurnoutTest 
 
     @Override
     public void checkThrownMsgSent() {
-        Assert.assertTrue("message sent", stcs.outbound.size() > 0);
         Assert.assertArrayEquals("slot contents",jmri.NmraPacket.accDecoderPkt(2,false),m.getCommandStation().slot(0).getPayload());
     }
 
     @Override
     public void checkClosedMsgSent() {
-        Assert.assertTrue("message sent", stcs.outbound.size() > 0);
         Assert.assertArrayEquals("slot contents",jmri.NmraPacket.accDecoderPkt(2,true),m.getCommandStation().slot(0).getPayload());
     }
 
