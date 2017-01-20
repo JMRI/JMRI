@@ -830,17 +830,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             editToolBarPanel.add(top11Panel);
         } else {
             JPanel top2Panel = new JPanel();
-            top2Panel.setLayout(new BoxLayout(top2Panel, BoxLayout.LINE_AXIS));
-            top2Panel.add(turnoutWYEButton);
-            top2Panel.add(doubleXoverButton);
-            top2Panel.add(Box.createHorizontalGlue());
+            top2Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            //top2Panel.setLayout(new BoxLayout(top2Panel, BoxLayout.LINE_AXIS));
             top2Panel.add(new JLabel("    " + rb.getString("Track") + ":  "));
             top2Panel.add(levelXingButton);
             top2Panel.add(trackButton);
             top2Panel.add(trackSegmentPropertiesPanel);
             top2Panel.add(Box.createHorizontalGlue());
             top2Panel.add(blockPanel);
-            top2Panel.add(Box.createHorizontalGlue());
             editToolBarPanel.add(top2Panel);
         }
 
