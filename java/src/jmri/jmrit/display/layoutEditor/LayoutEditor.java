@@ -671,6 +671,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JLabel turnoutNameLabel = new JLabel(turnoutNameString);
         turnoutNameComboBox.setEditable(true);
         turnoutNameComboBox.getEditor().setItem("");
+        turnoutNameComboBox.setSelectedIndex(-1);
         turnoutNameComboBox.setToolTipText(rb.getString("TurnoutNameToolTip"));
 
         turnoutNamePanel.add(turnoutNameLabel);
@@ -680,6 +681,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         extraTurnoutNameComboBox.setEnabled(false);
         extraTurnoutNameComboBox.setEditable(true);
         extraTurnoutNameComboBox.getEditor().setItem("");
+        extraTurnoutNameComboBox.setSelectedIndex(-1);
         extraTurnoutNameComboBox.setToolTipText(rb.getString("TurnoutNameToolTip"));
 
         // this is enabled/disabled via selectionListAction above
@@ -797,6 +799,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         blockPanel.add(blockNameLabel);
         blockIDComboBox.setEditable(true);
         blockIDComboBox.getEditor().setItem("");
+        blockIDComboBox.setSelectedIndex(-1);
         blockIDComboBox.setToolTipText(rb.getString("BlockIDToolTip"));
         blockPanel.add(blockIDComboBox);
 
@@ -804,6 +807,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         blockPanel.add(blockSensorComboBox);
         blockSensorComboBox.setEditable(true);
         blockSensorComboBox.getEditor().setItem("");
+        blockSensorComboBox.setSelectedIndex(-1);
         blockSensorComboBox.setToolTipText(rb.getString("OccupancySensorToolTip"));
 
         if (verticalToolBar) {
@@ -875,6 +879,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         top3.add(textMemoryComboBox);
         textMemoryComboBox.setEditable(true);
         textMemoryComboBox.getEditor().setItem("");
+        textMemoryComboBox.setSelectedIndex(-1);
         textMemoryComboBox.setToolTipText(rb.getString("MemoryToolTip"));
         textMemoryComboBox.setEnabled(false);
 
@@ -884,6 +889,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         top3.add(blockContentsComboBox);
         blockContentsComboBox.setEditable(true);
         blockContentsComboBox.getEditor().setItem("");
+        blockContentsComboBox.setSelectedIndex(-1);
         blockContentsComboBox.setEnabled(false);
         blockContentsComboBox.setToolTipText(rb.getString("BlockContentsButtonToolTip"));
 
@@ -6534,6 +6540,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         } else {
             o.setTurnout("");
             turnoutNameComboBox.getEditor().setItem("");
+            turnoutNameComboBox.setSelectedIndex(-1);
         }
 
         turnoutName = extraTurnoutNameComboBox.getSelectedDisplayName().trim();
@@ -6546,6 +6553,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         } else {
             o.setTurnoutB("");
             extraTurnoutNameComboBox.getEditor().setItem("");
+            extraTurnoutNameComboBox.setSelectedIndex(-1);
         }
     }   // addLayoutSlip
 
@@ -6611,6 +6619,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         } else {
             o.setTurnout("");
             turnoutNameComboBox.getEditor().setItem("");
+            turnoutNameComboBox.setSelectedIndex(-1);
         }
         //}
     }
