@@ -375,4 +375,4 @@ public class NceConnectionStatus implements NceListener {
     private final static Logger log = LoggerFactory.getLogger(NceConnectionStatus.class.getName());
 
 }
-/* @(#)NceConnectionStatus.java */
+

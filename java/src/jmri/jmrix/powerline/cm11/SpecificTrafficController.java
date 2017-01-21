@@ -1,4 +1,3 @@
-// SpecificTrafficController.java
 package jmri.jmrix.powerline.cm11;
 
 import jmri.jmrix.AbstractMRListener;
@@ -176,4 +175,4 @@ public class SpecificTrafficController extends SerialTrafficController {
 }
 
 
-/* @(#)SpecificTrafficController.java */
+

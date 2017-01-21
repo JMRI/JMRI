@@ -1,4 +1,3 @@
-// MRCConnectionTypeList.java
 package jmri.jmrix.mrc;
 
 /**

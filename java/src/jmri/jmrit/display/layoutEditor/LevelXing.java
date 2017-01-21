@@ -987,21 +987,11 @@ public class LevelXing {
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -8490425994057269937L;
-
                 public void actionPerformed(ActionEvent e) {
                     editLevelXing(instance);
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 1216686035755517232L;
-
                 public void actionPerformed(ActionEvent e) {
                     if (layoutEditor.removeLevelXing(instance)) {
                         // Returned true if user did not cancel
@@ -1012,11 +1002,6 @@ public class LevelXing {
             });
             if (blockACAssigned && blockBDAssigned) {
                 popup.add(new AbstractAction(rb.getString("SetSignals")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 5921583917110184757L;
-
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -1033,11 +1018,6 @@ public class LevelXing {
             if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
                 if (blockACAssigned && !blockBDAssigned) {
                     popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
-                        /**
-                         *
-                         */
-                        private static final long serialVersionUID = 427905878591367756L;
-
                         public void actionPerformed(ActionEvent e) {
                             AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlockAC());
                             routeTableAction.actionPerformed(e);
@@ -1045,11 +1025,6 @@ public class LevelXing {
                     });
                 } else if (!blockACAssigned && blockBDAssigned) {
                     popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
-                        /**
-                         *
-                         */
-                        private static final long serialVersionUID = -5685864388071905471L;
-
                         public void actionPerformed(ActionEvent e) {
                             AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlockBD());
                             routeTableAction.actionPerformed(e);
@@ -1058,11 +1033,6 @@ public class LevelXing {
                 } else if (blockACAssigned && blockBDAssigned) {
                     JMenu viewRouting = new JMenu(rb.getString("ViewBlockRouting"));
                     viewRouting.add(new AbstractAction(blockNameAC) {
-                        /**
-                         *
-                         */
-                        private static final long serialVersionUID = 5552420913563275699L;
-
                         public void actionPerformed(ActionEvent e) {
                             AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockNameAC, getLayoutBlockAC());
                             routeTableAction.actionPerformed(e);
@@ -1070,11 +1040,6 @@ public class LevelXing {
                     });
 
                     viewRouting.add(new AbstractAction(blockNameBD) {
-                        /**
-                         *
-                         */
-                        private static final long serialVersionUID = 3150885462721531952L;
-
                         public void actionPerformed(ActionEvent e) {
                             AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockNameBD, getLayoutBlockBD());
                             routeTableAction.actionPerformed(e);
@@ -1092,11 +1057,6 @@ public class LevelXing {
             }
             if (blockBoundaries) {
                 popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -128208913452543142L;
-
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -1106,11 +1066,6 @@ public class LevelXing {
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSensors")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 5004853444955075643L;
-
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);

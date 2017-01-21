@@ -1,4 +1,3 @@
-// TrainsTableAction.java
 package jmri.jmrit.operations.trains;
 
 import java.awt.Frame;
@@ -35,4 +34,4 @@ public class TrainsTableAction extends AbstractAction {
     }
 }
 
-/* @(#)TrainsTableAction.java */
+

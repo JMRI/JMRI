@@ -1,4 +1,3 @@
-// NceMacroRestore.java
 package jmri.jmrix.nce.consist;
 
 import java.io.BufferedReader;

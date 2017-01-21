@@ -1,4 +1,3 @@
-// LI101Frame.java
 package jmri.jmrix.lenz.swing.li101;
 
 import java.awt.FlowLayout;
@@ -26,11 +25,6 @@ import org.slf4j.LoggerFactory;
  * @author	Paul Bender Copyright (C) 2003-2010
   */
 public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -338386258040843147L;
 
     protected XNetTrafficController tc = null;
 

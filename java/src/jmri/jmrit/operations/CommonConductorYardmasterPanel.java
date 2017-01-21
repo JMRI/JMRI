@@ -1,4 +1,3 @@
-// YardmasterFrame.java
 package jmri.jmrit.operations;
 
 import java.awt.Dimension;

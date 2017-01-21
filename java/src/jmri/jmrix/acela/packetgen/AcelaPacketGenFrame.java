@@ -129,5 +129,3 @@ public class AcelaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jm
     public void reply(AcelaReply r) {
     } // ignore replies
 }
-
-/* @(#)AcelaPacketGenFrame.java */

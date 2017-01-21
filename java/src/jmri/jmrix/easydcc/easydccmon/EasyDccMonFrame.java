@@ -1,4 +1,3 @@
-// EasyDccMonFrame.java
 package jmri.jmrix.easydcc.easydccmon;
 
 import jmri.jmrix.easydcc.EasyDccListener;
@@ -12,11 +11,6 @@ import jmri.jmrix.easydcc.EasyDccTrafficController;
  * @author	Bob Jacobsen Copyright (C) 2001
   */
 public class EasyDccMonFrame extends jmri.jmrix.AbstractMonFrame implements EasyDccListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7982331955917888988L;
 
     public EasyDccMonFrame() {
         super();

@@ -1,4 +1,3 @@
-// CanComponentFactory.java
 package jmri.jmrix.can.swing;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -30,4 +29,4 @@ public class CanComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 }
 
 
-/* @(#)CanComponentFactory.java */
+

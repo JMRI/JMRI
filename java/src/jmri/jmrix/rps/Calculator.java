@@ -1,4 +1,3 @@
-// Calculator.java
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
@@ -22,4 +21,4 @@ public interface Calculator {
 
 }
 
-/* @(#)Calculator.java */
+

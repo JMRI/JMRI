@@ -1,4 +1,3 @@
-// SimpleProgFrame.java
 package jmri.jmrit.simpleprog;
 
 import java.awt.GridLayout;

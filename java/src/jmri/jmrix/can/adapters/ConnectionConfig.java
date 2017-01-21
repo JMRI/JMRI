@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.can.adapters;
 
 import java.awt.event.ActionEvent;

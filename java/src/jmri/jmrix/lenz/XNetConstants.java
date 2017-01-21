@@ -376,4 +376,4 @@ public final class XNetConstants {
 }
 
 
-/* @(#)XNetConstants.java */
+

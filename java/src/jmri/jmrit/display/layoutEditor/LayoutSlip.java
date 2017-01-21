@@ -537,21 +537,11 @@ public class LayoutSlip extends LayoutTurnout {
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 1310125794846689687L;
-
                 public void actionPerformed(ActionEvent e) {
                     editLayoutSlip(instance);
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -3483381614458277701L;
-
                 public void actionPerformed(ActionEvent e) {
                     if (layoutEditor.removeLayoutSlip(instance)) {
                         // Returned true if user did not cancel
@@ -599,11 +589,6 @@ public class LayoutSlip extends LayoutTurnout {
             }
             if (blockAssigned) {
                 popup.add(new AbstractAction(rb.getString("SetSignals")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -8272805807180330073L;
-
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -624,11 +609,6 @@ public class LayoutSlip extends LayoutTurnout {
             }
             if (blockBoundaries) {
                 popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -443772286763072510L;
-
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -637,11 +617,6 @@ public class LayoutSlip extends LayoutTurnout {
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSensors")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -9157435234409821081L;
-
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -654,11 +629,6 @@ public class LayoutSlip extends LayoutTurnout {
             if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
                 if (blockAssigned) {
                     popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
-                        /**
-                         *
-                         */
-                        private static final long serialVersionUID = -8170033670468406498L;
-
                         public void actionPerformed(ActionEvent e) {
                             AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
                             routeTableAction.actionPerformed(e);
@@ -978,11 +948,6 @@ public class LayoutSlip extends LayoutTurnout {
 
     class SampleStates extends JPanel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 363424691191982507L;
-
         // Methods, constructors, fields.
         SampleStates(int state) {
             super();
@@ -1061,11 +1026,6 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     class TestState extends JPanel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5936027643851258603L;
 
         public void paintComponent(Graphics g) {
             super.paintComponent(g);

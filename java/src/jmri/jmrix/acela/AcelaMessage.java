@@ -1,4 +1,3 @@
-// AcelaMessage.java
 package jmri.jmrix.acela;
 
 /**
@@ -115,5 +114,3 @@ public class AcelaMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 }
-
-/* @(#)AcelaMessage.java */

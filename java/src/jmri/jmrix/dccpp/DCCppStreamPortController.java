@@ -1,4 +1,3 @@
-// DCCppStreamPortController.java
 package jmri.jmrix.dccpp;
 
 import java.io.DataInputStream;
@@ -58,4 +57,4 @@ public class DCCppStreamPortController extends jmri.jmrix.AbstractStreamPortCont
 }
 
 
-/* @(#)DCCppStreamPortController.java */
+

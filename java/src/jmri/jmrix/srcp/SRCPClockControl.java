@@ -98,4 +98,4 @@ public class SRCPClockControl extends DefaultClockControl {
     }
 }
 
-/* @(#)SRCPClockControl.java */
+

@@ -72,4 +72,4 @@ public class MrcInterfaceScaffold extends MrcTrafficController {
 }
 
 
-/* @(#)LocoNetInterfaceScaffold.java */
+

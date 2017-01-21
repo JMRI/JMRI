@@ -1,4 +1,3 @@
-// MrcPortController.java
 package jmri.jmrix.mrc;
 
 import java.io.DataInputStream;
@@ -38,4 +37,4 @@ public abstract class MrcPortController extends jmri.jmrix.AbstractSerialPortCon
 }
 
 
-/* @(#)MrcPortController.java */
+

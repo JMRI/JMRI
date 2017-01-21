@@ -1,4 +1,3 @@
-// RpsReporterManager.java
 package jmri.jmrix.rps;
 
 import jmri.Reporter;
@@ -41,4 +40,4 @@ public class RpsReporterManager extends AbstractReporterManager {
     }
 }
 
-/* @(#)Rps ReporterManager.java */
+

@@ -1,4 +1,3 @@
-// SprogReply.java
 package jmri.jmrix.sprog;
 
 import jmri.jmrix.AbstractMRReply;
@@ -277,4 +276,4 @@ public class SprogReply extends AbstractMRReply {
 }
 
 
-/* @(#)SprogReply.java */
+

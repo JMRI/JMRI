@@ -1,4 +1,3 @@
-// TrainLoadOptionsAction.java
 package jmri.jmrit.operations.trains;
 
 import java.awt.event.ActionEvent;
@@ -33,4 +32,4 @@ public class TrainLoadOptionsAction extends AbstractAction {
     }
 }
 
-/* @(#)TrainLoadOptionsAction.java */
+

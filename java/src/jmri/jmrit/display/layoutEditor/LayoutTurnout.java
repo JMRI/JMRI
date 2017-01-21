@@ -2081,31 +2081,16 @@ public class LayoutTurnout {
             }
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
             popup.add(new AbstractAction(rb.getString("UseSizeAsDefault")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -4981607131914062303L;
-
                 public void actionPerformed(ActionEvent e) {
                     setUpDefaultSize();
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 5626467794371765334L;
-
                 public void actionPerformed(ActionEvent e) {
                     editLayoutTurnout();
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -836959400786739247L;
-
                 public void actionPerformed(ActionEvent e) {
                     if (layoutEditor.removeLayoutTurnout(instance)) {
                         // Returned true if user did not cancel
@@ -2116,11 +2101,6 @@ public class LayoutTurnout {
             });
             if (getTurnout() != null) {
                 popup.add(new AbstractAction(rb.getString("SetSignals")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 3763377792278990288L;
-
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -2157,11 +2137,6 @@ public class LayoutTurnout {
 
                     if (blockBName.equals("") && blockCName.equals("") && blockDName.equals("")) {
                         popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
-                            /**
-                             *
-                             */
-                            private static final long serialVersionUID = 3437334973806438829L;
-
                             public void actionPerformed(ActionEvent e) {
                                 AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
                                 routeTableAction.actionPerformed(e);
@@ -2170,11 +2145,6 @@ public class LayoutTurnout {
                     } else {
                         JMenu viewRouting = new JMenu(rb.getString("ViewBlockRouting"));
                         viewRouting.add(new AbstractAction(blockName) {
-                            /**
-                             *
-                             */
-                            private static final long serialVersionUID = 6647621589076140128L;
-
                             public void actionPerformed(ActionEvent e) {
                                 AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockName, getLayoutBlock());
                                 routeTableAction.actionPerformed(e);
@@ -2182,11 +2152,6 @@ public class LayoutTurnout {
                         });
                         if (!blockBName.equals("") && !blockBName.equals(blockName)) {
                             viewRouting.add(new AbstractAction(blockBName) {
-                                /**
-                                 *
-                                 */
-                                private static final long serialVersionUID = -1703869824440122796L;
-
                                 public void actionPerformed(ActionEvent e) {
                                     AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockBName, getLayoutBlockB());
                                     routeTableAction.actionPerformed(e);
@@ -2196,11 +2161,6 @@ public class LayoutTurnout {
 
                         if (!blockCName.equals("") && !blockCName.equals(blockName) && !blockCName.equals(blockBName)) {
                             viewRouting.add(new AbstractAction(blockCName) {
-                                /**
-                                 *
-                                 */
-                                private static final long serialVersionUID = -8564418494064300796L;
-
                                 public void actionPerformed(ActionEvent e) {
                                     AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockCName, getLayoutBlockC());
                                     routeTableAction.actionPerformed(e);
@@ -2210,11 +2170,6 @@ public class LayoutTurnout {
 
                         if (!blockDName.equals("") && !blockDName.equals(blockName) && !blockDName.equals(blockBName) && !blockDName.equals(blockCName)) {
                             viewRouting.add(new AbstractAction(blockDName) {
-                                /**
-                                 *
-                                 */
-                                private static final long serialVersionUID = -3710757271827906141L;
-
                                 public void actionPerformed(ActionEvent e) {
                                     AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockDName, getLayoutBlockD());
                                     routeTableAction.actionPerformed(e);
@@ -2228,11 +2183,6 @@ public class LayoutTurnout {
 
                 if (blockBoundaries) {
                     popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
-                        /**
-                         *
-                         */
-                        private static final long serialVersionUID = 5627429786560095290L;
-
                         public void actionPerformed(ActionEvent e) {
                             if (tools == null) {
                                 tools = new LayoutEditorTools(layoutEditor);
@@ -2243,11 +2193,6 @@ public class LayoutTurnout {
                         }
                     });
                     popup.add(new AbstractAction(rb.getString("SetSensors")) {
-                        /**
-                         *
-                         */
-                        private static final long serialVersionUID = 4791616009934935740L;
-
                         public void actionPerformed(ActionEvent e) {
                             if (tools == null) {
                                 tools = new LayoutEditorTools(layoutEditor);

@@ -1,4 +1,3 @@
-// DCCppTurnoutReplyCache.java
 package jmri.jmrix.dccpp;
 
 import org.slf4j.Logger;
@@ -122,4 +121,4 @@ public class DCCppTurnoutReplyCache implements DCCppListener {
 
 }
 
-/* @(#)DCCppTurnoutReplyCache.java */
+

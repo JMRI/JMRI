@@ -1,4 +1,3 @@
-// LocationsTableAction.java
 package jmri.jmrit.operations.locations;
 
 import java.awt.Frame;
@@ -35,4 +34,4 @@ public class LocationsTableAction extends AbstractAction {
     }
 }
 
-/* @(#)LocationsTableAction.java */
+

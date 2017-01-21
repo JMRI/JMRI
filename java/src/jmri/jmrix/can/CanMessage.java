@@ -1,4 +1,3 @@
-// CanMessage.java
 package jmri.jmrix.can;
 
 import javax.annotation.Nonnull;
@@ -197,4 +196,4 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
     boolean _isRtr;
 }
 
-/* @(#)CanMessage.java */
+

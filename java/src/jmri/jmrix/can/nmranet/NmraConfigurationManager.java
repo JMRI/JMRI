@@ -1,4 +1,3 @@
-// ConfigurationManager.java
 package jmri.jmrix.can.nmranet;
 
 import java.util.ResourceBundle;
@@ -56,4 +55,4 @@ public class NmraConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
 }
 
-/* @(#)ConfigurationManager.java */
+

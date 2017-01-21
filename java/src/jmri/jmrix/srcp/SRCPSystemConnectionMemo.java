@@ -142,4 +142,4 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 }
 
 
-/* @(#)InternalSystemConnectionMemo.java */
+

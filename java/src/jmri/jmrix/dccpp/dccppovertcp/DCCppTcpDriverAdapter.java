@@ -1,4 +1,3 @@
-// LnTcpDriverAdapter.java
 package jmri.jmrix.dccpp.dccppovertcp;
 
 import jmri.jmrix.dccpp.DCCppCommandStation;

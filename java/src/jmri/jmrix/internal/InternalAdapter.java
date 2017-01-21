@@ -1,4 +1,3 @@
-// InternalDriverAdapter.java
 package jmri.jmrix.internal;
 
 import org.slf4j.Logger;
