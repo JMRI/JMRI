@@ -46,7 +46,7 @@ public interface RouteManager extends Manager {
      * User GUI, to allow the auto generation of systemNames, where the user can
      * optionally supply a username.
      *
-     * @param userName
+     * @param userName user name for the new route
      * @return null if a Route with the same userName already exists or if there
      *         is trouble creating a new Route
      */
