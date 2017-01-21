@@ -8877,7 +8877,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             if (ttype == LayoutTurnout.RH_XOVER) {
                                 g2.draw(new Line2D.Double(t.getCoordsA(),
                                         midpoint(t.getCoordsA(), t.getCoordsB())));
-                                setTrackStrokeWidth(g2, false);
+                                //setTrackStrokeWidth(g2, false);
                                 g2.draw(new Line2D.Double(midpoint(t.getCoordsA(), t.getCoordsB()),
                                         t.getCoordsCenter()));
                             } else if (ttype == LayoutTurnout.LH_XOVER) {
@@ -8894,7 +8894,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             if (ttype == LayoutTurnout.LH_XOVER) {
                                 g2.draw(new Line2D.Double(t.getCoordsB(),
                                         midpoint(t.getCoordsB(), t.getCoordsA())));
-                                setTrackStrokeWidth(g2, false);
+                                //setTrackStrokeWidth(g2, false);
                                 g2.draw(new Line2D.Double(midpoint(t.getCoordsA(), t.getCoordsB()),
                                         t.getCoordsCenter()));
                             } else if (ttype == LayoutTurnout.RH_XOVER) {
@@ -8911,7 +8911,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             if (ttype == LayoutTurnout.RH_XOVER) {
                                 g2.draw(new Line2D.Double(t.getCoordsC(),
                                         midpoint(t.getCoordsC(), t.getCoordsD())));
-                                setTrackStrokeWidth(g2, false);
+                                //setTrackStrokeWidth(g2, false);
                                 g2.draw(new Line2D.Double(midpoint(t.getCoordsC(), t.getCoordsD()),
                                         t.getCoordsCenter()));
                             } else if (ttype == LayoutTurnout.LH_XOVER) {
@@ -8928,7 +8928,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             if (ttype == LayoutTurnout.LH_XOVER) {
                                 g2.draw(new Line2D.Double(t.getCoordsD(),
                                         midpoint(t.getCoordsD(), t.getCoordsC())));
-                                setTrackStrokeWidth(g2, false);
+                                //setTrackStrokeWidth(g2, false);
                                 g2.draw(new Line2D.Double(midpoint(t.getCoordsC(), t.getCoordsD()),
                                         t.getCoordsCenter()));
                             } else if (ttype == LayoutTurnout.RH_XOVER) {
@@ -8941,7 +8941,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             if (ttype == LayoutTurnout.RH_XOVER) {
                                 g2.draw(new Line2D.Double(t.getCoordsA(),
                                         midpoint(t.getCoordsA(), t.getCoordsB())));
-                                setTrackStrokeWidth(g2, false);
+                                //setTrackStrokeWidth(g2, false);
                                 g2.draw(new Line2D.Double(t.getCoordsCenter(),
                                         third(t.getCoordsCenter(), midpoint(t.getCoordsA(), t.getCoordsB()))));
                             } else if (ttype == LayoutTurnout.LH_XOVER) {
@@ -8958,7 +8958,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             if (ttype == LayoutTurnout.LH_XOVER) {
                                 g2.draw(new Line2D.Double(t.getCoordsB(),
                                         midpoint(t.getCoordsB(), t.getCoordsA())));
-                                setTrackStrokeWidth(g2, false);
+                                //setTrackStrokeWidth(g2, false);
                                 g2.draw(new Line2D.Double(t.getCoordsCenter(),
                                         third(t.getCoordsCenter(), midpoint(t.getCoordsA(), t.getCoordsB()))));
                             } else if (ttype == LayoutTurnout.RH_XOVER) {
@@ -8975,7 +8975,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             if (ttype == LayoutTurnout.RH_XOVER) {
                                 g2.draw(new Line2D.Double(t.getCoordsC(),
                                         midpoint(t.getCoordsC(), t.getCoordsD())));
-                                setTrackStrokeWidth(g2, false);
+                                //setTrackStrokeWidth(g2, false);
                                 g2.draw(new Line2D.Double(t.getCoordsCenter(),
                                         third(t.getCoordsCenter(), midpoint(t.getCoordsC(), t.getCoordsD()))));
                             } else if (ttype == LayoutTurnout.LH_XOVER) {
@@ -8992,7 +8992,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             if (ttype == LayoutTurnout.LH_XOVER) {
                                 g2.draw(new Line2D.Double(t.getCoordsD(),
                                         midpoint(t.getCoordsC(), t.getCoordsD())));
-                                setTrackStrokeWidth(g2, false);
+                                //setTrackStrokeWidth(g2, false);
                                 g2.draw(new Line2D.Double(t.getCoordsCenter(),
                                         third(t.getCoordsCenter(), midpoint(t.getCoordsC(), t.getCoordsD()))));
                             } else if (ttype == LayoutTurnout.RH_XOVER) {
