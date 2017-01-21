@@ -632,4 +632,4 @@ public class SimpleClockFrame extends JmriJFrame
     private final static Logger log = LoggerFactory.getLogger(SimpleClockFrame.class.getName());
 }
 
-/* @(#)SimpleClockFrame.java */
+

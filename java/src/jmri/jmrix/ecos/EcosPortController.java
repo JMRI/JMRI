@@ -1,4 +1,3 @@
-// EcosPortController.java
 package jmri.jmrix.ecos;
 
 /*
@@ -20,4 +19,4 @@ public abstract class EcosPortController extends jmri.jmrix.AbstractNetworkPortC
 }
 
 
-/* @(#)EcosPortController.java */
+

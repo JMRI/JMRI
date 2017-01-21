@@ -1,4 +1,3 @@
-// QsiInterface.java
 package jmri.jmrix.qsi;
 
 /**
@@ -30,4 +29,4 @@ public interface QsiInterface {
 }
 
 
-/* @(#)QsiInterface.java */
+

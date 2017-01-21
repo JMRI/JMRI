@@ -33,4 +33,4 @@ public class SprogPacketGenAction extends AbstractAction {
 }
 
 
-/* @(#)SprogPacketGenAction.java */
+

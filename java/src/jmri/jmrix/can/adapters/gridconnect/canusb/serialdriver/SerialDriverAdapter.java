@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.can.adapters.gridconnect.canusb.serialdriver;
 
 import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;

@@ -1,4 +1,3 @@
-// SerialSystemConnectionMemo.java
 package jmri.jmrix.ieee802154.serialdriver;
 
 import java.util.ResourceBundle;
@@ -63,4 +62,4 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154
 }
 
 
-/* @(#)SerialSystemConnectionMemo.java */
+

@@ -36,4 +36,4 @@ public class SprogVersionAction extends AbstractAction {
 }
 
 
-/* @(#)SprogVersionAction.java */
+

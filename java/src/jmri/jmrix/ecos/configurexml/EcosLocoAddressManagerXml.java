@@ -1,4 +1,3 @@
-// EcosLocoAddressManagerXml.java
 package jmri.jmrix.ecos.configurexml;
 
 import org.jdom2.Element;

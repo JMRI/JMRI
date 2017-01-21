@@ -552,4 +552,4 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     private final static Logger log = LoggerFactory.getLogger(NceClockControl.class.getName());
 }
 
-/* @(#)NceClockControl.java */
+

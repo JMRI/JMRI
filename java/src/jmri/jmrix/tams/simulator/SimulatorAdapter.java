@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.tams.simulator;
 
 import java.io.DataInputStream;

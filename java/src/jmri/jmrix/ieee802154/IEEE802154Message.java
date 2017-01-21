@@ -1,4 +1,3 @@
-// IEEE802154Message.java
 package jmri.jmrix.ieee802154;
 
 /**
@@ -107,4 +106,4 @@ public class IEEE802154Message extends jmri.jmrix.AbstractMRMessage {
     }
 
 }
-/* @(#)IEEE802154Message.java */
+

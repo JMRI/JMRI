@@ -1,4 +1,3 @@
-// ListFrame.java
 package jmri.jmrix.maple.assignment;
 
 import java.awt.BorderLayout;
@@ -39,11 +38,6 @@ import org.slf4j.LoggerFactory;
  * @author	Dave Duchamp Copyright (C) 2006
   */
 public class ListFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3796415081741573877L;
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.maple.assignment.ListBundle");
 
@@ -316,10 +310,6 @@ public class ListFrame extends jmri.util.JmriJFrame {
      */
     public class AssignmentTableModel extends AbstractTableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -1104519212252849474L;
         private String free = rb.getString("AssignmentFree");
         private int curRow = -1;
         private String curRowSysName = "";

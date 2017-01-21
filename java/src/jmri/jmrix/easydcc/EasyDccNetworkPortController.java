@@ -1,4 +1,3 @@
-// EasyDccNetworkPortController.java
 package jmri.jmrix.easydcc;
 
 import jmri.jmrix.SystemConnectionMemo;
@@ -23,4 +22,4 @@ public abstract class EasyDccNetworkPortController extends jmri.jmrix.AbstractNe
 }
 
 
-/* @(#)EasyDccPortController.java */
+

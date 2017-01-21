@@ -1,4 +1,3 @@
-// ScheduleResetHitsAction.java
 package jmri.jmrit.operations.locations.schedules;
 
 import java.awt.event.ActionEvent;

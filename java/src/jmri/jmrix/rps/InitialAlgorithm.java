@@ -1,4 +1,3 @@
-// InitialAlgorithm.java
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
@@ -357,4 +356,4 @@ public class InitialAlgorithm implements Calculator {
 
 }
 
-/* @(#)InitialAlgorithm.java */
+

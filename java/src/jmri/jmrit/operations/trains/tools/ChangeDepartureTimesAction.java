@@ -1,4 +1,3 @@
-// ChangeDepartureTimesAction.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Frame;
@@ -30,4 +29,4 @@ public class ChangeDepartureTimesAction extends AbstractAction {
     }
 }
 
-/* @(#)ChangeDepartureTimesAction.java */
+

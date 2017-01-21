@@ -1,4 +1,3 @@
-// SetTrainIconPositionAction.java
 package jmri.jmrit.operations.routes;
 
 import java.awt.Frame;
@@ -30,4 +29,4 @@ public class SetTrainIconPositionAction extends AbstractAction {
     }
 }
 
-/* @(#)SetTrainIconPositionAction.java */
+

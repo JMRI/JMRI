@@ -1,4 +1,3 @@
-// EasyDccInterface.java
 package jmri.jmrix.easydcc;
 
 /**
@@ -18,4 +17,4 @@ public interface EasyDccInterface {
 }
 
 
-/* @(#)EasyDccInterface.java */
+

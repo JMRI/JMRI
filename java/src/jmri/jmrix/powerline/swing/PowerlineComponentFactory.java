@@ -1,4 +1,3 @@
-// PowerlineComponentFactory.java
 package jmri.jmrix.powerline.swing;
 
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
@@ -29,4 +28,4 @@ public class PowerlineComponentFactory extends jmri.jmrix.swing.ComponentFactory
 }
 
 
-/* @(#)PowerlineComponentFactory.java */
+

@@ -42,7 +42,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
     LoaderEngine engine;
 
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.soundloader.LoaderFrame";
+        return "package.jmri.jmrix.loconet.soundloader.LoaderFrame"; // NOI18N
     }
 
     public String getTitle() {

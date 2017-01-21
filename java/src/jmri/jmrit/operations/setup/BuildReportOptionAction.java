@@ -1,4 +1,3 @@
-// BuildReportOptionAction.java
 package jmri.jmrit.operations.setup;
 
 import java.awt.Frame;
@@ -37,4 +36,4 @@ public class BuildReportOptionAction extends AbstractAction {
 //    private final static Logger log = LoggerFactory.getLogger(BuildReportOptionAction.class.getName());
 }
 
-/* @(#)BuildReportOptionAction.java */
+

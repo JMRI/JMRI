@@ -1,4 +1,3 @@
-// Transmitter.java
 package jmri.jmrix.rps;
 
 import jmri.DccThrottle;

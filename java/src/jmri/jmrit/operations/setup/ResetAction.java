@@ -1,4 +1,3 @@
-// ResetAction.java
 package jmri.jmrit.operations.setup;
 
 import apps.Apps;
@@ -68,4 +67,4 @@ public class ResetAction extends AbstractAction {
 //    private final static Logger log = LoggerFactory.getLogger(ResetAction.class.getName());
 }
 
-/* @(#)ResetAction.java */
+

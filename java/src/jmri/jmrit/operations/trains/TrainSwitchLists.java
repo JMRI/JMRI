@@ -1,4 +1,3 @@
-// TrainSwitchLists.java
 package jmri.jmrit.operations.trains;
 
 import java.io.BufferedWriter;

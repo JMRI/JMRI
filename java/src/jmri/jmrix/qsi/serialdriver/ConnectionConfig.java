@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.qsi.serialdriver;
 
 import java.util.ResourceBundle;

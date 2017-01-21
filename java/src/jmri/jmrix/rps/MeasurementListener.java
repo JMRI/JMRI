@@ -1,4 +1,3 @@
-// MeasurementListener.java
 package jmri.jmrix.rps;
 
 /**
@@ -13,4 +12,4 @@ public interface MeasurementListener {
 
 }
 
-/* @(#)MeasurementListener.java */
+

@@ -12,11 +12,6 @@ import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 
 public class EcosLocoTableTabAction extends AbstractTableTabAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6641977899170854725L;
-
     public EcosLocoTableTabAction(String s) {
         super(s);
     }

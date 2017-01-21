@@ -1,4 +1,3 @@
- // SerialMonFrame.java
 package jmri.jmrix.powerline.swing.serialmon;
 
 import jmri.jmrix.powerline.SerialListener;
@@ -15,11 +14,6 @@ import jmri.jmrix.powerline.SerialTrafficController;
  */
 @Deprecated
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -919574536509743467L;
 
     public SerialMonFrame(SerialTrafficController tc) {
         super();

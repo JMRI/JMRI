@@ -1,4 +1,3 @@
-// SerialReply.java
 package jmri.jmrix.oaktree;
 
 
@@ -40,4 +39,4 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
 }
 
-/* @(#)SerialReply.java */
+

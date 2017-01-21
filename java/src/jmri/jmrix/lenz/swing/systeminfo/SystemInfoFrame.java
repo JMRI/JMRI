@@ -1,4 +1,3 @@
-// SysteInfoFrame.java
 package jmri.jmrix.lenz.swing.systeminfo;
 
 import java.awt.GridLayout;
@@ -29,11 +28,6 @@ import org.slf4j.LoggerFactory;
  * @author	Giorgio Terdina Copyright (C) 2007
   */
 public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4494921840646526129L;
 
     protected XNetTrafficController tc = null;
 

@@ -1,4 +1,3 @@
-// ActiveFlag.java
 package jmri.jmrix.grapevine;
 
 /**
@@ -26,4 +25,4 @@ abstract public class ActiveFlag {
 }
 
 
-/* @(#)AbstractMRReply.java */
+

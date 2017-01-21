@@ -1,4 +1,3 @@
-// EcosReporter.java
 package jmri.jmrix.ecos;
 
 import java.util.regex.Matcher;
@@ -24,11 +23,6 @@ import org.slf4j.LoggerFactory;
  * @author	Kevin Dickerson Copyright (C) 2012
  */
 public class EcosReporter extends AbstractReporter implements PhysicalLocationReporter {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4207301843857219092L;
 
     public EcosReporter(String systemName, String userName) {  // a human-readable Reporter number must be specified!
         super(systemName, userName);  // can't use prefix here, as still in construction
@@ -146,5 +140,3 @@ public class EcosReporter extends AbstractReporter implements PhysicalLocationRe
     private final static Logger log = LoggerFactory.getLogger(EcosReporter.class.getName());
 
 }
-
-/* @(#)EcosReporter.java */

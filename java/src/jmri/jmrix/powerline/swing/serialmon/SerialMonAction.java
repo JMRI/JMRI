@@ -1,4 +1,3 @@
-// SerialMonAction.java
 package jmri.jmrix.powerline.swing.serialmon;
 
 import java.awt.event.ActionEvent;
@@ -16,11 +15,6 @@ import org.slf4j.LoggerFactory;
   */
 @Deprecated
 public class SerialMonAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -563795110468683083L;
 
     public SerialMonAction(String s, SerialTrafficController tc) {
         super(s);
@@ -49,4 +43,4 @@ public class SerialMonAction extends AbstractAction {
 }
 
 
-/* @(#)SerialMonAction.java */
+
