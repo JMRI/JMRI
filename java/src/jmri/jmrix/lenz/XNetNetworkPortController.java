@@ -1,4 +1,3 @@
-// XNetNetworkPortController.java
 package jmri.jmrix.lenz;
 
 import org.slf4j.Logger;
@@ -103,4 +102,4 @@ public abstract class XNetNetworkPortController extends jmri.jmrix.AbstractNetwo
 }
 
 
-/* @(#)XNetNetworkPortController.java */
+

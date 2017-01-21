@@ -1,4 +1,3 @@
-// TieTableModel.java
 package jmri.jmrix.openlcb.swing.tie;
 
 import java.awt.Font;
@@ -16,11 +15,6 @@ import org.slf4j.LoggerFactory;
   * @since 2.3.7
  */
 public class TieTableModel extends AbstractTableModel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3376418873299331229L;
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
 
@@ -201,5 +195,3 @@ public class TieTableModel extends AbstractTableModel {
     private final static Logger log = LoggerFactory.getLogger(TieTableModel.class.getName());
 
 }
-
-/* @(#)TieTableModel.java */

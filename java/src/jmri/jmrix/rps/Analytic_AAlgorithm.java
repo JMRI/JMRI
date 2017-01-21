@@ -1,4 +1,3 @@
-// Analytic_AAlgorithm.java
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
@@ -340,4 +339,4 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
     private final static Logger log = LoggerFactory.getLogger(Analytic_AAlgorithm.class.getName());
 }
 
-/* @(#)Analytic_AAlgorithm.java */
+

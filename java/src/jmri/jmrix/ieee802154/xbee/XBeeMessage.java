@@ -213,4 +213,4 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
     }
 
 }
-/* @(#)XBeeMessage.java */
+

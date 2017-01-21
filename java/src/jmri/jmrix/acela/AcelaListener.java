@@ -1,4 +1,3 @@
-// AcelaListener.java
 package jmri.jmrix.acela;
 
 /**
@@ -15,5 +14,3 @@ public interface AcelaListener extends jmri.jmrix.AbstractMRListener {
 
     public void reply(AcelaReply m);
 }
-
-/* @(#)AcelaListener.java */

@@ -85,4 +85,4 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
 }
 
 
-/* @(#)LocoNetInterfaceScaffold.java */
+

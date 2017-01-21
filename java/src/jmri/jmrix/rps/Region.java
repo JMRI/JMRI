@@ -1,4 +1,3 @@
-// Region.java
 package jmri.jmrix.rps;
 
 import java.awt.Shape;
@@ -142,4 +141,4 @@ public class Region {
     private final static Logger log = LoggerFactory.getLogger(Region.class.getName());
 }
 
-/* @(#)Region.java */
+

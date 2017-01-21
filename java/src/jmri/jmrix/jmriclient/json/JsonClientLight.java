@@ -16,10 +16,6 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonClientLight extends AbstractLight implements JsonClientListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8476285407567592168L;
     private static final Logger log = LoggerFactory.getLogger(JsonClientLight.class);
     private final JsonClientSystemConnectionMemo memo;
 

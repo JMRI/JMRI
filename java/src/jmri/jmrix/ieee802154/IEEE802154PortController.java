@@ -1,4 +1,3 @@
-// IEEE802154PortController.java
 package jmri.jmrix.ieee802154;
 
 /**
@@ -33,4 +32,4 @@ public abstract class IEEE802154PortController extends jmri.jmrix.AbstractSerial
 }
 
 
-/* @(#)IEEE802154PortController.java */
+

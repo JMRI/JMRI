@@ -1,4 +1,3 @@
-// AcelaInterface.java
 package jmri.jmrix.acela;
 
 /**
@@ -19,5 +18,3 @@ public interface AcelaInterface {
 
     void sendAcelaMessage(AcelaMessage m, AcelaListener l);  // 2nd arg gets the reply
 }
-
-/* @(#)AcelaInterface.java */

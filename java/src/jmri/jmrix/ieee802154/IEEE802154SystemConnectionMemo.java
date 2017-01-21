@@ -1,4 +1,3 @@
-// IEEE802154SystemConnectionMemo.java
 package jmri.jmrix.ieee802154;
 
 import java.util.ResourceBundle;
@@ -110,4 +109,4 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
 }
 
 
-/* @(#)IEEE802154SystemConnectionMemo.java */
+

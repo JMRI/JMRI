@@ -1,4 +1,3 @@
-// ServiceHandler.java
 package jmri.jmris;
 
 /**

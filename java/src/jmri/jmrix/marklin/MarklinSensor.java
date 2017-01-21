@@ -1,4 +1,3 @@
-// MarklinSensor.java
 package jmri.jmrix.marklin;
 
 import jmri.implementation.AbstractSensor;
@@ -16,11 +15,6 @@ import jmri.implementation.AbstractSensor;
  * 
  */
 public class MarklinSensor extends AbstractSensor {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7029240754803015932L;
 
     public MarklinSensor(String systemName, String userName) {
         super(systemName, userName);
@@ -41,5 +35,3 @@ public class MarklinSensor extends AbstractSensor {
     static String[] modeNames = null;
     static int[] modeValues = null;
 }
-
-/* @(#)MarklinSensor.java */

@@ -132,5 +132,3 @@ public class AcelaSignalHead extends DefaultSignalHead {
 
     private final static Logger log = LoggerFactory.getLogger(AcelaSignalHead.class.getName());
 }
-
-/* @(#)AcelaSignalHead.java */

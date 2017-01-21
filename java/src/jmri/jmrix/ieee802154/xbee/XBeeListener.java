@@ -1,4 +1,3 @@
-// XBeeListener.java
 package jmri.jmrix.ieee802154.xbee;
 
 /**
@@ -13,4 +12,4 @@ public interface XBeeListener extends jmri.jmrix.AbstractMRListener {
     public void reply(XBeeReply m);
 }
 
-/* @(#)XBeeListener.java */
+

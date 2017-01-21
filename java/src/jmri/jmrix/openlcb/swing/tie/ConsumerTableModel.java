@@ -1,4 +1,3 @@
-// ConsumerTableModel.java
 package jmri.jmrix.openlcb.swing.tie;
 
 import java.awt.Font;
@@ -16,11 +15,6 @@ import org.slf4j.LoggerFactory;
   * @since 2.3.7
  */
 public class ConsumerTableModel extends AbstractTableModel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5173698837318536847L;
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
 
@@ -205,4 +199,4 @@ public class ConsumerTableModel extends AbstractTableModel {
 
 }
 
-/* @(#)ProducerTableModel.java */
+

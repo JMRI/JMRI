@@ -1,4 +1,3 @@
-// Constants.java
 package jmri.jmrix.powerline.simulator;
 
 /**
@@ -55,4 +54,4 @@ public class Constants {
 }
 
 
-/* @(#)Constants.java */
+

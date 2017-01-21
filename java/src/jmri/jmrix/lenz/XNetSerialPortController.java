@@ -1,4 +1,3 @@
-// XNetSerialPortController.java
 package jmri.jmrix.lenz;
 
 import gnu.io.SerialPort;
@@ -138,4 +137,4 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
 }
 
 
-/* @(#)XNetSerialPortController.java */
+

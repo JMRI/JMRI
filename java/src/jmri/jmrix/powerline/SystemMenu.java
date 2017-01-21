@@ -1,4 +1,3 @@
-// SystemMenu.java
 package jmri.jmrix.powerline;
 
 /**
@@ -11,11 +10,6 @@ package jmri.jmrix.powerline;
 @Deprecated
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class SystemMenu extends jmri.jmrix.powerline.swing.PowerlineMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8020035923762579268L;
 
     public SystemMenu(SerialSystemConnectionMemo memo) {
         super(memo);

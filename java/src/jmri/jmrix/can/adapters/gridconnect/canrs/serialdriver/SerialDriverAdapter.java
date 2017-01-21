@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.can.adapters.gridconnect.canrs.serialdriver;
 
 import jmri.jmrix.can.TrafficController;

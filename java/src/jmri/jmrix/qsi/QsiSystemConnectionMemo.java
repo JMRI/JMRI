@@ -136,4 +136,4 @@ public class QsiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 }
 
 
-/* @(#)QsiSystemConnectionMemo.java */
+

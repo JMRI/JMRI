@@ -1,4 +1,3 @@
-// EcosReporterManager.java
 package jmri.jmrix.ecos;
 
 import jmri.Reporter;
@@ -34,4 +33,4 @@ public class EcosReporterManager extends jmri.managers.AbstractReporterManager {
     }
 }
 
-/* @(#)EcosReporterManager.java */
+
