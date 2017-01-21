@@ -529,12 +529,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         try {
             clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval"));
         } catch (RuntimeException e) {
-            try {
-                clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt_multiclick_time"));
-            } catch (RuntimeException ex) {
-                clickDelay = 500;
-                log.warn("Unable to get the double click speed, Using JMRI default of half a second" + e.toString());
-            }
+            clickDelay = 500;
+            log.debug("Unable to get the double click speed, Using JMRI default of half a second" + e.toString());
         }
 
         // assemble roster/groups splitpane
