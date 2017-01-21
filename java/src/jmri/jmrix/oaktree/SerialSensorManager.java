@@ -1,4 +1,3 @@
-// SerialSensorManager.java
 package jmri.jmrix.oaktree;
 
 import jmri.Sensor;
@@ -160,4 +159,4 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class.getName());
 }
 
-/* @(#)SerialSensorManager.java */
+

@@ -1,4 +1,3 @@
-// MrcMessage.java
 package jmri.jmrix.mrc;
 
 import org.slf4j.Logger;
@@ -513,4 +512,4 @@ public class MrcMessage {
 }
 
 
-/* @(#)MrcMessage.java */
+

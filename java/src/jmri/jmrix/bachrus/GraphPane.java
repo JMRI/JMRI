@@ -1,4 +1,3 @@
-// GraphPane.java
 package jmri.jmrix.bachrus;
 
 import java.awt.BasicStroke;
@@ -27,11 +26,6 @@ import org.slf4j.LoggerFactory;
  * @author	Dennis Miller Copyright (C) 2015
   */
 public class GraphPane extends JPanel implements Printable {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 260997228988676886L;
 
     final int PAD = 40;
 

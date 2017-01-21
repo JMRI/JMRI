@@ -1,4 +1,3 @@
-// XBeeComponentFactory.java
 package jmri.jmrix.ieee802154.xbee.swing;
 
 import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
@@ -27,4 +26,4 @@ public class XBeeComponentFactory extends jmri.jmrix.swing.ComponentFactory {
     }
 }
 
-/* @(#)XBeeComponentFactory.java */
+

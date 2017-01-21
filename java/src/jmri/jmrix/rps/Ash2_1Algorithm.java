@@ -1,4 +1,3 @@
-// Ash2_1Algorithm.java
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
@@ -404,4 +403,4 @@ public class Ash2_1Algorithm extends AbstractCalculator {
 
 }
 
-/* @(#)Ash2_1Algorithm.java */
+

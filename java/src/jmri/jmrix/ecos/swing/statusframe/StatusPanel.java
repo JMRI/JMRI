@@ -1,4 +1,3 @@
-// StatusPanel.java
 package jmri.jmrix.ecos.swing.statusframe;
 
 import java.util.ResourceBundle;
@@ -19,10 +18,6 @@ import jmri.jmrix.ecos.EcosTrafficController;
   */
 public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements EcosListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4996790282175507335L;
     String appString = "Application Version: ";
     String proString = "   Protocol Version: ";
     String hrdString = "   Hardware Version: ";
@@ -141,11 +136,6 @@ public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements Ecos
      */
     static public class Default extends jmri.jmrix.ecos.swing.EcosNamedPaneAction {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8240707560751847245L;
-
         public Default() {
             super(ResourceBundle.getBundle("jmri.jmrix.ecos.EcosBundle").getString("MenuItemInfo"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
@@ -155,6 +145,3 @@ public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements Ecos
     }
 
 }
-
-
-/* @(#)StatusPane.java */

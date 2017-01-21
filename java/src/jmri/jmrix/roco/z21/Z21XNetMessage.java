@@ -17,11 +17,6 @@ import jmri.jmrix.lenz.XNetMessage;
  */
 public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3422831570914017638L;
-
 //    static private int _nRetries = 5;
 
     // constructors, just pass on to the supperclass.

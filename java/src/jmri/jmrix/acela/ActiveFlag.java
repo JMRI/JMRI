@@ -1,4 +1,3 @@
-// ActiveFlag.java
 package jmri.jmrix.acela;
 
 /**
@@ -27,5 +26,3 @@ abstract public class ActiveFlag {
         return flag;
     }
 }
-
-/* @(#)ActiveFlag.java */

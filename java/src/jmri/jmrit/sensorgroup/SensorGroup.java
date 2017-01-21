@@ -1,4 +1,3 @@
-// SensorGroup.java
 package jmri.jmrit.sensorgroup;
 
 import java.util.ArrayList;

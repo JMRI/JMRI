@@ -1,4 +1,3 @@
-// XBeeTurnoutManager.java
 package jmri.jmrix.ieee802154.xbee;
 
 import jmri.JmriException;

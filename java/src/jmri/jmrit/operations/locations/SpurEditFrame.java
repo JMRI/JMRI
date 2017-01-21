@@ -1,4 +1,3 @@
-// SpurEditFrame.java
 package jmri.jmrit.operations.locations;
 
 import java.awt.Color;

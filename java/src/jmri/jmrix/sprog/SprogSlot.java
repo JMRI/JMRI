@@ -1,4 +1,3 @@
-// SprogSlot.java
 package jmri.jmrix.sprog;
 
 import java.util.Arrays;
@@ -464,4 +463,4 @@ public class SprogSlot {
 }
 
 
-/* @(#)SprogSlot.java */
+

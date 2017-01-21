@@ -1,4 +1,3 @@
-// SerialTurnout.java
 package jmri.jmrix.maple;
 
 import jmri.Turnout;
@@ -52,11 +51,6 @@ import org.slf4j.LoggerFactory;
  * @author	Dan Boudreau Copyright (C) 2007
   */
 public class SerialTurnout extends AbstractTurnout {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4128349882207745822L;
 
     /**
      * Create a Turnout object, with both system and user names.
@@ -215,5 +209,3 @@ public class SerialTurnout extends AbstractTurnout {
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
 }
-
-/* @(#)SerialTurnout.java */

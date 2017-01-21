@@ -1,4 +1,3 @@
-// SpecificReply.java
 package jmri.jmrix.powerline.cm11;
 
 import jmri.jmrix.powerline.SerialReply;
@@ -114,4 +113,4 @@ public class SpecificReply extends SerialReply {
 
 }
 
-/* @(#)SpecificReply.java */
+

@@ -1,4 +1,3 @@
-// SpecificSystemConnectionMemo.java
 package jmri.jmrix.powerline.cp290;
 
 import jmri.InstanceManager;
@@ -37,4 +36,4 @@ public class SpecificSystemConnectionMemo extends jmri.jmrix.powerline.SerialSys
 
 }
 
-/* @(#)SpecificSystemConnectionMemo.java */
+

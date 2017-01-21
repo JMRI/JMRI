@@ -653,8 +653,6 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
      */
     static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
 
-        private static final long serialVersionUID = -8552495867322154829L;
-
         public Default() {
             super("Open NCE DCC Packet Analyzer",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),

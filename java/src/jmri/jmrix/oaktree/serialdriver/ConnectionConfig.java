@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.oaktree.serialdriver;
 
 import javax.swing.BoxLayout;

@@ -206,4 +206,4 @@ public class DccSignalMast extends AbstractSignalMast {
 
 }
 
-/* @(#)DccSignalMast.java */
+

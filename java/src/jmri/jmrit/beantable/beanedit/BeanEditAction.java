@@ -93,21 +93,11 @@ abstract class BeanEditAction extends AbstractAction {
         basic.addItem(new BeanEditItem(commentFieldScroller, Bundle.getMessage("ColumnComment"), null));
 
         basic.setSaveItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -1823311798750191527L;
-
             public void actionPerformed(ActionEvent e) {
                 saveBasicItems(e);
             }
         });
         basic.setResetItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2590436299984618901L;
-
             public void actionPerformed(ActionEvent e) {
                 resetBasicItems(e);
             }
@@ -162,21 +152,11 @@ abstract class BeanEditAction extends AbstractAction {
         jsp.setPreferredSize(tableDim);
         properties.addItem(new BeanEditItem(jsp, "", null));
         properties.setSaveItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -5627203723098157467L;
-
             public void actionPerformed(ActionEvent e) {
                 propertiesModel.updateModel(bean);
             }
         });
         properties.setResetItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -956489116413677732L;
-
             public void actionPerformed(ActionEvent e) {
                 propertiesModel.setModel(bean);
             }
@@ -447,10 +427,6 @@ abstract class BeanEditAction extends AbstractAction {
     //Based upon the code from the RosterMediaPane
     private static class BeanPropertiesTableModel extends AbstractTableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -7466799526127205872L;
         Vector<KeyValueModel> attributes;
         String titles[];
         boolean wasModified;

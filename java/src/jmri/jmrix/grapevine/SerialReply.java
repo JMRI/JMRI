@@ -1,4 +1,3 @@
-// SerialReply.java
 package jmri.jmrix.grapevine;
 
 import org.slf4j.Logger;
@@ -124,4 +123,4 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
 }
 
-/* @(#)SerialReply.java */
+

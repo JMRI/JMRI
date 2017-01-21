@@ -1,4 +1,3 @@
-// EasyDccPortController.java
 package jmri.jmrix.easydcc;
 
 import java.io.DataInputStream;
@@ -35,4 +34,4 @@ public abstract class EasyDccPortController extends jmri.jmrix.AbstractSerialPor
 }
 
 
-/* @(#)EasyDccPortController.java */
+

@@ -1,4 +1,3 @@
-// TreeAction.java
 package jmri.jmrix.jinput.treecontrol;
 
 import jmri.util.JmriJFrameAction;
@@ -9,11 +8,6 @@ import jmri.util.JmriJFrameAction;
  * @author Bob Jacobsen Copyright 2008
   */
 public class TreeAction extends JmriJFrameAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6718366926805444393L;
 
     public TreeAction(String s) {
         super(s);
@@ -28,5 +22,3 @@ public class TreeAction extends JmriJFrameAction {
         return "jmri.jmrix.jinput.treecontrol.TreeFrame";
     }
 }
-
-/* @(#)TreeAction.java */

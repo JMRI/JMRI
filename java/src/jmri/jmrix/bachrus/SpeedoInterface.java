@@ -1,4 +1,3 @@
-// SpeedoInterface.java
 package jmri.jmrix.bachrus;
 
 /**
@@ -21,4 +20,4 @@ public interface SpeedoInterface {
     boolean status();
 }
 
-/* @(#)SpeedoInterface.java */
+

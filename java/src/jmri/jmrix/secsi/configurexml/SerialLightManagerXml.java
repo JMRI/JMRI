@@ -1,4 +1,3 @@
-// SerialLightManagerXml.java
 package jmri.jmrix.secsi.configurexml;
 
 import jmri.jmrix.secsi.SerialLightManager;
