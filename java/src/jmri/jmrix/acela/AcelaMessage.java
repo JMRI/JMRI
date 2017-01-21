@@ -1,4 +1,3 @@
-// AcelaMessage.java
 package jmri.jmrix.acela;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -117,5 +116,3 @@ public class AcelaMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 }
-
-/* @(#)AcelaMessage.java */

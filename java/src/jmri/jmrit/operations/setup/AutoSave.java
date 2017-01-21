@@ -1,4 +1,3 @@
-// AutoSave.java
 package jmri.jmrit.operations.setup;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;

@@ -1,4 +1,3 @@
-// SerialMonFrame.java
 package jmri.jmrix.maple.serialmon;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -13,11 +12,6 @@ import jmri.jmrix.maple.SerialTrafficController;
  * @author	Bob Jacobsen Copyright (C) 2001
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3307375334972355695L;
 
     public SerialMonFrame() {
         super();

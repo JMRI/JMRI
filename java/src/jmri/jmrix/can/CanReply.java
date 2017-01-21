@@ -1,4 +1,3 @@
-// CanReply.java
 package jmri.jmrix.can;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -173,4 +172,4 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
     boolean _isRtr;
 }
 
-/* @(#)CanReply.java */
+

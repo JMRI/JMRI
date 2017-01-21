@@ -1,4 +1,3 @@
-// AbstractXNetInitializationManager.java
 package jmri.jmrix.lenz;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;

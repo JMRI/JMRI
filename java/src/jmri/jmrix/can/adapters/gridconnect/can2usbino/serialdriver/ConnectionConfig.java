@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.can.adapters.gridconnect.can2usbino.serialdriver;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;

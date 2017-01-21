@@ -1,4 +1,3 @@
-// XBeeReply.java
 package jmri.jmrix.ieee802154.xbee;
 
 import com.digi.xbee.api.packet.XBeePacket;
@@ -75,4 +74,4 @@ public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
 
 }
 
-/* @(#)XBeeReply.java */
+

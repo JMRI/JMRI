@@ -1,4 +1,3 @@
-// SerialMessage.java
 package jmri.jmrix.maple;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -153,4 +152,4 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     private final static Logger log = LoggerFactory.getLogger(SerialMessage.class.getName());
 }
 
-/* @(#)SerialMessage.java */
+

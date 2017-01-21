@@ -1,4 +1,3 @@
-// Analytic_AAlgorithm.java
 package jmri.jmrix.rps;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -341,4 +340,4 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
     private final static Logger log = LoggerFactory.getLogger(Analytic_AAlgorithm.class.getName());
 }
 
-/* @(#)Analytic_AAlgorithm.java */
+

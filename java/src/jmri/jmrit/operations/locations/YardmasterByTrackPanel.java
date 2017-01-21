@@ -1,4 +1,3 @@
-// YardmasterByTrackPanel.java
 package jmri.jmrit.operations.locations;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;

@@ -11,11 +11,6 @@ import javax.swing.AbstractAction;
  */
 public class AnalogClockAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4819621738581568597L;
-
     public AnalogClockAction() {
         this("Analog Clock");
     }

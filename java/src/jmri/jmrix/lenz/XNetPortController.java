@@ -1,4 +1,3 @@
-// XNetPortController.java
 package jmri.jmrix.lenz;
 
 /**
@@ -58,4 +57,4 @@ public interface XNetPortController extends jmri.jmrix.PortAdapter {
 }
 
 
-/* @(#)XNetPortController.java */
+

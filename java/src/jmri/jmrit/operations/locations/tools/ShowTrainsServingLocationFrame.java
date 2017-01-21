@@ -1,4 +1,3 @@
-// ShowTrainsServingLocationFram.java
 package jmri.jmrit.operations.locations.tools;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;

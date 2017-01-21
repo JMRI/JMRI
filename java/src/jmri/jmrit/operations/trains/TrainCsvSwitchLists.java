@@ -1,4 +1,3 @@
-// TrainCsvSwitchLists.java
 package jmri.jmrit.operations.trains;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;

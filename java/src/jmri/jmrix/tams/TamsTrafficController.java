@@ -1,4 +1,3 @@
-// TamsTrafficController.java
 package jmri.jmrix.tams;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -527,4 +526,4 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
 
 }
 
-/* @(#)TamsTrafficController.java */
+

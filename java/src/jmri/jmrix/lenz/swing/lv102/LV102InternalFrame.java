@@ -1,4 +1,3 @@
-// LV102InternalFrame.java
 package jmri.jmrix.lenz.swing.lv102;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -30,11 +29,6 @@ import org.slf4j.LoggerFactory;
  * @author	Paul Bender Copyright (C) 2005
   */
 public class LV102InternalFrame extends javax.swing.JInternalFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6394940286346535557L;
 
     private progReplyListener progListener = null;
     private Thread progListenerThread = null;

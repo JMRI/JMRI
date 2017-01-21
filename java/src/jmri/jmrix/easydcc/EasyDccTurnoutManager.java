@@ -1,4 +1,3 @@
-// EasyDccTurnoutManager.java
 package jmri.jmrix.easydcc;
 
 import jmri.Turnout;
@@ -39,4 +38,4 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
 
 }
 
-/* @(#)EasyDccTurnoutManager.java */
+

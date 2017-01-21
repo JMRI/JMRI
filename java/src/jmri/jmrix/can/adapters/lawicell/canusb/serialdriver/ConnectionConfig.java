@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.can.adapters.lawicell.canusb.serialdriver;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;

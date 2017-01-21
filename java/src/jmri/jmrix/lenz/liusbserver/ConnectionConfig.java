@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.lenz.liusbserver;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;

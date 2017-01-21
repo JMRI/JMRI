@@ -1,4 +1,3 @@
-// RollingStockSetFrame.java
 package jmri.jmrit.operations.rollingstock;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;

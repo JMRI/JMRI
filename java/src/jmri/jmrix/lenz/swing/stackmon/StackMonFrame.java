@@ -1,4 +1,3 @@
-// StackMonFrame.java
 package jmri.jmrix.lenz.swing.stackmon;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -32,10 +31,6 @@ import org.slf4j.LoggerFactory;
   */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2129153656311593566L;
     JButton nextButton = new JButton("Next Entry");
     JButton previousButton = new JButton("Previous Entry");
     JButton deleteButton = new JButton("Delete Entry");

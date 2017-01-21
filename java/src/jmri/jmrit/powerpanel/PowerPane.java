@@ -44,11 +44,6 @@ public class PowerPane extends jmri.util.swing.JmriPanel
 
     public PowerPane() {
         selectMenu = new jmri.swing.PowerManagerMenu() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -7173050098266625273L;
-
             protected void choiceChanged() {
                 managerChanged();
             }

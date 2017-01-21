@@ -77,4 +77,4 @@ public class EcosInterfaceScaffold extends EcosTrafficController {
 }
 
 
-/* @(#)LocoNetInterfaceScaffold.java */
+

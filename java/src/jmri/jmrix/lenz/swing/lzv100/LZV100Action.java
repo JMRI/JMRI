@@ -1,4 +1,3 @@
-// LZV100Action.java
 package jmri.jmrix.lenz.swing.lzv100;
 
 import java.awt.event.ActionEvent;

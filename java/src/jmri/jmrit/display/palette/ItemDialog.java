@@ -1,4 +1,3 @@
-// ItemDialog.java
 package jmri.jmrit.display.palette;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -15,11 +14,6 @@ import jmri.util.JmriJFrame;
  * @author Pete Cressman Copyright (c) 2010
  */
 public class ItemDialog extends JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2157245075058528455L;
 
     //    protected ItemPanel _parent;
     protected String _type;

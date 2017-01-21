@@ -1,4 +1,3 @@
-// OperationsSetupAction.java
 package jmri.jmrit.operations.setup;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -37,4 +36,4 @@ public class OperationsSetupAction extends AbstractAction {
     }
 }
 
-/* @(#)OperationsSetupAction.java */
+

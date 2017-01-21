@@ -1,4 +1,3 @@
-// XNetSimulatorPortController.java
 package jmri.jmrix.lenz;
 
 import java.io.DataInputStream;
@@ -100,4 +99,4 @@ public abstract class XNetSimulatorPortController extends jmri.jmrix.AbstractSer
 }
 
 
-/* @(#)XNetSimulatorPortController.java */
+

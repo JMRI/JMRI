@@ -45,6 +45,7 @@
         <xs:element name="sensoricon" type="EditorSensorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="memoryicon" type="EditorMemoryIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="memoryInputIcon" type="EditorMemoryInputIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="memoryComboIcon" type="EditorMemoryComboIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="signalheadicon" type="EditorSignalHeadIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="signalmasticon" type="EditorSignalMastIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="reportericon" type="EditorReporterIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
@@ -56,7 +57,7 @@
         <xs:element name="indicatortrackicon" type="EditorIndicatorTrackIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="indicatorturnouticon" type="EditorIndicatorTurnoutIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="PortalIcon" type="EditorPortalIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
-        <xs:element name="LightIcon" type="EditorLightIconType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="LightIcon" type="EditorLightIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
             
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>

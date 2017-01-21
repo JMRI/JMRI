@@ -1,4 +1,3 @@
-// Reading.java
 package jmri.jmrix.rps;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -117,4 +116,4 @@ public class Reading {
     final Object rawData;
 }
 
-/* @(#)Reading.java */
+

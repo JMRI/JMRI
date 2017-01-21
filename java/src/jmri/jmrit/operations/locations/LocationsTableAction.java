@@ -1,4 +1,3 @@
-// LocationsTableAction.java
 package jmri.jmrit.operations.locations;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -36,4 +35,4 @@ public class LocationsTableAction extends AbstractAction {
     }
 }
 
-/* @(#)LocationsTableAction.java */
+

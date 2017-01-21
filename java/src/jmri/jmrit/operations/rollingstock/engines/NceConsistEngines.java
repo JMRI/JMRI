@@ -1,4 +1,3 @@
-// NceConsistEngines.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;

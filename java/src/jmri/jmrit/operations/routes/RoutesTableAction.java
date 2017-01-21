@@ -1,4 +1,3 @@
-// RoutesTableAction.java
 package jmri.jmrit.operations.routes;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -36,4 +35,4 @@ public class RoutesTableAction extends AbstractAction {
     }
 }
 
-/* @(#)RoutesTableAction.java */
+

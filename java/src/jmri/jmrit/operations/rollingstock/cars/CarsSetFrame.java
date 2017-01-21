@@ -1,4 +1,3 @@
-// CarsSetFrame.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;

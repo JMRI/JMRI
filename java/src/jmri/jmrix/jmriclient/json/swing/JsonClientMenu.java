@@ -10,10 +10,6 @@ import jmri.jmrix.jmriclient.json.JsonClientSystemConnectionMemo;
  */
 public class JsonClientMenu extends JMenu {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8357696542476455552L;
     JsonClientSystemConnectionMemo memo = null;
 
     public JsonClientMenu(String name, JsonClientSystemConnectionMemo memo) {

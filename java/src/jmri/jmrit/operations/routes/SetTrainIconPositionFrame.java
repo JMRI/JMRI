@@ -1,4 +1,3 @@
-// SetTrainIconPositionFrame.java
 package jmri.jmrit.operations.routes;
 
 import java.awt.Color;

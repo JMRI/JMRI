@@ -1,3 +1,10 @@
+package jmri.jmrix.lenz;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.implementation.AbstractTurnout;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Description:	extend jmri.AbstractTurnout for XNet layouts
  * <P>
@@ -97,19 +104,8 @@
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author      Paul Bender Copyright (C) 2003-2010
  */
-package jmri.jmrix.lenz;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import jmri.implementation.AbstractTurnout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7143747084589933154L;
     /* State information */
     protected static final int OFFSENT = 1;
     protected static final int COMMANDSENT = 2;
@@ -861,6 +857,3 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     private final static Logger log = LoggerFactory.getLogger(XNetTurnout.class.getName());
 
 }
-
-
-/* @(#)XNetTurnout.java */

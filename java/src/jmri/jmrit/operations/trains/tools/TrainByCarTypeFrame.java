@@ -1,4 +1,3 @@
-// TrainByCarTypeFrame.java
 package jmri.jmrit.operations.trains.tools;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;

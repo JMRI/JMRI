@@ -1,4 +1,3 @@
-// JMRIClientReporterManager.java
 package jmri.jmrix.jmriclient;
 
 import jmri.Reporter;
@@ -35,4 +34,4 @@ public class JMRIClientReporterManager extends jmri.managers.AbstractReporterMan
 
 }
 
-/* @(#)JMRIClientReporterManager.java */
+

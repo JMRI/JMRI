@@ -1,4 +1,3 @@
-// SpecificInsteonLight.java
 package jmri.jmrix.powerline.insteon2412s;
 
 import jmri.jmrix.powerline.InsteonSequence;
@@ -32,11 +31,6 @@ import org.slf4j.LoggerFactory;
 public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
 
     // System-dependent instance variables
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1334388609953094063L;
-
     /**
      * Current output step 0 to maxDimStep.
      * <p>
@@ -190,5 +184,3 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
 
     private final static Logger log = LoggerFactory.getLogger(SpecificInsteonLight.class.getName());
 }
-
-/* @(#)SpecificInsteonLight.java */

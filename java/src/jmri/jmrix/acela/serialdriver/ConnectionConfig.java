@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.acela.serialdriver;
 
 import javax.swing.JButton;
@@ -54,5 +53,3 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         }
     }
 }
-
-/* @(#)ConnectionConfig.java */

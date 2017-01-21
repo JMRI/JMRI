@@ -1,4 +1,3 @@
-// ConfigurationManager.java
 package jmri.jmrix.can;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -70,4 +69,4 @@ abstract public class ConfigurationManager {
     private final static Logger log = LoggerFactory.getLogger(ConfigurationManager.class.getName());
 }
 
-/* @(#)ConfigurationManager.java */
+

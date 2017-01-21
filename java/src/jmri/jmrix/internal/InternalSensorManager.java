@@ -1,4 +1,3 @@
-// InternalSensorManager.java
 package jmri.jmrix.internal;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -18,4 +17,4 @@ public class InternalSensorManager extends jmri.managers.InternalSensorManager {
     }
 }
 
-/* @(#)InternalSensorManager.java */
+

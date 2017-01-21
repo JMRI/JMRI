@@ -1,4 +1,3 @@
-// SerialReply.java
 package jmri.jmrix.grapevine;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -125,4 +124,4 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
 }
 
-/* @(#)SerialReply.java */
+

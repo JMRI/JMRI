@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.can.adapters.loopback;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;

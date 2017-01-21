@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.lenz.xntcp;
 
 import java.awt.event.ActionEvent;

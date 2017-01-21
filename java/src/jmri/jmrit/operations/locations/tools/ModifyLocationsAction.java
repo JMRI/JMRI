@@ -1,4 +1,3 @@
-// ModifyLocationsAction.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Frame;
@@ -42,4 +41,4 @@ public class ModifyLocationsAction extends AbstractAction {
     }
 }
 
-/* @(#)ModifyLocationsAction.java */
+

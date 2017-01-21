@@ -1689,4 +1689,4 @@ public class AutoActiveTrain implements ThrottleListener {
     private final static Logger log = LoggerFactory.getLogger(AutoActiveTrain.class.getName());
 }
 
-/* @(#)AutoActiveTrain.java */
+

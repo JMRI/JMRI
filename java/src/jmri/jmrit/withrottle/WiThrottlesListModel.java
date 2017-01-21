@@ -16,11 +16,6 @@ import org.slf4j.LoggerFactory;
 
 public class WiThrottlesListModel extends AbstractTableModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 473377515756069668L;
-
     ArrayList<DeviceServer> deviceList;
     //DeviceServer[] deviceList;
 

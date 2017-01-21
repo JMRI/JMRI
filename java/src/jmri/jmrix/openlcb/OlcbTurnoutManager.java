@@ -1,4 +1,3 @@
-// OlcbTurnoutManager.java
 package jmri.jmrix.openlcb;
 
 import org.openlcb.OlcbInterface;
@@ -141,4 +140,4 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     }
 }
 
-/* @(#)OlcbTurnoutManager.java */
+

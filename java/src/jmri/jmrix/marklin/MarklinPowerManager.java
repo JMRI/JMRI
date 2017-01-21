@@ -1,4 +1,3 @@
-// MarklinPowerManager.java
 package jmri.jmrix.marklin;
 
 import jmri.JmriException;
@@ -102,4 +101,4 @@ public class MarklinPowerManager implements PowerManager, MarklinListener {
 }
 
 
-/* @(#)MarklinPowerManager.java */
+

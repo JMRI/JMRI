@@ -1,4 +1,3 @@
-// SpeedoSystemConnectionMemo.java
 package jmri.jmrix.bachrus;
 
 import java.util.ResourceBundle;
@@ -71,4 +70,4 @@ public class SpeedoSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
 }
 
 
-/* @(#)InternalSystemConnectionMemo.java */
+

@@ -1,4 +1,3 @@
-// NceMacrobackup.java
 package jmri.jmrix.nce.macro;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;

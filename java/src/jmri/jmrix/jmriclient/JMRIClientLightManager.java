@@ -1,4 +1,3 @@
-// JMRIClientLightManager.java
 package jmri.jmrix.jmriclient;
 
 import jmri.Light;
@@ -13,10 +12,6 @@ import jmri.Light;
   */
 public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6247705424672589496L;
     private JMRIClientSystemConnectionMemo memo = null;
     private String prefix = null;
 
@@ -59,4 +54,4 @@ public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
 
 }
 
-/* @(#)JMRIClientLightManager.java */
+

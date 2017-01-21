@@ -1,4 +1,3 @@
-// NceConsistBackup.java
 package jmri.jmrix.nce.consist;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;

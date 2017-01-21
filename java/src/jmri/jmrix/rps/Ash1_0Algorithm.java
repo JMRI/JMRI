@@ -1,4 +1,3 @@
-// Ash1_0Algorithm.java
 package jmri.jmrix.rps;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -458,4 +457,4 @@ public class Ash1_0Algorithm implements Calculator {
     }
 }
 
-/* @(#)Ash1_0Algorithm.java */
+

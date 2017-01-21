@@ -1,4 +1,3 @@
-// InternalTurnoutManager.java
 package jmri.jmrix.internal;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -18,4 +17,4 @@ public class InternalTurnoutManager extends jmri.managers.InternalTurnoutManager
     }
 }
 
-/* @(#)InternalTurnoutManager.java */
+
