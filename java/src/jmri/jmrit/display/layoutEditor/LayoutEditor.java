@@ -489,13 +489,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         fileMenu.setMnemonic(stringsToVTCodes.get(rb.getString("MenuFileMnemonic")));
         menuBar.add(fileMenu);
         jmri.configurexml.StoreXmlUserAction store = new jmri.configurexml.StoreXmlUserAction(rbx.getString("MenuItemStore"));
-        if (SystemType.isMacOSX()) {
-            store.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-                    stringsToVTCodes.get(rbx.getString("MenuItemStoreAccelerator")), ActionEvent.META_MASK));
-        } else {
-            store.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-                    stringsToVTCodes.get(rbx.getString("MenuItemStoreAccelerator")), ActionEvent.CTRL_MASK));
-        }
+        int primary_modifier = SystemType.isMacOSX() ? ActionEvent.META_MASK : ActionEvent.CTRL_MASK;
+        store.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
+                stringsToVTCodes.get(rbx.getString("MenuItemStoreAccelerator")), primary_modifier));
         fileMenu.add(store);
         fileMenu.addSeparator();
         JMenuItem deleteItem = new JMenuItem(rbx.getString("DeletePanel"));
@@ -1413,13 +1409,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         editModeItem = new JCheckBoxMenuItem(rb.getString("EditMode"));
         optionMenu.add(editModeItem);
         editModeItem.setMnemonic(stringsToVTCodes.get(rb.getString("EditModeMnemonic")));
-        if (SystemType.isMacOSX()) {
-            editModeItem.setAccelerator(KeyStroke.getKeyStroke(
-                    stringsToVTCodes.get(rb.getString("EditModeAccelerator")), ActionEvent.META_MASK));
-        } else {
-            editModeItem.setAccelerator(KeyStroke.getKeyStroke(
-                    stringsToVTCodes.get(rb.getString("EditModeAccelerator")), ActionEvent.CTRL_MASK));
-        }
+        int primary_modifier = SystemType.isMacOSX() ? ActionEvent.META_MASK : ActionEvent.CTRL_MASK;
+        editModeItem.setAccelerator(KeyStroke.getKeyStroke(
+                stringsToVTCodes.get(rb.getString("EditModeAccelerator")), primary_modifier));
         editModeItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 setAllEditable(editModeItem.isSelected());
@@ -1476,13 +1468,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         showHelpItem.setSelected(showHelpBar);
         // show grid item
         showGridItem = new JCheckBoxMenuItem(rb.getString("ShowEditGrid"));
-        if (SystemType.isMacOSX()) {
-            showGridItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
-                    rb.getString("ShowEditGridAccelerator")), ActionEvent.META_MASK));
-        } else {
-            showGridItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
-                    rb.getString("ShowEditGridAccelerator")), ActionEvent.CTRL_MASK));
-        }
+        showGridItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                rb.getString("ShowEditGridAccelerator")), primary_modifier));
         optionMenu.add(showGridItem);
         showGridItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -1493,13 +1480,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         showGridItem.setSelected(drawGrid);
         // snap to grid on add item
         snapToGridOnAddItem = new JCheckBoxMenuItem(rb.getString("SnapToGridOnAdd"));
-        if (SystemType.isMacOSX()) {
-            snapToGridOnAddItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
-                    rb.getString("SnapToGridOnAddAccelerator")), ActionEvent.META_MASK | ActionEvent.SHIFT_MASK));
-        } else {
-            snapToGridOnAddItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
-                    rb.getString("SnapToGridOnAddAccelerator")), ActionEvent.CTRL_MASK | ActionEvent.SHIFT_MASK));
-        }
+        snapToGridOnAddItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                rb.getString("SnapToGridOnAddAccelerator")), primary_modifier | ActionEvent.SHIFT_MASK));
         optionMenu.add(snapToGridOnAddItem);
         snapToGridOnAddItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -1515,7 +1497,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     rb.getString("SnapToGridOnMoveAccelerator")), ActionEvent.META_MASK | ActionEvent.SHIFT_MASK));
         } else {
             snapToGridOnMoveItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
-                    rb.getString("SnapToGridOnMoveAccelerator")), ActionEvent.CTRL_MASK | ActionEvent.SHIFT_MASK));
+                    rb.getString("SnapToGridOnMoveAccelerator")), primary_modifier | ActionEvent.SHIFT_MASK));
         }
         optionMenu.add(snapToGridOnMoveItem);
         snapToGridOnMoveItem.addActionListener(new ActionListener() {
@@ -1952,12 +1934,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         JMenuItem zoomInItem = new JMenuItem(rb.getString("ZoomIn"));
         zoomInItem.setMnemonic(stringsToVTCodes.get(rb.getString("zoomInMnemonic")));
+        int primary_modifier = SystemType.isMacOSX() ? ActionEvent.META_MASK : ActionEvent.CTRL_MASK;
         if (SystemType.isMacOSX()) {
             zoomInItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
                     rb.getString("zoomInAccelerator")), ActionEvent.META_MASK));
         } else {
             zoomInItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
-                    rb.getString("zoomInAccelerator")), ActionEvent.CTRL_MASK));
+                    rb.getString("zoomInAccelerator")), primary_modifier));
         }
         zoomMenu.add(zoomInItem);
         zoomInItem.addActionListener(new ActionListener() {
@@ -1996,13 +1979,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         });
         JMenuItem zoomOutItem = new JMenuItem(rb.getString("ZoomOut"));
         zoomOutItem.setMnemonic(stringsToVTCodes.get(rb.getString("zoomOutMnemonic")));
-        if (SystemType.isMacOSX()) {
-            zoomOutItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
-                    rb.getString("zoomOutAccelerator")), ActionEvent.META_MASK));
-        } else {
-            zoomOutItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
-                    rb.getString("zoomOutAccelerator")), ActionEvent.CTRL_MASK));
-        }
+        zoomOutItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                rb.getString("zoomOutAccelerator")), primary_modifier));
         zoomMenu.add(zoomOutItem);
         zoomOutItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
