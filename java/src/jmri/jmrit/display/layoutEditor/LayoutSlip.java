@@ -27,7 +27,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JRootPane;
 import javax.swing.JSeparator;
+import javax.swing.SwingUtilities;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.SignalMast;
@@ -740,14 +742,16 @@ public class LayoutSlip extends LayoutTurnout {
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
             JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " A " + Bundle.getMessage("Name"));
-            turnoutAComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DISPLAYNAME);
+            turnoutAComboBox = new JmriBeanComboBox(
+                InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DISPLAYNAME);
             panel1.add(turnoutNameLabel);
             panel1.add(turnoutAComboBox);
             contentPane.add(panel1);
             JPanel panel1a = new JPanel();
             panel1a.setLayout(new FlowLayout());
             JLabel turnoutBNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " B " + Bundle.getMessage("Name"));
-            turnoutBComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getTurnoutB(), JmriBeanComboBox.DISPLAYNAME);
+            turnoutBComboBox = new JmriBeanComboBox(
+                InstanceManager.turnoutManagerInstance(), getTurnoutB(), JmriBeanComboBox.DISPLAYNAME);
             panel1a.add(turnoutBNameLabel);
             panel1a.add(turnoutBComboBox);
             contentPane.add(panel1a);
@@ -791,8 +795,12 @@ public class LayoutSlip extends LayoutTurnout {
             panel3.setLayout(new FlowLayout());
             JLabel block1NameLabel = new JLabel(rb.getString("BlockID"));
             panel3.add(block1NameLabel);
-            panel3.add(blockNameField);
-            blockNameField.setToolTipText(rb.getString("EditBlockNameHint"));
+            panel3.add(blockNameComboBox);
+            blockNameComboBox.setEditable(true);
+            blockNameComboBox.getEditor().setItem("");
+            blockNameComboBox.setSelectedIndex(-1);
+            blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
+
             contentPane.add(panel3);
             // set up Edit Block buttons
             JPanel panel4 = new JPanel();
@@ -811,6 +819,17 @@ public class LayoutSlip extends LayoutTurnout {
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
             panel5.add(slipEditDone = new JButton(Bundle.getMessage("ButtonDone")));
+
+            // make this button the default button (return or enter activates)
+            // Note: We have to invoke this later because we don't currently have a root pane
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    JRootPane rootPane = SwingUtilities.getRootPane(slipEditDone);
+                    rootPane.setDefaultButton(slipEditDone);
+                }
+            });
+
             slipEditDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     slipEditDonePressed(e);
@@ -831,7 +850,7 @@ public class LayoutSlip extends LayoutTurnout {
         hiddenBox.setSelected(hidden);
 
         // Set up for Edit
-        blockNameField.setText(blockName);
+        blockNameComboBox.getEditor().setItem(blockName);
 
         editLayoutTurnoutFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
@@ -1080,19 +1099,22 @@ public class LayoutSlip extends LayoutTurnout {
             }
             needRedraw = true;
         }
-        if (!blockName.equals(blockNameField.getText().trim())) {
+        String newBlockName = blockNameComboBox.getSelectedDisplayName();
+        newBlockName = (null != newBlockName) ? newBlockName.trim() : "";
+        if (!blockName.equals(newBlockName)) {
             // block 1 has changed, if old block exists, decrement use
             if ((block != null)) {
                 block.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockName = blockNameField.getText().trim();
+            blockName = newBlockName;
 
             try {
                 block = layoutEditor.provideLayoutBlock(blockName);
             } catch (IllegalArgumentException ex) {
                 blockName = "";
-                blockNameField.setText("");
+                blockNameComboBox.getEditor().setItem("");
+                blockNameComboBox.setSelectedIndex(-1);
             }
             needRedraw = true;
             layoutEditor.auxTools.setBlockConnectivityChanged();

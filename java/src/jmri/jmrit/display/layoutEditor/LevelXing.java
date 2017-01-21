@@ -18,8 +18,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JRootPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
@@ -135,8 +137,6 @@ public class LevelXing {
     public String getBlockNameBD() {
         return blockNameBD;
     }
-
-
 
     public SignalHead getSignalHead(int loc) {
         NamedBeanHandle<SignalHead> namedBean = null;
@@ -1252,6 +1252,17 @@ public class LevelXing {
                 }
             });
             xingEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
+
+            // make this button the default button (return or enter activates)
+            // Note: We have to invoke this later because we don't currently have a root pane
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    JRootPane rootPane = SwingUtilities.getRootPane(xingEditDone);
+                    rootPane.setDefaultButton(xingEditDone);
+                }
+            });
+
             // Cancel
             panel5.add(xingEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             xingEditCancel.addActionListener(new ActionListener() {

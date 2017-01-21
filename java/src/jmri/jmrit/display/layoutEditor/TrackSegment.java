@@ -17,8 +17,10 @@ import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JRootPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
@@ -644,6 +646,17 @@ public class TrackSegment {
                 }
             });
             segmentEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
+
+            // make this button the default button (return or enter activates)
+            // Note: We have to invoke this later because we don't currently have a root pane
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    JRootPane rootPane = SwingUtilities.getRootPane(segmentEditDone);
+                    rootPane.setDefaultButton(segmentEditDone);
+                }
+            });
+
             // Cancel
             panel5.add(segmentEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             segmentEditCancel.addActionListener(new ActionListener() {

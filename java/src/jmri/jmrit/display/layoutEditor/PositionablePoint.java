@@ -27,6 +27,8 @@ import jmri.util.swing.JCBHandle;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import javax.swing.JRootPane;
+import javax.swing.SwingUtilities;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,7 +81,7 @@ public class PositionablePoint {
 
     private NamedBeanHandle<SignalMast> eastBoundSignalMastNamed = null;
     private NamedBeanHandle<SignalMast> westBoundSignalMastNamed = null;
-    /* We use a namedbeanhandle for the the sensors, even though we only store the name here, 
+    /* We use a namedbeanhandle for the the sensors, even though we only store the name here,
      this is so that we can keep up with moves and changes of userNames */
     private NamedBeanHandle<Sensor> eastBoundSensorNamed = null;
     private NamedBeanHandle<Sensor> westBoundSensorNamed = null;
@@ -194,7 +196,8 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    public @Nonnull String getEastBoundSignal() {
+    public @Nonnull
+    String getEastBoundSignal() {
         SignalHead h = getEastBoundSignalHead();
         if (h != null) {
             return h.getDisplayName();
@@ -262,7 +265,8 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    public @Nonnull String getWestBoundSignal() {
+    public @Nonnull
+    String getWestBoundSignal() {
         SignalHead h = getWestBoundSignalHead();
         if (h != null) {
             return h.getDisplayName();
@@ -330,7 +334,8 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    public @Nonnull String getEastBoundSensorName() {
+    public @Nonnull
+    String getEastBoundSensorName() {
         if (eastBoundSensorNamed != null) {
             return eastBoundSensorNamed.getName();
         }
@@ -360,7 +365,8 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    public @Nonnull String getWestBoundSensorName() {
+    public @Nonnull
+    String getWestBoundSensorName() {
         if (westBoundSensorNamed != null) {
             return westBoundSensorNamed.getName();
         }
@@ -389,7 +395,8 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    public @Nonnull String getEastBoundSignalMastName() {
+    public @Nonnull
+    String getEastBoundSignalMastName() {
         if (getEastBoundSignalMastNamed() != null) {
             return getEastBoundSignalMastNamed().getName();
         }
@@ -449,7 +456,8 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    public @Nonnull String getWestBoundSignalMastName() {
+    public @Nonnull
+    String getWestBoundSignalMastName() {
         if (getWestBoundSignalMastNamed() != null) {
             return getWestBoundSignalMastNamed().getName();
         }
@@ -1001,11 +1009,22 @@ public class PositionablePoint {
         JButton done = new JButton(Bundle.getMessage("ButtonDone"));
         done.addActionListener(
                 new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        updateLink();
-                    }
-                }
+            public void actionPerformed(ActionEvent e) {
+                updateLink();
+            }
+        }
         );
+
+        // make this button the default button (return or enter activates)
+        // Note: We have to invoke this later because we don't currently have a root pane
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JRootPane rootPane = SwingUtilities.getRootPane(done);
+                rootPane.setDefaultButton(done);
+            }
+        });
+
         container.add(getLinkPanel(), BorderLayout.NORTH);
         container.add(done, BorderLayout.SOUTH);
         container.revalidate();

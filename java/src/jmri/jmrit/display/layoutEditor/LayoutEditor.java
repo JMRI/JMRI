@@ -54,6 +54,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -2287,6 +2288,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             });
             trackWidthDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
+
+            // make this button the default button (return or enter activates)
+            // Note: We have to invoke this later because we don't currently have a root pane
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    JRootPane rootPane = SwingUtilities.getRootPane(trackWidthDone);
+                    rootPane.setDefaultButton(trackWidthDone);
+                }
+            });
+
             // Cancel
             panel5.add(trackWidthCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             trackWidthCancel.addActionListener(new ActionListener() {
@@ -2430,6 +2442,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             });
             reporterDone.setToolTipText(rb.getString("ReporterDoneHint"));
+
+            // make this button the default button (return or enter activates)
+            // Note: We have to invoke this later because we don't currently have a root pane
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    JRootPane rootPane = SwingUtilities.getRootPane(reporterDone);
+                    rootPane.setDefaultButton(reporterDone);
+                }
+            });
+
             // Cancel
             panel5.add(reporterCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             reporterCancel.addActionListener(new ActionListener() {
@@ -2610,6 +2633,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             });
             scaleTrackDiagramDone.setToolTipText(rb.getString("ScaleTranslateHint"));
+
+            // make this button the default button (return or enter activates)
+            // Note: We have to invoke this later because we don't currently have a root pane
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    JRootPane rootPane = SwingUtilities.getRootPane(scaleTrackDiagramDone);
+                    rootPane.setDefaultButton(scaleTrackDiagramDone);
+                }
+            });
+
             panel5.add(scaleTrackDiagramCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             scaleTrackDiagramCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -2841,6 +2875,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             });
             moveSelectionDone.setToolTipText(rb.getString("MoveSelectionHint"));
+
+            // make this button the default button (return or enter activates)
+            // Note: We have to invoke this later because we don't currently have a root pane
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    JRootPane rootPane = SwingUtilities.getRootPane(moveSelectionDone);
+                    rootPane.setDefaultButton(moveSelectionDone);
+                }
+            });
+
             panel5.add(moveSelectionCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             moveSelectionCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {

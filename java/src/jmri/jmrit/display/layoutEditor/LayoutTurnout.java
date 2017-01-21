@@ -22,7 +22,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JRootPane;
 import javax.swing.JSeparator;
+import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 import jmri.BlockManager;
 import jmri.InstanceManager;
@@ -2414,7 +2416,7 @@ public class LayoutTurnout {
     private JmriBeanComboBox firstTurnoutComboBox;
     private JmriBeanComboBox secondTurnoutComboBox;
     private JLabel secondTurnoutLabel;
-    private JmriBeanComboBox blockNameComboBox = new JmriBeanComboBox(
+    protected JmriBeanComboBox blockNameComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
     private JmriBeanComboBox blockBNameComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
@@ -2598,6 +2600,17 @@ public class LayoutTurnout {
             turnoutEditBlock.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
             // Done
             panel5.add(turnoutEditDone = new JButton(Bundle.getMessage("ButtonDone")));
+
+            // make this button the default button (return or enter activates)
+            // Note: We have to invoke this later because we don't currently have a root pane
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    JRootPane rootPane = SwingUtilities.getRootPane(turnoutEditDone);
+                    rootPane.setDefaultButton(turnoutEditDone);
+                }
+            });
+
             turnoutEditDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     turnoutEditDonePressed(e);
