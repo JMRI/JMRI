@@ -1,4 +1,3 @@
-// SerialPacketGenFrame.java
 package jmri.jmrix.maple.packetgen;
 
 import java.awt.Dimension;
@@ -20,10 +19,6 @@ import jmri.util.StringUtil;
   */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.maple.SerialListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8183096014139212709L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();

@@ -60,10 +60,6 @@ import org.slf4j.LoggerFactory;
  */
 public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7522111619927231L;
     // member declarations
     JLabel jLabel1 = new JLabel();
     JButton sendButton = new JButton();
@@ -628,11 +624,6 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -8652162554686888688L;
 
         public Default() {
             super("Send CAN Frames and OpenLCB Messages",

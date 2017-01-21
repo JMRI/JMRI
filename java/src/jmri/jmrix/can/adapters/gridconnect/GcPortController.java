@@ -1,4 +1,3 @@
-// GcPortController.java
 package jmri.jmrix.can.adapters.gridconnect;
 
 import java.io.DataInputStream;
@@ -39,4 +38,4 @@ public abstract class GcPortController extends jmri.jmrix.AbstractSerialPortCont
 }
 
 
-/* @(#)GcPortController.java */
+

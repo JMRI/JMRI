@@ -1,4 +1,3 @@
-// XNetMonPane.java
 package jmri.jmrix.lenz.swing.mon;
 
 import jmri.jmrix.lenz.XNetConstants;
@@ -18,11 +17,6 @@ import org.slf4j.LoggerFactory;
  * @author Giorgio Terdina Copyright (C) 2007
  */
 public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3065525281171843991L;
 
     final java.util.ResourceBundle rb
             = java.util.ResourceBundle.
@@ -1687,11 +1681,6 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.util.swing.JmriNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8987187719675249342L;
 
         public Default() {
             super(java.util.ResourceBundle.

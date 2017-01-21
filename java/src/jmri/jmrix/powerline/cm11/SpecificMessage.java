@@ -1,4 +1,3 @@
-// SpecificMessage.java
 package jmri.jmrix.powerline.cm11;
 
 import jmri.jmrix.powerline.SerialMessage;
@@ -254,4 +253,4 @@ public class SpecificMessage extends SerialMessage {
     }
 }
 
-/* @(#)SpecificMessage.java */
+

@@ -1,4 +1,3 @@
-// TamsPowerManager.java
 package jmri.jmrix.tams;
 
 import jmri.JmriException;
@@ -159,4 +158,4 @@ public class TamsPowerManager implements PowerManager, TamsListener {
     private final static Logger log = LoggerFactory.getLogger(TamsPowerManager.class.getName());
 }
 
-/* @(#)TamsPowerManager.java */
+

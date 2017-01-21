@@ -1,4 +1,3 @@
-// Distributor.java
 package jmri.jmrix.rps;
 
 import java.util.Vector;
@@ -150,4 +149,4 @@ public class Distributor {
 
 }
 
-/* @(#)Distributor.java */
+

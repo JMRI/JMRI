@@ -1,4 +1,3 @@
-// AbstractXNetSerialConnectionConfig.java
 package jmri.jmrix.dccpp;
 
 /**

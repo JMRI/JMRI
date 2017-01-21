@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.powerline.cm11;
 
 import javax.swing.BoxLayout;

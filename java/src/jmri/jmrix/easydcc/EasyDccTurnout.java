@@ -1,4 +1,3 @@
-// EasyDccTurnout.java
 package jmri.jmrix.easydcc;
 
 import jmri.NmraPacket;
@@ -19,11 +18,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001
   */
 public class EasyDccTurnout extends AbstractTurnout {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2850269669837354617L;
 
     /**
      * EasyDcc turnouts use the NMRA number (0-511) as their numerical
@@ -125,5 +119,3 @@ public class EasyDccTurnout extends AbstractTurnout {
 
 }
 
-
-/* @(#)EasyDccTurnout.java */

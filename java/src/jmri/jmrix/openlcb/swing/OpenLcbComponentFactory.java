@@ -1,4 +1,3 @@
-// OpenLcbComponentFactory.java
 package jmri.jmrix.openlcb.swing;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -30,4 +29,4 @@ public class OpenLcbComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 }
 
 
-/* @(#)OpenLcbComponentFactory.java */
+

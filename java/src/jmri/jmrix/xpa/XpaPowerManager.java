@@ -1,4 +1,3 @@
-// XpaPowerManager.java
 package jmri.jmrix.xpa;
 
 import jmri.JmriException;
@@ -94,4 +93,4 @@ public class XpaPowerManager implements PowerManager, XpaListener {
 
 }
 
-/* @(#)XpaPowerManager.java */
+

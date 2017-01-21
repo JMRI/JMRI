@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
         urlPatterns = {"/panel/ControlPanel"})
 public class ControlPanelServlet extends AbstractPanelServlet {
 
-    private static final long serialVersionUID = -8086671279145186127L;
     private final static Logger log = LoggerFactory.getLogger(ControlPanelServlet.class);
 
     @Override

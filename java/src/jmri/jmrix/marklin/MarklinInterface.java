@@ -1,4 +1,3 @@
-// MarklinInterface.java
 package jmri.jmrix.marklin;
 
 /**
@@ -29,4 +28,4 @@ public interface MarklinInterface {
     void sendMarklinMessage(MarklinMessage m, MarklinListener l);
 }
 
-/* @(#)MarklinInterface.java */
+

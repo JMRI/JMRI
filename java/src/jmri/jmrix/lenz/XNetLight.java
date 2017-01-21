@@ -1,4 +1,3 @@
-// XNetLight.java
 package jmri.jmrix.lenz;
 
 import jmri.implementation.AbstractLight;
@@ -16,11 +15,6 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2008-2010
  */
 public class XNetLight extends AbstractLight implements XNetListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1847924231251447075L;
     private XNetTrafficController tc = null;
     private XNetLightManager lm = null;
 
@@ -210,4 +204,4 @@ public class XNetLight extends AbstractLight implements XNetListener {
     private final static Logger log = LoggerFactory.getLogger(XNetLight.class.getName());
 }
 
-/* @(#)XNetLight.java */
+

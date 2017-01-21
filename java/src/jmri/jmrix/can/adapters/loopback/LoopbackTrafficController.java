@@ -1,4 +1,3 @@
-// LoopbackTrafficController.java
 package jmri.jmrix.can.adapters.loopback;
 
 import jmri.jmrix.AbstractMRListener;
@@ -136,4 +135,4 @@ public class LoopbackTrafficController extends jmri.jmrix.can.TrafficController 
 }
 
 
-/* @(#)LoopbackTrafficController.java */
+

@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.zimo.mx1;
 
 import java.util.ResourceBundle;

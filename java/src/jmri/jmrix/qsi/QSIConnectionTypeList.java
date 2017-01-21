@@ -1,4 +1,3 @@
-// QSIConnectionTypeList.java
 package jmri.jmrix.qsi;
 
 /**

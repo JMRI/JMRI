@@ -21,4 +21,4 @@ public class DCCppMessageException extends JmriException {
 }
 
 
-/* @(#)DCCppMessageException.java */
+

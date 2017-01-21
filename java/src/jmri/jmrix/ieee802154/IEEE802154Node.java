@@ -1,4 +1,3 @@
-// IEEE802154Node.java
 package jmri.jmrix.ieee802154;
 
 import jmri.jmrix.AbstractMRListener;

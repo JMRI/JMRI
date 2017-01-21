@@ -1,4 +1,3 @@
-// RpsBlock.java
 package jmri.jmrix.rps;
 
 import java.util.List;
@@ -137,4 +136,4 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
 
 }
 
-/* @(#)RpsBlock.java */
+

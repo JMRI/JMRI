@@ -224,11 +224,6 @@ public class EditableList<E> extends JList<E> implements CellEditorListener {
      */
     private class StartEditingAction extends AbstractAction {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2759348317251714909L;
-
         @Override
         @SuppressWarnings("unchecked") // have to cast CellEditor to ListCellEditor to access methods
         public void actionPerformed(ActionEvent e) {
@@ -252,11 +247,6 @@ public class EditableList<E> extends JList<E> implements CellEditorListener {
     }
 
     private class CancelEditingAction extends AbstractAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -8222730187928540505L;
 
         @SuppressWarnings("unchecked")
         @Override

@@ -36,4 +36,4 @@ public class LI100XNetPacketizer extends XNetPacketizer {
 
 }
 
-/* @(#)LI100XNetPacketizer.java */
+

@@ -1,4 +1,3 @@
-// EcosInterface.java
 package jmri.jmrix.ecos;
 
 /**
@@ -29,4 +28,4 @@ public interface EcosInterface {
     void sendEcosMessage(EcosMessage m, EcosListener l);
 }
 
-/* @(#)EcosInterface.java */
+

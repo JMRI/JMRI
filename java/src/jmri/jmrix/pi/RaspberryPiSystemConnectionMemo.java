@@ -118,4 +118,4 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
 
 
 }
-/* @(#)XNetSystemConnectionMemo.java */
+

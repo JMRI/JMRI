@@ -1,4 +1,3 @@
-// ServerFrame.java
 package jmri.jmrix.dccpp.dccppovertcp;
 
 import java.awt.event.ActionEvent;

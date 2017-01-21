@@ -1,4 +1,3 @@
-// XNetReply.java
 package jmri.jmrix.lenz;
 
 
@@ -681,4 +680,4 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
 }
 
-/* @(#)XNetMessage.java */
+

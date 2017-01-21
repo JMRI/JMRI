@@ -106,21 +106,11 @@ public class SensorDebounceEditAction extends BeanEditAction {
         basic.addItem(new BeanEditItem(sensorDebounceActiveField, Bundle.getMessage("SensorActiveDebounce"), Bundle.getMessage("SensorActiveDebounceText")));
 
         basic.setSaveItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -4211002470804824662L;
-
             public void actionPerformed(ActionEvent e) {
                 saveDebounceItems(e);
             }
         });
         basic.setResetItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -9107982698145419220L;
-
             public void actionPerformed(ActionEvent e) {
                 resetDebounceItems(e);
             }

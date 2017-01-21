@@ -1,4 +1,3 @@
-// SerialPacketGenAction.java
 package jmri.jmrix.powerline.swing.packetgen;
 
 import java.awt.event.ActionEvent;
@@ -15,11 +14,6 @@ import org.slf4j.LoggerFactory;
  * @author kcameron Copyright (C) 2011
   */
 public class SerialPacketGenAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6499014957221691885L;
 
     public SerialPacketGenAction(String s, SerialTrafficController tc) {
         super(s);
@@ -44,6 +38,3 @@ public class SerialPacketGenAction extends AbstractAction {
     }
     private final static Logger log = LoggerFactory.getLogger(SerialPacketGenAction.class.getName());
 }
-
-
-/* @(#)SerialPacketGenAction.java */
