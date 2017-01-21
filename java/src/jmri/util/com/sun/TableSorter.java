@@ -2,6 +2,7 @@
 // http://java.sun.com/docs/books/tutorial/uiswing/components/table.html#sorting
 package jmri.util.com.sun;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -329,7 +330,7 @@ public class TableSorter extends AbstractTableModel {
             this.modelIndex = index;
         }
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EQ_COMPARETO_USE_OBJECT_EQUALS")
+        @SuppressFBWarnings(value = "EQ_COMPARETO_USE_OBJECT_EQUALS")
         // compareTo used for specific purpose, equals and hashCode not needed
         public int compareTo(Object o) {
             int row1 = modelIndex;

@@ -1,5 +1,6 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -2904,7 +2905,7 @@ public class PaneProgPane extends javax.swing.JPanel
     }
     boolean print = false;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void printPane(HardcopyWriter w) {

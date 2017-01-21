@@ -1,5 +1,6 @@
 package jmri.jmrit.automat;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.NamedBean;
 
 /**
@@ -68,7 +69,7 @@ public class Siglet extends AbstractAutomaton {
         return true;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
     public void setInputs(NamedBean[] in) {
         inputs = in;
     }

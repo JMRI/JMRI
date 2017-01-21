@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.locations;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
@@ -103,7 +104,7 @@ public class LocationManagerXml extends OperationsXml {
 
     private String operationsFileName = "OperationsLocationRoster.xml"; // NOI18N
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "For testing")
     public void dispose() {
         _instance = null;

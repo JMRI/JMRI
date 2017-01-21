@@ -1,5 +1,7 @@
 package jmri.util.iharder.dnd;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * This is the event that is passed to the
  * {@link FileDropListener#filesDropped filesDropped(...)} method in your
@@ -28,7 +30,7 @@ public class FileDropEvent extends java.util.EventObject {
      * @param source The event source
      * @since 1.1
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
     public FileDropEvent(java.io.File[] files, Object source) {
         super(source);
         this.files = files;
@@ -40,7 +42,7 @@ public class FileDropEvent extends java.util.EventObject {
      * @return array of files that were dropped
      * @since 1.1
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public java.io.File[] getFiles() {
         return files;
     }   // end getFiles

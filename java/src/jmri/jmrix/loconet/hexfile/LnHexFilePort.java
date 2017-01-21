@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.hexfile;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -221,7 +222,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
      * Get an array of valid values for "option 3"; used to display valid
      * options. May not be null, but may have zero entries
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validOption3() {
         return new String[]{"Normal", "Spread", "One Only", "Both"};
     }

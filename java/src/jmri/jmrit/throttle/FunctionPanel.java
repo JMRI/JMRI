@@ -1,5 +1,6 @@
 package jmri.jmrit.throttle;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.KeyAdapter;
@@ -49,7 +50,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public FunctionButton[] getFunctionButtons() {
         return functionButton;
     }

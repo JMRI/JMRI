@@ -1,6 +1,7 @@
 // Analytic_AAlgorithm.java
 package jmri.jmrix.rps;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.vecmath.Point3d;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,7 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
         this.offset = offset;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2")
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2")
     public Analytic_AAlgorithm(Point3d[] sensors, double vsound) {
         this.sensors = sensors;
         this.Vs = vsound;
@@ -331,9 +332,9 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
             this.z = z;
             this.vs = vs;
         }
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_FIELD")
+        @SuppressFBWarnings(value = "URF_UNREAD_FIELD")
         int code;
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_FIELD")
+        @SuppressFBWarnings(value = "URF_UNREAD_FIELD")
         double x, y, z, vs;
     }
 

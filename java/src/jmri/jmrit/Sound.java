@@ -1,5 +1,6 @@
 package jmri.jmrit;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -188,7 +189,7 @@ public class Sound {
 
     public static class WavBuffer {
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
+        @SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
         public WavBuffer(byte[] content) {
             buffer = content;
 
@@ -218,7 +219,7 @@ public class Sound {
         }
 
         // we maintain this, but don't use it for anything yet
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_FIELD")
+        @SuppressFBWarnings(value = "URF_UNREAD_FIELD")
         int fmtOffset;
 
         byte[] buffer;

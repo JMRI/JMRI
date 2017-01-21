@@ -1,6 +1,8 @@
 // SystemMenu.java
 package jmri.jmrix.powerline;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Create a "Systems" menu containing the Jmri powerline-specific tools
  *
@@ -9,7 +11,7 @@ package jmri.jmrix.powerline;
  * @author kcameron Copyright (C) 2011
  */
 @Deprecated
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class SystemMenu extends jmri.jmrix.powerline.swing.PowerlineMenu {
 
     /**

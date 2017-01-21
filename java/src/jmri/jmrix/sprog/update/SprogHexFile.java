@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog.update;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -119,7 +120,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
      *
      * @return int the data length of the record, or 0 if no data
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE")
+    @SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE")
     // False positive
     public int read() {
         // Make space for the the maximum size record to be read
@@ -353,7 +354,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
      *
      * @return byte[] array of data bytes
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP")
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP")
     // Happy to pass a reference to internal data
     public int[] getData() {
         return data;

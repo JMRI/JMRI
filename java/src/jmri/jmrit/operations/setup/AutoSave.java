@@ -1,6 +1,7 @@
 // AutoSave.java
 package jmri.jmrit.operations.setup;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.trains.TrainManager;
 import org.slf4j.Logger;
@@ -15,7 +16,7 @@ public class AutoSave {
 
     static Thread autoSave = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SC_START_IN_CTOR")
+    @SuppressFBWarnings(value = "SC_START_IN_CTOR")
     public AutoSave() {
         synchronized (this) {
             if (Setup.isAutoSaveEnabled() && autoSave == null) {

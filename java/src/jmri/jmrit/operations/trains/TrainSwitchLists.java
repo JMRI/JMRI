@@ -1,6 +1,7 @@
 // TrainSwitchLists.java
 package jmri.jmrit.operations.trains;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -58,7 +59,7 @@ public class TrainSwitchLists extends TrainCommon {
      *
      * @param location The Location needing a switch list
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
             justification = "CarManager only provides Car Objects") // NOI18N
     public void buildSwitchList(Location location) {
         // Append switch list data if not operating in real time

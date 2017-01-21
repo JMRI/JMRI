@@ -1,5 +1,6 @@
 package jmri.jmrix.rfid.serialdriver;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
@@ -364,7 +365,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
      *
      * @return list of rates
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP")
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP")
     @Override
     public String[] validBaudRates() {
         return validSpeeds;

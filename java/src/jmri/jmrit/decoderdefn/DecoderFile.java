@@ -1,5 +1,6 @@
 package jmri.jmrit.decoderdefn;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +115,7 @@ public class DecoderFile extends XmlFile {
      * return array of versions
      *
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public boolean[] getVersions() {
         return (versions);
     }
@@ -495,7 +496,7 @@ public class DecoderFile extends XmlFile {
         return model + " (" + family + ")";
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // script access
+    @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // script access
     static public String fileLocation = "decoders" + File.separator;
 
     // initialize logging

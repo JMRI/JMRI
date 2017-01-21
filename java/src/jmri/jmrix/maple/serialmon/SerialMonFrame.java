@@ -1,6 +1,7 @@
 // SerialMonFrame.java
 package jmri.jmrix.maple.serialmon;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrix.maple.SerialListener;
 import jmri.jmrix.maple.SerialMessage;
 import jmri.jmrix.maple.SerialReply;
@@ -40,7 +41,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         addHelpMenu("package.jmri.jmrix.maple.serialmon.SerialMonFrame", true);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "string concatenation, efficiency not as important as clarity here")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "string concatenation, efficiency not as important as clarity here")
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         // check for valid length
         if (l.getNumDataElements() < 2) {

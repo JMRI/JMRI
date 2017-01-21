@@ -1,5 +1,6 @@
 package jmri.jmrit.decoderdefn;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Iterator;
@@ -32,7 +33,7 @@ public class NameCheckAction extends AbstractAction {
     JPanel _who;
 
     @SuppressWarnings("unchecked")
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void actionPerformed(ActionEvent e) {

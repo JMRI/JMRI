@@ -1,10 +1,12 @@
 package jmri.jmrix.loconet.sdf;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  *
  * @author	Bob Jacobsen Copyright (C) 2007, 2010
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_OOI_PKGPROTECT") // Don't worry about malicious code changing constants
+@SuppressFBWarnings(value = "MS_OOI_PKGPROTECT") // Don't worry about malicious code changing constants
 public interface SdfConstants {
 
     /* **********************
@@ -170,7 +172,7 @@ public interface SdfConstants {
     final static int T_SPD_DEC_SP2 = TSPD + 14;
     final static int T_SPD_DIR_CHNG = TSPD + 15;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY")  // known to be mutable, OK by convention
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY")  // known to be mutable, OK by convention
     final static int[] triggerCodes = new int[]{
         TRIG_NEVER, TRIG_MODE_CHNG, TRIG_MATH, TRIG_DISTANCE,
         TRIG_SPD_INC, TRIG_SPD_DEC, TRIG_CAM, TRIG_NOT_TRIG,
@@ -225,7 +227,7 @@ public interface SdfConstants {
     /**
      * Human-readable form of trigger constants for use in SdfEditor
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY")  // known to be mutable, OK by convention
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY")  // known to be mutable, OK by convention
     final static String[] editorTriggerNames = new String[]{
         "TRIG_NEVER", "TRIG_MODE_CHNG", "TRIG_MATH", "TRIG_DISTANCE", // NOI18N
         "TRIG_SPD_INC", "TRIG_SPD_DEC", "TRIG_CAM", "TRIG_NOT_TRIG", // NOI18N
@@ -323,7 +325,7 @@ public interface SdfConstants {
     };
     final static int[] loopMasks = loopCodes;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY")  // known to be mutable, OK by convention
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY")  // known to be mutable, OK by convention
     final static String[] loopNames = new String[]{
         "loop_till_cam", "loop_till_init_TRIG", // NOI18N
         "loop_till_DIRNOW_CHNG", "loop_till_MOVING", "loop_till_SND_ACTV11", // NOI18N

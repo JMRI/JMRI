@@ -1,5 +1,6 @@
 package jmri.jmrit.display.palette;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -340,7 +341,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
 
         HashMap<String, NamedIcon> iconMap;
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // icon map is within package 
+        @SuppressFBWarnings(value = "EI_EXPOSE_REP2") // icon map is within package 
         public IconDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
             super(flavor, icon);
             iconMap = map;

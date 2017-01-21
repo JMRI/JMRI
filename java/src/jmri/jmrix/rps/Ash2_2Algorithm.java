@@ -1,6 +1,7 @@
 // Ash2_2Algorithm.java
 package jmri.jmrix.rps;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.vecmath.Point3d;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -154,13 +155,13 @@ import org.slf4j.LoggerFactory;
   */
 public class Ash2_2Algorithm extends AbstractCalculator {
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     public Ash2_2Algorithm(Point3d[] sensors, double vsound, int offset) {
         this(sensors, vsound);
         Ash2_2Algorithm.offset = offset;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2")
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2")
     public Ash2_2Algorithm(Point3d[] sensors, double vsound) {
         this.sensors = sensors;
         this.Vs = vsound;
@@ -253,15 +254,15 @@ public class Ash2_2Algorithm extends AbstractCalculator {
 
     static int offset = 0;			//  Offset (usec), add to delay
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
+    @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
     static public int TMAX = 35000;			//  Max. allowable delay (usec)
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
+    @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
     static public int TMIN = 150;			//  Min. allowable delay (usec)
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
+    @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
     static public int SMAX = 30;			//  Max. OK std. dev. (usec)
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
+    @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
     static public int NMAX = 50;			//  Max. no. of receivers used
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
+    @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
     static public int NERR = 6;			//  No. of rcvrs w/error reject
 
     //  Compute RPS Position  using
@@ -627,7 +628,7 @@ public class Ash2_2Algorithm extends AbstractCalculator {
             this.vs = vs;
         }
         int code;
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UUF_UNUSED_FIELD")
+        @SuppressFBWarnings(value = "UUF_UNUSED_FIELD")
         double x, y, z, t, vs;
     }
 

@@ -1,5 +1,6 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import com.digi.xbee.api.connection.IConnectionInterface;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
@@ -79,7 +80,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
     /**
      *
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"NO_NOTIFY_NOT_NOTIFYALL","NN_NAKED_NOTIFY"}, justification="The notify call is notifying the receive thread that data is available.  There is only one receive thead, so no reason to call notifyAll.")
+    @SuppressFBWarnings(value = {"NO_NOTIFY_NOT_NOTIFYALL","NN_NAKED_NOTIFY"}, justification="The notify call is notifying the receive thread that data is available.  There is only one receive thead, so no reason to call notifyAll.")
     public void serialEvent(SerialPortEvent e) {
         int type = e.getEventType();
         try {
@@ -225,7 +226,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
      * Get an array of valid baud rates. This is currently just a message saying
      * its fixed
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     @Override
     public String[] validBaudRates() {
         return validSpeeds;

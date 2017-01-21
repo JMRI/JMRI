@@ -1,5 +1,6 @@
 package jmri.jmrit.sound;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +15,7 @@ public class WavBuffer {
      * Create from already existing byte array. The array is expected to be in
      * .wav format, starting with a RIFF header.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
     public WavBuffer(byte[] content) {
         buffer = content;
 
@@ -157,7 +158,7 @@ public class WavBuffer {
                 + (buffer[index + 3] & 0xFF) * 256 * 256 * 256;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public byte[] getByteArray() {
         return buffer;
     }

@@ -1,6 +1,8 @@
 // AcelaMessage.java
 package jmri.jmrix.acela;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Contains the data payload of an Acela packet.
  * <P>
@@ -47,7 +49,7 @@ public class AcelaMessage extends jmri.jmrix.AbstractMRMessage {
         super(String.valueOf(a));
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public String toString() {

@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.NmraPacket;
 import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
@@ -70,7 +71,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 
     LocoNetInterface controller;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during creation of 1st turnout") // NOI18N
     private void initFeedbackModes() {
         if (_validFeedbackNames.length != _validFeedbackModes.length) {

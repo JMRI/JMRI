@@ -1,5 +1,6 @@
 package jmri.jmrix.dcc4pc.serialdriver;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
@@ -97,7 +98,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
     /**
      * Option 1 controls the connection used for programming
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validOption1() {
         List<SystemConnectionMemo> connList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
         if (!connList.isEmpty()) {

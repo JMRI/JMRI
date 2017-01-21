@@ -1,5 +1,6 @@
 package jmri.jmrix.ieee802154.serialdriver;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
@@ -234,7 +235,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     /**
      * Get an array of valid baud rates.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP")
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP")
     public String[] validBaudRates() {
         return validSpeeds;
     }
@@ -253,7 +254,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     /**
      * Option 1 is not used for anything
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP")
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP")
     public String[] validOption1() {
         return stdOption1Values;
     }

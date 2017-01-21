@@ -1,5 +1,6 @@
 package jmri.jmrit.picker;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,7 +36,7 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
     JTextField _userNametext;
     jmri.jmrit.picker.PickFrame _pickTables; // Opened from LogixTableAction
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2")
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2")
     public PickPanel(PickListModel[] models) {
         _tabPane = new JTabbedPane();
         _models = new PickListModel[models.length];

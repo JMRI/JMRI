@@ -1,6 +1,7 @@
 // AbstractXNetInitializationManager.java
 package jmri.jmrix.lenz;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -101,7 +102,7 @@ abstract public class AbstractXNetInitializationManager {
         public void run() {
         }
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NO_NOTIFY_NOT_NOTIFYALL", justification = "There should only ever be one thread waiting for this method (the designated parent, which started the thread).")
+        @SuppressFBWarnings(value = "NO_NOTIFY_NOT_NOTIFYALL", justification = "There should only ever be one thread waiting for this method (the designated parent, which started the thread).")
         private void finish() {
             initTimer.stop();
             // Notify the parent

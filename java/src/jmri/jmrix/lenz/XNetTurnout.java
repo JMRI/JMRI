@@ -99,6 +99,7 @@
  */
 package jmri.jmrix.lenz;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -120,9 +121,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     static String[] modeNames = null;
     static int[] modeValues = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     protected int _mThrown = jmri.Turnout.THROWN;
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     protected int _mClosed = jmri.Turnout.CLOSED;
 
     protected String _prefix = "X"; // default to "X"

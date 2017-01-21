@@ -1,5 +1,6 @@
 package jmri.jmrit.display.palette;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionListener;
@@ -127,7 +128,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
 
         HashMap<String, NamedIcon> iconMap;
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // icon map is within package 
+        @SuppressFBWarnings(value = "EI_EXPOSE_REP2") // icon map is within package 
         public IndicatorDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
             super(flavor, icon);
             iconMap = map;

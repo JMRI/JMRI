@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBeanHandle;
@@ -254,7 +255,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return _validFeedbackTypes;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "OK until Java 1.6 allows return of cheap array copy")
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "OK until Java 1.6 allows return of cheap array copy")
     @Override
     public String[] getValidFeedbackNames() {
         return _validFeedbackNames;
@@ -460,7 +461,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     protected String[] _validDecoderNames = PushbuttonPacket
             .getValidDecoderNames();
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "OK until Java 1.6 allows return of cheap array copy")
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "OK until Java 1.6 allows return of cheap array copy")
     @Override
     public String[] getValidDecoderNames() {
         return _validDecoderNames;

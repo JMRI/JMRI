@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -1516,7 +1517,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
          through paths table*/
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="handling issue if value isn't still identical")
+    @SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="handling issue if value isn't still identical")
     boolean informNeighbourOfAttachment(LayoutBlock lBlock, Block block, int workingDirection) {
         Adjacencies adj = getAdjacency(block);
         if (adj == null) {
@@ -2234,7 +2235,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
      * if the reverse path is required, then this need to be added seperately.
      */
     //Was public
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE")
+    @SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE")
     void addThroughPath(Block srcBlock, Block dstBlock, LayoutEditor panel) {
         //Reset connectivity flag.
         layoutConnectivity = true;
@@ -3005,7 +3006,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     }
 
     //This lot might need changing to only forward on the best route details.
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="checking against a error value of -1; bad practice to use values for errors, but not an FFPE")
+    @SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="checking against a error value of -1; bad practice to use values for errors, but not an FFPE")
     void updateRoutingInfo(LayoutBlock src, RoutingPacket update) {
         if (enableUpdateRouteLogging) {
             log.info("From " + this.getDisplayName() + " src: " + src.getDisplayName() + " block: " + update.getBlock().getDisplayName() + " hopCount " + update.getHopCount() + " metric: " + update.getMetric() + " status: " + update.getBlockState() + " packetID: " + update.getPacketId());

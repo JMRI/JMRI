@@ -1,5 +1,6 @@
 package apps;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ResourceBundle;
@@ -161,7 +162,7 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
             this.field = field;
         }
         @Override
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification="protected by if instanceof")
+        @SuppressFBWarnings(value="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification="protected by if instanceof")
         public void actionPerformed(ActionEvent e) {
             // get the file
             chooser.showOpenDialog(null);

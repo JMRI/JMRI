@@ -1,6 +1,7 @@
 package jmri.jmrit.roster.swing;
 
 import apps.gui.GuiLafPreferencesManager;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -270,7 +271,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
     // cache selectedRosterEntries so that multiple calls to this
     // between selection changes will not require the creation of a new array
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP",
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP",
             justification = "Want to give access to mutable, original roster objects")
     public RosterEntry[] getSelectedRosterEntries() {
         if (selectedRosterEntries == null) {
