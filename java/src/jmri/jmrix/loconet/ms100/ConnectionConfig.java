@@ -32,12 +32,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
      * @return null if this is a Mac OS X system that can't run MS100
      */
     public String name() {
-        if (SystemType.isMacOSX()
-                || (SystemType.isWindows() && Double.valueOf(System.getProperty("os.version")) >= 6)) {
-            return "(LocoNet MS100 not available)";
-        } else {
-            return "LocoNet MS100";
-        }
+        return "LocoNet MS100";
     }
 
     protected void setInstance() {
