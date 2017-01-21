@@ -53,7 +53,7 @@ public class BlockManager extends AbstractManager implements PropertyChangeListe
 
     @Override
     @CheckReturnValue
-    public @Nonnull
+    @Nonnull public
     String getSystemPrefix() {
         return "I";
     }
@@ -246,14 +246,14 @@ public class BlockManager extends AbstractManager implements PropertyChangeListe
     }
 
     @CheckReturnValue
-    public @Nonnull
+    @Nonnull public
     String getDefaultSpeed() {
         return defaultSpeed;
     }
 
     @Override
     @CheckReturnValue
-    public @Nonnull
+    @Nonnull public
     String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameBlock");
     }
@@ -268,7 +268,7 @@ public class BlockManager extends AbstractManager implements PropertyChangeListe
      * @return list of block system names
      */
     @CheckReturnValue
-    public @Nonnull
+    @Nonnull public
     List<Block> getBlocksOccupiedByRosterEntry(@Nonnull RosterEntry re) {
         List<Block> blockList = new ArrayList<>();
 

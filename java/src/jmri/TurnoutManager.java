@@ -57,7 +57,7 @@ public interface TurnoutManager extends Manager {
      *                                  e.g. an illegal name or name that can't
      *                                  be parsed.
      */
-    public @Nonnull Turnout provideTurnout(@Nonnull String name) throws IllegalArgumentException;
+    @Nonnull public Turnout provideTurnout(@Nonnull String name) throws IllegalArgumentException;
 
     /**
      * Locate via user name, then system name if needed. If that fails, return
@@ -111,32 +111,32 @@ public interface TurnoutManager extends Manager {
      *                                  an illegal name or name that can't be
      *                                  parsed.
      */
-    public @Nonnull Turnout newTurnout(@Nonnull String systemName, @Nullable String userName)  throws IllegalArgumentException;
+    @Nonnull public Turnout newTurnout(@Nonnull String systemName, @Nullable String userName)  throws IllegalArgumentException;
 
     /**
      * Get a list of all Turnouts' system names.
      */
-    public @Nonnull List<String> getSystemNameList();
+    @Nonnull public List<String> getSystemNameList();
 
     /**
      * Get text to be used for the Turnout.CLOSED state in user communication.
      * Allows text other than "CLOSED" to be use with certain hardware system to
      * represent the Turnout.CLOSED state.
      */
-    public @Nonnull String getClosedText();
+    @Nonnull public String getClosedText();
 
     /**
      * Get text to be used for the Turnout.THROWN state in user communication.
      * Allows text other than "THROWN" to be use with certain hardware system to
      * represent the Turnout.THROWN state.
      */
-    public @Nonnull String getThrownText();
+    @Nonnull public String getThrownText();
 
     /**
      * Get a list of the valid TurnoutOPeration subtypes for use with turnouts
      * of this system
      */
-    public @Nonnull String[] getValidOperationTypes();
+    @Nonnull public String[] getValidOperationTypes();
 
     /**
      * Get from the user, the number of addressed bits used to control a

@@ -36,7 +36,7 @@ public interface RouteManager extends Manager {
      * a Route with the same systemName or userName already exists, or if there
      * is trouble creating a new Route.
      */
-    public @Nonnull Route provideRoute(@Nonnull String systemName, String userName);
+    @Nonnull public Route provideRoute(@Nonnull String systemName, String userName);
 
     /**
      * For use with User GUI, to allow the auto generation of systemNames, where
@@ -44,7 +44,7 @@ public interface RouteManager extends Manager {
      * if the route does not exist Returns null if a Route with the same
      * userName already exists, or if there is trouble creating a new Route.
      */
-    public @Nonnull Route newRoute(@Nonnull String userName);
+    @Nonnull public Route newRoute(@Nonnull String userName);
 
     /**
      * Locate via user name, then system name if needed. Does not create a new
@@ -62,7 +62,7 @@ public interface RouteManager extends Manager {
     /**
      * Get a list of all Route system names.
      */
-    public @Nonnull List<String> getSystemNameList();
+    @Nonnull public List<String> getSystemNameList();
 
     /**
      * Delete Route by removing it from the manager. The Route must first be

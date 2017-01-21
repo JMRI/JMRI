@@ -175,7 +175,7 @@ public interface Turnout extends NamedBean {
      * Get a human readable representation of the feedback type. The values
      * depend on the implemented system.
      */
-    public @Nonnull String[] getValidFeedbackNames();
+    @Nonnull public String[] getValidFeedbackNames();
 
     /**
      * Set the feedback mode from a human readable name. This must be one of the
@@ -194,7 +194,7 @@ public interface Turnout extends NamedBean {
      * Get the feedback mode in human readable form. This will be one of the
      * names defined in a {@link #getValidFeedbackNames} call.
      */
-    public @Nonnull String getFeedbackModeName();
+    @Nonnull public String getFeedbackModeName();
 
     /**
      * Get the feedback mode in machine readable form. This will be one of the
@@ -405,7 +405,7 @@ public interface Turnout extends NamedBean {
     /**
      * Get a human readable representation of the decoder types.
      */
-    public @Nonnull String[] getValidDecoderNames();
+    @Nonnull public String[] getValidDecoderNames();
 
     /**
      * Get a human readable representation of the decoder type for this turnout.
