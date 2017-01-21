@@ -681,7 +681,7 @@ public class TrackSegment {
     void segmentEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
         String newBlockName = blockNameComboBox.getSelectedDisplayName();
-        newBlockName = newBlockName ? newBlockName.trim() : "";
+        newBlockName = (null != newBlockName) ? newBlockName.trim() : "";
         if (!blockName.equals(newBlockName)) {
             // block has changed, if old block exists, decrement use
             if (block != null) {
@@ -745,7 +745,7 @@ public class TrackSegment {
         }
         // check if Block changed
         String newBlockName = blockNameComboBox.getSelectedDisplayName();
-        newBlockName = newBlockName ? newBlockName.trim() : "";
+        newBlockName = (null != newBlockName) ? newBlockName.trim() : "";
         if (!blockName.equals(newBlockName)) {
             // block has changed, if old block exists, decrement use
             if (block != null) {
