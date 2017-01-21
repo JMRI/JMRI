@@ -7,25 +7,15 @@ package jmri;
  * be sited with a signal mast. Such subsidary signals would be used to
  * indicated routes, junctions and allowable speeds. Each such
  * route/junction/speed would be represented by a single output signal, that is
- * either off or on. Within the group on one such signal would be allowed on at
+ * either Off or On. Within the group only one such signal would be allowed on at
  * any one time.
  *
  * The group is attached to a signal mast, and can be configured to be activated
- * depending upon that masts appearance. The Each signal head within the group
- * is defined with a On and Off appearance, and a set of criteria in the form of
+ * depending upon that masts aspect. The Each signal head within the group
+ * is defined with an On and Off appearance, and a set of criteria in the form of
  * matching turnouts and sensor states, that must be met for the head to be set
  * On.
- * <P>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author	Pete Cressman Copyright (C) 2009
  */
 public interface SignalGroup extends NamedBean {
@@ -61,32 +51,32 @@ public interface SignalGroup extends NamedBean {
     public SignalMast getSignalMast();
 
     /**
-     * Clear the list of SignalMast Appearances that trigger the group
+     * Clear the list of SignalMast Aspects that trigger the group
      */
-    public void clearSignalMastAppearance();
+    public void clearSignalMastAspect();
 
     /**
-     * Add an appearance that can trigger the group activation
+     * Add an Aspect that can trigger the group activation
      */
-    public void addSignalMastAppearance(String sppearance);
+    public void addSignalMastAspect(String aspect);
 
-    public int getNumSignalMastAppearances();
+    public int getNumSignalMastAspects();
 
     /**
-     * Method to get a SignalMast Appearance by Index Returns null if there are
+     * Method to get a SignalMast Aspect by Index Returns null if there are
      * no Appearances with that index
      */
-    public String getSignalMastAppearanceByIndex(int x);
+    public String getSignalMastAspectByIndex(int x);
 
     /**
-     * Inquire if a SignalMast Appearance is included.
+     * Inquire if a SignalMast Aspect is included.
      */
-    public boolean isSignalMastAppearanceIncluded(String appearance);
+    public boolean isSignalMastAspectIncluded(String aspect);
 
     /**
-     * Remove a SignalMast Appearance from the set of triggers.
+     * Remove a SignalMast Aspect from the set of triggers.
      */
-    public void deleteSignalMastAppearance(String appearance);
+    public void deleteSignalMastAspect(String aspect);
 
     /**
      * Add a Signal Head to the Group
@@ -102,27 +92,27 @@ public interface SignalGroup extends NamedBean {
      */
     public void addSignalHead(SignalHead mHead);
 
-    public SignalHead getSignalHeadItemBeanByIndex(int n);
+    public SignalHead getHeadItemBeanByIndex(int n);
 
     /**
      * Method to get a SignalHead by Index Returns null if there are no Signal
      * Heads with that index
      */
-    public String getSignalHeadItemNameByIndex(int n);
+    public String getHeadItemNameByIndex(int n);
 
     /**
      * Method to get the On State of a SignalState at Index n
      * <P>
      * @return -1 if there are less than 'n' SignalHeads defined
      */
-    public int getSignalHeadOnStateByIndex(int n);
+    public int getHeadOnStateByIndex(int n);
 
     /**
      * Method to get the Off State of a SignalState at Index n
      * <P>
      * @return -1 if there are less than 'n' SignalHeads defined
      */
-    public int getSignalHeadOffStateByIndex(int n);
+    public int getHeadOffStateByIndex(int n);
 
     /**
      * Delete Signal Head by Name
@@ -134,44 +124,41 @@ public interface SignalGroup extends NamedBean {
      */
     public void deleteSignalHead(NamedBeanHandle<SignalHead> sh);
 
-    public int getNumSignalHeadItems();
+    public int getNumHeadItems();
 
     /**
      * Method to inquire if a Signal Head is included in this Group
+     * @param signalHead The signal head object we are querying
      */
-    public boolean isSignalIncluded(SignalHead signalHead);
+    public boolean isHeadIncluded(SignalHead signalHead);
 
     /**
      * Method to get the On State of Signal Head
-     *
      * @param signalHead The signal head object we are querying
      */
-    public int getSignalHeadOnState(SignalHead signalHead);
+    public int getHeadOnState(SignalHead signalHead);
 
     /**
      * Method to get the Off State of Signal Head
-     *
      * @param signalHead The signal head bean object we are querying
      */
-    public int getSignalHeadOffState(SignalHead signalHead);
+    public int getHeadOffState(SignalHead signalHead);
 
     /**
      * Sets the On State of the Signal in the Group
-     *
      * @param head  The SignalHead Bean
-     * @param state The Apperance that the SignalHead will change to when the
+     * @param state The Appearance that the SignalHead will change to when the
      *              conditions are met.
      */
-    public void setSignalHeadOnState(SignalHead head, int state);
+    public void setHeadOnState(SignalHead head, int state);
 
     /**
      * Sets the Off State of the Signal in the Group
-     *
      * @param head  The SignalHead Bean
      * @param state The Apperance that the SignalHead will change to when the
      *              conditions are NOT met.
      */
-    public void setSignalHeadOffState(SignalHead head, int state);
+    public void setHeadOffState(SignalHead head, int state);
 
     /**
      * Sets whether the sensors and turnouts should be treated as seperate
@@ -188,7 +175,7 @@ public interface SignalGroup extends NamedBean {
      * <P>
      * @return -1 if there are less than 'n' SignalHeads defined
      */
-    public int getNumSignalHeadTurnoutsByIndex(int x);
+    public int getNumHeadTurnoutsByIndex(int x);
 
     /**
      * Method to add a Turnout and its state to a signal head.
@@ -197,7 +184,7 @@ public interface SignalGroup extends NamedBean {
      * @param mTurn Turnout Bean
      * @param state The State that the turnout must be set to.
      */
-    public void setSignalHeadAlignTurnout(SignalHead mHead, Turnout mTurn, int state);
+    public void setHeadAlignTurnout(SignalHead mHead, Turnout mTurn, int state);
 
     /**
      * Inquire if a Turnout is included in the Signal Head Calculation.
@@ -262,7 +249,7 @@ public interface SignalGroup extends NamedBean {
      * @param mSensor Sensor Bean
      * @param state   The State that the sensor must be set to.
      */
-    public void setSignalHeadAlignSensor(SignalHead mHead, Sensor mSensor, int state);
+    public void setHeadAlignSensor(SignalHead mHead, Sensor mSensor, int state);
 
     /**
      * Inquire if a Sensor is included in the Signal Head Calculation.
@@ -318,21 +305,21 @@ public interface SignalGroup extends NamedBean {
      * <P>
      * @return -1 if there are less than 'n' SignalHeads defined
      */
-    public int getNumSignalHeadSensorsByIndex(int x);
+    public int getNumHeadSensorsByIndex(int x);
 
     /**
      * Delete all Turnouts for a given SignalHead in the group
      *
      * @param pSignal SignalHead Name
      */
-    public void clearSignalTurnout(SignalHead pSignal);
+    public void clearHeadTurnout(SignalHead pSignal);
 
     /**
      * Delete all Sensors for a given SignalHead in the group
      *
      * @param pSignal SignalHead Name
      */
-    public void clearSignalSensor(SignalHead pSignal);
+    public void clearHeadSensor(SignalHead pSignal);
 
     public int getState();
 

@@ -43,13 +43,13 @@ public class DefaultSignalGroupManagerXml
             e.setAttribute("userName", p.getUserName());
             //storeCommon(p, e);
             element.addContent(e);
-            for (int x = 0; x < p.getNumSignalMastAppearances(); x++) {
-                Element app = new Element("appearance").setAttribute("valid", p.getSignalMastAppearanceByIndex(x));
+            for (int x = 0; x < p.getNumSignalMastAspects(); x++) {
+                Element app = new Element("appearance").setAttribute("valid", p.getSignalMastAspectByIndex(x));
                 e.addContent(app);
             }
             e.setAttribute("signalMast", p.getSignalMastName());
 
-            for (int x = 0; x < p.getNumSignalHeadItems(); x++) {
+            for (int x = 0; x < p.getNumHeadItems(); x++) {
 
                 storeSignalHead(e, p, x);
 
@@ -60,20 +60,20 @@ public class DefaultSignalGroupManagerXml
 
     private void storeSignalHead(Element element, SignalGroup _group, int x) {
         Element group = new Element("signalHead");
-        String name = _group.getSignalHeadItemNameByIndex(x);
+        String name = _group.getHeadItemNameByIndex(x);
         group.setAttribute("name", name);
-        group.setAttribute("onAppearance", getSignalColour(_group.getSignalHeadOnStateByIndex(x)));
-        group.setAttribute("offAppearance", getSignalColour(_group.getSignalHeadOffStateByIndex(x)));
+        group.setAttribute("onAppearance", getSignalColour(_group.getHeadOnStateByIndex(x)));
+        group.setAttribute("offAppearance", getSignalColour(_group.getHeadOffStateByIndex(x)));
         if (_group.getSensorTurnoutOperByIndex(x)) {
             group.setAttribute("sensorTurnoutLogic", "AND");
         } else {
             group.setAttribute("sensorTurnoutLogic", "OR");
         }
 
-        for (int i = 0; i < _group.getNumSignalHeadTurnoutsByIndex(x); i++) {
+        for (int i = 0; i < _group.getNumHeadTurnoutsByIndex(x); i++) {
             storeTurnout(group, _group, x, i);
         }
-        for (int i = 0; i < _group.getNumSignalHeadSensorsByIndex(x); i++) {
+        for (int i = 0; i < _group.getNumHeadSensorsByIndex(x); i++) {
             storeSensor(group, _group, x, i);
         }
 
@@ -152,7 +152,7 @@ public class DefaultSignalGroupManagerXml
             List<Element> appList = e.getChildren("appearance");
             for (int y = 0; y < appList.size(); y++) {
                 String value = appList.get(y).getAttribute("valid").getValue();
-                m.addSignalMastAppearance(value);
+                m.addSignalMastAspect(value);
             }
             //loadCommon(m, e);
             List<Element> signalHeadList = list.get(i).getChildren("signalHead");
@@ -173,11 +173,11 @@ public class DefaultSignalGroupManagerXml
                     m.setSensorTurnoutOper(sigHead, inverse);
 
                     try {
-                        m.setSignalHeadOnState(sigHead, getIntFromColour(signalHeadList.get(y).getAttribute("onAppearance").getValue()));
+                        m.setHeadOnState(sigHead, getIntFromColour(signalHeadList.get(y).getAttribute("onAppearance").getValue()));
                     } catch (NullPointerException ex) {  // considered normal if the attributes are not present
                     }
                     try {
-                        m.setSignalHeadOffState(sigHead, getIntFromColour(signalHeadList.get(y).getAttribute("offAppearance").getValue()));
+                        m.setHeadOffState(sigHead, getIntFromColour(signalHeadList.get(y).getAttribute("offAppearance").getValue()));
                     } catch (NullPointerException ex) {  // considered normal if the attributes are not present
                     }
                     List<Element> signalTurnoutList = signalHeadList.get(y).getChildren("turnout");
@@ -191,7 +191,7 @@ public class DefaultSignalGroupManagerXml
                             } catch (org.jdom2.DataConversionException ex) {
                                 log.warn("invalid state attribute value");
                             }
-                            m.setSignalHeadAlignTurnout(sigHead, turnout, state);
+                            m.setHeadAlignTurnout(sigHead, turnout, state);
                         }
                     }
                     List<Element> signalSensorList = signalHeadList.get(y).getChildren("sensor");
@@ -205,7 +205,7 @@ public class DefaultSignalGroupManagerXml
                             } catch (org.jdom2.DataConversionException ex) {
                                 log.warn("invalid style attribute value");
                             }
-                            m.setSignalHeadAlignSensor(sigHead, sensor, state);
+                            m.setHeadAlignSensor(sigHead, sensor, state);
                         }
                     }
                 }

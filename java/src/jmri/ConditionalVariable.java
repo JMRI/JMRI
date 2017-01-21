@@ -760,9 +760,9 @@ public class ConditionalVariable {
             case Conditional.TYPE_SENSOR_INACTIVE:
                 return Bundle.getMessage("SensorStateInactive"); // NOI18N
             case Conditional.TYPE_TURNOUT_THROWN:
-                return rbx.getString("TurnoutThrown"); // NOI18N
+                return Bundle.getMessage("TurnoutStateThrown"); // NOI18N
             case Conditional.TYPE_TURNOUT_CLOSED:
-                return rbx.getString("TurnoutClosed"); // NOI18N
+                return Bundle.getMessage("TurnoutStateClosed"); // NOI18N
             case Conditional.TYPE_CONDITIONAL_TRUE:
                 return rbx.getString("True"); // NOI18N
             case Conditional.TYPE_CONDITIONAL_FALSE:
@@ -792,7 +792,7 @@ public class ConditionalVariable {
             case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
                 return rbx.getString("StateSignalHeadFlashGreen"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_LIT:
-                return rbx.getString("StateSignalHeadLit"); // NOI18N
+                return rbx.getString("TypeSignalHeadLit"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_HELD:
                 return rbx.getString("TypeSignalHeadHeld"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_LUNAR:
@@ -910,7 +910,7 @@ public class ConditionalVariable {
             case Conditional.TYPE_ENTRYEXIT_INACTIVE:
                 return rbx.getString("TypeEntryExitInactive"); // NOI18N
         }
-        return "None";
+        return Bundle.getMessage("NONE");
     }
 
     public static String getCompareOperationString(int index) {

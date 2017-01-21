@@ -68,7 +68,7 @@ public class SignalGroupSubTableAction {
 
     public SignalGroupSubTableAction() {
         this("Signal Group Head Edit Table");
-    }
+    } // NOI18N is never displayed on screen
 
     String helpTarget() {
         return "package.jmri.jmrit.beantable.SignalGroupTable";
@@ -142,7 +142,7 @@ public class SignalGroupSubTableAction {
             String result = jmri.util.StringUtil.getNameFromState(mode, sig.getValidStates(), sig.getValidStateNames());
             box.setSelectedItem(result);
         } else {
-            log.error("Failed to get signal {}", curSignal);
+            log.error("Failed to get signal head {}", curSignal);
         }
     }
 
@@ -196,7 +196,7 @@ public class SignalGroupSubTableAction {
     String curSignal;
     SignalHead curSignalHead;
 
-    void editSignal(SignalGroup g, String signal) {
+    void editHead(SignalGroup g, String signal) {
         curSignalGroup = g;
         curSignal = signal;
         curSignalHead = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(curSignal);
@@ -233,7 +233,7 @@ public class SignalGroupSubTableAction {
 
         // Set up window
         if (addFrame == null) {
-            addFrame = new JmriJFrame((Bundle.getMessage("AddEditSignalGroup") + " - " + Bundle.getMessage("BeanNameSignalHead")), false, true);
+            addFrame = new JmriJFrame((Bundle.getMessage("AddSignalGroup") + " - " + Bundle.getMessage("BeanNameSignalHead")), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalGroupAddEdit", true);
             addFrame.setLocation(100, 30);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
@@ -261,17 +261,17 @@ public class SignalGroupSubTableAction {
             if (curSignalHead.getClass().getName().contains("SingleTurnoutSignalHead")) {
                 jmri.implementation.SingleTurnoutSignalHead Signal = (jmri.implementation.SingleTurnoutSignalHead) InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(curSignal);
                 if (Signal != null) {
-                    if ((g.getSignalHeadOnState(curSignalHead) == 0x00) && (g.getSignalHeadOffState(curSignalHead) == 0x00)) {
-                        g.setSignalHeadOnState(curSignalHead, Signal.getOnAppearance());
-                        g.setSignalHeadOffState(curSignalHead, Signal.getOffAppearance());
+                    if ((g.getHeadOnState(curSignalHead) == 0x00) && (g.getHeadOffState(curSignalHead) == 0x00)) {
+                        g.setHeadOnState(curSignalHead, Signal.getOnAppearance());
+                        g.setHeadOffState(curSignalHead, Signal.getOffAppearance());
                     }
                 } else {
                     log.error("Failed to get signal {}", curSignal);
                 }
             }
 
-            setSignalStateBox(g.getSignalHeadOnState(curSignalHead), _OnAppearance);
-            setSignalStateBox(g.getSignalHeadOffState(curSignalHead), _OffAppearance);
+            setSignalStateBox(g.getHeadOnState(curSignalHead), _OnAppearance);
+            setSignalStateBox(g.getHeadOffState(curSignalHead), _OffAppearance);
             // add Turnout Display Choice
             JPanel py = new JPanel();
             py.add(new JLabel(Bundle.getMessage("Show")));
@@ -466,15 +466,15 @@ public class SignalGroupSubTableAction {
         addFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
                 addFrame.setVisible(false);
-                cancelEdit();
+                cancelSubEdit();
                 _SignalGroupSensorModel.dispose();
                 _SignalGroupTurnoutModel.dispose();
             }
         });
         addFrame.setVisible(true);
         setoperBox(curSignalGroup.getSensorTurnoutOper(curSignalHead), _SensorTurnoutOper);
-        setSignalStateBox(curSignalGroup.getSignalHeadOnState(curSignalHead), _OnAppearance);
-        setSignalStateBox(curSignalGroup.getSignalHeadOffState(curSignalHead), _OffAppearance);
+        setSignalStateBox(curSignalGroup.getHeadOnState(curSignalHead), _OnAppearance);
+        setSignalStateBox(curSignalGroup.getHeadOffState(curSignalHead), _OffAppearance);
         int setRow = 0;
         for (int i = _turnoutList.size() - 1; i >= 0; i--) {
             SignalGroupTurnout turnout = _turnoutList.get(i);
@@ -544,62 +544,65 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Sets the Turnout information for adding or editting
+     * Sets the Turnout information for adding or editing
      */
     int setTurnoutInformation(SignalGroup g) {
         for (int i = 0; i < _includedTurnoutList.size(); i++) {
             SignalGroupTurnout t = _includedTurnoutList.get(i);
-            g.setSignalHeadAlignTurnout(curSignalHead, t.getTurnout(), t.getState());
+            g.setHeadAlignTurnout(curSignalHead, t.getTurnout(), t.getState());
         }
         return _includedTurnoutList.size();
     }
 
     /**
-     * Sets the Sensor information for adding or editting
+     * Sets the Sensor information for adding or editing
      */
     int setSensorInformation(SignalGroup g) {
         for (int i = 0; i < _includedSensorList.size(); i++) {
             SignalGroupSensor s = _includedSensorList.get(i);
-            g.setSignalHeadAlignSensor(curSignalHead, s.getSensor(), s.getState());
+            g.setHeadAlignSensor(curSignalHead, s.getSensor(), s.getState());
         }
         return _includedSensorList.size();
     }
 
     void cancelPressed(ActionEvent e) {
-        addFrame.setVisible(false);
-        addFrame.dispose();
-        addFrame = null;
+        log.debug("canceled in SGSTA line 569");
+        cancelSubEdit();
+        //addFrame.setVisible(false);
+        //addFrame.dispose();
+        //addFrame = null;
     }
 
     /**
      * Responds to the Update button - update to SignalGroup Table
      */
     void updateSubPressed(ActionEvent e, boolean newSignalGroup) {
-        curSignalGroup.clearSignalTurnout(curSignalHead);
-        curSignalGroup.clearSignalSensor(curSignalHead);
+        curSignalGroup.clearHeadTurnout(curSignalHead);
+        curSignalGroup.clearHeadSensor(curSignalHead);
 
         initializeIncludedList();
         setTurnoutInformation(curSignalGroup);
         setSensorInformation(curSignalGroup);
-        curSignalGroup.setSignalHeadOnState(curSignalHead, signalStateFromBox(_OnAppearance));
-        curSignalGroup.setSignalHeadOffState(curSignalHead, signalStateFromBox(_OffAppearance));
+        curSignalGroup.setHeadOnState(curSignalHead, signalStateFromBox(_OnAppearance));
+        curSignalGroup.setHeadOffState(curSignalHead, signalStateFromBox(_OffAppearance));
         curSignalGroup.setSensorTurnoutOper(curSignalHead, operFromBox(_SensorTurnoutOper));
         // add control Sensors and a control Turnout if entered in the window
         finishUpdate();
     }
 
     void finishUpdate() {
-        // move to show all turnouts if not there
+        // move to show all signal heads if not there
         cancelIncludedOnly();
         updateSubButton.setVisible(false);
-
         addFrame.setVisible(false);
+        //addFrame.dispose();
+        //addFrame = null;
     }
 
     /**
      * Cancels edit mode
      */
-    void cancelEdit() {
+    void cancelSubEdit() {
         // get out of edit mode
         curSignalGroup = null;
         finishUpdate();
