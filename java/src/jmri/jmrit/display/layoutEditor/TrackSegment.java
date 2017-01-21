@@ -19,8 +19,11 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import jmri.BlockManager;
+import jmri.InstanceManager;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -208,7 +211,7 @@ public class TrackSegment {
         changed = true;
     }
     //public int getStartAngle() {return startangle;}
-    //public void setStartAngle(int x) {startangle = x;} 
+    //public void setStartAngle(int x) {startangle = x;}
 
     public double getAngle() {
         return angle;
@@ -548,7 +551,8 @@ public class TrackSegment {
     private JComboBox<String> mainlineBox = new JComboBox<String>();
     private int mainlineTrackIndex;
     private int sideTrackIndex;
-    private JTextField blockNameField = new JTextField(16);
+    private JmriBeanComboBox blockNameComboBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
     private JTextField arcField = new JTextField(5);
     private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideTrack"));
     private JButton segmentEditBlock;
@@ -572,7 +576,7 @@ public class TrackSegment {
             editTrackSegmentFrame.setLocation(50, 30);
             Container contentPane = editTrackSegmentFrame.getContentPane();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-            // add dashed choice 
+            // add dashed choice
             JPanel panel31 = new JPanel();
             panel31.setLayout(new FlowLayout());
             dashedBox.removeAllItems();
@@ -584,7 +588,7 @@ public class TrackSegment {
             panel31.add(new JLabel(rb.getString("Style") + " : "));
             panel31.add(dashedBox);
             contentPane.add(panel31);
-            // add mainline choice 
+            // add mainline choice
             JPanel panel32 = new JPanel();
             panel32.setLayout(new FlowLayout());
             mainlineBox.removeAllItems();
@@ -595,7 +599,7 @@ public class TrackSegment {
             mainlineBox.setToolTipText(rb.getString("MainlineToolTip"));
             panel32.add(mainlineBox);
             contentPane.add(panel32);
-            // add hidden choice 
+            // add hidden choice
             JPanel panel33 = new JPanel();
             panel33.setLayout(new FlowLayout());
             hiddenBox.setToolTipText(rb.getString("HiddenToolTip"));
@@ -606,8 +610,11 @@ public class TrackSegment {
             panel2.setLayout(new FlowLayout());
             JLabel blockNameLabel = new JLabel(rb.getString("BlockID"));
             panel2.add(blockNameLabel);
-            panel2.add(blockNameField);
-            blockNameField.setToolTipText(rb.getString("EditBlockNameHint"));
+            blockNameComboBox.setEditable(true);
+            blockNameComboBox.getEditor().setItem("");
+            blockNameComboBox.setSelectedIndex(-1);
+            blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
+            panel2.add(blockNameComboBox);
             contentPane.add(panel2);
             if ((getArc()) && (getCircle())) {
                 JPanel panel20 = new JPanel();
@@ -659,7 +666,8 @@ public class TrackSegment {
             dashedBox.setSelectedIndex(solidIndex);
         }
         hiddenBox.setSelected(hidden);
-        blockNameField.setText(blockName);
+        blockNameComboBox.getEditor().setItem(blockName);
+
         editTrackSegmentFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
                 segmentEditCancelPressed(null);
@@ -672,13 +680,15 @@ public class TrackSegment {
 
     void segmentEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        if (!blockName.equals(blockNameField.getText().trim())) {
+        String newBlockName = blockNameComboBox.getSelectedDisplayName();
+        newBlockName = newBlockName ? newBlockName.trim() : "";
+        if (!blockName.equals(newBlockName)) {
             // block has changed, if old block exists, decrement use
             if (block != null) {
                 block.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockName = blockNameField.getText().trim();
+            blockName = newBlockName;
             try {
                 block = layoutEditor.provideLayoutBlock(blockName);
             } catch (IllegalArgumentException ex) {
@@ -734,13 +744,15 @@ public class TrackSegment {
             needsRedraw = true;
         }
         // check if Block changed
-        if (!blockName.equals(blockNameField.getText().trim())) {
+        String newBlockName = blockNameComboBox.getSelectedDisplayName();
+        newBlockName = newBlockName ? newBlockName.trim() : "";
+        if (!blockName.equals(newBlockName)) {
             // block has changed, if old block exists, decrement use
             if (block != null) {
                 block.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockName = blockNameField.getText().trim();
+            blockName = newBlockName;
             try {
                 block = layoutEditor.provideLayoutBlock(blockName);
             } catch (IllegalArgumentException ex) {
@@ -1057,7 +1069,7 @@ public class TrackSegment {
             o = pt2y - pt1y;
             chord = java.lang.Math.sqrt(((a * a) + (o * o)));
             setChordLength(chord);
-            // Make sure chord is not null 
+            // Make sure chord is not null
             // In such a case (pt1 == pt2), there is no arc to draw
             if (chord > 0.0D) {
                 radius = (chord / 2) / (java.lang.Math.sin(halfAngle));
