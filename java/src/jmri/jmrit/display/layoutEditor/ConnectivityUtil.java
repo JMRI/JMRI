@@ -2387,7 +2387,7 @@ public class ConnectivityUtil {
 							con_type = con_types[conType];
 						}
 
-						String conName = ">WTF?<";
+						String conName = "";
 						try {
 							conName = ((PositionablePoint) conObj).getID();
 						} catch (Exception ex) {
@@ -2398,7 +2398,7 @@ public class ConnectivityUtil {
 							}
 						}
 
-						String curName = ">WTF?<";
+						String curName = "";
 						try {
 							curName = ((PositionablePoint) curObj).getID();
 						} catch (Exception ex) {
@@ -2430,7 +2430,7 @@ public class ConnectivityUtil {
 						con_type = con_types[conType];
 					}
 
-					String conName = ">WTF?<";
+					String conName = "";
 					try {
 						conName = ((PositionablePoint) conObj).getID();
 					} catch (Exception ex) {
@@ -2441,7 +2441,7 @@ public class ConnectivityUtil {
 						}
 					}
 
-					String curName = ">WTF?<";
+					String curName = "";
 					try {
 						curName = ((PositionablePoint) curObj).getID();
 					} catch (Exception ex) {
