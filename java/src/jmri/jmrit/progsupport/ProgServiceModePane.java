@@ -86,7 +86,7 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
      * Get the list of global managers
      * @return empty list if none
      */
-    protected @Nonnull List<GlobalProgrammerManager> getMgrList() {
+    @CheckForNull public List<GlobalProgrammerManager> getMgrList() {
         return InstanceManager.getList(jmri.GlobalProgrammerManager.class);
     }
 

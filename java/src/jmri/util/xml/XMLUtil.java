@@ -556,17 +556,17 @@ public final class XMLUtil extends Object {
         Validator v = schema.newValidator();
         final SAXException[] error = {null};
         v.setErrorHandler(new ErrorHandler() {
-            public @Override
+            @CheckForNull public
             void warning(SAXParseException x) throws SAXException {
             }
 
-            public @Override
+            @CheckForNull public
             void error(SAXParseException x) throws SAXException {
                 // Just rethrowing it is bad because it will also print it to stderr.
                 error[0] = x;
             }
 
-            public @Override
+            @CheckForNull public
             void fatalError(SAXParseException x) throws SAXException {
                 error[0] = x;
             }
@@ -1162,19 +1162,19 @@ public final class XMLUtil extends Object {
             log.error(null, exception);
         }
 
-        public @Override
+        @CheckForNull public
         void fatalError(SAXParseException exception) throws SAXException {
             annotate(exception);
             throw exception;
         }
 
-        public @Override
+        @CheckForNull public
         void error(SAXParseException exception) throws SAXException {
             annotate(exception);
             throw exception;
         }
 
-        public @Override
+        @CheckForNull public
         void warning(SAXParseException exception) throws SAXException {
             log.warn(null, exception);
         }

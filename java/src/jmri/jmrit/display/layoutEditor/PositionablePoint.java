@@ -194,7 +194,7 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    public @Nonnull String getEastBoundSignal() {
+    @CheckForNull public String getEastBoundSignal() {
         SignalHead h = getEastBoundSignalHead();
         if (h != null) {
             return h.getDisplayName();
@@ -262,7 +262,7 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    public @Nonnull String getWestBoundSignal() {
+    @CheckForNull public String getWestBoundSignal() {
         SignalHead h = getWestBoundSignalHead();
         if (h != null) {
             return h.getDisplayName();
@@ -330,7 +330,7 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    public @Nonnull String getEastBoundSensorName() {
+    @CheckForNull public String getEastBoundSensorName() {
         if (eastBoundSensorNamed != null) {
             return eastBoundSensorNamed.getName();
         }
@@ -360,7 +360,7 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    public @Nonnull String getWestBoundSensorName() {
+    @CheckForNull public String getWestBoundSensorName() {
         if (westBoundSensorNamed != null) {
             return westBoundSensorNamed.getName();
         }
@@ -389,7 +389,7 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    public @Nonnull String getEastBoundSignalMastName() {
+    @CheckForNull public String getEastBoundSignalMastName() {
         if (getEastBoundSignalMastNamed() != null) {
             return getEastBoundSignalMastNamed().getName();
         }
@@ -449,7 +449,7 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    public @Nonnull String getWestBoundSignalMastName() {
+    @CheckForNull public String getWestBoundSignalMastName() {
         if (getWestBoundSignalMastNamed() != null) {
             return getWestBoundSignalMastNamed().getName();
         }

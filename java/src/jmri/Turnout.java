@@ -175,7 +175,7 @@ public interface Turnout extends NamedBean {
      * Get a human readable representation of the feedback type. The values
      * depend on the implemented system.
      */
-    public @Nonnull String[] getValidFeedbackNames();
+    @Nonnull public String[] getValidFeedbackNames();
 
     /**
      * Set the feedback mode from a human readable name. This must be one of the
@@ -194,7 +194,7 @@ public interface Turnout extends NamedBean {
      * Get the feedback mode in human readable form. This will be one of the
      * names defined in a {@link #getValidFeedbackNames} call.
      */
-    public @Nonnull String getFeedbackModeName();
+    @Nonnull public String getFeedbackModeName();
 
     /**
      * Get the feedback mode in machine readable form. This will be one of the
@@ -218,7 +218,7 @@ public interface Turnout extends NamedBean {
     /**
      * @return current operation automation class
      */
-    public @Nullable TurnoutOperation getTurnoutOperation();
+    @CheckForNull public TurnoutOperation getTurnoutOperation();
 
     /**
      * set current automation class
@@ -247,28 +247,28 @@ public interface Turnout extends NamedBean {
      * <P>
      * Returns null if no Sensor recorded.
      */
-    public @Nullable Sensor getFirstSensor();
+    @CheckForNull public Sensor getFirstSensor();
 
     /**
      * Get the first sensor, if defined.
      * <P>
      * Returns null if no Sensor recorded.
      */
-    public @Nullable NamedBeanHandle<Sensor> getFirstNamedSensor();
+    @CheckForNull public NamedBeanHandle<Sensor> getFirstNamedSensor();
 
     /**
      * Get the Second sensor, if defined.
      * <P>
      * Returns null if no Sensor recorded.
      */
-    public @Nullable Sensor getSecondSensor();
+    @CheckForNull public Sensor getSecondSensor();
 
     /**
      * Get the first sensor, if defined.
      * <P>
      * Returns null if no Sensor recorded.
      */
-    public @Nullable NamedBeanHandle<Sensor> getSecondNamedSensor();
+    @CheckForNull public NamedBeanHandle<Sensor> getSecondNamedSensor();
 
     /**
      * Sets the initial known state (CLOSED,THROWN,UNKNOWN) from feedback
@@ -405,12 +405,12 @@ public interface Turnout extends NamedBean {
     /**
      * Get a human readable representation of the decoder types.
      */
-    public @Nonnull String[] getValidDecoderNames();
+    @Nonnull public String[] getValidDecoderNames();
 
     /**
      * Get a human readable representation of the decoder type for this turnout.
      */
-    public @Nullable  String getDecoderName();
+    @CheckForNull public  String getDecoderName();
 
     /**
      * Set a human readable representation of the decoder type for this turnout.
