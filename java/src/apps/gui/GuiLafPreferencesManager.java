@@ -13,6 +13,7 @@ import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
+import jmri.InstanceManagerAutoDefault;
 import jmri.beans.Bean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
@@ -26,7 +27,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2015
  */
-public class GuiLafPreferencesManager extends Bean implements PreferencesManager {
+public class GuiLafPreferencesManager extends Bean implements PreferencesManager, InstanceManagerAutoDefault {
 
     public static final String FONT_SIZE = "fontSize";
     public static final String LOCALE = "locale";
@@ -200,7 +201,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
                 return;
             }
         }
-        defaultFontSize = 11;	// couldn't find the default return a reasonable font size
+        defaultFontSize = 11;   // couldn't find the default return a reasonable font size
     }
 
     /**
@@ -208,7 +209,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      */
     private void logAllFonts() {
         // avoid any activity if logging at this level is disabled to avoid
-        // the unnessesary overhead of getting the fonts 
+        // the unnessesary overhead of getting the fonts
         if (log.isTraceEnabled()) {
             log.trace("******** LAF={}", UIManager.getLookAndFeel().getClass().getName());
             java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();

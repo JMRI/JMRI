@@ -166,8 +166,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JPanel helpBar = null;
 
     protected boolean skipIncludedTurnout = false;
-    private boolean verticalToolBar = InstanceManager.getNullableDefault(GuiLafPreferencesManager.class).isVerticalToolBar();
-
+    private boolean verticalToolBar = InstanceManager.getDefault(GuiLafPreferencesManager.class).isVerticalToolBar();
     public ArrayList<PositionableLabel> backgroundImage = new ArrayList<PositionableLabel>();  // background images
     public ArrayList<SensorIcon> sensorImage = new ArrayList<SensorIcon>();  // sensor images
     public ArrayList<SignalHeadIcon> signalHeadImage = new ArrayList<SignalHeadIcon>();  // signal head images
