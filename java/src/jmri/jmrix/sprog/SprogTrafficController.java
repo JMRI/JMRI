@@ -181,7 +181,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         waitingForReply = true;
 
         if (log.isDebugEnabled()) {
-            log.debug("sendSprogMessage message: [" + m.toString(isSIIBootMode()) + "]");
+            log.debug("sendSprogMessage message: [" + m + "]");
         }
         // remember who sent this
         lastSender = replyTo;
