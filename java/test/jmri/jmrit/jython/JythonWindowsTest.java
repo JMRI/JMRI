@@ -8,6 +8,8 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Invokes complete set of tests in the jmri.jmrit.jython tree
@@ -18,6 +20,8 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  */
 public class JythonWindowsTest {
 
+    private final static Logger log = LoggerFactory.getLogger(JythonWindowsTest.class);
+    
     // Really a check of Jython init, including the defaults file
     @Test
     public void testExec() {
@@ -39,6 +43,7 @@ public class JythonWindowsTest {
         try {
             w.buttonPressed();
         } catch (Exception e) {
+            log.error("unexpected excetion", e);
             Assert.fail("exception during execution: " + e);
         }
 

@@ -1,5 +1,7 @@
 package jmri.util;
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * Utilities for handling JMRI's threading conventions
  * <p>
@@ -19,6 +21,7 @@ public class ThreadingUtil {
         /**
          * Must handle its own exceptions
          */
+        @Override
         public void run();
     }
 
@@ -81,8 +84,8 @@ public class ThreadingUtil {
             } catch (InterruptedException e) {
                 log.warn("While on GUI thread", e);
                 // we just continue from InterruptedException for now
-            } catch (java.lang.reflect.InvocationTargetException e) {
-                log.error("Error while on GUI thread", e);
+            } catch (InvocationTargetException e) {
+                log.error("Invocation Error while on GUI thread", e.getCause());
                 // should have been handled inside the ThreadAction
             }
         }

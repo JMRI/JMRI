@@ -4,15 +4,17 @@
  * Description:	tests for the jmri.jmrix.nce.NceTurnout class
  *
  * @author	Bob Jacobsen
-  */
+ */
 package jmri.jmrix.nce;
 
+import apps.tests.Log4JFixture;
 import jmri.implementation.AbstractTurnoutTest;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 public class NceTurnoutTest extends AbstractTurnoutTest {
 
@@ -21,6 +23,7 @@ public class NceTurnoutTest extends AbstractTurnoutTest {
     @Before
     @Override
     public void setUp() {
+        Log4JFixture.setUp();
         // prepare an interface
         tcis = new NceTrafficControlScaffold();
 

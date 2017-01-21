@@ -1,5 +1,6 @@
 package jmri.jmrix.nce;
 
+import apps.tests.Log4JFixture;
 import java.util.Vector;
 import jmri.JmriException;
 import jmri.jmrix.AbstractPowerManagerTest;
@@ -13,7 +14,7 @@ import org.junit.Test;
  * JUnit tests for the NcePowerManager class.
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class NcePowerManagerTest extends AbstractPowerManagerTest {
 
     // service routines to simulate receiving on, off from interface

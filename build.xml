@@ -2165,7 +2165,7 @@
             <sequential>
                 <antcall target="compile-generated-source" />
                 <antcall target="javadoc" />
-                <antcall target="ci-test-travis" />
+                <!-- <antcall target="ci-test-travis" /> -->
             </sequential>
         </parallel>
     </target>
