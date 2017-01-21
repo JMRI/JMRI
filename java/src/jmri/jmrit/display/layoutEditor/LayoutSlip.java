@@ -212,7 +212,7 @@ public class LayoutSlip extends LayoutTurnout {
     /**
      * Toggle slip states if clicked on, physical turnout exists, and not
      * disabled
-     * Slip state progression is BD -> AD -> AC -> [BC*] -> BD (*BC is skipped for Single slip)
+     * Slip state progression is from BD to AD to AC to [BC*] and back to BD (*BC is skipped for Single slip)
      */
     public void toggleState() {
         switch (currentState) {
