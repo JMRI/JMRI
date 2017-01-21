@@ -30,7 +30,7 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
     }
 
     // create messages of a particular form
-    public static XNetMessage getReadDirectCVMsg(int cv) {
+    public static XNetMessage getZ21ReadDirectCVMsg(int cv) {
         XNetMessage m = new XNetMessage(5);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(XNetProgrammingTimeout);
@@ -42,7 +42,7 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
         return m;
     }
 
-    public static XNetMessage getWriteDirectCVMsg(int cv, int val) {
+    public static XNetMessage getZ21WriteDirectCVMsg(int cv, int val) {
         XNetMessage m = new XNetMessage(6);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(XNetProgrammingTimeout);
