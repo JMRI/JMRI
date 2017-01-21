@@ -57,7 +57,7 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
      */
     @Override
     public boolean okToSend() {
-        return status();
+        return ( status() && super.okToSend());
     }
 
     @Override

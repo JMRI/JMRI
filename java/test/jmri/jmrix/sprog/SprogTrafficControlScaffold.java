@@ -27,7 +27,8 @@ public class SprogTrafficControlScaffold extends SprogTrafficController {
      */
     public Vector<SprogMessage> outbound = new Vector<SprogMessage>();  // public OK here, so long as this is a test class
 
-    public void sendSprogMessage(SprogMessage m, SprogListener reply) {
+    @Override
+    public void sendSprogMessage(SprogMessage m) {
         if (log.isDebugEnabled()) {
             log.debug("sendSprogMessage [" + m + "]");
         }

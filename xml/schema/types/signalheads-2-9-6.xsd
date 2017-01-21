@@ -64,7 +64,7 @@
         <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
         <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
         <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1" />
-
+        <xs:element name="useAddressOffSet" type="yesNoType" minOccurs="0" maxOccurs="1"/>
         <xs:element name="turnout" minOccurs="0" maxOccurs="unbounded" >
           <xs:annotation><xs:documentation>
           Deprecated in JMRI 2.7.7 in favor of turnoutname element
@@ -75,7 +75,14 @@
             <xs:attribute name="state" type="xs:string" />
           </xs:complexType>
         </xs:element>
-        
+        <xs:element name="aspect" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="number" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+            </xs:sequence>
+            <xs:attribute name="defines" type="xs:string" />    
+          </xs:complexType>
+        </xs:element>
         <xs:element name="appearance" minOccurs="0" maxOccurs="unbounded" >
           <xs:complexType> 
             <xs:simpleContent>

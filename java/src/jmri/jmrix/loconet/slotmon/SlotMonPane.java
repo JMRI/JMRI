@@ -137,7 +137,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
     }
 
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.slotmon.SlotMonFrame";
+        return "package.jmri.jmrix.loconet.slotmon.SlotMonFrame"; // NOI18N
     }
 
     public String getTitle() {

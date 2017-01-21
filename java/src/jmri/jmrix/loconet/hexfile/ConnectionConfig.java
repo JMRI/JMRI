@@ -24,7 +24,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
     }
 
     public String name() {
-        return "LocoNet Simulator";
+        return "LocoNet Simulator"; // NOI18N
     }
 
     protected void setInstance() {
