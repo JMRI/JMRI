@@ -547,17 +547,18 @@ public class EcosLocoToRoster implements EcosListener {
         re.setDecoderComment("");
         re.putAttribute(adaptermemo.getPreferenceManager().getRosterAttribute(), _ecosObject);
         re.ensureFilenameExists();
-        if (pDecoderFile.getSupportedProtocols().length > 0) {
-            List<jmri.LocoAddress.Protocol> protocols = new ArrayList<jmri.LocoAddress.Protocol>(Arrays.asList(pDecoderFile.getSupportedProtocols()));
-            if ((ecosLoco.getECOSProtocol().startsWith("DCC")) && protocols.contains(jmri.LocoAddress.Protocol.DCC)) {
-                re.setProtocol(jmri.LocoAddress.Protocol.DCC);
-            } else if (ecosLoco.getECOSProtocol().equals("MMFKT") && protocols.contains(jmri.LocoAddress.Protocol.MFX)) {
-                re.setProtocol(jmri.LocoAddress.Protocol.MFX);
-            } else if (ecosLoco.getECOSProtocol().startsWith("MM") && protocols.contains(jmri.LocoAddress.Protocol.MOTOROLA)) {
-                re.setProtocol(jmri.LocoAddress.Protocol.MOTOROLA);
-            } else if (ecosLoco.getECOSProtocol().equals("SX32") && protocols.contains(jmri.LocoAddress.Protocol.SELECTRIX)) {
-                re.setProtocol(jmri.LocoAddress.Protocol.SELECTRIX);
+        if ((ecosLoco.getECOSProtocol().startsWith("DCC"))) {
+            if (ecosLoco.getNumber() <= 127) {
+                re.setProtocol(jmri.LocoAddress.Protocol.DCC_SHORT);
+            } else {
+                re.setProtocol(jmri.LocoAddress.Protocol.DCC_LONG);
             }
+        } else if (ecosLoco.getECOSProtocol().equals("MMFKT") || ecosLoco.getECOSProtocol().equals("MFX")) {
+            re.setProtocol(jmri.LocoAddress.Protocol.MFX);
+        } else if (ecosLoco.getECOSProtocol().startsWith("MM")) {
+            re.setProtocol(jmri.LocoAddress.Protocol.MOTOROLA);
+        } else if (ecosLoco.getECOSProtocol().equals("SX32")) {
+            re.setProtocol(jmri.LocoAddress.Protocol.SELECTRIX);
         }
 
         mProgrammer = null;

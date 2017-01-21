@@ -7,6 +7,8 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrix.ecos.EcosLocoAddress;
+import jmri.jmrix.ecos.EcosLocoAddressManager;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +36,7 @@ public class AddRosterEntryToEcos extends AbstractAction {
      *
      */
     private static final long serialVersionUID = 6450950718541666730L;
+    private EcosLocoAddressManager objEcosLocoManager;
 
     /**
      * @param s Name of this action, e.g. in menus
@@ -41,6 +44,7 @@ public class AddRosterEntryToEcos extends AbstractAction {
     public AddRosterEntryToEcos(String s, EcosSystemConnectionMemo memo) {
         super(s);
         adaptermemo = memo;
+        objEcosLocoManager = adaptermemo.getLocoAddressManager();
     }
 
     EcosSystemConnectionMemo adaptermemo;
@@ -69,7 +73,6 @@ public class AddRosterEntryToEcos extends AbstractAction {
         //System.out.println("Add " + re.getId() + " to Ecos");
         RosterToEcos rosterToEcos = new RosterToEcos();
         rosterToEcos.createEcosLoco(re, adaptermemo);
-        actionPerformed(event);
     }
 
     void rosterEntryUpdate() {
@@ -77,8 +80,18 @@ public class AddRosterEntryToEcos extends AbstractAction {
             rosterEntry.removeAllItems();
         }
         for (RosterEntry r : roster.getAllEntries()) {
-            if (r.getAttribute(adaptermemo.getPreferenceManager().getRosterAttribute()) == null) {
-                rosterEntry.addItem(r.titleString());
+            // Add only those locos to the drop-down list that are in the roster but not in the Ecos
+            String EcosLocoID = r.getAttribute(adaptermemo.getPreferenceManager().getRosterAttribute());
+            EcosLocoAddress EcosAddress = null;
+            if (EcosLocoID != null) {
+                log.info("EcosLocoID=" + EcosLocoID);
+                EcosAddress = objEcosLocoManager.getByEcosObject(EcosLocoID);
+            }
+            if (EcosAddress == null) {
+                // It is not possible to create MFX locomotives in the Ecos. They are auto-discovered.
+                if (r.getProtocol() != jmri.LocoAddress.Protocol.MFX) {
+                    rosterEntry.addItem(r.titleString());
+                }
             }
         }
     }
