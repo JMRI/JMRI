@@ -181,7 +181,7 @@ abstract public class SprogUpdateFrame
         // prevent button areas from expanding
         pack();
         paneA.setMaximumSize(paneA.getSize());
-        pack();
+//        pack();
     }
 
     public void notifyMessage(SprogMessage m) {
