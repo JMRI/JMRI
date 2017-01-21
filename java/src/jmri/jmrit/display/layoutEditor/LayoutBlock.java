@@ -1760,58 +1760,57 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             return;
         }
 
-        if (null != routes) {
-            for (Routes ro : routes) {
+        for (int i = 0; i < routes.size(); i++) {
+            Routes ro = routes.get(i);
+            if (enableAddRouteLogging) {
+                log.info(
+                    "source " + ro.getNextBlock().getDisplayName() + " Dest " + ro.getDestBlock().getDisplayName() + " " +
+                    ro.getNextBlock());
+            }
+
+            if (ro.getNextBlock() == getBlock()) {
                 if (enableAddRouteLogging) {
-                    log.info(
-                        "source " + ro.getNextBlock().getDisplayName() + " Dest " + ro.getDestBlock().getDisplayName() + " " +
-                        ro.getNextBlock());
+                    log.info("From " + this.getDisplayName() + " ro next block is this");
                 }
-
-                if (ro.getNextBlock() == getBlock()) {
+                if (validFromPath.contains(ro.getDestBlock())) {
                     if (enableAddRouteLogging) {
-                        log.info("From " + this.getDisplayName() + " ro next block is this");
-                    }
-                    if (validFromPath.contains(ro.getDestBlock())) {
-                        if (enableAddRouteLogging) {
-                            log.info("From " + this.getDisplayName() +
-                                " route to " + ro.getDestBlock().getDisplayName() +
-                                " we have it with a metric of " + ro.getMetric() +
-                                " we will add our metric of " + metric +
-                                " this will be sent to " + lBnewblock.getDisplayName() + " a");
-                        } //we added +1 to hop count and our metric.
+                        log.info("From " + this.getDisplayName() +
+                            " route to " + ro.getDestBlock().getDisplayName() +
+                            " we have it with a metric of " + ro.getMetric() +
+                            " we will add our metric of " + metric +
+                            " this will be sent to " + lBnewblock.getDisplayName() + " a");
+                    } //we added +1 to hop count and our metric.
 
-                        RoutingPacket update = new RoutingPacket(ADDITION, ro.getDestBlock(), ro.getHopCount() + 1, (ro.getMetric() + metric), (ro.getLength() + block.getLengthMm()), -1, getNextPacketID());
-                        lBnewblock.addRouteFromNeighbour(this, update);
-                    }
-                } else {
-                    //Don't know if this might need changing so that we only send out our best
-                    //route to the neighbour, rather than cycling through them all.
-                    if (validFromPath.contains(ro.getNextBlock())) {
+                    RoutingPacket update = new RoutingPacket(ADDITION, ro.getDestBlock(), ro.getHopCount() + 1, (ro.getMetric() + metric), (ro.getLength() + block.getLengthMm()), -1, getNextPacketID());
+                    lBnewblock.addRouteFromNeighbour(this, update);
+                }
+            } else {
+                //Don't know if this might need changing so that we only send out our best
+                //route to the neighbour, rather than cycling through them all.
+                if (validFromPath.contains(ro.getNextBlock())) {
+                    if (enableAddRouteLogging) {
+                        log.info("From " + this.getDisplayName() +
+                            " route to " + ro.getDestBlock().getDisplayName() +
+                            " we have it with a metric of " + ro.getMetric() +
+                            " we will add our metric of " + metric +
+                            " this will be sent to " + lBnewblock.getDisplayName() + " b");
+                    } //we added +1 to hop count and our metric.
+                    if (adj.advertiseRouteToNeighbour(ro)) {
                         if (enableAddRouteLogging) {
-                            log.info("From " + this.getDisplayName() +
-                                " route to " + ro.getDestBlock().getDisplayName() +
-                                " we have it with a metric of " + ro.getMetric() +
-                                " we will add our metric of " + metric +
-                                " this will be sent to " + lBnewblock.getDisplayName() + " b");
-                        } //we added +1 to hop count and our metric.
-                        if (adj.advertiseRouteToNeighbour(ro)) {
-                            if (enableAddRouteLogging) {
-                                log.info("Told to advertise to neighbour");
-                            }
-                            //this should keep track of the routes we sent to our neighbour.
-                            adj.addRouteAdvertisedToNeighbour(ro);
-                            RoutingPacket update = new RoutingPacket(ADDITION, ro.getDestBlock(), ro.getHopCount() + 1,
-                                (ro.getMetric() + metric), (ro.getLength() + block.getLengthMm()), -1, getNextPacketID());
-                            lBnewblock.addRouteFromNeighbour(this, update);
-                        } else {
-                            if (enableAddRouteLogging) {
-                                log.info("Not advertised to neighbour");
-                            }
+                            log.info("Told to advertise to neighbour");
                         }
-                    } else if (enableAddRouteLogging) {
-                        log.info("failed valid from path Not advertised/added");
+                        //this should keep track of the routes we sent to our neighbour.
+                        adj.addRouteAdvertisedToNeighbour(ro);
+                        RoutingPacket update = new RoutingPacket(ADDITION, ro.getDestBlock(), ro.getHopCount() + 1,
+                            (ro.getMetric() + metric), (ro.getLength() + block.getLengthMm()), -1, getNextPacketID());
+                        lBnewblock.addRouteFromNeighbour(this, update);
+                    } else {
+                        if (enableAddRouteLogging) {
+                            log.info("Not advertised to neighbour");
+                        }
                     }
+                } else if (enableAddRouteLogging) {
+                    log.info("failed valid from path Not advertised/added");
                 }
             }
         }
