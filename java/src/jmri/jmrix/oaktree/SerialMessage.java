@@ -1,4 +1,3 @@
-// SerialMessage.java
 package jmri.jmrix.oaktree;
 
 /**
@@ -104,4 +103,4 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
 }
 
-/* @(#)SerialMessage.java */
+

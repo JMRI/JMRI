@@ -1812,11 +1812,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 //    public class SensorConfigModel extends AbstractTableModel
     public class SensorConfigModel extends NodeConfigModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8903322968361854433L;
-
         public String getColumnName(int c) {
             return sensorConfigColumnNames[c];
         }
@@ -1919,11 +1914,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      * nodes
      */
     public class OutputConfigModel extends NodeConfigModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6592677373811166261L;
 
         public String getColumnName(int c) {
             return outputConfigColumnNames[c];

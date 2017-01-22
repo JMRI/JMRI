@@ -27,6 +27,8 @@ import jmri.util.swing.JCBHandle;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import javax.swing.JRootPane;
+import javax.swing.SwingUtilities;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,7 +81,7 @@ public class PositionablePoint {
 
     private NamedBeanHandle<SignalMast> eastBoundSignalMastNamed = null;
     private NamedBeanHandle<SignalMast> westBoundSignalMastNamed = null;
-    /* We use a namedbeanhandle for the the sensors, even though we only store the name here, 
+    /* We use a namedbeanhandle for the the sensors, even though we only store the name here,
      this is so that we can keep up with moves and changes of userNames */
     private NamedBeanHandle<Sensor> eastBoundSensorNamed = null;
     private NamedBeanHandle<Sensor> westBoundSensorNamed = null;
@@ -194,7 +196,8 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    public @Nonnull String getEastBoundSignal() {
+    @Nonnull public
+    String getEastBoundSignal() {
         SignalHead h = getEastBoundSignalHead();
         if (h != null) {
             return h.getDisplayName();
@@ -262,7 +265,8 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    public @Nonnull String getWestBoundSignal() {
+    @Nonnull public
+    String getWestBoundSignal() {
         SignalHead h = getWestBoundSignalHead();
         if (h != null) {
             return h.getDisplayName();
@@ -330,7 +334,8 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    public @Nonnull String getEastBoundSensorName() {
+    @Nonnull public
+    String getEastBoundSensorName() {
         if (eastBoundSensorNamed != null) {
             return eastBoundSensorNamed.getName();
         }
@@ -360,7 +365,8 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    public @Nonnull String getWestBoundSensorName() {
+    @Nonnull public
+    String getWestBoundSensorName() {
         if (westBoundSensorNamed != null) {
             return westBoundSensorNamed.getName();
         }
@@ -389,7 +395,8 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    public @Nonnull String getEastBoundSignalMastName() {
+    @Nonnull public
+    String getEastBoundSignalMastName() {
         if (getEastBoundSignalMastNamed() != null) {
             return getEastBoundSignalMastNamed().getName();
         }
@@ -449,7 +456,8 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    public @Nonnull String getWestBoundSignalMastName() {
+    @Nonnull public
+    String getWestBoundSignalMastName() {
         if (getWestBoundSignalMastNamed() != null) {
             return getWestBoundSignalMastNamed().getName();
         }
@@ -751,11 +759,6 @@ public class PositionablePoint {
         }
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
         popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -5879151659812492830L;
-
             public void actionPerformed(ActionEvent e) {
                 if (layoutEditor.removePositionablePoint(instance)) {
                     // user is serious about removing this point from the panel
@@ -767,21 +770,11 @@ public class PositionablePoint {
         if (blockBoundary) {
             if (getType() == EDGE_CONNECTOR) {
                 popup.add(new AbstractAction(rb.getString("EdgeEditLink")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 7417712706336145182L;
-
                     public void actionPerformed(ActionEvent e) {
                         setLink();
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSignals")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 7790296058732429696L;
-
                     public void actionPerformed(ActionEvent e) {
                         tools = new LayoutEditorTools(layoutEditor);
                         // bring up signals at level crossing tool dialog
@@ -790,11 +783,6 @@ public class PositionablePoint {
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 4141089902371028010L;
-
                     public void actionPerformed(ActionEvent event) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -805,11 +793,6 @@ public class PositionablePoint {
                 });
             } else {
                 popup.add(new AbstractAction(rb.getString("SetSignals")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -4724061827365861420L;
-
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -820,11 +803,6 @@ public class PositionablePoint {
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSensors")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 2796713739016080440L;
-
                     public void actionPerformed(ActionEvent event) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -835,11 +813,6 @@ public class PositionablePoint {
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -7773588998817362490L;
-
                     public void actionPerformed(ActionEvent event) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -852,11 +825,6 @@ public class PositionablePoint {
         }
         if (endBumper) {
             popup.add(new AbstractAction(rb.getString("SetSensors")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -7476420955847740957L;
-
                 public void actionPerformed(ActionEvent event) {
                     if (tools == null) {
                         tools = new LayoutEditorTools(layoutEditor);
@@ -867,11 +835,6 @@ public class PositionablePoint {
                 }
             });
             popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -7043861591726586142L;
-
                 public void actionPerformed(ActionEvent event) {
                     if (tools == null) {
                         tools = new LayoutEditorTools(layoutEditor);
@@ -1001,11 +964,22 @@ public class PositionablePoint {
         JButton done = new JButton(Bundle.getMessage("ButtonDone"));
         done.addActionListener(
                 new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        updateLink();
-                    }
-                }
+            public void actionPerformed(ActionEvent e) {
+                updateLink();
+            }
+        }
         );
+
+        // make this button the default button (return or enter activates)
+        // Note: We have to invoke this later because we don't currently have a root pane
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JRootPane rootPane = SwingUtilities.getRootPane(done);
+                rootPane.setDefaultButton(done);
+            }
+        });
+
         container.add(getLinkPanel(), BorderLayout.NORTH);
         container.add(done, BorderLayout.SOUTH);
         container.revalidate();

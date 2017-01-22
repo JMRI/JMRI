@@ -1,4 +1,3 @@
-// AcelaNode.java
 package jmri.jmrix.acela;
 
 import jmri.JmriException;
@@ -1233,5 +1232,3 @@ public class AcelaNode extends AbstractNode {
     }
     private final static Logger log = LoggerFactory.getLogger(AcelaNode.class.getName());
 }
-
-/* @(#)AcelaNode.java */

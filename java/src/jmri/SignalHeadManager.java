@@ -50,6 +50,6 @@ public interface SignalHeadManager extends Manager {
     /**
      * Get a list of all SignalHead system names.
      */
-    public @Nonnull List<String> getSystemNameList();
+    @Nonnull public List<String> getSystemNameList();
 
 }

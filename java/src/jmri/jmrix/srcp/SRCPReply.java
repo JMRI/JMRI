@@ -118,4 +118,4 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
 }
 
 
-/* @(#)SRCPReply.java */
+

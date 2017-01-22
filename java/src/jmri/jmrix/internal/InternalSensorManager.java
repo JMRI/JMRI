@@ -1,4 +1,3 @@
-// InternalSensorManager.java
 package jmri.jmrix.internal;
 
 
@@ -16,4 +15,4 @@ public class InternalSensorManager extends jmri.managers.InternalSensorManager {
     }
 }
 
-/* @(#)InternalSensorManager.java */
+

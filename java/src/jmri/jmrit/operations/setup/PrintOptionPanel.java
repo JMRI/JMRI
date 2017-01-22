@@ -1,4 +1,3 @@
-// PrintOptionFrame.java
 package jmri.jmrit.operations.setup;
 
 import java.awt.Dimension;

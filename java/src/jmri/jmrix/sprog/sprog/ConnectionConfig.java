@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.sprog.sprog;
 
 import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;

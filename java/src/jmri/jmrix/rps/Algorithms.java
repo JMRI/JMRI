@@ -1,4 +1,3 @@
-// Algorithms.java
 package jmri.jmrix.rps;
 
 import javax.swing.JComboBox;

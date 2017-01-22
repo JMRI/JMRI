@@ -1,4 +1,3 @@
-// AddRosterEntryToEcos.java
 package jmri.jmrix.ecos.utilities;
 
 import java.awt.event.ActionEvent;
@@ -32,10 +31,6 @@ import org.slf4j.LoggerFactory;
   */
 public class AddRosterEntryToEcos extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6450950718541666730L;
     private EcosLocoAddressManager objEcosLocoManager;
 
     /**

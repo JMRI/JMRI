@@ -52,9 +52,9 @@ public interface SignalMastManager extends Manager {
      *                                  due to e.g. an illegal name or name that
      *                                  can't be parsed.
      */
-    public @Nonnull SignalMast provideSignalMast(@Nonnull String name);
+    @Nonnull public SignalMast provideSignalMast(@Nonnull String name);
 
-    public @Nonnull SignalMast provideSignalMast(@Nonnull String prefix, // nominally IF$shsm
+    @Nonnull public SignalMast provideSignalMast(@Nonnull String prefix, // nominally IF$shsm
             @Nonnull String signalSystem,
             @Nonnull String mastName,
             @Nonnull String[] heads);
@@ -66,6 +66,6 @@ public interface SignalMastManager extends Manager {
     /**
      * Get a list of all SignalMast system names.
      */
-    public @Nonnull List<String> getSystemNameList();
+    @Nonnull public List<String> getSystemNameList();
 
 }

@@ -2125,7 +2125,7 @@ public class Train implements java.beans.PropertyChangeListener {
      *
      * @return Road and number of caboose.
      */
-    public @Nonnull String getCabooseRoadAndNumber() {
+    @Nonnull public String getCabooseRoadAndNumber() {
         String cabooseRoadNumber = NONE;
         RouteLocation rl = getCurrentLocation();
         List<RollingStock> cars = CarManager.instance().getByTrainList(this);

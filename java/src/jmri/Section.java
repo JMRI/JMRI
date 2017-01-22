@@ -548,7 +548,7 @@ public class Section extends AbstractNamedBean
     /**
      * Get a Copy of this Section's Block List
      */
-    public @Nonnull ArrayList<Block> getBlockList() {
+    @Nonnull public ArrayList<Block> getBlockList() {
         if (initializationNeeded) {
             initializeBlocks();
         }

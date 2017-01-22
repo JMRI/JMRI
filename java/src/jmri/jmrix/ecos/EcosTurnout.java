@@ -1,4 +1,3 @@
-// EcosTurnout.java
 package jmri.jmrix.ecos;
 
 import jmri.Turnout;
@@ -18,11 +17,6 @@ import org.slf4j.LoggerFactory;
   */
 public class EcosTurnout extends AbstractTurnout
         implements EcosListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5048966966311573172L;
 
     String prefix;
 
@@ -397,5 +391,3 @@ public class EcosTurnout extends AbstractTurnout
 
     private final static Logger log = LoggerFactory.getLogger(EcosTurnout.class.getName());
 }
-
-/* @(#)EcosTurnout.java */

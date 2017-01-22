@@ -1,12 +1,3 @@
-/**
- * SerialMonPane.java
- *
- * Description:	Swing action to create and register a MonFrame object
- *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008 copied from Ecos and converted
- * to Powerline
- * @author	Ken Cameron Copyright (C) 2011
-  */
 package jmri.jmrix.powerline.swing.serialmon;
 
 import java.util.ResourceBundle;
@@ -16,12 +7,15 @@ import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.swing.PowerlinePanelInterface;
 
+/**
+ * Swing action to create and register a MonFrame object
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001, 2008 copied from Ecos and converted
+ * to Powerline
+ * @author	Ken Cameron Copyright (C) 2011
+  */
 public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialListener, PowerlinePanelInterface {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5452592994756329128L;
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.powerline.swing.serialmon.SerialMonBundle");
 
     public SerialMonPane() {
@@ -83,11 +77,6 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialL
      */
     static public class Default extends jmri.jmrix.powerline.swing.PowerlineNamedPaneAction {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2564227328398852669L;
-
         public Default() {
             super("Open Powerline Monitor",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
@@ -98,5 +87,3 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialL
     }
 
 }
-
-/* @(#)MonAction.java */

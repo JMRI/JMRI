@@ -1,4 +1,3 @@
-// ImportEngineRosterAction.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.Component;

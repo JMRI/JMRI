@@ -63,4 +63,4 @@ public class SprogProgrammerManager extends DefaultProgrammerManager {
 }
 
 
-/* @(#)SprogProgrammerManager.java */
+

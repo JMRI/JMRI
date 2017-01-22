@@ -42,7 +42,6 @@ import org.slf4j.LoggerFactory;
  */
 public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelectionListener {
 
-    private static final long serialVersionUID = -6255531106871960794L;
     private OBlock _block;
     private CircuitBuilder _parent;
     // mouse selections of track icons that define the path
@@ -276,11 +275,6 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
     private static class PathCellRenderer extends JLabel implements ListCellRenderer<OPath> {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3285719502798567675L;
-
         public Component getListCellRendererComponent(
                 JList<? extends OPath> list, // the list
                 OPath value, // value to display
@@ -305,8 +299,6 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     }
 
     class PathListModel extends AbstractListModel<OPath> {
-
-        private static final long serialVersionUID = 5542865970112078810L;
 
         public int getSize() {
             return _block.getPaths().size();

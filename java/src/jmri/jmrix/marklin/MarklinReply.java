@@ -1,4 +1,3 @@
-// MarklinReply.java
 package jmri.jmrix.marklin;
 
 
@@ -133,4 +132,4 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
 }
 
 
-/* @(#)MarklinReply.java */
+

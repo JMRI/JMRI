@@ -1,4 +1,3 @@
-// DragJComponent.java
 package jmri.jmrit.display.palette;
 
 import java.awt.Color;

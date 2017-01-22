@@ -1,4 +1,3 @@
-// MergTrafficController.java
 package jmri.jmrix.can.adapters.gridconnect.canrs;
 
 import jmri.jmrix.AbstractMRMessage;
@@ -66,4 +65,4 @@ public class MergTrafficController extends GcTrafficController {
 }
 
 
-/* @(#)MergTrafficController.java */
+

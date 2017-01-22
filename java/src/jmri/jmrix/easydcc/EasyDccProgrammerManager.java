@@ -40,4 +40,4 @@ public class EasyDccProgrammerManager extends DefaultProgrammerManager {
 }
 
 
-/* @(#)EasyDccProgrammerManager.java */
+

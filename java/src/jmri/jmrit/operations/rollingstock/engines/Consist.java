@@ -1,4 +1,3 @@
-// Consist.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.util.ArrayList;

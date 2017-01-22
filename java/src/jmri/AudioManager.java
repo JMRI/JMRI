@@ -68,7 +68,7 @@ public interface AudioManager extends Manager {
      * @return Never null under normal circumstances
      * @throws AudioException if error occurs during creation
      */
-    public @Nonnull Audio provideAudio(@Nonnull String name) throws AudioException;
+    @Nonnull public Audio provideAudio(@Nonnull String name) throws AudioException;
 
     /**
      * Locate via user name, then system name if needed. If that fails, return
@@ -124,7 +124,7 @@ public interface AudioManager extends Manager {
      * @return requested Audio object (never null)
      * @throws AudioException if error occurs during creation
      */
-    public @Nonnull Audio newAudio(@Nonnull String systemName, String userName) throws AudioException;
+    @Nonnull public Audio newAudio(@Nonnull String systemName, String userName) throws AudioException;
 
     /**
      * Returns the currently active AudioFactory object.
@@ -142,7 +142,7 @@ public interface AudioManager extends Manager {
      * @return List of all Audio objects' system names
      */
     @Override
-    public @Nonnull List<String> getSystemNameList();
+    @Nonnull public List<String> getSystemNameList();
 
     /**
      * Get a list of specified Audio sub-type objects' system names.
@@ -150,7 +150,7 @@ public interface AudioManager extends Manager {
      * @param subType sub-type to retrieve
      * @return List of specified Audio sub-type objects' system names.
      */
-    public @Nonnull List<String> getSystemNameList(char subType);
+    @Nonnull public List<String> getSystemNameList(char subType);
 
     /**
      * Perform any initialisation operations

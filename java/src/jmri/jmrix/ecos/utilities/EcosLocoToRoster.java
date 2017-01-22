@@ -614,10 +614,6 @@ public class EcosLocoToRoster implements EcosListener {
         dRoot = new DefaultMutableTreeNode("Root");
         dModel = new DefaultTreeModel(dRoot);
         dTree = new JTree(dModel) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -3197427124986523211L;
 
             @Override
             public String getToolTipText(MouseEvent evt) {
@@ -760,10 +756,6 @@ public class EcosLocoToRoster implements EcosListener {
     // from http://www.codeguru.com/java/articles/143.shtml
     static class DecoderTreeNode extends DefaultMutableTreeNode {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -5606230191141397789L;
         private String toolTipText;
         private String title;
 

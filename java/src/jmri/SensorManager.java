@@ -38,7 +38,7 @@ public interface SensorManager extends Manager {
      *                                  e.g. an illegal name or name that can't
      *                                  be parsed.
      */
-    public @Nonnull Sensor provideSensor(@Nonnull String name) throws IllegalArgumentException;
+    @Nonnull public Sensor provideSensor(@Nonnull String name) throws IllegalArgumentException;
 
     /**
      * Locate via user name, then system name if needed. Does not create a new
@@ -80,7 +80,7 @@ public interface SensorManager extends Manager {
      *                                  an illegal name or name that can't be
      *                                  parsed.
      */
-    public @Nonnull Sensor newSensor(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
+    @Nonnull public Sensor newSensor(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
     @CheckReturnValue
     public @CheckForNull Sensor getByUserName(@Nonnull String s);
@@ -89,7 +89,7 @@ public interface SensorManager extends Manager {
     public @CheckForNull Sensor getBySystemName(@Nonnull String s);
 
     @CheckReturnValue
-    public @Nonnull List<String> getSystemNameList();
+    @Nonnull public List<String> getSystemNameList();
 
     /**
      * Requests status of all layout sensors under this Sensor Manager. This
@@ -125,7 +125,7 @@ public interface SensorManager extends Manager {
     @CheckReturnValue
     public @CheckForNull String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
-    public @Nonnull String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
+    @Nonnull public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
     @CheckReturnValue
     public long getDefaultSensorDebounceGoingActive();

@@ -1,4 +1,3 @@
-// ComponentFactory.java
 package jmri.jmrix.swing;
 
 import javax.swing.JMenu;
@@ -21,4 +20,4 @@ abstract public class ComponentFactory {
 
 }
 
-/* @(#)ComponentFactory.java */
+

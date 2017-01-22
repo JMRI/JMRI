@@ -1,4 +1,3 @@
-// SpecificSensorManagerXml.java
 package jmri.jmrix.powerline.cp290.configurexml;
 
 /**

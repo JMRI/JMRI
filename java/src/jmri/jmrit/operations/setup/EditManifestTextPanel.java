@@ -1,4 +1,3 @@
-// EditManifestTextFrame.java
 package jmri.jmrit.operations.setup;
 
 import java.awt.GridBagLayout;

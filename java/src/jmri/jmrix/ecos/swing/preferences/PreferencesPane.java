@@ -1,4 +1,3 @@
-// PreferencesPane.java
 package jmri.jmrix.ecos.swing.preferences;
 
 //import jmri.InstanceManager;
@@ -30,10 +29,6 @@ import jmri.swing.PreferencesPanel;
   */
 public class PreferencesPane extends javax.swing.JPanel implements PropertyChangeListener, PreferencesPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7443087749322913554L;
     JPanel throttletabpanel = new JPanel();
     JPanel rostertabpanel = new JPanel();
     JPanel turnouttabpanel = new JPanel();
@@ -578,5 +573,3 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
     }
 }
 
-
-/* @(#)PreferencesPane.java */

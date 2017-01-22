@@ -78,7 +78,7 @@ public class NullProfile extends Profile {
      * @return the id
      */
     @Override
-    public @Nonnull
+    @Nonnull public
     String getId() {
         return id;
     }

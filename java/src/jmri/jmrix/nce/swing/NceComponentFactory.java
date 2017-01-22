@@ -1,4 +1,3 @@
-// NceComponentFactory.java
 package jmri.jmrix.nce.swing;
 
 import jmri.jmrix.nce.NceSystemConnectionMemo;
@@ -29,4 +28,4 @@ public class NceComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 }
 
 
-/* @(#)LnComponentFactory.java */
+

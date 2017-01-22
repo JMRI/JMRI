@@ -1,4 +1,3 @@
-// Measurement.java
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
@@ -136,4 +135,4 @@ public class Measurement {
     }
 }
 
-/* @(#)Measurement.java */
+

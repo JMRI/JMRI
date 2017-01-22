@@ -1,4 +1,3 @@
-// GridConnectReply.java
 package jmri.jmrix.can.adapters.gridconnect;
 
 import jmri.jmrix.AbstractMRReply;
@@ -200,4 +199,4 @@ public class GridConnectReply extends AbstractMRReply {
     private final static Logger log = LoggerFactory.getLogger(GridConnectReply.class.getName());
 }
 
-/* @(#)GridConnectReply.java */
+
