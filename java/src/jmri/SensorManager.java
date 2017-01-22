@@ -48,8 +48,8 @@ public interface SensorManager extends Manager {
      * @return null if no match found
      */
     @CheckReturnValue
-    public @CheckForNull
-    Sensor getSensor(@Nonnull String name);
+    @CheckForNull
+    public Sensor getSensor(@Nonnull String name);
 
     // to free resources when no longer used
     @Override
