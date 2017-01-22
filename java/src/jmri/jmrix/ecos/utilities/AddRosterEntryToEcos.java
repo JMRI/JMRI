@@ -81,11 +81,11 @@ public class AddRosterEntryToEcos extends AbstractAction {
         }
         for (RosterEntry r : roster.getAllEntries()) {
             // Add only those locos to the drop-down list that are in the roster but not in the Ecos
-            String EcosLocoID = r.getAttribute(adaptermemo.getPreferenceManager().getRosterAttribute());
+            String DccAddress = r.getDccAddress();
             EcosLocoAddress EcosAddress = null;
-            if (EcosLocoID != null) {
-                log.info("EcosLocoID=" + EcosLocoID);
-                EcosAddress = objEcosLocoManager.getByEcosObject(EcosLocoID);
+            if (DccAddress != null) {
+                log.debug("DccAddress=" + DccAddress);
+                EcosAddress = objEcosLocoManager.getByDccAddress(Integer.parseInt(DccAddress));
             }
             if (EcosAddress == null) {
                 // It is not possible to create MFX locomotives in the Ecos. They are auto-discovered.
