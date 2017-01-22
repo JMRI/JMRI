@@ -89,7 +89,12 @@ public class FileLineEndingsTest {
         try {
             for (String pattern : patterns) {
                 PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:" + pattern);
-                Files.walk(directory.toPath()).filter(matcher::matches).forEach((path) -> {
+                // ignore the build directory if immediately under the passed in directory
+                PathMatcher target = FileSystems.getDefault().getPathMatcher("glob:./target/**");
+                Files.walk(directory.toPath())
+                        .filter(path -> !target.matches(path))
+                        .filter(matcher::matches)
+                        .forEach((path) -> {
                     if (path.toFile().isFile()) {
                         files.add(new Object[]{path.toFile()});
                     }
