@@ -23,7 +23,7 @@ import jmri.jmrix.AbstractMonPaneScaffold;
  *
  * @author	Bob Jacobsen   Copyright 2015
  */
-public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTest {
+public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     @Test
     public void testLifeCycle() throws Exception {

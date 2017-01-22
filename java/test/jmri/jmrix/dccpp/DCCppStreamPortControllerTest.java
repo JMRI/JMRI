@@ -18,7 +18,7 @@ import jmri.util.JUnitUtil;
  * @author	Paul Bender Copyright (C) 2012,2016
  * @author	Mark Underwood (C) 2015
  */
-public class DCCppStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortControllerTest {
+public class DCCppStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortControllerTestBase {
 
     @Test
     public void testCtor() {
