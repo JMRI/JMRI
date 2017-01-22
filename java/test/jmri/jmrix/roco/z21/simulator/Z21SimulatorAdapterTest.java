@@ -86,6 +86,7 @@ public class Z21SimulatorAdapterTest {
     }
 
     @Test
+    @Ignore // fails excessively but not persistently
     public void RailComDataChangedReply(){
         // create a new simulator.
         Z21SimulatorAdapter a = new Z21SimulatorAdapter();
