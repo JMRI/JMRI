@@ -78,7 +78,7 @@ public class PortalTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OBlockTest.class.getName()};
+        String[] testCaseName = {"-noloading", PortalTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
