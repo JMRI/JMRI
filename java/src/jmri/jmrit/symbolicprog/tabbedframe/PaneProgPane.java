@@ -1,6 +1,5 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -19,7 +18,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
-import java.util.Vector;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -2905,15 +2903,12 @@ public class PaneProgPane extends javax.swing.JPanel
     }
     boolean print = false;
 
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     public void printPane(HardcopyWriter w) {
         // if pane is empty, don't print anything
-        if (varList.size() == 0 && cvList.size() == 0) {
+        if (varList.isEmpty() && cvList.isEmpty()) {
             return;
         }
-        // future work needed her to print indexed CVs
+        // future work needed here to print indexed CVs
 
         // Define column widths for name and value output.
         // Make col 2 slightly larger than col 1 and reduce both to allow for
@@ -2924,9 +2919,9 @@ public class PaneProgPane extends javax.swing.JPanel
         try {
 
             //Create a string of spaces the width of the first column
-            String spaces = "";
+            StringBuilder spaces = new StringBuilder();
             for (int i = 0; i < col1Width; i++) {
-                spaces = spaces + " ";
+                spaces.append(" ");
             }
             // start with pane name in bold
             String heading1 = SymbolicProgBundle.getMessage("PrintHeadingField");
@@ -2944,7 +2939,7 @@ public class PaneProgPane extends javax.swing.JPanel
             s = "\n";
             w.write(s, 0, s.length());
             // if this isn't the raw CV section, write the column headings
-            if (cvList.size() == 0) {
+            if (cvList.isEmpty()) {
                 w.setFontStyle(Font.BOLD + Font.ITALIC);
                 s = "   " + heading1 + spaces.substring(0, interval) + "   " + heading2;
                 w.write(s, 0, s.length());
@@ -2957,10 +2952,10 @@ public class PaneProgPane extends javax.swing.JPanel
             // already.  If they have been printed, they will be skipped.
             // Using a vector here since we don't know how many variables will
             // be printed and it allows expansion as necessary
-            Vector<String> printedVariables = new Vector<String>(10, 5);
+            ArrayList<String> printedVariables = new ArrayList<>(10);
             // index over variables
             for (int i = 0; i < varList.size(); i++) {
-                int varNum = varList.get(i).intValue();
+                int varNum = varList.get(i);
                 VariableValue var = _varModel.getVariable(varNum);
                 String name = var.label();
                 if (name == null) {
@@ -2968,8 +2963,8 @@ public class PaneProgPane extends javax.swing.JPanel
                 }
                 // Check if variable has been printed.  If not store it and print
                 boolean alreadyPrinted = false;
-                for (int j = 0; j < printedVariables.size(); j++) {
-                    if (name.equals(printedVariables.elementAt(j))) {
+                for (String printedVariable : printedVariables) {
+                    if (name.equals(printedVariable)) {
                         alreadyPrinted = true;
                     }
                 }
@@ -2977,7 +2972,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 if (alreadyPrinted == true) {
                     continue;
                 }
-                printedVariables.addElement(name);
+                printedVariables.add(name);
 
                 String value = var.getTextValue();
                 String originalName = name;
@@ -3045,7 +3040,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 // Java 1.5 has a known bug, #6328248, that prevents printing of progress
                 //  bars using old style printing classes.  It results in blank bars on Windows,
                 //  but hangs Macs. The version check is a workaround.
-                float v = Float.valueOf(java.lang.System.getProperty("java.version").substring(0, 3)).floatValue();
+                float v = Float.valueOf(java.lang.System.getProperty("java.version").substring(0, 3));
                 if (originalName.equals("Speed Table") && v < 1.5) {
                     // set the height of the speed table graph in lines
                     int speedFrameLineHeight = 11;
