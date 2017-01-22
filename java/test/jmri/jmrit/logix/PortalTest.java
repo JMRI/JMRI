@@ -69,6 +69,10 @@ public class PortalTest extends TestCase {
         p.removePath(path2);
         Assert.assertEquals("Number of toPaths", 2, p.getToPaths().size());
         Assert.assertEquals("Number of fromPaths", 1, p.getFromPaths().size());
+        
+        jmri.util.JUnitAppender.assertWarnMessage("Path path_1 already in block OB2, cannot be added to block OB1");
+        jmri.util.JUnitAppender.assertWarnMessage("Path \"path_3\" is duplicate of path \"path_2\" in Portal \"portal_3\" from block OB1.");
+        jmri.util.JUnitAppender.assertWarnMessage("Path \"path_2\" is duplicate name for another path in Portal \"portal_3\" from block OB1.");
     }
 
     // from here down is testing infrastructure
