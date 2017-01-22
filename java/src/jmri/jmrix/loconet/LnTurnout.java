@@ -137,7 +137,8 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
      * Inversion is to already have been handled.
      *
      * @param state the state to set
-     * @param on    ???
+     * @param on    if true the C bit of the NMRA DCC packet is 1; if false the
+     *              C bit is 0
      */
     void sendOpcSwReqMessage(int state, boolean on) {
         LocoNetMessage l = new LocoNetMessage(4);
@@ -192,7 +193,8 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     boolean pending = false;
 
     /**
-     * Set the turnout OFF, e.g. after a timeout. What does this do within the Loconet
+     * Set the turnout DCC C bit to OFF. This is typically used to set a C bit
+     * that was set ON to OFF after a timeout.
      *
      * @param state the turnout state
      */
