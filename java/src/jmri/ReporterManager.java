@@ -53,7 +53,7 @@ public interface ReporterManager extends Manager {
      *                                  due to e.g. an illegal name or name that
      *                                  can't be parsed.
      */
-    public @Nonnull
+    @Nonnull public
     Reporter provideReporter(@Nonnull String name);
 
     /**
@@ -125,7 +125,7 @@ public interface ReporterManager extends Manager {
      *                                  e.g. an illegal name or name that can't
      *                                  be parsed.
      */
-    public @Nonnull
+    @Nonnull public
     Reporter newReporter(@Nonnull String systemName, String userName);
 
     /**
@@ -134,7 +134,7 @@ public interface ReporterManager extends Manager {
      * @return a list of reporter system names or an empty list if there are no
      *         reporters
      */
-    public @Nonnull
+    @Nonnull public
     @Override
     List<String> getSystemNameList();
 

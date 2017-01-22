@@ -24,9 +24,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import jmri.InstanceManager;
@@ -72,7 +74,7 @@ public class LayoutTurntable {
     // Defined text resource
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
-    // defined constants 
+    // defined constants
     // operational instance variables (not saved between sessions)
     private LayoutTurntable instance = null;
     private LayoutEditor layoutEditor = null;
@@ -550,6 +552,17 @@ public class LayoutTurntable {
                     turntableEditDonePressed(e);
                 }
             });
+
+            // make this button the default button (return or enter activates)
+            // Note: We have to invoke this later because we don't currently have a root pane
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    JRootPane rootPane = SwingUtilities.getRootPane(turntableEditDone);
+                    rootPane.setDefaultButton(turntableEditDone);
+                }
+            });
+
             turntableEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             // Cancel
             panel5.add(turntableEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
@@ -685,7 +698,7 @@ public class LayoutTurntable {
             radius = rad;
             needsRedraw = true;
         }
-        // clean up	
+        // clean up
         editOpen = false;
         editTurntableFrame.setVisible(false);
         editTurntableFrame.dispose();
@@ -888,20 +901,20 @@ public class LayoutTurntable {
                 top.add(angle = new JTextField(5));
                 angle.addFocusListener(
                         new FocusListener() {
-                            public void focusGained(FocusEvent e) {
-                            }
+                    public void focusGained(FocusEvent e) {
+                    }
 
-                            public void focusLost(FocusEvent e) {
-                                try {
-                                    Float.parseFloat(angle.getText());
-                                } catch (Exception ex) {
-                                    JOptionPane.showMessageDialog(editTurntableFrame, rb.getString("EntryError") + ": "
-                                            + ex + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
-                                            JOptionPane.ERROR_MESSAGE);
-                                    return;
-                                }
-                            }
+                    public void focusLost(FocusEvent e) {
+                        try {
+                            Float.parseFloat(angle.getText());
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(editTurntableFrame, rb.getString("EntryError") + ": "
+                                    + ex + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
+                                    JOptionPane.ERROR_MESSAGE);
+                            return;
                         }
+                    }
+                }
                 );
                 panel = new JPanel();
                 panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
