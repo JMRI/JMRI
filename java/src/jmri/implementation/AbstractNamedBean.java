@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -163,7 +164,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         firePropertyChange("UserName", old, s);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
             justification = "Sync of mUserName protected by ctor invocation")
     protected String mUserName;
 

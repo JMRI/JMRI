@@ -1,4 +1,3 @@
-// CanListener.java
 package jmri.jmrix.can;
 
 /**
@@ -13,4 +12,4 @@ public interface CanListener extends jmri.jmrix.AbstractMRListener {
     public void reply(CanReply m);
 }
 
-/* @(#)CanListener.java */
+

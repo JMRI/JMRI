@@ -1,5 +1,6 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import com.digi.xbee.api.models.ATCommandResponse;
 import com.digi.xbee.api.XBeeDevice;
 import com.digi.xbee.api.RemoteXBeeDevice;
@@ -55,7 +56,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      * Make connection to existing PortController object.
      */
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"UW_UNCOND_WAIT","WA_NOT_IN_LOOP"}, justification="The unconditional wait outside of a loop is used to allow the hardware to react to a reset request.")
+    @SuppressFBWarnings(value = {"UW_UNCOND_WAIT","WA_NOT_IN_LOOP"}, justification="The unconditional wait outside of a loop is used to allow the hardware to react to a reset request.")
     public void connectPort(AbstractPortController p) {
         // Attach XBee to the port
         try {

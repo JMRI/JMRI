@@ -56,4 +56,4 @@ public class NodeConfigAction extends AbstractAction {
 }
 
 
-/* @(#)NodeConfigAction.java */
+

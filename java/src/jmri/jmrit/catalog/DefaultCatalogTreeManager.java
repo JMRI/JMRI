@@ -1,4 +1,3 @@
-// DefaultCatalogTreeManager.java
 package jmri.jmrit.catalog;
 
 import jmri.CatalogTree;
@@ -185,4 +184,4 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
     private final static Logger log = LoggerFactory.getLogger(DefaultCatalogTreeManager.class.getName());
 }
 
-/* @(#)CatalogTreeFSManager.java */
+

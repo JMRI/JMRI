@@ -1,4 +1,3 @@
-// TrainCopyAction.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Frame;
@@ -38,4 +37,4 @@ public class TrainCopyAction extends AbstractAction {
     }
 }
 
-/* @(#)TrainCopyAction.java */
+

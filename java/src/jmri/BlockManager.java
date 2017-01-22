@@ -53,7 +53,7 @@ public class BlockManager extends AbstractManager implements PropertyChangeListe
 
     @Override
     @CheckReturnValue
-    public @Nonnull
+    @Nonnull public
     String getSystemPrefix() {
         return "I";
     }
@@ -185,20 +185,20 @@ public class BlockManager extends AbstractManager implements PropertyChangeListe
     }
 
     @CheckReturnValue
-    public @CheckForNull
+    @CheckForNull public
     Block getBySystemName(@Nonnull String name) {
         String key = name.toUpperCase();
         return (Block) _tsys.get(key);
     }
 
     @CheckReturnValue
-    public @CheckForNull
+    @CheckForNull public
     Block getByUserName(@Nonnull String key) {
         return (Block) _tuser.get(key);
     }
 
     @CheckReturnValue
-    public @CheckForNull
+    @CheckForNull public
     Block getByDisplayName(@Nonnull String key) {
         // First try to find it in the user list.
         // If that fails, look it up in the system list
@@ -212,7 +212,7 @@ public class BlockManager extends AbstractManager implements PropertyChangeListe
 
     static BlockManager _instance = null;
 
-    static public @CheckForNull
+    static @CheckForNull public
     BlockManager instance() {
         if (_instance == null) {
             _instance = new BlockManager();
@@ -246,14 +246,14 @@ public class BlockManager extends AbstractManager implements PropertyChangeListe
     }
 
     @CheckReturnValue
-    public @Nonnull
+    @Nonnull public
     String getDefaultSpeed() {
         return defaultSpeed;
     }
 
     @Override
     @CheckReturnValue
-    public @Nonnull
+    @Nonnull public
     String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameBlock");
     }
@@ -268,7 +268,7 @@ public class BlockManager extends AbstractManager implements PropertyChangeListe
      * @return list of block system names
      */
     @CheckReturnValue
-    public @Nonnull
+    @Nonnull public
     List<Block> getBlocksOccupiedByRosterEntry(@Nonnull RosterEntry re) {
         List<Block> blockList = new ArrayList<>();
 

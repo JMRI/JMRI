@@ -1,4 +1,3 @@
-// TrainCsvCommon.java
 package jmri.jmrit.operations.trains;
 
 import java.io.PrintWriter;

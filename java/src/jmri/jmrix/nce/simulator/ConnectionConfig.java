@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.nce.simulator;
 
 import javax.swing.JPanel;

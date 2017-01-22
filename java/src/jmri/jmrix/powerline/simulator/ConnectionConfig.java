@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.powerline.simulator;
 
 import javax.swing.JPanel;

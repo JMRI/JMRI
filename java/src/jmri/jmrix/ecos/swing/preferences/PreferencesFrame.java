@@ -1,4 +1,3 @@
-// PreferencesFrame.java
 package jmri.jmrix.ecos.swing.preferences;
 
 import javax.swing.BoxLayout;
@@ -11,11 +10,6 @@ import jmri.jmrix.ecos.EcosSystemConnectionMemo;
  * @author	Kevin Dickerson Copyright (C) 2009
  */
 public class PreferencesFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8594656805050589881L;
 
     public PreferencesFrame() {
         super();

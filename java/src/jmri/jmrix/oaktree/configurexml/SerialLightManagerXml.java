@@ -1,4 +1,3 @@
-// SerialLightManagerXml.java
 package jmri.jmrix.oaktree.configurexml;
 
 import jmri.jmrix.oaktree.SerialLightManager;

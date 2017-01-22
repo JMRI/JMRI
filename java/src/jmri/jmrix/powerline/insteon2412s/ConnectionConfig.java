@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.powerline.insteon2412s;
 
 import javax.swing.BoxLayout;

@@ -1217,10 +1217,6 @@ public class CircuitBuilder {
      */
     static class convertFrame extends JmriJFrame {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6547026117570145767L;
         JDialog _dialog;
 
         convertFrame(JDialog dialog) {

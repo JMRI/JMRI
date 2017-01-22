@@ -43,4 +43,4 @@ public class SprogSlotMonAction extends AbstractAction {
 }
 
 
-/* @(#)SprogSlotMonAction.java */
+

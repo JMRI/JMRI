@@ -1,4 +1,3 @@
-// XBeeConnectionMemo.java
 package jmri.jmrix.ieee802154.xbee;
 
 import java.util.ResourceBundle;
@@ -177,4 +176,4 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
 }
 
 
-/* @(#)XBeeConnectionMemo.java */
+

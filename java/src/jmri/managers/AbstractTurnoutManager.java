@@ -1,5 +1,6 @@
 package jmri.managers;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.Turnout;
@@ -268,7 +269,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
     String defaultClosedSpeed = "Normal";
     String defaultThrownSpeed = "Restricted";
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_PARAM_DEREF", justification = "We are validating user input however the value is stored in its original format")
+    @SuppressFBWarnings(value = "NP_NULL_PARAM_DEREF", justification = "We are validating user input however the value is stored in its original format")
     public void setDefaultClosedSpeed(String speed) throws JmriException {
         if (speed == null) {
             throw new JmriException("Value of requested turnout default closed speed can not be null");

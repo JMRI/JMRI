@@ -1,4 +1,3 @@
-// JMRIClientListener.java
 package jmri.jmrix.jmriclient;
 
 /**
@@ -14,4 +13,4 @@ public interface JMRIClientListener extends jmri.jmrix.AbstractMRListener {
     public void reply(JMRIClientReply m);
 }
 
-/* @(#)JMRIClientListener.java */
+

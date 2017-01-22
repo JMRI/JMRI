@@ -1,4 +1,3 @@
-// SerialLightManager.java
 package jmri.jmrix.powerline;
 
 import jmri.Light;
@@ -18,10 +17,6 @@ import org.slf4j.LoggerFactory;
   */
 abstract public class SerialLightManager extends AbstractLightManager {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8251688284977659469L;
     SerialTrafficController tc = null;
 
     public SerialLightManager(SerialTrafficController tc) {
@@ -103,4 +98,4 @@ abstract public class SerialLightManager extends AbstractLightManager {
 
 }
 
-/* @(#)SerialLightManager.java */
+

@@ -1,4 +1,3 @@
-// PollTableAction.java
 package jmri.jmrix.rps.swing.polling;
 
 import java.awt.event.ActionEvent;
@@ -45,4 +44,4 @@ public class PollTableAction extends AbstractAction {
 }
 
 
-/* @(#)PollTableAction.java */
+

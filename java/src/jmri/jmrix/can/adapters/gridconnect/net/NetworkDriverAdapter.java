@@ -1,4 +1,3 @@
-// NetworkDriverAdapter.java
 package jmri.jmrix.can.adapters.gridconnect.net;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;

@@ -1,4 +1,3 @@
-// SerialLightManagerXml.java
 package jmri.jmrix.maple.configurexml;
 
 import jmri.jmrix.maple.SerialLightManager;

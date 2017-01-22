@@ -1,4 +1,3 @@
-// ClientRxHandler.java
 package jmri.jmrix.dccpp.dccppovertcp;
 
 import java.io.BufferedReader;

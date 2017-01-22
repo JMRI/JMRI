@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.powerline.serialdriver;
 
 import javax.swing.BoxLayout;

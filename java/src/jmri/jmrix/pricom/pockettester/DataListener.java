@@ -1,4 +1,3 @@
-// pricom.pockettester.DataListener.java
 package jmri.jmrix.pricom.pockettester;
 
 /**
@@ -17,4 +16,4 @@ public interface DataListener {
     // public void rawMessage(String m);
 }
 
-/* @(#)DataListener.java */
+

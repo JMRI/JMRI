@@ -1,4 +1,3 @@
-// TamsComponentFactory.java
 package jmri.jmrix.tams.swing;
 
 import jmri.jmrix.tams.TamsSystemConnectionMemo;

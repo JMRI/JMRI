@@ -1,4 +1,3 @@
-// NceConsistRosterEntry.java
 package jmri.jmrix.nce.consist;
 
 import java.io.IOException;

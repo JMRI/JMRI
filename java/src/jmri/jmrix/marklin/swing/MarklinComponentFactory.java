@@ -1,4 +1,3 @@
-// MarklinComponentFactory.java
 package jmri.jmrix.marklin.swing;
 
 import jmri.jmrix.marklin.MarklinSystemConnectionMemo;

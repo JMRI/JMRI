@@ -1,5 +1,6 @@
 package jmri.jmrix.dcc4pc;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gnu.io.SerialPort;
 import java.io.DataInputStream;
 import java.util.Calendar;
@@ -121,7 +122,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT")
+    @SuppressFBWarnings(value = "MS_PKGPROTECT")
     // FindBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected Dcc4PcTrafficController self = null;

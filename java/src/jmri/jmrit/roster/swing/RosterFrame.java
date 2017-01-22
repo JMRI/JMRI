@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.help.SwingHelpUtilities;
 import javax.imageio.ImageIO;
@@ -529,12 +530,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         try {
             clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval"));
         } catch (RuntimeException e) {
-            try {
-                clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt_multiclick_time"));
-            } catch (RuntimeException ex) {
-                clickDelay = 500;
-                log.warn("Unable to get the double click speed, Using JMRI default of half a second" + e.toString());
-            }
+            clickDelay = 500;
+            log.debug("Unable to get the double click speed, Using JMRI default of half a second" + e.toString());
         }
 
         // assemble roster/groups splitpane
@@ -720,13 +717,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         return getProperty(value);
     }
 
-    // cache selectedRosterEntries so that multiple calls to this
-    // between selection changes will not require the creation of a new array
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP",
-            justification = "Want to give access to mutable, original roster objects")
     public RosterEntry[] getSelectedRosterEntries() {
-        return rtable.getSelectedRosterEntries();
+        RosterEntry[] entries = rtable.getSelectedRosterEntries();
+        return Arrays.copyOf(entries, entries.length);
     }
 
     @Override

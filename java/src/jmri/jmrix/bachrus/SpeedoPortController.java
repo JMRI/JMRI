@@ -1,4 +1,3 @@
-// SpeedoPortController.java
 package jmri.jmrix.bachrus;
 
 import java.io.DataInputStream;
@@ -34,4 +33,4 @@ public abstract class SpeedoPortController extends jmri.jmrix.AbstractSerialPort
 
 }
 
-/* @(#)SpeedoPortController.java */
+

@@ -1,4 +1,3 @@
-// PacketGenAction.java
 package jmri.jmrix.jmriclient.swing.packetgen;
 
 import java.awt.event.ActionEvent;
@@ -13,10 +12,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PacketGenAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 36676032325616914L;
     jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo _memo = null;
 
     public PacketGenAction(String s, jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo memo) {
@@ -45,4 +40,4 @@ public class PacketGenAction extends AbstractAction {
 }
 
 
-/* @(#)PacketGenAction.java */
+

@@ -1,4 +1,3 @@
-// PrintOptionFrame.java
 package jmri.jmrit.operations.setup;
 
 import javax.swing.JMenu;

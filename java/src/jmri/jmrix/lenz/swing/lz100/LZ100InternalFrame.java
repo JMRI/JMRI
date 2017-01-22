@@ -1,4 +1,3 @@
-// LZ100InternalFrame.java
 package jmri.jmrix.lenz.swing.lz100;
 
 import java.awt.event.ActionEvent;
@@ -27,11 +26,6 @@ import org.slf4j.LoggerFactory;
  * @author	Paul Bender Copyright (C) 2005-2010
   */
 public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XNetListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8054742294210908919L;
 
     private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lz100.LZ100Bundle");
 

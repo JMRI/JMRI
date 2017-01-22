@@ -1,4 +1,3 @@
-// EcosSensor.java
 package jmri.jmrix.ecos;
 
 import jmri.implementation.AbstractSensor;
@@ -14,11 +13,6 @@ import jmri.implementation.AbstractSensor;
   */
 public class EcosSensor extends AbstractSensor {
 
-    //final static String prefix = "US";
-    /**
-     *
-     */
-    private static final long serialVersionUID = 896698049236927292L;
     int objectNumber = 0;
 
     public EcosSensor(String systemName, String userName) {
@@ -49,4 +43,4 @@ public class EcosSensor extends AbstractSensor {
     }
 }
 
-/* @(#)EcosSensor.java */
+

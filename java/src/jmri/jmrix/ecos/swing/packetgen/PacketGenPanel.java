@@ -1,4 +1,3 @@
-// PacketGenFrame.java
 package jmri.jmrix.ecos.swing.packetgen;
 
 import java.awt.Dimension;
@@ -16,10 +15,6 @@ import jmri.jmrix.ecos.EcosSystemConnectionMemo;
  */
 public class PacketGenPanel extends jmri.jmrix.ecos.swing.EcosPanel implements EcosListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4117052466081375675L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();

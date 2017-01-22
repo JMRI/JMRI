@@ -1,4 +1,3 @@
-// RpsConnectionTypeList.java
 package jmri.jmrix.rps;
 
 /**
