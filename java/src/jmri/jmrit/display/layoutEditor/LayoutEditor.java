@@ -799,6 +799,24 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         blockIDComboBox.setToolTipText(rb.getString("BlockIDToolTip"));
         blockPanel.add(blockIDComboBox);
 
+        // change the block name
+        blockIDComboBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                String blockName = blockIDComboBox.getSelectedDisplayName();
+                blockName = (null != blockName) ? blockName.trim() : "";
+                LayoutBlock b = provideLayoutBlock(blockName);
+                if (b != null) {
+                    // if there is an occupancy sensor assigned already
+                    String sensorName = b.getOccupancySensorName();
+                    if (sensorName.length() > 0) {
+                        // update the block sensor ComboBox
+                        blockSensorComboBox.getEditor().setItem(sensorName);
+                    }
+                }
+            }
+        });
+
+
         blockPanel.add(blockSensorLabel);
         blockPanel.add(blockSensorComboBox);
         blockSensorComboBox.setEditable(true);
@@ -6472,7 +6490,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
             newTrack.updateBlockInfo();
         }
-
     }
 
     /**
