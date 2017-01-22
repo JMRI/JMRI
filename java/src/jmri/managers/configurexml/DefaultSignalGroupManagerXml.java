@@ -41,10 +41,11 @@ public class DefaultSignalGroupManagerXml
             e.setAttribute("systemName", p.getSystemName()); // deprecated for 2.9.* series
             e.addContent(new Element("systemName").addContent(p.getSystemName()));
             e.setAttribute("userName", p.getUserName());
-            //storeCommon(p, e);
+            //storeCommon(p, e); would store comment, now a separate element
+            storeComment(p, e);
             element.addContent(e);
             for (int x = 0; x < p.getNumSignalMastAspects(); x++) {
-                Element app = new Element("appearance").setAttribute("valid", p.getSignalMastAspectByIndex(x));
+                Element app = new Element("aspect").setAttribute("valid", p.getSignalMastAspectByIndex(x));
                 e.addContent(app);
             }
             e.setAttribute("signalMast", p.getSignalMastName());
@@ -146,15 +147,23 @@ public class DefaultSignalGroupManagerXml
                 m.setUserName(getUserName(e));
             }
 
+            //loadCommon(m, e); // would store comment, now a separate element
+            loadComment(m, e);
+
             primary = e.getAttribute("signalMast").getValue();
             m.setSignalMast(primary);
 
-            List<Element> appList = e.getChildren("appearance");
+            List<Element> appList = e.getChildren("appearance"); // deprecated 4.7.2 for aspect
             for (int y = 0; y < appList.size(); y++) {
                 String value = appList.get(y).getAttribute("valid").getValue();
                 m.addSignalMastAspect(value);
             }
-            //loadCommon(m, e);
+            List<Element> aspList = e.getChildren("aspect");
+            for (int y = 0; y < aspList.size(); y++) {
+                String value = aspList.get(y).getAttribute("valid").getValue();
+                m.addSignalMastAspect(value);
+            }
+
             List<Element> signalHeadList = list.get(i).getChildren("signalHead");
             if (signalHeadList.size() > 0) {
                 for (int y = 0; y < signalHeadList.size(); y++) {

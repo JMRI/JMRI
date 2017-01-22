@@ -166,7 +166,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
                 throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalHeadVeto", getDisplayName()), e); //IN18N
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) {
-            log.warn("not clear DoDelete operated? {}", getSystemName()); //IN18N
+            log.warn("not clear DoDelete operated? {}", getSystemName()); //NOI18N
         }
     }
 

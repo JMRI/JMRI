@@ -42,9 +42,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a SignalGroup Table
+ * Swing action to create and register a SignalGroup > Signal Head Edit Table
  *
- * Based in part on RouteTableAction.java by Bob Jacobsen
+ * Based in part on RouteTableAction.java and SignalGroupTableAction.java by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2010
  *
@@ -61,9 +61,8 @@ public class SignalGroupSubTableAction {
      *
      * @param s title of the action
      */
-    //BeanTableFrame f;
-    public SignalGroupSubTableAction(String s) {
 
+    public SignalGroupSubTableAction(String s) {
     }
 
     public SignalGroupSubTableAction() {
@@ -88,7 +87,7 @@ public class SignalGroupSubTableAction {
         int result = jmri.util.StringUtil.getStateFromName(mode, operValues, oper);
 
         if (result < 0) {
-            log.warn("unexpected mode string in Sensor Mode: " + mode);
+            log.warn("unexpected mode string in Signal Head Appearance Mode: " + mode);
             throw new IllegalArgumentException();
         }
         if (result == 0) {
@@ -106,7 +105,7 @@ public class SignalGroupSubTableAction {
         int result = jmri.util.StringUtil.getStateFromName(mode, sensorInputModeValues, sensorInputModes);
 
         if (result < 0) {
-            log.warn("unexpected mode string in Signal Appearance: " + mode);
+            log.warn("unexpected mode string in Signal Head Appearance: " + mode);
             throw new IllegalArgumentException();
         }
         return result;
@@ -117,8 +116,8 @@ public class SignalGroupSubTableAction {
         box.setSelectedItem(result);
     }
 
-    int signalStateFromBox(JComboBox<String> box) {
-        SignalHead sig = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(curSignal);
+    int headStateFromBox(JComboBox<String> box) {
+        SignalHead sig = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(curHeadName);
         int result;
         String mode;
         if (sig != null) {
@@ -130,19 +129,19 @@ public class SignalGroupSubTableAction {
         }
 
         if (result < 0) {
-            log.warn("unexpected mode string in signalMode: " + mode);
+            log.warn("unexpected mode string in signalHeadMode: " + mode);
             throw new IllegalArgumentException();
         }
         return result;
     }
 
-    void setSignalStateBox(int mode, JComboBox<String> box) {
-        SignalHead sig = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(curSignal);
+    void setSignalHeadStateBox(int mode, JComboBox<String> box) {
+        SignalHead sig = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(curHeadName);
         if (sig != null) {
             String result = jmri.util.StringUtil.getNameFromState(mode, sig.getValidStates(), sig.getValidStateNames());
             box.setSelectedItem(result);
         } else {
-            log.error("Failed to get signal head {}", curSignal);
+            log.error("SGsubTA #145 setSignalHeadStateBox: Failed to get signal head {}", curHeadName);
         }
     }
 
@@ -167,7 +166,7 @@ public class SignalGroupSubTableAction {
     JComboBox<String> _OffAppearance;
     JComboBox<String> _SensorTurnoutOper = new JComboBox<String>(oper);
 
-    JmriJFrame addFrame = null;
+    JmriJFrame addSubFrame = null;
     SignalGroupTurnoutModel _SignalGroupTurnoutModel;
     JScrollPane _SignalGroupTurnoutScrollPane;
     SignalGroupSensorModel _SignalGroupSensorModel;
@@ -177,10 +176,10 @@ public class SignalGroupSubTableAction {
     JRadioButton allButton = null;
     JRadioButton includedButton = null;
 
-    JLabel nameLabel = new JLabel(Bundle.getMessage("BeanNameSignalHead") + ":");
-    JLabel signalOnStateLabel = new JLabel(Bundle.getMessage("StateWhenMet") + ":");
-    JLabel signalOffStateLabel = new JLabel(Bundle.getMessage("StateWhenNotMet") + ":");
-    JLabel userLabel = new JLabel(Bundle.getMessage("SelectConditionsOn") + ":");
+    JLabel nameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameSignalHead")));
+    JLabel signalOnStateLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("StateWhenMet")));
+    JLabel signalOffStateLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("StateWhenNotMet")));
+    JLabel userLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("SelectConditionsOn")));
 
     JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
     JButton updateSubButton = new JButton(Bundle.getMessage("ButtonApply"));
@@ -193,18 +192,17 @@ public class SignalGroupSubTableAction {
     JPanel p2xs = null;   // Sensor list table
 
     SignalGroup curSignalGroup = null;
-    String curSignal;
+    String curHeadName;
     SignalHead curSignalHead;
 
-    void editHead(SignalGroup g, String signal) {
+    void editHead(SignalGroup g, String headName) {
         curSignalGroup = g;
-        curSignal = signal;
-        curSignalHead = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(curSignal);
-        //SignalHead sig = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(curSignal);
+        curHeadName = headName;
+        curSignalHead = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(curHeadName);
 
-        _OnAppearance = new JComboBox<String>(curSignalHead.getValidStateNames());
+        _OnAppearance = new JComboBox<String>(curSignalHead.getValidStateNames()); // get i18n strings from signal head definition
         _OffAppearance = new JComboBox<String>(curSignalHead.getValidStateNames());
-        _systemName = new JLabel(signal);
+        _systemName = new JLabel(headName);
         _systemName.setVisible(true);
 
         jmri.TurnoutManager tm = InstanceManager.turnoutManagerInstance();
@@ -232,12 +230,12 @@ public class SignalGroupSubTableAction {
         initializeIncludedList();
 
         // Set up window
-        if (addFrame == null) {
-            addFrame = new JmriJFrame((Bundle.getMessage("AddSignalGroup") + " - " + Bundle.getMessage("BeanNameSignalHead")), false, true);
-            addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalGroupAddEdit", true);
-            addFrame.setLocation(100, 30);
-            addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
-            Container contentPane = addFrame.getContentPane();
+        if (addSubFrame == null) {
+            addSubFrame = new JmriJFrame((Bundle.getMessage("EditSignalGroup") + " - " + Bundle.getMessage("BeanNameSignalHead")), false, true);
+            addSubFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalGroupAddEdit", true);
+            addSubFrame.setLocation(100, 30);
+            addSubFrame.getContentPane().setLayout(new BoxLayout(addSubFrame.getContentPane(), BoxLayout.Y_AXIS));
+            Container contentPane = addSubFrame.getContentPane();
             // add system name
             JPanel ps = new JPanel();
             ps.setLayout(new FlowLayout());
@@ -256,22 +254,29 @@ public class SignalGroupSubTableAction {
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
             p.add(userLabel);
-
             contentPane.add(p);
+
             if (curSignalHead.getClass().getName().contains("SingleTurnoutSignalHead")) {
-                jmri.implementation.SingleTurnoutSignalHead Signal = (jmri.implementation.SingleTurnoutSignalHead) InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(curSignal);
-                if (Signal != null) {
+                jmri.implementation.SingleTurnoutSignalHead stsh = (jmri.implementation.SingleTurnoutSignalHead) InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(curHeadName);
+                // we may use a user name in the editing pane, so look for that first
+                if (stsh == null) {
+                    stsh = (jmri.implementation.SingleTurnoutSignalHead) InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(curHeadName);
+                    // when user name is empty, get by user name
+                }
+                if (stsh != null) {
+                    log.error("SGsubTA #263 editHead: setting props for signal head {}", curHeadName);
                     if ((g.getHeadOnState(curSignalHead) == 0x00) && (g.getHeadOffState(curSignalHead) == 0x00)) {
-                        g.setHeadOnState(curSignalHead, Signal.getOnAppearance());
-                        g.setHeadOffState(curSignalHead, Signal.getOffAppearance());
+                        g.setHeadOnState(curSignalHead, stsh.getOnAppearance());
+                        g.setHeadOffState(curSignalHead, stsh.getOffAppearance());
                     }
                 } else {
-                    log.error("Failed to get signal {}", curSignal);
+                    // nothing found
+                    log.error("SGsubTA #269 editHead: Failed to get signal head object named {}", curHeadName);
                 }
             }
+            setSignalHeadStateBox(g.getHeadOnState(curSignalHead), _OnAppearance);
+            setSignalHeadStateBox(g.getHeadOffState(curSignalHead), _OffAppearance);
 
-            setSignalStateBox(g.getHeadOnState(curSignalHead), _OnAppearance);
-            setSignalStateBox(g.getHeadOffState(curSignalHead), _OffAppearance);
             // add Turnout Display Choice
             JPanel py = new JPanel();
             py.add(new JLabel(Bundle.getMessage("Show")));
@@ -316,9 +321,6 @@ public class SignalGroupSubTableAction {
             JPanel p21t = new JPanel();
             p21t.setLayout(new BoxLayout(p21t, BoxLayout.Y_AXIS));
             p21t.add(new JLabel(Bundle.getMessage("SelectInGroup", Bundle.getMessage("Turnouts"))));
-            //p21t.add(new JLabel("Sensors to be "));
-            //p21t.add(new JLabel("included in  "));
-            //p21t.add(new JLabel("this Signal Group."));
             p2xt.add(p21t);
             _SignalGroupTurnoutModel = new SignalGroupTurnoutModel();
             JTable SignalGroupTurnoutTable = new JTable(_SignalGroupTurnoutModel);
@@ -376,9 +378,6 @@ public class SignalGroupSubTableAction {
             JPanel p21s = new JPanel();
             p21s.setLayout(new BoxLayout(p21s, BoxLayout.Y_AXIS));
             p21s.add(new JLabel(Bundle.getMessage("SelectInGroup", Bundle.getMessage("Sensors"))));
-            //p21s.add(new JLabel(" Sensors to "));
-            //p21s.add(new JLabel(" be included "));
-            //p21s.add(new JLabel(" in this SignalGroup."));
             p2xs.add(p21s);
             _SignalGroupSensorModel = new SignalGroupSensorModel();
             JTable SignalGroupSensorTable = new JTable(_SignalGroupSensorModel);
@@ -418,14 +417,6 @@ public class SignalGroupSubTableAction {
             contentPane.add(p2xs);
             p2xs.setVisible(true);
 
-            // add lock control table
-            /*JPanel p4 = new JPanel();
-             p4.setLayout(new BoxLayout(p4, BoxLayout.Y_AXIS));
-            
-             // complete this panel
-             Border p4Border = BorderFactory.createEtchedBorder();
-             p4.setBorder(p4Border);
-             contentPane.add(p4);*/
             // add notes panel
             JPanel pa = new JPanel();
             pa.setLayout(new BoxLayout(pa, BoxLayout.Y_AXIS));
@@ -443,7 +434,7 @@ public class SignalGroupSubTableAction {
             pb.add(cancelButton);
             cancelButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    cancelPressed(e);
+                    cancelSubPressed(e);
                 }
             });
             // add Update SignalGroup button
@@ -459,22 +450,22 @@ public class SignalGroupSubTableAction {
             p2xsSpace.setVisible(false);
             updateSubButton.setVisible(true);
             contentPane.add(pb);
-            addFrame.pack();
+            addSubFrame.pack();
 
         }
         // set listener for window closing
-        addFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+        addSubFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
-                addFrame.setVisible(false);
+                addSubFrame.setVisible(false);
                 cancelSubEdit();
                 _SignalGroupSensorModel.dispose();
                 _SignalGroupTurnoutModel.dispose();
             }
         });
-        addFrame.setVisible(true);
+        addSubFrame.setVisible(true);
         setoperBox(curSignalGroup.getSensorTurnoutOper(curSignalHead), _SensorTurnoutOper);
-        setSignalStateBox(curSignalGroup.getHeadOnState(curSignalHead), _OnAppearance);
-        setSignalStateBox(curSignalGroup.getHeadOffState(curSignalHead), _OffAppearance);
+        setSignalHeadStateBox(curSignalGroup.getHeadOnState(curSignalHead), _OnAppearance);
+        setSignalHeadStateBox(curSignalGroup.getHeadOffState(curSignalHead), _OffAppearance);
         int setRow = 0;
         for (int i = _turnoutList.size() - 1; i >= 0; i--) {
             SignalGroupTurnout turnout = _turnoutList.get(i);
@@ -513,7 +504,6 @@ public class SignalGroupSubTableAction {
     }
 
     void setColumnToHoldButton(JTable table, int column, JButton sample) {
-        //TableColumnModel tcm = table.getColumnModel();
         // install a button renderer & editor
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         table.setDefaultRenderer(JButton.class, buttonRenderer);
@@ -565,16 +555,19 @@ public class SignalGroupSubTableAction {
         return _includedSensorList.size();
     }
 
-    void cancelPressed(ActionEvent e) {
-        log.debug("canceled in SGSTA line 569");
+    /**
+     * Responds to the Cancel button - clean up
+     */
+    void cancelSubPressed(ActionEvent e) {
+        log.debug("Edit Signal Group Head canceled in SGSTA line 569");
+        //addSubFrame.setVisible(false);
         cancelSubEdit();
-        //addFrame.setVisible(false);
-        //addFrame.dispose();
-        //addFrame = null;
+        _SignalGroupSensorModel.dispose();
+        _SignalGroupTurnoutModel.dispose();
     }
 
     /**
-     * Responds to the Update button - update to SignalGroup Table
+     * Responds to the Update button - update to SignalGroup
      */
     void updateSubPressed(ActionEvent e, boolean newSignalGroup) {
         curSignalGroup.clearHeadTurnout(curSignalHead);
@@ -583,20 +576,20 @@ public class SignalGroupSubTableAction {
         initializeIncludedList();
         setTurnoutInformation(curSignalGroup);
         setSensorInformation(curSignalGroup);
-        curSignalGroup.setHeadOnState(curSignalHead, signalStateFromBox(_OnAppearance));
-        curSignalGroup.setHeadOffState(curSignalHead, signalStateFromBox(_OffAppearance));
+        curSignalGroup.setHeadOnState(curSignalHead, headStateFromBox(_OnAppearance));
+        curSignalGroup.setHeadOffState(curSignalHead, headStateFromBox(_OffAppearance));
         curSignalGroup.setSensorTurnoutOper(curSignalHead, operFromBox(_SensorTurnoutOper));
-        // add control Sensors and a control Turnout if entered in the window
+        // add control Sensors and a control Turnouts if entered in the window
         finishUpdate();
     }
 
     void finishUpdate() {
-        // move to show all signal heads if not there
+        // move to show all turnaouts and sensors if not there
         cancelIncludedOnly();
         updateSubButton.setVisible(false);
-        addFrame.setVisible(false);
-        //addFrame.dispose();
-        //addFrame = null;
+        addSubFrame.setVisible(false);
+        //addSubFrame.dispose();
+        //addSubFrame = null;
     }
 
     /**
@@ -618,10 +611,11 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Base table model for selecting outputs
+     * Base table model for selecting Signal Group Head control outputs
      */
     public abstract class SignalGroupOutputModel extends AbstractTableModel implements PropertyChangeListener {
 
+        @Override
         public Class<?> getColumnClass(int c) {
             if (c == INCLUDE_COLUMN) {
                 return Boolean.class;
@@ -630,6 +624,7 @@ public class SignalGroupSubTableAction {
             }
         }
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("length")) {
                 // a new NamedBean is available in the manager
@@ -641,14 +636,17 @@ public class SignalGroupSubTableAction {
             InstanceManager.turnoutManagerInstance().removePropertyChangeListener(this);
         }
 
+        @Override
         public String getColumnName(int c) {
             return COLUMN_NAMES[c];
         }
 
+        @Override
         public int getColumnCount() {
             return 4;
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             return ((c == INCLUDE_COLUMN) || (c == STATE_COLUMN));
         }
@@ -677,6 +675,7 @@ public class SignalGroupSubTableAction {
             InstanceManager.turnoutManagerInstance().addPropertyChangeListener(this);
         }
 
+        @Override
         public int getRowCount() {
             if (showAll) {
                 return _turnoutList.size();
@@ -685,6 +684,7 @@ public class SignalGroupSubTableAction {
             }
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             ArrayList<SignalGroupTurnout> turnoutList = null;
             if (showAll) {
@@ -694,7 +694,7 @@ public class SignalGroupSubTableAction {
             }
             // some error checking
             if (r >= turnoutList.size()) {
-                log.debug("row is greater than turnout list size");
+                log.debug("SGSTA getValueAt #703: row is greater than turnout list size");
                 return null;
             }
             switch (c) {
@@ -711,6 +711,7 @@ public class SignalGroupSubTableAction {
             }
         }
 
+        @Override
         public void setValueAt(Object type, int r, int c) {
             ArrayList<SignalGroupTurnout> turnoutList = null;
             if (showAll) {
@@ -740,6 +741,7 @@ public class SignalGroupSubTableAction {
             InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
         }
 
+        @Override
         public int getRowCount() {
             if (showAll) {
                 return _sensorList.size();
@@ -748,6 +750,7 @@ public class SignalGroupSubTableAction {
             }
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             ArrayList<SignalGroupSensor> sensorList = null;
             if (showAll) {
@@ -757,7 +760,7 @@ public class SignalGroupSubTableAction {
             }
             // some error checking
             if (r >= sensorList.size()) {
-                log.debug("row is greater than turnout list size");
+                log.debug("SGSTA getValueAt #766: row is greater than sensor list size");
                 return null;
             }
             switch (c) {
@@ -774,6 +777,7 @@ public class SignalGroupSubTableAction {
             }
         }
 
+        @Override
         public void setValueAt(Object type, int r, int c) {
             ArrayList<SignalGroupSensor> sensorList = null;
             if (showAll) {
@@ -807,7 +811,7 @@ public class SignalGroupSubTableAction {
     private static String SET_TO_CLOSED = InstanceManager.turnoutManagerInstance().getClosedText();
     private static String SET_TO_THROWN = InstanceManager.turnoutManagerInstance().getThrownText();
 
-    private static String[] sensorInputModes = new String[]{"Active", "Inactive"}; // TODO I19N
+    private static String[] sensorInputModes = new String[]{"Active", "Inactive"}; // TODO I18N
     private static int[] sensorInputModeValues = new int[]{SignalGroup.ONACTIVE, SignalGroup.ONINACTIVE};
 
     private static String[] signalStates = new String[]{rbx.getString("StateSignalHeadDark"), rbx.getString("StateSignalHeadRed"), rbx.getString("StateSignalHeadYellow"), rbx.getString("StateSignalHeadGreen"), rbx.getString("StateSignalHeadLunar")};
@@ -817,7 +821,7 @@ public class SignalGroupSubTableAction {
         InstanceManager.turnoutManagerInstance().getThrownText()};
     private static int[] turnoutInputModeValues = new int[]{SignalGroup.ONCLOSED, SignalGroup.ONTHROWN};
 
-    private ArrayList<SignalGroupTurnout> _turnoutList;      // array of all Turnouts
+    private ArrayList<SignalGroupTurnout> _turnoutList;      // array of all Single Output Turnouts
     private ArrayList<SignalGroupTurnout> _includedTurnoutList;
 
     private ArrayList<SignalGroupSensor> _sensorList;        // array of all Sensors

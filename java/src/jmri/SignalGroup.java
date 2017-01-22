@@ -6,15 +6,18 @@ package jmri;
  * The Signal Group is used to represent European subsidary signals that would
  * be sited with a signal mast. Such subsidary signals would be used to
  * indicated routes, junctions and allowable speeds. Each such
- * route/junction/speed would be represented by a single output signal, that is
- * either Off or On. Within the group only one such signal would be allowed on at
+ * route/junction/speed would be represented by a single output signal (head), that is
+ * either Off or On. Within the group only one such signal head would be allowed on at
  * any one time.
  *
- * The group is attached to a signal mast, and can be configured to be activated
- * depending upon that masts aspect. The Each signal head within the group
+ * The group is attached to a main signal mast, and can be configured to be activated
+ * depending upon that masts current aspect. Each signal head within the group
  * is defined with an On and Off appearance, and a set of criteria in the form of
  * matching turnouts and sensor states, that must be met for the head to be set
  * On.
+ * For code clarity, JMRI uses the terms (signal)Mast and (signal)Head instead of Signal.
+ * Masts show Aspects, Heads show Appearances, though outside the USA this will vary.
+ * Use localization to address this in the user interface.
  *
  * @author	Pete Cressman Copyright (C) 2009
  */
@@ -63,8 +66,8 @@ public interface SignalGroup extends NamedBean {
     public int getNumSignalMastAspects();
 
     /**
-     * Method to get a SignalMast Aspect by Index Returns null if there are
-     * no Appearances with that index
+     * Method to get a SignalMast Aspect by Index
+     * Returns null if there are no Appearances with that index
      */
     public String getSignalMastAspectByIndex(int x);
 
@@ -80,14 +83,12 @@ public interface SignalGroup extends NamedBean {
 
     /**
      * Add a Signal Head to the Group
-     *
      * @param sh The SignalHead as a Named Bean
      */
     public void addSignalHead(NamedBeanHandle<SignalHead> sh);
 
     /**
      * Add a Signal Head to the Group
-     *
      * @param mHead The SignalHead as a Named Bean
      */
     public void addSignalHead(SignalHead mHead);
@@ -95,8 +96,8 @@ public interface SignalGroup extends NamedBean {
     public SignalHead getHeadItemBeanByIndex(int n);
 
     /**
-     * Method to get a SignalHead by Index Returns null if there are no Signal
-     * Heads with that index
+     * Method to get a SignalHead by Index
+     * Returns null if there are no Signal Heads with that index
      */
     public String getHeadItemNameByIndex(int n);
 
@@ -301,21 +302,21 @@ public interface SignalGroup extends NamedBean {
 
     /**
      * Method to get the number of Sensors used to determine the On state for
-     * the signalhead at index x
+     * the Signal Head at index x
      * <P>
      * @return -1 if there are less than 'n' SignalHeads defined
      */
     public int getNumHeadSensorsByIndex(int x);
 
     /**
-     * Delete all Turnouts for a given SignalHead in the group
+     * Delete all Turnouts for a given Signal Head in the group
      *
      * @param pSignal SignalHead Name
      */
     public void clearHeadTurnout(SignalHead pSignal);
 
     /**
-     * Delete all Sensors for a given SignalHead in the group
+     * Delete all Sensors for a given Signal Head in the group
      *
      * @param pSignal SignalHead Name
      */
@@ -325,9 +326,9 @@ public interface SignalGroup extends NamedBean {
 
     public void setState(int state);
 
-    static final int ONACTIVE = 0;    // route fires if sensor goes active
-    static final int ONINACTIVE = 1;  // route fires if sensor goes inactive
+    static final int ONACTIVE = 0;    // group head conditional fires if sensor goes active
+    static final int ONINACTIVE = 1;  // group head conditional fires if sensor goes inactive
 
-    static final int ONCLOSED = 2;    // route fires if turnout goes closed
-    static final int ONTHROWN = 4;  // route fires if turnout goes thrown
+    static final int ONCLOSED = 2;    // group head conditional fires if turnout goes closed
+    static final int ONTHROWN = 4;  // group head conditional fires if turnout goes thrown
 }
