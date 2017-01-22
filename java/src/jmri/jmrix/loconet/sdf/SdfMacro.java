@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.sdf;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -194,7 +195,7 @@ public abstract class SdfMacro implements SdfConstants {
      *               corresponding label is returned
      * @return "+" separated list of labels, or "&lt;ERROR&gt;" if none matched
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     String decodeFlags(int input, int[] values, int[] masks, String[] labels) {

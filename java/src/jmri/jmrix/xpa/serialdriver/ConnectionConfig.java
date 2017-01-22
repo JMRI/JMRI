@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.xpa.serialdriver;
 
 /**

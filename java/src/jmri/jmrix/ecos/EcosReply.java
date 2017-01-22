@@ -1,4 +1,3 @@
-// EcosReply.java
 package jmri.jmrix.ecos;
 
 import java.util.Arrays;
@@ -263,4 +262,4 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
     private final static Logger log = LoggerFactory.getLogger(EcosReply.class.getName());
 }
 
-/* @(#)EcosReply.java */
+

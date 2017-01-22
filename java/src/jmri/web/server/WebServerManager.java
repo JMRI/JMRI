@@ -1,5 +1,6 @@
 package jmri.web.server;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.IOException;
 import jmri.InstanceManager;
@@ -70,7 +71,7 @@ public class WebServerManager {
         return getInstance().getServer();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "REC_CATCH_EXCEPTION",
+    @SuppressFBWarnings(value = "REC_CATCH_EXCEPTION",
             justification = "Catch is covering both JDOMException and IOException, FindBugs seems confused")
     private void preferencesFromMiniServerPreferences(File MSFile, File WSFile) {
         XmlFile xmlFile = new XmlFile() {

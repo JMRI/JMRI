@@ -125,4 +125,4 @@ public class RpsSensor extends AbstractSensor
 
 }
 
-/* @(#)RpsSensor.java */
+

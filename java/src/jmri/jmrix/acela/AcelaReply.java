@@ -1,4 +1,3 @@
-// AcelaReply.java
 package jmri.jmrix.acela;
 
 
@@ -32,5 +31,3 @@ public class AcelaReply extends jmri.jmrix.AbstractMRReply {
         return index;
     }
 }
-
-/* @(#)AcelaReply.java */

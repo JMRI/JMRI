@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.setup;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
@@ -13,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2008
  *
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_CANNOT_BE_FINAL")
+@SuppressFBWarnings(value = "MS_CANNOT_BE_FINAL")
 public class Control {
 
     // debug flags
@@ -47,7 +48,7 @@ public class Control {
     public static final int panelY = 0;
 
     // Train build parameters
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // allow access for testing
+    @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // allow access for testing
     public static boolean fullTrainOnly = false;
 
     // Car and Engine attribute maximum string length	

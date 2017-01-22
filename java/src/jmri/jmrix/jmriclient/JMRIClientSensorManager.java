@@ -1,4 +1,3 @@
-// JMRIClientSensorManager.java
 package jmri.jmrix.jmriclient;
 
 import jmri.Sensor;
@@ -44,4 +43,4 @@ public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager
 
 }
 
-/* @(#)JMRIClientSensorManager.java */
+

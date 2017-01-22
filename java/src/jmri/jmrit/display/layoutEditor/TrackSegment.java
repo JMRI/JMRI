@@ -17,10 +17,15 @@ import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JRootPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import jmri.BlockManager;
+import jmri.InstanceManager;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -208,7 +213,7 @@ public class TrackSegment {
         changed = true;
     }
     //public int getStartAngle() {return startangle;}
-    //public void setStartAngle(int x) {startangle = x;} 
+    //public void setStartAngle(int x) {startangle = x;}
 
     public double getAngle() {
         return angle;
@@ -402,20 +407,12 @@ public class TrackSegment {
         }
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
         popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -8434155343805889256L;
 
             public void actionPerformed(ActionEvent e) {
                 editTrackSegment();
             }
         });
         popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -5403313571121888412L;
 
             public void actionPerformed(ActionEvent e) {
                 layoutEditor.removeTrackSegment(instance);
@@ -425,31 +422,17 @@ public class TrackSegment {
         });
         JMenu lineType = new JMenu(rb.getString("ChangeTo"));
         lineType.add(new AbstractAction(Bundle.getMessage("Line")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -2124868806018661728L;
 
             public void actionPerformed(ActionEvent e) {
                 changeType(0);
             }
         });
         lineType.add(new AbstractAction(Bundle.getMessage("Circle")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -481775061303245869L;
-
             public void actionPerformed(ActionEvent e) {
                 changeType(1);
             }
         });
         lineType.add(new AbstractAction(Bundle.getMessage("Ellipse")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -2192546838539431871L;
-
             public void actionPerformed(ActionEvent e) {
                 changeType(2);
             }
@@ -457,10 +440,6 @@ public class TrackSegment {
         popup.add(lineType);
         if (getArc()) {
             popup.add(new AbstractAction(rb.getString("FlipAngle")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -5467146687460909227L;
 
                 public void actionPerformed(ActionEvent e) {
                     flipAngle();
@@ -468,10 +447,6 @@ public class TrackSegment {
             });
             if (hideConstructionLines()) {
                 popup.add(new AbstractAction(rb.getString("ShowConstruct")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -3681445953384400565L;
 
                     public void actionPerformed(ActionEvent e) {
                         hideConstructionLines(SHOWCON);
@@ -479,11 +454,6 @@ public class TrackSegment {
                 });
             } else {
                 popup.add(new AbstractAction(rb.getString("HideConstruct")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -5218884649785670786L;
-
                     public void actionPerformed(ActionEvent e) {
                         hideConstructionLines(HIDECON);
                     }
@@ -492,11 +462,6 @@ public class TrackSegment {
         }
         if ((!blockName.equals("")) && (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled())) {
             popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -2604285207958381230L;
-
                 public void actionPerformed(ActionEvent e) {
                     AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
                     routeTableAction.actionPerformed(e);
@@ -548,7 +513,8 @@ public class TrackSegment {
     private JComboBox<String> mainlineBox = new JComboBox<String>();
     private int mainlineTrackIndex;
     private int sideTrackIndex;
-    private JTextField blockNameField = new JTextField(16);
+    private JmriBeanComboBox blockNameComboBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
     private JTextField arcField = new JTextField(5);
     private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideTrack"));
     private JButton segmentEditBlock;
@@ -572,7 +538,7 @@ public class TrackSegment {
             editTrackSegmentFrame.setLocation(50, 30);
             Container contentPane = editTrackSegmentFrame.getContentPane();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-            // add dashed choice 
+            // add dashed choice
             JPanel panel31 = new JPanel();
             panel31.setLayout(new FlowLayout());
             dashedBox.removeAllItems();
@@ -584,7 +550,7 @@ public class TrackSegment {
             panel31.add(new JLabel(rb.getString("Style") + " : "));
             panel31.add(dashedBox);
             contentPane.add(panel31);
-            // add mainline choice 
+            // add mainline choice
             JPanel panel32 = new JPanel();
             panel32.setLayout(new FlowLayout());
             mainlineBox.removeAllItems();
@@ -595,7 +561,7 @@ public class TrackSegment {
             mainlineBox.setToolTipText(rb.getString("MainlineToolTip"));
             panel32.add(mainlineBox);
             contentPane.add(panel32);
-            // add hidden choice 
+            // add hidden choice
             JPanel panel33 = new JPanel();
             panel33.setLayout(new FlowLayout());
             hiddenBox.setToolTipText(rb.getString("HiddenToolTip"));
@@ -606,8 +572,11 @@ public class TrackSegment {
             panel2.setLayout(new FlowLayout());
             JLabel blockNameLabel = new JLabel(rb.getString("BlockID"));
             panel2.add(blockNameLabel);
-            panel2.add(blockNameField);
-            blockNameField.setToolTipText(rb.getString("EditBlockNameHint"));
+            blockNameComboBox.setEditable(true);
+            blockNameComboBox.getEditor().setItem("");
+            blockNameComboBox.setSelectedIndex(-1);
+            blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
+            panel2.add(blockNameComboBox);
             contentPane.add(panel2);
             if ((getArc()) && (getCircle())) {
                 JPanel panel20 = new JPanel();
@@ -637,6 +606,17 @@ public class TrackSegment {
                 }
             });
             segmentEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
+
+            // make this button the default button (return or enter activates)
+            // Note: We have to invoke this later because we don't currently have a root pane
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    JRootPane rootPane = SwingUtilities.getRootPane(segmentEditDone);
+                    rootPane.setDefaultButton(segmentEditDone);
+                }
+            });
+
             // Cancel
             panel5.add(segmentEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             segmentEditCancel.addActionListener(new ActionListener() {
@@ -659,7 +639,8 @@ public class TrackSegment {
             dashedBox.setSelectedIndex(solidIndex);
         }
         hiddenBox.setSelected(hidden);
-        blockNameField.setText(blockName);
+        blockNameComboBox.getEditor().setItem(blockName);
+
         editTrackSegmentFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
                 segmentEditCancelPressed(null);
@@ -672,13 +653,15 @@ public class TrackSegment {
 
     void segmentEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        if (!blockName.equals(blockNameField.getText().trim())) {
+        String newBlockName = blockNameComboBox.getSelectedDisplayName();
+        newBlockName = (null != newBlockName) ? newBlockName.trim() : "";
+        if (!blockName.equals(newBlockName)) {
             // block has changed, if old block exists, decrement use
             if (block != null) {
                 block.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockName = blockNameField.getText().trim();
+            blockName = newBlockName;
             try {
                 block = layoutEditor.provideLayoutBlock(blockName);
             } catch (IllegalArgumentException ex) {
@@ -734,13 +717,15 @@ public class TrackSegment {
             needsRedraw = true;
         }
         // check if Block changed
-        if (!blockName.equals(blockNameField.getText().trim())) {
+        String newBlockName = blockNameComboBox.getSelectedDisplayName();
+        newBlockName = (null != newBlockName) ? newBlockName.trim() : "";
+        if (!blockName.equals(newBlockName)) {
             // block has changed, if old block exists, decrement use
             if (block != null) {
                 block.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockName = blockNameField.getText().trim();
+            blockName = newBlockName;
             try {
                 block = layoutEditor.provideLayoutBlock(blockName);
             } catch (IllegalArgumentException ex) {
@@ -1057,7 +1042,7 @@ public class TrackSegment {
             o = pt2y - pt1y;
             chord = java.lang.Math.sqrt(((a * a) + (o * o)));
             setChordLength(chord);
-            // Make sure chord is not null 
+            // Make sure chord is not null
             // In such a case (pt1 == pt2), there is no arc to draw
             if (chord > 0.0D) {
                 radius = (chord / 2) / (java.lang.Math.sin(halfAngle));

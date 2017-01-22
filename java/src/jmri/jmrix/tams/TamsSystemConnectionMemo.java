@@ -1,4 +1,3 @@
-// TamsSystemConnectionMemo.java
 package jmri.jmrix.tams;
 
 import java.util.ResourceBundle;
@@ -209,4 +208,4 @@ public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 }
 
 
-/* @(#)InternalSystemConnectionMemo.java */
+

@@ -1,4 +1,3 @@
-// MarklinSystemConnectionMemo.java
 package jmri.jmrix.marklin;
 
 import java.util.ResourceBundle;
@@ -184,4 +183,4 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 }
 
 
-/* @(#)InternalSystemConnectionMemo.java */
+

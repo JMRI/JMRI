@@ -1,5 +1,6 @@
 package jmri.jmrix.ecos;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
 import jmri.CommandStation;
 import jmri.jmrix.AbstractMRListener;
@@ -126,7 +127,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     public void setInstance() {
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT")
+    @SuppressFBWarnings(value = "MS_PKGPROTECT")
     // FindBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected EcosTrafficController self = null;

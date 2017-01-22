@@ -43,13 +43,7 @@ public class LayoutBlockRouteTableAction extends AbstractAction {
         createModel();
 
         // create the frame
-        f = new jmri.util.JmriJFrame() {
-
-            /**
-             *
-             */
-            private static final long serialVersionUID = -8814222912512779305L;
-        };
+        f = new jmri.util.JmriJFrame();
         f.add(m);
         setTitle();
         f.pack();

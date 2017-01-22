@@ -1,4 +1,3 @@
-// TurnoutSignalMast.java
 package jmri.implementation;
 
 import java.util.ArrayList;

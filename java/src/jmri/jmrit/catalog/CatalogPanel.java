@@ -748,10 +748,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
         popup.add(new javax.swing.JPopupMenu.Separator());
 
         popup.add(new AbstractAction(Bundle.getMessage("RenameIcon")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1598669233012552574L;
             NamedIcon icon;
 
             public void actionPerformed(ActionEvent e) {
@@ -766,10 +762,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
         popup.add(new javax.swing.JPopupMenu.Separator());
 
         popup.add(new AbstractAction(Bundle.getMessage("DeleteIcon")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -2412374302278407718L;
             NamedIcon icon;
 
             public void actionPerformed(ActionEvent e) {
@@ -807,10 +799,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
 
     class DropJTree extends JTree implements DropTargetListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6754039215423513840L;
         DataFlavor dataFlavor;
 
         DropJTree(TreeModel model) {

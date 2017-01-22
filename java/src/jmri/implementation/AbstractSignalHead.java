@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import java.util.Arrays;
 import jmri.SignalHead;
 import jmri.Turnout;
 
@@ -102,14 +103,12 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         return getAppearance();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"EI_EXPOSE_REP", "MS_EXPOSE_REP"}, justification = "OK until Java 1.6 allows return of cheap array copy")
     public static int[] getDefaultValidStates() {
-        return validStates;
+        return Arrays.copyOf(validStates, validStates.length);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"EI_EXPOSE_REP", "MS_EXPOSE_REP"}, justification = "OK until Java 1.6 allows return of cheap array copy")
     public static String[] getDefaultValidStateNames() {
-        return validStateNames;
+        return Arrays.copyOf(validStateNames, validStateNames.length);
     }
 
     public static String getDefaultStateName(int appearance) {
@@ -144,16 +143,14 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         Bundle.getMessage("SignalHeadStateFlashingGreen"),
         Bundle.getMessage("SignalHeadStateFlashingLunar"),};
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "OK until Java 1.6 allows return of cheap array copy")
     @Override
     public int[] getValidStates() {
-        return validStates;
+        return Arrays.copyOf(validStates, validStates.length);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "OK until Java 1.6 allows return of cheap array copy")
     @Override
     public String[] getValidStateNames() {
-        return validStateNames;
+        return Arrays.copyOf(validStateNames, validStateNames.length);
     }
 
     abstract boolean isTurnoutUsed(Turnout t);

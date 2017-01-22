@@ -1,4 +1,3 @@
-// MrcComponentFactory.java
 package jmri.jmrix.zimo.swing;
 
 import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
@@ -30,4 +29,4 @@ public class Mx1ComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 }
 
 
-/* @(#)MrcComponentFactory.java */
+

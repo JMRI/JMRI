@@ -1,4 +1,3 @@
-// MarklinTurnout.java
 package jmri.jmrix.marklin;
 
 import jmri.Turnout;
@@ -21,10 +20,6 @@ import org.slf4j.LoggerFactory;
 public class MarklinTurnout extends AbstractTurnout
         implements MarklinListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8288482023350129321L;
     String prefix;
 
     /**
@@ -197,5 +192,3 @@ public class MarklinTurnout extends AbstractTurnout
 
     private final static Logger log = LoggerFactory.getLogger(MarklinTurnout.class.getName());
 }
-
-/* @(#)MarklinTurnout.java */

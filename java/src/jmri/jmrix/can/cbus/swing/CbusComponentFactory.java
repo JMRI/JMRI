@@ -1,4 +1,3 @@
-// CbusComponentFactory.java
 package jmri.jmrix.can.cbus.swing;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -30,4 +29,4 @@ public class CbusComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 }
 
 
-/* @(#)CbusComponentFactory.java */
+

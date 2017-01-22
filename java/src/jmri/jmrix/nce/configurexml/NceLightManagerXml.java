@@ -1,4 +1,3 @@
-// NceLightManagerXml.java
 package jmri.jmrix.nce.configurexml;
 
 import org.jdom2.Element;

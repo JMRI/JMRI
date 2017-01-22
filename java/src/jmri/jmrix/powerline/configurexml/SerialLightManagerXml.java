@@ -1,4 +1,3 @@
-// SerialLightManagerXml.java
 package jmri.jmrix.powerline.configurexml;
 
 import org.jdom2.Element;

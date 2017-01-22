@@ -1,4 +1,3 @@
-// LinkNodeInventory.java
 package jmri.jmrix.openlcb;
 
 /**
@@ -10,4 +9,4 @@ public class LinkNodeInventory {
 
 }
 
-/* @(#)LinkNodeInventory.java */
+

@@ -74,4 +74,4 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
 }
 
 
-/* @(#)LocoNetInterfaceScaffold.java */
+

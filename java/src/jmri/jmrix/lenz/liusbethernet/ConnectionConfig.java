@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.lenz.liusbethernet;
 
 import javax.swing.JPanel;

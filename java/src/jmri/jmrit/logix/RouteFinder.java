@@ -67,6 +67,7 @@ public class RouteFinder implements Runnable {
 
     }
 
+    @Override
     public void run() {
         _destBlock = _destBlockOrder.getBlock();
         _dPathName = _destBlockOrder.getPathName();
@@ -84,19 +85,19 @@ public class RouteFinder implements Runnable {
             _avoidBlock = _avoidBlockOrder.getBlock();
         }
 
-        _destNodes = new ArrayList<DefaultMutableTreeNode>();
+        _destNodes = new ArrayList<>();
         _quit = false;
         int level = 0;
         RouteNode root = new RouteNode(_originBlockOrder, (_viaBlockOrder != null));
         _tree = new DefaultTreeModel(root);
-        ArrayList<RouteNode> nodes = new ArrayList<RouteNode>();
+        ArrayList<RouteNode> nodes = new ArrayList<>();
         nodes.add(root);
         while (level < _maxBlocks && !_quit) {
             nodes = makeLevel(nodes, level);
             level++;
 //            _pcs.firePropertyChange("RouteSearch", Integer.valueOf(level), Integer.valueOf(_destNodes.size()));
         }
-        if (_destNodes.size() == 0) {
+        if (_destNodes.isEmpty()) {
             _caller.debugRoute(_tree, _originBlockOrder, _destBlockOrder);
         } else {
             _caller.pickRoute(_destNodes, _tree);
@@ -110,7 +111,7 @@ public class RouteFinder implements Runnable {
      */
     ArrayList<RouteNode> makeLevel(ArrayList<RouteNode> nodes, int level) {
 
-        ArrayList<RouteNode> children = new ArrayList<RouteNode>();
+        ArrayList<RouteNode> children = new ArrayList<>();
         for (int i = 0; i < nodes.size(); i++) {
             RouteNode node = nodes.get(i);
             BlockOrder pOrder = (BlockOrder) node.getUserObject();
@@ -124,7 +125,7 @@ public class RouteFinder implements Runnable {
                     log.debug("makeLevel " + level + " block= " + pBlock.getDisplayName()
                             + ", path= " + pOrder.getPathName() + " meets " + paths.size() + " portal paths");
                 }
-                if (paths.size() == 0) {
+                if (paths.isEmpty()) {
                     log.error("Portal \"" + pName + "\" " + (exitPortal.getOpposingBlock(pBlock) == null
                             ? "is malformed! Only one block!" : "does not have any paths into the next block!"));
                 }

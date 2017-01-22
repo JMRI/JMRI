@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -121,7 +122,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         return panel;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "fixed number of possible values")
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "fixed number of possible values")
     private ScaleData makeCustomItem(float scale) {
         int cnt = 0;
         while (cnt < _layoutScales.getItemCount()) {
@@ -438,7 +439,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
      * Compare GUI values with Preferences. When different, update Preferences
      * and set _isDirty flag.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "fixed number of possible values")
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "fixed number of possible values")
     private void setValues() {
         WarrantPreferences preferences = WarrantPreferences.getDefault();
         int depth = preferences.getSearchDepth();

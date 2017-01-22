@@ -1,4 +1,3 @@
-// CatalogTreeNode.java
 package jmri.jmrit.catalog;
 
 import java.util.ArrayList;

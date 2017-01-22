@@ -275,4 +275,4 @@ public class AutoTurnouts {
     private final static Logger log = LoggerFactory.getLogger(AutoTurnouts.class.getName());
 }
 
-/* @(#)AutoTurnouts.java */
+

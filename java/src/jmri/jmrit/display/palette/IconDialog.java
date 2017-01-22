@@ -1,4 +1,3 @@
-// IconDialog.java
 package jmri.jmrit.display.palette;
 
 import java.awt.Color;
@@ -32,10 +31,6 @@ import org.slf4j.LoggerFactory;
  */
 public class IconDialog extends ItemDialog {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3594751185136377740L;
     protected FamilyItemPanel _parent;
     protected String _family;
     protected HashMap<String, NamedIcon> _iconMap;

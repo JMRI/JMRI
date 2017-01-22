@@ -1,4 +1,3 @@
-// EliteXNetTurnoutManager.java
 package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.Turnout;
@@ -85,4 +84,4 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
 
 }
 
-/* @(#)EliteXNetTurnoutManager.java */
+

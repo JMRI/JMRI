@@ -3,6 +3,7 @@ package jmri.implementation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.InstanceManager;
 import jmri.SignalAppearanceMap;
 import jmri.SignalMast;
@@ -28,7 +29,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         super(systemName);
     }
 
-    @javax.annotation.OverridingMethodsMustInvokeSuper
+    @OverridingMethodsMustInvokeSuper
     public void setAspect(String aspect) {
         String oldAspect = this.aspect;
         this.aspect = aspect;
@@ -86,7 +87,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
      *
      * This acts on all the SignalHeads included in this SignalMast
      */
-    @javax.annotation.OverridingMethodsMustInvokeSuper
+    @OverridingMethodsMustInvokeSuper
     public void setLit(boolean newLit) {
         boolean oldLit = mLit;
         mLit = newLit;
@@ -105,7 +106,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
      * held parameter is a local variable which effects the aspect only via
      * higher-level logic.
      */
-    @javax.annotation.OverridingMethodsMustInvokeSuper
+    @OverridingMethodsMustInvokeSuper
     public void setHeld(boolean newHeld) {
         boolean oldHeld = mHeld;
         mHeld = newHeld;

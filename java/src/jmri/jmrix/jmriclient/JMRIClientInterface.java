@@ -1,4 +1,3 @@
-// JMRIClientInterface.java
 package jmri.jmrix.jmriclient;
 
 /**
@@ -18,4 +17,4 @@ public interface JMRIClientInterface {
 }
 
 
-/* @(#)JMRIClientInterface.java */
+

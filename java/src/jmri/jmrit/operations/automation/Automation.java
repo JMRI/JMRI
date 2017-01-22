@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.automation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -581,7 +582,7 @@ public class Automation implements java.beans.PropertyChangeListener {
         return e;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "WA_NOT_IN_LOOP"},
+    @SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "WA_NOT_IN_LOOP"},
             justification = "Need to plause for user action")
     private void CheckForActionPropertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals(Action.ACTION_COMPLETE_CHANGED_PROPERTY) ||

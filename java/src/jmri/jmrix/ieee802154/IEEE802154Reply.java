@@ -1,4 +1,3 @@
-// IEEE802154Reply.java
 package jmri.jmrix.ieee802154;
 
 
@@ -281,4 +280,4 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
 
 }
 
-/* @(#)IEEE802154Reply.java */
+

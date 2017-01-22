@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.sprog.pi.pisprognano;
 
 import jmri.util.SystemType;
@@ -53,4 +52,4 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 }
 
-/* @(#)ConnectionConfig.java */
+

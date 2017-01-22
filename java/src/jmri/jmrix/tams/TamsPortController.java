@@ -1,4 +1,3 @@
-// TamsPortController.java
 package jmri.jmrix.tams;
 
 /**
@@ -22,4 +21,4 @@ public abstract class TamsPortController extends jmri.jmrix.AbstractSerialPortCo
 }
 
 
-/* @(#)TamsPortController.java */
+

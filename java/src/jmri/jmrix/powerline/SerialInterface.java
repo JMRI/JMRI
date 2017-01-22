@@ -1,4 +1,3 @@
-// SerialInterface.java
 package jmri.jmrix.powerline;
 
 /**
@@ -18,4 +17,4 @@ public interface SerialInterface {
 }
 
 
-/* @(#)SerialInterface.java */
+
