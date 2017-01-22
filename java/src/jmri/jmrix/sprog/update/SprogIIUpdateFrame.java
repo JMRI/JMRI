@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog.update;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.swing.JOptionPane;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.SprogMessage;
@@ -37,7 +38,7 @@ public class SprogIIUpdateFrame
 
     int bootVer = 0;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD")
+    @SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD")
     synchronized public void notifyVersion(SprogVersion v) {
         sv = v;
         if (sv.sprogType.isSprog() == false) {

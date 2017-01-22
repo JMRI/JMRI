@@ -77,7 +77,7 @@ public interface AudioManager extends Manager {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    public @CheckForNull Audio getAudio(@Nonnull String name);
+    @CheckForNull public Audio getAudio(@Nonnull String name);
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
@@ -86,7 +86,7 @@ public interface AudioManager extends Manager {
      * @param systemName Audio object system name (e.g. IAS1, IAB4)
      * @return requested Audio object or null if none exists
      */
-    public @CheckForNull Audio getBySystemName(@Nonnull String systemName);
+    @CheckForNull public Audio getBySystemName(@Nonnull String systemName);
 
     /**
      * Locate an instance based on a user name. Returns null if no instance
@@ -95,7 +95,7 @@ public interface AudioManager extends Manager {
      * @param userName Audio object user name
      * @return requested Audio object or null if none exists
      */
-    public @CheckForNull Audio getByUserName(@Nonnull String userName);
+    @CheckForNull public Audio getByUserName(@Nonnull String userName);
 
     /**
      * Return an instance with the specified system and user names. Note that
@@ -134,7 +134,7 @@ public interface AudioManager extends Manager {
      *
      * @return current active AudioFactory object
      */
-    public @CheckForNull AudioFactory getActiveAudioFactory();
+    @CheckForNull public AudioFactory getActiveAudioFactory();
 
     /**
      * Get a list of all Audio objects' system names.

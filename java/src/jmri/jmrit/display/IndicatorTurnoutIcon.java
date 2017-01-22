@@ -100,9 +100,8 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         return super.finishClone(pos);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "OK until Java 1.6 allows more efficient return of copy")
     public HashMap<String, HashMap<Integer, NamedIcon>> getIconMaps() {
-        return _iconMaps;
+        return new HashMap<>(_iconMaps);
     }
 
     /**

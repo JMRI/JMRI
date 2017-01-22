@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -2749,7 +2750,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @param event contains the mouse position.
      * @return a list of positionable items or an empty list.
      */
-//    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="ICAST_IDIV_CAST_TO_DOUBLE", justification="Divide by 2 is only case") 
+//    @SuppressFBWarnings(value="ICAST_IDIV_CAST_TO_DOUBLE", justification="Divide by 2 is only case") 
     protected List<Positionable> getSelectedItems(MouseEvent event) {
         double x;
         double y;

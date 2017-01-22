@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog.console;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import javax.swing.BorderFactory;
@@ -110,7 +111,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         super.dispose();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Ignore unsynchronized access to state
     @Override
     public void initComponents() throws Exception {
@@ -291,7 +292,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         tc.sendSprogMessage(m, this);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // validateCurrent() is called from synchronised code
     public void validateCurrent() {
         String currentRange = "200 - 996";
@@ -342,25 +343,25 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         // Further messages will be sent from state machine
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Called from synchronised code
     public boolean isCurrentLimitPossible() {
         return sv.hasCurrentLimit();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Called from synchronised code
     public boolean isBlueLineSupportPossible() {
         return sv.hasBlueLine();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Called from synchronised code
     public boolean isFirmwareUnlockPossible() {
         return sv.hasFirmwareLock();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Called from synchronised code
     public boolean isZTCModePossible() {
         return sv.hasZTCMode();

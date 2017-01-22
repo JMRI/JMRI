@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.help.SwingHelpUtilities;
 import javax.imageio.ImageIO;
@@ -716,13 +717,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         return getProperty(value);
     }
 
-    // cache selectedRosterEntries so that multiple calls to this
-    // between selection changes will not require the creation of a new array
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP",
-            justification = "Want to give access to mutable, original roster objects")
     public RosterEntry[] getSelectedRosterEntries() {
-        return rtable.getSelectedRosterEntries();
+        RosterEntry[] entries = rtable.getSelectedRosterEntries();
+        return Arrays.copyOf(entries, entries.length);
     }
 
     @Override

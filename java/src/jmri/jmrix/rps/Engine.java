@@ -1,5 +1,6 @@
 package jmri.jmrix.rps;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.IOException;
 import javax.vecmath.Point3d;
@@ -582,10 +583,10 @@ public class Engine implements ReadingListener {
     }
 
     // for now, we only allow one Engine
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT") // for tests
+    @SuppressFBWarnings(value = "MS_PKGPROTECT") // for tests
     static volatile protected Engine _instance = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "LI_LAZY_INIT_UPDATE_STATIC") // see comment in method
+    @SuppressFBWarnings(value = "LI_LAZY_INIT_UPDATE_STATIC") // see comment in method
     static public Engine instance() {
         if (_instance == null) {
             // NOTE: _instance has to be initialized before loadValues()

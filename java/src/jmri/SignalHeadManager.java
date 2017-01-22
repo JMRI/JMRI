@@ -39,13 +39,13 @@ public interface SignalHeadManager extends Manager {
      * @return null if no match found
      */
     @CheckReturnValue
-    public @CheckForNull SignalHead getSignalHead(@Nonnull String name);
+    @CheckForNull public SignalHead getSignalHead(@Nonnull String name);
 
     @CheckReturnValue
-    public @CheckForNull SignalHead getByUserName(@Nonnull String s);
+    @CheckForNull public SignalHead getByUserName(@Nonnull String s);
 
     @CheckReturnValue
-    public @CheckForNull SignalHead getBySystemName(@Nonnull String s);
+    @CheckForNull public SignalHead getBySystemName(@Nonnull String s);
 
     /**
      * Get a list of all SignalHead system names.

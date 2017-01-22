@@ -10,6 +10,7 @@
  */
 package jmri.jmrix.nce;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import jmri.Consist;
 import jmri.ConsistListener;
@@ -381,7 +382,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
             // not used
         }
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY") // notify not naked
+        @SuppressFBWarnings(value = "NN_NAKED_NOTIFY") // notify not naked
         public void reply(NceReply r) {
             if (_busy == 0) {
                 log.debug("Consist " + _consistNum + " read reply not for this consist");

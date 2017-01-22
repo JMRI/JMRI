@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +18,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LnTrafficRouter extends LnTrafficController implements LocoNetListener {
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization") // NOI18N
     public LnTrafficRouter() {
         // set the instance to point here

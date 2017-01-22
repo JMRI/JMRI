@@ -1,5 +1,7 @@
 package jmri.jmrix.rps;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.util.Arrays;
 import javax.vecmath.Point3d;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +21,8 @@ import org.slf4j.LoggerFactory;
   */
 public class Ash1_0Algorithm implements Calculator {
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
     public Ash1_0Algorithm(Point3d[] sensors, double vsound) {
-        this.sensors = sensors;
+        this.sensors = Arrays.copyOf(sensors, sensors.length);
         this.Vs = vsound;
 
         // load the algorithm variables
@@ -137,7 +138,7 @@ public class Ash1_0Algorithm implements Calculator {
     double xi, yi, zi, ri, xj, yj, zj, rj, xk, yk, zk, rk;
 
     //  Compute RPS Position using
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IP_PARAMETER_IS_DEAD_BUT_OVERWRITTEN") // it's secretly FORTRAN..
+    @SuppressFBWarnings(value = "IP_PARAMETER_IS_DEAD_BUT_OVERWRITTEN") // it's secretly FORTRAN..
     RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],// many
             double Vs, double Xt, double Yt, double Zt) {//         receivers
 
@@ -441,7 +442,7 @@ public class Ash1_0Algorithm implements Calculator {
      *
      * More of a struct, really
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UUF_UNUSED_FIELD") // t not formally needed
+    @SuppressFBWarnings(value = "UUF_UNUSED_FIELD") // t not formally needed
     static class RetVal {
 
         RetVal(int code, double x, double y, double z, double vs) {

@@ -1558,7 +1558,7 @@
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="4300"/><!-- change from default 100 warnings -->
+            <arg value="4150"/><!-- change from default 100 warnings -->
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
 

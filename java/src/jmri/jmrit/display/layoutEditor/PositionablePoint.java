@@ -7,6 +7,9 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,7 +17,9 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JRootPane;
 import javax.swing.JSeparator;
+import javax.swing.SwingUtilities;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Path;
@@ -23,13 +28,6 @@ import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.swing.JCBHandle;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
-import javax.swing.JRootPane;
-import javax.swing.SwingUtilities;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -196,8 +194,8 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    @Nonnull public
-    String getEastBoundSignal() {
+    @Nonnull
+    public String getEastBoundSignal() {
         SignalHead h = getEastBoundSignalHead();
         if (h != null) {
             return h.getDisplayName();
@@ -265,8 +263,8 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    @Nonnull public
-    String getWestBoundSignal() {
+    @Nonnull
+    public String getWestBoundSignal() {
         SignalHead h = getWestBoundSignalHead();
         if (h != null) {
             return h.getDisplayName();
@@ -334,8 +332,8 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    @Nonnull public
-    String getEastBoundSensorName() {
+    @Nonnull
+    public String getEastBoundSensorName() {
         if (eastBoundSensorNamed != null) {
             return eastBoundSensorNamed.getName();
         }
@@ -365,8 +363,8 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    @Nonnull public
-    String getWestBoundSensorName() {
+    @Nonnull
+    public String getWestBoundSensorName() {
         if (westBoundSensorNamed != null) {
             return westBoundSensorNamed.getName();
         }
@@ -395,8 +393,8 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    @Nonnull public
-    String getEastBoundSignalMastName() {
+    @Nonnull
+    public String getEastBoundSignalMastName() {
         if (getEastBoundSignalMastNamed() != null) {
             return getEastBoundSignalMastNamed().getName();
         }
@@ -456,8 +454,8 @@ public class PositionablePoint {
     }
 
     @CheckReturnValue
-    @Nonnull public
-    String getWestBoundSignalMastName() {
+    @Nonnull
+    public String getWestBoundSignalMastName() {
         if (getWestBoundSignalMastNamed() != null) {
             return getWestBoundSignalMastNamed().getName();
         }

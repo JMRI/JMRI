@@ -34,6 +34,6 @@ public interface RailComManager extends IdTagManager {
     @Nonnull public RailCom provideIdTag(@Nonnull String name) throws IllegalArgumentException;
 
     @Override
-    public @CheckForNull RailCom getIdTag(@Nonnull String name);
+    @CheckForNull public RailCom getIdTag(@Nonnull String name);
 
 }

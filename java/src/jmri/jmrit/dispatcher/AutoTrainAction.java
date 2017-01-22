@@ -1,5 +1,6 @@
 package jmri.jmrit.dispatcher;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import jmri.Block;
@@ -310,7 +311,7 @@ public class AutoTrainAction {
     // this method is called to execute the action, when the "When" event has happened.
     // it is "public" because it may be called from a TransitSectionAction.
 // djd debugging - need to check this out - probably useless, but harmless
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD",
+    @SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD",
             justification = "used only by thread that can be stopped, no conflict with other threads expected")
     public synchronized void executeAction(TransitSectionAction tsa) {
         if (tsa == null) {

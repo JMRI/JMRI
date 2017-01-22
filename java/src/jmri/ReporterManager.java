@@ -63,7 +63,7 @@ public interface ReporterManager extends Manager {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    public @CheckForNull
+    @CheckForNull public
     Reporter getReporter(@Nonnull String name);
 
     /**
@@ -73,7 +73,7 @@ public interface ReporterManager extends Manager {
      * @param systemName the system name to locate
      * @return requested Reporter object or null if none exists
      */
-    public @CheckForNull
+    @CheckForNull public
     Reporter getBySystemName(@Nonnull String systemName);
 
     /**
@@ -83,7 +83,7 @@ public interface ReporterManager extends Manager {
      * @param userName the user name to locate
      * @return requested Reporter object or null if none exists
      */
-    public @CheckForNull
+    @CheckForNull public
     Reporter getByUserName(@Nonnull String userName);
 
     /**
@@ -93,7 +93,7 @@ public interface ReporterManager extends Manager {
      * @param userName the name to locate
      * @return requested Reporter object or null if none exists
      */
-    public @CheckForNull
+    @CheckForNull public
     Reporter getByDisplayName(@Nonnull String userName);
 
     /**

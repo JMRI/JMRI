@@ -206,22 +206,22 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
         return null;
     }
 
+    @Override
     public void configure() {
         log.error("configure should not have been invoked"); // NOI18N
-        //new Exception().printStackTrace();
     }
 
+    @Override
     public String[] validBaudRates() {
-        log.error("validBaudRates should not have been invoked"); // NOI18N
-        new Exception().printStackTrace();
+        log.error("validBaudRates should not have been invoked", new Throwable()); // NOI18N
         return null;
     }
 
     /**
      * Get an array of valid values for "option 3"; used to display valid
      * options. May not be null, but may have zero entries
+     * @return the options
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validOption3() {
         return new String[]{"Normal", "Spread", "One Only", "Both"};
     }

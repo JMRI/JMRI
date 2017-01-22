@@ -1,5 +1,6 @@
 package jmri.jmrix.tmcc;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
@@ -111,7 +112,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     @Deprecated
     static volatile protected SerialTrafficController self = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
     @Override
     protected void setInstance() {
@@ -180,7 +181,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     /**
      * Actually transmits the next message to the port
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used in debug log, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {

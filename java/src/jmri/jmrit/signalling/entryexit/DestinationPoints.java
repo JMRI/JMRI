@@ -1,5 +1,6 @@
 package jmri.jmrit.signalling.entryexit;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -156,7 +157,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED",
+    @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED",
             justification = "No auto serialization")
     transient protected PropertyChangeListener propertyBlockListener;
 

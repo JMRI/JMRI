@@ -1,5 +1,6 @@
 package jmri.jmrit.vsdecoder.swing;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -112,7 +113,7 @@ public class ManageLocationsFrame extends JmriJFrame {
 
     private List<JMenu> menuList;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2",
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2",
             justification = "2D array of different types passed as complex parameter. "
             + "Better to switch to passing use-specific objects rather than "
             + "papering this over with a deep copy of the arguments. "
@@ -325,7 +326,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "only in slow debug")
+    @SuppressFBWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "only in slow debug")
     private void saveTableValues() {
         if ((Boolean) locModel.getValueAt(0, 1)) {
             listenerLoc.setLocation((Double) locModel.getValueAt(0, 2),
