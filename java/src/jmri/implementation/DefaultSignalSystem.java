@@ -155,22 +155,20 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
 
     protected java.util.Vector<String> imageTypes = new java.util.Vector<>();
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     public String toString() {
-        String retval = "SignalSystem " + getSystemName() + "\n";
+        StringBuilder retval = new StringBuilder();
+        retval.append("SignalSystem ").append(getSystemName()).append("\n");
         Enumeration<String> e1 = getAspects();
         while (e1.hasMoreElements()) {
             String s1 = e1.nextElement();
-            retval += "  " + s1 + "\n";
+            retval.append("  ").append(s1).append("\n");
             Enumeration<String> e2 = getKeys();
             while (e2.hasMoreElements()) {
                 String s2 = e2.nextElement();
-                retval += "    " + s2 + ": " + getProperty(s1, s2) + "\n";
+                retval.append("    ").append(s2).append(": ").append(getProperty(s1, s2)).append("\n");
             }
         }
-        return retval;
+        return retval.toString();
     }
 
     public String getBeanType() {

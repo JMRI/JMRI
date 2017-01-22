@@ -30,11 +30,11 @@ import javax.annotation.Nonnull;
  */
 public interface SignalGroupManager extends Manager {
 
-    public @CheckForNull SignalGroup getSignalGroup(@Nonnull String name);
+    @CheckForNull public SignalGroup getSignalGroup(@Nonnull String name);
 
-    public @CheckForNull SignalGroup getBySystemName(@Nonnull String name);
+    @CheckForNull public SignalGroup getBySystemName(@Nonnull String name);
 
-    public @CheckForNull SignalGroup getByUserName(@Nonnull String name);
+    @CheckForNull public SignalGroup getByUserName(@Nonnull String name);
 
     @Nonnull public SignalGroup newSignalGroup(@Nonnull String sys);
 

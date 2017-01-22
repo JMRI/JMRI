@@ -23,10 +23,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowSorter;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -671,6 +671,9 @@ public class TurnoutTableAction extends AbstractTableAction {
 
                         if (retval == null) {
                             Turnout t = turnManager.getBySystemName((String) getModel().getValueAt(row, SYSNAMECOL));
+                            if (t == null) {
+                                return null;
+                            }
                             retval = new BeanBoxRenderer();
                             if (column == SENSOR1COL) {
                                 ((JmriBeanComboBox) retval).setSelectedBean(t.getFirstSensor());
@@ -682,23 +685,27 @@ public class TurnoutTableAction extends AbstractTableAction {
                         }
                         return retval;
                     }
-                    Hashtable<Object, TableCellRenderer> rendererMapSensor1 = new Hashtable<Object, TableCellRenderer>();
-                    Hashtable<Object, TableCellRenderer> rendererMapSensor2 = new Hashtable<Object, TableCellRenderer>();
+                    Hashtable<Object, TableCellRenderer> rendererMapSensor1 = new Hashtable<>();
+                    Hashtable<Object, TableCellRenderer> rendererMapSensor2 = new Hashtable<>();
 
                     TableCellEditor getEditor(int row, int column) {
                         TableCellEditor retval = null;
-                        if (column == SENSOR1COL) {
-                            retval = editorMapSensor1.get(getModel().getValueAt(row, SYSNAMECOL));
-                        } else if (column == SENSOR2COL) {
-                            retval = editorMapSensor2.get(getModel().getValueAt(row, SYSNAMECOL));
-                        } else {
-                            return null;
+                        switch (column) {
+                            case SENSOR1COL:
+                                retval = editorMapSensor1.get(getModel().getValueAt(row, SYSNAMECOL));
+                                break;
+                            case SENSOR2COL:
+                                retval = editorMapSensor2.get(getModel().getValueAt(row, SYSNAMECOL));
+                                break;
+                            default:
+                                return null;
                         }
                         if (retval == null) {
                             Turnout t = turnManager.getBySystemName((String) getModel().getValueAt(row, SYSNAMECOL));
-
+                            if (t == null) {
+                                return null;
+                            }
                             JmriBeanComboBox c;
-
                             if (column == SENSOR1COL) {
                                 c = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), t.getFirstSensor(), JmriBeanComboBox.DISPLAYNAME);
                                 retval = new BeanComboBoxEditor(c);
@@ -712,8 +719,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                         }
                         return retval;
                     }
-                    Hashtable<Object, TableCellEditor> editorMapSensor1 = new Hashtable<Object, TableCellEditor>();
-                    Hashtable<Object, TableCellEditor> editorMapSensor2 = new Hashtable<Object, TableCellEditor>();
+                    Hashtable<Object, TableCellEditor> editorMapSensor1 = new Hashtable<>();
+                    Hashtable<Object, TableCellEditor> editorMapSensor2 = new Hashtable<>();
                 };
             }
 
@@ -734,6 +741,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         m.fireTableDataChanged();
     }
 
+    @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleTurnoutTable"));
     }
@@ -1203,10 +1211,11 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
 
     /**
-     * Insert a table specific Operations menu.
-     * Account for the Window and Help menus, which are already added to the menu bar
-     * as part of the creation of the JFrame, by adding the Operations menu 2 places earlier
-     * unless the table is part of the ListedTableFrame, that adds the Help menu later on.
+     * Insert a table specific Operations menu. Account for the Window and Help
+     * menus, which are already added to the menu bar as part of the creation of
+     * the JFrame, by adding the Operations menu 2 places earlier unless the
+     * table is part of the ListedTableFrame, that adds the Help menu later on.
+     *
      * @param f the JFrame of this table
      */
     @Override

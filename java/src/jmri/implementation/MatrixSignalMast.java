@@ -215,7 +215,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         }
     }
 
-    public @CheckForNull Turnout getOutputBean(int colnum) { // as bean
+    @CheckForNull public Turnout getOutputBean(int colnum) { // as bean
         String key = "output" + Integer.toString(colnum);
         if (colnum > 0 && colnum <= outputsToBeans.size()) {
             return outputsToBeans.get(key).getBean();
@@ -230,7 +230,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  @param colnum int index (1 up to 6) for the column of the desired output
      *  @return NamedBeanHandle to the configured turnout output
      */
-    public @CheckForNull NamedBeanHandle<Turnout> getOutputHandle (int colnum) {
+    @CheckForNull public NamedBeanHandle<Turnout> getOutputHandle (int colnum) {
         String key = "output" + Integer.toString(colnum);
         if (colnum > 0 && colnum <= outputsToBeans.size()) {
             return outputsToBeans.get(key);

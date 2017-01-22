@@ -541,7 +541,7 @@ public class Maintenance {
     }
 
     static boolean testName(String name, boolean found, String[] names, String line1, String line2,
-            String line, StringBuffer tempText) {
+            String line, StringBuilder tempText) {
         if (name == null) {
             return false;
         }
@@ -562,9 +562,6 @@ public class Maintenance {
         return false;
     }
 
-    //@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     static boolean search(String name, JTextArea text) {
         String[] names = getTypeAndNames(name);
         if (log.isDebugEnabled()) {
@@ -582,7 +579,7 @@ public class Maintenance {
         String sysName = names[2];
         String userName = names[1];
         int referenceCount = 0;
-        StringBuffer tempText = new StringBuffer();
+        StringBuilder tempText = new StringBuilder();
         boolean found = false;
         boolean empty = true;
         // search for references among each class known to be listeners
@@ -595,7 +592,7 @@ public class Maintenance {
                 log.error("Error getting Logix  - " + sName);
                 break;
             }
-            tempText = new StringBuffer();
+            tempText = new StringBuilder();
             String uName = x.getUserName();
             String line1 = MessageFormat.format(rbm.getString("ReferenceTitle"),
                     new Object[]{"", Bundle.getMessage("BeanNameLogix"), uName, sName});
@@ -642,7 +639,7 @@ public class Maintenance {
                 }
                 if (text != null && found) {
                     text.append(tempText.toString());
-                    tempText = new StringBuffer();
+                    tempText = new StringBuilder();
                     found = false;
                     empty = false;
                     line1 = null;
@@ -650,7 +647,7 @@ public class Maintenance {
             }
             if (text != null && found) {
                 text.append(tempText.toString());
-                tempText = new StringBuffer();
+                tempText = new StringBuilder();
                 found = false;
                 empty = false;
             }
@@ -663,7 +660,7 @@ public class Maintenance {
             }
         }
 
-        tempText = new StringBuffer();
+        tempText = new StringBuilder();
         found = false;
         empty = true;
         jmri.jmrit.logix.OBlockManager oBlockManager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
@@ -685,7 +682,7 @@ public class Maintenance {
             }
             if (text != null && found) {
                 text.append(tempText.toString());
-                tempText = new StringBuffer();
+                tempText = new StringBuilder();
                 found = false;
                 empty = false;
             }
@@ -698,7 +695,7 @@ public class Maintenance {
             }
         }
 
-        tempText = new StringBuffer();
+        tempText = new StringBuilder();
         found = false;
         empty = true;
         jmri.RouteManager routeManager = InstanceManager.getDefault(jmri.RouteManager.class);
@@ -752,7 +749,7 @@ public class Maintenance {
             }
             if (text != null && found) {
                 text.append(tempText.toString());
-                tempText = new StringBuffer();
+                tempText = new StringBuilder();
                 found = false;
                 empty = false;
             }
@@ -765,7 +762,7 @@ public class Maintenance {
             }
         }
 
-        tempText = new StringBuffer();
+        tempText = new StringBuilder();
         found = false;
         empty = true;
         jmri.TransitManager transitManager = InstanceManager.getDefault(jmri.TransitManager.class);
@@ -840,7 +837,7 @@ public class Maintenance {
                 }
                 if (text != null && found) {
                     text.append(tempText.toString());
-                    tempText = new StringBuffer();
+                    tempText = new StringBuilder();
                     found = false;
                     empty = false;
                     line1 = null;
@@ -848,7 +845,7 @@ public class Maintenance {
             }
             if (text != null && found) {
                 text.append(tempText.toString());
-                tempText = new StringBuffer();
+                tempText = new StringBuilder();
                 found = false;
                 empty = false;
             }
@@ -864,7 +861,7 @@ public class Maintenance {
 //        if (text != null) {
 //            text.append(rbm.getString("NestMessage"));
 //        }
-        tempText = new StringBuffer();
+        tempText = new StringBuilder();
         found = false;
         empty = true;
         jmri.SectionManager sectionManager = InstanceManager.getDefault(jmri.SectionManager.class);
@@ -948,7 +945,7 @@ public class Maintenance {
             }
             if (text != null && found) {
                 text.append(tempText.toString());
-                tempText = new StringBuffer();
+                tempText = new StringBuilder();
                 found = false;
                 empty = false;
             }
@@ -961,7 +958,7 @@ public class Maintenance {
             }
         }
 
-        tempText = new StringBuffer();
+        tempText = new StringBuilder();
         found = false;
         empty = true;
         jmri.BlockManager blockManager = InstanceManager.getDefault(jmri.BlockManager.class);
@@ -1002,7 +999,7 @@ public class Maintenance {
             }
             if (text != null && found) {
                 text.append(tempText.toString());
-                tempText = new StringBuffer();
+                tempText = new StringBuilder();
                 found = false;
                 empty = false;
             }
@@ -1015,7 +1012,7 @@ public class Maintenance {
             }
         }
 
-        tempText = new StringBuffer();
+        tempText = new StringBuilder();
         found = false;
         empty = true;
         jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
@@ -1041,7 +1038,7 @@ public class Maintenance {
             }
             if (text != null && found) {
                 text.append(tempText.toString());
-                tempText = new StringBuffer();
+                tempText = new StringBuilder();
                 found = false;
                 empty = false;
             }
@@ -1054,7 +1051,7 @@ public class Maintenance {
             }
         }
 
-        tempText = new StringBuffer();
+        tempText = new StringBuilder();
         found = false;
         empty = true;
         java.util.Enumeration<BlockBossLogic> enumeration = BlockBossLogic.entries();
@@ -1143,7 +1140,7 @@ public class Maintenance {
             }
             if (text != null && found) {
                 text.append(tempText.toString());
-                tempText = new StringBuffer();
+                tempText = new StringBuilder();
                 found = false;
                 empty = false;
             }
@@ -1156,7 +1153,7 @@ public class Maintenance {
             }
         }
 
-        tempText = new StringBuffer();
+        tempText = new StringBuilder();
         found = false;
         empty = true;
         jmri.ConditionalManager conditionalManager = InstanceManager.getDefault(jmri.ConditionalManager.class);
@@ -1211,7 +1208,7 @@ public class Maintenance {
             }
             if (text != null && found) {
                 text.append(tempText.toString());
-                tempText = new StringBuffer();
+                tempText = new StringBuilder();
                 found = false;
                 empty = false;
                 line1 = null;
@@ -1330,7 +1327,7 @@ public class Maintenance {
                 }
                 if (text != null && found) {
                     text.append(tempText.toString());
-                    tempText = new StringBuffer();
+                    tempText = new StringBuilder();
                     found = false;
                     empty = false;
                     line1 = null;

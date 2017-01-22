@@ -5,6 +5,7 @@
  */
 package jmri.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import jmri.TurnoutOperator;
@@ -34,7 +35,7 @@ public class SensorTurnoutOperator extends TurnoutOperator {
     public void run() {
         //long startTime = System.currentTimeMillis();
         listener = new PropertyChangeListener() {
-            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY",
+            @SuppressFBWarnings(value = "NN_NAKED_NOTIFY",
                     justification = "notify not naked, outside sensor and turnout is shared state")
             public void propertyChange(PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("KnownState")) {

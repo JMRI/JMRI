@@ -38,7 +38,7 @@ public interface SignalMastManager extends Manager {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    public @CheckForNull SignalMast getSignalMast(@Nonnull String name);
+    @CheckForNull public SignalMast getSignalMast(@Nonnull String name);
 
     /**
      * Locate via user name, then system name if needed. Create new one from
@@ -59,9 +59,9 @@ public interface SignalMastManager extends Manager {
             @Nonnull String mastName,
             @Nonnull String[] heads);
 
-    public @CheckForNull SignalMast getByUserName(@Nonnull String s);
+    @CheckForNull public SignalMast getByUserName(@Nonnull String s);
 
-    public @CheckForNull SignalMast getBySystemName(@Nonnull String s);
+    @CheckForNull public SignalMast getBySystemName(@Nonnull String s);
 
     /**
      * Get a list of all SignalMast system names.

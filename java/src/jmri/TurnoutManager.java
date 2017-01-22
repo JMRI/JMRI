@@ -1,6 +1,7 @@
 package jmri;
 
 import java.util.List;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -66,7 +67,7 @@ public interface TurnoutManager extends Manager {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    public @Nullable Turnout getTurnout(@Nonnull String name);
+    @CheckForNull public Turnout getTurnout(@Nonnull String name);
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
@@ -74,7 +75,7 @@ public interface TurnoutManager extends Manager {
      *
      * @return requested Turnout object or null if none exists
      */
-    public @Nullable Turnout getBySystemName(@Nonnull String systemName);
+    @CheckForNull public Turnout getBySystemName(@Nonnull String systemName);
 
     /**
      * Locate an instance based on a user name. Returns null if no instance
@@ -82,7 +83,7 @@ public interface TurnoutManager extends Manager {
      *
      * @return requested Turnout object or null if none exists
      */
-    public @Nullable Turnout getByUserName(@Nonnull String userName);
+    @CheckForNull public Turnout getByUserName(@Nonnull String userName);
 
     /**
      * Return an instance with the specified system and user names. Note that
@@ -193,7 +194,7 @@ public interface TurnoutManager extends Manager {
      * @param curAddress - The hardware address of the turnout we which to
      *                   check.
      */
-    public @Nullable String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
+    @CheckForNull public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
     /**
      * Returns a system name for a given hardware address and system prefix.
