@@ -139,7 +139,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                     ActiveTrain at = createActiveTrain(info.getTransitName(), info.getTrainName(), tSource, 
                             startBlock, startBlockSeq, destinationBlock, destinationBlockSeq, 
                             info.getAutoRun(), info.getDCCAddress(), info.getPriority(),
-                            info.getResetWhenDone(), info.getReverseAtEnd(), true, null);
+                            info.getResetWhenDone(), info.getReverseAtEnd(), info.getAllocateAllTheWay(), true, null);
                     if (at != null) {
                         if (tSource == ActiveTrain.ROSTER) {
                             RosterEntry re = Roster.getDefault().getEntryForId(info.getTrainName());
@@ -921,6 +921,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
      * resetWhenDone - set to "true" if the Active Train is capable of continuous running 
      *   and the user has requested that it be automatically reset for another run thru its 
      *   Transit each time it completes running through its Transit. 
+     * allocateAllTheWay - set to "true" to allow Auto Allocate to allocate as many sections
+     *   as possible between the start section and the end section. Set to false Auto Allocate
+     *   allocates no more than three sections ahead.
      * showErrorMessages - "true" if error message dialogs are to be displayed for 
      *   detected errors Set to "false" to suppress error message dialogs from this method. 
      *   frame - window request is from, or "null" if not from a window
@@ -929,7 +932,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
      */
     public ActiveTrain createActiveTrain(String transitID, String trainID, int tSource, String startBlockName,
             int startBlockSectionSequenceNumber, String endBlockName, int endBlockSectionSequenceNumber,
-            boolean autoRun, String dccAddress, int priority, boolean resetWhenDone, boolean reverseAtEnd,
+            boolean autoRun, String dccAddress, int priority, boolean resetWhenDone, boolean reverseAtEnd, boolean allocateAllTheWay,
             boolean showErrorMessages, JmriJFrame frame) {
 //        log.debug("trainID:{}, tSource:{}, startBlockName:{}, startBlockSectionSequenceNumber:{}, endBlockName:{}, endBlockSectionSequenceNumber:{}",
 //                trainID,tSource,startBlockName,startBlockSectionSequenceNumber,endBlockName,endBlockSectionSequenceNumber);
@@ -1152,6 +1155,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             restartingTrainsList.add(at);
         }
         at.setReverseAtEnd(reverseAtEnd);
+        at.setAllocateAllTheWay(allocateAllTheWay);
         at.setPriority(priority);
         at.setDccAddress(dccAddress);
         at.setAutoRun(autoRun);
@@ -2314,10 +2318,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     public class ActiveTrainsTableModel extends javax.swing.table.AbstractTableModel implements
             java.beans.PropertyChangeListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -612833010252140557L;
         public static final int TRANSIT_COLUMN = 0;
         public static final int TRAIN_COLUMN = 1;
         public static final int TYPE_COLUMN = 2;
@@ -2446,10 +2446,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     public class AllocationRequestTableModel extends javax.swing.table.AbstractTableModel implements
             java.beans.PropertyChangeListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1425670284957075595L;
         public static final int ACTIVE_COLUMN = 0;
         public static final int PRIORITY_COLUMN = 1;
         public static final int TRAINTYPE_COLUMN = 2;
@@ -2607,10 +2603,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     public class AllocatedSectionTableModel extends javax.swing.table.AbstractTableModel implements
             java.beans.PropertyChangeListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -7179461629851240834L;
         public static final int ACTIVE_COLUMN = 0;
         public static final int SECTION_COLUMN = 1;
         public static final int OCCUPANCY_COLUMN = 2;

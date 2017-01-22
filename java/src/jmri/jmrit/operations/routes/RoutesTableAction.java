@@ -1,4 +1,3 @@
-// RoutesTableAction.java
 package jmri.jmrit.operations.routes;
 
 import java.awt.Frame;
@@ -35,4 +34,4 @@ public class RoutesTableAction extends AbstractAction {
     }
 }
 
-/* @(#)RoutesTableAction.java */
+

@@ -1,4 +1,3 @@
-// SpecificLight.java
 package jmri.jmrix.powerline.cm11;
 
 import jmri.jmrix.powerline.SerialTrafficController;
@@ -28,11 +27,6 @@ import jmri.jmrix.powerline.SerialTrafficController;
 public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -5302813776530897464L;
-
-    /**
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in SerialLightManager
@@ -54,5 +48,3 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
 
     SerialTrafficController tc = null;
 }
-
-/* @(#)SerialLight.java */

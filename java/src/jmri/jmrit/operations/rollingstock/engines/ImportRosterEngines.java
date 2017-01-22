@@ -1,4 +1,3 @@
-// ImportRosterEngines.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.text.MessageFormat;

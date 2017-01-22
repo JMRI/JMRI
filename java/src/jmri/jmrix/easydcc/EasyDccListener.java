@@ -1,4 +1,3 @@
-// EasyDccListener.java
 package jmri.jmrix.easydcc;
 
 /**
@@ -14,4 +13,4 @@ public interface EasyDccListener extends jmri.jmrix.AbstractMRListener {
     public void reply(EasyDccReply m);
 }
 
-/* @(#)EasyDccListener.java */
+

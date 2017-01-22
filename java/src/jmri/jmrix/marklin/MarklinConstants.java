@@ -1,4 +1,3 @@
-// MarklinConstants.java
 package jmri.jmrix.marklin;
 
 /**
@@ -125,4 +124,4 @@ public final class MarklinConstants {
 }
 
 
-/* @(#)MarklinConstants.java */
+

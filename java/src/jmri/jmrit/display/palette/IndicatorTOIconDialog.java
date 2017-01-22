@@ -1,4 +1,3 @@
-// IndicatorTOIconDialog.java
 package jmri.jmrit.display.palette;
 
 import java.awt.FlowLayout;
@@ -20,10 +19,6 @@ import org.slf4j.LoggerFactory;
  */
 public class IndicatorTOIconDialog extends IconDialog {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6760221740048137437L;
     String _key;
 
     /**

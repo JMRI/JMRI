@@ -80,7 +80,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         // LocoNet Interface mode at shutdown
                 // Finally, create and register a shutdown task to ensure clean exit
         if (restoreToLocoNetInterfaceModeTask == null) {
-            restoreToLocoNetInterfaceModeTask = new QuietShutDownTask("Restore PR3 to LocoNet Interface Mode") {
+            restoreToLocoNetInterfaceModeTask = new QuietShutDownTask("Restore PR3 to LocoNet Interface Mode") {    // NOI18N
                 @Override
                 public boolean execute() {
                     
@@ -97,7 +97,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
                             msg.setElement(3, 0);
                             msg.setElement(4, 0);
                             tc.sendLocoNetMessage(msg);
-                            log.info("Configuring PR3 for 'LocoNet Interface' mode");
+                            log.info("Configuring PR3 for 'LocoNet Interface' mode"); // NOI18N
                         }
                     }
                     return true;
@@ -106,7 +106,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
             if (InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
                 InstanceManager.getDefault(jmri.ShutDownManager.class).register(restoreToLocoNetInterfaceModeTask);
             } else {
-                log.warn("The PR3 will not be automatically returned to 'LocoNet interface' mode upon quit!");
+                log.warn("The PR3 will not be automatically returned to 'LocoNet interface' mode upon quit!"); // NOI18N
             }
 
         }
@@ -181,7 +181,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         mode = MS100MODE;
 
         tm = new LocoNetThrottledTransmitter(getLnTrafficController(), mTurnoutExtraSpace);
-        log.debug("ThrottleTransmitted configured with :" + mTurnoutExtraSpace);
+        log.debug("ThrottleTransmitted configured with :" + mTurnoutExtraSpace); // NOI18N
 
         InstanceManager.store(super.getPowerManager(), jmri.PowerManager.class);
 

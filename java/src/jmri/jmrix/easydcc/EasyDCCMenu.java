@@ -1,4 +1,3 @@
-// EasyDCCMenu.java
 package jmri.jmrix.easydcc;
 
 import java.util.ResourceBundle;
@@ -10,11 +9,6 @@ import javax.swing.JMenu;
  * @author	Bob Jacobsen Copyright 2003
  */
 public class EasyDCCMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7711006235388013294L;
 
     public EasyDCCMenu(String name) {
         this();

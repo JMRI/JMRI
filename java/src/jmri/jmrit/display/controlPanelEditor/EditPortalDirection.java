@@ -28,10 +28,6 @@ import jmri.jmrit.logix.Portal;
  */
 public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionListener, ListSelectionListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4492310660948299211L;
     private OBlock _homeBlock;
     private CircuitBuilder _parent;
     private PortalIcon _icon;

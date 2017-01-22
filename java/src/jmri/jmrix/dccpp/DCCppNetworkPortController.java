@@ -115,4 +115,4 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
 }
 
 
-/* @(#)DCCppNetworkPortController.java */
+

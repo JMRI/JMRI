@@ -1,4 +1,3 @@
-// OlcbAddress.java
 package jmri.jmrix.openlcb;
 
 import java.util.regex.Matcher;
@@ -220,4 +219,4 @@ public class OlcbAddress {
 }
 
 
-/* @(#)OlcbAddress.java */
+

@@ -1,4 +1,3 @@
-// Constants.java
 package jmri.jmrix.rps;
 
 /**
@@ -14,4 +13,4 @@ public interface Constants {
 
 }
 
-/* @(#)Constants.java */
+

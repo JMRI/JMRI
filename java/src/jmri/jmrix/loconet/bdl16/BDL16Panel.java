@@ -30,7 +30,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
     public BDL16Panel(int boardNum) {
         super(boardNum);
-        appendLine(provideAddressing("BDL16x"));  // add read/write buttons, address
+        appendLine(provideAddressing("BDL16x"));  // add read/write buttons, address // NOI18N
 
         appendLine(commonrail);
         appendLine(polarity);
@@ -61,7 +61,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.bdl16.BDL16Frame";
+        return "package.jmri.jmrix.loconet.bdl16.BDL16Frame"; // NOI18N
     }
 
     public String getTitle() {
@@ -168,7 +168,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
             case 40:
                 return 0;    // done!
             default:
-                log.error("unexpected state " + state);
+                log.error("unexpected state " + state); // NOI18N
                 return 0;
         }
     }

@@ -1,10 +1,3 @@
-/**
- * EcosMonPane.java
- *
- * Description:	Swing action to create and register a MonFrame object
- *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- */
 package jmri.jmrix.ecos.swing.monitor;
 
 import jmri.jmrix.ecos.EcosListener;
@@ -13,12 +6,12 @@ import jmri.jmrix.ecos.EcosReply;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import jmri.jmrix.ecos.swing.EcosPanelInterface;
 
+/**
+ * Swing action to create and register a MonFrame object
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ */
 public class EcosMonPane extends jmri.jmrix.AbstractMonPane implements EcosListener, EcosPanelInterface {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6307090381604775765L;
 
     public EcosMonPane() {
         super();
@@ -88,11 +81,6 @@ public class EcosMonPane extends jmri.jmrix.AbstractMonPane implements EcosListe
      */
     static public class Default extends jmri.jmrix.ecos.swing.EcosNamedPaneAction {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3709779221206654800L;
-
         public Default() {
             super("ECOS Command Monitor",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
@@ -102,6 +90,3 @@ public class EcosMonPane extends jmri.jmrix.AbstractMonPane implements EcosListe
     }
 
 }
-
-
-/* @(#)MonAction.java */

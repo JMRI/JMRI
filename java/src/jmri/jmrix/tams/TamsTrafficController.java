@@ -1,4 +1,3 @@
-// TamsTrafficController.java
 package jmri.jmrix.tams;
 
 import java.util.LinkedList;
@@ -526,4 +525,4 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
 
 }
 
-/* @(#)TamsTrafficController.java */
+

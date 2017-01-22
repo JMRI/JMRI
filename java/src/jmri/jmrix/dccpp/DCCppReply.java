@@ -1,4 +1,3 @@
-// DCCppReply.java
 package jmri.jmrix.dccpp;
 
 import java.util.ArrayList;
@@ -1026,4 +1025,4 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
 }
 
-/* @(#)DCCppReply.java */
+

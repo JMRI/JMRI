@@ -96,17 +96,18 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
      * buffer length. This might go false for short intervals, but it might also
      * stick off if something goes wrong.
      */
+    @Override
     public boolean okToSend() {
         if (CheckBuffer) {
             if (log.isDebugEnabled()) {
                 log.debug("Buffer Empty: " + OutputBufferEmpty);
             }
-            return (OutputBufferEmpty);
+            return (OutputBufferEmpty && super.okToSend() );
         } else {
             if (log.isDebugEnabled()) {
                 log.debug("No Flow Control or Buffer Check");
             }
-            return (true);
+            return (super.okToSend());
         }
     }
 
@@ -152,14 +153,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
 
     public boolean status() {
         return (pout != null && pin != null);
-    }
-
-    /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed
-     */
-    public String[] validBaudRates() {
-        return null;
     }
 
     @Deprecated

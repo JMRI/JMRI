@@ -1,4 +1,3 @@
-// LnPowerManager.java
 package jmri.jmrix.mrc;
 
 import java.util.Date;
@@ -96,4 +95,4 @@ public class MrcPowerManager
     private final static Logger log = LoggerFactory.getLogger(MrcPowerManager.class.getName());
 }
 
-/* @(#)LnPowerManager.java */
+

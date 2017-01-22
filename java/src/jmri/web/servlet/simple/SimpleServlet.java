@@ -38,7 +38,6 @@ import org.slf4j.LoggerFactory;
         urlPatterns = {"/simple"})
 public class SimpleServlet extends WebSocketServlet {
 
-    private static final long serialVersionUID = 3435613482175230757L;
     private static final Logger log = LoggerFactory.getLogger(SimpleServlet.class);
 
     @Override

@@ -69,6 +69,18 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
      */
     abstract public void sendXNetMessage(XNetMessage m, XNetListener reply);
 
+
+    /**
+     * Make connection to existing PortController object.
+     */
+    @Override
+    public void connectPort(jmri.jmrix.AbstractPortController p) {
+       super.connectPort(p);
+       if(p instanceof XNetPortController ){
+          this.addXNetListener(XNetInterface.COMMINFO,new XNetTimeSlotListener((XNetPortController)p));
+       }
+    }
+
     /**
      * Forward a preformatted XNetMessage to a specific listener interface.
      *

@@ -1,4 +1,3 @@
-// JmriSRCPServerFrame.java
 package jmri.jmris.srcp;
 
 //import java.awt.*;
@@ -14,11 +13,6 @@ import javax.swing.JToggleButton;
  * @author	Paul Bender Copyright (C) 2009
   */
 public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7304361652689711790L;
 
     public JmriSRCPServerFrame() {
         this("Jmri SRCP Server Starter");

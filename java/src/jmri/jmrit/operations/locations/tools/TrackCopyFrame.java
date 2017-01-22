@@ -1,4 +1,3 @@
-// TrackCopyFrame.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Dimension;

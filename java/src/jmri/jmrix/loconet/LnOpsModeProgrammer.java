@@ -262,9 +262,9 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     public final void setMode(ProgrammingMode m) {
         if (getSupportedModes().contains(m)) {
             mode = m;
-            notifyPropertyChange("Mode", mode, m);
+            notifyPropertyChange("Mode", mode, m); // NOI18N
         } else {
-            throw new IllegalArgumentException("Invalid requested mode: " + m);
+            throw new IllegalArgumentException("Invalid requested mode: " + m); // NOI18N
         }
     }
 

@@ -1,4 +1,3 @@
-// SprogPortController.java
 package jmri.jmrix.sprog;
 
 /*
@@ -20,4 +19,4 @@ public abstract class SprogPortController extends jmri.jmrix.AbstractSerialPortC
 }
 
 
-/* @(#)SprogPortController.java */
+

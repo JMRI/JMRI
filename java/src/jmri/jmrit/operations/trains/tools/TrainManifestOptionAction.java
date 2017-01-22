@@ -37,4 +37,4 @@ public class TrainManifestOptionAction extends AbstractAction {
 //    private final static Logger log = LoggerFactory.getLogger(TrainManifestOptionAction.class.getName());
 }
 
-/* @(#)TrainManifestOptionAction.java */
+

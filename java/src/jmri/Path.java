@@ -31,9 +31,9 @@ import java.util.List;
  * attribute is for use in automatic running of trains. Length should be the
  * actual length of model railroad track in the path. It is always stored here
  * in millimeter units. A length of 0.0 indicates no entry of length by the
- * user.  If there is no entry the length of the block the path is in
- * will be returned.  An Entry is only needed when there are paths of greatly
- * different lengths in the block.
+ * user. If there is no entry the length of the block the path is in will be
+ * returned. An Entry is only needed when there are paths of greatly different
+ * lengths in the block.
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2008
  */
@@ -48,6 +48,10 @@ public class Path {
     /**
      * Convenience constructor to set the destination/source block and
      * directions in one call.
+     *
+     * @param dest               the destination
+     * @param toBlockDirection   direction to next block
+     * @param fromBlockDirection direction from prior block
      */
     public Path(Block dest, int toBlockDirection, int fromBlockDirection) {
         this();
@@ -59,6 +63,11 @@ public class Path {
     /**
      * Convenience constructor to set the destination/source block, directions
      * and a single setting element in one call.
+     *
+     * @param dest               the destination
+     * @param toBlockDirection   direction to next block
+     * @param fromBlockDirection direction from prior block
+     * @param setting            the setting to add
      */
     public Path(Block dest, int toBlockDirection, int fromBlockDirection, BeanSetting setting) {
         this(dest, toBlockDirection, fromBlockDirection);
@@ -117,7 +126,7 @@ public class Path {
      */
     public boolean checkPathSet() {
         // empty conditions are always set
-        if (_beans.size() == 0) {
+        if (_beans.isEmpty()) {
             return true;
         }
         // check the status of all BeanSettings 
@@ -178,6 +187,9 @@ public class Path {
     /**
      * Decode the direction constants into a human-readable form. This should
      * eventually be internationalized.
+     *
+     * @param d the direction
+     * @return the direction description
      */
     static public String decodeDirection(int d) {
         if (d == NONE) {
@@ -222,12 +234,14 @@ public class Path {
         return b.toString();
     }
 
-    /*
-     * Set path length.  length must be in millimeters.
+    /**
+     * Set path length.
+     *
+     * @param l length in millimeters
      */
     public void setLength(float l) {
         _length = l;
-        if (_block!=null) {
+        if (_block != null) {
             if (l > _block.getLengthMm()) {
                 _length = _block.getLengthMm();
             }
@@ -235,15 +249,18 @@ public class Path {
     }
 
     /**
-     * Return actual stored length.  default 0.
+     * Return actual stored length.
+     *
+     * @return length in millimeters or 0
      */
     public float getLength() {
         return _length;
     }
 
     /**
-     * Return length in millimeters. Default length of 0 
-     * will return the block length.
+     * Return length in millimeters.
+     *
+     * @return the stored length if greater than 0 or the block length
      */
     public float getLengthMm() {
         if (_length <= 0.0f) {
@@ -253,8 +270,9 @@ public class Path {
     }
 
     /**
-     * Return length in centimeters. Default length of 0 
-     * will return the block length.
+     * Return length in centimeters.
+     *
+     * @return the stored length if greater than 0 or the block length
      */
     public float getLengthCm() {
         if (_length <= 0.0f) {
@@ -264,8 +282,9 @@ public class Path {
     }
 
     /**
-     * Return length in inches. Default length of 0 
-     * will return the block length.
+     * Return length in inches.
+     *
+     * @return the stored length if greater than 0 or the block length
      */
     public float getLengthIn() {
         if (_length <= 0.0f) {
@@ -282,7 +301,7 @@ public class Path {
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="equals operator should actually check for equality")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "equals operator should actually check for equality")
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -294,21 +313,37 @@ public class Path {
         if (!(getClass() == obj.getClass())) {
             return false;
         } else {
-            Path p = (Path)obj;
-            
+            Path p = (Path) obj;
+
             // next line is the FE_FLOATING_POINT_EQUALITY annotated above
-            if (p._length != this._length) return false;
-            
-            if (p._toBlockDirection != this._toBlockDirection) return false;
-            if (p._fromBlockDirection != this._fromBlockDirection) return false;
+            if (p._length != this._length) {
+                return false;
+            }
 
-            if (p._block == null &&  this._block != null) return false;
-            if (p._block != null &&  this._block == null) return false;
-            if (p._block != null &&  this._block != null && !p._block.equals(this._block)) return false;
+            if (p._toBlockDirection != this._toBlockDirection) {
+                return false;
+            }
+            if (p._fromBlockDirection != this._fromBlockDirection) {
+                return false;
+            }
 
-            if (p._beans.size() != this._beans.size()) return false;
-            for (int i = 0; i<p._beans.size(); i++) {
-                if (! p._beans.get(i).equals(this._beans.get(i))) return false;
+            if (p._block == null && this._block != null) {
+                return false;
+            }
+            if (p._block != null && this._block == null) {
+                return false;
+            }
+            if (p._block != null && this._block != null && !p._block.equals(this._block)) {
+                return false;
+            }
+
+            if (p._beans.size() != this._beans.size()) {
+                return false;
+            }
+            for (int i = 0; i < p._beans.size(); i++) {
+                if (!p._beans.get(i).equals(this._beans.get(i))) {
+                    return false;
+                }
             }
         }
         return true;
@@ -320,7 +355,7 @@ public class Path {
         int hash = 100;
         return hash;
     }
-    
+
     private ArrayList<BeanSetting> _beans = new ArrayList<BeanSetting>();
     private Block _block;
     private int _toBlockDirection;

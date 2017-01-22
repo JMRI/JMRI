@@ -1,4 +1,3 @@
-// PollDataModel.java
 package jmri.jmrix.rps.swing.polling;
 
 import javax.swing.JComboBox;

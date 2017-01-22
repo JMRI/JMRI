@@ -116,4 +116,4 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
 }
 
 
-/* @(#)DCCppPowerManager.java */
+
