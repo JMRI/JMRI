@@ -1,6 +1,6 @@
 package jmri.implementation;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.util.Arrays;
 
 /**
  * Default implementation of the basic logic of the SignalHead interface.
@@ -166,14 +166,14 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         Bundle.getMessage("SignalHeadStateFlashingYellow"),
         Bundle.getMessage("SignalHeadStateFlashingGreen"),};
 
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @Override
     public int[] getValidStates() {
-        return validStates;
+        return Arrays.copyOf(validStates, validStates.length);
     }
 
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @Override
     public String[] getValidStateNames() {
-        return validStateNames;
+        return Arrays.copyOf(validStateNames, validStateNames.length);
     }
 
     boolean isTurnoutUsed(jmri.Turnout t) {

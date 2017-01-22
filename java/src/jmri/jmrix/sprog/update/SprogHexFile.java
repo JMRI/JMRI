@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * hardware device via some bootloading process.
  *
  * @author	Andrew Crosland Copyright (C) 2010
-  */
+ */
 public class SprogHexFile extends jmri.util.JmriJFrame {
 
     private File file;
@@ -354,10 +355,8 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
      *
      * @return byte[] array of data bytes
      */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP")
-    // Happy to pass a reference to internal data
     public int[] getData() {
-        return data;
+        return Arrays.copyOf(data, data.length);
     }
 
     /**

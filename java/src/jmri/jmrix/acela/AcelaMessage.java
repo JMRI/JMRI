@@ -1,6 +1,6 @@
 package jmri.jmrix.acela;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.util.StringUtil;
 
 /**
  * Contains the data payload of an Acela packet.
@@ -48,18 +48,16 @@ public class AcelaMessage extends jmri.jmrix.AbstractMRMessage {
         super(String.valueOf(a));
     }
 
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
+    @Override
     public String toString() {
-        String s = "";
+        StringBuilder s = new StringBuilder();
         for (int i = 0; i < getNumDataElements(); i++) {
             if (i != 0) {
-                s += " ";
+                s.append(" ");
             }
-            s += jmri.util.StringUtil.twoHexFromInt(getElement(i));
+            s.append(StringUtil.twoHexFromInt(getElement(i)));
         }
-        return s;
+        return s.toString();
     }
 
     // static methods to return a formatted message

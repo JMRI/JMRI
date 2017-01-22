@@ -1,6 +1,7 @@
 package jmri.jmrix.rps;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.util.Arrays;
 import javax.vecmath.Point3d;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -132,9 +133,8 @@ public class Ash2_0Algorithm extends AbstractCalculator {
         this.offset = offset;
     }
 
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
     public Ash2_0Algorithm(Point3d[] sensors, double vsound) {
-        this.sensors = sensors;
+        this.sensors = Arrays.copyOf(sensors, sensors.length);
         this.Vs = vsound;
 
         // load the algorithm variables

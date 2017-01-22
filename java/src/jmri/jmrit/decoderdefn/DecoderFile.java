@@ -3,6 +3,7 @@ package jmri.jmrit.decoderdefn;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import jmri.LocoAddress;
 import jmri.jmrit.XmlFile;
@@ -114,10 +115,10 @@ public class DecoderFile extends XmlFile {
     /**
      * return array of versions
      *
+     * @return array of boolean where each element is true if version matches; false otherwise
      */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public boolean[] getVersions() {
-        return (versions);
+        return Arrays.copyOf(versions, versions.length);
     }
 
     public String getVersionsAsString() {

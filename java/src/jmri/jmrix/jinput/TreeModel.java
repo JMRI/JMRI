@@ -1,8 +1,8 @@
 package jmri.jmrix.jinput;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.Arrays;
 import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -165,9 +165,8 @@ public final class TreeModel extends DefaultTreeModel {
     // note they might not arrive for a while
     Controller[] ca;
 
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public Controller[] controllers() {
-        return ca;
+        return Arrays.copyOf(ca, ca.length);
     }
 
     /**

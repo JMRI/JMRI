@@ -1,6 +1,6 @@
 package jmri.implementation;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.util.Arrays;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import org.slf4j.Logger;
@@ -300,41 +300,41 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         Bundle.getMessage("SignalHeadStateGreen")
     };
 
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @Override
     public int[] getValidStates() {
         if (!mHome) {
-            return validStates2AspectDistant;
+            return Arrays.copyOf(validStates2AspectDistant, validStates2AspectDistant.length);
         } else {
             switch (mAspects) {
                 case 2:
-                    return validStates2AspectHome;
+                    return Arrays.copyOf(validStates2AspectHome, validStates2AspectHome.length);
                 case 3:
-                    return validStates3Aspect;
+                    return Arrays.copyOf(validStates3Aspect, validStates3Aspect.length);
                 case 4:
-                    return validStates4Aspect;
+                    return Arrays.copyOf(validStates4Aspect, validStates4Aspect.length);
                 default:
                     log.warn("Unexpected number of apsects: " + mAspects);
-                    return validStates3Aspect;
+                    return Arrays.copyOf(validStates3Aspect, validStates3Aspect.length);
             }
         }
 
     }
 
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @Override
     public String[] getValidStateNames() {
         if (!mHome) {
-            return validStateNames2AspectDistant;
+            return Arrays.copyOf(validStateNames2AspectDistant, validStateNames2AspectDistant.length);
         } else {
             switch (mAspects) {
                 case 2:
-                    return validStateNames2AspectHome;
+                    return Arrays.copyOf(validStateNames2AspectHome, validStateNames2AspectHome.length);
                 case 3:
-                    return validStateNames3Aspect;
+                    return Arrays.copyOf(validStateNames3Aspect, validStateNames3Aspect.length);
                 case 4:
-                    return validStateNames4Aspect;
+                    return Arrays.copyOf(validStateNames4Aspect, validStateNames3Aspect.length);
                 default:
                     log.warn("Unexpected number of apsects: " + mAspects);
-                    return validStateNames3Aspect;
+                    return Arrays.copyOf(validStateNames3Aspect, validStateNames3Aspect.length);
             }
         }
     }

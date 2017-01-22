@@ -1,12 +1,13 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import com.digi.xbee.api.connection.IConnectionInterface;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
+import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -222,14 +223,9 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
 //        adaptermemo.setSerialAddress(new jmri.jmrix.ieee802154.SerialAddress(adaptermemo));
     }
 
-    /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed
-     */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     @Override

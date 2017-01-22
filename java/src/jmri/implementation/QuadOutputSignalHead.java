@@ -1,6 +1,6 @@
 package jmri.implementation;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.util.Arrays;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 
@@ -31,6 +31,7 @@ public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
         mLunar = lunar;
     }
 
+    @Override
     protected void updateOutput() {
         if (mLit == false) {
             super.updateOutput();
@@ -44,7 +45,6 @@ public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
             mYellow.getBean().setCommandedState(Turnout.CLOSED);
             mGreen.getBean().setCommandedState(Turnout.CLOSED);
             mLunar.getBean().setCommandedState(Turnout.CLOSED);
-            return;
 
         } else {
             switch (mAppearance) {
@@ -68,6 +68,7 @@ public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
      */
+    @Override
     public void dispose() {
         mLunar = null;
         super.dispose();
@@ -107,23 +108,21 @@ public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
         Bundle.getMessage("SignalHeadStateFlashingGreen")
     };
 
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @Override
     public int[] getValidStates() {
-        return validStates;
+        return Arrays.copyOf(validStates, validStates.length);
     }
 
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @Override
     public String[] getValidStateNames() {
-        return validStateNames;
+        return Arrays.copyOf(validStateNames, validStateNames.length);
     }
 
+    @Override
     boolean isTurnoutUsed(Turnout t) {
         if (super.isTurnoutUsed(t)) {
             return true;
         }
-        if (getLunar() != null && t.equals(getLunar().getBean())) {
-            return true;
-        }
-        return false;
+        return getLunar() != null && t.equals(getLunar().getBean());
     }
 }

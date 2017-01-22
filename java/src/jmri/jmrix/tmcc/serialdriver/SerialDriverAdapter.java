@@ -1,6 +1,5 @@
 package jmri.jmrix.tmcc.serialdriver;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
@@ -9,6 +8,7 @@ import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.util.Arrays;
 import jmri.jmrix.tmcc.SerialPortController;
 import jmri.jmrix.tmcc.SerialTrafficController;
 import jmri.jmrix.tmcc.TMCCSystemConnectionMemo;
@@ -229,12 +229,9 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         activeSerialPort.setFlowControlMode(flow);
     }
 
-    /**
-     * Get an array of valid baud rates.
-     */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**

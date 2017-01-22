@@ -95,13 +95,14 @@ public class Reading {
     final double[] values;
     final int time; // in msec since epoch
 
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION") // We accept the poor performance
+    @Override
     public String toString() {
-        String r = "Reading id=" + getID() + " values=";
+        StringBuilder b = new StringBuilder();
+        b.append("Reading id=").append(getID()).append(" values=");
         for (int i = 1; i <= getNValues(); i++) {
-            r += "" + (int) getValue(i) + ((i != (getNValues())) ? "," : " ");
+            b.append(getValue(i)).append(i != getNValues() ? "," : " ");
         }
-        return r;
+        return b.toString();
     }
 
     /**

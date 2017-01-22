@@ -1,6 +1,5 @@
 package jmri.jmrix.rfid.serialdriver;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
@@ -11,6 +10,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.TooManyListenersException;
 import jmri.jmrix.rfid.RfidPortController;
 import jmri.jmrix.rfid.RfidProtocol;
@@ -360,15 +360,9 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         activeSerialPort.setFlowControlMode(flow);
     }
 
-    /**
-     * Get an array of valid baud rates.
-     *
-     * @return list of rates
-     */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP")
     @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**

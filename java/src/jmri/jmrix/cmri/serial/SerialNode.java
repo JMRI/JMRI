@@ -1,6 +1,6 @@
 package jmri.jmrix.cmri.serial;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.util.Arrays;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRListener;
@@ -122,18 +122,16 @@ public class SerialNode extends AbstractNode {
         num2LSearchLights = n;
     }
 
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public byte[] getLocSearchLightBits() {
-        return locSearchLightBits;
+        return Arrays.copyOf(locSearchLightBits, locSearchLightBits.length);
     }
 
     public void setLocSearchLightBits(int num, int value) {
         locSearchLightBits[num] = (byte) (value & 0xFF);
     }
 
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public byte[] getCardTypeLocation() {
-        return cardTypeLocation;
+        return Arrays.copyOf(cardTypeLocation, cardTypeLocation.length);
     }
 
     public void setCardTypeLocation(int num, int value) {

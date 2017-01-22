@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 import jmri.jmrix.loconet.sdf.SdfBuffer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -468,9 +469,8 @@ public class SpjFile {
             }
         }
 
-        @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
         public byte[] getByteArray() {
-            return bytes;
+            return Arrays.copyOf(bytes, bytes.length);
         }
 
         /**

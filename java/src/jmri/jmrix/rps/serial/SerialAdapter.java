@@ -1,6 +1,5 @@
 package jmri.jmrix.rps.serial;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
@@ -8,6 +7,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
 import jmri.jmrix.rps.Distributor;
 import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Reading;
@@ -175,12 +175,9 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
         return opened;
     }
 
-    /**
-     * Get an array of valid baud rates.
-     */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     protected String[] validSpeeds = new String[]{"115,200 baud"};

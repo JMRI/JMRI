@@ -1,6 +1,5 @@
 package jmri.util.docbook;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 
 /**
@@ -65,16 +64,21 @@ public class RevHistory {
         addRevision(System.getProperty("user.name"), revremark);
     }
 
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     public String toString(String prefix) {
-        String retval = "";
+        StringBuilder retval = new StringBuilder();
         for (int i = 0; i < list.size(); i++) {
             Revision r = list.get(i);
-            retval += prefix + r.revnumber + ", " + r.date + ", " + r.authorinitials + ", " + r.revremark + "\n";
+            retval.append(prefix)
+                    .append(r.revnumber)
+                    .append(", ")
+                    .append(r.date)
+                    .append(", ")
+                    .append(r.authorinitials)
+                    .append(", ")
+                    .append(r.revremark)
+                    .append("\n");
         }
-        return retval;
+        return retval.toString();
     }
 
     @Override

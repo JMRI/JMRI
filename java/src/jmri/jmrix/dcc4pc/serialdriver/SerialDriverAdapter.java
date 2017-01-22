@@ -1,6 +1,5 @@
 package jmri.jmrix.dcc4pc.serialdriver;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
@@ -98,11 +97,10 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
     /**
      * Option 1 controls the connection used for programming
      */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validOption1() {
         List<SystemConnectionMemo> connList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
         if (!connList.isEmpty()) {
-            ArrayList<String> progConn = new ArrayList<String>();
+            ArrayList<String> progConn = new ArrayList<>();
             progConn.add("");
             String userName = "Dcc4Pc";
             if (this.getSystemConnectionMemo() != null) {
@@ -114,9 +112,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
                     progConn.add(scm.getUserName());
                 }
             }
-            String[] validOption1 = new String[progConn.size()];
-            progConn.toArray(validOption1);
-            return validOption1;
+            return progConn.toArray(new String[progConn.size()]);
         } else {
             return new String[]{""};
         }

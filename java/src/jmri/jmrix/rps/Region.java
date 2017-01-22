@@ -3,6 +3,7 @@ package jmri.jmrix.rps;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Shape;
 import java.awt.geom.GeneralPath;
+import java.util.Arrays;
 import javax.vecmath.Point3d;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,6 @@ import org.slf4j.LoggerFactory;
 @net.jcip.annotations.Immutable
 public class Region {
 
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
     public Region(Point3d[] points) {
         super();
 
@@ -34,7 +34,7 @@ public class Region {
         if (points.length < 3) {
             log.error("Not enough points to define region");
         }
-        this.points = points;
+        this.points = Arrays.copyOf(points, points.length);
     }
 
     @SuppressFBWarnings(value = "JCIP_FIELD_ISNT_FINAL_IN_IMMUTABLE_CLASS", justification = "internal state, not changeable from outside")

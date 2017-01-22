@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet.locobuffer;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
@@ -9,6 +8,7 @@ import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Vector;
 import jmri.jmrix.loconet.LnPacketizer;
@@ -278,22 +278,13 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
                 + " RTSCTS_IN= " + SerialPort.FLOWCONTROL_RTSCTS_IN); // NOI18N
     }
 
-    /**
-     * Get an array of valid baud rates as strings. This allows subclasses to
-     * change the arrays of speeds.
-     */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
-    /**
-     * Get an array of valid baud rates as integers. This allows subclasses to
-     * change the arrays of speeds.
-     */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public int[] validBaudNumber() {
-        return validSpeedValues;
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     protected String[] validSpeeds = new String[]{"19,200 baud (J1 on 1&2)", "57,600 baud (J1 on 2&3)"};

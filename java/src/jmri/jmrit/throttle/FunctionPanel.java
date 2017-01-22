@@ -1,10 +1,10 @@
 package jmri.jmrit.throttle;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Arrays;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
@@ -50,9 +50,8 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         }
     }
 
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public FunctionButton[] getFunctionButtons() {
-        return functionButton;
+        return Arrays.copyOf(functionButton, functionButton.length);
     }
 
     /**

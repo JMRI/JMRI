@@ -1,6 +1,5 @@
 package jmri.jmrix.lenz.li100f;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
@@ -10,6 +9,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetPacketizer;
@@ -278,13 +278,9 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
          checkBuffer = true;*/
     }
 
-    /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed
-     */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
@@ -294,9 +290,8 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
         return "LI100F connection uses ";
     }
 
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validOption1() {
-        return validOption1;
+        return Arrays.copyOf(validOption1, validOption1.length);
     }
 
     protected String[] validSpeeds = new String[]{"9,600 baud", "19,200 baud"};

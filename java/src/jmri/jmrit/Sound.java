@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Arrays;
 import javax.annotation.Nonnull;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -189,9 +190,8 @@ public class Sound {
 
     public static class WavBuffer {
 
-        @SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
         public WavBuffer(byte[] content) {
-            buffer = content;
+            buffer = Arrays.copyOf(content, content.length);
 
             // find fmt chunk and set offset
             int index = 12; // skip RIFF header

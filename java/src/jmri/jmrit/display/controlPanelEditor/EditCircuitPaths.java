@@ -48,7 +48,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     private ArrayList<Positionable> _pathGroup = new ArrayList<Positionable>();
 
     private JTextField _pathName = new JTextField();
-    private JList<OPath> _pathList;   // Java 1.6; in Java 1.7, JList<OPath>
+    private JList<OPath> _pathList;
     private PathListModel _pathListModel;
 
     private boolean _pathChange = false;

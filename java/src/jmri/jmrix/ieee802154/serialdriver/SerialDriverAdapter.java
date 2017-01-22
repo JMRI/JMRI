@@ -1,6 +1,5 @@
 package jmri.jmrix.ieee802154.serialdriver;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
@@ -10,6 +9,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import jmri.jmrix.ieee802154.IEEE802154PortController;
 import jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo;
 import org.slf4j.Logger;
@@ -232,12 +232,9 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
         activeSerialPort.setFlowControlMode(flow);
     }
 
-    /**
-     * Get an array of valid baud rates.
-     */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP")
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
@@ -251,12 +248,8 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
 
     String[] stdOption1Values = new String[]{"CM11", "CP290", "Insteon 2412S"};
 
-    /**
-     * Option 1 is not used for anything
-     */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP")
     public String[] validOption1() {
-        return stdOption1Values;
+        return Arrays.copyOf(stdOption1Values, stdOption1Values.length);
     }
 
     /**
