@@ -89,7 +89,7 @@ public class FileLineEndingsTest {
         try {
             for (String pattern : patterns) {
                 PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:" + pattern);
-                Files.walk(directory.toPath()).filter(matcher::matches).forEach‌​((path) -> {
+                Files.walk(directory.toPath()).filter(matcher::matches).forEach((path) -> {
                     if (path.toFile().isFile()) {
                         files.add(new Object[]{path.toFile()});
                     }
@@ -109,11 +109,11 @@ public class FileLineEndingsTest {
     public void lineEndings() {
         try {
             String path = this.file.getCanonicalPath();
-            // convert Windows path separators into POSIX path separators so
-            // Python can normalize the paths since the Windows path separator
+            // convert Windows separators into POSIX separators so
+            // Python can normalize the paths since the Windows separator
             // is also the escape character
-            if (File.pathSeparator.equals("\\")) {
-                path = path.replaceAll("\\", "/");
+            if (File.separator.equals("\\")) {
+                path = path.replace("\\", "/");
             }
             String script = String.join("\n",
                     "import os",
