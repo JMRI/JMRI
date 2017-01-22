@@ -1139,16 +1139,6 @@ public class ConnectivityUtil {
      * Adds the specified sensor ('name') to the SSL for the specified signal head
      * 'name' should be the system name for the sensor.
      * Returns 'true' if the sensor was already in the signal head SSL or if it has been
-<<<<<<< HEAD
-     *		added successfully.  Returns 'false' and logs an error if not.
-     * If the SSL has not been set up yet, the sensor is not added, an error message is output,
-     *		and 'false' is returned.
-     * Parameters: 'name' - sensor name, 'sh' - signal head, 'where' should be DIVERGING if the sensor
-     *		is being added to the diverging (second) part of a facing mode SSL, 'CONTINUING' if
-     *		the sensor is being added to the continuing (first) part of a facing mode SSL, OVERALL if
-     *		the sensor is being added to the overall sensor list of a facing mode SSL. 'where' is
-     *		ignored if not a facing mode SSL.
-=======
      *      added successfully.  Returns 'false' and logs an error if not.
      * If the SSL has not been set up yet, the sensor is not added, an error message is output,
      *      and 'false' is returned.
@@ -1157,7 +1147,6 @@ public class ConnectivityUtil {
      *      the sensor is being added to the continuing (first) part of a facing mode SSL, OVERALL if
      *      the sensor is being added to the overall sensor list of a facing mode SSL. 'where' is
      *      ignored if not a facing mode SSL.
->>>>>>> JMRI/master
      */
     public boolean addSensorToSignalHeadLogic(String name, SignalHead sh, int where) {
         if (sh == null) {
@@ -2385,11 +2374,6 @@ public class ConnectivityUtil {
                     conType = curTS.getType1();
                     conObj = curTS.getConnect1();
                 } else {
-<<<<<<< HEAD
-                    log.error("Connectivity error when following track " + curTS.getID() +
-                        " from Block " + lb.getFullyFormattedDisplayName() +
-                        " to Block " + nlb.getFullyFormattedDisplayName());
-=======
                     if (logInfoFor_trackSegmentLeadsTo) {
                         String con_type = "TURNTABLE_RAY_OFFSET";
                         if (conType <= LayoutEditor.SLIP_D) {
@@ -2430,7 +2414,6 @@ public class ConnectivityUtil {
                             " to " + conName + " (conType: " + con_type + "), nlb: " + nlb.getID());
                     }
                     log.error("Connectivity error when following track " + curTS.getID() + " in Block " + lb.getUserName());
->>>>>>> JMRI/master
                     return false;
                 }
 
@@ -2643,10 +2626,7 @@ public class ConnectivityUtil {
                                     curTS = (TrackSegment) lt.getConnectB();
                                     //if connect C is in this block
                                     if (((TrackSegment) lt.getConnectC()).getLayoutBlock() == lb) {
-<<<<<<< HEAD
-=======
                                         // add it to our post processing list
->>>>>>> JMRI/master
                                         posTS.add((TrackSegment) lt.getConnectC());
                                         posOB.add(conObj);
                                     }
@@ -2733,10 +2713,7 @@ public class ConnectivityUtil {
                                     curTS = (TrackSegment) ls.getConnectB();
                                     //if connect A is in this block...
                                     if (((TrackSegment) ls.getConnectA()).getLayoutBlock() == lb) {
-<<<<<<< HEAD
-=======
                                         // add it to our post processing list
->>>>>>> JMRI/master
                                         posTS.add((TrackSegment) ls.getConnectA());
                                         posOB.add(conObj);
                                     }
@@ -2766,17 +2743,10 @@ public class ConnectivityUtil {
                                     curTS = (TrackSegment) ls.getConnectA();
                                 }
                                 break;
-<<<<<<< HEAD
-                        }
-                        curObj = conObj;
-                    }
-                }
-=======
                         }   //switch (conType)
                         curObj = conObj;
                     }   // if (ls.getLayoutBlock() != lb
                 }   //else if (conType >= LayoutEditor.SLIP_A && conType <= LayoutEditor.SLIP_D)
->>>>>>> JMRI/master
             } else {
                 curTS = null;
             }
