@@ -7,6 +7,7 @@ import com.jogamp.openal.ALConstants;
 import com.jogamp.openal.ALException;
 import com.jogamp.openal.ALFactory;
 import com.jogamp.openal.util.ALut;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
 import jmri.Audio;
 import jmri.AudioManager;
@@ -199,7 +200,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * @return true, if initialisation successful
      */
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "OK to write to static variables as we only do so if not initialised")
     public boolean init() {
         if (initialised) {

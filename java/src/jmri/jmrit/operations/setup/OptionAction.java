@@ -30,4 +30,4 @@ public class OptionAction extends AbstractAction {
     }
 }
 
-/* @(#)OptionAction.java */
+

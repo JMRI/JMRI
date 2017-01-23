@@ -1,5 +1,6 @@
 package apps.gui3.dp3;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Rectangle;
@@ -551,7 +552,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", // NOI18N
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", // NOI18N
             justification = "saveBasicRoster protected by ctor invocation, Swing thread when needed")  // NOI18N
     JButton saveBasicRoster;
 

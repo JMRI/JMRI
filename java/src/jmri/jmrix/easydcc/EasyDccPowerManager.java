@@ -1,4 +1,3 @@
-// EasyDccPowerManager.java
 package jmri.jmrix.easydcc;
 
 import jmri.JmriException;
@@ -112,4 +111,4 @@ public class EasyDccPowerManager implements PowerManager, EasyDccListener {
 }
 
 
-/* @(#)EasyDccPowerManager.java */
+

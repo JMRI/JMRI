@@ -1,4 +1,3 @@
-// DCCppLight.java
 package jmri.jmrix.dccpp;
 
 import jmri.implementation.AbstractLight;
@@ -157,4 +156,4 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
     private final static Logger log = LoggerFactory.getLogger(DCCppLight.class.getName());
 }
 
-/* @(#)DCCppLight.java */
+

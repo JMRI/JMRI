@@ -14,7 +14,7 @@ import com.pi4j.io.gpio.GpioProvider;
  * </P>
  * @author Paul Bender Copyright (C) 2016
  */
-public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     @Override
     public String getSystemName(int i){

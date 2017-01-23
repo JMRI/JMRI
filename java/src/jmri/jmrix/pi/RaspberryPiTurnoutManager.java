@@ -1,4 +1,3 @@
-// RaspberryPiTurnoutManager.java
 
 package jmri.jmrix.pi;
 
@@ -37,4 +36,4 @@ public class RaspberryPiTurnoutManager extends jmri.managers.AbstractTurnoutMana
 
 }
 
-/* @(#)RaspberryPiTurnoutManager.java */
+

@@ -1,5 +1,6 @@
 package jmri.jmrit;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -83,7 +84,7 @@ public class MemoryFrameAction extends AbstractAction {
             }
         });
         gcButton.addActionListener(new ActionListener() {
-            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_GC")  // Garbage collection OK here
+            @SuppressFBWarnings(value = "DM_GC")  // Garbage collection OK here
             public void actionPerformed(ActionEvent event) {
                 Runtime.getRuntime().gc();
                 updateDisplay();

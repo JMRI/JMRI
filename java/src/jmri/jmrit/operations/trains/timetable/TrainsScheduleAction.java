@@ -1,4 +1,3 @@
-// TrainsScheduleAction.java
 package jmri.jmrit.operations.trains.timetable;
 
 import java.awt.Frame;
@@ -29,4 +28,4 @@ public class TrainsScheduleAction extends AbstractAction {
     }
 }
 
-/* @(#)TrainsScheduleAction.java */
+

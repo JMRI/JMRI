@@ -31,11 +31,6 @@ import org.slf4j.LoggerFactory;
  */
 public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanListener, CanPanelInterface {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2643128840399163414L;
-
     public NetworkTreePane() {
         super();
     }
@@ -106,11 +101,6 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -9075693791903690311L;
 
         public Default() {
             super("Openlcb Network Tree",

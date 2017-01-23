@@ -1,4 +1,3 @@
-// SetTrainIconPositionAction.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Frame;
@@ -219,4 +218,4 @@ public class SetPhysicalLocationAction extends AbstractAction {
             .getLogger(SetPhysicalLocationAction.class.getName());
 }
 
-/* @(#)SetPhysicalLocationAction.java */
+

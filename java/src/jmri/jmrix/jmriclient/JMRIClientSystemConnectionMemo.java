@@ -253,4 +253,4 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     }
 
 }
-/* @(#)JMRIClientSystemConnectionMemo.java */
+

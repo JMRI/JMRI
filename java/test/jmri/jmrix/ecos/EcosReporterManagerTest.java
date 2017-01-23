@@ -14,7 +14,7 @@ import jmri.Reporter;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class EcosReporterManagerTest extends jmri.managers.AbstractReporterMgrTest {
+public class EcosReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
     @Override
     public String getSystemName(int i) {

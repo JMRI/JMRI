@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.easydcc.networkdriver;
 
 import jmri.jmrix.JmrixConfigPane;

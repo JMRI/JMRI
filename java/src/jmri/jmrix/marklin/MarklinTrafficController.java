@@ -1,5 +1,6 @@
 package jmri.jmrix.marklin;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import jmri.CommandStation;
 import jmri.jmrix.AbstractMRListener;
@@ -124,7 +125,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT")
+    @SuppressFBWarnings(value = "MS_PKGPROTECT")
     // FindBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected MarklinTrafficController self = null;

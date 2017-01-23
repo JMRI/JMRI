@@ -14,7 +14,7 @@ import org.junit.Test;
  *
  * @author      Paul Bender Copyright (C) 2016
  */
-public class DCCppNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPortControllerTest {
+public class DCCppNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPortControllerTestBase {
 
     @Override
     @Before

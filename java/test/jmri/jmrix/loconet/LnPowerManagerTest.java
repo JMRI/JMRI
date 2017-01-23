@@ -1,6 +1,6 @@
 package jmri.jmrix.loconet;
 
-import jmri.jmrix.AbstractPowerManagerTest;
+import jmri.jmrix.AbstractPowerManagerTestBase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,7 +11,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen Copyright 2001
  */
-public class LnPowerManagerTest extends AbstractPowerManagerTest {
+public class LnPowerManagerTest extends AbstractPowerManagerTestBase {
 
     /**
      * service routines to simulate receiving on, off from interface

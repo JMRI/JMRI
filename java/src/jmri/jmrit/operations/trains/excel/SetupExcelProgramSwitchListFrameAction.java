@@ -1,4 +1,3 @@
-// SetupExcelProgramSwitchListFrameAction.java
 package jmri.jmrit.operations.trains.excel;
 
 import java.awt.Frame;
@@ -31,4 +30,4 @@ public class SetupExcelProgramSwitchListFrameAction extends AbstractAction {
     }
 }
 
-/* @(#)SetupExcelProgramSwitchListFrameAction.java */
+

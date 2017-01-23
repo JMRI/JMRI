@@ -1,4 +1,3 @@
-// EcosSystemConnectionMemo.java
 package jmri.jmrix.ecos;
 
 import java.util.ResourceBundle;
@@ -223,4 +222,4 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 }
 
 
-/* @(#)InternalSystemConnectionMemo.java */
+

@@ -1,10 +1,12 @@
 package jmri.jmrix.loconet.spjfile;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 import jmri.jmrix.loconet.sdf.SdfBuffer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -370,25 +372,25 @@ public class SpjFile {
 
         int time;
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_FIELD") // we maintain this, but don't use it for anything yet
+        @SuppressFBWarnings(value = "URF_UNREAD_FIELD") // we maintain this, but don't use it for anything yet
         int spare1;
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_FIELD") // we maintain this, but don't use it for anything yet
+        @SuppressFBWarnings(value = "URF_UNREAD_FIELD") // we maintain this, but don't use it for anything yet
         int spare2;
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_FIELD") // we maintain this, but don't use it for anything yet
+        @SuppressFBWarnings(value = "URF_UNREAD_FIELD") // we maintain this, but don't use it for anything yet
         int spare3;
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_FIELD") // we maintain this, but don't use it for anything yet
+        @SuppressFBWarnings(value = "URF_UNREAD_FIELD") // we maintain this, but don't use it for anything yet
         int spare4;
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_FIELD") // we maintain this, but don't use it for anything yet
+        @SuppressFBWarnings(value = "URF_UNREAD_FIELD") // we maintain this, but don't use it for anything yet
         int spare5;
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_FIELD") // we maintain this, but don't use it for anything yet
+        @SuppressFBWarnings(value = "URF_UNREAD_FIELD") // we maintain this, but don't use it for anything yet
         int spare6;
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_FIELD") // we maintain this, but don't use it for anything yet
+        @SuppressFBWarnings(value = "URF_UNREAD_FIELD") // we maintain this, but don't use it for anything yet
         int spare7;
 
         String filename;
@@ -467,9 +469,8 @@ public class SpjFile {
             }
         }
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
         public byte[] getByteArray() {
-            return bytes;
+            return Arrays.copyOf(bytes, bytes.length);
         }
 
         /**

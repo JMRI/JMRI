@@ -1,4 +1,3 @@
-// XpaMessage.java
 package jmri.jmrix.xpa;
 
 import org.slf4j.Logger;
@@ -210,4 +209,4 @@ public class XpaMessage implements jmri.jmrix.Message {
 
 }
 
-/* @(#)XpaMessage.java */
+

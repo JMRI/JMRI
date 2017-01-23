@@ -53,7 +53,7 @@ public interface ReporterManager extends Manager {
      *                                  due to e.g. an illegal name or name that
      *                                  can't be parsed.
      */
-    public @Nonnull
+    @Nonnull public
     Reporter provideReporter(@Nonnull String name);
 
     /**
@@ -63,7 +63,7 @@ public interface ReporterManager extends Manager {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    public @CheckForNull
+    @CheckForNull public
     Reporter getReporter(@Nonnull String name);
 
     /**
@@ -73,7 +73,7 @@ public interface ReporterManager extends Manager {
      * @param systemName the system name to locate
      * @return requested Reporter object or null if none exists
      */
-    public @CheckForNull
+    @CheckForNull public
     Reporter getBySystemName(@Nonnull String systemName);
 
     /**
@@ -83,7 +83,7 @@ public interface ReporterManager extends Manager {
      * @param userName the user name to locate
      * @return requested Reporter object or null if none exists
      */
-    public @CheckForNull
+    @CheckForNull public
     Reporter getByUserName(@Nonnull String userName);
 
     /**
@@ -93,7 +93,7 @@ public interface ReporterManager extends Manager {
      * @param userName the name to locate
      * @return requested Reporter object or null if none exists
      */
-    public @CheckForNull
+    @CheckForNull public
     Reporter getByDisplayName(@Nonnull String userName);
 
     /**
@@ -125,7 +125,7 @@ public interface ReporterManager extends Manager {
      *                                  e.g. an illegal name or name that can't
      *                                  be parsed.
      */
-    public @Nonnull
+    @Nonnull public
     Reporter newReporter(@Nonnull String systemName, String userName);
 
     /**
@@ -134,7 +134,7 @@ public interface ReporterManager extends Manager {
      * @return a list of reporter system names or an empty list if there are no
      *         reporters
      */
-    public @Nonnull
+    @Nonnull public
     @Override
     List<String> getSystemNameList();
 

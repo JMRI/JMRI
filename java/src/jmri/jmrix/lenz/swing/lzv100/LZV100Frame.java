@@ -1,4 +1,3 @@
-// LZV100Frame.java
 package jmri.jmrix.lenz.swing.lzv100;
 
 import java.awt.event.ActionEvent;
@@ -20,11 +19,6 @@ import javax.swing.JToggleButton;
  * @author	Paul Bender Copyright (C) 2003,2005
   */
 public class LZV100Frame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -272552917307354256L;
 
     public LZV100Frame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
         this("LZV100 Configuration Utility", memo);

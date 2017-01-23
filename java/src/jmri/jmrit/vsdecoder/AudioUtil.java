@@ -98,6 +98,50 @@ public class AudioUtil {
         return rlist;
     }
 
+    // steam1 helper 1
+    static public ByteBuffer getWavData(InputStream stream) {
+        int[] format = new int[1];
+        int[] size = new int[1];
+        ByteBuffer[] data = new ByteBuffer[1];
+        int[] freq = new int[1];
+        int[] loop = new int[1];
+
+        // Pull the WAV data into the "data" buffer.
+        try {
+            ALut.alutLoadWAVFile(stream, format, data, size, freq, loop);
+        } catch (ALException e) {
+            log.warn("Error loading JoalAudioBuffer from stream", e);
+            return null;
+        }
+        log.debug("WAV data: {}, order: {}, size: {}", data[0], data[0].order(), size[0]);
+        return data[0];
+    }
+
+    // steam1 helper 2
+    static public int getWavFormat(InputStream stream) {
+        int[] format = new int[1];
+        int[] size = new int[1];
+        ByteBuffer[] data = new ByteBuffer[1];
+        int[] freq = new int[1];
+        int[] loop = new int[1];
+
+        // Pull the WAV data into the "data" buffer.
+        try {
+            ALut.alutLoadWAVFile(stream, format, data, size, freq, loop);
+        } catch (ALException e) {
+            log.warn("Error loading JoalAudioBuffer from stream", e);
+            return 0;
+        }
+        // OK, for now, we're only going to support 8-bit and 16-bit Mono data.
+        // I'll have to figure out later how to extend this to multiple data formats.
+        if ((format[0] != AL.AL_FORMAT_MONO8) && (format[0] != AL.AL_FORMAT_MONO16)) {
+            log.warn("Invalid Format! Failing out." + parseFormat(format[0]));
+            return 0;
+        }
+        log.debug("WAV format: {}", parseFormat(format[0]));
+        return format[0];
+    }
+
     /**
      * Take a list of AudioByteBuffers and provide a 1:1 corresponding List of
      * AudioBuffers

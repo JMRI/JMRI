@@ -1,4 +1,3 @@
-// CanUsbDriverAdapter.java
 package jmri.jmrix.can.adapters.lawicell.canusb.serialdriver;
 
 

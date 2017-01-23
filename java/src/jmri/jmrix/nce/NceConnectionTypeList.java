@@ -1,4 +1,3 @@
-// NceConnectionTypeList.java
 package jmri.jmrix.nce;
 
 /**

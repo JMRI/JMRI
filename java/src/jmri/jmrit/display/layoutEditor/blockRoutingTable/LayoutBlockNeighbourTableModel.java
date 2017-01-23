@@ -16,13 +16,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4104722631566472444L;
-
-    //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
-
     public static final int NEIGHBOURCOL = 0;
     static final int DIRECTIONCOL = 1;
     static final int MUTUALCOL = 2;

@@ -26,10 +26,6 @@ import jmri.util.JmriJFrame;
  */
 public class MultiSensorIconFrame extends JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6940028615554911494L;
     JPanel content = new JPanel();
     JmriJFrame defaultsFrame;
     MultiIconEditor defaultIcons;
@@ -165,10 +161,6 @@ public class MultiSensorIconFrame extends JmriJFrame {
 
     class Entry extends JPanel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -8918960162933617297L;
         JTextField sensor = new JTextField(5);
         JPanel self;
         MultiIconEditor ed = new MultiIconEditor(1);

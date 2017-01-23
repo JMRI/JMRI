@@ -74,4 +74,4 @@ public class SprogCSTurnout extends AbstractTurnout {
     private final static Logger log = LoggerFactory.getLogger(SprogCSTurnout.class.getName());
 }
 
-/* @(#)SprogCSTurnout.java */
+

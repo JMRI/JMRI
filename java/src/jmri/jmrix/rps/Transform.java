@@ -1,4 +1,3 @@
-// Transform.java
 package jmri.jmrix.rps;
 
 
@@ -10,4 +9,4 @@ package jmri.jmrix.rps;
 public class Transform {
 }
 
-/* @(#)Transform.java */
+

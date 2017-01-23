@@ -1,6 +1,6 @@
-// LV102InternalFrame.java
 package jmri.jmrix.lenz.swing.lv102;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,11 +30,6 @@ import org.slf4j.LoggerFactory;
   */
 public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6394940286346535557L;
-
     private progReplyListener progListener = null;
     private Thread progListenerThread = null;
 
@@ -42,7 +37,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
     // programming operation.  This 
     // should not be more than 15.
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SC_START_IN_CTOR",
+    @SuppressFBWarnings(value = "SC_START_IN_CTOR",
             justification = "with existing code structure, we do not expect this to ever be subclassed.")
 
     public LV102InternalFrame() {
@@ -661,7 +656,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
          * This class is a programmer listener, so we implement the
          * programmingOpReply() function
          */
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NO_NOTIFY_NOT_NOTIFYALL", justification = "There should only ever be one thread waiting for this method.")
+        @SuppressFBWarnings(value = "NO_NOTIFY_NOT_NOTIFYALL", justification = "There should only ever be one thread waiting for this method.")
 
         public void programmingOpReply(int value, int status) {
             if (log.isDebugEnabled()) {

@@ -1,5 +1,6 @@
 package jmri.jmrix.roco.z21;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.net.DatagramPacket;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
@@ -81,7 +82,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
     /**
      * Actually transmits the next message to the port
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT", "SBSC_USE_STRINGBUFFER_CONCATENATION","UW_UNCOND_WAIT"}, 
+    @SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT", "SBSC_USE_STRINGBUFFER_CONCATENATION","UW_UNCOND_WAIT"}, 
             justification = "Two locks needed for synchronization here, this is OK; String + only used for debug, so inefficient String processing not really a problem; Unconditional Wait is to give external hardware, which doesn't necessarilly respond, time to process the data.")
     @Override
     synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
@@ -252,7 +253,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
      * <P>
      * (This is public for testing purposes) Runs in the "Receive" thread.
      */
-     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"UW_UNCOND_WAIT","WA_NOT_IN_LOOP", "NO_NOTIFY_NOT_NOTIFYALL"},
+     @SuppressFBWarnings(value = {"UW_UNCOND_WAIT","WA_NOT_IN_LOOP", "NO_NOTIFY_NOT_NOTIFYALL"},
               justification = "Wait is for external hardware, which doesn't necessarilly respond, to process the data.  Notify is used because Having more than one thread waiting on xmtRunnable is an error.")
     public void handleOneIncomingReply() throws java.io.IOException {
         // we sit in this until the message is complete, relying on
@@ -386,7 +387,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"UW_UNCOND_WAIT","WA_NOT_IN_LOOP"},
+    @SuppressFBWarnings(value = {"UW_UNCOND_WAIT","WA_NOT_IN_LOOP"},
                      justification = "Wait is for external hardware, which doesn't necessarilly respond, to process the data.")
     @Override
     protected void terminate() {

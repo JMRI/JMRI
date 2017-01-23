@@ -1,4 +1,3 @@
-// XNetStreamPortController.java
 package jmri.jmrix.lenz;
 
 import java.io.DataInputStream;
@@ -98,4 +97,4 @@ public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortContr
 }
 
 
-/* @(#)XNetStreamPortController.java */
+

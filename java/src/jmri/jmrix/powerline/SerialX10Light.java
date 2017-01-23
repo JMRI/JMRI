@@ -1,4 +1,3 @@
-// SerialX10Light.java
 package jmri.jmrix.powerline;
 
 import org.slf4j.Logger;
@@ -27,11 +26,6 @@ import org.slf4j.LoggerFactory;
 public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
 
     // System-dependent instance variables
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8432585767207210483L;
-
     /**
      * Current output step 0 to maxDimStep.
      * <p>
@@ -213,4 +207,4 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
     private final static Logger log = LoggerFactory.getLogger(SerialX10Light.class.getName());
 }
 
-/* @(#)SerialX10Light.java */
+

@@ -1,4 +1,3 @@
-// SensorManager.java
 package jmri.jmrix.rps;
 
 import jmri.Sensor;
@@ -54,4 +53,4 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
     }
 }
 
-/* @(#)RpsSensorManager.java */
+

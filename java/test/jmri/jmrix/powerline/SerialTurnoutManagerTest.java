@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright 2004, 2008 Converted to multiple connection
  * @author kcameron Copyright (C) 2011
  */
-public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     private SerialTrafficControlScaffold nis = null;
 
