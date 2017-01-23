@@ -672,7 +672,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         turnoutNamePanel.add(turnoutNameLabel);
         turnoutNamePanel.add(turnoutNameComboBox);
-        //turnoutNamePanel.add(Box.createHorizontalGlue());
 
         extraTurnoutNameComboBox.setEnabled(false);
         extraTurnoutNameComboBox.setEditable(true);
@@ -689,7 +688,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         extraTurnoutPanel.add(extraTurnoutNameComboBox);
 
         extraTurnoutPanel.setEnabled(false);
-        extraTurnoutPanel.add(Box.createHorizontalGlue());
 
         String[] angleStrings = {"-180", "-135", "-90", "-45", "0", "+45", "+90", "+135", "+180"};
         rotationComboBox = new JComboBox(angleStrings);
@@ -699,7 +697,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         rotationPanel.add(new JLabel(rb.getString("Rotation")));
         rotationPanel.add(rotationComboBox);
-        rotationPanel.add(Box.createHorizontalGlue());
 
         // the turnoutPropertiesPanel is enabled/disabled via selectionListAction above
         turnoutPropertiesPanel.add(turnoutNamePanel);
@@ -711,46 +708,46 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             top1Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             top1Panel.add(turnoutLHButton);
             top1Panel.add(turnoutRHButton);
-            top1Panel.add(Box.createHorizontalGlue());
+            top1Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, top1Panel.getPreferredSize().height));
             editToolBarPanel.add(top1Panel);
 
             JPanel top2Panel = new JPanel();
             top2Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             top2Panel.add(turnoutWYEButton);
             top2Panel.add(doubleXoverButton);
-            top2Panel.add(Box.createHorizontalGlue());
+            top2Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, top2Panel.getPreferredSize().height));
             editToolBarPanel.add(top2Panel);
 
             JPanel top3Panel = new JPanel();
             top3Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             top3Panel.add(lhXoverButton);
             top3Panel.add(rhXoverButton);
-            top3Panel.add(Box.createHorizontalGlue());
+            top3Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, top3Panel.getPreferredSize().height));
             editToolBarPanel.add(top3Panel);
 
             JPanel top4Panel = new JPanel();
             top4Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             top4Panel.add(layoutSingleSlipButton);
             top4Panel.add(layoutDoubleSlipButton);
-            top4Panel.add(Box.createHorizontalGlue());
+            top4Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, top4Panel.getPreferredSize().height));
             editToolBarPanel.add(top4Panel);
 
             JPanel top5Panel = new JPanel();
             top5Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             top5Panel.add(turnoutNamePanel);
-            top5Panel.add(Box.createHorizontalGlue());
+            top5Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, top5Panel.getPreferredSize().height));
             editToolBarPanel.add(top5Panel);
 
             JPanel top6Panel = new JPanel();
             top6Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             top6Panel.add(extraTurnoutPanel);
-            top6Panel.add(Box.createHorizontalGlue());
+            top6Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, top6Panel.getPreferredSize().height));
             editToolBarPanel.add(top6Panel);
 
             JPanel top7Panel = new JPanel();
             top7Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             top7Panel.add(rotationPanel);
-            top7Panel.add(Box.createHorizontalGlue());
+            top7Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, top7Panel.getPreferredSize().height));
             editToolBarPanel.add(top7Panel);
         } else {
             JPanel top1Panel = new JPanel();
@@ -829,15 +826,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             top8Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             top8Panel.add(levelXingButton);
             top8Panel.add(trackButton);
+            top8Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, top8Panel.getPreferredSize().height));
             editToolBarPanel.add(top8Panel);
 
             // this would be top9Panel
+            trackSegmentPropertiesPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+                trackSegmentPropertiesPanel.getPreferredSize().height));
             editToolBarPanel.add(trackSegmentPropertiesPanel);
 
             JPanel top10Panel = new JPanel();
             top10Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             top10Panel.add(new JLabel(blockNameString));
             top10Panel.add(blockIDComboBox);
+            top10Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, top10Panel.getPreferredSize().height));
             editToolBarPanel.add(top10Panel);
 
             JPanel top11Panel = new JPanel();
@@ -845,6 +846,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             top11Panel.add(new JLabel(blockNameString));
             top11Panel.add(blockSensorLabel);
             top11Panel.add(blockSensorComboBox);
+            top11Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, top11Panel.getPreferredSize().height));
             editToolBarPanel.add(top11Panel);
         } else {
             JPanel top2Panel = new JPanel();
@@ -914,29 +916,34 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             top12Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             top12Panel.add(anchorButton);
             top12Panel.add(endBumperButton);
+            top12Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, top12Panel.getPreferredSize().height));
             editToolBarPanel.add(top12Panel);
 
             JPanel top13Panel = new JPanel();
             top13Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             top13Panel.add(edgeButton);
+            top13Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, top13Panel.getPreferredSize().height));
             editToolBarPanel.add(top13Panel);
 
             JPanel top14Panel = new JPanel();
             top14Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             top14Panel.add(textLabelButton);
             top14Panel.add(textLabelTextField);
+            top14Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, top14Panel.getPreferredSize().height));
             editToolBarPanel.add(top14Panel);
 
             JPanel top15Panel = new JPanel();
             top15Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             top15Panel.add(memoryButton);
             top15Panel.add(textMemoryComboBox);
+            top15Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, top15Panel.getPreferredSize().height));
             editToolBarPanel.add(top15Panel);
 
             JPanel top16Panel = new JPanel();
             top16Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             top16Panel.add(blockContentsButton);
             top16Panel.add(blockContentsComboBox);
+            top16Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, top16Panel.getPreferredSize().height));
             editToolBarPanel.add(top16Panel);
         } else {
             editToolBarPanel.add(top3);
@@ -1060,46 +1067,49 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             JPanel top17Panel = new JPanel();
             top17Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             top17Panel.add(multiSensorButton);
+            top17Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, top17Panel.getPreferredSize().height));
             editToolBarPanel.add(top17Panel);
 
             JPanel top18Panel = new JPanel();
             top18Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             top18Panel.add(signalMastButton);
             top18Panel.add(nextSignalMast);
+            top18Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, top18Panel.getPreferredSize().height));
             editToolBarPanel.add(top18Panel);
 
             JPanel top19Panel = new JPanel();
             top19Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             top19Panel.add(sensorButton);
             top19Panel.add(nextSensor);
+            top19Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, top19Panel.getPreferredSize().height));
             editToolBarPanel.add(top19Panel);
 
             JPanel top20Panel = new JPanel();
             top20Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             top20Panel.add(signalButton);
             top20Panel.add(nextSignalHead);
+            top20Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, top20Panel.getPreferredSize().height));
             editToolBarPanel.add(top20Panel);
 
             JPanel top21Panel = new JPanel();
             top21Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             top21Panel.add(iconLabelButton);
             top21Panel.add(changeIconsButton);
+            top21Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, top21Panel.getPreferredSize().height));
             editToolBarPanel.add(top21Panel);
 
             editToolBarPanel.add(Box.createVerticalGlue());
-            // Box.Filler glue = (Box.Filler) Box.createVerticalGlue();
-            // glue.changeShape(glue.getMinimumSize(),  new Dimension(0, Short.MAX_VALUE), glue.getMaximumSize());
-            // editToolBarPanel.add(glue);
 
-            JPanel top99Panel = new JPanel();
-            top99Panel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-            top99Panel.add(locationLabel);
-            top99Panel.add(new JLabel("{x:"));
-            top99Panel.add(xLabel);
-            top99Panel.add(new JLabel(", y:"));
-            top99Panel.add(yLabel);
-            top99Panel.add(new JLabel("}  "));
-            editToolBarPanel.add(top99Panel, BorderLayout.SOUTH);;
+            JPanel bottomPanel = new JPanel();
+            bottomPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+            bottomPanel.add(locationLabel);
+            bottomPanel.add(new JLabel("{x:"));
+            bottomPanel.add(xLabel);
+            bottomPanel.add(new JLabel(", y:"));
+            bottomPanel.add(yLabel);
+            bottomPanel.add(new JLabel("}  "));
+            bottomPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, bottomPanel.getPreferredSize().height));
+            editToolBarPanel.add(bottomPanel, BorderLayout.SOUTH);;
         } else {
             editToolBarPanel.add(top4);
         }
