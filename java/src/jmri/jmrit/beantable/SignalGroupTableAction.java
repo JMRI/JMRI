@@ -651,7 +651,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     cancelPressed(e);
                 }
             });
-            cancelButton.setVisible(false); // do not show in 4.7.1 while working on NPE fix
+            cancelButton.setVisible(true);
             pb.add(deleteButton);
             deleteButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
