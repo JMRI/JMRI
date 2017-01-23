@@ -160,7 +160,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //private jmri.TurnoutManager tm = null;
     private LayoutEditor thisPanel = null;
 
-    private JPanel editToolBarPanel = null;
+    private JPanel editToolBarPanel = new JPanel();
     private JScrollPane editToolBarScroll = null;
     private JPanel editToolBarContainer = null;
 
@@ -638,7 +638,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         iconLabelButton.addActionListener(selectionListAction);
 
         // setup top edit bar
-        editToolBarPanel = new JPanel();
         editToolBarPanel.setLayout(new BoxLayout(editToolBarPanel, BoxLayout.PAGE_AXIS));
         //editToolBarPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 
@@ -1087,7 +1086,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             top21Panel.add(changeIconsButton);
             editToolBarPanel.add(top21Panel);
 
-            editToolBarPanel.add(Box.createVerticalGlue());
+            //editToolBarPanel.add(Box.createVerticalGlue());
+            Box.Filler glue = (Box.Filler) Box.createVerticalGlue();
+            glue.changeShape(glue.getMinimumSize(),  new Dimension(0, Short.MAX_VALUE), glue.getMaximumSize());
+            editToolBarPanel.add(glue);
 
             JPanel top99Panel = new JPanel();
             top99Panel.setLayout(new FlowLayout(FlowLayout.RIGHT));
