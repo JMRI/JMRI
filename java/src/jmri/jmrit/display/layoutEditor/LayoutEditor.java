@@ -227,7 +227,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JRadioButton edgeButton = new JRadioButton(rb.getString("EdgeConnector"));
 
     private JRadioButton textLabelButton = new JRadioButton(Bundle.getMessage("TextLabel"));
-    private JTextField textLabel = new JTextField(8);
+    private JTextField textLabelTextField = new JTextField(8);
 
     private JRadioButton memoryButton = new JRadioButton(Bundle.getMessage("BeanNameMemory"));
     private JmriBeanComboBox textMemoryComboBox = new JmriBeanComboBox(
@@ -597,7 +597,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 blockPanel.setEnabled(e);
 
                 // enable/disable text label, memory & block contents text fields
-                textLabel.setEnabled(textLabelButton.isSelected());
+                textLabelTextField.setEnabled(textLabelButton.isSelected());
                 textMemoryComboBox.setEnabled(memoryButton.isSelected());
                 blockContentsComboBox.setEnabled(blockContentsButton.isSelected());
 
@@ -883,9 +883,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         top3.add(textLabelButton);
         textLabelButton.setToolTipText(rb.getString("TextLabelToolTip"));
 
-        top3.add(textLabel);
-        textLabel.setToolTipText(rb.getString("TextToolTip"));
-        textLabel.setEnabled(false);
+        top3.add(textLabelTextField);
+        textLabelTextField.setToolTipText(rb.getString("TextToolTip"));
+        textLabelTextField.setEnabled(false);
 
         top3.add(memoryButton);
         memoryButton.setToolTipText(Bundle.getMessage("MemoryButtonToolTip", Bundle.getMessage("Memory")));
@@ -924,7 +924,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             JPanel top14Panel = new JPanel();
             top14Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             top14Panel.add(textLabelButton);
-            top14Panel.add(textLabel);
+            top14Panel.add(textLabelTextField);
             editToolBarPanel.add(top14Panel);
 
             JPanel top15Panel = new JPanel();
@@ -7795,7 +7795,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * Add a label to the Draw Panel
      */
     void addLabel() {
-        PositionableLabel l = super.addLabel(textLabel.getText().trim());
+        PositionableLabel l = super.addLabel(textLabelTextField.getText().trim());
         setDirty(true);
         l.setForeground(defaultTextColor);
     }
