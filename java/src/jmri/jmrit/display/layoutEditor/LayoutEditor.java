@@ -1086,10 +1086,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             top21Panel.add(changeIconsButton);
             editToolBarPanel.add(top21Panel);
 
-            //editToolBarPanel.add(Box.createVerticalGlue());
-            Box.Filler glue = (Box.Filler) Box.createVerticalGlue();
-            glue.changeShape(glue.getMinimumSize(),  new Dimension(0, Short.MAX_VALUE), glue.getMaximumSize());
-            editToolBarPanel.add(glue);
+            editToolBarPanel.add(Box.createVerticalGlue());
+            // Box.Filler glue = (Box.Filler) Box.createVerticalGlue();
+            // glue.changeShape(glue.getMinimumSize(),  new Dimension(0, Short.MAX_VALUE), glue.getMaximumSize());
+            // editToolBarPanel.add(glue);
 
             JPanel top99Panel = new JPanel();
             top99Panel.setLayout(new FlowLayout(FlowLayout.RIGHT));
