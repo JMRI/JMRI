@@ -1998,11 +1998,11 @@ public class SignalHeadTableAction extends AbstractTableAction {
             ev1Panel.setVisible(true);
             eto1.setVisible(true);
             eto1.setDefaultNamedBean(((SingleTurnoutSignalHead) curS).getOutput().getBean());
-            ev2Border.setTitle("On Appearance");
+            ev2Border.setTitle(Bundle.getMessage("OnAppearance"));
             ev2Panel.setVisible(true);
             es2aBox.setVisible(true);
             setSignalStateInBox(es2aBox, ((SingleTurnoutSignalHead) curS).getOnAppearance());
-            ev3Border.setTitle("Off Appearance");
+            ev3Border.setTitle(Bundle.getMessage("OffAppearance"));
             ev3Panel.setVisible(true);
             es3aBox.setVisible(true);
             setSignalStateInBox(es3aBox, ((SingleTurnoutSignalHead) curS).getOffAppearance());

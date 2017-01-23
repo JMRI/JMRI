@@ -149,13 +149,13 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             @Override
             public int getPreferredWidth(int col) {
                 if (col == EDITCOL) {
-                    return new JTextField(6).getPreferredSize().width;
+                    return new JTextField(Bundle.getMessage("ButtonEdit")).getPreferredSize().width;
                 }
                 if (col == ENABLECOL) {
                     return new JTextField(6).getPreferredSize().width;
                 }
                 if (col == COMMENTCOL) {
-                    return new JTextField(15).getPreferredSize().width;
+                    return new JTextField(30).getPreferredSize().width;
                 }
                 if (col == DELETECOL) {
                     return new JTextField(22).getPreferredSize().width;
@@ -519,27 +519,27 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
             p3xsi.add(p31si);
             _AspectModel = new SignalMastAspectModel();
-            JTable SignalAppearanceTable = new JTable(_AspectModel);
+            JTable SignalMastAspectTable = new JTable(_AspectModel);
             TableRowSorter<SignalMastAspectModel> smaSorter = new TableRowSorter<>(_AspectModel);
             smaSorter.setComparator(SignalMastAspectModel.ASPECT_COLUMN, new SystemNameComparator());
             RowSorterUtil.setSortOrder(smaSorter, SignalMastAspectModel.ASPECT_COLUMN, SortOrder.ASCENDING);
-            SignalAppearanceTable.setRowSorter(smaSorter);
-            SignalAppearanceTable.setRowSelectionAllowed(false);
-            SignalAppearanceTable.setPreferredScrollableViewportSize(new java.awt.Dimension(200, 80));
-            TableColumnModel SignalAppearanceColumnModel = SignalAppearanceTable.getColumnModel();
-            TableColumn includeColumnA = SignalAppearanceColumnModel.
+            SignalMastAspectTable.setRowSorter(smaSorter);
+            SignalMastAspectTable.setRowSelectionAllowed(false);
+            SignalMastAspectTable.setPreferredScrollableViewportSize(new java.awt.Dimension(200, 80));
+            TableColumnModel SignalMastAspectColumnModel = SignalMastAspectTable.getColumnModel();
+            TableColumn includeColumnA = SignalMastAspectColumnModel.
                     getColumn(SignalGroupTableAction.SignalMastAspectModel.INCLUDE_COLUMN);
             includeColumnA.setResizable(false);
             includeColumnA.setMinWidth(30);
             includeColumnA.setMaxWidth(60);
             @SuppressWarnings("static-access")
-            TableColumn sNameColumnA = SignalAppearanceColumnModel.
+            TableColumn sNameColumnA = SignalMastAspectColumnModel.
                     getColumn(_AspectModel.ASPECT_COLUMN);
             sNameColumnA.setResizable(true);
             sNameColumnA.setMinWidth(75);
             sNameColumnA.setMaxWidth(140);
 
-            _SignalAppearanceScrollPane = new JScrollPane(SignalAppearanceTable);
+            _SignalAppearanceScrollPane = new JScrollPane(SignalMastAspectTable);
             p3xsi.add(_SignalAppearanceScrollPane, BorderLayout.CENTER);
             p3.add(p3xsi);
             p3xsi.setVisible(true);
@@ -629,6 +629,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
             _SignalGroupHeadScrollPane = new JScrollPane(SignalGroupHeadTable);
             p2xsi.add(_SignalGroupHeadScrollPane, BorderLayout.CENTER);
+            p2xsi.setToolTipText(Bundle.getMessage("SignalGroupHeadTableTooltip")); // add tooltip to explain which head types are shown
             contentPane.add(p2xsi);
             p2xsi.setVisible(true);
 
@@ -658,7 +659,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                 }
             });
             deleteButton.setToolTipText(Bundle.getMessage("DeleteSignalGroupInSystem"));
-            // Update SignalGroup button in Add/Edit SigGroup pane
+            // Update SignalGroup button in Add/Edit SignalGroup pane
             pb.add(updateButton);
             updateButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -1418,12 +1419,12 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             Bundle.getMessage("ColumnSystemName"),
             Bundle.getMessage("ColumnUserName"),
             Bundle.getMessage("Include"),
-            Bundle.getMessage("OnState"),
-            Bundle.getMessage("OffState"),
+            Bundle.getMessage("OnAppearance"),
+            Bundle.getMessage("OffAppearance"),
             "" // No label above last (Edit) column
     };
 
-    private static String[] signalStates = new String[]{rbx.getString("StateSignalHeadDark"), rbx.getString("StateSignalHeadRed"), rbx.getString("StateSignalHeadYellow"), rbx.getString("StateSignalHeadGreen"), rbx.getString("StateSignalHeadLunar")};
+    private static String[] signalStates = new String[]{Bundle.getMessage("SignalHeadStateDark"), Bundle.getMessage("SignalHeadStateRed"), Bundle.getMessage("SignalHeadStateYellow"), Bundle.getMessage("SignalHeadStateGreen"), Bundle.getMessage("SignalHeadStateLunar")};
     private static int[] signalStatesValues = new int[]{SignalHead.DARK, SignalHead.RED, SignalHead.YELLOW, SignalHead.GREEN, SignalHead.LUNAR};
 
     private ArrayList<SignalGroupSignalHead> _signalHeadsList;        // array of all single output signal heads
@@ -1498,23 +1499,23 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         String getOnState() {
             switch (_onState) {
                 case SignalHead.DARK:
-                    return rbx.getString("StateSignalHeadDark");
+                    return Bundle.getMessage("SignalHeadStateDark");
                 case SignalHead.RED:
-                    return rbx.getString("StateSignalHeadRed");
+                    return Bundle.getMessage("SignalHeadStateRed");
                 case SignalHead.YELLOW:
-                    return rbx.getString("StateSignalHeadYellow");
+                    return Bundle.getMessage("SignalHeadStateYellow");
                 case SignalHead.GREEN:
-                    return rbx.getString("StateSignalHeadGreen");
+                    return Bundle.getMessage("SignalHeadStateGreen");
                 case SignalHead.LUNAR:
-                    return rbx.getString("StateSignalHeadLunar");
+                    return Bundle.getMessage("SignalHeadStateLunar");
                 case SignalHead.FLASHRED:
-                    return rbx.getString("StateSignalHeadFlashRed");
+                    return Bundle.getMessage("SignalHeadStateFlashingRed");
                 case SignalHead.FLASHYELLOW:
-                    return rbx.getString("StateSignalHeadFlashYellow");
+                    return Bundle.getMessage("SignalHeadStateFlashingYellow");
                 case SignalHead.FLASHGREEN:
-                    return rbx.getString("StateSignalHeadFlashGreen");
+                    return Bundle.getMessage("SignalHeadStateFlashingGreen");
                 case SignalHead.FLASHLUNAR:
-                    return rbx.getString("StateSignalHeadFlashLunar");
+                    return Bundle.getMessage("SignalHeadStateFlashingLunar");
             }
             return "";
         }
@@ -1527,23 +1528,23 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         String getOffState() {
             switch (_offState) {
                 case SignalHead.DARK:
-                    return rbx.getString("StateSignalHeadDark");
+                    return Bundle.getMessage("SignalHeadStateDark");
                 case SignalHead.RED:
-                    return rbx.getString("StateSignalHeadRed");
+                    return Bundle.getMessage("SignalHeadStateRed");
                 case SignalHead.YELLOW:
-                    return rbx.getString("StateSignalHeadYellow");
+                    return Bundle.getMessage("SignalHeadStateYellow");
                 case SignalHead.GREEN:
-                    return rbx.getString("StateSignalHeadGreen");
+                    return Bundle.getMessage("SignalHeadStateGreen");
                 case SignalHead.LUNAR:
-                    return rbx.getString("StateSignalHeadLunar");
+                    return Bundle.getMessage("SignalHeadStateLunar");
                 case SignalHead.FLASHRED:
-                    return rbx.getString("StateSignalHeadFlashRed");
+                    return Bundle.getMessage("SignalHeadStateFlashingRed");
                 case SignalHead.FLASHYELLOW:
-                    return rbx.getString("StateSignalHeadFlashYellow");
+                    return Bundle.getMessage("SignalHeadStateFlashingYellow");
                 case SignalHead.FLASHGREEN:
-                    return rbx.getString("StateSignalHeadFlashGreen");
+                    return Bundle.getMessage("SignalHeadStateFlashingGreen");
                 case SignalHead.FLASHLUNAR:
-                    return rbx.getString("StateSignalHeadFlashLunar");
+                    return Bundle.getMessage("SignalHeadStateFlashingLunar");
             }
             return "";
         }
@@ -1562,23 +1563,23 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
          * @param localized name for the Signal Head Appearance when this head is On
          */
         void setSetOnState(String state) {
-            if (state.equals(rbx.getString("StateSignalHeadDark"))) {
+            if (state.equals(Bundle.getMessage("SignalHeadStateDark"))) {
                 _onState = SignalHead.DARK;
-            } else if (state.equals(rbx.getString("StateSignalHeadRed"))) {
+            } else if (state.equals(Bundle.getMessage("SignalHeadStateRed"))) {
                 _onState = SignalHead.RED;
-            } else if (state.equals(rbx.getString("StateSignalHeadYellow"))) {
+            } else if (state.equals(Bundle.getMessage("SignalHeadStateYellow"))) {
                 _onState = SignalHead.YELLOW;
-            } else if (state.equals(rbx.getString("StateSignalHeadGreen"))) {
+            } else if (state.equals(Bundle.getMessage("SignalHeadStateGreen"))) {
                 _onState = SignalHead.GREEN;
-            } else if (state.equals(rbx.getString("StateSignalHeadLunar"))) {
+            } else if (state.equals(Bundle.getMessage("SignalHeadStateLunar"))) {
                 _onState = SignalHead.LUNAR;
-            } else if (state.equals(rbx.getString("StateSignalHeadFlashRed"))) {
+            } else if (state.equals(Bundle.getMessage("SignalHeadStateFlashingRed"))) {
                 _onState = SignalHead.FLASHRED;
-            } else if (state.equals(rbx.getString("StateSignalHeadFlashYellow"))) {
+            } else if (state.equals(Bundle.getMessage("SignalHeadStateFlashingYellow"))) {
                 _onState = SignalHead.FLASHYELLOW;
-            } else if (state.equals(rbx.getString("StateSignalHeadFlashGreen"))) {
+            } else if (state.equals(Bundle.getMessage("SignalHeadStateFlashingGreen"))) {
                 _onState = SignalHead.FLASHGREEN;
-            } else if (state.equals(rbx.getString("StateSignalHeadFlashLunar"))) {
+            } else if (state.equals(Bundle.getMessage("SignalHeadStateFlashingLunar"))) {
                 _onState = SignalHead.FLASHLUNAR;
             }
         }
@@ -1589,23 +1590,23 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
          * @param localized name for the Signal Head Appearance when this head is Off
          */
         void setSetOffState(String state) {
-            if (state.equals(rbx.getString("StateSignalHeadDark"))) {
+            if (state.equals(Bundle.getMessage("SignalHeadStateDark"))) {
                 _offState = SignalHead.DARK;
-            } else if (state.equals(rbx.getString("StateSignalHeadRed"))) {
+            } else if (state.equals(Bundle.getMessage("SignalHeadStateRed"))) {
                 _offState = SignalHead.RED;
-            } else if (state.equals(rbx.getString("StateSignalHeadYellow"))) {
+            } else if (state.equals(Bundle.getMessage("SignalHeadStateYellow"))) {
                 _offState = SignalHead.YELLOW;
-            } else if (state.equals(rbx.getString("StateSignalHeadGreen"))) {
+            } else if (state.equals(Bundle.getMessage("SignalHeadStateGreen"))) {
                 _offState = SignalHead.GREEN;
-            } else if (state.equals(rbx.getString("StateSignalHeadLunar"))) {
+            } else if (state.equals(Bundle.getMessage("SignalHeadStateLunar"))) {
                 _offState = SignalHead.LUNAR;
-            } else if (state.equals(rbx.getString("StateSignalHeadFlashRed"))) {
+            } else if (state.equals(Bundle.getMessage("SignalHeadStateFlashingRed"))) {
                 _offState = SignalHead.FLASHRED;
-            } else if (state.equals(rbx.getString("StateSignalHeadFlashYellow"))) {
+            } else if (state.equals(Bundle.getMessage("SignalHeadStateFlashingYellow"))) {
                 _offState = SignalHead.FLASHYELLOW;
-            } else if (state.equals(rbx.getString("StateSignalHeadFlashGreen"))) {
+            } else if (state.equals(Bundle.getMessage("SignalHeadStateFlashingGreen"))) {
                 _offState = SignalHead.FLASHGREEN;
-            } else if (state.equals(rbx.getString("StateSignalHeadFlashLunar"))) {
+            } else if (state.equals(Bundle.getMessage("SignalHeadStateFlashingLunar"))) {
                 _offState = SignalHead.FLASHLUNAR;
             }
         }

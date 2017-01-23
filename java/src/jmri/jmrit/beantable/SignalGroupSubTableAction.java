@@ -164,6 +164,7 @@ public class SignalGroupSubTableAction {
     JLabel _systemName;
     JComboBox<String> _OnAppearance;
     JComboBox<String> _OffAppearance;
+    JLabel spacer = new JLabel("       "); // to create space between On and Off Appearance choices
     JComboBox<String> _SensorTurnoutOper = new JComboBox<String>(oper);
 
     JmriJFrame addSubFrame = null;
@@ -177,8 +178,8 @@ public class SignalGroupSubTableAction {
     JRadioButton includedButton = null;
 
     JLabel nameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameSignalHead")));
-    JLabel signalOnStateLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("StateWhenMet")));
-    JLabel signalOffStateLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("StateWhenNotMet")));
+    JLabel signalOnStateLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("OnAppearance")));
+    JLabel signalOffStateLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("OffAppearance")));
     JLabel userLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("SelectConditionsOn")));
 
     JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
@@ -200,7 +201,7 @@ public class SignalGroupSubTableAction {
         curHeadName = headName;
         curSignalHead = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(curHeadName);
 
-        _OnAppearance = new JComboBox<String>(curSignalHead.getValidStateNames()); // get i18n strings from signal head definition
+        _OnAppearance = new JComboBox<String>(curSignalHead.getValidStateNames()); // shows i18n strings from signal head definition
         _OffAppearance = new JComboBox<String>(curSignalHead.getValidStateNames());
         _systemName = new JLabel(headName);
         _systemName.setVisible(true);
@@ -247,7 +248,10 @@ public class SignalGroupSubTableAction {
             pc.setLayout(new FlowLayout());
             pc.add(signalOnStateLabel);
             pc.add(_OnAppearance);
+            _OnAppearance.setToolTipText(Bundle.getMessage("StateWhenMetTooltip"));
+            pc.add(spacer);
             pc.add(signalOffStateLabel);
+            _OffAppearance.setToolTipText(Bundle.getMessage("StateWhenNotMetTooltip"));
             pc.add(_OffAppearance);
             contentPane.add(pc);
 
@@ -811,10 +815,10 @@ public class SignalGroupSubTableAction {
     private static String SET_TO_CLOSED = InstanceManager.turnoutManagerInstance().getClosedText();
     private static String SET_TO_THROWN = InstanceManager.turnoutManagerInstance().getThrownText();
 
-    private static String[] sensorInputModes = new String[]{"Active", "Inactive"}; // TODO I18N
+    private static String[] sensorInputModes = new String[]{Bundle.getMessage("SensorStateActive"), Bundle.getMessage("SensorStateInactive")};
     private static int[] sensorInputModeValues = new int[]{SignalGroup.ONACTIVE, SignalGroup.ONINACTIVE};
 
-    private static String[] signalStates = new String[]{rbx.getString("StateSignalHeadDark"), rbx.getString("StateSignalHeadRed"), rbx.getString("StateSignalHeadYellow"), rbx.getString("StateSignalHeadGreen"), rbx.getString("StateSignalHeadLunar")};
+    private static String[] signalStates = new String[]{Bundle.getMessage("SignalHeadStateDark"), Bundle.getMessage("SignalHeadStateRed"), Bundle.getMessage("SignalHeadStateYellow"), Bundle.getMessage("SignalHeadStateGreen"), Bundle.getMessage("SignalHeadStateLunar")};
     private static int[] signalStatesValues = new int[]{SignalHead.DARK, SignalHead.RED, SignalHead.YELLOW, SignalHead.GREEN, SignalHead.LUNAR};
 
     private static String[] turnoutInputModes = new String[]{InstanceManager.turnoutManagerInstance().getClosedText(),
