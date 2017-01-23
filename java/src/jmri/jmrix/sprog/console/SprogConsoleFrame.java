@@ -288,7 +288,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         SprogMessage m = new SprogMessage(cmdTextField.getText());
         // Messages sent by us will not be forwarded back so add to display manually
-        nextLine("cmd: \"" + m.toString() + "\"\n", "");
+        nextLine("cmd: \"" + m.toString(_memo.getSprogTrafficController().isSIIBootMode()) + "\"\n", "");
         tc.sendSprogMessage(m, this);
     }
 
@@ -337,7 +337,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
             // Else send blank message to kick things off
             saveMsg = new SprogMessage(" " + tmpString);
         }
-        nextLine("cmd: \"" + saveMsg.toString() + "\"\n", "");
+        nextLine("cmd: \"" + saveMsg.toString(_memo.getSprogTrafficController().isSIIBootMode()) + "\"\n", "");
         tc.sendSprogMessage(saveMsg, this);
 
         // Further messages will be sent from state machine
@@ -432,7 +432,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
 
     @Override
     public synchronized void notifyMessage(SprogMessage l) {  // receive a message and log it
-        nextLine("cmd: \"" + l.toString() + "\"\n", "");
+        nextLine("cmd: \"" + l.toString(_memo.getSprogTrafficController().isSIIBootMode()) + "\"\n", "");
     }
 
     @Override
@@ -544,7 +544,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 // Send new mode word
                 state = State.MODESENT;
                 msg = new SprogMessage("M " + modeWord);
-                nextLine("cmd: \"" + msg.toString() + "\"\n", "");
+                nextLine("cmd: \"" + msg.toString(_memo.getSprogTrafficController().isSIIBootMode()) + "\"\n", "");
                 tc.sendSprogMessage(msg, this);
                 break;
             case MODESENT:
@@ -553,7 +553,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 // Write to EEPROM
                 state = State.WRITESENT;
                 msg = new SprogMessage("W");
-                nextLine("cmd: \"" + msg.toString() + "\"\n", "");
+                nextLine("cmd: \"" + msg.toString(_memo.getSprogTrafficController().isSIIBootMode()) + "\"\n", "");
                 tc.sendSprogMessage(msg, this);
                 break;
             case WRITESENT:

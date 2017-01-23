@@ -278,7 +278,7 @@ public class SprogIIUpdateFrame
             }
             msg = SprogMessage.getWriteFlash(hexFile.getAddress(), hexFile.getData(), blockLen);
             if (log.isDebugEnabled()) {
-                log.debug(msg.toString());
+                log.debug(msg.toString(true));
             }
         } else {
             // Do nothing
@@ -298,6 +298,7 @@ public class SprogIIUpdateFrame
         } else {
             // use timeout to kick off the next write
             bootState = BootState.NULLWRITE;
+            statusBar.setText("Skip " + hexFile.getAddress());
             startVShortTimer();
         }
     }
