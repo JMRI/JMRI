@@ -54,7 +54,7 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
      * Given a locomotive address, request its status 
      * @param address is the locomotive address
      */
-    public static XNetMessage getLocomotiveInfoRequestMsg(int address) {
+    public static XNetMessage getZ21LocomotiveInfoRequestMsg(int address) {
         XNetMessage msg = new XNetMessage(5);
         msg.setElement(0, XNetConstants.LOCO_STATUS_REQ);
         msg.setElement(1, Z21Constants.LAN_X_LOCO_INFO_REQUEST_Z21);
@@ -71,7 +71,7 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
      * @param functionno is the function to change
      * @param newstate is boolean representing whether the function is to be on or off.
      */
-    public static XNetMessage getLocomotiveFunctionOperationMsg(int address, int functionno, boolean state) {
+    public static XNetMessage getZ21LocomotiveFunctionOperationMsg(int address, int functionno, boolean state) {
         XNetMessage msg = new XNetMessage(6);
         int functionbyte = functionno;
         msg.setElement(0, XNetConstants.LOCO_OPER_REQ);
@@ -95,7 +95,7 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
      * Given a turnout address, generate a message to request the state. 
      * @param address is the turnout address
      */
-    public static XNetMessage getTurnoutInfoRequestMessage(int address ) {
+    public static XNetMessage getZ21TurnoutInfoRequestMessage(int address ) {
         // refer to section 5.1 of the z21 lan protocol manual.
         XNetMessage msg = new XNetMessage(4);
         msg.setElement(0,Z21Constants.LAN_X_GET_TURNOUT_INFO);
@@ -115,7 +115,7 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
      * @param queue boolean value representing whehter or not the message is 
      * added to the queue.
      */
-    public static XNetMessage getSetTurnoutRequestMessage(int address, boolean thrown,boolean active, boolean queue) {
+    public static XNetMessage getZ21SetTurnoutRequestMessage(int address, boolean thrown,boolean active, boolean queue) {
         // refer to section 5.2 of the z21 lan protocol manual.
         XNetMessage msg = new XNetMessage(5);
         msg.setElement(0,Z21Constants.LAN_X_SET_TURNOUT);
