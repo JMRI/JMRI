@@ -25,6 +25,8 @@ public class SchemaTest extends SchemaTestBase {
         files.addAll(getFiles(new File("java/test/jmri/jmrit/decoderdefn/fail"), true, false));
         // check that decoder definitions are valid
         files.addAll(getFiles(new File("xml/decoders/"), true, true));
+        // check that decoderIndex is valid
+        files.addAll(getFiles(new File("xml/decoderIndex.xml"), true, true));
         return files;
     }
 

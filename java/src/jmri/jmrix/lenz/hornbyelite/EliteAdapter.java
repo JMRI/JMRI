@@ -9,6 +9,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Vector;
 import jmri.jmrix.lenz.XNetPacketizer;
 import jmri.jmrix.lenz.XNetSerialPortController;
@@ -283,21 +284,16 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
          CheckBuffer = false;*/
     }
 
-    /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
      * Option 1 controls flow control option
      */
     /*public String option1Name() { return "Elite connection uses "; }
-     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
-     public String[] validOption1() { return validOption1; }*/
+     public String[] validOption1() { return Arrays.copyOf(validOption1, validOption1.length); }*/
     protected String[] validSpeeds = new String[]{"9,600 baud", "19,200 baud", "38,400 baud", "57,600 baud", "115,200 baud"};
     protected int[] validSpeedValues = new int[]{9600, 19200, 38400, 57600, 115200};
 

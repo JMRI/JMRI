@@ -1,4 +1,3 @@
-// SerialSensor.java
 package jmri.jmrix.maple;
 
 import jmri.implementation.AbstractSensor;
@@ -9,11 +8,6 @@ import jmri.implementation.AbstractSensor;
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
  */
 public class SerialSensor extends AbstractSensor {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -196410325440991581L;
 
     public SerialSensor(String systemName) {
         super(systemName);
@@ -36,5 +30,3 @@ public class SerialSensor extends AbstractSensor {
     }
 
 }
-
-/* @(#)SerialSensor.java */

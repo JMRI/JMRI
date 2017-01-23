@@ -85,7 +85,7 @@ public class LocoIOTableModel
 
     public void propertyChange(PropertyChangeEvent evt) {
         // String s = "LocoIOTableModel: " + evt.getPropertyName() + " := " + evt.getNewValue() + " from " + evt.getSource();
-        if (evt.getPropertyName().equals("PortChange")) {
+        if (evt.getPropertyName().equals("PortChange")) { // NOI18N
             Integer i = (Integer) evt.getNewValue();
             int v = i.intValue();
             // System.out.println(s + " ROW = " + v);
@@ -238,9 +238,9 @@ public class LocoIOTableModel
                     liodata.setV1(row, l, liodata.getAddr(row));
                     liodata.setV2(row, l, liodata.getAddr(row));
 
-                    msg[row] = "Packet: " + LnConstants.OPC_NAME(l.getOpcode()) + " "
+                    msg[row] = "Packet: " + LnConstants.OPC_NAME(l.getOpcode()) + " " // NOI18N
                             + Integer.toHexString(liodata.getV1(row)) + " "
-                            + Integer.toHexString(liodata.getV2(row)) + " <CHK>";
+                            + Integer.toHexString(liodata.getV2(row)) + " <CHK>"; // NOI18N
                     if (status != null) {
                         status.setText(msg[row]);
                     }
@@ -267,10 +267,10 @@ public class LocoIOTableModel
                 liodata.setV2(row, l, a);
 
                 int opcode = (l == null) ? 0 : l.getOpcode();
-                msg[row] = "Packet: " + LnConstants.OPC_NAME(opcode)
+                msg[row] = "Packet: " + LnConstants.OPC_NAME(opcode) // NOI18N
                         + " " + Integer.toHexString(liodata.getV1(row))
                         + " " + Integer.toHexString(liodata.getV2(row))
-                        + " <CHK>";
+                        + " <CHK>"; // NOI18N
 
                 if (status != null) {
                     status.setText(msg[row]);
@@ -293,7 +293,7 @@ public class LocoIOTableModel
     // public static String[] getValidOnModes() { return validmodes.getValidModes(); }
     public void dispose() {
         if (log.isDebugEnabled()) {
-            log.debug("dispose");
+            log.debug("dispose"); // NOI18N
         }
     }
 

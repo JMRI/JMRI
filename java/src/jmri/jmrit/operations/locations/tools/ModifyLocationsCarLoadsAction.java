@@ -1,4 +1,3 @@
-// ModifyLocationsCarLoadsAction.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Frame;
@@ -39,4 +38,4 @@ public class ModifyLocationsCarLoadsAction extends AbstractAction {
     }
 }
 
-/* @(#)ModifyLocationsCarLoadsAction.java */
+

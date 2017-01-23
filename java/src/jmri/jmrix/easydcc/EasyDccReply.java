@@ -1,4 +1,3 @@
-// EasyDccReply.java
 package jmri.jmrix.easydcc;
 
 import org.slf4j.Logger;
@@ -68,4 +67,4 @@ public class EasyDccReply extends jmri.jmrix.AbstractMRReply {
 }
 
 
-/* @(#)EasyDccReply.java */
+

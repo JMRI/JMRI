@@ -1,4 +1,3 @@
-// NceNetworkPortController.java
 package jmri.jmrix.nce;
 
 /*
@@ -20,4 +19,4 @@ public abstract class NceNetworkPortController extends jmri.jmrix.AbstractNetwor
 }
 
 
-/* @(#)NceNetworkPortController.java */
+

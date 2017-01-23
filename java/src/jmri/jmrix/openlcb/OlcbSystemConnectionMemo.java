@@ -1,4 +1,3 @@
-// OlcbSystemConnectionMemo.java
 package jmri.jmrix.openlcb;
 
 import org.openlcb.NodeID;
@@ -172,4 +171,4 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
 }
 
 
-/* @(#)OlcbSystemConnectionMemo.java */
+

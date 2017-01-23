@@ -291,13 +291,13 @@ public class VSDecoder implements PropertyChangeListener {
             return;
         }
 
-        log.warn("VSDecoderPane throttle property change: " + eventName);
+        log.debug("VSDecoderPane throttle property change: " + eventName);
 
         if (oldValue != null) {
-            log.warn("Old: " + oldValue.toString());
+            log.debug("Old: " + oldValue.toString());
         }
         if (newValue != null) {
-            log.warn("New: " + newValue.toString());
+            log.debug("New: " + newValue.toString());
         }
 
         // Iterate through the list of sound events, forwarding the propertyChange event.
@@ -799,6 +799,11 @@ public class VSDecoder implements PropertyChangeListener {
             } else if (el.getAttributeValue("type").equals("steam")) {
                 // Handle a Diesel Engine sound
                 SteamSound es = new SteamSound(prefix + el.getAttributeValue("name"));
+                es.setXml(el, vf);
+                sound_list.put(el.getAttributeValue("name"), es);
+            } else if (el.getAttributeValue("type").equals("steam1")) {
+                // Handle a Steam Engine sound
+                Steam1Sound es = new Steam1Sound(prefix + el.getAttributeValue("name"));
                 es.setXml(el, vf);
                 sound_list.put(el.getAttributeValue("name"), es);
             } else {

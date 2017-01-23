@@ -12,7 +12,7 @@ import org.junit.Test;
  *
  * @author	Paul Bender
  */
-public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTest {
+public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
 
     private XNetPowerManager pm = null;
     private XNetInterfaceScaffold tc = null;

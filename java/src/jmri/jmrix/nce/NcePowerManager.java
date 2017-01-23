@@ -1,4 +1,3 @@
-// NcePowerManager.java
 package jmri.jmrix.nce;
 
 import jmri.JmriException;
@@ -114,4 +113,4 @@ public class NcePowerManager implements PowerManager, NceListener {
 }
 
 
-/* @(#)NcePowerManager.java */
+

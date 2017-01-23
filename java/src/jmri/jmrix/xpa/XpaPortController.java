@@ -1,4 +1,3 @@
-// XpaPortController.java
 package jmri.jmrix.xpa;
 
 import jmri.jmrix.SystemConnectionMemo;
@@ -18,4 +17,4 @@ public abstract class XpaPortController extends jmri.jmrix.AbstractSerialPortCon
 }
 
 
-/* @(#)XpaPortController.java */
+

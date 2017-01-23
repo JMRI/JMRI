@@ -1,4 +1,3 @@
-// JMRIClientPowerManager.java
 package jmri.jmrix.jmriclient;
 
 import jmri.JmriException;
@@ -91,4 +90,4 @@ public class JMRIClientPowerManager implements PowerManager, JMRIClientListener 
 }
 
 
-/* @(#)JMRIClientPowerManager.java */
+

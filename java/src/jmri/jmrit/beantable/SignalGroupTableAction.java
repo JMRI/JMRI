@@ -448,7 +448,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             ps.setLayout(new FlowLayout());
             ps.add(nameLabel);
             ps.add(_systemName);
-            _systemName.setToolTipText(Bundle.getMessage("SigGroupSysNameTooltip"));
+            _systemName.setToolTipText(Bundle.getMessage("SignalGroupSysNameTooltip"));
             ps.add(fixedSystemName);
             fixedSystemName.setVisible(false);
             contentPane.add(ps);
@@ -457,9 +457,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             p.setLayout(new FlowLayout());
             p.add(userLabel);
             p.add(_userName);
-            _userName.setToolTipText(Bundle.getMessage("SigGroupUserNameTooltip"));
-
+            _userName.setToolTipText(Bundle.getMessage("SignalGroupUserNameTooltip"));
             contentPane.add(p);
+            
             // add Signal Masts/Heads Display Choice
             JPanel py = new JPanel();
             py.add(new JLabel(Bundle.getMessage("Show")));
@@ -651,7 +651,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     cancelPressed(e);
                 }
             });
-            cancelButton.setVisible(true);
+            cancelButton.setVisible(false); // do not show in 4.7.1 while working on NPE fix
             pb.add(deleteButton);
             deleteButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -909,7 +909,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                 _mastAspectsList.add(new SignalMastAspect(aspects.get(i)));
             }
         } else {
-            log.error("Failed to get signal mast {}", g.getSignalMastName());
+            log.error("Failed to get signal mast {}", g.getSignalMastName()); // false indicates Can't find mast (but quoted name stands for a head) TODO
         }
 
         fixedSystemName.setText(sName);
@@ -1385,6 +1385,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
      */
     void signalHeadEditPressed(int row) {
         if (curSignalGroup == null) {
+            log.debug("From signalEditPressed");
             if (!checkNewNamesOK()) {
                 log.debug("signalHeadEditPressed: checkNewNamesOK = false");
                 return;

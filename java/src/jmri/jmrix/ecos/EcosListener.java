@@ -1,4 +1,3 @@
-// EcosListener.java
 package jmri.jmrix.ecos;
 
 /**
@@ -14,4 +13,4 @@ public interface EcosListener extends jmri.jmrix.AbstractMRListener {
     public void reply(EcosReply m);
 }
 
-/* @(#)EcosListener.java */
+

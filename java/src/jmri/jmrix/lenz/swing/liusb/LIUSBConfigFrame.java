@@ -1,4 +1,3 @@
-// LIUSBConfigFrame.java
 package jmri.jmrix.lenz.swing.liusb;
 
 import java.awt.FlowLayout;
@@ -26,11 +25,6 @@ import org.slf4j.LoggerFactory;
  * @author	Paul Bender Copyright (C) 2009-2010
   */
 public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5772554676540073551L;
 
     protected XNetTrafficController tc = null;
 

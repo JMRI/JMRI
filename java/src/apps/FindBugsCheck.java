@@ -60,10 +60,10 @@ public class FindBugsCheck {
 
     // Test Nonnull
     
-    @javax.annotation.Nonnull public FindBugsCheck jaNonnullReturn() {
+    Nonnull public FindBugsCheck jaNonnullReturn() {
         return null; // (NP_NONNULL_RETURN_VIOLATION) may return null, but is declared @Nonnull
     }
-    public void jaNonNullParm(@javax.annotation.Nonnull FindBugsCheck p) {
+    public void jaNonNullParm(Nonnull FindBugsCheck p) {
         p.test();
     }
     public void jaTestNonnull() {
@@ -78,10 +78,10 @@ public class FindBugsCheck {
         jaNonNullParm(jaCheckForNullReturn()); // definitely should be flagged!
     }
 
-    @edu.umd.cs.findbugs.annotations.NonNull public FindBugsCheck fbNonnullReturn() {
+    @NonNull public FindBugsCheck fbNonnullReturn() {
         return null; // (NP_NONNULL_RETURN_VIOLATION) may return null, but is declared @NonNull
     }
-    public void fbNonNullParm(@edu.umd.cs.findbugs.annotations.NonNull FindBugsCheck p) {
+    public void fbNonNullParm(@NonNull FindBugsCheck p) {
         p.test();
     }
     public void fbTestNonnull() {
@@ -99,10 +99,10 @@ public class FindBugsCheck {
 
     // Test Nullable
     
-    @javax.annotation.Nullable public FindBugsCheck jaNullableReturn() {
+    Nullable public FindBugsCheck jaNullableReturn() {
         return null;
     }
-    public void jaNullableParm(@javax.annotation.Nullable FindBugsCheck p) {
+    public void jaNullableParm(Nullable FindBugsCheck p) {
         p.test(); // (NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE) This parameter is always used in a way that requires it to be non-null, but the parameter is explicitly annotated as being Nullable.
     }
     public void jaTestNullable() {
@@ -117,10 +117,10 @@ public class FindBugsCheck {
         jaNullableParm(jaCheckForNullReturn());
     }
 
-    @edu.umd.cs.findbugs.annotations.Nullable public FindBugsCheck fbNullableReturn() {
+    @Nullable public FindBugsCheck fbNullableReturn() {
         return null;
     }
-    public void fbNullableParm(@edu.umd.cs.findbugs.annotations.Nullable FindBugsCheck p) {
+    public void fbNullableParm(@Nullable FindBugsCheck p) {
         p.test(); // (NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE) This parameter is always used in a way that requires it to be non-null, but the parameter is explicitly annotated as being Nullable.
     }
     public void fbTestNullable() {
@@ -138,10 +138,10 @@ public class FindBugsCheck {
 
     // Test CheckForNull
 
-    @javax.annotation.CheckForNull public FindBugsCheck jaCheckForNullReturn() {
+    CheckForNull public FindBugsCheck jaCheckForNullReturn() {
         return null;
     }
-    public void jaCheckForNullParm(@javax.annotation.CheckForNull FindBugsCheck p) {
+    public void jaCheckForNullParm(CheckForNull FindBugsCheck p) {
         p.test(); // (NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE) This parameter is always used in a way that requires it to be non-null, but the parameter is explicitly annotated as being Nullable.
     }
     public void jaTestCheckForNull() {
@@ -156,10 +156,10 @@ public class FindBugsCheck {
         jaCheckForNullParm(jaCheckForNullReturn());
     }
     
-    @edu.umd.cs.findbugs.annotations.CheckForNull public FindBugsCheck fbCheckForNullReturn() {
+    @CheckForNull public FindBugsCheck fbCheckForNullReturn() {
         return null;
     }
-    public void fbCheckForNullParm(@edu.umd.cs.findbugs.annotations.CheckForNull FindBugsCheck p) {
+    public void fbCheckForNullParm(@CheckForNull FindBugsCheck p) {
         p.test(); // (NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE) This parameter is always used in a way that requires it to be non-null, but the parameter is explicitly annotated as being Nullable.
     }
     public void fbTestCheckForNull() {

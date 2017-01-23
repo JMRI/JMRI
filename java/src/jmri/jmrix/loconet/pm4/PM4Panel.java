@@ -35,7 +35,7 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     public PM4Panel(int boardNum) {
         super(boardNum);
 
-        appendLine(provideAddressing("PM4x"));  // add read/write buttons, address
+        appendLine(provideAddressing("PM4x"));  // add read/write buttons, address // NOI18N
 
         JPanel panec = new JPanel();
         panec.setLayout(new FlowLayout());
@@ -92,7 +92,7 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.pm4.PM4Frame";
+        return "package.jmri.jmrix.loconet.pm4.PM4Frame"; // NOI18N
     }
 
     public String getTitle() {
@@ -217,7 +217,7 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
             case 30:
                 return 0;   // done!
             default:
-                log.error("unexpected state " + state);
+                log.error("unexpected state " + state); // NOI18N
                 return 0;
         }
     }

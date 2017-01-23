@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.tams.simulator;
 
 import javax.swing.JPanel;

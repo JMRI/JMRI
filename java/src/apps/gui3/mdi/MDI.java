@@ -1,5 +1,6 @@
 package apps.gui3.mdi;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ResourceBundle;
 import jmri.Application;
 import jmri.util.swing.mdi.MdiMainFrame;
@@ -27,7 +28,7 @@ public class MDI extends apps.gui3.Apps3 {
         this.start();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "only one application at a time")
     protected void createMainFrame() {
         // create and populate main window

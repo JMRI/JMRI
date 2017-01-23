@@ -1,4 +1,3 @@
-// ConfigurationManager.java
 package jmri.jmrix.can;
 
 import java.util.ResourceBundle;
@@ -55,4 +54,4 @@ public class CanConfigurationManager extends ConfigurationManager {
 
 }
 
-/* @(#)ConfigurationManager.java */
+

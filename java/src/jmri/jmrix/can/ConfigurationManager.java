@@ -1,6 +1,6 @@
-// ConfigurationManager.java
 package jmri.jmrix.can;
 
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +25,8 @@ abstract public class ConfigurationManager {
     /**
      * Provide the current set of "Option1" values
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"EI_EXPOSE_REP", "MS_EXPOSE_REP"}) // OK until Java 1.6 allows return of cheap array copy
     static public String[] getSystemOptions() {
-        return options;
+        return Arrays.copyOf(options, options.length);
     }
 
     /**
@@ -69,4 +68,4 @@ abstract public class ConfigurationManager {
     private final static Logger log = LoggerFactory.getLogger(ConfigurationManager.class.getName());
 }
 
-/* @(#)ConfigurationManager.java */
+

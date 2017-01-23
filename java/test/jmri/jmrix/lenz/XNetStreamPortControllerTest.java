@@ -21,7 +21,7 @@ import org.junit.Test;
  *
  * @author	Paul Bender
  */
-public class XNetStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortControllerTest {
+public class XNetStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortControllerTestBase {
 
     @Test
     public void testCtor() {

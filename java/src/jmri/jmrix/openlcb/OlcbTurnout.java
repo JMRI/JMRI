@@ -17,10 +17,6 @@ import jmri.jmrix.can.CanMessage;
  */
 public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2709042631708878196L;
     OlcbAddress addrThrown;   // go to thrown state
     OlcbAddress addrClosed;   // go to closed state
     final OlcbInterface iface;

@@ -1,4 +1,3 @@
-// DCCppSerialPortController.java
 package jmri.jmrix.dccpp;
 
 import gnu.io.SerialPort;
@@ -103,4 +102,4 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
 }
 
 
-/* @(#)DCCppSerialPortController.java */
+

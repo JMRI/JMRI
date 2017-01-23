@@ -1,4 +1,3 @@
-// SprogProgrammer.java
 package jmri.jmrix.sprog;
 
 import org.slf4j.Logger;
@@ -267,4 +266,4 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
 
 }
 
-/* @(#)SprogProgrammer.java */
+

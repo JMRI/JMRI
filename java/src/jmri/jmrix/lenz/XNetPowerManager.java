@@ -156,4 +156,4 @@ public class XNetPowerManager implements PowerManager, XNetListener {
 }
 
 
-/* @(#)XNetPowerManager.java */
+

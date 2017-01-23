@@ -1,4 +1,3 @@
-// NceMessageCheck.java
 package jmri.jmrix.nce;
 
 import jmri.JmriException;
@@ -125,4 +124,4 @@ public class NceMessageCheck {
     private final static Logger log = LoggerFactory.getLogger(NceMessageCheck.class.getName());
 }
 
-/* @(#)NceMessageCheck.java */
+

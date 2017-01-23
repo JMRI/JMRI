@@ -1,4 +1,3 @@
-// EasyDccConnectionTypeList.java
 package jmri.jmrix.easydcc;
 
 /**

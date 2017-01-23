@@ -16,10 +16,6 @@ import org.slf4j.LoggerFactory;
  */
 public class XNetLightManager extends AbstractLightManager {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4478201509172741798L;
     private XNetTrafficController tc = null;
     private String prefix = null;
 

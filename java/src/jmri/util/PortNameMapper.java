@@ -1,4 +1,3 @@
-// PortNameMapper.java
 package jmri.util;
 
 import at.jta.*;

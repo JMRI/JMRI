@@ -14,7 +14,7 @@ import jmri.Turnout;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class EcosTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class EcosTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     @Override
     public String getSystemName(int i) {

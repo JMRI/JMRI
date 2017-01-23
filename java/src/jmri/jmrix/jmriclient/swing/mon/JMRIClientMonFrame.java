@@ -1,4 +1,3 @@
-// JMRIClientMonFrame.java
 package jmri.jmrix.jmriclient.swing.mon;
 
 import jmri.jmrix.jmriclient.JMRIClientListener;
@@ -13,10 +12,6 @@ import jmri.jmrix.jmriclient.JMRIClientTrafficController;
   */
 public class JMRIClientMonFrame extends jmri.jmrix.AbstractMonFrame implements JMRIClientListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2892712948852673352L;
     protected JMRIClientTrafficController tc = null;
 
     public JMRIClientMonFrame(jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo memo) {

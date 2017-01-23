@@ -1,4 +1,3 @@
-// TamsReply.java
 package jmri.jmrix.tams;
 
 import org.slf4j.Logger;
@@ -81,4 +80,4 @@ public class TamsReply extends jmri.jmrix.AbstractMRReply {
 
 }
 
-/* @(#)TamsReply.java */
+

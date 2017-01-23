@@ -17,11 +17,6 @@ import jmri.util.JmriJFrame;
  */
 public class FileHistoryAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7063215106558684398L;
-
     public FileHistoryAction(String s) {
         super(s);
     }

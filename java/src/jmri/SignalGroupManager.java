@@ -21,17 +21,17 @@ import javax.annotation.Nonnull;
  */
 public interface SignalGroupManager extends Manager {
 
-    public @CheckForNull SignalGroup getSignalGroup(@Nonnull String name);
+    @CheckForNull public SignalGroup getSignalGroup(@Nonnull String name);
 
-    public @CheckForNull SignalGroup getBySystemName(@Nonnull String name);
+    @CheckForNull public SignalGroup getBySystemName(@Nonnull String name);
 
-    public @CheckForNull SignalGroup getByUserName(@Nonnull String name);
+    @CheckForNull public SignalGroup getByUserName(@Nonnull String name);
 
-    public @Nonnull SignalGroup newSignalGroup(@Nonnull String sys);
+    @Nonnull public SignalGroup newSignalGroup(@Nonnull String sys);
 
-    public @Nonnull SignalGroup provideSignalGroup(@Nonnull String systemName, String userName);
+    @Nonnull public SignalGroup provideSignalGroup(@Nonnull String systemName, String userName);
 
-    public @Nonnull List<String> getSystemNameList();
+    @Nonnull public List<String> getSystemNameList();
 
     void deleteSignalGroup(@Nonnull SignalGroup s);
 }
