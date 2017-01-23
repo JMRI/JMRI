@@ -42,7 +42,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a SignalGroup > Signal Head Edit Table
+ * Swing action to create and register a SignalGroup - Signal Head Edit Table
  *
  * Based in part on RouteTableAction.java and SignalGroupTableAction.java by Bob Jacobsen
  *

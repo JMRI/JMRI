@@ -1379,7 +1379,6 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     /**
      * Opens an editor to set the details of a Signal Head as part of a Signal Group
      * when user clicks the Edit button in the Signal Head table in the lower half of the Edit Signal Group pane.
-     * {@link #editSignal(jmri.jmrit.beantable.SignalGroupSubTableAction)}
      * (renamed from signalEditPressed in 4.7.1 to explain what's in here)
      * @param row Index of line clicked in the displayed Signal Head table
      */
