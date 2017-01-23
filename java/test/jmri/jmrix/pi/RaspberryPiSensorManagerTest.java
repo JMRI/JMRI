@@ -20,7 +20,7 @@ import jmri.Sensor;
  * </P>
  * @author Paul Bender Copyright (C) 2016
  */
-public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     private GpioProvider myprovider = null;
 
