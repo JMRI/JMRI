@@ -45,7 +45,7 @@ public class EcosMenu extends JMenu {
 
         add(new jmri.jmrit.beantable.ListedTableAction("ECoS Loco Database", "jmri.jmrix.ecos.swing.locodatabase.EcosLocoTableTabAction"));
         add(new apps.gui3.TabbedPreferencesAction("ECoS Preferences", "ECOS", title));
-        add(new jmri.jmrix.ecos.utilities.AddRosterEntryToEcos("Add Roster Entry to ECoS", memo));
+        if (memo != null) add(new jmri.jmrix.ecos.utilities.AddRosterEntryToEcos("Add Roster Entry to ECoS", memo));
 
     }
 
