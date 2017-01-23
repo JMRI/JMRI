@@ -134,5 +134,5 @@ public interface Sensor extends NamedBean {
      * <p>
      * returns null if there is no direct reporter.
      */
-    public @CheckForNull Reporter getReporter();
+    @CheckForNull public Reporter getReporter();
 }

@@ -19,7 +19,7 @@ import jmri.util.JUnitUtil;
  *
  * @author	Paul Bender Copyright (C) 2014-2016
  */
-public class SprogCSStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortControllerTest {
+public class SprogCSStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortControllerTestBase {
 
     @Test
     public void testCtor() {

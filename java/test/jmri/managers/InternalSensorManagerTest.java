@@ -16,7 +16,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen Copyright 2016
  */
-public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     public String getSystemName(int i) {
         return "IS" + i;

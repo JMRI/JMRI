@@ -1,9 +1,11 @@
 package jmri.jmrit.symbolicprog;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JButton;
@@ -44,13 +46,12 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * Defines the columns; values understood are: "Name", "Value", "Range",
      * "Read", "Write", "Comment", "CV", "Mask", "State"
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
     public VariableTableModel(JLabel status, String h[], CvTableModel cvModel, IndexedCvTableModel iCvModel) {
         super();
         _status = status;
         _cvModel = cvModel;
         _indxCvModel = iCvModel;
-        headers = h;
+        headers = Arrays.copyOf(h, h.length);
     }
 
     // basic methods for AbstractTableModel implementation
@@ -836,7 +837,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * Configure from a constant. This is like setRow (which processes a
      * variable Element).
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_LOAD_OF_KNOWN_NULL_VALUE",
+    @SuppressFBWarnings(value = "NP_LOAD_OF_KNOWN_NULL_VALUE",
             justification = "null mask parameter to ConstantValue constructor expected.")
     public void setConstant(Element e) {
         // get the values for the VariableValue ctor

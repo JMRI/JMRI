@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import jmri.Light;
 
@@ -233,7 +234,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      *                                  current value of the minIntensity
      *                                  property
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
     @Override
     public void setMaxIntensity(double intensity) {
         if (intensity < 0.0 || intensity > 1.0) {
@@ -278,7 +279,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      *                                  current value of the maxIntensity
      *                                  property
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
     @Override
     public void setMinIntensity(double intensity) {
         if (intensity < 0.0 || intensity > 1.0) {
@@ -406,7 +407,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      * change anything in the hardware
      * @param intensity intensity value
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
     protected void notifyTargetIntensityChange(double intensity) {
         double oldValue = mCurrentIntensity;
         mCurrentIntensity = intensity;

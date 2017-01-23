@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.soundloader;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Font;
 import java.io.IOException;
 import java.util.ResourceBundle;
@@ -43,7 +44,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
     SpjFile file;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "cache resource at 1st start, threading OK") // NOI18N
     public EditorTableDataModel(SpjFile file) {
         super();
@@ -361,7 +362,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
      * column. Data is word wrapped within a column. Can handle data as strings,
      * comboboxes or booleans
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void printTable(HardcopyWriter w) {
@@ -410,7 +411,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         w.close();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize) {

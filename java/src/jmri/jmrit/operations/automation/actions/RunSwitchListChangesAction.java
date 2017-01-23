@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.automation.actions;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -41,7 +42,7 @@ public class RunSwitchListChangesAction extends Action {
      * common code see RunSwitchListAction.java
      * @param isChanged if set true only locations with changes will get a custom switch list.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
+    @SuppressFBWarnings(
             value = {"UC_USELESS_CONDITION", "RpC_REPEATED_CONDITIONAL_TEST"},
             justification = "isChanged = false when called from RunSwitchListAction")
     protected void doAction(boolean isChanged) {

@@ -14,7 +14,7 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class SerialMonPaneTest extends jmri.jmrix.AbstractMonPaneTest {
+public class SerialMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
 
     private SerialTrafficControlScaffold tc = null;

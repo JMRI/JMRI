@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
@@ -270,8 +271,6 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
     // cache selectedRosterEntries so that multiple calls to this
     // between selection changes will not require the creation of a new array
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP",
-            justification = "Want to give access to mutable, original roster objects")
     public RosterEntry[] getSelectedRosterEntries() {
         if (selectedRosterEntries == null) {
             int[] rows = dataTable.getSelectedRows();
@@ -280,7 +279,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
                 selectedRosterEntries[idx] = Roster.getDefault().getEntryForId(dataModel.getValueAt(sorter.convertRowIndexToModel(rows[idx]), RosterTableModel.IDCOL).toString());
             }
         }
-        return selectedRosterEntries;
+        return Arrays.copyOf(selectedRosterEntries, selectedRosterEntries.length);
     }
 
     public void setEditable(boolean editable) {

@@ -1,5 +1,6 @@
 package jmri.jmrix.nce.clockmon;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -1088,7 +1089,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         } while (priorState != internalSyncRunStateCounter);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="testing for change from stored value")
+    @SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="testing for change from stored value")
     private void internalClockStatusCheck() {
         // if change to internal clock
         if (clockMode == SYNCMODE_INTERNAL_MASTER) {
@@ -1174,7 +1175,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "Slow operation in debug OK for now")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "Slow operation in debug OK for now")
     private void debugOutputForRecomputeOffset(double avgDiff) {
         Date now = internalClock.getTime();
         String txt = "";
@@ -1223,7 +1224,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "Slow operation in debug OK for now")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "Slow operation in debug OK for now")
     private void debugOutputForRecomputeInternalSync(double pCorr, double iCorr, double dCorr) {
         String txt = "";
         for (int i = 0; i < priorDiffs.size(); i++) {
@@ -1292,7 +1293,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "Slow operation in debug OK for now")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "Slow operation in debug OK for now")
     private void debugOutputForRecomputeNceSync(double pCorr, double iCorr, double dCorr, double newInternalRate, double currError) {
         String txt = "";
         for (int i = priorDiffs.size() - 1; i >= 0; i--) {

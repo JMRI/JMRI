@@ -12,7 +12,7 @@ import org.junit.Test;
  * </P>
  * @author Paul Bender Copyright (C) 2016
  */
-public class SprogTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
+public class SprogTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
    private SprogTrafficControlScaffold stcs = null;
 

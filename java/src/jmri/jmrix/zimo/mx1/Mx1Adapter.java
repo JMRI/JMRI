@@ -8,6 +8,7 @@ import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.util.Arrays;
 import jmri.jmrix.zimo.Mx1CommandStation;
 import jmri.jmrix.zimo.Mx1Packetizer;
 import jmri.jmrix.zimo.Mx1PortController;
@@ -241,13 +242,9 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
         activeSerialPort.setFlowControlMode(flow);
     }
 
-    /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     protected String[] validSpeeds = new String[]{"1,200 baud", "2,400 baud", "4,800 baud",
@@ -263,7 +260,8 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
     InputStream serialStream = null;
 
     /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * @return the default adapter
+     * @deprecated since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
     static public Mx1Adapter instance() {

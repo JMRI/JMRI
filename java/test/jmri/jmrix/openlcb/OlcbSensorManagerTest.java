@@ -14,7 +14,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen Copyright 2008, 2010
  */
-public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     @Override
     public String getSystemName(int i) {

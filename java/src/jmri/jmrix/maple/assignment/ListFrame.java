@@ -1,5 +1,6 @@
 package jmri.jmrix.maple.assignment;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -457,7 +458,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
             w.close();
         }
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+        @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
         // Only used occasionally, so inefficient String processing not really a problem
         // though it would be good to fix it if you're working in this area
         protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) {

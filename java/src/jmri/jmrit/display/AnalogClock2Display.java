@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -257,7 +258,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         super.setScale(scale);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="fixed number of possible values")
+    @SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="fixed number of possible values")
     void addRateMenuEntry(JMenu menu, final int newrate) {
         JRadioButtonMenuItem button = new JRadioButtonMenuItem("" + newrate + ":1");
         button.addActionListener(new ActionListener() {
