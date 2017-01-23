@@ -1,5 +1,6 @@
 package jmri.managers;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
@@ -80,7 +81,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      * the shutdown was aborted by the user, in which case the program should
      * continue to operate.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
+    @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     @Override
     public boolean shutdown() {
         return shutdown(0, true);
@@ -96,7 +97,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      * shell script (Linux/Mac OS X/UNIX) can catch the exit status and restart
      * the java program.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
+    @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     @Override
     public boolean restart() {
         return shutdown(100, true);
@@ -116,7 +117,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      *               executed correctly.
      * @return false if shutdown or restart failed.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
+    @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     protected boolean shutdown(int status, boolean exit) {
         if (!shuttingDown) {
             Date start = new Date();

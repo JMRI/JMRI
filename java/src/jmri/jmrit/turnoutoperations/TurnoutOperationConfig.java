@@ -26,8 +26,6 @@ public class TurnoutOperationConfig extends JPanel {
         return myOperation;
     }
 
-    //Boudreau 2009: Should not override isValid() causes contents to not be be displayed with Java 1.6
-    //public boolean isValid() { return valid; }
     public void endConfigure() {
         log.error("Should have been overridden!");
     }

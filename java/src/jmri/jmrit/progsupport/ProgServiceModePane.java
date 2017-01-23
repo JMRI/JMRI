@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -86,7 +87,7 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
      * Get the list of global managers
      * @return empty list if none
      */
-    protected @Nonnull List<GlobalProgrammerManager> getMgrList() {
+    @CheckForNull public List<GlobalProgrammerManager> getMgrList() {
         return InstanceManager.getList(jmri.GlobalProgrammerManager.class);
     }
 

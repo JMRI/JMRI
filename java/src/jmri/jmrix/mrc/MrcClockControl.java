@@ -1,5 +1,6 @@
 package jmri.jmrix.mrc;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.text.DecimalFormat;
 import java.util.Date;
 import jmri.InstanceManager;
@@ -246,7 +247,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         issueClockTime(now.getHours(), now.getMinutes());
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="testing for any change from previous value")
+    @SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="testing for any change from previous value")
     public void initializeHardwareClock(double rate, Date now, boolean getTime) {
         // clockMode controls what we are doing: SYNCMODE_OFF, SYNCMODE_INTERNAL_MASTER, SYNCMODE_MRC_MASTER
         boolean synchronizeWithInternalClock = internalClock.getSynchronize();

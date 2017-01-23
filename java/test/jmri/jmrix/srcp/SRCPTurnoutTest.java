@@ -14,7 +14,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen
  * @author  Paul Bender Copyright (C) 2017
  */
-public class SRCPTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
+public class SRCPTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
     private SRCPTrafficControlScaffold stc = null;
 

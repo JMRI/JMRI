@@ -1,5 +1,6 @@
 package jmri.util;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Calendar;
 
 /**
@@ -57,7 +58,7 @@ public class WaitHandler {
      *
      * @param self waiting Object
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification = "unguarded wait() used intentionally here as part of utility class")
+    @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification = "unguarded wait() used intentionally here as part of utility class")
     public WaitHandler(Object self) {
         // loop until interrupted, or non-spurious wake
         while (true) {

@@ -10,12 +10,11 @@ import java.io.File;
 public class GetClassPath {
 
     // static provide the class path
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("SBSC_USE_STRINGBUFFER_CONCATENATION") // not a performance issue
     static public String getClassPath() {
         File programdir = new File(".");
         File libdir = new File("lib");
 
-        String classpath = "";
+        StringBuilder classpath = new StringBuilder();
 
         // add the jar files from the base directory
         String[] programfiles = programdir.list();
@@ -23,8 +22,7 @@ public class GetClassPath {
              return ". wasn't a directory; failure";
         }
 
-        for (int i = 0; i < programfiles.length; i++) {
-            String entry = programfiles[i];
+        for (String entry : programfiles) {
             // check that this file should go on the class path
             if (entry.length() < 5) {
                 continue;
@@ -39,10 +37,10 @@ public class GetClassPath {
                 continue;
             }
             // OK, it should
-            classpath = classpath + entry + ":";
+            classpath.append(entry).append(":");
         }
         // add jmri.jar explicitly
-        classpath = classpath + "jmri.jar";
+        classpath.append("jmri.jar");
 
         // add entries from lib/
         String[] libfiles = libdir.list();
@@ -50,8 +48,7 @@ public class GetClassPath {
              return "lib wasn't a directory; failure";
         }
 
-        for (int i = 0; i < libfiles.length; i++) {
-            String entry = libfiles[i];
+        for (String entry : libfiles) {
             // check that this file should go on the class path
             if (entry.length() < 5) {
                 continue;
@@ -66,11 +63,11 @@ public class GetClassPath {
                 continue;
             }
             // OK, it should
-            classpath = classpath + ":lib/" + entry;
+            classpath.append(":lib/").append(entry);
         }
 
         // return the result
-        return classpath;
+        return classpath.toString();
     }
 
     // Main entry point

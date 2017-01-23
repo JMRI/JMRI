@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.uhlenbrock;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
@@ -37,7 +38,7 @@ import org.slf4j.LoggerFactory;
  */
 public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterface {
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization")
     public UhlenbrockPacketizer() {
         super();

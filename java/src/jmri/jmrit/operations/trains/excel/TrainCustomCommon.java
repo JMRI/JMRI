@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.trains.excel;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -53,7 +54,7 @@ public abstract class TrainCustomCommon {
      * @param csvFile The File to add.
      *
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT")
+    @SuppressFBWarnings(value = "UW_UNCOND_WAIT")
     public void addCVSFile(File csvFile) {
         // Ignore null files...
         if (csvFile == null  || !excelFileExists()) {
@@ -90,7 +91,7 @@ public abstract class TrainCustomCommon {
      * file of file names.
      * @return True if successful.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT")
+    @SuppressFBWarnings(value = "UW_UNCOND_WAIT")
     public boolean process() {
         
         // check to see it the Excel program is available
@@ -147,7 +148,7 @@ public abstract class TrainCustomCommon {
         return file.exists();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT")
+    @SuppressFBWarnings(value = "UW_UNCOND_WAIT")
     public boolean checkProcessReady() {
         if (!isProcessAlive())
             return true;

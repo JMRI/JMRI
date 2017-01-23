@@ -12,7 +12,7 @@ import junit.framework.TestCase;
  *
  * @author	Bob Jacobsen 2002, 2004, 2005, 2007, 2008
   */
-public abstract class AbstractLightTest extends TestCase {
+public abstract class AbstractLightTestBase extends TestCase {
 
     // implementing classes must provide these abstract members:
     //
@@ -24,7 +24,7 @@ public abstract class AbstractLightTest extends TestCase {
 
     abstract public void checkOffMsgSent();
 
-    public AbstractLightTest(String s) {
+    public AbstractLightTestBase(String s) {
         super(s);
     }
 

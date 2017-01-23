@@ -1,5 +1,6 @@
 package jmri.managers;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -39,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * @deprecated Since 4.5.4; use {@link jmri.managers.JmriUserPreferencesManager} instead.
  */
 @net.jcip.annotations.NotThreadSafe  // intended for access from Swing thread only
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
+@SuppressFBWarnings(
         value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
         justification = "Class is single-threaded, and uses statics extensively")
 @Deprecated

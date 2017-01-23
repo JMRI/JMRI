@@ -13,7 +13,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen
  */
-public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTest {
+public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
 
     private SRCPTrafficControlScaffold stc = null;
   
