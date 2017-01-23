@@ -14,7 +14,7 @@ import jmri.Sensor;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class EcosSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class EcosSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     @Override
     public String getSystemName(int i) {

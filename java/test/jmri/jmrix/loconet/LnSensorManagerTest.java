@@ -14,7 +14,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen Copyright 2001
  */
-public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     private LocoNetInterfaceScaffold lnis = null;
 

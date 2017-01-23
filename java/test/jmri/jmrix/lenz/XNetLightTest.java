@@ -7,7 +7,7 @@ import org.junit.Assert;
  *
  * @author	Paul Bender
  */
-public class XNetLightTest extends jmri.implementation.AbstractLightTest {
+public class XNetLightTest extends jmri.implementation.AbstractLightTestBase {
 
     public int numListeners() {
         return xnis.numListeners();

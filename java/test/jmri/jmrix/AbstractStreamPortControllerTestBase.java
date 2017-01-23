@@ -9,10 +9,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * JUnit tests for the AbstractNetworkPortController class
+ * JUnit tests for the AbstractStreamPortController class
  * <p>
  *
  * @author      Paul Bender Copyright (C) 2016
  */
-public class AbstractNetworkPortControllerTest extends AbstractPortControllerTest {
+public abstract class AbstractStreamPortControllerTestBase extends AbstractPortControllerTestBase {
 }

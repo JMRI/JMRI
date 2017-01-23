@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
  * itself a test class, e.g. should not be added to a suite. Instead, this forms
  * the base for test classes, including providing some common tests.
  *
- * @author	Bob Jacobsen 2016 from AbstractLightTest
+ * @author	Bob Jacobsen 2016 from AbstractLightTestBase (which was called AbstractLightTest at the time)
  */
 public /*abstract*/ class AbstractSensorTest extends TestCase {
 

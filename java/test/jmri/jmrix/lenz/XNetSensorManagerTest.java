@@ -15,7 +15,7 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (c) 2003
  */
-public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
         
     private XNetInterfaceScaffold xnis; 
 

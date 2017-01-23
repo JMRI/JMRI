@@ -21,7 +21,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen 2003, 2006, 2008, 2016
  * @author      Paul Bender Copyright(C) 2016
  */
-public abstract class AbstractSensorMgrTest {
+public abstract class AbstractSensorMgrTestBase {
 
     // implementing classes must provide these abstract members:
     //

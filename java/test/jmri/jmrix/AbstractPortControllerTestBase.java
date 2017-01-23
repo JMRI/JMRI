@@ -14,7 +14,7 @@ import org.junit.Test;
 /**
  * @author Bob Jacobsen Copyright (C) 2015
  */
-public class AbstractPortControllerTest {
+public abstract class AbstractPortControllerTestBase {
 
     @Test
     public void testisDirtyNotNPE() {
