@@ -20,7 +20,7 @@ import org.powermock.core.classloader.annotations.MockPolicy;
  * @author	Paul Bender Copyright (C) 2012,2016
  */
 @RunWith(PowerMockRunner.class)
-public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTest {
+public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
     @Override
     public String getSystemName(int i) {

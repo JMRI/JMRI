@@ -1,6 +1,6 @@
 package jmri.jmrix.maple;
 
-import jmri.implementation.AbstractTurnoutTest;
+import jmri.implementation.AbstractTurnoutTestBase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,7 +11,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen
   */
-public class SerialTurnoutTest extends AbstractTurnoutTest {
+public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     private SerialTrafficControlScaffold tcis = null;
     private SerialNode n = new SerialNode();

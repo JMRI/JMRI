@@ -8,7 +8,7 @@ import org.junit.Assert;
  * @author	Paul Bender
  * @author	Mark Underwood (C) 2015
  */
-public class DCCppLightTest extends jmri.implementation.AbstractLightTest {
+public class DCCppLightTest extends jmri.implementation.AbstractLightTestBase {
 
     public int numListeners() {
         return xnis.numListeners();

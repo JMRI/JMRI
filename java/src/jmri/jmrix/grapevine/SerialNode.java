@@ -1,5 +1,6 @@
 package jmri.jmrix.grapevine;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRListener;
@@ -167,7 +168,7 @@ public class SerialNode extends AbstractNode {
      * Public method to set node type.
      */
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     public void setNodeType(int type) {
         nodeType = type;
         switch (nodeType) {

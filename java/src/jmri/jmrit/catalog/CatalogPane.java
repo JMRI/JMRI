@@ -91,9 +91,6 @@ public class CatalogPane extends JPanel {
         add(previewPanel);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     public NamedIcon getSelectedIcon() {
         if (!dTree.isSelectionEmpty() && dTree.getSelectionPath() != null) {
             // somebody has been selected
@@ -105,24 +102,22 @@ public class CatalogPane extends JPanel {
             }
             if (((DefaultMutableTreeNode) path.getPathComponent(1)).getUserObject().equals("resources")) {
                 // process a .jar icon
-                StringBuffer buf = new StringBuffer(CatalogTreeModel.resourceRoot);
+                StringBuilder buf = new StringBuilder(CatalogTreeModel.resourceRoot);
                 for (int i = 2; i < level; i++) {
                     buf.append("/");
                     buf.append((String) ((DefaultMutableTreeNode) path.getPathComponent(i)).getUserObject());
                 }
-                String name = buf.toString();
-                log.debug("attempt to load resource from " + name);
-                return NamedIcon.getIconByName(name);
+                log.debug("attempt to load resource from {}", buf);
+                return NamedIcon.getIconByName(buf.toString());
             } else if (((DefaultMutableTreeNode) path.getPathComponent(1)).getUserObject().equals("files")) {
                 // process a file
-                String name = "file:" + (String) ((DefaultMutableTreeNode) path.getPathComponent(2)).getUserObject();
+                StringBuilder buf = new StringBuilder("file:").append(((DefaultMutableTreeNode) path.getPathComponent(2)).getUserObject());
                 for (int i = 3; i < level; i++) {
-                    name = name + File.separator
-                            + (String) ((DefaultMutableTreeNode) path.getPathComponent(i)).getUserObject();
+                    buf.append(File.separator).append(((DefaultMutableTreeNode) path.getPathComponent(i)).getUserObject());
                 }
-                log.debug("attempt to load file from " + name);
+                log.debug("attempt to load file from {}", buf);
                 //return new NamedIcon(name, "file:"+name);
-                return NamedIcon.getIconByName(name);
+                return NamedIcon.getIconByName(buf.toString());
             } else {
                 log.error("unexpected first element on getSelectedIcon: " + path.getPathComponent(1));
             }

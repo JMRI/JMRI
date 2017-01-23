@@ -3,6 +3,7 @@ package apps.gui3;
 import apps.AppsBase;
 import apps.SplashWindow;
 import apps.SystemConsole;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.AWTEvent;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -107,7 +108,7 @@ public abstract class Apps3 extends AppsBase {
      * For compatability with adding in buttons to the toolbar using the
      * existing createbuttonmodel
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "only one application at a time")
     protected static void setButtonSpace() {
         _buttonSpace = new JPanel();
@@ -212,7 +213,7 @@ public abstract class Apps3 extends AppsBase {
             debugListener = new AWTEventListener() {
 
                 @Override
-                @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "debugmsg write is semi-global")
+                @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "debugmsg write is semi-global")
                 public void eventDispatched(AWTEvent e) {
                     if (!debugFired) {
                         /*We set the debugmsg flag on the first instance of the user pressing any button

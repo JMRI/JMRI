@@ -14,7 +14,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen Copyright 2003
  */
-public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     private SerialNode n0 = null;
     private SerialNode n1 = null;

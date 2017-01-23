@@ -16,7 +16,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen Copyright 2009
  */
-public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest {
+public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
     public String getSystemName(int i) {
         return "IL" + i;

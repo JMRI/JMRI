@@ -1223,7 +1223,7 @@
           Define the XML stucture for storing a LocoIcon
         </xs:documentation>
         <xs:appinfo>
-          jmri.jmrit.display.configurexml.LocoIconXML??
+          jmri.jmrit.display.configurexml.LocoIconXml
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence>
@@ -1285,7 +1285,7 @@
           Define the XML stucture for storing a BlockContentsIcon
         </xs:documentation>
         <xs:appinfo>
-          jmri.jmrit.display.configurexml.LocoIconXML??
+          jmri.jmrit.display.configurexml.BlockContentsIconXml
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence>
@@ -1390,7 +1390,7 @@
           (Not present in 2.9.3 DTD, done by observation)
         </xs:documentation>
         <xs:appinfo>
-          jmri.jmrit.display.configurexml.??
+          jmri.jmrit.display.configurexml.LayoutTurntableXml
         </xs:appinfo>
       </xs:annotation>
 
