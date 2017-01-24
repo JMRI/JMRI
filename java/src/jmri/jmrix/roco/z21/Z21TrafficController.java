@@ -268,8 +268,15 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         DatagramPacket receivePacket = new DatagramPacket(buffer, 100, host, port);
 
         // and wait to receive data in the packet.
-        ((Z21Adapter) controller).getSocket().receive(receivePacket);
-
+        try {
+           ((Z21Adapter) controller).getSocket().receive(receivePacket);
+        } catch (java.net.SocketException|NullPointerException se) {
+           // if we are waiting when the controller is disposed,
+           // a socket exception will be thrown.
+           log.debug("Socket exception during receive.  Connection Closed?");
+           rcvException = true;
+           return;
+        }
         // create the reply from the received data.
         Z21Reply msg = new Z21Reply(buffer, receivePacket.getLength());
 

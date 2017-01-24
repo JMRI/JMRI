@@ -18,7 +18,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen
  * @author      Paul Bender Copyright (C) 2016
  */
-public class JMRIClientSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class JMRIClientSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     @Override
     public String getSystemName(int i) {

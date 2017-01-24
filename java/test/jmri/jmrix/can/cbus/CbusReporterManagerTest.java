@@ -17,7 +17,7 @@ import jmri.jmrix.can.TrafficControllerScaffold;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTest {
+public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
     @Override
     public String getSystemName(int i) {

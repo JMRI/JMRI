@@ -1,21 +1,19 @@
-/**
- * DccTurnoutTest.java
- *
- * Description:	tests for the jmri.jmrix.dcc.DccTurnout class
- *
- * @author	Bob Jacobsen
- */
 package jmri.jmrix.dcc;
 
 import jmri.CommandStation;
 import jmri.InstanceManager;
-import jmri.implementation.AbstractTurnoutTest;
+import jmri.implementation.AbstractTurnoutTestBase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class DccTurnoutTest extends AbstractTurnoutTest {
+/**
+ * Tests for the jmri.jmrix.dcc.DccTurnout class
+ *
+ * @author	Bob Jacobsen
+ */
+public class DccTurnoutTest extends AbstractTurnoutTestBase {
 
     CommandStationScaffold tcis;
 

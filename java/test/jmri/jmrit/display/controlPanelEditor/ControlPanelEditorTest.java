@@ -1,38 +1,39 @@
-package jmri.jmrix.marklin.swing.monitor;
+package jmri.jmrit.display.controlPanelEditor;
 
 import apps.tests.Log4JFixture;
-import jmri.util.JUnitUtil;
 import jmri.InstanceManager;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import java.awt.GraphicsEnvironment;
 
 /**
- * Test simple functioning of MarklinMonPane
+ * Test simple functioning of the ControlPanelEditor class.
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author  Paul Bender Copyright (C) 2017 
  */
-public class MarklinMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
-
+public class ControlPanelEditorTest {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull("exists", pane );
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ControlPanelEditor frame = new ControlPanelEditor();
+        Assert.assertNotNull("exists", frame );
     }
 
-    @Override
     @Before
     public void setUp() {
         Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
-        pane = new MarklinMonPane();
     }
 
-    @Override
     @After
     public void tearDown() {
         JUnitUtil.resetInstanceManager();
         Log4JFixture.tearDown();
     }
+
 }

@@ -2,7 +2,7 @@ package jmri.jmrix.easydcc;
 
 import java.util.Vector;
 import jmri.JmriException;
-import jmri.jmrix.AbstractPowerManagerTest;
+import jmri.jmrix.AbstractPowerManagerTestBase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,7 +14,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen Copyright 2006
  */
-public class EasyDccPowerManagerTest extends AbstractPowerManagerTest {
+public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
 
     // service routines to simulate recieving on, off from interface
     @Override

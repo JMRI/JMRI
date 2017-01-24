@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2005
  */
-public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     @Override
     public String getSystemName(int i) {

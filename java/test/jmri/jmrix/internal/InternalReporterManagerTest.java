@@ -14,7 +14,7 @@ import org.junit.Test;
  * @author	Mark Underwood 2012
  * @author	Paul Bender 2016
  */
-public class InternalReporterManagerTest extends jmri.managers.AbstractReporterMgrTest {
+public class InternalReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
     @Override
     public String getSystemName(int i) {

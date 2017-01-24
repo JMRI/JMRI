@@ -613,9 +613,9 @@ public class DefaultConditionalAction implements ConditionalAction {
      * correspond to an action Data as defined in ConditionalAction, returns -1.
      */
     public static int stringToActionData(String str) {
-        if (str.equals(rbx.getString("TurnoutClosed"))) {
+        if (str.equals(Bundle.getMessage("TurnoutStateClosed"))) {
             return Turnout.CLOSED;
-        } else if (str.equals(rbx.getString("TurnoutThrown"))) {
+        } else if (str.equals(Bundle.getMessage("TurnoutStateThrown"))) {
             return Turnout.THROWN;
         } else if (str.equals(Bundle.getMessage("SensorStateActive"))) {
             return Sensor.ACTIVE;
@@ -681,9 +681,9 @@ public class DefaultConditionalAction implements ConditionalAction {
             case Conditional.ACTION_DELAYED_TURNOUT:
             case Conditional.ACTION_RESET_DELAYED_TURNOUT:
                 if (data == Turnout.CLOSED) {
-                    return (rbx.getString("TurnoutClosed"));
+                    return (Bundle.getMessage("TurnoutStateClosed"));
                 } else if (data == Turnout.THROWN) {
-                    return (rbx.getString("TurnoutThrown"));
+                    return (Bundle.getMessage("TurnoutStateThrown"));
                 } else if (data == Route.TOGGLE) {
                     return (rbx.getString("Toggle"));
                 }
