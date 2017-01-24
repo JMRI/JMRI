@@ -1,4 +1,3 @@
-// LoaderAction.java
 package jmri.jmrix.openlcb.swing.downloader;
 
 /**
@@ -10,4 +9,4 @@ public class LoaderAction extends LoaderPane.Default {
 
 }
 
-/* @(#)LoaderAction.java */
+

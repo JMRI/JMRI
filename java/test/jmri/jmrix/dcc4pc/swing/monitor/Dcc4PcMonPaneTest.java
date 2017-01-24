@@ -13,7 +13,7 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class Dcc4PcMonPaneTest extends jmri.jmrix.AbstractMonPaneTest {
+public class Dcc4PcMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     @Test
     public void testMemoCtor() {

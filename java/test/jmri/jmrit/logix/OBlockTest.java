@@ -168,6 +168,9 @@ public class OBlockTest extends TestCase {
         Assert.assertEquals("Two portals", 2, b.getPortals().size());
 
         Assert.assertEquals("Same Portal", p, b.getPortalByName("barp"));
+        
+        jmri.util.JUnitAppender.assertWarnMessage("Portal \"foop\" from block \"null\" to block \"null\" not in block OB0"); 
+        jmri.util.JUnitAppender.assertWarnMessage("Portal \"barp\" from block \"null\" to block \"null\" not in block OB0"); 
     }
         
     public void testAddPath() {

@@ -173,7 +173,7 @@ public abstract class AbstractProgrammer implements Programmer {
     }
 
     @Override
-    abstract public @Nonnull List<ProgrammingMode> getSupportedModes();
+    abstract @Nonnull public List<ProgrammingMode> getSupportedModes();
 
     /**
      * Basic implementation. Override this to turn writing on and off globally.

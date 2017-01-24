@@ -36,4 +36,4 @@ public class SprogMonAction extends AbstractAction {
 }
 
 
-/* @(#)SprogMonAction.java */
+

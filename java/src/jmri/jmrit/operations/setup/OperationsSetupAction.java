@@ -1,6 +1,6 @@
-// OperationsSetupAction.java
 package jmri.jmrit.operations.setup;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
@@ -24,7 +24,7 @@ public class OperationsSetupAction extends AbstractAction {
     static OperationsSetupFrame operationsSetupFrame = null;
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Only one OperationsSetupFrame")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Only one OperationsSetupFrame")
     public void actionPerformed(ActionEvent e) {
         // create a settings frame
         if (operationsSetupFrame == null || !operationsSetupFrame.isVisible()) {
@@ -36,4 +36,4 @@ public class OperationsSetupAction extends AbstractAction {
     }
 }
 
-/* @(#)OperationsSetupAction.java */
+

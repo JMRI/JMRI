@@ -1,4 +1,3 @@
-// YardmasterByTrackAction.java
 package jmri.jmrit.operations.locations;
 
 import java.awt.Frame;
@@ -46,4 +45,4 @@ public class YardmasterByTrackAction extends AbstractAction {
     }
 }
 
-/* @(#)YardmasterByTrackAction.java */
+

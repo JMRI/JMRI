@@ -1,4 +1,3 @@
-// SprogPowerManager.java
 package jmri.jmrix.sprog;
 
 import jmri.JmriException;
@@ -108,4 +107,4 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
 
 }
 
-/* @(#)SprogPowerManager.java */
+

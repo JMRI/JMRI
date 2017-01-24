@@ -29,7 +29,7 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
 
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.locomon.LocoMonFrame";
+        return "package.jmri.jmrix.loconet.locomon.LocoMonFrame"; // NOI18N
     }
 
     @Override
@@ -37,7 +37,7 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
         String uName = "";
         if (memo != null) {
             uName = memo.getUserName();
-            if (!"LocoNet".equals(uName)) {
+            if (!"LocoNet".equals(uName)) { // NOI18N
                 uName = uName + ": ";
             } else {
                 uName = "";

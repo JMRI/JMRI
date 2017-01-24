@@ -28,7 +28,7 @@ public class HexFileFrame extends JmriJFrame {
 
     // to find and remember the log file
     final javax.swing.JFileChooser inputFileChooser
-            = jmri.jmrit.XmlFile.userFileChooser("Hex files", "hex");
+            = jmri.jmrit.XmlFile.userFileChooser("Hex files", "hex"); // NOI18N
 
     public HexFileFrame() {
         super();
@@ -158,7 +158,7 @@ public class HexFileFrame extends JmriJFrame {
                 false, false);
         port.getSystemConnectionMemo().configureManagers();
         LnSensorManager LnSensorManager = (LnSensorManager) port.getSystemConnectionMemo().getSensorManager();
-        LnSensorManager.setDefaultSensorState(port.getOptionState("SensorDefaultState"));
+        LnSensorManager.setDefaultSensorState(port.getOptionState("SensorDefaultState")); // NOI18N
 
         // Install a debug programmer, replacing the existing LocoNet one
         jmri.ProgrammerManager ep = port.getSystemConnectionMemo().getProgrammerManager();

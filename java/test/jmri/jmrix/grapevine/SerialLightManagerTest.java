@@ -18,7 +18,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen Copyright 2004, 2007, 2008
  */
-public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTest {
+public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
     @Before
     public void setUp() {

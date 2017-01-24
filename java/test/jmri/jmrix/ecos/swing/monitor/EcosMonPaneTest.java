@@ -19,7 +19,7 @@ import jmri.jmrix.AbstractMonPaneScaffold;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class EcosMonPaneTest extends jmri.jmrix.AbstractMonPaneTest {
+public class EcosMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     jmri.jmrix.ecos.EcosSystemConnectionMemo memo = null;
 

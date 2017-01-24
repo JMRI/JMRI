@@ -19,11 +19,6 @@ import org.slf4j.LoggerFactory;
  */
 public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListener, CanPanelInterface {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2953838883575771579L;
-
     public MonitorPane() {
         super();
     }
@@ -170,11 +165,6 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -5753208779918899593L;
 
         public Default() {
             super("Openlcb Monitor",

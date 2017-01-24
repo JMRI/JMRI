@@ -216,10 +216,6 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         JMenu menu = new JMenu(rb.getString("MenuMenu"));
         serverOnOff = new JMenuItem(rb.getString("MenuMenuStop"));
         serverOnOff.addActionListener(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 8264877902074382783L;
 
             @Override
             public void actionPerformed(ActionEvent event) {

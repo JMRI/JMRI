@@ -1,4 +1,3 @@
-// XNetPortController.java
 package jmri.jmrix.dccpp;
 
 /**
@@ -32,4 +31,4 @@ public interface DCCppPortController extends jmri.jmrix.PortAdapter {
 }
 
 
-/* @(#)DCCppPortController.java */
+

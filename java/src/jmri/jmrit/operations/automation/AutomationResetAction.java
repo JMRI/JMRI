@@ -1,4 +1,3 @@
-// ResetAutomationAction.java
 package jmri.jmrit.operations.automation;
 
 import java.awt.event.ActionEvent;

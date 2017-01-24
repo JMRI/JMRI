@@ -1,4 +1,3 @@
-// SchedulesTableFrame.java
 package jmri.jmrit.operations.locations.schedules;
 
 import java.awt.Dimension;

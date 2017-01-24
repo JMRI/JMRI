@@ -1,9 +1,11 @@
 package jmri.jmrix.loconet.sdf;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,9 +28,8 @@ import org.slf4j.LoggerFactory;
  */
 public class SdfBuffer {
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
     public SdfBuffer(byte[] buffer) {
-        this.buffer = buffer;
+        this.buffer = Arrays.copyOf(buffer, buffer.length);
         loadMacroList();
     }
 
@@ -105,7 +106,7 @@ public class SdfBuffer {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public String toString() {
@@ -118,9 +119,8 @@ public class SdfBuffer {
         return out;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public byte[] getByteArray() {
-        return buffer;
+        return Arrays.copyOf(buffer, buffer.length);
     }
 
     public List<SdfMacro> getMacroList() {

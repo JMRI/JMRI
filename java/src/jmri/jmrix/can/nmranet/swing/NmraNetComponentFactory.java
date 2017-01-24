@@ -1,4 +1,3 @@
-// NmraNetComponentFactory.java
 package jmri.jmrix.can.nmranet.swing;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -30,4 +29,4 @@ public class NmraNetComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 }
 
 
-/* @(#)NmraNetComponentFactory.java */
+

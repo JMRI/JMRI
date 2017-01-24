@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.can.adapters.gridconnect.net;
 
 import java.util.ResourceBundle;

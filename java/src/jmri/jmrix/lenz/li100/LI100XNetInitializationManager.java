@@ -1,4 +1,3 @@
-// LI100XNetInitializationManager.java
 package jmri.jmrix.lenz.li100;
 
 import jmri.jmrix.lenz.AbstractXNetInitializationManager;

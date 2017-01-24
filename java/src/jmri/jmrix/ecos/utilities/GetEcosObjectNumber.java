@@ -1,4 +1,3 @@
-// GetEcosObjectNumber.java
 package jmri.jmrix.ecos.utilities;
 
 

@@ -1,4 +1,3 @@
-// DCCppSimulatorPortController.java
 package jmri.jmrix.dccpp;
 
 import java.io.DataInputStream;
@@ -53,4 +52,4 @@ public abstract class DCCppSimulatorPortController extends jmri.jmrix.AbstractSe
 }
 
 
-/* @(#)DCCppSimulatorPortController.java */
+

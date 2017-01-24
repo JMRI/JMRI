@@ -41,4 +41,4 @@ public class QsiMonAction extends AbstractAction {
 }
 
 
-/* @(#)QsiMonAction.java */
+

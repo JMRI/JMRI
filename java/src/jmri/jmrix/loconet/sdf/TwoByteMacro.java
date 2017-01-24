@@ -13,7 +13,7 @@ public class TwoByteMacro extends SdfMacro {
     }
 
     public String name() {
-        return "Two Byte Macro";
+        return "Two Byte Macro"; // NOI18N
     }
 
     byte[] bytes = new byte[2];

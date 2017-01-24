@@ -10,7 +10,7 @@
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-  <meta name="Date.Modified" content="20150920">
+  <meta name="Date.Modified" content="20170107">
   <meta name="keywords" content="JMRI help Turnout Add Edit">
   <!--#include virtual="/Style" -->
 </head>
@@ -24,7 +24,7 @@
 
       <p>When adding a Turnout, from the drop down list select the
       System (hardware connection) to which the Turnout is
-      attached.</p><img src="AddTurnout.png">
+      attached.</p><img src="images/AddTurnout.png">
 
       <p>Enter a valid Hardware Address for that Turnout and if
       desired enter a User Name.</p>
@@ -34,21 +34,22 @@
       let's the user optionally use 2 CBUS event values for each
       Turnout added (either discovered automatically or entered
       manually as <code>-x;+y</code>).</p><img src=
-      "AddTurnoutMERG.png">
+      "images/AddTurnoutMERG.png">
 
       <h2>Creating a number of Turnouts</h2>
 
       <p>It is also possible to create a number of Turnouts in one
       go.<br>
-      Where supported, the "Add Range" check box will be
-      enabled.</p><img src="AddTurnoutNumber.png">
+      Where supported, the "Add a sequential range" check box will be
+      enabled.</p><img src="images/AddTurnoutNumber.png">
 
-      <p>When checking the "Add Range" box, this will enable the
-      "Number To Add" field. Here enter in the number of Turnouts
-      that you wish to add. This will create that number of
+      <p>When checking the "Add a sequential range" box, this will
+      enable the "Number of items" spinner. Click the small arrows
+      up or down to set the number of Turnouts you wish to add.
+      This will create that number of
       sequential Turnouts.</p>If a User Name has been entered, a
-      number will be added to the end of the name to keep each
-      Turnout User Name unique.<br>
+      number will be added to the end of that names of all but the first
+      one to keep each Turnout User Name unique.<br>
       See <a href=
       "../../../../html/doc/Technical/Names.shtml">Names</a> under
       general help for more information.

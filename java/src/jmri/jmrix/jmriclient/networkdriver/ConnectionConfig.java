@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.jmriclient.networkdriver;
 
 import java.awt.event.ActionEvent;

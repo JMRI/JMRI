@@ -1,6 +1,6 @@
-// NceMacroRestore.java
 package jmri.jmrix.nce.macro;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -248,7 +248,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
     public void message(NceMessage m) {
     } // ignore replies
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY")
+    @SuppressFBWarnings(value = "NN_NAKED_NOTIFY")
     public void reply(NceReply r) {
         if (log.isDebugEnabled()) {
             log.debug("waiting for " + waiting + " responses ");

@@ -155,7 +155,7 @@ public class SignalSystemTest {
         jmri.util.JUnitAppender.assertErrorMessage("No facing block found for source mast IF$vsm:BNSF-1996:SL-2A($0100)");
         jmri.util.JUnitAppender.clearBacklog();
         jmri.util.JUnitAppender.verifyNoBacklog();
-        log.warn("suppressing multiple \"No facing block found ...\" messages from AA1UPtest.xml file");
+        log.info("suppressing multiple \"No facing block found ...\" messages from AA1UPtest.xml file");
     }
 
     void checkAspect(String mastName, String aspect) {

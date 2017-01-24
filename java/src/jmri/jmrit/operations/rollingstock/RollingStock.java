@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.rollingstock;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
@@ -268,7 +269,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
+    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
             justification = "returns a weight of zero tons")
     public String getWeightTons() {
         if (!_weightTons.equals(DEFAULT_WEIGHT)) {

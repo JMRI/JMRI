@@ -1,4 +1,3 @@
-// SpecificReply.java
 package jmri.jmrix.powerline.simulator;
 
 import jmri.jmrix.powerline.SerialTrafficController;
@@ -122,4 +121,4 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 
 }
 
-/* @(#)SpecificReply.java */
+

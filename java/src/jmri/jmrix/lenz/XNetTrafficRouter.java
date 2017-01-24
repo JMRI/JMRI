@@ -1,4 +1,3 @@
-// XNetTrafficRouter.java
 package jmri.jmrix.lenz;
 
 import org.slf4j.Logger;
@@ -109,4 +108,4 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
 }
 
 
-/* @(#)XNetTrafficRouter.java */
+

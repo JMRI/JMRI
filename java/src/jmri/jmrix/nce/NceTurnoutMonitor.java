@@ -1,6 +1,7 @@
 //NceTournoutMonitor.java
 package jmri.jmrix.nce;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -175,7 +176,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY") // notify not naked, command station is shared state
+    @SuppressFBWarnings(value = "NN_NAKED_NOTIFY") // notify not naked, command station is shared state
     public void reply(NceReply r) {
         if (r.getNumDataElements() == REPLY_LEN) {
 
@@ -471,4 +472,4 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
             .getLogger(NceTurnoutMonitor.class.getName());
 
 }
-/* @(#)NceTurnoutMonitor.java */
+

@@ -1,5 +1,6 @@
 package jmri.jmrix.nce.usbinterface;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -256,7 +257,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
     int recChar = 0;
     int[] recChars = new int[16];
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification = "Thread wait from main transfer loop")
+    @SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification = "Thread wait from main transfer loop")
     public void reply(NceReply r) {
         if (log.isDebugEnabled()) {
             log.debug("Receive character");

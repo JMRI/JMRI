@@ -1,6 +1,6 @@
-// TamsTrafficController.java
 package jmri.jmrix.tams;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -272,7 +272,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     public void setInstance() {
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT")
+    @SuppressFBWarnings(value = "MS_PKGPROTECT")
     // FindBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected TamsTrafficController self = null;
@@ -526,4 +526,4 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
 
 }
 
-/* @(#)TamsTrafficController.java */
+

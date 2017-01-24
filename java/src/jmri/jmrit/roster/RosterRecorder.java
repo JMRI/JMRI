@@ -1,4 +1,3 @@
-// RosterRecorder.java
 package jmri.jmrit.roster;
 
 import java.util.concurrent.ArrayBlockingQueue;

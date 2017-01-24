@@ -1,4 +1,3 @@
-// LenzConnectionTypeList.java
 package jmri.jmrix.dccpp;
 
 /**

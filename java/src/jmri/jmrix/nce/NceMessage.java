@@ -1,4 +1,3 @@
-// NceMessage.java
 package jmri.jmrix.nce;
 
 import java.util.Arrays;
@@ -540,4 +539,4 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     private final static Logger log = LoggerFactory.getLogger(NceMessage.class.getName());
 }
 
-/* @(#)NceMessage.java */
+

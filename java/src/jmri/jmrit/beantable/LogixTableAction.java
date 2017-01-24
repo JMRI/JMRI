@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -470,8 +471,8 @@ public class LogixTableAction extends AbstractTableAction {
 
     // Add Logix Variables
     JmriJFrame addLogixFrame = null;
-    JTextField _systemName = new JTextField(10);
-    JTextField _addUserName = new JTextField(10);
+    JTextField _systemName = new JTextField(20);
+    JTextField _addUserName = new JTextField(20);
     JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     JLabel _sysNameLabel = new JLabel(Bundle.getMessage("BeanNameLogix") + " " + Bundle.getMessage("ColumnSystemName") + ":");
     JLabel _userNameLabel = new JLabel(Bundle.getMessage("BeanNameLogix") + " " + Bundle.getMessage("ColumnUserName") + ":");
@@ -2165,7 +2166,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     boolean logicTypeChanged(ActionEvent e) {
         int type = _operatorBox.getSelectedIndex() + 1;
         if (type == _logicType) {

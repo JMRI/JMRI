@@ -211,6 +211,15 @@
         </li>
 
         <li>
+          <p>Check <b>Allocate Train As Far As Possible</b> to allow
+          Dispatcher when using Auto Allocation to allocate as far
+          ahead of the train as allowed by other circumstances such as
+          an occupied block. Allocation is limited of course by the
+          <b>Destination location of Train</b> selection. If left unchecked
+          Dispatcher will in using Auto Allocation allocate no more than
+          three sections ahead of the current location of the train.
+        </li>
+        <li>
           <p>Check <b>Reset When Done</b> to set up the Active
           Train for continuous running. With continuous running,
           when an Active Train has completed running through its

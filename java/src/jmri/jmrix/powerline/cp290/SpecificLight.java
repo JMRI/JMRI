@@ -1,4 +1,3 @@
-// SpecificLight.java
 package jmri.jmrix.powerline.cp290;
 
 import jmri.jmrix.powerline.SerialTrafficController;
@@ -29,11 +28,6 @@ import org.slf4j.LoggerFactory;
  * @author kcameron Copyright (C) 2011
  */
 public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4123284768492494792L;
 
     /**
      * Create a Light object, with only system name.
@@ -106,5 +100,3 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
 
     private final static Logger log = LoggerFactory.getLogger(SpecificLight.class.getName());
 }
-
-/* @(#)SpecificLight.java */

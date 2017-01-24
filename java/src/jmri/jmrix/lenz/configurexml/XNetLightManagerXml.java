@@ -1,4 +1,3 @@
-// XNetLightManagerXml.java
 package jmri.jmrix.lenz.configurexml;
 
 import org.jdom2.Element;
