@@ -13,21 +13,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Conditional.java
+ * DefaultSignalGroup.java
  *
- * A Conditional type to provide runtime support for Densor Groups.
- * <P>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * A Conditional type to provide Signal Groups (n signalHeads w/Conditionals for a main Mast).
  * <P>
  * @author	Pete Cressman Copyright (C) 2009
+ * @author Egbert Broerse 2017
  */
 public class DefaultSignalGroup extends AbstractNamedBean implements jmri.SignalGroup {
 
@@ -43,7 +34,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         return Bundle.getMessage("BeanNameSignalGroup");
     }
 
-    ArrayList<String> _signalMastAppearances = new ArrayList<String>();
+    ArrayList<String> _signalMastAspects = new ArrayList<String>();
 
     private NamedBeanHandle<SignalMast> _signalMast;
 
@@ -66,7 +57,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
             mMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName(pName);
         }
         if (mMast == null) {
-            log.warn("did not find a SignalHead named " + pName);
+            log.warn("did not find a Signal Mast named {}", pName);
             return;
         }
         setSignalMast(mMast, pName);
@@ -81,7 +72,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("Aspect")) {
                     String now = ((String) e.getNewValue());
-                    if (isSignalMastAppearanceIncluded(now)) {
+                    if (isSignalMastAspectIncluded(now)) {
                         setHead();
                     } else {
                         resetHeads();
@@ -100,41 +91,41 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         return _signalMast.getName();
     }
 
-    public void addSignalMastAppearance(String appearance) {
-        if (isSignalMastAppearanceIncluded(appearance)) {
+    public void addSignalMastAspect(String aspect) {
+        if (isSignalMastAspectIncluded(aspect)) {
             return;
         }
-        _signalMastAppearances.add(appearance);
+        _signalMastAspects.add(aspect);
     }
 
-    public boolean isSignalMastAppearanceIncluded(String appearance) {
-        for (int i = 0; i < _signalMastAppearances.size(); i++) {
-            if (_signalMastAppearances.get(i).equals(appearance)) {
-                // Found Appearance
+    public boolean isSignalMastAspectIncluded(String aspect) {
+        for (int i = 0; i < _signalMastAspects.size(); i++) {
+            if (_signalMastAspects.get(i).equals(aspect)) {
+                // Found Aspect
                 return true;
             }
         }
         return false;
     }
 
-    public void deleteSignalMastAppearance(String appearance) {
-        _signalMastAppearances.remove(appearance);
+    public void deleteSignalMastAspect(String aspect) {
+        _signalMastAspects.remove(aspect);
     }
 
-    public int getNumSignalMastAppearances() {
-        return _signalMastAppearances.size();
+    public int getNumSignalMastAspects() {
+        return _signalMastAspects.size();
     }
 
-    public String getSignalMastAppearanceByIndex(int x) {
+    public String getSignalMastAspectByIndex(int x) {
         try {
-            return _signalMastAppearances.get(x);
+            return _signalMastAspects.get(x);
         } catch (IndexOutOfBoundsException ioob) {
             return null;
         }
     }
 
-    public void clearSignalMastAppearance() {
-        _signalMastAppearances = new ArrayList<String>();
+    public void clearSignalMastAspect() {
+        _signalMastAspects = new ArrayList<String>();
     }
 
     /*
@@ -166,12 +157,12 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
 
     protected PropertyChangeListener mSignalMastListener = null;
 
-    public void setSignalHeadAlignTurnout(SignalHead mHead, Turnout mTurn, int state) {
+    public void setHeadAlignTurnout(SignalHead mHead, Turnout mTurn, int state) {
         SignalHeadItem sh = getSignalHeadItem(mHead);
         sh.addTurnout(mTurn, state);
     }
 
-    public void setSignalHeadAlignSensor(SignalHead mHead, Sensor mSen, int state) {
+    public void setHeadAlignSensor(SignalHead mHead, Sensor mSen, int state) {
         SignalHeadItem sh = getSignalHeadItem(mHead);
         sh.addSensor(mSen, state);
     }
@@ -187,7 +178,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
-    public String getSignalHeadItemNameByIndex(int n) {
+    public String getHeadItemNameByIndex(int n) {
         try {
             return getSignalHeadItemByIndex(n).getName();
         } catch (IndexOutOfBoundsException ioob) {
@@ -195,22 +186,22 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
-    public SignalHead getSignalHeadItemBeanByIndex(int n) {
+    public SignalHead getHeadItemBeanByIndex(int n) {
         try {
-            return getSignalHeadItemByIndex(n).getSignal();
+            return getSignalHeadItemByIndex(n).getSignalHead();
         } catch (IndexOutOfBoundsException ioob) {
             return null;
         }
     }
 
     /*
-     Returns the number of signalheads in this group
+     Returns the number of signal heads in this group
      */
-    public int getNumSignalHeadItems() {
+    public int getNumHeadItems() {
         return _signalHeadItem.size();
     }
 
-    public int getSignalHeadOffState(SignalHead bean) {
+    public int getHeadOffState(SignalHead bean) {
         try {
             return getSignalHeadItem(bean).getOffAppearance();
         } catch (NullPointerException e) {
@@ -218,7 +209,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
-    public int getSignalHeadOnState(SignalHead bean) {
+    public int getHeadOnState(SignalHead bean) {
         try {
             return getSignalHeadItem(bean).getOnAppearance();
         } catch (NullPointerException e) {
@@ -226,7 +217,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
-    public int getSignalHeadOnStateByIndex(int n) {
+    public int getHeadOnStateByIndex(int n) {
         try {
             return getSignalHeadItemByIndex(n).getOnAppearance();
         } catch (IndexOutOfBoundsException ioob) {
@@ -234,7 +225,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
-    public int getSignalHeadOffStateByIndex(int n) {
+    public int getHeadOffStateByIndex(int n) {
         try {
             return getSignalHeadItemByIndex(n).getOffAppearance();
         } catch (IndexOutOfBoundsException ioob) {
@@ -250,20 +241,20 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         _signalHeadItem.remove(getSignalHeadItem(sh.getName()));
     }
 
-    public void setSignalHeadOnState(SignalHead head, int state) {
+    public void setHeadOnState(SignalHead head, int state) {
         getSignalHeadItem(head).setOnAppearance(state);
         firePropertyChange("UpdateCondition", null, null);
     }
 
-    public void setSignalHeadOffState(SignalHead head, int state) {
+    public void setHeadOffState(SignalHead head, int state) {
         getSignalHeadItem(head).setOffAppearance(state);
         firePropertyChange("UpdateCondition", null, null);
     }
 
-    public boolean isSignalIncluded(SignalHead bean) {
+    public boolean isHeadIncluded(SignalHead bean) {
         for (int i = 0; i < _signalHeadItem.size(); i++) {
-            if (_signalHeadItem.get(i).getSignal() == bean) {
-                // Found turnout
+            if (_signalHeadItem.get(i).getSignalHead() == bean) {
+                // Found head
                 return true;
             }
         }
@@ -271,7 +262,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
     }
 
     /*
-     Returns a signalhead item
+     Returns a signal head item
      */
     private SignalHeadItem getSignalHeadItem(String name) {
         for (int i = 0; i < _signalHeadItem.size(); i++) {
@@ -284,7 +275,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
 
     private SignalHeadItem getSignalHeadItem(NamedBean bean) {
         for (int i = 0; i < _signalHeadItem.size(); i++) {
-            if (_signalHeadItem.get(i).getSignal().equals(bean)) {
+            if (_signalHeadItem.get(i).getSignalHead().equals(bean)) {
                 return _signalHeadItem.get(i);
             }
         }
@@ -296,9 +287,9 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
     }
 
     public int getTurnoutState(SignalHead pSignal, Turnout pTurnout) {
-        SignalHeadItem sig = getSignalHeadItem(pSignal);
-        if (sig != null) {
-            return sig.getTurnoutState(pTurnout);
+        SignalHeadItem shi = getSignalHeadItem(pSignal);
+        if (shi != null) {
+            return shi.getTurnoutState(pTurnout);
         }
         return -1;
     }
@@ -364,9 +355,9 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
     }
 
     public int getSensorState(SignalHead pSignal, Sensor pSensor) {
-        SignalHeadItem sig = getSignalHeadItem(pSignal);
-        if (sig != null) {
-            return sig.getSensorState(pSensor);
+        SignalHeadItem shi = getSignalHeadItem(pSignal);
+        if (shi != null) {
+            return shi.getSensorState(pSensor);
         }
         return -1;
     }
@@ -384,11 +375,11 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         firePropertyChange("UpdateCondition", null, null);
     }
 
-    public void clearSignalTurnout(SignalHead pSignal) {
+    public void clearHeadTurnout(SignalHead pSignal) {
         getSignalHeadItem(pSignal).clearSignalTurnouts();
     }
 
-    public void clearSignalSensor(SignalHead pSignal) {
+    public void clearHeadSensor(SignalHead pSignal) {
         getSignalHeadItem(pSignal).clearSignalSensors();
     }
 
@@ -397,7 +388,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
             return;
         }
         for (int i = 0; i < _signalHeadItem.size(); i++) {
-            _signalHeadItem.get(i).getSignal().setAppearance(_signalHeadItem.get(i).getOffAppearance());
+            _signalHeadItem.get(i).getSignalHead().setAppearance(_signalHeadItem.get(i).getOffAppearance());
         }
         headactive = false;
     }
@@ -415,7 +406,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
-    public int getNumSignalHeadSensorsByIndex(int x) {
+    public int getNumHeadSensorsByIndex(int x) {
         try {
 
             return getSignalHeadItemByIndex(x).getNumSensors();
@@ -424,7 +415,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
-    public int getNumSignalHeadTurnoutsByIndex(int x) {
+    public int getNumHeadTurnoutsByIndex(int x) {
         try {
             return getSignalHeadItemByIndex(x).getNumTurnouts();
         } catch (IndexOutOfBoundsException ioob) {
@@ -438,10 +429,10 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         SignalHeadItem(NamedBeanHandle<SignalHead> sh) {
             namedHead = sh;
             if (namedHead.getBean().getClass().getName().contains("SingleTurnoutSignalHead")) {
-                jmri.implementation.SingleTurnoutSignalHead Signal = (jmri.implementation.SingleTurnoutSignalHead) namedHead.getBean();
+                jmri.implementation.SingleTurnoutSignalHead stsh = (jmri.implementation.SingleTurnoutSignalHead) namedHead.getBean();
                 if ((onAppearance == 0x00) && (offAppearance == 0x00)) {
-                    onAppearance = Signal.getOnAppearance();
-                    offAppearance = Signal.getOffAppearance();
+                    onAppearance = stsh.getOnAppearance();
+                    offAppearance = stsh.getOffAppearance();
                 }
             }
         }
@@ -452,7 +443,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
             return namedHead.getName();
         }
 
-        public SignalHead getSignal() {
+        public SignalHead getSignalHead() {
             return namedHead.getBean();
         }
 
@@ -507,9 +498,9 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
                 }
             }
             if (state) {
-                getSignal().setAppearance(onAppearance);
+                getSignalHead().setAppearance(onAppearance);
             } else {
-                getSignal().setAppearance(offAppearance);
+                getSignalHead().setAppearance(offAppearance);
             }
             return state;
         }
