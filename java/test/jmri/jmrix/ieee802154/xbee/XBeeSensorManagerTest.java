@@ -36,7 +36,7 @@ import org.powermock.core.classloader.annotations.MockPolicy;
  * @author	Paul Bender Copyright (C) 2012,2016
  */
 @RunWith(PowerMockRunner.class)
-public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     private static final String NODE_ID = "id";
         

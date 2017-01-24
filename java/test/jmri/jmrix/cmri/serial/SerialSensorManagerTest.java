@@ -15,7 +15,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen Copyright 2003
  * @author	Paul Bender Copyright (C) 2016
  */
-public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     private jmri.jmrix.cmri.CMRISystemConnectionMemo memo = null;
     private SerialTrafficControlScaffold stcs = null;

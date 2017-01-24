@@ -1,6 +1,6 @@
 package jmri.jmrix.grapevine;
 
-import jmri.implementation.AbstractLightTest;
+import jmri.implementation.AbstractLightTestBase;
 import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen
   */
-public class SerialLightTest extends AbstractLightTest {
+public class SerialLightTest extends AbstractLightTestBase {
 
     private SerialTrafficControlScaffold tcis = null;
 

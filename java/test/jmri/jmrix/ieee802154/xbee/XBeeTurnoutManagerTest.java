@@ -21,7 +21,7 @@ import org.powermock.core.classloader.annotations.MockPolicy;
  * @author	Paul Bender Copyright (C) 2012,2016
  */
 @RunWith(PowerMockRunner.class)
-public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     XBeeTrafficController tc = null;
 

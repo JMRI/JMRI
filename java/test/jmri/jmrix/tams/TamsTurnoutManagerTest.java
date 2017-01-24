@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen  Copyright 2013, 2016
  */
-public class TamsTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class TamsTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     private TamsInterfaceScaffold nis = null;
     private TamsSystemConnectionMemo tm = null;

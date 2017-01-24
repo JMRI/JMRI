@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Coleman
  */
-public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
+public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
     private AcelaTrafficControlScaffold tcis = null;
     private AcelaSystemConnectionMemo memo = null;
