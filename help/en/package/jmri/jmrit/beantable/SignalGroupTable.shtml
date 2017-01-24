@@ -8,7 +8,7 @@
 
   <title>JMRI: Signal Group Table Help</title>
   <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-  <meta name="Date.Modified" content="20151230">
+  <meta name="Date.Modified" content="20170124">
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <meta name="keywords" content=
@@ -24,9 +24,9 @@
       <h1>The Signal Group Table</h1>
 
       <p>The Signal Group Table displays a list of your Signal
-      Groups.</p><a href="SignalGroupsTable.png"><img src=
-      "SignalGroupsTable.png" align="right" width="386" height=
-      "165"></a>
+      Groups.</p><a href="SignalGroupTable.png"><img src=
+      "SignalGroupTable.png" align="right" width="386" height=
+      "168"></a>
 
       <p>There are six columns in the Signal Group Table:</p>
 
@@ -60,12 +60,12 @@
       <h3><a name="edit" id="edit">Editing an existing Signal
       Group</a></h3>
 
-      <p><a name="edit" id="edit">Click on one of the <b>Edit</b>
+      <p>Click on one of the <b>Edit</b>
       buttons at the right of the Signal Group Table to open
       the</a> <a href="SignalGroupAddEdit.shtml">Edit Signal
       Group</a> window for the corresponding Signal Group. <a href=
       "SignalGroup.png"><img src="SignalGroup.png" align="right"
-      height="274" width="306"></a></p>
+      height="223" width="309"></a></p>
 
       <h2><a name="example" id="example">Signal Group Example -
       Junction Indicator</a></h2>
