@@ -35,3 +35,6 @@ matrix:
   exclude:
   - os: osx
     env: HEADLESS=true
+
+after_success:
+  - mvn coveralls:report
