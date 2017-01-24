@@ -110,8 +110,6 @@ public class Z21SimulatorAdapterTest {
 
     }
 
-
-
     // The minimal setup for log4J
     @BeforeClass
     static public void setUp() {
