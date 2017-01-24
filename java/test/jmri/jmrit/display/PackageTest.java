@@ -46,7 +46,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.display.layoutEditor.PackageTest.suite());
         suite.addTest(jmri.jmrit.display.panelEditor.PackageTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.display.palette.PackageTest.class));
-        suite.addTest(jmri.jmrit.display.controlPanelEditor.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.display.controlPanelEditor.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new JUnit4TestAdapter(SensorTextEditTest.class));
         suite.addTest(new JUnit4TestAdapter(AnalogClock2DisplayTest.class));
