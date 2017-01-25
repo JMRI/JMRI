@@ -80,6 +80,7 @@ public class Z21XNetProgrammer extends XNetProgrammer {
     }
 
     // programming interface
+    @Override
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE)
                 || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
@@ -96,13 +97,14 @@ public class Z21XNetProgrammer extends XNetProgrammer {
             // start the error timer
             restartTimer(XNetProgrammerTimeout);
 
-            XNetMessage msg = Z21XNetMessage.getWriteDirectCVMsg(CV, val);
+            XNetMessage msg = Z21XNetMessage.getZ21WriteDirectCVMsg(CV, val);
             controller().sendXNetMessage(msg, this);
         } else {
             super.writeCV(CV, val, p);
         }
     }
 
+    @Override
     synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE)
                 || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
@@ -119,7 +121,7 @@ public class Z21XNetProgrammer extends XNetProgrammer {
             restartTimer(XNetProgrammerTimeout);
 
             // format and send message to go to program mode
-            XNetMessage msg = Z21XNetMessage.getReadDirectCVMsg(CV);
+            XNetMessage msg = Z21XNetMessage.getZ21ReadDirectCVMsg(CV);
             controller().sendXNetMessage(msg, this);
         } else {
             super.readCV(CV, p);
@@ -127,6 +129,7 @@ public class Z21XNetProgrammer extends XNetProgrammer {
 
     }
 
+    @Override
     synchronized public void message(XNetReply m) {
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these

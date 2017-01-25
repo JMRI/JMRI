@@ -13,12 +13,14 @@ import jmri.util.JmriJFrame;
 /**
  * JUnit tests for the AbstractMonPane class
  * <p>
+ * Not intended to be run by itself, but rather as part of inherited tests
+ * <p>
  * Copyright: Copyright (c) 2015</p>
  *
  * @author Bob Jacobsen
  * @author      Paul Bender Copyright (C) 2016
  */
-public class AbstractMonPaneTest {
+public abstract class AbstractMonPaneTestBase {
 
     // implementing classes must set pane to the pane under test in setUp.
     protected AbstractMonPane pane = null;

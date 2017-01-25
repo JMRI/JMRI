@@ -9,13 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * SerialTurnoutManagerTest.java
- *
- * Description:	tests for the jmri.jmrix.cmri.SerialTurnoutManager class
+ * Tests for the jmri.jmrix.cmri.SerialTurnoutManager class
  *
  * @author	Bob Jacobsen
  */
-public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     private jmri.jmrix.cmri.CMRISystemConnectionMemo memo = null;
     private SerialTrafficControlScaffold stcs = null;

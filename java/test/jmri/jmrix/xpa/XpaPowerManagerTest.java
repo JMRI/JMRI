@@ -12,7 +12,7 @@ import org.junit.Test;
  * <P>
  * @author	Paul Bender
  */
-public class XpaPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTest {
+public class XpaPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
 
     private XpaTrafficControlScaffold tc = null;
 

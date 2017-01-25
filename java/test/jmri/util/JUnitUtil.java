@@ -205,6 +205,16 @@ public class JUnitUtil {
         }
     }
 
+    /**
+     * Reset the user files path in the default
+     * {@link jmri.util.FileUtilSupport} object (used by
+     * {@link jmri.util.FileUtil}) to the default settings/user files path for
+     * tests of {@code git-working-copy/temp}.
+     */
+    public static void resetFileUtilSupport() {
+        FileUtilSupport.getDefault().setUserFilesPath(FileUtil.getPreferencesPath());
+    }
+
     static public interface ReleaseUntil {
 
         public boolean ready() throws Exception;
