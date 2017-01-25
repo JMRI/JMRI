@@ -703,6 +703,20 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         turnoutPropertiesPanel.add(extraTurnoutPanel);
         turnoutPropertiesPanel.add(rotationPanel);
 
+        Dimension coordSize = xLabel.getPreferredSize();
+        coordSize.width *= 2;
+        xLabel.setPreferredSize(coordSize);
+        yLabel.setPreferredSize(coordSize);
+
+        JPanel locationPanel = new JPanel();
+        locationPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        locationPanel.add(new JLabel("    " + rb.getString("Location") + ":"));
+        locationPanel.add(new JLabel("{x:"));
+        locationPanel.add(xLabel);
+        locationPanel.add(new JLabel(", y:"));
+        locationPanel.add(yLabel);
+        locationPanel.add(new JLabel("}  "));
+
         if (verticalToolBar) {
             JPanel top1Panel = new JPanel();
             top1Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -1013,8 +1027,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         signalFrame.setVisible(false);
 
         // icon label
-        top4.add(new JLabel("    "));
-        top4.add(iconLabelButton);
         iconLabelButton.setToolTipText(rb.getString("IconLabelToolTip"));
 
         // change icons…
@@ -1034,11 +1046,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }
         });
-        top4.add(changeIconsButton);
+
         changeIconsButton.setToolTipText(rb.getString("ChangeIconToolTip"));
         changeIconsButton.setEnabled(false);
-
-        top4.add(Box.createHorizontalGlue());
 
         // ??
         iconEditor = new MultiIconEditor(1);
@@ -1047,21 +1057,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         iconFrame = new JFrame(rb.getString("EditIcon"));
         iconFrame.getContentPane().add(iconEditor);
         iconFrame.pack();
-
-        JLabel locationLabel = new JLabel("    " + rb.getString("Location") + ":");
-        top4.add(locationLabel);
-
-        Dimension coordSize = xLabel.getPreferredSize();
-        coordSize.width *= 2;
-        xLabel.setPreferredSize(coordSize);
-        yLabel.setPreferredSize(coordSize);
-        top4.add(new JLabel("{x:"));
-        top4.add(xLabel);
-        top4.add(new JLabel(", y:"));
-        top4.add(yLabel);
-        top4.add(new JLabel("}  "));
-
-        top4.add(Box.createHorizontalGlue());
 
         if (verticalToolBar) {
             JPanel top17Panel = new JPanel();
@@ -1100,17 +1095,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             editToolBarPanel.add(Box.createVerticalGlue());
 
-            JPanel bottomPanel = new JPanel();
-            bottomPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-            bottomPanel.add(locationLabel);
-            bottomPanel.add(new JLabel("{x:"));
-            bottomPanel.add(xLabel);
-            bottomPanel.add(new JLabel(", y:"));
-            bottomPanel.add(yLabel);
-            bottomPanel.add(new JLabel("}  "));
-            bottomPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, bottomPanel.getPreferredSize().height));
-            editToolBarPanel.add(bottomPanel, BorderLayout.SOUTH);;
+            locationPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, locationPanel.getPreferredSize().height));
+            editToolBarPanel.add(locationPanel, BorderLayout.SOUTH);;
         } else {
+            top4.add(new JLabel("    "));
+            top4.add(iconLabelButton);
+            top4.add(changeIconsButton);
+
+            top4.add(Box.createHorizontalGlue());
+
+            top4.add(locationPanel);
+
+            top4.add(Box.createHorizontalGlue());
+
             editToolBarPanel.add(top4);
         }
 
@@ -2799,7 +2796,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (LevelXing x : xingList) {
             x.scaleCoords(xFactor, yFactor);
         }
-        // loop over all defined level crossings
+        // loop over all defined slips
         for (LayoutSlip x : slipList) {
             x.scaleCoords(xFactor, yFactor);
         }
@@ -3001,7 +2998,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             center.getY() + yTranslation));
                 }
             }
-            // loop over all defined level crossings
+            // loop over all defined slips
             for (LayoutSlip x : slipList) {
                 Point2D center = x.getCoordsCenter();
                 if (selectRect.contains(center)) {
@@ -3605,6 +3602,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             break;
                         }
                     }
+                    //TODO: check east/west control points?
                     for (LayoutSlip sl : slipList) {
                         // check the center point
                         Point2D pt = sl.getCoordsCenter();
@@ -3665,6 +3663,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     break;
                 }
             }
+            //TODO: check east/west control points?
             for (LayoutSlip sl : slipList) {
                 // check the center point
                 Point2D pt = sl.getCoordsCenter();
@@ -5130,7 +5129,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
         if (_slipSelection != null) {
-            // loop over all defined level crossings
+            // loop over all defined slips
             for (LayoutSlip xing : _slipSelection) {
                 int minx = (int) Math.min(Math.min(xing.getCoordsA().getX(), xing.getCoordsB().getX()), Math.min(xing.getCoordsC().getX(), xing.getCoordsD().getX()));
                 int miny = (int) Math.min(Math.min(xing.getCoordsA().getY(), xing.getCoordsB().getY()), Math.min(xing.getCoordsC().getY(), xing.getCoordsD().getY()));
@@ -5263,7 +5262,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }
         }
-        // loop over all defined level crossings
+        // loop over all defined slips
         for (LayoutSlip x : slipList) {
             Point2D center = x.getCoordsCenter();
             if (selectRect.contains(center)) {
@@ -5836,7 +5835,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
         if (_slipSelection != null) {
-            // loop over all defined level crossings
+            // loop over all defined slips
             for (LayoutSlip x : _slipSelection) {
                 Point2D center = x.getCoordsCenter();
                 x.setCoordsCenter(new Point2D.Double(returnNewXPostition(e, center.getX()),
@@ -6110,7 +6109,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         }
                     }
                     if (_slipSelection != null) {
-                        // loop over all defined level crossings
+                        // loop over all defined slips
                         for (LayoutSlip x : _slipSelection) {
                             Point2D center = x.getCoordsCenter();
                             xNew = (int) center.getX() + offsetx;
@@ -8534,6 +8533,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             highLightSelection(g2);
         } else if (turnoutCirclesWithoutEditMode) {
             drawTurnoutCircles(g2);
+            drawSlipCircles(g2);
         }
     }
 
@@ -9342,6 +9342,20 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
     }
 
+    private void drawSlipCircles(Graphics2D g2) {
+        // loop over all defined slips
+        for (LayoutSlip sl : slipList) {
+            if (!(sl.getHidden() && !isEditable())) {
+                Point2D pt = sl.getCoordsCenter();
+                double circleRadius = SIZE * turnoutCircleSize;
+                double circleDiameter = 2.0 * circleRadius;
+                g2.setColor(turnoutCircleColor != null ? turnoutCircleColor : defaultTrackColor);
+                g2.draw(new Ellipse2D.Double(
+                        pt.getX() - circleRadius, pt.getY() - circleRadius, circleDiameter, circleDiameter));
+            }
+        }
+    }
+
     private void drawTurnoutRects(Graphics2D g2) {
         // loop over all defined turnouts
         for (LayoutTurnout t : turnoutList) {
@@ -9486,10 +9500,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     private void drawSlipRects(Graphics2D g2) {
-        // loop over all defined level crossings
+        // loop over all defined slips
         for (LayoutSlip x : slipList) {
+            //TODO: draw east/west control points?
             Point2D pt = x.getCoordsCenter();
-            g2.setColor(defaultTrackColor);
+            g2.setColor(turnoutCircleColor != null ? turnoutCircleColor : defaultTrackColor);
             double circleRadius = SIZE * turnoutCircleSize;
             double circleDiameter = 2.0 * circleRadius;
             g2.draw(new Ellipse2D.Double(

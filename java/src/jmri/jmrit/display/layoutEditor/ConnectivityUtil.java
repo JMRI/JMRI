@@ -8,6 +8,7 @@ import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
+import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.blockboss.BlockBossLogic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -2375,40 +2376,10 @@ public class ConnectivityUtil {
                     conObj = curTS.getConnect1();
                 } else {
                     if (logInfoFor_trackSegmentLeadsTo) {
-                        String con_type = "TURNTABLE_RAY_OFFSET";
-                        if (conType <= LayoutEditor.SLIP_D) {
-                            String[] con_types = {"NONE", "POS_POINT",
-                                "TURNOUT_A", "TURNOUT_B", "TURNOUT_C", "TURNOUT_D",
-                                "LEVEL_XING_A", "LEVEL_XING_B", "LEVEL_XING_C", "LEVEL_XING_D",
-                                "TRACK", "TURNOUT_CENTER", "LEVEL_XING_CENTER", "TURNTABLE_CENTER",
-                                "LAYOUT_POS_LABEL", "LAYOUT_POS_JCOMP", "MULTI_SENSOR", "MARKER",
-                                "TRACK_CIRCLE_CENTRE", "UNUSED_19", "SLIP_CENTER",
-                                "SLIP_A", "SLIP_B", "SLIP_C", "SLIP_D"};
-                            con_type = con_types[conType];
-                        }
+                        String con_type = connectionTypeToString(conType);
 
-                        String conName = "";
-                        try {
-                            conName = ((PositionablePoint) conObj).getID();
-                        } catch (Exception ex) {
-                            try {
-                                conName = ((LayoutTurnout) conObj).getName();
-                            } catch (Exception ex1) {
-                                conName = "<" + conObj + ">";
-                            }
-                        }
-
-                        String curName = "";
-                        try {
-                            curName = ((PositionablePoint) curObj).getID();
-                        } catch (Exception ex) {
-                            try {
-                                curName = ((LayoutTurnout) curObj).getName();
-                            } catch (Exception ex1) {
-                                curName = "<" + conObj + ">";
-                            }
-                        }
-
+                        String conName = objectToNameOrIDString(conObj);
+                        String curName = objectToNameOrIDString(curObj);
                         log.info("\tIn block " + lb.getUserName() + ", follow " + curName + " thru " + curTS.getID() +
                             " (connects " + curTS.getConnect1Name() + " & " + curTS.getConnect2Name() + ")" +
                             " to " + conName + " (conType: " + con_type + "), nlb: " + nlb.getID());
@@ -2418,40 +2389,12 @@ public class ConnectivityUtil {
                 }
 
                 if (logInfoFor_trackSegmentLeadsTo) {
-                    String con_type = "TURNTABLE_RAY_OFFSET";
-                    if (conType <= LayoutEditor.SLIP_D) {
-                        String[] con_types = {"NONE", "POS_POINT",
-                            "TURNOUT_A", "TURNOUT_B", "TURNOUT_C", "TURNOUT_D",
-                            "LEVEL_XING_A", "LEVEL_XING_B", "LEVEL_XING_C", "LEVEL_XING_D",
-                            "TRACK", "TURNOUT_CENTER", "LEVEL_XING_CENTER", "TURNTABLE_CENTER",
-                            "LAYOUT_POS_LABEL", "LAYOUT_POS_JCOMP", "MULTI_SENSOR", "MARKER",
-                            "TRACK_CIRCLE_CENTRE", "UNUSED_19", "SLIP_CENTER",
-                            "SLIP_A", "SLIP_B", "SLIP_C", "SLIP_D"};
-                        con_type = con_types[conType];
+                    String con_type = connectionTypeToString(conType);
+                    if (con_type.startsWith("X")) {
+                        log.debug("LevelXing");
                     }
-
-                    String conName = "";
-                    try {
-                        conName = ((PositionablePoint) conObj).getID();
-                    } catch (Exception ex) {
-                        try {
-                            conName = ((LayoutTurnout) conObj).getName();
-                        } catch (Exception ex1) {
-                            conName = "<" + conObj + ">";
-                        }
-                    }
-
-                    String curName = "";
-                    try {
-                        curName = ((PositionablePoint) curObj).getID();
-                    } catch (Exception ex) {
-                        try {
-                            curName = ((LayoutTurnout) curObj).getName();
-                        } catch (Exception ex1) {
-                            curName = "<" + conObj + ">";
-                        }
-                    }
-
+                    String conName = objectToNameOrIDString(conObj);
+                    String curName = objectToNameOrIDString(curObj);
                     log.info("\tIn block " + lb.getUserName() + ", follow " + curName + " thru " + curTS.getID() +
                         " (connects " + curTS.getConnect1Name() + " & " + curTS.getConnect2Name() + ")" +
                         " to " + conName + " (conType: " + con_type + "), nlb: " + nlb.getID());
@@ -2463,6 +2406,9 @@ public class ConnectivityUtil {
                     // reached anchor point or end bumper
                     if (((PositionablePoint) conObj).getType() == PositionablePoint.END_BUMPER) {
                         // end of line without reaching 'nlb'
+                        if (logInfoFor_trackSegmentLeadsTo) {
+                            log.info("end of line without reaching {}", nlb.getID());
+                        }
                         curTS = null;
                     } else if (((PositionablePoint) conObj).getType() == PositionablePoint.ANCHOR ||
                         ((PositionablePoint) conObj).getType() == PositionablePoint.EDGE_CONNECTOR) {
@@ -2605,8 +2551,8 @@ public class ConnectivityUtil {
                                 break;
                         }
                         curObj = conObj;
-                    } // if RH, LH or DOUBLE _XOVER
-                    else if ((tType == LayoutTurnout.RH_TURNOUT) || (tType == LayoutTurnout.LH_TURNOUT)
+                    } else // if RH, LH or DOUBLE _XOVER
+                    if ((tType == LayoutTurnout.RH_TURNOUT) || (tType == LayoutTurnout.LH_TURNOUT)
                             || (tType == LayoutTurnout.WYE_TURNOUT)) {
                         // reached RH. LH, or WYE turnout
                         if (lt.getLayoutBlock() != lb) {    // if not in the last block...
@@ -2766,6 +2712,39 @@ public class ConnectivityUtil {
 
         // searched all possible paths in this block, 'lb', without finding the desired exit block, 'nlb'
         return false;
+    }
+
+    private String connectionTypeToString(int conType) {
+        String con_type = "TURNTABLE_RAY_OFFSET";
+        if (conType <= LayoutEditor.SLIP_D) {
+            String[] con_types = {"NONE", "POS_POINT",
+                "TURNOUT_A", "TURNOUT_B", "TURNOUT_C", "TURNOUT_D",
+                "LEVEL_XING_A", "LEVEL_XING_B", "LEVEL_XING_C", "LEVEL_XING_D",
+                "TRACK", "TURNOUT_CENTER", "LEVEL_XING_CENTER", "TURNTABLE_CENTER",
+                "LAYOUT_POS_LABEL", "LAYOUT_POS_JCOMP", "MULTI_SENSOR", "MARKER",
+                "TRACK_CIRCLE_CENTRE", "UNUSED_19", "SLIP_CENTER",
+                "SLIP_A", "SLIP_B", "SLIP_C", "SLIP_D"};
+            con_type = con_types[conType];
+        }
+        return con_type;
+    }
+
+    private String objectToNameOrIDString(Object obj) {
+        String result = "";
+        try {
+            result = ((AbstractNamedBean) obj).getDisplayName();
+        } catch (Exception ex1) {
+            try {
+                result = ((PositionablePoint) obj).getID();
+            } catch (Exception ex2) {
+                try {
+                    result = ((LayoutTurnout) obj).getName();
+                } catch (Exception ex3) {
+                    result = "<" + obj + ">";
+                }
+            }
+        }
+        return result;
     }
 
     private boolean turnoutConnectivity = true;
