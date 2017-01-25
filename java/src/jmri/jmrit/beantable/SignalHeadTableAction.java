@@ -196,7 +196,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                         String[] stateNameList = s.getValidStateNames(); // Array of valid appearance names
                         int[] validStateList = s.getValidStates(); // Array of valid appearance numbers
                         for (int i = 0; i < stateNameList.length; i++) {
-                            if (value == stateNameList[i]) {
+                            if (value.equals(stateNameList[i])) {
                                 newState = validStateList [i];
                                 break;
                             }
