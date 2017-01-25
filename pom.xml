@@ -126,6 +126,18 @@
                         <version>0.7.6.201602180812</version>
                         <configuration>
                            <dataFile>jacoco.exec</dataFile>
+                           <excludes>
+                               <File>**/*Test*.class</File>
+                               <!-- Exclude testing infrastructure classes -->
+                               <File>**/*Scaffold.class"</File>
+                               <File>**/*JUnit*.class</File>
+                               <File>**/*Demo.class</File>
+                               <File>**/*Mock*.class</File>
+                               <File>jmri/jmrit/symbolicprog/tabbedframe/CheckProgrammerNames.class</File>
+                               <File>jmri/jmrix/openlcb/SampleFactory.class</File>
+                               <File>jmri/util/swing/SamplePane.class</File>
+                               <File>apps/tests/Log4JFixture.class" </File>
+                           </excludes>
                         </configuration>
                         <executions>
                             <execution>
