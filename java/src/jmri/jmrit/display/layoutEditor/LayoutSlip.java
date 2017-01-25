@@ -1,5 +1,9 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static jmri.jmrit.display.layoutEditor.LayoutEditor.SLIP_CENTER;
+import static jmri.jmrit.display.layoutEditor.LayoutEditor.SLIP_LEFT;
+import static jmri.jmrit.display.layoutEditor.LayoutEditor.SLIP_RIGHT;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Container;
@@ -214,38 +218,85 @@ public class LayoutSlip extends LayoutTurnout {
      * disabled
      * Slip state progression is from BD to AD to AC to [BC*] and back to BD (*BC is skipped for Single slip)
      */
-    public void toggleState() {
-        switch (currentState) {
-            case STATE_AC: {
-                if (singleSlipStraightEqual()) {
-                    setTurnoutState(turnoutStates.get(STATE_BD));
-                    currentState = STATE_BD;
-                } else {
-                    setTurnoutState(turnoutStates.get(STATE_BC));
-                    currentState = STATE_BC;
+    public void toggleState(int selectedPointType) {
+        switch (selectedPointType) {
+            case SLIP_LEFT: {
+                switch (currentState) {
+                    case STATE_AC: {
+                        currentState = STATE_BC;
+                        break;
+                    }
+                    case STATE_BD: {
+                        currentState = STATE_AD;
+                        break;
+                    }
+                    case STATE_AD: {
+                        currentState = STATE_BD;
+                        break;
+                    }
+                    case STATE_BC:
+                    default: {
+                        currentState = STATE_AC;
+                        break;
+                    }
                 }
                 break;
             }
-
-            case STATE_BD: {
-                setTurnoutState(turnoutStates.get(STATE_AD));
-                currentState = STATE_AD;
+            case SLIP_RIGHT: {
+                switch (currentState) {
+                    case STATE_AC: {
+                        currentState = STATE_AD;
+                        break;
+                    }
+                    case STATE_BD: {
+                        currentState = STATE_BC;
+                        break;
+                    }
+                    case STATE_AD: {
+                        currentState = STATE_AC;
+                        break;
+                    }
+                    case STATE_BC:
+                    default: {
+                        currentState = STATE_BD;
+                        break;
+                    }
+                }
                 break;
             }
+            case SLIP_CENTER:
+            default:
+            {
+                switch (currentState) {
+                    case STATE_AC: {
+                        if (singleSlipStraightEqual()) {
+                            currentState = STATE_BD;
+                        } else {
+                            currentState = STATE_BC;
+                        }
+                        break;
+                    }
 
-            case STATE_AD: {
-                setTurnoutState(turnoutStates.get(STATE_AC));
-                currentState = STATE_AC;
-                break;
-            }
+                    case STATE_BD: {
+                        currentState = STATE_AD;
+                        break;
+                    }
 
-            case STATE_BC:
-            default: {
-                setTurnoutState(turnoutStates.get(STATE_BD));
-                currentState = STATE_BD;
+                    case STATE_AD: {
+                        currentState = STATE_AC;
+                        break;
+                    }
+
+                    case STATE_BC:
+                    default: {
+                        currentState = STATE_BD;
+                        break;
+                    }
+                }
                 break;
             }
         }
+        setTurnoutState(turnoutStates.get(currentState));
     }
 
     void setTurnoutState(TurnoutState ts) {
@@ -974,46 +1025,41 @@ public class LayoutSlip extends LayoutTurnout {
         int turnBState;
         switch (testState) {
             case STATE_AC: {
-                turnAState = turnoutStates.get(STATE_BD).getTestTurnoutAState();
-                turnBState = turnoutStates.get(STATE_BD).getTestTurnoutBState();
-                testState = STATE_BD;
+                if (type == SINGLE_SLIP) {
+                    testState = STATE_BD;
+                } else {
+                    testState = STATE_BD;
+                }
                 break;
             }
 
             case STATE_BD: {
-                turnAState = turnoutStates.get(STATE_AD).getTestTurnoutAState();
-                turnBState = turnoutStates.get(STATE_AD).getTestTurnoutBState();
                 testState = STATE_AD;
                 break;
             }
 
             case STATE_AD: {
                 if (type == SINGLE_SLIP) {
-                    turnAState = turnoutStates.get(STATE_AC).getTestTurnoutAState();
-                    turnBState = turnoutStates.get(STATE_AC).getTestTurnoutBState();
                     testState = STATE_AC;
                 } else {
-                    turnAState = turnoutStates.get(STATE_BC).getTestTurnoutAState();
-                    turnBState = turnoutStates.get(STATE_BC).getTestTurnoutBState();
                     testState = STATE_BC;
                 }
                 break;
             }
 
             case STATE_BC: {
-                turnAState = turnoutStates.get(STATE_AC).getTestTurnoutAState();
-                turnBState = turnoutStates.get(STATE_AC).getTestTurnoutBState();
                 testState = STATE_AC;
                 break;
             }
 
             default: {
-                turnAState = turnoutStates.get(STATE_BD).getTestTurnoutAState();
-                turnBState = turnoutStates.get(STATE_BD).getTestTurnoutBState();
                 testState = STATE_BD;
                 break;
             }
         }
+        turnAState = turnoutStates.get(testState).getTestTurnoutAState();
+        turnBState = turnoutStates.get(testState).getTestTurnoutBState();
+
         ((Turnout) turnoutAComboBox.getSelectedBean()).setCommandedState(turnAState);
         ((Turnout) turnoutBComboBox.getSelectedBean()).setCommandedState(turnBState);
         /*if(getTurnout()!=null)

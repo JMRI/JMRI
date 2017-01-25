@@ -151,6 +151,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     final public static int SLIP_B = 22; // offset for slip connection points
     final public static int SLIP_C = 23; // offset for slip connection points
     final public static int SLIP_D = 24; // offset for slip connection points
+    final public static int SLIP_LEFT = 25;
+    final public static int SLIP_RIGHT = 26;
     final public static int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
 
     // dashed line parameters
@@ -2769,9 +2771,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             x.setCoordsCenter(new Point2D.Double(center.getX() + xDel, center.getY() + yDel));
         }
         // loop over all defined slips
-        for (LayoutSlip x : slipList) {
-            Point2D center = x.getCoordsCenter();
-            x.setCoordsCenter(new Point2D.Double(center.getX() + xDel, center.getY() + yDel));
+        for (LayoutSlip sl : slipList) {
+            Point2D center = sl.getCoordsCenter();
+            sl.setCoordsCenter(new Point2D.Double(center.getX() + xDel, center.getY() + yDel));
         }
         // loop over all defined turntables
         for (LayoutTurntable x : turntableList) {
@@ -2797,8 +2799,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             x.scaleCoords(xFactor, yFactor);
         }
         // loop over all defined slips
-        for (LayoutSlip x : slipList) {
-            x.scaleCoords(xFactor, yFactor);
+        for (LayoutSlip sl : slipList) {
+            sl.scaleCoords(xFactor, yFactor);
         }
         // loop over all defined turntables
         for (LayoutTurntable x : turntableList) {
@@ -2999,10 +3001,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }
             // loop over all defined slips
-            for (LayoutSlip x : slipList) {
-                Point2D center = x.getCoordsCenter();
+            for (LayoutSlip sl: slipList) {
+                Point2D center = sl.getCoordsCenter();
                 if (selectRect.contains(center)) {
-                    x.setCoordsCenter(new Point2D.Double(center.getX() + xTranslation,
+                    sl.setCoordsCenter(new Point2D.Double(center.getX() + xTranslation,
                             center.getY() + yTranslation));
                 }
             }
@@ -3088,10 +3090,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             center.getY() + undoDeltaY));
                 }
             }
-            for (LayoutSlip x : slipList) {
-                Point2D center = x.getCoordsCenter();
+            for (LayoutSlip sl : slipList) {
+                Point2D center = sl.getCoordsCenter();
                 if (undoRect.contains(center)) {
-                    x.setCoordsCenter(new Point2D.Double(center.getX() + undoDeltaX,
+                    sl.setCoordsCenter(new Point2D.Double(center.getX() + undoDeltaX,
                             center.getY() + undoDeltaY));
                 }
             }
@@ -3602,16 +3604,25 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             break;
                         }
                     }
-                    //TODO: check east/west control points?
                     for (LayoutSlip sl : slipList) {
-                        // check the center point
+                        // check east/west turnout (control) circles?
                         Point2D pt = sl.getCoordsCenter();
-                        Rectangle2D r = new Rectangle2D.Double(
-                                pt.getX() - (SIZE2 * 2.0), pt.getY() - (SIZE2 * 2.0), 4.0 * SIZE2, 4.0 * SIZE2);
-                        if (r.contains(dLoc)) {
+                        double circleRadius = SIZE * turnoutCircleSize;
+                        double circleDiameter = 2.0 * circleRadius;
+
+                        Point2D leftCenter = midpoint(sl.getCoordsA(), sl.getCoordsB());
+                        Double leftFract = circleRadius / pt.distance(leftCenter);
+                        Point2D leftCircleCenter = lerp(pt, leftCenter, leftFract);
+                        Double leftDistance = dLoc.distance(leftCircleCenter);
+
+                        Point2D rightCenter = midpoint(sl.getCoordsC(), sl.getCoordsD());
+                        Double rightFract = circleRadius / pt.distance(rightCenter);
+                        Point2D rightCircleCenter = lerp(pt, rightCenter, rightFract);
+                        Double rightDistance = dLoc.distance(rightCircleCenter);
+                        if ((leftDistance <= circleRadius) || (rightDistance <= circleRadius)) {
                             // mouse was pressed on this turnout
                             selectedObject = sl;
-                            selectedPointType = SLIP_CENTER;
+                            selectedPointType = (leftDistance < rightDistance) ? SLIP_LEFT : SLIP_RIGHT;
                             break;
                         }
                     }
@@ -3663,16 +3674,25 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     break;
                 }
             }
-            //TODO: check east/west control points?
             for (LayoutSlip sl : slipList) {
-                // check the center point
+                //check east/west turnout (control) circles?
                 Point2D pt = sl.getCoordsCenter();
-                Rectangle2D r = new Rectangle2D.Double(
-                        pt.getX() - (SIZE2 * 2.0), pt.getY() - (SIZE2 * 2.0), 4.0 * SIZE2, 4.0 * SIZE2);
-                if (r.contains(dLoc)) {
+                double circleRadius = SIZE * turnoutCircleSize;
+                double circleDiameter = 2.0 * circleRadius;
+
+                Point2D leftCenter = midpoint(sl.getCoordsA(), sl.getCoordsB());
+                Double leftFract = circleRadius / pt.distance(leftCenter);
+                Point2D leftCircleCenter = lerp(pt, leftCenter, leftFract);
+                Double leftDistance = dLoc.distance(leftCircleCenter);
+
+                Point2D rightCenter = midpoint(sl.getCoordsC(), sl.getCoordsD());
+                Double rightFract = circleRadius / pt.distance(rightCenter);
+                Point2D rightCircleCenter = lerp(pt, rightCenter, rightFract);
+                Double rightDistance = dLoc.distance(rightCircleCenter);
+                if ((leftDistance <= circleRadius) || (rightDistance <= circleRadius)) {
                     // mouse was pressed on this turnout
                     selectedObject = sl;
-                    selectedPointType = SLIP_CENTER;
+                    selectedPointType = (leftDistance < rightDistance) ? SLIP_LEFT : SLIP_RIGHT;
                     break;
                 }
             }
@@ -3901,76 +3921,86 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
 
-        // check level Xings, if any
-        for (LayoutSlip x : slipList) {
-            if (x != selectedObject) {
+        // check slips, if any
+        for (LayoutSlip sl : slipList) {
+            if (sl != selectedObject) {
                 if (!requireUnconnected) {
-                    // check the center point
-                    Point2D pt = x.getCoordsCenter();
-                    Rectangle2D r = new Rectangle2D.Double(
-                            pt.getX() - SIZE2, pt.getY() - SIZE2, SIZE2 + SIZE2, SIZE2 + SIZE2);
-                    if (r.contains(loc)) {
+                    Point2D pt = sl.getCoordsCenter();
+                    double circleRadius = SIZE * turnoutCircleSize;
+                    double circleDiameter = 2.0 * circleRadius;
+
+                    Point2D leftCenter = midpoint(sl.getCoordsA(), sl.getCoordsB());
+                    Double leftFract = circleRadius / pt.distance(leftCenter);
+                    Point2D leftCircleCenter = lerp(pt, leftCenter, leftFract);
+                    Double leftDistance = dLoc.distance(leftCircleCenter);
+
+                    Point2D rightCenter = midpoint(sl.getCoordsC(), sl.getCoordsD());
+                    Double rightFract = circleRadius / pt.distance(rightCenter);
+                    Point2D rightCircleCenter = lerp(pt, rightCenter, rightFract);
+                    Double rightDistance = dLoc.distance(rightCircleCenter);
+                    if ((leftDistance <= circleRadius) || (rightDistance <= circleRadius)) {
+                        // mouse was pressed on this turnout
                         // mouse was pressed on this connection point
                         foundLocation = pt;
-                        foundObject = x;
-                        foundPointType = SLIP_CENTER;
+                        foundObject = sl;
+                        foundPointType = (leftDistance < rightDistance) ? SLIP_LEFT : SLIP_RIGHT;
                         foundNeedsConnect = false;
                         return true;
                     }
                 }
-                if (!requireUnconnected || (x.getConnectA() == null)) {
+                if (!requireUnconnected || (sl.getConnectA() == null)) {
                     // check the A connection point
-                    Point2D pt = x.getCoordsA();
+                    Point2D pt = sl.getCoordsA();
                     Rectangle2D r = new Rectangle2D.Double(
                             pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2);
                     if (r.contains(loc)) {
                         // mouse was pressed on this connection point
                         foundLocation = pt;
-                        foundObject = x;
+                        foundObject = sl;
                         foundPointType = SLIP_A;
-                        foundNeedsConnect = (x.getConnectA() == null);
+                        foundNeedsConnect = (sl.getConnectA() == null);
                         return true;
                     }
                 }
-                if (!requireUnconnected || (x.getConnectB() == null)) {
+                if (!requireUnconnected || (sl.getConnectB() == null)) {
                     // check the B connection point
-                    Point2D pt = x.getCoordsB();
+                    Point2D pt = sl.getCoordsB();
                     Rectangle2D r = new Rectangle2D.Double(
                             pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2);
                     if (r.contains(loc)) {
                         // mouse was pressed on this connection point
                         foundLocation = pt;
-                        foundObject = x;
+                        foundObject = sl;
                         foundPointType = SLIP_B;
-                        foundNeedsConnect = (x.getConnectB() == null);
+                        foundNeedsConnect = (sl.getConnectB() == null);
                         return true;
                     }
                 }
-                if (!requireUnconnected || (x.getConnectC() == null)) {
+                if (!requireUnconnected || (sl.getConnectC() == null)) {
                     // check the C connection point
-                    Point2D pt = x.getCoordsC();
+                    Point2D pt = sl.getCoordsC();
                     Rectangle2D r = new Rectangle2D.Double(
                             pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2);
                     if (r.contains(loc)) {
                         // mouse was pressed on this connection point
                         foundLocation = pt;
-                        foundObject = x;
+                        foundObject = sl;
                         foundPointType = SLIP_C;
-                        foundNeedsConnect = (x.getConnectC() == null);
+                        foundNeedsConnect = (sl.getConnectC() == null);
                         return true;
                     }
                 }
-                if (!requireUnconnected || (x.getConnectD() == null)) {
+                if (!requireUnconnected || (sl.getConnectD() == null)) {
                     // check the D connection point
-                    Point2D pt = x.getCoordsD();
+                    Point2D pt = sl.getCoordsD();
                     Rectangle2D r = new Rectangle2D.Double(
                             pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2);
                     if (r.contains(loc)) {
                         // mouse was pressed on this connection point
                         foundLocation = pt;
-                        foundObject = x;
+                        foundObject = sl;
                         foundPointType = SLIP_D;
-                        foundNeedsConnect = (x.getConnectD() == null);
+                        foundNeedsConnect = (sl.getConnectD() == null);
                         return true;
                     }
                 }
@@ -4342,12 +4372,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 // controlling layout, in edit mode
                 LayoutTurnout t = (LayoutTurnout) selectedObject;
                 t.toggleTurnout();
-            } else if ((selectedObject != null) && (selectedPointType == SLIP_CENTER)
+            } else if ((selectedObject != null) && ((selectedPointType == SLIP_CENTER) ||
+                    (selectedPointType == SLIP_LEFT) || (selectedPointType == SLIP_RIGHT))
                     && allControlling() && (!event.isMetaDown()) && (!event.isAltDown()) && (!event.isPopupTrigger())
                     && (!event.isShiftDown()) && (!event.isControlDown())) {
                 // controlling layout, in edit mode
-                LayoutSlip t = (LayoutSlip) selectedObject;
-                t.toggleState();
+                LayoutSlip sl = (LayoutSlip) selectedObject;
+                sl.toggleState(selectedPointType);
             } else if ((selectedObject != null) && (selectedPointType >= TURNTABLE_RAY_OFFSET)
                     && allControlling() && (!event.isMetaDown()) && (!event.isAltDown()) && (!event.isPopupTrigger())
                     && (!event.isShiftDown()) && (!event.isControlDown())) {
@@ -4388,12 +4419,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 t.toggleTurnout();
             }
         } // check if controlling turnouts out of edit mode
-        else if ((selectedObject != null) && (selectedPointType == SLIP_CENTER)
+        else if ((selectedObject != null) && ((selectedPointType == SLIP_CENTER) ||
+                            (selectedPointType == SLIP_LEFT) || (selectedPointType == SLIP_RIGHT))
                 && allControlling() && (!event.isMetaDown()) && (!event.isAltDown()) && (!event.isPopupTrigger())
                 && (!event.isShiftDown()) && (!delayedPopupTrigger)) {
             // controlling layout, not in edit mode
-            LayoutSlip t = (LayoutSlip) selectedObject;
-            t.toggleState();
+            LayoutSlip sl = (LayoutSlip) selectedObject;
+            sl.toggleState(selectedPointType);
         } else if ((selectedObject != null) && (selectedPointType >= TURNTABLE_RAY_OFFSET)
                 && allControlling() && (!event.isMetaDown()) && (!event.isAltDown()) && (!event.isPopupTrigger())
                 && (!event.isShiftDown()) && (!delayedPopupTrigger)) {
@@ -4420,8 +4452,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             ((LevelXing) foundObject).showPopUp(event, isEditable());
                             break;
                         case SLIP_CENTER:
+                        case SLIP_RIGHT:
+                        case SLIP_LEFT: {
                             ((LayoutSlip) foundObject).showPopUp(event, isEditable());
                             break;
+                        }
                         default:
                             break;
                     }
@@ -4481,6 +4516,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     ((LevelXing) foundObject).showPopUp(event, isEditable());
                     break;
                 case SLIP_CENTER:
+                case SLIP_LEFT:
+                case SLIP_RIGHT:
                     ((LayoutSlip) foundObject).showPopUp(event, isEditable());
                     break;
                 case TURNTABLE_CENTER:
@@ -4660,6 +4697,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         amendSelectionGroup((LevelXing) foundObject);
                         break;
                     case SLIP_CENTER:
+                    case SLIP_LEFT:
+                    case SLIP_RIGHT:
                         amendSelectionGroup((LayoutSlip) foundObject);
                         break;
                     case TURNTABLE_CENTER:
@@ -5130,15 +5169,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
         if (_slipSelection != null) {
             // loop over all defined slips
-            for (LayoutSlip xing : _slipSelection) {
-                int minx = (int) Math.min(Math.min(xing.getCoordsA().getX(), xing.getCoordsB().getX()), Math.min(xing.getCoordsC().getX(), xing.getCoordsD().getX()));
-                int miny = (int) Math.min(Math.min(xing.getCoordsA().getY(), xing.getCoordsB().getY()), Math.min(xing.getCoordsC().getY(), xing.getCoordsD().getY()));
-                int maxx = (int) Math.max(Math.max(xing.getCoordsA().getX(), xing.getCoordsB().getX()), Math.max(xing.getCoordsC().getX(), xing.getCoordsD().getX()));
-                int maxy = (int) Math.max(Math.max(xing.getCoordsA().getY(), xing.getCoordsB().getY()), Math.max(xing.getCoordsC().getY(), xing.getCoordsD().getY()));
+            for (LayoutSlip sl : _slipSelection) {
+                int minx = (int) Math.min(Math.min(sl.getCoordsA().getX(), sl.getCoordsB().getX()), Math.min(sl.getCoordsC().getX(), sl.getCoordsD().getX()));
+                int miny = (int) Math.min(Math.min(sl.getCoordsA().getY(), sl.getCoordsB().getY()), Math.min(sl.getCoordsC().getY(), sl.getCoordsD().getY()));
+                int maxx = (int) Math.max(Math.max(sl.getCoordsA().getX(), sl.getCoordsB().getX()), Math.max(sl.getCoordsC().getX(), sl.getCoordsD().getX()));
+                int maxy = (int) Math.max(Math.max(sl.getCoordsA().getY(), sl.getCoordsB().getY()), Math.max(sl.getCoordsC().getY(), sl.getCoordsD().getY()));
                 int width = maxx - minx;
                 int height = maxy - miny;
-                int x = (int) xing.getCoordsCenter().getX() - (width / 2);
-                int y = (int) xing.getCoordsCenter().getY() - (height / 2);
+                int x = (int) sl.getCoordsCenter().getX() - (width / 2);
+                int y = (int) sl.getCoordsCenter().getY() - (height / 2);
                 g.drawRect(x, y, width, height);
             }
         }
@@ -5263,14 +5302,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
         // loop over all defined slips
-        for (LayoutSlip x : slipList) {
-            Point2D center = x.getCoordsCenter();
+        for (LayoutSlip sl : slipList) {
+            Point2D center = sl.getCoordsCenter();
             if (selectRect.contains(center)) {
                 if (_slipSelection == null) {
                     _slipSelection = new ArrayList<LayoutSlip>();
                 }
-                if (!_slipSelection.contains(x)) {
-                    _slipSelection.add(x);
+                if (!_slipSelection.contains(sl)) {
+                    _slipSelection.add(sl);
                 }
             }
         }
@@ -5352,8 +5391,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (_slipSelection != null) {
             boolean oldSlip = noWarnSlip;
             noWarnSlip = true;
-            for (LayoutSlip point : _slipSelection) {
-                removeLayoutSlip(point);
+            for (LayoutSlip sl : _slipSelection) {
+                removeLayoutSlip(sl);
             }
             noWarnSlip = oldSlip;
         }
@@ -5836,9 +5875,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
         if (_slipSelection != null) {
             // loop over all defined slips
-            for (LayoutSlip x : _slipSelection) {
-                Point2D center = x.getCoordsCenter();
-                x.setCoordsCenter(new Point2D.Double(returnNewXPostition(e, center.getX()),
+            for (LayoutSlip sl : _slipSelection) {
+                Point2D center = sl.getCoordsCenter();
+                sl.setCoordsCenter(new Point2D.Double(returnNewXPostition(e, center.getX()),
                         returnNewYPostition(e, center.getY())));
             }
         }
@@ -6110,8 +6149,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     }
                     if (_slipSelection != null) {
                         // loop over all defined slips
-                        for (LayoutSlip x : _slipSelection) {
-                            Point2D center = x.getCoordsCenter();
+                        for (LayoutSlip sl : _slipSelection) {
+                            Point2D center = sl.getCoordsCenter();
                             xNew = (int) center.getX() + offsetx;
                             yNew = (int) center.getY() + offsety;
                             if (xNew < 0) {
@@ -6120,7 +6159,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             if (yNew < 0) {
                                 yNew = 0;
                             }
-                            x.setCoordsCenter(new Point2D.Double(xNew, yNew));
+                            sl.setCoordsCenter(new Point2D.Double(xNew, yNew));
                         }
                     }
                     // loop over all defined turntables
@@ -6202,6 +6241,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             x.setCoordsD(newPos);
                             break;
                         case SLIP_CENTER:
+                        case SLIP_LEFT:
+                        case SLIP_RIGHT:
                             ((LayoutSlip) selectedObject).setCoordsCenter(newPos);
                             isDragging = true;
                             break;
@@ -6744,8 +6785,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }
         }
-        for (LayoutSlip slip : slipList) {
-            Turnout to = slip.getTurnout();
+        for (LayoutSlip sl : slipList) {
+            Turnout to = sl.getTurnout();
             if (to != null) {
                 String uname = to.getUserName();
                 if (to.getSystemName().equals(turnoutName) || (uname != null && uname.equals(turnoutName))) {
@@ -6756,7 +6797,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     return false;
                 }
             }
-            to = slip.getTurnoutB();
+            to = sl.getTurnoutB();
             if (to != null) {
                 String uname = to.getUserName();
                 if (to.getSystemName().equals(turnoutName) || (uname != null && uname.equals(turnoutName))) {
@@ -8473,8 +8514,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             x.setObjects(this);
         }
         // initialize LevelXings if any
-        for (LayoutSlip l : slipList) {
-            l.setObjects(this);
+        for (LayoutSlip sl : slipList) {
+            sl.setObjects(this);
         }
         // initialize LayoutTurntables if any
         for (LayoutTurntable t : turntableList) {
@@ -9142,18 +9183,30 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
     }
 
+    //return a Double between a & b for t:0 ==> a and t:1 ==> b
+    private Double lerp(Double a, Double b, Double t) {
+          return ((1.0 - t) * a) + (t * b);
+    }
+
+    //return a Point2D between a & b for t:0 ==> a and t:1 ==> b
+    private Point2D lerp(Point2D p1, Point2D p2, Double interpolant) {
+        return new Point2D.Double(lerp(p1.getX(), p2.getX(), interpolant),
+                lerp(p1.getY(), p2.getY(), interpolant));
+    }
+
+    // return a Point2D at the mid point between p1 & p2
     private Point2D midpoint(Point2D p1, Point2D p2) {
-        return new Point2D.Double((p1.getX() + p2.getX()) / 2.0, (p1.getY() + p2.getY()) / 2.0);
+        return lerp(p1, p2, 0.5);
     }
 
+    // return a Point2D one third of the way from p1 to p2
     protected Point2D third(Point2D p1, Point2D p2) {
-        return new Point2D.Double(p1.getX() + ((p2.getX() - p1.getX()) / 3.0),
-                p1.getY() + ((p2.getY() - p1.getY()) / 3.0));
+        return lerp(p1, p2, 1.0/3.0);
     }
 
+    // return a Point2D one forth of the way from p1 to p2
     private Point2D fourth(Point2D p1, Point2D p2) {
-        return new Point2D.Double(p1.getX() + ((p2.getX() - p1.getX()) / 4.0),
-                p1.getY() + ((p2.getY() - p1.getY()) / 4.0));
+        return lerp(p1, p2, 1.0/4.0);
     }
 
     private void drawXings(Graphics2D g2) {
@@ -9200,12 +9253,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     private void drawSlips(Graphics2D g2) {
-        for (LayoutSlip x : slipList) {
-            if (x.getHidden() && !isEditable()) {
+        for (LayoutSlip sl : slipList) {
+            if (sl.getHidden() && !isEditable()) {
                 continue;   // skip this one
             }
-            LayoutBlock b = x.getLayoutBlock();
-            setTrackStrokeWidth(g2, x.isMainline());
+            LayoutBlock b = sl.getLayoutBlock();
+            setTrackStrokeWidth(g2, sl.isMainline());
             Color mainColour;
             Color subColour;
             if (b != null) {
@@ -9218,111 +9271,111 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             g2.setColor(subColour);
 
-            g2.draw(new Line2D.Double(x.getCoordsA(),
-                    third(x.getCoordsA(), x.getCoordsC())));
-            g2.draw(new Line2D.Double(x.getCoordsC(),
-                    third(x.getCoordsC(), x.getCoordsA())));
+            g2.draw(new Line2D.Double(sl.getCoordsA(),
+                    third(sl.getCoordsA(), sl.getCoordsC())));
+            g2.draw(new Line2D.Double(sl.getCoordsC(),
+                    third(sl.getCoordsC(), sl.getCoordsA())));
 
-            g2.draw(new Line2D.Double(x.getCoordsB(),
-                    third(x.getCoordsB(), x.getCoordsD())));
-            g2.draw(new Line2D.Double(x.getCoordsD(),
-                    third(x.getCoordsD(), x.getCoordsB())));
+            g2.draw(new Line2D.Double(sl.getCoordsB(),
+                    third(sl.getCoordsB(), sl.getCoordsD())));
+            g2.draw(new Line2D.Double(sl.getCoordsD(),
+                    third(sl.getCoordsD(), sl.getCoordsB())));
 
-            if (x.getSlipType() == LayoutSlip.DOUBLE_SLIP) {
-                if (x.getSlipState() == LayoutSlip.STATE_AC) {
-                    g2.draw(new Line2D.Double(x.getCoordsA(),
-                            third(x.getCoordsA(), x.getCoordsD())));
+            if (sl.getSlipType() == LayoutSlip.DOUBLE_SLIP) {
+                if (sl.getSlipState() == LayoutSlip.STATE_AC) {
+                    g2.draw(new Line2D.Double(sl.getCoordsA(),
+                            third(sl.getCoordsA(), sl.getCoordsD())));
 
-                    g2.draw(new Line2D.Double(x.getCoordsD(),
-                            third(x.getCoordsD(), x.getCoordsA())));
+                    g2.draw(new Line2D.Double(sl.getCoordsD(),
+                            third(sl.getCoordsD(), sl.getCoordsA())));
 
-                    g2.draw(new Line2D.Double(x.getCoordsB(),
-                            third(x.getCoordsB(), x.getCoordsC())));
+                    g2.draw(new Line2D.Double(sl.getCoordsB(),
+                            third(sl.getCoordsB(), sl.getCoordsC())));
 
-                    g2.draw(new Line2D.Double(x.getCoordsC(),
-                            third(x.getCoordsC(), x.getCoordsB())));
-
-                    g2.setColor(mainColour);
-                    g2.draw(new Line2D.Double(x.getCoordsA(), x.getCoordsC()));
-
-                } else if (x.getSlipState() == LayoutSlip.STATE_BD) {
-                    g2.draw(new Line2D.Double(x.getCoordsB(),
-                            third(x.getCoordsB(), x.getCoordsC())));
-
-                    g2.draw(new Line2D.Double(x.getCoordsC(),
-                            third(x.getCoordsC(), x.getCoordsB())));
-
-                    g2.draw(new Line2D.Double(x.getCoordsA(),
-                            third(x.getCoordsA(), x.getCoordsD())));
-                    g2.draw(new Line2D.Double(x.getCoordsD(),
-                            third(x.getCoordsD(), x.getCoordsA())));
+                    g2.draw(new Line2D.Double(sl.getCoordsC(),
+                            third(sl.getCoordsC(), sl.getCoordsB())));
 
                     g2.setColor(mainColour);
-                    g2.draw(new Line2D.Double(x.getCoordsB(), x.getCoordsD()));
+                    g2.draw(new Line2D.Double(sl.getCoordsA(), sl.getCoordsC()));
 
-                } else if (x.getSlipState() == LayoutSlip.STATE_AD) {
-                    g2.draw(new Line2D.Double(x.getCoordsB(),
-                            third(x.getCoordsB(), x.getCoordsC())));
+                } else if (sl.getSlipState() == LayoutSlip.STATE_BD) {
+                    g2.draw(new Line2D.Double(sl.getCoordsB(),
+                            third(sl.getCoordsB(), sl.getCoordsC())));
 
-                    g2.draw(new Line2D.Double(x.getCoordsC(),
-                            third(x.getCoordsC(), x.getCoordsB())));
+                    g2.draw(new Line2D.Double(sl.getCoordsC(),
+                            third(sl.getCoordsC(), sl.getCoordsB())));
+
+                    g2.draw(new Line2D.Double(sl.getCoordsA(),
+                            third(sl.getCoordsA(), sl.getCoordsD())));
+                    g2.draw(new Line2D.Double(sl.getCoordsD(),
+                            third(sl.getCoordsD(), sl.getCoordsA())));
 
                     g2.setColor(mainColour);
-                    g2.draw(new Line2D.Double(x.getCoordsA(), x.getCoordsD()));
+                    g2.draw(new Line2D.Double(sl.getCoordsB(), sl.getCoordsD()));
 
-                } else if (x.getSlipState() == LayoutSlip.STATE_BC) {
+                } else if (sl.getSlipState() == LayoutSlip.STATE_AD) {
+                    g2.draw(new Line2D.Double(sl.getCoordsB(),
+                            third(sl.getCoordsB(), sl.getCoordsC())));
 
-                    g2.draw(new Line2D.Double(x.getCoordsA(),
-                            third(x.getCoordsA(), x.getCoordsD())));
+                    g2.draw(new Line2D.Double(sl.getCoordsC(),
+                            third(sl.getCoordsC(), sl.getCoordsB())));
 
-                    g2.draw(new Line2D.Double(x.getCoordsD(),
-                            third(x.getCoordsD(), x.getCoordsA())));
                     g2.setColor(mainColour);
-                    g2.draw(new Line2D.Double(x.getCoordsB(), x.getCoordsC()));
+                    g2.draw(new Line2D.Double(sl.getCoordsA(), sl.getCoordsD()));
+
+                } else if (sl.getSlipState() == LayoutSlip.STATE_BC) {
+
+                    g2.draw(new Line2D.Double(sl.getCoordsA(),
+                            third(sl.getCoordsA(), sl.getCoordsD())));
+
+                    g2.draw(new Line2D.Double(sl.getCoordsD(),
+                            third(sl.getCoordsD(), sl.getCoordsA())));
+                    g2.setColor(mainColour);
+                    g2.draw(new Line2D.Double(sl.getCoordsB(), sl.getCoordsC()));
                 } else {
-                    g2.draw(new Line2D.Double(x.getCoordsB(),
-                            third(x.getCoordsB(), x.getCoordsC())));
+                    g2.draw(new Line2D.Double(sl.getCoordsB(),
+                            third(sl.getCoordsB(), sl.getCoordsC())));
 
-                    g2.draw(new Line2D.Double(x.getCoordsC(),
-                            third(x.getCoordsC(), x.getCoordsB())));
+                    g2.draw(new Line2D.Double(sl.getCoordsC(),
+                            third(sl.getCoordsC(), sl.getCoordsB())));
 
-                    g2.draw(new Line2D.Double(x.getCoordsA(),
-                            third(x.getCoordsA(), x.getCoordsD())));
+                    g2.draw(new Line2D.Double(sl.getCoordsA(),
+                            third(sl.getCoordsA(), sl.getCoordsD())));
 
-                    g2.draw(new Line2D.Double(x.getCoordsD(),
-                            third(x.getCoordsD(), x.getCoordsA())));
+                    g2.draw(new Line2D.Double(sl.getCoordsD(),
+                            third(sl.getCoordsD(), sl.getCoordsA())));
                 }
             } else {
-                g2.draw(new Line2D.Double(x.getCoordsA(),
-                        third(x.getCoordsA(), x.getCoordsD())));
+                g2.draw(new Line2D.Double(sl.getCoordsA(),
+                        third(sl.getCoordsA(), sl.getCoordsD())));
 
-                g2.draw(new Line2D.Double(x.getCoordsD(),
-                        third(x.getCoordsD(), x.getCoordsA())));
-                if (x.getSlipState() == LayoutSlip.STATE_AD) {
+                g2.draw(new Line2D.Double(sl.getCoordsD(),
+                        third(sl.getCoordsD(), sl.getCoordsA())));
+                if (sl.getSlipState() == LayoutSlip.STATE_AD) {
                     g2.setColor(mainColour);
-                    g2.draw(new Line2D.Double(x.getCoordsA(), x.getCoordsD()));
+                    g2.draw(new Line2D.Double(sl.getCoordsA(), sl.getCoordsD()));
 
-                } else if (x.getSlipState() == LayoutSlip.STATE_BD) {
+                } else if (sl.getSlipState() == LayoutSlip.STATE_BD) {
                     g2.setColor(mainColour);
-                    g2.draw(new Line2D.Double(x.getCoordsB(), x.getCoordsD()));
-                    if (x.singleSlipStraightEqual()) {
+                    g2.draw(new Line2D.Double(sl.getCoordsB(), sl.getCoordsD()));
+                    if (sl.singleSlipStraightEqual()) {
                         g2.setColor(mainColour);
-                        g2.draw(new Line2D.Double(x.getCoordsA(), x.getCoordsC()));
+                        g2.draw(new Line2D.Double(sl.getCoordsA(), sl.getCoordsC()));
                     }
 
-                } else if (x.getSlipState() == LayoutSlip.STATE_AC) {
+                } else if (sl.getSlipState() == LayoutSlip.STATE_AC) {
                     g2.setColor(mainColour);
-                    g2.draw(new Line2D.Double(x.getCoordsA(), x.getCoordsC()));
-                    if (x.singleSlipStraightEqual()) {
+                    g2.draw(new Line2D.Double(sl.getCoordsA(), sl.getCoordsC()));
+                    if (sl.singleSlipStraightEqual()) {
                         g2.setColor(mainColour);
-                        g2.draw(new Line2D.Double(x.getCoordsB(), x.getCoordsD()));
+                        g2.draw(new Line2D.Double(sl.getCoordsB(), sl.getCoordsD()));
                     }
                 } else {
-                    g2.draw(new Line2D.Double(x.getCoordsA(),
-                            third(x.getCoordsA(), x.getCoordsD())));
+                    g2.draw(new Line2D.Double(sl.getCoordsA(),
+                            third(sl.getCoordsA(), sl.getCoordsD())));
 
-                    g2.draw(new Line2D.Double(x.getCoordsD(),
-                            third(x.getCoordsD(), x.getCoordsA())));
+                    g2.draw(new Line2D.Double(sl.getCoordsD(),
+                            third(sl.getCoordsD(), sl.getCoordsA())));
                 }
             }
         }
@@ -9347,11 +9400,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (LayoutSlip sl : slipList) {
             if (!(sl.getHidden() && !isEditable())) {
                 Point2D pt = sl.getCoordsCenter();
+                g2.setColor(turnoutCircleColor != null ? turnoutCircleColor : defaultTrackColor);
                 double circleRadius = SIZE * turnoutCircleSize;
                 double circleDiameter = 2.0 * circleRadius;
-                g2.setColor(turnoutCircleColor != null ? turnoutCircleColor : defaultTrackColor);
-                g2.draw(new Ellipse2D.Double(
-                        pt.getX() - circleRadius, pt.getY() - circleRadius, circleDiameter, circleDiameter));
+
+                Point2D leftCenter = midpoint(sl.getCoordsA(), sl.getCoordsB());
+                Double leftFract = circleRadius / pt.distance(leftCenter);
+                Point2D leftCircleCenter = lerp(pt, leftCenter, leftFract);
+
+                g2.draw(new Ellipse2D.Double(leftCircleCenter.getX() - circleRadius,
+                    leftCircleCenter.getY() - circleRadius, circleDiameter, circleDiameter));
+
+                Point2D rightCenter = midpoint(sl.getCoordsC(), sl.getCoordsD());
+                Double rightFract = circleRadius / pt.distance(rightCenter);
+                Point2D rightCircleCenter = lerp(pt, rightCenter, rightFract);
+                g2.draw(new Ellipse2D.Double(rightCircleCenter.getX() - circleRadius,
+                    rightCircleCenter.getY() - circleRadius, circleDiameter, circleDiameter));
             }
         }
     }
@@ -9501,46 +9565,60 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void drawSlipRects(Graphics2D g2) {
         // loop over all defined slips
-        for (LayoutSlip x : slipList) {
-            //TODO: draw east/west control points?
-            Point2D pt = x.getCoordsCenter();
-            g2.setColor(turnoutCircleColor != null ? turnoutCircleColor : defaultTrackColor);
-            double circleRadius = SIZE * turnoutCircleSize;
-            double circleDiameter = 2.0 * circleRadius;
-            g2.draw(new Ellipse2D.Double(
-                    pt.getX() - circleRadius, pt.getY() - circleRadius, circleDiameter, circleDiameter));
-            pt = x.getCoordsA();
-            if (x.getConnectA() == null) {
-                g2.setColor(Color.magenta);
-            } else {
-                g2.setColor(Color.blue);
+        for (LayoutSlip sl : slipList) {
+            if (!(sl.getHidden() && !isEditable())) {
+                Point2D pt = sl.getCoordsCenter();
+                // draw east/west turnout (control) circles?
+                g2.setColor(turnoutCircleColor != null ? turnoutCircleColor : defaultTrackColor);
+                double circleRadius = SIZE * turnoutCircleSize;
+                double circleDiameter = 2.0 * circleRadius;
+
+                Point2D leftCenter = midpoint(sl.getCoordsA(), sl.getCoordsB());
+                Double leftFract = circleRadius / pt.distance(leftCenter);
+                Point2D leftCircleCenter = lerp(pt, leftCenter, leftFract);
+
+                g2.draw(new Ellipse2D.Double(leftCircleCenter.getX() - circleRadius,
+                    leftCircleCenter.getY() - circleRadius, circleDiameter, circleDiameter));
+
+                Point2D rightCenter = midpoint(sl.getCoordsC(), sl.getCoordsD());
+                Double rightFract = circleRadius / pt.distance(rightCenter);
+                Point2D rightCircleCenter = lerp(pt, rightCenter, rightFract);
+                g2.draw(new Ellipse2D.Double(rightCircleCenter.getX() - circleRadius,
+                    rightCircleCenter.getY() - circleRadius, circleDiameter, circleDiameter));
+
+                pt = sl.getCoordsA();
+                if (sl.getConnectA() == null) {
+                    g2.setColor(Color.magenta);
+                } else {
+                    g2.setColor(Color.blue);
+                }
+                g2.draw(new Rectangle2D.Double(
+                        pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
+                pt = sl.getCoordsB();
+                if (sl.getConnectB() == null) {
+                    g2.setColor(Color.red);
+                } else {
+                    g2.setColor(Color.green);
+                }
+                g2.draw(new Rectangle2D.Double(
+                        pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
+                pt = sl.getCoordsC();
+                if (sl.getConnectC() == null) {
+                    g2.setColor(Color.red);
+                } else {
+                    g2.setColor(Color.green);
+                }
+                g2.draw(new Rectangle2D.Double(
+                        pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
+                pt = sl.getCoordsD();
+                if (sl.getConnectD() == null) {
+                    g2.setColor(Color.red);
+                } else {
+                    g2.setColor(Color.green);
+                }
+                g2.draw(new Rectangle2D.Double(
+                        pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
             }
-            g2.draw(new Rectangle2D.Double(
-                    pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
-            pt = x.getCoordsB();
-            if (x.getConnectB() == null) {
-                g2.setColor(Color.red);
-            } else {
-                g2.setColor(Color.green);
-            }
-            g2.draw(new Rectangle2D.Double(
-                    pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
-            pt = x.getCoordsC();
-            if (x.getConnectC() == null) {
-                g2.setColor(Color.red);
-            } else {
-                g2.setColor(Color.green);
-            }
-            g2.draw(new Rectangle2D.Double(
-                    pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
-            pt = x.getCoordsD();
-            if (x.getConnectD() == null) {
-                g2.setColor(Color.red);
-            } else {
-                g2.setColor(Color.green);
-            }
-            g2.draw(new Rectangle2D.Double(
-                    pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
         }
     }
 
@@ -9989,18 +10067,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     break;
                 }
             }
-            for (LayoutSlip ls : slipList) {
-                if (ls.getTurnout() == nb || ls.getTurnoutB() == nb) {
+            for (LayoutSlip sl : slipList) {
+                if (sl.getTurnout() == nb || sl.getTurnoutB() == nb) {
                     switch (menu) {
                         case VIEWPOPUPONLY:
-                            ls.addViewPopUpMenu(item);
+                            sl.addViewPopUpMenu(item);
                             break;
                         case EDITPOPUPONLY:
-                            ls.addEditPopUpMenu(item);
+                            sl.addEditPopUpMenu(item);
                             break;
                         default:
-                            ls.addEditPopUpMenu(item);
-                            ls.addViewPopUpMenu(item);
+                            sl.addEditPopUpMenu(item);
+                            sl.addViewPopUpMenu(item);
                     }
                     break;
                 }
@@ -10168,12 +10246,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         t.setSecondTurnout(null);
                     }
                 }
-                for (LayoutSlip l : slipList) {
-                    if (nb.equals(l.getTurnout())) {
-                        l.setTurnout(null);
+                for (LayoutSlip sl : slipList) {
+                    if (nb.equals(sl.getTurnout())) {
+                        sl.setTurnout(null);
                     }
-                    if (nb.equals(l.getTurnoutB())) {
-                        l.setTurnoutB(null);
+                    if (nb.equals(sl.getTurnoutB())) {
+                        sl.setTurnoutB(null);
                     }
                 }
                 for (LayoutTurntable lx : turntableList) {
