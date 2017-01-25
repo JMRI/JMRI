@@ -1,4 +1,3 @@
-// SpeedoConnectionTypeList.java
 package jmri.jmrix.bachrus;
 
 /**

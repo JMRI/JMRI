@@ -1,4 +1,3 @@
-// GridConnectDoubledMessage.java
 package jmri.jmrix.can.adapters.gridconnect.can2usbino;
 
 import jmri.jmrix.can.CanMessage;
@@ -154,4 +153,4 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
     private final static Logger log = LoggerFactory.getLogger(GridConnectDoubledMessage.class.getName());
 }
 
-/* @(#)GridConnectDoubledMessage.java */
+

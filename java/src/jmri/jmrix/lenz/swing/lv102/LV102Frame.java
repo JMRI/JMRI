@@ -1,4 +1,3 @@
-// LV102Frame.java
 package jmri.jmrix.lenz.swing.lv102;
 
 import java.awt.event.ActionEvent;
@@ -16,11 +15,6 @@ import javax.swing.JToggleButton;
  * @author	Paul Bender Copyright (C) 2004,2005
   */
 public class LV102Frame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6327549110966065451L;
 
     public LV102Frame() {
         this("LV102 Configuration Utility");

@@ -1,4 +1,3 @@
-// MrcTrafficController.java
 package jmri.jmrix.mrc;
 
 import java.util.Date;
@@ -180,4 +179,4 @@ public abstract class MrcTrafficController implements MrcInterface {
 }
 
 
-/* @(#)MrcTrafficController.java */
+

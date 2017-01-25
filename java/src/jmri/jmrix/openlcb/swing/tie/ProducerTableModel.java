@@ -1,4 +1,3 @@
-// ProducerTableModel.java
 package jmri.jmrix.openlcb.swing.tie;
 
 import java.awt.Font;
@@ -16,11 +15,6 @@ import org.slf4j.LoggerFactory;
   * @since 2.3.7
  */
 public class ProducerTableModel extends AbstractTableModel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1734913950207049663L;
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
 
@@ -205,5 +199,3 @@ public class ProducerTableModel extends AbstractTableModel {
     private final static Logger log = LoggerFactory.getLogger(ProducerTableModel.class.getName());
 
 }
-
-/* @(#)ProducerTableModel.java */

@@ -1,4 +1,3 @@
-// NetworkDriverAdapter.java
 package jmri.jmrix.easydcc.networkdriver;
 
 import java.net.Socket;

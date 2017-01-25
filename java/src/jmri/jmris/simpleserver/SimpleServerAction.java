@@ -1,4 +1,3 @@
-// SimpleServerAction.java
 package jmri.jmris.simpleserver;
 
 import java.awt.event.ActionEvent;
@@ -10,11 +9,6 @@ import javax.swing.AbstractAction;
  * @author Paul Bender Copyright (C) 2010
  */
 public class SimpleServerAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9027149722115966187L;
 
     public SimpleServerAction(String s) {
         super(s);
@@ -33,4 +27,4 @@ public class SimpleServerAction extends AbstractAction {
 }
 
 
-/* @(#)SimpleServerAction.java */
+

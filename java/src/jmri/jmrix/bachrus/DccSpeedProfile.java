@@ -1,4 +1,3 @@
-// DccSpeedProfile.java
 package jmri.jmrix.bachrus;
 
 import java.io.FileOutputStream;

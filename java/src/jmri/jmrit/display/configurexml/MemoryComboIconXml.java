@@ -68,14 +68,15 @@ public class MemoryComboIconXml extends PositionableLabelXml {
         for (int i = 0; i < list.size(); i++) {
             Element e = list.get(i);
             String item = e.getText();
-//            int idx = 0;
-//            try {
-//                idx = e.getAttribute("index").getIntValue();
-//            } catch ( org.jdom2.DataConversionException ex) {
-//                log.error("failed to convert ComboBoxIcon index attribute");
-//                idx = i;
-//            }
-            items[i] = item;
+            try {
+                int idx = e.getAttribute("index").getIntValue();
+                items[idx] = item;
+            } catch ( org.jdom2.DataConversionException ex) {
+                log.error("failed to convert ComboBoxIcon index attribute");
+                if (items[i]==null) {
+                    items[i] = item;                    
+                }
+            }
         }
 
         MemoryComboIcon l = new MemoryComboIcon(p, items);

@@ -1,4 +1,3 @@
-// EnginesTableFrame.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.beans.PropertyChangeEvent;

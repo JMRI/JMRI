@@ -1,4 +1,3 @@
-// PowerlinePanel.java
 package jmri.jmrix.powerline.swing;
 
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
@@ -15,10 +14,6 @@ import jmri.jmrix.powerline.SerialSystemConnectionMemo;
  */
 abstract public class PowerlinePanel extends jmri.util.swing.JmriPanel implements PowerlinePanelInterface {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4095514688087393187L;
     /**
      * make "memo" object available as convenience
      */

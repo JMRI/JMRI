@@ -12,7 +12,7 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2016
  **/
 
-public class Z21ReporterManagerTest extends jmri.managers.AbstractReporterMgrTest {
+public class Z21ReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
     @Override
     public String getSystemName(int i) {

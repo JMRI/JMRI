@@ -53,5 +53,5 @@ public interface PowerManager {
     public void removePropertyChangeListener(PropertyChangeListener p);
 
     @CheckReturnValue
-    public @Nonnull String getUserName();
+    @Nonnull public String getUserName();
 }

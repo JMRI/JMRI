@@ -6,6 +6,7 @@ import gnu.io.SerialPort;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.util.Arrays;
 import jmri.jmrix.can.TrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -152,20 +153,13 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         return opened;
     }
 
-    /**
-     * Get an array of valid baud rates.
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
-    /**
-     * And the corresponding values.
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public int[] validBaudValues() {
-        return validSpeedValues;
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     protected String[] validSpeeds = new String[]{"57,600", "115,200", "230,400", "250,000", "333,333", "460,800", "500,000"};

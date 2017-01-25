@@ -18,7 +18,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen Copyright 2008
  * @author	Paul Bender Copyright (C) 2016
  */
-public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
         
     private CanSystemConnectionMemo memo = null;
 

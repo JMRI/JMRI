@@ -1,4 +1,3 @@
-// TrainConductorFrame.java
 package jmri.jmrit.operations.trains;
 
 import java.awt.Dimension;

@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,7 @@ public abstract class LnTrafficController implements LocoNetInterface {
         return self;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT")
+    @SuppressFBWarnings(value = "MS_PKGPROTECT")
     // FindBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     static protected LnTrafficController self = null;

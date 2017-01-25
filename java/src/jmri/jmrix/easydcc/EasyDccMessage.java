@@ -1,4 +1,3 @@
-// EasyDccMessage.java
 package jmri.jmrix.easydcc;
 
 import org.slf4j.Logger;
@@ -221,4 +220,4 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
 }
 
 
-/* @(#)EasyDccMessage.java */
+

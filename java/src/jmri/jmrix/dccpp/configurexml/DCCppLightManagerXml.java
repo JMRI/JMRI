@@ -1,4 +1,3 @@
-// DCCppLightManagerXml.java
 package jmri.jmrix.dccpp.configurexml;
 
 import org.jdom2.Element;

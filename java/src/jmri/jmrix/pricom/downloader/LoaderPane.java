@@ -1,5 +1,6 @@
 package jmri.jmrix.pricom.downloader;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
@@ -39,7 +40,7 @@ public class LoaderPane extends javax.swing.JPanel {
     //private     boolean opened = false;
     DataInputStream serialStream = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
             justification = "Class is no longer active, no hardware with which to test fix")
     OutputStream ostream = null;
 

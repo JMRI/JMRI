@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -20,9 +21,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
@@ -195,7 +196,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                         String[] stateNameList = s.getValidStateNames(); // Array of valid appearance names
                         int[] validStateList = s.getValidStates(); // Array of valid appearance numbers
                         for (int i = 0; i < stateNameList.length; i++) {
-                            if (value == stateNameList[i]) {
+                            if (value.equals(stateNameList[i])) {
                                 newState = validStateList [i];
                                 break;
                             }
@@ -1672,7 +1673,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     }
 
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     void handleMergSignalDriverOkPressed() {
         SignalHead s;
         // Adding Merg Signal Driver.
@@ -2282,7 +2283,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     }
 
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     void updatePressed(ActionEvent e) {
         String nam = eUserName.getText();
         // check if user name changed

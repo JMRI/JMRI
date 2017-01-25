@@ -179,11 +179,6 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
 
     public class SignalMastAppearanceModel extends AbstractTableModel implements PropertyChangeListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1161557965839973328L;
-
         SignalMastAppearanceModel() {
             super();
             if (sml != null) {

@@ -14,7 +14,7 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2014,2016
  */
-public class XNetMonPaneTest extends jmri.jmrix.AbstractMonPaneTest {
+public class XNetMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         
     private jmri.jmrix.lenz.XNetSystemConnectionMemo memo = null;
 

@@ -1,15 +1,3 @@
-/**
- * AbstractTurnoutTest.java
- *
- * Description:	AbsBaseClass for Turnout tests in specific jmrix. packages
- *
- * @author	Bob Jacobsen
- */
-/**
- * This is not itself a test class, e.g. should not be added to a suite.
- * Instead, this forms the base for test classes, including providing some
- * common tests
- */
 package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
@@ -19,8 +7,15 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
-public abstract class AbstractTurnoutTest {
+/**
+ * Abstract base class for Turnout tests in specific jmrix. packages
+ *
+ * This is not itself a test class, e.g. should not be added to a suite.
+ * Instead, this forms the base for test classes, including providing some
+ * common tests
+ * @author	Bob Jacobsen
+ */
+public abstract class AbstractTurnoutTestBase {
 
     // implementing classes must provide these abstract members:
     //

@@ -1,4 +1,3 @@
-// SetupExcelProgramFrame.java
 package jmri.jmrit.operations.trains.excel;
 
 import java.awt.Dimension;

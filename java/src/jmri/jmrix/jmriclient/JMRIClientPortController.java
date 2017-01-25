@@ -1,4 +1,3 @@
-// JMRIClientPortController.java
 package jmri.jmrix.jmriclient;
 
 /**
@@ -34,4 +33,4 @@ public abstract class JMRIClientPortController extends jmri.jmrix.AbstractNetwor
 }
 
 
-/* @(#)JMRIClientPortController.java */
+

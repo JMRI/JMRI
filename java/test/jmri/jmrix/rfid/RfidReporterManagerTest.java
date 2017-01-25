@@ -14,7 +14,7 @@ import jmri.Reporter;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTest {
+public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
     RfidTrafficController tc = null;
 

@@ -1,4 +1,3 @@
-// ListAction.java
 package jmri.jmrix.maple.assignment;
 
 import java.awt.event.ActionEvent;
@@ -12,11 +11,6 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2006
   */
 public class ListAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 969660510115409385L;
 
     public ListAction(String s) {
         super(s);

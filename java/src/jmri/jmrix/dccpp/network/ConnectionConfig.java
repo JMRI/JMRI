@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.dccpp.network;
 
 import javax.swing.JPanel;

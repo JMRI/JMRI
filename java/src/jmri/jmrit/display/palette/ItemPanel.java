@@ -31,10 +31,6 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class ItemPanel extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6256134896588725084L;
     protected JmriJFrame _paletteFrame;
     protected String _itemType;
     protected Editor _editor;

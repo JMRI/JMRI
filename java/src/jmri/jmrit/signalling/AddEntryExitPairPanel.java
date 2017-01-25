@@ -265,11 +265,6 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
     //Need to add a property change listener to catch when paths go active.
     class TableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3291217259103678604L;
-
         //needs a method to for when panel changes
         //need a method to delete an item
         //Possibly also to set a route.

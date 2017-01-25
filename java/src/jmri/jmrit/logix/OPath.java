@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -21,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * objects) through wich it enters or exits the block. One of these may be null,
  * if the OPath dead ends within the block.
  *
- * @author	Pete Cressman Copyright (C) 2009
+ * @author Pete Cressman Copyright (C) 2009
  */
 public class OPath extends jmri.Path {
 
@@ -33,9 +34,11 @@ public class OPath extends jmri.Path {
     private TimeTurnout _listener;
 
     /**
-     * Create an OPath object with default directions of NONE, and no setting element.
+     * Create an OPath object with default directions of NONE, and no setting
+     * element.
+     *
      * @param owner Block owning the path
-     * @param name name of the path
+     * @param name  name of the path
      */
     public OPath(Block owner, String name) {
         super(owner, 0, 0);
@@ -43,11 +46,13 @@ public class OPath extends jmri.Path {
     }
 
     /**
-     * Create an OPath object with default directions of NONE, and no setting element.
-     * @param owner Block owning the path
-     * @param name name of the path
-     * @param entry Portal where path enters
-     * @param exit Portal where path exits
+     * Create an OPath object with default directions of NONE, and no setting
+     * element.
+     *
+     * @param owner    Block owning the path
+     * @param name     name of the path
+     * @param entry    Portal where path enters
+     * @param exit     Portal where path exits
      * @param settings array of turnout settings of the path
      */
     public OPath(String name, OBlock owner, Portal entry, Portal exit, ArrayList<BeanSetting> settings) {
@@ -67,7 +72,7 @@ public class OPath extends jmri.Path {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UR_UNINIT_READ_CALLED_FROM_SUPER_CONSTRUCTOR")
+    @SuppressFBWarnings(value = "UR_UNINIT_READ_CALLED_FROM_SUPER_CONSTRUCTOR")
     // OPath ctor invokes Path ctor via super(), which calls this, before the internal
     // _block variable has been set so that Path.getPath() can work.  In this implementation,
     // getPath() only controls whether log.debug(...) is fired, but this might change if/when
@@ -274,11 +279,9 @@ public class OPath extends jmri.Path {
         if (obj == null) {
             return false;
         }
-    
-        if (!(getClass() == obj.getClass())) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        
         OPath path = (OPath) obj;
         if (_fromPortal != null && !_fromPortal.equals(path.getFromPortal())) {
             return false;

@@ -1,4 +1,3 @@
-// OlcbSensorManager.java
 package jmri.jmrix.openlcb;
 
 import jmri.JmriException;
@@ -115,4 +114,4 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
 
 }
 
-/* @(#)OlcbSensorManager.java */
+

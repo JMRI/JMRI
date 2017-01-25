@@ -13,11 +13,6 @@ import javax.swing.AbstractAction;
   */
 public class LV102Action extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8355340585591242351L;
-
     public LV102Action(String s) {
         super(s);
     }

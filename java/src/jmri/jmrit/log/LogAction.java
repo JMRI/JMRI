@@ -32,4 +32,4 @@ public class LogAction extends AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(LogAction.class.getName());
 }
 
-/* @(#)LogAction.java */
+

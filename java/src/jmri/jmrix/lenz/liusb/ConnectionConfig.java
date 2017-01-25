@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.lenz.liusb;
 
 import jmri.util.SystemType;

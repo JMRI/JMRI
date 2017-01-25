@@ -16,7 +16,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2010
  */
-public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTest {
+public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
     XNetInterfaceScaffold xnis = null;
 
@@ -91,7 +91,7 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTest {
         // prepare an interface, register
         xnis = new XNetInterfaceScaffold(new LenzCommandStation());
         // create and register the manager object
-        l = new XNetLightManager(xnis, "X"); // l is defined in AbstractLightMgrTest.
+        l = new XNetLightManager(xnis, "X"); // l is defined in AbstractLightMgrTestBase.
         jmri.InstanceManager.setLightManager(l);
         
     }

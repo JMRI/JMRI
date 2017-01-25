@@ -1,5 +1,6 @@
 package jmri.jmrix.easydcc;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -94,7 +95,7 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
 
     static volatile protected EasyDccTrafficController self = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
     @Override
     @Deprecated

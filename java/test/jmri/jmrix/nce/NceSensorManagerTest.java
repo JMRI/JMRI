@@ -15,7 +15,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen Copyright 2002
  * @author      Paul Bender Copyright (C) 2016
  */
-public class NceSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class NceSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
         
     private NceInterfaceScaffold lnis = null;
 

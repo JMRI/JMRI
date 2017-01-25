@@ -1,4 +1,3 @@
-// EcosMessage.java
 package jmri.jmrix.ecos;
 
 
@@ -42,4 +41,4 @@ public class EcosMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 }
-/* @(#)EcosMessage.java */
+

@@ -1,4 +1,3 @@
-// NodeConfigAction.java
 package jmri.jmrix.acela.nodeconfig;
 
 import java.awt.event.ActionEvent;
@@ -36,6 +35,3 @@ public class NodeConfigAction extends AbstractAction {
     }
     private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
 }
-
-
-/* @(#)NodeConfigAction.java */

@@ -1,4 +1,3 @@
-// SerialNode.java
 package jmri.jmrix.ieee802154.serialdriver;
 
 import java.util.Arrays;

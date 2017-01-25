@@ -1,5 +1,6 @@
 package jmri.jmrix.acela.nodeconfig;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -16,7 +17,6 @@ import javax.swing.border.Border;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import jmri.jmrix.acela.AcelaNode;
-import jmri.jmrix.acela.AcelaTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -167,7 +167,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Initialize the config window
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void initComponents() {
@@ -1221,7 +1221,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Method to handle info state
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void infoButtonActionPerformed() {
@@ -1549,7 +1549,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Method to handle cancel button
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void cancelButtonActionPerformed() {
@@ -1812,11 +1812,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 //    public class SensorConfigModel extends AbstractTableModel
     public class SensorConfigModel extends NodeConfigModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8903322968361854433L;
-
         public String getColumnName(int c) {
             return sensorConfigColumnNames[c];
         }
@@ -1919,11 +1914,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      * nodes
      */
     public class OutputConfigModel extends NodeConfigModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6592677373811166261L;
 
         public String getColumnName(int c) {
             return outputConfigColumnNames[c];
