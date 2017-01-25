@@ -114,7 +114,9 @@
                         <configuration>
                            <sourceDirectories>
                                   <!-- Additional source directories -->
-                                  <File>temp</File>
+                                  <File>java/tmp</File>
+                                  <File>target/generated-sources/javacc</File>
+                                  <File>target/generated-sources/jjtree</File>
                            </sourceDirectories>
                         </configuration>
                     </plugin>
