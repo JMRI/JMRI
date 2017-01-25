@@ -12,9 +12,9 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen Copyright 2001
  */
-public class HexVariableValueTest extends VariableValueTest {
+public class HexVariableValueTest extends AbstractVariableValueTestBase {
 
-    // abstract members invoked by tests in parent VariableValueTest class
+    // abstract members invoked by tests in parent AbstractVariableValueTestBase class
     VariableValue makeVar(String label, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
             String cvNum, String mask, int minVal, int maxVal,
