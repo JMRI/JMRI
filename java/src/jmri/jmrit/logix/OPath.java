@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * objects) through wich it enters or exits the block. One of these may be null,
  * if the OPath dead ends within the block.
  *
- * @author	Pete Cressman Copyright (C) 2009
+ * @author Pete Cressman Copyright (C) 2009
  */
 public class OPath extends jmri.Path {
 
