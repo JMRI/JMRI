@@ -37,4 +37,4 @@ matrix:
     env: HEADLESS=true
 
 after_success:
-  - mvn coveralls:report -U -P travis-coverage
+  - mvn jacoco:report coveralls:report -U -P travis-coverage

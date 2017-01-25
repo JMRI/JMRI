@@ -110,12 +110,20 @@
                     <plugin>
                         <groupId>org.eluder.coveralls</groupId>
                         <artifactId>coveralls-maven-plugin</artifactId>
-                        <configuration>
-                            <jacocoReports>
-                                <File>jacoco.exec</File>
-                            </jacocoReports>
-                        </configuration>
                         <version>4.3.0</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                           <artifactId>jacoco-maven-plugin</artifactId>
+                           <version>0.7.6.201602180812</version>
+                           <executions>
+                               <execution>
+                                   <id>prepare-agent</id>
+                                   <goals>
+                                       <goal>prepare-agent</goal>
+                                   </goals>
+                               </execution>
+                           </executions>
                     </plugin>
                 </plugins>
             </build>
