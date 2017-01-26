@@ -158,7 +158,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     return new JTextField(30).getPreferredSize().width;
                 }
                 if (col == DELETECOL) {
-                    return new JTextField(22).getPreferredSize().width;
+                    return new JTextField(Bundle.getMessage("ButtonDelete")).getPreferredSize().width;
                 } else {
                     return super.getPreferredWidth(col);
                 }
@@ -266,8 +266,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("Enabled")) {
                     return true;
-                } //if (e.getPropertyName().equals("Locked")) return true;
-                else {
+                } else {
                     return super.matchPropertyName(e);
                 }
             }
@@ -551,6 +550,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     public void actionPerformed(ActionEvent event) {
                         if (mainSignal.getSelectedBean() == null) { // ie. empty first row was selected or set
                             log.debug("Empty line in mainSignal comboBox");
+                            //setValidSignalMastAspects(); // clears the Aspect table
                         } else {
                             if (curSignalGroup == null ||
                                     mainSignal.getSelectedBean() != curSignalGroup.getSignalMast()) {
@@ -775,7 +775,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     boolean checkValidSignalMast() {
         SignalMast mMast = (SignalMast) mainSignal.getSelectedBean();
         if (mMast == null) {
-            log.warn("Signal Mast not selected. mainSignal = {}", mainSignal.getSelectedItem());
+            //log.warn("Signal Mast not selected. mainSignal = {}", mainSignal.getSelectedItem());
             javax.swing.JOptionPane.showMessageDialog(null, Bundle.getMessage("NoMastSelectedWarning"),
                     Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
             return false;
@@ -802,7 +802,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             return g;
         } catch (IllegalArgumentException ex) {
             // should never get here
-            log.error("checkNamesOK; Unknown failure to create SignalGroup with System Name: " + sName);
+            log.error("checkNamesOK; Unknown failure to create SignalGroup with System Name: {}", sName);
             throw ex;
         }   
     }
@@ -877,7 +877,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         finishUpdate();
         _SignalGroupHeadModel.dispose();
         _AspectModel.dispose();
-        log.debug("cancelPressed in SGTA line 871");
+        log.debug("cancelPressed in SGTA line 880");
     }
 
     /**
@@ -1122,7 +1122,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             // some error checking
             if (_mastAspectsList == null || r >= aspectList.size()) {
                 // prevent NPE when clicking Add... in table to add new group (with 1 group existing using a different mast type)
-                log.debug("SGTA getValueAt #1123: row value {} is greater than aspectList size {}", r, aspectList.size());
+                log.debug("SGTA getValueAt #1125: row value {} is greater than aspectList size {}", r, aspectList.size());
                 return null;
             }
             switch (c) {
@@ -1137,7 +1137,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
         @Override
         public void setValueAt(Object type, int r, int c) {
-            log.debug("SigGroupEditSet A; row = {}");
+            log.debug("SigGroupEditSet A; row = {}", r);
             ArrayList<SignalMastAspect> aspectList = null;
             if (showAll) {
                 aspectList = _mastAspectsList;
@@ -1380,11 +1380,12 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
      * Opens an editor to set the details of a Signal Head as part of a Signal Group
      * when user clicks the Edit button in the Signal Head table in the lower half of the Edit Signal Group pane.
      * (renamed from signalEditPressed in 4.7.1 to explain what's in here)
+     * @see SignalGroupSubTableAction#editHead(SignalGroup, String) SignalGroupSubTableAction.editHead
      * @param row Index of line clicked in the displayed Signal Head table
      */
     void signalHeadEditPressed(int row) {
         if (curSignalGroup == null) {
-            log.debug("From signalEditPressed");
+            log.debug("From signalHeadEditPressed");
             if (!checkNewNamesOK()) {
                 log.debug("signalHeadEditPressed: checkNewNamesOK = false");
                 return;
@@ -1393,7 +1394,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                 return;
             }
             updatePressed(null, true, false);
-            // Read the new entries provided in the Add pane before opening the Edit Signal Head subpane
+            // Read new entries provided in the Add pane before opening the Edit Signal Head subpane
         }
         if (!curSignalGroup.isHeadIncluded(_SignalGroupHeadModel.getBean(row))) {
             curSignalGroup.addSignalHead(_SignalGroupHeadModel.getBean(row));
@@ -1401,7 +1402,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         _SignalGroupHeadModel.fireTableDataChanged();
         log.debug("signalHeadEditPressed: opening sbaTableAction for edit");
         SignalGroupSubTableAction editSignalHead = new SignalGroupSubTableAction();
-        // calls separate class file SignalGroupSubTableAction to edit details for head
+        // calls separate class file SignalGroupSubTableAction to edit details for Signal Head
         editSignalHead.editHead(curSignalGroup, _SignalGroupHeadModel.getDisplayName(row));
     }
 
@@ -1466,7 +1467,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     }
                 }
             } else {
-                log.error("Failed to get signal head {}",  sysName);
+                log.error("Failed to get signal head {}", sysName);
             }
 
         }
