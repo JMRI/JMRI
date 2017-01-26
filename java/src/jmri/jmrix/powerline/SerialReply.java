@@ -1,4 +1,3 @@
-// SerialReply.java
 package jmri.jmrix.powerline;
 
 import org.slf4j.Logger;
@@ -55,4 +54,4 @@ abstract public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
 }
 
-/* @(#)SerialReply.java */
+

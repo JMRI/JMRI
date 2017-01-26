@@ -1,10 +1,9 @@
 package jmri;
 
 import java.util.List;
-
 import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
 import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 
 /**
  * Interface for controlling sensors.
@@ -38,7 +37,8 @@ public interface SensorManager extends Manager {
      *                                  e.g. an illegal name or name that can't
      *                                  be parsed.
      */
-    public @Nonnull Sensor provideSensor(@Nonnull String name) throws IllegalArgumentException;
+    @Nonnull
+    public Sensor provideSensor(@Nonnull String name) throws IllegalArgumentException;
 
     /**
      * Locate via user name, then system name if needed. Does not create a new
@@ -48,9 +48,11 @@ public interface SensorManager extends Manager {
      * @return null if no match found
      */
     @CheckReturnValue
-    public@CheckForNull Sensor getSensor(@Nonnull String name);
+    @CheckForNull
+    public Sensor getSensor(@Nonnull String name);
 
     // to free resources when no longer used
+    @Override
     public void dispose();
 
     /**
@@ -75,21 +77,28 @@ public interface SensorManager extends Manager {
      * except to issue warnings. This will mostly happen if you're creating
      * Turnouts when you should be looking them up.
      *
-     * @return requested Sensor object (never null)
+     * @param systemName the desired system name
+     * @param userName   the desired user name
+     * @return requested Sensor object
      * @throws IllegalArgumentException if cannot create the Sensor due to e.g.
      *                                  an illegal name or name that can't be
      *                                  parsed.
      */
-    public @Nonnull Sensor newSensor(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
+    @Nonnull
+    public Sensor newSensor(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
     @CheckReturnValue
-    public @CheckForNull Sensor getByUserName(@Nonnull String s);
+    @CheckForNull
+    public Sensor getByUserName(@Nonnull String s);
 
     @CheckReturnValue
-    public @CheckForNull Sensor getBySystemName(@Nonnull String s);
+    @CheckForNull
+    public Sensor getBySystemName(@Nonnull String s);
 
     @CheckReturnValue
-    public @Nonnull List<String> getSystemNameList();
+    @Nonnull
+    @Override
+    public List<String> getSystemNameList();
 
     /**
      * Requests status of all layout sensors under this Sensor Manager. This
@@ -103,10 +112,12 @@ public interface SensorManager extends Manager {
     public void updateAll();
 
     /**
-     * A method that determines if it is possible to add a range of sensors in
-     * numerical order eg 10 to 30 will return true. where as if the address
-     * format is 1b23 this will return false.
+     * Determines if it is possible to add a range of sensors in numerical
+     * order.
      *
+     * @param systemName the system name to check against; appears to be ignored
+     *                   in all implementations
+     * @return true if possible; false otherwise
      */
     @CheckReturnValue
     public boolean allowMultipleAdditions(@Nonnull String systemName);
@@ -116,16 +127,19 @@ public interface SensorManager extends Manager {
      * return the next free valid address up to a maximum of 10 address away
      * from the initial address.
      *
-     * @param curAddress - The hardware address of the turnout we which to
+     * @param curAddress - The hardware address of the sensor we wish to add
      * @param prefix     - The System Prefix used to make up the systemName
      *                   check.
-     * @return           - null if the system name made from prefix and curAddress is in use
+     * @return - null if the system name made from prefix and curAddress is in
+     *         use
      * @throws jmri.JmriException if problem calculating next address
      */
     @CheckReturnValue
-    public @CheckForNull String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
+    @CheckForNull
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
-    public @Nonnull String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
     @CheckReturnValue
     public long getDefaultSensorDebounceGoingActive();

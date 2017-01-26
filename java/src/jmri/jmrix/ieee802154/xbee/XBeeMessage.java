@@ -1,5 +1,6 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import com.digi.xbee.api.packet.XBeeAPIPacket;
 import com.digi.xbee.api.packet.common.ATCommandPacket;
 import com.digi.xbee.api.packet.common.RemoteATCommandPacket;
@@ -133,7 +134,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
      * @param on boolean value stating whether or not the pin should be turned
      *        on (true) or off (false)
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
+    @SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
     public static XBeeMessage getRemoteDoutMessage(Object address, int pin, boolean on) {
         byte onValue[] = {0x5};
         byte offValue[] = {0x4};
@@ -150,7 +151,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
      16 bit or 64 bit.
      * @param pin the DIO Pin on the XBee to use.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
+    @SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
     public static XBeeMessage getRemoteDoutMessage(Object address, int pin) {
         if (address instanceof com.digi.xbee.api.models.XBee16BitAddress) {
             return new XBeeMessage((XBeeAPIPacket) new RemoteATCommandPacket(XBeeAPIPacket.NO_FRAME_ID,XBee64BitAddress.COORDINATOR_ADDRESS,(XBee16BitAddress) address,0,"D" + pin, ""));
@@ -164,7 +165,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
      * @param address XBee Address of the node.  This can be either 
      16 bit or 64 bit.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
+    @SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
     public static XBeeMessage getForceSampleMessage(Object address) {
         if (address instanceof com.digi.xbee.api.models.XBee16BitAddress) {
             return new XBeeMessage((XBeeAPIPacket) new RemoteATCommandPacket(XBeeAPIPacket.NO_FRAME_ID,XBee64BitAddress.COORDINATOR_ADDRESS,(XBee16BitAddress) address,0,"IS",""));
@@ -181,7 +182,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
      * @param payload An byte array containing the bytes to be transfered, as the low order word of the integer.
      * @return XBeeMessage with remote transmission request for the provided address containing the provided payload.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
+    @SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
     public static XBeeMessage getRemoteTransmissionRequest(Object address, byte[] payload) {
         if (address instanceof com.digi.xbee.api.models.XBee16BitAddress) {
             return getRemoteTransmissionRequest((com.digi.xbee.api.models.XBee16BitAddress) address, payload);
@@ -213,4 +214,4 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
     }
 
 }
-/* @(#)XBeeMessage.java */
+

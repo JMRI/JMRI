@@ -39,9 +39,9 @@ public class LocoBufferUsbAdapter extends LocoBufferAdapter {
         // configure flow control to always on
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
         activeSerialPort.setFlowControlMode(flow);
-        log.debug("Found flow control " + activeSerialPort.getFlowControlMode()
-                + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT
-                + " RTSCTS_IN= " + SerialPort.FLOWCONTROL_RTSCTS_IN);
+        log.debug("Found flow control " + activeSerialPort.getFlowControlMode() // NOI18N
+                + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT // NOI18N
+                + " RTSCTS_IN= " + SerialPort.FLOWCONTROL_RTSCTS_IN); // NOI18N
     }
 
     /**

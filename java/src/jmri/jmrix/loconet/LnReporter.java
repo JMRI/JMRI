@@ -93,7 +93,7 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
         }
 
         lastLoco = (enter ? loco : -1);
-        setReport("" + loco + (enter ? " enter" : " exits"));
+        setReport("" + loco + (enter ? " enter" : " exits")); // NOI18N
     }
 
     /**
@@ -113,7 +113,7 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
         boolean north = ((l.getElement(3) & 0x20) == 0);
 
         // get loco address
-        setReport("" + loco + " seen " + (north ? "northbound" : "southbound"));
+        setReport("" + loco + " seen " + (north ? "northbound" : "southbound")); // NOI18N
 
     }
 
@@ -152,7 +152,7 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
         if (rep == null) {
             return (null);
         }
-        Pattern ln_p = Pattern.compile("(\\d+) (enter|exits|seen)\\s*(northbound|southbound)?");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
+        Pattern ln_p = Pattern.compile("(\\d+) (enter|exits|seen)\\s*(northbound|southbound)?");  // Match a number followed by the word "enter".  This is the LocoNet pattern. // NOI18N
         Matcher m = ln_p.matcher(rep);
         return (m);
     }
@@ -175,14 +175,14 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
     // Assumes the LocoReporter format is "NNNN [enter|exit]"
     public PhysicalLocationReporter.Direction getDirection(String rep) {
         // Extract the direction from the tail of the report string
-        log.debug("report string: " + rep);
+        log.debug("report string: " + rep); // NOI18N
         Matcher m = this.parseReport(rep);
         if (m.find()) {
-            log.debug("Parsed direction: " + m.group(2));
-            if (m.group(2).equals("enter")) {
+            log.debug("Parsed direction: " + m.group(2)); // NOI18N
+            if (m.group(2).equals("enter")) { // NOI18N
                 // LocoNet Enter message
                 return (PhysicalLocationReporter.Direction.ENTER);
-            } else if (m.group(2).equals("seen")) {
+            } else if (m.group(2).equals("seen")) { // NOI18N
                 // Lissy message.  Treat them all as "entry" messages.
                 return (PhysicalLocationReporter.Direction.ENTER);
             } else {

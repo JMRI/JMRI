@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.ieee802154.xbee;
 
 import javax.swing.JButton;

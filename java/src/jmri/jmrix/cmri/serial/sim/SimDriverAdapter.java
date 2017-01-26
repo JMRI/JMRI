@@ -1,11 +1,12 @@
 package jmri.jmrix.cmri.serial.sim;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
-import jmri.jmrix.cmri.serial.SerialSensorManager;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
+import java.util.Arrays;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import jmri.jmrix.cmri.serial.SerialTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2008, 2011
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+@SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
         justification = "Access to 'self' OK until multiple instance pattern installed")
 public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter {
 
@@ -40,14 +41,14 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     /**
      * set up all of the other objects to operate connected to this port
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Access to 'self' OK until multiple instance pattern installed")
 
     public void configure() {
         // install a traffic controller that doesn't time out
         SerialTrafficController tc = new SerialTrafficController() {
             // timeout doesn't do anything
-            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
                     justification = "only until multi-connect update done")
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage m, jmri.jmrix.AbstractMRListener l) {
             }
@@ -92,12 +93,9 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
     }
 
-    /**
-     * Get an array of valid baud rates.
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**

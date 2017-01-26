@@ -20,13 +20,16 @@ import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JRootPane;
 import javax.swing.JSeparator;
+import javax.swing.SwingUtilities;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.SignalMast;
@@ -209,41 +212,40 @@ public class LayoutSlip extends LayoutTurnout {
     /**
      * Toggle slip states if clicked on, physical turnout exists, and not
      * disabled
+     * Slip state progression is from BD to AD to AC to [BC*] and back to BD (*BC is skipped for Single slip)
      */
     public void toggleState() {
         switch (currentState) {
-            case STATE_AC:
+            case STATE_AC: {
                 if (singleSlipStraightEqual()) {
-                    setTurnoutState(turnoutStates.get(STATE_AD));
-                    currentState = STATE_AD;
-                } else {
                     setTurnoutState(turnoutStates.get(STATE_BD));
                     currentState = STATE_BD;
-                }
-                break;
-            case STATE_BD:
-                setTurnoutState(turnoutStates.get(STATE_AD));
-                currentState = STATE_AD;
-                break;
-            case STATE_AD:
-                if (type == SINGLE_SLIP) {
-                    setTurnoutState(turnoutStates.get(STATE_AC));
-                    currentState = STATE_AC;
                 } else {
                     setTurnoutState(turnoutStates.get(STATE_BC));
                     currentState = STATE_BC;
                 }
                 break;
-            case STATE_BC:
+            }
+
+            case STATE_BD: {
+                setTurnoutState(turnoutStates.get(STATE_AD));
+                currentState = STATE_AD;
+                break;
+            }
+
+            case STATE_AD: {
                 setTurnoutState(turnoutStates.get(STATE_AC));
                 currentState = STATE_AC;
                 break;
-            default:
+            }
+
+            case STATE_BC:
+            default: {
                 setTurnoutState(turnoutStates.get(STATE_BD));
                 currentState = STATE_BD;
                 break;
+            }
         }
-
     }
 
     void setTurnoutState(TurnoutState ts) {
@@ -527,23 +529,19 @@ public class LayoutSlip extends LayoutTurnout {
                 blockAssigned = true;
             }
 
+            if (hidden) {
+                popup.add(rb.getString("Hidden"));
+            } else {
+                popup.add(rb.getString("NotHidden"));
+            }
+
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 1310125794846689687L;
-
                 public void actionPerformed(ActionEvent e) {
                     editLayoutSlip(instance);
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -3483381614458277701L;
-
                 public void actionPerformed(ActionEvent e) {
                     if (layoutEditor.removeLayoutSlip(instance)) {
                         // Returned true if user did not cancel
@@ -591,11 +589,6 @@ public class LayoutSlip extends LayoutTurnout {
             }
             if (blockAssigned) {
                 popup.add(new AbstractAction(rb.getString("SetSignals")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -8272805807180330073L;
-
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -616,11 +609,6 @@ public class LayoutSlip extends LayoutTurnout {
             }
             if (blockBoundaries) {
                 popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -443772286763072510L;
-
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -629,11 +617,6 @@ public class LayoutSlip extends LayoutTurnout {
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSensors")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -9157435234409821081L;
-
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -646,11 +629,6 @@ public class LayoutSlip extends LayoutTurnout {
             if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
                 if (blockAssigned) {
                     popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
-                        /**
-                         *
-                         */
-                        private static final long serialVersionUID = -8170033670468406498L;
-
                         public void actionPerformed(ActionEvent e) {
                             AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
                             routeTableAction.actionPerformed(e);
@@ -714,6 +692,7 @@ public class LayoutSlip extends LayoutTurnout {
     boolean editOpen = false;
     private JmriBeanComboBox turnoutAComboBox;
     private JmriBeanComboBox turnoutBComboBox;
+    private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideSlip"));
 
     /**
      * Edit a Slip
@@ -733,14 +712,16 @@ public class LayoutSlip extends LayoutTurnout {
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
             JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " A " + Bundle.getMessage("Name"));
-            turnoutAComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DISPLAYNAME);
+            turnoutAComboBox = new JmriBeanComboBox(
+                InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DISPLAYNAME);
             panel1.add(turnoutNameLabel);
             panel1.add(turnoutAComboBox);
             contentPane.add(panel1);
             JPanel panel1a = new JPanel();
             panel1a.setLayout(new FlowLayout());
             JLabel turnoutBNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " B " + Bundle.getMessage("Name"));
-            turnoutBComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getTurnoutB(), JmriBeanComboBox.DISPLAYNAME);
+            turnoutBComboBox = new JmriBeanComboBox(
+                InstanceManager.turnoutManagerInstance(), getTurnoutB(), JmriBeanComboBox.DISPLAYNAME);
             panel1a.add(turnoutBNameLabel);
             panel1a.add(turnoutBComboBox);
             contentPane.add(panel1a);
@@ -772,13 +753,24 @@ public class LayoutSlip extends LayoutTurnout {
             });
             panel2.add(testButton);
             contentPane.add(panel2);
+
+            JPanel panel33 = new JPanel();
+            panel33.setLayout(new FlowLayout());
+            hiddenBox.setToolTipText(rb.getString("HiddenToolTip"));
+            panel33.add(hiddenBox);
+            contentPane.add(panel33);
+
             // setup block name
             JPanel panel3 = new JPanel();
             panel3.setLayout(new FlowLayout());
             JLabel block1NameLabel = new JLabel(rb.getString("BlockID"));
             panel3.add(block1NameLabel);
-            panel3.add(blockNameField);
-            blockNameField.setToolTipText(rb.getString("EditBlockNameHint"));
+            panel3.add(blockNameComboBox);
+            blockNameComboBox.setEditable(true);
+            blockNameComboBox.getEditor().setItem("");
+            blockNameComboBox.setSelectedIndex(-1);
+            blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
+
             contentPane.add(panel3);
             // set up Edit Block buttons
             JPanel panel4 = new JPanel();
@@ -797,6 +789,17 @@ public class LayoutSlip extends LayoutTurnout {
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
             panel5.add(slipEditDone = new JButton(Bundle.getMessage("ButtonDone")));
+
+            // make this button the default button (return or enter activates)
+            // Note: We have to invoke this later because we don't currently have a root pane
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    JRootPane rootPane = SwingUtilities.getRootPane(slipEditDone);
+                    rootPane.setDefaultButton(slipEditDone);
+                }
+            });
+
             slipEditDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     slipEditDonePressed(e);
@@ -813,8 +816,11 @@ public class LayoutSlip extends LayoutTurnout {
             slipEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
         }
+
+        hiddenBox.setSelected(hidden);
+
         // Set up for Edit
-        blockNameField.setText(blockName);
+        blockNameComboBox.getEditor().setItem(blockName);
 
         editLayoutTurnoutFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
@@ -942,11 +948,6 @@ public class LayoutSlip extends LayoutTurnout {
 
     class SampleStates extends JPanel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 363424691191982507L;
-
         // Methods, constructors, fields.
         SampleStates(int state) {
             super();
@@ -972,17 +973,21 @@ public class LayoutSlip extends LayoutTurnout {
         int turnAState;
         int turnBState;
         switch (testState) {
-            case STATE_AC:
+            case STATE_AC: {
                 turnAState = turnoutStates.get(STATE_BD).getTestTurnoutAState();
                 turnBState = turnoutStates.get(STATE_BD).getTestTurnoutBState();
                 testState = STATE_BD;
                 break;
-            case STATE_BD:
+            }
+
+            case STATE_BD: {
                 turnAState = turnoutStates.get(STATE_AD).getTestTurnoutAState();
                 turnBState = turnoutStates.get(STATE_AD).getTestTurnoutBState();
                 testState = STATE_AD;
                 break;
-            case STATE_AD:
+            }
+
+            case STATE_AD: {
                 if (type == SINGLE_SLIP) {
                     turnAState = turnoutStates.get(STATE_AC).getTestTurnoutAState();
                     turnBState = turnoutStates.get(STATE_AC).getTestTurnoutBState();
@@ -993,17 +998,21 @@ public class LayoutSlip extends LayoutTurnout {
                     testState = STATE_BC;
                 }
                 break;
-            case STATE_BC:
+            }
+
+            case STATE_BC: {
                 turnAState = turnoutStates.get(STATE_AC).getTestTurnoutAState();
                 turnBState = turnoutStates.get(STATE_AC).getTestTurnoutBState();
                 testState = STATE_AC;
                 break;
-            default:
+            }
+
+            default: {
                 turnAState = turnoutStates.get(STATE_BD).getTestTurnoutAState();
                 turnBState = turnoutStates.get(STATE_BD).getTestTurnoutBState();
                 testState = STATE_BD;
                 break;
-
+            }
         }
         ((Turnout) turnoutAComboBox.getSelectedBean()).setCommandedState(turnAState);
         ((Turnout) turnoutBComboBox.getSelectedBean()).setCommandedState(turnBState);
@@ -1017,11 +1026,6 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     class TestState extends JPanel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5936027643851258603L;
 
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -1055,20 +1059,22 @@ public class LayoutSlip extends LayoutTurnout {
             }
             needRedraw = true;
         }
-        if (!blockName.equals(blockNameField.getText().trim())) {
+        String newBlockName = blockNameComboBox.getSelectedDisplayName();
+        newBlockName = (null != newBlockName) ? newBlockName.trim() : "";
+        if (!blockName.equals(newBlockName)) {
             // block 1 has changed, if old block exists, decrement use
             if ((block != null)) {
                 block.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockName = blockNameField.getText().trim();
+            blockName = newBlockName;
 
-            try { 
+            try {
                 block = layoutEditor.provideLayoutBlock(blockName);
-
             } catch (IllegalArgumentException ex) {
                 blockName = "";
-                blockNameField.setText("");
+                blockNameComboBox.getEditor().setItem("");
+                blockNameComboBox.setSelectedIndex(-1);
             }
             needRedraw = true;
             layoutEditor.auxTools.setBlockConnectivityChanged();
@@ -1077,6 +1083,14 @@ public class LayoutSlip extends LayoutTurnout {
         for (TurnoutState ts : turnoutStates.values()) {
             ts.updateStatesFromCombo();
         }
+
+        // set hidden
+        boolean oldHidden = hidden;
+        hidden = hiddenBox.isSelected();
+        if (oldHidden != hidden) {
+            needRedraw = true;
+        }
+
         editOpen = false;
         editLayoutTurnoutFrame.setVisible(false);
         editLayoutTurnoutFrame.dispose();

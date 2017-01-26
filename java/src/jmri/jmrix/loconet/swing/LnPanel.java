@@ -38,8 +38,8 @@ abstract public class LnPanel extends jmri.util.swing.JmriPanel implements LnPan
         if (memo != null) {
             uName = memo.getUserName();
             // string "LocoNet" is hard coded
-            if (!"LocoNet".equals(uName)) {
-                uName = uName + ": ";
+            if (!"LocoNet".equals(uName)) { // NOI18N
+                uName = uName + ": "; // NOI18N
             } else {
                 uName = "";
             }

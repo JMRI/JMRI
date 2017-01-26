@@ -1,5 +1,6 @@
 package jmri.jmrix.dccpp.swing;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -115,7 +116,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
     private enum CurrentTab { SENSOR, TURNOUT, OUTPUT }
     private CurrentTab cTab;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2",
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2",
             justification = "2D array of different types passed as complex parameter. "
             + "Better to switch to passing use-specific objects rather than "
             + "papering this over with a deep copy of the arguments. "
@@ -425,7 +426,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         }*/
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "only in slow debug")
+    @SuppressFBWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "only in slow debug")
     private void saveTableValues() {
         if (cTab == CurrentTab.SENSOR) {
             for (int i = 0; i < sensorModel.getRowData().size(); i++) {

@@ -98,7 +98,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
      * Accessor routines
      */
     public String getHardwareClockName() {
-        return ("Loconet Fast Clock");
+        return ("Loconet Fast Clock"); // NOI18N
     }
 
     public boolean canCorrectHardwareClock() {

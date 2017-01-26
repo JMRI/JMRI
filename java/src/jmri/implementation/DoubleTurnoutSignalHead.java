@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import org.slf4j.Logger;
@@ -35,7 +36,7 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead implements java.b
     }
 
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     protected void updateOutput() {
         // assumes that writing a turnout to an existing state is cheap!
         if (mLit == false) {

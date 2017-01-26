@@ -1,10 +1,3 @@
-/**
- * EasyDccTurnoutManagerTest.java
- *
- * Description:	tests for the jmri.jmrix.easydcc.EasyDccTurnoutManager class
- *
- * @author	Bob Jacobsen
- */
 package jmri.jmrix.easydcc;
 
 import jmri.Turnout;
@@ -15,7 +8,12 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EasyDccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+/**
+ * Tests for the jmri.jmrix.easydcc.EasyDccTurnoutManager class
+ *
+ * @author	Bob Jacobsen
+ */
+public class EasyDccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     @After
     public void tearDown() {

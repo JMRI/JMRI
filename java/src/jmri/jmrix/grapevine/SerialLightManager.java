@@ -1,4 +1,3 @@
-// SerialLightManager.java
 package jmri.jmrix.grapevine;
 
 import jmri.Light;
@@ -17,11 +16,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2006, 2007
   */
 public class SerialLightManager extends AbstractLightManager {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8036188579890200841L;
 
     public SerialLightManager() {
 
@@ -107,5 +101,3 @@ public class SerialLightManager extends AbstractLightManager {
     private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class.getName());
 
 }
-
-/* @(#)SerialLighttManager.java */

@@ -1,4 +1,3 @@
-// JMRIClientTurnoutManager.java
 package jmri.jmrix.jmriclient;
 
 import jmri.Turnout;
@@ -44,4 +43,4 @@ public class JMRIClientTurnoutManager extends jmri.managers.AbstractTurnoutManag
 
 }
 
-/* @(#)JMRIClientTurnoutManager.java */
+

@@ -1,4 +1,3 @@
-// IEEE802154Listener.java
 package jmri.jmrix.ieee802154;
 
 /**
@@ -13,4 +12,4 @@ abstract public interface IEEE802154Listener extends jmri.jmrix.AbstractMRListen
     public void reply(IEEE802154Reply m);
 }
 
-/* @(#)IEEE802154Listener.java */
+

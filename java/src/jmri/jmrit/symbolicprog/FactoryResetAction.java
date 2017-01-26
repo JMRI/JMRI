@@ -1,4 +1,3 @@
-// FactoryResetAction.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionEvent;

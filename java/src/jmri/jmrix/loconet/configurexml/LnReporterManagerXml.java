@@ -19,7 +19,7 @@ public class LnReporterManagerXml extends jmri.managers.configurexml.AbstractRep
     }
 
     public void setStoreElementClass(Element reporters) {
-        reporters.setAttribute("class", "jmri.jmrix.loconet.configurexml.LnReporterManagerXml");
+        reporters.setAttribute("class", "jmri.jmrix.loconet.configurexml.LnReporterManagerXml"); // NOI18N
     }
 
     public void load(Element element, Object o) {

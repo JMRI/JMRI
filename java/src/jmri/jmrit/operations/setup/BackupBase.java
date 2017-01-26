@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.setup;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -125,7 +126,7 @@ public abstract class BackupBase {
      * @return A sorted backup list.
      *
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
             justification = "not possible")  // NOI18N
     public String[] getBackupSetList() {
         String[] setList = getBackupRoot().list();
@@ -144,7 +145,7 @@ public abstract class BackupBase {
         return dirs;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
             justification = "not possible")  // NOI18N
     public BackupSet[] getBackupSets() {
         // This is a bit of a kludge for now, until I learn more about dynamic
@@ -376,7 +377,7 @@ public abstract class BackupBase {
      * Reset Operations by deleting XML files, leaves directories and backup
      * files in place.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
             justification = "not possible")  // NOI18N
     public void deleteOperationsFiles() {
         // TODO Maybe this should also only delete specific files used by Operations,
@@ -434,7 +435,7 @@ public abstract class BackupBase {
          * @throws IOException Thrown when overwrite false and destination directory exists.
          *
          */
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "OBL_UNSATISFIED_OBLIGATION")
+        @SuppressFBWarnings(value = "OBL_UNSATISFIED_OBLIGATION")
         public static void copy(String sourceFileName, String destFileName,
                 Boolean overwrite) throws IOException {
 

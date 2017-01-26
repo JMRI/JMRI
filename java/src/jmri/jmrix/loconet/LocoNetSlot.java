@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -260,7 +261,7 @@ public class LocoNetSlot {
 
     // methods to interact with LocoNet
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     public void setSlot(LocoNetMessage l) throws LocoNetException { // exception if message can't be parsed
         // sort out valid messages, handle
         switch (l.getOpCode()) {
@@ -335,7 +336,7 @@ public class LocoNetSlot {
                 return;
             }
             default: {
-                throw new LocoNetException("message can't be parsed");
+                throw new LocoNetException("message can't be parsed"); // NOI18N
             }
         }
     }
@@ -477,8 +478,8 @@ public class LocoNetSlot {
             v = new ArrayList<SlotListener>(slotListeners);
         }
         if (log.isDebugEnabled()) {
-            log.debug("notify " + v.size()
-                    + " SlotListeners");
+            log.debug("notify " + v.size() // NOI18N
+                    + " SlotListeners"); // NOI18N
         }
         // forward to all listeners
         int cnt = v.size();

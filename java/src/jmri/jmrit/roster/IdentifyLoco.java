@@ -1,4 +1,3 @@
-// IdentifyLoco.java
 package jmri.jmrit.roster;
 
 import org.slf4j.Logger;

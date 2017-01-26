@@ -19,7 +19,7 @@ import jmri.jmrix.AbstractMonPaneScaffold;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class MrcMonPanelTest extends jmri.jmrix.AbstractMonPaneTest {
+public class MrcMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     jmri.jmrix.mrc.MrcSystemConnectionMemo memo = null;
 

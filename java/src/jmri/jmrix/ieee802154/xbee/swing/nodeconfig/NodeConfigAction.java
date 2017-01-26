@@ -1,4 +1,3 @@
-// NodeConfigAction.java
 package jmri.jmrix.ieee802154.xbee.swing.nodeconfig;
 
 import java.awt.event.ActionEvent;
@@ -12,10 +11,6 @@ import org.slf4j.LoggerFactory;
   */
 public class NodeConfigAction extends jmri.jmrix.ieee802154.swing.nodeconfig.NodeConfigAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6932741816925928746L;
     private jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo xcm = null;
 
     public NodeConfigAction(String s, jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo cm) {
@@ -60,6 +55,3 @@ public class NodeConfigAction extends jmri.jmrix.ieee802154.swing.nodeconfig.Nod
 
     private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
 }
-
-
-/* @(#)NodeConfigAction.java */

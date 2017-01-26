@@ -1,5 +1,6 @@
 package jmri.jmrit.operations;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.GridBagConstraints;
@@ -380,7 +381,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "Checks for instance")
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "Checks for instance")
     protected String getWindowFrameRef() {
         if (this.getTopLevelAncestor() instanceof JmriJFrame) {
             return ((JmriJFrame) this.getTopLevelAncestor()).getWindowFrameRef();

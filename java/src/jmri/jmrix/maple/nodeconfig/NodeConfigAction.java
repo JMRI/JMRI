@@ -1,4 +1,3 @@
-// NodeConfigAction.java
 package jmri.jmrix.maple.nodeconfig;
 
 import java.awt.event.ActionEvent;
@@ -12,11 +11,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001
   */
 public class NodeConfigAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6952737531002185247L;
 
     public NodeConfigAction(String s) {
         super(s);

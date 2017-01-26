@@ -1,4 +1,3 @@
-// TrainConductorAction.java
 package jmri.jmrit.operations.trains;
 
 import java.awt.Frame;
@@ -33,4 +32,4 @@ public class TrainConductorAction extends AbstractAction {
     }
 }
 
-/* @(#)TrainConductorAction.java */
+

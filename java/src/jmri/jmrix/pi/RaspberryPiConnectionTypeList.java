@@ -1,4 +1,3 @@
-// RaspberryPiConnectionTypeList.java
 package jmri.jmrix.pi;
 
 /**

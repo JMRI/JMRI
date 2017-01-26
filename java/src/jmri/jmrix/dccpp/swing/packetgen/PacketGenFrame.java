@@ -1,4 +1,3 @@
-// PacketGenFrame.java
 package jmri.jmrix.dccpp.swing.packetgen;
 
 import jmri.jmrix.dccpp.DCCppMessage;

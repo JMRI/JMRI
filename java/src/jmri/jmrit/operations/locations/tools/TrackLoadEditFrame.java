@@ -1,6 +1,6 @@
-// TrackLoadEditFrame.java
 package jmri.jmrit.operations.locations.tools;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
@@ -342,7 +342,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected void save() {
         checkForErrors();
         _track.setHoldCarsWithCustomLoadsEnabled(holdCars.isSelected());

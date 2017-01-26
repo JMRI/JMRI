@@ -1,5 +1,6 @@
 package jmri.jmrix.direct;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.annotation.Nonnull;
 import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
@@ -58,7 +59,7 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
         _dataChars[n] = v & 0x7F;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public String toString() {

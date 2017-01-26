@@ -1,4 +1,3 @@
-// TamsMessage.java
 package jmri.jmrix.tams;
 
 import org.slf4j.Logger;
@@ -282,4 +281,4 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
     static Logger log = LoggerFactory.getLogger(TamsMessage.class.getName());
 }
 
-/* @(#)TamsMessage.java */
+

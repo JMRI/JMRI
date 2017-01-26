@@ -1,4 +1,3 @@
-// NceListener.java
 package jmri.jmrix.nce;
 
 /**
@@ -14,4 +13,4 @@ public interface NceListener extends jmri.jmrix.AbstractMRListener {
     public void reply(NceReply m);
 }
 
-/* @(#)NceListener.java */
+

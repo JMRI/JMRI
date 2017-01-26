@@ -1,5 +1,6 @@
 package jmri.jmrix.mrc;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Date;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
@@ -194,7 +195,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
      *
      * @param speed Number from 0 to 1, or less than zero for emergency stop
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
@@ -253,7 +254,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
     }
 
     //Might need to look at other packets from handsets to see if they also have control of our loco and adjust from that.
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "fixed number of possible values")
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "fixed number of possible values")
     public void notifyRcv(Date timestamp, MrcMessage m) {
         if (m.getMessageClass() != MrcInterface.THROTTLEINFO
                 || (m.getMessageClass() == MrcInterface.THROTTLEINFO && (m.getElement(0) == MrcPackets.LOCOSOLECONTROLCODE

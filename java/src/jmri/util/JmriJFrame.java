@@ -1,5 +1,6 @@
 package jmri.util;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Insets;
@@ -704,7 +705,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * Handle closing a window or quiting the program while the modified bit was
      * set.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "LI_LAZY_INIT_STATIC", justification = "modified is only on Swing thread")
+    @SuppressFBWarnings(value = "LI_LAZY_INIT_STATIC", justification = "modified is only on Swing thread")
     protected void handleModified() {
         if (getModifiedFlag()) {
             this.setVisible(true);

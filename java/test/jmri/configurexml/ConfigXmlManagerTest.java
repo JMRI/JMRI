@@ -73,6 +73,13 @@ public class ConfigXmlManagerTest extends TestCase {
                 ConfigXmlManager.adapterName(""));
     }
 
+    public void testCurrentClassName() {
+        Assert.assertEquals("unmigrated", "jmri.managers.configurexml.DccSignalHeadXml",
+                ConfigXmlManager.currentClassName("jmri.managers.configurexml.DccSignalHeadXml"));
+        Assert.assertEquals("migrated", "jmri.managers.configurexml.DccSignalHeadXml",
+                ConfigXmlManager.currentClassName("jmri.configurexml.DccSignalHeadXml"));
+    }
+    
     public void testFindFile() throws FileNotFoundException, IOException {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager() {
             void locateClassFailed(Throwable ex, String adapterName, Object o) {

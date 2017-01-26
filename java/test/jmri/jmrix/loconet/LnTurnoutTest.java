@@ -1,4 +1,3 @@
-//LnTurnoutTest.java
 package jmri.jmrix.loconet;
 
 import org.junit.After;
@@ -13,7 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen
  */
-public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
+public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
     @Override
     @Before

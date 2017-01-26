@@ -1,12 +1,19 @@
 package jmri.jmrit.vsdecoder.swing;
 
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
+
 /**
  * class VSDOptionsDialog
  *
  * Configuration dialog for setting up a new VSDecoder
- */
-
-/*
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -24,22 +31,7 @@ package jmri.jmrit.vsdecoder.swing;
  * @author			Mark Underwood Copyright (C) 2011
  * 
  */
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainManager;
-
 public class VSDOptionsDialog extends JDialog {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4803792315315710325L;
 
     public static final String OPTIONS_PROPERTY = "Options"; // NOI18N
 

@@ -1,10 +1,3 @@
-/**
- * DccTurnoutManagerTest.java
- *
- * Description:	tests for the jmri.jmrix.dcc.DccTurnoutManager class
- *
- * @author	Bob Jacobsen
- */
 package jmri.jmrix.dcc;
 
 import jmri.Turnout;
@@ -15,7 +8,12 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+/**
+ * Tests for the jmri.jmrix.dcc.DccTurnoutManager class
+ *
+ * @author	Bob Jacobsen
+ */
+public class DccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     @After
     public void tearDown() {

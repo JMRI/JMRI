@@ -1,4 +1,3 @@
-// SerialListener.java
 package jmri.jmrix.powerline;
 
 /**
@@ -13,4 +12,4 @@ abstract public interface SerialListener extends jmri.jmrix.AbstractMRListener {
     public void reply(SerialReply m);
 }
 
-/* @(#)SerialListener.java */
+

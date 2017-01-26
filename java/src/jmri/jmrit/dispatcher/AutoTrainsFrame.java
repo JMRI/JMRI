@@ -575,4 +575,4 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 
 }
 
-/* @(#)AutoTrainsFrame.java */
+

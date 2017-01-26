@@ -157,5 +157,3 @@ public class JythonWindow extends AbstractAction {
     }
 
 }
-
-/* @(#)JythonWindow.java */

@@ -26,7 +26,7 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
     private JButton btnCancel;
     private JsonServerPreferences preferences;
     private JFrame parentFrame = null;
-    private static final long serialVersionUID = 5452568391598728906L;
+
     public JsonServerPreferencesPanel() {
         this.preferences = new JsonServerPreferences();
         this.preferences.apply(JsonServerPreferences.getDefault());

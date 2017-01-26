@@ -16,10 +16,6 @@ import org.slf4j.LoggerFactory;
  */
 public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2512449384265147100L;
     // data members
     private int _number;   // turnout number
     private JMRIClientTrafficController tc = null;
@@ -166,4 +162,4 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
 }
 
 
-/* @(#)JMRIClientTurnout.java */
+

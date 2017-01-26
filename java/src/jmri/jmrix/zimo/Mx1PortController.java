@@ -1,4 +1,3 @@
-// Mx1PortController.java
 package jmri.jmrix.zimo;
 
 /**
@@ -29,4 +28,4 @@ public abstract class Mx1PortController extends jmri.jmrix.AbstractSerialPortCon
 }
 
 
-/* @(#)Mx1PortController.java */
+

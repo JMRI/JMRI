@@ -1,5 +1,6 @@
 package jmri.jmrix.cmri.serial;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
@@ -200,7 +201,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      */
     @Override
     @Deprecated
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
     protected void setInstance() {
         self = this;

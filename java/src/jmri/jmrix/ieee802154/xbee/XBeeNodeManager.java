@@ -142,4 +142,4 @@ public class XBeeNodeManager implements IDiscoveryListener {
 
 }
 
-/* @(#)XBeeNodeManager.java */
+

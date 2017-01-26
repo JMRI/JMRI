@@ -9,11 +9,11 @@ import static jmri.server.json.JSON.ID;
 import static jmri.server.json.JSON.IDLE;
 import static jmri.server.json.JSON.IS_LONG_ADDRESS;
 import static jmri.server.json.JSON.RELEASE;
-import static jmri.server.json.roster.JsonRoster.ROSTER_ENTRY;
 import static jmri.server.json.JSON.SPEED;
 import static jmri.server.json.JSON.SPEED_STEPS;
 import static jmri.server.json.JSON.STATUS;
 import static jmri.server.json.JSON.THROTTLE;
+import static jmri.server.json.roster.JsonRoster.ROSTER_ENTRY;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -75,6 +75,8 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
      * @param server     The server requesting this throttle on behalf of a
      *                   client
      * @return The throttle
+     * @throws jmri.JmriException if unable to get the requested throttle
+     * @throws java.io.IOException if unable to communicate with client
      */
     public static JsonThrottle getThrottle(String throttleId, JsonNode data, JsonThrottleServer server) throws JmriException, IOException {
         DccLocoAddress address = null;

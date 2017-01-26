@@ -1,5 +1,6 @@
 package jmri.jmrix.can;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Arrays;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
@@ -177,7 +178,7 @@ abstract public class AbstractCanTrafficController
      * Overridden to include translation form the CAN hardware format
      *
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE")
+    @SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE")
     // Ignore false positive that msg is never used
     public void handleOneIncomingReply() throws java.io.IOException {
         // we sit in this until the message is complete, relying on

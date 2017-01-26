@@ -42,7 +42,7 @@ public class OBlockManager extends AbstractManager
         return jmri.Manager.OBLOCKS;
     }
 
-    public @Nonnull String getSystemPrefix() {
+    @Nonnull public String getSystemPrefix() {
         return "O";
     }
 
@@ -110,7 +110,7 @@ public class OBlockManager extends AbstractManager
         return (OBlock) _tuser.get(key);
     }
 
-    public @Nonnull OBlock provideOBlock(String name) throws IllegalArgumentException {
+    @Nonnull public OBlock provideOBlock(String name) throws IllegalArgumentException {
         if (name == null || name.length() == 0) {
             throw new IllegalArgumentException("name \""+name+"\" invalid");
         }
