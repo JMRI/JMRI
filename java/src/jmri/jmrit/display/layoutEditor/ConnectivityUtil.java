@@ -314,7 +314,7 @@ public class ConnectivityUtil {
                             }
                             break;
                             default: {
-                                log.warning("getTurnoutList() unknown tTyp: " + tTyp);
+                                log.warn("getTurnoutList() unknown tTyp: " + tTyp);
                                 break;
                             }
                     }   // switch (tTyp)
@@ -2315,7 +2315,7 @@ public class ConnectivityUtil {
                     }
                     break;
                 default: {
-                    log.warning("getTurnoutSetting() unknown cType: " + cType);
+                    log.warn("getTurnoutSetting() unknown cType: " + cType);
                     break;
                 }
             }   // switch (cType)
@@ -2556,7 +2556,7 @@ public class ConnectivityUtil {
                                 }
                                 break;
                             default: {
-                                log.warning("trackSegmentLeadsTo() unknown conType: " + conType);
+                                log.warn("trackSegmentLeadsTo() unknown conType: " + conType);
                                 break;
                             }
                         }   // switch (conType)
@@ -2700,7 +2700,7 @@ public class ConnectivityUtil {
                                 }
                                 break;
                             default: {
-                                log.warning("trackSegmentLeadsTo() unknown conType: " + conType);
+                                log.warn("trackSegmentLeadsTo() unknown conType: " + conType);
                                 break;
                             }
                         }   //switch (conType)
