@@ -13,7 +13,7 @@ import javax.script.ScriptException;
 import jmri.script.JmriScriptEngineManager;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -95,10 +95,10 @@ public class FileLineEndingsTest {
                         .filter(path -> !target.matches(path))
                         .filter(matcher::matches)
                         .forEach((path) -> {
-                    if (path.toFile().isFile()) {
-                        files.add(new Object[]{path.toFile()});
-                    }
-                });
+                            if (path.toFile().isFile()) {
+                                files.add(new Object[]{path.toFile()});
+                            }
+                        });
             }
         } catch (IOException ex) {
             log.error("Unable to get files in {}", directory, ex);
@@ -140,7 +140,12 @@ public class FileLineEndingsTest {
         }
     }
 
-    @Before
+    @BeforeClass
+    public void setUpClass() {
+        // make sure logging is setup before building parameter set
+        Log4JFixture.setUp();
+    }
+
     public void setUp() {
         Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
