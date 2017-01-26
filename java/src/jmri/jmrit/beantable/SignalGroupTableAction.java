@@ -5,8 +5,6 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -396,7 +394,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             // add user warning that a 2nd session not allowed (cf. Logix)
             // Already editing a Signal Group, ask for completion of that edit first
             String workingTitle = _systemName.getText();
-            if (workingTitle == "" || workingTitle == null) {
+            if (workingTitle.isEmpty() || workingTitle == null) {
                 workingTitle = Bundle.getMessage("NONE");
                 _systemName.setText(workingTitle);
             }
@@ -976,7 +974,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
      */
     void updatePressed(ActionEvent e, boolean newSignalGroup, boolean close) {
         log.debug("Update found SignalGroup system name: {}/{}", _systemName.getText(), fixedSystemName.getText());
-        if (_systemName.getText() == "") {
+        if (_systemName.getText().isEmpty()) {
             _systemName.setText(fixedSystemName.getText());
             // NPE in checkNewNamesOK() because the _systemName field seems to be empty
         }
