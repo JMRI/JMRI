@@ -47,7 +47,8 @@ import org.slf4j.LoggerFactory;
  * Based in part on RouteTableAction.java and SignalGroupTableAction.java by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2010
- *
+ * @author Egbert Broerse 2017
+
  */
 public class SignalGroupSubTableAction {
 
@@ -196,6 +197,13 @@ public class SignalGroupSubTableAction {
     String curHeadName;
     SignalHead curSignalHead;
 
+    /**
+     * Opens an editor to set the details of a Signal Head as part of a Signal Group.
+     * Called when user clicks the Edit button for a Head in the Add/Edit Signal Group pane.
+     * @see SignalGroupTableAction#signalHeadEditPressed(int) SignalGroupTableAction.signalHeadEditPressed
+     * @param g Parent Signal Head
+     * @param headName System or User Name of this Signal Head
+     */
     void editHead(SignalGroup g, String headName) {
         curSignalGroup = g;
         curHeadName = headName;
@@ -564,7 +572,6 @@ public class SignalGroupSubTableAction {
      */
     void cancelSubPressed(ActionEvent e) {
         log.debug("Edit Signal Group Head canceled in SGSTA line 569");
-        //addSubFrame.setVisible(false);
         cancelSubEdit();
         _SignalGroupSensorModel.dispose();
         _SignalGroupTurnoutModel.dispose();
@@ -588,12 +595,10 @@ public class SignalGroupSubTableAction {
     }
 
     void finishUpdate() {
-        // move to show all turnaouts and sensors if not there
+        // move to show all turnouts and sensors if not yet set
         cancelIncludedOnly();
         updateSubButton.setVisible(false);
         addSubFrame.setVisible(false);
-        //addSubFrame.dispose();
-        //addSubFrame = null;
     }
 
     /**
@@ -672,6 +677,7 @@ public class SignalGroupSubTableAction {
 
     /**
      * Table model for selecting Turnouts and Turnout State
+     * as Conditionals for a Signal Group Signal Head member.
      */
     class SignalGroupTurnoutModel extends SignalGroupOutputModel {
 
@@ -698,7 +704,7 @@ public class SignalGroupSubTableAction {
             }
             // some error checking
             if (r >= turnoutList.size()) {
-                log.debug("SGSTA getValueAt #703: row is greater than turnout list size");
+                log.debug("SGSTA getValueAt #703: row index is greater than turnout list size");
                 return null;
             }
             switch (c) {
@@ -738,6 +744,7 @@ public class SignalGroupSubTableAction {
 
     /**
      * Set up table for selecting Sensors and Sensor State
+     * as Conditionals for a Signal Group Signal Head member.
      */
     class SignalGroupSensorModel extends SignalGroupOutputModel {
 
@@ -802,7 +809,7 @@ public class SignalGroupSubTableAction {
         }
     }
 
-    private boolean showAll = true;   // false indicates show only included Turnouts
+    private boolean showAll = true;   // false indicates: show only included Turnouts and Sensors
 
     private static int ROW_HEIGHT;
 
@@ -825,7 +832,7 @@ public class SignalGroupSubTableAction {
         InstanceManager.turnoutManagerInstance().getThrownText()};
     private static int[] turnoutInputModeValues = new int[]{SignalGroup.ONCLOSED, SignalGroup.ONTHROWN};
 
-    private ArrayList<SignalGroupTurnout> _turnoutList;      // array of all Single Output Turnouts
+    private ArrayList<SignalGroupTurnout> _turnoutList;      // array of all Turnouts
     private ArrayList<SignalGroupTurnout> _includedTurnoutList;
 
     private ArrayList<SignalGroupSensor> _sensorList;        // array of all Sensors
@@ -875,6 +882,10 @@ public class SignalGroupSubTableAction {
 
     }
 
+    /**
+     * Element containing Signal Group configuration information
+     * for a Sensor as Conditional.
+     */
     private class SignalGroupSensor extends SignalGroupElement {
 
         SignalGroupSensor(String sysName, String userName) {
@@ -891,6 +902,9 @@ public class SignalGroupSubTableAction {
             return "";
         }
 
+        /**
+         * Pairs should correspond with values in getSetToState()
+         */
         void setSetToState(String state) {
             if (SET_TO_INACTIVE.equals(state)) {
                 _setToState = Sensor.INACTIVE;
@@ -904,6 +918,10 @@ public class SignalGroupSubTableAction {
         }
     }
 
+    /**
+     * Element containing Signal Group configuration information
+     * for a Turnout as Conditional.
+     */
     private class SignalGroupTurnout extends SignalGroupElement {
 
         SignalGroupTurnout(String sysName, String userName) {
@@ -920,6 +938,9 @@ public class SignalGroupSubTableAction {
             return "";
         }
 
+        /**
+         * Pairs should correspond with values in getSetToState()
+         */
         void setSetToState(String state) {
             if (SET_TO_CLOSED.equals(state)) {
                 _setToState = Turnout.CLOSED;
