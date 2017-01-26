@@ -170,7 +170,7 @@ public class Log4JUtil {
         // we don't need to explictly test for that here, just make sure the
         // directory is created if need be.
         if (!logDir.exists()) {
-            logDir.mkdirs();
+            FileUtil.createDirectory(logDir);
         }
         PropertyConfigurator.configure(p);
     }
