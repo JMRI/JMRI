@@ -313,7 +313,11 @@ public class ConnectivityUtil {
                                 }
                             }
                             break;
-                    }
+                            default: {
+                                log.warning("getTurnoutList() unknown tTyp: " + tTyp);
+                                break;
+                            }
+                    }   // switch (tTyp)
                 }
             }
             return list;
@@ -2310,7 +2314,11 @@ public class ConnectivityUtil {
                         tr = (TrackSegment) lt.getConnectA();
                     }
                     break;
-            }
+                default: {
+                    log.warning("getTurnoutSetting() unknown cType: " + cType);
+                    break;
+                }
+            }   // switch (cType)
             if ((tr != null) && (tr.getLayoutBlock() != lb)) {
                 // continuing track segment is not in this block
                 tr = null;
@@ -2547,9 +2555,11 @@ public class ConnectivityUtil {
                                     curTS = null;
                                 }
                                 break;
-                            default:    // ERROR: UNKNOWN conType (shouldn't ever happen)
+                            default: {
+                                log.warning("trackSegmentLeadsTo() unknown conType: " + conType);
                                 break;
-                        }
+                            }
+                        }   // switch (conType)
                         curObj = conObj;
                     } else // if RH, LH or DOUBLE _XOVER
                     if ((tType == LayoutTurnout.RH_TURNOUT) || (tType == LayoutTurnout.LH_TURNOUT)
@@ -2689,6 +2699,10 @@ public class ConnectivityUtil {
                                     curTS = (TrackSegment) ls.getConnectA();
                                 }
                                 break;
+                            default: {
+                                log.warning("trackSegmentLeadsTo() unknown conType: " + conType);
+                                break;
+                            }
                         }   //switch (conType)
                         curObj = conObj;
                     }   // if (ls.getLayoutBlock() != lb
