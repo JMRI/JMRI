@@ -142,7 +142,7 @@ public class SignalGroupSubTableAction {
             String result = jmri.util.StringUtil.getNameFromState(mode, sig.getValidStates(), sig.getValidStateNames());
             box.setSelectedItem(result);
         } else {
-            log.error("SGsubTA #145 setSignalHeadStateBox: Failed to get signal head {}", curHeadName);
+            log.error("Failed to get signal head {}", curHeadName);
         }
     }
 
@@ -276,14 +276,14 @@ public class SignalGroupSubTableAction {
                     // when user name is empty, get by user name
                 }
                 if (stsh != null) {
-                    log.error("SGsubTA #263 editHead: setting props for signal head {}", curHeadName);
+                    log.debug("SGsubTA #279 editHead: setting props for signal head {}", curHeadName);
                     if ((g.getHeadOnState(curSignalHead) == 0x00) && (g.getHeadOffState(curSignalHead) == 0x00)) {
                         g.setHeadOnState(curSignalHead, stsh.getOnAppearance());
                         g.setHeadOffState(curSignalHead, stsh.getOffAppearance());
                     }
                 } else {
                     // nothing found
-                    log.error("SGsubTA #269 editHead: Failed to get signal head object named {}", curHeadName);
+                    log.error("Failed to get signal head object named {}", curHeadName);
                 }
             }
             setSignalHeadStateBox(g.getHeadOnState(curSignalHead), _OnAppearance);

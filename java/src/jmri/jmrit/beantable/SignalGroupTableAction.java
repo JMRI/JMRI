@@ -982,7 +982,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         }
         String uName = _userName.getText();
         if (curSignalGroup == null) {
-            log.error("Catched NPE during Update. curSignalGroup = null");
+            log.error("Catch NPE during Update. curSignalGroup = null");
             // We might want to check if the User Name has been changed. But there's
             // nothing to compare with so this is propably a newly created signalGroup.
             // TODO cannot be compared since curSignalGroup is null, causes NPE
@@ -1152,7 +1152,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             log.debug("SigGroupEditSet B; row = {}; aspectList.size() = {}.", r, aspectList.size());
             switch (c) {
                 case INCLUDE_COLUMN:
-                    aspectList.get(r).setIncluded(((Boolean) type).booleanValue()); // NPE
+                    aspectList.get(r).setIncluded(((Boolean) type).booleanValue());
                     break;
                 case ASPECT_COLUMN:
                     aspectList.get(r).setAspect((String) type);
@@ -1416,7 +1416,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             Bundle.getMessage("Include"),
             Bundle.getMessage("ColumnLabelSetState")
     };
-    private static String[] COLUMN_SIG_NAMES = { // used in class SignalGroupSignalModel
+    private static String[] COLUMN_SIG_NAMES = { // used in class SignalGroupSignalHeadModel
             Bundle.getMessage("ColumnSystemName"),
             Bundle.getMessage("ColumnUserName"),
             Bundle.getMessage("Include"),
@@ -1463,11 +1463,11 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                         _offState = oneSigHead.getOffAppearance();
                         _signalHead = oneSigHead;
                     } else {
-                        log.error("Failed to get oneSigHead head {}", sysName);
+                        log.error("SignalGroupSignalHead: Failed to get oneSigHead head {}", sysName);
                     }
                 }
             } else {
-                log.error("Failed to get signal head {}", sysName);
+                log.error("SignalGroupSignalHead: Failed to get signal head {}", sysName);
             }
 
         }
