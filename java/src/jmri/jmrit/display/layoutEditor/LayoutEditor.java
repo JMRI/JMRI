@@ -7845,7 +7845,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * Add a label to the Draw Panel
      */
     void addLabel() {
-        PositionableLabel l = super.addLabel(textLabelTextField.getText().trim());
+        String labelText = textLabelTextField.getText();
+        labelText = (null != labelText) ? labelText.trim() : "";
+        if (labelText.length() <= 0) {
+            JOptionPane.showMessageDialog(this, rb.getString("Error11"),
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        PositionableLabel l = super.addLabel(labelText);
         setDirty(true);
         l.setForeground(defaultTextColor);
     }
@@ -7887,7 +7894,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         String memoryName = textMemoryComboBox.getSelectedDisplayName();
         memoryName = (null != memoryName) ? memoryName.trim() : "";
         if (memoryName.length() <= 0) {
-            JOptionPane.showMessageDialog(this, rb.getString("Error11"),
+            JOptionPane.showMessageDialog(this, rb.getString("Error11a"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -7913,7 +7920,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         String blockName = blockContentsComboBox.getSelectedDisplayName();
         blockName = (null != blockName) ? blockName.trim() : "";
         if (blockName.length() <= 0) {
-            JOptionPane.showMessageDialog(this, rb.getString("Error11"),
+            JOptionPane.showMessageDialog(this, rb.getString("Error11b"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -9876,6 +9883,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private void drawPanelGrid(Graphics2D g2) {
         Dimension dim = getSize();
         double pix = gridSize;
+        int wideMod = gridSize * 10;
+        int wideMin = gridSize / 2;
         double maxX = dim.width;
         double maxY = dim.height;
         Point2D startPt = new Point2D.Double(0.0, gridSize);
@@ -9888,7 +9897,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         while (pix < maxY) {
             startPt.setLocation(0.0, pix);
             stopPt.setLocation(maxX, pix);
-            if ((((int) pix) % 100) < 5.0) {
+            if ((((int) pix) % wideMod) < wideMin) {
                 g2.setStroke(wide);
                 g2.draw(new Line2D.Double(startPt, stopPt));
                 g2.setStroke(narrow);
@@ -9902,7 +9911,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         while (pix < maxX) {
             startPt.setLocation(pix, 0.0);
             stopPt.setLocation(pix, maxY);
-            if ((((int) pix) % 100) < 5.0) {
+            if ((((int) pix) % wideMod) < wideMin) {
                 g2.setStroke(wide);
                 g2.draw(new Line2D.Double(startPt, stopPt));
                 g2.setStroke(narrow);
