@@ -214,16 +214,18 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     /**
-     * Toggle slip states if clicked on, physical turnout exists, and not
-     * disabled
-     * Slip state progression is from BD to AD to AC to [BC*] and back to BD (*BC is skipped for Single slip)
+     * Toggle slip states if clicked on, physical turnout exists, and not disabled
      */
     public void toggleState(int selectedPointType) {
         switch (selectedPointType) {
             case SLIP_LEFT: {
                 switch (currentState) {
                     case STATE_AC: {
-                        currentState = STATE_BC;
+                        if (type == SINGLE_SLIP) {
+                            currentState = STATE_BD;
+                        } else {
+                            currentState = STATE_BC;
+                        }
                         break;
                     }
                     case STATE_BD: {
@@ -249,7 +251,11 @@ public class LayoutSlip extends LayoutTurnout {
                         break;
                     }
                     case STATE_BD: {
-                        currentState = STATE_BC;
+                        if (type == SINGLE_SLIP) {
+                            currentState = STATE_AC;
+                        } else {
+                            currentState = STATE_BC;
+                        }
                         break;
                     }
                     case STATE_AD: {
