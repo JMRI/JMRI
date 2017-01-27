@@ -890,7 +890,7 @@ public class LayoutSlip extends LayoutTurnout {
         needsBlockUpdate = false;
     }
 
-    void drawSlipState(int state, Graphics2D g2) {
+    void drawSlipState(Graphics2D g2, int state) {
         int ctrX = 20;
         int ctrY = 20;
         Point2D ldispA = new Point2D.Double(-20.0, 0.0);
@@ -905,38 +905,28 @@ public class LayoutSlip extends LayoutTurnout {
         g2.setStroke(new BasicStroke(2, BasicStroke.CAP_BUTT,
                 BasicStroke.JOIN_ROUND));
 
-        g2.draw(new Line2D.Double(A,
-                layoutEditor.third(A, C)));
-        g2.draw(new Line2D.Double(C,
-                layoutEditor.third(C, A)));
+        g2.draw(new Line2D.Double(A, third(A, C)));
+        g2.draw(new Line2D.Double(C, third(C, A)));
 
         if (state == STATE_AC || state == STATE_BD || state == UNKNOWN) {
-            g2.draw(new Line2D.Double(A,
-                    layoutEditor.third(A, D)));
+            g2.draw(new Line2D.Double(A, third(A, D)));
 
-            g2.draw(new Line2D.Double(D,
-                    layoutEditor.third(D, A)));
+            g2.draw(new Line2D.Double(D, third(D, A)));
 
             if (getSlipType() == LayoutSlip.DOUBLE_SLIP) {
-                g2.draw(new Line2D.Double(B,
-                        layoutEditor.third(B, C)));
+                g2.draw(new Line2D.Double(B, third(B, C)));
 
-                g2.draw(new Line2D.Double(C,
-                        layoutEditor.third(C, B)));
+                g2.draw(new Line2D.Double(C, third(C, B)));
             }
         } else {
-            g2.draw(new Line2D.Double(B,
-                    layoutEditor.third(B, D)));
-            g2.draw(new Line2D.Double(D,
-                    layoutEditor.third(D, B)));
+            g2.draw(new Line2D.Double(B, third(B, D)));
+            g2.draw(new Line2D.Double(D, third(D, B)));
         }
 
         if (getSlipType() == LayoutSlip.DOUBLE_SLIP) {
             if (state == LayoutSlip.STATE_AC) {
-                g2.draw(new Line2D.Double(B,
-                        layoutEditor.third(B, D)));
-                g2.draw(new Line2D.Double(D,
-                        layoutEditor.third(D, B)));
+                g2.draw(new Line2D.Double(B, third(B, D)));
+                g2.draw(new Line2D.Double(D, third(D, B)));
 
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, C));
@@ -946,45 +936,35 @@ public class LayoutSlip extends LayoutTurnout {
                 g2.draw(new Line2D.Double(B, D));
 
             } else if (state == LayoutSlip.STATE_AD) {
-                g2.draw(new Line2D.Double(B,
-                        layoutEditor.third(B, C)));
+                g2.draw(new Line2D.Double(B, third(B, C)));
 
-                g2.draw(new Line2D.Double(C,
-                        layoutEditor.third(C, B)));
+                g2.draw(new Line2D.Double(C, third(C, B)));
 
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, D));
 
             } else if (state == LayoutSlip.STATE_BC) {
 
-                g2.draw(new Line2D.Double(A,
-                        layoutEditor.third(A, D)));
+                g2.draw(new Line2D.Double(A, third(A, D)));
 
-                g2.draw(new Line2D.Double(D,
-                        layoutEditor.third(D, A)));
+                g2.draw(new Line2D.Double(D, third(D, A)));
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(B, C));
             } else {
-                g2.draw(new Line2D.Double(B,
-                        layoutEditor.third(B, D)));
-                g2.draw(new Line2D.Double(D,
-                        layoutEditor.third(D, B)));
+                g2.draw(new Line2D.Double(B, third(B, D)));
+                g2.draw(new Line2D.Double(D, third(D, B)));
             }
         } else {
-            g2.draw(new Line2D.Double(A,
-                    layoutEditor.third(A, D)));
+            g2.draw(new Line2D.Double(A, third(A, D)));
 
-            g2.draw(new Line2D.Double(D,
-                    layoutEditor.third(D, A)));
+            g2.draw(new Line2D.Double(D, third(D, A)));
             if (state == LayoutSlip.STATE_AD) {
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, D));
 
             } else if (state == LayoutSlip.STATE_AC) {
-                g2.draw(new Line2D.Double(B,
-                        layoutEditor.third(B, D)));
-                g2.draw(new Line2D.Double(D,
-                        layoutEditor.third(D, B)));
+                g2.draw(new Line2D.Double(B, third(B, D)));
+                g2.draw(new Line2D.Double(D, third(D, B)));
 
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, C));
@@ -994,10 +974,8 @@ public class LayoutSlip extends LayoutTurnout {
                 g2.draw(new Line2D.Double(B, D));
 
             } else {
-                g2.draw(new Line2D.Double(B,
-                        layoutEditor.third(B, D)));
-                g2.draw(new Line2D.Double(D,
-                        layoutEditor.third(D, B)));
+                g2.draw(new Line2D.Double(B, third(B, D)));
+                g2.draw(new Line2D.Double(D, third(D, B)));
             }
         }
 
@@ -1016,7 +994,7 @@ public class LayoutSlip extends LayoutTurnout {
         public void paintComponent(Graphics g) {
             super.paintComponent(g);    // paints background
             Graphics2D g2 = (Graphics2D) g;
-            drawSlipState(state, g2);
+            drawSlipState(g2, state);
         }
     }
 
@@ -1082,7 +1060,7 @@ public class LayoutSlip extends LayoutTurnout {
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g;
-            drawSlipState(testState, g2);
+            drawSlipState(g2, testState);
         }
     }
 
@@ -1356,6 +1334,131 @@ public class LayoutSlip extends LayoutTurnout {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutSlip.class.getName());
+    public void draw(Graphics2D g2) {
+        if (!getHidden() || layoutEditor.isEditable()) {
+            LayoutBlock b = getLayoutBlock();
+            layoutEditor.setTrackStrokeWidth(g2, isMainline());
+            Color mainColour;
+            Color subColour;
+            if (b != null) {
+                mainColour = b.getBlockColor();
+                subColour = b.getBlockTrackColor();
+            } else {
+                mainColour = defaultTrackColor;
+                subColour = defaultTrackColor;
+            }
 
+            g2.setColor(subColour);
+
+            g2.draw(new Line2D.Double(getCoordsA(),
+                    third(getCoordsA(), getCoordsC())));
+            g2.draw(new Line2D.Double(getCoordsC(),
+                    third(getCoordsC(), getCoordsA())));
+
+            g2.draw(new Line2D.Double(getCoordsB(),
+                    third(getCoordsB(), getCoordsD())));
+            g2.draw(new Line2D.Double(getCoordsD(),
+                    third(getCoordsD(), getCoordsB())));
+
+            if (getSlipType() == LayoutSlip.DOUBLE_SLIP) {
+                if (getSlipState() == LayoutSlip.STATE_AC) {
+                    g2.draw(new Line2D.Double(getCoordsA(),
+                            third(getCoordsA(), getCoordsD())));
+
+                    g2.draw(new Line2D.Double(getCoordsD(),
+                            third(getCoordsD(), getCoordsA())));
+
+                    g2.draw(new Line2D.Double(getCoordsB(),
+                            third(getCoordsB(), getCoordsC())));
+
+                    g2.draw(new Line2D.Double(getCoordsC(),
+                            third(getCoordsC(), getCoordsB())));
+
+                    g2.setColor(mainColour);
+                    g2.draw(new Line2D.Double(getCoordsA(), getCoordsC()));
+
+                } else if (getSlipState() == LayoutSlip.STATE_BD) {
+                    g2.draw(new Line2D.Double(getCoordsB(),
+                            third(getCoordsB(), getCoordsC())));
+
+                    g2.draw(new Line2D.Double(getCoordsC(),
+                            third(getCoordsC(), getCoordsB())));
+
+                    g2.draw(new Line2D.Double(getCoordsA(),
+                            third(getCoordsA(), getCoordsD())));
+                    g2.draw(new Line2D.Double(getCoordsD(),
+                            third(getCoordsD(), getCoordsA())));
+
+                    g2.setColor(mainColour);
+                    g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
+
+                } else if (getSlipState() == LayoutSlip.STATE_AD) {
+                    g2.draw(new Line2D.Double(getCoordsB(),
+                            third(getCoordsB(), getCoordsC())));
+
+                    g2.draw(new Line2D.Double(getCoordsC(),
+                            third(getCoordsC(), getCoordsB())));
+
+                    g2.setColor(mainColour);
+                    g2.draw(new Line2D.Double(getCoordsA(), getCoordsD()));
+
+                } else if (getSlipState() == LayoutSlip.STATE_BC) {
+
+                    g2.draw(new Line2D.Double(getCoordsA(),
+                            third(getCoordsA(), getCoordsD())));
+
+                    g2.draw(new Line2D.Double(getCoordsD(),
+                            third(getCoordsD(), getCoordsA())));
+                    g2.setColor(mainColour);
+                    g2.draw(new Line2D.Double(getCoordsB(), getCoordsC()));
+                } else {
+                    g2.draw(new Line2D.Double(getCoordsB(),
+                            third(getCoordsB(), getCoordsC())));
+
+                    g2.draw(new Line2D.Double(getCoordsC(),
+                            third(getCoordsC(), getCoordsB())));
+
+                    g2.draw(new Line2D.Double(getCoordsA(),
+                            third(getCoordsA(), getCoordsD())));
+
+                    g2.draw(new Line2D.Double(getCoordsD(),
+                            third(getCoordsD(), getCoordsA())));
+                }
+            } else {
+                g2.draw(new Line2D.Double(getCoordsA(),
+                        third(getCoordsA(), getCoordsD())));
+
+                g2.draw(new Line2D.Double(getCoordsD(),
+                        third(getCoordsD(), getCoordsA())));
+                if (getSlipState() == LayoutSlip.STATE_AD) {
+                    g2.setColor(mainColour);
+                    g2.draw(new Line2D.Double(getCoordsA(), getCoordsD()));
+
+                } else if (getSlipState() == LayoutSlip.STATE_BD) {
+                    g2.setColor(mainColour);
+                    g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
+                    if (singleSlipStraightEqual()) {
+                        g2.setColor(mainColour);
+                        g2.draw(new Line2D.Double(getCoordsA(), getCoordsC()));
+                    }
+
+                } else if (getSlipState() == LayoutSlip.STATE_AC) {
+                    g2.setColor(mainColour);
+                    g2.draw(new Line2D.Double(getCoordsA(), getCoordsC()));
+                    if (singleSlipStraightEqual()) {
+                        g2.setColor(mainColour);
+                        g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
+                    }
+                } else {
+                    g2.draw(new Line2D.Double(getCoordsA(),
+                            third(getCoordsA(), getCoordsD())));
+
+                    g2.draw(new Line2D.Double(getCoordsD(),
+                            third(getCoordsD(), getCoordsA())));
+                }
+            }
+        }   // if (!(getHidden() && !layoutEditor.isEditable()))
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(LayoutSlip.class.getName());
 }
