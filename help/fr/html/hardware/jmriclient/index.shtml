@@ -1,38 +1,31 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
-<!-- Translated by Herv&#233; Blorec 2013-09-10 -->
-<title>JMRI: JMRIClient and SimpleServer Configuration</title>
+<!-- Translated by Herv&#233; Blorec 2017-01-26 -->
+<title>JMRI Hardware Support - JMRIClient and SimpleServer</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<div id="mainContent">>
 
-<h1> 
-JMRI: Connexion JMRIClient 
-</h1>
+<h1>Support Mat&#233;riel: Connexion JMRIClient</h1>
 
 <p>La connexion JMRIClient fournit une m&#233;thode de connexion &#224; distance d'un programme JMRI &#224; un autre. Il peut &#234;tre utilis&#233; pour construire un panneau sur un ordinateur qui est connect&#233; au r&#233;seau directement, mais actuellement fait fonctionner le panneau sur un ordinateur sans connexion physique au r&#233;seau.</p>
 
-    
+ <p>La connexion JMRIClient peut aussi &#234;tre utilis&#233;e pour partager des informations entre deux opr&#233;rateurs voisins sans r&#233;pliquercompl&#232;tement les informations sur chaque ordinateur. Cette configuration est particuli&#232;rement utile sur les configurations modulaires o&#249; plusieurs constructeurs de module sont impliqu&#233;s. </P>  
 
-<h2>
-Le Simple Serveur JMRI
-</h2>
+a name="connecting"></a><h2>Connexion</h2>
+<h3>Le Serveur Simple JMRI</h3>
 
 <p>"Simple" dans ce cas, d&#233;signe en fait le protocole, pas le serveur
 lui-m&#234;me. Il utilise des commandes assez simples qui incluent le nom du p&#233;riph&#233;rique
@@ -51,7 +44,8 @@ aiguillages, lumi&#232;res, alimentation, et la r&#233;troaction &#224; distance
 Rapports.</p>
 
 <p> Pour configurer le JMRIClient, vous pouvez s&#233;lectionner l'option "JMRI (R&#233;seau)" dans la
-liste des fabricants de Syst&#232;mes. Sous cette option se trouve "Connexion R&#233;seau JMRI". Vous pouvez avoir plusieurs interfaces   "connexion r&#233;seau JMRI" configur&#233;es.</p>
+liste des fabricants de Syst&#232;mes. Sous cette option se trouve "Connexion R&#233;seau JMRI". 
+Vous pouvez avoir plusieurs interfaces "Connexion R&#233;seau JMRI" configur&#233;es.</p>
 
 <p> Le client utilise actuellement le pr&#233;fixe du syst&#232;me pour d&#233;terminer ce qu'il faut envoyer au serveur. Si votre serveur dispose d'une connexion avec un pr&#233;fixe "XYZ", vous avez besoin de configurer votre client avec le pr&#233;fixe "XYZ" pour pouvoir acc&#233;der aux
 dispositifs nomm&#233;s sur le serveur.</p>
@@ -64,7 +58,7 @@ dispositifs nomm&#233;s sur le serveur.</p>
 
 <h3>Duplication de connexion simple</h3>
 
-<p> L'utilisation op&#233;rationnelle simple de  JMRIClient et du serveur simple 
+<p> L'utilisation op&#233;rationnelle la plus simple de JMRIClient et du serveur simple 
 est d'avoir un ordinateur reli&#233; directement au r&#233;seau (l'ordinateur serveur)
 et un second ordinateur (l'ordinateur client) reli&#233; au premier par l'interm&#233;diaire d'un
 r&#233;seau informatique o&#249; vous souhaitez faire fonctionner un panneau.</p>
@@ -114,7 +108,8 @@ ne fait pas de logique, alors ce n'est pas un bug.</p>
    </li>
 </ol>
 
-
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
