@@ -257,7 +257,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     @Override
     public String[] getValidFeedbackNames() {
-        return Arrays.copyOf(_validDecoderNames, _validFeedbackNames.length);
+        return Arrays.copyOf(_validFeedbackNames, _validFeedbackNames.length);
     }
 
     @Override
