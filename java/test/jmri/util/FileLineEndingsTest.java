@@ -141,7 +141,7 @@ public class FileLineEndingsTest {
     }
 
     @BeforeClass
-    public void setUpClass() {
+    public static void setUpClass() {
         // make sure logging is setup before building parameter set
         Log4JFixture.setUp();
     }
