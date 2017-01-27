@@ -71,6 +71,7 @@ public class LsDecSignalHead extends DefaultSignalHead {
      * Modified from DefaultSignalHead
      * removed software flashing!!!
      */
+    @Override
     public void setAppearance(int newAppearance) {
         int oldAppearance = mAppearance;
         mAppearance = newAppearance;
@@ -83,6 +84,7 @@ public class LsDecSignalHead extends DefaultSignalHead {
         }
     }
 
+    @Override
     public void setLit(boolean newLit) {
         boolean oldLit = mLit;
         mLit = newLit;
@@ -273,6 +275,7 @@ public class LsDecSignalHead extends DefaultSignalHead {
         mDarkState = i;
     }
 
+    @Override
     boolean isTurnoutUsed(Turnout t) {
         if (getRed() != null && t.equals(getRed().getBean())) {
             return true;
