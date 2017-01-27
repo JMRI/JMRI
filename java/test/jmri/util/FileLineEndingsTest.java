@@ -13,7 +13,6 @@ import javax.script.ScriptException;
 import jmri.script.JmriScriptEngineManager;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -85,6 +84,7 @@ public class FileLineEndingsTest {
      * @return a collection of files to validate
      */
     public static Collection<Object[]> getFiles(File directory, String[] patterns) {
+        Log4JFixture.initLogging(); // initialize logging when building parameter set
         ArrayList<Object[]> files = new ArrayList<>();
         try {
             for (String pattern : patterns) {
@@ -138,12 +138,6 @@ public class FileLineEndingsTest {
             log.error("Unable to get path for {}", this.file, ex);
             Assert.fail("Unable to get get path " + file.getPath() + " for test");
         }
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-        // make sure logging is setup before building parameter set
-        Log4JFixture.setUp();
     }
 
     public void setUp() {
