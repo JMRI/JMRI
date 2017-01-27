@@ -70,7 +70,9 @@ import jmri.Reporter;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.SignalHead;
+import jmri.SignalHeadManager;
 import jmri.SignalMast;
+import jmri.SignalMastManager;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.AnalogClock2Display;
@@ -243,13 +245,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JRadioButton multiSensorButton = new JRadioButton(Bundle.getMessage("MultiSensor") + "...");
 
     private JRadioButton signalMastButton = new JRadioButton(rb.getString("SignalMastIcon"));
-    private JTextField nextSignalMast = new JTextField(5);
+    private JmriBeanComboBox signalMastComboBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(SignalMastManager.class), null, JmriBeanComboBox.DISPLAYNAME);
 
     private JRadioButton sensorButton = new JRadioButton(rb.getString("SensorIcon"));
-    private JTextField nextSensor = new JTextField(5);
+    private JmriBeanComboBox sensorComboBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DISPLAYNAME);
 
     private JRadioButton signalButton = new JRadioButton(rb.getString("SignalIcon"));
-    private JTextField nextSignalHead = new JTextField(5);
+    private JmriBeanComboBox signalHeadComboBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DISPLAYNAME);
 
     private JRadioButton iconLabelButton = new JRadioButton(rb.getString("IconLabel"));
 
@@ -604,9 +609,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 blockContentsComboBox.setEnabled(blockContentsButton.isSelected());
 
                 // enable/disable signal mast, sensor & signal head text fields
-                nextSignalMast.setEnabled(signalMastButton.isSelected());
-                nextSensor.setEnabled(sensorButton.isSelected());
-                nextSignalHead.setEnabled(signalButton.isSelected());
+                signalMastComboBox.setEnabled(signalMastButton.isSelected());
+                sensorComboBox.setEnabled(sensorButton.isSelected());
+                signalHeadComboBox.setEnabled(signalButton.isSelected());
 
                 // changeIconsButton
                 e = (sensorButton.isSelected()
@@ -976,17 +981,23 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // Signal Mast & text
         top4.add(signalMastButton);
         signalMastButton.setToolTipText(rb.getString("SignalMastButtonToolTip"));
-        top4.add(nextSignalMast);
-        nextSignalMast.setEnabled(false);
+        top4.add(signalMastComboBox);
+        signalMastComboBox.setEditable(true);
+        signalMastComboBox.getEditor().setItem("");
+        signalMastComboBox.setSelectedIndex(-1);
+        signalMastComboBox.setEnabled(false);
 
         top4.add(Box.createHorizontalGlue());
 
         // sensor icon & text
         top4.add(sensorButton);
         sensorButton.setToolTipText(rb.getString("SensorButtonToolTip"));
-        top4.add(nextSensor);
-        nextSensor.setToolTipText(rb.getString("SensorIconToolTip"));
-        nextSensor.setEnabled(false);
+        top4.add(sensorComboBox);
+        sensorComboBox.setToolTipText(rb.getString("SensorIconToolTip"));
+        sensorComboBox.setEditable(true);
+        sensorComboBox.getEditor().setItem("");
+        sensorComboBox.setSelectedIndex(-1);
+        sensorComboBox.setEnabled(false);
 
         sensorIconEditor = new MultiIconEditor(4);
         sensorIconEditor.setIcon(0, Bundle.getMessage("MakeLabel", Bundle.getMessage("SensorStateActive")),
@@ -1006,9 +1017,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // Signal icon & text
         top4.add(signalButton);
         signalButton.setToolTipText(rb.getString("SignalButtonToolTip"));
-        top4.add(nextSignalHead);
-        nextSignalHead.setToolTipText(rb.getString("SignalIconToolTip"));
-        nextSignalHead.setEnabled(false);
+        top4.add(signalHeadComboBox);
+        signalHeadComboBox.setEditable(true);
+        signalHeadComboBox.getEditor().setItem("");
+        signalHeadComboBox.setSelectedIndex(-1);
+        signalHeadComboBox.setEnabled(false);
+        signalHeadComboBox.setToolTipText(rb.getString("SignalIconToolTip"));
 
         signalIconEditor = new MultiIconEditor(10);
         signalIconEditor.setIcon(0, "Red:", "resources/icons/smallschematics/searchlights/left-red-short.gif");
@@ -1070,21 +1084,21 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             JPanel top18Panel = new JPanel();
             top18Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             top18Panel.add(signalMastButton);
-            top18Panel.add(nextSignalMast);
+            top18Panel.add(signalMastComboBox);
             top18Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, top18Panel.getPreferredSize().height));
             editToolBarPanel.add(top18Panel);
 
             JPanel top19Panel = new JPanel();
             top19Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             top19Panel.add(sensorButton);
-            top19Panel.add(nextSensor);
+            top19Panel.add(sensorComboBox);
             top19Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, top19Panel.getPreferredSize().height));
             editToolBarPanel.add(top19Panel);
 
             JPanel top20Panel = new JPanel();
             top20Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             top20Panel.add(signalButton);
-            top20Panel.add(nextSignalHead);
+            top20Panel.add(signalHeadComboBox);
             top20Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, top20Panel.getPreferredSize().height));
             editToolBarPanel.add(top20Panel);
 
@@ -7666,7 +7680,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * Add a sensor indicator to the Draw Panel
      */
     void addSensor() {
-        if ((nextSensor.getText()).trim().length() <= 0) {
+        String tName = sensorComboBox.getSelectedDisplayName();
+        tName = (null != tName) ? tName.trim() : "";
+        if (tName.length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error10"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
@@ -7681,16 +7697,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         l.setIcon("SensorStateInactive", sensorIconEditor.getIcon(1));
         l.setIcon("BeanStateInconsistent", sensorIconEditor.getIcon(2));
         l.setIcon("BeanStateUnknown", sensorIconEditor.getIcon(3));
-        l.setSensor(nextSensor.getText().trim());
+        l.setSensor(tName);
         l.setDisplayLevel(SENSORS);
         //Sensor xSensor = l.getSensor();
+        // (Note: I don't see the point of this section of code because…
         if (l.getSensor() != null) {
             if ((l.getNamedSensor().getName() == null)
-                    || (!(l.getNamedSensor().getName().equals(nextSensor.getText().trim())))) {
-                nextSensor.setText(l.getNamedSensor().getName());
+                    || (!(l.getNamedSensor().getName().equals(tName)))) {
+                sensorComboBox.getEditor().setItem(l.getNamedSensor().getName());
             }
         }
-        nextSensor.setText(l.getNamedSensor().getName());
+        // …because this is called regardless of the code above?!?
+        sensorComboBox.getEditor().setItem(l.getNamedSensor().getName());
+
         setNextLocation(l);
         setDirty(true);
         putItem(l);
@@ -7707,14 +7726,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      */
     void addSignalHead() {
         // check for valid signal head entry
-        String tName = nextSignalHead.getText().trim();
+        String tName = signalHeadComboBox.getSelectedDisplayName();
+        tName = (null != tName) ? tName.trim() : "";
+
         SignalHead mHead = null;
         if (!tName.equals("")) {
             mHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(tName);
             /*if (mHead == null)
              mHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(tName);
              else */
-            nextSignalHead.setText(tName);
+            signalHeadComboBox.getEditor().setItem(tName);
         }
         if (mHead == null) {
             // There is no signal head corresponding to this name
@@ -7791,11 +7812,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     void addSignalMast() {
         // check for valid signal head entry
-        String tName = nextSignalMast.getText().trim();
+        String tName = signalMastComboBox.getSelectedDisplayName();
+        tName = (null != tName) ? tName.trim() : "";
         SignalMast mMast = null;
         if (!tName.equals("")) {
             mMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(tName);
-            nextSignalMast.setText(tName);
+            signalMastComboBox.getEditor().setItem(tName);
         }
         if (mMast == null) {
             // There is no signal head corresponding to this name
