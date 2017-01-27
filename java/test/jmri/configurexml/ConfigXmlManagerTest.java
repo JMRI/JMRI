@@ -33,6 +33,7 @@ public class ConfigXmlManagerTest extends TestCase {
             void locateFailed(Throwable ex, String adapterName, Object o) {
             }
         };
+
         Object o1 = new jmri.implementation.TripleTurnoutSignalHead("", "", null, null, null);
         configxmlmanager.registerConfig(o1);
         Assert.assertTrue("stored in clist", configxmlmanager.clist.size() == 1);
@@ -40,6 +41,27 @@ public class ConfigXmlManagerTest extends TestCase {
         Assert.assertTrue("removed from clist", configxmlmanager.clist.size() == 0);
     }
 
+    public void testLogErrorOnStore() {
+        ConfigXmlManager configxmlmanager = new ConfigXmlManager();
+        innerFlag = false;
+        configxmlmanager.setErrorHandler(new ErrorHandler(){
+            public void handle(ErrorMemo e) {
+                innerFlag = true;
+            }
+        });
+        
+        Object o1 = new jmri.ConfigXmlHandle();
+        configxmlmanager.registerConfig(o1);
+     
+        // this will fail before reaching file
+        try {
+            configxmlmanager.storeAll(new File("none"));
+        } catch (Exception e) {
+            // check that the handler was invoked
+            Assert.assertTrue(innerFlag);
+        }
+    }
+    
     public void testFind() throws ClassNotFoundException {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager() {
             @SuppressWarnings("unused")
@@ -145,6 +167,7 @@ public class ConfigXmlManagerTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     protected void tearDown() {
