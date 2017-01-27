@@ -51,7 +51,7 @@ public class ConfigXmlManagerTest extends TestCase {
         });
         
         Object o1 = new jmri.ConfigXmlHandle();
-        configxmlmanager.registerConfig(o1);
+        configxmlmanager.registerUser(o1);
      
         // this will fail before reaching file
         try {
