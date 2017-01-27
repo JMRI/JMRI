@@ -38,3 +38,6 @@ matrix:
   exclude:
   - os: osx
     env: HEADLESS=true
+
+after_success:
+  - mvn jacoco:report coveralls:report -U -P travis-coverage
