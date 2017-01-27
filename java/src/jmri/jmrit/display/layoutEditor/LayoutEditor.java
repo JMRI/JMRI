@@ -3582,7 +3582,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     beginObject = foundObject;
                     beginPointType = foundPointType;
                     beginLocation = foundLocation;
-                } else {
+                } else {    //TODO: auto-add anchor point?
                     foundObject = null;
                     beginObject = null;
                 }
@@ -3642,7 +3642,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             }
                         }
                     }
-                }
+                }   // if (allControlling())
                 // initialize starting selection - cancel any previous selection rectangle
                 selectionActive = true;
                 selectionX = dLoc.getX();
@@ -3737,9 +3737,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
         //thisPanel.setFocusable(true);
         thisPanel.requestFocusInWindow();
-
-        return;
-    }
+    }   //mousePressed
 
     private boolean checkSelect(Point2D loc, boolean requireUnconnected) {
         return checkSelect(loc, requireUnconnected, null);

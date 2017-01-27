@@ -2398,9 +2398,9 @@ public class ConnectivityUtil {
 
                 if (logInfoFor_trackSegmentLeadsTo) {
                     String con_type = connectionTypeToString(conType);
-                    if (con_type.startsWith("X")) {
-                        log.debug("LevelXing");
-                    }
+                    //if (con_type.startsWith("LEVEL_XING_")) {
+                    //    log.debug("LevelXing");
+                    //}
                     String conName = objectToNameOrIDString(conObj);
                     String curName = objectToNameOrIDString(curObj);
                     log.info("\tIn block " + lb.getUserName() + ", follow " + curName + " thru " + curTS.getID() +
@@ -2754,7 +2754,11 @@ public class ConnectivityUtil {
                 try {
                     result = ((LayoutTurnout) obj).getName();
                 } catch (Exception ex3) {
-                    result = "<" + obj + ">";
+                    try {
+                        result = ((LevelXing) obj).getID();
+                    } catch (Exception ex4) {
+                        result = "<" + obj + ">";
+                    }
                 }
             }
         }
