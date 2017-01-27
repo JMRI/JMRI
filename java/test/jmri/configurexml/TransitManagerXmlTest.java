@@ -31,7 +31,7 @@ public class TransitManagerXmlTest {
    }
 
    @Test
-   public void StoreOneTransitTest(){
+   public void StoreOneTransitTest() throws Exception {
       TransitManagerXml tmx = new TransitManagerXml();
       TransitManager tm = new TransitManager();
       Transit t = tm.createNewTransit("TS1", "user");
@@ -44,7 +44,10 @@ public class TransitManagerXmlTest {
       
       t.addTransitSection(ts);
       
-      Assert.assertNotNull("Element(s) returned", tmx.store(tm));
+      org.jdom2.Element e;
+      Assert.assertNotNull("Element(s) returned", e = tmx.store(tm));
+
+      Assert.assertNotNull("Element(s) processed", tmx.load(e, null));
    }
 
    @Before
