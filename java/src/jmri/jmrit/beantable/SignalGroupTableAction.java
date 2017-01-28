@@ -327,7 +327,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     /**
      * Read Appearance for a Signal Group Signal Head from the state comboBox
      * called from SignalGroupSubTableAction
-     * @param box to read from
+     * @param comboBox to read from
      */
     int signalStateFromBox(JComboBox<String> box) {
         String mode = (String) box.getSelectedItem();
@@ -982,7 +982,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         }
         String uName = _userName.getText();
         if (curSignalGroup == null) {
-            log.error("Catch NPE during Update. curSignalGroup = null");
+            log.debug("Catch NPE during Update. curSignalGroup = null");
             // We might want to check if the User Name has been changed. But there's
             // nothing to compare with so this is propably a newly created signalGroup.
             // TODO cannot be compared since curSignalGroup is null, causes NPE
