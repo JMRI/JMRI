@@ -278,8 +278,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                     root.addContent(e);
                 }
             } catch (Exception e) {
-                storingErrorEncountered(null, "storing to file",
-                        "Unknown error (Exception)", null, null, e);
+                storingErrorEncountered(null, "storing to file in addConfigStore",
+                        "Exception thrown", null, null, e);
                 result = false;
             }
         }
@@ -297,8 +297,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 }
             } catch (Exception e) {
                 result = false;
-                storingErrorEncountered(((XmlAdapter) o), "storing to file",
-                        "Unknown error (Exception)", null, null, e);
+                storingErrorEncountered(null, "storing to file in addToolsStore",
+                        "Exception thrown", null, null, e);
             }
         }
         return result;
@@ -315,8 +315,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 }
             } catch (Exception e) {
                 result = false;
-                storingErrorEncountered((XmlAdapter) o, "storing to file",
-                        "Unknown error (Exception)", null, null, e);
+                storingErrorEncountered(null, "storing to file in addUserStore",
+                        "Exception thrown", null, null, e);
             }
         }
         return result;
