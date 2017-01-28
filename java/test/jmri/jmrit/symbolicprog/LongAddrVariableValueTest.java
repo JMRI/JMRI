@@ -20,11 +20,11 @@ import jmri.util.JUnitUtil;
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
  */
-public class LongAddrVariableValueTest extends VariableValueTest {
+public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
 
     ProgDebugger p = new ProgDebugger();
 
-    // abstract members invoked by tests in parent VariableValueTest class
+    // abstract members invoked by tests in parent AbstractVariableValueTestBase class
     VariableValue makeVar(String label, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
             String cvNum, String mask, int minVal, int maxVal,

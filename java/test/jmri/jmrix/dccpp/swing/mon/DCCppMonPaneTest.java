@@ -13,7 +13,7 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class DCCppMonPaneTest extends jmri.jmrix.AbstractMonPaneTest {
+public class DCCppMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     jmri.jmrix.dccpp.DCCppSystemConnectionMemo memo = null;
 

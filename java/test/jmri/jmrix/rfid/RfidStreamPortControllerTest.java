@@ -21,7 +21,7 @@ import org.junit.Test;
  *
  * @author	Paul Bender
  */
-public class RfidStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortControllerTest {
+public class RfidStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortControllerTestBase {
 
     @Test
     public void testCtor() {

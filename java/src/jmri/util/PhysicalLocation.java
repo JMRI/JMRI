@@ -284,6 +284,9 @@ public class PhysicalLocation extends Vector3f {
 
     @Override
     public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
         if (this.getClass().equals(o.getClass())) {
             if (this.hashCode() == o.hashCode()) {
                 return true;

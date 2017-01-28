@@ -10,7 +10,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen Copyright 2008
  */
-public class Analytic_AAlgorithmTest extends AbstractAlgorithmTest {
+public class Analytic_AAlgorithmTest extends AbstractAlgorithmTestBase {
 
     @Override
     Calculator getAlgorithm(Point3d[] pts, double vs) {

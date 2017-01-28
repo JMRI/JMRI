@@ -1,11 +1,3 @@
-/**
- * AbstractPowerManagerTest.java
- *
- * Description:	AbsBaseClass for PowerManager tests in specific jmrix. packages
- *
- * @author	Bob Jacobsen Copyright 2007
- * @author	Bob Jacobsen Copyright (C) 2017
-  */
 package jmri.jmrix;
 
 import java.beans.PropertyChangeListener;
@@ -16,7 +8,16 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public abstract class AbstractPowerManagerTest {
+/**
+ * Abstract base class for PowerManager tests in specific jmrix. packages
+ *
+ * This is not itself a test class, e.g. should not be added to a suite.
+ * Instead, this forms the base for test classes, including providing some
+ * common tests
+ * @author	Bob Jacobsen Copyright 2007
+ * @author	Bob Jacobsen Copyright (C) 2017
+  */
+public abstract class AbstractPowerManagerTestBase {
 
     // required setup routine, must set p to an appropriate value.
     @Before
@@ -27,7 +28,7 @@ public abstract class AbstractPowerManagerTest {
 
     protected abstract void hearOff();
 
-    protected abstract void sendOnReply();	  // get a reply to On command from layou
+    protected abstract void sendOnReply();	  // get a reply to On command from layout
 
     protected abstract void sendOffReply();   // get a reply to Off command from layout
 

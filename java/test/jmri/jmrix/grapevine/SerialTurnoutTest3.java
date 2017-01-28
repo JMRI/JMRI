@@ -1,6 +1,6 @@
 package jmri.jmrix.grapevine;
 
-import jmri.implementation.AbstractTurnoutTest;
+import jmri.implementation.AbstractTurnoutTestBase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,7 +12,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen
   */
-public class SerialTurnoutTest3 extends AbstractTurnoutTest {
+public class SerialTurnoutTest3 extends AbstractTurnoutTestBase {
 
     private SerialTrafficControlScaffold tcis = null;
 
