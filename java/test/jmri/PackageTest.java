@@ -40,7 +40,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.PathTest.suite());
         suite.addTest(jmri.PathLengthTest.suite());
         suite.addTest(jmri.PushbuttonPacketTest.suite());
-        suite.addTest(new JUnit4TestAdapter(jmri.SignalGroup.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.SignalGroupTest.class));
         suite.addTest(jmri.TurnoutTest.suite());
         suite.addTest(jmri.TurnoutOperationTest.suite());
         suite.addTest(jmri.ApplicationTest.suite());
