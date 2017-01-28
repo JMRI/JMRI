@@ -107,6 +107,47 @@
                             <skipTests>true</skipTests>
                         </configuration>
                     </plugin>
+                    <plugin>
+                        <groupId>org.eluder.coveralls</groupId>
+                        <artifactId>coveralls-maven-plugin</artifactId>
+                        <version>4.3.0</version>
+                        <configuration>
+                           <sourceDirectories>
+                                  <!-- Additional source directories -->
+                                  <File>java/tmp</File>
+                                  <File>target/generated-sources/javacc</File>
+                                  <File>target/generated-sources/jjtree</File>
+                           </sourceDirectories>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>0.7.8</version>
+                        <configuration>
+                           <dataFile>jacoco.exec</dataFile>
+                           <excludes>
+                               <File>**/*Test*.class</File>
+                               <!-- Exclude testing infrastructure classes -->
+                               <File>**/*Scaffold.class"</File>
+                               <File>**/*JUnit*.class</File>
+                               <File>**/*Demo.class</File>
+                               <File>**/*Mock*.class</File>
+                               <File>jmri/jmrit/symbolicprog/tabbedframe/CheckProgrammerNames.class</File>
+                               <File>jmri/jmrix/openlcb/SampleFactory.class</File>
+                               <File>jmri/util/swing/SamplePane.class</File>
+                               <File>apps/tests/Log4JFixture.class" </File>
+                           </excludes>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>prepare-agent</id>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
