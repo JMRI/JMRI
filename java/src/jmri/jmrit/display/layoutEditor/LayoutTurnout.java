@@ -229,8 +229,6 @@ public class LayoutTurnout extends LayoutTrack {
 
     private boolean useBlockSpeed = false;
 
-    protected Color defaultTrackColor = Color.black;
-
     protected LayoutTurnout() {
     }
 
