@@ -235,6 +235,21 @@
           and/or highVersionID attributes, which apply to just that
           model. If one doesn't appear, the value from the family
           element (or its default) will be used.
+
+          <p>It is important to note that
+          <em>the 'family'+'model' combination must be unique</em>.
+          This is the <em>only</em> information that can be used to match
+          a decoder definition to an existing roster entry.
+          </p>
+          <ul>
+              <li>There can be multiple instances of model 'x'
+              but they must reside in different families.</li>
+              <li>There can be multiple definitions of family 'y'
+              (in different decoder files) but model 'x'
+              can only appear within one of these.</li>
+              <li>The 'family'+'model' uniqueness restriction
+              applies irrespective of manufacturer.</li>
+          </ul>
         </dd>
 
         <dt class="left">File contents: Programming Modes</dt>
@@ -450,7 +465,7 @@
 
       <p>For more advanced information on the content of the files,
       please see the <a href="CreateDecoderAdvanced.shtml">Advanced
-      Decoder Definitions</a> page. 
+      Decoder Definitions</a> page.
       <!--#include virtual="/Footer" --></p>
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

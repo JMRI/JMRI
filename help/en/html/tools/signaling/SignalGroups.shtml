@@ -108,8 +108,8 @@
       to 40 km/h.</p><a name="table" id="table"></a>
 
       <h3>The Signal Group Table</h3><a href=
-      "../../../package/jmri/jmrit/beantable/SignalGroupsTable.png"><img src="../../../package/jmri/jmrit/beantable/SignalGroupsTable.png"
-      align="right" width="386" height="165" hspace="0" vspace="0"
+      "../../../package/jmri/jmrit/beantable/SignalGroupTable.png"><img src="../../../package/jmri/jmrit/beantable/SignalGroupTable.png"
+      align="right" width="386" height="168" hspace="0" vspace="0"
       alt="Signal Group Table figure"></a>
 
       <p>JMRI Signal Groups can be created and edited using the
