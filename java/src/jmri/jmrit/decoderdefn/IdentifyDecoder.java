@@ -15,12 +15,22 @@ import org.slf4j.LoggerFactory;
  * Contains manufacturer-specific code to generate a 3rd "productID" identifier,
  * in addition to the manufacturer ID and model ID:<ul>
  * <li>QSI: (mfgID == 113) write {@literal 254=>CV49}, write {@literal 4=>CV50},
- * then CV56 is high byte, write {@literal 5=>CV50}, then CV56 is low byte of ID
- * <li>Harman: (mfgID = 98) CV112 is high byte, CV113 is low byte of ID
- * <li>Hornby: (mfgID == 48) CV159 is ID
- * <li>TCS: (mfgID == 153) CV249 is ID
- * <li>Zimo: (mfgID == 145) CV250 is ID
+ * then CV56 is high byte, write {@literal 5=>CV50}, then CV56 is low byte of ID</li>
+ * <li>Harman: (mfgID = 98) CV112 is high byte, CV113 is low byte of ID</li>
+ * <li>Hornby: (mfgID == 48) CV159 is ID</li>
+ * <li>TCS: (mfgID == 153) CV249 is ID</li>
+ * <li>Zimo: (mfgID == 145) CV250 is ID</li>
+ * <li>SoundTraxx: (mfgID == 98, modelID == 70 or 71) CV253 is high byte, CV256 is low byte of ID</li>
+ * <li>ESU: (mfgID == 151, modelID == 255) use RailCom&reg; Product ID CVs;
+ * write {@literal 0=>CV31}, write {@literal 255=>CV32},
+ * then CVs 261 (lowest) to 264 (highest) are a four byte ID</li>
  * </ul>
+ *
+ * TODO:
+ * <br>The RailCom&reg; Product ID is a 32 bit unsigned value.
+ * {@code productID} is currently {@code int} with -1 signifying a null value.
+ * Potential for value conflict exists but
+ * changing would involve significant code changes elsewhere.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2010
  * @author Howard G. Penny Copyright (C) 2005
@@ -56,7 +66,7 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
 
     public boolean test3(int value) {
         modelID = value;
-        if (mfgID == 113) {  // QSI 
+        if (mfgID == 113) {  // QSI
             statusUpdate("Set PI for Read Product ID High Byte");
             writeCV(49, 254);
             return false;

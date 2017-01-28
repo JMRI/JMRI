@@ -17,7 +17,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen Copyright 2008
  */
-abstract public class AbstractAlgorithmTest {
+abstract public class AbstractAlgorithmTestBase {
 
     abstract Calculator getAlgorithm(Point3d[] pts, double vs);
 
