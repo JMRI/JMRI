@@ -37,11 +37,12 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
      */
     @Override
     public List<ProgrammingMode> getSupportedModes() {
-        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.PAGEMODE);
-        ret.add(DefaultProgrammerManager.REGISTERMODE);
-        return ret;
+        List<ProgrammingMode> retval = new ArrayList<ProgrammingMode>();
+        retval.add(AUTOMATICMODE);
+        return retval;
     }
+
+    static final ProgrammingMode AUTOMATICMODE = new ProgrammingMode("Automatic", Bundle.getMessage("MrcAutomaticMode"));
 
     @Override
     public boolean getCanRead() {
