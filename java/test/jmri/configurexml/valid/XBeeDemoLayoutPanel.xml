@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>3</minor>
+    <test>3</test>
+    <modifier>.3ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.ieee802154.xbee.configurexml.XBeeSensorManagerXml">
+    <sensor systemName="ZS00 02 :0" inverted="true">
+      <systemName>ZS00 02 :0</systemName>
+      <useGlobalDebounceTimer>yes</useGlobalDebounceTimer>
+    </sensor>
+    <sensor systemName="ZS00 02 :1" inverted="true">
+      <systemName>ZS00 02 :1</systemName>
+      <useGlobalDebounceTimer>yes</useGlobalDebounceTimer>
+    </sensor>
+    <sensor systemName="ZS00 02 :2" inverted="true">
+      <systemName>ZS00 02 :2</systemName>
+    </sensor>
+    <sensor systemName="ZS00 02 :3" inverted="true">
+      <systemName>ZS00 02 :3</systemName>
+    </sensor>
+    <sensor systemName="ZS00 02 :4" inverted="true">
+      <systemName>ZS00 02 :4</systemName>
+    </sensor>
+    <sensor systemName="ZS00 02 :6" inverted="true">
+      <systemName>ZS00 02 :6</systemName>
+    </sensor>
+    <sensor systemName="ZSSPROG:0" inverted="true">
+      <systemName>ZSSPROG:0</systemName>
+    </sensor>
+    <sensor systemName="ZSSPROG:1" inverted="false">
+      <systemName>ZSSPROG:1</systemName>
+    </sensor>
+    <sensor systemName="ZSSPROG:2" inverted="true">
+      <systemName>ZSSPROG:2</systemName>
+    </sensor>
+    <sensor systemName="ZSYARD INPUT:0" inverted="false">
+      <systemName>ZSYARD INPUT:0</systemName>
+    </sensor>
+    <sensor systemName="ZSYARD INPUT:1" inverted="false">
+      <systemName>ZSYARD INPUT:1</systemName>
+    </sensor>
+    <sensor systemName="ZSYARD INPUT:2" inverted="false">
+      <systemName>ZSYARD INPUT:2</systemName>
+      <useGlobalDebounceTimer>yes</useGlobalDebounceTimer>
+    </sensor>
+    <sensor systemName="ZSYARD INPUT:3" inverted="false">
+      <systemName>ZSYARD INPUT:3</systemName>
+      <useGlobalDebounceTimer>yes</useGlobalDebounceTimer>
+    </sensor>
+    <sensor systemName="ZSYARD INPUT:4" inverted="false">
+      <systemName>ZSYARD INPUT:4</systemName>
+    </sensor>
+    <sensor systemName="ZSYARD INPUT:6" inverted="false">
+      <systemName>ZSYARD INPUT:6</systemName>
+    </sensor>
+  </sensors>
+  <sensors class="jmri.jmrix.rfid.generic.standalone.configurexml.StandaloneSensorManagerXml">
+    <sensor systemName="FS1" inverted="false">
+      <systemName>FS1</systemName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.sprog.configurexml.SprogTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout systemName="ST1" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>ST1</systemName>
+    </turnout>
+    <turnout systemName="ST2" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>ST2</systemName>
+    </turnout>
+  </turnouts>
+  <reporters class="jmri.jmrix.rfid.generic.standalone.configurexml.StandaloneReporterManagerXml">
+    <reporter systemName="FR1">
+      <systemName>FR1</systemName>
+    </reporter>
+  </reporters>
+  <reporters class="jmri.jmrix.rfid.generic.standalone.configurexml.StandaloneReporterManagerXml">
+    <reporter systemName="FR1">
+      <systemName>FR1</systemName>
+    </reporter>
+  </reporters>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <blocks class="jmri.configurexml.BlockManagerXml">
+    <defaultspeed>Normal</defaultspeed>
+    <block systemName="IB1">
+      <systemName>IB1</systemName>
+      <userName>A</userName>
+    </block>
+    <block systemName="IB2">
+      <systemName>IB2</systemName>
+      <userName>B</userName>
+    </block>
+    <block systemName="IB3">
+      <systemName>IB3</systemName>
+      <userName>C</userName>
+    </block>
+    <block systemName="IB4">
+      <systemName>IB4</systemName>
+      <userName>D</userName>
+    </block>
+    <block systemName="IB5">
+      <systemName>IB5</systemName>
+      <userName>E</userName>
+    </block>
+    <block systemName="IB6">
+      <systemName>IB6</systemName>
+      <userName>F</userName>
+    </block>
+    <block systemName="IB7">
+      <systemName>IB7</systemName>
+      <userName>G</userName>
+    </block>
+    <block systemName="IB8">
+      <systemName>IB8</systemName>
+      <userName>H</userName>
+    </block>
+    <block systemName="IB1" length="0.0" curve="0" userName="A">
+      <systemName>IB1</systemName>
+      <userName>A</userName>
+      <comment />
+      <permissive>no</permissive>
+      <occupancysensor>ZSSPROG:1</occupancysensor>
+      <path todir="64" fromdir="128" block="IB2" />
+    </block>
+    <block systemName="IB2" length="0.0" curve="0" userName="B">
+      <systemName>IB2</systemName>
+      <userName>B</userName>
+      <comment />
+      <permissive>no</permissive>
+      <occupancysensor>ZSSPROG:2</occupancysensor>
+      <reporter systemName="FR1" useCurrent="yes" />
+      <path todir="128" fromdir="64" block="IB1" />
+    </block>
+    <block systemName="IB3" length="0.0" curve="0" userName="C">
+      <systemName>IB3</systemName>
+      <userName>C</userName>
+      <comment />
+      <permissive>no</permissive>
+      <occupancysensor>ZSYARD INPUT:0</occupancysensor>
+      <path todir="64" fromdir="128" block="IB4" />
+    </block>
+    <block systemName="IB4" length="0.0" curve="0" userName="D">
+      <systemName>IB4</systemName>
+      <userName>D</userName>
+      <comment />
+      <permissive>no</permissive>
+      <occupancysensor>ZSYARD INPUT:1</occupancysensor>
+      <path todir="128" fromdir="64" block="IB3" />
+    </block>
+    <block systemName="IB5" length="0.0" curve="0" userName="E">
+      <systemName>IB5</systemName>
+      <userName>E</userName>
+      <comment />
+      <permissive>no</permissive>
+      <occupancysensor>ZSYARD INPUT:2</occupancysensor>
+      <path todir="64" fromdir="128" block="IB6" />
+    </block>
+    <block systemName="IB6" length="0.0" curve="0" userName="F">
+      <systemName>IB6</systemName>
+      <userName>F</userName>
+      <comment />
+      <permissive>no</permissive>
+      <occupancysensor>ZSYARD INPUT:3</occupancysensor>
+      <path todir="128" fromdir="64" block="IB5" />
+    </block>
+    <block systemName="IB7" length="0.0" curve="0" userName="G">
+      <systemName>IB7</systemName>
+      <userName>G</userName>
+      <comment />
+      <permissive>no</permissive>
+      <occupancysensor>ZSYARD INPUT:4</occupancysensor>
+      <path todir="64" fromdir="128" block="IB8" />
+    </block>
+    <block systemName="IB8" length="0.0" curve="0" userName="H">
+      <systemName>IB8</systemName>
+      <userName>H</userName>
+      <comment />
+      <permissive>no</permissive>
+      <occupancysensor>ZSYARD INPUT:6</occupancysensor>
+      <path todir="128" fromdir="64" block="IB7" />
+    </block>
+  </blocks>
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+  <layoutblocks class="jmri.jmrit.display.configurexml.LayoutBlockManagerXml">
+    <layoutblock systemName="ILB1" userName="A" occupancysensor="ZSSPROG:1" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
+      <systemName>ILB1</systemName>
+      <userName>A</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB2" userName="B" occupancysensor="ZSSPROG:2" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
+      <systemName>ILB2</systemName>
+      <userName>B</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB3" userName="C" occupancysensor="ZSYARD INPUT:0" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
+      <systemName>ILB3</systemName>
+      <userName>C</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB4" userName="D" occupancysensor="ZSYARD INPUT:1" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
+      <systemName>ILB4</systemName>
+      <userName>D</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB5" userName="E" occupancysensor="ZSYARD INPUT:2" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
+      <systemName>ILB5</systemName>
+      <userName>E</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB6" userName="F" occupancysensor="ZSYARD INPUT:3" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
+      <systemName>ILB6</systemName>
+      <userName>F</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB7" userName="G" occupancysensor="ZSYARD INPUT:4" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
+      <systemName>ILB7</systemName>
+      <userName>G</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB8" userName="H" occupancysensor="ZSYARD INPUT:6" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
+      <systemName>ILB8</systemName>
+      <userName>H</userName>
+    </layoutblock>
+  </layoutblocks>
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="XBee Switching Demo" x="65" y="24" height="930" width="1660" windowheight="744" windowwidth="1301" panelheight="930" panelwidth="1660" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="yes" drawgrid="yes" snaponadd="no" snaponmove="yes" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="black" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="2" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" gridSize="10" openDispatcher="no" useDirectTurnoutControl="no">
+    <reportericon reporter="FR1" x="100" y="80" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.ReporterIconXml">
+      <tooltip>FR1</tooltip>
+    </reportericon>
+    <layoutturnout ident="TO3" turnoutname="ST1" type="2" connectaname="T9" connectbname="T7" connectcname="T2" continuing="2" disabled="no" disableWhenOccupied="no" xcen="210.0" ycen="70.0" xa="170.0" ya="70.0" xb="250.0" yb="70.0" xc="240.0" yc="60.0" xd="170.0" yd="70.0" ver="1" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO4" turnoutname="ST2" type="1" connectaname="T2" connectbname="T3" connectcname="T5" continuing="2" disabled="no" disableWhenOccupied="no" xcen="290.0" ycen="40.0" xa="260.0" ya="50.0" xb="320.0" yb="30.0" xc="343.0" yc="39.0" xd="260.0" yd="50.0" ver="1" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <tracksegment ident="T2" connect1name="TO4" type1="2" connect2name="TO3" type2="4" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T3" blockname="G" connect1name="TO4" type1="3" connect2name="A5" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T4" blockname="H" connect1name="A5" type1="1" connect2name="EB1" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T5" blockname="E" connect1name="TO4" type1="4" connect2name="A4" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T6" blockname="F" connect1name="A4" type1="1" connect2name="EB2" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T7" blockname="C" connect1name="TO3" type1="3" connect2name="A3" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T8" blockname="D" connect1name="A3" type1="1" connect2name="EB3" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T9" blockname="B" connect1name="A6" type1="1" connect2name="TO3" type2="2" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T10" blockname="A" connect1name="EB4" type1="1" connect2name="A6" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <positionablepoint ident="A3" type="1" x="400.0" y="70.0" connect1name="T7" connect2name="T8" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A4" type="1" x="360.0" y="40.0" connect1name="T5" connect2name="T6" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A5" type="1" x="400.0" y="20.0" connect1name="T3" connect2name="T4" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB1" type="2" x="500.0" y="20.0" connect1name="T4" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB2" type="2" x="500.0" y="40.0" connect1name="T6" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB3" type="2" x="500.0" y="70.0" connect1name="T8" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB4" type="2" x="20.0" y="70.0" connect1name="T10" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A6" type="1" x="100.0" y="70.0" connect1name="T9" connect2name="T10" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+  </LayoutEditor>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Wed Feb 03 15:20:44 EST 2016</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Wed Feb 03 15:20:44 EST 2016</date>
+      <filename>/home/paul/.jmri/Sensys2014/UserPrefsProfileConfig.xml</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Wed Feb 03 15:21:18 EST 2016</date>
+      <filename>/home/paul/.jmri/Sensys2014/XBeeDemoLayoutPanel.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Wed Feb 03 15:08:53 EST 2016</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Wed Feb 03 15:08:53 EST 2016</date>
+          <filename>/home/paul/.jmri/Sensys2014/UserPrefsProfileConfig.xml</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Wed Feb 03 15:10:13 EST 2016</date>
+          <filename>/home/paul/.jmri/Sensys2014/XBeeDemoLayoutPanel.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Sat Nov 01 08:43:37 GMT 2014</date>
+              <filename>JMRI program</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Sat Nov 01 08:43:39 GMT 2014</date>
+              <filename>/home/jmri/.jmri/DemoSensys/UserPrefsProfileConfig.xml</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Sat Nov 01 08:48:58 GMT 2014</date>
+              <filename>/home/jmri/.jmri/DemoSensys/ProfileConfig.xml</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Sat Nov 01 08:52:59 GMT 2014</date>
+              <filename>/home/jmri/.jmri/DemoSensys/XBeeDemoLayoutPanel.xml</filename>
+              <filehistory>
+                <operation>
+                  <type>app</type>
+                  <date>Sat Nov 01 06:18:08 GMT 2014</date>
+                  <filename>JMRI program</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Sat Nov 01 06:18:10 GMT 2014</date>
+                  <filename>/home/jmri/.jmri/DemoSensys/UserPrefsProfileConfig.xml</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Sat Nov 01 06:22:59 GMT 2014</date>
+                  <filename>/home/jmri/.jmri/DemoSensys/ProfileConfig.xml</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Sat Nov 01 06:24:55 GMT 2014</date>
+                  <filename>/home/jmri/.jmri/DemoLayoutPanel.xml</filename>
+                  <filehistory>
+                    <operation>
+                      <type>app</type>
+                      <date>Tue Oct 28 12:08:31 CDT 2014</date>
+                      <filename>JMRI program</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Tue Oct 28 12:08:31 CDT 2014</date>
+                      <filename>/Users/MSU/Library/Preferences/JMRI/PanelPro/UserPrefsProfileConfig.xml</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Tue Oct 28 12:08:36 CDT 2014</date>
+                      <filename>/Users/MSU/Library/Preferences/JMRI/PanelPro/ProfileConfig.xml</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Tue Oct 28 12:08:39 CDT 2014</date>
+                      <filename>/Users/MSU/Library/Preferences/JMRI/DemoLayoutPanel.xml</filename>
+                      <filehistory>
+                        <operation>
+                          <type>app</type>
+                          <date>Tue Sep 23 14:24:17 CDT 2014</date>
+                          <filename>JMRI program</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Tue Sep 23 14:24:17 CDT 2014</date>
+                          <filename>/Users/MSU/Library/Preferences/JMRI/PanelPro/UserPrefsProfileConfig.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Tue Sep 23 14:24:21 CDT 2014</date>
+                          <filename>/Users/MSU/Library/Preferences/JMRI/PanelPro/ProfileConfig.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Tue Sep 23 14:24:51 CDT 2014</date>
+                          <filename>/Users/MSU/Library/Preferences/JMRI/DemoLayoutPanel.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Store</type>
+                          <date>Tue Sep 23 14:25:36 CDT 2014</date>
+                          <filename />
+                        </operation>
+                      </filehistory>
+                    </operation>
+                    <operation>
+                      <type>Store</type>
+                      <date>Tue Oct 28 12:09:35 CDT 2014</date>
+                      <filename />
+                    </operation>
+                  </filehistory>
+                </operation>
+                <operation>
+                  <type>Store</type>
+                  <date>Sat Nov 01 06:47:27 GMT 2014</date>
+                  <filename />
+                </operation>
+              </filehistory>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Sat Nov 01 09:11:17 GMT 2014</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Wed Feb 03 15:20:19 EST 2016</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Wed Feb 03 15:24:42 EST 2016</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.3.3ish-201602032020-paul-Rc567112 on Wed Feb 03 15:24:42 EST 2016 $Id$-->
+</layout-config>
