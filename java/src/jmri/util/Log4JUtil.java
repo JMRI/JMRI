@@ -4,6 +4,7 @@ import apps.SystemConsole;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Enumeration;
 import java.util.Properties;
 import jmri.util.exceptionhandler.UncaughtExceptionHandler;
@@ -74,8 +75,8 @@ public class Log4JUtil {
      * <p>
      * Use the logging control file specified in the <i>jmri.log</i> property
      * or, if none, the default.lcf file. If the file is absolute and cannot be
-     * found, look for the file first in the settings directory and
-     * then in the installation directory.
+     * found, look for the file first in the settings directory and then in the
+     * installation directory.
      *
      * @param logFile the logging control file
      * @see jmri.util.FileUtil#getPreferencesPath()
@@ -170,7 +171,7 @@ public class Log4JUtil {
         // we don't need to explictly test for that here, just make sure the
         // directory is created if need be.
         if (!logDir.exists()) {
-            FileUtil.createDirectory(logDir);
+            Files.createDirectories(logDir.toPath());
         }
         PropertyConfigurator.configure(p);
     }
