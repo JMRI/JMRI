@@ -19,7 +19,6 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -59,6 +58,7 @@ public class PreviewDialog extends JDialog {
 
     int _cnt;           // number of files displayed when setIcons() method runs
     int _startNum;      // total number of files displayed from a directory
+    boolean needsMore = true;
 
     File _currentDir;   // current FS directory
     String[] _filter;   // file extensions of types to display
@@ -66,7 +66,7 @@ public class PreviewDialog extends JDialog {
     JButton _moreButton;
     boolean _mode;
 
-    public PreviewDialog(Frame frame, String title, File dir, String[] filter, boolean modality) {
+    protected PreviewDialog(Frame frame, String title, File dir, String[] filter, boolean modality) {
         super(frame, Bundle.getMessage(title), modality);
         _currentDir = dir;
         _filter = new String[filter.length];
@@ -76,12 +76,8 @@ public class PreviewDialog extends JDialog {
         _mode = modality;
     }
 
-    public void init(ActionListener addAction, ActionListener moreAction,
-            ActionListener lookAction, ActionListener cancelAction,
-            int startNum, JFrame waitDialog) {
-        waitDialog.setVisible(true);
-        waitDialog.invalidate();
-        waitDialog.repaint();
+    protected void init(ActionListener addAction, ActionListener moreAction,
+            ActionListener lookAction, ActionListener cancelAction, int startNum) {
         if (log.isDebugEnabled()) {
             log.debug("Enter _previewDialog.init dir= " + _currentDir.getPath());
         }
@@ -105,39 +101,42 @@ public class PreviewDialog extends JDialog {
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         p.add(Box.createHorizontalStrut(5));
 
-        if (moreAction != null) {
-            p.add(Box.createHorizontalStrut(5));
-            _moreButton = new JButton(Bundle.getMessage("ButtonDisplayMore"));
-            _moreButton.addActionListener(moreAction);
-            p.add(_moreButton);
-        }
-
         JPanel previewPanel = setupPanel();     // provide panel for images, add to bottom of window
         _startNum = startNum;
         try {
-            _moreButton.setVisible(setIcons(startNum));
+            needsMore = setIcons(startNum);
         } catch (OutOfMemoryError oome) {
             log.error("OutOfMemoryError AvailableMemory= " + availableMemory() + ", " + _cnt + " files read.");
             resetPanel();
         }
 
+        if (needsMore) {
+            if (moreAction != null) {
+                p.add(Box.createHorizontalStrut(5));
+                _moreButton = new JButton(Bundle.getMessage("ButtonDisplayMore"));
+                _moreButton.addActionListener(moreAction);
+                _moreButton.setVisible(needsMore);
+                p.add(_moreButton);
+            } else {
+                log.error("More ActionListener missing");
+            }            
+            msg.setText(Bundle.getMessage("moreMsg"));
+        }
+
+        boolean hasButtons = needsMore;
         if (addAction != null) {
-            if (_moreButton.isVisible()) {
+ /*           if (needsMore) {
                 JOptionPane.showMessageDialog(this,
                         java.text.MessageFormat.format(Bundle.getMessage("tooManyIcons"),
                                 new Object[]{_currentDir.getName()}),
                         Bundle.getMessage("WarningTitle"), JOptionPane.INFORMATION_MESSAGE);
-                msg.setText(Bundle.getMessage("moreMsg"));
-            } else {
+            } else */ {
                 p.add(Box.createHorizontalStrut(5));
                 _addButton = new JButton(Bundle.getMessage("ButtonAddToCatalog"));
                 _addButton.addActionListener(addAction);
                 p.add(_addButton);
                 msg.setText(Bundle.getMessage("addDirMsg"));
-            }
-        } else if (lookAction != null) {
-            if (_moreButton.isVisible()) {
-                msg.setText(Bundle.getMessage("moreMsg"));
+                hasButtons = true;
             }
         } else {
             msg.setText(Bundle.getMessage("dragMsg"));
@@ -148,18 +147,23 @@ public class PreviewDialog extends JDialog {
             JButton lookButton = new JButton(Bundle.getMessage("ButtonKeepLooking"));
             lookButton.addActionListener(lookAction);
             p.add(lookButton);
+            hasButtons = true;
         }
-        p.add(Box.createHorizontalStrut(5));
-        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-        cancelButton.addActionListener(cancelAction);
-        p.add(cancelButton);
-        p.add(Box.createHorizontalStrut(5));
-        p.setPreferredSize(new Dimension(400, _moreButton.getPreferredSize().height));
-
+        
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(p);
-        panel.add(new JSeparator());
+
+        if (hasButtons) {
+            p.add(Box.createHorizontalStrut(5));
+            JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
+            cancelButton.addActionListener(cancelAction);
+            p.add(cancelButton);
+            p.add(Box.createHorizontalStrut(5));
+            p.setPreferredSize(new Dimension(400, cancelButton.getPreferredSize().height));            
+            panel.add(p);
+            panel.add(new JSeparator());
+        }
+
         panel.add(previewPanel);
         getContentPane().add(panel);
         setPreferredSize(new Dimension(450,
@@ -167,7 +171,6 @@ public class PreviewDialog extends JDialog {
         //setMinimumSize(new Dimension(450,300));
         setLocationRelativeTo(null);
         pack();
-        waitDialog.setVisible(false);
         setVisible(true);
     }
 
@@ -291,8 +294,6 @@ public class PreviewDialog extends JDialog {
         // This handler will catch memory exceptions from that thread
         _noMemory = false;
         Thread.setDefaultUncaughtExceptionHandler(new MemoryExceptionHandler());
-        int numCol = 6;
-        int numRow = 5;
         long memoryNeeded = 0;
         // allow room for ImageFetcher threads
         long memoryAvailable = availableMemory() - 10000000;
@@ -312,11 +313,20 @@ public class PreviewDialog extends JDialog {
         _cnt = 0;
         int cnt = 0;
         File[] files = _currentDir.listFiles();
+        int numCol = 1;
+        while (numCol * numCol < files.length) {
+            numCol++;
+        }
+        if (numCol > 1) {
+            numCol--;
+        }
+        int numRow = files.length / numCol;
+        
         for (int i = 0; i < files.length; i++) {
             String ext = jmri.util.FileChooserFilter.getFileExtension(files[i]);
             for (int k = 0; k < _filter.length; k++) {
                 if (ext != null && ext.equalsIgnoreCase(_filter[k])) {
-                    if (cnt < startNum || _noMemory) {
+                    if (cnt < startNum) {
                         cnt++;
                         continue;
                     }
@@ -331,7 +341,7 @@ public class PreviewDialog extends JDialog {
                         memoryNeeded += 3 * icon.getIconWidth() * icon.getIconHeight();
                         if (memoryAvailable < memoryNeeded) {
                             _noMemory = true;
-                            continue;
+                            break;
                         }
                         double scale = icon.reduceTo(CatalogPanel.ICON_WIDTH,
                                 CatalogPanel.ICON_HEIGHT, CatalogPanel.ICON_SCALE);
@@ -358,16 +368,11 @@ public class PreviewDialog extends JDialog {
                         }
                         c.insets = new Insets(5, 5, 0, 0);
                         JLabel image;
-                        if (_mode) {
-                            image = new JLabel();
-                        } else {
-                            //modeless is for ImageEditor dragging
-                            try {
-                                image = new DragJLabel(new DataFlavor(ImageIndexEditor.IconDataFlavorMime));
-                            } catch (java.lang.ClassNotFoundException cnfe) {
-                                cnfe.printStackTrace();
-                                image = new JLabel();
-                            }
+                        try {
+                            image = new DragJLabel(new DataFlavor(ImageIndexEditor.IconDataFlavorMime));
+                        } catch (java.lang.ClassNotFoundException cnfe) {
+                            cnfe.printStackTrace();
+                            image = new JLabel(cnfe.getMessage());
                         }
                         image.setOpaque(true);
                         image.setName(name);
@@ -388,9 +393,9 @@ public class PreviewDialog extends JDialog {
                         if (_noMemory) {
                             continue;
                         }
-                        if (log.isDebugEnabled()) {
+/*                        if (log.isDebugEnabled()) {
                             log.debug(name + " inserted at (" + c.gridx + ", " + c.gridy + ")");
-                        }
+                        }*/
                         _preview.add(p);
                         _cnt++;
                         cnt++;
@@ -398,12 +403,12 @@ public class PreviewDialog extends JDialog {
                             _noMemory = true;
                         }
                     } catch (OutOfMemoryError oome) {
-                        JOptionPane.showMessageDialog(this,
-                                java.text.MessageFormat.format(Bundle.getMessage("OutOfMemory"),
-                                        new Object[]{Integer.valueOf(_cnt)}),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.INFORMATION_MESSAGE);
                         _noMemory = true;
+                        log.error("OutOfMemoryError AvailableMemory= " + availableMemory() + ", " + _cnt + " files read.");
                     }
+                }
+                if (_noMemory) {
+                    break;
                 }
             }
         }
@@ -423,10 +428,13 @@ public class PreviewDialog extends JDialog {
         CatalogPanel.packParentFrame(this);
 
         if (_noMemory) {
-            JOptionPane.showMessageDialog(this,
-                    java.text.MessageFormat.format(Bundle.getMessage("OutOfMemory"),
-                            new Object[]{Integer.valueOf(_cnt)}),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.INFORMATION_MESSAGE);
+            int choice = JOptionPane.showOptionDialog(null,
+                    Bundle.getMessage("OutOfMemory", cnt), Bundle.getMessage("ErrorTitle"), 
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                    new String[]{Bundle.getMessage("Quit"), Bundle.getMessage("ButtonKeepLooking")}, 1);
+            if (choice==0) {
+                return _noMemory;
+            }
         }
         Thread.setDefaultUncaughtExceptionHandler(exceptionHandler);
         return _noMemory;
@@ -446,6 +454,7 @@ public class PreviewDialog extends JDialog {
             for (int i = 0; i < memoryTest.size(); i++) {
                 memoryTest.remove(i);
             }
+            log.debug("OutOfMemoryError for availableMemory test");
             //if (log.isDebugEnabled()) log.debug("Max Memory available= "+total+" bytes");
         }
         return total;

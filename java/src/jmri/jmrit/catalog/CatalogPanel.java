@@ -77,7 +77,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CatalogPanel extends JPanel implements MouseListener {
 
-    public static final double ICON_SCALE = 0.15;
+    public static final double ICON_SCALE = 0.10;
     public static final int ICON_WIDTH = 100;
     public static final int ICON_HEIGHT = 100;
 
@@ -351,7 +351,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
         node.setUserObject(name);
         tree.nodeChanged(cNode);
         _model.nodeChanged(node);
-        updatePanel();
         ImageIndexEditor.indexChanged(true);
         updatePanel();
         return true;
@@ -538,24 +537,18 @@ public class CatalogPanel extends JPanel implements MouseListener {
             }
             c.insets = new Insets(5, 5, 0, 0);
 
-//            JLabel image = null;
             JLabel nameLabel = null;
             if (_noDrag) {
-//                image = new JLabel();
                 nameLabel = new JLabel(leaf.getName());
             } else {
                 try {
-//                    image = new DragJLabel(new DataFlavor(ImageIndexEditor.IconDataFlavorMime));
                     nameLabel = new DragJLabel(new DataFlavor(ImageIndexEditor.IconDataFlavorMime));
                 } catch (java.lang.ClassNotFoundException cnfe) {
                     cnfe.printStackTrace();
+                    nameLabel = new JLabel(cnfe.getMessage());
                     continue;
                 }
             }
-//            image.setOpaque(true);
-//            image.setName(leaf.getName());
-//            image.setBackground(_currentBackground);
-//            image.setIcon(icon);
             nameLabel.setText(leaf.getName());
             nameLabel.setName(leaf.getName());
             nameLabel.setBackground(_currentBackground);
@@ -563,9 +556,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
 
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-//            JPanel iPanel = new JPanel();
-//            iPanel.add(image);
-//            p.add(iPanel);
             p.add(nameLabel);
             JLabel label = new JLabel(java.text.MessageFormat.format(Bundle.getMessage("scale"),
                     new Object[]{printDbl(scale, 2)}));
@@ -693,7 +683,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
     /**
      * Return the node the user has selected.
      */
-    public CatalogTreeNode getSelectedNode() {
+    protected CatalogTreeNode getSelectedNode() {
         if (!_dTree.isSelectionEmpty() && _dTree.getSelectionPath() != null) {
             // somebody has been selected
             if (log.isDebugEnabled()) {
@@ -706,13 +696,13 @@ public class CatalogPanel extends JPanel implements MouseListener {
         return null;
     }
 
-    void delete(NamedIcon icon) {
+    private void delete(NamedIcon icon) {
         CatalogTreeNode node = getSelectedNode();
         node.deleteLeaf(icon.getName(), icon.getURL());
         updatePanel();
     }
 
-    void rename(NamedIcon icon) {
+    private void rename(NamedIcon icon) {
         String name = JOptionPane.showInputDialog(getParentFrame(this),
                 Bundle.getMessage("newIconName"), icon.getName(),
                 JOptionPane.QUESTION_MESSAGE);
@@ -722,6 +712,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
             if (leaf != null) {
                 leaf.setName(name);
             }
+            invalidate();
             getParentFrame(this).invalidate();
             updatePanel();
         }

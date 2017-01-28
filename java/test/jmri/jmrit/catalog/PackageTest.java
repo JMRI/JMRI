@@ -29,6 +29,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.catalog");   // no tests in this class itself
         suite.addTest(CatalogTreeFSTest.suite());
         suite.addTest(CatalogTreeIndexTest.suite());
+        suite.addTest(ImageIndexEditorTest.suite());        
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.catalog.configurexml.PackageTest.class));
 

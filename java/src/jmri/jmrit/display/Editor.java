@@ -1,6 +1,5 @@
 package jmri.jmrit.display;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -2520,7 +2519,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 frame.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
-                        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
                         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
                         if (log.isDebugEnabled()) {
                             log.debug("windowClosing: HIDE {}", toString());
