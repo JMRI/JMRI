@@ -13,6 +13,7 @@ import javax.script.ScriptException;
 import jmri.script.JmriScriptEngineManager;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -84,7 +85,7 @@ public class FileLineEndingsTest {
      * @return a collection of files to validate
      */
     public static Collection<Object[]> getFiles(File directory, String[] patterns) {
-        Log4JFixture.initLogging(); // initialize logging when building parameter set
+        Log4JFixture.setUp(); // setup logging early so this method can log
         ArrayList<Object[]> files = new ArrayList<>();
         try {
             for (String pattern : patterns) {
@@ -140,6 +141,7 @@ public class FileLineEndingsTest {
         }
     }
 
+    @Before
     public void setUp() {
         Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
