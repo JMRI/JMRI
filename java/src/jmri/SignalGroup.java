@@ -84,7 +84,7 @@ public interface SignalGroup extends NamedBean {
 
     /**
      * Add a Signal Head to the Group.
-     * @param signalHead The Signal Head as a Named Bean
+     * @param sh The Signal Head as a Named Bean
      */
     public void addSignalHead(NamedBeanHandle<SignalHead> sh);
 
@@ -116,7 +116,7 @@ public interface SignalGroup extends NamedBean {
 
     /**
      * Delete a Signal Head by Name.
-     * @param signalHead The Signal Head to be deleted from the group.
+     * @param sh The Signal Head to be deleted from the group.
      */
     public void deleteSignalHead(SignalHead sh);
 
