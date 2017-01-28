@@ -19,7 +19,7 @@ import jmri.util.JUnitUtil;
  *
  * @author	Bob Jacobsen, Copyright 2002
  */
-public abstract class VariableValueTest extends TestCase {
+public abstract class AbstractVariableValueTestBase extends TestCase {
 
     ProgDebugger p = new ProgDebugger();
 
@@ -458,12 +458,12 @@ public abstract class VariableValueTest extends TestCase {
     }
 
     // from here down is testing infrastructure
-    public VariableValueTest(String s) {
+    public AbstractVariableValueTestBase(String s) {
         super(s);
     }
 
     // abstract class has no main entry point, test suite
-    private final static Logger log = LoggerFactory.getLogger(VariableValueTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractVariableValueTestBase.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

@@ -41,10 +41,8 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
 
         // record state.  COMMANDSENT is just waiting for a reply...
         useProgrammer(p);
-        _progRead = false;
         progState = COMMANDSENT;
         _val = val;
-        _cv = CV;
 
         // Add the packet to the queue rather than send it directly
         // [AC 23/01/16] Check that there is a free slot for the ops mode packet.
@@ -55,22 +53,17 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
             t.setRepeats(false);
             t.start();
         } else {
+            progState = NOTPROGRAMMING;
             notifyProgListenerEnd(_val, jmri.ProgListener.FailedTimeout);
         }
     }
 
     synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {
-        if (log.isDebugEnabled()) {
-            log.debug("read CV=" + CV);
-        }
         log.error("readCV not available in this protocol");
         throw new ProgrammerException();
     }
 
     synchronized public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        if (log.isDebugEnabled()) {
-            log.debug("confirm CV={}", CV);
-        }
         log.error("confirmCV not available in this protocol");
         throw new ProgrammerException();
     }

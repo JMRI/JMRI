@@ -28,8 +28,13 @@ public class JmriServer {
     protected ShutDownTask shutDownTask = null;
     private Thread listenThread = null;
     protected ArrayList<ClientListener> connectedClientThreads = new ArrayList<ClientListener>();
+
     private static JmriServer _instance = null;
 
+    /*
+     * @deprecated since 4.7.1 use @link{jmri.InstanceManager.getDefault()} instead.
+     */
+    @Deprecated
     public synchronized static JmriServer instance() {
         if (_instance == null) {
             _instance = new JmriServer();
