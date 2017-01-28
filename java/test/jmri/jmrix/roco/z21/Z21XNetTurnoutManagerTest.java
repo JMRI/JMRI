@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright 2004
  * @author	Paul Bender Copyright 2016
  */
-public class Z21XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class Z21XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     @Override
     public String getSystemName(int i) {

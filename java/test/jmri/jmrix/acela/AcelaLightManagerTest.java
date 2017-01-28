@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Coleman Copyright 2008
  */
-public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTest {
+public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
     private AcelaSystemConnectionMemo _memo = null;
     private AcelaTrafficControlScaffold tcis = null;

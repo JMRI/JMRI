@@ -12,7 +12,7 @@ import org.junit.Test;
  * </P>
  * @author Paul Bender Copyright (C) 2016
  */
-public class SprogPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTest{
+public class SprogPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
 
     private SprogTrafficControlScaffold stc = null;
 

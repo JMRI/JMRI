@@ -58,7 +58,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javax.annotation.CheckForNull;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.FactoryConfigurationError;
@@ -557,18 +556,15 @@ public final class XMLUtil extends Object {
         Validator v = schema.newValidator();
         final SAXException[] error = {null};
         v.setErrorHandler(new ErrorHandler() {
-            @CheckForNull public
-            void warning(SAXParseException x) throws SAXException {
+            public void warning(SAXParseException x) throws SAXException {
             }
 
-            @CheckForNull public
-            void error(SAXParseException x) throws SAXException {
+            public void error(SAXParseException x) throws SAXException {
                 // Just rethrowing it is bad because it will also print it to stderr.
                 error[0] = x;
             }
 
-            @CheckForNull public
-            void fatalError(SAXParseException x) throws SAXException {
+            public void fatalError(SAXParseException x) throws SAXException {
                 error[0] = x;
             }
         });
@@ -1163,20 +1159,17 @@ public final class XMLUtil extends Object {
             log.error(null, exception);
         }
 
-        @CheckForNull public
-        void fatalError(SAXParseException exception) throws SAXException {
+        public void fatalError(SAXParseException exception) throws SAXException {
             annotate(exception);
             throw exception;
         }
 
-        @CheckForNull public
-        void error(SAXParseException exception) throws SAXException {
+        public void error(SAXParseException exception) throws SAXException {
             annotate(exception);
             throw exception;
         }
 
-        @CheckForNull public
-        void warning(SAXParseException exception) throws SAXException {
+        public void warning(SAXParseException exception) throws SAXException {
             log.warn(null, exception);
         }
 

@@ -14,7 +14,7 @@ import org.junit.Test;
  *
  * @author      Paul Bender Copyright (C) 2016
  */
-public class XNetSerialPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTest {
+public class XNetSerialPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
     @Override
     @Before

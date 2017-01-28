@@ -12,7 +12,7 @@ import javax.vecmath.Point3d;
  *
  * @author	Bob Jacobsen Copyright 2007
   */
-public class Ash2_0AlgorithmTest extends AbstractAlgorithmTest {
+public class Ash2_0AlgorithmTest extends AbstractAlgorithmTestBase {
 
     @Override
     Calculator getAlgorithm(Point3d[] pts, double vs) {

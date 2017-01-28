@@ -8,7 +8,7 @@
 
   <title>JMRI: Adding Signal Groups</title>
   <meta name="author" content="Bob Jacobsen, Egbert Broerse">
-  <meta name="Date.Modified" content="20160412">
+  <meta name="Date.Modified" content="20170124">
   <!--#include virtual="/Style" -->
 </head>
 
@@ -21,7 +21,7 @@
 
       <p>After clicking on the "Add..." button below the <a href=
       "../beantable/SignalGroupTable.shtml">Signal Group Table</a>,
-      the following panel appears:</p><a href=
+      the following pane appears:</p><a href=
       "SignalGroupAdd.png"><img src="SignalGroupAdd.png" width=
       "310" height="269"></a>
 
@@ -45,25 +45,22 @@
         using the <em>Single Output</em> connection type (pictured
         to the right) show up in the list. <a href=
         "SingleSignalHead.png"><img src="SingleSignalHead.png"
-        height="186" width="129" align="right"></a></li>
+        height="185" width="127" align="right"></a></li>
       </ul>
 
       <p>In the Add/Edit Signal Group window, after entering a User
-      Name for the new Signal Group and the (existing) System Name
-      of the parent Signal Mast, check <b>Include</b>behind one or
-      more Mast Aspects.<br>
+      Name for the new Signal Group and selecting the parent Signal
+      Mast from the combo box, check <b>Include</b> behind one or
+      more Mast Aspects in the table directly below.<br>
       Next select one or more Signal Heads by checking their
       <b>Include</b> check boxes in the second list.<br>
-      Click the <b>Apply</b> button at the bottom of the pane.
-      Reopen the Signal Group pane bij clicking on its <b>Edit</b>
-      button in the Signal Group Table to have JMRI repopulate the
-      correct values into the lists and Appearances. If necessary,
-      check the correct boxes in both lists.</p>
+      Click the <b>Apply</b> button at the bottom of the pane or
+      continue further set up.</p>
 
       <h3>Define Signal Group Conditions</h3>
 
-      <p>Each Signal Head within the Signal Group has a set of
-      criteria that have to be met before that Signal Head is
+      <p>Each Signal Head that you include in Signal Group has a set
+      of criteria that have to be met before that Signal Head is
       illuminated. These criteria are made up from Turnout and/or
       Sensor states and can be changed by clicking on the
       corresponding <b>Edit</b> button in the last column of the
@@ -71,18 +68,19 @@
       the right will open, letting you define a specific Signal
       Head that is part of your Indicator.</p><a href=
       "SignalGroupAddEditHead.png"><img src=
-      "SignalGroupAddEditHead.png" height="233" width="417" align=
+      "SignalGroupAddEditHead.png" height="234" width="297" align=
       "right"></a>
 
       <p>Choose two <i>different</i> values in the pop up menus at
       the top of the pane to define the states of the Indicator
-      Signal Head.<br>
+      Signal Head. On meaning when conditions are met, and Off
+      as long as that is not the case.<br>
       To complete the definition of a Signal Group Indicator Head,
       mark the appropriate <b>Include</b> check boxes for both
       Turnouts and Sensors, and specify their state in the last
       column of each list.<br>
-      In between both lists there is a final logical OR/AND option
-      to choose from.</p>
+      In between both lists there is a final logic
+      <b>OR/AND</b> option to choose from.</p>
 
       <p>You will need to do some deep thinking to prepare for this
       last step, as this is the place where you control how your
@@ -90,8 +88,14 @@
       rule out some options, so build it up in small steps and test
       often.</p>
 
+      <p>Finish the Signal Group definition by clicking <b>Apply</b>
+      in the Signal Head set up pane and again click <b>Apply</b> to
+      close the Signal Group Add pane. Your new Group will appear in
+      the Table.</p>
+
       <p>Back to the <a href="SignalGroupTable.shtml">Signal Group
-      Table help page</a>. <!--#include virtual="/Footer" --></p>
+      Table help page</a>.
+        <!--#include virtual="/Footer" --></p>
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

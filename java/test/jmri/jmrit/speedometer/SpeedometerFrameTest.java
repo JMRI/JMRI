@@ -96,6 +96,7 @@ public class SpeedometerFrameTest {
         // pressing the buttons and all information is filled in.
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpeedometerFrame frame = new SpeedometerFrame();
+        frame.setVisible(true);
         SpeedometerScaffold operator = new SpeedometerScaffold();
         operator.setStartSensorValue("IS1");
         operator.setStopSensor1Value("IS2");
