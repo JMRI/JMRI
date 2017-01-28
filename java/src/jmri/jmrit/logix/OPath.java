@@ -4,6 +4,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import javax.swing.Timer;
 import jmri.BeanSetting;
 import jmri.Block;
@@ -19,8 +20,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  * An OPath inherits the List of BeanSettings for all the turnouts needed to
  * traverse the Block. It also has references to the Portals (block boundary
- * objects) through wich it enters or exits the block. One of these may be null,
- * if the OPath dead ends within the block.
+ * objects) through which it enters or exits the block. One of these may be
+ * null, if the OPath dead ends within the block.
  *
  * @author Pete Cressman Copyright (C) 2009
  */
@@ -72,11 +73,12 @@ public class OPath extends jmri.Path {
         }
     }
 
-    @SuppressFBWarnings(value = "UR_UNINIT_READ_CALLED_FROM_SUPER_CONSTRUCTOR")
+    @SuppressFBWarnings(value = "UR_UNINIT_READ_CALLED_FROM_SUPER_CONSTRUCTOR", justification="Adds logging not available in super implementation")
     // OPath ctor invokes Path ctor via super(), which calls this, before the internal
     // _block variable has been set so that Path.getPath() can work.  In this implementation,
     // getPath() only controls whether log.debug(...) is fired, but this might change if/when
     // super.setBlock(...) is changed, in which case this logic will fail.
+    @Override
     public void setBlock(Block block) {
         if (getBlock() == block) {
             return;
@@ -232,6 +234,7 @@ public class OPath extends jmri.Path {
             lock = l;
         }
 
+        @Override
         public void actionPerformed(java.awt.event.ActionEvent event) {
             fireTurnouts(list, set, lockState, lock);
             // Turn Timer OFF
@@ -247,6 +250,7 @@ public class OPath extends jmri.Path {
                 + (_toPortal == null ? "" : " to portal " + _toPortal.getName());
     }
 
+    @Override
     public String toString() {
         return "OPath \"" + _name + "\"on block " + (getBlock() != null ? getBlock().getDisplayName() : "null")
                 + (_fromPortal == null ? "" : " from portal " + _fromPortal.getName())
@@ -254,8 +258,9 @@ public class OPath extends jmri.Path {
     }
 
     /**
-     * override to disallow duplicate setting
+     * {@inheritDoc} Does not allow duplicate settings.
      */
+    @Override
     public void addSetting(BeanSetting t) {
         Iterator<BeanSetting> iter = getSettings().iterator();
         while (iter.hasNext()) {
@@ -268,10 +273,23 @@ public class OPath extends jmri.Path {
         super.addSetting(t);
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this._fromPortal);
+        hash = 67 * hash + Objects.hashCode(this._toPortal);
+        hash = 67 * hash + Objects.hashCode(this._name);
+        hash = 67 * hash + Objects.hashCode(this._timer);
+        hash = 67 * hash + (this._timerActive ? 1 : 0);
+        return hash;
+    }
+
     /**
-     * Override to indicate logical equality for use as paths in OBlocks.
+     * {@inheritDoc}
      *
+     * Override to indicate logical equality for use as paths in OBlocks.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;

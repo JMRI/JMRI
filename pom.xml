@@ -20,6 +20,7 @@
         <slf4j.version>1.7.21</slf4j.version>
         <ant.version>1.9.7</ant.version>
         <ant.jvm.args></ant.jvm.args>
+        <jmri.log4jconfigfilename>${basedir}/tests.lcf</jmri.log4jconfigfilename>
     </properties>
     <scm>
         <connection>scm:git:https://github.com/JMRI/JMRI.git</connection>

@@ -318,7 +318,7 @@ runs a specific test or test suite.<br>
      <p>
      If the PackageTest has not been converted to JUnit4 format yet, the following line needs to be added to the list of test classes in the "suite" method:</p>
      <p>
-     <code>suite.addTest(new junit.framework.JUnit4TestAdapter(FooTest.class));
+     <code>suite.addTest(new junit.framework.JUnit4TestAdapter(FooTest.class));</code>
      </p>
 
      <p>
@@ -363,7 +363,7 @@ runs a specific test or test suite.<br>
      <p>
      If the enclosing PackageTest has not been converted to JUnit4 format yet, the following line needs to be added to the list of test classes in the "suite" method:</p>
      <p>
-     <code>suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.foo.PackageTest.clas));
+     <code>suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.foo.PackageTest.clas));</code>
      </p>
 
      <p>
