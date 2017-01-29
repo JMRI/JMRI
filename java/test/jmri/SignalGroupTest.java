@@ -35,7 +35,7 @@ public class SignalGroupTest {
         jmri.implementation.SingleTurnoutSignalHead sh
                 = new jmri.implementation.SingleTurnoutSignalHead("IH1",
                 new jmri.NamedBeanHandle<Turnout>("IT1", it1),
-                SignalHead.GREEN, SignalHead.DARK); // on state + off state (for now LUNAR from the beginning, stsh bug)
+                SignalHead.GREEN, SignalHead.DARK); // on state + off state
         Assert.assertNotNull("SignalHead is null!", sh);
         // provide a virtual signal mast:
         SignalMast sm = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0002)");

@@ -42,8 +42,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a SignalGroup - Signal Head Edit Table
- *
+ * Swing action to create and register a SignalGroup - Signal Head Edit Table.
+ * <p>
  * Based in part on RouteTableAction.java and SignalGroupTableAction.java by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2010
@@ -74,15 +74,29 @@ public class SignalGroupSubTableAction {
         return "package.jmri.jmrit.beantable.SignalGroupTable";
     }
 
+    /**
+     * Set choice for conditional evaluation.
+     * Set to AND when you want all conditionals to be met for the Signal Head to turn On when an included Aspect is shown on the main Mast.
+     * Set to OR when you at least one of the conditionals to be met for the Signal Head to turn On when an included Aspect is shown.
+     * @see operFromBox operFromBox()
+     * @param mode True for AND
+     * @param box the comboBox object to set
+     */
     void setoperBox(boolean mode, JComboBox<String> box) {
-        int _mode = 0;
+        int _mode = 0; // OR
         if (mode) {
-            _mode = 1;
+            _mode = 1; // AND
         }
         String result = jmri.util.StringUtil.getNameFromState(_mode, operValues, oper);
         box.setSelectedItem(result);
     }
 
+    /**
+     * Get the user choice for conditional evaluation.
+     * @see setoperBox setoperBox()
+     * @param box the comboBox object containing the user choice
+     * @return True for AND, False for OR
+     */
     boolean operFromBox(JComboBox<String> box) {
         String mode = (String) box.getSelectedItem();
         int result = jmri.util.StringUtil.getStateFromName(mode, operValues, oper);
@@ -101,22 +115,11 @@ public class SignalGroupSubTableAction {
     private static String[] oper = new String[]{"AND", "OR"};
     private static int[] operValues = new int[]{0x00, 0x01};
 
-    int sensorModeFromBox(JComboBox<String> box) {
-        String mode = (String) box.getSelectedItem();
-        int result = jmri.util.StringUtil.getStateFromName(mode, sensorInputModeValues, sensorInputModes);
-
-        if (result < 0) {
-            log.warn("unexpected mode string in Signal Head Appearance: " + mode);
-            throw new IllegalArgumentException();
-        }
-        return result;
-    }
-
-    void setSensorModeBox(int mode, JComboBox<String> box) {
-        String result = jmri.util.StringUtil.getNameFromState(mode, sensorInputModeValues, sensorInputModes);
-        box.setSelectedItem(result);
-    }
-
+    /**
+     * Get the user choice for a Signal Group Signal Head's On and Off Appearance from a comboBox at the top of the Edit Head sub pane.
+     * @param box the comboBox object containing the user choice
+     * @return Value for the Appearance (color) set i.e. 0 for DARK
+     */
     int headStateFromBox(JComboBox<String> box) {
         SignalHead sig = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(curHeadName);
         int result;
@@ -136,6 +139,11 @@ public class SignalGroupSubTableAction {
         return result;
     }
 
+    /**
+     * Set selected item in a Signal Group Signal Head's On and Off Appearance in a comboBox at the top of the Edit Head sub pane.
+     * @param mode Value for an Appearance (color) i.e. 0 for DARK
+     * @param box the comboBox object to set
+     */
     void setSignalHeadStateBox(int mode, JComboBox<String> box) {
         SignalHead sig = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(curHeadName);
         if (sig != null) {
@@ -146,6 +154,40 @@ public class SignalGroupSubTableAction {
         }
     }
 
+    /**
+     * Get the user choice for a Sensor conditional's On state from the comboBox on the Edit Head sub pane.
+     * @see turnoutModeFromBox turnoutModeFromBox()
+     * @param box the comboBox object containing the user choice
+     * @return Value for ACTIVE/INACTIVE
+     */
+    int sensorModeFromBox(JComboBox<String> box) {
+        String mode = (String) box.getSelectedItem();
+        int result = jmri.util.StringUtil.getStateFromName(mode, sensorInputModeValues, sensorInputModes);
+
+        if (result < 0) {
+            log.warn("unexpected mode string in Signal Head Appearance: " + mode);
+            throw new IllegalArgumentException();
+        }
+        return result;
+    }
+
+    /**
+     * Set selected item for a Sensor conditional's On state in the comboBox on the Edit Head sub pane.
+     * @see turnoutModeFromBox turnoutModeFromBox()
+     * @param mode Value for ACTIVE/INACTIVE
+     * @param box the comboBox object to set
+     */
+    void setSensorModeBox(int mode, JComboBox<String> box) {
+        String result = jmri.util.StringUtil.getNameFromState(mode, sensorInputModeValues, sensorInputModes);
+        box.setSelectedItem(result);
+    }
+
+    /**
+     * Get the user choice for a Control Turnout conditional's On state from the comboBox on the Edit Head sub pane.
+     * @see sensorModeFromBox sensorModeFromBox()
+     * @param box the comboBox object containing the user choice
+     * @return Value for CLOSED/THROWN
+     */
     int turnoutModeFromBox(JComboBox<String> box) {
         String mode = (String) box.getSelectedItem();
         int result = jmri.util.StringUtil.getStateFromName(mode, turnoutInputModeValues, turnoutInputModes);
@@ -157,6 +199,12 @@ public class SignalGroupSubTableAction {
         return result;
     }
 
+    /**
+     * Set selected item for a Control Turnout conditional's On state in the comboBox on the Edit Head sub pane.
+     * @see turnoutModeFromBox turnoutModeFromBox()
+     * @param mode Value for CLOSED/THROWN
+     * @param box the comboBox object to set
+     */
     void setTurnoutModeBox(int mode, JComboBox<String> box) {
         String result = jmri.util.StringUtil.getNameFromState(mode, turnoutInputModeValues, turnoutInputModes);
         box.setSelectedItem(result);
@@ -198,7 +246,7 @@ public class SignalGroupSubTableAction {
     SignalHead curSignalHead;
 
     /**
-     * Opens an editor to set the details of a Signal Head as part of a Signal Group.
+     * Open an editor to set the details of a Signal Head as part of a Signal Group.
      * Called when user clicks the Edit button for a Head in the Add/Edit Signal Group pane.
      * @see SignalGroupTableAction#signalHeadEditPressed(int) SignalGroupTableAction.signalHeadEditPressed
      * @param g Parent Signal Head
@@ -238,36 +286,36 @@ public class SignalGroupSubTableAction {
         }
         initializeIncludedList();
 
-        // Set up window
-        if (addSubFrame == null) {
+        // Set up sub panel for editing of a Signal Group Signal Head item
+        if (addSubFrame == null) { // create one if not yet available
             addSubFrame = new JmriJFrame((Bundle.getMessage("EditSignalGroup") + " - " + Bundle.getMessage("BeanNameSignalHead")), false, true);
             addSubFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalGroupAddEdit", true);
             addSubFrame.setLocation(100, 30);
             addSubFrame.getContentPane().setLayout(new BoxLayout(addSubFrame.getContentPane(), BoxLayout.Y_AXIS));
             Container contentPane = addSubFrame.getContentPane();
-            // add system name
+            // add system name label
             JPanel ps = new JPanel();
             ps.setLayout(new FlowLayout());
             ps.add(nameLabel);
             ps.add(_systemName);
             contentPane.add(ps);
-            // add user name
+            // add user name label
             JPanel pc = new JPanel();
             pc.setLayout(new FlowLayout());
             pc.add(signalOnStateLabel);
-            pc.add(_OnAppearance);
+            pc.add(_OnAppearance); // comboBox to set On Appearance
             _OnAppearance.setToolTipText(Bundle.getMessage("StateWhenMetTooltip"));
             pc.add(spacer);
             pc.add(signalOffStateLabel);
+            pc.add(_OffAppearance); // comboBox to set On Appearance
             _OffAppearance.setToolTipText(Bundle.getMessage("StateWhenNotMetTooltip"));
-            pc.add(_OffAppearance);
             contentPane.add(pc);
 
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
             p.add(userLabel);
             contentPane.add(p);
-
+            // fill in info for the Signal Head being configured
             if (curSignalHead.getClass().getName().contains("SingleTurnoutSignalHead")) {
                 jmri.implementation.SingleTurnoutSignalHead stsh = (jmri.implementation.SingleTurnoutSignalHead) InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(curHeadName);
                 // we may use a user name in the editing pane, so look for that first
@@ -380,6 +428,7 @@ public class SignalGroupSubTableAction {
             po.add(operLabel);
             po.add(_SensorTurnoutOper);
             contentPane.add(po);
+
             // add sensor table
             p2xs = new JPanel();
             JPanel p2xsSpace = new JPanel();
@@ -439,6 +488,7 @@ public class SignalGroupSubTableAction {
             Border pBorder = BorderFactory.createEtchedBorder();
             pa.setBorder(pBorder);
             contentPane.add(pa);
+
             // add buttons - Add SignalGroup button
             JPanel pb = new JPanel();
             pb.setLayout(new FlowLayout(FlowLayout.TRAILING));
@@ -463,7 +513,6 @@ public class SignalGroupSubTableAction {
             updateSubButton.setVisible(true);
             contentPane.add(pb);
             addSubFrame.pack();
-
         }
         // set listener for window closing
         addSubFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -475,6 +524,7 @@ public class SignalGroupSubTableAction {
             }
         });
         addSubFrame.setVisible(true);
+        // add AND/OR choice box
         setoperBox(curSignalGroup.getSensorTurnoutOper(curSignalHead), _SensorTurnoutOper);
         setSignalHeadStateBox(curSignalGroup.getHeadOnState(curSignalHead), _OnAppearance);
         setSignalHeadStateBox(curSignalGroup.getHeadOffState(curSignalHead), _OffAppearance);
@@ -515,6 +565,9 @@ public class SignalGroupSubTableAction {
         updateSubButton.setVisible(true);
     }
 
+    /**
+     * Configure colum widths for the Turnout and Sensor Conditional tables
+     */
     void setColumnToHoldButton(JTable table, int column, JButton sample) {
         // install a button renderer & editor
         ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -528,7 +581,7 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Initialize list of included turnout positions
+     * Initialize the list of included turnouts and sensors for a Signal Head item on the sub pane
      */
     void initializeIncludedList() {
         _includedTurnoutList = new ArrayList<SignalGroupTurnout>();
@@ -546,7 +599,8 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Sets the Turnout information for adding or editing
+     * Set the Turnout information for adding or editing
+     * @param g The Signal Group being configured
      */
     int setTurnoutInformation(SignalGroup g) {
         for (int i = 0; i < _includedTurnoutList.size(); i++) {
@@ -557,7 +611,8 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Sets the Sensor information for adding or editing
+     * Set the Sensor information for adding or editing
+     * @param g The Signal Group being configured
      */
     int setSensorInformation(SignalGroup g) {
         for (int i = 0; i < _includedSensorList.size(); i++) {
@@ -568,7 +623,7 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Responds to the Cancel button - clean up
+     * Respond to the Cancel button - clean up
      */
     void cancelSubPressed(ActionEvent e) {
         log.debug("Edit Signal Group Head canceled in SGSTA line 569");
@@ -578,31 +633,36 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Responds to the Update button - update to SignalGroup
+     * Respond to the Update button on the Edit Head sub pane - update to SignalGroup
+     * @param newSignalGroup True if this is a newly created Signal Group for which additional actions are required
      */
     void updateSubPressed(ActionEvent e, boolean newSignalGroup) {
         curSignalGroup.clearHeadTurnout(curSignalHead);
         curSignalGroup.clearHeadSensor(curSignalHead);
-
+        // store the new configuration as entered by the user
         initializeIncludedList();
         setTurnoutInformation(curSignalGroup);
         setSensorInformation(curSignalGroup);
         curSignalGroup.setHeadOnState(curSignalHead, headStateFromBox(_OnAppearance));
         curSignalGroup.setHeadOffState(curSignalHead, headStateFromBox(_OffAppearance));
+        // store AND/OR operand user choice
         curSignalGroup.setSensorTurnoutOper(curSignalHead, operFromBox(_SensorTurnoutOper));
         // add control Sensors and a control Turnouts if entered in the window
         finishUpdate();
     }
 
+    /**
+     * Clean up the interface and reset Included radio button to All for next use
+     */
     void finishUpdate() {
-        // move to show all turnouts and sensors if not yet set
+        // show all turnouts and sensors if not yet set to All
         cancelIncludedOnly();
         updateSubButton.setVisible(false);
         addSubFrame.setVisible(false);
     }
 
     /**
-     * Cancels edit mode
+     * Cancel edit mode
      */
     void cancelSubEdit() {
         // get out of edit mode
@@ -611,7 +671,7 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Cancels included Turnouts only option
+     * Cancel included Turnouts and Sensors only option
      */
     void cancelIncludedOnly() {
         if (!showAll) {
@@ -620,7 +680,7 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Base table model for selecting Signal Group Head control outputs
+     * Base table model for selecting Signal Group Head control Conditionals
      */
     public abstract class SignalGroupOutputModel extends AbstractTableModel implements PropertyChangeListener {
 
@@ -676,7 +736,7 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Table model for selecting Turnouts and Turnout State
+     * Table model for selecting Turnouts and their On State
      * as Conditionals for a Signal Group Signal Head member.
      */
     class SignalGroupTurnoutModel extends SignalGroupOutputModel {
@@ -743,7 +803,7 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Set up table for selecting Sensors and Sensor State
+     * Set up a table for selecting Sensors and Sensor On State
      * as Conditionals for a Signal Group Signal Head member.
      */
     class SignalGroupSensorModel extends SignalGroupOutputModel {
@@ -809,7 +869,7 @@ public class SignalGroupSubTableAction {
         }
     }
 
-    private boolean showAll = true;   // false indicates: show only included Turnouts and Sensors
+    private boolean showAll = true; // false indicates: show only included Turnouts and Sensors
 
     private static int ROW_HEIGHT;
 
@@ -884,14 +944,21 @@ public class SignalGroupSubTableAction {
 
     /**
      * Element containing Signal Group configuration information
-     * for a Sensor as Conditional.
+     * for a Control Sensor as Conditional.
      */
     private class SignalGroupSensor extends SignalGroupElement {
 
+        /**
+         * Create a Sensor item for this Signal Head by the name of the Control Sensor
+         */
         SignalGroupSensor(String sysName, String userName) {
             super(sysName, userName);
         }
 
+        /**
+         * Get the configured On state for the Control Sensor Conditional to be True
+         * @return A string describing the On state for use in the GUI (read from a Properties file, localizable)
+         */
         String getSetToState() {
             switch (_setToState) {
                 case Sensor.INACTIVE:
@@ -903,7 +970,9 @@ public class SignalGroupSubTableAction {
         }
 
         /**
+         * Store a uniform value for the On state of the Control Sensor Conditional.
          * Pairs should correspond with values in getSetToState()
+         * @param state Choice from the comboBox, localizable i.e. Active
          */
         void setSetToState(String state) {
             if (SET_TO_INACTIVE.equals(state)) {
@@ -913,6 +982,10 @@ public class SignalGroupSubTableAction {
             }
         }
 
+        /**
+         * Get the Sensor object.
+         * @return The Sensor Bean acting as Control Sensor for this Head and Group
+         */
         Sensor getSensor() {
             return jmri.InstanceManager.sensorManagerInstance().getSensor(_sysName);
         }
@@ -920,14 +993,21 @@ public class SignalGroupSubTableAction {
 
     /**
      * Element containing Signal Group configuration information
-     * for a Turnout as Conditional.
+     * for a Control Turnout as Conditional.
      */
     private class SignalGroupTurnout extends SignalGroupElement {
 
+        /**
+         * Create a Turnout item for this Signal Head by the name of the Control Turnout
+         */
         SignalGroupTurnout(String sysName, String userName) {
             super(sysName, userName);
         }
 
+        /**
+         * Get the configured On state for the Control Turnout Conditional to be True
+         * @return A string describing the On state for use in the GUI
+         */
         String getSetToState() {
             switch (_setToState) {
                 case Turnout.CLOSED:
@@ -939,7 +1019,9 @@ public class SignalGroupSubTableAction {
         }
 
         /**
+         * Store a uniform value for the On state of the Control Sensor Conditional.
          * Pairs should correspond with values in getSetToState()
+         * @param state Choice from the comboBox, localizable i.e. Thrown.
          */
         void setSetToState(String state) {
             if (SET_TO_CLOSED.equals(state)) {
@@ -949,6 +1031,10 @@ public class SignalGroupSubTableAction {
             }
         }
 
+        /**
+         * Get the Turnout object.
+         * @return The Turnout Bean acting as Control Turnout for this Head and Group
+         */
         Turnout getTurnout() {
             return jmri.InstanceManager.turnoutManagerInstance().getTurnout(_sysName);
         }
