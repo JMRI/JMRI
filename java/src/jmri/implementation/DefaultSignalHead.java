@@ -7,7 +7,7 @@ import java.util.Arrays;
  *
  * This class only claims support for the Red, Yellow and Green appearances, and
  * their corressponding flashing forms. Support for Lunar is deferred to
- * DefaultLunarSignalHead.
+ * DefaultLunarSignalHead or an extended class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2009
  */
@@ -21,8 +21,9 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         super(systemName);
     }
 
+    @Override
     public void setAppearance(int newAppearance) {
-        int oldAppearance = mAppearance;
+        int oldAppearance = mAppearance; // store the current appearance
         mAppearance = newAppearance;
         if (mLit && ((newAppearance == FLASHGREEN)
                 || (newAppearance == FLASHYELLOW)
@@ -47,6 +48,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         }
     }
 
+    @Override
     public void setLit(boolean newLit) {
         boolean oldLit = mLit;
         mLit = newLit;
@@ -74,6 +76,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
      * held parameter is a local variable which effects the aspect only via
      * higher-level logic
      */
+    @Override
     public void setHeld(boolean newHeld) {
         boolean oldHeld = mHeld;
         mHeld = newHeld;
@@ -89,10 +92,10 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
      *
      * Does not notify listeners of changes; that's done elsewhere. Should use
      * the following variables to determine what to send:
-     * <UL>
-     * <LI>mAppearance
-     * <LI>mLit
-     * <LI>mFlashOn
+     * <ul>
+     * <li>mAppearance
+     * <li>mLit
+     * <li>mFlashOn
      * </ul>
      */
     abstract protected void updateOutput();
@@ -156,7 +159,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         GREEN,
         FLASHRED,
         FLASHYELLOW,
-        FLASHGREEN,};
+        FLASHGREEN,}; // No int for Lunar
     final static private String[] validStateNames = new String[]{
         Bundle.getMessage("SignalHeadStateDark"),
         Bundle.getMessage("SignalHeadStateRed"),
@@ -164,7 +167,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         Bundle.getMessage("SignalHeadStateGreen"),
         Bundle.getMessage("SignalHeadStateFlashingRed"),
         Bundle.getMessage("SignalHeadStateFlashingYellow"),
-        Bundle.getMessage("SignalHeadStateFlashingGreen"),};
+        Bundle.getMessage("SignalHeadStateFlashingGreen"),}; // Lunar not included
 
     @Override
     public int[] getValidStates() {
@@ -176,6 +179,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         return Arrays.copyOf(validStateNames, validStateNames.length);
     }
 
+    @Override
     boolean isTurnoutUsed(jmri.Turnout t) {
         return false;
     }

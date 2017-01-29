@@ -77,7 +77,7 @@ public class DefaultSignalGroupManager extends AbstractManager
         if (r != null) {
             return r;
         }
-        // Route does not exist, create a new group
+        // Group does not exist, create a new group
         r = new DefaultSignalGroup(systemName, userName);
         // save in the maps
         register(r);
