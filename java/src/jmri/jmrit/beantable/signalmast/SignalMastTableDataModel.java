@@ -137,7 +137,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     public Object getValueAt(int row, int col) {
         // some error checking
         if (row >= sysNameList.size()) {
-            log.debug("row is greater than name list");
+            log.debug("row index is greater than name list");
             return "error";
         }
         String name = sysNameList.get(row);
