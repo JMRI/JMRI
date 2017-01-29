@@ -39,6 +39,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite(PackageTest.class);
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(jmri.jmrit.symbolicprog.ArithmeticQualifierTest.suite());
+        suite.addTest(jmri.jmrit.symbolicprog.ValueQualifierTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.QualifierAdderTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.FnMapPanelTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.CompositeVariableValueTest.suite());
