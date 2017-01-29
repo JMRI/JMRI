@@ -21,6 +21,8 @@ package jmri;
  * Masts show Aspects, Heads show Appearances, though outside the USA this will vary.
  * Use localization to address this in the user interface.
  *
+ * @see jmri.implementation.DefaultSignalGroup DefaultSignalGroup
+ *
  * @author	Pete Cressman Copyright (C) 2009
  * @author	Egbert Broerse Copyright (C) 2017
  */
