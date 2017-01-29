@@ -15,7 +15,14 @@ import org.slf4j.LoggerFactory;
    NullAudioListenerTest.class,
    NullAudioBufferTest.class,
    JavaSoundAudioListenerTest.class,
-   JavaSoundAudioBufferTest.class
+   JavaSoundAudioBufferTest.class,
+   JavaSoundAudioFactoryTest.class,
+   JavaSoundAudioSourceTest.class,
+   JoalAudioFactoryTest.class,
+   JoalAudioSourceTest.class,
+   NullAudioFactoryTest.class,
+   NullAudioSourceTest.class,
+   DefaultAudioManagerTest.class
 })
 /**
  * Invokes complete set of tests in the jmri.jmrit.audio tree
