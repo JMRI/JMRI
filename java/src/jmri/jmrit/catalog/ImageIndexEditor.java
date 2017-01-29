@@ -3,7 +3,6 @@ package jmri.jmrit.catalog;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.Enumeration;
 import java.util.List;
 import javax.swing.BoxLayout;
@@ -95,11 +94,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         JMenuItem searchItem = new JMenuItem(Bundle.getMessage("searchFSMenu"));
         searchItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                File dir = jmri.jmrit.catalog.DirectorySearcher.instance().searchFS();
-                if (dir != null) {
-                    addDirectoryToCatalog(dir);
-                    indexChanged(true);
-                }
+                jmri.jmrit.catalog.DirectorySearcher.instance().searchFS();
             }
         });
         findIcon.add(searchItem);
@@ -153,7 +148,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         pack();
         setVisible(true);
     }
-
+/*
     public void addDirectoryToCatalog(java.io.File dir) {
         if (_catalog == null) {
             _catalog = CatalogPanel.makeDefaultCatalog();
@@ -162,7 +157,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         _catalog.createNewBranch("IF" + name, name, dir.getAbsolutePath());
         this.add(_catalog);
         this.pack();
-    }
+    }*/
 
     public static final synchronized void indexChanged(boolean changed) {
         _indexChanged = changed;

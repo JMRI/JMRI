@@ -77,7 +77,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CatalogPanel extends JPanel implements MouseListener {
 
-    public static final double ICON_SCALE = 0.10;
+    public static final double ICON_SCALE = 0.010;
     public static final int ICON_WIDTH = 100;
     public static final int ICON_HEIGHT = 100;
 

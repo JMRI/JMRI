@@ -64,16 +64,14 @@ public class PreviewDialog extends JDialog {
     String[] _filter;   // file extensions of types to display
     JButton _addButton;
     JButton _moreButton;
-    boolean _mode;
 
-    protected PreviewDialog(Frame frame, String title, File dir, String[] filter, boolean modality) {
-        super(frame, Bundle.getMessage(title), modality);
+    protected PreviewDialog(Frame frame, String title, File dir, String[] filter) {
+        super(frame, Bundle.getMessage(title), false);
         _currentDir = dir;
         _filter = new String[filter.length];
         for (int i = 0; i < filter.length; i++) {
             _filter[i] = filter[i];
         }
-        _mode = modality;
     }
 
     protected void init(ActionListener addAction, ActionListener moreAction,
@@ -109,6 +107,15 @@ public class PreviewDialog extends JDialog {
             log.error("OutOfMemoryError AvailableMemory= " + availableMemory() + ", " + _cnt + " files read.");
             resetPanel();
         }
+        if (_noMemory) {
+            int choice = JOptionPane.showOptionDialog(null,
+                    Bundle.getMessage("OutOfMemory", _cnt), Bundle.getMessage("ErrorTitle"), 
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                    new String[]{Bundle.getMessage("Quit"), Bundle.getMessage("ShowContents")}, 1);
+            if (choice==0) {
+                return;
+            }
+        }
 
         if (needsMore) {
             if (moreAction != null) {
@@ -125,19 +132,12 @@ public class PreviewDialog extends JDialog {
 
         boolean hasButtons = needsMore;
         if (addAction != null) {
- /*           if (needsMore) {
-                JOptionPane.showMessageDialog(this,
-                        java.text.MessageFormat.format(Bundle.getMessage("tooManyIcons"),
-                                new Object[]{_currentDir.getName()}),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.INFORMATION_MESSAGE);
-            } else */ {
-                p.add(Box.createHorizontalStrut(5));
-                _addButton = new JButton(Bundle.getMessage("ButtonAddToCatalog"));
-                _addButton.addActionListener(addAction);
-                p.add(_addButton);
-                msg.setText(Bundle.getMessage("addDirMsg"));
-                hasButtons = true;
-            }
+            p.add(Box.createHorizontalStrut(5));
+            _addButton = new JButton(Bundle.getMessage("ButtonAddToCatalog"));
+            _addButton.addActionListener(addAction);
+            p.add(_addButton);
+            msg.setText(Bundle.getMessage("addDirMsg"));
+            hasButtons = true;
         } else {
             msg.setText(Bundle.getMessage("dragMsg"));
         }
@@ -166,9 +166,6 @@ public class PreviewDialog extends JDialog {
 
         panel.add(previewPanel);
         getContentPane().add(panel);
-        setPreferredSize(new Dimension(450,
-                previewPanel.getPreferredSize().height + 2 * p.getPreferredSize().height));
-        //setMinimumSize(new Dimension(450,300));
         setLocationRelativeTo(null);
         pack();
         setVisible(true);
@@ -185,10 +182,8 @@ public class PreviewDialog extends JDialog {
         p.add(_previewLabel);
         previewPanel.add(p);
         _preview = new JPanel();
-        _preview.setMinimumSize(new Dimension(2 * CatalogPanel.ICON_WIDTH, 2 * CatalogPanel.ICON_HEIGHT));
         JScrollPane js = new JScrollPane(_preview);
         previewPanel.add(js);
-        _preview.setMinimumSize(new Dimension(200, 150));
         JRadioButton whiteButton = new JRadioButton(Bundle.getMessage("white"), false);
         JRadioButton grayButton = new JRadioButton(Bundle.getMessage("lightGray"), true);
         JRadioButton darkButton = new JRadioButton(Bundle.getMessage("darkGray"), false);
@@ -266,7 +261,7 @@ public class PreviewDialog extends JDialog {
         pack();
     }
 
-    public int getNumFilesShown() {
+    protected int getNumFilesShown() {
         return _startNum + _cnt;
     }
 
@@ -274,7 +269,7 @@ public class PreviewDialog extends JDialog {
 
         public void uncaughtException(Thread t, Throwable e) {
             _noMemory = true;
-            log.error("Exception from setIcons: " + e, e);
+            log.error("MemoryExceptionHandler from setIcons: "+e+": "+_cnt+" files read.", e);
             if (log.isDebugEnabled()) {
                 log.debug("memoryAvailable = " + availableMemory());
             }
@@ -294,13 +289,10 @@ public class PreviewDialog extends JDialog {
         // This handler will catch memory exceptions from that thread
         _noMemory = false;
         Thread.setDefaultUncaughtExceptionHandler(new MemoryExceptionHandler());
-        long memoryNeeded = 0;
         // allow room for ImageFetcher threads
-        long memoryAvailable = availableMemory() - 10000000;
         if (log.isDebugEnabled()) {
-            log.debug("setIcons: startNum= " + startNum + " memoryAvailable = " + availableMemory());
+            log.debug("setIcons: startNum= {}", startNum);
         }
-        boolean newCol = false;
         GridBagLayout gridbag = new GridBagLayout();
         _preview.setLayout(gridbag);
         GridBagConstraints c = new GridBagConstraints();
@@ -308,24 +300,20 @@ public class PreviewDialog extends JDialog {
         c.anchor = GridBagConstraints.CENTER;
         c.weightx = 1.0;
         c.weighty = 1.0;
-        c.gridy = 0;
-        c.gridx = -1;
-        _cnt = 0;
-        int cnt = 0;
-        File[] files = _currentDir.listFiles();
-        int numCol = 1;
-        while (numCol * numCol < files.length) {
-            numCol++;
-        }
-        if (numCol > 1) {
-            numCol--;
-        }
-        int numRow = files.length / numCol;
+        c.gridy = -1;
+        c.gridx = 0;
+        _cnt = 0;       // number of images displayed in this panel
+        int cnt = 0;    // total number of images in directory
+        File[] files = _currentDir.listFiles(); // all files, filtered below
+        int nCols = 1;
+        int nRows = 1;
+        int nAvail = 1;
         
         for (int i = 0; i < files.length; i++) {
             String ext = jmri.util.FileChooserFilter.getFileExtension(files[i]);
             for (int k = 0; k < _filter.length; k++) {
                 if (ext != null && ext.equalsIgnoreCase(_filter[k])) {
+                    // files[i] filtered to be an image file
                     if (cnt < startNum) {
                         cnt++;
                         continue;
@@ -338,34 +326,40 @@ public class PreviewDialog extends JDialog {
                     try {
                         String path = files[i].getAbsolutePath();
                         NamedIcon icon = new NamedIcon(path, name);
-                        memoryNeeded += 3 * icon.getIconWidth() * icon.getIconHeight();
-                        if (memoryAvailable < memoryNeeded) {
+                        long size = icon.getIconWidth()*icon.getIconHeight();
+                        long memoryAvailable = availableMemory();
+                        log.debug("Memory calculation icon size= {} memoryAvailable= {}", size, memoryAvailable);
+
+                        if (memoryAvailable <4*size) {
                             _noMemory = true;
+                            log.debug("Memory calculation caught icon size= {} testSize= {} memoryAvailable= {}", 4*size, memoryAvailable);
                             break;
                         }
                         double scale = icon.reduceTo(CatalogPanel.ICON_WIDTH,
                                 CatalogPanel.ICON_HEIGHT, CatalogPanel.ICON_SCALE);
                         if (_noMemory) {
+                            log.debug("MemoryExceptionHandler caught icon size={} ", size);
                             continue;
                         }
-                        if (c.gridx < numCol) {
-                            c.gridx++;
-                        } else if (c.gridy < numRow) { //start next row
-                            c.gridy++;
-                            if (!newCol) {
-                                c.gridx = 0;
-                            }
-                        } else if (!newCol) { // start new column
-                            c.gridx++;
-                            numCol++;
+                        _cnt++;
+                        cnt++;
+                        if (_cnt > nAvail) {
+                            nCols++;
+                            nRows++;
+                            nAvail = nCols*nRows;
+                            c.gridx = nCols-1;
                             c.gridy = 0;
-                            newCol = true;
-                        } else {  // start new row
+                        } else if (_cnt > nAvail - nRows) {
+                            if (c.gridx < nCols-1) {                           
+                                c.gridx++;
+                            } else {
+                                c.gridx = 0;
+                                c.gridy++;
+                            }
+                        } else {
                             c.gridy++;
-                            numRow++;
-                            c.gridx = 0;
-                            newCol = false;
                         }
+                        
                         c.insets = new Insets(5, 5, 0, 0);
                         JLabel image;
                         try {
@@ -390,21 +384,16 @@ public class PreviewDialog extends JDialog {
                         p.add(label);
                         p.add(nameLabel);
                         gridbag.setConstraints(p, c);
-                        if (_noMemory) {
-                            continue;
-                        }
-/*                        if (log.isDebugEnabled()) {
+                        if (log.isDebugEnabled()) {
                             log.debug(name + " inserted at (" + c.gridx + ", " + c.gridy + ")");
-                        }*/
+                        }
                         _preview.add(p);
-                        _cnt++;
-                        cnt++;
                         if (_cnt > 300) { // somewhere above this number, VM can't build display of panel
                             _noMemory = true;
                         }
                     } catch (OutOfMemoryError oome) {
                         _noMemory = true;
-                        log.error("OutOfMemoryError AvailableMemory= " + availableMemory() + ", " + _cnt + " files read.");
+                        log.error("OutOfMemoryError= "+oome+" AvailableMemory= "+availableMemory()+", "+_cnt+" files read.");
                     }
                 }
                 if (_noMemory) {
@@ -424,18 +413,9 @@ public class PreviewDialog extends JDialog {
                     new Object[]{Integer.valueOf(startNum)});
         }
         _previewLabel.setText(msg);
-        _preview.setMinimumSize(new Dimension(CatalogPanel.ICON_WIDTH, 2 * CatalogPanel.ICON_HEIGHT));
+//        _preview.setMinimumSize(new Dimension(CatalogPanel.ICON_WIDTH, 2 * CatalogPanel.ICON_HEIGHT));
         CatalogPanel.packParentFrame(this);
 
-        if (_noMemory) {
-            int choice = JOptionPane.showOptionDialog(null,
-                    Bundle.getMessage("OutOfMemory", cnt), Bundle.getMessage("ErrorTitle"), 
-                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                    new String[]{Bundle.getMessage("Quit"), Bundle.getMessage("ButtonKeepLooking")}, 1);
-            if (choice==0) {
-                return _noMemory;
-            }
-        }
         Thread.setDefaultUncaughtExceptionHandler(exceptionHandler);
         return _noMemory;
     }
@@ -454,7 +434,7 @@ public class PreviewDialog extends JDialog {
             for (int i = 0; i < memoryTest.size(); i++) {
                 memoryTest.remove(i);
             }
-            log.debug("OutOfMemoryError for availableMemory test");
+            log.debug("availableMemory= {}", total);
             //if (log.isDebugEnabled()) log.debug("Max Memory available= "+total+" bytes");
         }
         return total;

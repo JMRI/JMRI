@@ -23,7 +23,6 @@ import java.awt.event.MouseMotionListener;
 import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -2499,10 +2498,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    File dir = jmri.jmrit.catalog.DirectorySearcher.instance().searchFS();
-                    if (dir != null) {
-                        ea.addDirectoryToCatalog(dir);
-                    }
+                    jmri.jmrit.catalog.DirectorySearcher.instance().searchFS();
+                    ea.addDirectoryToCatalog();
                 }
 
                 ActionListener init(IconAdder ed) {

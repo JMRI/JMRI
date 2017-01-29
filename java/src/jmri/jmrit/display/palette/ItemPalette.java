@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -24,7 +23,6 @@ import javax.swing.event.ChangeListener;
 import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
-import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.CatalogTreeLeaf;
 import jmri.jmrit.catalog.CatalogTreeNode;
 import jmri.jmrit.catalog.DirectorySearcher;
@@ -512,10 +510,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
          JMenuItem searchItem = new JMenuItem(Bundle.getMessage("searchFSMenu"));
          searchItem.addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
-                 File dir = jmri.jmrit.catalog.DirectorySearcher.instance().searchFS();
-                 if (dir != null) {
-                     addDirectoryToCatalog(dir);
-                 }
+                 jmri.jmrit.catalog.DirectorySearcher.instance().searchFS();
              }
          });
          findIcon.add(searchItem);
@@ -524,14 +519,6 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         addHelpMenu("package.jmri.jmrit.display.ItemPalette", true);
     }
 
-    public void addDirectoryToCatalog(File dir) {
-        CatalogPanel catalog = CatalogPanel.makeDefaultCatalog();
-        String name = dir.getName();
-        catalog.createNewBranch("IF" + name, name, dir.getAbsolutePath());
-        ImageIndexEditor.indexChanged(true);
-        this.pack();
-    }
-    
     public void closePanels(java.awt.event.WindowEvent e) {
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         java.awt.Component[] comps = _tabPane.getComponents();
