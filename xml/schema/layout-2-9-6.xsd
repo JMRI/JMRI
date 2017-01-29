@@ -378,7 +378,11 @@ signals - obsolete, EMPTY, never used
       </xs:unique>
       <xs:key name="turnoutName">
         <xs:annotation><xs:documentation>Insist that all turnout user and system names are unique</xs:documentation></xs:annotation>
+        <!-- because not enforced internally in JMRI, invalidates otherwise usable panel
+             workaround this by merely duplicating the turnoutSystemName constraints
         <xs:selector xpath="./turnouts/turnout/systemName | ./turnouts/turnout/userName"/> 
+        -->
+        <xs:selector xpath="./turnouts/turnout/systemName"/> 
         <xs:field xpath="."/>           
       </xs:key>
 
@@ -394,7 +398,11 @@ signals - obsolete, EMPTY, never used
       </xs:unique>
       <xs:unique name="sensorName">
         <xs:annotation><xs:documentation>Insist that all sensor user and system names are unique</xs:documentation></xs:annotation>
+        <!-- because not enforced internally in JMRI, invalidates otherwise usable panel
+             workaround this by merely duplicating the sensorSystemName constraints
         <xs:selector xpath="./sensors/sensor/systemName | ./sensors/sensor/userName "/> 
+        -->
+        <xs:selector xpath="./sensors/sensor/systemName"/> 
         <xs:field xpath="."/>           
       </xs:unique>
 
@@ -410,7 +418,11 @@ signals - obsolete, EMPTY, never used
       </xs:unique>
       <xs:unique name="signalHeadName">
         <xs:annotation><xs:documentation>Insist that all user and system names are unique</xs:documentation></xs:annotation>
+        <!-- because not enforced internally in JMRI, invalidates otherwise usable panel
+             workaround this by merely duplicating the signalHeadSystemName constraints
         <xs:selector xpath="./signalheads/signalhead/systemName | ./signalheads/signalhead/userName "/> 
+        -->
+        <xs:selector xpath="./signalheads/signalhead/systemName"/> 
         <xs:field xpath="."/>           
       </xs:unique>
 
