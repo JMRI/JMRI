@@ -1,43 +1,34 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- UpDated  by Blorec Herv&#233;  2013-09-13-->
+<!-- UpDated  by Blorec Herv&#233;  2017-01-29-->
 <html lang="fr">
 <head>
- <TITLE>
- JMRI: Keyspan USB connections
- 
- </TITLE>
-    <META http-equiv=Content-Type content="texGuide d'Installationt/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META content="John Plocher" name=Author>
-    <META name="keywords" content="Keyspan USB java model railroad JMRI install">
+ <title>JMRI Hardware Support - Keyspan USB adapter</title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta content="John Plocher" name="Author">
+    <meta name="keywords" content="Keyspan USB java model railroad JMRI install">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
-    <div id="mainContent">
-      <H2> 
-      JMRI Guide d'Installation: Keyspan connexions USB
-      </H2>
+<div id="mainContent">
+      <H1>Support Mat&#233;riel: Keyspan connexions USB</H1>
 
       <p>Cette page d&#233;crit les tests des deux d'adaptateurs USB  ports s&#233;rie avec       
        l'interface MS100 LocoNett&reg; Digitrax.
  
        <p> MS100 est un syst&#232;me de d&#233;calage de niveau passif qui tire sa puissance du
        contr&#244;le conduit dans l'interface RS232. Digitrax n'a pas publi&#233; de
-       sch&#233;ma, mais Bill Robinson, de l'&#233;quipe Digital a gracieusement fourni un
+       sch&#233;ma, mais Bill Robinson, de Digital Team a gracieusement fourni un
        sch&#233;ma de leur d&#233;calage de niveau qui est pens&#233; pour &#234;tre tr&#232;s similaire.</p>
 
       <p><img src="./images/LN_to_PC.gif" alt="Sample LocoNet to RS232 Interface Schematic"></p>
@@ -45,8 +36,8 @@
     <H2>R&#233;sum&#233;</H2>
 
 	<dl>
-        <dt class=left>Keyspan PDA adapteur P/N USA-19</dt>
-	<dt class=left>R&#233;sum&#233;: Cela a fonctionn&#233;.</dt>
+         <dt class="left">Keyspan PDA adapteur P/N USA-19</dt>
+	 <dt class="left">R&#233;sum&#233;: Cela a fonctionn&#233;.</dt>
 	<dd>
 	<p> Malheureusement, cet adaptateur n'est plus fabriqu&#233;. Je crois que le
 remplacement par "Keyspan High Speed Serial Adapter" Partie # USA-19QW est la
@@ -58,8 +49,8 @@ adaptateur, avec des num&#233;ros de mod&#232;le l&#233;g&#232;rement diff&#233;
 certains d'entre eux travaillent &#224; 56.000 bauds. </p>
 </dd>
 
-<dt class=left>Keyspa<p><img src="./images/LN_to_PC.gif" alt="Sample LocoNet to RS232 Interface Schematic"></p>n Dual Serial Adapter P/N USA-28X</dt>
-<dt class=left> R&#233;sum&#233;:. Cela n'a pas fonctionn&#233;.</dt>
+ <dt class="left">Keyspa<p><img src="./images/LN_to_PC.gif" alt="Sample LocoNet to RS232 Interface Schematic"></p>n Dual Serial Adapter P/N USA-28X</dt>
+ <dt class="left">R&#233;sum&#233;:. Cela n'a pas fonctionn&#233;.</dt>
 	<dd>
 	Probl&#232;mes: l'adaptateur USB fournit une seule sortie ligne de contr&#244;le, et
 les sorties du port s&#233;rie ont seulement +/- 5V. Ce ne fut pas suffisant pour alimenter
@@ -70,8 +61,8 @@ le MS100 pendant la r&#233;ception.
     <H2>D&#233;tails</H2>
 
 	<dl>
-        <dt class=left>Keyspan PDA adapter P/N USA-19</dt>
-	<dt class=left>R&#233;sum&#233;: Ceci &#224; fonctionn&#233;.</dt>
+        <dt class="left">Keyspan PDA adapter P/N USA-19</dt>
+	 <dt class="left">R&#233;sum&#233;: Ceci &#224; fonctionn&#233;.</dt>
 	<dd>
 	<p> Ce fut effectivement la seconde s&#233;rie d'adaptateur USB que j'ai essay&#233;, apr&#232;s le
 Keyspan Adaptateur s&#233;rie  double (voir ci-dessous). Cet adaptateur fournit un connecteur DB9
@@ -106,8 +97,8 @@ RI       9            22
 </ p>
 </ dd>
 
-<dt class=left> Keyspan Dual Serial Adapter P/N USA-28X </dt>
-<dt class=left> R&#233;sum&#233;:. Cela n'a pas fonctionn&#233; </dt>
+ <dt class="left"> Keyspan Dual Serial Adapter P/N USA-28X </dt>
+ <dt class="left"> R&#233;sum&#233;:. Cela n'a pas fonctionn&#233; </dt>
 <dd>
 <p>
 Le probl&#232;me initial &#233;tait que l'adaptateur USB fournit une seule commande
@@ -155,11 +146,12 @@ l'adresse. L'acc&#232;s Java &#224; des adaptateurs USB s&#233;rie a &#233;t&#23
 d&#233;codeurs sur le r&#233;seau. Le Trafic de la centrale de commande, du r&#233;gulateur et des
 divers composants auxiliaires (PM4, DS54) &#233;tait disponible pour les tests.
 .
-
 	</dd>
 	</dl>
 <p>LocoNet&reg; est une marque d&#233;pos&#233; de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
