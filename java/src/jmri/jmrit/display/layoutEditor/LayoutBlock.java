@@ -695,7 +695,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
     private void updateBlockPaths(ArrayList<LayoutConnectivity> c, LayoutEditor panel) {
         if (enableAddRouteLogging) {
-            log.info("From " + this.getDisplayName() + " updateBlockPaths Called");
+            log.info("From " + this.getDisplayName() + " updatePaths Called");
         }
         LayoutEditorAuxTools auxTools = new LayoutEditorAuxTools(panel);
         java.util.List<jmri.Path> paths = block.getPaths();
@@ -774,8 +774,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
                 if (InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
                     addAdjacency(newp);
-//                 } else {
-//                     log.error("Trouble adding Path to block {}", blockName);
+//             } else {
+//                  log.error("Trouble adding Path to block {}", blockName);
                 }
                 auxTools.addBeanSettings(newp, lc, _instance);
             }

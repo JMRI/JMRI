@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A collection of tools to find various object on the layout editor panel.
- * 
+ *
 */
 public class LayoutEditorFindItems {
 
@@ -493,29 +493,29 @@ public class LayoutEditorFindItems {
             return null;
         }
         switch (type) {
-            case LayoutEditor.NONE:
+            case LayoutTrack.NONE:
                 return null;
-            case LayoutEditor.POS_POINT:
+            case LayoutTrack.POS_POINT:
                 return findPositionablePointByName(name);
-            case LayoutEditor.TURNOUT_A:
-            case LayoutEditor.TURNOUT_B:
-            case LayoutEditor.TURNOUT_C:
-            case LayoutEditor.TURNOUT_D:
+            case LayoutTrack.TURNOUT_A:
+            case LayoutTrack.TURNOUT_B:
+            case LayoutTrack.TURNOUT_C:
+            case LayoutTrack.TURNOUT_D:
                 return findLayoutTurnoutByName(name);
-            case LayoutEditor.LEVEL_XING_A:
-            case LayoutEditor.LEVEL_XING_B:
-            case LayoutEditor.LEVEL_XING_C:
-            case LayoutEditor.LEVEL_XING_D:
+            case LayoutTrack.LEVEL_XING_A:
+            case LayoutTrack.LEVEL_XING_B:
+            case LayoutTrack.LEVEL_XING_C:
+            case LayoutTrack.LEVEL_XING_D:
                 return findLevelXingByName(name);
-            case LayoutEditor.SLIP_A:
-            case LayoutEditor.SLIP_B:
-            case LayoutEditor.SLIP_C:
-            case LayoutEditor.SLIP_D:
+            case LayoutTrack.SLIP_A:
+            case LayoutTrack.SLIP_B:
+            case LayoutTrack.SLIP_C:
+            case LayoutTrack.SLIP_D:
                 return findLayoutSlipByName(name);
-            case LayoutEditor.TRACK:
+            case LayoutTrack.TRACK:
                 return findTrackSegmentByName(name);
             default:
-                if (type >= LayoutEditor.TURNTABLE_RAY_OFFSET) {
+                if (type >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
                     return findLayoutTurntableByName(name);
                 }
         }
