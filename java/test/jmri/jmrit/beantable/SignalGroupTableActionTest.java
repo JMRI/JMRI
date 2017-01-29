@@ -10,6 +10,7 @@ import jmri.jmrit.beantable.SignalGroupTableAction;
 import jmri.util.JmriJFrame;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
