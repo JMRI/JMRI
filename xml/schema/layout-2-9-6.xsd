@@ -426,11 +426,13 @@ signals - obsolete, EMPTY, never used
         <xs:field xpath="."/>           
       </xs:unique>
 
+      <!-- depends on turnout user names being unique from turnout system names
       <xs:keyref name="signalElementTurnoutPresent" refer="turnoutName">
         <xs:annotation><xs:documentation>Insist that watchedturnout be defined in signalelement</xs:documentation></xs:annotation>
         <xs:selector xpath="./signalelements/signalelement"/> 
         <xs:field xpath="@watchedturnout"/>           
       </xs:keyref>
+      -->
 
   </xs:element>
 </xs:schema>
