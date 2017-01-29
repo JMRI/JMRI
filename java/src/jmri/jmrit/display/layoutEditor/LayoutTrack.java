@@ -17,7 +17,9 @@ public class LayoutTrack {
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     // size of point boxes
+    @Deprecated
     public static final double SIZE = 3.0;
+    @Deprecated
     public static final double SIZE2 = SIZE * 2.;  // must be twice SIZE
 
     // connection types
