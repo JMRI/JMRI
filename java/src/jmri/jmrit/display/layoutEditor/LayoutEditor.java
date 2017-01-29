@@ -3659,9 +3659,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             // not in edit mode - check if mouse is on a turnout (using wider search range)
             selectedObject = null;
             for (LayoutTurnout t : turnoutList) {
-                // check a rectangle as large as turnout circle, but at least size 4
-                //double circleRadius = Math.max(LayoutTrack.SIZE * LayoutTurnout.getTurnoutCircleSize(), LayoutTrack.SIZE2 * 2.0);
-                double circleRadius = LayoutTrack.SIZE * LayoutTurnout.getTurnoutCircleSize();
+                // check a circle as large as turnout circle, but at least size 4
+                double circleRadius = Math.max(LayoutTrack.SIZE * LayoutTurnout.getTurnoutCircleSize(), LayoutTrack.SIZE2 * 2.0);
+                //double circleRadius = LayoutTrack.SIZE * LayoutTurnout.getTurnoutCircleSize();
                 double circleDiameter = 2.0 * circleRadius;
                 Point2D pt = t.getCoordsCenter();
                 Rectangle2D r = new Rectangle2D.Double(
@@ -3676,7 +3676,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             for (LayoutSlip sl : slipList) {
                 //check east/west turnout (control) circles?
                 Point2D pt = sl.getCoordsCenter();
-                double circleRadius = Math.min(LayoutTrack.SIZE * LayoutTurnout.getTurnoutCircleSize(), LayoutTrack.SIZE2 * 2.0);
+                double circleRadius = Math.max(LayoutTrack.SIZE * LayoutTurnout.getTurnoutCircleSize(), LayoutTrack.SIZE2 * 2.0);
                 double circleDiameter = 2.0 * circleRadius;
 
                 Point2D leftCenter = LayoutTrack.midpoint(sl.getCoordsA(), sl.getCoordsB());

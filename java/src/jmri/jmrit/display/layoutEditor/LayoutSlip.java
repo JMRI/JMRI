@@ -1356,10 +1356,7 @@ public class LayoutSlip extends LayoutTurnout {
         // draw east/west turnout (control) circles
         g2.setColor(turnoutCircleColor != null ? turnoutCircleColor : defaultTrackColor);
 
-        double size = SIZE;
-        double size2 = SIZE2;
-
-        double circleRadius = size * getTurnoutCircleSize();
+        double circleRadius = SIZE * turnoutCircleSize;
         double circleDiameter = 2.0 * circleRadius;
 
         Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
@@ -1381,7 +1378,7 @@ public class LayoutSlip extends LayoutTurnout {
         } else {
             g2.setColor(Color.blue);
         }
-        g2.draw(new Rectangle2D.Double(pt.getX() - size, pt.getY() - size, size2, size2));
+        g2.draw(new Rectangle2D.Double(pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
 
         pt = getCoordsB();
         if (getConnectB() == null) {
@@ -1389,7 +1386,7 @@ public class LayoutSlip extends LayoutTurnout {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(new Rectangle2D.Double(pt.getX() - size, pt.getY() - size, size2, size2));
+        g2.draw(new Rectangle2D.Double(pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
 
         pt = getCoordsC();
         if (getConnectC() == null) {
@@ -1397,7 +1394,7 @@ public class LayoutSlip extends LayoutTurnout {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(new Rectangle2D.Double(pt.getX() - size, pt.getY() - size, size2, size2));
+        g2.draw(new Rectangle2D.Double(pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
 
         pt = getCoordsD();
         if (getConnectD() == null) {
@@ -1405,7 +1402,7 @@ public class LayoutSlip extends LayoutTurnout {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(new Rectangle2D.Double(pt.getX() - size, pt.getY() - size, size2, size2));
+        g2.draw(new Rectangle2D.Double(pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
     }   // public void drawSlipRects(Graphics2D g2)
     static class TurnoutState {
 

@@ -3794,10 +3794,7 @@ public class LayoutTurnout extends LayoutTrack {
     public void drawTurnoutRect(Graphics2D g2) {
         g2.setColor(turnoutCircleColor != null ? turnoutCircleColor : defaultTrackColor);
 
-        double size = SIZE;
-        double size2 = SIZE2;
-
-        double circleRadius = size * turnoutCircleSize;
+        double circleRadius = SIZE * turnoutCircleSize;
         double circleDiameter = 2.0 * circleRadius;
         g2.draw(new Ellipse2D.Double(
                 center.getX() - circleRadius, center.getY() - circleRadius, circleDiameter, circleDiameter));
@@ -3816,7 +3813,7 @@ public class LayoutTurnout extends LayoutTrack {
                 g2.setColor(Color.green);
             }
         }
-        g2.draw(new Rectangle2D.Double(pt.getX() - size, pt.getY() - size, size2, size2));
+        g2.draw(new Rectangle2D.Double(pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
 
         pt = getCoordsB();
         if (getConnectB() == null) {
@@ -3824,7 +3821,7 @@ public class LayoutTurnout extends LayoutTrack {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(new Rectangle2D.Double(pt.getX() - size, pt.getY() - size, size2, size2));
+        g2.draw(new Rectangle2D.Double(pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
 
         pt = getCoordsC();
         if (getConnectC() == null) {
@@ -3832,7 +3829,7 @@ public class LayoutTurnout extends LayoutTrack {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(new Rectangle2D.Double(pt.getX() - size, pt.getY() - size, size2, size2));
+        g2.draw(new Rectangle2D.Double(pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
         if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
             pt = getCoordsD();
             if (getConnectD() == null) {
@@ -3840,7 +3837,7 @@ public class LayoutTurnout extends LayoutTrack {
             } else {
                 g2.setColor(Color.green);
             }
-            g2.draw(new Rectangle2D.Double(pt.getX() - size, pt.getY() - size, size2, size2));
+            g2.draw(new Rectangle2D.Double(pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
         }
     }
 
