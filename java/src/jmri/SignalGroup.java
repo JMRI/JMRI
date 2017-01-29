@@ -84,7 +84,7 @@ public interface SignalGroup extends NamedBean {
 
     /**
      * Get a SignalMast Aspect for the Main Signal Mast by its Index.
-     * @param n Index of the Signal Mast Aspect in the list
+     * @param x Index of the Signal Mast Aspect in the list
      * @return null if there are no Aspects with that index.
      */
     public String getSignalMastAspectByIndex(int x);
@@ -102,85 +102,85 @@ public interface SignalGroup extends NamedBean {
     public void deleteSignalMastAspect(String aspect);
 
     /**
-     * Add a Signal Head to the Group.
+     * Add a Signal Head item for this Signal Head to the list in the Group.
      * @param headBean The Signal Head as a Named Bean
      */
     public void addSignalHead(NamedBeanHandle<SignalHead> headBean);
 
     /**
-     * Add a Signal Head to the Group.
+     * Add a Signal Head item for this Signal Head to the list in the Group.
      * @param signalHead The Signal Head object
      */
     public void addSignalHead(SignalHead signalHead);
 
     /**
      * Get a Signal Head by Index.
-     * @param n Index of the SignalHead in the Group
+     * @param x Index of the SignalHead in the Group
      * @return null if there are no Signal Heads with that index in the group
      */
-    public SignalHead getHeadItemBeanByIndex(int n);
+    public SignalHead getHeadItemBeanByIndex(int x);
 
     /**
      * Get the name of a Signal Head by Index.
-     * @param n Index of the SignalHead in the Group
+     * @param x Index of the SignalHead in the Group
      * @return null if there are no Signal Heads with that index in the group
      */
-    public String getHeadItemNameByIndex(int n);
+    public String getHeadItemNameByIndex(int x);
 
     /**
-     * Get the On State of a Signal Head at Index n in the group.
-     * @param n Index of the SignalHead in Group
-     * @return -1 if there are less than 'n' Signal Heads defined
+     * Get the On State for the Signal Head item at Index x in the group.
+     * @param x Index of the SignalHead in Group
+     * @return -1 if there are less than 'x' Signal Heads defined
      */
-    public int getHeadOnStateByIndex(int n);
+    public int getHeadOnStateByIndex(int x);
 
     /**
-     * Get the Off State of a Signal Head at Index n in the group.
-     * @param n Index of the SignalHead in Group
-     * @return -1 if there are less than 'n' Signal Heads defined
+     * Get the Off State for the Signal Head item at Index x in the group.
+     * @param x Index of the SignalHead in Group
+     * @return -1 if there are less than 'x' Signal Heads defined
      */
-    public int getHeadOffStateByIndex(int n);
+    public int getHeadOffStateByIndex(int x);
 
     /**
-     * Remove a Signal Head from the group by Name.
+     * Remove the Signal Head item for this Signal Head from the group by Name.
      * @param sh The Signal Head to be deleted from the group.
      */
     public void deleteSignalHead(SignalHead sh);
 
     /**
-     * Remove a Signal Head from the group by NamedBean
+     * Remove the Signal Head item for this Signal Head from the group by NamedBean
      * @param headBean The Named Bean to be removed from the group.
      */
     public void deleteSignalHead(NamedBeanHandle<SignalHead> headBean);
 
     /**
-     * Get the number of Signal Heads configured in this group.
+     * Get the number of Signal Heads configured as items in this group.
      * @return the number of Signal Heads
      */
     public int getNumHeadItems();
 
     /**
-     * Inquire if a Signal Head is included in this Group.
+     * Inquire if a Signal Head item for this head is included in this Group.
      * @param signalHead The Signal Head object we are querying
      */
     public boolean isHeadIncluded(SignalHead signalHead);
 
     /**
-     * Get the On (conditions met) State of a Signal Head.
+     * Get the On (conditions met) State of a Signal Head item in the group.
      * @param signalHead The Signal Head object we are querying
      * @return state value for the On state (appearance)
      */
     public int getHeadOnState(SignalHead signalHead);
 
     /**
-     * Get the Off (conditions NOT met) State of a Signal Head.
+     * Get the Off (conditions NOT met) State of a Signal Head item in the group.
      * @param signalHead The Signal Head Bean object we are querying
      * @return state value for the Off state (appearance)
      */
     public int getHeadOffState(SignalHead signalHead);
 
     /**
-     * Set the On (conditions met) State of a Signal Head in the Group.
+     * Set the On (conditions met) State of a Signal Head item in the Group.
      * @param signalHead  The SignalHead Bean
      * @param state The Appearance that the SignalHead will change to when the
      *              conditions are met.
@@ -188,7 +188,7 @@ public interface SignalGroup extends NamedBean {
     public void setHeadOnState(SignalHead signalHead, int state);
 
     /**
-     * Set the Off (conditions NOT met) State of a Signal Head in the Group.
+     * Set the Off (conditions NOT met) State of a Signal Head item in the Group.
      * @param signalHead  The SignalHead Bean
      * @param state The Apperance that the SignalHead will change to when the
      *              conditions are NOT met.
@@ -215,7 +215,7 @@ public interface SignalGroup extends NamedBean {
      * Get the number of turnouts configured for
      * the Signal Head at index x.
      * @param x Index of the SignalHead in Group
-     * @return -1 if there are less than 'n' Signal Heads defined
+     * @return -1 if there are less than 'x' Signal Heads defined
      */
     public int getNumHeadTurnoutsByIndex(int x);
 
@@ -338,7 +338,7 @@ public interface SignalGroup extends NamedBean {
      * Get the number of Sensors configured for
      * the Signal Head at index x.
      * @param x Index for the Signal Head in the group
-     * @return -1 if there are less than 'n' Signal Heads defined
+     * @return -1 if there are less than 'x' Signal Heads defined
      */
     public int getNumHeadSensorsByIndex(int x);
 

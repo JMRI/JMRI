@@ -167,36 +167,30 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         sh.addSensor(sensor, state);
     }
 
-    /**
-     * Get the 'n' Signal Head item
-     */
-    private SignalHeadItem getSignalHeadItemByIndex(int n) {
+    private SignalHeadItem getSignalHeadItemByIndex(int x) {
         try {
-            return _signalHeadItem.get(n);
+            return _signalHeadItem.get(x);
         } catch (IndexOutOfBoundsException ioob) {
             return null;
         }
     }
 
-    public String getHeadItemNameByIndex(int n) {
+    public String getHeadItemNameByIndex(int x) {
         try {
-            return getSignalHeadItemByIndex(n).getName();
+            return getSignalHeadItemByIndex(x).getName();
         } catch (IndexOutOfBoundsException ioob) {
             return null;
         }
     }
 
-    public SignalHead getHeadItemBeanByIndex(int n) {
+    public SignalHead getHeadItemBeanByIndex(int x) {
         try {
-            return getSignalHeadItemByIndex(n).getSignalHead();
+            return getSignalHeadItemByIndex(x).getSignalHead();
         } catch (IndexOutOfBoundsException ioob) {
             return null;
         }
     }
 
-    /**
-     * Get the number of Signal Heads in this Group
-     */
     public int getNumHeadItems() {
         return _signalHeadItem.size();
     }
@@ -217,17 +211,17 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
-    public int getHeadOnStateByIndex(int n) {
+    public int getHeadOnStateByIndex(int x) {
         try {
-            return getSignalHeadItemByIndex(n).getOnAppearance();
+            return getSignalHeadItemByIndex(x).getOnAppearance();
         } catch (IndexOutOfBoundsException ioob) {
             return -1;
         }
     }
 
-    public int getHeadOffStateByIndex(int n) {
+    public int getHeadOffStateByIndex(int x) {
         try {
-            return getSignalHeadItemByIndex(n).getOffAppearance();
+            return getSignalHeadItemByIndex(x).getOffAppearance();
         } catch (IndexOutOfBoundsException ioob) {
             return -1;
         }
