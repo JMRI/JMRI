@@ -182,7 +182,8 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getTextEditAction(final Positionable pos, final String title) {
-        return new AbstractAction(Bundle.getMessage(title)) {
+        return new AbstractAction(Bundle.getMessage(title) + "...") {
+
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
@@ -196,7 +197,7 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getLinkEditAction(final Positionable pos, final String title) {
-        return new AbstractAction(Bundle.getMessage(title)) {
+        return new AbstractAction(Bundle.getMessage(title) + "...") {
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -382,7 +383,7 @@ public class CoordinateEdit extends JmriJFrame {
 
         okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                pl.getTooltip().setText(xTextField.getText());
+                pl.getTooltip().setText(xTextField.getText()); // is fetched from pane OK but not stored in icon pl
                 dispose();
             }
         });

@@ -1,4 +1,3 @@
-// DelaySound.java
 package jmri.jmrix.loconet.sdf;
 
 /**
@@ -17,7 +16,7 @@ public class DelaySound extends SdfMacro {
     }
 
     public String name() {
-        return "DELAY_SOUND";
+        return "DELAY_SOUND"; // NOI18N
     }
 
     int mode;
@@ -51,19 +50,17 @@ public class DelaySound extends SdfMacro {
     }
 
     public String toString() {
-        return "Delay Sound\n";
+        return "Delay Sound\n"; // NOI18N
     }
 
     public String oneInstructionString() {
-        String modeVal = (DELAY_THIS == mode) ? "DELAY_THIS" : "DELAY_CV";
-        String valueVal = (DELAY_THIS == mode) ? "" + value : "CV=" + value;
-        String glblVal = (glbl == 1) ? "DELAY_GLOBAL" : "0";  // what should 0 case be?
-        return name() + ' ' + modeVal + "," + valueVal + "," + glblVal + '\n';
+        String modeVal = (DELAY_THIS == mode) ? "DELAY_THIS" : "DELAY_CV"; // NOI18N
+        String valueVal = (DELAY_THIS == mode) ? "" + value : "CV=" + value; // NOI18N
+        String glblVal = (glbl == 1) ? "DELAY_GLOBAL" : "0";  // what should 0 case be? // NOI18N
+        return name() + ' ' + modeVal + "," + valueVal + "," + glblVal + '\n'; // NOI18N
     }
 
     public String allInstructionString(String indent) {
         return indent + oneInstructionString();
     }
 }
-
-/* @(#)DelaySound.java */

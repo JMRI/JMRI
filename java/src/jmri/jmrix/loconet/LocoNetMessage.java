@@ -1,4 +1,3 @@
-// LocoNetMessage.java
 package jmri.jmrix.loconet;
 
 import java.io.Serializable;
@@ -33,8 +32,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class LocoNetMessage implements Serializable {
-
-    static final long serialVersionUID = -7904918731667071828L;
 
     /**
      * Create a new object, representing a specific-length message.
@@ -87,7 +84,7 @@ public class LocoNetMessage implements Serializable {
      * Get a String representation of the op code in hex
      */
     public String getOpCodeHex() {
-        return "0x" + Integer.toHexString(getOpCode());
+        return "0x" + Integer.toHexString(getOpCode()); // NOI18N
     }
 
     /**
@@ -99,18 +96,18 @@ public class LocoNetMessage implements Serializable {
 
     public int getElement(int n) {
         if (n < 0 || n >= _dataBytes.length) {
-            log.error("reference element " + n
-                    + " in message of " + _dataBytes.length
-                    + " elements: " + this.toString());
+            log.error("reference element " + n // NOI18N
+                    + " in message of " + _dataBytes.length // NOI18N
+                    + " elements: " + this.toString()); // NOI18N
         }
         return _dataBytes[n] & 0xFF;
     }
 
     public void setElement(int n, int v) {
         if (n < 0 || n >= _dataBytes.length) {
-            log.error("reference element " + n
-                    + " in message of " + _dataBytes.length
-                    + " elements: " + this.toString());
+            log.error("reference element " + n // NOI18N
+                    + " in message of " + _dataBytes.length // NOI18N
+                    + " elements: " + this.toString()); // NOI18N
         }
         _dataBytes[n] = v;
     }
@@ -424,5 +421,3 @@ public class LocoNetMessage implements Serializable {
     private final static Logger log = LoggerFactory.getLogger(LocoNetMessage.class.getName());
 
 }
-
-/* @(#)LocoNetMessage.java */

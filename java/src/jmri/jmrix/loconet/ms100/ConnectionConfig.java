@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.loconet.ms100;
 
 import jmri.util.SystemType;
@@ -33,10 +32,10 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
      */
     public String name() {
         if (SystemType.isMacOSX()
-                || (SystemType.isWindows() && Double.valueOf(System.getProperty("os.version")) >= 6)) {
+                || (SystemType.isWindows() && Double.valueOf(System.getProperty("os.version")) >= 6)) { // NOI18N
             return "(LocoNet MS100 not available)";
         } else {
-            return "LocoNet MS100";
+            return "LocoNet MS100"; // NOI18N
         }
     }
 

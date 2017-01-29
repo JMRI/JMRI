@@ -171,7 +171,7 @@ public class WarrantManagerXml //extends XmlFile
             return;
         }
         Element elem = new Element("nxparams");
-        NXFrame nxFrame = NXFrame.getInstance();
+        NXFrame nxFrame = NXFrame.getDefault();
         Element e = new Element("maxspeed");
         e.addContent(Float.toString(nxFrame.getMaxSpeed()));
         elem.addContent(e);
@@ -188,10 +188,12 @@ public class WarrantManagerXml //extends XmlFile
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
         
         // don't continue on to build NXFrame if no content
-        if (shared.getChildren().size() == 0) return true;
+        if (shared.getChildren().isEmpty()) {
+            return true;
+        }
         
         if (!GraphicsEnvironment.isHeadless()) {
-            NXFrame nxFrame = NXFrame.getInstance();
+            NXFrame nxFrame = NXFrame.getDefault();
             loadNXParams(nxFrame, shared.getChild("nxparams"));
 //            nxFrame.init();   don't make visible
         }

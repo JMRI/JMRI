@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.loconet.locobuffer;
 
 /**
@@ -29,7 +28,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     public String name() {
-        return "LocoNet LocoBuffer";
+        return "LocoNet LocoBuffer"; // NOI18N
     }
 
     protected void setInstance() {

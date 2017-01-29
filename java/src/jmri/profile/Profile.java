@@ -128,7 +128,7 @@ public class Profile implements Comparable<Profile> {
     /**
      * @return the id
      */
-    public @Nonnull
+    @Nonnull public
     String getId() {
         return id;
     }

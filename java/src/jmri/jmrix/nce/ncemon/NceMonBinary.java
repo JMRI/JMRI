@@ -1,4 +1,3 @@
-// NceMonBinary.java
 package jmri.jmrix.nce.ncemon;
 
 import java.text.MessageFormat;

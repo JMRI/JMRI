@@ -1,4 +1,3 @@
-// NetworkDriverAdapter.java
 package jmri.jmrix.nce.networkdriver;
 
 import jmri.jmrix.nce.NceNetworkPortController;

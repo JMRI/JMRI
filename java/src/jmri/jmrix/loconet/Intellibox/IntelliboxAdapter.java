@@ -1,6 +1,6 @@
-// LocoBufferAdapter.java
 package jmri.jmrix.loconet.Intellibox;
 
+import java.util.Arrays;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 
@@ -50,20 +50,16 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
         packets.startThreads();
     }
 
-    /**
-     * Get an array of valid baud rates.
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
      * Get an array of valid baud rates as integers.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public int[] validBaudNumber() {
-        return validSpeedValues;
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     /**

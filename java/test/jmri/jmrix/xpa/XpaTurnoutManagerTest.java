@@ -13,7 +13,7 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class XpaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class XpaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     private XpaSystemConnectionMemo memo = null;
 

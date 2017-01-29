@@ -1,4 +1,3 @@
-// GenerateTrigger.java
 package jmri.jmrix.loconet.sdf;
 
 /**
@@ -14,7 +13,7 @@ public class GenerateTrigger extends SdfMacro {
     }
 
     public String name() {
-        return "GENERATE_TRIGGER";
+        return "GENERATE_TRIGGER"; // NOI18N
     }
 
     int trigger;
@@ -36,7 +35,7 @@ public class GenerateTrigger extends SdfMacro {
         if (trigName != null) {
             return trigName;
         }
-        return "(trigger = 0x" + jmri.util.StringUtil.twoHexFromInt(trigger) + ")";
+        return "(trigger = 0x" + jmri.util.StringUtil.twoHexFromInt(trigger) + ")"; // NOI18N
     }
 
     /**
@@ -52,16 +51,14 @@ public class GenerateTrigger extends SdfMacro {
     }
 
     public String toString() {
-        return "Cause Trigger " + triggerVal() + '\n';
+        return "Cause Trigger " + triggerVal() + '\n'; // NOI18N
     }
 
     public String oneInstructionString() {
-        return name() + ' ' + triggerVal() + '\n';
+        return name() + ' ' + triggerVal() + '\n'; // NOI18N
     }
 
     public String allInstructionString(String indent) {
         return indent + oneInstructionString();
     }
 }
-
-/* @(#)GenerateTrigger.java */

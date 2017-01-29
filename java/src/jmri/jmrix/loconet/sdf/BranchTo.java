@@ -1,4 +1,3 @@
-// BranchTo.java
 package jmri.jmrix.loconet.sdf;
 
 /**
@@ -16,7 +15,7 @@ public class BranchTo extends SdfMacro {
     }
 
     public String name() {
-        return "BRANCH_TO";
+        return "BRANCH_TO"; // NOI18N
     }
 
     public int length() {
@@ -50,16 +49,14 @@ public class BranchTo extends SdfMacro {
     }
 
     public String toString() {
-        return "Branch\n";
+        return "Branch\n"; // NOI18N
     }
 
     public String oneInstructionString() {
-        return name() + ' ' + addr + "; from base of " + skemebase + '\n';
+        return name() + ' ' + addr + "; from base of " + skemebase + '\n'; // NOI18N
     }
 
     public String allInstructionString(String indent) {
         return indent + oneInstructionString();
     }
 }
-
-/* @(#)BranchTo.java */

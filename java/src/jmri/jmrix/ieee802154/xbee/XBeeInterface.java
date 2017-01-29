@@ -1,4 +1,3 @@
-// XBeeInterface.java
 package jmri.jmrix.ieee802154.xbee;
 
 /**
@@ -17,4 +16,4 @@ public interface XBeeInterface {
 }
 
 
-/* @(#)XBeeInterface.java */
+

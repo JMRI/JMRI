@@ -14,7 +14,7 @@ import javax.swing.table.TableRowSorter;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 /**
- * Frame provinging a command station slot manager.
+ * Frame providing a command station slot manager.
  * <P>
  * Slots 102 through 127 are normally not used for loco control, so are shown
  * separately.
@@ -23,10 +23,6 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
   */
 public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5149412620444668985L;
     /**
      * Controls whether not-in-use slots are shown
      */
@@ -141,7 +137,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
     }
 
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.slotmon.SlotMonFrame";
+        return "package.jmri.jmrix.loconet.slotmon.SlotMonFrame"; // NOI18N
     }
 
     public String getTitle() {
@@ -160,11 +156,6 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8377346674021280925L;
 
         public Default() {
             super(Bundle.getMessage("MenuItemSlotMonitor"),

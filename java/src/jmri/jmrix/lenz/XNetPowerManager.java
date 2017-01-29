@@ -25,7 +25,7 @@ public class XNetPowerManager implements PowerManager, XNetListener {
     }
 
     public String getUserName() {
-        return "XPressNet";
+        return userName;
     }
 
     String userName = "XPressNet";
@@ -156,4 +156,4 @@ public class XNetPowerManager implements PowerManager, XNetListener {
 }
 
 
-/* @(#)XNetPowerManager.java */
+

@@ -1,4 +1,3 @@
-// MrcInterface.java
 package jmri.jmrix.mrc;
 
 /**
@@ -62,4 +61,4 @@ public interface MrcInterface {
 }
 
 
-/* @(#)MrcInterface.java */
+

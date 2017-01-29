@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.loconet.locobufferusb;
 
 import jmri.util.SystemType;
@@ -27,7 +26,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     public String name() {
-        return "LocoNet LocoBuffer-USB";
+        return "LocoNet LocoBuffer-USB"; // NOI18N
     }
 
     public boolean isOptList2Advanced() {
@@ -43,7 +42,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     @Override
     protected String[] getPortFriendlyNames() {
         if (SystemType.isWindows()) {
-            return new String[]{"LocoBuffer-USB", "LocoBuffer"};
+            return new String[]{"LocoBuffer-USB", "LocoBuffer"}; // NOI18N
         }
         return new String[]{};
     }

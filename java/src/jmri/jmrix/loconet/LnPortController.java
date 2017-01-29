@@ -1,4 +1,3 @@
-// LnPortController.java
 package jmri.jmrix.loconet;
 
 import java.io.DataInputStream;
@@ -87,19 +86,19 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
         if (value == null) {
             return;  // can happen while switching protocols
         }
-        log.debug("setCommandStationType: " + value);
+        log.debug("setCommandStationType: " + value); // NOI18N
         commandStationType = value;
     }
 
     public void setTurnoutHandling(String value) {
-        if (value.equals("One Only") || value.equals("Both")) {
+        if (value.equals("One Only") || value.equals("Both")) { // NOI18N
             mTurnoutNoRetry = true;
         }
-        if (value.equals("Spread") || value.equals("Both")) {
+        if (value.equals("Spread") || value.equals("Both")) { // NOI18N
             mTurnoutExtraSpace = true;
         }
-        log.debug("turnout no retry: " + mTurnoutNoRetry);
-        log.debug("turnout extra space: " + mTurnoutExtraSpace);
+        log.debug("turnout no retry: " + mTurnoutNoRetry); // NOI18N
+        log.debug("turnout extra space: " + mTurnoutExtraSpace); // NOI18N
     }
 
     @Override
@@ -108,6 +107,3 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     }
     private final static Logger log = LoggerFactory.getLogger(LnPortController.class.getName());
 }
-
-
-/* @(#)LnPortController.java */

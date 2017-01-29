@@ -36,4 +36,4 @@ public class DCCppProgrammerManager extends DefaultProgrammerManager {
     }
 }
 
-/* @(#)DefaultProgrammerManager.java */
+

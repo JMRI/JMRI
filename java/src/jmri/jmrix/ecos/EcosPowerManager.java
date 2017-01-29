@@ -1,4 +1,3 @@
-// EcosPowerManager.java
 package jmri.jmrix.ecos;
 
 import jmri.JmriException;
@@ -107,4 +106,4 @@ public class EcosPowerManager implements PowerManager, EcosListener {
 }
 
 
-/* @(#)EcosPowerManager.java */
+

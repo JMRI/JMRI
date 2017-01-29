@@ -55,18 +55,21 @@ public interface RailCom extends IdTag {
     /**
      * Method for a RailCom Reader to set the orientation reported back from a
      * device
+     *
      * @param type the orientation to set
      */
     public void setOrientation(int type);
 
     /**
      * Gets the Orientation of the Rail Com device on the track
+     *
      * @return current orientation
      */
     public int getOrientation();
 
     /**
-     * Gets the address reported back as a jmri.DccLocoAddress
+     * Gets the address reported back as a {@link jmri.DccLocoAddress}.
+     *
      * @return current DCC loco address
      */
     public DccLocoAddress getDccLocoAddress();
@@ -74,6 +77,7 @@ public interface RailCom extends IdTag {
     /**
      * Method for a RailCom Reader to set the Address type reported back from a
      * device
+     *
      * @param type set type of address
      */
     public void setAddressType(int type);
@@ -87,12 +91,16 @@ public interface RailCom extends IdTag {
 
     /**
      * Gets the actual address type as a String.
+     *
+     * @return the address type
      */
     public String getAddressTypeAsString();
 
     /**
      * Method for a RailCom Reader to set the Actual speed reported back from a
      * device
+     *
+     * @param actualSpeed the speed
      */
     public void setActualSpeed(int actualSpeed);
 
@@ -105,7 +113,9 @@ public interface RailCom extends IdTag {
     public int getActualSpeed();
 
     /**
-     * Method for a RailCom Reader to set the Actual Load back from a device
+     * Method for a RailCom Reader to set the Actual Load back from a device.
+     *
+     * @param actualLoad the load
      */
     public void setActualLoad(int actualLoad);
 
@@ -118,7 +128,9 @@ public interface RailCom extends IdTag {
 
     /**
      * Method for a RailCom Reader to set the actual temperate reported back
-     * from a device
+     * from a device.
+     *
+     * @param actualTemp the temperature
      */
     public void setActualTemperature(int actualTemp);
 
@@ -132,13 +144,17 @@ public interface RailCom extends IdTag {
 
     /**
      * Method for a RailCom Reader to set the fuel level reported back from a
-     * device
+     * device.
+     *
+     * @param fuelLevel the fuel level
      */
     public void setFuelLevel(int fuelLevel);
 
     /**
      * Method for a RailCom Reader to set the water level reported back from a
-     * device
+     * device.
+     *
+     * @param waterLevel the water level
      */
     public void setWaterLevel(int waterLevel);
 
@@ -158,7 +174,9 @@ public interface RailCom extends IdTag {
 
     /**
      * Method for a RailCom Reader to set the location reported back from a
-     * device
+     * device.
+     *
+     * @param location the location
      */
     public void setLocation(int location);
 
@@ -172,7 +190,9 @@ public interface RailCom extends IdTag {
 
     /**
      * Method for a RailCom Reader to set the routing number reported back from
-     * a device
+     * a device.
+     *
+     * @param routingno the routing number
      */
     public void setRoutingNo(int routingno);
 
@@ -201,23 +221,31 @@ public interface RailCom extends IdTag {
     public void setCv(int cv, int value);
 
     /**
-     * This sets the cv number of the next expected value to be returned in a
-     * RailCom Packet.
+     * Set the CV number of the next expected value to be returned in a RailCom
+     * Packet.
+     *
+     * @param cv the expected CV
      */
     public void setExpectedCv(int cv);
 
     /**
-     * returns the CV that we are expecting to be returned in a railcom packet
+     * Get the expected CV to be returned in a RailCom Packet.
+     *
+     * @return the expected CV
      */
     public int getExpectedCv();
 
     /**
-     * Sets the value of the cv that has been read from the rail comm packet
+     * Set the value of the CV that has been read from the RailCom packet.
+     *
+     * @param value the CV value
      */
     public void setCvValue(int value);
 
     /**
-     * returns a list of the CVs and values last seen for this Railcom device.
+     * Get a list of the CVs last seen for this RailCom device.
+     *
+     * @return a list of CVs
      */
     public List<Integer> getCVList();
 

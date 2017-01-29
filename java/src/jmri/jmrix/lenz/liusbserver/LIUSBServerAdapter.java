@@ -78,17 +78,20 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         } catch (java.io.IOException e) {
             log.error("init (pipe): Exception: " + e.toString());
             ConnectionStatus.instance().setConnectionState(
+                        this.getSystemConnectionMemo().getUserName(),
                         m_HostName, ConnectionStatus.CONNECTION_DOWN);
             throw e; // re-throw so this can be seen externally.
         } catch (Exception ex) {
             log.error("init (connect): Exception: " + ex.toString());
             ConnectionStatus.instance().setConnectionState(
+                        this.getSystemConnectionMemo().getUserName(),
                         m_HostName, ConnectionStatus.CONNECTION_DOWN);
             throw ex; // re-throw so this can be seen externally.
         }
         keepAliveTimer();
         if (opened) {
             ConnectionStatus.instance().setConnectionState(
+                    this.getSystemConnectionMemo().getUserName(),
                     m_HostName, ConnectionStatus.CONNECTION_UP);
         }
 
@@ -98,8 +101,9 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
      * Can the port accept additional characters? return true if the port is
      * opened.
      */
+    @Override
     public boolean okToSend() {
-        return status();
+        return (super.okToSend() && status());
     }
 
     // base class methods for the XNetNetworkPortController interface

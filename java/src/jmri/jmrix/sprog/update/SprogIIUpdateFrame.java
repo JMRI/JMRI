@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog.update;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.swing.JOptionPane;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.SprogMessage;
@@ -37,7 +38,7 @@ public class SprogIIUpdateFrame
 
     int bootVer = 0;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD")
+    @SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD")
     synchronized public void notifyVersion(SprogVersion v) {
         sv = v;
         if (sv.sprogType.isSprog() == false) {
@@ -277,7 +278,7 @@ public class SprogIIUpdateFrame
             }
             msg = SprogMessage.getWriteFlash(hexFile.getAddress(), hexFile.getData(), blockLen);
             if (log.isDebugEnabled()) {
-                log.debug(msg.toString());
+                log.debug(msg.toString(true));
             }
         } else {
             // Do nothing
@@ -297,6 +298,7 @@ public class SprogIIUpdateFrame
         } else {
             // use timeout to kick off the next write
             bootState = BootState.NULLWRITE;
+            statusBar.setText("Skip " + hexFile.getAddress());
             startVShortTimer();
         }
     }

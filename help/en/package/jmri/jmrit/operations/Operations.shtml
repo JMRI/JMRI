@@ -25,19 +25,26 @@
  <div class="nomenu" id="mBody">
   <div id="mainContent">
    <h1>JMRI: OperationsPro&trade;</h1>
-   The JMRI Operations program allows you to create computer generated train Manifests for your
-   railroad. A train <a href="#PrintingManifests">Manifest</a> details the work that a crew will
-   perform during an operations session. The Manifest provides a list of car pick up and set outs
-   and shows where the cars are located and where they should be eventually positioned on the
-   railroad. The program allows you to enter a roster of cars and locomotives, define locations
-   (stations) on the railroad, and routes for trains to travel. The car roster includes information
-   about the car, including road, number, type of car, color, length, weight, load, date built, and
-   owner. Trains are assigned routes that define locations or stations where cars can be picked up
-   or set out. Features include the ability to control what car types, roads, and car loads a
-   location or industry can service, the available track space for a location, and the maximum
-   length the train can be between any two locations in the train's route.
+			The JMRI Operations program allows you to create computer generated
+			train Manifests for your railroad. A train
+			<a href="#PrintingManifests">Manifest</a> details the work that a
+			crew will perform during an operations session. The Manifest provides
+			a list of car pick up and set outs and shows where the cars are
+			located and where they should be eventually positioned on the
+			railroad. The program allows you to enter a roster of
+			<a href="#Cars">cars</a> and <a href="#Locomotives">locomotives</a>,
+			define <a href="#Locations">locations</a> (stations) on the railroad,
+			and <a href="#Routes">routes</a> for <a href="#Trains">trains</a> to
+			travel. The car roster includes information about the car, including
+			road, number, type of car, color, length, weight, load, date built,
+			and owner. Trains are assigned routes that define locations or
+			stations where cars can be picked up or set out. Features include the
+			ability to control what car types, roads, and car loads a location or
+			industry can service, the available track space for a location, and
+			the maximum length the train can be between any two locations in the
+			train's route.
 
-   <p>
+			<p>
     Locations can have spurs, yards, staging and classification/interchange tracks. Spurs are used
     to service industries, and can optionally have <a href="#Schedules">schedules</a> assigned to
     them which allows for very fine control over car movement and loads. Trains can be configured to
@@ -140,6 +147,8 @@
         <li><a href="#Schedules">Schedules</a></li>
 
         <li><a href="#SchedulesAndLoads">Schedules and Loads</a></li>
+        
+        <li><a href="#ControllingCarsToSpur">Controlling Cars to the Spur / Industry</a></li> 
 
         <li><a href="#ShowSchedulesByCarTypeAndLoad">Show Schedules by Car Type and Load</a></li>
 
@@ -477,7 +486,7 @@
     route by selecting them from the menu and pressing the "Add Location" button in the <a
      href="#AddRoute">Add Route</a> window. Try and keep it simple by only entering each of your
     locations once in the route. For now don't modify the route in any way, later you can come back
-    and modify how many cars are serviced at each location by adjusting the move count.
+    and modify how many cars are serviced at each location by adjusting the <a href="#EditRoute">move</a> count.
    </p>
 
    <p>
@@ -1958,6 +1967,14 @@
     of routes that can service the track. If you only want to prevent certain trains or routes from
     serving the track select the "Exclude Trains" or "Exclude Routes" options.</p>
 
+   <p>If you restrict a track to certain trains or routes, the table in the <a href="#AddLocation">Edit Location</a>
+    window for that track will have an additional column called "Restrictions". If you've built a
+    list of trains or routes that can only set out cars to the track, you will see "SO" followed by the
+    number of trains or routes that are allowed to place cars onto that track. For car pickup
+    restrictions, you will see "PU" followed by the number of trains or routes that are allowed to
+    pull cars from that track. A small "x" appears before the number if you built of list of train
+    or route exclusions for that track.</p>
+
    <a name="Schedules" id="Schedules"></a>
    <h3>Schedules</h3>
    If you would like to see cars delivered in a particular sequence, or with a specific load for
@@ -1968,6 +1985,12 @@
    and load. You can also decide the car's new load, destination, and when the car is to be picked
    up. For example, if you wanted two SP boxcars to be delivered followed by a tankcar loaded with
    "Oil", you can create a schedule that will do exactly that.
+
+   <p>You should note that adding schedules and custom loads is an optional feature and isn't
+    needed for good car movement, and in most cases will reduce car movement. So if you want the
+    most car movement don't use schedules or custom loads. This feature is here for those that want
+    specific car movement and custom loads. You also don't have to have schedules for all of your
+    spurs / industries, you can be selective and only add them to the spurs that you believe need them.</p>
 
    <p>
     To create a schedule press the "Add" button next to "Optional Schedule" pull down menu in the <a
@@ -2091,6 +2114,7 @@
     three cars.
    </p>
 
+   <a name="ControllingCarsToSpur" id="ControllingCarsToSpur"></a>
    <h4>Controlling Cars to the Spur / Industry</h4>
 
    <p>If you need to adjust the number of cars "en route" to a spur with a schedule, select in
@@ -2120,19 +2144,19 @@
 
    <p>Schedules can operate in one of two modes, sequential as described above, or in match
     mode. Match mode eliminates the sequential aspects of a schedule. In match mode, the program
-    will search the entire schedule to find a car type, delivery day, and receive load that matches
-    the car that the program is trying to place. In match mode the pointer shows the last car type
-    that the program found acceptable for the spur. To change the schedule to match mode, select
-    "Match" in the edit schedule window and press "Save". Match mode is useful when the order cars
-    arrive isn't important, but you still want to receive or ship cars with a specific load, provide
-    the car's final destination, or have the car wait for a specific number of trains or pickup day.
-    In match mode the schedule item count is ignored as it isn't used. Instead, a hit count is
-    provided. The program increments the hit count for a schedule item each time it finds a match,
-    and plans on sending the car to that spur because of the match. In match mode, all of the
-    schedule item fields are available, and you can have the same type of car several times, with
-    each item in the schedule looking for a specific receive load or delivery date. Also in match
-    mode the car type selection box advances automatically to the next car type when adding a car
-    type. This makes it easy to quickly add car types to the table.</p>
+    when building a train will search the entire schedule to find a car type, delivery day, and
+    receive load that matches the car that the program is trying to place. In match mode the pointer
+    shows the last car type that the program found acceptable for the spur. To change the schedule
+    to match mode, select "Match" in the edit schedule window and press "Save". Match mode is useful
+    when the order cars arrive isn't important, but you still want to receive or ship cars with a
+    specific load, provide the car's final destination, or have the car wait for a specific number
+    of trains or pickup day. In match mode the schedule item count is ignored as it isn't used.
+    Instead, a hit count is provided. The program increments the hit count for a schedule item each
+    time it finds a match, and plans on sending the car to that spur because of the match. In match
+    mode, all of the schedule item fields are available, and you can have the same type of car
+    several times, with each item in the schedule looking for a specific receive load or delivery
+    date. Also in match mode the car type selection box advances automatically to the next car type
+    when adding a car type. This makes it easy to quickly add car types to the table.</p>
 
    <h4>Using the Same Schedule for Several Spurs</h4>
 
@@ -2511,6 +2535,14 @@
     remove a load name from the list, select the load name you want to remove, and press "Delete
     Load". "Delete All" will remove all load names from the load list.</p>
 
+   <p>
+    If you decide to restrict a track to certain loads, the table in the <a href="#AddLocation">Edit
+     Location</a> window for that track will have an additional column called "Loads". If you've built a
+    list of loads that can be accepted by the track, you will see "A" followed by the number of
+    loads that are accepted by that track. If you've built a list of loads that the track will not
+    allow, you will see "E" and the number of loads that you want to exclude from this track.
+   </p>
+
    <a name="SpurOption" id="SpurOption"></a>
    <h5>Spur Option</h5>
 
@@ -2540,6 +2572,14 @@
     road you want, and then press the "Add Road" button. To remove a road from the list, select the
     road you want to remove, and press "Delete Road". "Delete All" will remove all roads from the
     road list.</p>
+
+   <p>
+    If you decide to restrict a track to certain roads, the table in the <a href="#AddLocation">Edit
+     Location</a> window for that track will have an additional column called "Roads". If you've built a
+    list of roads that can be accepted by the track, you will see "A" followed by the number of
+    roads that are accepted by that track. If you've built a list of roads that the track will not
+    service, you will see "E" and the number of roads that you want to exclude from this track.
+   </p>
 
    <a name="Pools" id="Pools"></a>
    <h4>Track Pools</h4>
@@ -3371,18 +3411,23 @@
    <a name="Routes" id="Routes"></a>
    <h2>Routes</h2>
    A route is a list of locations (stations) that a train will visit. Later you can decide if the
-   train stops at a location for work. Routes can be point to point or out and back. To build a
-   route, select "Tools-&gt;Operations-&gt;Routes". The Routes window also provides route status,
-   for example, "Orphan" means the route hasn't been assigned to a train.
+   train stops at a location for work. Routes can be point to point or out and back. A route that
+   returns to its origin is often referred to as a "turn". To build a route, select
+   "Tools-&gt;Operations-&gt;Routes".
 
    <p>
     <img src="images/Routes.png">
    </p>
 
+   <p>The "Routes" window shows for every route created the id, name, comment, shortest route
+    length, longest route length, and status of the route. If there's a problem with the route, the
+    status will be reported as "Error". If the route hasn't been assigned to a train, the status for
+    the route is reported as "Orphan". Use the "Edit" button to modify an existing route.</p>
+
    <a name="AddRoute" id="AddRoute"></a>
    <h3>Add Route</h3>
 
-   <p>Press the "Add" button located at the bottom of the "Routes" window to create a new route
+   <p>Press the "Add" button located at the bottom of the <a href="#Routes">Routes</a> window to create a new route
     for your trains.</p>
 
    <p>
@@ -3390,7 +3435,7 @@
    </p>
 
    <p>
-    Enter the route name and an optional comment. This comment is shown in the routes window, and <a
+    Enter the route name and an optional comment. This comment is shown in the <a href="#Routes">Routes</a> window, and <a
      href="#ManifestComments">optionally</a> on your Manifests. Each route must have unique name.
     Then press the "Add Route" button located at the bottom of the window. Now select the location
     the train will depart by selecting the location in the menu box located at the left bottom side
@@ -3461,7 +3506,7 @@
    <p>If you want to delay the departure of the train from a location or increase the train's
     travel time, enter the number of minutes desired in the "Wait" cell. Another choice is to
     specify the train's departure time from a location by selecting the "Departure Time" radio
-    button in the lower right hand corner of the edit route window.</p>
+    button in the lower right hand corner of the <a href="#EditRoute">Edit Route</a> window.</p>
 
    <p>
     You can also adjust the <a href="#MaximumTrainLength">maximum train length</a> using <a
@@ -3513,17 +3558,18 @@
     an Eastbound train. The second "Hillsboro" provides the departure direction for the train, and
     the amount of work for tracks that can only be access by a Westbound train. Even though
     "Hillsboro" appears twice in the route, it will only appear once on your Manifests and switch
-    lists.</p>
+    lists. Also when you enter a location twice in a row in the route with a change in direction,
+    the location's switch list will add a note that the train's departure direction has changed.</p>
 
    <a name="PassengerTrainRoute" id="PassengerTrainRoute"></a>
    <h3>Passenger Train Route</h3>
    <p>Normally passenger trains run on a schedule based on departure times. If you want your
     Manifests to show the departure times for your train, create a route in which you specify the
-    departure time at each location. In the lower right hand corner of the "Edit Route" window,
+    departure time at each location. In the lower right hand corner of the <a href="#EditRoute">Edit Route</a> window,
     select "Departure Time" in the Display box. Now select the departure time for each location in
     the train's route. The Manifest statement "No work at xxx" isn't appropriate for a passenger
     train. To eliminate this statement, simply add a comment to each location in the train's route.
-    Use the Edit Route window, and for each location, you can add a comment or edit an existing one.</p>
+    Use the <a href="#EditRoute">Edit Route</a> window, and for each location, you can add a comment or edit an existing one.</p>
 
    <a name="DepartingStagingRoute" id="DepartingStagingRoute"></a>
    <h3>Departing Staging Route</h3>
@@ -3583,7 +3629,7 @@
    <a name="CopyRoute" id="CopyRoute"></a>
    <h4>Copy Route</h4>
    <p>You can copy an existing route using this tool that can be found under "Tools" in both the
-    "Routes" window and "Edit Route" window. Enter the name of the new route and select the route
+    <a href="#Routes">Routes</a> window and <a href="#EditRoute">Edit Route</a> window. Enter the name of the new route and select the route
     that you want to copy. If you want to reverse the order of your route, select the "Invert"
     checkbox before pressing the "Copy" button.</p>
 
@@ -3597,7 +3643,7 @@
 
    <a name="Trains" id="Trains"></a>
    <h2>Trains</h2>
-   Now that we've created our routes we need trains to move cars! Create a train by selecting
+   Now that we've created our <a href="#Routes">Routes</a> we need trains to move cars! Create a train by selecting
    "Tools-&gt;Operations-&gt;Trains" from the top level menu.
 
    <p>

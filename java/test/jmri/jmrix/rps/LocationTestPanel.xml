@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE layout-config SYSTEM "layout-config.dtd">
-
-<layout-config>
+<layout-config
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/layout.xsd"
+>
 
     <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="RPS Location Test" x="20" y="22" height="639" width="781" editable="yes" positionable="yes" controlling="yes" hide="no" panelmenu="yes">
 

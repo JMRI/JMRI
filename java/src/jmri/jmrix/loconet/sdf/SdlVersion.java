@@ -1,4 +1,3 @@
-// SdlVersion.java
 package jmri.jmrix.loconet.sdf;
 
 /**
@@ -13,7 +12,7 @@ public class SdlVersion extends SdfMacro {
     }
 
     public String name() {
-        return "SDL_VERSION";
+        return "SDL_VERSION"; // NOI18N
     }
 
     int version;
@@ -43,16 +42,14 @@ public class SdlVersion extends SdfMacro {
     }
 
     public String toString() {
-        return "Version " + (version == 0x10 ? "1" : "<unknown code>") + '\n';
+        return "Version " + (version == 0x10 ? "1" : "<unknown code>") + '\n'; // NOI18N
     }
 
     public String oneInstructionString() {
-        return name() + ' ' + (version == 0x10 ? "VERSION_1" : "Unknown code " + version) + '\n';
+        return name() + ' ' + (version == 0x10 ? "VERSION_1" : "Unknown code " + version) + '\n'; // NOI18N
     }
 
     public String allInstructionString(String indent) {
         return indent + oneInstructionString();
     }
 }
-
-/* @(#)SdlVersion.java */

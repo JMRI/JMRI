@@ -1,16 +1,7 @@
 package jmri.jmrix.openlcb.swing.networktree;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.JTree;
-import javax.swing.Timer;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -25,10 +16,6 @@ import org.openlcb.Connection;
 import org.openlcb.MimicNodeStore;
 import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
-import org.openlcb.cdi.impl.ConfigRepresentation;
-import org.openlcb.cdi.jdom.CdiMemConfigReader;
-import org.openlcb.cdi.jdom.JdomCdiReader;
-import org.openlcb.cdi.swing.CdiPanel;
 import org.openlcb.implementations.MemoryConfigurationService;
 import org.openlcb.swing.memconfig.MemConfigDescriptionPane;
 import org.openlcb.swing.memconfig.MemConfigReadWritePane;
@@ -43,11 +30,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2009, 2010, 2012
  */
 public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanListener, CanPanelInterface {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2643128840399163414L;
 
     public NetworkTreePane() {
         super();
@@ -70,6 +52,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
 
         treePane = new TreePane();
+        treePane.setPreferredSize(new Dimension(300, 300));
 
         treePane.initComponents(
                 (MimicNodeStore) memo.get(MimicNodeStore.class),
@@ -118,11 +101,6 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -9075693791903690311L;
 
         public Default() {
             super("Openlcb Network Tree",

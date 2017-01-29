@@ -1,4 +1,3 @@
-// RosterRecorder.java
 package jmri.jmrit.roster;
 
 import java.util.concurrent.ArrayBlockingQueue;
@@ -27,9 +26,9 @@ public class RosterRecorder extends Thread {
         });
 
         // listen to each entry
-        for (int i = 0; i < roster.numEntries(); i++) {
-            watchEntry(roster.getEntry(i));
-        }
+        roster.getAllEntries().forEach((entry) -> {
+            watchEntry(entry);
+        });
 
     }
 

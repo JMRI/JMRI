@@ -1,4 +1,3 @@
-// LsDecSignalHeadXml.java
 package jmri.implementation.configurexml;
 
 import java.util.List;

@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -302,11 +303,29 @@ public class LogixTableAction extends AbstractTableAction {
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleLogixTable"));
     }
-    
+
+    /**
+     * Insert 2 table specific menus.
+     * Account for the Window and Help menus, which are already added to the menu bar
+     * as part of the creation of the JFrame, by adding the menus 2 places earlier
+     * unless the table is part of the ListedTableFrame, that adds the Help menu later on.
+     * @param f the JFrame of this table
+     */
+    @Override
     public void setMenuBar(BeanTableFrame f) {
         JMenu menu = new JMenu(Bundle.getMessage("MenuOptions"));
         menu.setMnemonic(KeyEvent.VK_O);
         javax.swing.JMenuBar menuBar = f.getJMenuBar();
+        int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenus before 'Window' and 'Help'
+        int offset = 1;
+        log.debug("setMenuBar number of menu items = " + pos);
+        for (int i = 0; i <= pos; i++) {
+            if (menuBar.getComponent(i) instanceof JMenu) {
+                if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
+                    offset = -1; // correct for use as part of ListedTableAction where the Help Menu is not yet present
+                }
+            }
+        }
 
         ButtonGroup enableButtonGroup = new ButtonGroup();
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(rbx.getString("EnableAll"));
@@ -326,7 +345,7 @@ public class LogixTableAction extends AbstractTableAction {
         });
         enableButtonGroup.add(r);
         menu.add(r);
-        menuBar.add(menu);
+        menuBar.add(menu, pos + offset);
 
         menu = new JMenu(Bundle.getMessage("MenuTools"));
         menu.setMnemonic(KeyEvent.VK_T);
@@ -369,7 +388,7 @@ public class LogixTableAction extends AbstractTableAction {
             }
         }.init(f));
         menu.add(item);
-        menuBar.add(menu);
+        menuBar.add(menu, pos + offset + 1); // add this menu to the right of the previous
     }
 
     void OpenPickListTable() {
@@ -452,8 +471,8 @@ public class LogixTableAction extends AbstractTableAction {
 
     // Add Logix Variables
     JmriJFrame addLogixFrame = null;
-    JTextField _systemName = new JTextField(10);
-    JTextField _addUserName = new JTextField(10);
+    JTextField _systemName = new JTextField(20);
+    JTextField _addUserName = new JTextField(20);
     JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     JLabel _sysNameLabel = new JLabel(Bundle.getMessage("BeanNameLogix") + " " + Bundle.getMessage("ColumnSystemName") + ":");
     JLabel _userNameLabel = new JLabel(Bundle.getMessage("BeanNameLogix") + " " + Bundle.getMessage("ColumnUserName") + ":");
@@ -2147,7 +2166,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     boolean logicTypeChanged(ActionEvent e) {
         int type = _operatorBox.getSelectedIndex() + 1;
         if (type == _logicType) {
@@ -5073,9 +5092,9 @@ public class LogixTableAction extends AbstractTableAction {
                             return rbx.getString("False");
                         }
                     }
-                    return rbx.getString("Unknown");
+                    return Bundle.getMessage("BeanStateUnknown");
                 default:
-                    return rbx.getString("Unknown");
+                    return Bundle.getMessage("BeanStateUnknown");
             }
         }
 
@@ -5258,7 +5277,7 @@ public class LogixTableAction extends AbstractTableAction {
                         case Conditional.FALSE:
                             return rbx.getString("False");
                         case Conditional.UNKNOWN:
-                            return rbx.getString("Unknown");
+                            return Bundle.getMessage("BeanStateUnknown");
                     }
                     break;
                 case TRIGGERS_COLUMN:

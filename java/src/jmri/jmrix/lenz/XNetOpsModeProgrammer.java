@@ -89,21 +89,30 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         return ret;
     }
 
-    /*
+    /**
      * Can this ops-mode programmer read back values?
      * Indirectly we can, though this requires an external display 
      * (a Lenz LRC120) and enabling railcom.
      * @return true to allow us to trigger an ops mode read
      */
-    // An operations mode read can be triggered on command 
-    // stations which support Operations Mode Writes (LZ100,
-    // LZV100,MultiMouse).  Whether or not the operation produces
-    // a result depends on additional external hardware (a booster 
-    // with an enabled  RailCom cutout (LV102 or similar) and a 
-    // RailCom receiver circuit (LRC120 or similar)).
-    // We have no way of determining if the required external 
-    // hardware is present, so we return true for all command 
-    // stations on which the Operations Mode Programmer is enabled.
+    @Override
+    public boolean getCanRead() {
+        // An operations mode read can be triggered on command 
+        // stations which support Operations Mode Writes (LZ100,
+        // LZV100,MultiMouse).  Whether or not the operation produces
+        // a result depends on additional external hardware (a booster 
+        // with an enabled  RailCom cutout (LV102 or similar) and a 
+        // RailCom receiver circuit (LRC120 or similar)).
+        // We have no way of determining if the required external 
+        // hardware is present, so we return true for all command 
+        // stations on which the Operations Mode Programmer is enabled.
+
+        // yes, we just call the superclass method.  Leave this in place
+        // so the comments and javadoc above make sense.
+        return super.getCanRead();
+    }
+
+
     synchronized public void message(XNetReply l) {
         if (progState == XNetProgrammer.NOTPROGRAMMING) {
             // We really don't care about any messages unless we send a 
@@ -124,7 +133,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
                     return;  // just ignore this, since we are retransmitting 
                     // the message.
                 } else if (l.getElement(0) == XNetConstants.CS_INFO
-                        && l.getElement(2) == XNetConstants.CS_NOT_SUPPORTED) {
+                        && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
                     progState = XNetProgrammer.NOTPROGRAMMING;
                     stopTimer();
                     progListener.programmingOpReply(value, jmri.ProgListener.NotImplemented);

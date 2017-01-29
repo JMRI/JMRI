@@ -1,4 +1,3 @@
-/* SlotManager.java */
 package jmri.jmrix.loconet;
 
 import java.util.ArrayList;
@@ -245,8 +244,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             v = (Vector<SlotListener>) slotListeners.clone();
         }
         if (log.isDebugEnabled()) {
-            log.debug("notify " + v.size()
-                    + " SlotListeners about slot "
+            log.debug("notify " + v.size() // NOI18N
+                    + " SlotListeners about slot " // NOI18N
                     + s.getSlot());
         }
         // forward to all listeners
@@ -558,15 +557,15 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // if here, i holds the slot number, and we expect to be able to parse
         // and have the slot handle the message
         if (i >= _slots.length || i < 0) {
-            log.error("Received slot number " + i
-                    + " is greater than array length " + _slots.length + " Message was "
+            log.error("Received slot number " + i // NOI18N
+                    + " is greater than array length " + _slots.length + " Message was " // NOI18N
                     + m.toString());
         }
         try {
             _slots[i].setSlot(m);
         } catch (LocoNetException e) {
             // must not have been interesting, or at least routed right
-            log.error("slot rejected LocoNetMessage" + m);
+            log.error("slot rejected LocoNetMessage" + m); // NOI18N
             return;
         }
         // notify listeners that slot may have changed
@@ -600,8 +599,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         if (i == 124) {
             // here its an operation on the programmer slot
             if (log.isDebugEnabled()) {
-                log.debug("Message " + m.getOpCodeHex()
-                        + " for slot 124 in state " + progState);
+                log.debug("Message " + m.getOpCodeHex() // NOI18N
+                        + " for slot 124 in state " + progState); // NOI18N
             }
             switch (progState) {
                 case 0:   // notProgramming
@@ -783,7 +782,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 || getMode().equals(DefaultProgrammerManager.ADDRESSMODE)) {
             pcmd = pcmd | 0x10;
         } else {
-            throw new jmri.ProgrammerException("mode not supported");
+            throw new jmri.ProgrammerException("mode not supported"); // NOI18N
         }
 
         doWrite(CV, val, p, pcmd);
@@ -831,7 +830,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 || getMode().equals(DefaultProgrammerManager.ADDRESSMODE)) {
             pcmd = pcmd | 0x10;
         } else {
-            throw new jmri.ProgrammerException("mode not supported");
+            throw new jmri.ProgrammerException("mode not supported"); // NOI18N
         }
 
         doConfirm(CV, val, p, pcmd);
@@ -890,7 +889,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 || getMode().equals(DefaultProgrammerManager.ADDRESSMODE)) {
             pcmd = pcmd | 0x10;
         } else {
-            throw new jmri.ProgrammerException("mode not supported");
+            throw new jmri.ProgrammerException("mode not supported"); // NOI18N
         }
 
         doRead(CV, p, pcmd);
@@ -920,9 +919,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
             if (log.isInfoEnabled()) {
-                log.info("programmer already in use by " + _usingProgrammer);
+                log.info("programmer already in use by " + _usingProgrammer); // NOI18N
             }
-            throw new jmri.ProgrammerException("programmer in use");
+            throw new jmri.ProgrammerException("programmer in use"); // NOI18N
         } else {
             _usingProgrammer = p;
             return;
@@ -1169,7 +1168,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     public String getUserName() {
         if (adaptermemo == null) {
-            return "LocoNet";
+            return "LocoNet"; // NOI18N
         }
         return adaptermemo.getUserName();
     }
@@ -1188,6 +1187,3 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(SlotManager.class.getName());
 }
-
-
-/* @(#)SlotManager.java */

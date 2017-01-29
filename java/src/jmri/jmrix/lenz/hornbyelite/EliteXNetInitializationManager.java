@@ -1,4 +1,3 @@
-// EliteXNetInitializationManager.java
 package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.lenz.AbstractXNetInitializationManager;

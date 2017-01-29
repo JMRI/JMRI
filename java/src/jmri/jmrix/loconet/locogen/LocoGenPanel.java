@@ -1,4 +1,3 @@
-// LocoGenPanel.java
 package jmri.jmrix.loconet.locogen;
 
 import java.awt.GridLayout;
@@ -32,10 +31,6 @@ import org.slf4j.LoggerFactory;
 public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements LocoNetListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8721664131869665655L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
@@ -53,7 +48,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     JToggleButton mRunButton = new JToggleButton("Go");
 
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.locogen.LocoGenFrame";
+        return "package.jmri.jmrix.loconet.locogen.LocoGenFrame"; // NOI18N
     }
 
     public String getTitle() {
@@ -183,7 +178,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
      *
      */
     public void message(LocoNetMessage m) {
-        log.debug("message");
+        log.debug("message"); // NOI18N
         // are we running?
         if (!mRunButton.isSelected()) {
             return;
@@ -200,7 +195,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
      * Echo has been heard, start delay for next packet
      */
     void startSequenceDelay() {
-        log.debug("startSequenceDelay");
+        log.debug("startSequenceDelay"); // NOI18N
         // at the start, mNextSequenceElement contains index we're
         // working on
         int delay = Integer.parseInt(mDelayField[mNextSequenceElement].getText());
@@ -215,7 +210,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
      * elapsed.
      */
     void sendNextItem() {
-        log.debug("sendNextItem");
+        log.debug("sendNextItem"); // NOI18N
         // check if still running
         if (!mRunButton.isSelected()) {
             return;

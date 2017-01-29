@@ -14,11 +14,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LnMessageServerAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5248571475794161828L;
-
     public LnMessageServerAction(String s) {
         super(s);
     }
@@ -37,7 +32,7 @@ public class LnMessageServerAction extends AbstractAction {
             // disable action, as already run
             setEnabled(false);
         } catch (RemoteException ex) {
-            LoggerFactory.getLogger(LnMessageServerAction.class.getName()).warn("LnMessageServerAction Exception: " + ex);
+            LoggerFactory.getLogger(LnMessageServerAction.class.getName()).warn("LnMessageServerAction Exception: " + ex); // NOI18N
         }
     }
 

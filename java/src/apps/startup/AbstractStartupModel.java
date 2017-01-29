@@ -1,5 +1,7 @@
 package apps.startup;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.Nonnull;
 
 /**
@@ -10,6 +12,7 @@ import javax.annotation.Nonnull;
 public abstract class AbstractStartupModel implements StartupModel {
 
     private String name;
+    private final List<Exception> exceptions = new ArrayList<>();
 
     protected AbstractStartupModel() {
         this.name = null;
@@ -28,10 +31,11 @@ public abstract class AbstractStartupModel implements StartupModel {
     @Override
     @Nonnull
     public String toString() {
-        if (this.getName() == null) {
+        String string = this.getName();
+        if (string == null) {
             return super.toString();
         }
-        return this.getName();
+        return string;
     }
 
     /**
@@ -44,6 +48,17 @@ public abstract class AbstractStartupModel implements StartupModel {
      */
     @Override
     public boolean isValid() {
-        return this.name != null && !this.name.isEmpty();
+        String s = this.getName();
+        return s != null && !s.isEmpty();
+    }
+
+    @Override
+    public List<Exception> getExceptions() {
+        return new ArrayList<>(this.exceptions);
+    }
+
+    @Override
+    public void addException(@Nonnull Exception exception) {
+        this.exceptions.add(exception);
     }
 }

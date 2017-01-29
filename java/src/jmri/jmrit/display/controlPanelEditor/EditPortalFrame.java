@@ -45,10 +45,6 @@ import org.slf4j.LoggerFactory;
  */
 public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelectionListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8328681792874046328L;
     private OBlock _homeBlock;
     private CircuitBuilder _parent;
     private OBlock _adjacentBlock;
@@ -528,7 +524,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                 selects[i++] = iter.next().getDisplayName();
             }
             Object select = JOptionPane.showInputDialog(this, Bundle.getMessage("multipleBlockSelections",
-                    _homeBlock.getDisplayName()), Bundle.getMessage("questionTitle"),
+                    _homeBlock.getDisplayName()), Bundle.getMessage("QuestionTitle"),
                     JOptionPane.QUESTION_MESSAGE, null, selects, null);
             if (select != null) {
                 iter = neighbors.iterator();
@@ -596,11 +592,6 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     }
 
     public class IconDragJLabel extends DragJLabel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7136480915082749291L;
 
         public IconDragJLabel(DataFlavor flavor) {
             super(flavor);

@@ -1,4 +1,3 @@
-// ServerListner.java
 package jmri.jmrix.loconet.loconetovertcp;
 
 /**

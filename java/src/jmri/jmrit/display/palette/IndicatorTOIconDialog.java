@@ -1,4 +1,3 @@
-// IndicatorTOIconDialog.java
 package jmri.jmrit.display.palette;
 
 import java.awt.FlowLayout;
@@ -20,10 +19,6 @@ import org.slf4j.LoggerFactory;
  */
 public class IndicatorTOIconDialog extends IconDialog {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6760221740048137437L;
     String _key;
 
     /**
@@ -90,7 +85,7 @@ public class IndicatorTOIconDialog extends IconDialog {
             }
             Object[] selections = options.toArray();
             String key = (String) JOptionPane.showInputDialog(_parent._paletteFrame,
-                    Bundle.getMessage("PickStatus"), Bundle.getMessage("questionTitle"), JOptionPane.QUESTION_MESSAGE, null,
+                    Bundle.getMessage("PickStatus"), Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE, null,
                     selections, selections[0]);
             if (key != null) {
                 _key = key;

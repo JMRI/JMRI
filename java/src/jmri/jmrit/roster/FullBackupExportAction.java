@@ -74,8 +74,7 @@ public class FullBackupExportAction
             zipper = new ZipOutputStream(new FileOutputStream(filename));
 
             // create a zip file roster entry for each entry in the main roster
-            for (int index = 0; index < roster.numEntries(); index++) {
-                RosterEntry entry = roster.getEntry(index);
+            for (RosterEntry entry : roster.getAllEntries()) {
                 copyFileToStream(entry.getPathName(), "roster", zipper, entry.getId());
             }
 

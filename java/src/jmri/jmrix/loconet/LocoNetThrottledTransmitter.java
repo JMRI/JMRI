@@ -1,4 +1,3 @@
-// LocoNetThrottledTransmitter
 package jmri.jmrix.loconet;
 
 import java.util.concurrent.DelayQueue;
@@ -105,7 +104,7 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
     private void attachServiceThread() {
         theServiceThread = new ServiceThread();
         theServiceThread.setPriority(Thread.NORM_PRIORITY);
-        theServiceThread.setName("LocoNetThrottledTransmitter");
+        theServiceThread.setName("LocoNetThrottledTransmitter"); // NOI18N
         theServiceThread.setDaemon(true);
         theServiceThread.start();
     }
@@ -203,5 +202,3 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
     private final static Logger log = LoggerFactory.getLogger(LocoNetThrottledTransmitter.class.getName());
 
 }
-
-/* @(#)LocoNetThrottledTransmitter.java */

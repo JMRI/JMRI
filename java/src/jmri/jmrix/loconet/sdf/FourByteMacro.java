@@ -1,4 +1,3 @@
-// FourByteMacro.java
 package jmri.jmrix.loconet.sdf;
 
 /**
@@ -17,7 +16,7 @@ public class FourByteMacro extends SdfMacro {
     }
 
     public String name() {
-        return "Four Byte Macro";
+        return "Four Byte Macro"; // NOI18N
     }
 
     byte[] bytes = new byte[4];
@@ -63,5 +62,3 @@ public class FourByteMacro extends SdfMacro {
         return indent + oneInstructionString();
     }
 }
-
-/* @(#)FourByteMacro.java */

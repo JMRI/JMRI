@@ -33,12 +33,15 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(AcelaLightManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(AcelaLightTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(AcelaTurnoutManagerTest.class));
-        suite.addTest(new TestSuite(AcelaTurnoutTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AcelaTurnoutTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.acela.configurexml.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.acela.serialdriver.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.acela.nodeconfig.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.acela.acelamon.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.acela.packetgen.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AcelaSystemConnectionMemoTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AcelaPortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AcelaTrafficControllerTest.class));
         return suite;
     }
 }

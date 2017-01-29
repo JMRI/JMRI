@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.loconet.pr2;
 
 /**
@@ -25,7 +24,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     public String name() {
-        return "LocoNet PR2";
+        return "LocoNet PR2"; // NOI18N
     }
 
     protected void setInstance() {

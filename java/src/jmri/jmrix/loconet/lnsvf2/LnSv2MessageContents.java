@@ -592,7 +592,7 @@ public class LnSv2MessageContents {
             int destination, int svNum, int d1, int d2, int d3, int d4) 
         throws java.lang.IllegalArgumentException {
             if ( ! isSupportedSv2Command(command)) {
-                throw new java.lang.IllegalArgumentException("Command is not a supported SV2 command");
+                throw new java.lang.IllegalArgumentException("Command is not a supported SV2 command"); // NOI18N
             }
         LocoNetMessage m = new LocoNetMessage(SV2_LENGTH_ELEMENT_VALUE);
         m.setOpCode(LnConstants.OPC_PEER_XFER);

@@ -1,4 +1,3 @@
-// PowerlinePanelInterface.java
 package jmri.jmrix.powerline.swing;
 
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;

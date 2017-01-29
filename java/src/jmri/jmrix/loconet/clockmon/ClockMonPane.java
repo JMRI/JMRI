@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 public class ClockMonPane extends LnPanel implements SlotListener {
 
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.clockmon.ClockMonFrame";
+        return "package.jmri.jmrix.loconet.clockmon.ClockMonFrame"; // NOI18N
     }
 
     public String getTitle() {
@@ -86,7 +86,7 @@ public class ClockMonPane extends LnPanel implements SlotListener {
         if (memo.getSlotManager() != null) {
             memo.getSlotManager().addSlotListener(this);
         } else {
-            log.error("No LocoNet connection available, can't function");
+            log.error("No LocoNet connection available, can't function"); // NOI18N
         }
 
     }
@@ -100,7 +100,7 @@ public class ClockMonPane extends LnPanel implements SlotListener {
             return; // only watch clock slot
         }
         if (log.isDebugEnabled()) {
-            log.debug("slot update " + s);
+            log.debug("slot update " + s); // NOI18N
         }
 
         // update GUI from the new slot contents
@@ -121,10 +121,10 @@ public class ClockMonPane extends LnPanel implements SlotListener {
         super.dispose();
     }
 
-    JTextField days = new JTextField("00");
-    JTextField hours = new JTextField("00");
-    JTextField minutes = new JTextField("00");
-    JTextField frac_mins = new JTextField("00");
+    JTextField days = new JTextField("00"); // NOI18N
+    JTextField hours = new JTextField("00"); // NOI18N
+    JTextField minutes = new JTextField("00"); // NOI18N
+    JTextField frac_mins = new JTextField("00"); // NOI18N
 
     JTextField rate = new JTextField(4);
 
@@ -134,11 +134,6 @@ public class ClockMonPane extends LnPanel implements SlotListener {
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2901473960804245354L;
 
         public Default() {
             super(Bundle.getMessage("MenuItemClockMon"),

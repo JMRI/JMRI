@@ -1,4 +1,3 @@
-// EndSound.java
 package jmri.jmrix.loconet.sdf;
 
 /**
@@ -16,7 +15,7 @@ public class EndSound extends SdfMacro {
     int byte1, byte2;
 
     public String name() {
-        return "END_SOUND";
+        return "END_SOUND"; // NOI18N
     }
 
     public int length() {
@@ -45,7 +44,7 @@ public class EndSound extends SdfMacro {
     }
 
     public String toString() {
-        return "End Sequence\n";
+        return "End Sequence\n"; // NOI18N
     }
 
     public String oneInstructionString() {
@@ -56,5 +55,3 @@ public class EndSound extends SdfMacro {
         return indent + oneInstructionString();
     }
 }
-
-/* @(#)EndSound.java */

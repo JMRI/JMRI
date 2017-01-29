@@ -1,4 +1,3 @@
-// LnLightManagerXml.java
 package jmri.jmrix.loconet.configurexml;
 
 import org.jdom2.Element;
@@ -20,7 +19,7 @@ public class LnLightManagerXml extends jmri.managers.configurexml.AbstractLightM
     }
 
     public void setStoreElementClass(Element lights) {
-        lights.setAttribute("class", "jmri.jmrix.loconet.configurexml.LnLightManagerXml");
+        lights.setAttribute("class", "jmri.jmrix.loconet.configurexml.LnLightManagerXml"); // NOI18N
     }
 
     public void load(Element element, Object o) {

@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.wangrow.serialdriver;
 
 import jmri.jmrix.nce.serialdriver.SerialDriverAdapter;

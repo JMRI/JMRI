@@ -1,4 +1,3 @@
-// EditManifestHeaderTextFrame.java
 package jmri.jmrit.operations.setup;
 
 import jmri.jmrit.operations.OperationsFrame;

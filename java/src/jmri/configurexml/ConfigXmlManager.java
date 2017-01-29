@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import jmri.InstanceManager;
+import jmri.jmrit.XmlFile;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.util.FileUtil;
 import org.jdom2.Document;
@@ -19,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides the mechanisms for storing an entire layout configuration to XML.
- * "Layout" refers to the hardware: Specific communcation systems, etc.
+ * "Layout" refers to the hardware: Specific communication systems, etc.
  *
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen Copyright (c) 2002, 2008
@@ -74,6 +75,18 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         }
     }
 
+    /**
+    * Handles classes who's location has migrated,
+    * e.g. so that it's now in a different package.
+    */
+    static public String currentClassName(String name) {
+        if (! classMigrationBundle.containsKey(name)) return name;
+        String migratedName = classMigrationBundle.getString(name);
+        log.debug("Using migrated class name {} for {}", migratedName, name);
+        return migratedName;
+    }
+    static java.util.ResourceBundle classMigrationBundle = java.util.ResourceBundle.getBundle("jmri.configurexml.ClassMigration");
+    
     /**
      * Remove the registered preference items. This is used e.g. when a GUI
      * wants to replace the preferences with new values.
@@ -265,8 +278,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                     root.addContent(e);
                 }
             } catch (Exception e) {
-                storingErrorEncountered(null, "storing to file",
-                        "Unknown error (Exception)", null, null, e);
+                storingErrorEncountered(null, "storing to file in addConfigStore",
+                        "Exception thrown", null, null, e);
                 result = false;
             }
         }
@@ -284,8 +297,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 }
             } catch (Exception e) {
                 result = false;
-                storingErrorEncountered(((XmlAdapter) o), "storing to file",
-                        "Unknown error (Exception)", null, null, e);
+                storingErrorEncountered(null, "storing to file in addToolsStore",
+                        "Exception thrown", null, null, e);
             }
         }
         return result;
@@ -302,8 +315,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 }
             } catch (Exception e) {
                 result = false;
-                storingErrorEncountered((XmlAdapter) o, "storing to file",
-                        "Unknown error (Exception)", null, null, e);
+                storingErrorEncountered(null, "storing to file in addUserStore",
+                        "Exception thrown", null, null, e);
             }
         }
         return result;
@@ -597,7 +610,9 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
          */
         Map<Element, Integer> loadlist = Collections.synchronizedMap(new LinkedHashMap<Element, Integer>());
 
+        boolean verify = XmlFile.getVerify();
         try {
+            XmlFile.setVerify(true);
             root = super.rootFromURL(url);
             // get the objects to load
             List<Element> items = root.getChildren();
@@ -613,6 +628,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 if (log.isDebugEnabled()) {
                     log.debug("attempt to get adapter {} for {}", adapterName, item);
                 }
+                adapterName = currentClassName(adapterName);
                 XmlAdapter adapter = null;
 
                 adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
@@ -631,6 +647,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             for (int i = 0; i < l.size(); i++) {
                 Element item = l.get(i).getKey();
                 String adapterName = item.getAttribute("class").getValue();
+                adapterName = currentClassName(adapterName);
                 if (log.isDebugEnabled()) {
                     log.debug("load " + item + " via " + adapterName);
                 }
@@ -699,6 +716,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             result = false;
         } finally {
             // no matter what, close error reporting
+            XmlFile.setVerify(verify);
             handler.done();
         }
 
@@ -716,7 +734,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         } else {
             log.info("Not recording file history");
         }
-
+        XmlFile.setVerify(verify);
         return result;
     }
 
@@ -796,8 +814,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * Invoke common handling of errors that happen during the "load" process.
      * <p>
      * Generally, this is invoked by {@link XmlAdapter} implementations of their
-     * creationErrorEncountered() method (note different arguemments, though).
-     * The standard implemenation of that is in {@link AbstractXmlAdapter}.
+     * creationErrorEncountered() method (note different arguments, though).
+     * The standard implementation of that is in {@link AbstractXmlAdapter}.
      * <p>
      * Exceptions passed into this are absorbed.
      *

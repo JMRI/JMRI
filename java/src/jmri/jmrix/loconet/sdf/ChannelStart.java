@@ -1,4 +1,3 @@
-// ChannelStart.java
 package jmri.jmrix.loconet.sdf;
 
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ public class ChannelStart extends SdfMacro {
     }
 
     public String name() {
-        return "CHANNEL_START";
+        return "CHANNEL_START"; // NOI18N
     }
 
     int number;
@@ -66,11 +65,11 @@ public class ChannelStart extends SdfMacro {
     }
 
     public String toString() {
-        return "Channel " + number + '\n';
+        return "Channel " + number + '\n'; // NOI18N
     }
 
     public String oneInstructionString() {
-        return name() + ' ' + number + '\n';
+        return name() + ' ' + number + '\n'; // NOI18N
     }
 
     public String allInstructionString(String indent) {
@@ -84,5 +83,3 @@ public class ChannelStart extends SdfMacro {
         return output;
     }
 }
-
-/* @(#)ChannelStart.java */

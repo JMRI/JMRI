@@ -190,6 +190,14 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
     }
 
     @Override
+    public void setOffset(long offset) {
+        super.setOffset(offset);
+        if (initialised && isBound() && audioChannel != null) {
+            this.clip.setFramePosition((int) offset);
+        }
+    }
+
+    @Override
     public int getState() {
         boolean old = jsState;
         jsState = (this.clip != null ? this.clip.isActive() : false);

@@ -34,7 +34,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     DuplexChannelInfo dci[] = new DuplexChannelInfo[LnDplxGrpInfoImplConstants.DPLX_MAX_CH - LnDplxGrpInfoImplConstants.DPLX_MIN_CH + 1];
     private javax.swing.Timer tmr;
-    private static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.duplexgroup.DuplexGroupScan");
+    private static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.duplexgroup.swing.DuplexGroupScan");
     DuplexGroupScanPanel safe;
 
     private final static int DEFAULT_SCAN_COUNT = 25;
@@ -124,7 +124,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         p = new JPanel();
         // Apply a rigid area with a width that is wide enough to display the longest status message
         try {
-            minWindowWidth = Integer.parseInt(rb.getString("MinimumWidthForWIndow"), 10);
+            minWindowWidth = Integer.parseInt(rb.getString("MinimumWidthForWindow"), 10);
         } catch (Exception e) {
             minWindowWidth = 400;
         }
@@ -166,8 +166,8 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.DuplexGroupSetup.DuplexGroupScanPanel";
-    }
+        return "package.jmri.jmrix.loconet.DuplexGroupSetup.DuplexGroupScanPanel"; // NOI18N
+    } // NOI18N
 
     @Override
     public String getTitle() {
@@ -347,10 +347,10 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     private void updateScanLoopCountStatus(int current, int total) {
         String countStatus = rb.getString("StatusCurrentLoopCounter");
-        String begin = countStatus.substring(0, countStatus.indexOf("%count"));
+        String begin = countStatus.substring(0, countStatus.indexOf("%count")); // NOI18N
 
-        String middle = countStatus.substring(begin.length() + 6, countStatus.indexOf("%loops"));
-        String end = countStatus.substring(countStatus.indexOf("%loops") + 6);
+        String middle = countStatus.substring(begin.length() + 6, countStatus.indexOf("%loops")); // NOI18N
+        String end = countStatus.substring(countStatus.indexOf("%loops") + 6); // NOI18N
         countStatus = begin + Integer.toString(current) + middle + Integer.toString(total) + end;
         grStatusValue.setText(countStatus);
     }
@@ -503,10 +503,6 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     private class duplexGroupChannelScanGuiCanvas extends java.awt.Canvas {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3311247866128360812L;
         private int barWidth = 7;
         private int barSpace = barWidth + 8;
         private int barOffset = (barSpace - barWidth) / 2;
@@ -548,7 +544,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
                 // get the height of a line of text in this font and render context
                 textHeight = metrics.getHeight();
                 // get the advance of my text in this font and render context
-                textWidth = metrics.stringWidth("38");  // representative (but not accurate) example text string
+                textWidth = metrics.stringWidth("38");  // representative (but not accurate) example text string // NOI18N
                 // calculate the size of a box to hold the text with some padding.
                 channelTextSize = new Dimension(textWidth + HORIZ_PADDING, textHeight + VERT_PADDING);
                 requiredMinWindowWidth = channelCount * channelTextSize.width;

@@ -1,4 +1,3 @@
-// TrainBuilderTest.java
 package jmri.jmrit.operations.trains;
 
 import java.util.List;

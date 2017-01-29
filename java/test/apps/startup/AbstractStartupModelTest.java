@@ -1,6 +1,7 @@
 package apps.startup;
 
 import apps.tests.Log4JFixture;
+import jmri.JmriException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -103,6 +104,11 @@ public class AbstractStartupModelTest {
      * Minimal implementation of AbstractStartupModel
      */
     public class AbstractStartupModelImpl extends AbstractStartupModel {
+
+        @Override
+        public void performAction() throws JmriException {
+            // empty method not tested as abstract in class being tested
+        }
     }
 
 }

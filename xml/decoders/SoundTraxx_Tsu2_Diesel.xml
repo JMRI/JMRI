@@ -73,11 +73,17 @@
             <authorinitials>MJM</authorinitials>
             <revremark>Add ID CV 253,254,255,256 and change product ID to values in CV256</revremark>
         </revision>
+        <revision>
+            <revnumber>4.1</revnumber>
+            <date>2016-12-21</date>
+            <authorinitials>DGH</authorinitials>
+            <revremark>Change product ID to values in CVs 253(high byte) and 256(low byte)</revremark>
+        </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
         <family name="Tsunami2 Diesel" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Econami Diesel decoders">
-            <model model="TSU-1100 EMD Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="20" comment="Model 885001">
+            <model model="TSU-1100 EMD Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="276" comment="Model 885001">
                 <versionCV lowVersionID="71"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -108,7 +114,7 @@
                 </output>
                 <size length="27" width="10.5" height="5" units="mm"/>
             </model>
-            <model model="TSU-1100 GE Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="21" comment="Model 885002">
+            <model model="TSU-1100 GE Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="277" comment="Model 885002">
                 <versionCV lowVersionID="71"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -139,7 +145,7 @@
                 </output>
                 <size length="27" width="10.5" height="5" units="mm"/>
             </model>
-            <model model="TSU-1100 Alco Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="22" comment="Model 885003">
+            <model model="TSU-1100 Alco Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="278" comment="Model 885003">
                 <versionCV lowVersionID="71"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -170,7 +176,7 @@
                 </output>
                 <size length="27" width="10.5" height="5" units="mm"/>
             </model>
-            <model model="TSU-1100 Baldwin Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="23" comment="Model 885004">
+            <model model="TSU-1100 Baldwin Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="279" comment="Model 885004">
                 <versionCV lowVersionID="71"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -201,7 +207,7 @@
                 </output>
                 <size length="27" width="10.5" height="5" units="mm"/>
             </model>
-            <model model="TSU-2200 EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="24" comment="Model 885005">
+            <model model="TSU-2200 EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="280" comment="Model 885005">
                 <versionCV lowVersionID="71"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -236,7 +242,7 @@
                 </output>
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="TSU-2200 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="25" comment="Model 885006">
+            <model model="TSU-2200 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="281" comment="Model 885006">
                 <versionCV lowVersionID="71"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -271,7 +277,7 @@
                 </output>
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="TSU-2200 Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="26" comment="Model 885007">
+            <model model="TSU-2200 Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="282" comment="Model 885007">
                 <versionCV lowVersionID="71"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -306,7 +312,7 @@
                 </output>
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="TSU-2200 Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="27" comment="Model 885008">
+            <model model="TSU-2200 Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="283" comment="Model 885008">
                 <versionCV lowVersionID="71"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -341,7 +347,7 @@
                 </output>
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="TSU-21PNEM EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="28" comment="Model 885009">
+            <model model="TSU-21PNEM EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="284" comment="Model 885009">
                 <versionCV lowVersionID="71"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -376,7 +382,7 @@
                 </output>
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="TSU-21PNEM GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="29" comment="Model 885010">
+            <model model="TSU-21PNEM GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="285" comment="Model 885010">
                 <versionCV lowVersionID="71"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -411,7 +417,7 @@
                 </output>
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="TSU-21PNEM Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="30" comment="Model 885011">
+            <model model="TSU-21PNEM Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="286" comment="Model 885011">
                 <versionCV lowVersionID="71"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -446,7 +452,7 @@
                 </output>
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="TSU-21PNEM Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="31" comment="Model 885012">
+            <model model="TSU-21PNEM Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="287" comment="Model 885012">
                 <versionCV lowVersionID="71"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -481,7 +487,7 @@
                 </output>
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="TSU-PNP EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="32" comment="Model 885013">
+            <model model="TSU-PNP EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="288" comment="Model 885013">
                 <versionCV lowVersionID="71"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -516,7 +522,7 @@
                 </output>
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="TSU-PNP GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="33" comment="Model 885014">
+            <model model="TSU-PNP GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="289" comment="Model 885014">
                 <versionCV lowVersionID="71"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -551,7 +557,7 @@
                 </output>
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="TSU-PNP Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="34" comment="Model 885015">
+            <model model="TSU-PNP Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="290" comment="Model 885015">
                 <versionCV lowVersionID="71"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -586,7 +592,7 @@
                 </output>
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="TSU-PNP Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="35" comment="Model 885016">
+            <model model="TSU-PNP Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="291" comment="Model 885016">
                 <versionCV lowVersionID="71"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -1168,23 +1174,23 @@
                 </enumVal>
                 <label>Auxiliary Airhorn Select</label>
             </variable>
-            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="20,24,28,32" default="18" tooltip="Bell sound effect and ring-rate">
+            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="276,280,284,288" default="18" tooltip="Bell sound effect and ring-rate">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselBell.xml"/>
                 <label>Bell Select</label>
             </variable>
-            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="21,25,29,33" default="36" tooltip="Bell sound effect and ring-rate">
+            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="277,281,285,289" default="36" tooltip="Bell sound effect and ring-rate">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselBell.xml"/>
                 <label>Bell Select</label>
             </variable>
-            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="22,26,30,34" default="10" tooltip="Bell sound effect and ring-rate">
+            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="278,282,286,290" default="10" tooltip="Bell sound effect and ring-rate">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselBell.xml"/>
                 <label>Bell Select</label>
             </variable>
-            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="23,27,31,35" default="47" tooltip="Bell sound effect and ring-rate">
+            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="279,283,287,291" default="47" tooltip="Bell sound effect and ring-rate">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselBell.xml"/>
                 <label>Bell Select</label>
             </variable>
-            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="20,24,28,32" default="0" tooltip="Select one of prime mover sound effects">
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="276,280,284,288" default="0" tooltip="Select one of prime mover sound effects">
                 <enumVal>
                     <enumChoice>
                         <choice>EMD 567 (No Transition)</choice>
@@ -1216,7 +1222,7 @@
                 </enumVal>
                 <label>Prime Mover Select</label>
             </variable>
-            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="21,25,29,33" default="2" tooltip="Select one of prime mover sound effects">
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="277,281,285,289" default="2" tooltip="Select one of prime mover sound effects">
                 <enumVal>
                     <enumChoice>
                         <choice>FDL-12</choice>
@@ -1242,7 +1248,7 @@
                 </enumVal>
                 <label>Prime Mover Select</label>
             </variable>
-            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="22,26,30,34" default="0" tooltip="Select one of prime mover sound effects">
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="278,282,286,290" default="0" tooltip="Select one of prime mover sound effects">
                 <enumVal>
                     <enumChoice>
                         <choice>ALCO 539 Turbo</choice>
@@ -1274,7 +1280,7 @@
                 </enumVal>
                 <label>Prime Mover Select</label>
             </variable>
-            <variable CV="123" mask="XXXXXVVV" item="Sound Option 5" include="23,27,31,35" default="0" tooltip="Select one of prime mover sound effects">
+            <variable CV="123" mask="XXXXXVVV" item="Sound Option 5" include="279,283,287,291" default="0" tooltip="Select one of prime mover sound effects">
                 <enumVal>
                     <enumChoice>
                         <choice>Baldwin VO</choice>
@@ -1300,15 +1306,15 @@
                 </enumVal>
                 <label>Prime Mover Select</label>
             </variable>
-            <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="20,24,28,32" default="3" tooltip="Select one of air compressor sound effects">
+            <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="276,280,284,288" default="3" tooltip="Select one of air compressor sound effects">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselComp.xml"/>
                 <label>Air Compressor Select</label>
             </variable>
-            <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="21,25,29,33" default="1" tooltip="Select one of air compressor sound effects">
+            <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="277,281,285,289" default="1" tooltip="Select one of air compressor sound effects">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselComp.xml"/>
                 <label>Air Compressor Select</label>
             </variable>
-            <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="22,26,30,34,23,27,31,35" default="0" tooltip="Select one of air compressor sound effects">
+            <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="278,282,286,34,280,283,287,291" default="0" tooltip="Select one of air compressor sound effects">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselComp.xml"/>
                 <label>Air Compressor Select</label>
             </variable>

@@ -1,6 +1,6 @@
-// CanMessage.java
 package jmri.jmrix.can;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.annotation.Nonnull;
 import jmri.jmrix.AbstractMRMessage;
 
@@ -161,7 +161,7 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array, can be directly manipulated
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array, can be directly manipulated
     public int[] getData() {
         return _dataChars;
     }
@@ -197,4 +197,4 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
     boolean _isRtr;
 }
 
-/* @(#)CanMessage.java */
+

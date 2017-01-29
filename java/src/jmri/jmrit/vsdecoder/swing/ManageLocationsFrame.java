@@ -1,5 +1,6 @@
 package jmri.jmrit.vsdecoder.swing;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -112,7 +113,7 @@ public class ManageLocationsFrame extends JmriJFrame {
 
     private List<JMenu> menuList;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2",
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2",
             justification = "2D array of different types passed as complex parameter. "
             + "Better to switch to passing use-specific objects rather than "
             + "papering this over with a deep copy of the arguments. "
@@ -224,10 +225,10 @@ public class ManageLocationsFrame extends JmriJFrame {
         opsScrollPanel.getViewport().add(opsTable);
 
         tabbedPane = new JTabbedPane();
-        tabbedPane.addTab(Bundle.getMessage("FieldReportersTabTitle"), reporterScrollPanel);
+        tabbedPane.addTab(Bundle.getMessage("Reporters"), reporterScrollPanel); // Reporters Tab Title
         tabbedPane.setToolTipTextAt(0, Bundle.getMessage("ToolTipReporterTab"));
         tabbedPane.setMnemonicAt(0, Mnemonics.get("ReporterTab")); // NOI18N
-        tabbedPane.addTab(Bundle.getMessage("FieldBlockTabTitle"), blockScrollPanel);
+        tabbedPane.addTab(Bundle.getMessage("Blocks"), blockScrollPanel);
         tabbedPane.setToolTipTextAt(0, Bundle.getMessage("ToolTipBlockTab"));
         tabbedPane.setMnemonicAt(0, Mnemonics.get("BlockTab")); // NOI18N
         tabbedPane.addTab(Bundle.getMessage("FieldOpsTabTitle"), opsScrollPanel);
@@ -239,7 +240,7 @@ public class ManageLocationsFrame extends JmriJFrame {
 
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
-        JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
+        JButton closeButton = new JButton(Bundle.getMessage("ButtonCancel"));
         closeButton.setToolTipText(Bundle.getMessage("ToolTipButtonMLFClose"));
         closeButton.setMnemonic(Mnemonics.get("CloseButton")); // NOI18N
         closeButton.addActionListener(new ActionListener() {
@@ -268,12 +269,12 @@ public class ManageLocationsFrame extends JmriJFrame {
     private void buildMenu() {
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
 
-        fileMenu.add(new LoadVSDFileAction(Bundle.getMessage("MenuItemLoadVSDFile")));
-        fileMenu.add(new StoreXmlVSDecoderAction(Bundle.getMessage("MenuItemSaveProfile")));
-        fileMenu.add(new LoadXmlVSDecoderAction(Bundle.getMessage("MenuItemLoadProfile")));
+        fileMenu.add(new LoadVSDFileAction(Bundle.getMessage("VSDecoderFileMenuLoadVSDFile")));
+        fileMenu.add(new StoreXmlVSDecoderAction(Bundle.getMessage("VSDecoderFileMenuSaveProfile")));
+        fileMenu.add(new LoadXmlVSDecoderAction(Bundle.getMessage("VSDecoderFileMenuLoadProfile")));
 
         JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
-        editMenu.add(new VSDPreferencesAction(Bundle.getMessage("MenuItemEditPreferences")));
+        editMenu.add(new VSDPreferencesAction(Bundle.getMessage("VSDecoderFileMenuPreferences")));
 
         fileMenu.getItem(1).setEnabled(false); // disable XML store
         fileMenu.getItem(2).setEnabled(false); // disable XML load
@@ -325,7 +326,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "only in slow debug")
+    @SuppressFBWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "only in slow debug")
     private void saveTableValues() {
         if ((Boolean) locModel.getValueAt(0, 1)) {
             listenerLoc.setLocation((Double) locModel.getValueAt(0, 2),
@@ -382,7 +383,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         public LocationTableModel(Object[][] dataMap) {
             super();
             // Use i18n-ized column titles.
-            columnNames[0] = Bundle.getMessage("FieldTableNameColumn");
+            columnNames[0] = Bundle.getMessage("Name");
             columnNames[1] = Bundle.getMessage("FieldTableUseColumn");
             columnNames[2] = Bundle.getMessage("FieldTableXColumn");
             columnNames[3] = Bundle.getMessage("FieldTableYColumn");
@@ -456,7 +457,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         public ListenerTableModel(Object[][] dataMap) {
             super();
             // Use i18n-ized column titles.
-            columnNames[0] = Bundle.getMessage("FieldTableNameColumn");
+            columnNames[0] = Bundle.getMessage("Name");
             columnNames[1] = Bundle.getMessage("FieldTableUseColumn");
             columnNames[2] = Bundle.getMessage("FieldTableXColumn");
             columnNames[3] = Bundle.getMessage("FieldTableYColumn");

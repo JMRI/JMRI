@@ -87,7 +87,7 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
         int val = -1;
 
         try {
-            int tmp = Integer.valueOf(part[8], 10).intValue();
+            int tmp = Integer.valueOf(part[7], 10).intValue();
             val = tmp;  // don't do this assign until now in case the conversion throws
         } catch (Exception e) {
             log.error("Unable to get number from reply: \"" + s + "\"");
@@ -118,4 +118,4 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
 }
 
 
-/* @(#)SRCPReply.java */
+

@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.loconet.pr3;
 
 import jmri.util.SystemType;
@@ -27,7 +26,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     public String name() {
-        return "LocoNet PR3";
+        return "LocoNet PR3"; // NOI18N
     }
 
     public boolean isOptList2Advanced() {
@@ -37,7 +36,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     @Override
     protected String[] getPortFriendlyNames() {
         if (SystemType.isWindows()) {
-            return new String[]{"Communications Port"};
+            return new String[]{"Communications Port"}; // NOI18N
         }
         return new String[]{};
     }

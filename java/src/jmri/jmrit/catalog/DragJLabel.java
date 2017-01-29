@@ -1,4 +1,3 @@
-// DragJLabel.java
 package jmri.jmrit.catalog;
 
 import java.awt.datatransfer.DataFlavor;
