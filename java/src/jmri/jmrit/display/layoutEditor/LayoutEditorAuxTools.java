@@ -28,7 +28,7 @@ public class LayoutEditorAuxTools {
     //ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     // constants
-    // operational instance variables 
+    // operational instance variables
     private LayoutEditor layoutEditor = null;
     private ArrayList<LayoutConnectivity> cList = new ArrayList<LayoutConnectivity>(); //LayoutConnectivity list
     private boolean blockConnectivityChanged = false;  // true if block connectivity may have changed
@@ -183,7 +183,7 @@ public class LayoutEditorAuxTools {
                     // check first connection for turnout or level crossing
                     if ((ts.getType1() >= LayoutEditor.TURNOUT_A)
                             && (ts.getType1() <= LayoutEditor.LEVEL_XING_D)) {
-                        // have connection to turnout or level crossing							
+                        // have connection to turnout or level crossing
                         if (ts.getType1() <= LayoutEditor.TURNOUT_D) {
                             // have connection to a turnout, is block different
                             lt = (LayoutTurnout) ts.getConnect1();
@@ -247,7 +247,7 @@ public class LayoutEditorAuxTools {
                     // check second connection for turnout or level crossing
                     if ((ts.getType2() >= LayoutEditor.TURNOUT_A)
                             && (ts.getType2() <= LayoutEditor.LEVEL_XING_D)) {
-                        // have connection to turnout or level crossing							
+                        // have connection to turnout or level crossing
                         if (ts.getType2() <= LayoutEditor.TURNOUT_D) {
                             // have connection to a turnout
                             lt = (LayoutTurnout) ts.getConnect2();
@@ -307,7 +307,7 @@ public class LayoutEditorAuxTools {
                             // add to list
                             cList.add(c);
                         }
-                    } // this is routinely reached in normal operation with 
+                    } // this is routinely reached in normal operation with
                 }
             }
         }
@@ -458,7 +458,7 @@ public class LayoutEditorAuxTools {
                     // check first connection for turnout or level crossing
                     if ((ts.getType1() >= LayoutEditor.TURNOUT_A)
                             && (ts.getType1() <= LayoutEditor.LEVEL_XING_D)) {
-                        // have connection to turnout or level crossing							
+                        // have connection to turnout or level crossing
                         if (ts.getType1() <= LayoutEditor.TURNOUT_D) {
                             // have connection to a turnout, is block different
                             lt = (LayoutTurnout) ts.getConnect1();
@@ -522,7 +522,7 @@ public class LayoutEditorAuxTools {
                     // check second connection for turnout or level crossing
                     if ((ts.getType2() >= LayoutEditor.TURNOUT_A)
                             && (ts.getType2() <= LayoutEditor.LEVEL_XING_D)) {
-                        // have connection to turnout or level crossing							
+                        // have connection to turnout or level crossing
                         if (ts.getType2() <= LayoutEditor.TURNOUT_D) {
                             // have connection to a turnout
                             lt = (LayoutTurnout) ts.getConnect2();
@@ -649,7 +649,7 @@ public class LayoutEditorAuxTools {
         blockConnectivityChanged = false;
     }
 
-    // 
+    //
     private void checkConnectivity(LayoutConnectivity c, boolean[] found) {
         // initialize input LayoutConnectivity components
         LayoutBlock blk1 = c.getBlock1();
@@ -773,11 +773,7 @@ public class LayoutEditorAuxTools {
                     LayoutTurnout ltx = (LayoutTurnout) prevConnection;
                     if (lc.getConnectedType() == LayoutEditor.TURNOUT_B) {
                         // Track Segment connected to continuing track of turnout
-                        if (ltx.getContinuingSense() == Turnout.CLOSED) {
-                            bs = new BeanSetting(ltx.getTurnout(), ltx.getTurnoutName(), Turnout.CLOSED);
-                        } else {
-                            bs = new BeanSetting(ltx.getTurnout(), ltx.getTurnoutName(), Turnout.THROWN);
-                        }
+                        bs = new BeanSetting(ltx.getTurnout(), ltx.getTurnoutName(), ltx.getContinuingSense());
                         if (bs.getBean() != null) {
                             p.addSetting(bs);
                         } else {
@@ -865,7 +861,7 @@ public class LayoutEditorAuxTools {
                         }
                     } else {
                         //At a double slip we could go in two different directions
-                        log.warn("possible incomplete code: At a double slip we could go in two different directions");
+                        log.info("possible incomplete code: At a double slip we could go in two different directions");
                     }
                 }
             } else {
@@ -1161,7 +1157,7 @@ public class LayoutEditorAuxTools {
                         // entry is at turnout throat, cannot follow possible path any further
                         curConnection = null;
                     } else if (typeCurConnection == LayoutEditor.TURNOUT_B) {
-                        // entry is at continuing track of turnout 
+                        // entry is at continuing track of turnout
                         bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
                         if (bs.getBean() != null) {
                             p.addSetting(bs);
@@ -1170,7 +1166,7 @@ public class LayoutEditorAuxTools {
                             log.error("BadBeanError (T) LayoutTurnout " + lt.getName() + " has Turnout: " + lt.getTurnout() + " turnoutName: " + lt.getTurnoutName());
                         }
                         if (lt.getLayoutBlock() != layoutBlock) {
-                            // left current block 
+                            // left current block
                             curConnection = null;
                         } else {
                             prevConnection = curConnection;
@@ -1178,7 +1174,7 @@ public class LayoutEditorAuxTools {
                             typeCurConnection = LayoutEditor.TRACK;
                         }
                     } else if (typeCurConnection == LayoutEditor.TURNOUT_D) {
-                        // entry is at continuing track of turnout 
+                        // entry is at continuing track of turnout
                         bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
                         if (bs.getBean() != null) {
                             p.addSetting(bs);
@@ -1187,7 +1183,7 @@ public class LayoutEditorAuxTools {
                             log.error("BadBeanError (U) LayoutTurnout " + lt.getName() + " has Turnout: " + lt.getTurnout() + " turnoutName: " + lt.getTurnoutName());
                         }
                         if (lt.getLayoutBlockC() != layoutBlock) {
-                            // left current block 
+                            // left current block
                             curConnection = null;
                         } else {
                             prevConnection = curConnection;
@@ -1202,7 +1198,7 @@ public class LayoutEditorAuxTools {
                         // entry is at turnout throat, cannot follow possible path any further
                         curConnection = null;
                     } else if (typeCurConnection == LayoutEditor.TURNOUT_A) {
-                        // entry is at continuing track of turnout 
+                        // entry is at continuing track of turnout
                         bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
                         if (bs.getBean() != null) {
                             p.addSetting(bs);
@@ -1211,7 +1207,7 @@ public class LayoutEditorAuxTools {
                             log.error("BadBeanError (V) LayoutTurnout " + lt.getName() + " has Turnout: " + lt.getTurnout() + " turnoutName: " + lt.getTurnoutName());
                         }
                         if (lt.getLayoutBlockB() != layoutBlock) {
-                            // left current block 
+                            // left current block
                             curConnection = null;
                         } else {
                             prevConnection = curConnection;
@@ -1219,7 +1215,7 @@ public class LayoutEditorAuxTools {
                             typeCurConnection = LayoutEditor.TRACK;
                         }
                     } else { // typeCurConnection == LayoutEditor.TURNOUT_C per if statement 2 levels up
-                        // entry is at continuing track of turnout 
+                        // entry is at continuing track of turnout
                         bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
                         if (bs.getBean() != null) {
                             p.addSetting(bs);
