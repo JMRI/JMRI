@@ -59,6 +59,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.symbolicprog.configurexml.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.symbolicprog.autospeed.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.symbolicprog.symbolicframe.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(QualifierCombinerTest.class));
         return suite;
     }
 
