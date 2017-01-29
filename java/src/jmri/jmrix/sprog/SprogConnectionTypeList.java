@@ -1,4 +1,3 @@
-// SprogConnectionTypeList.java
 package jmri.jmrix.sprog;
 
 /**

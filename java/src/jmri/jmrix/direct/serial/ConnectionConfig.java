@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.direct.serial;
 
 import jmri.util.SystemType;

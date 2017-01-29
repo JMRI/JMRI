@@ -1,6 +1,6 @@
-// ShowTrainsServingLocationFram.java
 package jmri.jmrit.operations.locations.tools;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -180,7 +180,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("check box action");
         isShowAllTrains = showAllTrainsCheckBox.isSelected();

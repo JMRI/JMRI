@@ -86,4 +86,4 @@ public class DCCppInterfaceScaffold extends DCCppTrafficController {
 }
 
 
-/* @(#)LocoNetInterfaceScaffold.java */
+

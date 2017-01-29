@@ -1,4 +1,3 @@
-// InterchangeTableModel.java
 package jmri.jmrit.operations.locations;
 
 import java.beans.PropertyChangeEvent;

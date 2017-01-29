@@ -1,4 +1,3 @@
-// DCCppComponentFactory.java
 package jmri.jmrix.dccpp.swing;
 
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
@@ -31,4 +30,4 @@ public class DCCppComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 }
 
 
-/* @(#)DCCppComponentFactory.java */
+

@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.maple.serialdriver;
 
 import javax.swing.JButton;

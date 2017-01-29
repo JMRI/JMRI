@@ -1,4 +1,3 @@
-// SpecificLightManager.java
 package jmri.jmrix.powerline.simulator;
 
 import jmri.Light;
@@ -16,11 +15,6 @@ import jmri.jmrix.powerline.SerialTrafficController;
  * @author kcameron Copyright (C) 2011
   */
 public class SpecificLightManager extends jmri.jmrix.powerline.SerialLightManager {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8171888128741447856L;
 
     public SpecificLightManager(SerialTrafficController tc) {
         super(tc);
@@ -44,5 +38,3 @@ public class SpecificLightManager extends jmri.jmrix.powerline.SerialLightManage
         return tc.getAdapterMemo().getSerialAddress().isInsteon(systemName);
     }
 }
-
-/* @(#)SpecificLightManager.java */

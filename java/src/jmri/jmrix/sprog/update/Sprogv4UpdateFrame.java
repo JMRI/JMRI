@@ -1,4 +1,3 @@
-// Sprogv4UpdateFrame.java
 package jmri.jmrix.sprog.update;
 
 import javax.swing.JOptionPane;

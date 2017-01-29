@@ -1,5 +1,6 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ArrayList;
@@ -82,7 +83,7 @@ public class ProgCheckAction extends AbstractAction {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     static String checkMissingNames(File file) {
@@ -152,7 +153,7 @@ public class ProgCheckAction extends AbstractAction {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     static String checkIncompleteComprehensive(File file) {

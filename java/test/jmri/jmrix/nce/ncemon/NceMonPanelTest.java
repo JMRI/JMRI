@@ -1,10 +1,3 @@
-/**
- * NceMonPanelTest.java
- *
- * Description:	JUnit tests for the NceProgrammer class
- *
- * @author	Bob Jacobsen
- */
 package jmri.jmrix.nce.ncemon;
 
 import java.util.Vector;
@@ -26,7 +19,12 @@ import java.awt.GraphicsEnvironment;
 import jmri.util.JmriJFrame;
 import jmri.jmrix.AbstractMonPaneScaffold;
 
-public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTest {
+/**
+ * JUnit tests for the NceProgrammer class
+ *
+ * @author	Bob Jacobsen
+ */
+public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     private NceSystemConnectionMemo memo = null;
 

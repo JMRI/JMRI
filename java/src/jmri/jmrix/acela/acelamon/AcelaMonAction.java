@@ -38,5 +38,3 @@ public class AcelaMonAction extends AbstractAction {
     }
     private final static Logger log = LoggerFactory.getLogger(AcelaMonAction.class.getName());
 }
-
-/* @(#)AcelaMonAction.java */

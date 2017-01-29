@@ -148,6 +148,12 @@ public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
     @Override
     public void dispose(){
        super.dispose();
+       keepAliveTimer.stop();
+       keepAliveTimer = null;
+       socket.close();
+       opened = false;
+       allowConnectionRecovery = false; // disposing of the object should 
+                                        // result in not allowing reconnection.
     }
 
     private final static Logger log = LoggerFactory.getLogger(Z21Adapter.class.getName());

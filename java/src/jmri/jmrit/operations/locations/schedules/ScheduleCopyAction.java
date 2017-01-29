@@ -1,4 +1,3 @@
-// ScheduleCopyAction.java
 package jmri.jmrit.operations.locations.schedules;
 
 import java.awt.Frame;
@@ -37,4 +36,4 @@ public class ScheduleCopyAction extends AbstractAction {
     }
 }
 
-/* @(#)ScheduleCopyAction.java */
+

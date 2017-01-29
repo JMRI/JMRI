@@ -3,6 +3,7 @@
  */
 package jmri.jmrix.lenz.liusbserver;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.lenz.XNetPacketizer;
@@ -31,7 +32,7 @@ public class LIUSBServerXNetPacketizer extends XNetPacketizer {
     /**
      * Actually transmits the next message to the port
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"UW_UNCOND_WAIT"},
+    @SuppressFBWarnings(value = {"UW_UNCOND_WAIT"},
              justification = "Wait is for external hardware, which doesn't necessarilly respond, to process the data.")
 
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
@@ -87,4 +88,4 @@ public class LIUSBServerXNetPacketizer extends XNetPacketizer {
     private final static Logger log = LoggerFactory.getLogger(LIUSBServerXNetPacketizer.class.getName());
 }
 
-/* @(#)XnTcpXNetPacketizer.java */
+

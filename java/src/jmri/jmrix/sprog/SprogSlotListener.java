@@ -17,4 +17,4 @@ public interface SprogSlotListener extends java.util.EventListener {
 }
 
 
-/* @(#)SprogSlotListener.java */
+

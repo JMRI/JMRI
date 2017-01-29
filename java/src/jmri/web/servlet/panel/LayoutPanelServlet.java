@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * @author mstevetodd -- based on PanelServlet.java by rhwood
  */
 @WebServlet(name = "LayoutPanelServlet",
-        urlPatterns = {"/panel/LayoutPanel"})
+        urlPatterns = {"/panel/Layout"})
 public class LayoutPanelServlet extends AbstractPanelServlet {
 
     private final static Logger log = LoggerFactory.getLogger(LayoutPanelServlet.class);

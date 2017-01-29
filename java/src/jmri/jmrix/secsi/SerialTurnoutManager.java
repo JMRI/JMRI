@@ -1,4 +1,3 @@
-// SerialTurnoutManager.java
 package jmri.jmrix.secsi;
 
 import jmri.Turnout;
@@ -64,4 +63,4 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
 }
 
-/* @(#)SerialTurnoutManager.java */
+

@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
@@ -183,7 +184,7 @@ public class Pr2Throttle extends AbstractThrottle {
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
@@ -193,7 +194,7 @@ public class Pr2Throttle extends AbstractThrottle {
 
         writeData();
         if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting); // NOI18N
         }
         record(speed);
     }
@@ -207,7 +208,7 @@ public class Pr2Throttle extends AbstractThrottle {
         isForward = forward;
         sendFunctionGroup1();
         if (old != isForward) {
-            notifyPropertyChangeListener("IsForward", old, isForward);
+            notifyPropertyChangeListener("IsForward", old, isForward); // NOI18N
         }
     }
 

@@ -1,4 +1,3 @@
-// AcelaConnectionTypeList.java
 package jmri.jmrix.acela;
 
 /**

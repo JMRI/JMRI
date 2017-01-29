@@ -1,4 +1,3 @@
-// NceTurnoutManager.java
 package jmri.jmrix.nce;
 
 import jmri.Turnout;
@@ -42,4 +41,4 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
     }
 }
 
-/* @(#)NceTurnoutManager.java */
+

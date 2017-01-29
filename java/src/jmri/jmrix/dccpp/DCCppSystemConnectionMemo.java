@@ -305,4 +305,4 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private final static Logger log = LoggerFactory.getLogger(DCCppSystemConnectionMemo.class.getName());
 
 }
-/* @(#)DCCppSystemConnectionMemo.java */
+

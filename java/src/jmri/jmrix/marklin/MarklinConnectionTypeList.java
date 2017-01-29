@@ -1,4 +1,3 @@
-// MarklinConnectionTypeList.java
 package jmri.jmrix.marklin;
 
 /**

@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -61,7 +62,7 @@ public class ExportEngines extends XmlFile {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
             justification = "EngineManager only provides Engine Objects")
     public void writeFile(String name) {
         log.debug("writeFile {}", name);

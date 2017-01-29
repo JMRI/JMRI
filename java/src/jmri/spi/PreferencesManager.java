@@ -90,7 +90,7 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
      * @return A set or list of classes. If there are no dependencies, return an
      *         empty set instead of null.
      */
-    public @Nonnull
+    @Nonnull public
     Iterable<Class<? extends PreferencesManager>> getRequires();
 
     /**
@@ -101,7 +101,7 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
      *         instance of no other Interfaces or abstract Classes than
      *         PreferencesManager, return an empty set instead of null.
      */
-    public @Nonnull
+    @Nonnull public
     Iterable<Class<?>> getProvides();
 
     /**

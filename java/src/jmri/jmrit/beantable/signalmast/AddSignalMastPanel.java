@@ -81,7 +81,7 @@ public class AddSignalMastPanel extends JPanel {
     JPanel dccMastPanel = new JPanel();
     JLabel systemPrefixBoxLabel = new JLabel(Bundle.getMessage("DCCSystem") + ":");
     JComboBox<String> systemPrefixBox = new JComboBox<String>();
-    JLabel dccAspectAddressLabel = new JLabel(Bundle.getMessage("DCCMastAddress"));
+    JLabel dccAspectAddressLabel = new JLabel(Bundle.getMessage("DCCMastAddress")+ ":");
     JTextField dccAspectAddressField = new JTextField(5);
     JCheckBox allowUnLit = new JCheckBox();
     JPanel unLitSettingsPanel = new JPanel();
@@ -862,7 +862,7 @@ public class AddSignalMastPanel extends JPanel {
                 InstanceManager.getDefault(jmri.SignalMastManager.class).register(dccMast);
             } else if (Bundle.getMessage("MatrixCtlMast").equals(signalMastDriver.getSelectedItem())) {
                 // Create was pressed for new mast, check all boxes are filled
-                if (turnoutBox1.getDisplayName() == "" || (bitNum > 1 && turnoutBox2.getDisplayName() == "") || (bitNum > 2 && turnoutBox3.getDisplayName() == "") ||
+                if (turnoutBox1.getDisplayName().isEmpty() || (bitNum > 1 && turnoutBox2.getDisplayName().isEmpty()) || (bitNum > 2 && turnoutBox3.getDisplayName().isEmpty()) ||
                         (bitNum > 3 && turnoutBox4.getDisplayName().equals("")) || (bitNum > 4 && turnoutBox5.getDisplayName().equals("")) ||
                         (bitNum > 5 && turnoutBox6.getDisplayName().equals(""))) {
                     // radd extra OR in order to set MAXMATRIXBITS > 6
@@ -2274,4 +2274,4 @@ public class AddSignalMastPanel extends JPanel {
     private final static Logger log = LoggerFactory.getLogger(AddSignalMastPanel.class.getName());
 }
 
-/* @(#)AddSignalMastPanel.java */
+

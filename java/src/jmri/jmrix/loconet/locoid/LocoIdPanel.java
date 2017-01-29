@@ -69,7 +69,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
     }
 
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.locoid.LocoIdFrame";
+        return "package.jmri.jmrix.loconet.locoid.LocoIdFrame"; // NOI18N
     }
 
     public String getTitle() {

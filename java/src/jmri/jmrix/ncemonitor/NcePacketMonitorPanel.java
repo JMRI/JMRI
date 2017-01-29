@@ -1,5 +1,6 @@
 package jmri.jmrix.ncemonitor;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
@@ -35,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * @author	Ken Cameron Copyright (C) 2010 derived from -
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "serialStream is access from separate thread, and this class isn't used much")
+@SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "serialStream is access from separate thread, and this class isn't used much")
 public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements NcePanelInterface {
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ncemonitor.NcePacketMonitorBundle");
@@ -652,8 +653,6 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
-
-        private static final long serialVersionUID = -8552495867322154829L;
 
         public Default() {
             super("Open NCE DCC Packet Analyzer",

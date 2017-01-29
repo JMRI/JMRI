@@ -1,4 +1,3 @@
-// Mx1Listener.java
 package jmri.jmrix.zimo;
 
 /**
@@ -28,4 +27,4 @@ public interface Mx1Listener extends java.util.EventListener {
 }
 
 
-/* @(#)Mx1Listener.java */
+

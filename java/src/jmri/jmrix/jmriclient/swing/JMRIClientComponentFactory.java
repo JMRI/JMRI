@@ -1,4 +1,3 @@
-// JMRIClientComponentFactory.java
 package jmri.jmrix.jmriclient.swing;
 
 import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
@@ -30,4 +29,4 @@ public class JMRIClientComponentFactory extends jmri.jmrix.swing.ComponentFactor
 }
 
 
-/* @(#)JMRIClientComponentFactory.java */
+

@@ -15,7 +15,7 @@ import org.junit.Test;
  * @author	Mark Underwood 2012
  * @author	Paul Bender 2016
  */
-public class ProxyReporterManagerTest extends AbstractReporterMgrTest {
+public class ProxyReporterManagerTest extends AbstractReporterMgrTestBase {
 
     @Override
     public String getSystemName(int i) {

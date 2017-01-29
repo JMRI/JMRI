@@ -58,10 +58,12 @@ public class PanelMenu extends JMenu {
     private JMenu panelsSubMenu = null;
     private JMenuItem noPanelsItem = null;
     static private PanelMenu thisMenu = null;
-    private ArrayList<Editor> panelsList = new ArrayList<Editor>();
+    private final ArrayList<Editor> panelsList = new ArrayList<>();
 
     /**
      * Provide method to reference this panel menu
+     *
+     * @return get the single instance of this menu
      */
     static public PanelMenu instance() {
         if (thisMenu == null) {
@@ -71,7 +73,7 @@ public class PanelMenu extends JMenu {
     }
 
     /**
-     * Provide method to delete the refence to this menu
+     * Provide method to delete the reference to this menu
      */
     static public void dispose() {
         thisMenu = null;
@@ -79,6 +81,8 @@ public class PanelMenu extends JMenu {
 
     /**
      * Utility routine for getting the number of panels in the Panels sub menu
+     *
+     * @return the number of panels
      */
     public int getNumberOfPanels() {
         return panelsList.size();
@@ -86,12 +90,12 @@ public class PanelMenu extends JMenu {
 
     /**
      * Delete a panel from Show Panel sub menu
+     *
+     * @param panel the panel to remove from the menu
      */
     public void deletePanel(Editor panel) {
-        if (log.isDebugEnabled()) {
-            log.debug("deletePanel");
-        }
-        if (panelsList.size() == 0) {
+        log.debug("deletePanel");
+        if (panelsList.isEmpty()) {
             return;
         }
         for (int i = 0; i < panelsList.size(); i++) {
@@ -105,7 +109,7 @@ public class PanelMenu extends JMenu {
                 panelsSubMenu.remove(i);
                 // If there are no panels on the list,
                 // replace the 'No Panels' menu item
-                if (panelsList.size() == 0) {
+                if (panelsList.isEmpty()) {
                     panelsSubMenu.add(noPanelsItem);
                 }
                 return;
@@ -115,23 +119,23 @@ public class PanelMenu extends JMenu {
 
     /**
      * Add an Editor panel to Show Panels sub menu
+     *
+     * @param panel the panel to add to the menu
      */
     public void addEditorPanel(final Editor panel) {
         // If this is the first panel, remove the 'No Panels' menu item
-        if (panelsList.size() == 0) {
+        if (panelsList.isEmpty()) {
             panelsSubMenu.remove(noPanelsItem);
         }
         panelsList.add(panel);
-        ActionListener a = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (panel instanceof LayoutEditor) {
-                    panel.setVisible(true);
-                    panel.repaint();
-                } else {
-                    panel.getTargetFrame().setVisible(true);
-                }
-                updateEditorPanel(panel);
+        ActionListener a = (ActionEvent e) -> {
+            if (panel instanceof LayoutEditor) {
+                panel.setVisible(true);
+                panel.repaint();
+            } else {
+                panel.getTargetFrame().setVisible(true);
             }
+            updateEditorPanel(panel);
         };
         JCheckBoxMenuItem r = new JCheckBoxMenuItem(panel.getTitle());
         r.addActionListener(a);
@@ -141,9 +145,11 @@ public class PanelMenu extends JMenu {
 
     /**
      * Update an Editor type panel in Show Panels sub menu
+     *
+     * @param panel the panel to update
      */
     public void updateEditorPanel(Editor panel) {
-        if (panelsList.size() == 0) {
+        if (panelsList.isEmpty()) {
             return;
         }
         for (int i = 0; i < panelsList.size(); i++) {
@@ -170,9 +176,11 @@ public class PanelMenu extends JMenu {
 
     /**
      * Rename an Editor type panel in Show Panels sub menu
+     *
+     * @param panel the panel to rename
      */
     public void renameEditorPanel(Editor panel) {
-        if (panelsList.size() == 0) {
+        if (panelsList.isEmpty()) {
             return;
         }
         for (int i = 0; i < panelsList.size(); i++) {
@@ -188,9 +196,12 @@ public class PanelMenu extends JMenu {
     /**
      * Determine if named panel already exists returns true if named panel
      * already loaded
+     *
+     * @param name the name to test
+     * @return true if name is in use; false otherwise
      */
     public boolean isPanelNameUsed(String name) {
-        if (panelsList.size() == 0) {
+        if (panelsList.isEmpty()) {
             return false;
         }
         for (int i = 0; i < panelsList.size(); i++) {
@@ -206,7 +217,7 @@ public class PanelMenu extends JMenu {
     }
 
     public Editor getEditorByName(String name) {
-        if (panelsList.size() == 0) {
+        if (panelsList.isEmpty()) {
             return null;
         }
         for (int i = 0; (i < panelsList.size()); i++) {
@@ -226,7 +237,7 @@ public class PanelMenu extends JMenu {
     }
 
     public ArrayList<LayoutEditor> getLayoutEditorPanelList() {
-        ArrayList<LayoutEditor> lePanelsList = new ArrayList<LayoutEditor>();
+        ArrayList<LayoutEditor> lePanelsList = new ArrayList<>();
         for (int i = 0; (i < panelsList.size()); i++) {
             try {
                 LayoutEditor le = (LayoutEditor) panelsList.get(i);

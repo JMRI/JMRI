@@ -1,4 +1,3 @@
-// SprogUpdateFrame.java
 package jmri.jmrix.sprog.update;
 
 import javax.swing.BoxLayout;
@@ -32,10 +31,6 @@ abstract public class SprogUpdateFrame
         extends jmri.util.JmriJFrame
         implements SprogListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4342048453134323808L;
 // member declarations
     protected JButton programButton = new JButton();
     protected JButton openFileChooserButton = new JButton();
@@ -181,7 +176,7 @@ abstract public class SprogUpdateFrame
         // prevent button areas from expanding
         pack();
         paneA.setMaximumSize(paneA.getSize());
-        pack();
+//        pack();
     }
 
     public void notifyMessage(SprogMessage m) {

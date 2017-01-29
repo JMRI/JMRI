@@ -8,6 +8,7 @@ import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.util.Arrays;
 import jmri.jmrix.zimo.Mx1CommandStation;
 import jmri.jmrix.zimo.Mx1Packetizer;
 import jmri.jmrix.zimo.Mx1PortController;
@@ -36,6 +37,7 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
 
     SerialPort activeSerialPort = null;
 
+    @Override
     public String openPort(String portName, String appName) {
         // open the port in MX-1 mode, check ability to set moderators
         try {
@@ -213,13 +215,11 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
 
-    /**
-     * Local method to do specific configuration
-     */
     protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
@@ -242,13 +242,9 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
         activeSerialPort.setFlowControlMode(flow);
     }
 
-    /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     protected String[] validSpeeds = new String[]{"9,600 baud (Default)", "1,200 baud", "2,400 baud", "4,800 baud",

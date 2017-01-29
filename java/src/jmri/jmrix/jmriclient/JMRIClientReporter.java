@@ -1,4 +1,3 @@
-// JMRIClientReporter.java
 package jmri.jmrix.jmriclient;
 
 import jmri.implementation.AbstractReporter;
@@ -16,10 +15,6 @@ import org.slf4j.LoggerFactory;
   */
 public class JMRIClientReporter extends AbstractReporter implements JMRIClientListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1164767908120216920L;
     // data members
     private int _number;   // reporter number
     private JMRIClientTrafficController tc = null;
@@ -93,4 +88,4 @@ public class JMRIClientReporter extends AbstractReporter implements JMRIClientLi
 }
 
 
-/* @(#)JMRIClientReporter.java */
+

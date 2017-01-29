@@ -1,4 +1,3 @@
-// XBeeSensor.java
 package jmri.jmrix.ieee802154.xbee;
 
 import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
@@ -26,10 +25,6 @@ import org.slf4j.LoggerFactory;
  */
 public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1015365837178480016L;
     private String NodeIdentifier; /* This is a string representation of
      the XBee address in the system name
      It may be an address or it may be
@@ -170,5 +165,3 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
 
 }
 
-
-/* @(#)XBeeSensor.java */

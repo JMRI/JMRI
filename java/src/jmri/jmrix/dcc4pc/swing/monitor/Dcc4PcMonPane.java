@@ -125,4 +125,4 @@ public class Dcc4PcMonPane extends jmri.jmrix.AbstractMonPane implements Dcc4PcL
 }
 
 
-/* @(#)MonAction.java */
+

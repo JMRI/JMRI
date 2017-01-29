@@ -124,15 +124,15 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                 try {
                     board = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
                 } catch (NumberFormatException ex) {
-                    log.error("Unable to convert " + curAddress + " into the cab and channel format of nn:xx");
-                    throw new JmriException("Hardware Address passed should be a number");
+                    log.error("Unable to convert " + curAddress + " into the cab and channel format of nn:xx"); // NOI18N
+                    throw new JmriException("Hardware Address passed should be a number"); // NOI18N
                 }
             }
             try {
                 channel = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " into the cab and channel format of nn:xx");
-                throw new JmriException("Hardware Address passed should be a number");
+                log.error("Unable to convert " + curAddress + " into the cab and channel format of nn:xx"); // NOI18N
+                throw new JmriException("Hardware Address passed should be a number"); // NOI18N
             }
             if (turnout) {
                 iName = 2 * (channel - 1) + 1;
@@ -144,8 +144,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
             try {
                 iName = Integer.parseInt(curAddress);
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " Hardware Address to a number");
-                throw new JmriException("Hardware Address passed should be a number");
+                log.error("Unable to convert " + curAddress + " Hardware Address to a number"); // NOI18N
+                throw new JmriException("Hardware Address passed should be a number"); // NOI18N
             }
         }
         return prefix + typeLetter() + iName;
@@ -161,7 +161,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false); // NOI18N
             return null;
         }
 

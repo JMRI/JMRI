@@ -1,5 +1,6 @@
 package jmri.jmrit.symbolicprog.symbolicframe;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.util.List;
 import javax.swing.Box;
@@ -436,7 +437,7 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame {
         variableModel.setFileDirty(false);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "REC_CATCH_EXCEPTION") // dead class doesn't need this fixed right now
+    @SuppressFBWarnings(value = "REC_CATCH_EXCEPTION") // dead class doesn't need this fixed right now
     void writeFile() {
         log.warn("SymbolicProgFrame writeFile invoked - is this still right, or should the LocoFile method be used?");
         log.warn("Note use of VersionID attribute...");

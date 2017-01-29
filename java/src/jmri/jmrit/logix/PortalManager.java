@@ -156,4 +156,4 @@ public class PortalManager extends AbstractManager
     private final static Logger log = LoggerFactory.getLogger(PortalManager.class.getName());
 }
 
-/* @(#)PortalManager.java */
+

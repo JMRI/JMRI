@@ -15,7 +15,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen Copyright 2007
  * @author      Paul Bender Copyright (C) 2016
  */
-public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     @Override
     public String getSystemName(int i) {

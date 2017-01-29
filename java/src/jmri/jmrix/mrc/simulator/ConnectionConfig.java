@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.mrc.simulator;
 
 import javax.swing.JPanel;

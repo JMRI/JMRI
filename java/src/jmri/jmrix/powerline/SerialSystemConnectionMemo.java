@@ -1,4 +1,3 @@
-// SerialSystemConnectionMemo.java
 package jmri.jmrix.powerline;
 
 import java.util.ResourceBundle;
@@ -165,4 +164,4 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
 }
 
 
-/* @(#)SerialSystemConnectionMemo.java */
+
