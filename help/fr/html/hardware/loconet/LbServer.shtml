@@ -1,47 +1,35 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
- <!--UpDated by Herv&#233; Blorec  2013-09-13-->
-
+ <!--UpDated by Herv&#233; Blorec  2017-01-29-->
 <html lang="fr">
 <head>
- <TITLE>
-      JMRI Hardware Guide: Connecting Multiple Computers to LocoNet via LbServer
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="Digitrax Chief DCS Command Station LocoNet Server LocoBuffer java model railroad JMRI install windows">
+ <title>JMRI Hardware Support - Multiple Computers to LocoNet&reg; via LbServer</title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="Digitrax Chief DCS Command Station LocoNet Server LocoBuffer java model railroad JMRI install windows">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmriGuide d'Installation.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<div id="mainContent">
+      <h1>Supporte Mat&#233;riel: Connexion de multiples ordinateurs &#224; LocoNet&reg; via LbServer</h1>
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
-      <h1> 
-      JMRI Guide mat&#233;riel: Connexion de multiples ordinateurs &#224; LocoNet&reg; via LbServer
-      </h1>
-
-Cette page d&#233;crit comment configurer plusieurs noeuds JMRI pour la connexion
+Cette page d&#233;crit comment configurer plusieurs n&#339;uds JMRI pour la connexion
 clients &#224; un seul
 <a href="http://loconetovertcp.sourceforge.net">LbServer LocoNetOverTCP </a>,
 qui &#224; son tour est reli&#233; au r&#233;seau ferr&#233;.
 <P>
 
-Ce lien, appel&#233; LocoNetOverTCP, utilise un processus serveur non-Java s&#233;par&#233;
+Cette connexion, appel&#233; LocoNetOverTCP, utilise un processus serveur non-Java s&#233;par&#233;
  LbServer, qui communique avec des messages sous forme de cha&#238;nes ASCII simples sur sockets TCP/IP,
-permettant &#224; des noeuds non-Java de partager aussi le LocoBufer.
+permettant &#224; des n&#339;uds non-Java de partager aussi le LocoBufer.
 <P>
 
 <h2>Configuration pour JMRI LocoNetOverTCP</h2>
@@ -76,7 +64,7 @@ dans les communications LocoNet. Cela ne cause pas de charge suppl&#233;mentaire
 Il en co&#238;te un peu plus en raisons des cartes suppl&#233;mentaires, et ne vous permettent pas de
 mettre un ordinateur distant &#224; partir du r&#233;seau ferr&#233;.
 <LI> L'ordinateur ex&#233;cutant LbServer peut &#233;galement ex&#233;cuter le logiciel JMRI, dans ce
-cas, le client et serveur se trouvent &#234;tre sur le m&#234;me noeud.
+cas, le client et serveur se trouvent &#234;tre sur le m&#234;me n&#339;ud.
 <LI> Certains logiciels pare-feu d&#233;tectent l'utilisation du port 1234 par LbServer comme un cheval de Troie et bloquent l'acc&#232;s au port.
 Pour contourner ce probl&#232;me, vous aurez soit &#224; permettre l'acc&#232;s par votre logiciel pare-feu ou de changer le port par
 un autre num&#233;ro, comme  9999. Le nouveau num&#233;ro de port devra aussi &#234;tre pass&#233; dans LbServer comme une option de ligne de commande.
