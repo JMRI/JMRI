@@ -22,11 +22,13 @@ package jmri;
  * Use localization to address this in the user interface.
  *
  * @author	Pete Cressman Copyright (C) 2009
+ * @author	Egbert Broerse Copyright (C) 2017
  */
 public interface SignalGroup extends NamedBean {
 
     /**
      * Set enabled status of the signal group.
+     * @param boo Enabled = true
      */
     public void setEnabled(boolean boo);
 
@@ -36,53 +38,66 @@ public interface SignalGroup extends NamedBean {
     public boolean getEnabled();
 
     /**
-     * Sets the main Signal Mast to which the Group belongs.
+     * Set the main Signal Mast for the Group by name.
+     * @param mastName Name of the (existing) Signal Mast
+     * to set as main mast for the group
      */
     public void setSignalMast(String mastName);
 
     /**
-     * Sets the main Signal Mast to which the Group belongs.
+     * Set the main Signal Mast for the Group.
+     * @param signalMast Mast object to attach
+     * @param mastName Name of the (existing) Signal Mast
+     * to set as main mast for the group
      */
     public void setSignalMast(SignalMast signalMast, String mastName);
 
     /**
      * Get the name of the main Signal Mast in a group.
-     * @return Name of the main Signal Mast as string
+     * @return Name of the mast as string
      */
     public String getSignalMastName();
 
     /**
-     * Get the SignalMast in a group.
+     * Get the main Signal Mast in a group.
      * @return The main Signal Mast as bean
      */
     public SignalMast getSignalMast();
 
     /**
-     * Clear the list of SignalMast Aspects that trigger the group.
+     * Clear the list of SignalMast Aspects that may trigger the group.
+     * Causes the Aspect list to be rebuilt next time it is called
      */
     public void clearSignalMastAspect();
 
     /**
      * Add an Aspect that can trigger the group activation.
-     * @param aspect Name of an aspect to be included on the Main Signal Mast in the Group, must be valid
+     * @param aspect Name of an aspect for the Main Signal Mast in the Group, must be valid for the Mast type
      */
     public void addSignalMastAspect(String aspect);
 
+    /**
+     * Get the total number of Signal Mast Aspects available in this group.
+     * @return the number of Aspects on the main Signal Mast, null if no Main Mast is assigned
+     */
     public int getNumSignalMastAspects();
 
     /**
-     * Method to get a SignalMast Aspect by Index.
-     * Returns null if there are no Appearances with that index.
+     * Get a SignalMast Aspect for the Main Signal Mast by its Index.
+     * @param n Index of the Signal Mast Aspect in the list
+     * @return null if there are no Aspects with that index.
      */
     public String getSignalMastAspectByIndex(int x);
 
     /**
-     * Inquire if a SignalMast Aspect is included.
+     * Inquire if a Signal Mast Aspect is included in the group.
+     * @param aspect Name of the Aspect, i.e. "Clear"
      */
     public boolean isSignalMastAspectIncluded(String aspect);
 
     /**
      * Remove a SignalMast Aspect from the set of triggers.
+     * @param aspect Name of the Aspect, i.e. "Clear"
      */
     public void deleteSignalMastAspect(String aspect);
 
@@ -94,70 +109,78 @@ public interface SignalGroup extends NamedBean {
 
     /**
      * Add a Signal Head to the Group.
-     * @param mHead The Signal Head object
+     * @param signalHead The Signal Head object
      */
-    public void addSignalHead(SignalHead mHead);
+    public void addSignalHead(SignalHead signalHead);
 
+    /**
+     * Get a Signal Head by Index.
+     * @param n Index of the SignalHead in the Group
+     * @return null if there are no Signal Heads with that index in the group
+     */
     public SignalHead getHeadItemBeanByIndex(int n);
 
     /**
-     * Method to get a Signal Head by Index.
-     * @return null if there are no Signal Heads with that index
+     * Get the name of a Signal Head by Index.
+     * @param n Index of the SignalHead in the Group
+     * @return null if there are no Signal Heads with that index in the group
      */
     public String getHeadItemNameByIndex(int n);
 
     /**
-     * Method to get the On State of a Signal Head at Index n.
+     * Get the On State of a Signal Head at Index n in the group.
+     * @param n Index of the SignalHead in Group
      * @return -1 if there are less than 'n' Signal Heads defined
      */
     public int getHeadOnStateByIndex(int n);
 
     /**
-     * Method to get the Off State of a Signal Head at Index n.
+     * Get the Off State of a Signal Head at Index n in the group.
+     * @param n Index of the SignalHead in Group
      * @return -1 if there are less than 'n' Signal Heads defined
      */
     public int getHeadOffStateByIndex(int n);
 
     /**
-     * Method to delete a Signal Head by Name.
+     * Remove a Signal Head from the group by Name.
      * @param sh The Signal Head to be deleted from the group.
      */
     public void deleteSignalHead(SignalHead sh);
 
     /**
-     * Method to delete a Signal Head by NamedBean
+     * Remove a Signal Head from the group by NamedBean
      * @param headBean The Named Bean to be removed from the group.
      */
     public void deleteSignalHead(NamedBeanHandle<SignalHead> headBean);
 
-    /*
-     * Method to get the number of Signal Heads in this group.
+    /**
+     * Get the number of Signal Heads configured in this group.
      * @return the number of Signal Heads
      */
     public int getNumHeadItems();
 
     /**
-     * Method to inquire if a Signal Head is included in this Group.
+     * Inquire if a Signal Head is included in this Group.
      * @param signalHead The Signal Head object we are querying
      */
     public boolean isHeadIncluded(SignalHead signalHead);
 
     /**
-     * Method to get the On State of Signal Head.
+     * Get the On (conditions met) State of a Signal Head.
      * @param signalHead The Signal Head object we are querying
      * @return state value for the On state (appearance)
      */
     public int getHeadOnState(SignalHead signalHead);
 
     /**
-     * Method to get the Off State of Signal Head.
+     * Get the Off (conditions NOT met) State of a Signal Head.
      * @param signalHead The Signal Head Bean object we are querying
      * @return state value for the Off state (appearance)
      */
     public int getHeadOffState(SignalHead signalHead);
 
     /**
-     * Sets the On State of the Signal Head in the Group.
+     * Set the On (conditions met) State of a Signal Head in the Group.
      * @param signalHead  The SignalHead Bean
      * @param state The Appearance that the SignalHead will change to when the
      *              conditions are met.
@@ -165,7 +188,7 @@ public interface SignalGroup extends NamedBean {
     public void setHeadOnState(SignalHead signalHead, int state);
 
     /**
-     * Sets the Off State of the Signal Head in the Group.
+     * Set the Off (conditions NOT met) State of a Signal Head in the Group.
      * @param signalHead  The SignalHead Bean
      * @param state The Apperance that the SignalHead will change to when the
      *              conditions are NOT met.
@@ -173,7 +196,7 @@ public interface SignalGroup extends NamedBean {
     public void setHeadOffState(SignalHead signalHead, int state);
 
     /**
-     * Sets whether the sensors and turnouts should be treated as separate
+     * Set whether the sensors and turnouts should be treated as separate
      * calculations (OR) or as one (AND) when determining if the Signal Head should be On
      * or Off.
      * @param signalHead The SignalHead Bean
@@ -182,150 +205,152 @@ public interface SignalGroup extends NamedBean {
     public void setSensorTurnoutOper(SignalHead signalHead, boolean boo);
 
     /**
-     * Gets the state of the AND/OR conditional operand for Signal Head at Index.
+     * Get the state of the AND/OR conditional operand for Signal Head at Index.
      * @param x Index of the SignalHead in Group
      * @return true when set to AND, false for OR
      */
     public boolean getSensorTurnoutOperByIndex(int x);
 
     /**
-     * Method to get the number of turnouts used to determine the On state for
+     * Get the number of turnouts configured for
      * the Signal Head at index x.
+     * @param x Index of the SignalHead in Group
      * @return -1 if there are less than 'n' Signal Heads defined
      */
     public int getNumHeadTurnoutsByIndex(int x);
 
     /**
-     * Method to add a Turnout and its state to a Signal Head.
-     * @param mHead SignalHead we are adding the turnout to
-     * @param mTurn Turnout Bean
-     * @param state The State that the turnout must be set to.
+     * Add a Turnout and its On state to a Signal Head.
+     * @param signalHead SignalHead we are adding the turnout to
+     * @param turnout Turnout Bean
+     * @param state Value for the turnout On state (Turnout.THROWN or Turnout.CLOSED).
      */
     public void setHeadAlignTurnout(SignalHead signalHead, Turnout turnout, int state);
 
     /**
      * Inquire if a Turnout is included in the Signal Head Calculation.
-     * @param signalHead  Signal Head Bean
-     * @param pTurnout Turnout Bean
+     * @param signalHead The Signal Head Bean
+     * @param turnout Turnout Bean
      */
     public boolean isTurnoutIncluded(SignalHead signalHead, Turnout turnout);
 
     /**
-     * Gets the state of the Turnout for the given Signal Head in the group.
+     * Get the On state of the Turnout for the given Signal Head in the group.
      * @param signalHead  Signal Head Bean
-     * @param pTurnout Name of the Turnout within the Group
+     * @param turnout The Turnout within the Group
      * @return -1 if the Turnout or Signal Head is invalid
      */
     public int getTurnoutState(SignalHead signalHead, Turnout turnout);
 
     /**
-     * Gets the state of a given Turnout for the Signal Head at index x.
-     * @param x        Signal Head at index x
-     * @param pTurnout Name of the Turnout within the Group
+     * Get the On state of a given Turnout for the Signal Head at index x.
+     * @param x Index for the Signal Head in the group
+     * @param turnout Name of the Turnout configured for the head
      * @return -1 if the Turnout or Signal Head is invalid
      */
     public int getTurnoutStateByIndex(int x, Turnout turnout);
 
     /**
-     * Gets the state of the Turnout at index pTurnout, for the Signal Head at
-     * index x.
-     * @param x        Signal Head at index x
-     * @param pTurnout Turnout at index pTurnout
+     * Get the On state of the Turnout at index pTurnout, for the Signal Head at
+     * index x in the group.
+     * @param x Index for the Signal Head in the group
+     * @param pTurnout Index of the Turnout configured for the head
      * @return -1 if the Turnout or Signal Head is invalid
      */
     public int getTurnoutStateByIndex(int x, int pTurnout);
 
     /**
-     * Gets the Name of the Turnout at index pTurnout, for the Signal Head at
+     * Get the Name of the Turnout at index pTurnout, for the Signal Head at
      * index x in the group.
-     * @param x Index for the signal head in the group
+     * @param x Index for the Signal Head in the group
      * @param pTurnout Index for the turnout in the signal head item
      * @return null if the Turnout or Signal Head is invalid
      */
     public String getTurnoutNameByIndex(int x, int pTurnout);
 
     /**
-     * Gets the Turnout at index x, for the Signal Head at
+     * Get the Turnout at index x, for the Signal Head at
      * index x in the group.
-     * @param x Index for the signal head in the group
+     * @param x Index for the Signal Head in the group
      * @param pTurnout Index for the turnout in the signal head item
      * @return null if the Turnout or Signal Head is invalid
      */
     public Turnout getTurnoutByIndex(int x, int pTurnout);
 
     /**
-     * Method to add a Sensor and its state to a Signal Head.
-     * @param mHead   SignalHead we are adding the sensor to
-     * @param mSensor Sensor Bean
-     * @param state   The State that the sensor must be set to.
+     * Add a Sensor and its On state to a Signal Head.
+     * @param signalHead Signal Head we are adding the sensor to
+     * @param sensor Sensor Bean
+     * @param state Value for the Sensor On state (Sensor.ACTIVE or Sensor.INACTIVE).
      */
     public void setHeadAlignSensor(SignalHead signalHead, Sensor sensor, int state);
 
     /**
      * Inquire if a Sensor is included in the Signal Head Calculation.
      * @param signalHead Signal Head Bean
-     * @param pSensor Sensor Bean
+     * @param sensor Sensor Bean
      */
     public boolean isSensorIncluded(SignalHead signalHead, Sensor sensor);
 
     /**
-     * Gets the state of the Sensor for the Signal Head in the group.
-     * @param signalHead Signal Head Bean
-     * @param pSensor Name of the Sensor within the Group
+     * Get the On state of the Sensor for the Signal Head in the group.
+     * @param signalHead The Signal Head Bean
+     * @param sensor Name of the Sensor in the head item
      * @return -1 if the Sensor or Signal Head is invalid
      */
     public int getSensorState(SignalHead signalHead, Sensor sensor);
 
     /**
-     * Gets the state of the Sensor at index pSensor for the Signal Head at
+     * Get the On state of the Sensor at index pSensor for the Signal Head at
      * index x.
-     * @param x       Index of the Signal Head
-     * @param pSensor Index of the Sensor for the head
+     * @param x Index for the Signal Head in the group
+     * @param pSensor Index of the Sensor in the head item
      * @return -1 if the Sensor or Signal Head is invalid
      */
     public int getSensorStateByIndex(int x, int pSensor);
 
     /**
-     * Gets the name of the Sensor at index pSensor for the Signal Head at
+     * Get the name of the Sensor at index pSensor for the Signal Head at
      * index x.
-     * @param x       Index of the Signal Head
-     * @param pSensor Sensor at index pTurnout
+     * @param x Index for the Signal Head in the group
+     * @param pSensor Index of the Sensor in the head item
      * @return null if the Sensor or Signal Head is invalid
      */
     public String getSensorNameByIndex(int x, int pSensor);
 
     /**
-     * Gets the Sensor at index pSensor, for the Signal Head at
+     * Get the Sensor at index pSensor, for the Signal Head at
      * index x.
-     * @param x       Signal Head at index x
-     * @param pSensor Index of the sensor in the head item
+     * @param x Index for the Signal Head in the group
+     * @param pSensor Index of the Sensor in the head item
      * @return null if the Sensor or Signal Head is invalid
      */
     public Sensor getSensorByIndex(int x, int pSensor);
 
     /**
-     * Gets the state of the AND/OR conditional operand for a Signal Head.
-     * @param signalHead The name of the SignalHead
+     * Get the AND/OR conditional operand set for a Signal Head in the group.
+     * @param signalHead The Signal Head Bean
      * @return true when set to AND, false for OR
      */
     public boolean getSensorTurnoutOper(SignalHead signalHead);
 
     /**
-     * Method to get the number of Sensors used to determine the On state for
+     * Get the number of Sensors configured for
      * the Signal Head at index x.
+     * @param x Index for the Signal Head in the group
      * @return -1 if there are less than 'n' Signal Heads defined
      */
     public int getNumHeadSensorsByIndex(int x);
 
     /**
      * Delete all Turnouts for a given Signal Head in the group.
-     * @param signalHead The Named Bean for Signal Head to be cleared
+     * @param signalHead The Signal Head Bean from which the Turnouts will be removed
      */
     public void clearHeadTurnout(SignalHead signalHead);
 
     /**
      * Delete all Sensors for a given Signal Head in the group.
-     * @param signalHead The Named Bean for Signal Head to be cleared
+     * @param signalHead The Signal Head Bean from which the Turnouts will be removed
      */
     public void clearHeadSensor(SignalHead signalHead);
 

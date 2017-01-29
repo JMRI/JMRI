@@ -325,7 +325,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     /**
      * Read Appearance for a Signal Group Signal Head from the state comboBox
      * called from SignalGroupSubTableAction
-     * @param comboBox to read from
+     * @param box comboBox to read from
      */
     int signalStateFromBox(JComboBox<String> box) {
         String mode = (String) box.getSelectedItem();
@@ -339,7 +339,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Sets Appearance in a Signal Group Signal Head state comboBox
+     * Set Appearance in a Signal Group Signal Head state comboBox
      * called from SignalGroupSubTableAction
      * @param mode Value to be set
      * @param box in which to enter mode
@@ -732,7 +732,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
     /**
      * Check name for a new SignalGroup object using the _systemName field on the addFrame pane
-     * @return If name is allowed
+     * @return Whether name is allowed
      */
     boolean checkNewNamesOK() {
         // Get system name and user name from Add Signal Group pane
@@ -784,6 +784,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     /**
      * Check name and return a new or existing SignalGroup object
      * SignalGroup with the name as entered in the _systemName field on the addFrame pane
+     * @return The new/updated SignalGroup object
      */
     SignalGroup checkNamesOK() {
         // Get system name and user name

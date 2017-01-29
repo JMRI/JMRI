@@ -168,7 +168,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
     }
 
     /**
-     * Returns the 'n' Signal Head item
+     * Get the 'n' Signal Head item
      */
     private SignalHeadItem getSignalHeadItemByIndex(int n) {
         try {
@@ -195,7 +195,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
     }
 
     /**
-     * Returns the number of Signal Heads in this Group
+     * Get the number of Signal Heads in this Group
      */
     public int getNumHeadItems() {
         return _signalHeadItem.size();
@@ -262,7 +262,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
     }
 
     /**
-     * Returns a Signal Head item by its name from the Signal Group
+     * Get a Signal Head item by its name from the Signal Group
      */
     private SignalHeadItem getSignalHeadItem(String name) {
         for (int i = 0; i < _signalHeadItem.size(); i++) {
@@ -274,7 +274,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
     }
 
     /**
-     * Returns a Signal Head item by its Bean from the Signal Group
+     * Get a Signal Head item by its Bean from the Signal Group
      */
     private SignalHeadItem getSignalHeadItem(NamedBean headBean) {
         for (int i = 0; i < _signalHeadItem.size(); i++) {
@@ -476,7 +476,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
 
         /**
-         * Sets whether the sensors and turnouts should be treated as separate
+         * Set whether the sensors and turnouts should be treated as separate
          * calculations (OR) or as one (AND), when determining if the Signal Head in this item
          * should be On or Off.
          * @param boo Provide true for AND, false for OR
