@@ -469,7 +469,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
 
         protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) {
             String columnString = "";
-            String lineString = "";
+            StringBuilder lineString = new StringBuilder();
             StringBuilder[] spaces = new StringBuilder[4];
             // create base strings the width of each of the columns
             for (int k = 0; k < 4; k++) {
@@ -512,10 +512,10 @@ public class ListFrame extends jmri.util.JmriJFrame {
                         columnString = columnStrings[i] + spaces[i].substring(columnStrings[i].length());
                         columnStrings[i] = "";
                     }
-                    lineString = lineString + columnString + " ";
+                    lineString.append(columnString).append(" ");
                 }
                 try {
-                    w.write(lineString);
+                    w.write(lineString.toString());
                     //write vertical dividing lines
                     int iLine = w.getCurrentLineNumber();
                     for (int i = 0, k = 0; i < w.getCharactersPerLine(); k++) {
@@ -526,9 +526,8 @@ public class ListFrame extends jmri.util.JmriJFrame {
                             i = w.getCharactersPerLine();
                         }
                     }
-                    lineString = "\n";
-                    w.write(lineString);
-                    lineString = "";
+                    w.write("\n");
+                    lineString = new StringBuilder();
                 } catch (IOException e) {
                     log.warn("error during printing: " + e);
                 }
