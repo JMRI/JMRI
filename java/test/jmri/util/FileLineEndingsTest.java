@@ -85,6 +85,7 @@ public class FileLineEndingsTest {
      * @return a collection of files to validate
      */
     public static Collection<Object[]> getFiles(File directory, String[] patterns) {
+        Log4JFixture.setUp(); // setup logging early so this method can log
         ArrayList<Object[]> files = new ArrayList<>();
         try {
             for (String pattern : patterns) {
@@ -95,10 +96,10 @@ public class FileLineEndingsTest {
                         .filter(path -> !target.matches(path))
                         .filter(matcher::matches)
                         .forEach((path) -> {
-                    if (path.toFile().isFile()) {
-                        files.add(new Object[]{path.toFile()});
-                    }
-                });
+                            if (path.toFile().isFile()) {
+                                files.add(new Object[]{path.toFile()});
+                            }
+                        });
             }
         } catch (IOException ex) {
             log.error("Unable to get files in {}", directory, ex);
