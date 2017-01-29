@@ -24,15 +24,14 @@ public class SignalGroupTableActionTest {
 
     @Test
     public void testCreate() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Action a = new SignalGroupTableAction();
         Assert.assertNotNull(a);
     }
 
     @Test
     public void testInvoke() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         new SignalGroupTableAction().actionPerformed(null);
         JFrame f = JFrameOperator.findJFrame(Bundle.getMessage("TitleSignalGroupTable"), true, true);
         Assert.assertNotNull("found frame", f);
@@ -43,9 +42,7 @@ public class SignalGroupTableActionTest {
 
     @Test
     public void testAdd() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // create a signal mast
         SignalMast sm = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0002)", "VM1");
 
