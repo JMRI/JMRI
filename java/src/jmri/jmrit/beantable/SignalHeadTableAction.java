@@ -328,7 +328,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
              * Respond to change from bean. Prevent Appearance change when Signal Head is set to Hold or Unlit.
              * @Param e A property change of any bean
              */
-/*            @Override
+            @Override
             // Might be useful to show only a Dark option in the comboBox if head is Held
             // At present, does not work/change when head Lit/Held checkboxes are (de)activated
             public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -345,7 +345,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                     }
                 }
                 super.propertyChange(e);
-            }*/
+            }
 
             /**
              * Customize the SignalHead Value (Appearance) column to show an appropriate ComboBox of available Appearances
@@ -364,7 +364,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             }
 
             /**
-             * A row specific Appearance combobox cell editor/renderer
+             * A row specific Appearance combobox cell editor/renderer.
              */
             class AppearanceComboBoxPanel extends RowComboBoxPanel {
 
@@ -377,7 +377,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 }
 
                 /**
-                 * Call the method in the surrounding method for the SignalHeadTable
+                 * Call the method in the surrounding method for the SignalHeadTable.
                  * @param row the user clicked on in the table
                  * @return an appropriate combobox for this signal head
                  */
@@ -393,15 +393,15 @@ public class SignalHeadTableAction extends AbstractTableAction {
             // All row values are in terms of the Model, not the Table as displayed.
 
             /**
-             * Clear the old appearance comboboxes and force them to be rebuilt
-             * At present (4.7.1) not used.
+             * Clear the old appearance comboboxes and force them to be rebuilt.
+             * Used with the Single Output Signal Head to capture reconguration.
              * @param row Index of the signal mast (in TableDataModel) to be rebuilt in the Hashtables
              */
 
-/*          public void clearAppearanceVector(int row) {
+          public void clearAppearanceVector(int row) {
                 boxMap.remove(this.getValueAt(row, SYSNAMECOL));
                 editorMap.remove(this.getValueAt(row, SYSNAMECOL));
-            }*/
+            }
 
             // Hashtables for Editors; not used for Renderer)
 

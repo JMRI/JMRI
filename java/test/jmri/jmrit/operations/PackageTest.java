@@ -35,6 +35,7 @@ public class PackageTest extends TestCase {
 
         suite.addTest(XmlLoadTests.suite()); // no tests in class itself
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class)); 
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CommonConductorYardmasterPanelTest.class)); 
         return suite;
     }
 

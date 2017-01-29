@@ -71,6 +71,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
      * Modified from DefaultSignalHead
      * removed software flashing!!!
      */
+    @Override
     public void setAppearance(int newAppearance) {
         int oldAppearance = mAppearance;
         mAppearance = newAppearance;
@@ -110,6 +111,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
 
     }
 
+    @Override
     public void setLit(boolean newLit) {
         boolean oldLit = mLit;
         mLit = newLit;
@@ -339,6 +341,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         }
     }
 
+    @Override
     boolean isTurnoutUsed(Turnout t) {
         if (getInput1() != null && t.equals(getInput1().getBean())) {
             return true;
