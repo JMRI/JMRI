@@ -36,6 +36,7 @@ public class PackageTest extends TestCase {
         suite.addTest(BlockManagerXmlTest.suite());
         //suite.addTest(OBlockManagerXmlTest.suite());
         suite.addTest(SectionManagerXmlTest.suite());
+        suite.addTest(new JUnit4TestAdapter(TransitManagerXmlTest.class));
 
         suite.addTest(DefaultJavaBeanConfigXMLTest.suite());
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
