@@ -128,8 +128,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         sourceMastBox = new JmriBeanComboBox(smm, sourceMast, JmriBeanComboBox.DISPLAYNAME);
         destMastBox = new JmriBeanComboBox(smm, destMast, JmriBeanComboBox.DISPLAYNAME);
-        //signalMastCombo(sourceMastBox, sourceMast);
-        //signalMastCombo(destMastBox, destMast);
 
         JPanel containerPanel = new JPanel();
         containerPanel.setLayout(new BorderLayout());
@@ -168,7 +166,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         header.add(destPanel);
         header.add(mastSpeed);
 
-//        JPanel srcSigSpeed = new JPanel();
         JPanel editor = new JPanel();
         editor.setLayout(new BoxLayout(editor, BoxLayout.Y_AXIS));
         editor.add(useLayoutEditor);
@@ -259,8 +256,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         containerPanel.add(header, BorderLayout.NORTH);
 
-//        JPanel sensorPanel = new JPanel();
-//        JPanel signalMastPanel = new JPanel();
         JTabbedPane detailsTab = new JTabbedPane();
         detailsTab.add(Bundle.getMessage("Blocks"), buildBlocksPanel());
         detailsTab.add(Bundle.getMessage("Turnouts"), buildTurnoutPanel());
@@ -422,7 +417,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         _manualBlockScrollPane = new JScrollPane(manualBlockTable);
         p2xc.add(_manualBlockScrollPane, BorderLayout.CENTER);
-        //contentPane.add(p2xc);
         blockPanel.add(p2xc);
         p2xc.setVisible(true);
 
@@ -457,7 +451,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         TableColumn stateColumnA = _autoBlockColumnModel.
                 getColumn(AutoBlockModel.STATE_COLUMN);
-        //stateColumnA.setCellEditor(new DefaultCellEditor(stateCCombo));
         stateColumnA.setResizable(false);
         stateColumnA.setMinWidth(90);
         stateColumnA.setMaxWidth(100);
@@ -584,7 +577,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         TableColumn stateColumnA = _autoTurnoutColumnModel.
                 getColumn(AutoTurnoutModel.STATE_COLUMN);
-        //stateColumnA.setCellEditor(new DefaultCellEditor(stateCCombo));
         stateColumnA.setResizable(false);
         stateColumnA.setMinWidth(90);
         stateColumnA.setMaxWidth(100);
@@ -723,7 +715,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         _manualSignalMastScrollPane = new JScrollPane(manualSignalMastTable);
         p2xm.add(_manualSignalMastScrollPane, BorderLayout.CENTER);
-        //contentPane.add(p2xm);
         SignalMastPanel.add(p2xm);
         p2xm.setVisible(true);
 
@@ -758,14 +749,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         TableColumn stateColumnA = _autoMastColumnModel.
                 getColumn(AutoMastModel.STATE_COLUMN);
-        //stateColumnA.setCellEditor(new DefaultCellEditor(stateCCombo));
         stateColumnA.setResizable(false);
         stateColumnA.setMinWidth(90);
         stateColumnA.setMaxWidth(100);
 
         _autoSignalMastScrollPane = new JScrollPane(autoMastTable);
         p2xsm.add(_autoSignalMastScrollPane, BorderLayout.CENTER);
-        //contentPane.add(p2xa);
         SignalMastPanel.add(p2xsm);
         p2xsm.setVisible(true);
 
@@ -1408,9 +1397,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             switch (c) {
                 case INCLUDE_COLUMN:
                     return Boolean.valueOf(blockList.get(r).isIncluded());
-                case SNAME_COLUMN:  // slot number
+                case SNAME_COLUMN:
                     return blockList.get(r).getSysName();
-                case UNAME_COLUMN:  //
+                case UNAME_COLUMN:
                     return blockList.get(r).getUserName();
                 case STATE_COLUMN:
                     return blockList.get(r).getSetToState();
@@ -1484,9 +1473,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             switch (c) {
                 case INCLUDE_COLUMN:
                     return Boolean.valueOf(turnoutList.get(r).isIncluded());
-                case SNAME_COLUMN:  // slot number
+                case SNAME_COLUMN:
                     return turnoutList.get(r).getSysName();
-                case UNAME_COLUMN:  //
+                case UNAME_COLUMN:
                     return turnoutList.get(r).getUserName();
                 case STATE_COLUMN:
                     return turnoutList.get(r).getSetToState();
@@ -1547,11 +1536,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             switch (c) {
                 case INCLUDE_COLUMN:
                     return Boolean.valueOf(sensorList.get(r).isIncluded());
-                case SNAME_COLUMN:  // slot number
+                case SNAME_COLUMN:
                     return sensorList.get(r).getSysName();
-                case UNAME_COLUMN:  //
+                case UNAME_COLUMN:
                     return sensorList.get(r).getUserName();
-                case STATE_COLUMN:  //
+                case STATE_COLUMN:
                     return sensorList.get(r).getSetToState();
                 default:
                     return null;
@@ -1602,9 +1591,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             switch (c) {
                 case INCLUDE_COLUMN:
                     return Boolean.valueOf(signalMastList.get(r).isIncluded());
-                case SNAME_COLUMN:  // slot number
+                case SNAME_COLUMN:
                     return signalMastList.get(r).getSysName();
-                case UNAME_COLUMN:  //
+                case UNAME_COLUMN:
                     return signalMastList.get(r).getUserName();
                 case STATE_COLUMN:
                     return signalMastList.get(r).getSetToState();
@@ -1779,8 +1768,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                     return rb.getString("ColumnSpeed");
                 case PERMISSIVE_COLUMN:
                     return rb.getString("ColumnPermissive");
-                /*AbstractTableAction.rb.getString("ColumnUserName"); //"User Name";*/
-
             }
             return super.getColumnName(col);
         }
@@ -1806,16 +1793,15 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         public Object getValueAt(int r, int c) {
             switch (c) {
-                case SNAME_COLUMN:  // slot number
+                case SNAME_COLUMN:
                     return _automaticBlockList.get(r).getSysName();
-                case UNAME_COLUMN:  //
+                case UNAME_COLUMN:
                     return _automaticBlockList.get(r).getUserName();
                 case STATE_COLUMN:
                     return _automaticBlockList.get(r).getSetToState();
                 case SPEED_COLUMN:
                     return _automaticBlockList.get(r).getBlockSpeed();
                 case PERMISSIVE_COLUMN:
-                    //return new Boolean(_automaticBlockList.get(r).getPermissiveWorking());
                     return _automaticBlockList.get(r).getPermissiveWorking();
                 default:
                     return null;
@@ -1850,9 +1836,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         public Object getValueAt(int r, int c) {
             switch (c) {
-                case SNAME_COLUMN:  // slot number
+                case SNAME_COLUMN:
                     return _automaticTurnoutList.get(r).getSysName();
-                case UNAME_COLUMN:  //
+                case UNAME_COLUMN:
                     return _automaticTurnoutList.get(r).getUserName();
                 case STATE_COLUMN:
                     return _automaticTurnoutList.get(r).getSetToState();
@@ -1882,9 +1868,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         public Object getValueAt(int r, int c) {
             switch (c) {
-                case SNAME_COLUMN:  // slot number
+                case SNAME_COLUMN:
                     return _automaticSignalMastList.get(r).getSysName();
-                case UNAME_COLUMN:  //
+                case UNAME_COLUMN:
                     return _automaticSignalMastList.get(r).getUserName();
                 case STATE_COLUMN:
                     return _automaticSignalMastList.get(r).getSetToState();
@@ -1916,7 +1902,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 setForeground(table.getForeground());
                 setBackground(table.getBackground());
             }
-
             // Select the current value
             setSelectedItem(value);
             return this;
