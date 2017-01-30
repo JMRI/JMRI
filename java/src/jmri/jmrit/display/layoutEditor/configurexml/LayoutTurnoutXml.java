@@ -174,7 +174,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         String name = element.getAttribute("ident").getValue();
         double x = 0.0;
         double y = 0.0;
-        int tType = LayoutEditor.RH_TURNOUT;
+        int tType = LayoutTurnout.RH_TURNOUT;
         try {
             x = element.getAttribute("xcen").getFloatValue();
             y = element.getAttribute("ycen").getFloatValue();

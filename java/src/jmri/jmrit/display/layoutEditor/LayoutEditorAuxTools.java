@@ -188,7 +188,7 @@ public class LayoutEditorAuxTools {
                             lt = (LayoutTurnout) ts.getConnect1();
                             type = ts.getType1();
                             blk2 = lt.getLayoutBlock();
-                            if (lt.getTurnoutType() > LayoutEditor.WYE_TURNOUT) {
+                            if (lt.getTurnoutType() > LayoutTurnout.WYE_TURNOUT) {
                                 // not RH, LH, or WYE turnout - other blocks possible
                                 if ((type == LayoutTrack.TURNOUT_B) && (lt.getLayoutBlockB() != null)) {
                                     blk2 = lt.getLayoutBlockB();
@@ -252,7 +252,7 @@ public class LayoutEditorAuxTools {
                             lt = (LayoutTurnout) ts.getConnect2();
                             type = ts.getType2();
                             blk2 = lt.getLayoutBlock();
-                            if (lt.getTurnoutType() > LayoutEditor.WYE_TURNOUT) {
+                            if (lt.getTurnoutType() > LayoutTurnout.WYE_TURNOUT) {
                                 // not RH, LH, or WYE turnout - other blocks possible
                                 if ((type == LayoutTrack.TURNOUT_B) && (lt.getLayoutBlockB() != null)) {
                                     blk2 = lt.getLayoutBlockB();
@@ -316,7 +316,7 @@ public class LayoutEditorAuxTools {
             for (int i = 0; i < layoutEditor.turnoutList.size(); i++) {
                 lt = layoutEditor.turnoutList.get(i);
                 // check for layout turnout
-                if ((lt.getTurnoutType() >= LayoutEditor.DOUBLE_XOVER)
+                if ((lt.getTurnoutType() >= LayoutTurnout.DOUBLE_XOVER)
                         && (lt.getLayoutBlock() != null)) {
                     // have a crossover turnout with at least one block, check for multiple blocks
                     if ((lt.getLayoutBlockB() != lt.getLayoutBlock()) || (lt.getLayoutBlockC() != lt.getLayoutBlock())
@@ -329,7 +329,7 @@ public class LayoutEditorAuxTools {
                             c.setDirection(computeDirection(lt.getCoordsA(), lt.getCoordsB()));
                             cList.add(c);
                         }
-                        if ((lt.getTurnoutType() != LayoutEditor.LH_XOVER)
+                        if ((lt.getTurnoutType() != LayoutTurnout.LH_XOVER)
                                 && (lt.getLayoutBlock() != lt.getLayoutBlockC())) {
                             // have a AC block boundary, create a LayoutConnectivity
                             c = new LayoutConnectivity(lt.getLayoutBlock(), lt.getLayoutBlockC());
@@ -344,7 +344,7 @@ public class LayoutEditorAuxTools {
                             c.setDirection(computeDirection(lt.getCoordsC(), lt.getCoordsD()));
                             cList.add(c);
                         }
-                        if ((lt.getTurnoutType() != LayoutEditor.RH_XOVER)
+                        if ((lt.getTurnoutType() != LayoutTurnout.RH_XOVER)
                                 && (lt.getLayoutBlockB() != lt.getLayoutBlockD())) {
                             // have a BD block boundary, create a LayoutConnectivity
                             c = new LayoutConnectivity(lt.getLayoutBlockB(), lt.getLayoutBlockD());
@@ -463,7 +463,7 @@ public class LayoutEditorAuxTools {
                             lt = (LayoutTurnout) ts.getConnect1();
                             type = ts.getType1();
                             blk2 = lt.getLayoutBlock();
-                            if (lt.getTurnoutType() > LayoutEditor.WYE_TURNOUT) {
+                            if (lt.getTurnoutType() > LayoutTurnout.WYE_TURNOUT) {
                                 // not RH, LH, or WYE turnout - other blocks possible
                                 if ((type == LayoutTrack.TURNOUT_B) && (lt.getLayoutBlockB() != null)) {
                                     blk2 = lt.getLayoutBlockB();
@@ -527,7 +527,7 @@ public class LayoutEditorAuxTools {
                             lt = (LayoutTurnout) ts.getConnect2();
                             type = ts.getType2();
                             blk2 = lt.getLayoutBlock();
-                            if (lt.getTurnoutType() > LayoutEditor.WYE_TURNOUT) {
+                            if (lt.getTurnoutType() > LayoutTurnout.WYE_TURNOUT) {
                                 // not RH, LH, or WYE turnout - other blocks possible
                                 if ((type == LayoutTrack.TURNOUT_B) && (lt.getLayoutBlockB() != null)) {
                                     blk2 = lt.getLayoutBlockB();
@@ -593,7 +593,7 @@ public class LayoutEditorAuxTools {
             for (int i = 0; i < layoutEditor.turnoutList.size(); i++) {
                 lt = layoutEditor.turnoutList.get(i);
                 // check for layout turnout
-                if ((lt.getTurnoutType() >= LayoutEditor.DOUBLE_XOVER)
+                if ((lt.getTurnoutType() >= LayoutTurnout.DOUBLE_XOVER)
                         && (lt.getLayoutBlock() != null)) {
                     // have a crossover turnout with at least one block, check for multiple blocks
                     if ((lt.getLayoutBlockB() != null) || (lt.getLayoutBlockC() != null)
@@ -606,7 +606,7 @@ public class LayoutEditorAuxTools {
                             c.setDirection(computeDirection(lt.getCoordsA(), lt.getCoordsB()));
                             checkConnectivity(c, found);
                         }
-                        if ((lt.getTurnoutType() != LayoutEditor.LH_XOVER) && (lt.getLayoutBlockC() != null)
+                        if ((lt.getTurnoutType() != LayoutTurnout.LH_XOVER) && (lt.getLayoutBlockC() != null)
                                 && (lt.getLayoutBlock() != lt.getLayoutBlockC())) {
                             // have a AC block boundary, create a LayoutConnectivity
                             c = new LayoutConnectivity(lt.getLayoutBlock(), lt.getLayoutBlockC());
@@ -622,7 +622,7 @@ public class LayoutEditorAuxTools {
                             c.setDirection(computeDirection(lt.getCoordsC(), lt.getCoordsD()));
                             checkConnectivity(c, found);
                         }
-                        if ((lt.getTurnoutType() != LayoutEditor.RH_XOVER) && (lt.getLayoutBlockB() != null)
+                        if ((lt.getTurnoutType() != LayoutTurnout.RH_XOVER) && (lt.getLayoutBlockB() != null)
                                 && (lt.getLayoutBlockD() != null) && (lt.getLayoutBlockB() != lt.getLayoutBlockD())) {
                             // have a BD block boundary, create a LayoutConnectivity
                             c = new LayoutConnectivity(lt.getLayoutBlockB(), lt.getLayoutBlockD());
@@ -750,8 +750,8 @@ public class LayoutEditorAuxTools {
                 // is this Track Segment connected to a RH, LH, or WYE turnout at the continuing or diverging track
                 if (((lc.getConnectedType() == LayoutTrack.TURNOUT_B)
                         || (lc.getConnectedType() == LayoutTrack.TURNOUT_C))
-                        && ((((LayoutTurnout) prevConnection).getTurnoutType() >= LayoutEditor.RH_TURNOUT)
-                        && (((LayoutTurnout) prevConnection).getTurnoutType() <= LayoutEditor.WYE_TURNOUT))) {
+                        && ((((LayoutTurnout) prevConnection).getTurnoutType() >= LayoutTurnout.RH_TURNOUT)
+                        && (((LayoutTurnout) prevConnection).getTurnoutType() <= LayoutTurnout.WYE_TURNOUT))) {
                     LayoutTurnout ltx = (LayoutTurnout) prevConnection;
                     if (lc.getConnectedType() == LayoutTrack.TURNOUT_B) {
                         // Track Segment connected to continuing track of turnout
@@ -782,13 +782,13 @@ public class LayoutEditorAuxTools {
                 } // is this Track Segment connected to the continuing track of a RH_XOVER or LH_XOVER
                 else if (((lc.getConnectedType() >= LayoutTrack.TURNOUT_A)
                         && (lc.getConnectedType() <= LayoutTrack.TURNOUT_D))
-                        && ((((LayoutTurnout) prevConnection).getTurnoutType() == LayoutEditor.RH_XOVER)
-                        || (((LayoutTurnout) prevConnection).getTurnoutType() == LayoutEditor.LH_XOVER))) {
+                        && ((((LayoutTurnout) prevConnection).getTurnoutType() == LayoutTurnout.RH_XOVER)
+                        || (((LayoutTurnout) prevConnection).getTurnoutType() == LayoutTurnout.LH_XOVER))) {
                     LayoutTurnout ltz = (LayoutTurnout) prevConnection;
-                    if (((ltz.getTurnoutType() == LayoutEditor.RH_XOVER)
+                    if (((ltz.getTurnoutType() == LayoutTurnout.RH_XOVER)
                             && ((lc.getConnectedType() == LayoutTrack.TURNOUT_B)
                             || (lc.getConnectedType() == LayoutTrack.TURNOUT_D)))
-                            || ((ltz.getTurnoutType() == LayoutEditor.LH_XOVER)
+                            || ((ltz.getTurnoutType() == LayoutTurnout.LH_XOVER)
                             && ((lc.getConnectedType() == LayoutTrack.TURNOUT_A)
                             || (lc.getConnectedType() == LayoutTrack.TURNOUT_C)))) {
                         bs = new BeanSetting(ltz.getTurnout(), ltz.getTurnoutName(), Turnout.CLOSED);
@@ -804,16 +804,16 @@ public class LayoutEditorAuxTools {
                         && lc.getConnectedType() <= LayoutTrack.SLIP_D) {
 
                     LayoutSlip lsz = (LayoutSlip) prevConnection;
-                    if (lsz.getSlipType() == LayoutEditor.SINGLE_SLIP) {
+                    if (lsz.getSlipType() == LayoutSlip.SINGLE_SLIP) {
                         if (lc.getConnectedType() == LayoutTrack.SLIP_C) {
-                            bs = new BeanSetting(lsz.getTurnout(), lsz.getTurnoutName(), lsz.getTurnoutState(LayoutEditor.STATE_AC));
+                            bs = new BeanSetting(lsz.getTurnout(), lsz.getTurnoutName(), lsz.getTurnoutState(LayoutTurnout.STATE_AC));
                             if (bs.getBean() != null) {
                                 p.addSetting(bs);
                             } else {
                                 InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
                                 log.error("BadBeanError (D): " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName());
                             }
-                            bs = new BeanSetting(lsz.getTurnoutB(), lsz.getTurnoutBName(), lsz.getTurnoutBState(LayoutEditor.STATE_AC));
+                            bs = new BeanSetting(lsz.getTurnoutB(), lsz.getTurnoutBName(), lsz.getTurnoutBState(LayoutTurnout.STATE_AC));
                             if (bs.getBean() != null) {
                                 p.addSetting(bs);
                             } else {
@@ -821,20 +821,20 @@ public class LayoutEditorAuxTools {
                                 log.error("BadBeanError (E): " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName());
                             }
                         } else if (lc.getConnectedType() == LayoutTrack.SLIP_B) {
-                            bs = new BeanSetting(lsz.getTurnout(), lsz.getTurnoutName(), lsz.getTurnoutState(LayoutEditor.STATE_BD));
+                            bs = new BeanSetting(lsz.getTurnout(), lsz.getTurnoutName(), lsz.getTurnoutState(LayoutTurnout.STATE_BD));
                             if (bs.getBean() != null) {
                                 p.addSetting(bs);
                             } else {
                                 InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                                log.error("BadBeanError (F): " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName() + " " + lsz.getTurnout() + " " + lsz.getTurnoutName() + " " + lsz.getTurnoutState(LayoutEditor.STATE_BD));
+                                log.error("BadBeanError (F): " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName() + " " + lsz.getTurnout() + " " + lsz.getTurnoutName() + " " + lsz.getTurnoutState(LayoutTurnout.STATE_BD));
                             }
 
-                            bs = new BeanSetting(lsz.getTurnoutB(), lsz.getTurnoutBName(), lsz.getTurnoutBState(LayoutEditor.STATE_BD));
+                            bs = new BeanSetting(lsz.getTurnoutB(), lsz.getTurnoutBName(), lsz.getTurnoutBState(LayoutTurnout.STATE_BD));
                             if (bs.getBean() != null) {
                                 p.addSetting(bs);
                             } else {
                                 InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                                log.error("BadBeanError (G): " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName() + " " + lsz.getTurnoutB() + " " + lsz.getTurnoutBName() + " " + lsz.getTurnoutBState(LayoutEditor.STATE_BD));
+                                log.error("BadBeanError (G): " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName() + " " + lsz.getTurnoutB() + " " + lsz.getTurnoutBName() + " " + lsz.getTurnoutBState(LayoutTurnout.STATE_BD));
                             }
                         } else if (lc.getConnectedType() == LayoutTrack.SLIP_A) {
                             //As connection A of a single slip which could go in two different directions
@@ -914,11 +914,11 @@ public class LayoutEditorAuxTools {
                 if ((typeCurConnection >= LayoutTrack.TURNOUT_A) && (typeCurConnection <= LayoutTrack.TURNOUT_D)) {
                     // connected object is a turnout
                     int turnoutType = ((LayoutTurnout) curConnection).getTurnoutType();
-                    if (turnoutType > LayoutEditor.WYE_TURNOUT) {
+                    if (turnoutType > LayoutTurnout.WYE_TURNOUT) {
                         // have crossover turnout
-                        if ((turnoutType == LayoutEditor.DOUBLE_XOVER)
-                                || ((turnoutType == LayoutEditor.RH_XOVER) && ((typeCurConnection == LayoutTrack.TURNOUT_A) || (typeCurConnection == LayoutTrack.TURNOUT_C)))
-                                || ((turnoutType == LayoutEditor.LH_XOVER) && ((typeCurConnection == LayoutTrack.TURNOUT_B) || (typeCurConnection == LayoutTrack.TURNOUT_D)))) {
+                        if ((turnoutType == LayoutTurnout.DOUBLE_XOVER)
+                                || ((turnoutType == LayoutTurnout.RH_XOVER) && ((typeCurConnection == LayoutTrack.TURNOUT_A) || (typeCurConnection == LayoutTrack.TURNOUT_C)))
+                                || ((turnoutType == LayoutTurnout.LH_XOVER) && ((typeCurConnection == LayoutTrack.TURNOUT_B) || (typeCurConnection == LayoutTrack.TURNOUT_D)))) {
                             // entering turnout at a throat, cannot follow path any further
                             curConnection = null;
                         } else {
@@ -1077,7 +1077,7 @@ public class LayoutEditorAuxTools {
                     && (typeCurConnection <= LayoutTrack.TURNOUT_D)) {
                 lt = (LayoutTurnout) curConnection;
                 // test for crossover turnout
-                if (lt.getTurnoutType() <= LayoutEditor.WYE_TURNOUT) {
+                if (lt.getTurnoutType() <= LayoutTurnout.WYE_TURNOUT) {
                     // have RH, LH, or WYE turnout
 
                     if (lt.getLayoutBlock() != layoutBlock) {
@@ -1129,10 +1129,10 @@ public class LayoutEditorAuxTools {
                             }
                         }
                     }
-                } else if (lt.getTurnoutType() == LayoutEditor.DOUBLE_XOVER) {
+                } else if (lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER) {
                     // have a double crossover turnout, cannot follow possible path any further
                     curConnection = null;
-                } else if (lt.getTurnoutType() == LayoutEditor.RH_XOVER) {
+                } else if (lt.getTurnoutType() == LayoutTurnout.RH_XOVER) {
                     // have a right-handed crossover turnout
                     if ((typeCurConnection == LayoutTrack.TURNOUT_A)
                             || (typeCurConnection == LayoutTrack.TURNOUT_C)) {
@@ -1173,7 +1173,7 @@ public class LayoutEditorAuxTools {
                             typeCurConnection = LayoutTrack.TRACK;
                         }
                     }
-                } else if (lt.getTurnoutType() == LayoutEditor.LH_XOVER) {
+                } else if (lt.getTurnoutType() == LayoutTurnout.LH_XOVER) {
                     // have a left-handed crossover turnout
                     if ((typeCurConnection == LayoutTrack.TURNOUT_B)
                             || (typeCurConnection == LayoutTrack.TURNOUT_D)) {
@@ -1263,16 +1263,16 @@ public class LayoutEditorAuxTools {
                 LayoutSlip ls = (LayoutSlip) curConnection;
                 if (ls.getLayoutBlock() != layoutBlock) {
                     curConnection = null;
-                } else if (ls.getSlipType() == LayoutEditor.SINGLE_SLIP) {
+                } else if (ls.getSlipType() == LayoutSlip.SINGLE_SLIP) {
                     if (typeCurConnection == LayoutTrack.SLIP_C) {
-                        bs = new BeanSetting(ls.getTurnout(), ls.getTurnoutName(), ls.getTurnoutState(LayoutEditor.STATE_AC));
+                        bs = new BeanSetting(ls.getTurnout(), ls.getTurnoutName(), ls.getTurnoutState(LayoutTurnout.STATE_AC));
                         if (bs.getBean() != null) {
                             p.addSetting(bs);
                         } else {
                             InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
                             log.error("BadBeanError (X): " + ls.getName() + " " + ls.getLayoutBlock().getDisplayName());
                         }
-                        bs = new BeanSetting(ls.getTurnoutB(), ls.getTurnoutBName(), ls.getTurnoutBState(LayoutEditor.STATE_AC));
+                        bs = new BeanSetting(ls.getTurnoutB(), ls.getTurnoutBName(), ls.getTurnoutBState(LayoutTurnout.STATE_AC));
                         if (bs.getBean() != null) {
                             p.addSetting(bs);
                         } else {
@@ -1283,7 +1283,7 @@ public class LayoutEditorAuxTools {
                         curConnection = ((LayoutSlip) curConnection).getConnectC();
                         typeCurConnection = LayoutTrack.TRACK;
                     } else if (typeCurConnection == LayoutTrack.SLIP_B) {
-                        bs = new BeanSetting(ls.getTurnout(), ls.getTurnoutName(), ls.getTurnoutState(LayoutEditor.STATE_BD));
+                        bs = new BeanSetting(ls.getTurnout(), ls.getTurnoutName(), ls.getTurnoutState(LayoutTurnout.STATE_BD));
                         if (bs.getBean() != null) {
                             p.addSetting(bs);
                         } else {
@@ -1291,7 +1291,7 @@ public class LayoutEditorAuxTools {
                             log.error("BadBeanError (Z): " + ls.getName() + " " + ls.getLayoutBlock().getDisplayName());
                         }
 
-                        bs = new BeanSetting(ls.getTurnoutB(), ls.getTurnoutBName(), ls.getTurnoutBState(LayoutEditor.STATE_BD));
+                        bs = new BeanSetting(ls.getTurnoutB(), ls.getTurnoutBName(), ls.getTurnoutBState(LayoutTurnout.STATE_BD));
                         if (bs.getBean() != null) {
                             p.addSetting(bs);
                         } else {

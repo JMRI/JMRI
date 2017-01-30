@@ -66,7 +66,10 @@ public class LayoutSlip extends LayoutTurnout {
     // Defined text resource
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
-    public int currentState = LayoutEditor.UNKNOWN;
+    public static final int SINGLE_SLIP = 7;
+    public static final int DOUBLE_SLIP = 8;
+
+    public int currentState = UNKNOWN;
 
     private String turnoutBName = "";
     private NamedBeanHandle<Turnout> namedTurnoutB = null;
@@ -95,16 +98,16 @@ public class LayoutSlip extends LayoutTurnout {
             return;
         }
         type = slipType;
-        if (type == LayoutEditor.DOUBLE_SLIP) {
-            turnoutStates.put(LayoutEditor.STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.CLOSED));
-            turnoutStates.put(LayoutEditor.STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
-            turnoutStates.put(LayoutEditor.STATE_AD, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
-            turnoutStates.put(LayoutEditor.STATE_BC, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
+        if (type == DOUBLE_SLIP) {
+            turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.CLOSED));
+            turnoutStates.put(STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
+            turnoutStates.put(STATE_AD, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
+            turnoutStates.put(STATE_BC, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
         } else {
-            turnoutStates.put(LayoutEditor.STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
-            turnoutStates.put(LayoutEditor.STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
-            turnoutStates.put(LayoutEditor.STATE_AD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
-            turnoutStates.remove(LayoutEditor.STATE_BC);
+            turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
+            turnoutStates.put(STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
+            turnoutStates.put(STATE_AD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
+            turnoutStates.remove(STATE_BC);
         }
     }
 
@@ -209,25 +212,25 @@ public class LayoutSlip extends LayoutTurnout {
         switch (selectedPointType) {
             case SLIP_LEFT: {
                 switch (currentState) {
-                    case LayoutEditor.STATE_AC: {
-                        if (type == LayoutEditor.SINGLE_SLIP) {
-                            currentState = LayoutEditor.STATE_BD;
+                    case STATE_AC: {
+                        if (type == SINGLE_SLIP) {
+                            currentState = STATE_BD;
                         } else {
-                            currentState = LayoutEditor.STATE_BC;
+                            currentState = STATE_BC;
                         }
                         break;
                     }
-                    case LayoutEditor.STATE_BD: {
-                        currentState = LayoutEditor.STATE_AD;
+                    case STATE_BD: {
+                        currentState = STATE_AD;
                         break;
                     }
-                    case LayoutEditor.STATE_AD: {
-                        currentState = LayoutEditor.STATE_BD;
+                    case STATE_AD: {
+                        currentState = STATE_BD;
                         break;
                     }
-                    case LayoutEditor.STATE_BC:
+                    case STATE_BC:
                     default: {
-                        currentState = LayoutEditor.STATE_AC;
+                        currentState = STATE_AC;
                         break;
                     }
                 }
@@ -235,25 +238,25 @@ public class LayoutSlip extends LayoutTurnout {
             }
             case SLIP_RIGHT: {
                 switch (currentState) {
-                    case LayoutEditor.STATE_AC: {
-                        currentState = LayoutEditor.STATE_AD;
+                    case STATE_AC: {
+                        currentState = STATE_AD;
                         break;
                     }
-                    case LayoutEditor.STATE_BD: {
-                        if (type == LayoutEditor.SINGLE_SLIP) {
-                            currentState = LayoutEditor.STATE_AC;
+                    case STATE_BD: {
+                        if (type == SINGLE_SLIP) {
+                            currentState = STATE_AC;
                         } else {
-                            currentState = LayoutEditor.STATE_BC;
+                            currentState = STATE_BC;
                         }
                         break;
                     }
-                    case LayoutEditor.STATE_AD: {
-                        currentState = LayoutEditor.STATE_AC;
+                    case STATE_AD: {
+                        currentState = STATE_AC;
                         break;
                     }
-                    case LayoutEditor.STATE_BC:
+                    case STATE_BC:
                     default: {
-                        currentState = LayoutEditor.STATE_BD;
+                        currentState = STATE_BD;
                         break;
                     }
                 }
@@ -264,28 +267,28 @@ public class LayoutSlip extends LayoutTurnout {
             default:
             {
                 switch (currentState) {
-                    case LayoutEditor.STATE_AC: {
+                    case STATE_AC: {
                         if (singleSlipStraightEqual()) {
-                            currentState = LayoutEditor.STATE_BD;
+                            currentState = STATE_BD;
                         } else {
-                            currentState = LayoutEditor.STATE_BC;
+                            currentState = STATE_BC;
                         }
                         break;
                     }
 
-                    case LayoutEditor.STATE_BD: {
-                        currentState = LayoutEditor.STATE_AD;
+                    case STATE_BD: {
+                        currentState = STATE_AD;
                         break;
                     }
 
-                    case LayoutEditor.STATE_AD: {
-                        currentState = LayoutEditor.STATE_AC;
+                    case STATE_AD: {
+                        currentState = STATE_AC;
                         break;
                     }
 
-                    case LayoutEditor.STATE_BC:
+                    case STATE_BC:
                     default: {
-                        currentState = LayoutEditor.STATE_BD;
+                        currentState = STATE_BD;
                         break;
                     }
                 }
@@ -898,14 +901,14 @@ public class LayoutSlip extends LayoutTurnout {
         g2.draw(new Line2D.Double(A, third(A, C)));
         g2.draw(new Line2D.Double(C, third(C, A)));
 
-        if (state == LayoutEditor.STATE_AC
-                || state == LayoutEditor.STATE_BD
-                || state == LayoutEditor.UNKNOWN) {
+        if (state == STATE_AC
+                || state == STATE_BD
+                || state == UNKNOWN) {
             g2.draw(new Line2D.Double(A, third(A, D)));
 
             g2.draw(new Line2D.Double(D, third(D, A)));
 
-            if (getSlipType() == LayoutEditor.DOUBLE_SLIP) {
+            if (getSlipType() == DOUBLE_SLIP) {
                 g2.draw(new Line2D.Double(B, third(B, C)));
 
                 g2.draw(new Line2D.Double(C, third(C, B)));
@@ -915,19 +918,19 @@ public class LayoutSlip extends LayoutTurnout {
             g2.draw(new Line2D.Double(D, third(D, B)));
         }
 
-        if (getSlipType() == LayoutEditor.DOUBLE_SLIP) {
-            if (state == LayoutEditor.STATE_AC) {
+        if (getSlipType() == DOUBLE_SLIP) {
+            if (state == STATE_AC) {
                 g2.draw(new Line2D.Double(B, third(B, D)));
                 g2.draw(new Line2D.Double(D, third(D, B)));
 
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, C));
 
-            } else if (state == LayoutEditor.STATE_BD) {
+            } else if (state == STATE_BD) {
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(B, D));
 
-            } else if (state == LayoutEditor.STATE_AD) {
+            } else if (state == STATE_AD) {
                 g2.draw(new Line2D.Double(B, third(B, C)));
 
                 g2.draw(new Line2D.Double(C, third(C, B)));
@@ -935,7 +938,7 @@ public class LayoutSlip extends LayoutTurnout {
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, D));
 
-            } else if (state == LayoutEditor.STATE_BC) {
+            } else if (state == STATE_BC) {
 
                 g2.draw(new Line2D.Double(A, third(A, D)));
 
@@ -950,18 +953,18 @@ public class LayoutSlip extends LayoutTurnout {
             g2.draw(new Line2D.Double(A, third(A, D)));
 
             g2.draw(new Line2D.Double(D, third(D, A)));
-            if (state == LayoutEditor.STATE_AD) {
+            if (state == STATE_AD) {
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, D));
 
-            } else if (state == LayoutEditor.STATE_AC) {
+            } else if (state == STATE_AC) {
                 g2.draw(new Line2D.Double(B, third(B, D)));
                 g2.draw(new Line2D.Double(D, third(D, B)));
 
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, C));
 
-            } else if (state == LayoutEditor.STATE_BD) {
+            } else if (state == STATE_BD) {
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(B, D));
 
@@ -990,7 +993,7 @@ public class LayoutSlip extends LayoutTurnout {
         }
     }
 
-    int testState = LayoutEditor.UNKNOWN;
+    int testState = UNKNOWN;
 
     /**
      * Toggle slip states if clicked on, physical turnout exists, and not
@@ -1000,36 +1003,36 @@ public class LayoutSlip extends LayoutTurnout {
         int turnAState;
         int turnBState;
         switch (testState) {
-            case LayoutEditor.STATE_AC: {
-                if (type == LayoutEditor.SINGLE_SLIP) {
-                    testState = LayoutEditor.STATE_BD;
+            case STATE_AC: {
+                if (type == SINGLE_SLIP) {
+                    testState = STATE_BD;
                 } else {
-                    testState = LayoutEditor.STATE_BD;
+                    testState = STATE_BD;
                 }
                 break;
             }
 
-            case LayoutEditor.STATE_BD: {
-                testState = LayoutEditor.STATE_AD;
+            case STATE_BD: {
+                testState = STATE_AD;
                 break;
             }
 
-            case LayoutEditor.STATE_AD: {
-                if (type == LayoutEditor.SINGLE_SLIP) {
-                    testState = LayoutEditor.STATE_AC;
+            case STATE_AD: {
+                if (type == SINGLE_SLIP) {
+                    testState = STATE_AC;
                 } else {
-                    testState = LayoutEditor.STATE_BC;
+                    testState = STATE_BC;
                 }
                 break;
             }
 
-            case LayoutEditor.STATE_BC: {
-                testState = LayoutEditor.STATE_AC;
+            case STATE_BC: {
+                testState = STATE_AC;
                 break;
             }
 
             default: {
-                testState = LayoutEditor.STATE_BD;
+                testState = STATE_BD;
                 break;
             }
         }
@@ -1186,10 +1189,10 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     public boolean singleSlipStraightEqual() {
-        if (type != LayoutEditor.SINGLE_SLIP) {
+        if (type != SINGLE_SLIP) {
             return false;
         }
-        return turnoutStates.get(LayoutEditor.STATE_AC).equals(turnoutStates.get(LayoutEditor.STATE_BD));
+        return turnoutStates.get(STATE_AC).equals(turnoutStates.get(STATE_BD));
     }
 
     Hashtable<Integer, TurnoutState> turnoutStates = new Hashtable<Integer, TurnoutState>(4);
@@ -1262,8 +1265,8 @@ public class LayoutSlip extends LayoutTurnout {
             g2.draw(new Line2D.Double(pointB, third(pointB, pointD)));
             g2.draw(new Line2D.Double(pointD, third(pointD, pointB)));
 
-            if (getSlipType() == LayoutEditor.DOUBLE_SLIP) {
-                if (getSlipState() == LayoutEditor.STATE_AC) {
+            if (getSlipType() == DOUBLE_SLIP) {
+                if (getSlipState() == STATE_AC) {
                     g2.draw(new Line2D.Double(pointA, third(pointA, pointD)));
                     g2.draw(new Line2D.Double(pointD, third(pointD, pointA)));
                     g2.draw(new Line2D.Double(pointB, third(pointB, pointC)));
@@ -1272,7 +1275,7 @@ public class LayoutSlip extends LayoutTurnout {
                     g2.setColor(mainColour);
                     g2.draw(new Line2D.Double(pointA, pointC));
 
-                } else if (getSlipState() == LayoutEditor.STATE_BD) {
+                } else if (getSlipState() == STATE_BD) {
                     g2.draw(new Line2D.Double(pointB, third(pointB, pointC)));
                     g2.draw(new Line2D.Double(pointC, third(pointC, pointB)));
                     g2.draw(new Line2D.Double(pointA, third(pointA, pointD)));
@@ -1281,13 +1284,13 @@ public class LayoutSlip extends LayoutTurnout {
                     g2.setColor(mainColour);
                     g2.draw(new Line2D.Double(pointB, pointD));
 
-                } else if (getSlipState() == LayoutEditor.STATE_AD) {
+                } else if (getSlipState() == STATE_AD) {
                     g2.draw(new Line2D.Double(pointB, third(pointB, pointC)));
                     g2.draw(new Line2D.Double(pointC, third(pointC, pointB)));
 
                     g2.setColor(mainColour);
                     g2.draw(new Line2D.Double(pointA, pointD));
-                } else if (getSlipState() == LayoutEditor.STATE_BC) {
+                } else if (getSlipState() == STATE_BC) {
                     g2.draw(new Line2D.Double(pointA, third(pointA, pointD)));
                     g2.draw(new Line2D.Double(pointD, third(pointD, pointA)));
 
@@ -1302,17 +1305,17 @@ public class LayoutSlip extends LayoutTurnout {
             } else {
                 g2.draw(new Line2D.Double(pointA, third(pointA, pointD)));
                 g2.draw(new Line2D.Double(pointD, third(pointD, pointA)));
-                if (getSlipState() == LayoutEditor.STATE_AD) {
+                if (getSlipState() == STATE_AD) {
                     g2.setColor(mainColour);
                     g2.draw(new Line2D.Double(pointA, pointD));
-                } else if (getSlipState() == LayoutEditor.STATE_BD) {
+                } else if (getSlipState() == STATE_BD) {
                     g2.setColor(mainColour);
                     g2.draw(new Line2D.Double(pointB, pointD));
                     if (singleSlipStraightEqual()) {
                         g2.setColor(mainColour);
                         g2.draw(new Line2D.Double(pointA, pointC));
                     }
-                } else if (getSlipState() == LayoutEditor.STATE_AC) {
+                } else if (getSlipState() == STATE_AC) {
                     g2.setColor(mainColour);
                     g2.draw(new Line2D.Double(pointA, pointC));
                     if (singleSlipStraightEqual()) {
