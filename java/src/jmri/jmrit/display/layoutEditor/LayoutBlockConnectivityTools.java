@@ -662,7 +662,7 @@ public class LayoutBlockConnectivityTools {
         ArrayList<Integer> settingsList = ct.getTurnoutSettingList();
         for (int i = 0; i < turnoutList.size(); i++) {
             LayoutTurnout lt = turnoutList.get(i);
-            if (lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER) {
+            if (lt.getTurnoutType() == LayoutEditor.DOUBLE_XOVER) {
                 if (settingsList.get(i) == jmri.Turnout.THROWN) {
                     jmri.Turnout t = lt.getTurnout();
                     if (t.getKnownState() == jmri.Turnout.THROWN) {

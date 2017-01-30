@@ -111,25 +111,7 @@ public class LayoutTurnout extends LayoutTrack {
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     protected LayoutTurnout instance = null;
-
-    // defined constants - turnout types
-    public static final int RH_TURNOUT = 1;
-    public static final int LH_TURNOUT = 2;
-    public static final int WYE_TURNOUT = 3;
-    public static final int DOUBLE_XOVER = 4;
-    public static final int RH_XOVER = 5;
-    public static final int LH_XOVER = 6;
-    public static final int SINGLE_SLIP = 7; //used in LayoutSlip which extends this class
-    public static final int DOUBLE_SLIP = 8; //used in LayoutSlip which extends this class
-    // defined constants - link types
-    public static final int NO_LINK = 0;
-    public static final int FIRST_3_WAY = 1;       // this turnout is the first turnout of a 3-way
-    // turnout pair (closest to the throat)
-    public static final int SECOND_3_WAY = 2;      // this turnout is the second turnout of a 3-way
-    // turnout pair (furthest from the throat)
-    public static final int THROAT_TO_THROAT = 3;  // this turnout is one of two throat-to-throat
-    // turnouts - no signals at throat
-
+  
     // program default turnout size parameters
     public static final double turnoutBXDefault = 20.0;  // RH, LH, WYE
     public static final double turnoutCXDefault = 20.0;
@@ -205,7 +187,7 @@ public class LayoutTurnout extends LayoutTrack {
     protected NamedBeanHandle<Sensor> sensorCNamed = null; // diverging
     protected NamedBeanHandle<Sensor> sensorDNamed = null; // single or double crossover only
 
-    public int type = RH_TURNOUT;
+    public int type = LayoutEditor.RH_TURNOUT;
     public Object connectA = null;      // throat of LH, RH, RH Xover, LH Xover, and WYE turnouts
     public Object connectB = null;      // straight leg of LH and RH turnouts
     public Object connectC = null;
@@ -223,7 +205,7 @@ public class LayoutTurnout extends LayoutTrack {
     private int version = 1;
 
     public String linkedTurnoutName = ""; // name of the linked Turnout (as entered in tool)
-    public int linkType = NO_LINK;
+    public int linkType = LayoutEditor.NO_LINK;
 
     protected boolean hidden = false;
 
@@ -263,16 +245,16 @@ public class LayoutTurnout extends LayoutTrack {
         center = c;
         version = v;
         // adjust initial coordinates
-        if (type == LH_TURNOUT) {
+        if (type == LayoutEditor.LH_TURNOUT) {
             dispB.setLocation(layoutEditor.getTurnoutBX(), 0.0);
             dispC.setLocation(layoutEditor.getTurnoutCX(), -layoutEditor.getTurnoutWid());
-        } else if (type == RH_TURNOUT) {
+        } else if (type == LayoutEditor.RH_TURNOUT) {
             dispB.setLocation(layoutEditor.getTurnoutBX(), 0.0);
             dispC.setLocation(layoutEditor.getTurnoutCX(), layoutEditor.getTurnoutWid());
-        } else if (type == WYE_TURNOUT) {
+        } else if (type == LayoutEditor.WYE_TURNOUT) {
             dispB.setLocation(layoutEditor.getTurnoutBX(), 0.5 * layoutEditor.getTurnoutWid());
             dispC.setLocation(layoutEditor.getTurnoutBX(), -0.5 * layoutEditor.getTurnoutWid());
-        } else if (type == DOUBLE_XOVER) {
+        } else if (type == LayoutEditor.DOUBLE_XOVER) {
             if (version == 2) {
                 center = new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
                 pointB.setLocation(layoutEditor.getXOverLong() * 2, 0);
@@ -289,7 +271,7 @@ public class LayoutTurnout extends LayoutTrack {
             blockCName = "";
             blockD = null;
             blockDName = "";
-        } else if (type == RH_XOVER) {
+        } else if (type == LayoutEditor.RH_XOVER) {
             if (version == 2) {
                 center = new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
                 pointB.setLocation((layoutEditor.getXOverShort() + layoutEditor.getXOverLong()), 0);
@@ -306,7 +288,7 @@ public class LayoutTurnout extends LayoutTrack {
             blockCName = "";
             blockD = null;
             blockDName = "";
-        } else if (type == LH_XOVER) {
+        } else if (type == LayoutEditor.LH_XOVER) {
             if (version == 2) {
                 center = new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
                 pointA.setLocation(20, 0);
@@ -1083,7 +1065,7 @@ public class LayoutTurnout extends LayoutTrack {
             secondTurnoutName = "";
             secondNamedTurnout = null;
         }
-        if ((type == RH_TURNOUT) || (type == LH_TURNOUT) || (type == WYE_TURNOUT)) {
+        if ((type == LayoutEditor.RH_TURNOUT) || (type == LayoutEditor.LH_TURNOUT) || (type == LayoutEditor.WYE_TURNOUT)) {
             if (oldSecondTurnoutName != null && !oldSecondTurnoutName.equals("")) {
                 Turnout oldTurnout = InstanceManager.turnoutManagerInstance().getTurnout(oldSecondTurnoutName);
                 LayoutTurnout oldLinked = layoutEditor.getFinder().findLayoutTurnoutByTurnoutName(oldTurnout.getSystemName());
@@ -1223,14 +1205,16 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public Point2D getCoordsA() {
-        if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
+        if ((type == LayoutEditor.DOUBLE_XOVER)
+                || (type == LayoutEditor.LH_XOVER)
+                || (type == LayoutEditor.RH_XOVER)) {
             if (version == 2) {
                 return pointA;
             }
             double x = center.getX() - dispC.getX();
             double y = center.getY() - dispC.getY();
             return new Point2D.Double(x, y);
-        } else if (type == WYE_TURNOUT) {
+        } else if (type == LayoutEditor.WYE_TURNOUT) {
             double x = center.getX() - (0.5 * (dispB.getX() + dispC.getX()));
             double y = center.getY() - (0.5 * (dispB.getY() + dispC.getY()));
             return new Point2D.Double(x, y);
@@ -1242,7 +1226,9 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public Point2D getCoordsB() {
-        if ((version == 2) && ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER))) {
+        if ((version == 2) && ((type == LayoutEditor.DOUBLE_XOVER)
+                || (type == LayoutEditor.LH_XOVER)
+                || (type == LayoutEditor.RH_XOVER))) {
             return pointB;
         }
         double x = center.getX() + dispB.getX();
@@ -1251,7 +1237,9 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public Point2D getCoordsC() {
-        if ((version == 2) && ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER))) {
+        if ((version == 2) && ((type == LayoutEditor.DOUBLE_XOVER)
+                || (type == LayoutEditor.LH_XOVER)
+                || (type == LayoutEditor.RH_XOVER))) {
             return pointC;
         }
         double x = center.getX() + dispC.getX();
@@ -1260,7 +1248,9 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public Point2D getCoordsD() {
-        if ((version == 2) && ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER))) {
+        if ((version == 2) && ((type == LayoutEditor.DOUBLE_XOVER)
+                || (type == LayoutEditor.LH_XOVER)
+                || (type == LayoutEditor.RH_XOVER))) {
             return pointD;
         }
         // only allowed for single and double crossovers
@@ -1332,12 +1322,12 @@ public class LayoutTurnout extends LayoutTrack {
         double lenB = Math.sqrt((bX * bX) + (bY * bY));
         double lenC = Math.sqrt((cX * cX) + (cY * cY));
         double distBC = Math.sqrt(((bX - cX) * (bX - cX)) + ((bY - cY) * (bY - cY)));
-        if ((type == LH_TURNOUT) || (type == RH_TURNOUT)) {
+        if ((type == LayoutEditor.LH_TURNOUT) || (type == LayoutEditor.RH_TURNOUT)) {
             layoutEditor.setTurnoutBX(Math.round(lenB + 0.1));
             double xc = ((bX * cX) + (bY * cY)) / lenB;
             layoutEditor.setTurnoutCX(Math.round(xc + 0.1));
             layoutEditor.setTurnoutWid(Math.round(Math.sqrt((lenC * lenC) - (xc * xc)) + 0.1));
-        } else if (type == WYE_TURNOUT) {
+        } else if (type == LayoutEditor.WYE_TURNOUT) {
             double xx = Math.sqrt((lenB * lenB) - (0.25 * (distBC * distBC)));
             layoutEditor.setTurnoutBX(Math.round(xx + 0.1));
             layoutEditor.setTurnoutCX(Math.round(xx + 0.1));
@@ -1351,12 +1341,12 @@ public class LayoutTurnout extends LayoutTrack {
                 cX = pointC.getX() / layoutEditor.getXScale();
                 cY = pointC.getY() / layoutEditor.getYScale();
                 double lenAB = Math.sqrt(((bX - aX) * (bX - aX)) + ((bY - aY) * (bY - aY)));
-                if (type == DOUBLE_XOVER) {
+                if (type == LayoutEditor.DOUBLE_XOVER) {
                     double lenBC = Math.sqrt(((bX - cX) * (bX - cX)) + ((bY - cY) * (bY - cY)));
                     layoutEditor.setXOverLong(Math.round(lenAB / 2)); //set to half to be backwardly compatible
                     layoutEditor.setXOverHWid(Math.round(lenBC / 2));
                     layoutEditor.setXOverShort(Math.round((0.5 * lenAB) / 2));
-                } else if (type == RH_XOVER) {
+                } else if (type == LayoutEditor.RH_XOVER) {
                     lenAB = lenAB / 3;
                     layoutEditor.setXOverShort(Math.round(lenAB));
                     layoutEditor.setXOverLong(Math.round(lenAB * 2));
@@ -1369,7 +1359,7 @@ public class LayoutTurnout extends LayoutTrack {
                     double lenBC = Math.sqrt(((bX - cX) * (bX - cX)) + ((bY - cY) * (bY - cY)));
                     layoutEditor.setXOverHWid(Math.round(lenBC / 2));
 
-                } else if (type == LH_XOVER) {
+                } else if (type == LayoutEditor.LH_XOVER) {
                     double dY = pointD.getY() / layoutEditor.getYScale();
                     lenAB = lenAB / 3;
                     layoutEditor.setXOverShort(Math.round(lenAB));
@@ -1383,18 +1373,18 @@ public class LayoutTurnout extends LayoutTrack {
                     double lenBC = Math.sqrt(((bX - cX) * (bX - cX)) + ((bY - cY) * (bY - cY)));
                     layoutEditor.setXOverHWid(Math.round(lenBC / 2));
                 }
-            } else if (type == DOUBLE_XOVER) {
+            } else if (type == LayoutEditor.DOUBLE_XOVER) {
                 double lng = Math.sqrt((lenB * lenB) - (0.25 * (distBC * distBC)));
                 layoutEditor.setXOverLong(Math.round(lng + 0.1));
                 layoutEditor.setXOverHWid(Math.round((0.5 * distBC) + 0.1));
                 layoutEditor.setXOverShort(Math.round((0.5 * lng) + 0.1));
-            } else if (type == RH_XOVER) {
+            } else if (type == LayoutEditor.RH_XOVER) {
                 double distDC = Math.sqrt(((bX + cX) * (bX + cX)) + ((bY + cY) * (bY + cY)));
                 layoutEditor.setXOverShort(Math.round((0.25 * distDC) + 0.1));
                 layoutEditor.setXOverLong(Math.round((0.75 * distDC) + 0.1));
                 double hwid = Math.sqrt((lenC * lenC) - (0.5625 * distDC * distDC));
                 layoutEditor.setXOverHWid(Math.round(hwid + 0.1));
-            } else if (type == LH_XOVER) {
+            } else if (type == LayoutEditor.LH_XOVER) {
                 double distDC = Math.sqrt(((bX + cX) * (bX + cX)) + ((bY + cY) * (bY + cY)));
                 layoutEditor.setXOverShort(Math.round((0.25 * distDC) + 0.1));
                 layoutEditor.setXOverLong(Math.round((0.75 * distDC) + 0.1));
@@ -1417,7 +1407,9 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setLayoutBlockB(LayoutBlock b) {
-        if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
+        if ((type == LayoutEditor.DOUBLE_XOVER)
+                || (type == LayoutEditor.LH_XOVER)
+                || (type == LayoutEditor.RH_XOVER)) {
             blockB = b;
             if (b != null) {
                 blockBName = b.getID();
@@ -1430,7 +1422,9 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setLayoutBlockC(LayoutBlock b) {
-        if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
+        if ((type == LayoutEditor.DOUBLE_XOVER)
+                || (type == LayoutEditor.LH_XOVER)
+                || (type == LayoutEditor.RH_XOVER)) {
             blockC = b;
             if (b != null) {
                 blockCName = b.getID();
@@ -1443,7 +1437,9 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setLayoutBlockD(LayoutBlock b) {
-        if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
+        if ((type == LayoutEditor.DOUBLE_XOVER)
+                || (type == LayoutEditor.LH_XOVER)
+                || (type == LayoutEditor.RH_XOVER)) {
             blockD = b;
             if (b != null) {
                 blockDName = b.getID();
@@ -1460,7 +1456,9 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setLayoutBlockBByName(String name) {
-        if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
+        if ((type == LayoutEditor.DOUBLE_XOVER)
+                || (type == LayoutEditor.LH_XOVER)
+                || (type == LayoutEditor.RH_XOVER)) {
             blockBName = name;
         } else {
             log.error("Attempt to set block B name, but not a crossover");
@@ -1468,7 +1466,9 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setLayoutBlockCByName(String name) {
-        if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
+        if ((type == LayoutEditor.DOUBLE_XOVER)
+                || (type == LayoutEditor.LH_XOVER)
+                || (type == LayoutEditor.RH_XOVER)) {
             blockCName = name;
         } else {
             log.error("Attempt to set block C name, but not a crossover");
@@ -1476,7 +1476,9 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setLayoutBlockDByName(String name) {
-        if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
+        if ((type == LayoutEditor.DOUBLE_XOVER)
+                || (type == LayoutEditor.LH_XOVER)
+                || (type == LayoutEditor.RH_XOVER)) {
             blockDName = name;
         } else {
             log.error("Attempt to set block D name, but not a crossover");
@@ -1493,7 +1495,9 @@ public class LayoutTurnout extends LayoutTrack {
             return ((TrackSegment) connectA).getMainline();
         } else {
             // if no connection, depends on type of turnout
-            if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
+            if ((type == LayoutEditor.DOUBLE_XOVER)
+                    || (type == LayoutEditor.LH_XOVER)
+                    || (type == LayoutEditor.RH_XOVER)) {
                 // All crossovers - straight continuing is B
                 if (connectB != null) {
                     return ((TrackSegment) connectB).getMainline();
@@ -1514,7 +1518,9 @@ public class LayoutTurnout extends LayoutTrack {
             return ((TrackSegment) connectB).getMainline();
         } else {
             // if no connection, depends on type of turnout
-            if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
+            if ((type == LayoutEditor.DOUBLE_XOVER)
+                    || (type == LayoutEditor.LH_XOVER)
+                    || (type == LayoutEditor.RH_XOVER)) {
                 // All crossovers - straight continuing is A
                 if (connectA != null) {
                     return ((TrackSegment) connectA).getMainline();
@@ -1537,7 +1543,9 @@ public class LayoutTurnout extends LayoutTrack {
             return ((TrackSegment) connectC).getMainline();
         } else {
             // if no connection, depends on type of turnout
-            if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
+            if ((type == LayoutEditor.DOUBLE_XOVER)
+                    || (type == LayoutEditor.LH_XOVER)
+                    || (type == LayoutEditor.RH_XOVER)) {
                 // All crossovers - straight continuing is D
                 if (connectD != null) {
                     return ((TrackSegment) connectD).getMainline();
@@ -1594,7 +1602,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
         double x = center.getX() - p.getX();
         double y = center.getY() - p.getY();
-        if (type == DOUBLE_XOVER) {
+        if (type == LayoutEditor.DOUBLE_XOVER) {
             dispC = new Point2D.Double(x, y);
             // adjust to maintain rectangle
             double oldLength = Math.sqrt((dispB.getX() * dispB.getX())
@@ -1603,7 +1611,8 @@ public class LayoutTurnout extends LayoutTrack {
             x = dispB.getX() * newLength / oldLength;
             y = dispB.getY() * newLength / oldLength;
             dispB = new Point2D.Double(x, y);
-        } else if ((type == RH_XOVER) || (type == LH_XOVER)) {
+        } else if ((type == LayoutEditor.RH_XOVER)
+                || (type == LayoutEditor.LH_XOVER)) {
             dispC = new Point2D.Double(x, y);
             // adjust to maintain the parallelogram
             double a = 0.0;
@@ -1616,15 +1625,15 @@ public class LayoutTurnout extends LayoutTrack {
                 xi = -b / (a + (1.0 / a));
                 yi = (a * xi) + b;
             }
-            if (type == RH_XOVER) {
+            if (type == LayoutEditor.RH_XOVER) {
                 x = xi - (0.333333 * (-x - xi));
                 y = yi - (0.333333 * (-y - yi));
-            } else if (type == LH_XOVER) {
+            } else if (type == LayoutEditor.LH_XOVER) {
                 x = xi - (3.0 * (-x - xi));
                 y = yi - (3.0 * (-y - yi));
             }
             dispB = new Point2D.Double(x, y);
-        } else if (type == WYE_TURNOUT) {
+        } else if (type == LayoutEditor.WYE_TURNOUT) {
             // modify both to maintain same angle at wye
             double temX = (dispB.getX() + dispC.getX());
             double temY = (dispB.getY() + dispC.getY());
@@ -1648,7 +1657,8 @@ public class LayoutTurnout extends LayoutTrack {
         double x = center.getX() - p.getX();
         double y = center.getY() - p.getY();
         dispB = new Point2D.Double(-x, -y);
-        if ((type == DOUBLE_XOVER) || (type == WYE_TURNOUT)) {
+        if ((type == LayoutEditor.DOUBLE_XOVER)
+                || (type == LayoutEditor.WYE_TURNOUT)) {
             // adjust to maintain rectangle or wye shape
             double oldLength = Math.sqrt((dispC.getX() * dispC.getX())
                     + (dispC.getY() * dispC.getY()));
@@ -1656,7 +1666,8 @@ public class LayoutTurnout extends LayoutTrack {
             x = dispC.getX() * newLength / oldLength;
             y = dispC.getY() * newLength / oldLength;
             dispC = new Point2D.Double(x, y);
-        } else if ((type == RH_XOVER) || (type == LH_XOVER)) {
+        } else if ((type == LayoutEditor.RH_XOVER)
+                || (type == LayoutEditor.LH_XOVER)) {
             // adjust to maintain the parallelogram
             double a = 0.0;
             double b = y;
@@ -1674,10 +1685,10 @@ public class LayoutTurnout extends LayoutTrack {
                 xi = -b / (a + (1.0 / a));
                 yi = (a * xi) + b;
             }
-            if (type == LH_XOVER) {
+            if (type == LayoutEditor.LH_XOVER) {
                 x = xi - (0.333333 * (x - xi));
                 y = yi - (0.333333 * (y - yi));
-            } else if (type == RH_XOVER) {
+            } else if (type == LayoutEditor.RH_XOVER) {
                 x = xi - (3.0 * (x - xi));
                 y = yi - (3.0 * (y - yi));
             }
@@ -1693,7 +1704,8 @@ public class LayoutTurnout extends LayoutTrack {
         double x = center.getX() - p.getX();
         double y = center.getY() - p.getY();
         dispC = new Point2D.Double(-x, -y);
-        if ((type == DOUBLE_XOVER) || (type == WYE_TURNOUT)) {
+        if ((type == LayoutEditor.DOUBLE_XOVER)
+                || (type == LayoutEditor.WYE_TURNOUT)) {
             // adjust to maintain rectangle or wye shape
             double oldLength = Math.sqrt((dispB.getX() * dispB.getX())
                     + (dispB.getY() * dispB.getY()));
@@ -1701,7 +1713,8 @@ public class LayoutTurnout extends LayoutTrack {
             x = dispB.getX() * newLength / oldLength;
             y = dispB.getY() * newLength / oldLength;
             dispB = new Point2D.Double(x, y);
-        } else if ((type == RH_XOVER) || (type == LH_XOVER)) {
+        } else if ((type == LayoutEditor.RH_XOVER)
+                || (type == LayoutEditor.LH_XOVER)) {
             double a = 0.0;
             double b = -y;
             double xi = 0.0;
@@ -1719,10 +1732,10 @@ public class LayoutTurnout extends LayoutTrack {
                 xi = -b / (a + (1.0 / a));
                 yi = (a * xi) + b;
             }
-            if (type == RH_XOVER) {
+            if (type == LayoutEditor.RH_XOVER) {
                 x = xi - (0.333333 * (-x - xi));
                 y = yi - (0.333333 * (-y - yi));
-            } else if (type == LH_XOVER) {
+            } else if (type == LayoutEditor.LH_XOVER) {
                 x = xi - (3.0 * (-x - xi));
                 y = yi - (3.0 * (-y - yi));
             }
@@ -1737,7 +1750,7 @@ public class LayoutTurnout extends LayoutTrack {
         double x = center.getX() - p.getX();
         double y = center.getY() - p.getY();
         dispB = new Point2D.Double(x, y);
-        if (type == DOUBLE_XOVER) {
+        if (type == LayoutEditor.DOUBLE_XOVER) {
             // adjust to maintain rectangle
             double oldLength = Math.sqrt((dispC.getX() * dispC.getX())
                     + (dispC.getY() * dispC.getY()));
@@ -1745,7 +1758,8 @@ public class LayoutTurnout extends LayoutTrack {
             x = dispC.getX() * newLength / oldLength;
             y = dispC.getY() * newLength / oldLength;
             dispC = new Point2D.Double(x, y);
-        } else if ((type == RH_XOVER) || (type == LH_XOVER)) {
+        } else if ((type == LayoutEditor.RH_XOVER)
+                || (type == LayoutEditor.LH_XOVER)) {
             // adjust to maintain the parallelogram
             double a = 0.0;
             double b = y;
@@ -1757,10 +1771,10 @@ public class LayoutTurnout extends LayoutTrack {
                 xi = -b / (a + (1.0 / a));
                 yi = (a * xi) + b;
             }
-            if (type == LH_XOVER) {
+            if (type == LayoutEditor.LH_XOVER) {
                 x = xi - (0.333333 * (-x - xi));
                 y = yi - (0.333333 * (-y - yi));
-            } else if (type == RH_XOVER) {
+            } else if (type == LayoutEditor.RH_XOVER) {
                 x = xi - (3.0 * (-x - xi));
                 y = yi - (3.0 * (-y - yi));
             }
@@ -1857,13 +1871,17 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     private boolean disableOccupiedTurnout() {
-        if ((type == RH_TURNOUT) || (type == LH_TURNOUT) || (type == WYE_TURNOUT)) {
+        if ((type == LayoutEditor.RH_TURNOUT)
+                || (type == LayoutEditor.LH_TURNOUT)
+                || (type == LayoutEditor.WYE_TURNOUT)) {
             if (block.getOccupancy() == LayoutBlock.OCCUPIED) {
                 log.debug("Block " + blockName + "is Occupied");
                 return true;
             }
         }
-        if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
+        if ((type == LayoutEditor.DOUBLE_XOVER)
+                || (type == LayoutEditor.RH_XOVER)
+                || (type == LayoutEditor.LH_XOVER)) {
             //If the turnout is set for straigh over, we need to deal with the straight over connecting blocks
             if (getTurnout().getKnownState() == jmri.Turnout.CLOSED) {
                 if ((block.getOccupancy() == LayoutBlock.OCCUPIED) && (blockB.getOccupancy() == LayoutBlock.OCCUPIED)) {
@@ -1877,7 +1895,8 @@ public class LayoutTurnout extends LayoutTrack {
             }
 
         }
-        if ((type == DOUBLE_XOVER) || (type == LH_XOVER)) {
+        if ((type == LayoutEditor.DOUBLE_XOVER)
+                || (type == LayoutEditor.LH_XOVER)) {
             if (getTurnout().getKnownState() == jmri.Turnout.THROWN) {
                 if ((blockB.getOccupancy() == LayoutBlock.OCCUPIED) && (blockD.getOccupancy() == LayoutBlock.OCCUPIED)) {
                     log.debug("Blocks " + blockBName + " & " + blockDName + " are Occupied");
@@ -1886,7 +1905,7 @@ public class LayoutTurnout extends LayoutTrack {
             }
         }
 
-        if ((type == DOUBLE_XOVER) || (type == RH_XOVER)) {
+        if ((type == LayoutEditor.DOUBLE_XOVER) || (type == LayoutEditor.RH_XOVER)) {
             if (getTurnout().getKnownState() == jmri.Turnout.THROWN) {
                 if ((block.getOccupancy() == LayoutBlock.OCCUPIED) && (blockC.getOccupancy() == LayoutBlock.OCCUPIED)) {
                     log.debug("Blocks " + block + " & " + blockCName + " are Occupied");
@@ -2004,22 +2023,22 @@ public class LayoutTurnout extends LayoutTrack {
         }
         if (editable) {
             switch (getTurnoutType()) {
-                case RH_TURNOUT:
+                case LayoutEditor.RH_TURNOUT:
                     popup.add(Bundle.getMessage("RightTurnout"));
                     break;
-                case LH_TURNOUT:
+                case LayoutEditor.LH_TURNOUT:
                     popup.add(Bundle.getMessage("LeftTurnout"));
                     break;
-                case WYE_TURNOUT:
+                case LayoutEditor.WYE_TURNOUT:
                     popup.add(rb.getString("WYETurnout"));
                     break;
-                case DOUBLE_XOVER:
+                case LayoutEditor.DOUBLE_XOVER:
                     popup.add(rb.getString("DoubleCrossOver"));
                     break;
-                case RH_XOVER:
+                case LayoutEditor.RH_XOVER:
                     popup.add(Bundle.getMessage("RightCrossOver"));
                     break;
-                case LH_XOVER:
+                case LayoutEditor.LH_XOVER:
                     popup.add(Bundle.getMessage("LeftCrossOver"));
                     break;
                 default:
@@ -2094,7 +2113,8 @@ public class LayoutTurnout extends LayoutTrack {
             } else {
                 popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getID());
             }
-            if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
+            if ((type == LayoutEditor.DOUBLE_XOVER)
+                    || (type == LayoutEditor.RH_XOVER) || (type == LayoutEditor.LH_XOVER)) {
                 // check if extra blocks have been entered
                 if (blockB != null) {
                     popup.add(Bundle.getMessage("Block_ID", 2) + ": " + blockBName);
@@ -2137,20 +2157,21 @@ public class LayoutTurnout extends LayoutTrack {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
                         }
-                        if ((getTurnoutType() == DOUBLE_XOVER) || (getTurnoutType() == RH_XOVER)
-                                || (getTurnoutType() == LH_XOVER)) {
+                        if ((getTurnoutType() == LayoutEditor.DOUBLE_XOVER)
+                                || (getTurnoutType() == LayoutEditor.RH_XOVER)
+                                || (getTurnoutType() == LayoutEditor.LH_XOVER)) {
                             tools.setSignalsAtXoverTurnoutFromMenu(instance,
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
-                        } else if (linkType == NO_LINK) {
+                        } else if (linkType == LayoutEditor.NO_LINK) {
                             tools.setSignalsAtTurnoutFromMenu(instance,
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
-                        } else if (linkType == THROAT_TO_THROAT) {
+                        } else if (linkType == LayoutEditor.THROAT_TO_THROAT) {
                             tools.setThroatToThroatFromMenu(instance, linkedTurnoutName,
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
-                        } else if (linkType == FIRST_3_WAY) {
+                        } else if (linkType == LayoutEditor.FIRST_3_WAY) {
                             tools.set3WayFromMenu(turnoutName, linkedTurnoutName,
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
-                        } else if (linkType == SECOND_3_WAY) {
+                        } else if (linkType == LayoutEditor.SECOND_3_WAY) {
                             tools.set3WayFromMenu(linkedTurnoutName, turnoutName,
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                         }
@@ -2248,7 +2269,9 @@ public class LayoutTurnout extends LayoutTrack {
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];
         //ArrayList<String> boundaryBetween = new ArrayList<String>(4);
-        if ((type == WYE_TURNOUT) || (type == RH_TURNOUT) || (type == LH_TURNOUT)) {
+        if ((type == LayoutEditor.WYE_TURNOUT)
+                || (type == LayoutEditor.RH_TURNOUT)
+                || (type == LayoutEditor.LH_TURNOUT)) {
             //This should only be needed where we are looking at a single turnout.
             if (block != null) {
                 LayoutBlock aLBlock = null;
@@ -2457,7 +2480,9 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
             });
-            if ((type != DOUBLE_XOVER) && (type != RH_XOVER) && (type != LH_XOVER)) {
+            if ((type != LayoutEditor.DOUBLE_XOVER)
+                    && (type != LayoutEditor.RH_XOVER)
+                    && (type != LayoutEditor.LH_XOVER)) {
                 additionalTurnout.setText(rb.getString("ThrowTwoTurnouts"));
             }
             panel1a.add(additionalTurnout);
@@ -2472,7 +2497,9 @@ public class LayoutTurnout extends LayoutTrack {
             contentPane.add(panel1b);
 
             // add continuing state choice, if not crossover
-            if ((type != DOUBLE_XOVER) && (type != RH_XOVER) && (type != LH_XOVER)) {
+            if ((type != LayoutEditor.DOUBLE_XOVER)
+                    && (type != LayoutEditor.RH_XOVER)
+                    && (type != LayoutEditor.LH_XOVER)) {
                 JPanel panel3 = new JPanel();
                 panel3.setLayout(new FlowLayout());
                 stateBox.removeAllItems();
@@ -2510,7 +2537,9 @@ public class LayoutTurnout extends LayoutTrack {
                 }
             });
             contentPane.add(panel2);
-            if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
+            if ((type == LayoutEditor.DOUBLE_XOVER)
+                    || (type == LayoutEditor.RH_XOVER)
+                    || (type == LayoutEditor.LH_XOVER)) {
                 JPanel panel21 = new JPanel();
                 panel21.setLayout(new FlowLayout());
                 TitledBorder borderblk2 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
@@ -2609,7 +2638,9 @@ public class LayoutTurnout extends LayoutTrack {
 
         // Set up for Edit
         blockNameComboBox.getEditor().setItem(blockName);
-        if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
+        if ((type == LayoutEditor.DOUBLE_XOVER)
+                || (type == LayoutEditor.RH_XOVER)
+                || (type == LayoutEditor.LH_XOVER)) {
             blockBNameComboBox.getEditor().setItem(blockBName);
             blockCNameComboBox.getEditor().setItem(blockCName);
             blockDNameComboBox.getEditor().setItem(blockDName);
@@ -2622,7 +2653,9 @@ public class LayoutTurnout extends LayoutTrack {
             secondTurnoutComboBox.setEnabled(true);
         }
 
-        if ((type != DOUBLE_XOVER) && (type != RH_XOVER) && (type != LH_XOVER)) {
+        if ((type != LayoutEditor.DOUBLE_XOVER)
+                && (type != LayoutEditor.RH_XOVER)
+                && (type != LayoutEditor.LH_XOVER)) {
             if (continuingSense == Turnout.CLOSED) {
                 stateBox.setSelectedIndex(turnoutClosedIndex);
             } else {
@@ -2809,7 +2842,9 @@ public class LayoutTurnout extends LayoutTrack {
             newName = (String) secondTurnoutComboBox.getEditor().getItem();
             newName = (null != newName) ? newName.trim() : "";
             if (!secondTurnoutName.equals(newName)) {
-                if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
+                if ((type == LayoutEditor.DOUBLE_XOVER)
+                        || (type == LayoutEditor.RH_XOVER)
+                        || (type == LayoutEditor.LH_XOVER)) {
                     // turnout has changed
                     newName = newName;
                     if (layoutEditor.validatePhysicalTurnout(newName,
@@ -2829,7 +2864,9 @@ public class LayoutTurnout extends LayoutTrack {
             setSecondTurnout(null);
         }
         // set the continuing route Turnout State
-        if ((type == RH_TURNOUT) || (type == LH_TURNOUT) || (type == WYE_TURNOUT)) {
+        if ((type == LayoutEditor.RH_TURNOUT)
+                || (type == LayoutEditor.LH_TURNOUT)
+                || (type == LayoutEditor.WYE_TURNOUT)) {
             continuingSense = Turnout.CLOSED;
             if (stateBox.getSelectedIndex() == turnoutThrownIndex) {
                 continuingSense = Turnout.THROWN;
@@ -2858,7 +2895,9 @@ public class LayoutTurnout extends LayoutTrack {
             needRedraw = true;
             needsBlockUpdate = true;
         }
-        if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
+        if ((type == LayoutEditor.DOUBLE_XOVER)
+                || (type == LayoutEditor.LH_XOVER)
+                || (type == LayoutEditor.RH_XOVER)) {
             // check if Block 2 changed
             newName = (String) blockBNameComboBox.getEditor().getItem();
             newName = (null != newName) ? newName.trim() : "";
@@ -2970,7 +3009,9 @@ public class LayoutTurnout extends LayoutTrack {
     //@todo on the cross-overs check the internal boundary details.
     public void reCheckBlockBoundary() {
         if (connectA == null && connectB == null && connectC == null) {
-            if ((type == RH_TURNOUT) || (type == LH_TURNOUT) || (type == WYE_TURNOUT)) {
+            if ((type == LayoutEditor.RH_TURNOUT)
+                    || (type == LayoutEditor.LH_TURNOUT)
+                    || (type == LayoutEditor.WYE_TURNOUT)) {
                 if (signalAMastNamed != null) {
                     removeSML(getSignalAMast());
                 }
@@ -2988,7 +3029,9 @@ public class LayoutTurnout extends LayoutTrack {
                 sensorCNamed = null;
                 return;
 
-            } else if (((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) && connectD == null) {
+            } else if (((type == LayoutEditor.DOUBLE_XOVER)
+                    || (type == LayoutEditor.RH_XOVER)
+                    || (type == LayoutEditor.LH_XOVER)) && connectD == null) {
                 if (signalAMastNamed != null) {
                     removeSML(getSignalAMast());
                 }
@@ -3016,7 +3059,9 @@ public class LayoutTurnout extends LayoutTrack {
         if (connectA == null || connectB == null || connectC == null) {
             //could still be in the process of rebuilding.
             return;
-        } else if ((connectD == null) && ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER))) {
+        } else if ((connectD == null) && ((type == LayoutEditor.DOUBLE_XOVER)
+                || (type == LayoutEditor.RH_XOVER)
+                || (type == LayoutEditor.LH_XOVER))) {
             //could still be in the process of rebuilding.
             return;
         }
@@ -3058,7 +3103,10 @@ public class LayoutTurnout extends LayoutTrack {
 
             }
         }
-        if (connectD != null && connectD instanceof TrackSegment && ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER))) {
+        if (connectD != null && connectD instanceof TrackSegment
+                && ((type == LayoutEditor.DOUBLE_XOVER)
+                || (type == LayoutEditor.RH_XOVER)
+                || (type == LayoutEditor.LH_XOVER))) {
             trkD = (TrackSegment) connectD;
             if (trkD.getLayoutBlock() == block || trkD.getLayoutBlock() == blockB || trkD.getLayoutBlock() == blockC || trkD.getLayoutBlock() == blockD) {
                 if (signalDMastNamed != null) {
@@ -3075,8 +3123,14 @@ public class LayoutTurnout extends LayoutTrack {
         if (block == null) {
             return ret;
         }
-        if (getTurnoutType() >= DOUBLE_XOVER && getTurnoutType() <= LH_XOVER) {
-            if ((getTurnoutType() == DOUBLE_XOVER || getTurnoutType() == RH_XOVER) && (getSignalAMast() == bean || getSignalCMast() == bean || getSensorA() == bean || getSensorC() == bean)) {
+        if (getTurnoutType() >= LayoutEditor.DOUBLE_XOVER
+                && getTurnoutType() <= LayoutEditor.LH_XOVER) {
+            if ((getTurnoutType() == LayoutEditor.DOUBLE_XOVER
+                    || getTurnoutType() == LayoutEditor.RH_XOVER)
+                    && (getSignalAMast() == bean
+                    || getSignalCMast() == bean
+                    || getSensorA() == bean
+                    || getSensorC() == bean)) {
                 if (getSignalAMast() == bean || getSensorA() == bean) {
                     if (connectA != null) {
                         if (((TrackSegment) connectA).getLayoutBlock() == block) {
@@ -3101,7 +3155,12 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
             }
-            if ((getTurnoutType() == DOUBLE_XOVER || getTurnoutType() == LH_XOVER) && (getSignalBMast() == bean || getSignalDMast() == bean || getSensorB() == bean || getSensorD() == bean)) {
+            if ((getTurnoutType() == LayoutEditor.DOUBLE_XOVER
+                    || getTurnoutType() == LayoutEditor.LH_XOVER)
+                    && (getSignalBMast() == bean
+                    || getSignalDMast() == bean
+                    || getSensorB() == bean
+                    || getSensorD() == bean)) {
                 if (getSignalBMast() == bean || getSensorB() == bean) {
                     if (connectB != null && blockB != null) {
                         if (((TrackSegment) connectB).getLayoutBlock() == blockB) {
@@ -3126,7 +3185,11 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
             }
-            if (getTurnoutType() == RH_XOVER && (getSignalBMast() == bean || getSignalDMast() == bean || getSensorB() == bean || getSensorD() == bean)) {
+            if (getTurnoutType() == LayoutEditor.RH_XOVER
+                    && (getSignalBMast() == bean
+                    || getSignalDMast() == bean
+                    || getSensorB() == bean
+                    || getSensorD() == bean)) {
                 if (getSignalBMast() == bean || getSensorB() == bean) {
                     if (connectB != null && ((TrackSegment) connectB).getLayoutBlock() == blockB) {
                         if (blockB != block) {
@@ -3145,7 +3208,11 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
             }
-            if (getTurnoutType() == LH_XOVER && (getSensorA() == bean || getSensorC() == bean || getSignalAMast() == bean || getSignalCMast() == bean)) {
+            if (getTurnoutType() == LayoutEditor.LH_XOVER
+                    && (getSensorA() == bean
+                    || getSensorC() == bean
+                    || getSignalAMast() == bean
+                    || getSignalCMast() == bean)) {
                 if (getSignalAMast() == bean || getSensorA() == bean) {
                     if (connectA != null && ((TrackSegment) connectA).getLayoutBlock() == block) {
                         if (blockB != block) {
@@ -3289,7 +3356,7 @@ public class LayoutTurnout extends LayoutTrack {
             g2.setColor(defaultTrackColor);
         }
 
-        if (type == DOUBLE_XOVER) {
+        if (type == LayoutEditor.DOUBLE_XOVER) {
             //  double crossover turnout
             if (to == null) {
                 // no physical turnout linked - draw A corner
@@ -3484,13 +3551,14 @@ public class LayoutTurnout extends LayoutTrack {
                     g2.draw(new Line2D.Double(pointD, third(pointD, pointB)));
                 }
             }
-        } else if ((type == RH_XOVER) || (type == LH_XOVER)) {
+        } else if ((type == LayoutEditor.RH_XOVER)
+                || (type == LayoutEditor.LH_XOVER)) {
             //  LH and RH crossover turnouts
             if (to == null) {
                 // no physical turnout linked - draw A corner
                 float w = layoutEditor.setTrackStrokeWidth(g2, isMainlineA());
                 g2.draw(new Line2D.Double(pointA, midpoint(pointA, pointB)));
-                if (type == RH_XOVER) {
+                if (type == LayoutEditor.RH_XOVER) {
                     w = layoutEditor.setTrackStrokeWidth(g2, false);
                     g2.draw(new Line2D.Double(midpoint(pointA, pointB), center));
                 }
@@ -3504,7 +3572,7 @@ public class LayoutTurnout extends LayoutTrack {
                 // draw B corner
                 w = layoutEditor.setTrackStrokeWidth(g2, isMainlineB());
                 g2.draw(new Line2D.Double(pointB, midpoint(pointA, pointB)));
-                if (type == LH_XOVER) {
+                if (type == LayoutEditor.LH_XOVER) {
                     w = layoutEditor.setTrackStrokeWidth(g2, false);
                     g2.draw(new Line2D.Double(midpoint(pointA, pointB), center));
                 }
@@ -3518,7 +3586,7 @@ public class LayoutTurnout extends LayoutTrack {
                 // draw C corner
                 w = layoutEditor.setTrackStrokeWidth(g2, isMainlineC());
                 g2.draw(new Line2D.Double(pointC, midpoint(pointC, pointD)));
-                if (type == RH_XOVER) {
+                if (type == LayoutEditor.RH_XOVER) {
                     w = layoutEditor.setTrackStrokeWidth(g2, false);
                     g2.draw(new Line2D.Double(midpoint(pointC, pointD), center));
                 }
@@ -3532,7 +3600,7 @@ public class LayoutTurnout extends LayoutTrack {
                 // draw D corner
                 w = layoutEditor.setTrackStrokeWidth(g2, isMainlineD());
                 g2.draw(new Line2D.Double(pointD, midpoint(pointC, pointD)));
-                if (type == LH_XOVER) {
+                if (type == LayoutEditor.LH_XOVER) {
                     w = layoutEditor.setTrackStrokeWidth(g2, false);
                     g2.draw(new Line2D.Double(midpoint(pointC, pointD), center));
                 }
@@ -3545,7 +3613,7 @@ public class LayoutTurnout extends LayoutTrack {
                     // continuing path - not crossed over
                     float w = layoutEditor.setTrackStrokeWidth(g2, isMainlineA());
                     g2.draw(new Line2D.Double(pointA, midpoint(pointA, pointB)));
-                    if (type == RH_XOVER) {
+                    if (type == LayoutEditor.RH_XOVER) {
                         w = layoutEditor.setTrackStrokeWidth(g2, false);
                         if (b != null) {
                             g2.setColor(b.getBlockTrackColor());
@@ -3560,7 +3628,7 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                     w = layoutEditor.setTrackStrokeWidth(g2, isMainlineB());
                     g2.draw(new Line2D.Double(pointB, midpoint(pointA, pointB)));
-                    if (type == LH_XOVER) {
+                    if (type == LayoutEditor.LH_XOVER) {
                         w = layoutEditor.setTrackStrokeWidth(g2, false);
                         if (b != null) {
                             g2.setColor(b.getBlockTrackColor());
@@ -3575,7 +3643,7 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                     w = layoutEditor.setTrackStrokeWidth(g2, isMainlineC());
                     g2.draw(new Line2D.Double(pointC, midpoint(pointC, pointD)));
-                    if (type == RH_XOVER) {
+                    if (type == LayoutEditor.RH_XOVER) {
                         w = layoutEditor.setTrackStrokeWidth(g2, false);
                         if (b != null) {
                             g2.setColor(b.getBlockTrackColor());
@@ -3590,7 +3658,7 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                     w = layoutEditor.setTrackStrokeWidth(g2, isMainlineD());
                     g2.draw(new Line2D.Double(pointD, midpoint(pointC, pointD)));
-                    if (type == LH_XOVER) {
+                    if (type == LayoutEditor.LH_XOVER) {
                         w = layoutEditor.setTrackStrokeWidth(g2, false);
                         if (b != null) {
                             g2.setColor(b.getBlockTrackColor());
@@ -3600,11 +3668,11 @@ public class LayoutTurnout extends LayoutTrack {
                 } else if (state == Turnout.THROWN) {
                     // diverting (crossed) path
                     float w = layoutEditor.setTrackStrokeWidth(g2, isMainlineA());
-                    if (type == RH_XOVER) {
+                    if (type == LayoutEditor.RH_XOVER) {
                         g2.draw(new Line2D.Double(pointA, midpoint(pointA, pointB)));
                         //w = layoutEditor.setTrackStrokeWidth(g2, false);
                         g2.draw(new Line2D.Double(midpoint(pointA, pointB), center));
-                    } else if (type == LH_XOVER) {
+                    } else if (type == LayoutEditor.LH_XOVER) {
                         g2.draw(new Line2D.Double(pointA, fourth(pointA, pointB)));
                     }
                     b = getLayoutBlockB();
@@ -3614,11 +3682,11 @@ public class LayoutTurnout extends LayoutTrack {
                         g2.setColor(defaultTrackColor);
                     }
                     w = layoutEditor.setTrackStrokeWidth(g2, isMainlineB());
-                    if (type == LH_XOVER) {
+                    if (type == LayoutEditor.LH_XOVER) {
                         g2.draw(new Line2D.Double(pointB, midpoint(pointB, pointA)));
                         //w = layoutEditor.setTrackStrokeWidth(g2, false);
                         g2.draw(new Line2D.Double(midpoint(pointA, pointB), center));
-                    } else if (type == RH_XOVER) {
+                    } else if (type == LayoutEditor.RH_XOVER) {
                         g2.draw(new Line2D.Double(pointB, fourth(pointB, pointA)));
                     }
                     b = getLayoutBlockC();
@@ -3628,11 +3696,11 @@ public class LayoutTurnout extends LayoutTrack {
                         g2.setColor(defaultTrackColor);
                     }
                     w = layoutEditor.setTrackStrokeWidth(g2, isMainlineC());
-                    if (type == RH_XOVER) {
+                    if (type == LayoutEditor.RH_XOVER) {
                         g2.draw(new Line2D.Double(pointC, midpoint(pointC, pointD)));
                         //w = layoutEditor.setTrackStrokeWidth(g2, false);
                         g2.draw(new Line2D.Double(midpoint(pointC, pointD), center));
-                    } else if (type == LH_XOVER) {
+                    } else if (type == LayoutEditor.LH_XOVER) {
                         g2.draw(new Line2D.Double(pointC, fourth(pointC, pointD)));
                     }
                     b = getLayoutBlockD();
@@ -3642,21 +3710,21 @@ public class LayoutTurnout extends LayoutTrack {
                         g2.setColor(defaultTrackColor);
                     }
                     w = layoutEditor.setTrackStrokeWidth(g2, isMainlineD());
-                    if (type == LH_XOVER) {
+                    if (type == LayoutEditor.LH_XOVER) {
                         g2.draw(new Line2D.Double(pointD, midpoint(pointD, pointC)));
                         //w = layoutEditor.setTrackStrokeWidth(g2, false);
                         g2.draw(new Line2D.Double(midpoint(pointC, pointD), center));
-                    } else if (type == RH_XOVER) {
+                    } else if (type == LayoutEditor.RH_XOVER) {
                         g2.draw(new Line2D.Double(pointD, fourth(pointD, pointC)));
                     }
                 } else {
                     // unknown or inconsistent
                     float w = layoutEditor.setTrackStrokeWidth(g2, isMainlineA());
-                    if (type == RH_XOVER) {
+                    if (type == LayoutEditor.RH_XOVER) {
                         g2.draw(new Line2D.Double(pointA, midpoint(pointA, pointB)));
                         //w = layoutEditor.setTrackStrokeWidth(g2, false);
                         g2.draw(new Line2D.Double(center, third(center, midpoint(pointA, pointB))));
-                    } else if (type == LH_XOVER) {
+                    } else if (type == LayoutEditor.LH_XOVER) {
                         g2.draw(new Line2D.Double(pointA, fourth(pointA, pointB)));
                     }
                     b = getLayoutBlockB();
@@ -3666,11 +3734,11 @@ public class LayoutTurnout extends LayoutTrack {
                         g2.setColor(defaultTrackColor);
                     }
                     w = layoutEditor.setTrackStrokeWidth(g2, isMainlineB());
-                    if (type == LH_XOVER) {
+                    if (type == LayoutEditor.LH_XOVER) {
                         g2.draw(new Line2D.Double(pointB, midpoint(pointB, pointA)));
                         //w = layoutEditor.setTrackStrokeWidth(g2, false);
                         g2.draw(new Line2D.Double(center, third(center, midpoint(pointA, pointB))));
-                    } else if (type == RH_XOVER) {
+                    } else if (type == LayoutEditor.RH_XOVER) {
                         g2.draw(new Line2D.Double(pointB, fourth(pointB, pointA)));
                     }
                     b = getLayoutBlockC();
@@ -3680,11 +3748,11 @@ public class LayoutTurnout extends LayoutTrack {
                         g2.setColor(defaultTrackColor);
                     }
                     w = layoutEditor.setTrackStrokeWidth(g2, isMainlineC());
-                    if (type == RH_XOVER) {
+                    if (type == LayoutEditor.RH_XOVER) {
                         g2.draw(new Line2D.Double(pointC, midpoint(pointC, pointD)));
                         //w = layoutEditor.setTrackStrokeWidth(g2, false);
                         g2.draw(new Line2D.Double(center, third(center, midpoint(pointC, pointD))));
-                    } else if (type == LH_XOVER) {
+                    } else if (type == LayoutEditor.LH_XOVER) {
                         g2.draw(new Line2D.Double(pointC, fourth(pointC, pointD)));
                     }
                     b = getLayoutBlockD();
@@ -3694,11 +3762,11 @@ public class LayoutTurnout extends LayoutTrack {
                         g2.setColor(defaultTrackColor);
                     }
                     w = layoutEditor.setTrackStrokeWidth(g2, isMainlineD());
-                    if (type == LH_XOVER) {
+                    if (type == LayoutEditor.LH_XOVER) {
                         g2.draw(new Line2D.Double(pointD, midpoint(pointC, pointD)));
                         //w = layoutEditor.setTrackStrokeWidth(g2, false);
                         g2.draw(new Line2D.Double(center, third(center, midpoint(pointC, pointD))));
-                    } else if (type == RH_XOVER) {
+                    } else if (type == LayoutEditor.RH_XOVER) {
                         g2.draw(new Line2D.Double(pointD, fourth(pointD, pointC)));
                     }
                 }
@@ -3792,7 +3860,7 @@ public class LayoutTurnout extends LayoutTrack {
         drawTurnoutCircle(g2);
 
         Point2D pt = getCoordsA();
-        if (type >= DOUBLE_XOVER && type <= LH_XOVER) {
+        if (type >= LayoutEditor.DOUBLE_XOVER && type <= LayoutEditor.LH_XOVER) {
             if (getConnectA() == null) {
                 g2.setColor(Color.magenta);
             } else {
@@ -3822,7 +3890,9 @@ public class LayoutTurnout extends LayoutTrack {
             g2.setColor(Color.green);
         }
         g2.draw(LayoutEditor.controlPointRectAt(pt));
-        if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
+        if ((type == LayoutEditor.DOUBLE_XOVER)
+                || (type == LayoutEditor.RH_XOVER)
+                || (type == LayoutEditor.LH_XOVER)) {
             pt = getCoordsD();
             if (getConnectD() == null) {
                 g2.setColor(Color.red);

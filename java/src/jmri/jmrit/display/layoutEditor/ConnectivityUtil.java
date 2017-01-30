@@ -109,106 +109,106 @@ public class ConnectivityUtil {
                     if (((TrackSegment) ls.getConnectA()).getLayoutBlock() == lb) {
                         if (((TrackSegment) ls.getConnectC()).getLayoutBlock() == nlb
                                 || ((TrackSegment) ls.getConnectC()).getLayoutBlock() == plb) {
-                            companion.add(Integer.valueOf(LayoutSlip.STATE_AC));
+                            companion.add(Integer.valueOf(LayoutEditor.STATE_AC));
                         } else if (((TrackSegment) ls.getConnectD()).getLayoutBlock() == nlb
                                 || ((TrackSegment) ls.getConnectD()).getLayoutBlock() == plb) {
-                            companion.add(Integer.valueOf(LayoutSlip.STATE_AD));
+                            companion.add(Integer.valueOf(LayoutEditor.STATE_AD));
                         } else if (((TrackSegment) ls.getConnectC()).getLayoutBlock() == lb) {
-                            companion.add(Integer.valueOf(LayoutSlip.STATE_AC));
+                            companion.add(Integer.valueOf(LayoutEditor.STATE_AC));
                         } else if (((TrackSegment) ls.getConnectD()).getLayoutBlock() == lb) {
-                            companion.add(Integer.valueOf(LayoutSlip.STATE_AD));
+                            companion.add(Integer.valueOf(LayoutEditor.STATE_AD));
                         } else {
                             if (!suppress) {
                                 log.error("Cannot determine slip setting " + ls.getName());
                             }
-                            companion.add(Integer.valueOf(LayoutSlip.UNKNOWN));
+                            companion.add(Integer.valueOf(LayoutEditor.UNKNOWN));
                         }
                     } else if (((TrackSegment) ls.getConnectB()).getLayoutBlock() == lb) {
-                        if (tTyp == LayoutSlip.DOUBLE_SLIP) {
+                        if (tTyp == LayoutEditor.DOUBLE_SLIP) {
                             if (((TrackSegment) ls.getConnectD()).getLayoutBlock() == nlb
                                     || ((TrackSegment) ls.getConnectD()).getLayoutBlock() == plb) {
-                                companion.add(Integer.valueOf(LayoutSlip.STATE_BD));
+                                companion.add(Integer.valueOf(LayoutEditor.STATE_BD));
                             } else if (((TrackSegment) ls.getConnectC()).getLayoutBlock() == nlb
                                     || ((TrackSegment) ls.getConnectC()).getLayoutBlock() == plb) {
-                                companion.add(Integer.valueOf(LayoutSlip.STATE_BC));
+                                companion.add(Integer.valueOf(LayoutEditor.STATE_BC));
                             } else if (((TrackSegment) ls.getConnectD()).getLayoutBlock() == lb) {
-                                companion.add(Integer.valueOf(LayoutSlip.STATE_BD));
+                                companion.add(Integer.valueOf(LayoutEditor.STATE_BD));
                             } else if (((TrackSegment) ls.getConnectC()).getLayoutBlock() == lb) {
-                                companion.add(Integer.valueOf(LayoutSlip.STATE_BC));
+                                companion.add(Integer.valueOf(LayoutEditor.STATE_BC));
                             } else {
                                 if (!suppress) {
                                     log.error("Cannot determine slip setting " + ls.getName());
                                 }
-                                companion.add(Integer.valueOf(LayoutSlip.UNKNOWN));
+                                companion.add(Integer.valueOf(LayoutEditor.UNKNOWN));
                             }
 
                         } else {
                             if (((TrackSegment) ls.getConnectD()).getLayoutBlock() == nlb
                                     || ((TrackSegment) ls.getConnectD()).getLayoutBlock() == plb) {
-                                companion.add(Integer.valueOf(LayoutSlip.STATE_BD));
+                                companion.add(Integer.valueOf(LayoutEditor.STATE_BD));
                             } else if (((TrackSegment) ls.getConnectD()).getLayoutBlock() == lb) {
-                                companion.add(Integer.valueOf(LayoutSlip.STATE_BD));
+                                companion.add(Integer.valueOf(LayoutEditor.STATE_BD));
                             } else {
                                 if (!suppress) {
                                     log.error("Cannot determine slip setting " + ls.getName());
                                 }
-                                companion.add(Integer.valueOf(LayoutSlip.UNKNOWN));
+                                companion.add(Integer.valueOf(LayoutEditor.UNKNOWN));
                             }
                         }
                     } else if (((TrackSegment) ls.getConnectC()).getLayoutBlock() == lb) {
-                        if (tTyp == LayoutSlip.DOUBLE_SLIP) {
+                        if (tTyp == LayoutEditor.DOUBLE_SLIP) {
                             if (((TrackSegment) ls.getConnectA()).getLayoutBlock() == nlb
                                     || ((TrackSegment) ls.getConnectA()).getLayoutBlock() == plb) {
-                                companion.add(Integer.valueOf(LayoutSlip.STATE_AC));
+                                companion.add(Integer.valueOf(LayoutEditor.STATE_AC));
                             } else if (((TrackSegment) ls.getConnectB()).getLayoutBlock() == nlb
                                     || ((TrackSegment) ls.getConnectB()).getLayoutBlock() == plb) {
-                                companion.add(Integer.valueOf(LayoutSlip.STATE_BC));
+                                companion.add(Integer.valueOf(LayoutEditor.STATE_BC));
                             } else if (((TrackSegment) ls.getConnectA()).getLayoutBlock() == lb) {
-                                companion.add(Integer.valueOf(LayoutSlip.STATE_AC));
+                                companion.add(Integer.valueOf(LayoutEditor.STATE_AC));
                             } else if (((TrackSegment) ls.getConnectB()).getLayoutBlock() == lb) {
-                                companion.add(Integer.valueOf(LayoutSlip.STATE_BC));
+                                companion.add(Integer.valueOf(LayoutEditor.STATE_BC));
                             } else {
                                 if (!suppress) {
                                     log.error("Cannot determine slip setting " + ls.getName());
                                 }
-                                companion.add(Integer.valueOf(LayoutSlip.UNKNOWN));
+                                companion.add(Integer.valueOf(LayoutEditor.UNKNOWN));
                             }
 
                         } else {
                             if (((TrackSegment) ls.getConnectA()).getLayoutBlock() == nlb
                                     || ((TrackSegment) ls.getConnectA()).getLayoutBlock() == plb) {
-                                companion.add(Integer.valueOf(LayoutSlip.STATE_AC));
+                                companion.add(Integer.valueOf(LayoutEditor.STATE_AC));
                             } else if (((TrackSegment) ls.getConnectA()).getLayoutBlock() == lb) {
-                                companion.add(Integer.valueOf(LayoutSlip.STATE_AC));
+                                companion.add(Integer.valueOf(LayoutEditor.STATE_AC));
                             } else {
                                 if (!suppress) {
                                     log.error("Cannot determine slip setting " + ls.getName());
                                 }
-                                companion.add(Integer.valueOf(LayoutSlip.UNKNOWN));
+                                companion.add(Integer.valueOf(LayoutEditor.UNKNOWN));
                             }
                         }
                     } else if (((TrackSegment) ls.getConnectD()).getLayoutBlock() == lb) {
                         if (((TrackSegment) ls.getConnectA()).getLayoutBlock() == nlb
                                 || ((TrackSegment) ls.getConnectA()).getLayoutBlock() == plb) {
-                            companion.add(Integer.valueOf(LayoutSlip.STATE_AD));
+                            companion.add(Integer.valueOf(LayoutEditor.STATE_AD));
                         } else if (((TrackSegment) ls.getConnectB()).getLayoutBlock() == nlb
                                 || ((TrackSegment) ls.getConnectB()).getLayoutBlock() == plb) {
-                            companion.add(Integer.valueOf(LayoutSlip.STATE_BD));
+                            companion.add(Integer.valueOf(LayoutEditor.STATE_BD));
                         } else if (((TrackSegment) ls.getConnectA()).getLayoutBlock() == lb) {
-                            companion.add(Integer.valueOf(LayoutSlip.STATE_AD));
+                            companion.add(Integer.valueOf(LayoutEditor.STATE_AD));
                         } else if (((TrackSegment) ls.getConnectB()).getLayoutBlock() == lb) {
-                            companion.add(Integer.valueOf(LayoutSlip.STATE_AD));
+                            companion.add(Integer.valueOf(LayoutEditor.STATE_AD));
                         } else {
                             if (!suppress) {
                                 log.error("Cannot determine slip setting " + ls.getName());
                             }
-                            companion.add(Integer.valueOf(LayoutSlip.UNKNOWN));
+                            companion.add(Integer.valueOf(LayoutEditor.UNKNOWN));
                         }
                     } else {
                         if (!suppress) {
                             log.error("Cannot determine turnout setting for " + ls.getName());
                         }
-                        companion.add(Integer.valueOf(LayoutSlip.UNKNOWN));
+                        companion.add(Integer.valueOf(LayoutEditor.UNKNOWN));
                     }
                     break;
 
@@ -216,9 +216,9 @@ public class ConnectivityUtil {
                     //list.add(ltx);
                     //int tTyp = ltx.getTurnoutType();
                     switch (tTyp) {
-                        case LayoutTurnout.RH_TURNOUT:
-                        case LayoutTurnout.LH_TURNOUT:
-                        case LayoutTurnout.WYE_TURNOUT:
+                        case LayoutEditor.RH_TURNOUT:
+                        case LayoutEditor.LH_TURNOUT:
+                        case LayoutEditor.WYE_TURNOUT:
                             if (((TrackSegment) ltx.getConnectA()).getLayoutBlock() == lb) {
                                 if ((((TrackSegment) ltx.getConnectC()).getLayoutBlock() == nlb)
                                         || (((TrackSegment) ltx.getConnectC()).getLayoutBlock() == plb)) {
@@ -250,11 +250,11 @@ public class ConnectivityUtil {
                                 companion.add(Integer.valueOf(Turnout.CLOSED));
                             }
                             break;
-                        case LayoutTurnout.RH_XOVER:
-                        case LayoutTurnout.LH_XOVER:
-                        case LayoutTurnout.DOUBLE_XOVER:
+                        case LayoutEditor.RH_XOVER:
+                        case LayoutEditor.LH_XOVER:
+                        case LayoutEditor.DOUBLE_XOVER:
                             if (ltx.getLayoutBlock() == lb) {
-                                if ((tTyp != LayoutTurnout.LH_XOVER) && ((ltx.getLayoutBlockC() == nlb)
+                                if ((tTyp != LayoutEditor.LH_XOVER) && ((ltx.getLayoutBlockC() == nlb)
                                         || (ltx.getLayoutBlockC() == plb))) {
                                     companion.add(Integer.valueOf(Turnout.THROWN));
                                 } else if ((ltx.getLayoutBlockB() == nlb)
@@ -262,7 +262,7 @@ public class ConnectivityUtil {
                                     companion.add(Integer.valueOf(Turnout.CLOSED));
                                 } else if (ltx.getLayoutBlockB() == lb) {
                                     companion.add(Integer.valueOf(Turnout.CLOSED));
-                                } else if ((tTyp != LayoutTurnout.LH_XOVER)
+                                } else if ((tTyp != LayoutEditor.LH_XOVER)
                                         && (ltx.getLayoutBlockC() == lb)) {
                                     companion.add(Integer.valueOf(Turnout.THROWN));
                                 } else {
@@ -274,7 +274,7 @@ public class ConnectivityUtil {
                             } else if (ltx.getLayoutBlockB() == lb) {
                                 if ((ltx.getLayoutBlock() == nlb) || (ltx.getLayoutBlock() == plb)) {
                                     companion.add(Integer.valueOf(Turnout.CLOSED));
-                                } else if ((tTyp != LayoutTurnout.RH_XOVER) && ((ltx.getLayoutBlockD() == nlb)
+                                } else if ((tTyp != LayoutEditor.RH_XOVER) && ((ltx.getLayoutBlockD() == nlb)
                                         || (ltx.getLayoutBlockD() == plb) || (ltx.getLayoutBlockD() == lb))) {
                                     companion.add(Integer.valueOf(Turnout.THROWN));
                                 } else {
@@ -284,13 +284,13 @@ public class ConnectivityUtil {
                                     companion.add(Integer.valueOf(Turnout.CLOSED));
                                 }
                             } else if (ltx.getLayoutBlockC() == lb) {
-                                if ((tTyp != LayoutTurnout.LH_XOVER) && ((ltx.getLayoutBlock() == nlb)
+                                if ((tTyp != LayoutEditor.LH_XOVER) && ((ltx.getLayoutBlock() == nlb)
                                         || (ltx.getLayoutBlock() == plb))) {
                                     companion.add(Integer.valueOf(Turnout.THROWN));
                                 } else if ((ltx.getLayoutBlockD() == nlb)
                                         || (ltx.getLayoutBlockD() == plb) || (ltx.getLayoutBlockD() == lb)) {
                                     companion.add(Integer.valueOf(Turnout.CLOSED));
-                                } else if ((tTyp != LayoutTurnout.LH_XOVER) && (ltx.getLayoutBlockD() == lb)) {
+                                } else if ((tTyp != LayoutEditor.LH_XOVER) && (ltx.getLayoutBlockD() == lb)) {
                                     companion.add(Integer.valueOf(Turnout.THROWN));
                                 } else {
                                     if (!suppress) {
@@ -301,7 +301,7 @@ public class ConnectivityUtil {
                             } else if (ltx.getLayoutBlockD() == lb) {
                                 if ((ltx.getLayoutBlockC() == nlb) || (ltx.getLayoutBlockC() == plb)) {
                                     companion.add(Integer.valueOf(Turnout.CLOSED));
-                                } else if ((tTyp != LayoutTurnout.RH_XOVER) && ((ltx.getLayoutBlockB() == nlb)
+                                } else if ((tTyp != LayoutEditor.RH_XOVER) && ((ltx.getLayoutBlockB() == nlb)
                                         || (ltx.getLayoutBlockB() == plb))) {
                                     companion.add(Integer.valueOf(Turnout.THROWN));
                                 } else {
@@ -497,8 +497,8 @@ public class ConnectivityUtil {
                 LayoutTurnout lt = (LayoutTurnout) cObject;
                 int tType = lt.getTurnoutType();
                 // is this turnout a crossover turnout at least partly within this block?
-                if ((tType == LayoutTurnout.DOUBLE_XOVER) || (tType == LayoutTurnout.RH_XOVER)
-                        || (tType == LayoutTurnout.LH_XOVER)) {
+                if ((tType == LayoutEditor.DOUBLE_XOVER) || (tType == LayoutEditor.RH_XOVER)
+                        || (tType == LayoutEditor.LH_XOVER)) {
                     // reached a crossover turnout
                     switch (cType) {
                         case LayoutTrack.TURNOUT_A:
@@ -510,7 +510,7 @@ public class ConnectivityUtil {
                                 list.add((LayoutTurnout) cObject);
                                 companion.add(Integer.valueOf(Turnout.CLOSED));
                                 tr = null;
-                            } else if ((lt.getLayoutBlockC() == nlb) && (tType != LayoutTurnout.LH_XOVER)) {
+                            } else if ((lt.getLayoutBlockC() == nlb) && (tType != LayoutEditor.LH_XOVER)) {
                                 // exits Block at C, either Double or RH
                                 list.add((LayoutTurnout) cObject);
                                 companion.add(Integer.valueOf(Turnout.THROWN));
@@ -522,7 +522,7 @@ public class ConnectivityUtil {
                                 tr = (TrackSegment) lt.getConnectB();
                                 prevConnectType = LayoutTrack.TURNOUT_B;
                                 prevConnectObject = cObject;
-                            } else if ((lt.getLayoutBlockC() == lb) && (tType != LayoutTurnout.LH_XOVER)) {
+                            } else if ((lt.getLayoutBlockC() == lb) && (tType != LayoutEditor.LH_XOVER)) {
                                 // block continues at C, either Double or RH
                                 list.add((LayoutTurnout) cObject);
                                 companion.add(Integer.valueOf(Turnout.THROWN));
@@ -549,7 +549,7 @@ public class ConnectivityUtil {
                                 list.add((LayoutTurnout) cObject);
                                 companion.add(Integer.valueOf(Turnout.CLOSED));
                                 tr = null;
-                            } else if ((lt.getLayoutBlockD() == nlb) && (tType != LayoutTurnout.RH_XOVER)) {
+                            } else if ((lt.getLayoutBlockD() == nlb) && (tType != LayoutEditor.RH_XOVER)) {
                                 // exits Block at D, either Double or LH
                                 list.add((LayoutTurnout) cObject);
                                 companion.add(Integer.valueOf(Turnout.THROWN));
@@ -561,7 +561,7 @@ public class ConnectivityUtil {
                                 tr = (TrackSegment) lt.getConnectA();
                                 prevConnectType = LayoutTrack.TURNOUT_A;
                                 prevConnectObject = cObject;
-                            } else if ((lt.getLayoutBlockD() == lb) && (tType != LayoutTurnout.RH_XOVER)) {
+                            } else if ((lt.getLayoutBlockD() == lb) && (tType != LayoutEditor.RH_XOVER)) {
                                 // block continues at D, either Double or LH
                                 list.add((LayoutTurnout) cObject);
                                 companion.add(Integer.valueOf(Turnout.THROWN));
@@ -588,7 +588,7 @@ public class ConnectivityUtil {
                                 list.add((LayoutTurnout) cObject);
                                 companion.add(Integer.valueOf(Turnout.CLOSED));
                                 tr = null;
-                            } else if ((lt.getLayoutBlock() == nlb) && (tType != LayoutTurnout.LH_XOVER)) {
+                            } else if ((lt.getLayoutBlock() == nlb) && (tType != LayoutEditor.LH_XOVER)) {
                                 // exits Block at A, either Double or RH
                                 list.add((LayoutTurnout) cObject);
                                 companion.add(Integer.valueOf(Turnout.THROWN));
@@ -600,7 +600,7 @@ public class ConnectivityUtil {
                                 tr = (TrackSegment) lt.getConnectD();
                                 prevConnectType = LayoutTrack.TURNOUT_D;
                                 prevConnectObject = cObject;
-                            } else if ((lt.getLayoutBlock() == lb) && (tType != LayoutTurnout.LH_XOVER)) {
+                            } else if ((lt.getLayoutBlock() == lb) && (tType != LayoutEditor.LH_XOVER)) {
                                 // block continues at A, either Double or RH
                                 list.add((LayoutTurnout) cObject);
                                 companion.add(Integer.valueOf(Turnout.THROWN));
@@ -627,7 +627,7 @@ public class ConnectivityUtil {
                                 list.add((LayoutTurnout) cObject);
                                 companion.add(Integer.valueOf(Turnout.CLOSED));
                                 tr = null;
-                            } else if ((lt.getLayoutBlockB() == nlb) && (tType != LayoutTurnout.RH_XOVER)) {
+                            } else if ((lt.getLayoutBlockB() == nlb) && (tType != LayoutEditor.RH_XOVER)) {
                                 // exits Block at B, either Double or LH
                                 list.add((LayoutTurnout) cObject);
                                 companion.add(Integer.valueOf(Turnout.THROWN));
@@ -639,7 +639,7 @@ public class ConnectivityUtil {
                                 tr = (TrackSegment) lt.getConnectC();
                                 prevConnectType = LayoutTrack.TURNOUT_C;
                                 prevConnectObject = cObject;
-                            } else if ((lt.getLayoutBlockB() == lb) && (tType != LayoutTurnout.RH_XOVER)) {
+                            } else if ((lt.getLayoutBlockB() == lb) && (tType != LayoutEditor.RH_XOVER)) {
                                 // block continues at B, either Double or LH
                                 list.add((LayoutTurnout) cObject);
                                 companion.add(Integer.valueOf(Turnout.THROWN));
@@ -658,8 +658,8 @@ public class ConnectivityUtil {
                             }
                             break;
                     }
-                } else if ((tType == LayoutTurnout.RH_TURNOUT) || (tType == LayoutTurnout.LH_TURNOUT)
-                        || (tType == LayoutTurnout.WYE_TURNOUT)) {
+                } else if ((tType == LayoutEditor.RH_TURNOUT) || (tType == LayoutEditor.LH_TURNOUT)
+                        || (tType == LayoutEditor.WYE_TURNOUT)) {
                     // reached RH. LH, or WYE turnout, is it in the current Block?
                     if (lt.getLayoutBlock() != lb) {
                         // turnout is outside of current block
@@ -825,9 +825,9 @@ public class ConnectivityUtil {
      * Returns 'false' if one or more of the required signals are missing.
      */
     public boolean layoutTurnoutHasRequiredSignals(LayoutTurnout t) {
-        if (t.getLinkType() == LayoutTurnout.NO_LINK) {
-            if ((t.getTurnoutType() == LayoutTurnout.RH_TURNOUT) || (t.getTurnoutType() == LayoutTurnout.LH_TURNOUT)
-                    || (t.getTurnoutType() == LayoutTurnout.WYE_TURNOUT)) {
+        if (t.getLinkType() == LayoutEditor.NO_LINK) {
+            if ((t.getTurnoutType() == LayoutEditor.RH_TURNOUT) || (t.getTurnoutType() == LayoutEditor.LH_TURNOUT)
+                    || (t.getTurnoutType() == LayoutEditor.WYE_TURNOUT)) {
                 if ((t.getSignalA1Name() != null) && (!t.getSignalA1Name().equals(""))
                         && (t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
                         && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))) {
@@ -835,7 +835,7 @@ public class ConnectivityUtil {
                 } else {
                     return false;
                 }
-            } else if (t.getTurnoutType() == LayoutTurnout.SINGLE_SLIP || t.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP) {
+            } else if (t.getTurnoutType() == LayoutEditor.SINGLE_SLIP || t.getTurnoutType() == LayoutEditor.DOUBLE_SLIP) {
                 if ((t.getSignalA1Name() != null) && (!t.getSignalA1Name().equals(""))
                         && (t.getSignalA2Name() != null) && (!t.getSignalA2Name().equals(""))
                         && (t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
@@ -843,10 +843,10 @@ public class ConnectivityUtil {
                         && (t.getSignalD1Name() != null) && (!t.getSignalD1Name().equals(""))
                         && (t.getSignalD2Name() != null) && (!t.getSignalD2Name().equals(""))) {
 
-                    if (t.getTurnoutType() == LayoutTurnout.SINGLE_SLIP) {
+                    if (t.getTurnoutType() == LayoutEditor.SINGLE_SLIP) {
                         return true;
                     }
-                    if (t.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP) {
+                    if (t.getTurnoutType() == LayoutEditor.DOUBLE_SLIP) {
                         if ((t.getSignalB2Name() != null) && (!t.getSignalB2Name().equals(""))
                                 && (t.getSignalC2Name() != null) && (!t.getSignalC2Name().equals(""))) {
                             return true;
@@ -864,21 +864,21 @@ public class ConnectivityUtil {
                     return false;
                 }
             }
-        } else if (t.getLinkType() == LayoutTurnout.FIRST_3_WAY) {
+        } else if (t.getLinkType() == LayoutEditor.FIRST_3_WAY) {
             if ((t.getSignalA1Name() != null) && (!t.getSignalA1Name().equals(""))
                     && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))) {
                 return true;
             } else {
                 return false;
             }
-        } else if (t.getLinkType() == LayoutTurnout.SECOND_3_WAY) {
+        } else if (t.getLinkType() == LayoutEditor.SECOND_3_WAY) {
             if ((t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
                     && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))) {
                 return true;
             } else {
                 return false;
             }
-        } else if (t.getLinkType() == LayoutTurnout.THROAT_TO_THROAT) {
+        } else if (t.getLinkType() == LayoutEditor.THROAT_TO_THROAT) {
             if ((t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
                     && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))) {
                 return true;
@@ -1374,9 +1374,9 @@ public class ConnectivityUtil {
                 }
                 break;
             case LayoutTrack.TURNOUT_A:
-                if ((((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.RH_TURNOUT)
-                        || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.LH_TURNOUT)
-                        || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.WYE_TURNOUT)) {
+                if ((((LayoutTurnout) cNode).getTurnoutType() == LayoutEditor.RH_TURNOUT)
+                        || (((LayoutTurnout) cNode).getTurnoutType() == LayoutEditor.LH_TURNOUT)
+                        || (((LayoutTurnout) cNode).getTurnoutType() == LayoutEditor.WYE_TURNOUT)) {
                     if ((((LayoutTurnout) cNode).getLinkedTurnoutName() == null)
                             || (((LayoutTurnout) cNode).getLinkedTurnoutName().equals(""))) {
                         // Standard turnout - node type A
@@ -1406,7 +1406,7 @@ public class ConnectivityUtil {
                     } else {
                         // linked turnout - node type A
                         LayoutTurnout lto = layoutEditor.getFinder().findLayoutTurnoutByName(((LayoutTurnout) cNode).getLinkedTurnoutName());
-                        if (((LayoutTurnout) cNode).getLinkType() == LayoutTurnout.THROAT_TO_THROAT) {
+                        if (((LayoutTurnout) cNode).getLinkType() == LayoutEditor.THROAT_TO_THROAT) {
                             if (cNodeState == 0) {
                                 if (lto.getContinuingSense() == Turnout.CLOSED) {
                                     tTrack = (TrackSegment) lto.getConnectB();
@@ -1428,7 +1428,7 @@ public class ConnectivityUtil {
                                 return null;
                             }
                             pObject = lto;
-                        } else if (((LayoutTurnout) cNode).getLinkType() == LayoutTurnout.FIRST_3_WAY) {
+                        } else if (((LayoutTurnout) cNode).getLinkType() == LayoutEditor.FIRST_3_WAY) {
                             if (cNodeState == 0) {
                                 if (lto.getContinuingSense() == Turnout.CLOSED) {
                                     tTrack = (TrackSegment) lto.getConnectB();
@@ -1461,16 +1461,16 @@ public class ConnectivityUtil {
                             }
                         }
                     }
-                } else if ((((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.RH_XOVER)
-                        || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.LH_XOVER)
-                        || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)) {
+                } else if ((((LayoutTurnout) cNode).getTurnoutType() == LayoutEditor.RH_XOVER)
+                        || (((LayoutTurnout) cNode).getTurnoutType() == LayoutEditor.LH_XOVER)
+                        || (((LayoutTurnout) cNode).getTurnoutType() == LayoutEditor.DOUBLE_XOVER)) {
                     // crossover turnout - node type A
                     if (cNodeState == 0) {
                         tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectB();
                         pType = LayoutTrack.TURNOUT_B;
                     } else if (cNodeState == 1) {
                         if ((cNodeType == LayoutTrack.TURNOUT_A)
-                                && (!(((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.LH_XOVER))) {
+                                && (!(((LayoutTurnout) cNode).getTurnoutType() == LayoutEditor.LH_XOVER))) {
                             tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectC();
                             pType = LayoutTrack.TURNOUT_C;
                         } else {
@@ -1485,20 +1485,20 @@ public class ConnectivityUtil {
                 break;
             case LayoutTrack.TURNOUT_B:
             case LayoutTrack.TURNOUT_C:
-                if ((((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.RH_TURNOUT)
-                        || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.LH_TURNOUT)
-                        || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.WYE_TURNOUT)) {
+                if ((((LayoutTurnout) cNode).getTurnoutType() == LayoutEditor.RH_TURNOUT)
+                        || (((LayoutTurnout) cNode).getTurnoutType() == LayoutEditor.LH_TURNOUT)
+                        || (((LayoutTurnout) cNode).getTurnoutType() == LayoutEditor.WYE_TURNOUT)) {
                     if ((((LayoutTurnout) cNode).getLinkedTurnoutName() == null)
                             || (((LayoutTurnout) cNode).getLinkedTurnoutName().equals(""))
-                            || (((LayoutTurnout) cNode).getLinkType() == LayoutTurnout.FIRST_3_WAY)) {
+                            || (((LayoutTurnout) cNode).getLinkType() == LayoutEditor.FIRST_3_WAY)) {
                         tTrack = (TrackSegment) (((LayoutTurnout) cNode).getConnectA());
                         pType = LayoutTrack.TURNOUT_A;
                     } else {
                         LayoutTurnout lto = layoutEditor.getFinder().findLayoutTurnoutByName(((LayoutTurnout) cNode).getLinkedTurnoutName());
-                        if (((LayoutTurnout) cNode).getLinkType() == LayoutTurnout.SECOND_3_WAY) {
+                        if (((LayoutTurnout) cNode).getLinkType() == LayoutEditor.SECOND_3_WAY) {
                             tTrack = (TrackSegment) (lto.getConnectA());
                             pType = LayoutTrack.TURNOUT_A;
-                        } else if (((LayoutTurnout) cNode).getLinkType() == LayoutTurnout.THROAT_TO_THROAT) {
+                        } else if (((LayoutTurnout) cNode).getLinkType() == LayoutEditor.THROAT_TO_THROAT) {
                             if (cNodeState == 0) {
                                 if (lto.getContinuingSense() == Turnout.CLOSED) {
                                     tTrack = (TrackSegment) lto.getConnectB();
@@ -1522,9 +1522,9 @@ public class ConnectivityUtil {
                         }
                         pObject = lto;
                     }
-                } else if ((((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.RH_XOVER)
-                        || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.LH_XOVER)
-                        || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)) {
+                } else if ((((LayoutTurnout) cNode).getTurnoutType() == LayoutEditor.RH_XOVER)
+                        || (((LayoutTurnout) cNode).getTurnoutType() == LayoutEditor.LH_XOVER)
+                        || (((LayoutTurnout) cNode).getTurnoutType() == LayoutEditor.DOUBLE_XOVER)) {
                     if (cNodeState == 0) {
                         if (cNodeType == LayoutTrack.TURNOUT_B) {
                             tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectA();
@@ -1535,11 +1535,11 @@ public class ConnectivityUtil {
                         }
                     } else if (cNodeState == 1) {
                         if ((cNodeType == LayoutTrack.TURNOUT_C)
-                                && (!(((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.LH_XOVER))) {
+                                && (!(((LayoutTurnout) cNode).getTurnoutType() == LayoutEditor.LH_XOVER))) {
                             tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectA();
                             pType = LayoutTrack.TURNOUT_A;
                         } else if ((cNodeType == LayoutTrack.TURNOUT_B)
-                                && (!(((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.RH_XOVER))) {
+                                && (!(((LayoutTurnout) cNode).getTurnoutType() == LayoutEditor.RH_XOVER))) {
                             tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectD();
                             pType = LayoutTrack.TURNOUT_D;
                         } else {
@@ -1553,14 +1553,14 @@ public class ConnectivityUtil {
                 }
                 break;
             case LayoutTrack.TURNOUT_D:
-                if ((((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.RH_XOVER)
-                        || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.LH_XOVER)
-                        || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)) {
+                if ((((LayoutTurnout) cNode).getTurnoutType() == LayoutEditor.RH_XOVER)
+                        || (((LayoutTurnout) cNode).getTurnoutType() == LayoutEditor.LH_XOVER)
+                        || (((LayoutTurnout) cNode).getTurnoutType() == LayoutEditor.DOUBLE_XOVER)) {
                     if (cNodeState == 0) {
                         tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectC();
                         pType = LayoutTrack.TURNOUT_C;
                     } else if (cNodeState == 1) {
-                        if (!(((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.RH_XOVER)) {
+                        if (!(((LayoutTurnout) cNode).getTurnoutType() == LayoutEditor.RH_XOVER)) {
                             tTrack = (TrackSegment) ((LayoutTurnout) cNode).getConnectB();
                             pType = LayoutTrack.TURNOUT_B;
                         } else {
@@ -1605,7 +1605,7 @@ public class ConnectivityUtil {
                 if (cNodeState == 0) {
                     tTrack = (TrackSegment) ((LayoutSlip) cNode).getConnectD();
                     pType = LayoutTrack.SLIP_D;
-                } else if (cNodeState == 1 && (((LayoutSlip) cNode).getTurnoutType() == LayoutTurnout.DOUBLE_SLIP)) {
+                } else if (cNodeState == 1 && (((LayoutSlip) cNode).getTurnoutType() == LayoutEditor.DOUBLE_SLIP)) {
                     tTrack = (TrackSegment) ((LayoutSlip) cNode).getConnectC();
                     pType = LayoutTrack.SLIP_C;
                 } else {
@@ -1617,7 +1617,7 @@ public class ConnectivityUtil {
                 if (cNodeState == 0) {
                     tTrack = (TrackSegment) ((LayoutSlip) cNode).getConnectA();
                     pType = LayoutTrack.SLIP_A;
-                } else if (cNodeState == 1 && (((LayoutSlip) cNode).getTurnoutType() == LayoutTurnout.DOUBLE_SLIP)) {
+                } else if (cNodeState == 1 && (((LayoutSlip) cNode).getTurnoutType() == LayoutEditor.DOUBLE_SLIP)) {
                     tTrack = (TrackSegment) ((LayoutSlip) cNode).getConnectB();
                     pType = LayoutTrack.SLIP_B;
                 } else {
@@ -1722,7 +1722,7 @@ public class ConnectivityUtil {
                 if ((tBlock != node.getTrackSegment().getLayoutBlock().getBlock())
                         && (tBlock != excludedBlock)) {
                     block = tBlock;
-                } else if (lt.getTurnoutType() != LayoutTurnout.LH_XOVER) {
+                } else if (lt.getTurnoutType() != LayoutEditor.LH_XOVER) {
                     tBlock = ((TrackSegment) lt.getConnectC()).getLayoutBlock().getBlock();
                     if ((tBlock != node.getTrackSegment().getLayoutBlock().getBlock())
                             && (tBlock != excludedBlock)) {
@@ -1736,8 +1736,8 @@ public class ConnectivityUtil {
                 if ((tBlock != node.getTrackSegment().getLayoutBlock().getBlock())
                         && (tBlock != excludedBlock)) {
                     block = tBlock;
-                } else if ((lt.getTurnoutType() == LayoutTurnout.LH_XOVER)
-                        || (lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)) {
+                } else if ((lt.getTurnoutType() == LayoutEditor.LH_XOVER)
+                        || (lt.getTurnoutType() == LayoutEditor.DOUBLE_XOVER)) {
                     tBlock = ((TrackSegment) lt.getConnectD()).getLayoutBlock().getBlock();
                     if ((tBlock != node.getTrackSegment().getLayoutBlock().getBlock())
                             && (tBlock != excludedBlock)) {
@@ -1747,15 +1747,15 @@ public class ConnectivityUtil {
                 break;
             case LayoutTrack.TURNOUT_C:
                 lt = (LayoutTurnout) node.getNode();
-                if (lt.getTurnoutType() != LayoutTurnout.LH_XOVER) {
+                if (lt.getTurnoutType() != LayoutEditor.LH_XOVER) {
                     tBlock = ((TrackSegment) lt.getConnectA()).getLayoutBlock().getBlock();
                     if ((tBlock != node.getTrackSegment().getLayoutBlock().getBlock())
                             && (tBlock != excludedBlock)) {
                         block = tBlock;
                     }
                 }
-                if ((block == null) && ((lt.getTurnoutType() == LayoutTurnout.LH_XOVER)
-                        || (lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER))) {
+                if ((block == null) && ((lt.getTurnoutType() == LayoutEditor.LH_XOVER)
+                        || (lt.getTurnoutType() == LayoutEditor.DOUBLE_XOVER))) {
                     tBlock = ((TrackSegment) lt.getConnectD()).getLayoutBlock().getBlock();
                     if ((tBlock != node.getTrackSegment().getLayoutBlock().getBlock())
                             && (tBlock != excludedBlock)) {
@@ -1765,8 +1765,8 @@ public class ConnectivityUtil {
                 break;
             case LayoutTrack.TURNOUT_D:
                 lt = (LayoutTurnout) node.getNode();
-                if ((lt.getTurnoutType() == LayoutTurnout.LH_XOVER)
-                        || (lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)) {
+                if ((lt.getTurnoutType() == LayoutEditor.LH_XOVER)
+                        || (lt.getTurnoutType() == LayoutEditor.DOUBLE_XOVER)) {
                     tBlock = ((TrackSegment) lt.getConnectB()).getLayoutBlock().getBlock();
                     if ((tBlock != node.getTrackSegment().getLayoutBlock().getBlock())
                             && (tBlock != excludedBlock)) {
@@ -1819,7 +1819,7 @@ public class ConnectivityUtil {
             case LayoutTrack.SLIP_B:
                 ls = (LayoutSlip) node.getNode();
                 tBlock = ((TrackSegment) ls.getConnectD()).getLayoutBlock().getBlock();
-                if (ls.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+                if (ls.getTurnoutType() == LayoutEditor.DOUBLE_SLIP) {
                     //Double slip
                     if ((tBlock != node.getTrackSegment().getLayoutBlock().getBlock())
                             && (tBlock != excludedBlock)) {
@@ -1840,7 +1840,7 @@ public class ConnectivityUtil {
             case LayoutTrack.SLIP_C:
                 ls = (LayoutSlip) node.getNode();
                 tBlock = ((TrackSegment) ls.getConnectA()).getLayoutBlock().getBlock();
-                if (ls.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
+                if (ls.getTurnoutType() == LayoutEditor.DOUBLE_SLIP) {
                     if ((tBlock != node.getTrackSegment().getLayoutBlock().getBlock())
                             && (tBlock != excludedBlock)) {
                         block = tBlock;
@@ -1887,7 +1887,7 @@ public class ConnectivityUtil {
         int setting = Turnout.THROWN;
         int tType = lt.getTurnoutType();
         if (lt instanceof LayoutSlip) {
-            setting = LayoutSlip.UNKNOWN;
+            setting = LayoutEditor.UNKNOWN;
             LayoutSlip ls = (LayoutSlip) lt;
             tType = ls.getTurnoutType();
             switch (cType) {
@@ -1895,34 +1895,34 @@ public class ConnectivityUtil {
                     if (nlb == ((TrackSegment) ls.getConnectC()).getLayoutBlock()) {
                         // exiting block at C
                         prevConnectType = LayoutTrack.SLIP_A;
-                        setting = LayoutSlip.STATE_AC;
+                        setting = LayoutEditor.STATE_AC;
                         tr = (TrackSegment) ls.getConnectC();
                     } else if (nlb == ((TrackSegment) ls.getConnectD()).getLayoutBlock()) {
                         // exiting block at D
                         prevConnectType = LayoutTrack.SLIP_A;
-                        setting = LayoutSlip.STATE_AD;
+                        setting = LayoutEditor.STATE_AD;
                         tr = (TrackSegment) ls.getConnectD();
                     } else if (lb == ((TrackSegment) ls.getConnectC()).getLayoutBlock()
                             && lb != ((TrackSegment) ls.getConnectD()).getLayoutBlock()) {
                         // block continues at C only
                         tr = (TrackSegment) lt.getConnectC();
-                        setting = LayoutSlip.STATE_AC;
+                        setting = LayoutEditor.STATE_AC;
                         prevConnectType = LayoutTrack.SLIP_A;
 
                     } else if (lb == ((TrackSegment) ls.getConnectD()).getLayoutBlock()
                             && lb != ((TrackSegment) ls.getConnectC()).getLayoutBlock()) {
                         // block continues at D only
-                        setting = LayoutSlip.STATE_AD;
+                        setting = LayoutEditor.STATE_AD;
                         tr = (TrackSegment) lt.getConnectD();
                         prevConnectType = LayoutTrack.SLIP_A;
                     } else {
                         if ((ls.getConnectC() != null) && trackSegmentLeadsTo((TrackSegment) ls.getConnectC(), ls)) {
                             prevConnectType = LayoutTrack.SLIP_C;
-                            setting = LayoutSlip.STATE_AC;
+                            setting = LayoutEditor.STATE_AC;
                             tr = (TrackSegment) lt.getConnectC();
                         } else if ((ls.getConnectD() != null) && trackSegmentLeadsTo((TrackSegment) ls.getConnectD(), ls)) {
                             prevConnectType = LayoutTrack.SLIP_D;
-                            setting = LayoutSlip.STATE_AD;
+                            setting = LayoutEditor.STATE_AD;
                             tr = (TrackSegment) lt.getConnectD();
                         } else {
                             if (!suppress) {
@@ -1936,37 +1936,37 @@ public class ConnectivityUtil {
                     if (nlb == ((TrackSegment) ls.getConnectD()).getLayoutBlock()) {
                         // exiting block at D
                         prevConnectType = LayoutTrack.SLIP_D;
-                        setting = LayoutSlip.STATE_BD;
+                        setting = LayoutEditor.STATE_BD;
                         tr = (TrackSegment) ls.getConnectD();
                     } else if (nlb == ((TrackSegment) ls.getConnectC()).getLayoutBlock()
-                            && tType == LayoutSlip.DOUBLE_SLIP) {
+                            && tType == LayoutEditor.DOUBLE_SLIP) {
                         // exiting block at C
                         prevConnectType = LayoutTrack.SLIP_C;
-                        setting = LayoutSlip.STATE_BC;
+                        setting = LayoutEditor.STATE_BC;
                         tr = (TrackSegment) ls.getConnectC();
                     } else {
-                        if (tType == LayoutSlip.DOUBLE_SLIP) {
+                        if (tType == LayoutEditor.DOUBLE_SLIP) {
                             if (lb == ((TrackSegment) ls.getConnectD()).getLayoutBlock()
                                     && lb != ((TrackSegment) ls.getConnectC()).getLayoutBlock()) {
                                 //Found continuing at D only
                                 tr = (TrackSegment) lt.getConnectD();
-                                setting = LayoutSlip.STATE_BD;
+                                setting = LayoutEditor.STATE_BD;
                                 prevConnectType = LayoutTrack.SLIP_D;
 
                             } else if (lb == ((TrackSegment) ls.getConnectC()).getLayoutBlock()
                                     && lb != ((TrackSegment) ls.getConnectD()).getLayoutBlock()) {
                                 //Found continuing at C only
                                 tr = (TrackSegment) lt.getConnectC();
-                                setting = LayoutSlip.STATE_BC;
+                                setting = LayoutEditor.STATE_BC;
                                 prevConnectType = LayoutTrack.SLIP_B;
                             } else {
                                 if ((ls.getConnectD() != null) && trackSegmentLeadsTo((TrackSegment) ls.getConnectD(), ls)) {
                                     prevConnectType = LayoutTrack.SLIP_D;
-                                    setting = LayoutSlip.STATE_BD;
+                                    setting = LayoutEditor.STATE_BD;
                                     tr = (TrackSegment) lt.getConnectD();
                                 } else if ((ls.getConnectC() != null) && trackSegmentLeadsTo((TrackSegment) ls.getConnectC(), ls)) {
                                     prevConnectType = LayoutTrack.SLIP_C;
-                                    setting = LayoutSlip.STATE_BC;
+                                    setting = LayoutEditor.STATE_BC;
                                     tr = (TrackSegment) lt.getConnectC();
                                 } else {
                                     if (!suppress) {
@@ -1980,7 +1980,7 @@ public class ConnectivityUtil {
                             if (lb == ((TrackSegment) ls.getConnectD()).getLayoutBlock()) {
                                 //Found continuing at D only
                                 tr = (TrackSegment) lt.getConnectD();
-                                setting = LayoutSlip.STATE_BD;
+                                setting = LayoutEditor.STATE_BD;
                                 prevConnectType = LayoutTrack.SLIP_D;
                             } else {
                                 tr = null;
@@ -1992,38 +1992,38 @@ public class ConnectivityUtil {
                     if (nlb == ((TrackSegment) ls.getConnectA()).getLayoutBlock()) {
                         // exiting block at A
                         prevConnectType = LayoutTrack.SLIP_A;
-                        setting = LayoutSlip.STATE_AC;
+                        setting = LayoutEditor.STATE_AC;
                         tr = (TrackSegment) ls.getConnectA();
                     } else if (nlb == ((TrackSegment) ls.getConnectB()).getLayoutBlock()
-                            && tType == LayoutSlip.DOUBLE_SLIP) {
+                            && tType == LayoutEditor.DOUBLE_SLIP) {
                         // exiting block at B
                         prevConnectType = LayoutTrack.SLIP_B;
-                        setting = LayoutSlip.STATE_BC;
+                        setting = LayoutEditor.STATE_BC;
                         tr = (TrackSegment) ls.getConnectB();
                     } else {
-                        if (tType == LayoutSlip.DOUBLE_SLIP) {
+                        if (tType == LayoutEditor.DOUBLE_SLIP) {
                             if (lb == ((TrackSegment) ls.getConnectA()).getLayoutBlock()
                                     && lb != ((TrackSegment) ls.getConnectB()).getLayoutBlock()) {
                                 //Found continuing at A only
                                 tr = (TrackSegment) lt.getConnectA();
-                                setting = LayoutSlip.STATE_AC;
+                                setting = LayoutEditor.STATE_AC;
                                 prevConnectType = LayoutTrack.SLIP_A;
 
                             } else if (lb == ((TrackSegment) ls.getConnectB()).getLayoutBlock()
                                     && lb != ((TrackSegment) ls.getConnectA()).getLayoutBlock()) {
                                 //Found continuing at B only
                                 tr = (TrackSegment) lt.getConnectB();
-                                setting = LayoutSlip.STATE_BC;
+                                setting = LayoutEditor.STATE_BC;
                                 prevConnectType = LayoutTrack.SLIP_B;
 
                             } else {
                                 if ((ls.getConnectA() != null) && trackSegmentLeadsTo((TrackSegment) ls.getConnectA(), ls)) {
                                     prevConnectType = LayoutTrack.SLIP_A;
-                                    setting = LayoutSlip.STATE_AC;
+                                    setting = LayoutEditor.STATE_AC;
                                     tr = (TrackSegment) lt.getConnectA();
                                 } else if ((ls.getConnectB() != null) && trackSegmentLeadsTo((TrackSegment) ls.getConnectB(), ls)) {
                                     prevConnectType = LayoutTrack.SLIP_B;
-                                    setting = LayoutSlip.STATE_BC;
+                                    setting = LayoutEditor.STATE_BC;
                                     tr = (TrackSegment) lt.getConnectB();
                                 } else {
                                     if (!suppress) {
@@ -2036,7 +2036,7 @@ public class ConnectivityUtil {
                             if (lb == ((TrackSegment) ls.getConnectA()).getLayoutBlock()) {
                                 //Found continuing at A only
                                 tr = (TrackSegment) lt.getConnectA();
-                                setting = LayoutSlip.STATE_AC;
+                                setting = LayoutEditor.STATE_AC;
                                 prevConnectType = LayoutTrack.SLIP_A;
                             } else {
                                 tr = null;
@@ -2048,34 +2048,34 @@ public class ConnectivityUtil {
                     if (nlb == ((TrackSegment) ls.getConnectB()).getLayoutBlock()) {
                         // exiting block at B
                         prevConnectType = LayoutTrack.SLIP_B;
-                        setting = LayoutSlip.STATE_BD;
+                        setting = LayoutEditor.STATE_BD;
                         tr = (TrackSegment) ls.getConnectB();
                     } else if (nlb == ((TrackSegment) ls.getConnectA()).getLayoutBlock()) {
                         // exiting block at B
                         prevConnectType = LayoutTrack.SLIP_A;
-                        setting = LayoutSlip.STATE_AD;
+                        setting = LayoutEditor.STATE_AD;
                         tr = (TrackSegment) ls.getConnectA();
                     } else if (lb == ((TrackSegment) ls.getConnectB()).getLayoutBlock()
                             && lb != ((TrackSegment) ls.getConnectA()).getLayoutBlock()) {
                         //Found continuing at B only
                         tr = (TrackSegment) lt.getConnectB();
-                        setting = LayoutSlip.STATE_BD;
+                        setting = LayoutEditor.STATE_BD;
                         prevConnectType = LayoutTrack.SLIP_B;
 
                     } else if (lb == ((TrackSegment) ls.getConnectA()).getLayoutBlock()
                             && lb != ((TrackSegment) ls.getConnectB()).getLayoutBlock()) {
                         //Found continuing at A only
-                        setting = LayoutSlip.STATE_AD;
+                        setting = LayoutEditor.STATE_AD;
                         tr = (TrackSegment) lt.getConnectA();
                         prevConnectType = LayoutTrack.SLIP_A;
                     } else {
                         if ((ls.getConnectA() != null) && trackSegmentLeadsTo((TrackSegment) ls.getConnectA(), ls)) {
                             prevConnectType = LayoutTrack.SLIP_A;
-                            setting = LayoutSlip.STATE_AD;
+                            setting = LayoutEditor.STATE_AD;
                             tr = (TrackSegment) lt.getConnectA();
                         } else if ((ls.getConnectB() != null) && trackSegmentLeadsTo((TrackSegment) ls.getConnectB(), ls)) {
                             prevConnectType = LayoutTrack.SLIP_B;
-                            setting = LayoutSlip.STATE_BD;
+                            setting = LayoutEditor.STATE_BD;
                             tr = (TrackSegment) lt.getConnectB();
                         } else {
                             if (!suppress) {
@@ -2101,7 +2101,7 @@ public class ConnectivityUtil {
             switch (cType) {
                 case LayoutTrack.TURNOUT_A:
                     // check for left-handed crossover
-                    if (tType == LayoutTurnout.LH_XOVER) {
+                    if (tType == LayoutEditor.LH_XOVER) {
                         // entering at a continuing track of a left-handed crossover
                         prevConnectType = LayoutTrack.TURNOUT_B;
                         setting = Turnout.CLOSED;
@@ -2150,7 +2150,7 @@ public class ConnectivityUtil {
                     }
                     break;
                 case LayoutTrack.TURNOUT_B:
-                    if ((tType == LayoutTurnout.LH_XOVER) || (tType == LayoutTurnout.DOUBLE_XOVER)) {
+                    if ((tType == LayoutEditor.LH_XOVER) || (tType == LayoutEditor.DOUBLE_XOVER)) {
                         // entering at a throat of a double crossover or a left-handed crossover
                         if ((nlb == lt.getLayoutBlock()) || ((lt.getConnectA() != null)
                                 && (nlb == ((TrackSegment) lt.getConnectA()).getLayoutBlock()))) {
@@ -2201,7 +2201,7 @@ public class ConnectivityUtil {
                     }
                     break;
                 case LayoutTrack.TURNOUT_C:
-                    if ((tType == LayoutTurnout.RH_XOVER) || (tType == LayoutTurnout.DOUBLE_XOVER)) {
+                    if ((tType == LayoutEditor.RH_XOVER) || (tType == LayoutEditor.DOUBLE_XOVER)) {
                         // entering at a throat of a double crossover or a right-handed crossover
                         if ((nlb == lt.getLayoutBlockD()) || ((lt.getConnectD() != null)
                                 && (nlb == ((TrackSegment) lt.getConnectD()).getLayoutBlock()))) {
@@ -2244,7 +2244,7 @@ public class ConnectivityUtil {
                                 tr = null;
                             }
                         }
-                    } else if (tType == LayoutTurnout.LH_XOVER) {
+                    } else if (tType == LayoutEditor.LH_XOVER) {
                         // entering at continuing track, must exit at throat
                         prevConnectType = LayoutTrack.TURNOUT_D;
                         tr = (TrackSegment) lt.getConnectD();
@@ -2256,7 +2256,7 @@ public class ConnectivityUtil {
                     }
                     break;
                 case LayoutTrack.TURNOUT_D:
-                    if ((tType == LayoutTurnout.LH_XOVER) || (tType == LayoutTurnout.DOUBLE_XOVER)) {
+                    if ((tType == LayoutEditor.LH_XOVER) || (tType == LayoutEditor.DOUBLE_XOVER)) {
                         // entering at a throat of a double crossover or a left-handed crossover
                         if ((nlb == lt.getLayoutBlockC()) || ((lt.getConnectC() != null)
                                 && (nlb == ((TrackSegment) lt.getConnectC()).getLayoutBlock()))) {
@@ -2299,7 +2299,7 @@ public class ConnectivityUtil {
                                 tr = null;
                             }
                         }
-                    } else if (tType == LayoutTurnout.RH_XOVER) {
+                    } else if (tType == LayoutEditor.RH_XOVER) {
                         // entering at through track of a right-handed crossover, must exit at throat
                         prevConnectType = LayoutTrack.TURNOUT_C;
                         tr = (TrackSegment) lt.getConnectC();
@@ -2459,8 +2459,8 @@ public class ConnectivityUtil {
                     int tType = lt.getTurnoutType();
 
                     // RH, LH or DOUBLE _XOVER
-                    if ((tType == LayoutTurnout.DOUBLE_XOVER) || (tType == LayoutTurnout.RH_XOVER)
-                            || (tType == LayoutTurnout.LH_XOVER)) {
+                    if ((tType == LayoutEditor.DOUBLE_XOVER) || (tType == LayoutEditor.RH_XOVER)
+                            || (tType == LayoutEditor.LH_XOVER)) {
                         // reached a crossover turnout
                         switch (conType) {
                             case LayoutTrack.TURNOUT_A:
@@ -2470,16 +2470,16 @@ public class ConnectivityUtil {
                                     } else {
                                         curTS = null;
                                     }
-                                } else if ((lt.getLayoutBlockB() == nlb) || ((tType != LayoutTurnout.LH_XOVER)
+                                } else if ((lt.getLayoutBlockB() == nlb) || ((tType != LayoutEditor.LH_XOVER)
                                         && (lt.getLayoutBlockC() == nlb))) {
                                     return true;
                                 } else if (lt.getLayoutBlockB() == lb) {
                                     curTS = (TrackSegment) lt.getConnectB();
-                                    if ((tType != LayoutTurnout.LH_XOVER) && (lt.getLayoutBlockC() == lb)) {
+                                    if ((tType != LayoutEditor.LH_XOVER) && (lt.getLayoutBlockC() == lb)) {
                                         posTS.add((TrackSegment) lt.getConnectC());
                                         posOB.add(conObj);
                                     }
-                                } else if ((tType != LayoutTurnout.LH_XOVER) && (lt.getLayoutBlockC() == lb)) {
+                                } else if ((tType != LayoutEditor.LH_XOVER) && (lt.getLayoutBlockC() == lb)) {
                                     curTS = (TrackSegment) lt.getConnectC();
                                 } else {
                                     curTS = null;
@@ -2492,16 +2492,16 @@ public class ConnectivityUtil {
                                     } else {
                                         curTS = null;
                                     }
-                                } else if ((lt.getLayoutBlock() == nlb) || ((tType != LayoutTurnout.RH_XOVER)
+                                } else if ((lt.getLayoutBlock() == nlb) || ((tType != LayoutEditor.RH_XOVER)
                                         && (lt.getLayoutBlockD() == nlb))) {
                                     return true;
                                 } else if (lt.getLayoutBlock() == lb) {
                                     curTS = (TrackSegment) lt.getConnectA();
-                                    if ((tType != LayoutTurnout.RH_XOVER) && (lt.getLayoutBlockD() == lb)) {
+                                    if ((tType != LayoutEditor.RH_XOVER) && (lt.getLayoutBlockD() == lb)) {
                                         posTS.add((TrackSegment) lt.getConnectD());
                                         posOB.add(conObj);
                                     }
-                                } else if ((tType != LayoutTurnout.RH_XOVER) && (lt.getLayoutBlockD() == lb)) {
+                                } else if ((tType != LayoutEditor.RH_XOVER) && (lt.getLayoutBlockD() == lb)) {
                                     curTS = (TrackSegment) lt.getConnectD();
                                 } else {
                                     curTS = null;
@@ -2514,16 +2514,16 @@ public class ConnectivityUtil {
                                     } else {
                                         curTS = null;
                                     }
-                                } else if ((lt.getLayoutBlockD() == nlb) || ((tType != LayoutTurnout.LH_XOVER)
+                                } else if ((lt.getLayoutBlockD() == nlb) || ((tType != LayoutEditor.LH_XOVER)
                                         && (lt.getLayoutBlock() == nlb))) {
                                     return true;
                                 } else if (lt.getLayoutBlockD() == lb) {
                                     curTS = (TrackSegment) lt.getConnectD();
-                                    if ((tType != LayoutTurnout.LH_XOVER) && (lt.getLayoutBlock() == lb)) {
+                                    if ((tType != LayoutEditor.LH_XOVER) && (lt.getLayoutBlock() == lb)) {
                                         posTS.add((TrackSegment) lt.getConnectA());
                                         posOB.add(conObj);
                                     }
-                                } else if ((tType != LayoutTurnout.LH_XOVER) && (lt.getLayoutBlock() == lb)) {
+                                } else if ((tType != LayoutEditor.LH_XOVER) && (lt.getLayoutBlock() == lb)) {
                                     curTS = (TrackSegment) lt.getConnectA();
                                 } else {
                                     curTS = null;
@@ -2536,16 +2536,16 @@ public class ConnectivityUtil {
                                     } else {
                                         curTS = null;
                                     }
-                                } else if ((lt.getLayoutBlockC() == nlb) || ((tType != LayoutTurnout.RH_XOVER)
+                                } else if ((lt.getLayoutBlockC() == nlb) || ((tType != LayoutEditor.RH_XOVER)
                                         && (lt.getLayoutBlockB() == nlb))) {
                                     return true;
                                 } else if (lt.getLayoutBlockC() == lb) {
                                     curTS = (TrackSegment) lt.getConnectC();
-                                    if ((tType != LayoutTurnout.RH_XOVER) && (lt.getLayoutBlockB() == lb)) {
+                                    if ((tType != LayoutEditor.RH_XOVER) && (lt.getLayoutBlockB() == lb)) {
                                         posTS.add((TrackSegment) lt.getConnectB());
                                         posOB.add(conObj);
                                     }
-                                } else if ((tType != LayoutTurnout.RH_XOVER) && (lt.getLayoutBlockB() == lb)) {
+                                } else if ((tType != LayoutEditor.RH_XOVER) && (lt.getLayoutBlockB() == lb)) {
                                     curTS = (TrackSegment) lt.getConnectB();
                                 } else {
                                     curTS = null;
@@ -2558,8 +2558,8 @@ public class ConnectivityUtil {
                         }   // switch (conType)
                         curObj = conObj;
                     } else // if RH, LH or DOUBLE _XOVER
-                    if ((tType == LayoutTurnout.RH_TURNOUT) || (tType == LayoutTurnout.LH_TURNOUT)
-                            || (tType == LayoutTurnout.WYE_TURNOUT)) {
+                    if ((tType == LayoutEditor.RH_TURNOUT) || (tType == LayoutEditor.LH_TURNOUT)
+                            || (tType == LayoutEditor.WYE_TURNOUT)) {
                         // reached RH. LH, or WYE turnout
                         if (lt.getLayoutBlock() != lb) {    // if not in the last block...
                             if (lt.getLayoutBlock() == nlb) {   // if in the next block
@@ -2623,7 +2623,7 @@ public class ConnectivityUtil {
                                 }
                                 break;
                             case LayoutTrack.SLIP_B:
-                                if (tType == LayoutSlip.SINGLE_SLIP) {
+                                if (tType == LayoutEditor.SINGLE_SLIP) {
                                     curTS = (TrackSegment) ls.getConnectD();
                                     break;
                                 }
@@ -2647,7 +2647,7 @@ public class ConnectivityUtil {
                                 break;
                             case LayoutTrack.SLIP_C:
                                 // if this is a single slip...
-                                if (tType == LayoutSlip.SINGLE_SLIP) {
+                                if (tType == LayoutEditor.SINGLE_SLIP) {
                                     curTS = (TrackSegment) ls.getConnectA();
                                     break;
                                 }

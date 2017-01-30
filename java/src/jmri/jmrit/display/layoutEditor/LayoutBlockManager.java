@@ -421,7 +421,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
         if (cType == LayoutTrack.TURNOUT_A) {
             // block boundary is at the facing point of a turnout or A connection of a crossover turnout
             lt = (LayoutTurnout) connected;
-            if (lt.getLinkType() == LayoutTurnout.NO_LINK) {
+            if (lt.getLinkType() == LayoutEditor.NO_LINK) {
                 // standard turnout or A connection of a crossover turnout
                 if (facingIsBlock1) {
                     if (lt.getSignalHead(LayoutTurnout.POINTA2) == null) //there is no signal head for diverging
@@ -523,11 +523,11 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                         return null;
                     }
                 }
-            } else if (lt.getLinkType() == LayoutTurnout.THROAT_TO_THROAT) {
+            } else if (lt.getLinkType() == LayoutEditor.THROAT_TO_THROAT) {
                 //  There are no signals at the throat of a THROAT_TO_THROAT
                 //  There should not be a block boundary here
                 return null;
-            } else if (lt.getLinkType() == LayoutTurnout.FIRST_3_WAY) {
+            } else if (lt.getLinkType() == LayoutEditor.FIRST_3_WAY) {
                 // 3-way turnout is in its own block - block boundary is at the throat of the 3-way turnout
                 if (!facingIsBlock1) {
                     // facing block is within the three-way turnout's block - no signals for exit of the block
@@ -573,7 +573,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                         return null;
                     }
                 }
-            } else if (lt.getLinkType() == LayoutTurnout.SECOND_3_WAY) {
+            } else if (lt.getLinkType() == LayoutEditor.SECOND_3_WAY) {
                 // There are no signals at the throat of the SECOND_3_WAY turnout of a 3-way turnout
                 // There should not be a block boundary here
                 return null;
@@ -583,8 +583,8 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             // block boundary is at the continuing track of a turnout or B connection of a crossover turnout
             lt = (LayoutTurnout) connected;
             // check for double crossover or LH crossover
-            if (((lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                    || (lt.getTurnoutType() == LayoutTurnout.LH_XOVER))) {
+            if (((lt.getTurnoutType() == LayoutEditor.DOUBLE_XOVER)
+                    || (lt.getTurnoutType() == LayoutEditor.LH_XOVER))) {
                 if (facingIsBlock1) {
                     if (lt.getSignalHead(LayoutTurnout.POINTB2) == null) // there is only one signal at B, return it
                     {
@@ -678,13 +678,13 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                 }
             }
             // not double crossover or LH crossover
-            if ((lt.getLinkType() == LayoutTurnout.NO_LINK) && (lt.getContinuingSense() == Turnout.CLOSED)) {
+            if ((lt.getLinkType() == LayoutEditor.NO_LINK) && (lt.getContinuingSense() == Turnout.CLOSED)) {
                 if (facingIsBlock1) {
                     return lt.getSignalHead(LayoutTurnout.POINTB);
                 } else {
                     return lt.getSignalHead(LayoutTurnout.POINTA);
                 }
-            } else if (lt.getLinkType() == LayoutTurnout.NO_LINK) {
+            } else if (lt.getLinkType() == LayoutEditor.NO_LINK) {
                 if (facingIsBlock1) {
                     return lt.getSignalHead(LayoutTurnout.POINTC);
                 } else {
@@ -694,7 +694,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                         return lt.getSignalHead(LayoutTurnout.POINTA2);
                     }
                 }
-            } else if (lt.getLinkType() == LayoutTurnout.THROAT_TO_THROAT) {
+            } else if (lt.getLinkType() == LayoutEditor.THROAT_TO_THROAT) {
                 if (!facingIsBlock1) {
                     //  There are no signals at the throat of a THROAT_TO_THROAT
                     return null;
@@ -728,11 +728,11 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                             + " is in an UNKNOWN or INCONSISTENT state.");
                 }
                 return null;
-            } else if (lt.getLinkType() == LayoutTurnout.FIRST_3_WAY) {
+            } else if (lt.getLinkType() == LayoutEditor.FIRST_3_WAY) {
                 // there is no signal at the FIRST_3_WAY turnout continuing track of a 3-way turnout
                 // there should not be a block boundary here
                 return null;
-            } else if (lt.getLinkType() == LayoutTurnout.SECOND_3_WAY) {
+            } else if (lt.getLinkType() == LayoutEditor.SECOND_3_WAY) {
                 if (facingIsBlock1) {
                     if (lt.getContinuingSense() == Turnout.CLOSED) {
                         return lt.getSignalHead(LayoutTurnout.POINTB);
@@ -758,8 +758,8 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             // block boundary is at the diverging track of a turnout or C connection of a crossover turnout
             lt = (LayoutTurnout) connected;
             // check for double crossover or RH crossover
-            if ((lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                    || (lt.getTurnoutType() == LayoutTurnout.RH_XOVER)) {
+            if ((lt.getTurnoutType() == LayoutEditor.DOUBLE_XOVER)
+                    || (lt.getTurnoutType() == LayoutEditor.RH_XOVER)) {
                 if (facingIsBlock1) {
                     if (lt.getSignalHead(LayoutTurnout.POINTC2) == null) // there is only one head at C, return it
                     {
@@ -853,10 +853,10 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                 }
             }
             // not double crossover or RH crossover
-            if ((lt.getLinkType() == LayoutTurnout.NO_LINK) && (lt.getContinuingSense() == Turnout.CLOSED)) {
+            if ((lt.getLinkType() == LayoutEditor.NO_LINK) && (lt.getContinuingSense() == Turnout.CLOSED)) {
                 if (facingIsBlock1) {
                     return lt.getSignalHead(LayoutTurnout.POINTC);
-                } else if (lt.getTurnoutType() == LayoutTurnout.LH_XOVER) // LH turnout - this is continuing track for D connection
+                } else if (lt.getTurnoutType() == LayoutEditor.LH_XOVER) // LH turnout - this is continuing track for D connection
                 {
                     return lt.getSignalHead(LayoutTurnout.POINTD);
                 } else {
@@ -869,13 +869,13 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                         return lt.getSignalHead(LayoutTurnout.POINTA2);
                     }
                 }
-            } else if (lt.getLinkType() == LayoutTurnout.NO_LINK) {
+            } else if (lt.getLinkType() == LayoutEditor.NO_LINK) {
                 if (facingIsBlock1) {
                     return lt.getSignalHead(LayoutTurnout.POINTB);
                 } else {
                     return lt.getSignalHead(LayoutTurnout.POINTA);
                 }
-            } else if (lt.getLinkType() == LayoutTurnout.THROAT_TO_THROAT) {
+            } else if (lt.getLinkType() == LayoutEditor.THROAT_TO_THROAT) {
                 if (!facingIsBlock1) {
                     //  There are no signals at the throat of a THROAT_TO_THROAT
                     return null;
@@ -909,7 +909,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                             + " is in an UNKNOWN or INCONSISTENT state.");
                     return null;
                 }
-            } else if (lt.getLinkType() == LayoutTurnout.FIRST_3_WAY) {
+            } else if (lt.getLinkType() == LayoutEditor.FIRST_3_WAY) {
                 if (facingIsBlock1) {
                     return lt.getSignalHead(LayoutTurnout.POINTC);
                 } else {
@@ -919,7 +919,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                         return lt.getSignalHead(LayoutTurnout.POINTA2);
                     }
                 }
-            } else if (lt.getLinkType() == LayoutTurnout.SECOND_3_WAY) {
+            } else if (lt.getLinkType() == LayoutEditor.SECOND_3_WAY) {
                 if (facingIsBlock1) {
                     if (lt.getContinuingSense() == Turnout.CLOSED) {
                         return lt.getSignalHead(LayoutTurnout.POINTC);
@@ -948,7 +948,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
         if (cType == LayoutTrack.TURNOUT_D) {
             // block boundary is at D connectin of a crossover turnout
             lt = (LayoutTurnout) connected;
-            if (lt.getTurnoutType() == LayoutTurnout.RH_XOVER) {
+            if (lt.getTurnoutType() == LayoutEditor.RH_XOVER) {
                 // no diverging route possible, this is continuing track for C connection
                 if (facingIsBlock1) {
                     return lt.getSignalHead(LayoutTurnout.POINTD);
@@ -1057,14 +1057,14 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             LayoutSlip ls = (LayoutSlip) connected;
             switch (cType) {
                 case LayoutTrack.SLIP_A:
-                    if (ls.getSlipState() == LayoutSlip.STATE_AD) {
+                    if (ls.getSlipState() == LayoutEditor.STATE_AD) {
                         return ls.getSignalHead(LayoutTurnout.POINTA2);
                     } else {
                         return ls.getSignalHead(LayoutTurnout.POINTA);
                     }
                 case LayoutTrack.SLIP_B:
-                    if (ls.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
-                        if (ls.getSlipState() == LayoutSlip.STATE_BC) {
+                    if (ls.getTurnoutType() == LayoutEditor.DOUBLE_SLIP) {
+                        if (ls.getSlipState() == LayoutEditor.STATE_BC) {
                             return ls.getSignalHead(LayoutTurnout.POINTB2);
                         } else {
                             return ls.getSignalHead(LayoutTurnout.POINTB);
@@ -1073,8 +1073,8 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                         return ls.getSignalHead(LayoutTurnout.POINTB);
                     }
                 case LayoutTrack.SLIP_C:
-                    if (ls.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
-                        if (ls.getSlipState() == LayoutSlip.STATE_BC) {
+                    if (ls.getTurnoutType() == LayoutEditor.DOUBLE_SLIP) {
+                        if (ls.getSlipState() == LayoutEditor.STATE_BC) {
                             return ls.getSignalHead(LayoutTurnout.POINTC2);
                         } else {
                             return ls.getSignalHead(LayoutTurnout.POINTC);
@@ -1083,7 +1083,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                         return ls.getSignalHead(LayoutTurnout.POINTC);
                     }
                 case LayoutTrack.SLIP_D:
-                    if (ls.getSlipState() == LayoutSlip.STATE_AD) {
+                    if (ls.getSlipState() == LayoutEditor.STATE_AD) {
                         return ls.getSignalHead(LayoutTurnout.POINTD2);
                     } else {
                         return ls.getSignalHead(LayoutTurnout.POINTD);
@@ -1436,7 +1436,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 
         if (cType == LayoutTrack.TURNOUT_A) {
             lt = (LayoutTurnout) connected;
-            if ((lt.getLinkType() == LayoutTurnout.NO_LINK) || (lt.getLinkType() == LayoutTurnout.FIRST_3_WAY)) {
+            if ((lt.getLinkType() == LayoutEditor.NO_LINK) || (lt.getLinkType() == LayoutEditor.FIRST_3_WAY)) {
                 if ((T.equals(SignalMast.class) && lt.getSignalAMast() != null) || (T.equals(Sensor.class) && lt.getSensorA() != null)) {
                     if (tr == null) {
                         if (lt.getConnectA() instanceof TrackSegment) {

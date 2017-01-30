@@ -1111,7 +1111,7 @@ public class Section extends AbstractNamedBean
         if ((containsBlock(aBlock.getBlock())) || (containsBlock(bBlock.getBlock()))) {
             LayoutBlock exBlock = null;
             if (aBlock == bBlock) {
-                if ((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER) && (cBlock == dBlock)) {
+                if ((t.getTurnoutType() == LayoutEditor.DOUBLE_XOVER) && (cBlock == dBlock)) {
                     exBlock = cBlock;
                 }
             }
@@ -1169,14 +1169,14 @@ public class Section extends AbstractNamedBean
                     return dir;
                 }
             }
-            if ((t.getTurnoutType() != LayoutTurnout.LH_XOVER) && containsBlock(aBlock.getBlock())
+            if ((t.getTurnoutType() != LayoutEditor.LH_XOVER) && containsBlock(aBlock.getBlock())
                     && (!containsBlock(cBlock.getBlock()))) {
                 int dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, cBlock);
                 if (dir != EntryPoint.UNKNOWN) {
                     return dir;
                 }
             }
-            if ((t.getTurnoutType() != LayoutTurnout.RH_XOVER) && containsBlock(bBlock.getBlock())
+            if ((t.getTurnoutType() != LayoutEditor.RH_XOVER) && containsBlock(bBlock.getBlock())
                     && (!containsBlock(dBlock.getBlock()))) {
                 int dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, dBlock);
                 if (dir != EntryPoint.UNKNOWN) {
@@ -1187,7 +1187,7 @@ public class Section extends AbstractNamedBean
         if ((containsBlock(dBlock.getBlock())) || (containsBlock(cBlock.getBlock()))) {
             LayoutBlock exBlock = null;
             if (dBlock == cBlock) {
-                if ((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER) && (bBlock == aBlock)) {
+                if ((t.getTurnoutType() == LayoutEditor.DOUBLE_XOVER) && (bBlock == aBlock)) {
                     exBlock = aBlock;
                 }
             }
@@ -1245,14 +1245,14 @@ public class Section extends AbstractNamedBean
                     return dir;
                 }
             }
-            if ((t.getTurnoutType() != LayoutTurnout.RH_XOVER) && containsBlock(dBlock.getBlock())
+            if ((t.getTurnoutType() != LayoutEditor.RH_XOVER) && containsBlock(dBlock.getBlock())
                     && (!containsBlock(bBlock.getBlock()))) {
                 int dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, bBlock);
                 if (dir != EntryPoint.UNKNOWN) {
                     return dir;
                 }
             }
-            if ((t.getTurnoutType() != LayoutTurnout.LH_XOVER) && containsBlock(cBlock.getBlock())
+            if ((t.getTurnoutType() != LayoutEditor.LH_XOVER) && containsBlock(cBlock.getBlock())
                     && (!containsBlock(aBlock.getBlock()))) {
                 int dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, aBlock);
                 if (dir != EntryPoint.UNKNOWN) {
@@ -1290,7 +1290,7 @@ public class Section extends AbstractNamedBean
         if ((containsBlock(aBlock.getBlock())) || (containsBlock(cBlock.getBlock()))) {
             LayoutBlock exBlock = null;
             if (aBlock == cBlock) {
-                if ((t.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP) && (bBlock == dBlock)) {
+                if ((t.getTurnoutType() == LayoutEditor.DOUBLE_SLIP) && (bBlock == dBlock)) {
                     exBlock = bBlock;
                 }
             }
@@ -1299,7 +1299,7 @@ public class Section extends AbstractNamedBean
                 int dir = EntryPoint.UNKNOWN;
                 Block tBlock = null;
                 TrackNode tn = new TrackNode(t, LayoutTrack.SLIP_A, (TrackSegment) t.getConnectA(),
-                        false, LayoutSlip.STATE_AC);
+                        false, LayoutEditor.STATE_AC);
                 while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                     tn = cUtil.getNextNode(tn, 0);
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
@@ -1311,7 +1311,7 @@ public class Section extends AbstractNamedBean
                     }
                 } else {
                     tn = new TrackNode(t, LayoutTrack.SLIP_C, (TrackSegment) t.getConnectC(),
-                            false, LayoutSlip.STATE_AC);
+                            false, LayoutEditor.STATE_AC);
                     while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                         tn = cUtil.getNextNode(tn, 0);
                         tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
@@ -1357,7 +1357,7 @@ public class Section extends AbstractNamedBean
         if ((containsBlock(dBlock.getBlock())) || (containsBlock(bBlock.getBlock()))) {
             LayoutBlock exBlock = null;
             if (dBlock == bBlock) {
-                if ((t.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP) && (cBlock == aBlock)) {
+                if ((t.getTurnoutType() == LayoutEditor.DOUBLE_SLIP) && (cBlock == aBlock)) {
                     exBlock = aBlock;
                 }
             }
@@ -1366,7 +1366,7 @@ public class Section extends AbstractNamedBean
                 int dir = EntryPoint.UNKNOWN;
                 Block tBlock = null;
                 TrackNode tn = new TrackNode(t, LayoutTrack.SLIP_D, (TrackSegment) t.getConnectD(),
-                        false, LayoutSlip.STATE_BD);
+                        false, LayoutEditor.STATE_BD);
                 while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                     tn = cUtil.getNextNode(tn, 0);
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
@@ -1378,7 +1378,7 @@ public class Section extends AbstractNamedBean
                     }
                 } else {
                     tn = new TrackNode(t, LayoutTrack.TURNOUT_B, (TrackSegment) t.getConnectB(),
-                            false, LayoutSlip.STATE_BD);
+                            false, LayoutEditor.STATE_BD);
                     while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                         tn = cUtil.getNextNode(tn, 0);
                         tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
@@ -1415,7 +1415,7 @@ public class Section extends AbstractNamedBean
                     return dir;
                 }
             }
-            if (t.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP) {
+            if (t.getTurnoutType() == LayoutEditor.DOUBLE_SLIP) {
                 int dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, aBlock);
                 if (dir != EntryPoint.UNKNOWN) {
                     return dir;
@@ -1809,10 +1809,10 @@ public class Section extends AbstractNamedBean
                 LayoutTurnout t = turnoutList.get(m);
                 if (cUtil.layoutTurnoutHasRequiredSignals(t)) {
                     // have a signalled turnout
-                    if ((t.getLinkType() == LayoutTurnout.NO_LINK)
-                            && ((t.getTurnoutType() == LayoutTurnout.RH_TURNOUT)
-                            || (t.getTurnoutType() == LayoutTurnout.LH_TURNOUT)
-                            || (t.getTurnoutType() == LayoutTurnout.WYE_TURNOUT))) {
+                    if ((t.getLinkType() == LayoutEditor.NO_LINK)
+                            && ((t.getTurnoutType() == LayoutEditor.RH_TURNOUT)
+                            || (t.getTurnoutType() == LayoutEditor.LH_TURNOUT)
+                            || (t.getTurnoutType() == LayoutEditor.WYE_TURNOUT))) {
                         // standard turnout - nothing special
                         // Note: direction is for proceeding from the throat to either other track
                         int direction = getDirectionStandardTurnout(t, cUtil);
@@ -1915,12 +1915,12 @@ public class Section extends AbstractNamedBean
                                 }
                             }
                         }
-                    } else if (t.getLinkType() != LayoutTurnout.NO_LINK) {
+                    } else if (t.getLinkType() != LayoutEditor.NO_LINK) {
                         // special linked turnout
                         LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(t.getLinkedTurnoutName(), panel);
                         if (tLinked == null) {
                             log.error("null Layout Turnout linked to turnout " + t.getTurnout().getSystemName());
-                        } else if (t.getLinkType() == LayoutTurnout.THROAT_TO_THROAT) {
+                        } else if (t.getLinkType() == LayoutEditor.THROAT_TO_THROAT) {
                             SignalHead b1Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
                                     t.getSignalB1Name());
                             SignalHead b2Head = null;
@@ -2037,7 +2037,7 @@ public class Section extends AbstractNamedBean
                                     }
                                 }
                             }
-                        } else if (t.getLinkType() == LayoutTurnout.FIRST_3_WAY) {
+                        } else if (t.getLinkType() == LayoutEditor.FIRST_3_WAY) {
                             SignalHead a1Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
                                     t.getSignalA1Name());
                             SignalHead a2Head = null;
@@ -2103,7 +2103,7 @@ public class Section extends AbstractNamedBean
                                     }
                                 }
                             }
-                        } else if (t.getLinkType() == LayoutTurnout.SECOND_3_WAY) {
+                        } else if (t.getLinkType() == LayoutEditor.SECOND_3_WAY) {
                             SignalHead bHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
                                     t.getSignalB1Name());
                             SignalHead cHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
@@ -2161,9 +2161,9 @@ public class Section extends AbstractNamedBean
                                 }
                             }
                         }
-                    } else if ((t.getTurnoutType() == LayoutTurnout.RH_XOVER)
-                            || (t.getTurnoutType() == LayoutTurnout.LH_XOVER)
-                            || (t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)) {
+                    } else if ((t.getTurnoutType() == LayoutEditor.RH_XOVER)
+                            || (t.getTurnoutType() == LayoutEditor.LH_XOVER)
+                            || (t.getTurnoutType() == LayoutEditor.DOUBLE_XOVER)) {
                         // crossover turnout 
                         // Note: direction is for proceeding from A to B (or D to C)
                         int direction = getDirectionXoverTurnout(t, cUtil);
@@ -2175,8 +2175,8 @@ public class Section extends AbstractNamedBean
                             errorCount++;
                         } else {
                             if (((TrackSegment) t.getConnectA()).getLayoutBlock().getBlock() == cBlock) {
-                                if ((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                                        || (t.getTurnoutType() == LayoutTurnout.RH_XOVER)) {
+                                if ((t.getTurnoutType() == LayoutEditor.DOUBLE_XOVER)
+                                        || (t.getTurnoutType() == LayoutEditor.RH_XOVER)) {
                                     if (!placeSensorInCrossover(t.getSignalB1Name(), t.getSignalB2Name(),
                                             t.getSignalC1Name(), t.getSignalC2Name(), altDirection, cUtil)) {
                                         errorCount++;
@@ -2189,8 +2189,8 @@ public class Section extends AbstractNamedBean
                                 }
                             }
                             if (((TrackSegment) t.getConnectB()).getLayoutBlock().getBlock() == cBlock) {
-                                if ((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                                        || (t.getTurnoutType() == LayoutTurnout.LH_XOVER)) {
+                                if ((t.getTurnoutType() == LayoutEditor.DOUBLE_XOVER)
+                                        || (t.getTurnoutType() == LayoutEditor.LH_XOVER)) {
                                     if (!placeSensorInCrossover(t.getSignalA1Name(), t.getSignalA2Name(),
                                             t.getSignalD1Name(), t.getSignalD2Name(), direction, cUtil)) {
                                         errorCount++;
@@ -2203,8 +2203,8 @@ public class Section extends AbstractNamedBean
                                 }
                             }
                             if (((TrackSegment) t.getConnectC()).getLayoutBlock().getBlock() == cBlock) {
-                                if ((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                                        || (t.getTurnoutType() == LayoutTurnout.RH_XOVER)) {
+                                if ((t.getTurnoutType() == LayoutEditor.DOUBLE_XOVER)
+                                        || (t.getTurnoutType() == LayoutEditor.RH_XOVER)) {
                                     if (!placeSensorInCrossover(t.getSignalD1Name(), t.getSignalD2Name(),
                                             t.getSignalA1Name(), t.getSignalA2Name(), direction, cUtil)) {
                                         errorCount++;
@@ -2217,8 +2217,8 @@ public class Section extends AbstractNamedBean
                                 }
                             }
                             if (((TrackSegment) t.getConnectD()).getLayoutBlock().getBlock() == cBlock) {
-                                if ((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                                        || (t.getTurnoutType() == LayoutTurnout.LH_XOVER)) {
+                                if ((t.getTurnoutType() == LayoutEditor.DOUBLE_XOVER)
+                                        || (t.getTurnoutType() == LayoutEditor.LH_XOVER)) {
                                     if (!placeSensorInCrossover(t.getSignalC1Name(), t.getSignalC2Name(),
                                             t.getSignalB1Name(), t.getSignalB2Name(), altDirection, cUtil)) {
                                         errorCount++;
@@ -2231,7 +2231,7 @@ public class Section extends AbstractNamedBean
                                 }
                             }
                         }
-                    } else if (t.getTurnoutType() == LayoutTurnout.SINGLE_SLIP || t.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP) {
+                    } else if (t.getTurnoutType() == LayoutEditor.SINGLE_SLIP || t.getTurnoutType() == LayoutEditor.DOUBLE_SLIP) {
                         int direction = getDirectionSlip((LayoutSlip) t, cUtil);
                         int altDirection = EntryPoint.FORWARD;
                         if (direction == EntryPoint.FORWARD) {
@@ -2246,7 +2246,7 @@ public class Section extends AbstractNamedBean
                             if (!checkDirectionSensor(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(t.getSignalA2Name()), altDirection, ConnectivityUtil.OVERALL, cUtil)) {
                                 errorCount++;
                             }
-                            if (t.getTurnoutType() == LayoutTurnout.SINGLE_SLIP) {
+                            if (t.getTurnoutType() == LayoutEditor.SINGLE_SLIP) {
                                 if (!checkDirectionSensor(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(t.getSignalB1Name()), altDirection, ConnectivityUtil.OVERALL, cUtil)) {
                                     errorCount++;
                                 }
@@ -2258,7 +2258,7 @@ public class Section extends AbstractNamedBean
                                     errorCount++;
                                 }
                             }
-                            if (t.getTurnoutType() == LayoutTurnout.SINGLE_SLIP) {
+                            if (t.getTurnoutType() == LayoutEditor.SINGLE_SLIP) {
                                 if (!checkDirectionSensor(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(t.getSignalC1Name()), direction, ConnectivityUtil.OVERALL, cUtil)) {
                                     errorCount++;
                                 }

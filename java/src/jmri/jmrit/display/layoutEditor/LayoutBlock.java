@@ -2549,7 +2549,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 }
             }
             /*for(LayoutTurnout turn: stod){
-             if(turn.type==LayoutTurnout.DOUBLE_XOVER){
+             if(turn.type==LayoutEditor.DOUBLE_XOVER){
              //Further checks might be required.
              }
 
@@ -2580,7 +2580,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 boolean allowAddition = false;
                 for (int i = 0; i < maxt.size(); i++) {
                     LayoutTurnout turn = maxt.get(i);
-                    if (turn.type == LayoutTurnout.DOUBLE_XOVER) {
+                    if (turn.type == LayoutEditor.DOUBLE_XOVER) {
                         allowAddition = true;
                         //The double crossover gets reported in the opposite setting.
                         if (maxtSet.get(i) == 2) {

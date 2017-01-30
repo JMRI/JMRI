@@ -258,6 +258,49 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     @Deprecated
     public static final double SIZE2 = SIZE * 2.;  // must be twice SIZE
 
+    // defined constants - turnout types
+    @Deprecated
+    public static final int RH_TURNOUT = 1;
+    @Deprecated
+    public static final int LH_TURNOUT = 2;
+    @Deprecated
+    public static final int WYE_TURNOUT = 3;
+    @Deprecated
+    public static final int DOUBLE_XOVER = 4;
+    @Deprecated
+    public static final int RH_XOVER = 5;
+    @Deprecated
+    public static final int LH_XOVER = 6;
+    @Deprecated
+    public static final int SINGLE_SLIP = 7; //used in LayoutSlip which extends this class
+    @Deprecated
+    public static final int DOUBLE_SLIP = 8; //used in LayoutSlip which extends this class
+
+    // defined constants - link types
+    @Deprecated
+    public static final int NO_LINK = 0;
+    @Deprecated
+    public static final int FIRST_3_WAY = 1;       // this turnout is the first turnout of a 3-way
+    // turnout pair (closest to the throat)
+    @Deprecated
+    public static final int SECOND_3_WAY = 2;      // this turnout is the second turnout of a 3-way
+    // turnout pair (furthest from the throat)
+    @Deprecated
+    public static final int THROAT_TO_THROAT = 3;  // this turnout is one of two throat-to-throat
+    // turnouts - no signals at throat
+
+    // operational instance variables (not saved between sessions)
+    @Deprecated
+    public static final int UNKNOWN = Turnout.UNKNOWN;
+    @Deprecated
+    public static final int STATE_AC = 0x02;
+    @Deprecated
+    public static final int STATE_BD = 0x04;
+    @Deprecated
+    public static final int STATE_AD = 0x06;
+    @Deprecated
+    public static final int STATE_BC = 0x08;
+
     private static double circleRadius = LayoutTurnout.getTurnoutCircleSize();
     private static double circleDiameter = 2.0 * circleRadius;
 
@@ -355,6 +398,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public ArrayList<LevelXing> xingList = new ArrayList<LevelXing>();  // LevelXing list
     public ArrayList<LayoutSlip> slipList = new ArrayList<LayoutSlip>();  // Layout slip list
     public ArrayList<LayoutTurntable> turntableList = new ArrayList<LayoutTurntable>(); // Turntable list
+
     // counts used to determine unique internal names
     private int numAnchors = 0;
     private int numEndBumpers = 0;
@@ -364,6 +408,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private int numLayoutSlips = 0;
     private int numLayoutTurnouts = 0;
     private int numLayoutTurntables = 0;
+
     // Lists of items that facilitate tools and drawings
     public ArrayList<SignalHeadIcon> signalList = new ArrayList<SignalHeadIcon>();  // Signal Head Icons
     public ArrayList<MemoryIcon> memoryLabelList = new ArrayList<MemoryIcon>(); // Memory Label List
@@ -2975,8 +3020,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
             // loop over all defined turnouts
             for (LayoutTurnout t : turnoutList) {
-                if (t.getVersion() == 2 && ((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                        || (t.getTurnoutType() == LayoutTurnout.LH_XOVER) || (t.getTurnoutType() == LayoutTurnout.RH_XOVER))) {
+                if (t.getVersion() == 2 && ((t.getTurnoutType() == LayoutEditor.DOUBLE_XOVER)
+                        || (t.getTurnoutType() == LayoutEditor.LH_XOVER) || (t.getTurnoutType() == LayoutEditor.RH_XOVER))) {
                     if (selectRect.contains(t.getCoordsA())) {
                         Point2D coord = t.getCoordsA();
                         t.setCoordsA(new Point2D.Double(coord.getX() + xTranslation,
@@ -3066,8 +3111,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }
             for (LayoutTurnout t : turnoutList) {
-                if (t.getVersion() == 2 && ((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                        || (t.getTurnoutType() == LayoutTurnout.LH_XOVER) || (t.getTurnoutType() == LayoutTurnout.RH_XOVER))) {
+                if (t.getVersion() == 2 && ((t.getTurnoutType() == LayoutEditor.DOUBLE_XOVER)
+                        || (t.getTurnoutType() == LayoutEditor.LH_XOVER) || (t.getTurnoutType() == LayoutEditor.RH_XOVER))) {
                     if (undoRect.contains(t.getCoordsA())) {
                         Point2D coord = t.getCoordsA();
                         t.setCoordsA(new Point2D.Double(coord.getX() + undoDeltaX,
@@ -3830,9 +3875,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         return true;
                     }
                 }
-                if (((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                        || (t.getTurnoutType() == LayoutTurnout.RH_XOVER)
-                        || (t.getTurnoutType() == LayoutTurnout.LH_XOVER)) && (!requireUnconnected || (t.getConnectD() == null))) {
+                if (((t.getTurnoutType() == LayoutEditor.DOUBLE_XOVER)
+                        || (t.getTurnoutType() == LayoutEditor.RH_XOVER)
+                        || (t.getTurnoutType() == LayoutEditor.LH_XOVER)) && (!requireUnconnected || (t.getConnectD() == null))) {
                     // check the D connection point, double crossover turnouts only
                     Point2D pt = t.getCoordsD();
                     Rectangle2D r = controlPointRectAt(pt);
@@ -4294,23 +4339,23 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     currentPoint.setLocation(xLoc, yLoc);
                 }
                 if (turnoutRHButton.isSelected()) {
-                    addLayoutTurnout(LayoutTurnout.RH_TURNOUT);
+                    addLayoutTurnout(LayoutEditor.RH_TURNOUT);
                 } else if (turnoutLHButton.isSelected()) {
-                    addLayoutTurnout(LayoutTurnout.LH_TURNOUT);
+                    addLayoutTurnout(LayoutEditor.LH_TURNOUT);
                 } else if (turnoutWYEButton.isSelected()) {
-                    addLayoutTurnout(LayoutTurnout.WYE_TURNOUT);
+                    addLayoutTurnout(LayoutEditor.WYE_TURNOUT);
                 } else if (doubleXoverButton.isSelected()) {
-                    addLayoutTurnout(LayoutTurnout.DOUBLE_XOVER);
+                    addLayoutTurnout(LayoutEditor.DOUBLE_XOVER);
                 } else if (rhXoverButton.isSelected()) {
-                    addLayoutTurnout(LayoutTurnout.RH_XOVER);
+                    addLayoutTurnout(LayoutEditor.RH_XOVER);
                 } else if (lhXoverButton.isSelected()) {
-                    addLayoutTurnout(LayoutTurnout.LH_XOVER);
+                    addLayoutTurnout(LayoutEditor.LH_XOVER);
                 } else if (levelXingButton.isSelected()) {
                     addLevelXing();
                 } else if (layoutSingleSlipButton.isSelected()) {
-                    addLayoutSlip(LayoutSlip.SINGLE_SLIP);
+                    addLayoutSlip(LayoutEditor.SINGLE_SLIP);
                 } else if (layoutDoubleSlipButton.isSelected()) {
-                    addLayoutSlip(LayoutSlip.DOUBLE_SLIP);
+                    addLayoutSlip(LayoutEditor.DOUBLE_SLIP);
                 } else if (endBumperButton.isSelected()) {
                     addEndBumper();
                 } else if (anchorButton.isSelected()) {
@@ -4695,8 +4740,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     case LayoutTrack.TURNOUT_C:
                     case LayoutTrack.TURNOUT_D:
                         LayoutTurnout t = (LayoutTurnout) foundObject;
-                        if (t.getVersion() == 2 && ((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                                || (t.getTurnoutType() == LayoutTurnout.LH_XOVER) || (t.getTurnoutType() == LayoutTurnout.RH_XOVER))) {
+                        if (t.getVersion() == 2 && ((t.getTurnoutType() == LayoutEditor.DOUBLE_XOVER)
+                                || (t.getTurnoutType() == LayoutEditor.LH_XOVER) || (t.getTurnoutType() == LayoutEditor.RH_XOVER))) {
                             amendSelectionGroup((LayoutTurnout) foundObject, dLoc);
                         }
                     //$FALL-THROUGH$
@@ -4884,8 +4929,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             dLoc = lt.getCoordsC();
             checkPointsOfTurnoutSub(lt.getCoordsC());
         }
-        if (lt.getConnectD() == null && ((lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                || (lt.getTurnoutType() == LayoutTurnout.LH_XOVER) || (lt.getTurnoutType() == LayoutTurnout.RH_XOVER))) {
+        if (lt.getConnectD() == null && ((lt.getTurnoutType() == LayoutEditor.DOUBLE_XOVER)
+                || (lt.getTurnoutType() == LayoutEditor.LH_XOVER) || (lt.getTurnoutType() == LayoutEditor.RH_XOVER))) {
             beginPointType = LayoutTrack.TURNOUT_D;
             dLoc = lt.getCoordsD();
             checkPointsOfTurnoutSub(lt.getCoordsD());
@@ -4935,7 +4980,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 case LayoutTrack.TURNOUT_D:
                     LayoutTurnout ft = (LayoutTurnout) foundObject;
                     addTrackSegment();
-                    if (ft.getTurnoutType() == LayoutTurnout.RH_TURNOUT || ft.getTurnoutType() == LayoutTurnout.LH_TURNOUT) {
+                    if (ft.getTurnoutType() == LayoutEditor.RH_TURNOUT || ft.getTurnoutType() == LayoutEditor.LH_TURNOUT) {
                         rotateTurnout(ft);
                     }
                     break;
@@ -4953,7 +4998,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 || (beginPointType == LayoutTrack.TURNOUT_C && (be.getConnectB() != null || be.getConnectA() != null))) {
             return;
         }
-        if (be.getTurnoutType() != LayoutTurnout.RH_TURNOUT && be.getTurnoutType() != LayoutTurnout.LH_TURNOUT) {
+        if (be.getTurnoutType() != LayoutEditor.RH_TURNOUT && be.getTurnoutType() != LayoutEditor.LH_TURNOUT) {
             return;
         }
 
@@ -5105,9 +5150,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             for (Map.Entry<LayoutTurnout, TurnoutSelection> entry : _turnoutSelection.entrySet()) {
                 LayoutTurnout t = entry.getKey();
                 int ttype = t.getTurnoutType();
-                if (t.getVersion() == 2 && ((ttype == LayoutTurnout.DOUBLE_XOVER)
-                        || (ttype == LayoutTurnout.LH_XOVER)
-                        || (ttype == LayoutTurnout.RH_XOVER))) {
+                if (t.getVersion() == 2 && ((ttype == LayoutEditor.DOUBLE_XOVER)
+                        || (ttype == LayoutEditor.LH_XOVER)
+                        || (ttype == LayoutEditor.RH_XOVER))) {
                     TurnoutSelection ts = entry.getValue();
                     if (ts.getPointA()) {
                         Point2D coord = t.getCoordsA();
@@ -5205,9 +5250,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // loop over all defined turnouts
         for (LayoutTurnout t : turnoutList) {
             int ttype = t.getTurnoutType();
-            if (t.getVersion() == 2 && ((ttype == LayoutTurnout.DOUBLE_XOVER)
-                    || (ttype == LayoutTurnout.LH_XOVER)
-                    || (ttype == LayoutTurnout.RH_XOVER))) {
+            if (t.getVersion() == 2 && ((ttype == LayoutEditor.DOUBLE_XOVER)
+                    || (ttype == LayoutEditor.LH_XOVER)
+                    || (ttype == LayoutEditor.RH_XOVER))) {
                 if (selectRect.contains(t.getCoordsA())) {
                     if (_turnoutSelection == null) {
                         _turnoutSelection = new HashMap<LayoutTurnout, TurnoutSelection>();
@@ -5435,9 +5480,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             LayoutTurnout t = entry.getKey();
             if (t == p) {
                 int ttype = t.getTurnoutType();
-                if (t.getVersion() == 2 && ((ttype == LayoutTurnout.DOUBLE_XOVER)
-                        || (ttype == LayoutTurnout.LH_XOVER)
-                        || (ttype == LayoutTurnout.RH_XOVER))) {
+                if (t.getVersion() == 2 && ((ttype == LayoutEditor.DOUBLE_XOVER)
+                        || (ttype == LayoutEditor.LH_XOVER)
+                        || (ttype == LayoutEditor.RH_XOVER))) {
                     TurnoutSelection ts = entry.getValue();
                     Rectangle2D r = controlPointRectAt(dLoc);
                     if (ts.getPointA()) {
@@ -5477,8 +5522,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
         if (!removed) {
-            if (p.getVersion() == 2 && ((p.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                    || (p.getTurnoutType() == LayoutTurnout.LH_XOVER) || (p.getTurnoutType() == LayoutTurnout.RH_XOVER))) {
+            if (p.getVersion() == 2 && ((p.getTurnoutType() == LayoutEditor.DOUBLE_XOVER)
+                    || (p.getTurnoutType() == LayoutEditor.LH_XOVER) || (p.getTurnoutType() == LayoutEditor.RH_XOVER))) {
                 Rectangle2D r = controlPointRectAt(dLoc);
                 if (r.contains(p.getCoordsA())) {
                     TurnoutSelection ts;
@@ -5817,9 +5862,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             for (Map.Entry<LayoutTurnout, TurnoutSelection> entry : _turnoutSelection.entrySet()) {
                 LayoutTurnout t = entry.getKey();
                 int ttype = t.getTurnoutType();
-                if (t.getVersion() == 2 && ((ttype == LayoutTurnout.DOUBLE_XOVER)
-                        || (ttype == LayoutTurnout.LH_XOVER)
-                        || (ttype == LayoutTurnout.RH_XOVER))) {
+                if (t.getVersion() == 2 && ((ttype == LayoutEditor.DOUBLE_XOVER)
+                        || (ttype == LayoutEditor.LH_XOVER)
+                        || (ttype == LayoutEditor.RH_XOVER))) {
 
                     TurnoutSelection ts = entry.getValue();
                     if (ts.getPointA()) {
@@ -6049,9 +6094,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         for (Map.Entry<LayoutTurnout, TurnoutSelection> entry : _turnoutSelection.entrySet()) {
                             LayoutTurnout t = entry.getKey();
                             int ttype = t.getTurnoutType();
-                            if (t.getVersion() == 2 && ((ttype == LayoutTurnout.DOUBLE_XOVER)
-                                    || (ttype == LayoutTurnout.LH_XOVER)
-                                    || (ttype == LayoutTurnout.RH_XOVER))) {
+                            if (t.getVersion() == 2 && ((ttype == LayoutEditor.DOUBLE_XOVER)
+                                    || (ttype == LayoutEditor.LH_XOVER)
+                                    || (ttype == LayoutEditor.RH_XOVER))) {
 
                                 TurnoutSelection ts = entry.getValue();
                                 if (ts.getPointA()) {
@@ -6755,7 +6800,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             /*Only check for the second turnout if the type is a double cross over
              otherwise the second turnout is used to throw an additional turnout at
              the same time.*/
-            if (t.getTurnoutType() >= LayoutTurnout.DOUBLE_XOVER) {
+            if (t.getTurnoutType() >= LayoutEditor.DOUBLE_XOVER) {
                 Turnout to2 = t.getSecondTurnout();
                 if (to2 != null) {
                     String uname = to2.getUserName();
@@ -7269,9 +7314,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (b != null) {
             b.decrementUse();
         }
-        if ((o.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                || (o.getTurnoutType() == LayoutTurnout.RH_XOVER)
-                || (o.getTurnoutType() == LayoutTurnout.LH_XOVER)) {
+        if ((o.getTurnoutType() == LayoutEditor.DOUBLE_XOVER)
+                || (o.getTurnoutType() == LayoutEditor.RH_XOVER)
+                || (o.getTurnoutType() == LayoutEditor.LH_XOVER)) {
             LayoutBlock b2 = o.getLayoutBlockB();
             if ((b2 != null) && (b2 != b)) {
                 b2.decrementUse();
