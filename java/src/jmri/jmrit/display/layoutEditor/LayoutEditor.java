@@ -294,24 +294,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public static final int SLIP_LEFT = LayoutTrack.SLIP_LEFT;
     public static final int SLIP_RIGHT = LayoutTrack.SLIP_RIGHT;
     public static final int TURNTABLE_RAY_OFFSET = LayoutTrack.TURNTABLE_RAY_OFFSET; // offset for turntable connection points
-//
-//     // defined constants - link types
-//     public static final int NO_LINK = LayoutTurnout.NO_LINK;
-//     public static final int FIRST_3_WAY = LayoutTurnout.FIRST_3_WAY;    // this turnout is the first turnout of a 3-way
-//     // turnout pair (closest to the throat)
-//     public static final int SECOND_3_WAY = LayoutTurnout.SECOND_3_WAY;  // this turnout is the second turnout of a 3-way
-//     // turnout pair (furthest from the throat)
-//     public static final int THROAT_TO_THROAT = LayoutTurnout.THROAT_TO_THROAT;  // this turnout is one of two throat-to-throat
-//     // turnouts - no signals at throat
-//
-//     // operational instance variables (not saved between sessions)
-//     public static final int UNKNOWN = LayoutTurnout.UNKNOWN;
-//     public static final int STATE_AC = LayoutTurnout.STATE_AC;
-//     public static final int STATE_BD = LayoutTurnout.STATE_BD;
-//     public static final int STATE_AD = LayoutTurnout.STATE_AD;
-//     public static final int STATE_BC = LayoutTurnout.STATE_BC;
 
-    private static double circleRadius = LayoutTurnout.getTurnoutCircleSize();
+    // use these when you need a double; turnoutCircleSize[2] when you need an int
+    // note: these only change when setTurnoutCircleSize is called
+    // using these avoids calling getTurnoutCircleSize() and
+    // the multiply (x2) and the int -> double conversion.
+    private static double circleRadius = getTurnoutCircleSize();
     private static double circleDiameter = 2.0 * circleRadius;
 
     // selection variables

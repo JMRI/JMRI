@@ -236,6 +236,14 @@ public class LayoutTurnout extends LayoutTrack {
     // these are common for all turnouts
     protected static Color turnoutCircleColor = defaultTrackColor; //matches earlier versions
     protected static int turnoutCircleSize = 4;  //matches earlier versions
+    protected static int turnoutCircleSize2 = 2 * turnoutCircleSize;
+
+    // use these when you need a double; turnoutCircleSize[2] when you need an int
+    // note: these only change when setTurnoutCircleSize is called
+    // using these avoids calling getTurnoutCircleSize() and
+    // the multiple (x2) and the int -> double conversion.
+    protected static double circleRadius = turnoutCircleSize;
+    protected static double circleDiameter = 2.0 * circleRadius;
 
     private boolean useBlockSpeed = false;
 
@@ -431,16 +439,14 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public static int getTurnoutCircleSize() {
-        // this is only here to diagnose why the getTurnoutCircleSizeTest is 
-        // failing during the integration tests
-        // (normally I wouldn't commit this but alltest is passing on my machine.)
-        log.info("getTurnoutCircleSize(): {}", turnoutCircleSize);
         return turnoutCircleSize;
     }
 
     public static void setTurnoutCircleSize(int newSize) {
-        log.info("setTurnoutCircleSize({})", newSize);
         turnoutCircleSize = newSize;
+        turnoutCircleSize2 = 2 * turnoutCircleSize;
+        circleRadius = turnoutCircleSize;
+        circleDiameter = 2.0 * circleRadius;
     }
 
     public String getBlockName() {
