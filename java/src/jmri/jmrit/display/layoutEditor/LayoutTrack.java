@@ -56,8 +56,8 @@ public class LayoutTrack {
 
     protected static Color defaultTrackColor = Color.black;
 
-    protected static final double controlPointSize = LayoutEditor.SIZE;
-    protected static final double controlPointSize2 = LayoutEditor.SIZE2;
+    protected static final double controlPointSize = 3.0;   // LayoutEditor.SIZE;
+    protected static final double controlPointSize2 = 2.0 * controlPointSize; // LayoutEditor.SIZE2;
 
     /**
      * constructor method

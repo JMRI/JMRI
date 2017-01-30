@@ -124,24 +124,24 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         }
         Element states = new Element("states");
         Element state = new Element("A-C");
-        state.addContent(new Element("turnout").addContent("" + p.getTurnoutState(LayoutEditor.STATE_AC)));
-        state.addContent(new Element("turnoutB").addContent("" + p.getTurnoutBState(LayoutEditor.STATE_AC)));
+        state.addContent(new Element("turnout").addContent("" + p.getTurnoutState(LayoutSlip.STATE_AC)));
+        state.addContent(new Element("turnoutB").addContent("" + p.getTurnoutBState(LayoutSlip.STATE_AC)));
         states.addContent(state);
 
         state = new Element("A-D");
-        state.addContent(new Element("turnout").addContent("" + p.getTurnoutState(LayoutEditor.STATE_AD)));
-        state.addContent(new Element("turnoutB").addContent("" + p.getTurnoutBState(LayoutEditor.STATE_AD)));
+        state.addContent(new Element("turnout").addContent("" + p.getTurnoutState(LayoutSlip.STATE_AD)));
+        state.addContent(new Element("turnoutB").addContent("" + p.getTurnoutBState(LayoutSlip.STATE_AD)));
         states.addContent(state);
 
         state = new Element("B-D");
-        state.addContent(new Element("turnout").addContent("" + p.getTurnoutState(LayoutEditor.STATE_BD)));
-        state.addContent(new Element("turnoutB").addContent("" + p.getTurnoutBState(LayoutEditor.STATE_BD)));
+        state.addContent(new Element("turnout").addContent("" + p.getTurnoutState(LayoutSlip.STATE_BD)));
+        state.addContent(new Element("turnoutB").addContent("" + p.getTurnoutBState(LayoutSlip.STATE_BD)));
         states.addContent(state);
 
-        if (p.getSlipType() == LayoutEditor.DOUBLE_SLIP) {
+        if (p.getSlipType() == LayoutSlip.DOUBLE_SLIP) {
             state = new Element("B-C");
-            state.addContent(new Element("turnout").addContent("" + p.getTurnoutState(LayoutEditor.STATE_BC)));
-            state.addContent(new Element("turnoutB").addContent("" + p.getTurnoutBState(LayoutEditor.STATE_BC)));
+            state.addContent(new Element("turnout").addContent("" + p.getTurnoutState(LayoutSlip.STATE_BC)));
+            state.addContent(new Element("turnoutB").addContent("" + p.getTurnoutBState(LayoutSlip.STATE_BC)));
             states.addContent(state);
         }
         element.addContent(states);
@@ -175,7 +175,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert layoutslip center  attribute");
         }
-        int type = LayoutEditor.SINGLE_SLIP;
+        int type = LayoutSlip.SINGLE_SLIP;
         try {
             type = element.getAttribute("slipType").getIntValue();
         } catch (org.jdom2.DataConversionException e) {
@@ -250,25 +250,25 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
             Element state = element.getChild("states");
             if (state.getChild("A-C") != null) {
                 Element ac = state.getChild("A-C");
-                l.setTurnoutStates(LayoutEditor.STATE_AC,
+                l.setTurnoutStates(LayoutSlip.STATE_AC,
                         ac.getChild("turnout").getText(),
                         ac.getChild("turnoutB").getText());
             }
             if (state.getChild("A-D") != null) {
                 Element ad = state.getChild("A-D");
-                l.setTurnoutStates(LayoutEditor.STATE_AD,
+                l.setTurnoutStates(LayoutSlip.STATE_AD,
                         ad.getChild("turnout").getText(),
                         ad.getChild("turnoutB").getText());
             }
             if (state.getChild("B-D") != null) {
                 Element bd = state.getChild("B-D");
-                l.setTurnoutStates(LayoutEditor.STATE_BD,
+                l.setTurnoutStates(LayoutSlip.STATE_BD,
                         bd.getChild("turnout").getText(),
                         bd.getChild("turnoutB").getText());
             }
             if (state.getChild("B-C") != null) {
                 Element bc = state.getChild("B-C");
-                l.setTurnoutStates(LayoutEditor.STATE_BC,
+                l.setTurnoutStates(LayoutSlip.STATE_BC,
                         bc.getChild("turnout").getText(),
                         bc.getChild("turnoutB").getText());
             }

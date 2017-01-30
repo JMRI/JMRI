@@ -253,109 +253,63 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
 
     // size of point boxes
-    @Deprecated
-    public static final double SIZE = 3.0;
-    @Deprecated
-    public static final double SIZE2 = SIZE * 2.;  // must be twice SIZE
+    private static final double SIZE = 3.0;
+    private static final double SIZE2 = SIZE * 2.;  // must be twice SIZE
 
     // defined constants - turnout types
-    @Deprecated
     public static final int RH_TURNOUT = LayoutTurnout.RH_TURNOUT;
-    @Deprecated
     public static final int LH_TURNOUT = LayoutTurnout.LH_TURNOUT;
-    @Deprecated
     public static final int WYE_TURNOUT = LayoutTurnout.WYE_TURNOUT;
-    @Deprecated
     public static final int DOUBLE_XOVER = LayoutTurnout.DOUBLE_XOVER;
-    @Deprecated
     public static final int RH_XOVER = LayoutTurnout.RH_XOVER;
-    @Deprecated
     public static final int LH_XOVER = LayoutTurnout.LH_XOVER;
-    @Deprecated
     public static final int SINGLE_SLIP = LayoutSlip.SINGLE_SLIP;
-    @Deprecated
     public static final int DOUBLE_SLIP = LayoutSlip.DOUBLE_SLIP;
 
         // connection types
-    @Deprecated
     public static final int NONE = LayoutTrack.NONE;
-    @Deprecated
     public static final int POS_POINT = LayoutTrack.POS_POINT;
-    @Deprecated
     public static final int TURNOUT_A = LayoutTrack.TURNOUT_A;  // throat for RH, LH, and WYE turnouts
-    @Deprecated
     public static final int TURNOUT_B = LayoutTrack.TURNOUT_B;  // continuing route for RH or LH turnouts
-    @Deprecated
     public static final int TURNOUT_C = LayoutTrack.TURNOUT_C;  // diverging route for RH or LH turnouts
-    @Deprecated
     public static final int TURNOUT_D = LayoutTrack.TURNOUT_D;  // double-crossover or single crossover only
-    @Deprecated
     public static final int LEVEL_XING_A = LayoutTrack.LEVEL_XING_A;
-    @Deprecated
     public static final int LEVEL_XING_B = LayoutTrack.LEVEL_XING_B;
-    @Deprecated
     public static final int LEVEL_XING_C = LayoutTrack.LEVEL_XING_C;
-    @Deprecated
     public static final int LEVEL_XING_D = LayoutTrack.LEVEL_XING_D;
-    @Deprecated
     public static final int TRACK = LayoutTrack.TRACK;
-    @Deprecated
     public static final int TURNOUT_CENTER = LayoutTrack.TURNOUT_CENTER; // non-connection points should be last
-    @Deprecated
     public static final int LEVEL_XING_CENTER = LayoutTrack.LEVEL_XING_CENTER;
-    @Deprecated
     public static final int TURNTABLE_CENTER = LayoutTrack.TURNTABLE_CENTER;
-    @Deprecated
     public static final int LAYOUT_POS_LABEL = LayoutTrack.LAYOUT_POS_LABEL;
-    @Deprecated
     public static final int LAYOUT_POS_JCOMP = LayoutTrack.LAYOUT_POS_JCOMP;
-    @Deprecated
     public static final int MULTI_SENSOR = LayoutTrack.MULTI_SENSOR;
-    @Deprecated
     public static final int MARKER = LayoutTrack.MARKER;
-    @Deprecated
     public static final int TRACK_CIRCLE_CENTRE = LayoutTrack.TRACK_CIRCLE_CENTRE;
-    @Deprecated
     public static final int SLIP_CENTER = LayoutTrack.SLIP_CENTER; //
-    @Deprecated
     public static final int SLIP_A = LayoutTrack.SLIP_A; // offset for slip connection points
-    @Deprecated
     public static final int SLIP_B = LayoutTrack.SLIP_B; // offset for slip connection points
-    @Deprecated
     public static final int SLIP_C = LayoutTrack.SLIP_C; // offset for slip connection points
-    @Deprecated
     public static final int SLIP_D = LayoutTrack.SLIP_D; // offset for slip connection points
-    @Deprecated
     public static final int SLIP_LEFT = LayoutTrack.SLIP_LEFT;
-    @Deprecated
     public static final int SLIP_RIGHT = LayoutTrack.SLIP_RIGHT;
-    @Deprecated
     public static final int TURNTABLE_RAY_OFFSET = LayoutTrack.TURNTABLE_RAY_OFFSET; // offset for turntable connection points
-
-    // defined constants - link types
-    @Deprecated
-    public static final int NO_LINK = LayoutTurnout.NO_LINK;
-    @Deprecated
-    public static final int FIRST_3_WAY = LayoutTurnout.FIRST_3_WAY;    // this turnout is the first turnout of a 3-way
-    // turnout pair (closest to the throat)
-    @Deprecated
-    public static final int SECOND_3_WAY = LayoutTurnout.SECOND_3_WAY;  // this turnout is the second turnout of a 3-way
-    // turnout pair (furthest from the throat)
-    @Deprecated
-    public static final int THROAT_TO_THROAT = LayoutTurnout.THROAT_TO_THROAT;  // this turnout is one of two throat-to-throat
-    // turnouts - no signals at throat
-
-    // operational instance variables (not saved between sessions)
-    @Deprecated
-    public static final int UNKNOWN = LayoutTurnout.UNKNOWN;
-    @Deprecated
-    public static final int STATE_AC = LayoutTurnout.STATE_AC;
-    @Deprecated
-    public static final int STATE_BD = LayoutTurnout.STATE_BD;
-    @Deprecated
-    public static final int STATE_AD = LayoutTurnout.STATE_AD;
-    @Deprecated
-    public static final int STATE_BC = LayoutTurnout.STATE_BC;
+//
+//     // defined constants - link types
+//     public static final int NO_LINK = LayoutTurnout.NO_LINK;
+//     public static final int FIRST_3_WAY = LayoutTurnout.FIRST_3_WAY;    // this turnout is the first turnout of a 3-way
+//     // turnout pair (closest to the throat)
+//     public static final int SECOND_3_WAY = LayoutTurnout.SECOND_3_WAY;  // this turnout is the second turnout of a 3-way
+//     // turnout pair (furthest from the throat)
+//     public static final int THROAT_TO_THROAT = LayoutTurnout.THROAT_TO_THROAT;  // this turnout is one of two throat-to-throat
+//     // turnouts - no signals at throat
+//
+//     // operational instance variables (not saved between sessions)
+//     public static final int UNKNOWN = LayoutTurnout.UNKNOWN;
+//     public static final int STATE_AC = LayoutTurnout.STATE_AC;
+//     public static final int STATE_BD = LayoutTurnout.STATE_BD;
+//     public static final int STATE_AD = LayoutTurnout.STATE_AD;
+//     public static final int STATE_BC = LayoutTurnout.STATE_BC;
 
     private static double circleRadius = LayoutTurnout.getTurnoutCircleSize();
     private static double circleDiameter = 2.0 * circleRadius;

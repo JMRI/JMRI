@@ -431,6 +431,9 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public static int getTurnoutCircleSize() {
+        // this is only here to diagnose why the getTurnoutCircleSizeTest is 
+        // failing during the integration tests
+        // (normally I wouldn't commit this but alltest is passing on my machine.)
         log.info("getTurnoutCircleSize(): {}", turnoutCircleSize);
         return turnoutCircleSize;
     }
@@ -1136,13 +1139,13 @@ public class LayoutTurnout extends LayoutTrack {
 
     public Object getConnection(int location) throws jmri.JmriException {
         switch (location) {
-            case TURNOUT_A:
+            case LayoutEditor.TURNOUT_A:
                 return connectA;
-            case TURNOUT_B:
+            case LayoutEditor.TURNOUT_B:
                 return connectB;
-            case TURNOUT_C:
+            case LayoutEditor.TURNOUT_C:
                 return connectC;
-            case TURNOUT_D:
+            case LayoutEditor.TURNOUT_D:
                 return connectD;
         }
         log.error("Invalid Point Type " + location); //I18IN
@@ -1150,21 +1153,21 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setConnection(int location, Object o, int type) throws jmri.JmriException {
-        if ((type != TRACK) && (type != NONE)) {
+        if ((type != LayoutEditor.TRACK) && (type != LayoutEditor.NONE)) {
             log.error("unexpected type of connection to layoutturnout - " + type);
             throw new jmri.JmriException("unexpected type of connection to layoutturnout - " + type);
         }
         switch (location) {
-            case TURNOUT_A:
+            case LayoutEditor.TURNOUT_A:
                 connectA = o;
                 break;
-            case TURNOUT_B:
+            case LayoutEditor.TURNOUT_B:
                 connectB = o;
                 break;
-            case TURNOUT_C:
+            case LayoutEditor.TURNOUT_C:
                 connectC = o;
                 break;
-            case TURNOUT_D:
+            case LayoutEditor.TURNOUT_D:
                 connectD = o;
                 break;
             default:
@@ -1175,28 +1178,28 @@ public class LayoutTurnout extends LayoutTrack {
 
     public void setConnectA(Object o, int type) {
         connectA = o;
-        if ((type != TRACK) && (type != NONE)) {
+        if ((type != LayoutEditor.TRACK) && (type != LayoutEditor.NONE)) {
             log.error("unexpected type of A connection to layoutturnout - " + type);
         }
     }
 
     public void setConnectB(Object o, int type) {
         connectB = o;
-        if ((type != TRACK) && (type != NONE)) {
+        if ((type != LayoutEditor.TRACK) && (type != LayoutEditor.NONE)) {
             log.error("unexpected type of B connection to layoutturnout - " + type);
         }
     }
 
     public void setConnectC(Object o, int type) {
         connectC = o;
-        if ((type != TRACK) && (type != NONE)) {
+        if ((type != LayoutEditor.TRACK) && (type != LayoutEditor.NONE)) {
             log.error("unexpected type of C connection to layoutturnout - " + type);
         }
     }
 
     public void setConnectD(Object o, int type) {
         connectD = o;
-        if ((type != TRACK) && (type != NONE)) {
+        if ((type != LayoutEditor.TRACK) && (type != LayoutEditor.NONE)) {
             log.error("unexpected type of D connection to layoutturnout - " + type);
         }
     }
