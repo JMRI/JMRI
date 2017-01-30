@@ -7,10 +7,8 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
@@ -249,6 +247,8 @@ public class LayoutTurnout extends LayoutTrack {
     public LayoutTurnout(String id, int t, Point2D c, double rot,
             double xFactor, double yFactor, LayoutEditor myPanel, int v) {
         super();
+
+        instance = this;
 
         namedTurnout = null;
         turnoutName = "";
@@ -2643,16 +2643,16 @@ public class LayoutTurnout extends LayoutTrack {
 
     void turnoutEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newBlockName = blockNameComboBox.getSelectedDisplayName();
-        newBlockName = (null != newBlockName) ? newBlockName.trim() : "";
-        if (!blockName.equals(newBlockName)) {
+        String newName = (String) blockNameComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
+        if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if ((block != null) && (block != blockB) && (block != blockC)
                     && (block != blockD)) {
                 block.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockName = newBlockName;
+            blockName = newName;
             try {
                 block = layoutEditor.provideLayoutBlock(blockName);
             } catch (IllegalArgumentException ex) {
@@ -2680,16 +2680,16 @@ public class LayoutTurnout extends LayoutTrack {
 
     void turnoutEditBlockBPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newBlockName = blockBNameComboBox.getSelectedDisplayName();
-        newBlockName = (null != newBlockName) ? newBlockName.trim() : "";
-        if (!blockBName.equals(newBlockName)) {
+        String newName = (String) blockBNameComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
+        if (!blockBName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if ((blockB != null) && (block != blockB) && (blockB != blockC)
                     && (blockB != blockD)) {
                 blockB.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockBName = newBlockName;
+            blockBName = newName;
             try {
                 blockB = layoutEditor.provideLayoutBlock(blockBName);
             } catch (IllegalArgumentException ex) {
@@ -2717,16 +2717,16 @@ public class LayoutTurnout extends LayoutTrack {
 
     void turnoutEditBlockCPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newBlockName = blockCNameComboBox.getSelectedDisplayName();
-        newBlockName = (null != newBlockName) ? newBlockName.trim() : "";
-        if (!blockCName.equals(newBlockName)) {
+        String newName = (String) blockCNameComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
+        if (!blockCName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if ((blockC != null) && (block != blockC) && (blockB != blockC)
                     && (blockC != blockD)) {
                 blockC.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockCName = newBlockName;
+            blockCName = newName;
             try {
                 blockC = layoutEditor.provideLayoutBlock(blockCName);
             } catch (IllegalArgumentException ex) {
@@ -2754,16 +2754,16 @@ public class LayoutTurnout extends LayoutTrack {
 
     void turnoutEditBlockDPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newBlockName = blockDNameComboBox.getSelectedDisplayName();
-        newBlockName = (null != blockName) ? blockName.trim() : "";
-        if (!blockDName.equals(newBlockName)) {
+        String newName = (String) blockDNameComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
+        if (!blockDName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if ((blockD != null) && (block != blockD) && (blockB != blockD)
                     && (blockC != blockD)) {
                 blockD.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockDName = newBlockName;
+            blockDName = newName;
             try {
                 blockD = layoutEditor.provideLayoutBlock(blockDName);
             } catch (IllegalArgumentException ex) {
@@ -2791,7 +2791,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     void turnoutEditDonePressed(ActionEvent a) {
         // check if Turnout changed
-        String newName = firstTurnoutComboBox.getSelectedDisplayName();
+        String newName = (String) firstTurnoutComboBox.getEditor().getItem();
         newName = (null != newName) ? newName.trim() : "";
         if (!turnoutName.equals(newName)) {
             // turnout has changed
@@ -2806,12 +2806,12 @@ public class LayoutTurnout extends LayoutTrack {
         }
 
         if (additionalTurnout.isSelected()) {
-            String newTurnoutName = secondTurnoutComboBox.getSelectedDisplayName();
-            newTurnoutName = (null != newTurnoutName) ? newTurnoutName.trim() : "";
-            if (!secondTurnoutName.equals(newTurnoutName)) {
+            newName = (String) secondTurnoutComboBox.getEditor().getItem();
+            newName = (null != newName) ? newName.trim() : "";
+            if (!secondTurnoutName.equals(newName)) {
                 if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
                     // turnout has changed
-                    newName = newTurnoutName;
+                    newName = newName;
                     if (layoutEditor.validatePhysicalTurnout(newName,
                             editLayoutTurnoutFrame)) {
                         setSecondTurnout(newName);
@@ -2822,7 +2822,7 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                     needRedraw = true;
                 } else {
-                    setSecondTurnout(newTurnoutName);
+                    setSecondTurnout(newName);
                 }
             }
         } else {
@@ -2836,16 +2836,16 @@ public class LayoutTurnout extends LayoutTrack {
             }
         }
         // check if Block changed
-        String newBlockName = blockNameComboBox.getSelectedDisplayName();
-        newBlockName = (null != newBlockName) ? newBlockName.trim() : "";
-        if (!blockName.equals(newBlockName)) {
+        newName = (String) blockNameComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
+        if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if ((block != null) && (block != blockB) && (block != blockC)
                     && (block != blockD)) {
                 block.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockName = newBlockName;
+            blockName = newName;
             try {
                 block = layoutEditor.provideLayoutBlock(blockName);
             } catch (IllegalArgumentException ex) {
@@ -2860,16 +2860,16 @@ public class LayoutTurnout extends LayoutTrack {
         }
         if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
             // check if Block 2 changed
-            newBlockName = blockBNameComboBox.getSelectedDisplayName();
-            newBlockName = (null != newBlockName) ? newBlockName.trim() : "";
-            if (!blockBName.equals(newBlockName)) {
+            newName = (String) blockBNameComboBox.getEditor().getItem();
+            newName = (null != newName) ? newName.trim() : "";
+            if (!blockBName.equals(newName)) {
                 // block has changed, if old block exists, decrement use
                 if ((blockB != null) && (block != blockB) && (blockB != blockC)
                         && (blockB != blockD)) {
                     blockB.decrementUse();
                 }
                 // get new block, or null if block has been removed
-                blockBName = newBlockName;
+                blockBName = newName;
                 try {
                     blockB = layoutEditor.provideLayoutBlock(blockBName);
                 } catch (IllegalArgumentException ex) {
@@ -2884,16 +2884,16 @@ public class LayoutTurnout extends LayoutTrack {
                 needsBlockUpdate = true;
             }
             // check if Block 3 changed
-            newBlockName = blockCNameComboBox.getSelectedDisplayName();
-            newBlockName = (null != newBlockName) ? newBlockName.trim() : "";
-            if (!blockCName.equals(newBlockName)) {
+            newName = (String) blockCNameComboBox.getEditor().getItem();
+            newName = (null != newName) ? newName.trim() : "";
+            if (!blockCName.equals(newName)) {
                 // block has changed, if old block exists, decrement use
                 if ((blockC != null) && (block != blockC) && (blockB != blockC)
                         && (blockC != blockD)) {
                     blockC.decrementUse();
                 }
                 // get new block, or null if block has been removed
-                blockCName = newBlockName;
+                blockCName = newName;
                 try {
                     blockC = layoutEditor.provideLayoutBlock(blockCName);
                 } catch (IllegalArgumentException ex) {
@@ -2909,16 +2909,16 @@ public class LayoutTurnout extends LayoutTrack {
                 needsBlockUpdate = true;
             }
             // check if Block 4 changed
-            newBlockName = blockDNameComboBox.getSelectedDisplayName();
-            newBlockName = (null != newBlockName) ? newBlockName.trim() : "";
-            if (!blockDName.equals(newBlockName)) {
+            newName = (String) blockDNameComboBox.getEditor().getItem();
+            newName = (null != newName) ? newName.trim() : "";
+            if (!blockDName.equals(newName)) {
                 // block has changed, if old block exists, decrement use
                 if ((blockD != null) && (block != blockD) && (blockB != blockD)
                         && (blockC != blockD)) {
                     blockD.decrementUse();
                 }
                 // get new block, or null if block has been removed
-                blockDName = newBlockName;
+                blockDName = newName;
                 try {
                     blockD = layoutEditor.provideLayoutBlock(blockDName);
                 } catch (IllegalArgumentException ex) {
@@ -3784,20 +3784,12 @@ public class LayoutTurnout extends LayoutTrack {
     }   // draw(Graphics2D g2)
 
     public void drawTurnoutCircle(Graphics2D g2) {
-        double circleRadius = SIZE * turnoutCircleSize;
-        double circleDiameter = 2.0 * circleRadius;
         g2.setColor(turnoutCircleColor != null ? turnoutCircleColor : defaultTrackColor);
-        g2.draw(new Ellipse2D.Double(
-                center.getX() - circleRadius, center.getY() - circleRadius, circleDiameter, circleDiameter));
+        g2.draw(layoutEditor.turnoutCircleAt(center));
     }
 
     public void drawTurnoutRect(Graphics2D g2) {
-        g2.setColor(turnoutCircleColor != null ? turnoutCircleColor : defaultTrackColor);
-
-        double circleRadius = SIZE * turnoutCircleSize;
-        double circleDiameter = 2.0 * circleRadius;
-        g2.draw(new Ellipse2D.Double(
-                center.getX() - circleRadius, center.getY() - circleRadius, circleDiameter, circleDiameter));
+        drawTurnoutCircle(g2);
 
         Point2D pt = getCoordsA();
         if (type >= DOUBLE_XOVER && type <= LH_XOVER) {
@@ -3813,7 +3805,7 @@ public class LayoutTurnout extends LayoutTrack {
                 g2.setColor(Color.green);
             }
         }
-        g2.draw(new Rectangle2D.Double(pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
+        g2.draw(LayoutEditor.controlPointRectAt(pt));
 
         pt = getCoordsB();
         if (getConnectB() == null) {
@@ -3821,7 +3813,7 @@ public class LayoutTurnout extends LayoutTrack {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(new Rectangle2D.Double(pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
+        g2.draw(LayoutEditor.controlPointRectAt(pt));
 
         pt = getCoordsC();
         if (getConnectC() == null) {
@@ -3829,7 +3821,7 @@ public class LayoutTurnout extends LayoutTrack {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(new Rectangle2D.Double(pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
+        g2.draw(LayoutEditor.controlPointRectAt(pt));
         if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
             pt = getCoordsD();
             if (getConnectD() == null) {
@@ -3837,7 +3829,7 @@ public class LayoutTurnout extends LayoutTrack {
             } else {
                 g2.setColor(Color.green);
             }
-            g2.draw(new Rectangle2D.Double(pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
+            g2.draw(LayoutEditor.controlPointRectAt(pt));
         }
     }
 

@@ -12,10 +12,8 @@ import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
@@ -1066,10 +1064,10 @@ public class LayoutSlip extends LayoutTurnout {
     TestState testPanel;
 
     void slipEditDonePressed(ActionEvent a) {
-        if (!turnoutName.equals(turnoutAComboBox.getSelectedDisplayName())) {
-            String newName = turnoutAComboBox.getSelectedDisplayName();
-            if (layoutEditor.validatePhysicalTurnout(newName,
-                    editLayoutTurnoutFrame)) {
+        String newName = (String) turnoutAComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
+        if (!turnoutName.equals(newName)) {
+            if (layoutEditor.validatePhysicalTurnout(newName, editLayoutTurnoutFrame)) {
                 setTurnout(newName);
             } else {
                 namedTurnout = null;
@@ -1077,8 +1075,9 @@ public class LayoutSlip extends LayoutTurnout {
             }
             needRedraw = true;
         }
-        if (!turnoutBName.equals(turnoutBComboBox.getSelectedDisplayName())) {
-            String newName = turnoutBComboBox.getSelectedDisplayName();
+        newName = (String) turnoutBComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
+        if (!turnoutBName.equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName,
                     editLayoutTurnoutFrame)) {
                 setTurnoutB(newName);
@@ -1088,15 +1087,15 @@ public class LayoutSlip extends LayoutTurnout {
             }
             needRedraw = true;
         }
-        String newBlockName = blockNameComboBox.getSelectedDisplayName();
-        newBlockName = (null != newBlockName) ? newBlockName.trim() : "";
-        if (!blockName.equals(newBlockName)) {
+        newName = (String) blockNameComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
+        if (!blockName.equals(newName)) {
             // block 1 has changed, if old block exists, decrement use
             if ((block != null)) {
                 block.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockName = newBlockName;
+            blockName = newName;
 
             try {
                 block = layoutEditor.provideLayoutBlock(blockName);
@@ -1335,42 +1334,31 @@ public class LayoutSlip extends LayoutTurnout {
 
     public void drawSlipCircles(Graphics2D g2) {
         g2.setColor(getTurnoutCircleColor() != null ? getTurnoutCircleColor() : defaultTrackColor);
-        double circleRadius = SIZE * turnoutCircleSize;
-        double circleDiameter = 2.0 * circleRadius;
 
         Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
-        Double leftFract = circleRadius / center.distance(leftCenter);
+        Double leftFract = turnoutCircleSize / center.distance(leftCenter);
         Point2D leftCircleCenter = lerp(center, leftCenter, leftFract);
-
-        g2.draw(new Ellipse2D.Double(leftCircleCenter.getX() - circleRadius,
-            leftCircleCenter.getY() - circleRadius, circleDiameter, circleDiameter));
+        g2.draw(layoutEditor.turnoutCircleAt(leftCircleCenter));
 
         Point2D rightCenter = midpoint(getCoordsC(), getCoordsD());
-        Double rightFract = circleRadius / center.distance(rightCenter);
+        Double rightFract = turnoutCircleSize / center.distance(rightCenter);
         Point2D rightCircleCenter = lerp(center, rightCenter, rightFract);
-        g2.draw(new Ellipse2D.Double(rightCircleCenter.getX() - circleRadius,
-            rightCircleCenter.getY() - circleRadius, circleDiameter, circleDiameter));
+        g2.draw(layoutEditor.turnoutCircleAt(rightCircleCenter));
     }
 
     public void drawSlipRect(Graphics2D g2) {
         // draw east/west turnout (control) circles
         g2.setColor(turnoutCircleColor != null ? turnoutCircleColor : defaultTrackColor);
 
-        double circleRadius = SIZE * turnoutCircleSize;
-        double circleDiameter = 2.0 * circleRadius;
-
         Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
-        Double leftFract = circleRadius / center.distance(leftCenter);
+        Double leftFract = turnoutCircleSize / center.distance(leftCenter);
         Point2D leftCircleCenter = lerp(center, leftCenter, leftFract);
-
-        g2.draw(new Ellipse2D.Double(leftCircleCenter.getX() - circleRadius,
-            leftCircleCenter.getY() - circleRadius, circleDiameter, circleDiameter));
+        g2.draw(layoutEditor.turnoutCircleAt(leftCircleCenter));
 
         Point2D rightCenter = midpoint(getCoordsC(), getCoordsD());
-        Double rightFract = circleRadius / center.distance(rightCenter);
+        Double rightFract = turnoutCircleSize / center.distance(rightCenter);
         Point2D rightCircleCenter = lerp(center, rightCenter, rightFract);
-        g2.draw(new Ellipse2D.Double(rightCircleCenter.getX() - circleRadius,
-            rightCircleCenter.getY() - circleRadius, circleDiameter, circleDiameter));
+        g2.draw(layoutEditor.turnoutCircleAt(rightCircleCenter));
 
         Point2D pt = getCoordsA();
         if (getConnectA() == null) {
@@ -1378,7 +1366,7 @@ public class LayoutSlip extends LayoutTurnout {
         } else {
             g2.setColor(Color.blue);
         }
-        g2.draw(new Rectangle2D.Double(pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
+        g2.draw(LayoutEditor.controlPointRectAt(pt));
 
         pt = getCoordsB();
         if (getConnectB() == null) {
@@ -1386,7 +1374,7 @@ public class LayoutSlip extends LayoutTurnout {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(new Rectangle2D.Double(pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
+        g2.draw(LayoutEditor.controlPointRectAt(pt));
 
         pt = getCoordsC();
         if (getConnectC() == null) {
@@ -1394,7 +1382,7 @@ public class LayoutSlip extends LayoutTurnout {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(new Rectangle2D.Double(pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
+        g2.draw(LayoutEditor.controlPointRectAt(pt));
 
         pt = getCoordsD();
         if (getConnectD() == null) {
@@ -1402,8 +1390,9 @@ public class LayoutSlip extends LayoutTurnout {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(new Rectangle2D.Double(pt.getX() - SIZE, pt.getY() - SIZE, SIZE2, SIZE2));
+        g2.draw(LayoutEditor.controlPointRectAt(pt));
     }   // public void drawSlipRects(Graphics2D g2)
+
     static class TurnoutState {
 
         int turnoutA = Turnout.CLOSED;

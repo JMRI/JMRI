@@ -16,13 +16,11 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.awt.Stroke;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -252,6 +250,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     // grid size in pixels
     private int gridSize = 10;
+
+
+    // size of point boxes
+    @Deprecated
+    public static final double SIZE = 3.0;
+    @Deprecated
+    public static final double SIZE2 = SIZE * 2.;  // must be twice SIZE
+
+    private static double circleRadius = LayoutTurnout.getTurnoutCircleSize();
+    private static double circleDiameter = 2.0 * circleRadius;
 
     // selection variables
     private boolean selectionActive = false;
@@ -772,15 +780,23 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // change the block name
         blockIDComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
-                String blockName = blockIDComboBox.getSelectedDisplayName();
-                blockName = (null != blockName) ? blockName.trim() : "";
-                LayoutBlock b = provideLayoutBlock(blockName);
+                String newName = (String) blockIDComboBox.getEditor().getItem();
+                newName = (null != newName) ? newName.trim() : "";
+                LayoutBlock b = provideLayoutBlock(newName);
                 if (b != null) {
                     // if there is an occupancy sensor assigned already
                     String sensorName = b.getOccupancySensorName();
                     if (sensorName.length() > 0) {
                         // update the block sensor ComboBox
                         blockSensorComboBox.getEditor().setItem(sensorName);
+                    }
+                    int count = blockIDComboBox.getItemCount();
+                    for (int i = 0; i < count; i++) {
+                        String blockNameI = blockIDComboBox.getItemAt(i);
+                        LayoutBlock bI = provideLayoutBlock(blockNameI);
+                        if (bI != null) {
+                            bI.setUseExtraColor(newName.equals(blockNameI));
+                        }
                     }
                 }
             }
@@ -2941,11 +2957,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // here when all numbers read in - translation if entered
         if ((xTranslation != 0.0F) || (yTranslation != 0.0F)) {
             // set up selection rectangle
-            Rectangle2D selectRect = new Rectangle2D.Double(selectionX, selectionY,
-                    selectionWidth, selectionHeight);
+            Rectangle2D selectRect = new Rectangle2D.Double(selectionX, selectionY, selectionWidth, selectionHeight);
             // set up undo information
-            undoRect = new Rectangle2D.Double(selectionX + xTranslation, selectionY + yTranslation,
-                    selectionWidth, selectionHeight);
+            undoRect = new Rectangle2D.Double(selectionX + xTranslation, selectionY + yTranslation, selectionWidth, selectionHeight);
             undoDeltaX = -xTranslation;
             undoDeltaY = -yTranslation;
             canUndoMoveSelection = true;
@@ -3323,8 +3337,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             final int desiredSize = size;
 
             public void actionPerformed(ActionEvent e) {
-                if (LayoutTurnout.getTurnoutCircleSize() != desiredSize) {
-                    LayoutTurnout.setTurnoutCircleSize(desiredSize);
+                if (getTurnoutCircleSize() != desiredSize) {
+                    setTurnoutCircleSize(desiredSize);
                     setDirty(true);
                     repaint();
                 }
@@ -3333,7 +3347,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
         r.addActionListener(a);
         turnoutCircleSizeButtonGroup.add(r);
-        if (LayoutTurnout.getTurnoutCircleSize() == size) {
+        if (getTurnoutCircleSize() == size) {
             r.setSelected(true);
         } else {
             r.setSelected(false);
@@ -3358,7 +3372,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     protected void setOptionMenuTurnoutCircleSize() {
         for (int i = 0; i < turnoutCircleSizeCount; i++) {
-            if (turnoutCircleSizes[i] == LayoutTurnout.getTurnoutCircleSize()) {
+            if (turnoutCircleSizes[i] == getTurnoutCircleSize()) {
                 turnoutCircleSizeMenuItems[i].setSelected(true);
             } else {
                 turnoutCircleSizeMenuItems[i].setSelected(false);
@@ -3491,6 +3505,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         _lastX = _anchorX;
         _lastY = _anchorY;
         calcLocation(event, 0, 0);
+
         if (isEditable()) {
             boolean prevSelectionActive = selectionActive;
             selectionActive = false;
@@ -3590,15 +3605,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 // check if controlling a turnout in edit mode
                 selectedObject = null;
                 if (allControlling()) {
+
                     // check if mouse is on a turnout
                     selectedObject = null;
                     for (LayoutTurnout t : turnoutList) {
                         // check the center point
                         Point2D pt = t.getCoordsCenter();
-                        Rectangle2D r = new Rectangle2D.Double(
-                                pt.getX() - LayoutTrack.SIZE2, pt.getY() - LayoutTrack.SIZE2,
-                                2.0 * LayoutTrack.SIZE2, 2.0 * LayoutTrack.SIZE2);
-                        if (r.contains(dLoc)) {
+                        Double distance = dLoc.distance(pt);
+                        if (distance <= circleRadius) {
                             // mouse was pressed on this turnout
                             selectedObject = t;
                             selectedPointType = LayoutTrack.TURNOUT_CENTER;
@@ -3608,8 +3622,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     for (LayoutSlip sl : slipList) {
                         // check east/west turnout (control) circles?
                         Point2D pt = sl.getCoordsCenter();
-                        double circleRadius = LayoutTrack.SIZE * LayoutTurnout.getTurnoutCircleSize();
-                        double circleDiameter = 2.0 * circleRadius;
 
                         Point2D leftCenter = LayoutTrack.midpoint(sl.getCoordsA(), sl.getCoordsB());
                         Double leftFract = circleRadius / pt.distance(leftCenter);
@@ -3632,8 +3644,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             if (x.getRayConnectOrdered(k) != null) {
                                 // check the A connection point
                                 Point2D pt = x.getRayCoordsOrdered(k);
-                                Rectangle2D r = new Rectangle2D.Double(
-                                        pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2);
+                                Rectangle2D r = controlPointRectAt(pt);
                                 if (r.contains(dLoc)) {
                                     // mouse was pressed on this connection point
                                     selectedObject = x;
@@ -3659,13 +3670,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             // not in edit mode - check if mouse is on a turnout (using wider search range)
             selectedObject = null;
             for (LayoutTurnout t : turnoutList) {
-                // check a circle as large as turnout circle, but at least size 4
-                double circleRadius = Math.max(LayoutTrack.SIZE * LayoutTurnout.getTurnoutCircleSize(), LayoutTrack.SIZE2 * 2.0);
-                //double circleRadius = LayoutTrack.SIZE * LayoutTurnout.getTurnoutCircleSize();
-                double circleDiameter = 2.0 * circleRadius;
                 Point2D pt = t.getCoordsCenter();
-                Rectangle2D r = new Rectangle2D.Double(
-                        pt.getX() - circleRadius, pt.getY() - circleRadius, circleDiameter, circleDiameter);
+                Rectangle2D r = turnoutCircleRectAt(pt);
                 if (r.contains(dLoc)) {
                     // mouse was pressed on this turnout
                     selectedObject = t;
@@ -3676,22 +3682,27 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             for (LayoutSlip sl : slipList) {
                 //check east/west turnout (control) circles?
                 Point2D pt = sl.getCoordsCenter();
-                double circleRadius = Math.max(LayoutTrack.SIZE * LayoutTurnout.getTurnoutCircleSize(), LayoutTrack.SIZE2 * 2.0);
-                double circleDiameter = 2.0 * circleRadius;
 
                 Point2D leftCenter = LayoutTrack.midpoint(sl.getCoordsA(), sl.getCoordsB());
                 Double leftFract = circleRadius / pt.distance(leftCenter);
                 Point2D leftCircleCenter = LayoutTrack.lerp(pt, leftCenter, leftFract);
-                Double leftDistance = dLoc.distance(leftCircleCenter);
+                Rectangle2D leftRectangle = turnoutCircleRectAt(leftCircleCenter);
+                if (leftRectangle.contains(dLoc)) {
+                    // mouse was pressed on this turnout
+                    selectedObject = sl;
+                    selectedPointType = LayoutTrack.SLIP_LEFT;
+                    break;
+                }
 
                 Point2D rightCenter = LayoutTrack.midpoint(sl.getCoordsC(), sl.getCoordsD());
                 Double rightFract = circleRadius / pt.distance(rightCenter);
                 Point2D rightCircleCenter = LayoutTrack.lerp(pt, rightCenter, rightFract);
-                Double rightDistance = dLoc.distance(rightCircleCenter);
-                if ((leftDistance <= circleRadius) || (rightDistance <= circleRadius)) {
+                Rectangle2D rightRectangle = turnoutCircleRectAt(rightCircleCenter);
+
+                if (rightRectangle.contains(dLoc)) {
                     // mouse was pressed on this turnout
                     selectedObject = sl;
-                    selectedPointType = (leftDistance < rightDistance) ? LayoutTrack.SLIP_LEFT : LayoutTrack.SLIP_RIGHT;
+                    selectedPointType = LayoutTrack.SLIP_RIGHT;
                     break;
                 }
             }
@@ -3700,8 +3711,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     if (x.getRayConnectOrdered(k) != null) {
                         // check the A connection point
                         Point2D pt = x.getRayCoordsOrdered(k);
-                        Rectangle2D r = new Rectangle2D.Double(
-                                pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2);
+                        Rectangle2D r = controlPointRectAt(pt);
                         if (r.contains(dLoc)) {
                             // mouse was pressed on this connection point
                             selectedObject = x;
@@ -3743,6 +3753,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     private boolean checkSelect(Point2D loc, boolean requireUnconnected, Object avoid) {
+
         // check positionable points, if any
         for (PositionablePoint p : pointList) {
             if (p != avoid) {
@@ -3751,8 +3762,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         || ((p.getType() == PositionablePoint.ANCHOR)
                         && (p.getConnect2() == null))) {
                     Point2D pt = p.getCoords();
-                    Rectangle2D r = new Rectangle2D.Double(
-                            pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2);
+                    Rectangle2D r = controlPointRectAt(pt);
                     if (r.contains(loc)) {
                         // mouse was pressed on this connection point
                         foundLocation = pt;
@@ -3764,17 +3774,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }
         }
+
         // check turnouts, if any
         for (LayoutTurnout t : turnoutList) {
             if (t != selectedObject) {
                 if (!requireUnconnected) {
                     // check the center point
                     Point2D pt = t.getCoordsCenter();
-                    Rectangle2D r = new Rectangle2D.Double(
-                            pt.getX() - LayoutTrack.SIZE2,
-                            pt.getY() - LayoutTrack.SIZE2,
-                            LayoutTrack.SIZE2 + LayoutTrack.SIZE2,
-                            LayoutTrack.SIZE2 + LayoutTrack.SIZE2);
+                    Rectangle2D r = turnoutCircleRectAt(pt);
                     if (r.contains(loc)) {
                         // mouse was pressed on this connection point
                         foundLocation = pt;
@@ -3787,8 +3794,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!requireUnconnected || (t.getConnectA() == null)) {
                     // check the A connection point
                     Point2D pt = t.getCoordsA();
-                    Rectangle2D r = new Rectangle2D.Double(
-                            pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2);
+                    Rectangle2D r = controlPointRectAt(pt);
                     if (r.contains(loc)) {
                         // mouse was pressed on this connection point
                         foundLocation = pt;
@@ -3801,8 +3807,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!requireUnconnected || (t.getConnectB() == null)) {
                     // check the B connection point
                     Point2D pt = t.getCoordsB();
-                    Rectangle2D r = new Rectangle2D.Double(
-                            pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2);
+                    Rectangle2D r = controlPointRectAt(pt);
                     if (r.contains(loc)) {
                         // mouse was pressed on this connection point
                         foundLocation = pt;
@@ -3815,8 +3820,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!requireUnconnected || (t.getConnectC() == null)) {
                     // check the C connection point
                     Point2D pt = t.getCoordsC();
-                    Rectangle2D r = new Rectangle2D.Double(
-                            pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2);
+                    Rectangle2D r = controlPointRectAt(pt);
                     if (r.contains(loc)) {
                         // mouse was pressed on this connection point
                         foundLocation = pt;
@@ -3831,8 +3835,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         || (t.getTurnoutType() == LayoutTurnout.LH_XOVER)) && (!requireUnconnected || (t.getConnectD() == null))) {
                     // check the D connection point, double crossover turnouts only
                     Point2D pt = t.getCoordsD();
-                    Rectangle2D r = new Rectangle2D.Double(
-                            pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2);
+                    Rectangle2D r = controlPointRectAt(pt);
                     if (r.contains(loc)) {
                         // mouse was pressed on this connection point
                         foundLocation = pt;
@@ -3851,8 +3854,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!requireUnconnected) {
                     // check the center point
                     Point2D pt = x.getCoordsCenter();
-                    Rectangle2D r = new Rectangle2D.Double(
-                            pt.getX() - LayoutTrack.SIZE2, pt.getY() - LayoutTrack.SIZE2, LayoutTrack.SIZE2 + LayoutTrack.SIZE2, LayoutTrack.SIZE2 + LayoutTrack.SIZE2);
+                    Rectangle2D r = turnoutCircleRectAt(pt);
                     if (r.contains(loc)) {
                         // mouse was pressed on this connection point
                         foundLocation = pt;
@@ -3865,8 +3867,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!requireUnconnected || (x.getConnectA() == null)) {
                     // check the A connection point
                     Point2D pt = x.getCoordsA();
-                    Rectangle2D r = new Rectangle2D.Double(
-                            pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2);
+                    Rectangle2D r = controlPointRectAt(pt);
                     if (r.contains(loc)) {
                         // mouse was pressed on this connection point
                         foundLocation = pt;
@@ -3879,8 +3880,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!requireUnconnected || (x.getConnectB() == null)) {
                     // check the B connection point
                     Point2D pt = x.getCoordsB();
-                    Rectangle2D r = new Rectangle2D.Double(
-                            pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2);
+                    Rectangle2D r = controlPointRectAt(pt);
                     if (r.contains(loc)) {
                         // mouse was pressed on this connection point
                         foundLocation = pt;
@@ -3893,8 +3893,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!requireUnconnected || (x.getConnectC() == null)) {
                     // check the C connection point
                     Point2D pt = x.getCoordsC();
-                    Rectangle2D r = new Rectangle2D.Double(
-                            pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2);
+                    Rectangle2D r = controlPointRectAt(pt);
                     if (r.contains(loc)) {
                         // mouse was pressed on this connection point
                         foundLocation = pt;
@@ -3907,8 +3906,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!requireUnconnected || (x.getConnectD() == null)) {
                     // check the D connection point
                     Point2D pt = x.getCoordsD();
-                    Rectangle2D r = new Rectangle2D.Double(
-                            pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2);
+                    Rectangle2D r = controlPointRectAt(pt);
                     if (r.contains(loc)) {
                         // mouse was pressed on this connection point
                         foundLocation = pt;
@@ -3926,8 +3924,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (sl != selectedObject) {
                 if (!requireUnconnected) {
                     Point2D pt = sl.getCoordsCenter();
-                    double circleRadius = Math.min(LayoutTrack.SIZE * LayoutTurnout.getTurnoutCircleSize(), LayoutTrack.SIZE2 * 2.0);
-                    double circleDiameter = 2.0 * circleRadius;
 
                     Point2D leftCenter = LayoutTrack.midpoint(sl.getCoordsA(), sl.getCoordsB());
                     Double leftFract = circleRadius / pt.distance(leftCenter);
@@ -3940,7 +3936,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     Double rightDistance = dLoc.distance(rightCircleCenter);
                     if ((leftDistance <= circleRadius) || (rightDistance <= circleRadius)) {
                         // mouse was pressed on this turnout
-                        // mouse was pressed on this connection point
                         foundLocation = pt;
                         foundObject = sl;
                         foundPointType = (leftDistance < rightDistance) ? LayoutTrack.SLIP_LEFT : LayoutTrack.SLIP_RIGHT;
@@ -3951,8 +3946,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!requireUnconnected || (sl.getConnectA() == null)) {
                     // check the A connection point
                     Point2D pt = sl.getCoordsA();
-                    Rectangle2D r = new Rectangle2D.Double(
-                            pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2);
+                    Rectangle2D r = controlPointRectAt(pt);
                     if (r.contains(loc)) {
                         // mouse was pressed on this connection point
                         foundLocation = pt;
@@ -3965,8 +3959,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!requireUnconnected || (sl.getConnectB() == null)) {
                     // check the B connection point
                     Point2D pt = sl.getCoordsB();
-                    Rectangle2D r = new Rectangle2D.Double(
-                            pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2);
+                    Rectangle2D r = controlPointRectAt(pt);
                     if (r.contains(loc)) {
                         // mouse was pressed on this connection point
                         foundLocation = pt;
@@ -3979,8 +3972,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!requireUnconnected || (sl.getConnectC() == null)) {
                     // check the C connection point
                     Point2D pt = sl.getCoordsC();
-                    Rectangle2D r = new Rectangle2D.Double(
-                            pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2);
+                    Rectangle2D r = controlPointRectAt(pt);
                     if (r.contains(loc)) {
                         // mouse was pressed on this connection point
                         foundLocation = pt;
@@ -3993,8 +3985,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!requireUnconnected || (sl.getConnectD() == null)) {
                     // check the D connection point
                     Point2D pt = sl.getCoordsD();
-                    Rectangle2D r = new Rectangle2D.Double(
-                            pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2);
+                    Rectangle2D r = controlPointRectAt(pt);
                     if (r.contains(loc)) {
                         // mouse was pressed on this connection point
                         foundLocation = pt;
@@ -4012,8 +4003,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!requireUnconnected) {
                     // check the center point
                     Point2D pt = x.getCoordsCenter();
-                    Rectangle2D r = new Rectangle2D.Double(
-                            pt.getX() - LayoutTrack.SIZE2, pt.getY() - LayoutTrack.SIZE2, LayoutTrack.SIZE2 + LayoutTrack.SIZE2, LayoutTrack.SIZE2 + LayoutTrack.SIZE2);
+                    Rectangle2D r = turnoutCircleRectAt(pt);
                     if (r.contains(loc)) {
                         // mouse was pressed on this center point
                         foundLocation = pt;
@@ -4026,8 +4016,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 for (int k = 0; k < x.getNumberRays(); k++) {
                     if (!requireUnconnected || (x.getRayConnectOrdered(k) == null)) {
                         Point2D pt = x.getRayCoordsOrdered(k);
-                        Rectangle2D r = new Rectangle2D.Double(
-                                pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2);
+                        Rectangle2D r = controlPointRectAt(pt);
                         if (r.contains(loc)) {
                             // mouse was pressed on this connection point
                             foundLocation = pt;
@@ -4044,8 +4033,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (TrackSegment t : trackList) {
             if (t.getCircle()) {
                 Point2D pt = t.getCoordsCenterCircle();
-                Rectangle2D r = new Rectangle2D.Double(
-                        pt.getX() - LayoutTrack.SIZE2, pt.getY() - LayoutTrack.SIZE2, LayoutTrack.SIZE2 + LayoutTrack.SIZE2, LayoutTrack.SIZE2 + LayoutTrack.SIZE2);
+                Rectangle2D r = controlPointRectAt(pt);
                 if (r.contains(loc)) {
                     // mouse was pressed on this connection point
                     foundLocation = pt;
@@ -4067,11 +4055,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             Object o = tr.getConnect1();
             int type = tr.getType1();
             if (tr.getCircle()) {
-                Rectangle2D r = new Rectangle2D.Double(
-                        tr.getCentreSegX() - LayoutTrack.SIZE2, tr.getCentreSegY() - LayoutTrack.SIZE2, LayoutTrack.SIZE2 + LayoutTrack.SIZE2, LayoutTrack.SIZE2 + LayoutTrack.SIZE2);
+                Rectangle2D r = turnoutCircleRectAt(
+                        new Point2D.Double(tr.getCentreSegX(), tr.getCentreSegY()));
                 // Test this detection rectangle
-                if (r.contains(loc)) {
-                    // mouse was pressed in detection rectangle
+                if (r.contains(loc)) { // mouse was pressed in detection rectangle
                     return tr;
                 }
             } else {
@@ -4084,8 +4071,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 // construct a detection rectangle
                 double cX = (pt1.getX() + pt2.getX()) / 2.0D;
                 double cY = (pt1.getY() + pt2.getY()) / 2.0D;
-                Rectangle2D r = new Rectangle2D.Double(
-                        cX - LayoutTrack.SIZE2, cY - LayoutTrack.SIZE2, LayoutTrack.SIZE2 + LayoutTrack.SIZE2, LayoutTrack.SIZE2 + LayoutTrack.SIZE2);
+                Rectangle2D r = turnoutCircleRectAt(new Point2D.Double(cX, cY));
                 // Test this detection rectangle
                 if (r.contains(loc)) {
                     // mouse was pressed in detection rectangle
@@ -5443,6 +5429,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (_turnoutSelection == null) {
             _turnoutSelection = new HashMap<LayoutTurnout, TurnoutSelection>();
         }
+
         boolean removed = false;
         for (Map.Entry<LayoutTurnout, TurnoutSelection> entry : _turnoutSelection.entrySet()) {
             LayoutTurnout t = entry.getKey();
@@ -5452,8 +5439,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         || (ttype == LayoutTurnout.LH_XOVER)
                         || (ttype == LayoutTurnout.RH_XOVER))) {
                     TurnoutSelection ts = entry.getValue();
-                    Rectangle2D r = new Rectangle2D.Double(
-                            dLoc.getX() - LayoutTrack.SIZE, dLoc.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2);
+                    Rectangle2D r = controlPointRectAt(dLoc);
                     if (ts.getPointA()) {
                         if (r.contains(t.getCoordsA())) {
                             ts.setPointA(false);
@@ -5493,8 +5479,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (!removed) {
             if (p.getVersion() == 2 && ((p.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
                     || (p.getTurnoutType() == LayoutTurnout.LH_XOVER) || (p.getTurnoutType() == LayoutTurnout.RH_XOVER))) {
-                Rectangle2D r = new Rectangle2D.Double(
-                        dLoc.getX() - LayoutTrack.SIZE, dLoc.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2);
+                Rectangle2D r = controlPointRectAt(dLoc);
                 if (r.contains(p.getCoordsA())) {
                     TurnoutSelection ts;
                     if (!_turnoutSelection.containsKey(p)) {
@@ -6525,14 +6510,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setLink(newTrack, LayoutTrack.TRACK, beginObject, beginPointType);
         setLink(newTrack, LayoutTrack.TRACK, foundObject, foundPointType);
         // check on layout block
-        String blockName = blockIDComboBox.getSelectedDisplayName();
-        blockName = (null != blockName) ? blockName.trim() : "";
-        LayoutBlock b = provideLayoutBlock(blockName);
+        String newName = (String) blockIDComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
+        LayoutBlock b = provideLayoutBlock(newName);
         if (b != null) {
             newTrack.setLayoutBlock(b);
             auxTools.setBlockConnectivityChanged();
             // check on occupancy sensor
-            String sensorName = blockSensorComboBox.getSelectedDisplayName();
+            String sensorName = (String) blockSensorComboBox.getEditor().getItem();
             sensorName = (null != sensorName) ? sensorName.trim() : "";
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -6568,14 +6553,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         xingList.add(o);
         setDirty(true);
         // check on layout block
-        String blockName = blockIDComboBox.getSelectedDisplayName();
-        blockName = (null != blockName) ? blockName.trim() : "";
-        LayoutBlock b = provideLayoutBlock(blockName);
+        String newName = (String) blockIDComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
+        LayoutBlock b = provideLayoutBlock(newName);
         if (b != null) {
             o.setLayoutBlockAC(b);
             o.setLayoutBlockBD(b);
             // check on occupancy sensor
-            String sensorName = blockSensorComboBox.getSelectedDisplayName();
+            String sensorName = (String) blockSensorComboBox.getEditor().getItem();
             sensorName = (null != sensorName) ? sensorName.trim() : "";
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -6624,13 +6609,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setDirty(true);
 
         // check on layout block
-        String blockName = blockIDComboBox.getSelectedDisplayName();
-        blockName = (null != blockName) ? blockName.trim() : "";
-        LayoutBlock b = provideLayoutBlock(blockName);
+        String newName = (String) blockIDComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
+        LayoutBlock b = provideLayoutBlock(newName);
         if (b != null) {
             o.setLayoutBlock(b);
             // check on occupancy sensor
-            String sensorName = blockSensorComboBox.getSelectedDisplayName();
+            String sensorName = (String) blockSensorComboBox.getEditor().getItem();
             sensorName = (null != sensorName) ? sensorName.trim() : "";
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -6641,7 +6626,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
 
-        String turnoutName = turnoutNameComboBox.getSelectedDisplayName();
+        String turnoutName = (String) turnoutNameComboBox.getEditor().getItem();
         turnoutName = (null != turnoutName) ? turnoutName.trim() : "";
         if (validatePhysicalTurnout(turnoutName, this)) {
             // turnout is valid and unique.
@@ -6655,7 +6640,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             turnoutNameComboBox.setSelectedIndex(-1);
         }
 
-        turnoutName = extraTurnoutNameComboBox.getSelectedDisplayName();
+        turnoutName = (String) extraTurnoutNameComboBox.getEditor().getItem();
         turnoutName = (null != turnoutName) ? turnoutName.trim() : "";
         if (validatePhysicalTurnout(turnoutName, this)) {
             // turnout is valid and unique.
@@ -6706,13 +6691,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         turnoutList.add(o);
         setDirty(true);
         // check on layout block
-        String blockName = blockIDComboBox.getSelectedDisplayName();
-        blockName = (null != blockName) ? blockName.trim() : "";
-        LayoutBlock b = provideLayoutBlock(blockName);
+        String newName = (String) blockIDComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
+        LayoutBlock b = provideLayoutBlock(newName);
         if (b != null) {
             o.setLayoutBlock(b);
             // check on occupancy sensor
-            String sensorName = blockSensorComboBox.getSelectedDisplayName();
+            String sensorName = (String) blockSensorComboBox.getEditor().getItem();
             sensorName = (null != sensorName) ? sensorName.trim() : "";
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -6725,7 +6710,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // set default continuing route Turnout State
         o.setContinuingSense(Turnout.CLOSED);
         // check on a physical turnout
-        String turnoutName = turnoutNameComboBox.getSelectedDisplayName();
+        String turnoutName = (String) turnoutNameComboBox.getEditor().getItem();
         turnoutName = (null != turnoutName) ? turnoutName.trim() : "";
         if (validatePhysicalTurnout(turnoutName, this)) {
             // turnout is valid and unique.
@@ -6891,7 +6876,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * LayoutBlockManager if needed.
      */
     public LayoutBlock provideLayoutBlock(String s) {
-        LayoutBlock blk;
+        LayoutBlock blk = null;
         if (s.length() < 1) {
             if (!autoAssignBlocks) {
                 // nothing entered
@@ -6902,12 +6887,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     log.error("Unable to create a layout block");
                     return null;
                 }
-                // initialize the new block
-                blk.initializeLayoutBlock();
-                blk.initializeLayoutBlockRouting();
-                blk.setBlockTrackColor(defaultTrackColor);
-                blk.setBlockOccupiedColor(defaultOccupiedTrackColor);
-                blk.setBlockExtraColor(defaultAlternativeTrackColor);
             }
         } else {
             // check if this Layout Block already exists
@@ -6917,20 +6896,21 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (blk == null) {
                     log.error("Failure to create LayoutBlock '" + s + "'.");
                     return null;
-                } else {
-                    // initialize the new block
-                    blk.initializeLayoutBlock();
-                    blk.initializeLayoutBlockRouting();
-                    blk.setBlockTrackColor(defaultTrackColor);
-                    blk.setBlockOccupiedColor(defaultOccupiedTrackColor);
-                    blk.setBlockExtraColor(defaultAlternativeTrackColor);
                 }
             }
         }
-        // set both new and previously existing block
-        blk.addLayoutEditor(this);
-        setDirty(true);
-        blk.incrementUse();
+        if (blk != null) {
+            // initialize the new block
+            blk.initializeLayoutBlock();
+            blk.initializeLayoutBlockRouting();
+            blk.setBlockTrackColor(defaultTrackColor);
+            blk.setBlockOccupiedColor(defaultOccupiedTrackColor);
+            blk.setBlockExtraColor(defaultAlternativeTrackColor);
+            // set both new and previously existing block
+            blk.addLayoutEditor(this);
+            setDirty(true);
+            blk.incrementUse();
+        }
         return blk;
     }
 
@@ -7668,9 +7648,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * Add a sensor indicator to the Draw Panel
      */
     void addSensor() {
-        String tName = sensorComboBox.getSelectedDisplayName();
-        tName = (null != tName) ? tName.trim() : "";
-        if (tName.length() <= 0) {
+        String newName = (String) sensorComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
+        if (newName.length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error10"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
@@ -7685,13 +7665,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         l.setIcon("SensorStateInactive", sensorIconEditor.getIcon(1));
         l.setIcon("BeanStateInconsistent", sensorIconEditor.getIcon(2));
         l.setIcon("BeanStateUnknown", sensorIconEditor.getIcon(3));
-        l.setSensor(tName);
+        l.setSensor(newName);
         l.setDisplayLevel(SENSORS);
         //Sensor xSensor = l.getSensor();
         // (Note: I don't see the point of this section of code because…
         if (l.getSensor() != null) {
             if ((l.getNamedSensor().getName() == null)
-                    || (!(l.getNamedSensor().getName().equals(tName)))) {
+                    || (!(l.getNamedSensor().getName().equals(newName)))) {
                 sensorComboBox.getEditor().setItem(l.getNamedSensor().getName());
             }
         }
@@ -7714,28 +7694,28 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      */
     void addSignalHead() {
         // check for valid signal head entry
-        String tName = signalHeadComboBox.getSelectedDisplayName();
-        tName = (null != tName) ? tName.trim() : "";
+        String newName = (String) signalHeadComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
 
         SignalHead mHead = null;
-        if (!tName.equals("")) {
-            mHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(tName);
+        if (!newName.equals("")) {
+            mHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(newName);
             /*if (mHead == null)
-             mHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(tName);
+             mHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(newName);
              else */
-            signalHeadComboBox.getEditor().setItem(tName);
+            signalHeadComboBox.getEditor().setItem(newName);
         }
         if (mHead == null) {
             // There is no signal head corresponding to this name
             JOptionPane.showMessageDialog(thisPanel,
                     java.text.MessageFormat.format(rb.getString("Error9"),
-                            new Object[]{tName}),
+                            new Object[]{newName}),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         // create and set up signal icon
         SignalHeadIcon l = new SignalHeadIcon(this);
-        l.setSignalHead(tName);
+        l.setSignalHead(newName);
         l.setIcon(rbean.getString("SignalHeadStateRed"), signalIconEditor.getIcon(0));
         l.setIcon(rbean.getString("SignalHeadStateFlashingRed"), signalIconEditor.getIcon(1));
         l.setIcon(rbean.getString("SignalHeadStateYellow"), signalIconEditor.getIcon(2));
@@ -7800,24 +7780,24 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     void addSignalMast() {
         // check for valid signal head entry
-        String tName = signalMastComboBox.getSelectedDisplayName();
-        tName = (null != tName) ? tName.trim() : "";
+        String newName = (String) signalMastComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
         SignalMast mMast = null;
-        if (!tName.equals("")) {
-            mMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(tName);
-            signalMastComboBox.getEditor().setItem(tName);
+        if (!newName.equals("")) {
+            mMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(newName);
+            signalMastComboBox.getEditor().setItem(newName);
         }
         if (mMast == null) {
             // There is no signal head corresponding to this name
             JOptionPane.showMessageDialog(thisPanel,
                     java.text.MessageFormat.format(rb.getString("Error9"),
-                            new Object[]{tName}),
+                            new Object[]{newName}),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         // create and set up signal icon
         SignalMastIcon l = new SignalMastIcon(this);
-        l.setSignalMast(tName);
+        l.setSignalMast(newName);
         setNextLocation(l);
         setDirty(true);
         putSignalMast(l);
@@ -7899,7 +7879,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * Add a memory label to the Draw Panel
      */
     void addMemory() {
-        String memoryName = textMemoryComboBox.getSelectedDisplayName();
+        String memoryName = (String) textMemoryComboBox.getEditor().getItem();
         memoryName = (null != memoryName) ? memoryName.trim() : "";
         if (memoryName.length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error11a"),
@@ -7925,19 +7905,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     void addBlockContents() {
-        String blockName = blockContentsComboBox.getSelectedDisplayName();
-        blockName = (null != blockName) ? blockName.trim() : "";
-        if (blockName.length() <= 0) {
+        String newName = (String) blockContentsComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
+        if (newName.length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error11b"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         BlockContentsIcon l = new BlockContentsIcon("   ", this);
-        l.setBlock(blockName);
+        l.setBlock(newName);
         jmri.Block xMemory = l.getBlock();
         if (xMemory != null) {
             String uname = xMemory.getUserName();
-            if ((uname == null) || (!(uname.equals(blockName)))) {
+            if ((uname == null) || (!(uname.equals(newName)))) {
                 // put the system name in the memory field
                 blockContentsComboBox.getEditor().setItem(xMemory.getSystemName());
             }
@@ -8334,6 +8314,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     public void setTurnoutCircleSize(int size) {
         LayoutTurnout.setTurnoutCircleSize(size);
+
+        circleRadius = size;
+        circleDiameter = 2.0 * circleRadius;
+
         setOptionMenuTurnoutCircleSize();
     }
 
@@ -8546,6 +8530,24 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         resetDirty();
     }
 
+    public static Rectangle2D controlPointRectAt(Point2D inPoint) {
+        return new Rectangle2D.Double(
+            inPoint.getX() - LayoutTrack.controlPointSize,
+            inPoint.getY() - LayoutTrack.controlPointSize,
+            LayoutTrack.controlPointSize2, LayoutTrack.controlPointSize2);
+    }
+
+    public static Rectangle2D turnoutCircleRectAt(Point2D inPoint) {
+        return new Rectangle2D.Double(inPoint.getX() - circleRadius,
+            inPoint.getY() - circleRadius, circleDiameter, circleDiameter);
+    }
+
+    public static Ellipse2D turnoutCircleAt(Point2D inPoint) {
+        return new Ellipse2D.Double(inPoint.getX() - circleRadius,
+            inPoint.getY() - circleRadius, circleDiameter, circleDiameter);
+    }
+
+
     /**
      * Special internal class to allow drawing of layout to a JLayeredPane This
      * is the 'target' pane where the layout is displayed
@@ -8662,9 +8664,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             setTrackStrokeWidth(g2, false);
             Point2D c = x.getCoordsCenter();
             double r = x.getRadius();
+            double d = r + r;
             g2.setColor(defaultTrackColor);
-            g2.draw(new Ellipse2D.Double(
-                    c.getX() - r, c.getY() - r, r + r, r + r));
+            g2.draw(new Ellipse2D.Double(c.getX() - r, c.getY() - r, d, d));
             // draw ray tracks
             for (int j = 0; j < x.getNumberRays(); j++) {
                 Point2D pt = x.getRayCoordsOrdered(j);
@@ -8702,40 +8704,35 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (LevelXing x : xingList) {
             Point2D pt = x.getCoordsCenter();
             g2.setColor(defaultTrackColor);
-            g2.draw(new Ellipse2D.Double(
-                    pt.getX() - LayoutTrack.SIZE2, pt.getY() - LayoutTrack.SIZE2, LayoutTrack.SIZE2 + LayoutTrack.SIZE2, LayoutTrack.SIZE2 + LayoutTrack.SIZE2));
+            g2.draw(controlPointRectAt(pt));
             pt = x.getCoordsA();
             if (x.getConnectA() == null) {
                 g2.setColor(Color.magenta);
             } else {
                 g2.setColor(Color.blue);
             }
-            g2.draw(new Rectangle2D.Double(
-                    pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2));
+            g2.draw(controlPointRectAt(pt));
             pt = x.getCoordsB();
             if (x.getConnectB() == null) {
                 g2.setColor(Color.red);
             } else {
                 g2.setColor(Color.green);
             }
-            g2.draw(new Rectangle2D.Double(
-                    pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2));
+            g2.draw(controlPointRectAt(pt));
             pt = x.getCoordsC();
             if (x.getConnectC() == null) {
                 g2.setColor(Color.magenta);
             } else {
                 g2.setColor(Color.blue);
             }
-            g2.draw(new Rectangle2D.Double(
-                    pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2));
+            g2.draw(controlPointRectAt(pt));
             pt = x.getCoordsD();
             if (x.getConnectD() == null) {
                 g2.setColor(Color.red);
             } else {
                 g2.setColor(Color.green);
             }
-            g2.draw(new Rectangle2D.Double(
-                    pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2));
+            g2.draw(controlPointRectAt(pt));
         }
     }
 
@@ -8753,8 +8750,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (LayoutTurntable x : turntableList) {
             Point2D pt = x.getCoordsCenter();
             g2.setColor(defaultTrackColor);
-            g2.draw(new Ellipse2D.Double(
-                    pt.getX() - LayoutTrack.SIZE2, pt.getY() - LayoutTrack.SIZE2, LayoutTrack.SIZE2 + LayoutTrack.SIZE2, LayoutTrack.SIZE2 + LayoutTrack.SIZE2));
+            g2.draw(controlPointRectAt(pt));
+
             for (int j = 0; j < x.getNumberRays(); j++) {
                 pt = x.getRayCoordsOrdered(j);
                 if (x.getRayConnectOrdered(j) == null) {
@@ -8762,8 +8759,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 } else {
                     g2.setColor(Color.green);
                 }
-                g2.draw(new Rectangle2D.Double(
-                        pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2));
+                g2.draw(controlPointRectAt(pt));
             }
         }
     }
@@ -8800,13 +8796,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * the angle by dragging the mouse.
      */
     private void drawTrackCircleCentre(Graphics2D g2) {
-        // loop over all defined turnouts
+        // loop over all defined track segments
         for (TrackSegment t : trackList) {
+            g2.setColor(Color.black);
             if (t.getCircle() && t.showConstructionLinesLE()) {
                 Point2D pt = t.getCoordsCenterCircle();
-                g2.setColor(Color.black);
-                g2.draw(new Rectangle2D.Double(
-                        pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2));
+                g2.draw(turnoutCircleRectAt(pt));
             }
         }
     }
@@ -8841,8 +8836,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         } else {
                             g2.setColor(Color.green);
                         }
-                        g2.draw(new Rectangle2D.Double(
-                                pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2));
+                        g2.draw(controlPointRectAt(pt));
                     }
                     break;
                 case PositionablePoint.END_BUMPER:
@@ -8855,8 +8849,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         } else {
                             g2.setColor(Color.green);
                         }
-                        g2.draw(new Rectangle2D.Double(
-                                pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2));
+                        g2.draw(controlPointRectAt(pt));
                     }
                     break;
                 case PositionablePoint.EDGE_CONNECTOR:
@@ -8871,8 +8864,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         } else {
                             g2.setColor(Color.green);
                         }
-                        g2.draw(new Rectangle2D.Double(
-                                pt.getX() - LayoutTrack.SIZE, pt.getY() - LayoutTrack.SIZE, LayoutTrack.SIZE2, LayoutTrack.SIZE2));
+                        g2.draw(controlPointRectAt(pt));
                     }
                     break;
                 default:

@@ -659,15 +659,15 @@ public class TrackSegment extends LayoutTrack {
 
     void segmentEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newBlockName = blockNameComboBox.getSelectedDisplayName();
-        newBlockName = (null != newBlockName) ? newBlockName.trim() : "";
-        if (!blockName.equals(newBlockName)) {
+        String newName = (String) blockNameComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
+        if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if (block != null) {
                 block.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockName = newBlockName;
+            blockName = newName;
             try {
                 block = layoutEditor.provideLayoutBlock(blockName);
             } catch (IllegalArgumentException ex) {
@@ -723,15 +723,15 @@ public class TrackSegment extends LayoutTrack {
             needsRedraw = true;
         }
         // check if Block changed
-        String newBlockName = blockNameComboBox.getSelectedDisplayName();
-        newBlockName = (null != newBlockName) ? newBlockName.trim() : "";
-        if (!blockName.equals(newBlockName)) {
+        String newName = (String) blockNameComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
+        if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if (block != null) {
                 block.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockName = newBlockName;
+            blockName = newName;
             try {
                 block = layoutEditor.provideLayoutBlock(blockName);
             } catch (IllegalArgumentException ex) {
@@ -1185,8 +1185,8 @@ public class TrackSegment extends LayoutTrack {
                     new Point2D.Double(getCentreX(), getCentreY())));
                 g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect2(), getType2()),
                     new Point2D.Double(getCentreX(), getCentreY())));
-                g2.draw(new Ellipse2D.Double(getCentreSegX() - SIZE2, getCentreSegY() - SIZE2,
-                    SIZE2 + SIZE2, SIZE2 + SIZE2));
+                g2.draw(new Ellipse2D.Double(getCentreSegX() - controlPointSize2, getCentreSegY() - controlPointSize2,
+                    controlPointSize2 + controlPointSize2, controlPointSize2 + controlPointSize2));
             }
         } else {
             Point2D pt1 = layoutEditor.getCoords(getConnect1(), getType1());
@@ -1194,7 +1194,10 @@ public class TrackSegment extends LayoutTrack {
             double cX = (pt1.getX() + pt2.getX()) / 2.0D;
             double cY = (pt1.getY() + pt2.getY()) / 2.0D;
             if (showConstructionLinesLE()) { //draw track circles
-                g2.draw(new Ellipse2D.Double(cX - SIZE2, cY - SIZE2, SIZE2 + SIZE2, SIZE2 + SIZE2));
+                g2.draw(new Ellipse2D.Double(
+                        cX - controlPointSize2, cY - controlPointSize2,
+                        controlPointSize2 + controlPointSize2,
+                        controlPointSize2 + controlPointSize2));
             }
             if (getArc()) {
                 g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect1(), getType1()),

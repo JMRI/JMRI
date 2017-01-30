@@ -12,6 +12,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
+import jmri.jmrit.display.layoutEditor.LayoutTrack;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
@@ -968,7 +969,7 @@ public class Section extends AbstractNamedBean
             // using Entry Points directly will lead to a problem, try following track - first from A following B
             int dir = EntryPoint.UNKNOWN;
             Block tBlock = null;
-            TrackNode tn = new TrackNode(t, LayoutEditor.TURNOUT_A, (TrackSegment) t.getConnectA(),
+            TrackNode tn = new TrackNode(t, LayoutTrack.TURNOUT_A, (TrackSegment) t.getConnectA(),
                     false, Turnout.CLOSED);
             while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                 tn = cUtil.getNextNode(tn, 0);
@@ -976,7 +977,7 @@ public class Section extends AbstractNamedBean
             }
             if (tBlock == null) {
                 // try from A following C
-                tn = new TrackNode(t, LayoutEditor.TURNOUT_A, (TrackSegment) t.getConnectA(),
+                tn = new TrackNode(t, LayoutTrack.TURNOUT_A, (TrackSegment) t.getConnectA(),
                         false, Turnout.THROWN);
                 while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                     tn = cUtil.getNextNode(tn, 0);
@@ -992,7 +993,7 @@ public class Section extends AbstractNamedBean
             if (dir == EntryPoint.UNKNOWN) {
                 // try from B following A
                 tBlock = null;
-                tn = new TrackNode(t, LayoutEditor.TURNOUT_B, (TrackSegment) t.getConnectB(),
+                tn = new TrackNode(t, LayoutTrack.TURNOUT_B, (TrackSegment) t.getConnectB(),
                         false, Turnout.CLOSED);
                 while ((tBlock == null) && (tn != null && (!tn.reachedEndOfTrack()))) {
                     tn = cUtil.getNextNode(tn, 0);
@@ -1118,7 +1119,7 @@ public class Section extends AbstractNamedBean
                 // set direction by tracking from a or b
                 int dir = EntryPoint.UNKNOWN;
                 Block tBlock = null;
-                TrackNode tn = new TrackNode(t, LayoutEditor.TURNOUT_A, (TrackSegment) t.getConnectA(),
+                TrackNode tn = new TrackNode(t, LayoutTrack.TURNOUT_A, (TrackSegment) t.getConnectA(),
                         false, Turnout.CLOSED);
                 while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                     tn = cUtil.getNextNode(tn, 0);
@@ -1130,7 +1131,7 @@ public class Section extends AbstractNamedBean
                         dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
                     }
                 } else {
-                    tn = new TrackNode(t, LayoutEditor.TURNOUT_B, (TrackSegment) t.getConnectB(),
+                    tn = new TrackNode(t, LayoutTrack.TURNOUT_B, (TrackSegment) t.getConnectB(),
                             false, Turnout.CLOSED);
                     while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                         tn = cUtil.getNextNode(tn, 0);
@@ -1194,7 +1195,7 @@ public class Section extends AbstractNamedBean
                 // set direction by tracking from c or d
                 int dir = EntryPoint.UNKNOWN;
                 Block tBlock = null;
-                TrackNode tn = new TrackNode(t, LayoutEditor.TURNOUT_D, (TrackSegment) t.getConnectD(),
+                TrackNode tn = new TrackNode(t, LayoutTrack.TURNOUT_D, (TrackSegment) t.getConnectD(),
                         false, Turnout.CLOSED);
                 while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                     tn = cUtil.getNextNode(tn, 0);
@@ -1206,7 +1207,7 @@ public class Section extends AbstractNamedBean
                         dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
                     }
                 } else {
-                    tn = new TrackNode(t, LayoutEditor.TURNOUT_C, (TrackSegment) t.getConnectC(),
+                    tn = new TrackNode(t, LayoutTrack.TURNOUT_C, (TrackSegment) t.getConnectC(),
                             false, Turnout.CLOSED);
                     while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                         tn = cUtil.getNextNode(tn, 0);
@@ -1297,7 +1298,7 @@ public class Section extends AbstractNamedBean
                 // set direction by tracking from a or b
                 int dir = EntryPoint.UNKNOWN;
                 Block tBlock = null;
-                TrackNode tn = new TrackNode(t, LayoutEditor.SLIP_A, (TrackSegment) t.getConnectA(),
+                TrackNode tn = new TrackNode(t, LayoutTrack.SLIP_A, (TrackSegment) t.getConnectA(),
                         false, LayoutSlip.STATE_AC);
                 while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                     tn = cUtil.getNextNode(tn, 0);
@@ -1309,7 +1310,7 @@ public class Section extends AbstractNamedBean
                         dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
                     }
                 } else {
-                    tn = new TrackNode(t, LayoutEditor.SLIP_C, (TrackSegment) t.getConnectC(),
+                    tn = new TrackNode(t, LayoutTrack.SLIP_C, (TrackSegment) t.getConnectC(),
                             false, LayoutSlip.STATE_AC);
                     while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                         tn = cUtil.getNextNode(tn, 0);
@@ -1364,7 +1365,7 @@ public class Section extends AbstractNamedBean
                 // set direction by tracking from c or d
                 int dir = EntryPoint.UNKNOWN;
                 Block tBlock = null;
-                TrackNode tn = new TrackNode(t, LayoutEditor.SLIP_D, (TrackSegment) t.getConnectD(),
+                TrackNode tn = new TrackNode(t, LayoutTrack.SLIP_D, (TrackSegment) t.getConnectD(),
                         false, LayoutSlip.STATE_BD);
                 while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                     tn = cUtil.getNextNode(tn, 0);
@@ -1376,7 +1377,7 @@ public class Section extends AbstractNamedBean
                         dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
                     }
                 } else {
-                    tn = new TrackNode(t, LayoutEditor.TURNOUT_B, (TrackSegment) t.getConnectB(),
+                    tn = new TrackNode(t, LayoutTrack.TURNOUT_B, (TrackSegment) t.getConnectB(),
                             false, LayoutSlip.STATE_BD);
                     while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                         tn = cUtil.getNextNode(tn, 0);
@@ -1691,9 +1692,9 @@ public class Section extends AbstractNamedBean
                         // have a signaled AC level crossing internal to this block
                         if ((x.getSignalAName() != null) && (!x.getSignalAName().equals(""))) {
                             // there is a signal at A in the level crossing
-                            TrackNode tn = new TrackNode(x, LayoutEditor.LEVEL_XING_A,
+                            TrackNode tn = new TrackNode(x, LayoutTrack.LEVEL_XING_A,
                                     (TrackSegment) x.getConnectA(), false, 0);
-                            TrackNode altNode = new TrackNode(x, LayoutEditor.LEVEL_XING_C,
+                            TrackNode altNode = new TrackNode(x, LayoutTrack.LEVEL_XING_C,
                                     (TrackSegment) x.getConnectC(), false, 0);
                             SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
                                     x.getSignalAName());
@@ -1703,9 +1704,9 @@ public class Section extends AbstractNamedBean
                         }
                         if ((x.getSignalCName() != null) && (!x.getSignalCName().equals(""))) {
                             // there is a signal at C in the level crossing
-                            TrackNode tn = new TrackNode(x, LayoutEditor.LEVEL_XING_C,
+                            TrackNode tn = new TrackNode(x, LayoutTrack.LEVEL_XING_C,
                                     (TrackSegment) x.getConnectC(), false, 0);
-                            TrackNode altNode = new TrackNode(x, LayoutEditor.LEVEL_XING_A,
+                            TrackNode altNode = new TrackNode(x, LayoutTrack.LEVEL_XING_A,
                                     (TrackSegment) x.getConnectA(), false, 0);
                             SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
                                     x.getSignalCName());
@@ -1750,9 +1751,9 @@ public class Section extends AbstractNamedBean
                         // have a signaled BD level crossing internal to this block
                         if ((x.getSignalBName() != null) && (!x.getSignalBName().equals(""))) {
                             // there is a signal at B in the level crossing
-                            TrackNode tn = new TrackNode(x, LayoutEditor.LEVEL_XING_B,
+                            TrackNode tn = new TrackNode(x, LayoutTrack.LEVEL_XING_B,
                                     (TrackSegment) x.getConnectB(), false, 0);
-                            TrackNode altNode = new TrackNode(x, LayoutEditor.LEVEL_XING_D,
+                            TrackNode altNode = new TrackNode(x, LayoutTrack.LEVEL_XING_D,
                                     (TrackSegment) x.getConnectD(), false, 0);
                             SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
                                     x.getSignalBName());
@@ -1762,9 +1763,9 @@ public class Section extends AbstractNamedBean
                         }
                         if ((x.getSignalDName() != null) && (!x.getSignalDName().equals(""))) {
                             // there is a signal at C in the level crossing
-                            TrackNode tn = new TrackNode(x, LayoutEditor.LEVEL_XING_D,
+                            TrackNode tn = new TrackNode(x, LayoutTrack.LEVEL_XING_D,
                                     (TrackSegment) x.getConnectD(), false, 0);
-                            TrackNode altNode = new TrackNode(x, LayoutEditor.LEVEL_XING_B,
+                            TrackNode altNode = new TrackNode(x, LayoutTrack.LEVEL_XING_B,
                                     (TrackSegment) x.getConnectB(), false, 0);
                             SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
                                     x.getSignalDName());

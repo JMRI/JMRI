@@ -1259,15 +1259,15 @@ public class LevelXing extends LayoutTrack {
 
     void xingEdit1BlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newBlockName = block1NameComboBox.getSelectedDisplayName();
-        newBlockName = (null != newBlockName) ? newBlockName.trim() : "";
-        if (!blockNameAC.equals(newBlockName)) {
+        String newName = (String) block1NameComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
+        if (!blockNameAC.equals(newName)) {
             // block 1 has changed, if old block exists, decrement use
             if ((blockAC != null) && (blockAC != blockBD)) {
                 blockAC.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockNameAC = newBlockName;
+            blockNameAC = newName;
             if (blockNameAC.length() > 0) {
                 try {
                     blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
@@ -1301,15 +1301,15 @@ public class LevelXing extends LayoutTrack {
 
     void xingEdit2BlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newBlockName = block2NameComboBox.getSelectedDisplayName();
-        newBlockName = (null != newBlockName) ? newBlockName.trim() : "";
-        if (!blockNameBD.equals(newBlockName)) {
+        String newName = (String) block2NameComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
+        if (!blockNameBD.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if ((blockBD != null) && (blockBD != blockAC)) {
                 blockBD.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockNameBD = newBlockName;
+            blockNameBD = newName;
             if (blockNameBD.length() > 0) {
                 try {
                     blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
@@ -1343,15 +1343,15 @@ public class LevelXing extends LayoutTrack {
 
     void xingEditDonePressed(ActionEvent a) {
         // check if Blocks changed
-        String newBlockName = block1NameComboBox.getSelectedDisplayName();
-        newBlockName = (null != newBlockName) ? newBlockName.trim() : "";
-        if (!blockNameAC.equals(newBlockName)) {
+        String newName = (String) block1NameComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
+        if (!blockNameAC.equals(newName)) {
             // block 1 has changed, if old block exists, decrement use
             if ((blockAC != null) && (blockAC != blockBD)) {
                 blockAC.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockNameAC = newBlockName;
+            blockNameAC = newName;
             if (blockNameAC.length() > 0) {
                 try {
                     blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
@@ -1372,15 +1372,15 @@ public class LevelXing extends LayoutTrack {
             layoutEditor.auxTools.setBlockConnectivityChanged();
             needsBlockUpdate = true;
         }
-        newBlockName = block2NameComboBox.getSelectedDisplayName();
-        newBlockName = (null != newBlockName) ? newBlockName.trim() : "";
-        if (!blockNameBD.equals(newBlockName)) {
+        newName = (String) block2NameComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
+        if (!blockNameBD.equals(newName)) {
             // block 2 has changed, if old block exists, decrement use
             if ((blockBD != null) && (blockBD != blockAC)) {
                 blockBD.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockNameBD = newBlockName;
+            blockNameBD = newName;
             if (blockNameBD.length() > 0) {
                 try {
                     blockBD = layoutEditor.provideLayoutBlock(blockNameBD);

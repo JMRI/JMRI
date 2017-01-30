@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+
 import java.awt.Color;
 import java.awt.geom.Point2D;
 import java.util.ResourceBundle;
@@ -15,12 +16,6 @@ public class LayoutTrack {
 
     // Defined text resource
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
-
-    // size of point boxes
-    @Deprecated
-    public static final double SIZE = 3.0;
-    @Deprecated
-    public static final double SIZE2 = SIZE * 2.;  // must be twice SIZE
 
     // connection types
     public static final int NONE = 0;
@@ -60,6 +55,9 @@ public class LayoutTrack {
     protected boolean hidden = false;
 
     protected static Color defaultTrackColor = Color.black;
+
+    protected static final double controlPointSize = LayoutEditor.SIZE;
+    protected static final double controlPointSize2 = LayoutEditor.SIZE2;
 
     /**
      * constructor method
