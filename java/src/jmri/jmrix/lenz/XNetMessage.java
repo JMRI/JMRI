@@ -1406,6 +1406,724 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return msg;
     }
 
+   /**
+    * Generate text translations of messages for use in the XPressNet monitor.
+    *
+    * @return representation of the XNetMessage as a string.
+    */
+   public String toMonitorString(){
+        String text;
+        /* Start decoding messages sent by the computer */
+        /* Start with LI101F requests */
+        if (getElement(0) == XNetConstants.LI_VERSION_REQUEST) {
+            text = "REQUEST LI10x hardware/software version";
+        } else if (getElement(0) == XNetConstants.LI101_REQUEST) {
+            switch (getElement(1)) {
+                case XNetConstants.LI101_REQUEST_ADDRESS:
+                    text = "REQUEST LI101 Address " + getElement(2);
+                    break;
+                case XNetConstants.LI101_REQUEST_BAUD:
+                    text = "REQUEST LI101 Baud Rate ";
+                    switch (getElement(2)) {
+                        case 1:
+                            text += "19200bps (default)";
+                            break;
+                        case 2:
+                            text += "38400bps";
+                            break;
+                        case 3:
+                            text += "57600bps";
+                            break;
+                        case 4:
+                            text += "115200bps";
+                            break;
+                        default:
+                            text += "<undefined>";
+                    }
+                    break;
+                default:
+                    text = toString();
+            }
+            /* Next, we have generic requests */
+        } else if (getElement(0) == XNetConstants.CS_REQUEST) {
+            switch (getElement(1)) {
+                case XNetConstants.EMERGENCY_OFF:
+                    text = Bundle.getMessage("XNetMessageRequestEmergencyOff");
+                    break;
+                case XNetConstants.RESUME_OPS:
+                    text = Bundle.getMessage("XNetMessageRequestNormalOps");
+                    break;
+                case XNetConstants.SERVICE_MODE_CSRESULT:
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeResults");
+                    break;
+                case XNetConstants.CS_VERSION:
+                    text = Bundle.getMessage("XNetMessageRequestCSVersion");
+                    break;
+                case XNetConstants.CS_STATUS:
+                    text = Bundle.getMessage("XNetMessageRequestCSStatus");
+                    break;
+                default:
+                    text = toString();
+            }
+        } else if (getElement(0) == XNetConstants.CS_SET_POWERMODE
+                && getElement(1) == XNetConstants.CS_SET_POWERMODE
+                && getElement(2) == XNetConstants.CS_POWERMODE_AUTO) {
+            text = "REQUEST: Set Power-up Mode to Automatic";
+        } else if (getElement(0) == XNetConstants.CS_SET_POWERMODE
+                && getElement(1) == XNetConstants.CS_SET_POWERMODE
+                && getElement(2) == XNetConstants.CS_POWERMODE_MANUAL) {
+            text = "REQUEST: Set Power-up Mode to Manual";
+            /* Next, we have Programming Requests */
+        } else if (getElement(0) == XNetConstants.PROG_READ_REQUEST) {
+            switch (getElement(1)) {
+                case XNetConstants.PROG_READ_MODE_REGISTER:
+                    text = "Service Mode Request: Read Register " + getElement(2);
+                    break;
+                case XNetConstants.PROG_READ_MODE_CV:
+                    text
+                            = "Service Mode Request: Read CV " + getElement(2)
+                            + " in Direct Mode";
+                    break;
+                case XNetConstants.PROG_READ_MODE_PAGED:
+                    text
+                            = "Service Mode Request: Read CV " + getElement(2)
+                            + " in Paged Mode";
+                    break;
+                case XNetConstants.PROG_READ_MODE_CV_V36:
+                    text
+                            = "Service Mode Request (V3.6): Read CV " + (getElement(2)
+                            == 0 ? 1024 : getElement(2))
+                            + " in Direct Mode";
+                    break;
+                case XNetConstants.PROG_READ_MODE_CV_V36 + 1:
+                    text
+                            = "Service Mode Request (V3.6): Read CV " + (256
+                            + getElement(2))
+                            + " in Direct Mode";
+                    break;
+                case XNetConstants.PROG_READ_MODE_CV_V36 + 2:
+                    text
+                            = "Service Mode Request (V3.6): Read CV " + (512
+                            + getElement(2))
+                            + " in Direct Mode";
+                    break;
+                case XNetConstants.PROG_READ_MODE_CV_V36 + 3:
+                    text
+                            = "Service Mode Request (V3.6): Read CV " + (768
+                            + getElement(2))
+                            + " in Direct Mode";
+                    break;
+                default:
+                    text = toString();
+            }
+        } else if (getElement(0) == XNetConstants.PROG_WRITE_REQUEST) {
+            switch (getElement(1)) {
+                case XNetConstants.PROG_WRITE_MODE_REGISTER:
+                    text
+                            = "Service Mode Request: Write " + getElement(3)
+                            + " to Register " + getElement(2);
+                    break;
+                case XNetConstants.PROG_WRITE_MODE_CV:
+                    text
+                            = "Service Mode Request: Write " + getElement(3) + " to CV "
+                            + getElement(2) + " in Direct Mode";
+                    break;
+                case XNetConstants.PROG_WRITE_MODE_PAGED:
+                    text
+                            = "Service Mode Request: Write " + getElement(3) + " to CV "
+                            + getElement(2) + " in Paged Mode";
+                    break;
+                case XNetConstants.PROG_WRITE_MODE_CV_V36:
+                    text
+                            = "Service Mode Request (V3.6): Write " + getElement(3)
+                            + " to CV " + (getElement(2)
+                            == 0 ? 1024 : getElement(2)) + " in Direct Mode";
+                    break;
+                case (XNetConstants.PROG_WRITE_MODE_CV_V36 + 1):
+                    text
+                            = "Service Mode Request (V3.6): Write " + getElement(3)
+                            + " to CV " + (256 + getElement(2)) + " in Direct Mode";
+                    break;
+                case (XNetConstants.PROG_WRITE_MODE_CV_V36 + 2):
+                    text
+                            = "Service Mode Request (V3.6): Write " + getElement(3)
+                            + " to CV " + (512 + getElement(2)) + " in Direct Mode";
+                    break;
+                case (XNetConstants.PROG_WRITE_MODE_CV_V36 + 3):
+                    text
+                            = "Service Mode Request (V3.6): Write " + getElement(3)
+                            + " to CV " + (768 + getElement(2)) + " in Direct Mode";
+                    break;
+                default:
+                    text = toString();
+            }
+        } else if (getElement(0) == XNetConstants.OPS_MODE_PROG_REQ) {
+            switch (getElement(1)) {
+                case XNetConstants.OPS_MODE_PROG_WRITE_REQ:
+                    text = "Operations Mode Programming Request: ";
+                    if ((getElement(4) & 0xEC) == 0xEC
+                            || (getElement(4) & 0xE4) == 0xE4) {
+                        if ((getElement(4) & 0xEC) == 0xEC) {
+                            text = text + "Byte Mode Write: ";
+                        } else if ((getElement(4) & 0xE4) == 0xE4) {
+                            text = text + "Byte Mode Verify: ";
+                        }
+                        text = text + getElement(6)
+                                + " to CV "
+                                + (1 + getElement(5) + ((getElement(4) & 0x03) << 8))
+                                + " For Decoder Address "
+                                + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3));
+                        break;
+                    } else if ((getElement(4) & 0xE8) == 0xE8) {
+                        if ((getElement(6) & 0x10) == 0x10) {
+                            text = text + "Bit Mode Write: ";
+                        } else {
+                            text = text + "Bit Mode Verify: ";
+                        }
+                        text = text + ((getElement(6) & 0x08) >> 3)
+                                + " to CV "
+                                + (1 + getElement(5) + ((getElement(4) & 0x03) << 8))
+                                + " bit "
+                                + (getElement(6) & 0x07)
+                                + " For Decoder Address "
+                                + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3));
+                        break;
+                    }
+                //fall through
+                default:
+                    text = toString();
+            }
+            // Next, decode the locomotive operation requests
+        } else if (getElement(0) == XNetConstants.LOCO_OPER_REQ) {
+            text = "Mobile Decoder Operations Request: ";
+            int speed;
+            switch (getElement(1)) {
+                case XNetConstants.LOCO_SPEED_14:
+                    text = text
+                            + "Set Address: "
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
+                            + " To Speed Step "
+                            + (getElement(4) & 0x0f) + " and direction ";
+                    if ((getElement(4) & 0x80) != 0) {
+                        text += "Forward";
+                    } else {
+                        text += "Reverse";
+                    }
+                    text += " In 14 speed step mode.";
+                    break;
+                case XNetConstants.LOCO_SPEED_27:
+                    text = text
+                            + "Set Address: "
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
+                            + " To Speed Step ";
+                    speed
+                            = (((getElement(4) & 0x10) >> 4)
+                            + ((getElement(4) & 0x0F) << 1));
+                    if (speed >= 3) {
+                        speed -= 3;
+                    }
+                    text += speed;
+                    if ((getElement(4) & 0x80) != 0) {
+                        text += " and direction Forward";
+                    } else {
+                        text += "and direction Reverse";
+                    }
+                    text += " In 27 speed step mode.";
+                    break;
+                case XNetConstants.LOCO_SPEED_28:
+                    text = text
+                            + "Set Address: "
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
+                            + " To Speed Step ";
+                    speed
+                            = (((getElement(4) & 0x10) >> 4)
+                            + ((getElement(4) & 0x0F) << 1));
+                    if (speed >= 3) {
+                        speed -= 3;
+                    }
+                    text += speed;
+                    if ((getElement(4) & 0x80) != 0) {
+                        text += " and direction Forward";
+                    } else {
+                        text += "and direction Reverse";
+                    }
+                    text += " In 28 speed step mode.";
+                    break;
+                case XNetConstants.LOCO_SPEED_128:
+                    text = text
+                            + "Set Address: "
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
+                            + " To Speed Step "
+                            + (getElement(4) & 0x7F) + " and direction ";
+                    if ((getElement(4) & 0x80) != 0) {
+                        text += "Forward";
+                    } else {
+                        text += "Reverse";
+                    }
+                    text += " In 128 speed step mode.";
+                    break;
+                case XNetConstants.LOCO_SET_FUNC_GROUP1: {
+                    text = text
+                            + "Set Function Group 1 for address: "
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
+                    int element4 = getElement(4);
+                    if ((element4 & 0x10) != 0) {
+                        text += "F0 on ";
+                    } else {
+                        text += "F0 off ";
+                    }
+                    if ((element4 & 0x01) != 0) {
+                        text += "F1 on ";
+                    } else {
+                        text += "F1 off ";
+                    }
+                    if ((element4 & 0x02) != 0) {
+                        text += "F2 on ";
+                    } else {
+                        text += "F2 off ";
+                    }
+                    if ((element4 & 0x04) != 0) {
+                        text += "F3 on ";
+                    } else {
+                        text += "F3 off ";
+                    }
+                    if ((element4 & 0x08) != 0) {
+                        text += "F4 on ";
+                    } else {
+                        text += "F4 off ";
+                    }
+                    break;
+                }
+                case XNetConstants.LOCO_SET_FUNC_GROUP2: {
+                    text = text
+                            + "Set Function Group 2 for address: "
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
+                    int element4 = getElement(4);
+                    if ((element4 & 0x01) != 0) {
+                        text += "F5 on ";
+                    } else {
+                        text += "F5 off ";
+                    }
+                    if ((element4 & 0x02) != 0) {
+                        text += "F6 on ";
+                    } else {
+                        text += "F6 off ";
+                    }
+                    if ((element4 & 0x04) != 0) {
+                        text += "F7 on ";
+                    } else {
+                        text += "F7 off ";
+                    }
+                    if ((element4 & 0x08) != 0) {
+                        text += "F8 on ";
+                    } else {
+                        text += "F8 off ";
+                    }
+                    break;
+                }
+                case XNetConstants.LOCO_SET_FUNC_GROUP3: {
+                    text = text
+                            + "Set Function Group 3 for address: "
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
+                    int element4 = getElement(4);
+                    if ((element4 & 0x01) != 0) {
+                        text += "F9 on ";
+                    } else {
+                        text += "F9 off ";
+                    }
+                    if ((element4 & 0x02) != 0) {
+                        text += "F10 on ";
+                    } else {
+                        text += "F10 off ";
+                    }
+                    if ((element4 & 0x04) != 0) {
+                        text += "F11 on ";
+                    } else {
+                        text += "F11 off ";
+                    }
+                    if ((element4 & 0x08) != 0) {
+                        text += "F12 on ";
+                    } else {
+                        text += "F12 off ";
+                    }
+                    break;
+                }
+                case XNetConstants.LOCO_SET_FUNC_GROUP4: {
+                    text = text
+                            + "Set Function Group 4 for address: "
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
+                    int element4 = getElement(4);
+                    if ((element4 & 0x01) != 0) {
+                        text += "F13 on ";
+                    } else {
+                        text += "F13 off ";
+                    }
+                    if ((element4 & 0x02) != 0) {
+                        text += "F14 on ";
+                    } else {
+                        text += "F14 off ";
+                    }
+                    if ((element4 & 0x04) != 0) {
+                        text += "F15 on ";
+                    } else {
+                        text += "F15 off ";
+                    }
+                    if ((element4 & 0x08) != 0) {
+                        text += "F16 on ";
+                    } else {
+                        text += "F16 off ";
+                    }
+                    if ((element4 & 0x10) != 0) {
+                        text += "F17 on ";
+                    } else {
+                        text += "F17 off ";
+                    }
+                    if ((element4 & 0x20) != 0) {
+                        text += "F18 on ";
+                    } else {
+                        text += "F18 off ";
+                    }
+                    if ((element4 & 0x40) != 0) {
+                        text += "F19 on ";
+                    } else {
+                        text += "F19 off ";
+                    }
+                    if ((element4 & 0x80) != 0) {
+                        text += "F20 on ";
+                    } else {
+                        text += "F20 off ";
+                    }
+                    break;
+                }
+                case XNetConstants.LOCO_SET_FUNC_GROUP5: {
+                    text = text
+                            + "Set Function Group 5 for address: "
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
+                    int element4 = getElement(4);
+                    if ((element4 & 0x01) != 0) {
+                        text += "F21 on ";
+                    } else {
+                        text += "F21 off ";
+                    }
+                    if ((element4 & 0x02) != 0) {
+                        text += "F22 on ";
+                    } else {
+                        text += "F22 off ";
+                    }
+                    if ((element4 & 0x04) != 0) {
+                        text += "F23 on ";
+                    } else {
+                        text += "F23 off ";
+                    }
+                    if ((element4 & 0x08) != 0) {
+                        text += "F24 on ";
+                    } else {
+                        text += "F24 off ";
+                    }
+                    if ((element4 & 0x10) != 0) {
+                        text += "F25 on ";
+                    } else {
+                        text += "F25 off ";
+                    }
+                    if ((element4 & 0x20) != 0) {
+                        text += "F26 on ";
+                    } else {
+                        text += "F26 off ";
+                    }
+                    if ((element4 & 0x40) != 0) {
+                        text += "F27 on ";
+                    } else {
+                        text += "F27 off ";
+                    }
+                    if ((element4 & 0x80) != 0) {
+                        text += "F28 on ";
+                    } else {
+                        text += "F28 off ";
+                    }
+                    break;
+                }
+                case XNetConstants.LOCO_SET_FUNC_Group1: {
+                    text = text
+                            + "Set Function Group 1 Momentary Status for address: "
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
+                    int element4 = getElement(4);
+                    if ((element4 & 0x10) == 0) {
+                        text += "F0 continuous ";
+                    } else {
+                        text += "F0 momentary ";
+                    }
+                    if ((element4 & 0x01) == 0) {
+                        text += "F1 continuous ";
+                    } else {
+                        text += "F1 momentary ";
+                    }
+                    if ((element4 & 0x02) == 0) {
+                        text += "F2 continuous ";
+                    } else {
+                        text += "F2 momentary ";
+                    }
+                    if ((element4 & 0x04) == 0) {
+                        text += "F3 continuous ";
+                    } else {
+                        text += "F3 momentary ";
+                    }
+                    if ((element4 & 0x08) == 0) {
+                        text += "F4 continuous ";
+                    } else {
+                        text += "F4 momentary ";
+                    }
+                    break;
+                }
+                case XNetConstants.LOCO_SET_FUNC_Group2: {
+                    text = text
+                            + "Set Function Group 2 Momentary Status for address: "
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
+                    int element4 = getElement(4);
+                    if ((element4 & 0x01) == 0) {
+                        text += "F5 continuous ";
+                    } else {
+                        text += "F5 momentary ";
+                    }
+                    if ((element4 & 0x02) == 0) {
+                        text += "F6 continuous ";
+                    } else {
+                        text += "F6 momentary ";
+                    }
+                    if ((element4 & 0x04) == 0) {
+                        text += "F7 continuous ";
+                    } else {
+                        text += "F7 momentary ";
+                    }
+                    if ((element4 & 0x08) == 0) {
+                        text += "F8 continuous ";
+                    } else {
+                        text += "F8 momentary ";
+                    }
+                    break;
+                }
+                case XNetConstants.LOCO_SET_FUNC_Group3: {
+                    text = text
+                            + "Set Function Group 3 Momentary Status for address: "
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
+                    int element4 = getElement(4);
+                    if ((element4 & 0x01) == 0) {
+                        text += "F9 continuous ";
+                    } else {
+                        text += "F9 momentary ";
+                    }
+                    if ((element4 & 0x02) == 0) {
+                        text += "F10 continuous ";
+                    } else {
+                        text += "F10 momentary ";
+                    }
+                    if ((element4 & 0x04) == 0) {
+                        text += "F11 continuous ";
+                    } else {
+                        text += "F11 momentary ";
+                    }
+                    if ((element4 & 0x08) == 0) {
+                        text += "F12 continuous ";
+                    } else {
+                        text += "F12 momentary ";
+                    }
+                    break;
+                }
+                case XNetConstants.LOCO_SET_FUNC_Group4: {
+                    text = text
+                            + "Set Function Group 4 Momentary Status for address: "
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
+                    int element4 = getElement(4);
+                    if ((element4 & 0x01) == 0) {
+                        text += "F13 continuous ";
+                    } else {
+                        text += "F13 momentary ";
+                    }
+                    if ((element4 & 0x02) == 0) {
+                        text += "F14 continuous ";
+                    } else {
+                        text += "F14 momentary ";
+                    }
+                    if ((element4 & 0x04) == 0) {
+                        text += "F15 continuous ";
+                    } else {
+                        text += "F15 momentary ";
+                    }
+                    if ((element4 & 0x08) == 0) {
+                        text += "F16 continuous ";
+                    } else {
+                        text += "F16 momentary ";
+                    }
+                    if ((element4 & 0x10) == 0) {
+                        text += "F17 continuous ";
+                    } else {
+                        text += "F17 momentary ";
+                    }
+                    if ((element4 & 0x20) == 0) {
+                        text += "F18 continuous ";
+                    } else {
+                        text += "F18 momentary ";
+                    }
+                    if ((element4 & 0x40) == 0) {
+                        text += "F19 continuous ";
+                    } else {
+                        text += "F19 momentary ";
+                    }
+                    if ((element4 & 0x80) == 0) {
+                        text += "F20 continuous ";
+                    } else {
+                        text += "F20 momentary ";
+                    }
+                    break;
+                }
+                case XNetConstants.LOCO_SET_FUNC_Group5: {
+                    text = text
+                            + "Set Function Group 5 Momentary Status for address: "
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)) + " ";
+                    int element4 = getElement(4);
+                    if ((element4 & 0x01) == 0) {
+                        text += "F21 continuous ";
+                    } else {
+                        text += "F21 momentary ";
+                    }
+                    if ((element4 & 0x02) == 0) {
+                        text += "F22 continuous ";
+                    } else {
+                        text += "F22 momentary ";
+                    }
+                    if ((element4 & 0x04) == 0) {
+                        text += "F23 continuous ";
+                    } else {
+                        text += "F23 momentary ";
+                    }
+                    if ((element4 & 0x08) == 0) {
+                        text += "F24 continuous ";
+                    } else {
+                        text += "F24 momentary ";
+                    }
+                    if ((element4 & 0x10) == 0) {
+                        text += "F25 continuous ";
+                    } else {
+                        text += "F25 momentary ";
+                    }
+                    if ((element4 & 0x20) == 0) {
+                        text += "F26 continuous ";
+                    } else {
+                        text += "F26 momentary ";
+                    }
+                    if ((element4 & 0x40) == 0) {
+                        text += "F27 continuous ";
+                    } else {
+                        text += "F27 momentary ";
+                    }
+                    if ((element4 & 0x80) == 0) {
+                        text += "F28 continuous ";
+                    } else {
+                        text += "F28 momentary ";
+                    }
+                    break;
+                }
+                case XNetConstants.LOCO_ADD_MULTI_UNIT_REQ:
+                    text = text
+                            + "Add Locomotive:"
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
+                            + " To Multi Unit Consist: "
+                            + getElement(4) + " With Loco Direction Normal";
+                    break;
+                case (XNetConstants.LOCO_ADD_MULTI_UNIT_REQ | 0x01):
+                    text = text + "Add Locomotive:"
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
+                            + " To Multi Unit Consist: "
+                            + getElement(4) + " With Loco Direction Reversed";
+                    break;
+                case (XNetConstants.LOCO_REM_MULTI_UNIT_REQ):
+                    text = text + "Remove Locomotive:"
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
+                            + " From Multi Unit Consist: " + getElement(4);
+                    break;
+                default:
+                    text = toString();
+            }
+            // Emergency Stop a locomotive
+        } else if (getElement(0) == XNetConstants.EMERGENCY_STOP) {
+            text = "Emergency Stop " + LenzCommandStation.calcLocoAddress(getElement(1), getElement(2));	// GT 2007/11/6 Corrected calculation
+            // Disolve or Establish a Double Header
+        } else if (getElement(0) == XNetConstants.LOCO_DOUBLEHEAD
+                && getElement(1) == XNetConstants.LOCO_DOUBLEHEAD_BYTE2) {
+            text = "Double Header Request: ";
+            int loco1 = LenzCommandStation.calcLocoAddress(getElement(2), getElement(3));
+            int loco2 = LenzCommandStation.calcLocoAddress(getElement(4), getElement(5));
+            if (loco2 == 0) {
+                text
+                        = text + "Disolve Double Header that includes mobile decoder "
+                        + loco1;
+            } else {
+                text
+                        = text + "Establish Double Header with " + loco1 + " and "
+                        + loco2;
+            }
+            // Locomotive Status Request messages
+        } else if (getElement(0) == XNetConstants.LOCO_STATUS_REQ) {
+            switch (getElement(1)) {
+                case XNetConstants.LOCO_INFO_REQ_FUNC:
+                    text = "Request for Address "
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
+                            + " function momentary/continuous status.";
+                    break;
+                case XNetConstants.LOCO_INFO_REQ_FUNC_HI_ON:
+                    text = "Request for Address "
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
+                            + " F13-F28 on/off status.";
+                    break;
+                case XNetConstants.LOCO_INFO_REQ_FUNC_HI_MOM:
+                    text = "Request for Address "
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
+                            + " F13-F28 momentary/continuous status.";
+                    break;
+                case XNetConstants.LOCO_INFO_REQ_V3:
+                    text = "Request for Address "
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
+                            + " speed/direction/function on/off status.";
+                    break;
+                case XNetConstants.LOCO_STACK_SEARCH_FWD:
+                    text = "Search Command Station Stack Forward - Start Address: "
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3));
+                    break;
+                case XNetConstants.LOCO_STACK_SEARCH_BKWD:
+                    text = "Search Command Station Stack Backward - Start Address: "
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3));
+                    break;
+                case XNetConstants.LOCO_STACK_DELETE:
+                    text = "Delete Address "
+                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
+                            + " from Command Station Stack.";
+                    break;
+                default:
+                    text = toString();
+            }
+            // Accessory Info Request message
+        } else if (getElement(0) == XNetConstants.ACC_INFO_REQ) {
+            text = "Accessory Decoder/Feedback Encoder Status Request: "
+                    + "Base Address " + getElement(1) + ",";
+            text
+                    = text + (((getElement(2) & 0x01) == 0x01) ? "Upper" : "Lower")
+                    + " Nibble.";
+        } else if (getElement(0) == XNetConstants.ACC_OPER_REQ) {
+            text = "Accessory Decoder Operations Request: ";
+            int baseaddress = getElement(1);
+            int subaddress = ((getElement(2) & 0x06) >> 1);
+            int address = (baseaddress * 4) + subaddress + 1;
+            text = text + "Turnout Address " + address + "("
+                    + "Base Address " + getElement(1) + ","
+                    + "Sub Address " + ((getElement(2) & 0x06) >> 1) + ") ";
+            text = text + "Turn Output " + (getElement(2) & 0x01)
+                    + " " + (((getElement(2) & 0x08) == 0x08) ? "On." : "Off.");
+        } else {
+            text = toString();
+        }
+        return text;
+   }
+
+
     // initialize logging    
     private final static Logger log = LoggerFactory.getLogger(XNetMessage.class.getName());
 
