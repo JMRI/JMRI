@@ -294,7 +294,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                 fireTableDataChanged();
             } else if ((e.getPropertyName().equals("state")) || (e.getPropertyName().equals("Enabled"))) {
                 fireTableDataChanged();
-                fireTableRowsUpdated(0, _signalMastList.size());
+                fireTableRowsUpdated(0, _signalMastList.size()-1);
             }
         }
 
