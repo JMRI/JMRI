@@ -1420,25 +1420,29 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         } else if (getElement(0) == XNetConstants.LI101_REQUEST) {
             switch (getElement(1)) {
                 case XNetConstants.LI101_REQUEST_ADDRESS:
-                    text = "REQUEST LI101 Address " + getElement(2);
+                    text = Bundle.getMessage("XNetMessageRequestLIAddress", getElement(2));
                     break;
                 case XNetConstants.LI101_REQUEST_BAUD:
-                    text = "REQUEST LI101 Baud Rate ";
                     switch (getElement(2)) {
                         case 1:
-                            text += "19200bps (default)";
+                            text = Bundle.getMessage("XNetMessageRequestLIBaud",
+                                   Bundle.getMessage("LIBaud19200"));
                             break;
                         case 2:
-                            text += "38400bps";
+                            text = Bundle.getMessage("XNetMessageRequestLIBaud",
+                                   Bundle.getMessage("LIBaud38400"));
                             break;
                         case 3:
-                            text += "57600bps";
+                            text = Bundle.getMessage("XNetMessageRequestLIBaud",
+                                   Bundle.getMessage("LIBaud57600"));
                             break;
                         case 4:
-                            text += "115200bps";
+                            text = Bundle.getMessage("XNetMessageRequestLIBaud",
+                                   Bundle.getMessage("LIBaud115200"));
                             break;
                         default:
-                            text += "<undefined>";
+                            text = Bundle.getMessage("XNetMessageRequestLIBaud",
+                                   Bundle.getMessage("LIBaudOther"));
                     }
                     break;
                 default:
@@ -1454,7 +1458,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                     text = Bundle.getMessage("XNetMessageRequestNormalOps");
                     break;
                 case XNetConstants.SERVICE_MODE_CSRESULT:
-                    text = Bundle.getMessage("XNetMessageRequestServiceModeResults");
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeResult");
                     break;
                 case XNetConstants.CS_VERSION:
                     text = Bundle.getMessage("XNetMessageRequestCSVersion");
@@ -1468,50 +1472,34 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         } else if (getElement(0) == XNetConstants.CS_SET_POWERMODE
                 && getElement(1) == XNetConstants.CS_SET_POWERMODE
                 && getElement(2) == XNetConstants.CS_POWERMODE_AUTO) {
-            text = "REQUEST: Set Power-up Mode to Automatic";
+            text = Bundle.getMessage("XNetMessageRequestCSPowerModeAuto");
         } else if (getElement(0) == XNetConstants.CS_SET_POWERMODE
                 && getElement(1) == XNetConstants.CS_SET_POWERMODE
                 && getElement(2) == XNetConstants.CS_POWERMODE_MANUAL) {
-            text = "REQUEST: Set Power-up Mode to Manual";
+            text = Bundle.getMessage("XNetMessageRequestCSPowerModeManual");
             /* Next, we have Programming Requests */
         } else if (getElement(0) == XNetConstants.PROG_READ_REQUEST) {
             switch (getElement(1)) {
                 case XNetConstants.PROG_READ_MODE_REGISTER:
-                    text = "Service Mode Request: Read Register " + getElement(2);
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeReadRegister",getElement(2));
                     break;
                 case XNetConstants.PROG_READ_MODE_CV:
-                    text
-                            = "Service Mode Request: Read CV " + getElement(2)
-                            + " in Direct Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeReadDirect",getElement(2));
                     break;
                 case XNetConstants.PROG_READ_MODE_PAGED:
-                    text
-                            = "Service Mode Request: Read CV " + getElement(2)
-                            + " in Paged Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeReadPaged",getElement(2));
                     break;
                 case XNetConstants.PROG_READ_MODE_CV_V36:
-                    text
-                            = "Service Mode Request (V3.6): Read CV " + (getElement(2)
-                            == 0 ? 1024 : getElement(2))
-                            + " in Direct Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeReadDirectV36",(getElement(2)== 0 ? 1024 : getElement(2)));
                     break;
                 case XNetConstants.PROG_READ_MODE_CV_V36 + 1:
-                    text
-                            = "Service Mode Request (V3.6): Read CV " + (256
-                            + getElement(2))
-                            + " in Direct Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeReadDirectV36",(256 + getElement(2)));
                     break;
                 case XNetConstants.PROG_READ_MODE_CV_V36 + 2:
-                    text
-                            = "Service Mode Request (V3.6): Read CV " + (512
-                            + getElement(2))
-                            + " in Direct Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeReadDirectV36",(512 + getElement(2)));
                     break;
                 case XNetConstants.PROG_READ_MODE_CV_V36 + 3:
-                    text
-                            = "Service Mode Request (V3.6): Read CV " + (768
-                            + getElement(2))
-                            + " in Direct Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeReadDirectV36",(768 + getElement(2)));
                     break;
                 default:
                     text = toString();
@@ -1519,40 +1507,25 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         } else if (getElement(0) == XNetConstants.PROG_WRITE_REQUEST) {
             switch (getElement(1)) {
                 case XNetConstants.PROG_WRITE_MODE_REGISTER:
-                    text
-                            = "Service Mode Request: Write " + getElement(3)
-                            + " to Register " + getElement(2);
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeWriteRegister",getElement(2),getElement(3));
                     break;
                 case XNetConstants.PROG_WRITE_MODE_CV:
-                    text
-                            = "Service Mode Request: Write " + getElement(3) + " to CV "
-                            + getElement(2) + " in Direct Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeWriteDirect",getElement(2),getElement(3));
                     break;
                 case XNetConstants.PROG_WRITE_MODE_PAGED:
-                    text
-                            = "Service Mode Request: Write " + getElement(3) + " to CV "
-                            + getElement(2) + " in Paged Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeWritePaged",getElement(2),getElement(3));
                     break;
                 case XNetConstants.PROG_WRITE_MODE_CV_V36:
-                    text
-                            = "Service Mode Request (V3.6): Write " + getElement(3)
-                            + " to CV " + (getElement(2)
-                            == 0 ? 1024 : getElement(2)) + " in Direct Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeWriteDirectV36",(getElement(2)== 0 ? 1024 : getElement(2)),getElement(3));
                     break;
                 case (XNetConstants.PROG_WRITE_MODE_CV_V36 + 1):
-                    text
-                            = "Service Mode Request (V3.6): Write " + getElement(3)
-                            + " to CV " + (256 + getElement(2)) + " in Direct Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeWriteDirectV36",(256 + getElement(2)),getElement(3));
                     break;
                 case (XNetConstants.PROG_WRITE_MODE_CV_V36 + 2):
-                    text
-                            = "Service Mode Request (V3.6): Write " + getElement(3)
-                            + " to CV " + (512 + getElement(2)) + " in Direct Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeWriteDirectV36",(512 + getElement(2)),getElement(3));
                     break;
                 case (XNetConstants.PROG_WRITE_MODE_CV_V36 + 3):
-                    text
-                            = "Service Mode Request (V3.6): Write " + getElement(3)
-                            + " to CV " + (768 + getElement(2)) + " in Direct Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeWriteDirectV36",(768 + getElement(2)),getElement(3));
                     break;
                 default:
                     text = toString();
