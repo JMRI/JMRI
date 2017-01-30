@@ -74,7 +74,7 @@ public class LayoutTrack {
     }
 
     /**
-     * useful math methods (should be class extension for Double & Point2D)
+     * useful math methods (should be class extension for Double and Point2D)
      */
 
    //return a Double between a & b for t:0 ==> a and t:1 ==> b

@@ -431,10 +431,12 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public static int getTurnoutCircleSize() {
+        log.info("getTurnoutCircleSize(): {}", turnoutCircleSize);
         return turnoutCircleSize;
     }
 
     public static void setTurnoutCircleSize(int newSize) {
+        log.info("setTurnoutCircleSize({})", newSize);
         turnoutCircleSize = newSize;
     }
 
