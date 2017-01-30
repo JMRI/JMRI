@@ -1,14 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- Updated  by Blorec Herv&#233;  2013-09-13-->
+<!-- Updated  by Blorec Herv&#233;  2017-01-30-->
 <html lang="fr">
-<head>
-    <TITLE>
- 	JMRI: LocoNet Implementation
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+<<head>
+    <title>JMRI Support - LocoNet&reg; Implementation</title>
+    <meta content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI LocoNet technical implementation">
-
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
     <!-- are an arbitrary design pattern used by the update.pl script to -->
     <!-- easily replace the common header/footer code for all the web pages -->
@@ -17,25 +13,21 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
-    <div id="mainContent">
-
+<div id="mainContent">
 
 <H1>Informations sur la mise en oeuvre JMRI LocoNet&reg;</H1>
-
 
 Cette page d&#233;crit les diverses structures de haut niveau sur la mise en oeuvre de JMRI LocoNet.
 S'il vous pla&#238;t voir aussi les
@@ -107,8 +99,6 @@ et ses sous-classes
 <A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficRouter.html"> LnTrafficRouter </a>,
 et
 <A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetInterfaceScaffold.html"> LocoNetInterfaceScaffold </a>(lien cass&#233; le 17/01/2012).
-
-
 
 <h3>LnTrafficController</h3>
 
@@ -206,7 +196,6 @@ Ce n'est pas un m&#233;canisme tr&#232;s g&#233;n&#233;ral. Bien qu'un LnPacketi
 soit la bonne chose pour se connecter &#224; chacun des adaptateurs port s&#233;rie,
 le reste de la configuration peut varier.</UL>
 
-
 <h2>Adaptateurs Port </h2>
 <A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnPortController.html"> LnPortController </A>
 est une classe de base abstraite pour r&#233;aliser des mises en oeuvres communes pour l'adaptateur de
@@ -270,7 +259,7 @@ un objet LnTrafficController existe en appelant le proc&#233;d&#233; LnTrafficCo
 <LI> Commence LnTrafficController dans un nouveau fil pour qu'il puisse g&#233;rer les 
 messages entrants de fa&#231;on asynchrone.</LI> 
 
-<h2>Slot et programmateur de gestion </h2>
+<h2>Slot et gestion du Programmateur </h2>
 
 Les "slots" sont &#224; la base du fonctionnement d'une station de commande LocoNet. Ils sont repr&#233;sent&#233;s
 par la classe LocoNetSlot. Comme LocoNetMessage, cette classe n'a pas (encore) fourni un grand nombre
