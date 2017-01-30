@@ -28,7 +28,8 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.profile.PackageTest");  // no tests in this class itself
         suite.addTest(new JUnit4TestAdapter(ProfileTest.class));
         suite.addTest(new TestSuite(ProfileUtilsTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new JUnit4TestAdapter(ProfileListCellRendererTest.class));
         return suite;
     }
 
