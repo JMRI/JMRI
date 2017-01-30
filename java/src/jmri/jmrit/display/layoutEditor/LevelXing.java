@@ -1556,7 +1556,7 @@ public class LevelXing extends LayoutTrack {
             g2.setColor(defaultTrackColor);
         }
         // set track width for AC block
-        float w = layoutEditor.setTrackStrokeWidth(g2, isMainlineAC());
+        layoutEditor.setTrackStrokeWidth(g2, isMainlineAC());
         // draw AC segment
         g2.draw(new Line2D.Double(getCoordsA(), getCoordsC()));
     }
@@ -1570,7 +1570,7 @@ public class LevelXing extends LayoutTrack {
             g2.setColor(defaultTrackColor);
         }
         // set track width for BD block
-        float w = layoutEditor.setTrackStrokeWidth(g2, isMainlineBD());
+        layoutEditor.setTrackStrokeWidth(g2, isMainlineBD());
         // draw BD segment
         g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
     }

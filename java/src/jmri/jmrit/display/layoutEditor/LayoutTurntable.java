@@ -985,7 +985,7 @@ public class LayoutTurntable extends LayoutTrack {
 
     private void draw(Graphics2D g2) {
         // draw turntable circle - default track color, side track width
-        float w = layoutEditor.setTrackStrokeWidth(g2, false);
+        layoutEditor.setTrackStrokeWidth(g2, false);
         double r = getRadius();
         g2.setColor(defaultTrackColor);
         g2.draw(new Ellipse2D.Double(
@@ -995,7 +995,7 @@ public class LayoutTurntable extends LayoutTrack {
             Point2D pt = getRayCoordsOrdered(j);
             TrackSegment t = getRayConnectOrdered(j);
             if (t != null) {
-                w = layoutEditor.setTrackStrokeWidth(g2, t.getMainline());
+                layoutEditor.setTrackStrokeWidth(g2, t.getMainline());
                 LayoutBlock b = t.getLayoutBlock();
                 if (b != null) {
                     g2.setColor(b.getBlockColor());
@@ -1003,7 +1003,7 @@ public class LayoutTurntable extends LayoutTrack {
                     g2.setColor(defaultTrackColor);
                 }
             } else {
-                w = layoutEditor.setTrackStrokeWidth(g2, false);
+                layoutEditor.setTrackStrokeWidth(g2, false);
                 g2.setColor(defaultTrackColor);
             }
             g2.draw(new Line2D.Double(new Point2D.Double(

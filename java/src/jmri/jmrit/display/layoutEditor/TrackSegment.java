@@ -305,8 +305,13 @@ public class TrackSegment extends LayoutTrack {
                 log.error("bad blockname '" + tBlockName + "' in tracksegment " + ident);
             }
         }
-        connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
-        connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
+
+        //NOTE: testing "type-less" connects
+        // (read comments for findObjectByName in LayoutEditorFindItems.java)
+        // connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
+        // connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
+        connect1 = p.getFinder().findObjectByName(tConnect1Name);
+        connect2 = p.getFinder().findObjectByName(tConnect2Name);
     }
 
     /**
@@ -1022,15 +1027,11 @@ public class TrackSegment extends LayoutTrack {
         if ((getTmpPt1() != pt1) || (getTmpPt2() != pt2) || trackNeedsRedraw()) {
             setTmpPt1(pt1);
             setTmpPt2(pt2);
-            //float w = layoutEditor.setTrackStrokeWidth(g2,false);
-            double pt2x;
-            double pt2y;
-            double pt1x;
-            double pt1y;
-            pt2x = pt2.getX();
-            pt2y = pt2.getY();
-            pt1x = pt1.getX();
-            pt1y = pt1.getY();
+
+            double pt2x = pt2.getX();
+            double pt2y = pt2.getY();
+            double pt1x = pt1.getX();
+            double pt1y = pt1.getY();
 
             if (getAngle() == 0.0D) {
                 setTmpAngle(90.0D);
@@ -1038,22 +1039,20 @@ public class TrackSegment extends LayoutTrack {
                 setTmpAngle(getAngle());
             }
             // Convert angle to radiants in order to speed up maths
-            double halfAngle = java.lang.Math.toRadians(getTmpAngle()) / 2.0D;
-            double chord;
-            double a;
-            double o;
-            double radius;
+            double halfAngleRAD = java.lang.Math.toRadians(getTmpAngle()) / 2.0D;
+
             // Compute arc's chord
-            a = pt2x - pt1x;
-            o = pt2y - pt1y;
-            chord = java.lang.Math.sqrt(((a * a) + (o * o)));
+            double a = pt2x - pt1x;
+            double o = pt2y - pt1y;
+            double chord = java.lang.Math.sqrt(((a * a) + (o * o)));
             setChordLength(chord);
+
             // Make sure chord is not null
             // In such a case (pt1 == pt2), there is no arc to draw
             if (chord > 0.0D) {
-                radius = (chord / 2) / (java.lang.Math.sin(halfAngle));
+                double radius = (chord / 2) / (java.lang.Math.sin(halfAngleRAD));
                 // Circle
-                double startRad = java.lang.Math.atan2(a, o) - halfAngle;
+                double startRad = java.lang.Math.atan2(a, o) - halfAngleRAD;
                 setStartadj(java.lang.Math.toDegrees(startRad));
                 if (getCircle()) {
                     // Circle - Compute center
@@ -1066,9 +1065,9 @@ public class TrackSegment extends LayoutTrack {
                     setCX(getCentreX() - (radius));
                     setCY(getCentreY() - (radius));
 
-                    //Compute the vlues for locating the circle
-                    setCentreSegX(getCentreX() + radius * java.lang.Math.cos(startRad + halfAngle));
-                    setCentreSegY(getCentreY() - java.lang.Math.sin(startRad + halfAngle) * radius);
+                    // Compute the vlues for locating the circle
+                    setCentreSegX(getCentreX() + radius * java.lang.Math.cos(startRad + halfAngleRAD));
+                    setCentreSegY(getCentreY() - java.lang.Math.sin(startRad + halfAngleRAD) * radius);
 
                 } else {
                     // Ellipse - Round start angle to the closest multiple of 90
@@ -1113,15 +1112,8 @@ public class TrackSegment extends LayoutTrack {
             float trackWidth = layoutEditor.setTrackStrokeWidth(g2, mainline);
             if (getArc()) {
                 calculateTrackSegmentAngle();
-                Stroke drawingStroke;
                 Stroke originalStroke = g2.getStroke();
-                if (mainline) {
-                    drawingStroke = new BasicStroke(layoutEditor.getMainlineTrackWidth(), BasicStroke.CAP_BUTT,
-                        BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
-                } else {
-                    drawingStroke = new BasicStroke(layoutEditor.getSideTrackWidth(), BasicStroke.CAP_BUTT,
-                        BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
-                }
+                Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
                 g2.setStroke(drawingStroke);
                 g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
                 g2.setStroke(originalStroke);
@@ -1159,7 +1151,6 @@ public class TrackSegment extends LayoutTrack {
             } else {
                 g2.setColor(defaultTrackColor);
             }
-            //float w = layoutEditor.setTrackStrokeWidth(g2,false);(g2,mainline);
             if (getArc()) {
                 calculateTrackSegmentAngle();
                 g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));

@@ -295,9 +295,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public static final int SLIP_RIGHT = LayoutTrack.SLIP_RIGHT;
     public static final int TURNTABLE_RAY_OFFSET = LayoutTrack.TURNTABLE_RAY_OFFSET; // offset for turntable connection points
 
-    // use these when you need a double; turnoutCircleSize[2] when you need an int
+    // use these when you need a double and getTurnoutCircleSize() when you need an int
     // note: these only change when setTurnoutCircleSize is called
-    // using these avoids calling getTurnoutCircleSize() and
+    // using these avoids having to call getTurnoutCircleSize() and
     // the multiply (x2) and the int -> double conversion.
     private static double circleRadius = getTurnoutCircleSize();
     private static double circleDiameter = 2.0 * circleRadius;
@@ -1477,6 +1477,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     setAllShowTooltip(tooltipsInEditMode);
                 } else {
                     setAllShowTooltip(tooltipsWithoutEditMode);
+
+                    // HACK: undo using the "reserved" color to show the selected block
+                    int count = blockIDComboBox.getItemCount();
+                    for (int i = 0; i < count; i++) {
+                        String blockNameI = blockIDComboBox.getItemAt(i);
+                        LayoutBlock bI = provideLayoutBlock(blockNameI);
+                        if (bI != null) {
+                            bI.setUseExtraColor(false);
+                        }
+                    }
                 }
                 awaitingIconChange = false;
             }
@@ -8269,7 +8279,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return ColorUtil.colorToString(LayoutTurnout.getTurnoutCircleColor());
     }
 
-    public int getTurnoutCircleSize() {
+    public static int getTurnoutCircleSize() {
         return LayoutTurnout.getTurnoutCircleSize();
     }
 
@@ -8576,6 +8586,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         resetDirty();
     }
 
+    // these are convenience methods to return rectangles
+    // to do point-in-rect (hit) testing
+
+    // compute the control point rect at inPoint
     public static Rectangle2D controlPointRectAt(Point2D inPoint) {
         return new Rectangle2D.Double(
             inPoint.getX() - LayoutTrack.controlPointSize,
@@ -8583,16 +8597,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             LayoutTrack.controlPointSize2, LayoutTrack.controlPointSize2);
     }
 
+    // compute the turnout circle rect at inPoint
     public static Rectangle2D turnoutCircleRectAt(Point2D inPoint) {
         return new Rectangle2D.Double(inPoint.getX() - circleRadius,
             inPoint.getY() - circleRadius, circleDiameter, circleDiameter);
     }
 
+    // compute the turnout circle at inPoint (used for drawing)
     public static Ellipse2D turnoutCircleAt(Point2D inPoint) {
         return new Ellipse2D.Double(inPoint.getX() - circleRadius,
             inPoint.getY() - circleRadius, circleDiameter, circleDiameter);
     }
-
 
     /**
      * Special internal class to allow drawing of layout to a JLayeredPane This
@@ -8608,14 +8623,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (isEditable() && drawGrid) {
             drawPanelGrid(g2);
         }
+
         g2.setColor(defaultTrackColor);
         main = false;
         g2.setStroke(new BasicStroke(sideTrackWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+
         drawHiddenTrack(g2);
-        drawDashedTrack(g2, false);
-        drawDashedTrack(g2, true);
-        drawSolidTrack(g2, false);
-        drawSolidTrack(g2, true);
+        drawDashedTrack(g2, false); // non-mainline
+        drawDashedTrack(g2, true);  // mainline
+        drawSolidTrack(g2, false);  // non-mainline
+        drawSolidTrack(g2, true);   // mainline
         drawTurnouts(g2);
         drawXings(g2);
         drawSlips(g2);
@@ -8821,9 +8838,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void drawDashedTrack(Graphics2D g2, boolean mainline) {
         for (TrackSegment t : trackList) {
-            if ((!t.getHidden()) && t.getDashed() && (mainline == t.getMainline())) {
-                t.drawDashed(g2, mainline);
-            }
+            t.drawDashed(g2, mainline);
         }
     }
 
