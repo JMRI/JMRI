@@ -803,6 +803,18 @@ public class XNetMessageTest{
     }
 
     @Test
+    public void testToMonitorStringFunctionGroup1OpsMsg(){
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup1OpsMsg(1234,
+          false,false,false,false,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 1 for address: 1234 F0 off F1 off F2 off F3 off F4 off ",m.toMonitorString());
+       // all on
+       m = XNetMessage.getFunctionGroup1OpsMsg(1234,
+          true,true,true,true,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 1 for address: 1234 F0 on F1 on F2 on F3 on F4 on ",m.toMonitorString());
+    }
+
+    @Test
     public void testGetFunctionGroup1SetMomMsg() {
        // all off
        XNetMessage m = XNetMessage.getFunctionGroup1SetMomMsg(1234,
@@ -822,6 +834,18 @@ public class XNetMessageTest{
        Assert.assertEquals(0xD2,m.getElement(3));
        Assert.assertEquals(0x1F,m.getElement(4));
        Assert.assertEquals(0xC9,m.getElement(5));
+    }
+
+    @Test
+    public void testToMonitorStringFunctionGroup1SetMsg(){
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup1SetMomMsg(1234,
+          false,false,false,false,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 1 Momentary Status for address: 1234 F0 continuous F1 continuous F2 continuous F3 continuous F4 continuous ",m.toMonitorString());
+       // all on
+       m = XNetMessage.getFunctionGroup1SetMomMsg(1234,
+          true,true,true,true,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 1 Momentary Status for address: 1234 F0 momentary F1 momentary F2 momentary F3 momentary F4 momentary ",m.toMonitorString());
     }
 
     @Test
@@ -847,6 +871,18 @@ public class XNetMessageTest{
     }
 
     @Test
+    public void testToMonitorStringFunctionGroup2OpsMsg(){
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup2OpsMsg(1234,
+          false,false,false,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 2 for address: 1234 F5 off F6 off F7 off F8 off ",m.toMonitorString());
+       // all on
+       m = XNetMessage.getFunctionGroup2OpsMsg(1234,
+          true,true,true,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 2 for address: 1234 F5 on F6 on F7 on F8 on ",m.toMonitorString());
+    }
+
+    @Test
     public void testGetFunctionGroup2SetMomMsg() {
        // all off
        XNetMessage m = XNetMessage.getFunctionGroup2SetMomMsg(1234,
@@ -866,6 +902,18 @@ public class XNetMessageTest{
        Assert.assertEquals(0xD2,m.getElement(3));
        Assert.assertEquals(0x0F,m.getElement(4));
        Assert.assertEquals(0xD8,m.getElement(5));
+    }
+
+    @Test
+    public void testToMonitorStringFunctionGroup2SetMsg(){
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup2SetMomMsg(1234,
+          false,false,false,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 2 Momentary Status for address: 1234 F5 continuous F6 continuous F7 continuous F8 continuous ",m.toMonitorString());
+       // all on
+       m = XNetMessage.getFunctionGroup2SetMomMsg(1234,
+          true,true,true,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 2 Momentary Status for address: 1234 F5 momentary F6 momentary F7 momentary F8 momentary ",m.toMonitorString());
     }
 
     @Test
@@ -891,6 +939,18 @@ public class XNetMessageTest{
     }
 
     @Test
+    public void testToMonitorStringFunctionGroup3OpsMsg(){
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup3OpsMsg(1234,
+          false,false,false,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 3 for address: 1234 F9 off F10 off F11 off F12 off ",m.toMonitorString());
+       // all on
+       m = XNetMessage.getFunctionGroup3OpsMsg(1234,
+          true,true,true,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 3 for address: 1234 F9 on F10 on F11 on F12 on ",m.toMonitorString());
+    }
+
+    @Test
     public void testGetFunctionGroup3SetMomMsg() {
        // all off
        XNetMessage m = XNetMessage.getFunctionGroup3SetMomMsg(1234,
@@ -910,6 +970,18 @@ public class XNetMessageTest{
        Assert.assertEquals(0xD2,m.getElement(3));
        Assert.assertEquals(0x0F,m.getElement(4));
        Assert.assertEquals(0xDB,m.getElement(5));
+    }
+
+    @Test
+    public void testToMonitorStringFunctionGroup3SetMsg(){
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup3SetMomMsg(1234,
+          false,false,false,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 3 Momentary Status for address: 1234 F9 continuous F10 continuous F11 continuous F12 continuous ",m.toMonitorString());
+       // all on
+       m = XNetMessage.getFunctionGroup3SetMomMsg(1234,
+          true,true,true,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 3 Momentary Status for address: 1234 F9 momentary F10 momentary F11 momentary F12 momentary ",m.toMonitorString());
     }
 
     @Test
@@ -935,6 +1007,18 @@ public class XNetMessageTest{
     }
 
     @Test
+    public void testToMonitorStringFunctionGroup4OpsMsg(){
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup4OpsMsg(1234,
+          false,false,false,false,false,false,false,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 4 for address: 1234 F13 off F14 off F15 off F16 off F17 off F18 off F19 off F20 off ",m.toMonitorString());
+       // all on
+       m = XNetMessage.getFunctionGroup4OpsMsg(1234,
+          true,true,true,true,true,true,true,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 4 for address: 1234 F13 on F14 on F15 on F16 on F17 on F18 on F19 on F20 on ",m.toMonitorString());
+    }
+
+    @Test
     public void testGetFunctionGroup4SetMomMsg() {
        // all off
        XNetMessage m = XNetMessage.getFunctionGroup4SetMomMsg(1234,
@@ -954,6 +1038,18 @@ public class XNetMessageTest{
        Assert.assertEquals(0xD2,m.getElement(3));
        Assert.assertEquals(0xFF,m.getElement(4));
        Assert.assertEquals(0x2A,m.getElement(5));
+    }
+
+    @Test
+    public void testToMonitorStringFunctionGroup4SetMsg(){
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup4SetMomMsg(1234,
+          false,false,false,false,false,false,false,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 4 Momentary Status for address: 1234 F13 continuous F14 continuous F15 continuous F16 continuous F17 continuous F18 continuous F19 continuous F20 continuous ",m.toMonitorString());
+       // all on
+       m = XNetMessage.getFunctionGroup4SetMomMsg(1234,
+          true,true,true,true,true,true,true,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 4 Momentary Status for address: 1234 F13 momentary F14 momentary F15 momentary F16 momentary F17 momentary F18 momentary F19 momentary F20 momentary ",m.toMonitorString());
     }
 
     @Test
@@ -979,6 +1075,18 @@ public class XNetMessageTest{
     }
 
     @Test
+    public void testToMonitorStringFunctionGroup5OpsMsg(){
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup5OpsMsg(1234,
+          false,false,false,false,false,false,false,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 5 for address: 1234 F21 off F22 off F23 off F24 off F25 off F26 off F27 off F28 off ",m.toMonitorString());
+       // all on
+       m = XNetMessage.getFunctionGroup5OpsMsg(1234,
+          true,true,true,true,true,true,true,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 5 for address: 1234 F21 on F22 on F23 on F24 on F25 on F26 on F27 on F28 on ",m.toMonitorString());
+    }
+
+    @Test
     public void testGetFunctionGroup5SetMomMsg() {
        // all off
        XNetMessage m = XNetMessage.getFunctionGroup5SetMomMsg(1234,
@@ -1001,11 +1109,29 @@ public class XNetMessageTest{
     }
 
     @Test
+    public void testToMonitorStringFunctionGroup5SetMsg(){
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup5SetMomMsg(1234,
+          false,false,false,false,false,false,false,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 5 Momentary Status for address: 1234 F21 continuous F22 continuous F23 continuous F24 continuous F25 continuous F26 continuous F27 continuous F28 continuous ",m.toMonitorString());
+       // all on
+       m = XNetMessage.getFunctionGroup5SetMomMsg(1234,
+          true,true,true,true,true,true,true,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 5 Momentary Status for address: 1234 F21 momentary F22 momentary F23 momentary F24 momentary F25 momentary F26 momentary F27 momentary F28 momentary ",m.toMonitorString());
+    }
+
+    @Test
     public void testGetResumeOperationsMsg() {
        XNetMessage m = XNetMessage.getResumeOperationsMsg();
        Assert.assertEquals(0x21,m.getElement(0));
        Assert.assertEquals(0x81,m.getElement(1));
        Assert.assertEquals(0xA0,m.getElement(2));
+    }
+
+    @Test
+    public void testToMonitorStringResumeOperationsMsg(){
+       XNetMessage m = XNetMessage.getResumeOperationsMsg();
+       Assert.assertEquals("Monitor String","REQUEST: Normal Operations Resumed",m.toMonitorString());
     }
 
     @Test
@@ -1017,6 +1143,12 @@ public class XNetMessageTest{
     }
 
     @Test
+    public void testToMonitorStringEmergencyOffMsg(){
+       XNetMessage m = XNetMessage.getEmergencyOffMsg();
+       Assert.assertEquals("Monitor String","REQUEST: Emergency Off",m.toMonitorString());
+    }
+
+    @Test
     public void testGetCSVersionRequestMessage() {
        XNetMessage m = XNetMessage.getCSVersionRequestMessage();
        Assert.assertEquals(0x21,m.getElement(0));
@@ -1025,11 +1157,23 @@ public class XNetMessageTest{
     }
 
     @Test
+    public void testToMonitorStringCSVersionRequestMessage(){
+       XNetMessage m = XNetMessage.getCSVersionRequestMessage();
+       Assert.assertEquals("Monitor String","REQUEST: Command Station Version",m.toMonitorString());
+    }
+
+    @Test
     public void testGetCSStatusRequestMessage() {
        XNetMessage m = XNetMessage.getCSStatusRequestMessage();
        Assert.assertEquals(0x21,m.getElement(0));
        Assert.assertEquals(0x24,m.getElement(1));
        Assert.assertEquals(0x05,m.getElement(2));
+    }
+
+    @Test
+    public void testToMonitorStringCSStatusRequestMessage(){
+       XNetMessage m = XNetMessage.getCSStatusRequestMessage();
+       Assert.assertEquals("Monitor String","REQUEST: Command Station Status",m.toMonitorString());
     }
 
     @Test
@@ -1049,10 +1193,24 @@ public class XNetMessageTest{
     }
 
     @Test
+    public void testToMonitorStringCsAutoStartMessageMessage(){
+       XNetMessage m = XNetMessage.getCSAutoStartMessage(true);
+       Assert.assertEquals("Monitor String","REQUEST: Set Power-up Mode to Automatic",m.toMonitorString());
+       m = XNetMessage.getCSAutoStartMessage(false);
+       Assert.assertEquals("Monitor String","REQUEST: Set Power-up Mode to Manual",m.toMonitorString());
+    }
+
+    @Test
     public void testGetLIVersionRequestMessage() {
        XNetMessage m = XNetMessage.getLIVersionRequestMessage();
        Assert.assertEquals(0xF0,m.getElement(0));
        Assert.assertEquals(0xF0,m.getElement(1));
+    }
+
+    @Test
+    public void testToMonitorStringLIVersionRequestMessage(){
+       XNetMessage m = XNetMessage.getLIVersionRequestMessage();
+       Assert.assertEquals("Monitor String","REQUEST LI10x hardware/software version",m.toMonitorString());
     }
 
     @Test
@@ -1065,6 +1223,12 @@ public class XNetMessageTest{
     }
 
     @Test
+    public void testToMonitorStringLIAddressRequestMsg(){
+       XNetMessage m = XNetMessage.getLIAddressRequestMsg(1);
+       Assert.assertEquals("Monitor String","REQUEST LI101 Address 1",m.toMonitorString());
+    }
+
+    @Test
     public void testGetLISpeedReqeustMessage() {
        XNetMessage m = XNetMessage.getLISpeedRequestMsg(1);
        Assert.assertEquals(0xF2,m.getElement(0));
@@ -1072,6 +1236,13 @@ public class XNetMessageTest{
        Assert.assertEquals(0x01,m.getElement(2));
        Assert.assertEquals(0xF1,m.getElement(3));
     }
+
+    @Test
+    public void testToMonitorStringLISpeedRequestMessage(){
+       XNetMessage m = XNetMessage.getLISpeedRequestMsg(1);
+       Assert.assertEquals("Monitor String","REQUEST LI101 Baud Rate 19200bps (default)",m.toMonitorString());
+    }
+
 
     // The minimal setup for log4J
     @Before
