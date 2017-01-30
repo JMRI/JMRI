@@ -352,15 +352,17 @@ public class LayoutEditorTest {
     public void testSetTurnoutCircleSize() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor();
-        // NOTE: I'm only changing this value to see if it's what's causing
-        // testGetTurnoutCircleSize (above) to fail… Normally I wouldn't
-        // commit this to GitHub except that alltests is passing locally…
-        // it's only failing the integration tests after a commit.
-        // Once I've figured out what's causing the failure I'll restore
-        // the old code (and remote this (verbose) comment). <geowar1@mac.com>
-        // set to known value
+        //
+        // It's a Heisenbug!!!
+        //
+        // This test was causing testGetTurnoutCircleSize (above) to fail
+        // so I've added code to save & restore the previous value
+        // before & after the setTurnoutCircleSize tests.
+        //
+        int i = e.getTurnoutCircleSize();   // save previous value
         e.setTurnoutCircleSize(11);
         Assert.assertEquals("turnout circle size after set", 11, e.getTurnoutCircleSize());
+        e.setTurnoutCircleSize(i);  // restore previous value
     }
 
     @Test
