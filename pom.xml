@@ -16,9 +16,16 @@
         but if multiple dependencies are linked, use a property for single
         dependency source) -->
         <jetty.version>9.2.17.v20160517</jetty.version>
-        <powermock.version>1.6.5</powermock.version>
+        <powermock.version>1.6.6</powermock.version>
         <slf4j.version>1.7.21</slf4j.version>
+        <jogamp.version>2.3.2</jogamp.version>
+        <!-- test environment -->
+        <jmri.path.program>${basedir}</jmri.path.program>
+        <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
+        <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
+        <ant.version>1.9.7</ant.version>
         <ant.jvm.args></ant.jvm.args>
+        <argLine></argLine>
     </properties>
     <scm>
         <connection>scm:git:https://github.com/JMRI/JMRI.git</connection>
@@ -56,13 +63,13 @@
                             </execution>
                         </executions>  
                     </plugin>
-                    <!-- prevent surefire (maven default test harness) from running tests -->
+                    <!-- use surefire (maven default test harness) only for line endings -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>2.19.1</version>
                         <configuration>
-                            <skipTests>true</skipTests>
+                            <test>jmri.util.FileLineEndingsTest</test>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -97,14 +104,55 @@
                             </execution>
                         </executions>  
                     </plugin>
-                    <!-- prevent surefire (maven default test harness) from running tests -->
+                    <!-- use surefire (maven default test harness) only for line endings -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>2.19.1</version>
                         <configuration>
-                            <skipTests>true</skipTests>
+                            <test>jmri.util.FileLineEndingsTest</test>
                         </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.eluder.coveralls</groupId>
+                        <artifactId>coveralls-maven-plugin</artifactId>
+                        <version>4.3.0</version>
+                        <configuration>
+                           <sourceDirectories>
+                                  <!-- Additional source directories -->
+                                  <File>java/tmp</File>
+                                  <File>target/generated-sources/javacc</File>
+                                  <File>target/generated-sources/jjtree</File>
+                           </sourceDirectories>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>0.7.8</version>
+                        <configuration>
+                           <dataFile>jacoco.exec</dataFile>
+                           <excludes>
+                               <File>**/*Test*.class</File>
+                               <!-- Exclude testing infrastructure classes -->
+                               <File>**/*Scaffold.class"</File>
+                               <File>**/*JUnit*.class</File>
+                               <File>**/*Demo.class</File>
+                               <File>**/*Mock*.class</File>
+                               <File>jmri/jmrit/symbolicprog/tabbedframe/CheckProgrammerNames.class</File>
+                               <File>jmri/jmrix/openlcb/SampleFactory.class</File>
+                               <File>jmri/util/swing/SamplePane.class</File>
+                               <File>apps/tests/Log4JFixture.class</File>
+                           </excludes>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>prepare-agent</id>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
@@ -134,13 +182,13 @@
                             </execution>
                         </executions>  
                     </plugin>
-                    <!-- prevent surefire (maven default test harness) from running tests -->
+                    <!-- use surefire (maven default test harness) only for line endings -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>2.19.1</version>
                         <configuration>
-                            <skipTests>true</skipTests>
+                            <test>jmri.util.FileLineEndingsTest</test>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -175,7 +223,7 @@
                                     <excludeFilterFile>.findbugs.xml</excludeFilterFile>
                                     <effort>Max</effort>
                                     <threshold>High</threshold>
-                                    <jvmArgs>-Xmx1536m</jvmArgs>
+                                    <maxHeap>1536</maxHeap>
                                     <timeout>1200000</timeout><!-- 20 minutes -->
                                 </configuration>
                             </execution>
@@ -253,13 +301,18 @@
                     <dependency>
                         <groupId>org.apache.ant</groupId>
                         <artifactId>ant</artifactId>
-                        <version>1.9.7</version>
+                        <version>${ant.version}</version>
                     </dependency>
                     <!-- junit support is optional in ant maven packaging -->
                     <dependency>
                         <groupId>org.apache.ant</groupId>
+                        <artifactId>ant-junit4</artifactId>
+                        <version>${ant.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.ant</groupId>
                         <artifactId>ant-junit</artifactId>
-                        <version>1.9.7</version>
+                        <version>${ant.version}</version>
                     </dependency>
                 </dependencies>          
             </plugin>
@@ -306,19 +359,36 @@
                 <version>2.19.1</version>
                 <configuration>
                     <excludes>
+                        <!-- ignore until #2601 is resolved -->
+                        <exclude>jmri.jmrit.decoderdefn.DuplicateTest</exclude>
                         <!-- ignore to avoid duplicate test runs -->
-                        <exclude>apps/tests/AllTest.java</exclude>
-                        <exclude>jmri/HeadLessTest.java</exclude>
+                        <exclude>apps.tests.AllTest</exclude>
+                        <exclude>jmri.HeadLessTest</exclude>
                         <!-- ignore package tests under assumption they only include other tests -->
-                        <exclude>**/PackageTest.java</exclude>
+                        <exclude>**.PackageTest</exclude>
                         <!-- ignore since the test is not intended to be normally used -->
-                        <exclude>jmri/util/FailTest.java</exclude>
-                        <!-- ingore since base classes for other tests -->
-                        <exclude>jmri/util/SwingTestCase.java</exclude>
-                        <exclude>jmri/jmrit/operations/OperationsTestCase.java</exclude>
-                        <exclude>jmri/jmrit/operations/OperationsSwingTestCase.java</exclude>
+                        <exclude>jmri.util.FailTest</exclude>
+                        <!-- ignore since base classes for other tests -->
+                        <exclude>jmri.util.SwingTestCase</exclude>
+                        <exclude>jmri.jmrit.operations.OperationsTestCase</exclude>
+                        <exclude>jmri.jmrit.operations.OperationsSwingTestCase</exclude>
                     </excludes>
+                    <systemPropertyVariables>
+                        <jmri.path.program>${basedir}</jmri.path.program>
+                        <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
+                        <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
+                    </systemPropertyVariables>
                     <workingDirectory>${basedir}</workingDirectory>
+                    <argLine>@{argLine}</argLine>
+                    <useSystemClassLoader>true</useSystemClassLoader>
+                    <useManifestOnlyJar>false</useManifestOnlyJar>
+                    <!-- uncomment to force each test into new context
+                    <forkCount>1</forkCount>
+                    <reuseForks>false</reuseForks>
+                    -->
+                    <!-- uncomment to really ensure tests are independent
+                    <runOrder>random</runOrder>
+                    -->
                 </configuration>
             </plugin>
             <plugin>
@@ -369,10 +439,55 @@
                         <configuration>
                             <name>current.year</name>
                             <pattern>yyyy</pattern>
+                            <locale>en,US</locale>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- disable by default, enabled only in travis-coverage, for now
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.8</version>
+                <executions>
+                    <execution>
+                        <id>default-check</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <rule>
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>LINE</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.28</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>CLASS</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.50</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                                <rule>
+                                    <element>PACKAGE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>CLASS</counter>
+                                            <value>COVEREDCOUNT</value>
+                                            <minimum>1</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>        
+            -->
         </plugins>
     </build>
     <reporting>
@@ -482,13 +597,13 @@
         </dependency>
         <dependency>
             <groupId>org.python</groupId>
-            <artifactId>jython</artifactId>
+            <artifactId>jython-standalone</artifactId>
             <version>2.7.0</version>
         </dependency>
         <dependency>
-            <groupId>org.bidib.jbidib.org.qbang.rxtx</groupId>
-            <artifactId>rxtxcomm</artifactId>
-            <version>2.2</version>
+            <groupId>org.bidib.jbidib</groupId>
+            <artifactId>jbidibc-rxtx-2.2</artifactId>
+            <version>1.6.0</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -527,9 +642,19 @@
             <version>1.0</version>
         </dependency>
         <dependency>
+            <groupId>org.jogamp.jogl</groupId>
+            <artifactId>jogl-all-main</artifactId>
+            <version>${jogamp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jogamp.gluegen</groupId>
+            <artifactId>gluegen-rt-main</artifactId>
+            <version>${jogamp.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.jogamp.joal</groupId>
-            <artifactId>joal</artifactId>
-            <version>2.3.2</version>
+            <artifactId>joal-main</artifactId>
+            <version>${jogamp.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jdesktop</groupId>
@@ -615,9 +740,20 @@
         </dependency>
         <dependency>
             <groupId>org.powermock</groupId>
-            <artifactId>powermock-api-mockito</artifactId>
+            <artifactId>powermock-api-mockito2</artifactId>
             <version>${powermock.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.0.42-beta</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib-nodep</artifactId>
+            <version>2.2.2</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans</groupId>

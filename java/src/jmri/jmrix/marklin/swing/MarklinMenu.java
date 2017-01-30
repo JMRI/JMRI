@@ -12,11 +12,6 @@ import org.slf4j.LoggerFactory;
  */
 public class MarklinMenu extends JMenu {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7952313409946046904L;
-
     public MarklinMenu(MarklinSystemConnectionMemo memo) {
         super();
 

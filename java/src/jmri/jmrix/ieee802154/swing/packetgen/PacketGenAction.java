@@ -1,11 +1,3 @@
-/**
- * PacketGenAction.java
- *
- * Description:	Swing action to create and register a IEEE802154 PacketGenFrame
- * object
- *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
-  */
 package jmri.jmrix.ieee802154.swing.packetgen;
 
 import java.awt.event.ActionEvent;
@@ -13,12 +5,14 @@ import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Swing action to create and register a IEEE802154 PacketGenFrame
+ * object
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001, 2002
+  */
 public class PacketGenAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8964241715144652712L;
     jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo _memo = null;
 
     public PacketGenAction(String s, jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo memo) {
@@ -59,4 +53,4 @@ public class PacketGenAction extends AbstractAction {
 }
 
 
-/* @(#)LocoGenAction.java */
+

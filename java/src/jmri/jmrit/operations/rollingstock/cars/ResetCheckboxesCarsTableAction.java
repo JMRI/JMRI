@@ -1,4 +1,3 @@
-// ResetCheckboxesCarsTableAction.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.event.ActionEvent;
@@ -30,4 +29,4 @@ public class ResetCheckboxesCarsTableAction extends AbstractAction {
     }
 }
 
-/* @(#)ResetCheckboxesCarsTableAction.java */
+

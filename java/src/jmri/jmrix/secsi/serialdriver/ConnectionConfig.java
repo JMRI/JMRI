@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.secsi.serialdriver;
 
 import javax.swing.BoxLayout;

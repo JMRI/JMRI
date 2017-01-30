@@ -1,4 +1,3 @@
-// PortController.java
 package jmri.jmrix.can.adapters.lawicell;
 
 import java.io.DataInputStream;
@@ -34,4 +33,4 @@ public abstract class PortController extends jmri.jmrix.AbstractSerialPortContro
         return (CanSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 }
-/* @(#)PortController.java */
+

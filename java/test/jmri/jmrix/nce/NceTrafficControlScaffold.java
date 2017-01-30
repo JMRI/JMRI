@@ -51,6 +51,13 @@ public class NceTrafficControlScaffold extends NceTrafficController {
         return;
     }
 
+    protected void sendTestReply(NceReply m) {
+        // forward a test message to Listeners
+        notifyReply(m, null);
+        return;
+   }
+
+
     /*
      * Check number of listeners, used for testing dispose()
      */

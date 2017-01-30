@@ -104,4 +104,4 @@ class DCCppRegister {
     public void allocate() { this.incUserCount(); }
     public void release() { this.decUserCount(); }
 }
-/* @(#)DCCppRegisterManager.java */
+

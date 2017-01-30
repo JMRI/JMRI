@@ -42,4 +42,4 @@ public class Sprogv4UpdateAction extends SprogUpdateAction {
 }
 
 
-/* @(#)Sprogv4UpdateAction.java */
+

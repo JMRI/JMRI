@@ -1,4 +1,3 @@
-// DCCppSensor.java
 package jmri.jmrix.dccpp;
 
 import jmri.Sensor;
@@ -195,4 +194,4 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
 }
 
 
-/* @(#)DCCppSensor.java */
+

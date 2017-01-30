@@ -51,6 +51,12 @@ public class EasyDccTrafficControlScaffold extends EasyDccTrafficController {
         return;
     }
 
+    protected void sendTestReply(EasyDccReply m) {
+        // forward a test message to Listeners
+        notifyReply(m, null);
+        return;
+    }
+
     /*
      * Check number of listeners, used for testing dispose()
      */

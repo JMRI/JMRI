@@ -1,4 +1,3 @@
-// DCCppMultiMeter.java
 package jmri.jmrix.dccpp;
 
 import java.beans.PropertyChangeListener;

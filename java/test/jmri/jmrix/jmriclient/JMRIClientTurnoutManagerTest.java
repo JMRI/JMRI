@@ -16,7 +16,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen
  * @author      Paul Bender Copyright (C) 2012,2016	
  */
-public class JMRIClientTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class JMRIClientTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     @Override
     public String getSystemName(int i){

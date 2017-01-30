@@ -1,5 +1,6 @@
 package jmri.jmrix;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
 
     // copy one
     @SuppressWarnings("null")
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH",
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH",
             justification = "we want to force an exception")
     public AbstractMRMessage(AbstractMRMessage m) {
         this();

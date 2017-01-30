@@ -1,6 +1,6 @@
-// StackMonFrame.java
 package jmri.jmrix.lenz.swing.stackmon;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -31,10 +31,6 @@ import org.slf4j.LoggerFactory;
   */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2129153656311593566L;
     JButton nextButton = new JButton("Next Entry");
     JButton previousButton = new JButton("Previous Entry");
     JButton deleteButton = new JButton("Delete Entry");
@@ -236,7 +232,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
      * Request the status of the current address
      */
     @SuppressWarnings("unused")
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification = "This is part of work in progress code to allow display of all information about the locomotives in the stack.")
+@SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification = "This is part of work in progress code to allow display of all information about the locomotives in the stack.")
     private void requestStatus() {
         int address = 0;
         if (!adrTextField.getText().equals("")) {
@@ -251,7 +247,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
      * current address.
      */
     @SuppressWarnings("unused")
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification = "This is part of work in progress code to allow display of all information about the locomotives in the stack.")
+@SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification = "This is part of work in progress code to allow display of all information about the locomotives in the stack.")
     private void requestFunctionStatus() {
         int address = 0;
         if (!adrTextField.getText().equals("")) {

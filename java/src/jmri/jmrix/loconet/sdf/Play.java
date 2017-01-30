@@ -20,7 +20,7 @@ public class Play extends SdfMacro {
     }
 
     public String name() {
-        return "PLAY";
+        return "PLAY"; // NOI18N
     }
 
     int handle;
@@ -107,7 +107,7 @@ public class Play extends SdfMacro {
     }
 
     public String toString() {
-        return "Play Fragment " + handleVal() + '\n';
+        return "Play Fragment " + handleVal() + '\n'; // NOI18N
     }
 
     public String oneInstructionString() {

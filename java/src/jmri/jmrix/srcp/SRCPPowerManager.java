@@ -128,4 +128,4 @@ public class SRCPPowerManager implements PowerManager, SRCPListener {
 }
 
 
-/* @(#)SRCPPowerManager.java */
+

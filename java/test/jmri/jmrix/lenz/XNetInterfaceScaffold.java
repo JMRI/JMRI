@@ -80,9 +80,23 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
     public void receiveLoop() {
     }
 
+
+
+    /**
+     * This is normal, don't log at ERROR level
+     */
+    @Override 
+    protected void reportReceiveLoopException(Exception e) {
+        log.debug("run: Exception: {} in {} (considered normal in testing)", e.toString(), this.getClass().toString(), e);
+        jmri.jmrix.ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
+        if (controller instanceof jmri.jmrix.AbstractNetworkPortController) {
+            portWarnTCP(e);
+        }
+    }
+
     private final static Logger log = LoggerFactory.getLogger(XNetInterfaceScaffold.class.getName());
 
 }
 
 
-/* @(#)LocoNetInterfaceScaffold.java */
+

@@ -238,7 +238,7 @@ public class ListeningSpot {
 
     public Element getXml(String elementName) {
         Element me = new Element(elementName);
-        me.setAttribute("name", _name);
+        me.setAttribute("name", (_name == null ? "default" : _name));
         me.setAttribute("location", _location.toString());
         me.setAttribute("up", _up.toString());
         me.setAttribute("look_at", _lookAt.toString());

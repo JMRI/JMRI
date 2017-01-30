@@ -1,4 +1,3 @@
-// InterchangeEditFrame.java
 package jmri.jmrit.operations.locations;
 
 import javax.swing.BorderFactory;

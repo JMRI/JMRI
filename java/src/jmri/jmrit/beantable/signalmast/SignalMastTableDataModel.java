@@ -86,7 +86,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     }
 
     public int getPreferredWidth(int col) {
-        if (col == LITCOL) { // TODO I18N use Bundle.getMessage() + length() for PreferredWidth size
+        if (col == LITCOL) { // I18N use Bundle.getMessage() + length() for PreferredWidth size
             return new JTextField(Bundle.getMessage("ColumnHeadLit").length()).getPreferredSize().width;
         } else if (col == HELDCOL) {
             return new JTextField(Bundle.getMessage("ColumnHeadHeld").length()).getPreferredSize().width;
@@ -339,6 +339,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     /**
     * Respond to change from bean.
     */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().indexOf("aspectEnabled") >= 0 || e.getPropertyName().indexOf("aspectDisabled") >= 0) {
             if (e.getSource() instanceof NamedBean) {

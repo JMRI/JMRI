@@ -1,6 +1,6 @@
-// CarSetFrame.java
 package jmri.jmrit.operations.rollingstock.cars;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
@@ -259,7 +259,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 
     protected boolean askKernelChange = true;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected boolean change(Car car) {
         // save the auto button
         autoReturnWhenEmptyTrackCheckBoxSelected = autoReturnWhenEmptyTrackCheckBox.isSelected();
@@ -592,7 +592,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
         return c;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     public void setDestinationEnabled(boolean enable) {
         enableDestination = !enableDestination;
         enableDestinationFields(!locationUnknownCheckBox.isSelected());

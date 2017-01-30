@@ -1,9 +1,9 @@
 package jmri.jmrix.lenz;
 
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * XNetMessageTest.java
@@ -12,8 +12,9 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen
  */
-public class XNetMessageTest extends TestCase {
+public class XNetMessageTest{
 
+    @Test
     public void testCtor() {
         XNetMessage m = new XNetMessage(3);
         Assert.assertEquals("length", 3, m.getNumDataElements());
@@ -36,6 +37,7 @@ public class XNetMessageTest extends TestCase {
     }
 
     // check opcode inclusion in message
+    @Test
     public void testOpCode() {
         XNetMessage m = new XNetMessage(5);
         m.setOpCode(4);
@@ -44,6 +46,7 @@ public class XNetMessageTest extends TestCase {
     }
 
     // Test the string constructor.
+    @Test
     public void testStringCtor() {
         XNetMessage m = new XNetMessage("12 34 AB 3 19 6 B B1");
         Assert.assertEquals("length", 8, m.getNumDataElements());
@@ -57,12 +60,14 @@ public class XNetMessageTest extends TestCase {
         Assert.assertEquals("7th byte", 0xB1, m.getElement(7) & 0xFF);
     }
 
+    @Test
     public void testStringCtorEmptyString() {
         XNetMessage m = new XNetMessage("");
         Assert.assertEquals("length", 0, m.getNumDataElements());
         Assert.assertTrue("empty reply",m.toString().equals(""));
     }
 
+    @Test
     public void testCtorXNetReply(){
         XNetReply x = new XNetReply("12 34 AB 03 19 06 0B B1");
         XNetMessage m = new XNetMessage(x);
@@ -78,6 +83,7 @@ public class XNetMessageTest extends TestCase {
     }
 
     // test setting/getting the opcode
+    @Test
     public void testSetAndGetOpCode(){
         XNetMessage m = new XNetMessage("12 34 56");
         Assert.assertEquals(0x1,m.getOpCode());
@@ -91,6 +97,7 @@ public class XNetMessageTest extends TestCase {
     }
 
     // test setting/getting the opcode
+    @Test
     public void testGetOpCodeHex(){
         XNetMessage m = new XNetMessage("12 34 56");
         Assert.assertEquals("0x1",m.getOpCodeHex());
@@ -99,6 +106,7 @@ public class XNetMessageTest extends TestCase {
     }
 
     // check parity operations
+    @Test
     public void testParity() {
         XNetMessage m;
         m = new XNetMessage(3);
@@ -142,6 +150,7 @@ public class XNetMessageTest extends TestCase {
         Assert.assertEquals("parity check test 6", false, m.checkParity());
     }
 
+    @Test
     public void testGetElementBCD(){
         XNetMessage m = new XNetMessage("12 34 56");
         Assert.assertEquals("BCD value",Integer.valueOf(12),m.getElementBCD(0));
@@ -149,6 +158,7 @@ public class XNetMessageTest extends TestCase {
         Assert.assertEquals("BCD value",Integer.valueOf(56),m.getElementBCD(2));
     }
 
+    @Test
     public void testLength(){
         XNetMessage m = new XNetMessage("12 34 56");
         Assert.assertEquals("length",3,m.length());
@@ -156,6 +166,7 @@ public class XNetMessageTest extends TestCase {
         Assert.assertEquals("length",4,m.length());
     }
 
+    @Test
     public void testSetXNetMessageRetries(){
         XNetMessage m = new XNetMessage("12 34 56");
         Assert.assertEquals("Retries ",5,m.getRetries());
@@ -165,6 +176,7 @@ public class XNetMessageTest extends TestCase {
         Assert.assertEquals("Retries",0,m.getRetries());
     }
 
+    @Test
     public void testSetXNetMessageTimeout(){
         XNetMessage m = new XNetMessage("12 34 56");
         Assert.assertEquals("Timeout",5000,m.getTimeout());
@@ -174,6 +186,7 @@ public class XNetMessageTest extends TestCase {
         Assert.assertEquals("Timeout",0,m.getTimeout());
     }
 
+    @Test
     public void testGetAndSetBroadcastReply(){
         XNetMessage m = new XNetMessage("12 34 56");
         Assert.assertTrue(m.replyExpected()); // reply expected returns 
@@ -183,9 +196,22 @@ public class XNetMessageTest extends TestCase {
         Assert.assertFalse(m.replyExpected());
     }
 
+    @Test
+    public void testEquality(){
+       XNetMessage m = new XNetMessage("11 34 45");
+       XNetMessage n = new XNetMessage("11 34 45");
+       XNetMessage o = new XNetMessage(3);
+       o.setElement(0,0x11);
+       o.setElement(1,0x34);
+       o.setElement(2,0x45);
+       Assert.assertEquals("messages equal",m,n);
+       Assert.assertEquals("messages equal",m,o);
+
+    }
 
 
     // test canned messages.
+    @Test
     public void testGetNMRAXNetMsg() {
        XNetMessage m = XNetMessage.getNMRAXNetMsg(jmri.NmraPacket.opsCvWriteByte(2,false,29,32));
        Assert.assertEquals(0xE5,m.getElement(0));
@@ -196,7 +222,15 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0x20,m.getElement(5));
        Assert.assertEquals(0x07,m.getElement(6));
     }
+ 
+    @Test
+    public void testToMonitorStringNMRAXNetMsg(){
+       XNetMessage m = XNetMessage.getNMRAXNetMsg(jmri.NmraPacket.opsCvWriteByte(2,false,29,32));
+       Assert.assertEquals("Monitor String","E5 30 02 EC 1C 20 07",m.toMonitorString());
+    }
+       
 
+    @Test
     public void testGetTurnoutCommandMsg() {
        XNetMessage m = XNetMessage.getTurnoutCommandMsg(5,false,true,true);
        Assert.assertEquals(0x52,m.getElement(0));
@@ -227,6 +261,19 @@ public class XNetMessageTest extends TestCase {
        jmri.util.JUnitAppender.assertErrorMessage("XPressNet turnout logic can't handle both THROWN and CLOSED yet");
     }
 
+    @Test
+    public void testToMonitorStringTurnoutCmdMsg(){
+       XNetMessage m = XNetMessage.getTurnoutCommandMsg(5,false,true,true);
+       Assert.assertEquals("Monitor String","Accessory Decoder Operations Request: Turnout Address 5(Base Address 1,Sub Address 0) Turn Output 1 On.",m.toMonitorString());
+       m = XNetMessage.getTurnoutCommandMsg(5,true,false,true);
+       Assert.assertEquals("Monitor String","Accessory Decoder Operations Request: Turnout Address 5(Base Address 1,Sub Address 0) Turn Output 0 On.",m.toMonitorString());
+       m = XNetMessage.getTurnoutCommandMsg(5,false,true,false);
+       Assert.assertEquals("Monitor String","Accessory Decoder Operations Request: Turnout Address 5(Base Address 1,Sub Address 0) Turn Output 1 Off.",m.toMonitorString());
+       m = XNetMessage.getTurnoutCommandMsg(5,true,false,false);
+       Assert.assertEquals("Monitor String","Accessory Decoder Operations Request: Turnout Address 5(Base Address 1,Sub Address 0) Turn Output 0 Off.",m.toMonitorString());
+    }
+
+    @Test
     public void testGetFeedbackRequestMsg() {
        XNetMessage m = XNetMessage.getFeedbackRequestMsg(5,true);
        Assert.assertEquals(0x42,m.getElement(0));
@@ -239,9 +286,18 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0x01,m.getElement(1));
        Assert.assertEquals(0x81,m.getElement(2));
        Assert.assertEquals(0xC2,m.getElement(3));
-   }
-    
-    public void testGetServiceModeREsultMsg(){
+    }
+
+    @Test
+    public void testToMonitorStringFeedbackRequestMsg(){
+       XNetMessage m = XNetMessage.getFeedbackRequestMsg(5,true);
+       Assert.assertEquals("Monitor String","Accessory Decoder/Feedback Encoder Status Request: Base Address 1,Lower Nibble.",m.toMonitorString());
+       m = XNetMessage.getFeedbackRequestMsg(5,false);
+       Assert.assertEquals("Monitor String","Accessory Decoder/Feedback Encoder Status Request: Base Address 1,Upper Nibble.",m.toMonitorString());
+    }
+ 
+    @Test
+    public void testGetServiceModeResultMsg(){
        XNetMessage m = XNetMessage.getServiceModeResultsMsg();
        Assert.assertEquals(0x21,m.getElement(0));
        Assert.assertEquals(0x10,m.getElement(1));
@@ -249,6 +305,13 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals("programming mode required",jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE,m.getNeededMode());
     }
 
+    @Test
+    public void testToMonitorStringServiceModeResultMsg(){
+       XNetMessage m = XNetMessage.getServiceModeResultsMsg();
+       Assert.assertEquals("Monitor String","REQUEST: Service Mode Result",m.toMonitorString());
+    }
+
+    @Test
     public void testGetExitProgModeMsg(){
        XNetMessage m = XNetMessage.getExitProgModeMsg();
        Assert.assertEquals(0x21,m.getElement(0));
@@ -257,6 +320,13 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals("programming mode required",jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE,m.getNeededMode());
     }
 
+    @Test
+    public void testToMonitorStringExitProgModeMsg(){
+       XNetMessage m = XNetMessage.getExitProgModeMsg();
+       Assert.assertEquals("Monitor String","REQUEST: Normal Operations Resumed",m.toMonitorString());
+    }
+
+    @Test
     public void testGetReadPagedCVMsg(){
        XNetMessage m = XNetMessage.getReadPagedCVMsg(29);
        Assert.assertEquals(0x22,m.getElement(0));
@@ -266,6 +336,13 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals("programming mode required",jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE,m.getNeededMode());
     }
 
+    @Test
+    public void testToMonitorStringReadPagedCVMsg(){
+       XNetMessage m = XNetMessage.getReadPagedCVMsg(29);
+       Assert.assertEquals("Monitor String","Service Mode Request: Read CV 29 in Paged Mode",m.toMonitorString());
+    }
+
+    @Test
     public void testGetReadDirectCVMsg(){
        XNetMessage m = XNetMessage.getReadDirectCVMsg(29);
        Assert.assertEquals(0x22,m.getElement(0));
@@ -292,6 +369,17 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals("programming mode required",jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE,m.getNeededMode());
     }
 
+    @Test
+    public void testToMonitorStringReadDirectCVMsg(){
+       XNetMessage m = XNetMessage.getReadDirectCVMsg(29);
+       Assert.assertEquals("Monitor String","Service Mode Request: Read CV 29 in Direct Mode",m.toMonitorString());
+       m = XNetMessage.getReadDirectCVMsg(300);
+       Assert.assertEquals("Monitor String","Service Mode Request (V3.6): Read CV 300 in Direct Mode",m.toMonitorString());
+       m = XNetMessage.getReadDirectCVMsg(1024);
+       Assert.assertEquals("Monitor String","Service Mode Request (V3.6): Read CV 1,024 in Direct Mode",m.toMonitorString());
+    }
+
+    @Test
     public void testGetWritePagedCVMsg(){
        XNetMessage m = XNetMessage.getWritePagedCVMsg(29,5);
        Assert.assertEquals(0x23,m.getElement(0));
@@ -302,6 +390,13 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals("programming mode required",jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE,m.getNeededMode());
     }
 
+    @Test
+    public void testToMonitorStringWritePagedCVMsg(){
+       XNetMessage m = XNetMessage.getWritePagedCVMsg(29,5);
+       Assert.assertEquals("Monitor String","Service Mode Request: Write 5 to CV 29 in Paged Mode",m.toMonitorString());
+    }
+
+    @Test
     public void testGetWriteDirectCVMsg(){
        XNetMessage m = XNetMessage.getWriteDirectCVMsg(29,5);
        Assert.assertEquals(0x23,m.getElement(0));
@@ -331,6 +426,17 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals("programming mode required",jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE,m.getNeededMode());
     }
 
+    @Test
+    public void testToMonitorStringWriteDirectCVMsg(){
+       XNetMessage m = XNetMessage.getWriteDirectCVMsg(29,5);
+       Assert.assertEquals("Monitor String","Service Mode Request: Write 5 to CV 29 in Direct Mode",m.toMonitorString());
+       m = XNetMessage.getWriteDirectCVMsg(300,5);
+       Assert.assertEquals("Monitor String","Service Mode Request (V3.6): Write 5 to CV 300 in Direct Mode",m.toMonitorString());
+       m = XNetMessage.getWriteDirectCVMsg(1024,5);
+       Assert.assertEquals("Monitor String","Service Mode Request (V3.6): Write 5 to CV 1,024 in Direct Mode",m.toMonitorString());
+    }
+
+    @Test
     public void testGetReadRegisterMsg(){
        XNetMessage m = XNetMessage.getReadRegisterMsg(5);
        Assert.assertEquals(0x22,m.getElement(0));
@@ -342,6 +448,13 @@ public class XNetMessageTest extends TestCase {
        jmri.util.JUnitAppender.assertErrorMessage("register number too large: 10");
     }
 
+    @Test
+    public void testToMonitorStringRegisterReadMsg(){
+       XNetMessage m = XNetMessage.getReadRegisterMsg(5);
+       Assert.assertEquals("Monitor String","Service Mode Request: Read Register 5",m.toMonitorString());
+    }
+
+    @Test
     public void testGetWriteRegisterMsg(){
        XNetMessage m = XNetMessage.getWriteRegisterMsg(5,5);
        Assert.assertEquals(0x23,m.getElement(0));
@@ -354,6 +467,13 @@ public class XNetMessageTest extends TestCase {
        jmri.util.JUnitAppender.assertErrorMessage("register number too large: 10");
     }
 
+    @Test
+    public void testToMonitorStringRegisterWriteMsg(){
+       XNetMessage m = XNetMessage.getWriteRegisterMsg(5,5);
+       Assert.assertEquals("Monitor String","Service Mode Request: Write 5 to Register 5",m.toMonitorString());
+    }
+
+    @Test
     public void testGetWriteOpsModeCVMsg(){
        XNetMessage m = XNetMessage.getWriteOpsModeCVMsg(0,5,29,5);
        Assert.assertEquals(0xE6,m.getElement(0));
@@ -366,6 +486,7 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0x26,m.getElement(7));
     }
 
+    @Test
     public void testGetVerifyOpsModeCVMsg(){
        XNetMessage m = XNetMessage.getVerifyOpsModeCVMsg(0,5,29,5);
        Assert.assertEquals(0xE6,m.getElement(0));
@@ -378,6 +499,7 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0x2E,m.getElement(7));
     }
 
+    @Test
     public void testGetBitWriteOpsModeCVMsg(){
        XNetMessage m = XNetMessage.getBitWriteOpsModeCVMsg(0,5,29,2,true);
        Assert.assertEquals(0xE6,m.getElement(0));
@@ -400,6 +522,7 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0xC5,m.getElement(7));
     }
 
+    @Test
     public void testGetBitVerifyOpsModeCVMsg(){
        XNetMessage m = XNetMessage.getBitVerifyOpsModeCVMsg(0,5,29,2,true);
        Assert.assertEquals(0xE6,m.getElement(0));
@@ -422,6 +545,7 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0xD5,m.getElement(7));
     }
 
+    @Test
     public void testGetBuildDoubleHeaderMessage(){
        XNetMessage m = XNetMessage.getBuildDoubleHeaderMsg(1234,4567);
        Assert.assertEquals(0xE5,m.getElement(0));
@@ -433,6 +557,7 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0xB6,m.getElement(6));
     }
 
+    @Test
     public void testGetDisolveDoubleHeaderMessage(){
        XNetMessage m = XNetMessage.getDisolveDoubleHeaderMsg(1234);
        Assert.assertEquals(0xE5,m.getElement(0));
@@ -444,6 +569,7 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0xB0,m.getElement(6));
     }
 
+    @Test
     public void testGetAddLocoToConsistMsg(){
        XNetMessage m = XNetMessage.getAddLocoToConsistMsg(42,1234,true);
        Assert.assertEquals(0xE4,m.getElement(0));
@@ -462,6 +588,7 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0x99,m.getElement(5));
     }
 
+    @Test
     public void testGetRemoveLocoFromConsistMsg(){
        XNetMessage m = XNetMessage.getRemoveLocoFromConsistMsg(42,1234);
        Assert.assertEquals(0xE4,m.getElement(0));
@@ -472,6 +599,7 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0x9A,m.getElement(5));
     }
 
+    @Test
     public void testGetNextAddressOnStackMsg(){
        // search forward
        XNetMessage m = XNetMessage.getNextAddressOnStackMsg(1234,true);
@@ -490,6 +618,7 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0xF3,m.getElement(4));
     }
 
+    @Test
     public void testGetDBSearchMsgConsistAddress(){
        // search forward
        XNetMessage m = XNetMessage.getDBSearchMsgConsistAddress(42,true);
@@ -506,6 +635,7 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0xCC,m.getElement(3));
     }
 
+    @Test
     public void testGetDBSearchMsgNextMULoco(){
        // search forward
        XNetMessage m = XNetMessage.getDBSearchMsgNextMULoco(42,1234,true);
@@ -527,6 +657,7 @@ public class XNetMessageTest extends TestCase {
     }
 
 
+    @Test
     public void testGetDeleteAddressOnStackMsg(){
        XNetMessage m = XNetMessage.getDeleteAddressOnStackMsg(1234);
        Assert.assertEquals(0xE3,m.getElement(0));
@@ -536,6 +667,7 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0xB1,m.getElement(4));
     }
 
+    @Test
     public void testGetLocomoitveInfoRequestMsg(){
        XNetMessage m = XNetMessage.getLocomotiveInfoRequestMsg(1234);
        Assert.assertEquals(0xE3,m.getElement(0));
@@ -545,6 +677,7 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0xF5,m.getElement(4));
     }
 
+    @Test
     public void testGetLocomoitveFunctionStatusMsg(){
        XNetMessage m = XNetMessage.getLocomotiveFunctionStatusMsg(1234);
        Assert.assertEquals(0xE3,m.getElement(0));
@@ -554,6 +687,7 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0xF2,m.getElement(4));
     }
 
+    @Test
     public void testGetLocomoitveFunctionHighOnStatusMsg(){
        XNetMessage m = XNetMessage.getLocomotiveFunctionHighOnStatusMsg(1234);
        Assert.assertEquals(0xE3,m.getElement(0));
@@ -563,6 +697,7 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0xFC,m.getElement(4));
     }
 
+    @Test
     public void testGetLocomoitveFunctionHighMomStatusMsg(){
        XNetMessage m = XNetMessage.getLocomotiveFunctionHighMomStatusMsg(1234);
        Assert.assertEquals(0xE3,m.getElement(0));
@@ -572,6 +707,7 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0xFD,m.getElement(4));
     }
 
+    @Test
     public void testGetAddressedEmergencyStop(){
        XNetMessage m = XNetMessage.getAddressedEmergencyStop(1234);
        Assert.assertEquals(0x92,m.getElement(0));
@@ -580,6 +716,7 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0x84,m.getElement(3));
     }
 
+    @Test
     public void testGetSpeedAndDirectionMsg(){
        // 128 speed step mode, forward direction.
        XNetMessage m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode128,0.5f,true);
@@ -726,6 +863,7 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0xE2,m.getElement(5));
     }
 
+    @Test
     public void testGetFunctionGroup1OpsMsg() {
        // all off
        XNetMessage m = XNetMessage.getFunctionGroup1OpsMsg(1234,
@@ -747,6 +885,19 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0xCD,m.getElement(5));
     }
 
+    @Test
+    public void testToMonitorStringFunctionGroup1OpsMsg(){
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup1OpsMsg(1234,
+          false,false,false,false,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 1 for address: 1234 F0 off F1 off F2 off F3 off F4 off ",m.toMonitorString());
+       // all on
+       m = XNetMessage.getFunctionGroup1OpsMsg(1234,
+          true,true,true,true,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 1 for address: 1234 F0 on F1 on F2 on F3 on F4 on ",m.toMonitorString());
+    }
+
+    @Test
     public void testGetFunctionGroup1SetMomMsg() {
        // all off
        XNetMessage m = XNetMessage.getFunctionGroup1SetMomMsg(1234,
@@ -768,6 +919,19 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0xC9,m.getElement(5));
     }
 
+    @Test
+    public void testToMonitorStringFunctionGroup1SetMsg(){
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup1SetMomMsg(1234,
+          false,false,false,false,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 1 Momentary Status for address: 1234 F0 continuous F1 continuous F2 continuous F3 continuous F4 continuous ",m.toMonitorString());
+       // all on
+       m = XNetMessage.getFunctionGroup1SetMomMsg(1234,
+          true,true,true,true,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 1 Momentary Status for address: 1234 F0 momentary F1 momentary F2 momentary F3 momentary F4 momentary ",m.toMonitorString());
+    }
+
+    @Test
     public void testGetFunctionGroup2OpsMsg() {
        // all off
        XNetMessage m = XNetMessage.getFunctionGroup2OpsMsg(1234,
@@ -789,6 +953,19 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0xDC,m.getElement(5));
     }
 
+    @Test
+    public void testToMonitorStringFunctionGroup2OpsMsg(){
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup2OpsMsg(1234,
+          false,false,false,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 2 for address: 1234 F5 off F6 off F7 off F8 off ",m.toMonitorString());
+       // all on
+       m = XNetMessage.getFunctionGroup2OpsMsg(1234,
+          true,true,true,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 2 for address: 1234 F5 on F6 on F7 on F8 on ",m.toMonitorString());
+    }
+
+    @Test
     public void testGetFunctionGroup2SetMomMsg() {
        // all off
        XNetMessage m = XNetMessage.getFunctionGroup2SetMomMsg(1234,
@@ -810,6 +987,19 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0xD8,m.getElement(5));
     }
 
+    @Test
+    public void testToMonitorStringFunctionGroup2SetMsg(){
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup2SetMomMsg(1234,
+          false,false,false,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 2 Momentary Status for address: 1234 F5 continuous F6 continuous F7 continuous F8 continuous ",m.toMonitorString());
+       // all on
+       m = XNetMessage.getFunctionGroup2SetMomMsg(1234,
+          true,true,true,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 2 Momentary Status for address: 1234 F5 momentary F6 momentary F7 momentary F8 momentary ",m.toMonitorString());
+    }
+
+    @Test
     public void testGetFunctionGroup3OpsMsg() {
        // all off
        XNetMessage m = XNetMessage.getFunctionGroup3OpsMsg(1234,
@@ -831,6 +1021,19 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0xDF,m.getElement(5));
     }
 
+    @Test
+    public void testToMonitorStringFunctionGroup3OpsMsg(){
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup3OpsMsg(1234,
+          false,false,false,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 3 for address: 1234 F9 off F10 off F11 off F12 off ",m.toMonitorString());
+       // all on
+       m = XNetMessage.getFunctionGroup3OpsMsg(1234,
+          true,true,true,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 3 for address: 1234 F9 on F10 on F11 on F12 on ",m.toMonitorString());
+    }
+
+    @Test
     public void testGetFunctionGroup3SetMomMsg() {
        // all off
        XNetMessage m = XNetMessage.getFunctionGroup3SetMomMsg(1234,
@@ -852,6 +1055,19 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0xDB,m.getElement(5));
     }
 
+    @Test
+    public void testToMonitorStringFunctionGroup3SetMsg(){
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup3SetMomMsg(1234,
+          false,false,false,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 3 Momentary Status for address: 1234 F9 continuous F10 continuous F11 continuous F12 continuous ",m.toMonitorString());
+       // all on
+       m = XNetMessage.getFunctionGroup3SetMomMsg(1234,
+          true,true,true,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 3 Momentary Status for address: 1234 F9 momentary F10 momentary F11 momentary F12 momentary ",m.toMonitorString());
+    }
+
+    @Test
     public void testGetFunctionGroup4OpsMsg() {
        // all off
        XNetMessage m = XNetMessage.getFunctionGroup4OpsMsg(1234,
@@ -873,6 +1089,19 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0x2E,m.getElement(5));
     }
 
+    @Test
+    public void testToMonitorStringFunctionGroup4OpsMsg(){
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup4OpsMsg(1234,
+          false,false,false,false,false,false,false,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 4 for address: 1234 F13 off F14 off F15 off F16 off F17 off F18 off F19 off F20 off ",m.toMonitorString());
+       // all on
+       m = XNetMessage.getFunctionGroup4OpsMsg(1234,
+          true,true,true,true,true,true,true,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 4 for address: 1234 F13 on F14 on F15 on F16 on F17 on F18 on F19 on F20 on ",m.toMonitorString());
+    }
+
+    @Test
     public void testGetFunctionGroup4SetMomMsg() {
        // all off
        XNetMessage m = XNetMessage.getFunctionGroup4SetMomMsg(1234,
@@ -894,6 +1123,19 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0x2A,m.getElement(5));
     }
 
+    @Test
+    public void testToMonitorStringFunctionGroup4SetMsg(){
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup4SetMomMsg(1234,
+          false,false,false,false,false,false,false,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 4 Momentary Status for address: 1234 F13 continuous F14 continuous F15 continuous F16 continuous F17 continuous F18 continuous F19 continuous F20 continuous ",m.toMonitorString());
+       // all on
+       m = XNetMessage.getFunctionGroup4SetMomMsg(1234,
+          true,true,true,true,true,true,true,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 4 Momentary Status for address: 1234 F13 momentary F14 momentary F15 momentary F16 momentary F17 momentary F18 momentary F19 momentary F20 momentary ",m.toMonitorString());
+    }
+
+    @Test
     public void testGetFunctionGroup5OpsMsg() {
        // all off
        XNetMessage m = XNetMessage.getFunctionGroup5OpsMsg(1234,
@@ -915,6 +1157,19 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0x25,m.getElement(5));
     }
 
+    @Test
+    public void testToMonitorStringFunctionGroup5OpsMsg(){
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup5OpsMsg(1234,
+          false,false,false,false,false,false,false,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 5 for address: 1234 F21 off F22 off F23 off F24 off F25 off F26 off F27 off F28 off ",m.toMonitorString());
+       // all on
+       m = XNetMessage.getFunctionGroup5OpsMsg(1234,
+          true,true,true,true,true,true,true,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 5 for address: 1234 F21 on F22 on F23 on F24 on F25 on F26 on F27 on F28 on ",m.toMonitorString());
+    }
+
+    @Test
     public void testGetFunctionGroup5SetMomMsg() {
        // all off
        XNetMessage m = XNetMessage.getFunctionGroup5SetMomMsg(1234,
@@ -936,8 +1191,19 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0x21,m.getElement(5));
     }
 
+    @Test
+    public void testToMonitorStringFunctionGroup5SetMsg(){
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup5SetMomMsg(1234,
+          false,false,false,false,false,false,false,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 5 Momentary Status for address: 1234 F21 continuous F22 continuous F23 continuous F24 continuous F25 continuous F26 continuous F27 continuous F28 continuous ",m.toMonitorString());
+       // all on
+       m = XNetMessage.getFunctionGroup5SetMomMsg(1234,
+          true,true,true,true,true,true,true,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Function Group 5 Momentary Status for address: 1234 F21 momentary F22 momentary F23 momentary F24 momentary F25 momentary F26 momentary F27 momentary F28 momentary ",m.toMonitorString());
+    }
 
-
+    @Test
     public void testGetResumeOperationsMsg() {
        XNetMessage m = XNetMessage.getResumeOperationsMsg();
        Assert.assertEquals(0x21,m.getElement(0));
@@ -945,6 +1211,13 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0xA0,m.getElement(2));
     }
 
+    @Test
+    public void testToMonitorStringResumeOperationsMsg(){
+       XNetMessage m = XNetMessage.getResumeOperationsMsg();
+       Assert.assertEquals("Monitor String","REQUEST: Normal Operations Resumed",m.toMonitorString());
+    }
+
+    @Test
     public void testGetEmergencyOffMsg() {
        XNetMessage m = XNetMessage.getEmergencyOffMsg();
        Assert.assertEquals(0x21,m.getElement(0));
@@ -952,6 +1225,13 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0xA1,m.getElement(2));
     }
 
+    @Test
+    public void testToMonitorStringEmergencyOffMsg(){
+       XNetMessage m = XNetMessage.getEmergencyOffMsg();
+       Assert.assertEquals("Monitor String","REQUEST: Emergency Off",m.toMonitorString());
+    }
+
+    @Test
     public void testGetCSVersionRequestMessage() {
        XNetMessage m = XNetMessage.getCSVersionRequestMessage();
        Assert.assertEquals(0x21,m.getElement(0));
@@ -959,6 +1239,13 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0x00,m.getElement(2));
     }
 
+    @Test
+    public void testToMonitorStringCSVersionRequestMessage(){
+       XNetMessage m = XNetMessage.getCSVersionRequestMessage();
+       Assert.assertEquals("Monitor String","REQUEST: Command Station Version",m.toMonitorString());
+    }
+
+    @Test
     public void testGetCSStatusRequestMessage() {
        XNetMessage m = XNetMessage.getCSStatusRequestMessage();
        Assert.assertEquals(0x21,m.getElement(0));
@@ -966,6 +1253,13 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0x05,m.getElement(2));
     }
 
+    @Test
+    public void testToMonitorStringCSStatusRequestMessage(){
+       XNetMessage m = XNetMessage.getCSStatusRequestMessage();
+       Assert.assertEquals("Monitor String","REQUEST: Command Station Status",m.toMonitorString());
+    }
+
+    @Test
     public void testGetCsAutoStartMessge() {
        // test autostart mode.
        XNetMessage m = XNetMessage.getCSAutoStartMessage(true);
@@ -981,12 +1275,28 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0x00,m.getElement(3));
     }
 
+    @Test
+    public void testToMonitorStringCsAutoStartMessageMessage(){
+       XNetMessage m = XNetMessage.getCSAutoStartMessage(true);
+       Assert.assertEquals("Monitor String","REQUEST: Set Power-up Mode to Automatic",m.toMonitorString());
+       m = XNetMessage.getCSAutoStartMessage(false);
+       Assert.assertEquals("Monitor String","REQUEST: Set Power-up Mode to Manual",m.toMonitorString());
+    }
+
+    @Test
     public void testGetLIVersionRequestMessage() {
        XNetMessage m = XNetMessage.getLIVersionRequestMessage();
        Assert.assertEquals(0xF0,m.getElement(0));
        Assert.assertEquals(0xF0,m.getElement(1));
     }
 
+    @Test
+    public void testToMonitorStringLIVersionRequestMessage(){
+       XNetMessage m = XNetMessage.getLIVersionRequestMessage();
+       Assert.assertEquals("Monitor String","REQUEST LI10x hardware/software version",m.toMonitorString());
+    }
+
+    @Test
     public void testGetLIAddressRequestMsg() {
        XNetMessage m = XNetMessage.getLIAddressRequestMsg(1);
        Assert.assertEquals(0xF2,m.getElement(0));
@@ -995,6 +1305,13 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0xF2,m.getElement(3));
     }
 
+    @Test
+    public void testToMonitorStringLIAddressRequestMsg(){
+       XNetMessage m = XNetMessage.getLIAddressRequestMsg(1);
+       Assert.assertEquals("Monitor String","REQUEST LI101 Address 1",m.toMonitorString());
+    }
+
+    @Test
     public void testGetLISpeedReqeustMessage() {
        XNetMessage m = XNetMessage.getLISpeedRequestMsg(1);
        Assert.assertEquals(0xF2,m.getElement(0));
@@ -1003,29 +1320,21 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0xF1,m.getElement(3));
     }
 
-    // from here down is testing infrastructure
-    public XNetMessageTest(String s) {
-        super(s);
+    @Test
+    public void testToMonitorStringLISpeedRequestMessage(){
+       XNetMessage m = XNetMessage.getLISpeedRequestMsg(1);
+       Assert.assertEquals("Monitor String","REQUEST LI101 Baud Rate 19200bps (default)",m.toMonitorString());
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XNetMessageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XNetMessageTest.class);
-        return suite;
-    }
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
         // make sure the message timeouts and retries are set to
         // the defaults.

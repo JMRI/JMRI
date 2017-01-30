@@ -15,7 +15,7 @@ import org.jdom2.Element;
 public class LnSensorManagerXml extends jmri.jmrix.loconet.configurexml.LnSensorManagerXml {
 
     public void setStoreElementClass(Element sensors) {
-        sensors.setAttribute("class", super.getClass().getSuperclass().getName());
+        sensors.setAttribute("class", super.getClass().getSuperclass().getName()); // NOI18N
     }
 
 }

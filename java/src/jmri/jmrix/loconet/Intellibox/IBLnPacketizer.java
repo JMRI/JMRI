@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.Intellibox;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.NoSuchElementException;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetMessage;
@@ -34,7 +35,7 @@ import org.slf4j.LoggerFactory;
  */
 public class IBLnPacketizer extends LnPacketizer {
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization")
     public IBLnPacketizer() {
         echo = true;
@@ -53,7 +54,7 @@ public class IBLnPacketizer extends LnPacketizer {
          */
         LnPacketizer trafficController;
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+        @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
                 justification = "single threaded during init; will eventually be replaced for multi-connection support")
         public RcvHandler(LnPacketizer lt) {
             trafficController = lt;

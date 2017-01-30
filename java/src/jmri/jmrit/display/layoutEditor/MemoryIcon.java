@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionListener;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JOptionPane;
@@ -18,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * panel file that have been written out, so we just annoted 
  * the fact, but now we want to leave it on the list to fix.
  */
-//@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+//@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
 
     String defaultText = " ";

@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import jmri.NamedBeanHandle;
@@ -14,9 +15,9 @@ import org.slf4j.LoggerFactory;
  * After much confusion, the user-level terminology was changed to call these
  * "Single Output"; the class name remains the same to reduce recoding.
  * <P>
- * One Turnout object is provided during construction, and drives the aspect to
+ * One Turnout object is provided during construction, and drives the appearance to
  * be either ON or OFF. Normally, "THROWN" is on, and "CLOSED" is off. The
- * facility to set the aspect via any of the four aspect colors is provided,
+ * facility to set the appearance via any of the basic four appearance colors + Lunar is provided,
  * however they all do the same.
  *
  * Based Upon DoubleTurnoutSignalHead by Bob Jacobsen
@@ -75,6 +76,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
         mOutput.getBean().setCommandedState(s);
     }
 
+    @Override
     protected void updateOutput() {
         // assumes that writing a turnout to an existing state is cheap!
         if (mLit == false) {
@@ -144,6 +146,32 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
       }
     }
 
+    /**
+     * Adds Lunar to the available values
+     */
+    private static final int[] validStates = new int[]{
+            DARK,
+            RED,
+            YELLOW,
+            GREEN,
+            LUNAR,
+            FLASHRED,
+            FLASHYELLOW,
+            FLASHGREEN,
+            FLASHLUNAR
+    };
+    private static final String[] validStateNames = new String[]{
+            Bundle.getMessage("SignalHeadStateDark"),
+            Bundle.getMessage("SignalHeadStateRed"),
+            Bundle.getMessage("SignalHeadStateYellow"),
+            Bundle.getMessage("SignalHeadStateGreen"),
+            Bundle.getMessage("SignalHeadStateLunar"),
+            Bundle.getMessage("SignalHeadStateFlashingRed"),
+            Bundle.getMessage("SignalHeadStateFlashingYellow"),
+            Bundle.getMessage("SignalHeadStateFlashingGreen"),
+            Bundle.getMessage("SignalHeadStateFlashingLunar"),};
+
+    @Override
     public int[] getValidStates() {
         int[] validStates;
         if (mOnAppearance == mOffAppearance) {
@@ -151,7 +179,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
             validStates[0] = mOnAppearance;
             validStates[1] = mOffAppearance;
             return validStates;
-        } else if (mOnAppearance == DARK || mOffAppearance == DARK) {
+        } else if (mOnAppearance == DARK || mOffAppearance == DARK) { // we can make flashing with Dark only
             validStates = new int[3];
         } else {
             validStates = new int[2];
@@ -160,17 +188,18 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
         validStates[x] = mOnAppearance;
         x++;
         if (mOffAppearance == DARK) {
-            validStates[x] = (mOnAppearance * 2);  // makes flashing
+            validStates[x] = (mOnAppearance * 2);  // makes flashing of the one color
             x++;
         }
         validStates[x] = mOffAppearance;
         x++;
         if (mOnAppearance == DARK) {
-            validStates[x] = (mOffAppearance * 2);  // makes flashing
+            validStates[x] = (mOffAppearance * 2);  // makes flashing of the one color
         }
         return validStates;
     }
 
+    @Override
     public String[] getValidStateNames() {
         String[] validStateName;
         if (mOnAppearance == mOffAppearance) {
@@ -200,7 +229,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
     }
 
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     private String getSignalColour(int mAppearance) {
         switch (mAppearance) {
             case SignalHead.RED:
@@ -227,6 +256,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
         }
     }
 
+    @Override
     boolean isTurnoutUsed(Turnout t) {
         if (getOutput() != null && t.equals(getOutput().getBean())) {
             return true;
@@ -239,6 +269,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
     /* (non-Javadoc)
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
      */
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getSource().equals(mOutput.getBean()) && evt.getPropertyName().equals("KnownState")) {
             // The underlying turnout has some state change. Check if its known state matches what we expected it to do.

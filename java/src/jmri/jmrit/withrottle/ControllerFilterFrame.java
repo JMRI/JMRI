@@ -206,10 +206,6 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
     public abstract class AbstractFilterModel extends AbstractTableModel implements PropertyChangeListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -4167975455673762191L;
         List<String> sysNameList = null;
         boolean isDirty;
 
@@ -259,10 +255,6 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
     class TurnoutFilterModel extends AbstractFilterModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 647944884708203007L;
         TurnoutManager mgr = InstanceManager.turnoutManagerInstance();
 
         TurnoutFilterModel() {

@@ -44,5 +44,3 @@ public class AcelaMonFrame extends jmri.jmrix.AbstractMonFrame implements AcelaL
         nextLine("rep: \"" + l.toString() + "\"\n", "");
     }
 }
-
-/* @(#)AcelaMonFrame.java */

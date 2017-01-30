@@ -548,6 +548,11 @@ public class XNetReplyTest extends TestCase {
         Assert.assertFalse(r.isOkMessage());
     }
 
+    public void testToMonitorStringOKMessage(){
+        XNetReply r = new XNetReply("01 04 05");
+        Assert.assertEquals("Monitor String","Command Successfully Sent/Normal Operations Resumed after timeout",r.toMonitorString());
+    }
+
    // check is this an Timeslot Restored message
     public void testIsTimeSlotRestoredMessage() {
         // Timeslot restored message

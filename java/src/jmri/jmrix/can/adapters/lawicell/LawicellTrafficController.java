@@ -1,4 +1,3 @@
-// LawicellTrafficController.java
 package jmri.jmrix.can.adapters.lawicell;
 
 import jmri.jmrix.AbstractMRListener;
@@ -158,4 +157,4 @@ public class LawicellTrafficController extends jmri.jmrix.can.TrafficController 
 }
 
 
-/* @(#)LawicellTrafficController.java */
+

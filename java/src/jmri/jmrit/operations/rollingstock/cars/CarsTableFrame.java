@@ -1,4 +1,3 @@
-// CarsTableFrame.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.text.MessageFormat;

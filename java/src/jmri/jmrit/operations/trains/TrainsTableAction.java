@@ -1,6 +1,6 @@
-// TrainsTableAction.java
 package jmri.jmrit.operations.trains;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
@@ -24,7 +24,7 @@ public class TrainsTableAction extends AbstractAction {
     static TrainsTableFrame trainsTableFrame = null;
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Show only one TrainsTableFrame")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Show only one TrainsTableFrame")
     public void actionPerformed(ActionEvent e) {
         // create a train table frame
         if (trainsTableFrame == null || !trainsTableFrame.isVisible()) {
@@ -35,4 +35,4 @@ public class TrainsTableAction extends AbstractAction {
     }
 }
 
-/* @(#)TrainsTableAction.java */
+

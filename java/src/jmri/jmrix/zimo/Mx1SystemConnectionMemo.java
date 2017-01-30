@@ -1,4 +1,3 @@
-// Mx1SystemConnectionMemo.javaf
 package jmri.jmrix.zimo;
 
 import java.util.ResourceBundle;
@@ -220,4 +219,4 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 }
 
 
-/* @(#)Mx1SystemConnectionMemo.java */
+

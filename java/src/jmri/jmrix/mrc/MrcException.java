@@ -1,4 +1,3 @@
-// MrcException.java
 package jmri.jmrix.mrc;
 
 import jmri.JmriException;
@@ -10,16 +9,8 @@ import jmri.JmriException;
  */
 public class MrcException extends JmriException {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7936529558836572247L;
-
     public MrcException(String m) {
         super(m);
     }
 
 }
-
-
-/* @(#)MrcException.java */

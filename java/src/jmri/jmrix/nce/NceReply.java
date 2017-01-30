@@ -1,4 +1,3 @@
-// NceReply.java
 package jmri.jmrix.nce;
 
 
@@ -94,4 +93,4 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
 }
 
 
-/* @(#)NceReply.java */
+

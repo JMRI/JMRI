@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Objects;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Path;
@@ -14,7 +15,7 @@ import jmri.Sensor;
 import jmri.Turnout;
 import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+ import org.slf4j.LoggerFactory;
 
 /**
  * OBlock extends jmri.Block to be used in Logix Conditionals and Warrants. It
@@ -152,9 +153,11 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
 
-    /** 
-     * Note: equality consists of the underlying (superclass) Block implementation
-     * being the same.
+    /**
+     * {@inheritDoc}
+     *
+     * Note: equality consists of the underlying (superclass) Block
+     * implementation being the same.
      */
     @Override
     public boolean equals(Object obj) {
@@ -170,6 +173,21 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         }
 
         return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this._portals);
+        hash = 97 * hash + Objects.hashCode(this._warrant);
+        hash = 97 * hash + Objects.hashCode(this._pathName);
+        hash = 97 * hash + (int) (this._entryTime ^ (this._entryTime >>> 32));
+        hash = 97 * hash + (this._metric ? 1 : 0);
+        hash = 97 * hash + Objects.hashCode(this._sharedTO);
+        hash = 97 * hash + Objects.hashCode(this._markerForeground);
+        hash = 97 * hash + Objects.hashCode(this._markerBackground);
+        hash = 97 * hash + Objects.hashCode(this._markerFont);
+        return hash;
     }
 
     /**

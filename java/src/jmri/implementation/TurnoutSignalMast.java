@@ -1,4 +1,3 @@
-// TurnoutSignalMast.java
 package jmri.implementation;
 
 import java.util.ArrayList;
@@ -187,13 +186,15 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         turnouts.put(appearance, new TurnoutAspect(turn, state));
     }
 
-    HashMap<String, TurnoutAspect> turnouts = new HashMap<String, TurnoutAspect>();
+    HashMap<String, TurnoutAspect> turnouts = new HashMap<>();
 
     boolean resetPreviousStates = false;
 
     /**
      * If the signal mast driver requires the previous state to be cleared down
      * before the next state is set.
+     *
+     * @param boo true if prior states should be cleared; false otherwise
      */
     public void resetPreviousStates(boolean boo) {
         resetPreviousStates = boo;

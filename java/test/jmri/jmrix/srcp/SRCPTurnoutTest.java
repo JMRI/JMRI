@@ -14,33 +14,52 @@ import org.junit.Test;
  * @author	Bob Jacobsen
  * @author  Paul Bender Copyright (C) 2017
  */
-public class SRCPTurnoutTest {
+public class SRCPTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
-    private SRCPTurnout m = null;
+    private SRCPTrafficControlScaffold stc = null;
 
-    @Test
-    public void testCtor() {
-        Assert.assertNotNull(m);
+    @Override
+    public int numListeners() {
+        return stc.numListeners();
+    }
+
+    @Override
+    public void checkThrownMsgSent() {
+       Assert.assertTrue("message sent", stc.outbound.size()>0);
+       Assert.assertEquals("content", "SET 1 GA 1 0 1 -1\n", stc.outbound.elementAt(stc.outbound.size()-1).toString());  // THROWN message
+    }
+
+    @Override
+    public void checkClosedMsgSent() {
+       Assert.assertTrue("message sent", stc.outbound.size()>0);
+       Assert.assertEquals("content", "SET 1 GA 1 0 0 -1\n", stc.outbound.elementAt(stc.outbound.size()-1).toString());  // THROWN message
     }
 
     @Test
     public void testGetNumber(){
-        Assert.assertEquals("Number",1,m.getNumber());
+        Assert.assertEquals("Number",1,((SRCPTurnout) t).getNumber());
     }
+
+    @Override
+    @Test
+    public void testDispose() {
+        t.setCommandedState(jmri.Turnout.CLOSED);    // in case registration with TrafficController
+        //is deferred to after first use
+        t.dispose();
+        Assert.assertEquals("controller listeners remaining", 1, numListeners());
+    }
+
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        SRCPTrafficController et = new SRCPTrafficController() {
-            @Override
-            public void sendSRCPMessage(SRCPMessage m, SRCPListener l) {
-                // we aren't actually sending anything to a layout.
-            }
-        };
-        SRCPBusConnectionMemo memo = new SRCPBusConnectionMemo(et, "TEST", 1);
+        jmri.util.JUnitUtil.resetInstanceManager();
+        stc = new SRCPTrafficControlScaffold();
+        SRCPBusConnectionMemo memo = new SRCPBusConnectionMemo(stc, "TEST", 1);
         memo.setTurnoutManager(new SRCPTurnoutManager(memo, memo.getBus()));
-        m = new SRCPTurnout(1, memo);
+        t = new SRCPTurnout(1, memo);
     }
 
     @After

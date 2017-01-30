@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.zimo.mx1;
 
 import java.util.ResourceBundle;
@@ -18,6 +17,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * @param p the associated serial port
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
