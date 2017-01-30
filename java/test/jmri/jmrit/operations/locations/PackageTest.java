@@ -39,6 +39,7 @@ public class PackageTest extends TestCase {
         suite.addTest(SidingEditFrameTest.suite());
         suite.addTest(StagingEditFrameTest.suite());
         suite.addTest(YardEditFrameTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(YardmasterPanelTest.class)); 
 
         return suite;
     }

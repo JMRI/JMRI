@@ -92,6 +92,7 @@ public class DccSignalHead extends AbstractSignalHead {
         }
     }
 
+    @Override
     public void setAppearance(int newAppearance) {
         int oldAppearance = mAppearance;
         mAppearance = newAppearance;
@@ -121,6 +122,7 @@ public class DccSignalHead extends AbstractSignalHead {
      * held parameter is a local variable which effects the aspect only via
      * higher-level logic
      */
+    @Override
     public void setHeld(boolean newHeld) {
         boolean oldHeld = mHeld;
         mHeld = newHeld;
@@ -228,6 +230,7 @@ public class DccSignalHead extends AbstractSignalHead {
 
     int dccSignalDecoderAddress;
 
+    @Override
     boolean isTurnoutUsed(Turnout t) {
         return false;
     }

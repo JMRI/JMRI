@@ -32,6 +32,7 @@ public class PackageTest extends TestCase {
         suite.addTest(OBlockTableActionTest.suite());
         suite.addTest(new JUnit4TestAdapter(RouteTableActionTest.class));
         suite.addTest(SensorTableWindowTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SignalGroupTableActionTest.class));
         suite.addTest(new JUnit4TestAdapter(SignalHeadTableActionTest.class));
         suite.addTest(TurnoutTableWindowTest.suite());
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));

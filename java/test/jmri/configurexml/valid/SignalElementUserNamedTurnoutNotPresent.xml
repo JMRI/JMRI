@@ -4,6 +4,9 @@
 <!-- The signal element names its turnout via a user name that's not present -->
 <!-- Not so different from a system name, since it's not present, but still... -->
 
+<!-- This file SHOULD BE INVALID, but because JMRI does not enforce the schema
+     rule this is verifying, that rule has been disabled in schema tests -->
+
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <turnouts class="jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml">
     <operations automate="false">

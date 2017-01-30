@@ -2,7 +2,6 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 import jmri.Block;
 import jmri.BlockManager;
@@ -229,11 +228,12 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             if (sName == null) {
                 log.error("System name null during 1st initialization of LayoutBlocks");
             } else {
-                log.debug("initializeLayoutBlock on \"{}\"", sName);
                 LayoutBlock b = getBySystemName(sName);
+                log.debug("Calling block '" + sName + "(" + b.getDisplayName() + ")'.initializeLayoutBlock()");
                 b.initializeLayoutBlock();
             }
         }
+
         // cycle through all LayoutBlocks, updating Paths of associated jmri.Blocks
         badBeanErrors = 0;
         iter = getSystemNameList().iterator();
@@ -242,8 +242,9 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             if (sName == null) {
                 log.error("System name null during 2nd initialization of LayoutBlocks");
             } else {
-                log.debug("LayoutBlock initialization - system name = " + sName);
                 LayoutBlock b = getBySystemName(sName);
+                log.debug("Calling block '" + sName + "(" + b.getDisplayName() + ")'.updatePaths()");
+
                 b.updatePaths();
                 if (b.getBlock().getValue() != null) {
                     b.getBlock().setValue(null);
@@ -335,7 +336,8 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             i++;
         }
         if (lc == null) {
-            log.error("Block " + facingBlock.getDisplayName() + " is not connected to Block " + protectedBlock.getDisplayName());
+            log.error("Block " + facingBlock.getSystemName() + "("
+                + facingBlock.getDisplayName() + ") is not connected to Block " + protectedBlock.getDisplayName());
             return null;
         }
         // blocks are connected, get connection item types
@@ -422,7 +424,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             if (lt.getLinkType() == LayoutTurnout.NO_LINK) {
                 // standard turnout or A connection of a crossover turnout
                 if (facingIsBlock1) {
-                    if (lt.getSignalHead(LayoutTurnout.POINTA2) == null) //there is no signal head for diverging 
+                    if (lt.getSignalHead(LayoutTurnout.POINTA2) == null) //there is no signal head for diverging
                     {
                         return lt.getSignalHead(LayoutTurnout.POINTA);
                     } else {
@@ -464,7 +466,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                                 return lt.getSignalHead(LayoutTurnout.POINTA);
                             }
                         } else {
-                            // neither track segment is in block 2 - should never get here unless layout turnout is 
+                            // neither track segment is in block 2 - should never get here unless layout turnout is
                             //      the only item in block 2
                             if (!(lt.getBlockName().equals(protectedBlock.getUserName()))) {
                                 log.error("neither signal at A protects block " + protectedBlock.getUserName()
@@ -484,7 +486,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                             // B and C both in block 1, check turnout position to decide which signal head to return
                             int state = lt.getTurnout().getKnownState();
                             if (((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.CLOSED))
-                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) // continuing  
+                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) // continuing
                             {
                                 return lt.getSignalHead(LayoutTurnout.POINTB);
                             } else if (((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.CLOSED))
@@ -512,7 +514,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                             return lt.getSignalHead(LayoutTurnout.POINTC2);
                         }
                     } else {
-                        // neither track segment is in block 1 - should never get here unless layout turnout is 
+                        // neither track segment is in block 1 - should never get here unless layout turnout is
                         //    the only item in block 1
                         if (!(lt.getBlockName().equals(facingBlock.getUserName()))) {
                             log.error("no signal faces block " + facingBlock.getUserName()
@@ -580,7 +582,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
         if (cType == LayoutEditor.TURNOUT_B) {
             // block boundary is at the continuing track of a turnout or B connection of a crossover turnout
             lt = (LayoutTurnout) connected;
-            // check for double crossover or LH crossover 
+            // check for double crossover or LH crossover
             if (((lt.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
                     || (lt.getTurnoutType() == LayoutTurnout.LH_XOVER))) {
                 if (facingIsBlock1) {
@@ -598,7 +600,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                             // A and D both in block 2, check turnout position to decide which signal head to return
                             int state = lt.getTurnout().getKnownState();
                             if (((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.CLOSED))
-                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) // continuing  
+                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) // continuing
                             {
                                 return lt.getSignalHead(LayoutTurnout.POINTB);
                             } else if (((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.CLOSED))
@@ -618,7 +620,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                     {
                         return lt.getSignalHead(LayoutTurnout.POINTB2);
                     } else {
-                        // neither track segment is in block 2 - should never get here unless layout turnout is 
+                        // neither track segment is in block 2 - should never get here unless layout turnout is
                         //       only item in block 2
                         if (!(lt.getBlockName().equals(protectedBlock.getUserName()))) {
                             log.error("neither signal at B protects block " + protectedBlock.getUserName()
@@ -637,7 +639,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                             // A and D both in block 1, check turnout position to decide which signal head to return
                             int state = lt.getTurnout().getKnownState();
                             if (((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.CLOSED))
-                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) // continuing  
+                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) // continuing
                             {
                                 return lt.getSignalHead(LayoutTurnout.POINTA);
                             } else if (((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.CLOSED))
@@ -665,7 +667,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                             return lt.getSignalHead(LayoutTurnout.POINTD2);
                         }
                     } else {
-                        // neither track segment is in block 1 - should never get here unless layout turnout is 
+                        // neither track segment is in block 1 - should never get here unless layout turnout is
                         //    the only item in block 1
                         if (!(lt.getBlockName().equals(facingBlock.getUserName()))) {
                             log.error("no signal faces block " + facingBlock.getUserName()
@@ -694,7 +696,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                 }
             } else if (lt.getLinkType() == LayoutTurnout.THROAT_TO_THROAT) {
                 if (!facingIsBlock1) {
-                    //  There are no signals at the throat of a THROAT_TO_THROAT 
+                    //  There are no signals at the throat of a THROAT_TO_THROAT
                     return null;
                 }
                 // facing block is outside of the THROAT_TO_THROAT
@@ -728,7 +730,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                 return null;
             } else if (lt.getLinkType() == LayoutTurnout.FIRST_3_WAY) {
                 // there is no signal at the FIRST_3_WAY turnout continuing track of a 3-way turnout
-                // there should not be a block boundary here				
+                // there should not be a block boundary here
                 return null;
             } else if (lt.getLinkType() == LayoutTurnout.SECOND_3_WAY) {
                 if (facingIsBlock1) {
@@ -773,7 +775,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                             // A and D both in block 2, check turnout position to decide which signal head to return
                             int state = lt.getTurnout().getKnownState();
                             if (((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.CLOSED))
-                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) // continuing  
+                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) // continuing
                             {
                                 return lt.getSignalHead(LayoutTurnout.POINTC);
                             } else if (((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.CLOSED))
@@ -793,7 +795,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                     {
                         return lt.getSignalHead(LayoutTurnout.POINTC);
                     } else {
-                        // neither track segment is in block 2 - should never get here unless layout turnout is 
+                        // neither track segment is in block 2 - should never get here unless layout turnout is
                         //       only item in block 2
                         if (!(lt.getBlockName().equals(protectedBlock.getUserName()))) {
                             log.error("neither signal at C protects block " + protectedBlock.getUserName()
@@ -812,7 +814,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                             // A and D both in block 1, check turnout position to decide which signal head to return
                             int state = lt.getTurnout().getKnownState();
                             if (((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.CLOSED))
-                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) // continuing  
+                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) // continuing
                             {
                                 return lt.getSignalHead(LayoutTurnout.POINTD);
                             } else if (((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.CLOSED))
@@ -840,7 +842,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                             return lt.getSignalHead(LayoutTurnout.POINTA2);
                         }
                     } else {
-                        // neither track segment is in block 1 - should never get here unless layout turnout is 
+                        // neither track segment is in block 1 - should never get here unless layout turnout is
                         //    the only item in block 1
                         if (!(lt.getBlockName().equals(facingBlock.getUserName()))) {
                             log.error("no signal faces block " + facingBlock.getUserName()
@@ -859,7 +861,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                     return lt.getSignalHead(LayoutTurnout.POINTD);
                 } else {
                     // RH, LH or WYE turnout, this is diverging track for A connection
-                    if (lt.getSignalHead(LayoutTurnout.POINTA2) == null) // there is no signal head at the throat for diverging 
+                    if (lt.getSignalHead(LayoutTurnout.POINTA2) == null) // there is no signal head at the throat for diverging
                     {
                         return lt.getSignalHead(LayoutTurnout.POINTA);
                     } else // there is a diverging head at the throat, return it
@@ -875,7 +877,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                 }
             } else if (lt.getLinkType() == LayoutTurnout.THROAT_TO_THROAT) {
                 if (!facingIsBlock1) {
-                    //  There are no signals at the throat of a THROAT_TO_THROAT 
+                    //  There are no signals at the throat of a THROAT_TO_THROAT
                     return null;
                 }
                 // facing block is outside of the THROAT_TO_THROAT
@@ -955,7 +957,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                 }
             }
             if (facingIsBlock1) {
-                if (lt.getSignalHead(LayoutTurnout.POINTD2) == null) //there is no signal head for diverging 
+                if (lt.getSignalHead(LayoutTurnout.POINTD2) == null) //there is no signal head for diverging
                 {
                     return lt.getSignalHead(LayoutTurnout.POINTD);
                 } else {
@@ -969,7 +971,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                             // C and B both in block2, check turnout position to decide which signal head to return
                             int state = lt.getTurnout().getKnownState();
                             if (((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.CLOSED))
-                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) // continuing  
+                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) // continuing
                             {
                                 return lt.getSignalHead(LayoutTurnout.POINTD);
                             } else if (((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.CLOSED))
@@ -989,7 +991,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                     {
                         return lt.getSignalHead(LayoutTurnout.POINTD2);
                     } else {
-                        // neither track segment is in block 2 - should never get here unless layout turnout is 
+                        // neither track segment is in block 2 - should never get here unless layout turnout is
                         //      the only item in block 2
                         if (!(lt.getBlockName().equals(protectedBlock.getUserName()))) {
                             log.error("neither signal at D protects block " + protectedBlock.getUserName()
@@ -1009,7 +1011,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                         // C and B both in block 1, check turnout position to decide which signal head to return
                         int state = lt.getTurnout().getKnownState();
                         if (((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.CLOSED))
-                                || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) // continuing  
+                                || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) // continuing
                         {
                             return lt.getSignalHead(LayoutTurnout.POINTC);
                         } else if (((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.CLOSED))
@@ -1037,7 +1039,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                         return lt.getSignalHead(LayoutTurnout.POINTB2);
                     }
                 } else {
-                    // neither track segment is in block 1 - should never get here unless layout turnout is 
+                    // neither track segment is in block 1 - should never get here unless layout turnout is
                     //    the only item in block 1
                     if (!(lt.getBlockName().equals(facingBlock.getUserName()))) {
                         log.error("no signal faces block " + facingBlock.getUserName()
@@ -1323,7 +1325,9 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             return null;
         }
         if (log.isDebugEnabled()) {
-            log.debug("find signal mast between facing " + facingBlock.getDisplayName() + " protected " + protectedBlock.getDisplayName());
+            log.debug("find signal mast between facing " +
+                facingBlock.getSystemName() + "(" + facingBlock.getDisplayName() + ") protected " +
+                protectedBlock.getSystemName() + "(" + protectedBlock.getDisplayName() + ")");
         }
         // non-null - check if input corresponds to Blocks in a Layout Editor panel.
         LayoutBlock fLayoutBlock = getByUserName(facingBlock.getUserName());
@@ -2079,6 +2083,9 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
      * direction they are in and which of the connected blocks they are
      * reachable from.
      */
+
+    private long firstRoutingChange;
+
     public void enableAdvancedRouting(boolean boo) {
         if (boo == enableAdvancedRouting) {
             return;
@@ -2095,6 +2102,9 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             log.debug("initializeLayoutBlockRouting immediate return due to {} {}", enableAdvancedRouting, initialized);
             return;
         }
+
+        firstRoutingChange = System.nanoTime();
+
         // cycle through all LayoutBlocks, completing initialization of the layout block routing
         java.util.Enumeration<jmri.NamedBean> en = _tsys.elements();
         while (en.hasMoreElements()) {
@@ -2139,7 +2149,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                     firePropertyChange("topology", true, false);
                     long oldvalue = lastRoutingChange;
                     while (!stabilised) {
-                        Thread.sleep(2000L);
+                        Thread.sleep(2000L);    // two seconds
                         if (oldvalue == lastRoutingChange) {
                             log.debug("routing table has now been stable for 2 seconds");
                             checking = false;
@@ -2160,7 +2170,10 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                                 log.debug("Stable, no sensor to set");
                             }
                         } else {
-                            log.debug("routing table not stable at {} in {}", lastRoutingChange, Thread.currentThread().getName());
+                            long seconds = (long)((lastRoutingChange - firstRoutingChange) / 1e9);
+                            log.debug("routing table not stable after {} in {}",
+                                String.format("%d:%02d:%02d", seconds / 3600, (seconds / 60) % 60, seconds % 60),
+                                Thread.currentThread().getName());
                         }
                         oldvalue = lastRoutingChange;
                     }
@@ -2248,9 +2261,9 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
     /**
      * Returns a list of layout blocks which this roster entry appears to
      * be occupying. A layout block is assumed to contain this roster entry if the value
-     * of the underlying block is the RosterEntry itself, or a string with the entry's 
+     * of the underlying block is the RosterEntry itself, or a string with the entry's
      * id or dcc address.
-     * 
+     *
      * @param re the roster entry
      * @return list of layout block user names
      */
@@ -2258,7 +2271,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
         BlockManager bm = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
         List<Block> blockList = bm.getBlocksOccupiedByRosterEntry(re);
         List<LayoutBlock> layoutBlockList = new ArrayList<>();
-        
+
         for (Block block : blockList) {
             if (block.getUserName() != null) {
                 LayoutBlock lb = getByUserName(block.getUserName());
@@ -2267,9 +2280,9 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                 }
             }
         }
-        
+
         return layoutBlockList;
-    } 
+    }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutBlockManager.class.getName());
 }
