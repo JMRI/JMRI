@@ -1416,7 +1416,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         /* Start decoding messages sent by the computer */
         /* Start with LI101F requests */
         if (getElement(0) == XNetConstants.LI_VERSION_REQUEST) {
-            text = "REQUEST LI10x hardware/software version";
+            text = Bundle.getMessage("XNetMessageRequestLIVersion");
         } else if (getElement(0) == XNetConstants.LI101_REQUEST) {
             switch (getElement(1)) {
                 case XNetConstants.LI101_REQUEST_ADDRESS:
@@ -1533,33 +1533,31 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         } else if (getElement(0) == XNetConstants.OPS_MODE_PROG_REQ) {
             switch (getElement(1)) {
                 case XNetConstants.OPS_MODE_PROG_WRITE_REQ:
-                    text = "Operations Mode Programming Request: ";
                     if ((getElement(4) & 0xEC) == 0xEC
                             || (getElement(4) & 0xE4) == 0xE4) {
+                        String message = "";
                         if ((getElement(4) & 0xEC) == 0xEC) {
-                            text = text + "Byte Mode Write: ";
+                            message ="XNetMessageOpsModeByteWrite";
                         } else if ((getElement(4) & 0xE4) == 0xE4) {
-                            text = text + "Byte Mode Verify: ";
+                            message ="XNetMessageOpsModeByteVerify";
                         }
-                        text = text + getElement(6)
-                                + " to CV "
-                                + (1 + getElement(5) + ((getElement(4) & 0x03) << 8))
-                                + " For Decoder Address "
-                                + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3));
+                        text = Bundle.getMessage(message,
+                               getElement(6),
+                               (1 + getElement(5) + ((getElement(4) & 0x03) << 8)),
+                               LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)));
                         break;
                     } else if ((getElement(4) & 0xE8) == 0xE8) {
+                        String message = "";
                         if ((getElement(6) & 0x10) == 0x10) {
-                            text = text + "Bit Mode Write: ";
+                            message ="XNetMessageOpsModeBitVerify";
                         } else {
-                            text = text + "Bit Mode Verify: ";
+                            message ="XNetMessageOpsModeBitWrite";
                         }
-                        text = text + ((getElement(6) & 0x08) >> 3)
-                                + " to CV "
-                                + (1 + getElement(5) + ((getElement(4) & 0x03) << 8))
-                                + " bit "
-                                + (getElement(6) & 0x07)
-                                + " For Decoder Address "
-                                + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3));
+                        text = Bundle.getMessage(message,
+                                ((getElement(6) & 0x08) >> 3),
+                                (1 + getElement(5) + ((getElement(4) & 0x03) << 8)),
+                                (getElement(6) & 0x07),
+                                LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)));
                         break;
                     }
                 //fall through
@@ -1996,29 +1994,27 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                     break;
                 }
                 case XNetConstants.LOCO_ADD_MULTI_UNIT_REQ:
-                    text = text
-                            + "Add Locomotive:"
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
-                            + " To Multi Unit Consist: "
-                            + getElement(4) + " With Loco Direction Normal";
+                    text = Bundle.getMessage("XNetMessageAddToConsistDirNormalRequest",
+                           LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)),
+                           getElement(4));
                     break;
                 case (XNetConstants.LOCO_ADD_MULTI_UNIT_REQ | 0x01):
-                    text = text + "Add Locomotive:"
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
-                            + " To Multi Unit Consist: "
-                            + getElement(4) + " With Loco Direction Reversed";
+                    text = Bundle.getMessage("XNetMessageAddToConsistDirReverseRequest",
+                           LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)),
+                           getElement(4));
                     break;
                 case (XNetConstants.LOCO_REM_MULTI_UNIT_REQ):
-                    text = text + "Remove Locomotive:"
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
-                            + " From Multi Unit Consist: " + getElement(4);
+                    text = Bundle.getMessage("XNetMessageRemoveFromConsistRequest",
+                           LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)),
+                           getElement(4));
                     break;
                 default:
                     text = toString();
             }
             // Emergency Stop a locomotive
         } else if (getElement(0) == XNetConstants.EMERGENCY_STOP) {
-            text = "Emergency Stop " + LenzCommandStation.calcLocoAddress(getElement(1), getElement(2));	// GT 2007/11/6 Corrected calculation
+            text = Bundle.getMessage("XNetMessageAddressedEmergencyStopRequest",
+              LenzCommandStation.calcLocoAddress(getElement(1), getElement(2)));
             // Disolve or Establish a Double Header
         } else if (getElement(0) == XNetConstants.LOCO_DOUBLEHEAD
                 && getElement(1) == XNetConstants.LOCO_DOUBLEHEAD_BYTE2) {
@@ -2026,13 +2022,9 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
             int loco1 = LenzCommandStation.calcLocoAddress(getElement(2), getElement(3));
             int loco2 = LenzCommandStation.calcLocoAddress(getElement(4), getElement(5));
             if (loco2 == 0) {
-                text
-                        = text + "Disolve Double Header that includes mobile decoder "
-                        + loco1;
+                text = Bundle.getMessage("XNetMessageDisolveDoubleHeaderRequest",loco1);
             } else {
-                text
-                        = text + "Establish Double Header with " + loco1 + " and "
-                        + loco2;
+                text = Bundle.getMessage("XNetMessageBuildDoubleHeaderRequest",loco1,loco2);
             }
             // Locomotive Status Request messages
         } else if (getElement(0) == XNetConstants.LOCO_STATUS_REQ) {
