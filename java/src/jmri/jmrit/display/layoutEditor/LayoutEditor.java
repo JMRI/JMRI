@@ -302,10 +302,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public static final int SLIP_RIGHT = LayoutTrack.SLIP_RIGHT;
     public static final int TURNTABLE_RAY_OFFSET = LayoutTrack.TURNTABLE_RAY_OFFSET; // offset for turntable connection points
 
-    // use these when you need a double and getTurnoutCircleSize() when you need an int
+    protected int turnoutCircleSize = 4;  //matches earlier versions
+
+    // use turnoutCircleSize when you need an int and these when you need a double
     // note: these only change when setTurnoutCircleSize is called
     // using these avoids having to call getTurnoutCircleSize() and
-    // the multiply (x2) and the int -> double conversion.
+    // the multiply (x2) and the int -> double conversion overhead
     private static double circleRadius = getTurnoutCircleSize();
     private static double circleDiameter = 2.0 * circleRadius;
 
@@ -8282,8 +8284,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return ColorUtil.colorToString(LayoutTurnout.getTurnoutCircleColor());
     }
 
-    public static int getTurnoutCircleSize() {
-        return LayoutTurnout.getTurnoutCircleSize();
+    public int getTurnoutCircleSize() {
+        return turnoutCircleSize;
     }
 
     public boolean getTurnoutDrawUnselectedLeg() {
@@ -8372,8 +8374,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     public void setTurnoutCircleSize(int size) {
-        LayoutTurnout.setTurnoutCircleSize(size);
+        // this is an int
+        turnoutCircleSize = size;
 
+        // these are doubles
         circleRadius = size;
         circleDiameter = 2.0 * circleRadius;
 

@@ -237,15 +237,12 @@ public class LayoutTurnout extends LayoutTrack {
 
     // these are common for all turnouts
     protected static Color turnoutCircleColor = defaultTrackColor; //matches earlier versions
-    protected static int turnoutCircleSize = 4;  //matches earlier versions
-    protected static int turnoutCircleSize2 = 2 * turnoutCircleSize;
 
-    // use these when you need a double; turnoutCircleSize[2] when you need an int
     // note: these only change when setTurnoutCircleSize is called
     // using these will avoid having to call getTurnoutCircleSize(),
     // the multiply (x2) and the int -> double conversion.
-    protected static double circleRadius = turnoutCircleSize;
-    protected static double circleDiameter = 2.0 * circleRadius;
+    protected double circleRadius = layoutEditor.getTurnoutCircleSize();
+    protected double circleDiameter = 2.0 * circleRadius;
 
     private boolean useBlockSpeed = false;
 
@@ -440,15 +437,7 @@ public class LayoutTurnout extends LayoutTrack {
         turnoutCircleColor = newColor;
     }
 
-    public static int getTurnoutCircleSize() {
-        return turnoutCircleSize;
-    }
-
     public static void setTurnoutCircleSize(int newSize) {
-        // int values
-        turnoutCircleSize = newSize;
-        turnoutCircleSize2 = 2 * turnoutCircleSize;
-        // double values
         circleRadius = turnoutCircleSize;
         circleDiameter = 2.0 * circleRadius;
     }
