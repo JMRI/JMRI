@@ -235,8 +235,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     protected boolean hidden = false;
 
-    // these are common for all turnouts
-    protected static Color turnoutCircleColor = defaultTrackColor; //matches earlier versions
+    protected Color turnoutCircleColor = defaultTrackColor; //matches earlier versions
 
     // note: these only change when setTurnoutCircleSize is called
     // using these will avoid having to call getTurnoutCircleSize(),
@@ -429,16 +428,16 @@ public class LayoutTurnout extends LayoutTrack {
         hidden = hide;
     }
 
-    public static Color getTurnoutCircleColor() {
+    public Color getTurnoutCircleColor() {
         return turnoutCircleColor;
     }
 
-    public static void setTurnoutCircleColor(Color newColor) {
+    public void setTurnoutCircleColor(Color newColor) {
         turnoutCircleColor = newColor;
     }
 
-    public static void setTurnoutCircleSize(int newSize) {
-        circleRadius = turnoutCircleSize;
+    public void setTurnoutCircleSize(int newSize) {
+        circleRadius = newSize;
         circleDiameter = 2.0 * circleRadius;
     }
 
@@ -3850,7 +3849,7 @@ public class LayoutTurnout extends LayoutTrack {
                 g2.setColor(Color.green);
             }
         }
-        g2.draw(LayoutEditor.controlPointRectAt(pt));
+        g2.draw(layoutEditor.controlPointRectAt(pt));
 
         pt = getCoordsB();
         if (getConnectB() == null) {
@@ -3858,7 +3857,7 @@ public class LayoutTurnout extends LayoutTrack {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(LayoutEditor.controlPointRectAt(pt));
+        g2.draw(layoutEditor.controlPointRectAt(pt));
 
         pt = getCoordsC();
         if (getConnectC() == null) {
@@ -3866,7 +3865,7 @@ public class LayoutTurnout extends LayoutTrack {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(LayoutEditor.controlPointRectAt(pt));
+        g2.draw(layoutEditor.controlPointRectAt(pt));
         if ((type == DOUBLE_XOVER)
                 || (type == RH_XOVER)
                 || (type == LH_XOVER)) {
@@ -3876,7 +3875,7 @@ public class LayoutTurnout extends LayoutTrack {
             } else {
                 g2.setColor(Color.green);
             }
-            g2.draw(LayoutEditor.controlPointRectAt(pt));
+            g2.draw(layoutEditor.controlPointRectAt(pt));
         }
     }
 

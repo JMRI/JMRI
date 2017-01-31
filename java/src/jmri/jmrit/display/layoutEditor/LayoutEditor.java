@@ -308,8 +308,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     // note: these only change when setTurnoutCircleSize is called
     // using these avoids having to call getTurnoutCircleSize() and
     // the multiply (x2) and the int -> double conversion overhead
-    private static double circleRadius = getTurnoutCircleSize();
-    private static double circleDiameter = 2.0 * circleRadius;
+    private double circleRadius = getTurnoutCircleSize();
+    private double circleDiameter = 2.0 * circleRadius;
 
     // selection variables
     private boolean selectionActive = false;
@@ -8597,7 +8597,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     // to do point-in-rect (hit) testing
 
     // compute the control point rect at inPoint
-    public static Rectangle2D controlPointRectAt(Point2D inPoint) {
+    public Rectangle2D controlPointRectAt(Point2D inPoint) {
         return new Rectangle2D.Double(
             inPoint.getX() - LayoutTrack.controlPointSize,
             inPoint.getY() - LayoutTrack.controlPointSize,
@@ -8605,13 +8605,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     // compute the turnout circle rect at inPoint
-    public static Rectangle2D turnoutCircleRectAt(Point2D inPoint) {
+    public Rectangle2D turnoutCircleRectAt(Point2D inPoint) {
         return new Rectangle2D.Double(inPoint.getX() - circleRadius,
             inPoint.getY() - circleRadius, circleDiameter, circleDiameter);
     }
 
     // compute the turnout circle at inPoint (used for drawing)
-    public static Ellipse2D turnoutCircleAt(Point2D inPoint) {
+    public Ellipse2D turnoutCircleAt(Point2D inPoint) {
         return new Ellipse2D.Double(inPoint.getX() - circleRadius,
             inPoint.getY() - circleRadius, circleDiameter, circleDiameter);
     }
