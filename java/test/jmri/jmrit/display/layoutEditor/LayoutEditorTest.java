@@ -344,25 +344,16 @@ public class LayoutEditorTest {
     public void testGetTurnoutCircleSize() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor();
-        // defaults to 2.
-        Assert.assertEquals("turnout circle size", 2, e.getTurnoutCircleSize());
+        // defaults to 4.
+        Assert.assertEquals("turnout circle size", 4, e.getTurnoutCircleSize());
     }
 
     @Test
     public void testSetTurnoutCircleSize() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor();
-        //
-        // It's a Heisenbug!!!
-        //
-        // This test was causing testGetTurnoutCircleSize (above) to fail
-        // so I've added code to save & restore the previous value
-        // before & after the setTurnoutCircleSize tests.
-        //
-        int i = e.getTurnoutCircleSize();   // save previous value
         e.setTurnoutCircleSize(11);
         Assert.assertEquals("turnout circle size after set", 11, e.getTurnoutCircleSize());
-        e.setTurnoutCircleSize(i);  // restore previous value
     }
 
     @Test
