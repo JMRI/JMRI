@@ -126,6 +126,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //private jmri.TurnoutManager tm = null;
     private LayoutEditor thisPanel = null;
 
+    // dashed line parameters
+    //private static int minNumDashes = 3;
+    //private static double maxDashLength = 10;
+
     private JPanel editToolBarPanel = new JPanel();
     private JScrollPane editToolBarScroll = null;
     private JPanel editToolBarContainer = null;
@@ -251,10 +255,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     // grid size in pixels
     private int gridSize = 10;
 
-
     // size of point boxes
     private static final double SIZE = 3.0;
     private static final double SIZE2 = SIZE * 2.;  // must be twice SIZE
+
+    // note: although these have been moved to the LayoutTurnout class I'm leaving a copy of them here so
+    // that any external use of these won't break. At some point in the future these should be @Deprecated.
+    // All JMRI sources have been updated to use the ones in the LayoutTurnout class.
 
     // defined constants - turnout types
     public static final int RH_TURNOUT = LayoutTurnout.RH_TURNOUT;
@@ -263,10 +270,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public static final int DOUBLE_XOVER = LayoutTurnout.DOUBLE_XOVER;
     public static final int RH_XOVER = LayoutTurnout.RH_XOVER;
     public static final int LH_XOVER = LayoutTurnout.LH_XOVER;
-    public static final int SINGLE_SLIP = LayoutSlip.SINGLE_SLIP;
-    public static final int DOUBLE_SLIP = LayoutSlip.DOUBLE_SLIP;
+    public static final int SINGLE_SLIP = LayoutTurnout.SINGLE_SLIP;
+    public static final int DOUBLE_SLIP = LayoutTurnout.DOUBLE_SLIP;
 
-        // connection types
+    // connection types (see note above)
     public static final int NONE = LayoutTrack.NONE;
     public static final int POS_POINT = LayoutTrack.POS_POINT;
     public static final int TURNOUT_A = LayoutTrack.TURNOUT_A;  // throat for RH, LH, and WYE turnouts
@@ -3013,9 +3020,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // here when all numbers read in - translation if entered
         if ((xTranslation != 0.0F) || (yTranslation != 0.0F)) {
             // set up selection rectangle
-            Rectangle2D selectRect = new Rectangle2D.Double(selectionX, selectionY, selectionWidth, selectionHeight);
+            Rectangle2D selectRect = new Rectangle2D.Double(selectionX, selectionY,
+                    selectionWidth, selectionHeight);
             // set up undo information
-            undoRect = new Rectangle2D.Double(selectionX + xTranslation, selectionY + yTranslation, selectionWidth, selectionHeight);
+            undoRect = new Rectangle2D.Double(selectionX + xTranslation, selectionY + yTranslation,
+                    selectionWidth, selectionHeight);
             undoDeltaX = -xTranslation;
             undoDeltaY = -yTranslation;
             canUndoMoveSelection = true;
@@ -3661,7 +3670,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 // check if controlling a turnout in edit mode
                 selectedObject = null;
                 if (allControlling()) {
-
                     // check if mouse is on a turnout
                     selectedObject = null;
                     for (LayoutTurnout t : turnoutList) {
@@ -3809,7 +3817,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     private boolean checkSelect(Point2D loc, boolean requireUnconnected, Object avoid) {
-
         // check positionable points, if any
         for (PositionablePoint p : pointList) {
             if (p != avoid) {
@@ -3830,7 +3837,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }
         }
-
         // check turnouts, if any
         for (LayoutTurnout t : turnoutList) {
             if (t != selectedObject) {
@@ -7687,11 +7693,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             case LayoutTrack.LEVEL_XING_D:
                 return ((LevelXing) o).getLayoutBlockBD();
             case LayoutTrack.SLIP_A:
-                return ((LayoutSlip) o).getLayoutBlock();
             case LayoutTrack.SLIP_B:
-                return ((LayoutSlip) o).getLayoutBlock();
             case LayoutTrack.SLIP_C:
-                return ((LayoutSlip) o).getLayoutBlock();
             case LayoutTrack.SLIP_D:
                 return ((LayoutSlip) o).getLayoutBlock();
             case LayoutTrack.TRACK:
@@ -8623,7 +8626,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (isEditable() && drawGrid) {
             drawPanelGrid(g2);
         }
-
         g2.setColor(defaultTrackColor);
         main = false;
         g2.setStroke(new BasicStroke(sideTrackWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
@@ -8661,6 +8663,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     boolean main = true;
     float trackWidth = sideTrackWidth;
 
+    // had to make this public so the LayoutTrack classes could access it
+    // also returned the current value of trackWidth for the callers to use
     public float setTrackStrokeWidth(Graphics2D g2, boolean need) {
         if (main != need) {
             main = need;

@@ -66,8 +66,12 @@ public class LayoutSlip extends LayoutTurnout {
     // Defined text resource
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
-    public static final int SINGLE_SLIP = 7;
-    public static final int DOUBLE_SLIP = 8;
+    // operational instance variables (not saved between sessions)
+    final public static int UNKNOWN = Turnout.UNKNOWN;
+    final public static int STATE_AC = 0x02;
+    final public static int STATE_BD = 0x04;
+    final public static int STATE_AD = 0x06;
+    final public static int STATE_BC = 0x08;
 
     public int currentState = UNKNOWN;
 
@@ -1236,7 +1240,6 @@ public class LayoutSlip extends LayoutTurnout {
         }
     }
 
-
     public void draw(Graphics2D g2) {
         if (!getHidden() || layoutEditor.isEditable()) {
             Point2D pointA = getCoordsA();
@@ -1484,5 +1487,6 @@ public class LayoutSlip extends LayoutTurnout {
         }
 
     }
+
     private final static Logger log = LoggerFactory.getLogger(LayoutSlip.class.getName());
 }

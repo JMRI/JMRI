@@ -695,7 +695,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
     private void updateBlockPaths(ArrayList<LayoutConnectivity> c, LayoutEditor panel) {
         if (enableAddRouteLogging) {
-            log.info("From " + this.getDisplayName() + " updatePaths Called");
+            log.info("From " + this.getDisplayName() + " updateBlockPaths Called");
         }
         LayoutEditorAuxTools auxTools = new LayoutEditorAuxTools(panel);
         java.util.List<jmri.Path> paths = block.getPaths();
@@ -774,8 +774,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
                 if (InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
                     addAdjacency(newp);
-//             } else {
-//                  log.error("Trouble adding Path to block {}", blockName);
+//                 } else {
+//                     log.error("Trouble adding Path to block {}", blockName);
                 }
                 auxTools.addBeanSettings(newp, lc, _instance);
             }
@@ -2549,7 +2549,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 }
             }
             /*for(LayoutTurnout turn: stod){
-             if(turn.type==LayoutEditor.DOUBLE_XOVER){
+             if(turn.type==LayoutTurnout.DOUBLE_XOVER){
              //Further checks might be required.
              }
 
@@ -2580,7 +2580,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 boolean allowAddition = false;
                 for (int i = 0; i < maxt.size(); i++) {
                     LayoutTurnout turn = maxt.get(i);
-                    if (turn.type == LayoutEditor.DOUBLE_XOVER) {
+                    if (turn.type == LayoutTurnout.DOUBLE_XOVER) {
                         allowAddition = true;
                         //The double crossover gets reported in the opposite setting.
                         if (maxtSet.get(i) == 2) {
@@ -3233,7 +3233,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 }
             }
         } else {
-            log.warn("getValidRoute({}, {}", 
+            log.warn("getValidRoute({}, {}",
                 (null != nxtBlock) ? nxtBlock.getDisplayName() : "<null>",
                 (null != dstBlock) ? dstBlock.getDisplayName() : "<null>");
         }
