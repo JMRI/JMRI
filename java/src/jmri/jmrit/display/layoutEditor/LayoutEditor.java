@@ -3386,10 +3386,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 repaint();
             }
         };
+
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
         r.addActionListener(a);
         turnoutCircleColorButtonGroup.add(r);
-        if (getTurnoutCircleColor().equals(color)) {
+        if (turnoutCircleColor.equals(color)) {
             r.setSelected(true);
         } else {
             r.setSelected(false);
@@ -3428,9 +3429,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     protected void setOptionMenuTurnoutCircleColor() {
         for (int i = 0; i < turnoutCircleColorCount; i++) {
-            if (turnoutCircleColors[i] == null && getTurnoutCircleColor() == null) {
+            if (turnoutCircleColors[i] == null && turnoutCircleColor == null) {
                 turnoutCircleColorMenuItems[i].setSelected(true);
-            } else if (turnoutCircleColors[i] != null && turnoutCircleColors[i].equals(getTurnoutCircleColor())) {
+            } else if (turnoutCircleColors[i] != null && turnoutCircleColors[i].equals(turnoutCircleColor)) {
                 turnoutCircleColorMenuItems[i].setSelected(true);
             } else {
                 turnoutCircleColorMenuItems[i].setSelected(false);
