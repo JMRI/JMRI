@@ -410,7 +410,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
 
         /**
          * Call method getApectEditorBox() in the surrounding method for the SignalMastTable
-         * @param row the user clicked on in the table
+         * @param row Index of the row clicked in the table
          * @return an appropriate combobox for this signal mast
          */
         @Override
