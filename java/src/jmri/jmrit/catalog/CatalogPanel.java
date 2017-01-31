@@ -549,8 +549,9 @@ public class CatalogPanel extends JPanel implements MouseListener {
                     continue;
                 }
             }
-            nameLabel.setText(leaf.getName());
+//            nameLabel.setText(leaf.getName());
             nameLabel.setName(leaf.getName());
+//            nameLabel.setVerticalTextPosition(JLabel.TOP);
             nameLabel.setBackground(_currentBackground);
             nameLabel.setIcon(icon);
 
@@ -560,13 +561,12 @@ public class CatalogPanel extends JPanel implements MouseListener {
             JLabel label = new JLabel(java.text.MessageFormat.format(Bundle.getMessage("scale"),
                     new Object[]{printDbl(scale, 2)}));
             p.add(label);
+            label = new JLabel(leaf.getName());
+            p.add(label);
             if (_noDrag) {
                 p.addMouseListener(this);
             }
             gridbag.setConstraints(p, c);
-            if (_noMemory) {
-                continue;
-            }
             _preview.add(p);
             if (log.isDebugEnabled()) {
                 log.debug(leaf.getName() + " inserted at (" + c.gridx + ", " + c.gridy

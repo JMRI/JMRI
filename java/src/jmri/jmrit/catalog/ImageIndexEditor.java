@@ -148,16 +148,6 @@ public final class ImageIndexEditor extends JmriJFrame {
         pack();
         setVisible(true);
     }
-/*
-    public void addDirectoryToCatalog(java.io.File dir) {
-        if (_catalog == null) {
-            _catalog = CatalogPanel.makeDefaultCatalog();
-        }
-        String name = dir.getName();
-        _catalog.createNewBranch("IF" + name, name, dir.getAbsolutePath());
-        this.add(_catalog);
-        this.pack();
-    }*/
 
     public static final synchronized void indexChanged(boolean changed) {
         _indexChanged = changed;
@@ -179,8 +169,10 @@ public final class ImageIndexEditor extends JmriJFrame {
                     jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(_shutDownTask);
                 }
             } else {
-                jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(_shutDownTask);
-                _shutDownTask = null;
+                if (_shutDownTask!=null) {
+                    jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(_shutDownTask);
+                    _shutDownTask = null;                    
+                }
             }
         }
     }
@@ -222,7 +214,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         _catalog.createNewBranch("IFPREF", "Preferences Directory", FileUtil.getUserFilesPath() + "resources");
         return _catalog;
     }
-
+    
     private JPanel makeIndexPanel() {
         _index = new CatalogPanel("ImageIndex", "selectIndexNode");
         _index.init(true);
@@ -245,7 +237,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         return _index;
     }
 
-    private void addNode() {
+    void addNode() {
         CatalogTreeNode selectedNode = _index.getSelectedNode();
         if (selectedNode == null) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("selectAddNode"),
@@ -310,7 +302,7 @@ public final class ImageIndexEditor extends JmriJFrame {
     }
 
     @SuppressWarnings("unchecked")
-    private int countSubNodes(CatalogTreeNode node) {
+    int countSubNodes(CatalogTreeNode node) {
         int cnt = 0;
         Enumeration<CatalogTreeNode> e = node.children();
         while (e.hasMoreElements()) {

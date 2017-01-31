@@ -6,6 +6,7 @@ import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.AbstractButtonFinder;
+import junit.extensions.jfcunit.finder.DialogFinder;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
@@ -29,19 +30,29 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
         ImageIndexEditor indexEditor = ImageIndexEditor.instance(_cpe);
         Assert.assertNotNull(JFrameOperator.waitJFrame(Bundle.getMessage("editIndexFrame"), true, true));
         Assert.assertFalse("Index not changed",ImageIndexEditor.isIndexChanged());
-/* Cannot get rid of FileChooser        
-        DirectorySearcher.instance().openDirectory();        
-        DialogFinder finder = new DialogFinder(Bundle.getMessage("openDirMenu"));
+        /* Next call opens JOptionPane.  Modal dialog blocks following code to find and press buttons.
+        indexEditor.addNode();
+        java.awt.Container pane = findContainer("selectAddNode");
+        Assert.assertNotNull("Select node prompt not found", pane);
+        pressButton(pane, "OK");
+        // This opens FileChooser  - also modal      
+        DirectorySearcher.instance().openDirectory();
+        pane = findContainer("openDirMenu");
+        Assert.assertNotNull("FileChooser not found", pane);
+        ((javax.swing.JFileChooser)pane).cancelSelection();
+        pressButton(pane, "Cancel"); */
+    }
+    
+    java.awt.Container findContainer(String title) {
+        DialogFinder finder = new DialogFinder(Bundle.getMessage(title));
         JUnitUtil.waitFor(() -> {
             return (java.awt.Container)finder.find()!=null;
         }, "Found dialog + \"title\"");
-        java.awt.Container pane = (java.awt.Container)finder.find();
-        Assert.assertNotNull("FileChooser not found", pane);
-        ((javax.swing.JFileChooser)pane).cancelSelection();
-        */
+        return (java.awt.Container)finder.find();
+        
     }
     
-    private javax.swing.AbstractButton pressButton(java.awt.Container frame, String text) {
+    javax.swing.AbstractButton pressButton(java.awt.Container frame, String text) {
         AbstractButtonFinder buttonFinder = new AbstractButtonFinder(text);
         javax.swing.AbstractButton button = (javax.swing.AbstractButton) buttonFinder.find(frame, 0);
         Assert.assertNotNull(text+" Button not found", button);

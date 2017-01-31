@@ -62,8 +62,7 @@ public class PreviewDialog extends JDialog {
 
     File _currentDir;   // current FS directory
     String[] _filter;   // file extensions of types to display
-    JButton _addButton;
-    JButton _moreButton;
+    ActionListener _lookAction;
 
     protected PreviewDialog(Frame frame, String title, File dir, String[] filter) {
         super(frame, Bundle.getMessage(title), false);
@@ -74,8 +73,7 @@ public class PreviewDialog extends JDialog {
         }
     }
 
-    protected void init(ActionListener addAction, ActionListener moreAction,
-            ActionListener lookAction, ActionListener cancelAction, int startNum) {
+    protected void init(ActionListener moreAction, ActionListener lookAction, ActionListener cancelAction, int startNum) {
         if (log.isDebugEnabled()) {
             log.debug("Enter _previewDialog.init dir= " + _currentDir.getPath());
         }
@@ -101,12 +99,7 @@ public class PreviewDialog extends JDialog {
 
         JPanel previewPanel = setupPanel();     // provide panel for images, add to bottom of window
         _startNum = startNum;
-        try {
-            needsMore = setIcons(startNum);
-        } catch (OutOfMemoryError oome) {
-            log.error("OutOfMemoryError AvailableMemory= " + availableMemory() + ", " + _cnt + " files read.");
-            resetPanel();
-        }
+        needsMore = setIcons(startNum);
         if (_noMemory) {
             int choice = JOptionPane.showOptionDialog(null,
                     Bundle.getMessage("OutOfMemory", _cnt), Bundle.getMessage("ErrorTitle"), 
@@ -120,10 +113,10 @@ public class PreviewDialog extends JDialog {
         if (needsMore) {
             if (moreAction != null) {
                 p.add(Box.createHorizontalStrut(5));
-                _moreButton = new JButton(Bundle.getMessage("ButtonDisplayMore"));
-                _moreButton.addActionListener(moreAction);
-                _moreButton.setVisible(needsMore);
-                p.add(_moreButton);
+                JButton moreButton = new JButton(Bundle.getMessage("ButtonDisplayMore"));
+                moreButton.addActionListener(moreAction);
+                moreButton.setVisible(needsMore);
+                p.add(moreButton);
             } else {
                 log.error("More ActionListener missing");
             }            
@@ -131,17 +124,9 @@ public class PreviewDialog extends JDialog {
         }
 
         boolean hasButtons = needsMore;
-        if (addAction != null) {
-            p.add(Box.createHorizontalStrut(5));
-            _addButton = new JButton(Bundle.getMessage("ButtonAddToCatalog"));
-            _addButton.addActionListener(addAction);
-            p.add(_addButton);
-            msg.setText(Bundle.getMessage("addDirMsg"));
-            hasButtons = true;
-        } else {
-            msg.setText(Bundle.getMessage("dragMsg"));
-        }
+        msg.setText(Bundle.getMessage("dragMsg"));
 
+        _lookAction = lookAction;
         if (lookAction != null) {
             p.add(Box.createHorizontalStrut(5));
             JButton lookButton = new JButton(Bundle.getMessage("ButtonKeepLooking"));
@@ -170,6 +155,12 @@ public class PreviewDialog extends JDialog {
         pack();
         setVisible(true);
     }
+    
+    ActionListener getLookActionListener() {
+        return _lookAction;
+    }
+
+
 
     /**
      * Setup a display panel to display icons
@@ -309,6 +300,8 @@ public class PreviewDialog extends JDialog {
         int nRows = 1;
         int nAvail = 1;
         
+        long memoryAvailable = availableMemory();
+        long memoryUsed = 0;        // estmate
         for (int i = 0; i < files.length; i++) {
             String ext = jmri.util.FileChooserFilter.getFileExtension(files[i]);
             for (int k = 0; k < _filter.length; k++) {
@@ -327,13 +320,12 @@ public class PreviewDialog extends JDialog {
                         String path = files[i].getAbsolutePath();
                         NamedIcon icon = new NamedIcon(path, name);
                         long size = icon.getIconWidth()*icon.getIconHeight();
-                        long memoryAvailable = availableMemory();
-                        log.debug("Memory calculation icon size= {} memoryAvailable= {}", size, memoryAvailable);
+                        log.debug("Memory calculation icon size= {} memoryAvailable= {} memoryUsed= {}", size, memoryAvailable, memoryUsed);
 
-                        if (memoryAvailable <4*size) {
+                        if (memoryAvailable < 4*size) {
                             _noMemory = true;
                             log.debug("Memory calculation caught icon size= {} testSize= {} memoryAvailable= {}", 4*size, memoryAvailable);
-                            break;
+                            continue;
                         }
                         double scale = icon.reduceTo(CatalogPanel.ICON_WIDTH,
                                 CatalogPanel.ICON_HEIGHT, CatalogPanel.ICON_SCALE);
@@ -341,6 +333,13 @@ public class PreviewDialog extends JDialog {
                             log.debug("MemoryExceptionHandler caught icon size={} ", size);
                             continue;
                         }
+                        if (scale < 1.0) {
+                            size *= 4;
+                        } else {
+                            size += 1000;
+                        }
+                        memoryUsed += size;
+                        memoryAvailable -= size;
                         _cnt++;
                         cnt++;
                         if (_cnt > nAvail) {
@@ -406,8 +405,7 @@ public class PreviewDialog extends JDialog {
         JLabel bottom = new JLabel();
         gridbag.setConstraints(bottom, c);
         _preview.add(bottom);
-        String msg = java.text.MessageFormat.format(Bundle.getMessage("numImagesInDir"),
-                new Object[]{_currentDir.getName(), Integer.valueOf(cnt)});
+        String msg = Bundle.getMessage("numImagesInDir", _currentDir.getName(), DirectorySearcher.numImageFiles(_currentDir));
         if (startNum > 0) {
             msg = msg + " " + java.text.MessageFormat.format(Bundle.getMessage("numImagesShown"),
                     new Object[]{Integer.valueOf(startNum)});
@@ -434,6 +432,7 @@ public class PreviewDialog extends JDialog {
             for (int i = 0; i < memoryTest.size(); i++) {
                 memoryTest.remove(i);
             }
+            System.gc();
             log.debug("availableMemory= {}", total);
             //if (log.isDebugEnabled()) log.debug("Max Memory available= "+total+" bytes");
         }

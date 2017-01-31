@@ -41,11 +41,10 @@ public class DirectorySearcher {
     static JFileChooser _directoryChooser = null;
     static DirectorySearcher _instance;
 
-    PreviewDialog _previewDialog = null;
+    static PreviewDialog _previewDialog = null;
+    static Seacher _searcher;
     JFrame _waitDialog;
     JLabel _waitText;
-    boolean _quitLooking = false;
-    Seacher _searcher;
 
     private DirectorySearcher() {
     }
@@ -65,6 +64,14 @@ public class DirectorySearcher {
      * @return chosen directory or null to cancel operation
      */
     private static File getDirectory(String msg, boolean recurse) {
+        if (_previewDialog!=null) {
+            _previewDialog.dispose();
+        }
+        if (_searcher!=null) {
+            synchronized (_searcher){
+                _searcher.notify();                
+            }            
+        }
         if (_directoryChooser == null) {
             _directoryChooser = new JFileChooser(FileSystemView.getFileSystemView());
             jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Graphics Files");
@@ -110,7 +117,7 @@ public class DirectorySearcher {
         }
     }
 
-    private static int numImageFiles(File dir) {
+    protected static int numImageFiles(File dir) {
         File[] files = dir.listFiles();
         if (files==null) {
             return 0;
@@ -163,15 +170,13 @@ public class DirectorySearcher {
     public void openDirectory() {
         File dir = getDirectory("openDirMenu", true);
         if (dir != null) {
-            doPreviewDialog(dir, null, new MActionListener(dir, true),
+            doPreviewDialog(dir, new MActionListener(dir, true),
                     null, new CActionListener(), 0);
             closeWaitFrame();
         }
     }
 
     public void searchFS() {
-//        JOptionPane.showMessageDialog(null, "Sorry - Temporarily disabled", Bundle.getMessage("searchFSMenu"),
-//                JOptionPane.INFORMATION_MESSAGE);
         File dir = getDirectory("searchFSMenu", false);
         showWaitFrame("searchWait", dir);
         if (dir != null) {
@@ -180,9 +185,18 @@ public class DirectorySearcher {
         }
     }
     
+    void searcherDone(File dir, int count) {
+        if (_previewDialog!=null) {
+            _previewDialog.dispose();
+        }
+        JOptionPane.showMessageDialog(null, Bundle.getMessage("numFound", count, dir.getAbsolutePath()),
+                Bundle.getMessage("info"), JOptionPane.INFORMATION_MESSAGE);
+    }
+    
     class Seacher extends Thread implements Runnable {
         File dir;
         boolean quit = false;
+        int count;
         
         Seacher(File d) {
             dir =d;
@@ -194,6 +208,9 @@ public class DirectorySearcher {
         public void run() {
             getImageDirectory(dir, CatalogTreeManager.IMAGE_FILTER);
             if (log.isDebugEnabled()) log.debug("Searcher done for directory {}  quit={}", dir.getAbsolutePath(), quit);
+            ThreadingUtil.runOnLayout(() -> {
+                searcherDone(dir, count);
+            });
         }
         /**
          * Find a Directory with image files
@@ -205,10 +222,12 @@ public class DirectorySearcher {
             if (files == null || quit) {
                 return;
             }
-            if (numImageFiles(dir) > 0) {
+            int cnt = numImageFiles(dir);
+            count += cnt;
+            if (cnt > 0) {
                 if (log.isDebugEnabled()) log.debug("getImageDirectory dir= {} has {} files", dir.getAbsolutePath(), numImageFiles(dir));
                 ThreadingUtil.runOnLayout(() -> {
-                    doPreviewDialog(dir, new AActionListener(dir), new MActionListener(dir, false),
+                    doPreviewDialog(dir, new MActionListener(dir, false),
                             new LActionListener(dir), new CActionListener(), 0);
                 });
                 synchronized (this) {
@@ -238,20 +257,7 @@ public class DirectorySearcher {
         }
     }
 
-    // add Directory dir to Catalog
-    class AActionListener implements ActionListener {
-        File dir;
-
-        public AActionListener(File d) {
-            dir = d;
-        }
-        public void actionPerformed(ActionEvent a) {
-            addDirectoryToCatalog(dir);
-            cancelLooking();
-        }
-    }
-
-    // Directory dir has too many icons - display in separate windows 
+    // More action.  Directory dir has too many icons - display in separate windows 
     class MActionListener implements ActionListener {
         File dir;
         boolean oneDir;
@@ -285,15 +291,13 @@ public class DirectorySearcher {
         }
     }
 
-    private void doPreviewDialog(File dir, ActionListener addAction, ActionListener moreAction,
-            ActionListener lookAction, ActionListener cancelAction,
-            int startNum) {
-        _quitLooking = false;
+    private void doPreviewDialog(File dir, ActionListener moreAction,
+            ActionListener lookAction, ActionListener cancelAction, int startNum) {
         showWaitFrame("previewWait", dir);
         if (log.isDebugEnabled()) log.debug("doPreviewDialog dir= {}", dir.getAbsolutePath());
         
         _previewDialog = new PreviewDialog(null, "previewDir", dir, CatalogTreeManager.IMAGE_FILTER);
-        _previewDialog.init(addAction, moreAction, lookAction, cancelAction, startNum);
+        _previewDialog.init(moreAction, lookAction, cancelAction, startNum);
         _waitDialog.setVisible(false);
     }
 
@@ -302,10 +306,11 @@ public class DirectorySearcher {
         if (log.isDebugEnabled()) log.debug("displayMore: dir= {} has {} files", dir.getName(), numImageFiles(dir));
         if (_previewDialog != null) {
             int numFilesShown = _previewDialog.getNumFilesShown();
+            ActionListener lookAction = _previewDialog.getLookActionListener();
             _previewDialog.dispose();
             if (numFilesShown>0) {
-                doPreviewDialog(dir, null, new MActionListener(dir, oneDir),
-                        new LActionListener(dir), new CActionListener(), numFilesShown);
+                doPreviewDialog(dir, new MActionListener(dir, oneDir),
+                        lookAction, new CActionListener(), numFilesShown);
             }
             
         } else {
@@ -321,16 +326,16 @@ public class DirectorySearcher {
             _previewDialog.dispose();
             _previewDialog = null;
         }
-        _quitLooking = false;
-        synchronized (_searcher){
-            _searcher.notify();                
+        if (_searcher!=null) {
+            synchronized (_searcher){
+                _searcher.notify();                
+            }            
         }
     }
 
     private void cancelLooking() {
         closeWaitFrame();
         if (_previewDialog != null) {
-            _quitLooking = true;
             _previewDialog.dispose();
             _previewDialog = null;
         }
@@ -339,17 +344,9 @@ public class DirectorySearcher {
                 _searcher.quit();
                 _searcher.notify();                
             }
-            
         }
     }
 
-    private void addDirectoryToCatalog(File dir) {
-        CatalogPanel catalog = CatalogPanel.makeDefaultCatalog();
-        String name = dir.getName();
-        catalog.createNewBranch("IF" + name, name, dir.getAbsolutePath());
-        ImageIndexEditor.indexChanged(true);
-    }
-    
     public void close() {
         closeWaitFrame();
         cancelLooking();
