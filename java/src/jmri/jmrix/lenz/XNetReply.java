@@ -686,8 +686,42 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         String text;
         // First, Decode anything that is sent by the LI10x, and
         // not the command station
-        if (isOkMessage()) {
-            text = Bundle.getMessage("XNetReplyOkMessage");
+        
+        if(getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER){
+            switch(this.getElement(1)) {
+              case XNetConstants.LI_MESSAGE_RESPONSE_PC_DATA_ERROR:
+                 text = Bundle.getMessage("XNetReplyErrorPCtoLI");
+                 break;
+              case XNetConstants.LI_MESSAGE_RESPONSE_CS_DATA_ERROR:
+                 text = Bundle.getMessage("XNetReplyErrorLItoCS");
+                 break;
+              case XNetConstants.LI_MESSAGE_RESPONSE_UNKNOWN_DATA_ERROR:
+                 text = Bundle.getMessage("XNetReplyErrorUnknown");
+                 break;
+              case XNetConstants.LI_MESSAGE_RESPONSE_SEND_SUCCESS:
+                 text = Bundle.getMessage("XNetReplyOkMessage");
+                 break;
+              case XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR:
+                 text = Bundle.getMessage("XNetReplyErrorNoTimeSlot");
+                 break;
+              case XNetConstants.LI_MESSAGE_RESPONSE_BUFFER_OVERFLOW:
+                 text = Bundle.getMessage("XNetReplyErrorBufferOverflow");
+                 break;
+              case XNetConstants.LIUSB_TIMESLOT_RESTORED:
+                 text = Bundle.getMessage("XNetReplyTimeSlotRestored");
+                 break;
+              case XNetConstants.LIUSB_REQUEST_SENT_WHILE_NO_TIMESLOT:
+                 text = Bundle.getMessage("XNetReplyRequestSentWhileNoTimeslot");
+                 break;
+              case XNetConstants.LIUSB_BAD_DATA_IN_REQUEST:
+                 text = Bundle.getMessage("XNetReplyBadDataInRequest");
+                 break;
+              case XNetConstants.LIUSB_RETRANSMIT_REQUEST:
+                 text = Bundle.getMessage("XNetReplyRetransmitRequest");
+                 break;
+              default:
+                 text = toString();
+           }
         } else if (getElement(0) == XNetConstants.LI_VERSION_RESPONSE) {
             text = "LI10x hardware Version:  "
                     + (getElementBCD(1).floatValue()) / 10
