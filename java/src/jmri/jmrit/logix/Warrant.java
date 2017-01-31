@@ -1658,7 +1658,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 blkName, firstSpeed, maxSpeed, lastSpeed, blkTime, firstIdx, (_commands.size()-1));
     }
     
-    private class BlockSpeedInfo {
+    static private class BlockSpeedInfo {
         float entranceSpeed;
         float maxSpeed;
         float exitSpeed;
