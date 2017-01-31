@@ -1334,30 +1334,29 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     public void drawSlipCircles(Graphics2D g2) {
-        g2.setColor(getTurnoutCircleColor() != null ? getTurnoutCircleColor() : defaultTrackColor);
-
+        int circleSize = layoutEditor.getTurnoutCircleSize();
         Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
-        Double leftFract = turnoutCircleSize / center.distance(leftCenter);
+        Double leftFract = circleSize / center.distance(leftCenter);
         Point2D leftCircleCenter = lerp(center, leftCenter, leftFract);
         g2.draw(layoutEditor.turnoutCircleAt(leftCircleCenter));
 
         Point2D rightCenter = midpoint(getCoordsC(), getCoordsD());
-        Double rightFract = turnoutCircleSize / center.distance(rightCenter);
+        Double rightFract = circleSize / center.distance(rightCenter);
         Point2D rightCircleCenter = lerp(center, rightCenter, rightFract);
         g2.draw(layoutEditor.turnoutCircleAt(rightCircleCenter));
     }
 
     public void drawSlipRect(Graphics2D g2) {
         // draw east/west turnout (control) circles
-        g2.setColor(turnoutCircleColor != null ? turnoutCircleColor : defaultTrackColor);
+        int circleSize = layoutEditor.getTurnoutCircleSize();
 
         Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
-        Double leftFract = turnoutCircleSize / center.distance(leftCenter);
+        Double leftFract = circleSize / center.distance(leftCenter);
         Point2D leftCircleCenter = lerp(center, leftCenter, leftFract);
         g2.draw(layoutEditor.turnoutCircleAt(leftCircleCenter));
 
         Point2D rightCenter = midpoint(getCoordsC(), getCoordsD());
-        Double rightFract = turnoutCircleSize / center.distance(rightCenter);
+        Double rightFract = circleSize / center.distance(rightCenter);
         Point2D rightCircleCenter = lerp(center, rightCenter, rightFract);
         g2.draw(layoutEditor.turnoutCircleAt(rightCircleCenter));
 
@@ -1367,7 +1366,7 @@ public class LayoutSlip extends LayoutTurnout {
         } else {
             g2.setColor(Color.blue);
         }
-        g2.draw(LayoutEditor.controlPointRectAt(pt));
+        g2.draw(layoutEditor.controlPointRectAt(pt));
 
         pt = getCoordsB();
         if (getConnectB() == null) {
@@ -1375,7 +1374,7 @@ public class LayoutSlip extends LayoutTurnout {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(LayoutEditor.controlPointRectAt(pt));
+        g2.draw(layoutEditor.controlPointRectAt(pt));
 
         pt = getCoordsC();
         if (getConnectC() == null) {
@@ -1383,7 +1382,7 @@ public class LayoutSlip extends LayoutTurnout {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(LayoutEditor.controlPointRectAt(pt));
+        g2.draw(layoutEditor.controlPointRectAt(pt));
 
         pt = getCoordsD();
         if (getConnectD() == null) {
@@ -1391,7 +1390,7 @@ public class LayoutSlip extends LayoutTurnout {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(LayoutEditor.controlPointRectAt(pt));
+        g2.draw(layoutEditor.controlPointRectAt(pt));
     }   // public void drawSlipRects(Graphics2D g2)
 
     static class TurnoutState {

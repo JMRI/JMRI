@@ -302,7 +302,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public static final int SLIP_RIGHT = LayoutTrack.SLIP_RIGHT;
     public static final int TURNTABLE_RAY_OFFSET = LayoutTrack.TURNTABLE_RAY_OFFSET; // offset for turntable connection points
 
-    protected int turnoutCircleSize = 4;  //matches earlier versions
+    protected Color turnoutCircleColor = Color.black;   //matches earlier versions
+    protected int turnoutCircleSize = 4;                //matches earlier versions
 
     // use turnoutCircleSize when you need an int and these when you need a double
     // note: these only change when setTurnoutCircleSize is called
@@ -3380,7 +3381,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             final Color desiredColor = color;
 
             public void actionPerformed(ActionEvent e) {
-                LayoutTurnout.setTurnoutCircleColor(desiredColor);
+                setTurnoutCircleColor(ColorUtil.colorToString(desiredColor));
                 setDirty(true);
                 repaint();
             }
@@ -3388,7 +3389,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
         r.addActionListener(a);
         turnoutCircleColorButtonGroup.add(r);
-        if (LayoutTurnout.getTurnoutCircleColor().equals(color)) {
+        if (getTurnoutCircleColor().equals(color)) {
             r.setSelected(true);
         } else {
             r.setSelected(false);
@@ -3427,9 +3428,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     protected void setOptionMenuTurnoutCircleColor() {
         for (int i = 0; i < turnoutCircleColorCount; i++) {
-            if (turnoutCircleColors[i] == null && LayoutTurnout.getTurnoutCircleColor() == null) {
+            if (turnoutCircleColors[i] == null && getTurnoutCircleColor() == null) {
                 turnoutCircleColorMenuItems[i].setSelected(true);
-            } else if (turnoutCircleColors[i] != null && turnoutCircleColors[i].equals(LayoutTurnout.getTurnoutCircleColor())) {
+            } else if (turnoutCircleColors[i] != null && turnoutCircleColors[i].equals(getTurnoutCircleColor())) {
                 turnoutCircleColorMenuItems[i].setSelected(true);
             } else {
                 turnoutCircleColorMenuItems[i].setSelected(false);
@@ -8281,7 +8282,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     public String getTurnoutCircleColor() {
-        return ColorUtil.colorToString(LayoutTurnout.getTurnoutCircleColor());
+        return ColorUtil.colorToString(turnoutCircleColor);
     }
 
     public int getTurnoutCircleSize() {
@@ -8368,8 +8369,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setOptionMenuTrackColor();
     }
 
-    public void setTurnoutCircleColor(String color) {
-        LayoutTurnout.setTurnoutCircleColor(ColorUtil.stringToColor(color));
+    public void setTurnoutCircleColor(String newColor) {
+        turnoutCircleColor = ColorUtil.stringToColor(newColor);
         setOptionMenuTurnoutCircleColor();
     }
 
@@ -8657,6 +8658,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             drawMemoryRects(g2);
             drawBlockContentsRects(g2);
             drawTrackCircleCentre(g2);
+            drawTurnoutCircles(g2);
             highLightSelection(g2);
         } else if (turnoutCirclesWithoutEditMode) {
             drawTurnoutCircles(g2);
@@ -8706,6 +8708,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private void drawTurnoutCircles(Graphics2D g2) {
         // loop over all defined turnouts
         for (LayoutTurnout t : turnoutList) {
+            g2.setColor(turnoutCircleColor);
             if (!(t.getHidden() && !isEditable())) {
                 t.drawTurnoutCircle(g2);
             }
@@ -8714,6 +8717,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void drawSlipCircles(Graphics2D g2) {
         // loop over all defined slips
+        g2.setColor(turnoutCircleColor);
         for (LayoutSlip sl : slipList) {
             if (!(sl.getHidden() && !isEditable())) {
                 sl.drawSlipCircles(g2);
@@ -8724,6 +8728,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private void drawTurnoutRects(Graphics2D g2) {
         // loop over all defined turnouts
         for (LayoutTurnout t : turnoutList) {
+            g2.setColor(turnoutCircleColor);
             t.drawTurnoutRect(g2);
         }
     }
@@ -8811,6 +8816,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // loop over all defined slips
         for (LayoutSlip sl : slipList) {
             if (!(sl.getHidden() && !isEditable())) {
+                g2.setColor(turnoutCircleColor);
                 sl.drawSlipRect(g2);
             }
         }

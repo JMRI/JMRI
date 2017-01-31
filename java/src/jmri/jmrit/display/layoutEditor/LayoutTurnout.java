@@ -235,12 +235,10 @@ public class LayoutTurnout extends LayoutTrack {
 
     protected boolean hidden = false;
 
-    protected Color turnoutCircleColor = defaultTrackColor; //matches earlier versions
-
     // note: these only change when setTurnoutCircleSize is called
     // using these will avoid having to call getTurnoutCircleSize(),
     // the multiply (x2) and the int -> double conversion.
-    protected double circleRadius = layoutEditor.getTurnoutCircleSize();
+    protected double circleRadius = 4;  //matches earlier versions
     protected double circleDiameter = 2.0 * circleRadius;
 
     private boolean useBlockSpeed = false;
@@ -426,14 +424,6 @@ public class LayoutTurnout extends LayoutTrack {
 
     public void setHidden(boolean hide) {
         hidden = hide;
-    }
-
-    public Color getTurnoutCircleColor() {
-        return turnoutCircleColor;
-    }
-
-    public void setTurnoutCircleColor(Color newColor) {
-        turnoutCircleColor = newColor;
     }
 
     public void setTurnoutCircleSize(int newSize) {
@@ -3828,7 +3818,6 @@ public class LayoutTurnout extends LayoutTrack {
     }   // draw(Graphics2D g2)
 
     public void drawTurnoutCircle(Graphics2D g2) {
-        g2.setColor(turnoutCircleColor != null ? turnoutCircleColor : defaultTrackColor);
         g2.draw(layoutEditor.turnoutCircleAt(center));
     }
 

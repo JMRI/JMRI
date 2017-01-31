@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>7</minor>
+    <test>1</test>
+    <modifier>.1ish</modifier>
+  </jmriversion>
+  <!--Written by JMRI version 4.7.1ish-201701310342-geowar-R2a3a9a1 on Mon Jan 30 19:42:58 PST 2017 $Id$-->
+</layout-config>
