@@ -280,7 +280,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
      */
     @Deprecated
     //The JTable is extended so that we can reset the available aspect in the drop down when required
-    class SignalMastJTable extends JTable {
+    static class SignalMastJTable extends JTable {
 
         /**
          * @param srtr a table model.
