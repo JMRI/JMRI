@@ -5,8 +5,6 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -46,8 +44,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a SignalGroup Table
- *
+ * Swing action to create and register a Signal Group Table.
+ * <p>
  * Based in part on RouteTableAction.java by Bob Jacobsen
  *
  * @author Kevin Dickerson Copyright (C) 2010
@@ -325,9 +323,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Read Appearance for a Signal Group Signal Head from the state comboBox
-     * called from SignalGroupSubTableAction
-     * @param box to read from
+     * Read Appearance for a Signal Group Signal Head from the state comboBox.
+     * Called from SignalGroupSubTableAction
+     * @param box comboBox to read from
      */
     int signalStateFromBox(JComboBox<String> box) {
         String mode = (String) box.getSelectedItem();
@@ -341,8 +339,8 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Sets Appearance in a Signal Group Signal Head state comboBox
-     * called from SignalGroupSubTableAction
+     * Set Appearance in a Signal Group Signal Head state comboBox.
+     * Called from SignalGroupSubTableAction
      * @param mode Value to be set
      * @param box in which to enter mode
      */
@@ -385,8 +383,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     boolean inEditMode = false; // to warn and prevent opening more than 1 editing session
 
     /**
-     * Respond to click on Add... button below Signal Group Table
-     * Create JPanel with options
+     * Respond to click on Add... button below Signal Group Table.
+     * <p>
+     * Create JPanel with options for configuration.
      * @param e Event from origin; null when called from Edit button in Signal Group Table row
      */
     protected void addPressed(ActionEvent e) {
@@ -395,7 +394,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             // add user warning that a 2nd session not allowed (cf. Logix)
             // Already editing a Signal Group, ask for completion of that edit first
             String workingTitle = _systemName.getText();
-            if (workingTitle == "" || workingTitle == null) {
+            if (workingTitle.isEmpty() || workingTitle == null) {
                 workingTitle = Bundle.getMessage("NONE");
                 _systemName.setText(workingTitle);
             }
@@ -433,7 +432,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             }
         }
 
-        // Set up Add/Edit SignalGroup window
+        // Set up Add/Edit Signal Group window
         if (addFrame == null) { // if it's not yet present, create addFrame
             mainSignal = new JmriBeanComboBox(jmri.InstanceManager.getDefault(jmri.SignalMastManager.class), null, JmriBeanComboBox.DISPLAYNAME);
             mainSignal.setFirstItemBlank(true); // causes NPE when user selects that 1st line, so do not respond to result null
@@ -659,7 +658,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                 }
             });
             deleteButton.setToolTipText(Bundle.getMessage("DeleteSignalGroupInSystem"));
-            // Update SignalGroup button in Add/Edit SignalGroup pane
+            // [Update] Signal Group button in Add/Edit SignalGroup pane
             pb.add(updateButton);
             updateButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -679,7 +678,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         }
         addFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
-                // remind to save, if SignalGroup was created or edited
+                // remind to save, if Signal Group was created or edited
                 if (SignalGroupDirty) {
                     InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                             showInfoMessage(Bundle.getMessage("ReminderTitle"),
@@ -734,7 +733,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
     /**
      * Check name for a new SignalGroup object using the _systemName field on the addFrame pane
-     * @return If name is allowed
+     * @return Whether name is allowed
      */
     boolean checkNewNamesOK() {
         // Get system name and user name from Add Signal Group pane
@@ -772,6 +771,10 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         return true;
     }
 
+    /**
+     * Check selection in Main Mast comboBox and store object as mMast for further calculations.
+     * @return The new/updated SignalGroup object
+     */
     boolean checkValidSignalMast() {
         SignalMast mMast = (SignalMast) mainSignal.getSelectedBean();
         if (mMast == null) {
@@ -785,7 +788,8 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
     /**
      * Check name and return a new or existing SignalGroup object
-     * SignalGroup with the name as entered in the _systemName field on the addFrame pane
+     * with the name as entered in the _systemName field on the addFrame pane.
+     * @return The new/updated SignalGroup object
      */
     SignalGroup checkNamesOK() {
         // Get system name and user name
@@ -802,12 +806,18 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             return g;
         } catch (IllegalArgumentException ex) {
             // should never get here
-            log.error("checkNamesOK; Unknown failure to create SignalGroup with System Name: {}", sName);
+            log.error("checkNamesOK; Unknown failure to create Signal Group with System Name: {}", sName);
             throw ex;
         }   
     }
 
-    int setSignalInformation(SignalGroup g) {
+    /**
+     * Check all available Single Output Signal Heads against the list of signal head items registered with the group.
+     * Updates the list, which is stored in the field _includedSignalHeadsList.
+     * @param g Signal Group object
+     * @return The number of Signal Heads included in the group
+     */
+    int setHeadInformation(SignalGroup g) {
         for (int i = 0; i < g.getNumHeadItems(); i++) {
             SignalHead sig = g.getHeadItemBeanByIndex(i);
             boolean valid = false;
@@ -835,7 +845,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Store included Aspects for the selected main Signal Mast in the SignalGroup
+     * Store included Aspects for the selected main Signal Mast in the Signal Group
      * @param g Signal Group object
      */
     void setMastAspectInformation(SignalGroup g) {
@@ -881,22 +891,22 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Responds to the Edit button in the Signal Group Table
-     * after creating the Add/Edit pane with AddPressed supplying _SystemName
-     * Hides the editable _systemName field and displays it as a label
+     * Respond to the Edit button in the Signal Group Table
+     * after creating the Add/Edit pane with AddPressed supplying _SystemName.
+     * Hides the editable _systemName field on the Add Group pane and displays the value as a label instead.
      * @param e Event from origin, null if invoked by clicking the Edit button in a Signal Group Table row
      */
     void editPressed(ActionEvent e) {
-        // identify the SignalGroup with this name if it already exists
+        // identify the Signal Group with this name if it already exists
         String sName = _systemName.getText().toUpperCase(); // is already filled in from the Signal Group table by addPressed()
         SignalGroup g = jmri.InstanceManager.getDefault(jmri.SignalGroupManager.class).getBySystemName(sName);
         if (g == null) {
-            // SignalGroup does not exist, so cannot be edited
+            // Signal Group does not exist, so cannot be edited
             return;
         }
         g.addPropertyChangeListener(this);
 
-        // SignalGroup was found, make its system name not changeable
+        // Signal Group was found, make its system name not changeable
         curSignalGroup = g;
         log.debug("curSignalGroup was set");
 
@@ -959,7 +969,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Responds to the Delete button in the Add/Edit pane
+     * Respond to the Delete button in the Add/Edit pane
      */
     void deletePressed(ActionEvent e) {
         InstanceManager.getDefault(jmri.SignalGroupManager.class).deleteSignalGroup(curSignalGroup);
@@ -969,24 +979,24 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Responds to the Update button - store new properties in SignalGroup
+     * Respond to the Update button on the Edit Signal Group pane - store new properties in the Signal Group
      * @param e Event from origin, null if invoked by clicking the Edit button in a Signal Group Table row
      * @param newSignalGroup False when called as Update, True after editing Signal Head details
      * @param close True if the pane is closing, False if it stays open
      */
     void updatePressed(ActionEvent e, boolean newSignalGroup, boolean close) {
-        log.debug("Update found SignalGroup system name: {}/{}", _systemName.getText(), fixedSystemName.getText());
-        if (_systemName.getText() == "") {
+        log.debug("Update found Signal Group system name: {}/{}", _systemName.getText(), fixedSystemName.getText());
+        if (_systemName.getText().isEmpty()) {
             _systemName.setText(fixedSystemName.getText());
             // NPE in checkNewNamesOK() because the _systemName field seems to be empty
         }
         String uName = _userName.getText();
         if (curSignalGroup == null) {
-            log.error("Catched NPE during Update. curSignalGroup = null");
+            log.debug("Catch NPE during Update. curSignalGroup = null");
             // We might want to check if the User Name has been changed. But there's
-            // nothing to compare with so this is propably a newly created signalGroup.
+            // nothing to compare with so this is propably a newly created Signal Group.
             // TODO cannot be compared since curSignalGroup is null, causes NPE
-            // method sends repeated false warning when editing an existing SignalGroup
+            // method sends repeated false warning when editing an existing Signal Group
             // for which a system name is visibly filled in
             if (!checkNewNamesOK()) {
                 return;
@@ -1003,7 +1013,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         // user name is unique, change it
         g.setUserName(uName);
         initializeIncludedList();
-        setSignalInformation(g);
+        setHeadInformation(g);
         setMastAspectInformation(g);
 
         g.setSignalMast((SignalMast) mainSignal.getSelectedBean(), mainSignal.getSelectedDisplayName());
@@ -1152,7 +1162,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             log.debug("SigGroupEditSet B; row = {}; aspectList.size() = {}.", r, aspectList.size());
             switch (c) {
                 case INCLUDE_COLUMN:
-                    aspectList.get(r).setIncluded(((Boolean) type).booleanValue()); // NPE
+                    aspectList.get(r).setIncluded(((Boolean) type).booleanValue());
                     break;
                 case ASPECT_COLUMN:
                     aspectList.get(r).setAspect((String) type);
@@ -1377,7 +1387,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     JmriJFrame signalHeadEditFrame = null;
 
     /**
-     * Opens an editor to set the details of a Signal Head as part of a Signal Group
+     * Open an editor to set the details of a Signal Head as part of a Signal Group
      * when user clicks the Edit button in the Signal Head table in the lower half of the Edit Signal Group pane.
      * (renamed from signalEditPressed in 4.7.1 to explain what's in here)
      * @see SignalGroupSubTableAction#editHead(SignalGroup, String) SignalGroupSubTableAction.editHead
@@ -1416,7 +1426,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             Bundle.getMessage("Include"),
             Bundle.getMessage("ColumnLabelSetState")
     };
-    private static String[] COLUMN_SIG_NAMES = { // used in class SignalGroupSignalModel
+    private static String[] COLUMN_SIG_NAMES = { // used in class SignalGroupSignalHeadModel
             Bundle.getMessage("ColumnSystemName"),
             Bundle.getMessage("ColumnUserName"),
             Bundle.getMessage("Include"),
@@ -1463,11 +1473,11 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                         _offState = oneSigHead.getOffAppearance();
                         _signalHead = oneSigHead;
                     } else {
-                        log.error("Failed to get oneSigHead head {}", sysName);
+                        log.error("SignalGroupSignalHead: Failed to get oneSigHead head {}", sysName);
                     }
                 }
             } else {
-                log.error("Failed to get signal head {}", sysName);
+                log.error("SignalGroupSignalHead: Failed to get signal head {}", sysName);
             }
 
         }

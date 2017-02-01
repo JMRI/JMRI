@@ -63,6 +63,7 @@ public class SchemaTestBase {
      *         validate and a boolean matching the pass parameter
      */
     public static Collection<Object[]> getFiles(File directory, boolean recurse, boolean pass) {
+        Log4JFixture.setUp(); // setup logging early so this method can log
         ArrayList<Object[]> files = new ArrayList<>();
         if (directory.isDirectory()) {
             for (File file : directory.listFiles()) {
@@ -95,6 +96,7 @@ public class SchemaTestBase {
      * @throws IllegalArgumentException if directory is a file
      */
     public static Collection<Object[]> getDirectories(File directory, boolean recurse, boolean pass) throws IllegalArgumentException {
+        Log4JFixture.setUp(); // setup logging early so this method can log
         ArrayList<Object[]> files = new ArrayList<>();
         if (directory.isDirectory()) {
             for (File file : directory.listFiles()) {
