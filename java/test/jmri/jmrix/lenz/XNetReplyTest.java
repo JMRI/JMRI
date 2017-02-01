@@ -608,6 +608,12 @@ public class XNetReplyTest {
         r = new XNetReply("63 10 01 04 76");
         Assert.assertFalse(r.isCSBusyMessage());
     }
+
+    @Test
+    public void testToMonitorStringCSBusyMessage(){
+        XNetReply r = new XNetReply("61 81 e0");
+        Assert.assertEquals("Monitor String","Command Station Busy",r.toMonitorString());
+    }
    
     // check is this a CS transfer error message
     @Test
@@ -618,6 +624,12 @@ public class XNetReplyTest {
         // CV 1 in register mode.
         r = new XNetReply("63 10 01 04 76");
         Assert.assertFalse(r.isCSTransferError());
+    }
+
+    @Test
+    public void testToMonitorStringCSTransferError(){
+        XNetReply r = new XNetReply("61 80 e1");
+        Assert.assertEquals("Monitor String","Command Station Reported Transfer Error",r.toMonitorString());
     }
 
 
@@ -755,6 +767,79 @@ public class XNetReplyTest {
         Assert.assertFalse(r.isUnsolicited()); 
     }
 
+    // check toMonitor string for informational messages from the command station
+    // not covered elsewhere.
+    @Test
+    public void testToMonitorStringBCEmergencyOff(){
+        XNetReply r = new XNetReply("61 00 61");
+        Assert.assertEquals("Monitor String","Broadcast: Emergency Off (short circuit)",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringBCNormalOpers(){
+        XNetReply r = new XNetReply("61 01 60");
+        Assert.assertEquals("Monitor String","Broadcast: Normal Operations Resumed",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringBCServiceModeEntry(){
+        XNetReply r = new XNetReply("61 02 63");
+        Assert.assertEquals("Monitor String","Broadcast: Service Mode Entry",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringServiceModeCSReady(){
+        XNetReply r = new XNetReply("61 11 70");
+        Assert.assertEquals("Monitor String","Service Mode: Command Station Ready",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringServiceModeShortCircuit(){
+        XNetReply r = new XNetReply("61 12 73");
+        Assert.assertEquals("Monitor String","Service Mode: Short Circuit",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringServiceModeByteNotFound(){
+        XNetReply r = new XNetReply("61 13 72");
+        Assert.assertEquals("Monitor String","Service Mode: Data Byte Not Found",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringServiceModeCSBusy(){
+        XNetReply r = new XNetReply("61 1F 7E");
+        Assert.assertEquals("Monitor String","Service Mode: Command Station Busy",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringCSNotSupported(){
+        XNetReply r = new XNetReply("61 82 E3");
+        Assert.assertEquals("Monitor String","XPressNet Instruction not supported by Command Station",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringDHV1_V2ErrorNotOperated(){
+        XNetReply r = new XNetReply("61 83 E2");
+        Assert.assertEquals("Monitor String","XBus V1 and V2 MU+DH error: Selected Locomotive has not been operated by this XPressNet device or address 0 selected",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringDHV1_V2ErrorInUse(){
+        XNetReply r = new XNetReply("61 84 E5");
+        Assert.assertEquals("Monitor String","XBus V1 and V2 MU+DH error: Selected Locomotive is being operated by another XPressNet device",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringDHV1_V2ErrorAlreadyDH(){
+        XNetReply r = new XNetReply("61 85 E4");
+        Assert.assertEquals("Monitor String","XBus V1 and V2 MU+DH error: Selected Locomotive already in MU or DH",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringDHV1_V2ErrorNonZeroSpeed(){
+        XNetReply r = new XNetReply("61 86 E7");
+        Assert.assertEquals("Monitor String","XBus V1 and V2 MU+DH error: Unit selected for MU or DH has speed setting other than 0",r.toMonitorString());
+    }
 
     // The minimal setup for log4J
     @Before
