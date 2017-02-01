@@ -680,6 +680,15 @@ public class XNetMessageTest{
        Assert.assertEquals(0xF3,m.getElement(4));
     }
 
+
+    @Test
+    public void testToMonitorStringNextAddressOnStackMsg(){
+       XNetMessage m = XNetMessage.getNextAddressOnStackMsg(1234,true);
+       Assert.assertEquals("Monitor String","Search Command Station Stack Forward - Start Address: 1234",m.toMonitorString());
+       m = XNetMessage.getNextAddressOnStackMsg(1234,false);
+       Assert.assertEquals("Monitor String","Search Command Station Stack Backward - Start Address: 1234",m.toMonitorString());
+    }
+
     @Test
     public void testGetDBSearchMsgConsistAddress(){
        // search forward
@@ -695,6 +704,14 @@ public class XNetMessageTest{
        Assert.assertEquals(0x04,m.getElement(1));
        Assert.assertEquals(0x2A,m.getElement(2));
        Assert.assertEquals(0xCC,m.getElement(3));
+    }
+
+    @Test
+    public void testToMonitorStringDBSearchMsgConsistAddress(){
+       XNetMessage m = XNetMessage.getDBSearchMsgConsistAddress(42,true);
+       Assert.assertEquals("Monitor String","Search Command Station Stack Forward from Consist Address: 42",m.toMonitorString());
+       m = XNetMessage.getDBSearchMsgConsistAddress(42,false);
+       Assert.assertEquals("Monitor String","Search Command Station Stack Backward from Consist Address: 42",m.toMonitorString());
     }
 
     @Test
@@ -718,6 +735,14 @@ public class XNetMessageTest{
        Assert.assertEquals(0xDA,m.getElement(5));
     }
 
+    @Test
+    public void testToMonitorStringDBSearchNextMULoco(){
+       XNetMessage m = XNetMessage.getDBSearchMsgNextMULoco(42,1234,true);
+       Assert.assertEquals("Monitor String","Search Command Station Stack Forward for next address in Consist 42 Starting at 1234",m.toMonitorString());
+       m = XNetMessage.getDBSearchMsgNextMULoco(42,1234,false);
+       Assert.assertEquals("Monitor String","Search Command Station Stack Backward for next address in Consist 42 Starting at 1234",m.toMonitorString());
+    }
+
 
     @Test
     public void testGetDeleteAddressOnStackMsg(){
@@ -727,6 +752,12 @@ public class XNetMessageTest{
        Assert.assertEquals(0xC4,m.getElement(2));
        Assert.assertEquals(0xD2,m.getElement(3));
        Assert.assertEquals(0xB1,m.getElement(4));
+    }
+
+    @Test
+    public void testToMonitorStringDeleteAddressOnStackMsg(){
+       XNetMessage m = XNetMessage.getDeleteAddressOnStackMsg(1234);
+       Assert.assertEquals("Monitor String","Delete Address 1234 from Command Station Stack.",m.toMonitorString());
     }
 
     @Test
@@ -740,6 +771,12 @@ public class XNetMessageTest{
     }
 
     @Test
+    public void testToMonitorStringLocoInfoRequestMsg(){
+       XNetMessage m = XNetMessage.getLocomotiveInfoRequestMsg(1234);
+       Assert.assertEquals("Monitor String","Request for Address 1234 speed/direction/function on/off status.",m.toMonitorString());
+    }
+
+    @Test
     public void testGetLocomoitveFunctionStatusMsg(){
        XNetMessage m = XNetMessage.getLocomotiveFunctionStatusMsg(1234);
        Assert.assertEquals(0xE3,m.getElement(0));
@@ -747,6 +784,12 @@ public class XNetMessageTest{
        Assert.assertEquals(0xC4,m.getElement(2));
        Assert.assertEquals(0xD2,m.getElement(3));
        Assert.assertEquals(0xF2,m.getElement(4));
+    }
+
+    @Test
+    public void testToMonitorStringLocoFunctionStatusMsg(){
+       XNetMessage m = XNetMessage.getLocomotiveFunctionStatusMsg(1234);
+       Assert.assertEquals("Monitor String","Request for Address 1234 function momentary/continuous status.",m.toMonitorString());
     }
 
     @Test
@@ -760,6 +803,12 @@ public class XNetMessageTest{
     }
 
     @Test
+    public void testToMonitorStringLocoFunctionHighOnStatusMsg(){
+       XNetMessage m = XNetMessage.getLocomotiveFunctionHighOnStatusMsg(1234);
+       Assert.assertEquals("Monitor String","Request for Address 1234 F13-F28 on/off status.",m.toMonitorString());
+    }
+
+    @Test
     public void testGetLocomoitveFunctionHighMomStatusMsg(){
        XNetMessage m = XNetMessage.getLocomotiveFunctionHighMomStatusMsg(1234);
        Assert.assertEquals(0xE3,m.getElement(0));
@@ -767,6 +816,12 @@ public class XNetMessageTest{
        Assert.assertEquals(0xC4,m.getElement(2));
        Assert.assertEquals(0xD2,m.getElement(3));
        Assert.assertEquals(0xFD,m.getElement(4));
+    }
+
+    @Test
+    public void testToMonitorStringLocoFunctionHighMomStatusMsg(){
+       XNetMessage m = XNetMessage.getLocomotiveFunctionHighMomStatusMsg(1234);
+       Assert.assertEquals("Monitor String","Request for Address 1234 F13-F28 momentary/continuous status.",m.toMonitorString());
     }
 
     @Test
@@ -1392,6 +1447,30 @@ public class XNetMessageTest{
     public void testToMonitorStringLISpeedRequestMessage(){
        XNetMessage m = XNetMessage.getLISpeedRequestMsg(1);
        Assert.assertEquals("Monitor String","REQUEST LI101 Baud Rate 19200bps (default)",m.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringLISpeedRequestMessage2(){
+       XNetMessage m = XNetMessage.getLISpeedRequestMsg(2);
+       Assert.assertEquals("Monitor String","REQUEST LI101 Baud Rate 38400bps",m.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringLISpeedRequestMessage3(){
+       XNetMessage m = XNetMessage.getLISpeedRequestMsg(3);
+       Assert.assertEquals("Monitor String","REQUEST LI101 Baud Rate 57600bps",m.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringLISpeedRequestMessage4(){
+       XNetMessage m = XNetMessage.getLISpeedRequestMsg(4);
+       Assert.assertEquals("Monitor String","REQUEST LI101 Baud Rate 115200bps",m.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringLISpeedRequestMessage5(){
+       XNetMessage m = XNetMessage.getLISpeedRequestMsg(5);
+       Assert.assertEquals("Monitor String","REQUEST LI101 Baud Rate <undefined>",m.toMonitorString());
     }
 
 

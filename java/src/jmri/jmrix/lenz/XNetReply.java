@@ -759,57 +759,47 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         } else if (getElement(0) == XNetConstants.CS_INFO) {
             switch (getElement(1)) {
                 case XNetConstants.BC_NORMAL_OPERATIONS:
-                    text = "Broadcast: Normal Operations Resumed";
+                    text = Bundle.getMessage("XNetReplyBCNormalOpsResumed");
                     break;
                 case XNetConstants.BC_EVERYTHING_OFF:
-                    text = "Broadcast: Emergency Off (short circuit)";
+                    text = Bundle.getMessage("XNetReplyBCEverythingOff");
                     break;
                 case XNetConstants.BC_SERVICE_MODE_ENTRY:
-                    text = "Broadcast: Service Mode Entry";
+                    text = Bundle.getMessage("XNetReplyBCServiceEntry");
                     break;
                 case XNetConstants.PROG_SHORT_CIRCUIT:
-                    text = "Service Mode: Short Circuit";
+                    text = Bundle.getMessage("XNetReplyServiceModeShort");
                     break;
                 case XNetConstants.PROG_BYTE_NOT_FOUND:
-                    text = "Service Mode: Data Byte Not Found";
+                    text = Bundle.getMessage("XNetReplyServiceModeDataByteNotFound");
                     break;
                 case XNetConstants.PROG_CS_BUSY:
-                    text = "Service Mode: Command Station Busy";
+                    text = Bundle.getMessage("XNetReplyServiceModeCSBusy");
                     break;
                 case XNetConstants.PROG_CS_READY:
-                    text = "Service Mode: Command Station Ready";
+                    text = Bundle.getMessage("XNetReplyServiceModeCSReady");
                     break;
                 case XNetConstants.CS_BUSY:
-                    text = "Command Station Busy";
+                    text = Bundle.getMessage("XNetReplyCSBusy");
                     break;
                 case XNetConstants.CS_NOT_SUPPORTED:
-                    text = "XPressNet Instruction not supported by Command Station";
+                    text = Bundle.getMessage("XNetReplyCSNotSupported");
                     break;
                 case XNetConstants.CS_TRANSFER_ERROR:
-                    text = "Command Station Reported Transfer Error";
+                    text = Bundle.getMessage("XNetReplyCSTransferError");
                     break;
                 /* The remaining cases are for a Double Header or MU Error */
-                case 0x83:
-                    text = "XBus V1 and V2 MU+DH error: ";
-                    text
-                            = text
-                            + "Selected Locomotive has not been operated by this XPressNet device or address 0 selected";
+                case XNetConstants.CS_DH_ERROR_NON_OP:
+                    text = Bundle.getMessage("XNetReplyV1DHErrorNotOperated");
                     break;
-                case 0x84:
-                    text = "XBus V1 and V2 MU+DH error: ";
-                    text
-                            = text
-                            + "Selected Locomotive is being operated by another XPressNet device";
+                case XNetConstants.CS_DH_ERROR_IN_USE:
+                    text = Bundle.getMessage("XNetReplyV1DHErrorInUse");
                     break;
-                case 0x85:
-                    text = "XBus V1 and V2 MU+DH error: ";
-                    text = text + "Selected Locomotive already in MU or DH";
+                case XNetConstants.CS_DH_ERROR_ALREADY_DH:
+                    text = Bundle.getMessage("XNetReplyV1DHErrorAlreadyDH");
                     break;
-                case 0x86:
-                    text = "XBus V1 and V2 MU+DH error: ";
-                    text
-                            = text
-                            + "Unit selected for MU or DH has speed setting other than 0";
+                case XNetConstants.CS_DH_ERROR_NONZERO_SPD:
+                    text = Bundle.getMessage("XNetReplyV1DHErrorNonZeroSpeed");
                     break;
                 default:
                     text = toString();
