@@ -41,8 +41,8 @@ public class DirectorySearcher {
     static JFileChooser _directoryChooser = null;
     static DirectorySearcher _instance;
 
-    static PreviewDialog _previewDialog = null;
-    static Seacher _searcher;
+     PreviewDialog _previewDialog = null;
+    Seacher _searcher;
     JFrame _waitDialog;
     JLabel _waitText;
 
@@ -64,14 +64,6 @@ public class DirectorySearcher {
      * @return chosen directory or null to cancel operation
      */
     private static File getDirectory(String msg, boolean recurse) {
-        if (_previewDialog!=null) {
-            _previewDialog.dispose();
-        }
-        if (_searcher!=null) {
-            synchronized (_searcher){
-                _searcher.notify();                
-            }            
-        }
         if (_directoryChooser == null) {
             _directoryChooser = new JFileChooser(FileSystemView.getFileSystemView());
             jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Graphics Files");
@@ -151,9 +143,11 @@ public class DirectorySearcher {
             _waitDialog.setLocationRelativeTo(null);
             _waitDialog.setVisible(false);            
         }
-        _waitText.setText(Bundle.getMessage(msgkey, dir.getName()));
-        _waitDialog.setVisible(true);
-        _waitDialog.pack();
+        if (dir!=null) {
+            _waitText.setText(Bundle.getMessage(msgkey, dir.getName()));
+            _waitDialog.setVisible(true);
+            _waitDialog.pack();            
+        }
     }
 
     private void closeWaitFrame() {
@@ -163,11 +157,23 @@ public class DirectorySearcher {
         }
     }
 
+    private void clearSearch() {
+        if (_previewDialog!=null) {
+            _previewDialog.dispose();
+        }
+        if (_searcher!=null) {
+            synchronized (_searcher){
+                _searcher.notify();                
+            }            
+        }
+        
+    }
     /**
      * Open one directory.
      *
      */
     public void openDirectory() {
+        clearSearch();
         File dir = getDirectory("openDirMenu", true);
         if (dir != null) {
             doPreviewDialog(dir, new MActionListener(dir, true),
@@ -177,6 +183,7 @@ public class DirectorySearcher {
     }
 
     public void searchFS() {
+        clearSearch();
         File dir = getDirectory("searchFSMenu", false);
         showWaitFrame("searchWait", dir);
         if (dir != null) {
@@ -208,7 +215,7 @@ public class DirectorySearcher {
         public void run() {
             getImageDirectory(dir, CatalogTreeManager.IMAGE_FILTER);
             if (log.isDebugEnabled()) log.debug("Searcher done for directory {}  quit={}", dir.getAbsolutePath(), quit);
-            ThreadingUtil.runOnLayout(() -> {
+            ThreadingUtil.runOnGUI(() -> {
                 searcherDone(dir, count);
             });
         }
@@ -226,7 +233,7 @@ public class DirectorySearcher {
             count += cnt;
             if (cnt > 0) {
                 if (log.isDebugEnabled()) log.debug("getImageDirectory dir= {} has {} files", dir.getAbsolutePath(), numImageFiles(dir));
-                ThreadingUtil.runOnLayout(() -> {
+                ThreadingUtil.runOnGUI(() -> {
                     doPreviewDialog(dir, new MActionListener(dir, false),
                             new LActionListener(dir), new CActionListener(), 0);
                 });
@@ -246,7 +253,7 @@ public class DirectorySearcher {
                         return;
                     }
                     File f = files[k];
-                    ThreadingUtil.runOnLayout(() -> {
+                    ThreadingUtil.runOnGUI(() -> {
                         showWaitFrame("searchWait", f);
                     });
 //                    if (log.isDebugEnabled()) log.debug("getImageDirectory SubDir= {} of {} has {} files", 

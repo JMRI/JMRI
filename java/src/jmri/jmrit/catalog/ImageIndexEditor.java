@@ -190,9 +190,9 @@ public final class ImageIndexEditor extends JmriJFrame {
         try {
             new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().writeCatalogTrees();
             indexChanged(false);
-        } //catch (org.jdom2.JDOMException jde) { log.error("Exception writing CatalogTrees: "+jde); }                           
+        }                           
         catch (java.io.IOException ioe) {
-            log.error("Exception writing CatalogTrees: " + ioe);
+            log.error("Exception writing CatalogTrees: {}", ioe);
         }
     }
 
@@ -247,8 +247,7 @@ public final class ImageIndexEditor extends JmriJFrame {
                     Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE);
             if (name != null) {
                 if (!_index.insertNodeIntoModel(name, selectedNode)) {
-                    JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
-                            Bundle.getMessage("duplicateNodeName"), new Object[]{name}),
+                    JOptionPane.showMessageDialog(this, Bundle.getMessage("duplicateNodeName", name),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -266,8 +265,7 @@ public final class ImageIndexEditor extends JmriJFrame {
                     selectedNode.getUserObject());
             if (name != null) {
                 if (!_index.nodeChange(selectedNode, name)) {
-                    JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
-                            Bundle.getMessage("duplicateNodeName"), new Object[]{name}),
+                    JOptionPane.showMessageDialog(this, Bundle.getMessage("duplicateNodeName", name),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 }
 
@@ -291,8 +289,8 @@ public final class ImageIndexEditor extends JmriJFrame {
         } else {
             int numNodes = countSubNodes(selectedNode);
             int numIcons = countIcons(selectedNode);
-            int response = JOptionPane.showConfirmDialog(this, java.text.MessageFormat.format(
-                    Bundle.getMessage("confirmDeleteNode"), new Object[]{(String) selectedNode.getUserObject(), Integer.valueOf(numNodes), Integer.valueOf(numIcons)}),
+            int response = JOptionPane.showConfirmDialog(this, 
+                    Bundle.getMessage("confirmDeleteNode", selectedNode.getUserObject(), numNodes, numIcons),
                     Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.YES_OPTION) {

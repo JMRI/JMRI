@@ -159,8 +159,8 @@ public class CatalogPanel extends JPanel implements MouseListener {
 
     public void updatePanel() {
         if (log.isDebugEnabled()) {
-            log.debug("updatePanel: _dTree.isSelectionEmpty()= " + _dTree.isSelectionEmpty()
-                    + ", _dTree.getSelectionPath() is null " + (_dTree.getSelectionPath() == null));
+            log.debug("updatePanel: _dTree.isSelectionEmpty()= {} _dTree.getSelectionPath() is {}null",
+                    _dTree.isSelectionEmpty(), (_dTree.getSelectionPath() == null) ? "" : "not ");
         }
         if (!_dTree.isSelectionEmpty() && _dTree.getSelectionPath() != null) {
             try {
@@ -168,7 +168,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
             } catch (OutOfMemoryError oome) {
                 resetPanel();
                 if (log.isDebugEnabled()) {
-                    log.debug("setIcons threw OutOfMemoryError " + oome);
+                    log.debug("setIcons threw OutOfMemoryError {}", oome);
                 }
             }
         } else {
@@ -219,8 +219,8 @@ public class CatalogPanel extends JPanel implements MouseListener {
     @SuppressWarnings("unchecked")
     private void addTreeBranch(CatalogTreeNode node) {
         if (log.isDebugEnabled()) {
-            log.debug("addTreeBranch called for node= " + node.toString()
-                    + ", has " + node.getChildCount() + " children");
+            log.debug("addTreeBranch called for node= {}, has {} children.", 
+                    node.toString(), node.getChildCount());
         }
         //String name = node.toString(); 
         CatalogTreeNode root = (CatalogTreeNode) _model.getRoot();
@@ -465,16 +465,16 @@ public class CatalogPanel extends JPanel implements MouseListener {
 
         public void uncaughtException(Thread t, Throwable e) {
             _noMemory = true;
-            log.error("Exception from setIcons: " + e, e);
+            log.error("MemoryExceptionHandler: {}", e);
         }
     }
 
-    protected boolean _noMemory = false;
+    private boolean _noMemory = false;
 
     /**
      * Display the icons in the preview panel
      */
-    protected String setIcons() throws OutOfMemoryError {
+    private String setIcons() {
         Thread.UncaughtExceptionHandler exceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
         resetPanel();
         CatalogTreeNode node = getSelectedNode();
@@ -539,7 +539,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
 
             JLabel nameLabel = null;
             if (_noDrag) {
-                nameLabel = new JLabel(leaf.getName());
+                nameLabel = new JLabel();
             } else {
                 try {
                     nameLabel = new DragJLabel(new DataFlavor(ImageIndexEditor.IconDataFlavorMime));
@@ -558,8 +558,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             p.add(nameLabel);
-            JLabel label = new JLabel(java.text.MessageFormat.format(Bundle.getMessage("scale"),
-                    new Object[]{printDbl(scale, 2)}));
+            JLabel label = new JLabel(Bundle.getMessage("scale", CatalogPanel.printDbl(scale, 2)));
             p.add(label);
             label = new JLabel(leaf.getName());
             p.add(label);
@@ -569,8 +568,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
             gridbag.setConstraints(p, c);
             _preview.add(p);
             if (log.isDebugEnabled()) {
-                log.debug(leaf.getName() + " inserted at (" + c.gridx + ", " + c.gridy
-                        + ") w= " + icon.getIconWidth() + ", h= " + icon.getIconHeight());
+                log.debug("{} inserted at ({}, {})", leaf.getName(), c.gridx, c.gridy);
             }
         }
         c.gridy++;
@@ -580,8 +578,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         _preview.add(bottom);
 
         Thread.setDefaultUncaughtExceptionHandler(exceptionHandler);
-        return java.text.MessageFormat.format(Bundle.getMessage("numImagesInNode"),
-                new Object[]{node.getUserObject(), Integer.valueOf(leaves.size())});
+        return Bundle.getMessage("numImagesInNode", node.getUserObject(), leaves.size());
     }
 
     public static CatalogPanel makeDefaultCatalog() {
@@ -621,7 +618,10 @@ public class CatalogPanel extends JPanel implements MouseListener {
     }
 
     /**
-     * Utility
+     * Utility returns a number as a string
+     * @param z double
+     * @param decimalPlaces number of decimal places
+     * @return String
      */
     public static String printDbl(double z, int decimalPlaces) {
         if (Double.isNaN(z) || decimalPlaces > 8) {
@@ -658,9 +658,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         return sb.toString();
     }
 
-    /**
-     */
-    public void setSelectedNode(String[] names) {
+    protected void setSelectedNode(String[] names) {
         _dTree.setExpandsSelectedPaths(true);
         CatalogTreeNode[] path = new CatalogTreeNode[names.length];
         for (int i = 0; i < names.length; i++) {
@@ -669,9 +667,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         _dTree.setSelectionPath(new TreePath(path));
     }
 
-    /**
-     */
-    public void scrollPathToVisible(String[] names) {
+    protected void scrollPathToVisible(String[] names) {
         _dTree.setExpandsSelectedPaths(true);
         CatalogTreeNode[] path = new CatalogTreeNode[names.length];
         for (int i = 0; i < names.length; i++) {
@@ -682,13 +678,13 @@ public class CatalogPanel extends JPanel implements MouseListener {
 
     /**
      * Return the node the user has selected.
+     * @return CatalogTreeNode
      */
     protected CatalogTreeNode getSelectedNode() {
         if (!_dTree.isSelectionEmpty() && _dTree.getSelectionPath() != null) {
             // somebody has been selected
             if (log.isDebugEnabled()) {
-                log.debug("getSelectedNode with "
-                        + _dTree.getSelectionPath().toString());
+                log.debug("getSelectedNode with {}", _dTree.getSelectionPath().toString());
             }
             TreePath path = _dTree.getSelectionPath();
             return (CatalogTreeNode) path.getLastPathComponent();
@@ -698,8 +694,12 @@ public class CatalogPanel extends JPanel implements MouseListener {
 
     private void delete(NamedIcon icon) {
         CatalogTreeNode node = getSelectedNode();
+        if (log.isDebugEnabled()) {
+            log.debug("delete icon {} from node {}", icon.getName(), node.toString());
+        }
         node.deleteLeaf(icon.getName(), icon.getURL());
         updatePanel();
+        ImageIndexEditor.indexChanged(true);
     }
 
     private void rename(NamedIcon icon) {
@@ -708,13 +708,19 @@ public class CatalogPanel extends JPanel implements MouseListener {
                 JOptionPane.QUESTION_MESSAGE);
         if (name != null && name.length() > 0) {
             CatalogTreeNode node = getSelectedNode();
+            if (log.isDebugEnabled()) {
+                log.debug("rename icon {} to {} from node {}", icon.getName(), name, node.toString());
+            }
             CatalogTreeLeaf leaf = node.getLeaf(icon.getName(), icon.getURL());
             if (leaf != null) {
                 leaf.setName(name);
             }
-            invalidate();
-            getParentFrame(this).invalidate();
-            updatePanel();
+            TreePath path = _dTree.getSelectionPath();
+            // deselect to refresh panel
+            _dTree.setSelectionPath(null);
+            _dTree.setSelectionPath(path);
+//            updatePanel();
+            ImageIndexEditor.indexChanged(true);
         }
     }
 
@@ -731,7 +737,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
      */
     private void showPopUp(MouseEvent e, NamedIcon icon) {
         if (log.isDebugEnabled()) {
-            log.debug("showPopUp " + icon.toString());
+            log.debug("showPopUp {}", icon.toString());
         }
         JPopupMenu popup = new JPopupMenu();
         popup.add(new JMenuItem(icon.getName()));
@@ -826,7 +832,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
                     NamedIcon icon = (NamedIcon) tr.getTransferData(dataFlavor);
                     Point pt = e.getLocation();
                     if (log.isDebugEnabled()) {
-                        log.debug("DropJTree.drop: Point= (" + pt.x + ", " + pt.y + ")");
+                        log.debug("DropJTree.drop: Point= ({}, {})", pt.x, pt.y);
                     }
                     TreePath path = _dTree.getPathForLocation(pt.x, pt.y);
                     if (path != null) {
@@ -836,7 +842,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
                         nodeChange(node, node.toString());
                         e.dropComplete(true);
                         if (log.isDebugEnabled()) {
-                            log.debug("DropJTree.drop COMPLETED for " + icon.getURL());
+                            log.debug("DropJTree.drop COMPLETED for {}", icon.getURL());
                         }
                         return;
                     }
