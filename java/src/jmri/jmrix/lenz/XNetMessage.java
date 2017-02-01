@@ -2008,6 +2008,16 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                            LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)),
                            getElement(4));
                     break;
+                case (XNetConstants.LOCO_IN_MULTI_UNIT_REQ_FORWARD):
+                    text = Bundle.getMessage("XNetMessageSearchCSStackForwardNextMULoco",
+                           getElement(2),
+                           LenzCommandStation.calcLocoAddress(getElement(3), getElement(4)));
+                    break;
+                case (XNetConstants.LOCO_IN_MULTI_UNIT_REQ_BACKWARD):
+                    text = Bundle.getMessage("XNetMessageSearchCSStackBackwardNextMULoco",
+                           getElement(2),
+                           LenzCommandStation.calcLocoAddress(getElement(3), getElement(4)));
+                    break;
                 default:
                     text = toString();
             }
@@ -2029,39 +2039,44 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         } else if (getElement(0) == XNetConstants.LOCO_STATUS_REQ) {
             switch (getElement(1)) {
                 case XNetConstants.LOCO_INFO_REQ_FUNC:
-                    text = "Request for Address "
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
-                            + " function momentary/continuous status.";
+                    text = Bundle.getMessage("XNetMessageRequestLocoFunctionMomStatus",
+                            LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)));
                     break;
                 case XNetConstants.LOCO_INFO_REQ_FUNC_HI_ON:
-                    text = "Request for Address "
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
-                            + " F13-F28 on/off status.";
+                    text = Bundle.getMessage("XNetMessageRequestLocoFunctionHighStatus",
+                            LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)));
                     break;
                 case XNetConstants.LOCO_INFO_REQ_FUNC_HI_MOM:
-                    text = "Request for Address "
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
-                            + " F13-F28 momentary/continuous status.";
+                    text = Bundle.getMessage("XNetMessageRequestLocoFunctionHighMomStatus",
+                            LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)));
                     break;
                 case XNetConstants.LOCO_INFO_REQ_V3:
-                    text = "Request for Address "
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
-                            + " speed/direction/function on/off status.";
+                    text = Bundle.getMessage("XNetMessageRequestLocoInfo",
+                            LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)));
                     break;
                 case XNetConstants.LOCO_STACK_SEARCH_FWD:
-                    text = "Search Command Station Stack Forward - Start Address: "
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3));
+                    text = Bundle.getMessage("XNetMessageSearchCSStackForward",
+                           LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)));
                     break;
                 case XNetConstants.LOCO_STACK_SEARCH_BKWD:
-                    text = "Search Command Station Stack Backward - Start Address: "
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3));
+                    text = Bundle.getMessage("XNetMessageSearchCSStackBackward",
+                           LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)));
                     break;
                 case XNetConstants.LOCO_STACK_DELETE:
-                    text = "Delete Address "
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
-                            + " from Command Station Stack.";
+                    text = Bundle.getMessage("XNetMessageDeleteAddressOnStack",
+                            LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)));
                     break;
                 default:
+                    text = toString();
+            }
+        } else if(getElement(0) == XNetConstants.CS_MULTI_UNIT_REQ) {
+            if (getElement(1) == XNetConstants.CS_MULTI_UNIT_REQ_FWD){
+                text = Bundle.getMessage("XNetMessageSearchCSStackForwardConsistAddress",
+                           getElement(2));
+            } else if(getElement(1) == XNetConstants.CS_MULTI_UNIT_REQ_BKWD){
+                text = Bundle.getMessage("XNetMessageSearchCSStackBackwardConsistAddress",
+                           getElement(2));
+            } else {
                     text = toString();
             }
             // Accessory Info Request message
