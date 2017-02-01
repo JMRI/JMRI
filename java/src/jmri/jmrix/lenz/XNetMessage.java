@@ -2018,7 +2018,6 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
             // Disolve or Establish a Double Header
         } else if (getElement(0) == XNetConstants.LOCO_DOUBLEHEAD
                 && getElement(1) == XNetConstants.LOCO_DOUBLEHEAD_BYTE2) {
-            text = "Double Header Request: ";
             int loco1 = LenzCommandStation.calcLocoAddress(getElement(2), getElement(3));
             int loco2 = LenzCommandStation.calcLocoAddress(getElement(4), getElement(5));
             if (loco2 == 0) {
