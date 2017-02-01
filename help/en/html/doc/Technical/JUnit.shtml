@@ -704,9 +704,25 @@ environment.
       <h3><a name="complicatedGuiTesting" id=
       "complicatedGuiTesting">Testing Complicated GUI code</a></h3>
 
-      <p>For more complicated GUI testing, we use <a href=
+      <p>For more complicated GUI testing, two tools are generally used.
+      The older one, 
+      <a href="#JFCunit">JFCUnit</a>
+      is no longer maintained, so we recommend that new tests be 
+      written with <a href="#jemmy">Jemmy</a>.
+      
+      
+      
+      
+      
+      use <a href=
       "http://jfcunit.sourceforge.net/">JFCUnit</a> to control
-      interactions with Swing objects.</p>
+      interactions with Swing objects.
+      (Recently, e.g. 2016, some tests have been developed
+      using a different tool, 
+      <a href="https://jemmy.java.net/tutorial.html">jemmy</a>.  See e.g. the Speedometer tests
+      <a href="https://github.com/JMRI/JMRI/tree/master/java/test/jmri/jmrit/speedometer">Speedometer tests</a> 
+      for an example).
+      </p>
 
       <p>For a very simple example of the use of JFCUnit, see the
       <a href=
