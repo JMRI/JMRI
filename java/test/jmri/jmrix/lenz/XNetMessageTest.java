@@ -222,6 +222,13 @@ public class XNetMessageTest{
        Assert.assertEquals(0x20,m.getElement(5));
        Assert.assertEquals(0x07,m.getElement(6));
     }
+ 
+    @Test
+    public void testToMonitorStringNMRAXNetMsg(){
+       XNetMessage m = XNetMessage.getNMRAXNetMsg(jmri.NmraPacket.opsCvWriteByte(2,false,29,32));
+       Assert.assertEquals("Monitor String","E5 30 02 EC 1C 20 07",m.toMonitorString());
+    }
+       
 
     @Test
     public void testGetTurnoutCommandMsg() {
@@ -255,6 +262,18 @@ public class XNetMessageTest{
     }
 
     @Test
+    public void testToMonitorStringTurnoutCmdMsg(){
+       XNetMessage m = XNetMessage.getTurnoutCommandMsg(5,false,true,true);
+       Assert.assertEquals("Monitor String","Accessory Decoder Operations Request: Turnout Address 5(Base Address 1,Sub Address 0) Turn Output 1 On.",m.toMonitorString());
+       m = XNetMessage.getTurnoutCommandMsg(5,true,false,true);
+       Assert.assertEquals("Monitor String","Accessory Decoder Operations Request: Turnout Address 5(Base Address 1,Sub Address 0) Turn Output 0 On.",m.toMonitorString());
+       m = XNetMessage.getTurnoutCommandMsg(5,false,true,false);
+       Assert.assertEquals("Monitor String","Accessory Decoder Operations Request: Turnout Address 5(Base Address 1,Sub Address 0) Turn Output 1 Off.",m.toMonitorString());
+       m = XNetMessage.getTurnoutCommandMsg(5,true,false,false);
+       Assert.assertEquals("Monitor String","Accessory Decoder Operations Request: Turnout Address 5(Base Address 1,Sub Address 0) Turn Output 0 Off.",m.toMonitorString());
+    }
+
+    @Test
     public void testGetFeedbackRequestMsg() {
        XNetMessage m = XNetMessage.getFeedbackRequestMsg(5,true);
        Assert.assertEquals(0x42,m.getElement(0));
@@ -267,15 +286,29 @@ public class XNetMessageTest{
        Assert.assertEquals(0x01,m.getElement(1));
        Assert.assertEquals(0x81,m.getElement(2));
        Assert.assertEquals(0xC2,m.getElement(3));
-   }
-    
+    }
+
     @Test
-    public void testGetServiceModeREsultMsg(){
+    public void testToMonitorStringFeedbackRequestMsg(){
+       XNetMessage m = XNetMessage.getFeedbackRequestMsg(5,true);
+       Assert.assertEquals("Monitor String","Accessory Decoder/Feedback Encoder Status Request: Base Address 1,Lower Nibble.",m.toMonitorString());
+       m = XNetMessage.getFeedbackRequestMsg(5,false);
+       Assert.assertEquals("Monitor String","Accessory Decoder/Feedback Encoder Status Request: Base Address 1,Upper Nibble.",m.toMonitorString());
+    }
+ 
+    @Test
+    public void testGetServiceModeResultMsg(){
        XNetMessage m = XNetMessage.getServiceModeResultsMsg();
        Assert.assertEquals(0x21,m.getElement(0));
        Assert.assertEquals(0x10,m.getElement(1));
        Assert.assertEquals(0x31,m.getElement(2));
        Assert.assertEquals("programming mode required",jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE,m.getNeededMode());
+    }
+
+    @Test
+    public void testToMonitorStringServiceModeResultMsg(){
+       XNetMessage m = XNetMessage.getServiceModeResultsMsg();
+       Assert.assertEquals("Monitor String","REQUEST: Service Mode Result",m.toMonitorString());
     }
 
     @Test
@@ -288,6 +321,12 @@ public class XNetMessageTest{
     }
 
     @Test
+    public void testToMonitorStringExitProgModeMsg(){
+       XNetMessage m = XNetMessage.getExitProgModeMsg();
+       Assert.assertEquals("Monitor String","REQUEST: Normal Operations Resumed",m.toMonitorString());
+    }
+
+    @Test
     public void testGetReadPagedCVMsg(){
        XNetMessage m = XNetMessage.getReadPagedCVMsg(29);
        Assert.assertEquals(0x22,m.getElement(0));
@@ -295,6 +334,12 @@ public class XNetMessageTest{
        Assert.assertEquals(0x1D,m.getElement(2));
        Assert.assertEquals(0x2B,m.getElement(3));
        Assert.assertEquals("programming mode required",jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE,m.getNeededMode());
+    }
+
+    @Test
+    public void testToMonitorStringReadPagedCVMsg(){
+       XNetMessage m = XNetMessage.getReadPagedCVMsg(29);
+       Assert.assertEquals("Monitor String","Service Mode Request: Read CV 29 in Paged Mode",m.toMonitorString());
     }
 
     @Test
@@ -325,6 +370,20 @@ public class XNetMessageTest{
     }
 
     @Test
+    public void testToMonitorStringReadDirectCVMsg(){
+       XNetMessage m = XNetMessage.getReadDirectCVMsg(29);
+       Assert.assertEquals("Monitor String","Service Mode Request: Read CV 29 in Direct Mode",m.toMonitorString());
+       m = XNetMessage.getReadDirectCVMsg(300);
+       Assert.assertEquals("Monitor String","Service Mode Request (V3.6): Read CV 300 in Direct Mode",m.toMonitorString());
+       m = XNetMessage.getReadDirectCVMsg(600);
+       Assert.assertEquals("Monitor String","Service Mode Request (V3.6): Read CV 600 in Direct Mode",m.toMonitorString());
+       m = XNetMessage.getReadDirectCVMsg(900);
+       Assert.assertEquals("Monitor String","Service Mode Request (V3.6): Read CV 900 in Direct Mode",m.toMonitorString());
+       m = XNetMessage.getReadDirectCVMsg(1024);
+       Assert.assertEquals("Monitor String","Service Mode Request (V3.6): Read CV 1024 in Direct Mode",m.toMonitorString());
+    }
+
+    @Test
     public void testGetWritePagedCVMsg(){
        XNetMessage m = XNetMessage.getWritePagedCVMsg(29,5);
        Assert.assertEquals(0x23,m.getElement(0));
@@ -333,6 +392,12 @@ public class XNetMessageTest{
        Assert.assertEquals(0x05,m.getElement(3));
        Assert.assertEquals(0x2C,m.getElement(4));
        Assert.assertEquals("programming mode required",jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE,m.getNeededMode());
+    }
+
+    @Test
+    public void testToMonitorStringWritePagedCVMsg(){
+       XNetMessage m = XNetMessage.getWritePagedCVMsg(29,5);
+       Assert.assertEquals("Monitor String","Service Mode Request: Write 5 to CV 29 in Paged Mode",m.toMonitorString());
     }
 
     @Test
@@ -366,6 +431,20 @@ public class XNetMessageTest{
     }
 
     @Test
+    public void testToMonitorStringWriteDirectCVMsg(){
+       XNetMessage m = XNetMessage.getWriteDirectCVMsg(29,5);
+       Assert.assertEquals("Monitor String","Service Mode Request: Write 5 to CV 29 in Direct Mode",m.toMonitorString());
+       m = XNetMessage.getWriteDirectCVMsg(300,5);
+       Assert.assertEquals("Monitor String","Service Mode Request (V3.6): Write 5 to CV 300 in Direct Mode",m.toMonitorString());
+       m = XNetMessage.getWriteDirectCVMsg(600,5);
+       Assert.assertEquals("Monitor String","Service Mode Request (V3.6): Write 5 to CV 600 in Direct Mode",m.toMonitorString());
+       m = XNetMessage.getWriteDirectCVMsg(900,5);
+       Assert.assertEquals("Monitor String","Service Mode Request (V3.6): Write 5 to CV 900 in Direct Mode",m.toMonitorString());
+       m = XNetMessage.getWriteDirectCVMsg(1024,5);
+       Assert.assertEquals("Monitor String","Service Mode Request (V3.6): Write 5 to CV 1024 in Direct Mode",m.toMonitorString());
+    }
+
+    @Test
     public void testGetReadRegisterMsg(){
        XNetMessage m = XNetMessage.getReadRegisterMsg(5);
        Assert.assertEquals(0x22,m.getElement(0));
@@ -375,6 +454,12 @@ public class XNetMessageTest{
        Assert.assertEquals("programming mode required",jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE,m.getNeededMode());
        m = XNetMessage.getReadRegisterMsg(10);
        jmri.util.JUnitAppender.assertErrorMessage("register number too large: 10");
+    }
+
+    @Test
+    public void testToMonitorStringRegisterReadMsg(){
+       XNetMessage m = XNetMessage.getReadRegisterMsg(5);
+       Assert.assertEquals("Monitor String","Service Mode Request: Read Register 5",m.toMonitorString());
     }
 
     @Test
@@ -391,6 +476,12 @@ public class XNetMessageTest{
     }
 
     @Test
+    public void testToMonitorStringRegisterWriteMsg(){
+       XNetMessage m = XNetMessage.getWriteRegisterMsg(5,5);
+       Assert.assertEquals("Monitor String","Service Mode Request: Write 5 to Register 5",m.toMonitorString());
+    }
+
+    @Test
     public void testGetWriteOpsModeCVMsg(){
        XNetMessage m = XNetMessage.getWriteOpsModeCVMsg(0,5,29,5);
        Assert.assertEquals(0xE6,m.getElement(0));
@@ -404,6 +495,12 @@ public class XNetMessageTest{
     }
 
     @Test
+    public void testToMonitorStringWriteOpsModeCVMsg(){
+       XNetMessage m = XNetMessage.getWriteOpsModeCVMsg(0,5,29,5);
+       Assert.assertEquals("Monitor String","Operations Mode Programming Request: Byte Mode Write: 5 to CV 29 For Decoder Address 5",m.toMonitorString());
+    }
+
+    @Test
     public void testGetVerifyOpsModeCVMsg(){
        XNetMessage m = XNetMessage.getVerifyOpsModeCVMsg(0,5,29,5);
        Assert.assertEquals(0xE6,m.getElement(0));
@@ -414,6 +511,12 @@ public class XNetMessageTest{
        Assert.assertEquals(0x1C,m.getElement(5));
        Assert.assertEquals(0x05,m.getElement(6));
        Assert.assertEquals(0x2E,m.getElement(7));
+    }
+
+    @Test
+    public void testToMonitorStringVerifyOpsModeCVMsg(){
+       XNetMessage m = XNetMessage.getVerifyOpsModeCVMsg(0,5,29,5);
+       Assert.assertEquals("Monitor String","Operations Mode Programming Request: Byte Mode Verify: 5 to CV 29 For Decoder Address 5",m.toMonitorString());
     }
 
     @Test
@@ -440,6 +543,14 @@ public class XNetMessageTest{
     }
 
     @Test
+    public void testToMonitorStringWriteOpsBitModeCVMsg(){
+       XNetMessage m = XNetMessage.getBitWriteOpsModeCVMsg(0,5,29,2,true);
+       Assert.assertEquals("Monitor String","Operations Mode Programming Request: Bit Mode Write: 1 to CV 29 bit 2 For Decoder Address 5",m.toMonitorString());
+       m = XNetMessage.getBitWriteOpsModeCVMsg(0,5,29,2,false);
+       Assert.assertEquals("Monitor String","Operations Mode Programming Request: Bit Mode Write: 0 to CV 29 bit 2 For Decoder Address 5",m.toMonitorString());
+    }
+
+    @Test
     public void testGetBitVerifyOpsModeCVMsg(){
        XNetMessage m = XNetMessage.getBitVerifyOpsModeCVMsg(0,5,29,2,true);
        Assert.assertEquals(0xE6,m.getElement(0));
@@ -463,6 +574,14 @@ public class XNetMessageTest{
     }
 
     @Test
+    public void testToMonitorStringVerifyOpsBitModeCVMsg(){
+       XNetMessage m = XNetMessage.getBitVerifyOpsModeCVMsg(0,5,29,2,true);
+       Assert.assertEquals("Monitor String","Operations Mode Programming Request: Bit Mode Verify: 1 to CV 29 bit 2 For Decoder Address 5",m.toMonitorString());
+       m = XNetMessage.getBitVerifyOpsModeCVMsg(0,5,29,2,false);
+       Assert.assertEquals("Monitor String","Operations Mode Programming Request: Bit Mode Verify: 0 to CV 29 bit 2 For Decoder Address 5",m.toMonitorString());
+    }
+
+    @Test
     public void testGetBuildDoubleHeaderMessage(){
        XNetMessage m = XNetMessage.getBuildDoubleHeaderMsg(1234,4567);
        Assert.assertEquals(0xE5,m.getElement(0));
@@ -475,6 +594,12 @@ public class XNetMessageTest{
     }
 
     @Test
+    public void testToMonitorStringBuildDoubleHeaderMessage(){
+       XNetMessage m = XNetMessage.getBuildDoubleHeaderMsg(1234,4567);
+       Assert.assertEquals("Monitor String","Double Header Request: Establish Double Header with 1234 and 4567",m.toMonitorString());
+    }
+
+    @Test
     public void testGetDisolveDoubleHeaderMessage(){
        XNetMessage m = XNetMessage.getDisolveDoubleHeaderMsg(1234);
        Assert.assertEquals(0xE5,m.getElement(0));
@@ -484,6 +609,12 @@ public class XNetMessageTest{
        Assert.assertEquals(0x00,m.getElement(4));
        Assert.assertEquals(0x00,m.getElement(5));
        Assert.assertEquals(0xB0,m.getElement(6));
+    }
+
+    @Test
+    public void testToMonitorStringDisolveDoubleHeaderMessage(){
+       XNetMessage m = XNetMessage.getDisolveDoubleHeaderMsg(1234);
+       Assert.assertEquals("Monitor String","Double Header Request: Disolve Double Header that includes mobile decoder 1234",m.toMonitorString());
     }
 
     @Test
@@ -506,6 +637,14 @@ public class XNetMessageTest{
     }
 
     @Test
+    public void testToMonitorStringAddLocoToConsistMessage(){
+       XNetMessage m = XNetMessage.getAddLocoToConsistMsg(42,1234,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Add Locomotive:1234 To Multi Unit Consist: 42 With Loco Direction Normal",m.toMonitorString());
+       m = XNetMessage.getAddLocoToConsistMsg(42,1234,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Add Locomotive:1234 To Multi Unit Consist: 42 With Loco Direction Reversed",m.toMonitorString());
+    }
+
+    @Test
     public void testGetRemoveLocoFromConsistMsg(){
        XNetMessage m = XNetMessage.getRemoveLocoFromConsistMsg(42,1234);
        Assert.assertEquals(0xE4,m.getElement(0));
@@ -514,6 +653,12 @@ public class XNetMessageTest{
        Assert.assertEquals(0xD2,m.getElement(3));
        Assert.assertEquals(0x2A,m.getElement(4));
        Assert.assertEquals(0x9A,m.getElement(5));
+    }
+
+    @Test
+    public void testToMonitorStringRemoveLocoFromConsistMessage(){
+       XNetMessage m = XNetMessage.getRemoveLocoFromConsistMsg(42,1234);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Remove Locomotive:1234 From Multi Unit Consist: 42",m.toMonitorString());
     }
 
     @Test
@@ -631,6 +776,12 @@ public class XNetMessageTest{
        Assert.assertEquals(0xC4,m.getElement(1));
        Assert.assertEquals(0xD2,m.getElement(2));
        Assert.assertEquals(0x84,m.getElement(3));
+    }
+
+    @Test
+    public void testToMonitorStringAddressedEmergencyStop(){
+       XNetMessage m = XNetMessage.getAddressedEmergencyStop(1234);
+       Assert.assertEquals("Monitor String","Emergency Stop 1234",m.toMonitorString());
     }
 
     @Test

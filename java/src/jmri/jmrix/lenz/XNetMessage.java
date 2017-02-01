@@ -1416,29 +1416,33 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         /* Start decoding messages sent by the computer */
         /* Start with LI101F requests */
         if (getElement(0) == XNetConstants.LI_VERSION_REQUEST) {
-            text = "REQUEST LI10x hardware/software version";
+            text = Bundle.getMessage("XNetMessageRequestLIVersion");
         } else if (getElement(0) == XNetConstants.LI101_REQUEST) {
             switch (getElement(1)) {
                 case XNetConstants.LI101_REQUEST_ADDRESS:
-                    text = "REQUEST LI101 Address " + getElement(2);
+                    text = Bundle.getMessage("XNetMessageRequestLIAddress", getElement(2));
                     break;
                 case XNetConstants.LI101_REQUEST_BAUD:
-                    text = "REQUEST LI101 Baud Rate ";
                     switch (getElement(2)) {
                         case 1:
-                            text += "19200bps (default)";
+                            text = Bundle.getMessage("XNetMessageRequestLIBaud",
+                                   Bundle.getMessage("LIBaud19200"));
                             break;
                         case 2:
-                            text += "38400bps";
+                            text = Bundle.getMessage("XNetMessageRequestLIBaud",
+                                   Bundle.getMessage("LIBaud38400"));
                             break;
                         case 3:
-                            text += "57600bps";
+                            text = Bundle.getMessage("XNetMessageRequestLIBaud",
+                                   Bundle.getMessage("LIBaud57600"));
                             break;
                         case 4:
-                            text += "115200bps";
+                            text = Bundle.getMessage("XNetMessageRequestLIBaud",
+                                   Bundle.getMessage("LIBaud115200"));
                             break;
                         default:
-                            text += "<undefined>";
+                            text = Bundle.getMessage("XNetMessageRequestLIBaud",
+                                   Bundle.getMessage("LIBaudOther"));
                     }
                     break;
                 default:
@@ -1454,7 +1458,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                     text = Bundle.getMessage("XNetMessageRequestNormalOps");
                     break;
                 case XNetConstants.SERVICE_MODE_CSRESULT:
-                    text = Bundle.getMessage("XNetMessageRequestServiceModeResults");
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeResult");
                     break;
                 case XNetConstants.CS_VERSION:
                     text = Bundle.getMessage("XNetMessageRequestCSVersion");
@@ -1468,50 +1472,34 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         } else if (getElement(0) == XNetConstants.CS_SET_POWERMODE
                 && getElement(1) == XNetConstants.CS_SET_POWERMODE
                 && getElement(2) == XNetConstants.CS_POWERMODE_AUTO) {
-            text = "REQUEST: Set Power-up Mode to Automatic";
+            text = Bundle.getMessage("XNetMessageRequestCSPowerModeAuto");
         } else if (getElement(0) == XNetConstants.CS_SET_POWERMODE
                 && getElement(1) == XNetConstants.CS_SET_POWERMODE
                 && getElement(2) == XNetConstants.CS_POWERMODE_MANUAL) {
-            text = "REQUEST: Set Power-up Mode to Manual";
+            text = Bundle.getMessage("XNetMessageRequestCSPowerModeManual");
             /* Next, we have Programming Requests */
         } else if (getElement(0) == XNetConstants.PROG_READ_REQUEST) {
             switch (getElement(1)) {
                 case XNetConstants.PROG_READ_MODE_REGISTER:
-                    text = "Service Mode Request: Read Register " + getElement(2);
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeReadRegister",getElement(2));
                     break;
                 case XNetConstants.PROG_READ_MODE_CV:
-                    text
-                            = "Service Mode Request: Read CV " + getElement(2)
-                            + " in Direct Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeReadDirect",getElement(2));
                     break;
                 case XNetConstants.PROG_READ_MODE_PAGED:
-                    text
-                            = "Service Mode Request: Read CV " + getElement(2)
-                            + " in Paged Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeReadPaged",getElement(2));
                     break;
                 case XNetConstants.PROG_READ_MODE_CV_V36:
-                    text
-                            = "Service Mode Request (V3.6): Read CV " + (getElement(2)
-                            == 0 ? 1024 : getElement(2))
-                            + " in Direct Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeReadDirectV36",(getElement(2)== 0 ? 1024 : getElement(2)));
                     break;
                 case XNetConstants.PROG_READ_MODE_CV_V36 + 1:
-                    text
-                            = "Service Mode Request (V3.6): Read CV " + (256
-                            + getElement(2))
-                            + " in Direct Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeReadDirectV36",(256 + getElement(2)));
                     break;
                 case XNetConstants.PROG_READ_MODE_CV_V36 + 2:
-                    text
-                            = "Service Mode Request (V3.6): Read CV " + (512
-                            + getElement(2))
-                            + " in Direct Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeReadDirectV36",(512 + getElement(2)));
                     break;
                 case XNetConstants.PROG_READ_MODE_CV_V36 + 3:
-                    text
-                            = "Service Mode Request (V3.6): Read CV " + (768
-                            + getElement(2))
-                            + " in Direct Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeReadDirectV36",(768 + getElement(2)));
                     break;
                 default:
                     text = toString();
@@ -1519,40 +1507,25 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         } else if (getElement(0) == XNetConstants.PROG_WRITE_REQUEST) {
             switch (getElement(1)) {
                 case XNetConstants.PROG_WRITE_MODE_REGISTER:
-                    text
-                            = "Service Mode Request: Write " + getElement(3)
-                            + " to Register " + getElement(2);
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeWriteRegister",getElement(2),getElement(3));
                     break;
                 case XNetConstants.PROG_WRITE_MODE_CV:
-                    text
-                            = "Service Mode Request: Write " + getElement(3) + " to CV "
-                            + getElement(2) + " in Direct Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeWriteDirect",getElement(2),getElement(3));
                     break;
                 case XNetConstants.PROG_WRITE_MODE_PAGED:
-                    text
-                            = "Service Mode Request: Write " + getElement(3) + " to CV "
-                            + getElement(2) + " in Paged Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeWritePaged",getElement(2),getElement(3));
                     break;
                 case XNetConstants.PROG_WRITE_MODE_CV_V36:
-                    text
-                            = "Service Mode Request (V3.6): Write " + getElement(3)
-                            + " to CV " + (getElement(2)
-                            == 0 ? 1024 : getElement(2)) + " in Direct Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeWriteDirectV36",(getElement(2)== 0 ? 1024 : getElement(2)),getElement(3));
                     break;
                 case (XNetConstants.PROG_WRITE_MODE_CV_V36 + 1):
-                    text
-                            = "Service Mode Request (V3.6): Write " + getElement(3)
-                            + " to CV " + (256 + getElement(2)) + " in Direct Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeWriteDirectV36",(256 + getElement(2)),getElement(3));
                     break;
                 case (XNetConstants.PROG_WRITE_MODE_CV_V36 + 2):
-                    text
-                            = "Service Mode Request (V3.6): Write " + getElement(3)
-                            + " to CV " + (512 + getElement(2)) + " in Direct Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeWriteDirectV36",(512 + getElement(2)),getElement(3));
                     break;
                 case (XNetConstants.PROG_WRITE_MODE_CV_V36 + 3):
-                    text
-                            = "Service Mode Request (V3.6): Write " + getElement(3)
-                            + " to CV " + (768 + getElement(2)) + " in Direct Mode";
+                    text = Bundle.getMessage("XNetMessageRequestServiceModeWriteDirectV36",(768 + getElement(2)),getElement(3));
                     break;
                 default:
                     text = toString();
@@ -1560,33 +1533,31 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         } else if (getElement(0) == XNetConstants.OPS_MODE_PROG_REQ) {
             switch (getElement(1)) {
                 case XNetConstants.OPS_MODE_PROG_WRITE_REQ:
-                    text = "Operations Mode Programming Request: ";
                     if ((getElement(4) & 0xEC) == 0xEC
                             || (getElement(4) & 0xE4) == 0xE4) {
+                        String message = "";
                         if ((getElement(4) & 0xEC) == 0xEC) {
-                            text = text + "Byte Mode Write: ";
+                            message ="XNetMessageOpsModeByteWrite";
                         } else if ((getElement(4) & 0xE4) == 0xE4) {
-                            text = text + "Byte Mode Verify: ";
+                            message ="XNetMessageOpsModeByteVerify";
                         }
-                        text = text + getElement(6)
-                                + " to CV "
-                                + (1 + getElement(5) + ((getElement(4) & 0x03) << 8))
-                                + " For Decoder Address "
-                                + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3));
+                        text = Bundle.getMessage(message,
+                               getElement(6),
+                               (1 + getElement(5) + ((getElement(4) & 0x03) << 8)),
+                               LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)));
                         break;
                     } else if ((getElement(4) & 0xE8) == 0xE8) {
+                        String message = "";
                         if ((getElement(6) & 0x10) == 0x10) {
-                            text = text + "Bit Mode Write: ";
+                            message ="XNetMessageOpsModeBitVerify";
                         } else {
-                            text = text + "Bit Mode Verify: ";
+                            message ="XNetMessageOpsModeBitWrite";
                         }
-                        text = text + ((getElement(6) & 0x08) >> 3)
-                                + " to CV "
-                                + (1 + getElement(5) + ((getElement(4) & 0x03) << 8))
-                                + " bit "
-                                + (getElement(6) & 0x07)
-                                + " For Decoder Address "
-                                + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3));
+                        text = Bundle.getMessage(message,
+                                ((getElement(6) & 0x08) >> 3),
+                                (1 + getElement(5) + ((getElement(4) & 0x03) << 8)),
+                                (getElement(6) & 0x07),
+                                LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)));
                         break;
                     }
                 //fall through
@@ -2023,29 +1994,27 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                     break;
                 }
                 case XNetConstants.LOCO_ADD_MULTI_UNIT_REQ:
-                    text = text
-                            + "Add Locomotive:"
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
-                            + " To Multi Unit Consist: "
-                            + getElement(4) + " With Loco Direction Normal";
+                    text = Bundle.getMessage("XNetMessageAddToConsistDirNormalRequest",
+                           LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)),
+                           getElement(4));
                     break;
                 case (XNetConstants.LOCO_ADD_MULTI_UNIT_REQ | 0x01):
-                    text = text + "Add Locomotive:"
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
-                            + " To Multi Unit Consist: "
-                            + getElement(4) + " With Loco Direction Reversed";
+                    text = Bundle.getMessage("XNetMessageAddToConsistDirReverseRequest",
+                           LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)),
+                           getElement(4));
                     break;
                 case (XNetConstants.LOCO_REM_MULTI_UNIT_REQ):
-                    text = text + "Remove Locomotive:"
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
-                            + " From Multi Unit Consist: " + getElement(4);
+                    text = Bundle.getMessage("XNetMessageRemoveFromConsistRequest",
+                           LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)),
+                           getElement(4));
                     break;
                 default:
                     text = toString();
             }
             // Emergency Stop a locomotive
         } else if (getElement(0) == XNetConstants.EMERGENCY_STOP) {
-            text = "Emergency Stop " + LenzCommandStation.calcLocoAddress(getElement(1), getElement(2));	// GT 2007/11/6 Corrected calculation
+            text = Bundle.getMessage("XNetMessageAddressedEmergencyStopRequest",
+              LenzCommandStation.calcLocoAddress(getElement(1), getElement(2)));
             // Disolve or Establish a Double Header
         } else if (getElement(0) == XNetConstants.LOCO_DOUBLEHEAD
                 && getElement(1) == XNetConstants.LOCO_DOUBLEHEAD_BYTE2) {
@@ -2053,13 +2022,9 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
             int loco1 = LenzCommandStation.calcLocoAddress(getElement(2), getElement(3));
             int loco2 = LenzCommandStation.calcLocoAddress(getElement(4), getElement(5));
             if (loco2 == 0) {
-                text
-                        = text + "Disolve Double Header that includes mobile decoder "
-                        + loco1;
+                text = Bundle.getMessage("XNetMessageDisolveDoubleHeaderRequest",loco1);
             } else {
-                text
-                        = text + "Establish Double Header with " + loco1 + " and "
-                        + loco2;
+                text = Bundle.getMessage("XNetMessageBuildDoubleHeaderRequest",loco1,loco2);
             }
             // Locomotive Status Request messages
         } else if (getElement(0) == XNetConstants.LOCO_STATUS_REQ) {
