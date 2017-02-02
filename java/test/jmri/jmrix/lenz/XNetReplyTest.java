@@ -841,6 +841,101 @@ public class XNetReplyTest {
         Assert.assertEquals("Monitor String","XBus V1 and V2 MU+DH error: Unit selected for MU or DH has speed setting other than 0",r.toMonitorString());
     }
 
+    @Test
+    public void testToMonitorStringErrorNotOperated(){
+        XNetReply r = new XNetReply("E1 81 60");
+        Assert.assertEquals("Monitor String","XpressNet MU+DH error: Selected Locomotive has not been operated by this XPressNet device or address 0 selected",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringDHErrorInUse(){
+        XNetReply r = new XNetReply("E1 82 63");
+        Assert.assertEquals("Monitor String","XpressNet MU+DH error: Selected Locomotive is being operated by another XPressNet device",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringDHErrorAlreadyDH(){
+        XNetReply r = new XNetReply("E1 83 62");
+        Assert.assertEquals("Monitor String","XpressNet MU+DH error: Selected Locomotive already in MU or DH",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringDHErrorNonZeroSpeed(){
+        XNetReply r = new XNetReply("E1 84 65");
+        Assert.assertEquals("Monitor String","XpressNet MU+DH error: Unit selected for MU or DH has speed setting other than 0",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringDHErrorLocoNotMUed(){
+        XNetReply r = new XNetReply("E1 85 64");
+        Assert.assertEquals("Monitor String","XpressNet MU+DH error: Locomotive not in a MU",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringDHErrorAddressNotMUBase(){
+        XNetReply r = new XNetReply("E1 86 67");
+        Assert.assertEquals("Monitor String","XpressNet MU+DH error: Locomotive address not a multi-unit base address",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringDHErrorCanNotDelete(){
+        XNetReply r = new XNetReply("E1 87 66");
+        Assert.assertEquals("Monitor String","XpressNet MU+DH error: It is not possible to delete the locomotive",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringDHErrorCSStackFull(){
+        XNetReply r = new XNetReply("E1 88 69");
+        Assert.assertEquals("Monitor String","XpressNet MU+DH error: The Command Station Stack is Full",r.toMonitorString());
+    }
+ 
+   @Test
+    public void testToMonitorStringDHErrorOther(){
+        XNetReply r = new XNetReply("E1 89 69");
+        Assert.assertEquals("Monitor String","XpressNet MU+DH error: 9",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringLIVersionReply(){
+        XNetReply r = new XNetReply("02 01 36 34");
+        Assert.assertEquals("Monitor String","LI10x hardware Version: 0.1 Software Version: 3.6",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringLIAddressReply(){
+        XNetReply r = new XNetReply("F2 01 01 F2");
+        Assert.assertEquals("Monitor String","RESPONSE LI101 Address 1",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringLIBaud1Reply(){
+        XNetReply r = new XNetReply("F2 02 01 F1");
+        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 19200bps (default)",r.toMonitorString());
+    }
+    @Test
+    public void testToMonitorStringLIBaud2Reply(){
+        XNetReply r = new XNetReply("F2 02 02 F2");
+        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 38400bps",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringLIBaud3Reply(){
+        XNetReply r = new XNetReply("F2 02 03 F1");
+        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 57600bps",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringLIBaud4Reply(){
+        XNetReply r = new XNetReply("F2 02 04 F4");
+        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 115200bps",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringLIBaud5Reply(){
+        XNetReply r = new XNetReply("F2 02 05 F1");
+        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: <undefined>",r.toMonitorString());
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
