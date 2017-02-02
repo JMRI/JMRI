@@ -9,18 +9,6 @@ import jmri.jmrit.display.layoutEditor.LevelXing;
 
 /**
  *
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
- *
  * @author	Kevin Dickerson Copyright (C) 2011
  */
 public interface SignalMastLogic {
@@ -80,7 +68,7 @@ public interface SignalMastLogic {
 
     /**
      * This will replace the existing source SignalMast with a new signal mast
-     * instance. This is for use with such tools as the layout editor where a
+     * instance. This is for use with such tools as the Layout Editor where a
      * signalmast can at a certain location can be replaced with another, while
      * the remainder of the configuration stays the same.
      */
@@ -88,8 +76,8 @@ public interface SignalMastLogic {
 
     /**
      * This will replace the existing destination SignalMast with a new signal
-     * mast instance. This is for use with such tools as the layout editor where
-     * a signalmast can at a certain location can be replaced with another,
+     * mast instance. This is for use with such tools as the Layout Editor where
+     * a signalmast at a certain location can be replaced with another,
      * while the remainder of the configuration stays the same.
      */
     public void replaceDestinationMast(SignalMast oldMast, SignalMast newMast);
@@ -103,15 +91,15 @@ public interface SignalMastLogic {
     public int getAutoBlockState(Block block, SignalMast destination);
 
     /**
-     * returns all the blocks that have been detected as being in use for this
+     * Return all the blocks that have been detected as being in use for this
      * logic, this includes blocks on level xings that are not directly in the
      * path but do have an affect on the logic
      */
     public ArrayList<Block> getAutoBlocks(SignalMast destination);
 
     /**
-     * returns only the blocks that have been detected as being directly between
-     * the source and destination mast. The order of the block in the list, is
+     * Return only the blocks that have been detected as being directly between
+     * the source and destination mast. The order of the blocks in the list, is
      * the order that they are connected.
      */
     public ArrayList<Block> getAutoBlocksBetweenMasts(SignalMast destination);
@@ -149,7 +137,7 @@ public interface SignalMastLogic {
     public SignalMast getSourceMast();
 
     /**
-     * returns where the signalmast logic should be stored, if so how much.
+     * Return where the signalmast logic should be stored, if so how much.
      */
     public int getStoreState(SignalMast destination);
 
@@ -211,15 +199,15 @@ public interface SignalMastLogic {
     public boolean removeDestination(SignalMast dest);
 
     /**
-     * Sets which blocks must be inactive for the signal not to be set at a stop
-     * aspect These blocks are not stored in the panel file.
+     * Set which blocks must be inactive for the signal not to be set at a stop
+     * aspect. These blocks are not stored in the panel file.
      *
      * @param blocks blocks to be inactive
      */
     public void setAutoBlocks(LinkedHashMap<Block, Integer> blocks, SignalMast destination);
 
     /**
-     * Sets which masts must be in a given state before our mast can be set.
+     * Set which masts must be in a given state before our mast can be set.
      * These masts are not stored in the panel file.
      *
      * @param masts masts to be checked
@@ -227,14 +215,14 @@ public interface SignalMastLogic {
     public void setAutoMasts(Hashtable<SignalMast, String> masts, SignalMast destination);
 
     /**
-     * Sets which blocks must be inactive for the signal not to be set at a stop
-     * aspect These Turnouts are not stored in the panel file.
+     * Set which blocks must be inactive for the signal not to be set at a stop
+     * aspect. These Turnouts are not stored in the panel file.
      */
     public void setAutoTurnouts(Hashtable<Turnout, Integer> turnouts, SignalMast destination);
 
     /**
-     * Sets which blocks must be inactive for the signal not to be set at a stop
-     * aspect
+     * Set which blocks must be inactive for the signal not to be set at a stop
+     * aspect.
      *
      * @param blocks blocks to be inactive
      */
@@ -247,38 +235,38 @@ public interface SignalMastLogic {
     public void setDestinationMast(SignalMast dest);
 
     /**
-     * Sets the logic to the destination signal mast to be disabled.
+     * Set the logic to the destination signal mast to be disabled.
      */
     public void setDisabled(SignalMast dest);
 
     /**
-     * Sets the logic to the destination signal mast to be enabled.
+     * Set the logic to the destination signal mast to be enabled.
      */
     public void setEnabled(SignalMast dest);
 
     public void setFacingBlock(LayoutBlock facing);
 
     /**
-     * Sets which masts must be in a given state before our mast can be set.
+     * Set which masts must be in a given state before our mast can be set.
      *
      * @param masts masts to be checked
      */
     public void setMasts(Hashtable<SignalMast, String> masts, SignalMast destination);
 
     /**
-     * Sets which sensors must be in a given state before our mast can be set.
+     * Set which sensors must be in a given state before our mast can be set.
      *
      * @param sensors sensors to be checked
      */
     public void setSensors(Hashtable<NamedBeanHandle<Sensor>, Integer> sensors, SignalMast destination);
 
     /**
-     * Add an individual sensor and its state to the logic
+     * Add an individual sensor and its state to the logic.
      */
     public void addSensor(String sensorName, int state, SignalMast destination);
 
     /**
-     * Remove an individual sensor from the logic
+     * Remove an individual sensor from the logic.
      */
     public void removeSensor(String sensorName, SignalMast destination);
 
@@ -292,21 +280,21 @@ public interface SignalMastLogic {
     public void setStore(int store, SignalMast destination);
 
     /**
-     * Sets the states that each turnout must be in for signal not to be set at
-     * a stop aspect
+     * Set the states that each turnout must be in for signal not to be set at
+     * a stop aspect.
      *
-     * @param turnouts turnouts to check for state
+     * @param turnouts Named turnouts to check for state
      */
     public void setTurnouts(Hashtable<NamedBeanHandle<Turnout>, Integer> turnouts, SignalMast destination);
 
     public void setupLayoutEditorDetails();
 
     /**
-     * Sets whether this logic should use the details stored in the layout
-     * editor to determine the which blocks, turnouts will make up the logic
+     * Set whether this logic should use the details stored in the Layout
+     * Editor to determine the which blocks, turnouts will make up the logic
      * between the source and destination signal mast.
      *
-     * @param boo         Use the layout editor details to determine logic
+     * @param boo         Use the Layout Editor details to determine logic
      *                    details.
      * @param destination Destination SignalMast.
      *
@@ -314,27 +302,27 @@ public interface SignalMastLogic {
     public void useLayoutEditor(boolean boo, SignalMast destination) throws JmriException;
 
     /**
-     * Query if we are using the layout editor panels to build the signal mast
-     * logic, blocks, turnouts .
+     * Query if we are using the Layout Editor panels to build the signal mast
+     * logic, blocks, turnouts.
      *
      * @param destination Destination SignalMast.
-     * @return true if we are using the layout editor to build the signal mast
+     * @return true if we are using the Layout Editor to build the signal mast
      *         logic.
      */
     public boolean useLayoutEditor(SignalMast destination);
 
     /**
-     * Query if we are using the layout editor block information in the signal
+     * Query if we are using the Layout Editor block information in the signal
      * mast logic.
      *
      * @param destination Destination SignalMast.
-     * @return true if we are using the block information from the layout
-     *         editor.
+     * @return true if we are using the block information from the Layout
+     *         Editor.
      */
     public boolean useLayoutEditorBlocks(SignalMast destination);
 
     /**
-     * Sets whether we should use the information from the layout editor for
+     * Set whether we should use the information from the Layout Editor for
      * either blocks or turnouts.
      *
      * @param destination Destination SignalMast.
@@ -346,12 +334,12 @@ public interface SignalMastLogic {
     public void useLayoutEditorDetails(boolean turnouts, boolean blocks, SignalMast destination) throws JmriException;
 
     /**
-     * Query if we are using the layout editor turnout information in the signal
+     * Query if we are using the Layout Editor turnout information in the signal
      * mast logic.
      *
      * @param destination Destination SignalMast.
-     * @return true if we are using the turnout information from the layout
-     *         editor.
+     * @return true if we are using the turnout information from the Layout
+     *         Editor.
      */
     public boolean useLayoutEditorTurnouts(SignalMast destination);
 
@@ -362,14 +350,13 @@ public interface SignalMastLogic {
     public void addPropertyChangeListener(java.beans.PropertyChangeListener l);
 
     /**
-     * Get the block facing our source signal
-     *
+     * Get the block facing our source signal mast.
      */
     public LayoutBlock getFacingBlock();
 
     /**
      * Get the block that the source signal is protecting on the path to the
-     * destination signal mast
+     * destination signal mast.
      */
     public LayoutBlock getProtectingBlock(SignalMast destination);
 
@@ -377,10 +364,10 @@ public interface SignalMastLogic {
      * Set the auto turnouts based upon a given list of layout blocks for a
      * specific destination mast
      *
-     * @param blks        List of Layout Blockt.
+     * @param blks        List of Layout Blocks.
      * @param destination Destination SignalMast.
-     * @return A LinkedHashMap of the original blocks and the required state,
-     *         plus any blocks found on double-overs that also need to be
+     * @return A LinkedHashMap of the original blocks and their required state,
+     *         plus any blocks found on double cross-overs that also need to be
      *         un-occupied
      */
     public LinkedHashMap<Block, Integer> setupLayoutEditorTurnoutDetails(List<LayoutBlock> blks, SignalMast destination);
