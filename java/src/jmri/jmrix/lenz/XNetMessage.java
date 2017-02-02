@@ -1597,7 +1597,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                     if ((getElement(4) & 0x80) != 0) {
                         text += " and direction Forward";
                     } else {
-                        text += "and direction Reverse";
+                        text += " and direction Reverse";
                     }
                     text += " In 27 speed step mode.";
                     break;
@@ -1616,7 +1616,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                     if ((getElement(4) & 0x80) != 0) {
                         text += " and direction Forward";
                     } else {
-                        text += "and direction Reverse";
+                        text += " and direction Reverse";
                     }
                     text += " In 28 speed step mode.";
                     break;
