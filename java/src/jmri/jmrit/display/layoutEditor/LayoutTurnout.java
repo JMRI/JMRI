@@ -354,6 +354,11 @@ public class LayoutTurnout extends LayoutTrack {
 
     }
 
+    // this should only be used for debugging…
+    public String toString() {
+        return "LayoutTurnout " + ident;
+    }
+
     protected void rotateCoords(double rotDEG) {
         // rotate coordinates
         double rotRAD = rotDEG * Math.PI / 180.0;

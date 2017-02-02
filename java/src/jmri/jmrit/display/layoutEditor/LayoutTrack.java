@@ -8,11 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract base class for all layout track objects
+ * Abstract base class for all layout track objects (LayoutTurnout, LayoutSlip, LayoutTurntable, LevelXing, TrackSegment)
  *
  * @author George Warner Copyright (c) 2017
  */
-public class LayoutTrack {
+public abstract class LayoutTrack {
 
     // Defined text resource
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");

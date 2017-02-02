@@ -102,6 +102,12 @@ public class LayoutTurntable extends LayoutTrack {
         radius = 25.0;
     }
 
+    // this should only be used for debugging…
+    public String toString() {
+        return "LayoutTurntable " + ident;
+    }
+
+
     /**
      * Accessor methods
      */

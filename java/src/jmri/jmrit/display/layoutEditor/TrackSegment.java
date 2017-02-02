@@ -130,6 +130,11 @@ public class TrackSegment extends LayoutTrack {
         hidden = hide;
     }
 
+    // this should only be used for debugging…
+    public String toString() {
+        return "TrackSegment " + ident;
+    }
+
     /**
      * Accessor methods
      */

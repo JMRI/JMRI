@@ -93,6 +93,11 @@ public class LayoutSlip extends LayoutTurnout {
         rotateCoords(rot);
     }
 
+    // this should only be used for debugging…
+    public String toString() {
+        return "LayoutSlip " + ident;
+    }
+
     public void setTurnoutType(int slipType) {
         setSlipType(slipType);
     }

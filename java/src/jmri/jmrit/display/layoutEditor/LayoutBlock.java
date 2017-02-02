@@ -199,7 +199,11 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
     }
 
-    /* initializeLayoutBlockRouting */
+    // this should only be used for debugging…
+    public String toString() {
+        return "LayoutBlock " + getDisplayName();
+    }
+
 
     /**
      * Accessor methods
@@ -783,7 +787,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
 //djd debugging - lists results of automatic initialization of Paths and BeanSettings
         for (Path p : block.getPaths()) {
-            log.debug("From {} path to {}", blockName, p.toString());
+            log.debug("From {} to {}", blockName, p.toString());
         }
 //end debugging
     }   // updateBlockPaths
