@@ -693,7 +693,7 @@ ESU.
 </pre>
 
       <p>For an example, see the <a href=
-      "https://github.com/JMRI/JMRI/blob/master/xml/decoders/SPROG_DCC_Servo6."
+      "https://github.com/JMRI/JMRI/blob/master/xml/decoders/SPROG_DCC_Servo6.xml"
       target="_blank">xml/decoders/SPROG_DCC_Servo6.xml</a>
       file.</p>
 
