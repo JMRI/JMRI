@@ -154,6 +154,30 @@ public class LenzCommandStation implements jmri.CommandStation {
 
     }
 
+    /**
+     * We need to calculate the locomotive address when doing the translations
+     * back to text. XPressNet Messages will have these as two elements, which
+     * need to get translated back into a single address by reversing the
+     * formulas used to calculate them in the first place.
+     *
+     * @param AH the high order byte of the address
+     * @param AL the low order byte of the address
+     * @return the address as an integer.
+     */
+    static public int calcLocoAddress(int AH, int AL) {
+        if (AH == 0x00) {
+            /* if AH is 0, this is a short address */
+            return (AL);
+        } else {
+            /* This must be a long address */
+            int address = 0;
+            address = ((AH * 256) & 0xFF00);
+            address += (AL & 0xFF);
+            address -= 0xC000;
+            return (address);
+        }
+    }
+
     /* To Implement the CommandStation Interface, we have to define the 
      sendPacket function */
     /**

@@ -285,7 +285,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             firePropertyChange("feedbackchange", Integer.valueOf(oldMode),
                     Integer.valueOf(_activeFeedbackType));
         }
-        // unlock turnout if feedback is changed 
+        // unlock turnout if feedback is changed
         setLocked(CABLOCKOUT, false);
     }
 
@@ -666,7 +666,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     @Override
     public void setInitialKnownStateFromFeedback() {
         if (_activeFeedbackType == ONESENSOR) {
-            // ONESENSOR feedback 
+            // ONESENSOR feedback
             if (getFirstSensor() != null) {
                 // set according to state of sensor
                 int sState = getFirstSensor().getKnownState();

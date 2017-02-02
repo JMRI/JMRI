@@ -120,8 +120,8 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
                     source.addContent(dest);
                 }
                 panelElem.addContent(source);
-                element.addContent(panelElem);
             }
+            element.addContent(panelElem);
         }
         return element;
     }

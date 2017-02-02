@@ -145,12 +145,12 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
 
     @Override
     public int[] getValidStates() {
-        return Arrays.copyOf(validStates, validStates.length);
+        return Arrays.copyOf(validStates, validStates.length); // includes int for Lunar
     }
 
     @Override
     public String[] getValidStateNames() {
-        return Arrays.copyOf(validStateNames, validStateNames.length);
+        return Arrays.copyOf(validStateNames, validStateNames.length); // includes Lunar
     }
 
     abstract boolean isTurnoutUsed(Turnout t);

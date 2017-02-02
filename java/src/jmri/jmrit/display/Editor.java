@@ -157,7 +157,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     private JFrame _targetFrame;
     private JScrollPane _panelScrollPane;
 
-    // Option menu items 
+    // Option menu items
     protected int _scrollState = SCROLL_NONE;
     protected boolean _editable = true;
     private boolean _positionable = true;
@@ -1704,7 +1704,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 //                log.error("No such Icon Editor \""+name+"\"");
                 return null;
             }
-            // frame added in the above switch 
+            // frame added in the above switch
             frame = _iconEditorFrame.get(name);
 
             if (frame == null) { // addTextEditor does not create a usable frame
@@ -2334,7 +2334,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             log.debug("putIcon: {} url= {}", (icon == null ? "null" : "icon"), url);
         }
         PositionableLabel l = new PositionableLabel(icon, this);
-//        l.setPopupUtility(null);        // no text 
+//        l.setPopupUtility(null);        // no text
         l.setDisplayLevel(ICONS);
         setNextLocation(l);
         putItem(l);
@@ -2442,6 +2442,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             BundleName = "BeanNameLight";
         } else if ("Turnout".equals(name)) {
             BundleName = "BeanNameTurnout"; // called by RightTurnout and LeftTurnout objects in TurnoutIcon.java edit() method
+        } else if ("Block".equals(name)) {
+            BundleName = "BeanNameBlock";
         } else {
             BundleName = name;
         }
@@ -2515,7 +2517,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             findIcon.add(searchItem);
             frame.setJMenuBar(menuBar);
             editor.setParent(frame);
-            // when this window closes, check for saving 
+            // when this window closes, check for saving
             if (add) {
                 frame.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
@@ -2558,7 +2560,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     public boolean removeFromContents(Positionable l) {
         removeFromTarget(l);
         //todo check that parent == _targetPanel
-        //Container parent = this.getParent();   
+        //Container parent = this.getParent();
         // force redisplay
         return _contents.remove(l);
     }
@@ -2730,7 +2732,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (getFlag(OPTION_POSITION, p.isPositionable())) {
             int xObj = getItemX(p, deltaX);
             int yObj = getItemY(p, deltaY);
-            // don't allow negative placement, icon can become unreachable 
+            // don't allow negative placement, icon can become unreachable
             if (xObj < 0) {
                 xObj = 0;
             }
@@ -2750,7 +2752,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @param event contains the mouse position.
      * @return a list of positionable items or an empty list.
      */
-//    @SuppressFBWarnings(value="ICAST_IDIV_CAST_TO_DOUBLE", justification="Divide by 2 is only case") 
+//    @SuppressFBWarnings(value="ICAST_IDIV_CAST_TO_DOUBLE", justification="Divide by 2 is only case")
     protected List<Positionable> getSelectedItems(MouseEvent event) {
         double x;
         double y;
@@ -2962,7 +2964,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 if (deg == 0) {
                     p.setOpaque(newUtil.hasBackground());
                 } else {
-                    pos.rotate(deg);                    
+                    pos.rotate(deg);
                 }
             }
         } else if (p instanceof PositionableJPanel) {
