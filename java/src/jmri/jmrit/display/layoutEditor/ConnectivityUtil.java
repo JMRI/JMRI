@@ -71,7 +71,7 @@ public class ConnectivityUtil {
     /**
      * Provides a list of LayoutTurnouts in a specified Block (block), in order,
      * beginning at the connection to the specified previous Block (prevBlock)
-     * and continuing to the specfied next Block (nextBlock). Also compiles a
+     * and continuing to the specified next Block (nextBlock). Also compiles a
      * companion list of how the turnout should be set for the specified
      * connectivity. The companion list can be accessed by
      * "getTurnoutSettingList" immediately after this method returns. If both
@@ -80,7 +80,7 @@ public class ConnectivityUtil {
      * this block. If either are not present (null), returns all turnouts in
      * this block, with settings to enter/exit to whatever block is specified,
      * and other settings set to CLOSED. Returns an empty list if a connectivity
-     * anamoly is discovered--specified blocks are not connected.
+     * anomaly is discovered--specified blocks are not connected.
      */
     public ArrayList<LayoutTurnout> getTurnoutList(Block block, Block prevBlock, Block nextBlock) {
         return getTurnoutList(block, prevBlock, nextBlock, false);
@@ -772,6 +772,7 @@ public class ConnectivityUtil {
     }
 
     //Need to search through code to find out where this is being used
+    // <Section.java:1807>
     /**
      * Returns a list of all layout turnouts involving the specified Block
      */
@@ -2379,24 +2380,13 @@ public class ConnectivityUtil {
                     conType = curTS.getType1();
                     conObj = curTS.getConnect1();
                 } else {
-                    if (logInfoFor_trackSegmentLeadsTo) {
-                        String con_type = connectionTypeToString(conType);
-
-                        String conName = objectToNameOrIDString(conObj);
-                        String curName = objectToNameOrIDString(curObj);
-                        log.info("\tIn block " + lb.getUserName() + ", follow " + curName + " thru " + curTS.getID() +
-                            " (connects " + curTS.getConnect1Name() + " & " + curTS.getConnect2Name() + ")" +
-                            " to " + conName + " (conType: " + con_type + "), nlb: " + nlb.getID());
-                    }
                     log.error("Connectivity error when following track " + curTS.getID() + " in Block " + lb.getUserName());
                     return false;
                 }
 
                 if (logInfoFor_trackSegmentLeadsTo) {
                     String con_type = connectionTypeToString(conType);
-                    //if (con_type.startsWith("LEVEL_XING_")) {
-                    //    log.debug("LevelXing");
-                    //}
+
                     String conName = objectToNameOrIDString(conObj);
                     String curName = objectToNameOrIDString(curObj);
                     log.info("\tIn block " + lb.getUserName() + ", follow " + curName + " thru " + curTS.getID() +
@@ -2766,8 +2756,8 @@ public class ConnectivityUtil {
     /**
      * This flag can be checked after performing a getTurnoutList() to check if
      * the connectivity of the turnouts has been completed in the block when the
-     * getTurnoutList() was called. Returns 'false' if a turnout conectivity is
-     * not complete. Returns 'true' if the turnout conectivity is complete.
+     * getTurnoutList() was called. Returns 'false' if a turnout connectivity is
+     * not complete. Returns 'true' if the turnout connectivity is complete.
      */
     public boolean isTurnoutConnectivityComplete() {
         return turnoutConnectivity;
