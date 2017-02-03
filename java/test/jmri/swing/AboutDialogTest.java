@@ -4,6 +4,7 @@ import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.junit.After;
@@ -44,8 +45,10 @@ public class AboutDialogTest {
            }
         };
         waitThread.start();
-        frame.setVisible(true);
-        dialog.setVisible(true);
+        ThreadingUtil.runOnGUI( ()->{
+           frame.setVisible(true);
+           dialog.setVisible(true);
+        });
     }
 
     @Before
