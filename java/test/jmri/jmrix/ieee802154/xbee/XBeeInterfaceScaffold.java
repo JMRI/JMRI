@@ -106,15 +106,18 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
     /**
      * Avoid error message, normal in parent
      */
+    @Override
     protected void connectionWarn() {
     }
 
     /**
      * Avoid error message, normal in parent
      */
+    @Override
     protected void portWarn(Exception e) {
     }
 
+    @Override
     public void receiveLoop() {
     }
 

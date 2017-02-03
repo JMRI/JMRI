@@ -98,6 +98,7 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
      * @throws Exception when a error prevents creating the objects as as
      *                   required by the input XML.
      */
+    @Override
     public void load(Element e, Object o) throws Exception {
         throw new Exception("Method not coded");
     }
@@ -110,6 +111,7 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
      *          in ConfigXmlManager.
      * @return The XML representation Element
      */
+    @Override
     public Element store(Object o) {
         return storeDirectly(o);
     }

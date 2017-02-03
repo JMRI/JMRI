@@ -229,6 +229,7 @@ public class LightControl {
                         // listen for change in sensor state
                         _namedControlSensor.getBean().addPropertyChangeListener(_sensorListener
                                 = new java.beans.PropertyChangeListener() {
+                                    @Override
                                     public void propertyChange(java.beans.PropertyChangeEvent e) {
                                         if (!_parentLight.getEnabled()) {
                                             return;  // ignore property change if user disabled Light
@@ -276,6 +277,7 @@ public class LightControl {
                     // set up to listen for time changes on a minute basis
                     _clock.addMinuteChangeListener(_timebaseListener
                             = new java.beans.PropertyChangeListener() {
+                                @Override
                                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                                     if (_parentLight.getEnabled()) {  // don't change light if not enabled
                                         // update control if light is enabled
@@ -319,6 +321,7 @@ public class LightControl {
                     // listen for change in turnout state
                     _controlTurnout.addPropertyChangeListener(_turnoutListener
                             = new java.beans.PropertyChangeListener() {
+                                @Override
                                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                                     if (!_parentLight.getEnabled()) {
                                         return;  // ignore property change if user disabled light
@@ -359,6 +362,7 @@ public class LightControl {
                         // listen for change in timed control sensor state
                         _namedTimedControlSensor.getBean().addPropertyChangeListener(_timedSensorListener
                                 = new java.beans.PropertyChangeListener() {
+                                    @Override
                                     public void propertyChange(java.beans.PropertyChangeEvent e) {
                                         if (!_parentLight.getEnabled()) {
                                             return;  // ignore property change if user disabled light
@@ -429,12 +433,14 @@ public class LightControl {
                         // listen for change in sensor states
                         _namedControlSensor.getBean().addPropertyChangeListener(_sensorListener
                                 = new java.beans.PropertyChangeListener() {
+                                    @Override
                                     public void propertyChange(java.beans.PropertyChangeEvent e) {
                                         twoSensorChanged(e);
                                     }
                                 }, _controlSensorName, "Light Control " + _parentLight.getDisplayName());
                         _namedControlSensor2.getBean().addPropertyChangeListener(_sensor2Listener
                                 = new java.beans.PropertyChangeListener() {
+                                    @Override
                                     public void propertyChange(java.beans.PropertyChangeEvent e) {
                                         twoSensorChanged(e);
                                     }
@@ -587,6 +593,7 @@ public class LightControl {
      */
     class TimeLight implements java.awt.event.ActionListener {
 
+        @Override
         public void actionPerformed(java.awt.event.ActionEvent event) {
             // Turn Light OFF
             _parentLight.setState(Light.OFF);

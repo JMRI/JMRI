@@ -59,6 +59,7 @@ public abstract class SdfMacroEditor extends JPanel {
         }
     }
 
+    @Override
     public String toString() {
         return inst.toString();
     }

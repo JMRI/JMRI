@@ -17,6 +17,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 
     final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.ieee802154.IEEE802154ActionListBundle");
 
+    @Override
     public void initComponents() throws Exception {
         super.initComponents();
 
@@ -27,6 +28,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
         pack();
     }
 
+    @Override
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         String packetString = packetTextField.getSelectedItem().toString();
         byte packetByteArray[] = jmri.util.StringUtil.bytesFromHexString(packetString);

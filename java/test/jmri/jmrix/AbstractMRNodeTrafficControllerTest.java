@@ -13,6 +13,7 @@ import org.junit.Test;
 public class AbstractMRNodeTrafficControllerTest extends AbstractMRTrafficControllerTest {
     
     @Test
+    @Override
     public void testCtor() {
         Assert.assertNotNull(tc);
     }
@@ -23,6 +24,7 @@ public class AbstractMRNodeTrafficControllerTest extends AbstractMRTrafficContro
     }
 
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp(); 
         JUnitUtil.resetInstanceManager();
@@ -50,6 +52,7 @@ public class AbstractMRNodeTrafficControllerTest extends AbstractMRTrafficContro
     }
 
     @After
+    @Override
     public void tearDown(){
        tc = null;
         JUnitUtil.resetInstanceManager();

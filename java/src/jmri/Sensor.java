@@ -65,17 +65,20 @@ public interface Sensor extends NamedBean {
     /**
      * Request a call-back when the bound KnownState property changes.
      */
+    @Override
     public void addPropertyChangeListener(@CheckForNull java.beans.PropertyChangeListener l);
 
     /**
      * Remove a request for a call-back when a bound property changes.
      */
+    @Override
     public void removePropertyChangeListener(@CheckForNull java.beans.PropertyChangeListener l);
 
     /**
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
      */
+    @Override
     public void dispose();  // remove _all_ connections!
 
     /**

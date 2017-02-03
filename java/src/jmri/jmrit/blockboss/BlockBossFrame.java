@@ -199,6 +199,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         g.add(buttonTrailDiv);
         g.add(buttonFacing);
         ActionListener a = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 buttonClicked();
             }
@@ -246,6 +247,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         line.add(outSignalField = new JTextField(12));
         outSignalField.setToolTipText(outSignalFieldTooltip);
         outSignalField.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 // user hit enter, use this name to fill in the rest of the fields
                 activate();
@@ -295,6 +297,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         b.setAlignmentX(0.5f);
         getContentPane().add(b);
         b.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 okPressed();
             }

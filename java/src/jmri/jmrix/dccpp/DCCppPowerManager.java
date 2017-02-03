@@ -27,6 +27,7 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
         tc.sendDCCppMessage(DCCppMessage.makeCSStatusMsg(), this);
     }
 
+    @Override
     public String getUserName() {
         return "DCC++";
     }
@@ -35,6 +36,7 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
 
     int power = UNKNOWN;
 
+    @Override
     public void setPower(int v) throws JmriException {
         power = UNKNOWN;
         checkTC();
@@ -48,11 +50,13 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
         firePropertyChange("Power", null, null);
     }
 
+    @Override
     public int getPower() {
         return power;
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() throws JmriException {
         tc.removeDCCppListener(DCCppInterface.CS_INFO, this);
         tc = null;
@@ -67,6 +71,7 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
     // to hear of changes
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
+    @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
@@ -75,6 +80,7 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
         pcs.firePropertyChange(p, old, n);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
@@ -83,6 +89,7 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
 
     // to listen for Broadcast messages related to track power.
     // There are 5 messages to listen for
+    @Override
     public void message(DCCppReply m) {
         if (log.isDebugEnabled()) {
             log.debug("Message recieved: " + m.toString());
@@ -100,10 +107,12 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     public void message(DCCppMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());

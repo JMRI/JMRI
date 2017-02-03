@@ -106,6 +106,7 @@ public class MultiPaneWindow extends jmri.util.JmriJFrame {
 
         // install listener
         tree.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+            @Override
             public void valueChanged(javax.swing.event.TreeSelectionEvent e) {
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
                 if (node == null) {
@@ -157,6 +158,7 @@ public class MultiPaneWindow extends jmri.util.JmriJFrame {
     /**
      * Only close frame, etc, dispose() disposes of all cached panes
      */
+    @Override
     public void dispose() {
         rightTopWI.dispose();
         super.dispose();

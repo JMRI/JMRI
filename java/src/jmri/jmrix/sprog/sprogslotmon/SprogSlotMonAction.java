@@ -23,6 +23,7 @@ public class SprogSlotMonAction extends AbstractAction {
         this("SPROG Slot Monitor",memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         if(_memo.getCommandStation() == null) {

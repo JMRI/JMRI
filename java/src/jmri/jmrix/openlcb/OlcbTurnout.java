@@ -116,6 +116,7 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
      *
      * @param s new state value
      */
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         CanMessage m;
         if (s == Turnout.THROWN) {
@@ -131,11 +132,13 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
         }
     }
 
+    @Override
     protected void turnoutPushbuttonLockout(boolean locked) {
         // TODO: maybe we could get another pair of events in the address and use that event pair
         // to perform a lockout change on the turnout decoder itself.
     }
 
+    @Override
     public void dispose() {
         if (turnoutListener != null) turnoutListener.release();
         if (pc != null) pc.release();

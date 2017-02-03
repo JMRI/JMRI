@@ -60,10 +60,12 @@ public class ReporterTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes for the specific case
      * of Reporters
      */
+    @Override
     protected void createModel() {
         m = new BeanTableDataModel() {
             public static final int LASTREPORTCOL = NUMCOLUMN;
 
+            @Override
             public String getValue(String name) {
                 Object value;
                 Reporter r = reportManager.getBySystemName(name);
@@ -73,27 +75,33 @@ public class ReporterTableAction extends AbstractTableAction {
                 return (value = r.getCurrentReport()) == null ? "" : value.toString();
             }
 
+            @Override
             public Manager getManager() {
                 return reportManager;
             }
 
+            @Override
             public NamedBean getBySystemName(String name) {
                 return reportManager.getBySystemName(name);
             }
 
+            @Override
             public NamedBean getByUserName(String name) {
                 return reportManager.getByUserName(name);
             }
 
+            @Override
             protected String getMasterClassName() {
                 return getClassName();
             }
 
+            @Override
             public void clickOn(NamedBean t) {
                 // don't do anything on click; not used in this class, because 
                 // we override setValueAt
             }
 
+            @Override
             public void setValueAt(Object value, int row, int col) {
                 if (col == VALUECOL) {
                     Reporter t = (Reporter) getBySystemName(sysNameList.get(row));
@@ -107,10 +115,12 @@ public class ReporterTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public int getColumnCount() {
                 return LASTREPORTCOL + 1;
             }
 
+            @Override
             public String getColumnName(int col) {
                 if (col == VALUECOL) {
                     return Bundle.getMessage("LabelReport");
@@ -121,6 +131,7 @@ public class ReporterTableAction extends AbstractTableAction {
                 return super.getColumnName(col);
             }
 
+            @Override
             public Class<?> getColumnClass(int col) {
                 if (col == VALUECOL) {
                     return String.class;
@@ -131,6 +142,7 @@ public class ReporterTableAction extends AbstractTableAction {
                 return super.getColumnClass(col);
             }
 
+            @Override
             public boolean isCellEditable(int row, int col) {
                 if (col == LASTREPORTCOL) {
                     return false;
@@ -138,6 +150,7 @@ public class ReporterTableAction extends AbstractTableAction {
                 return super.isCellEditable(row, col);
             }
 
+            @Override
             public Object getValueAt(int row, int col) {
                 if (col == LASTREPORTCOL) {
                     Reporter t = (Reporter) getBySystemName(sysNameList.get(row));
@@ -146,6 +159,7 @@ public class ReporterTableAction extends AbstractTableAction {
                 return super.getValueAt(row, col);
             }
 
+            @Override
             public int getPreferredWidth(int col) {
                 if (col == LASTREPORTCOL) {
                     return super.getPreferredWidth(VALUECOL);
@@ -153,30 +167,36 @@ public class ReporterTableAction extends AbstractTableAction {
                 return super.getPreferredWidth(col);
             }
 
+            @Override
             public void configValueColumn(JTable table) {
                 // value column isn't button, so config is null
             }
 
+            @Override
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 return true;
                 // return (e.getPropertyName().indexOf("Report")>=0);
             }
 
+            @Override
             public JButton configureButton() {
                 log.error("configureButton should not have been called");
                 return null;
             }
 
+            @Override
             protected String getBeanType() {
                 return Bundle.getMessage("BeanNameReporter");
             }
         };
     }
 
+    @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleReporterTable"));
     }
 
+    @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.ReporterTable";
     }
@@ -194,20 +214,24 @@ public class ReporterTableAction extends AbstractTableAction {
     String userNameError = this.getClass().getName() + ".DuplicateUserName";
     jmri.UserPreferencesManager pref;
 
+    @Override
     protected void addPressed(ActionEvent e) {
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame == null) {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddReporter"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.ReporterAddEdit", true);
             ActionListener okListener = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     okPressed(e);
                 }
             };
             ActionListener cancelListener = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) { cancelPressed(e); }
             };
             ActionListener rangeListener = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     canAddRange(e);
                 }
@@ -328,10 +352,12 @@ public class ReporterTableAction extends AbstractTableAction {
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
+    @Override
     protected String getClassName() {
         return ReporterTableAction.class.getName();
     }
 
+    @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleReporterTable");
     }

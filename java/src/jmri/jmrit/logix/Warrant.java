@@ -130,6 +130,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         _runBlind = false;
     }
 
+    @Override
     public int getState() {
         if (_engineer != null) {
             return _engineer.getRunState();
@@ -146,6 +147,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         return -1;
     }
 
+    @Override
     public void setState(int state) {
     }
     
@@ -906,6 +908,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         return ret;
     }
 
+    @Override
     public void notifyThrottleFound(DccThrottle throttle) {
         if (throttle == null) {
             abortWarrant("notifyThrottleFound: null throttle(?)!");
@@ -955,6 +958,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         b.setState(b.getState() | OBlock.RUNNING);
     }
 
+    @Override
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
         abortWarrant("notifyFailedThrottleRequest address= " + address.toString() + 
                 " _runMode= " + MODES[_runMode] + " due to " + reason);
@@ -1162,6 +1166,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         return msg;
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (!(evt.getSource() instanceof NamedBean)) {
             return;
@@ -1742,6 +1747,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         super.dispose();
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameWarrant");
     }
@@ -1761,6 +1767,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             if(log.isDebugEnabled()) log.debug("CommandDelay: will wait {}ms, then Ramp to {}", startWait, speedType);
         }
 
+        @Override
         public void run() {
             synchronized(this) {
                 if (_startWait>0.0) {

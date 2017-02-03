@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
  */
 public class XBeeSensorManager extends jmri.managers.AbstractSensorManager implements IIOSampleReceiveListener{
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
@@ -38,12 +39,14 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     static private XBeeSensorManager mInstance = null;
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
         tc.getXBee().removeIOSampleListener(this);
         super.dispose();
     }
 
     // XBee specific methods
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         XBeeNode curNode = null;
         String name = addressFromSystemName(systemName);
@@ -77,6 +80,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     // IIOSampleReceiveListener methods
+    @Override
     public synchronized void ioSampleReceived(RemoteXBeeDevice remoteDevice,IOSample ioSample) {
         if (log.isDebugEnabled()) {
             log.debug("recieved io sample {} from {}",ioSample,remoteDevice);

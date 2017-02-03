@@ -262,6 +262,7 @@ public class OlcbTurnoutTest extends TestCase {
     OlcbTestInterface t;
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
 
@@ -270,6 +271,7 @@ public class OlcbTurnoutTest extends TestCase {
         t.waitForStartup();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

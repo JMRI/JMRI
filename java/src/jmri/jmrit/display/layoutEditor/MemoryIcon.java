@@ -28,6 +28,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         log.debug("MemoryIcon ctor= " + MemoryIcon.class.getName());
     }
 
+    @Override
     public void setText(String text) {
         if (text == null || text.length() == 0) {
             super.setText(defaultText);
@@ -46,6 +47,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         lBlock = lb;
     }
 
+    @Override
     public void displayState() {
         log.debug("displayState");
         if (getMemory() == null) {  // use default if not connected yet
@@ -138,6 +140,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
             popup.add(updateBlockItem);
             updateBlockItem.setSelected(updateBlockValueOnChange());
             updateBlockItem.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     updateBlockValueOnChange(updateBlockItem.isSelected());
                 }
@@ -146,6 +149,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         return super.showPopUp(popup);
     }
 
+    @Override
     public void setMemory(String pName) {
         super.setMemory(pName);
         lBlock = jmri.InstanceManager.getDefault(LayoutBlockManager.class).getBlockWithMemoryAssigned(getMemory());
@@ -161,6 +165,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         }
     }
 
+    @Override
     protected void addRosterToIcon(RosterEntry roster) {
         if (!jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() || lBlock == null) {
             super.addRosterToIcon(roster);

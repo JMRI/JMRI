@@ -181,6 +181,7 @@ public class DirectorySearcher {
             dir = d;
         }
 
+        @Override
         public void actionPerformed(ActionEvent a) {
             _addDir = dir;
             cancelLooking();
@@ -197,6 +198,7 @@ public class DirectorySearcher {
             oneDir = o;
         }
 
+        @Override
         public void actionPerformed(ActionEvent a) {
             displayMore(dir, oneDir);
         }
@@ -204,6 +206,7 @@ public class DirectorySearcher {
 
     class LActionListener implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent a) {
             keepLooking();
         }
@@ -211,6 +214,7 @@ public class DirectorySearcher {
 
     class CActionListener implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent a) {
             cancelLooking();
         }

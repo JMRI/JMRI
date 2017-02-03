@@ -119,6 +119,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         add(makeButtonPanel());
     }
 
+    @Override
     public void setToolTipText(String tip) {
         if (_dTree != null) {
             _dTree.setToolTipText(tip);
@@ -148,6 +149,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         _dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
 
         _dTree.addTreeSelectionListener(new TreeSelectionListener() {
+            @Override
             public void valueChanged(TreeSelectionEvent e) {
                 updatePanel();
             }
@@ -400,18 +402,21 @@ public class CatalogPanel extends JPanel implements MouseListener {
         JRadioButton grayButton = new JRadioButton(Bundle.getMessage("lightGray"), true);
         JRadioButton darkButton = new JRadioButton(Bundle.getMessage("darkGray"), false);
         whiteButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 _currentBackground = Color.white;
                 setBackground(_preview);
             }
         });
         grayButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 _currentBackground = _grayColor;
                 setBackground(_preview);
             }
         });
         darkButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 _currentBackground = new Color(150, 150, 150);
                 setBackground(_preview);
@@ -464,6 +469,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
 
     public class MemoryExceptionHandler implements Thread.UncaughtExceptionHandler {
 
+        @Override
         public void uncaughtException(Thread t, Throwable e) {
             _noMemory = true;
             log.error("Exception from setIcons: " + e, e);
@@ -750,6 +756,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         popup.add(new AbstractAction(Bundle.getMessage("RenameIcon")) {
             NamedIcon icon;
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 rename(icon);
             }
@@ -764,6 +771,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         popup.add(new AbstractAction(Bundle.getMessage("DeleteIcon")) {
             NamedIcon icon;
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 delete(icon);
             }
@@ -776,18 +784,23 @@ public class CatalogPanel extends JPanel implements MouseListener {
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
+    @Override
     public void mouseClicked(MouseEvent e) {
     }
 
+    @Override
     public void mouseEntered(MouseEvent e) {
     }
 
+    @Override
     public void mouseExited(MouseEvent e) {
     }
 
+    @Override
     public void mousePressed(MouseEvent e) {
     }
 
+    @Override
     public void mouseReleased(MouseEvent e) {
         if (e.isPopupTrigger()) {
             Container con = (Container) e.getSource();
@@ -812,22 +825,27 @@ public class CatalogPanel extends JPanel implements MouseListener {
             //if (log.isDebugEnabled()) log.debug("DropJTree ctor");
         }
 
+        @Override
         public void dragExit(DropTargetEvent dte) {
             //if (log.isDebugEnabled()) log.debug("DropJTree.dragExit ");
         }
 
+        @Override
         public void dragEnter(DropTargetDragEvent dtde) {
             //if (log.isDebugEnabled()) log.debug("DropJTree.dragEnter ");
         }
 
+        @Override
         public void dragOver(DropTargetDragEvent dtde) {
             //if (log.isDebugEnabled()) log.debug("DropJTree.dragOver ");
         }
 
+        @Override
         public void dropActionChanged(DropTargetDragEvent dtde) {
             //if (log.isDebugEnabled()) log.debug("DropJTree.dropActionChanged ");
         }
 
+        @Override
         public void drop(DropTargetDropEvent e) {
             try {
                 Transferable tr = e.getTransferable();

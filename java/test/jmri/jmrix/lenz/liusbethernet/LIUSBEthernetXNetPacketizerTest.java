@@ -15,6 +15,7 @@ import org.junit.Test;
 public class LIUSBEthernetXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest {
 
     @Test
+    @Override
     public void testOutbound() throws Exception {
         LIUSBEthernetXNetPacketizer c = (LIUSBEthernetXNetPacketizer)tc;
         // connect to iostream via port controller scaffold

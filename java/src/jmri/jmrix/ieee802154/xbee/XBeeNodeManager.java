@@ -92,6 +92,7 @@ public class XBeeNodeManager implements IDiscoveryListener {
     /*
      * Discovery error callback.
      */
+    @Override
     public void discoveryError(String error){
         log.error("Error durring node discovery process: {}",error);
     }
@@ -99,6 +100,7 @@ public class XBeeNodeManager implements IDiscoveryListener {
     /*
      * Discovery finished callback.
      */
+    @Override
     public void discoveryFinished(String error){
        if(error != null){
          log.error("Node discovery processed finished with error: {}", error);

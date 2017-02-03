@@ -188,6 +188,7 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
                 id);
 
         _roster.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent pce) {
                 if (pce.getPropertyName().equals("add")
                         || pce.getPropertyName().equals("remove")

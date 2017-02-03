@@ -133,6 +133,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
      *
      * @param m Message to send; will be updated with CRC
      */
+    @Override
     public void sendDCCppMessage(DCCppMessage m, DCCppListener reply) {
         // update statistics
         //transmittedMsgCount++;
@@ -201,6 +202,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
         // readline is deprecated, but there are no problems
         // with multi-byte characters here.
         @SuppressWarnings({"deprecation", "null"})
+        @Override
         public void run() {
 
             String rxLine;
@@ -252,6 +254,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     Runnable r = new Runnable() {
                         DCCppReply msgForLater = thisMsg;
 
+                        @Override
                         public void run() {
                             notifyReply(msgForLater, null);
                         }
@@ -284,6 +287,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
      */
     class XmtHandler implements Runnable {
 
+        @Override
         public void run() {
 
             while (true) {   // loop permanently

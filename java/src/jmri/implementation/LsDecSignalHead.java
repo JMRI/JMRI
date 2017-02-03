@@ -97,6 +97,7 @@ public class LsDecSignalHead extends DefaultSignalHead {
 
     @SuppressWarnings("fallthrough")
     @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @Override
     protected void updateOutput() {
         // assumes that writing a turnout to an existing state is cheap!
         if (mLit == false) {
@@ -136,6 +137,7 @@ public class LsDecSignalHead extends DefaultSignalHead {
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
      */
+    @Override
     public void dispose() {
         mRed = null;
         mYellow = null;

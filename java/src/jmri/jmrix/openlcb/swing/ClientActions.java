@@ -53,15 +53,18 @@ public class ClientActions {
 
         // create an object to add "New Sensor" buttons
         CdiPanel.GuiItemFactory factory = new CdiPanel.GuiItemFactory() {
+            @Override
             public JButton handleReadButton(JButton button) {
                 readList.add(button);
                 return button;
             }
 
+            @Override
             public JButton handleWriteButton(JButton button) {
                 return button;
             }
 
+            @Override
             public void handleGroupPaneStart(JPanel pane) {
                 this.gpane = pane;
                 evt1 = null;
@@ -70,6 +73,7 @@ public class ClientActions {
                 return;
             }
 
+            @Override
             public void handleGroupPaneEnd(JPanel pane) {
                 if (gpane != null && evt1 != null && evt2 != null && desc != null) {
                     JPanel p = new JPanel();
@@ -123,6 +127,7 @@ public class ClientActions {
                 return;
             }
 
+            @Override
             public JFormattedTextField handleEventIdTextField(JFormattedTextField field) {
                 if (evt1 == null) {
                     evt1 = field;
@@ -134,6 +139,7 @@ public class ClientActions {
                 return field;
             }
 
+            @Override
             public JTextField handleStringValue(JTextField value) {
                 desc = value;
                 return value;
@@ -156,6 +162,7 @@ public class ClientActions {
                 for (final JButton b : readList) {
 
                     ActionListener taskPerformer = new ActionListener() {
+                        @Override
                         public void actionPerformed(ActionEvent evt) {
                             target.doClick();
                         }
@@ -197,6 +204,7 @@ public class ClientActions {
                 for (final JButton b : list) {
 
                     ActionListener taskPerformer = new ActionListener() {
+                        @Override
                         public void actionPerformed(ActionEvent evt) {
                             target.doClick();
                         }

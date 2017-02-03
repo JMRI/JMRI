@@ -27,6 +27,7 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
 
     public void testMemoComparable() {
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(null, false) {
+            @Override
             long nowMSec() {
                 return 0;
             }
@@ -55,6 +56,7 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
 
     public void testMemoGetDelay() {
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(null, false) {
+            @Override
             long nowMSec() {
                 return 0;
             }
@@ -164,10 +166,12 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

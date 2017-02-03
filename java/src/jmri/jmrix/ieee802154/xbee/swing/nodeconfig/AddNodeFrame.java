@@ -48,6 +48,7 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
     /**
      * Initialize the config window
      */
+    @Override
     public void initComponents() {
         setTitle(Bundle.getMessage("AddNodeWindowTitle"));
         Container contentPane = getContentPane();
@@ -94,6 +95,7 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
         addButton.setVisible(true);
         addButton.setToolTipText(Bundle.getMessage("TipAddButton"));
         addButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 addButtonActionPerformed();
             }
@@ -105,6 +107,7 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
         cancelButton.setToolTipText(Bundle.getMessage("TipCancelButton"));
         panel4.add(cancelButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 cancelButtonActionPerformed();
             }
@@ -118,6 +121,7 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
     /**
      * Method to handle add button
      */
+    @Override
     public void addButtonActionPerformed() {
         if(nodeAddr64Field.getText().equals("") &&
            nodeAddrField.getText().equals("")) {
@@ -177,6 +181,7 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
     /**
      * Method to handle cancel button
      */
+    @Override
     public void cancelButtonActionPerformed() {
         // Reset 
         curNode = null;
@@ -187,6 +192,7 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
     }
 
     // Initilize the text boxes for the addresses.
+    @Override
     protected void initAddressBoxes() {
         nodeAddrField.setText("");
         nodeAddr64Field.setText("");

@@ -70,6 +70,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
         xbm = request;
     }
 
+    @Override
     public String toMonitorString() {
         if (xbm != null) {
             return xbm.toString();
@@ -78,6 +79,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
         }
     }
 
+    @Override
     public String toString() {
         String s = "";
         byte packet[] = xbm.getPacketData();

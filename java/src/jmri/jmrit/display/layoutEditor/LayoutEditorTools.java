@@ -183,6 +183,7 @@ public class LayoutEditorTools {
             panel2.add(new JLabel("   "));
             panel2.add(getSavedSignalHeads = new JButton(rb.getString("GetSaved")));
             getSavedSignalHeads.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     turnoutSignalsGetSaved(e);
                 }
@@ -258,6 +259,7 @@ public class LayoutEditorTools {
             panel6.setLayout(new FlowLayout());
             panel6.add(changeSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
             changeSignalIcon.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     signalFrame.setVisible(true);
                 }
@@ -266,6 +268,7 @@ public class LayoutEditorTools {
             panel6.add(new JLabel("  "));
             panel6.add(setSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSignalsDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setSignalsDonePressed(e);
                 }
@@ -284,6 +287,7 @@ public class LayoutEditorTools {
 
             panel6.add(setSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSignalsCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setSignalsCancelPressed(e);
                 }
@@ -291,6 +295,7 @@ public class LayoutEditorTools {
             setSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     setSignalsCancelPressed(null);
                 }
@@ -2012,6 +2017,7 @@ public class LayoutEditorTools {
             panel2.add(new JLabel("   "));
             panel2.add(getAnchorSavedSignalHeads = new JButton(rb.getString("GetSaved")));
             getAnchorSavedSignalHeads.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     getSavedAnchorSignals(e);
                 }
@@ -2064,6 +2070,7 @@ public class LayoutEditorTools {
             panel6.setLayout(new FlowLayout());
             panel6.add(changeSignalAtBoundaryIcon = new JButton(rb.getString("ChangeSignalIcon")));
             changeSignalAtBoundaryIcon.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     signalFrame.setVisible(true);
                 }
@@ -2072,6 +2079,7 @@ public class LayoutEditorTools {
             panel6.add(new JLabel("  "));
             panel6.add(setSignalsAtBoundaryDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSignalsAtBoundaryDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setSignalsAtBoundaryDonePressed(e);
                 }
@@ -2090,6 +2098,7 @@ public class LayoutEditorTools {
 
             panel6.add(setSignalsAtBoundaryCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSignalsAtBoundaryCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setSignalsAtBoundaryCancelPressed(e);
                 }
@@ -2097,6 +2106,7 @@ public class LayoutEditorTools {
             setSignalsAtBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAtBoundaryFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     setSignalsAtBoundaryCancelPressed(null);
                 }
@@ -2620,6 +2630,7 @@ public class LayoutEditorTools {
             panel2.add(new JLabel("   "));
             panel2.add(getSavedXoverSignalHeads = new JButton(rb.getString("GetSaved")));
             getSavedXoverSignalHeads.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     xoverTurnoutSignalsGetSaved(e);
                 }
@@ -2767,6 +2778,7 @@ public class LayoutEditorTools {
             panel6.setLayout(new FlowLayout());
             panel6.add(changeXoverSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
             changeXoverSignalIcon.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     signalFrame.setVisible(true);
                 }
@@ -2775,6 +2787,7 @@ public class LayoutEditorTools {
             panel6.add(new JLabel("  "));
             panel6.add(setXoverSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setXoverSignalsDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setXoverSignalsDonePressed(e);
                 }
@@ -2793,6 +2806,7 @@ public class LayoutEditorTools {
 
             panel6.add(setXoverSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setXoverSignalsCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setXoverSignalsCancelPressed(e);
                 }
@@ -2800,6 +2814,7 @@ public class LayoutEditorTools {
             setXoverSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAtXoverFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     setXoverSignalsCancelPressed(null);
                 }
@@ -3747,6 +3762,7 @@ public class LayoutEditorTools {
             panel2.add(new JLabel("   "));
             panel2.add(getSavedXingSignalHeads = new JButton(rb.getString("GetSaved")));
             getSavedXingSignalHeads.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     xingSignalsGetSaved(e);
                 }
@@ -3822,6 +3838,7 @@ public class LayoutEditorTools {
             panel6.setLayout(new FlowLayout());
             panel6.add(changeXingSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
             changeXingSignalIcon.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     signalFrame.setVisible(true);
                 }
@@ -3830,6 +3847,7 @@ public class LayoutEditorTools {
             panel6.add(new JLabel("  "));
             panel6.add(setXingSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setXingSignalsDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setXingSignalsDonePressed(e);
                 }
@@ -3848,6 +3866,7 @@ public class LayoutEditorTools {
 
             panel6.add(setXingSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setXingSignalsCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setXingSignalsCancelPressed(e);
                 }
@@ -3855,6 +3874,7 @@ public class LayoutEditorTools {
             setXingSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAtXingFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     setXingSignalsCancelPressed(null);
                 }
@@ -4593,6 +4613,7 @@ public class LayoutEditorTools {
             panel2.add(new JLabel("     "));
             panel2.add(getSavedTToTSignalHeads = new JButton(rb.getString("GetSaved")));
             getSavedTToTSignalHeads.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     tToTTurnoutSignalsGetSaved(e);
                 }
@@ -4748,6 +4769,7 @@ public class LayoutEditorTools {
             panel6.setLayout(new FlowLayout());
             panel6.add(changeTToTSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
             changeTToTSignalIcon.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     signalFrame.setVisible(true);
                 }
@@ -4756,6 +4778,7 @@ public class LayoutEditorTools {
             panel6.add(new JLabel("  "));
             panel6.add(setTToTSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setTToTSignalsDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setTToTSignalsDonePressed(e);
                 }
@@ -4774,6 +4797,7 @@ public class LayoutEditorTools {
 
             panel6.add(setTToTSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setTToTSignalsCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setTToTSignalsCancelPressed(e);
                 }
@@ -4781,6 +4805,7 @@ public class LayoutEditorTools {
             setTToTSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAtTToTFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     setTToTSignalsCancelPressed(null);
                 }
@@ -6178,6 +6203,7 @@ public class LayoutEditorTools {
             panel2.add(new JLabel("     "));
             panel2.add(getSaved3WaySignalHeads = new JButton(rb.getString("GetSaved")));
             getSaved3WaySignalHeads.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     getSaved3WaySignals(e);
                 }
@@ -6295,6 +6321,7 @@ public class LayoutEditorTools {
             panel6.setLayout(new FlowLayout());
             panel6.add(change3WaySignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
             change3WaySignalIcon.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     signalFrame.setVisible(true);
                 }
@@ -6303,6 +6330,7 @@ public class LayoutEditorTools {
             panel6.add(new JLabel("  "));
             panel6.add(set3WaySignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
             set3WaySignalsDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     set3WaySignalsDonePressed(e);
                 }
@@ -6321,6 +6349,7 @@ public class LayoutEditorTools {
 
             panel6.add(set3WaySignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             set3WaySignalsCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     set3WaySignalsCancelPressed(e);
                 }
@@ -6328,6 +6357,7 @@ public class LayoutEditorTools {
             set3WaySignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAt3WayFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     set3WaySignalsCancelPressed(null);
                 }
@@ -7474,6 +7504,7 @@ public class LayoutEditorTools {
             panel2.add(new JLabel("   "));
             panel2.add(getAnchorSavedSensors = new JButton(rb.getString("GetSaved")));
             getAnchorSavedSensors.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     getSavedAnchorSensors(e);
                 }
@@ -7523,6 +7554,7 @@ public class LayoutEditorTools {
             panel6.setLayout(new FlowLayout());
             panel6.add(changeSensorAtBoundaryIcon = new JButton(rb.getString("ChangeSensorIcon")));
             changeSensorAtBoundaryIcon.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     sensorFrame.setVisible(true);
                 }
@@ -7531,6 +7563,7 @@ public class LayoutEditorTools {
             panel6.add(new JLabel("  "));
             panel6.add(setSensorsAtBoundaryDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSensorsAtBoundaryDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setSensorsAtBoundaryDonePressed(e);
                 }
@@ -7549,6 +7582,7 @@ public class LayoutEditorTools {
 
             panel6.add(setSensorsAtBoundaryCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSensorsAtBoundaryCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setSensorsAtBoundaryCancelPressed(e);
                 }
@@ -7556,6 +7590,7 @@ public class LayoutEditorTools {
             setSensorsAtBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6, BorderLayout.SOUTH);
             setSensorsAtBoundaryFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     setSensorsAtBoundaryCancelPressed(null);
                 }
@@ -8023,6 +8058,7 @@ public class LayoutEditorTools {
             panel2.add(new JLabel("   "));
             panel2.add(getAnchorSavedSignalMasts = new JButton(rb.getString("GetSaved")));
             getAnchorSavedSignalMasts.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     getSavedAnchorSignalMasts(e);
                 }
@@ -8071,6 +8107,7 @@ public class LayoutEditorTools {
             panel6.setLayout(new FlowLayout());
             panel6.add(setSignalMastsAtBoundaryDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSignalMastsAtBoundaryDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setSignalMastsAtBoundaryDonePressed(e);
                 }
@@ -8089,6 +8126,7 @@ public class LayoutEditorTools {
 
             panel6.add(setSignalMastsAtBoundaryCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSignalMastsAtBoundaryCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setSignalMastsAtBoundaryCancelPressed(e);
                 }
@@ -8096,6 +8134,7 @@ public class LayoutEditorTools {
             setSignalMastsAtBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6, BorderLayout.SOUTH);
             setSignalMastsAtBoundaryFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     setSignalMastsAtBoundaryCancelPressed(null);
                 }
@@ -9204,6 +9243,7 @@ public class LayoutEditorTools {
             panel2.add(new JLabel("   "));
             panel2.add(getSavedSignalMasts = new JButton(rb.getString("GetSaved")));
             getSavedSignalMasts.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     turnoutSignalMastsGetSaved(e);
                 }
@@ -9245,6 +9285,7 @@ public class LayoutEditorTools {
             panel6.add(new JLabel("  "));
             panel6.add(setSignalMastsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSignalMastsDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setSignalMastsDonePressed(e);
                 }
@@ -9263,6 +9304,7 @@ public class LayoutEditorTools {
 
             panel6.add(setSignalMastsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSignalMastsCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setSignalMastsCancelPressed(e);
                 }
@@ -9270,6 +9312,7 @@ public class LayoutEditorTools {
             setSignalMastsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             signalMastsJmriFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
 //					setSignalMastsCancelPressed(null);
                 }
@@ -9771,6 +9814,7 @@ public class LayoutEditorTools {
             panel2.add(new JLabel("   "));
             panel2.add(getSavedSlipSignalMasts = new JButton(rb.getString("GetSaved")));
             getSavedSlipSignalMasts.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     slipSignalMastsGetSaved(e);
                 }
@@ -9814,6 +9858,7 @@ public class LayoutEditorTools {
             panel6.add(new JLabel("  "));
             panel6.add(setSlipSignalMastsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSlipSignalMastsDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setSlipSignalMastsDonePressed(e);
                 }
@@ -9821,6 +9866,7 @@ public class LayoutEditorTools {
             setSlipSignalMastsDone.setToolTipText(rb.getString("SignalDoneHint"));
             panel6.add(setSlipSignalMastsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSlipSignalMastsCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setSlipSignalMastsCancelPressed(e);
                 }
@@ -9828,6 +9874,7 @@ public class LayoutEditorTools {
             setSlipSignalMastsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             signalMastsAtSlipFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     setSlipSignalMastsCancelPressed(null);
                 }
@@ -10271,6 +10318,7 @@ public class LayoutEditorTools {
             panel2.add(new JLabel("   "));
             panel2.add(getSavedXingSignalMasts = new JButton(rb.getString("GetSaved")));
             getSavedXingSignalMasts.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     xingSignalMastsGetSaved(e);
                 }
@@ -10314,6 +10362,7 @@ public class LayoutEditorTools {
             panel6.add(new JLabel("  "));
             panel6.add(setXingSignalMastsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setXingSignalMastsDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setXingSignalMastsDonePressed(e);
                 }
@@ -10321,6 +10370,7 @@ public class LayoutEditorTools {
             setXingSignalMastsDone.setToolTipText(rb.getString("SignalDoneHint"));
             panel6.add(setXingSignalMastsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setXingSignalMastsCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setXingSignalMastsCancelPressed(e);
                 }
@@ -10328,6 +10378,7 @@ public class LayoutEditorTools {
             setXingSignalMastsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             signalMastsAtXingFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     setXingSignalMastsCancelPressed(null);
                 }
@@ -10763,6 +10814,7 @@ public class LayoutEditorTools {
             panel2.add(new JLabel("   "));
             panel2.add(getSavedSensors = new JButton(rb.getString("GetSaved")));
             getSavedSensors.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     turnoutSensorsGetSaved(e);
                 }
@@ -10804,6 +10856,7 @@ public class LayoutEditorTools {
             panel6.setLayout(new FlowLayout());
             panel6.add(changeSensorIcon = new JButton(rb.getString("ChangeSensorIcon")));
             changeSensorIcon.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     turnoutSensorFrame.setVisible(true);
                 }
@@ -10812,6 +10865,7 @@ public class LayoutEditorTools {
             panel6.add(new JLabel("  "));
             panel6.add(setSensorsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSensorsDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setSensorsDonePressed(e);
                 }
@@ -10819,6 +10873,7 @@ public class LayoutEditorTools {
             setSensorsDone.setToolTipText(rb.getString("SensorDoneHint"));
             panel6.add(setSensorsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSensorsCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setSensorsCancelPressed(e);
                 }
@@ -10826,6 +10881,7 @@ public class LayoutEditorTools {
             setSensorsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSensorsFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     setSensorsCancelPressed(null);
                 }
@@ -11301,6 +11357,7 @@ public class LayoutEditorTools {
             panel2.add(new JLabel("   "));
             panel2.add(getSavedXingSensors = new JButton(rb.getString("GetSaved")));
             getSavedXingSensors.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     xingSensorsGetSaved(e);
                 }
@@ -11342,6 +11399,7 @@ public class LayoutEditorTools {
             panel6.setLayout(new FlowLayout());
             panel6.add(changeSensorXingIcon = new JButton(rb.getString("ChangeSensorIcon")));
             changeSensorXingIcon.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     sensorXingFrame.setVisible(true);
                 }
@@ -11351,6 +11409,7 @@ public class LayoutEditorTools {
             panel6.add(new JLabel("  "));
             panel6.add(setXingSensorsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setXingSensorsDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setXingSensorsDonePressed(e);
                 }
@@ -11358,6 +11417,7 @@ public class LayoutEditorTools {
             setXingSensorsDone.setToolTipText(rb.getString("SensorDoneHint"));
             panel6.add(setXingSensorsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setXingSensorsCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setXingSensorsCancelPressed(e);
                 }
@@ -11365,6 +11425,7 @@ public class LayoutEditorTools {
             setXingSensorsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             sensorsAtXingFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     setXingSensorsCancelPressed(null);
                 }
@@ -11829,6 +11890,7 @@ public class LayoutEditorTools {
             panel2.add(new JLabel("   "));
             panel2.add(getSavedSlipSensors = new JButton(rb.getString("GetSaved")));
             getSavedSlipSensors.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     slipSensorsGetSaved(e);
                 }
@@ -11879,6 +11941,7 @@ public class LayoutEditorTools {
             panel6.setLayout(new FlowLayout());
             panel6.add(changeSensorSlipIcon = new JButton(rb.getString("ChangeSensorIcon")));
             changeSensorSlipIcon.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     sensorSlipFrame.setVisible(true);
                 }
@@ -11888,6 +11951,7 @@ public class LayoutEditorTools {
             panel6.add(new JLabel("  "));
             panel6.add(setSlipSensorsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSlipSensorsDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setSlipSensorsDonePressed(e);
                 }
@@ -11895,6 +11959,7 @@ public class LayoutEditorTools {
             setSlipSensorsDone.setToolTipText(rb.getString("SensorDoneHint"));
             panel6.add(setSlipSensorsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSlipSensorsCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setSlipSensorsCancelPressed(e);
                 }
@@ -11902,6 +11967,7 @@ public class LayoutEditorTools {
             setSlipSensorsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             sensorsAtSlipFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     setSlipSensorsCancelPressed(null);
                 }
@@ -12457,6 +12523,7 @@ public class LayoutEditorTools {
                 slipNameCombo.setSelectedIndex(0);
             }
             slipNameCombo.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     for (LayoutSlip slip : layoutEditor.slipList) {
                         if (slip.getDisplayName().equals(slipNameCombo.getSelectedItem())) {
@@ -12636,6 +12703,7 @@ public class LayoutEditorTools {
             panel6.setLayout(new FlowLayout());
             panel6.add(changeTToTSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
             changeTToTSignalIcon.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     signalFrame.setVisible(true);
                 }
@@ -12644,6 +12712,7 @@ public class LayoutEditorTools {
             panel6.add(new JLabel("  "));
             panel6.add(setSlipSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSlipSignalsDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setSlipSignalsDonePressed(e);
                 }
@@ -12651,6 +12720,7 @@ public class LayoutEditorTools {
             setSlipSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
             panel6.add(setSlipSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSlipSignalsCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setSlipSignalsCancelPressed(e);
                 }
@@ -12658,6 +12728,7 @@ public class LayoutEditorTools {
             setSlipSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAtSlipFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     setSlipSignalsCancelPressed(null);
                 }

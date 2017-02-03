@@ -77,6 +77,7 @@ public class AcelaLight extends AbstractLight {
     /**
      * Return the current state of this Light
      */
+    @Override
     public int getState() {
         return mState;
     }
@@ -87,6 +88,7 @@ public class AcelaLight extends AbstractLight {
      * AcelaNode), a Transmit packet will be sent before this Node is next
      * polled.
      */
+    @Override
     public void setState(int newState) {
         AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName,_memo);
 

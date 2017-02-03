@@ -33,6 +33,7 @@ public class SprogTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
 
     // The minimal setup for log4J
     @Before
+   @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         // prepare an interface

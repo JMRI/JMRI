@@ -46,14 +46,17 @@ public class DccTurnoutTest extends AbstractTurnoutTestBase {
 
         java.util.ArrayList<byte[]> outbound = new java.util.ArrayList<byte[]>();
 
+        @Override
         public void sendPacket(byte[] packet, int repeats) {
             outbound.add(packet);
         }
 
+        @Override
         public String getUserName() {
             return "";
         }
 
+        @Override
         public String getSystemPrefix() {
             return "";
         }

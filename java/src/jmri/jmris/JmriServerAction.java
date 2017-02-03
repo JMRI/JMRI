@@ -18,6 +18,7 @@ public class JmriServerAction extends AbstractAction {
         this("Start Jmri Server");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         JmriServerFrame f = new JmriServerFrame();

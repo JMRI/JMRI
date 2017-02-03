@@ -175,6 +175,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         JPanel panel = new JPanel();
         JButton nxButton = new JButton(Bundle.getMessage("CreateNXWarrant"));
         nxButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 nxAction();
             }
@@ -190,6 +191,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         panel.add(_status);
         JButton haltAllButton = new JButton(Bundle.getMessage("HaltAllTrains"));
         haltAllButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 haltAllAction();
             }
@@ -212,6 +214,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         menuBar.add(fileMenu);
         JMenu warrantMenu = new JMenu(Bundle.getMessage("MenuWarrant"));
         warrantMenu.add(new AbstractAction(Bundle.getMessage("ConcatWarrants")) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 concatMenuAction();
             }
@@ -220,6 +223,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         warrantMenu.add(WarrantTableAction._trackerTable);
         warrantMenu.add(new AbstractAction(Bundle.getMessage("CreateNXWarrant")) {
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 nxAction();
             }
@@ -274,6 +278,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         panel.add(pp);
         JButton concatButton = new JButton(Bundle.getMessage("Concatenate"));
         concatButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 concatenate();
             }
@@ -425,6 +430,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         return null;
     }
 
+    @Override
     public void mouseClicked(MouseEvent event) {
         javax.swing.JPopupMenu popup = new javax.swing.JPopupMenu();
         for (int i = _statusHistory.size() - 1; i >= 0; i--) {
@@ -433,15 +439,19 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         popup.show(_status, 0, 0);
     }
 
+    @Override
     public void mousePressed(MouseEvent event) {
     }
 
+    @Override
     public void mouseEntered(MouseEvent event) {
     }
 
+    @Override
     public void mouseExited(MouseEvent event) {
     }
 
+    @Override
     public void mouseReleased(MouseEvent event) {
     }
 

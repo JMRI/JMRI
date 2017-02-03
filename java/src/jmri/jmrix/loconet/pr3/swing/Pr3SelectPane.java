@@ -19,10 +19,12 @@ import org.slf4j.LoggerFactory;
   */
 public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements LocoNetListener {
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.loconet.pr3.swing.Pr3Select"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemPr3ModeSelect"));
     }
@@ -34,6 +36,7 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
 
         JButton b = new JButton(Bundle.getMessage("ButtonPr2Mode"));
         b.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 selectPR2mode();
             }
@@ -42,6 +45,7 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
 
         b = new JButton(Bundle.getMessage("ButtonMs100Mode"));
         b.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 selectMS100mode();
             }
@@ -51,6 +55,7 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
 
     }
 
+    @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
 
@@ -93,6 +98,7 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         memo.getLnTrafficController().sendLocoNetMessage(msg);
     }
 
+    @Override
     public void message(LocoNetMessage msg) {
         if ((msg.getOpCode() == LnConstants.OPC_PEER_XFER)
                 && (msg.getElement(1) == 0x10)

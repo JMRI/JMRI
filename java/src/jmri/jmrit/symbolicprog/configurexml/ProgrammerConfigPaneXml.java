@@ -30,6 +30,7 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
      * @param o Object to store, of type PositionableLabel
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         ProgrammerConfigPane p = (ProgrammerConfigPane) o;
         Element programmer = new Element("programmer");
@@ -78,6 +79,7 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
      * @param element Top level Element to unpack.
      * @param o       ignored
      */
+    @Override
     public void load(Element element, Object o) {
         log.warn("unexpected call of 2nd load form");
     }

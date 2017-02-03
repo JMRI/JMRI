@@ -31,10 +31,12 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
         lBlock.addPropertyChangeListener(this);
     }
 
+    @Override
     public int getRowCount() {
         return lBlock.getNumberOfNeighbours();
     }
 
+    @Override
     public int getColumnCount() {
         return NUMCOL;
     }
@@ -75,6 +77,7 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
         return false;
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("length")) {
             // a new NamedBean is available in the manager
@@ -98,6 +101,7 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
     /**
      * Provides the empty String if attribute doesn't exist.
      */
+    @Override
     public Object getValueAt(int row, int col) {
         // get roster entry for row
         if (lBlock == null) {

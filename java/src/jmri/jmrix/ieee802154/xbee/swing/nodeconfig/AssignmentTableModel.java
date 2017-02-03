@@ -47,10 +47,12 @@ public class AssignmentTableModel extends AbstractTableModel {
       userColumn.setResizable(true);
    }
 
+   @Override
    public String getColumnName(int c) {
       return assignmentTableColumnNames[c];
    }
 
+   @Override
    public Class<?> getColumnClass(int c) {
       if (c == BIT_COLUMN) {
          return Integer.class;
@@ -59,18 +61,22 @@ public class AssignmentTableModel extends AbstractTableModel {
       }
    }
 
+   @Override
    public boolean isCellEditable(int r, int c) {
       return false;
    }
 
+   @Override
    public int getColumnCount() {
       return 3;
    }
 
+   @Override
    public int getRowCount() {
       return 8;
    }
 
+   @Override
    public Object getValueAt(int r, int c) {
       Integer pin = Integer.valueOf(r);
       try {
@@ -104,6 +110,7 @@ public class AssignmentTableModel extends AbstractTableModel {
      }
   }
 
+   @Override
   public void setValueAt(Object type, int r, int c) {
      // nothing is stored here
   }

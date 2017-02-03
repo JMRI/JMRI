@@ -110,6 +110,7 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
     /**
      * request an update on status by sending an XBee message
      */
+    @Override
     public void requestUpdateFromLayout() {
         // Request the sensor status from the XBee Node this sensor is
         // attached to.  
@@ -133,6 +134,7 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
 
 
     // IIOSampleReceiveListener methods
+    @Override
     public synchronized void ioSampleReceived(RemoteXBeeDevice remoteDevice,IOSample ioSample) {
         if (log.isDebugEnabled()) {
             log.debug("recieved io sample {} from {}",ioSample,remoteDevice);
@@ -152,6 +154,7 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
         return;
     }
 
+    @Override
     public void dispose() {
         tc.getXBee().removeIOSampleListener(this);
         super.dispose();

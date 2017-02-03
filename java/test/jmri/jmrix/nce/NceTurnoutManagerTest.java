@@ -33,6 +33,7 @@ public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestB
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
+    @Override
     public String getSystemName(int n) {
         return "NT" + n;
     }

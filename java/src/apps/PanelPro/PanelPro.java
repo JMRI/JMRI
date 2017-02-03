@@ -41,23 +41,28 @@ public class PanelPro extends Apps {
         super(p);
     }
 
+    @Override
     protected String logo() {
         return "resources/PanelPro.gif";
     }
 
+    @Override
     protected String mainWindowHelpID() {
         return "package.apps.PanelPro.PanelPro";
     }
 
+    @Override
     protected String line1() {
         return MessageFormat.format(Bundle.getMessage("PanelProVersionCredit"),
                 new Object[]{jmri.Version.name()});
     }
 
+    @Override
     protected String line2() {
         return "http://jmri.org/PanelPro ";
     }
 
+    @Override
     protected JPanel statusPanel() {
         JPanel j = new JPanel();
         j.setLayout(new BoxLayout(j, BoxLayout.Y_AXIS));
@@ -65,6 +70,7 @@ public class PanelPro extends Apps {
 
         // Buttons
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Apps.handleQuit();
             }

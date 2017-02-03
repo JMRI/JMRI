@@ -31,12 +31,15 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
         }
 
         // methods removed for testing
+        @Override
         protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
         } // don't care about timeout
 
+        @Override
         protected void reportReceiveLoopException(Exception e) {
         }
 
+        @Override
         protected void portWarn(Exception e) {
         }
     }

@@ -50,6 +50,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
     public String getTitle(String menuTitle) { return Bundle.getMessage("TitleLoader"); }
 
+    @Override
     public void initComponents(CanSystemConnectionMemo memo) throws Exception {
         this.memo = memo;
         this.connection = memo.get(Connection.class);
@@ -131,9 +132,11 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         Integer ispace = Integer.valueOf(spaceField.getText());
         long addr = 0;
         loaderClient.doLoad(nid,destNodeID(),ispace,addr,fdata, new LoaderStatusReporter() {
+            @Override
             public void onProgress(float percent) {
                 updateGUI(Math.round(percent));
             }
+            @Override
             public void onDone(int errorCode, String errorString) {
                 if(errorCode==0) {
                     updateGUI(100); //draw bar to 100%

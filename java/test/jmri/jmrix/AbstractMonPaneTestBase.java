@@ -29,7 +29,9 @@ public abstract class AbstractMonPaneTestBase {
     @Before
     public void setUp(){
         pane = new AbstractMonPane() {
+            @Override
             public String getTitle() { return "title"; }
+            @Override
             protected void init() {}
         };
     }

@@ -108,6 +108,7 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
@@ -123,6 +124,7 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
         assertNotNull("LRouteTableAction is null!", _lRouteTable);        // test has begun
         _logixTable = new LogixTableAction() {
             // skip dialog box if in edit mode, just assume OK pressed
+            @Override
             boolean checkEditConditional() {
                 if (inEditConditionalMode) {
                     return true;
@@ -151,6 +153,7 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
         }
     }
 
+    @Override
     protected void tearDown() throws Exception {
         // now close action window
         TestHelper.disposeWindow(_lRouteTable.f, this);

@@ -57,10 +57,12 @@ public class DefaultRailComTest {
     public void testHasBeenSeen() throws InterruptedException {
         RailCom r = new DefaultRailCom("ID0413276BC1");
         Reporter rep = new AbstractReporter("IR1") {
+            @Override
             public int getState() {
                 return state;
             }
 
+            @Override
             public void setState(int s) {
                 state = s;
             }

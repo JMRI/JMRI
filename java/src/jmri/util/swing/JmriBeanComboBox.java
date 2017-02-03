@@ -34,6 +34,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         setKeySelectionManager(new beanSelectionManager());
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("length")) {
             // a new NamedBean is available in the manager
@@ -301,6 +302,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         String pattern = "";
 
         // FIXME: What is the correct type for the combo model here? This class may need refactored significantly to fix this?
+        @Override
         public int selectionForKey(char aKey, @SuppressWarnings("rawtypes") javax.swing.ComboBoxModel model) {
             // Find index of selected item
             int selIx = 01;

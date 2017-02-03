@@ -49,6 +49,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // no replies expected, don't wait for them
+    @Override
     public boolean replyExpected() {
         return false;
     }

@@ -36,14 +36,17 @@ public class OBlockManager extends AbstractManager
         super();
     }
 
+    @Override
     public int getXMLOrder() {
         return jmri.Manager.OBLOCKS;
     }
 
-    @Nonnull public String getSystemPrefix() {
+    @Nonnull@Override
+ public String getSystemPrefix() {
         return "O";
     }
 
+    @Override
     public char typeLetter() {
         return 'B';
     }
@@ -133,6 +136,7 @@ public class OBlockManager extends AbstractManager
         return (_instance);
     }
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameOBlock");
     }

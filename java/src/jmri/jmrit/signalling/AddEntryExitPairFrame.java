@@ -36,6 +36,7 @@ public class AddEntryExitPairFrame extends jmri.util.JmriJFrame {
         JMenuItem options = new JMenuItem(Bundle.getMessage("MenuOptions")); // reuse existing key in jmrit.Bundle
         menuBar.add(options);
         options.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 nxPanel.optionWindow(event);
             }

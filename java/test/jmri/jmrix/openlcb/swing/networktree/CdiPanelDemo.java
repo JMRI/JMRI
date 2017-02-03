@@ -43,6 +43,7 @@ public class CdiPanelDemo {
 
         m.initComponents(demoRepFromSample(SampleFactory.getBasicSample()),
                 new CdiPanel.GuiItemFactory() {
+                    @Override
                     public JButton handleReadButton(JButton button) {
                         //System.out.println("process button");
                         button.setBorder(BorderFactory.createLineBorder(java.awt.Color.yellow));
@@ -100,6 +101,7 @@ public class CdiPanelDemo {
 
         m.initComponents(demoRepFromFile(new File(fileName)),
                 new CdiPanel.GuiItemFactory() {
+                    @Override
                     public JButton handleReadButton(JButton button) {
                         //System.out.println("process button");
                         button.setBorder(BorderFactory.createLineBorder(java.awt.Color.yellow));

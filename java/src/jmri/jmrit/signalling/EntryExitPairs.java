@@ -122,6 +122,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         glassPane.setOpaque(false);
         glassPane.setLayout(null);
         glassPane.addMouseListener(new MouseAdapter() {
+            @Override
             public void mousePressed(MouseEvent e) {
                 e.consume();
             }
@@ -193,6 +194,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         return sourcePoint.getRefLocation();
     }
 
+    @Override
     public int getXMLOrder() {
         return ENTRYEXIT;
     }
@@ -207,10 +209,12 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         return null;
     }
 
+    @Override
     public NamedBean getBeanBySystemName(String systemName) {
         return getBySystemName(systemName);
     }
 
+    @Override
     public NamedBean getBeanByUserName(String userName) {
         for (Source e : nxpair.values()) {
             DestinationPoints pd = e.getByUserName(userName);
@@ -221,6 +225,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         return null;
     }
 
+    @Override
     public NamedBean getNamedBean(String name) {
         NamedBean b = getBeanByUserName(name);
         if (b != null) {
@@ -229,34 +234,42 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         return getBeanBySystemName(name);
     }
 
+    @Override
     public String getSystemPrefix() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
     public char typeLetter() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
     public String makeSystemName(String s) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
     public String[] getSystemNameArray() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
     public List<String> getSystemNameList() {
         return getEntryExitList();
     }
 
+    @Override
     public List<NamedBean> getNamedBeanList() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
     public void register(NamedBean n) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
     public void deregister(NamedBean n) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -269,6 +282,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         return routeClearOption;
     }
 
+    @Override
     public void dispose() {
     }
 
@@ -431,6 +445,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     }
 
     protected PropertyChangeListener propertyDestinationListener = new PropertyChangeListener() {
+        @Override
         public void propertyChange(PropertyChangeEvent e) {
             ((DestinationPoints) e.getSource()).removePropertyChangeListener(this);
             if (e.getPropertyName().equals("active")) {
@@ -781,6 +796,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     }
 
     javax.swing.Timer checkTimer = new javax.swing.Timer(10000, new java.awt.event.ActionListener() {
+        @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
             checkRoute();
         }
@@ -818,10 +834,12 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
+    @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
@@ -873,6 +891,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     }
 
     protected PropertyChangeListener propertyBlockManagerListener = new PropertyChangeListener() {
+        @Override
         public void propertyChange(PropertyChangeEvent e) {
             if (e.getPropertyName().equals("topology")) {
                 //boolean newValue = new Boolean.parseBoolean(String.valueOf(e.getNewValue()));
@@ -896,18 +915,22 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
 
     java.beans.VetoableChangeSupport vcs = new java.beans.VetoableChangeSupport(this);
 
+    @Override
     public synchronized void addVetoableChangeListener(java.beans.VetoableChangeListener l) {
         vcs.addVetoableChangeListener(l);
     }
 
+    @Override
     public synchronized void removeVetoableChangeListener(java.beans.VetoableChangeListener l) {
         vcs.removeVetoableChangeListener(l);
     }
 
+    @Override
     public void deleteBean(NamedBean bean, String property) throws java.beans.PropertyVetoException {
 
     }
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameTransit");
     }

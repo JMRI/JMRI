@@ -408,12 +408,14 @@ public class TrackSegment {
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
         popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 editTrackSegment();
             }
         });
         popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 layoutEditor.removeTrackSegment(instance);
                 remove();
@@ -423,16 +425,19 @@ public class TrackSegment {
         JMenu lineType = new JMenu(rb.getString("ChangeTo"));
         lineType.add(new AbstractAction(Bundle.getMessage("Line")) {
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 changeType(0);
             }
         });
         lineType.add(new AbstractAction(Bundle.getMessage("Circle")) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 changeType(1);
             }
         });
         lineType.add(new AbstractAction(Bundle.getMessage("Ellipse")) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 changeType(2);
             }
@@ -441,6 +446,7 @@ public class TrackSegment {
         if (getArc()) {
             popup.add(new AbstractAction(rb.getString("FlipAngle")) {
 
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     flipAngle();
                 }
@@ -448,12 +454,14 @@ public class TrackSegment {
             if (hideConstructionLines()) {
                 popup.add(new AbstractAction(rb.getString("ShowConstruct")) {
 
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         hideConstructionLines(SHOWCON);
                     }
                 });
             } else {
                 popup.add(new AbstractAction(rb.getString("HideConstruct")) {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         hideConstructionLines(HIDECON);
                     }
@@ -462,6 +470,7 @@ public class TrackSegment {
         }
         if ((!blockName.equals("")) && (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled())) {
             popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
                     routeTableAction.actionPerformed(e);
@@ -594,6 +603,7 @@ public class TrackSegment {
             // Edit Block
             panel5.add(segmentEditBlock = new JButton(Bundle.getMessage("EditBlock", "")));
             segmentEditBlock.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     segmentEditBlockPressed(e);
                 }
@@ -601,6 +611,7 @@ public class TrackSegment {
             segmentEditBlock.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
             panel5.add(segmentEditDone = new JButton(Bundle.getMessage("ButtonDone")));
             segmentEditDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     segmentEditDonePressed(e);
                 }
@@ -620,6 +631,7 @@ public class TrackSegment {
             // Cancel
             panel5.add(segmentEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             segmentEditCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     segmentEditCancelPressed(e);
                 }
@@ -642,6 +654,7 @@ public class TrackSegment {
         blockNameComboBox.getEditor().setItem(blockName);
 
         editTrackSegmentFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 segmentEditCancelPressed(null);
             }

@@ -161,15 +161,18 @@ public class DccSignalHeadTest {
         JUnitUtil.initInternalTurnoutManager();
 
         CommandStation c = new CommandStation() {
+            @Override
             public void sendPacket(byte[] packet, int repeats) {
                 lastSentPacket = packet;
                 sentPacketCount++;
             }
 
+            @Override
             public String getUserName() {
                 return null;
             }
 
+            @Override
             public String getSystemPrefix() {
                 return "I";
             }

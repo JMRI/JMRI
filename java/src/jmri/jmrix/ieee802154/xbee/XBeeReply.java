@@ -55,10 +55,12 @@ public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
         setBinary(true);
     }
 
+    @Override
     public String toMonitorString() {
         return xbresponse.toPrettyString();
     }
 
+    @Override
     public String toString() {
         return xbresponse.toString();
     }

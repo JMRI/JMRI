@@ -92,6 +92,7 @@ public class ProgModePane extends ProgModeSelector {
      *
      * @return Always true in this implementation
      */
+    @Override
     public boolean isSelected() {
         return true;
     }
@@ -99,6 +100,7 @@ public class ProgModePane extends ProgModeSelector {
     /**
      * Get the configured programmer
      */
+    @Override
     public Programmer getProgrammer() {
         if (mServicePane!=null && mServicePane.isSelected()) {
             return mServicePane.getProgrammer();
@@ -109,6 +111,7 @@ public class ProgModePane extends ProgModeSelector {
         }
     }
 
+    @Override
     public void dispose() {
         if (mServicePane != null) {
             mServicePane.dispose();

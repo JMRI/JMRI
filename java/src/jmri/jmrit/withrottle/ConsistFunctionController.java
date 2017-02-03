@@ -26,6 +26,7 @@ public class ConsistFunctionController implements ThrottleListener {
         rosterLoco = re;
     }
 
+    @Override
     public void notifyThrottleFound(DccThrottle t) {
         if (log.isDebugEnabled()) {
             log.debug("Lead Loco throttle found: " + t
@@ -43,6 +44,7 @@ public class ConsistFunctionController implements ThrottleListener {
         throttleController.sendAllFunctionStates(throttle);
     }
 
+    @Override
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
         log.error("Throttle request failed for " + address + " because " + reason);
     }

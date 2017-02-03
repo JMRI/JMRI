@@ -41,10 +41,12 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
         lBlock.addPropertyChangeListener(this);
     }
 
+    @Override
     public int getRowCount() {
         return lBlock.getNumberOfRoutes();
     }
 
+    @Override
     public int getColumnCount() {
         return NUMCOL;
     }
@@ -95,6 +97,7 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
         return false;
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("length")) {
             fireTableDataChanged();
@@ -117,6 +120,7 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
     /**
      * Provides the empty String if attribute doesn't exist.
      */
+    @Override
     public Object getValueAt(int row, int col) {
         // get roster entry for row
         if (lBlock == null) {

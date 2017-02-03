@@ -88,6 +88,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         t.setAdapterMemo(m);
 
         l = new SerialSensorManager(t) {
+            @Override
             public void reply(SerialReply r) {
             }
         };

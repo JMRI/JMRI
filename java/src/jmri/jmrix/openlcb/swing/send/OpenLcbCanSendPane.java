@@ -88,6 +88,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         // most of the action is in initComponents
     }
 
+    @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
         iface = memo.get(OlcbInterface.class);
@@ -100,6 +101,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
         // register request for notification
         Connection.ConnectionListener cl = new Connection.ConnectionListener() {
+            @Override
             public void connectionActive(Connection c) {
                 log.debug("connection active");
                 // load the alias field
@@ -134,6 +136,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
             pane1.add(Box.createVerticalGlue());
 
             sendButton.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     sendButtonActionPerformed(e);
                 }
@@ -165,6 +168,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         add(pane2);
 
         mRunButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 runButtonActionPerformed(e);
             }
@@ -186,6 +190,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         JButton b;
         b = new JButton("Send CIM");
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendCimPerformed(e);
             }
@@ -202,6 +207,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         add(pane2);
         b = new JButton("Send Verify Nodes Global");
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendVerifyNodeGlobal(e);
             }
@@ -209,6 +215,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2.add(b);
         b = new JButton("Send Verify Node Global with NodeID");
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendVerifyNodeGlobalID(e);
             }
@@ -222,6 +229,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         add(pane2);
         b = new JButton("Send Request Consumers");
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendReqConsumers(e);
             }
@@ -229,6 +237,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2.add(b);
         b = new JButton("Send Request Producers");
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendReqProducers(e);
             }
@@ -236,6 +245,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2.add(b);
         b = new JButton("Send Event Produced");
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendEventPerformed(e);
             }
@@ -251,6 +261,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         add(pane2);
         b = new JButton("Send Request Events");
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendRequestEvents(e);
             }
@@ -262,6 +273,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         add(pane2);
         b = new JButton("Send Datagram");
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendDatagramPerformed(e);
             }
@@ -271,6 +283,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2.add(datagramContentsField);
         b = new JButton("Send Datagram Reply");
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendDatagramReply(e);
             }
@@ -295,6 +308,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2.add(configNumberField);
         b = new JButton("Read");
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 readPerformed(e);
             }
@@ -308,6 +322,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         add(pane2);
         b = new JButton("Write");
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 writePerformed(e);
             }
@@ -320,6 +335,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         b = new JButton("Open CDI Config Tool");
         add(b);
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 openCdiPane();
             }
@@ -327,10 +343,12 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendPane";
     } // NOI18N
 
+    @Override
     public String getTitle() {
         if (memo != null) {
             return (memo.getUserName() + " Send Can Frame");
@@ -474,6 +492,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     protected void restartTimer(int delay) {
         if (timer == null) {
             timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     sendNextItem();
                 }
@@ -600,18 +619,21 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     /**
      * Don't pay attention to messages
      */
+    @Override
     public void message(CanMessage m) {
     }
 
     /**
      * Don't pay attention to replies
      */
+    @Override
     public void reply(CanReply m) {
     }
 
     /**
      * When the window closes, stop any sequences running
      */
+    @Override
     public void dispose() {
         mRunButton.setSelected(false);
         super.dispose();

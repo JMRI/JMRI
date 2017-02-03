@@ -14,14 +14,17 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractReporterManager extends AbstractManager
         implements ReporterManager {
 
+    @Override
     public int getXMLOrder() {
         return Manager.REPORTERS;
     }
 
+    @Override
     public char typeLetter() {
         return 'R';
     }
 
+    @Override
     public Reporter provideReporter(String sName) {
         Reporter t = getReporter(sName);
         if (t != null) {
@@ -34,6 +37,7 @@ public abstract class AbstractReporterManager extends AbstractManager
         }
     }
 
+    @Override
     public Reporter getReporter(String name) {
         Reporter t = getByUserName(name);
         if (t != null) {
@@ -43,18 +47,22 @@ public abstract class AbstractReporterManager extends AbstractManager
         return getBySystemName(name);
     }
 
+    @Override
     public Reporter getBySystemName(String name) {
         return (Reporter) _tsys.get(name);
     }
 
+    @Override
     public Reporter getByUserName(String key) {
         return (Reporter) _tuser.get(key);
     }
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameReporter");
     }
 
+    @Override
     public Reporter getByDisplayName(String key) {
         // First try to find it in the user list.
         // If that fails, look it up in the system list
@@ -66,6 +74,7 @@ public abstract class AbstractReporterManager extends AbstractManager
         return (retv);
     }
 
+    @Override
     public Reporter newReporter(String systemName, String userName) {
         if (log.isDebugEnabled()) {
             log.debug("new Reporter:"
@@ -112,10 +121,12 @@ public abstract class AbstractReporterManager extends AbstractManager
      * turnouts in numerical order eg 10 to 30
      *
      */
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return false;
     }
 
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) {
         //If the hardware address past does not already exist then this can
         //be considered the next valid address.

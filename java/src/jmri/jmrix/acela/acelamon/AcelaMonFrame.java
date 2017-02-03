@@ -20,24 +20,29 @@ public class AcelaMonFrame extends jmri.jmrix.AbstractMonFrame implements AcelaL
         _memo = memo;
     }
 
+    @Override
     protected String title() {
         return "Acela Command Monitor";
     }
 
+    @Override
     protected void init() {
         // connect to TrafficController
         _memo.getTrafficController().addAcelaListener(this);
     }
 
+    @Override
     public void dispose() {
         _memo.getTrafficController().removeAcelaListener(this);
         super.dispose();
     }
 
+    @Override
     public synchronized void message(AcelaMessage l) {  // receive a message and log it
         nextLine("cmd: \"" + l.toString() + "\"\n", "");
     }
 
+    @Override
     public synchronized void reply(AcelaReply l) {  // receive a reply message and log it
         l.setBinary(true);
         nextLine("rep: \"" + l.toString() + "\"\n", "");

@@ -26,6 +26,7 @@ public class AcelaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jm
         _memo = memo;
     }
 
+    @Override
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
 
@@ -49,9 +50,9 @@ public class AcelaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jm
         getContentPane().add(packetTextField);
         getContentPane().add(sendButton);
 
-        sendButton.addActionListener(
-                new java.awt.event.ActionListener() {
+        sendButton.addActionListener(new java.awt.event.ActionListener() {
 
+            @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         sendButtonActionPerformed(e);
                     }
@@ -122,9 +123,11 @@ public class AcelaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jm
         }
     }
 
+    @Override
     public void message(AcelaMessage m) {
     }  // ignore replies
 
+    @Override
     public void reply(AcelaReply r) {
     } // ignore replies
 }

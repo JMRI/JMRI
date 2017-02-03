@@ -45,6 +45,7 @@ public abstract class AbstractPowerManagerTestBase {
 
     protected class Listen implements PropertyChangeListener {
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             listenerResult = true;
         }

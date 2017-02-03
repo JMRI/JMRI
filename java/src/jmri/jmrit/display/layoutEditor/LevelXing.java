@@ -988,11 +988,13 @@ public class LevelXing {
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     editLevelXing(instance);
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     if (layoutEditor.removeLevelXing(instance)) {
                         // Returned true if user did not cancel
@@ -1003,6 +1005,7 @@ public class LevelXing {
             });
             if (blockACAssigned && blockBDAssigned) {
                 popup.add(new AbstractAction(rb.getString("SetSignals")) {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -1019,6 +1022,7 @@ public class LevelXing {
             if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
                 if (blockACAssigned && !blockBDAssigned) {
                     popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlockAC());
                             routeTableAction.actionPerformed(e);
@@ -1026,6 +1030,7 @@ public class LevelXing {
                     });
                 } else if (!blockACAssigned && blockBDAssigned) {
                     popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlockBD());
                             routeTableAction.actionPerformed(e);
@@ -1034,6 +1039,7 @@ public class LevelXing {
                 } else if (blockACAssigned && blockBDAssigned) {
                     JMenu viewRouting = new JMenu(rb.getString("ViewBlockRouting"));
                     viewRouting.add(new AbstractAction(blockNameAC) {
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockNameAC, getLayoutBlockAC());
                             routeTableAction.actionPerformed(e);
@@ -1041,6 +1047,7 @@ public class LevelXing {
                     });
 
                     viewRouting.add(new AbstractAction(blockNameBD) {
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockNameBD, getLayoutBlockBD());
                             routeTableAction.actionPerformed(e);
@@ -1058,6 +1065,7 @@ public class LevelXing {
             }
             if (blockBoundaries) {
                 popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -1067,6 +1075,7 @@ public class LevelXing {
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSensors")) {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -1193,6 +1202,7 @@ public class LevelXing {
             // Edit 1 Block
             panel4.add(xingEdit1Block = new JButton(Bundle.getMessage("EditBlock", 1)));
             xingEdit1Block.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     xingEdit1BlockPressed(e);
                 }
@@ -1201,6 +1211,7 @@ public class LevelXing {
             // Edit 2 Block
             panel4.add(xingEdit2Block = new JButton(Bundle.getMessage("EditBlock", 2)));
             xingEdit2Block.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     xingEdit2BlockPressed(e);
                 }
@@ -1212,6 +1223,7 @@ public class LevelXing {
             panel5.setLayout(new FlowLayout());
             panel5.add(xingEditDone = new JButton(Bundle.getMessage("ButtonDone")));
             xingEditDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     xingEditDonePressed(e);
                 }
@@ -1231,6 +1243,7 @@ public class LevelXing {
             // Cancel
             panel5.add(xingEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             xingEditCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     xingEditCancelPressed(e);
                 }
@@ -1245,6 +1258,7 @@ public class LevelXing {
         block1NameComboBox.getEditor().setItem(blockNameAC);
         block2NameComboBox.getEditor().setItem(blockNameBD);
         editLevelXingFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 xingEditCancelPressed(null);
             }

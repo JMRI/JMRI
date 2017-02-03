@@ -25,6 +25,7 @@ public class SerialAdapterTest {
                 setDefaultAlignment();
             }
 
+            @Override
             protected void setInitialAlignment() {
                 setDefaultAlignment();
             }
@@ -48,6 +49,7 @@ public class SerialAdapterTest {
                 setDefaultAlignment();
             }
 
+            @Override
             protected void setInitialAlignment() {
                 setDefaultAlignment();
             }

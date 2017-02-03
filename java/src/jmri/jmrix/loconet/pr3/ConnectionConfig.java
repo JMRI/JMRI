@@ -25,6 +25,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public String name() {
         return "LocoNet PR3"; // NOI18N
     }
@@ -41,6 +42,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return new String[]{};
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new PR3Adapter();

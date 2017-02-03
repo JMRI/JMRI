@@ -117,6 +117,7 @@ public class ThreePaneTLRWindow extends jmri.util.JmriJFrame {
     /**
      * Only close frame, etc, dispose() disposes of all cached panes
      */
+    @Override
     public void dispose() {
         rightTopWI.dispose();
         super.dispose();

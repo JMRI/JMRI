@@ -201,18 +201,21 @@ public class SignalHeadSignalMastTest {
         JUnitUtil.resetInstanceManager();
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH1") {
+                    @Override
                     protected void updateOutput() {
                     }
                 }
         );
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH2") {
+                    @Override
                     protected void updateOutput() {
                     }
                 }
         );
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH3") {
+                    @Override
                     protected void updateOutput() {
                     }
                 }

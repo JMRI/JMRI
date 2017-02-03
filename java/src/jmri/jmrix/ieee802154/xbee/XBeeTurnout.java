@@ -119,6 +119,7 @@ public class XBeeTurnout extends AbstractTurnout {
      *
      * @param s new state value
      */
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         try  {
             if((s == Turnout.THROWN) ^ getInverted() ) {
@@ -150,10 +151,12 @@ public class XBeeTurnout extends AbstractTurnout {
     /**
      * XBee turnouts do support inversion
      */
+    @Override
     public boolean canInvert() {
         return true;
     }
     
+    @Override
     protected void turnoutPushbuttonLockout(boolean locked) {
     }
 

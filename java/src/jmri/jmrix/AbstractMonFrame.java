@@ -88,6 +88,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         self = this;
     }
 
+    @Override
     public void initComponents() throws Exception {
 
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
@@ -308,6 +309,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         // if not frozen, display it in the Swing thread
         if (!freezeButton.isSelected()) {
             Runnable r = new Runnable() {
+                @Override
                 public void run() {
                     synchronized (self) {
                         monTextPane.append(linesBuffer.toString());

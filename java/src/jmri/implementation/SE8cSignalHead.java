@@ -163,12 +163,14 @@ public class SE8cSignalHead extends DefaultSignalHead {
         updateOutput();
     }
 
+    @Override
     public String getSystemName() {
         return systemName;
     }
     String systemName;
 
     // Handle a request to change state by sending a LocoNet command
+    @Override
     protected void updateOutput() {
         if (!mLit) {
             highTurnout.getBean().setCommandedState(Turnout.CLOSED);
@@ -212,9 +214,11 @@ public class SE8cSignalHead extends DefaultSignalHead {
         return highTurnout;
     }
 
+    @Override
     public void dispose() {
     }
 
+    @Override
     boolean isTurnoutUsed(Turnout t) {
         if (getLow() != null && t.equals(getLow().getBean())) {
             return true;
@@ -228,6 +232,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
     void addListeners() {
         lowTurnout.getBean().addPropertyChangeListener(
                 new java.beans.PropertyChangeListener() {
+                    @Override
                     public void propertyChange(java.beans.PropertyChangeEvent e) {
                         // we're not tracking state, we're tracking changes in state
                         if (e.getPropertyName().equals("CommandedState")) {
@@ -242,6 +247,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
         );
         highTurnout.getBean().addPropertyChangeListener(
                 new java.beans.PropertyChangeListener() {
+                    @Override
                     public void propertyChange(java.beans.PropertyChangeEvent e) {
                         // we're not tracking state, we're tracking changes in state
                         if (e.getPropertyName().equals("CommandedState")) {

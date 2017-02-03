@@ -35,6 +35,7 @@ public class JythonAutomaton extends AbstractAutomaton {
      * Initialization of the Python in the actual script file is deferred until
      * the {@link #handle} method.
      */
+    @Override
     protected void init() {
 
         try {
@@ -72,6 +73,7 @@ public class JythonAutomaton extends AbstractAutomaton {
      *
      * @return True to continue operation if successful
      */
+    @Override
     protected boolean handle() {
         if (interp == null) {
             log.error("No interpreter, so cannot handle automat");

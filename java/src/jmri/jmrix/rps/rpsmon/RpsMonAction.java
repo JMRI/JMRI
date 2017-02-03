@@ -18,6 +18,7 @@ public class RpsMonAction extends AbstractAction {
         this("RPS Monitor");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         RpsMonFrame f = new RpsMonFrame();
         try {

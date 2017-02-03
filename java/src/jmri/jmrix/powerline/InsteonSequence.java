@@ -89,22 +89,27 @@ public class InsteonSequence {
         int idmiddlebyte;
         int idlowbyte;
 
+        @Override
         public int getAddressHigh() {
             return idhighbyte;
         }
 
+        @Override
         public int getAddressMiddle() {
             return idmiddlebyte;
         }
 
+        @Override
         public int getAddressLow() {
             return idlowbyte;
         }
 
+        @Override
         public boolean isAddress() {
             return true;
         }
 
+        @Override
         public boolean isFunction() {
             return false;
         }
@@ -132,14 +137,17 @@ public class InsteonSequence {
         int command1;
         int command2;
 
+        @Override
         public int getAddressHigh() {
             return idhighbyte;
         }
 
+        @Override
         public int getAddressMiddle() {
             return idmiddlebyte;
         }
 
+        @Override
         public int getAddressLow() {
             return idlowbyte;
         }
@@ -160,10 +168,12 @@ public class InsteonSequence {
             return command2;
         }
 
+        @Override
         public boolean isAddress() {
             return false;
         }
 
+        @Override
         public boolean isFunction() {
             return true;
         }
@@ -185,14 +195,17 @@ public class InsteonSequence {
         int idlowbyte;
         int value;
 
+        @Override
         public int getAddressHigh() {
             return idhighbyte;
         }
 
+        @Override
         public int getAddressMiddle() {
             return idmiddlebyte;
         }
 
+        @Override
         public int getAddressLow() {
             return idlowbyte;
         }
@@ -201,10 +214,12 @@ public class InsteonSequence {
             return value;
         }
 
+        @Override
         public boolean isAddress() {
             return false;
         }
 
+        @Override
         public boolean isFunction() {
             return false;
         }

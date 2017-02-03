@@ -86,6 +86,7 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
      * Configure the common managers for the connection. This puts the
      * common manager config in one place.
      */
+    @Override
     public void configureManagers() {
 
         InstanceManager.setSensorManager(
@@ -150,10 +151,12 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
         olcbInterface = iface;
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.openlcb.OlcbActionListBundle");
     }
 
+    @Override
     public void dispose() {
         InstanceManager.deregister(this, OlcbSystemConnectionMemo.class);
         if (cf != null) {

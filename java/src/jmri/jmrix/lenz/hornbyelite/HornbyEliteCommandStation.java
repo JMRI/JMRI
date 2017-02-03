@@ -19,6 +19,7 @@ public class HornbyEliteCommandStation extends jmri.jmrix.lenz.LenzCommandStatio
     /**
      * The Hornby Elite does support Ops Mode programming
      */
+    @Override
     public boolean isOpsModePossible() {
         return true;
     }

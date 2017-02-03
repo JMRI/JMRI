@@ -372,6 +372,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     /**
      * When a Pick list is installed, table selection controls the Add button
      */
+    @Override
     public void valueChanged(ListSelectionEvent e) {
         if (_table == null) {
             return;
@@ -551,6 +552,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                     new Dimension(150, _sysNametext.getPreferredSize().height + 2));
             _addTableButton = new JButton(Bundle.getMessage("addToTable"));
             _addTableButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent a) {
                     addToTable();
                 }
@@ -559,6 +561,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _addTableButton.setToolTipText(Bundle.getMessage("ToolTipWillActivate"));
             p.add(_sysNametext);
             _sysNametext.addKeyListener(new KeyAdapter() {
+                @Override
                 public void keyReleased(KeyEvent a) {
                     if (_sysNametext.getText().length() > 0) {
                         _addTableButton.setEnabled(true);
@@ -583,6 +586,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         if (changeIcon) {
             _changeButton = new JButton(Bundle.getMessage("ButtonChangeIcon"));
             _changeButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent a) {
                     addCatalog();
                 }
@@ -590,6 +594,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             p.add(_changeButton);
             _closeButton = new JButton(Bundle.getMessage("ButtonCloseCatalog"));
             _closeButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent a) {
                     closeCatalog();
                 }
@@ -763,22 +768,27 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             //if (log.isDebugEnabled()) log.debug("DropJLabel ctor");
         }
 
+        @Override
         public void dragExit(DropTargetEvent dte) {
             //if (log.isDebugEnabled()) log.debug("DropJLabel.dragExit ");
         }
 
+        @Override
         public void dragEnter(DropTargetDragEvent dtde) {
             //if (log.isDebugEnabled()) log.debug("DropJLabel.dragEnter ");
         }
 
+        @Override
         public void dragOver(DropTargetDragEvent dtde) {
             //if (log.isDebugEnabled()) log.debug("DropJLabel.dragOver ");
         }
 
+        @Override
         public void dropActionChanged(DropTargetDragEvent dtde) {
             //if (log.isDebugEnabled()) log.debug("DropJLabel.dropActionChanged ");
         }
 
+        @Override
         public void drop(DropTargetDropEvent e) {
             try {
                 Transferable tr = e.getTransferable();

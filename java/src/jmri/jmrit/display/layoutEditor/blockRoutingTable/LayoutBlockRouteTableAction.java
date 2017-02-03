@@ -49,6 +49,7 @@ public class LayoutBlockRouteTableAction extends AbstractAction {
         f.setVisible(true);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         actionPerformed();
     }

@@ -74,6 +74,7 @@ public class DefaultSignalAppearanceMapTest extends TestCase {
     public void testTwoHead() {
 
         SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:two-searchlight:h1:h2") {
+            @Override
             void configureAspectTable(String signalSystemName, String aspectMapName) {
                 map = new DefaultSignalAppearanceMap("sys", "user");
             }
@@ -123,15 +124,18 @@ public class DefaultSignalAppearanceMapTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         super.setUp(); 
         jmri.util.JUnitUtil.resetInstanceManager();
         h1 = new DefaultSignalHead("h1", "head1") {
+            @Override
             protected void updateOutput() {
             }
         };
         h2 = new DefaultSignalHead("h2", "head2") {
+            @Override
             protected void updateOutput() {
             }
         };
@@ -144,6 +148,7 @@ public class DefaultSignalAppearanceMapTest extends TestCase {
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h2);
     }
 
+    @Override
     protected void tearDown() {
         InstanceManager.getDefault(jmri.SignalHeadManager.class).deregister(h1);
         h1.dispose();

@@ -44,6 +44,7 @@ public class JTableUtil {
         }
 
         JTable dataTable = new JTable(sorter) {
+            @Override
             public boolean editCellAt(int row, int column, java.util.EventObject e) {
                 boolean res = super.editCellAt(row, column, e);
                 java.awt.Component c = this.getEditorComponent();

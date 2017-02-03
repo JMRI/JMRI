@@ -496,6 +496,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem deleteItem = new JMenuItem(rbx.getString("DeletePanel"));
         fileMenu.add(deleteItem);
         deleteItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 if (deletePanel()) {
                     dispose(true);
@@ -543,6 +544,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         // This is used to enable/disable property controls depending on which (radio) button is selected
         ActionListener selectionListAction = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 // turnout properties
                 boolean e = (turnoutRHButton.isSelected()
@@ -811,6 +813,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         // change the block name
         blockIDComboBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 String blockName = blockIDComboBox.getSelectedDisplayName();
                 blockName = (null != blockName) ? blockName.trim() : "";
@@ -1040,6 +1043,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // change icons…
         // this is enabled/disabled via selectionListAction above
         changeIconsButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (sensorButton.isSelected()) {
                     sensorFrame.setVisible(true);
@@ -1252,6 +1256,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         super.setSize(w, h);
     }
 
+    @Override
     protected void targetWindowClosingEvent(java.awt.event.WindowEvent e) {
         boolean save = (isDirty() || (savedEditMode != isEditable())
                 || (savedPositionable != allPositionable())
@@ -1298,6 +1303,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem scaleItem = new JMenuItem(rb.getString("ScaleTrackDiagram") + "...");
         toolsMenu.add(scaleItem);
         scaleItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 // bring up scale track diagram dialog
                 scaleTrackDiagram();
@@ -1307,6 +1313,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem moveItem = new JMenuItem(rb.getString("TranslateSelection") + "...");
         toolsMenu.add(moveItem);
         moveItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 // bring up translate selection dialog
                 moveSelection();
@@ -1316,6 +1323,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem undoMoveItem = new JMenuItem(rb.getString("UndoTranslateSelection"));
         toolsMenu.add(undoMoveItem);
         undoMoveItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 // undo previous move selection
                 undoMoveSelection();
@@ -1325,6 +1333,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem undoTurnoutSize = new JMenuItem(rb.getString("ResetTurnoutSize"));
         toolsMenu.add(undoTurnoutSize);
         undoTurnoutSize.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 // undo previous move selection
                 resetTurnoutSize();
@@ -1335,6 +1344,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         skipTurnoutItem = new JCheckBoxMenuItem(rb.getString("SkipInternalTurnout"));
         toolsMenu.add(skipTurnoutItem);
         skipTurnoutItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 skipIncludedTurnout = skipTurnoutItem.isSelected();
             }
@@ -1344,6 +1354,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem turnoutItem = new JMenuItem(rb.getString("SignalsAtTurnout") + "...");
         toolsMenu.add(turnoutItem);
         turnoutItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 if (tools == null) {
                     tools = new LayoutEditorTools(thisPanel);
@@ -1356,6 +1367,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem boundaryItem = new JMenuItem(rb.getString("SignalsAtBoundary") + "...");
         toolsMenu.add(boundaryItem);
         boundaryItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 if (tools == null) {
                     tools = new LayoutEditorTools(thisPanel);
@@ -1368,6 +1380,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem xoverItem = new JMenuItem(rb.getString("SignalsAtXoverTurnout") + "...");
         toolsMenu.add(xoverItem);
         xoverItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 if (tools == null) {
                     tools = new LayoutEditorTools(thisPanel);
@@ -1380,6 +1393,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem xingItem = new JMenuItem(rb.getString("SignalsAtLevelXing") + "...");
         toolsMenu.add(xingItem);
         xingItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 if (tools == null) {
                     tools = new LayoutEditorTools(thisPanel);
@@ -1392,6 +1406,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem tToTItem = new JMenuItem(rb.getString("SignalsAtTToTTurnout") + "...");
         toolsMenu.add(tToTItem);
         tToTItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 if (tools == null) {
                     tools = new LayoutEditorTools(thisPanel);
@@ -1404,6 +1419,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem way3Item = new JMenuItem(rb.getString("SignalsAt3WayTurnout") + "...");
         toolsMenu.add(way3Item);
         way3Item.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 if (tools == null) {
                     tools = new LayoutEditorTools(thisPanel);
@@ -1415,6 +1431,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem slipItem = new JMenuItem(rb.getString("SignalsAtSlip") + "...");
         toolsMenu.add(slipItem);
         slipItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 if (tools == null) {
                     tools = new LayoutEditorTools(thisPanel);
@@ -1426,6 +1443,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem entryExitItem = new JMenuItem(Bundle.getMessage("EntryExit") + "...");
         toolsMenu.add(entryExitItem);
         entryExitItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 if (entryExit == null) {
                     entryExit = new jmri.jmrit.signalling.AddEntryExitPairAction("ENTRY EXIT", thisPanel);
@@ -1448,6 +1466,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         editModeItem.setAccelerator(KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(rb.getString("EditModeAccelerator")), primary_modifier));
         editModeItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 setAllEditable(editModeItem.isSelected());
                 if (isEditable()) {
@@ -1464,6 +1483,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         positionableItem = new JCheckBoxMenuItem(rb.getString("AllowRepositioning"));
         optionMenu.add(positionableItem);
         positionableItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 setAllPositionable(positionableItem.isSelected());
             }
@@ -1473,6 +1493,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         controlItem = new JCheckBoxMenuItem(rb.getString("AllowLayoutControl"));
         optionMenu.add(controlItem);
         controlItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 setAllControlling(controlItem.isSelected());
             }
@@ -1483,6 +1504,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         animationItem = new JCheckBoxMenuItem(rb.getString("AllowTurnoutAnimation"));
         optionMenu.add(animationItem);
         animationItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 boolean mode = animationItem.isSelected();
                 setTurnoutAnimation(mode);
@@ -1493,6 +1515,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         showHelpItem = new JCheckBoxMenuItem(rb.getString("ShowEditHelp"));
         optionMenu.add(showHelpItem);
         showHelpItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 showHelpBar = showHelpItem.isSelected();
                 if (isEditable()) {
@@ -1507,6 +1530,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 rb.getString("ShowEditGridAccelerator")), primary_modifier));
         optionMenu.add(showGridItem);
         showGridItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 drawGrid = showGridItem.isSelected();
                 repaint();
@@ -1519,6 +1543,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 rb.getString("SnapToGridOnAddAccelerator")), primary_modifier | ActionEvent.SHIFT_MASK));
         optionMenu.add(snapToGridOnAddItem);
         snapToGridOnAddItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 snapToGridOnAdd = snapToGridOnAddItem.isSelected();
                 repaint();
@@ -1536,6 +1561,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
         optionMenu.add(snapToGridOnMoveItem);
         snapToGridOnMoveItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 snapToGridOnMove = snapToGridOnMoveItem.isSelected();
                 repaint();
@@ -1547,6 +1573,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem gridSizeItem = new JMenuItem(rb.getString("EditGridSize") + "...");
         optionMenu.add(gridSizeItem);
         gridSizeItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 // prompt for new size
                 String newSize = (String) JOptionPane.showInputDialog(getTargetFrame(),
@@ -1579,6 +1606,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         scrollMenu.add(scrollBoth);
         scrollBoth.setSelected(_scrollState == SCROLL_BOTH);
         scrollBoth.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 _scrollState = SCROLL_BOTH;
                 setScroll(_scrollState);
@@ -1590,6 +1618,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         scrollMenu.add(scrollNone);
         scrollNone.setSelected(_scrollState == SCROLL_NONE);
         scrollNone.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 _scrollState = SCROLL_NONE;
                 setScroll(_scrollState);
@@ -1601,6 +1630,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         scrollMenu.add(scrollHorizontal);
         scrollHorizontal.setSelected(_scrollState == SCROLL_HORIZONTAL);
         scrollHorizontal.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 _scrollState = SCROLL_HORIZONTAL;
                 setScroll(_scrollState);
@@ -1612,6 +1642,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         scrollMenu.add(scrollVertical);
         scrollVertical.setSelected(_scrollState == SCROLL_VERTICAL);
         scrollVertical.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 _scrollState = SCROLL_VERTICAL;
                 setScroll(_scrollState);
@@ -1628,6 +1659,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         tooltipMenu.add(tooltipNone);
         tooltipNone.setSelected((!tooltipsInEditMode) && (!tooltipsWithoutEditMode));
         tooltipNone.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 tooltipsInEditMode = false;
                 tooltipsWithoutEditMode = false;
@@ -1639,6 +1671,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         tooltipMenu.add(tooltipAlways);
         tooltipAlways.setSelected((tooltipsInEditMode) && (tooltipsWithoutEditMode));
         tooltipAlways.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 tooltipsInEditMode = true;
                 tooltipsWithoutEditMode = true;
@@ -1650,6 +1683,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         tooltipMenu.add(tooltipInEdit);
         tooltipInEdit.setSelected((tooltipsInEditMode) && (!tooltipsWithoutEditMode));
         tooltipInEdit.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 tooltipsInEditMode = true;
                 tooltipsWithoutEditMode = false;
@@ -1661,6 +1695,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         tooltipMenu.add(tooltipNotInEdit);
         tooltipNotInEdit.setSelected((!tooltipsInEditMode) && (tooltipsWithoutEditMode));
         tooltipNotInEdit.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 tooltipsInEditMode = false;
                 tooltipsWithoutEditMode = true;
@@ -1671,6 +1706,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         antialiasingOnItem = new JCheckBoxMenuItem(rb.getString("AntialiasingOn"));
         optionMenu.add(antialiasingOnItem);
         antialiasingOnItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 antialiasingOn = antialiasingOnItem.isSelected();
                 repaint();
@@ -1682,6 +1718,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem titleItem = new JMenuItem(rb.getString("EditTitle") + "...");
         optionMenu.add(titleItem);
         titleItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 // prompt for name
                 String newName = (String) JOptionPane.showInputDialog(getTargetFrame(),
@@ -1708,6 +1745,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem backgroundItem = new JMenuItem(rb.getString("AddBackground") + "...");
         optionMenu.add(backgroundItem);
         backgroundItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 addBackground();
                 setDirty(true);
@@ -1735,6 +1773,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem clockItem = new JMenuItem(Bundle.getMessage("AddItem", Bundle.getMessage("FastClock")));
         optionMenu.add(clockItem);
         clockItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 addClock();
                 setDirty(true);
@@ -1745,6 +1784,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem turntableItem = new JMenuItem(rb.getString("AddTurntable"));
         optionMenu.add(turntableItem);
         turntableItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 addTurntable(windowCenter());
                 setDirty(true);
@@ -1755,6 +1795,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem reporterItem = new JMenuItem(rb.getString("AddReporter") + "...");
         optionMenu.add(reporterItem);
         reporterItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 Point2D pt = windowCenter();
                 enterReporter((int) pt.getX(), (int) pt.getY());
@@ -1766,6 +1807,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem locationItem = new JMenuItem(rb.getString("SetLocation"));
         optionMenu.add(locationItem);
         locationItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 setCurrentPositionAndSize();
                 log.debug("Bounds:" + upperLeftX + ", " + upperLeftY + ", " + windowWidth + ", " + windowHeight + ", " + panelWidth + ", " + panelHeight);
@@ -1775,6 +1817,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem widthItem = new JMenuItem(rb.getString("SetTrackWidth") + "...");
         optionMenu.add(widthItem);
         widthItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 // bring up enter track width dialog
                 enterTrackWidth();
@@ -1860,6 +1903,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         turnoutCirclesOnItem = new JCheckBoxMenuItem(rb.getString("TurnoutCirclesOn"));
         turnoutOptionsMenu.add(turnoutCirclesOnItem);
         turnoutCirclesOnItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 turnoutCirclesWithoutEditMode = turnoutCirclesOnItem.isSelected();
                 repaint();
@@ -1903,6 +1947,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         turnoutDrawUnselectedLegItem = new JCheckBoxMenuItem(rb.getString("TurnoutDrawUnselectedLeg"));
         turnoutOptionsMenu.add(turnoutDrawUnselectedLegItem);
         turnoutDrawUnselectedLegItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 turnoutDrawUnselectedLeg = turnoutDrawUnselectedLegItem.isSelected();
                 repaint();
@@ -1914,6 +1959,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         autoAssignBlocksItem = new JCheckBoxMenuItem(rb.getString("AutoAssignBlock"));
         optionMenu.add(autoAssignBlocksItem);
         autoAssignBlocksItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 autoAssignBlocks = autoAssignBlocksItem.isSelected();
             }
@@ -1924,6 +1970,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         hideTrackSegmentConstructionLines = new JCheckBoxMenuItem(rb.getString("HideTrackConLines"));
         optionMenu.add(hideTrackSegmentConstructionLines);
         hideTrackSegmentConstructionLines.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 int show = TrackSegment.SHOWCON;
                 if (hideTrackSegmentConstructionLines.isSelected()) {
@@ -1940,6 +1987,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         useDirectTurnoutControlItem = new JCheckBoxMenuItem(rb.getString("UseDirectTurnoutControl")); //IN18N
         optionMenu.add(useDirectTurnoutControlItem);
         useDirectTurnoutControlItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 useDirectTurnoutControl = false;
                 if (useDirectTurnoutControlItem.isSelected()) {
@@ -1979,6 +2027,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
         zoomMenu.add(zoomInItem);
         zoomInItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 int newZoom = (int) (zoomIn() * 100);
                 switch (newZoom) {
@@ -2018,6 +2067,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 rb.getString("zoomOutAccelerator")), primary_modifier));
         zoomMenu.add(zoomOutItem);
         zoomOutItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 int newZoom = (int) (zoomOut() * 100);
                 switch (newZoom) {
@@ -2054,6 +2104,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // add zoom choices to menu
         zoomMenu.add(zoom025Item);
         zoom025Item.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 setZoom(0.25);
             }
@@ -2062,6 +2113,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         zoomMenu.add(zoom05Item);
         zoom05Item.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 setZoom(0.5);
             }
@@ -2070,6 +2122,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         zoomMenu.add(zoom075Item);
         zoom075Item.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 setZoom(0.75);
             }
@@ -2078,6 +2131,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         zoomMenu.add(noZoomItem);
         noZoomItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 setZoom(1.0);
             }
@@ -2086,6 +2140,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         zoomMenu.add(zoom15Item);
         zoom15Item.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 setZoom(1.5);
             }
@@ -2094,6 +2149,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         zoomMenu.add(zoom20Item);
         zoom20Item.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 setZoom(2.0);
             }
@@ -2102,6 +2158,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         zoomMenu.add(zoom30Item);
         zoom30Item.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 setZoom(3.0);
             }
@@ -2110,6 +2167,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         zoomMenu.add(zoom40Item);
         zoom40Item.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 setZoom(4.0);
             }
@@ -2182,16 +2240,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         markerMenu.setMnemonic(stringsToVTCodes.get(rbx.getString("MenuMarkerMnemonic")));
         menuBar.add(markerMenu);
         markerMenu.add(new AbstractAction(rbx.getString("AddLoco") + "...") {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 locoMarkerFromInput();
             }
         });
         markerMenu.add(new AbstractAction(rbx.getString("AddLocoRoster") + "...") {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 locoMarkerFromRoster();
             }
         });
         markerMenu.add(new AbstractAction(rbx.getString("RemoveMarkers")) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 removeMarkers();
             }
@@ -2206,6 +2267,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem newTrainItem = new JMenuItem(Bundle.getMessage("MenuItemNewTrain"));
         dispMenu.add(newTrainItem);
         newTrainItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 if (jmri.InstanceManager.getDefault(jmri.TransitManager.class).getSystemNameList().size() <= 0) {
                     // Inform the user that there are no Transits available, and don't open the window
@@ -2239,6 +2301,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     /**
      * Remove marker icons from panel
      */
+    @Override
     protected void removeMarkers() {
         for (int i = markerImage.size(); i > 0; i--) {
             LocoIcon il = markerImage.get(i - 1);
@@ -2296,6 +2359,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             panel5.setLayout(new FlowLayout());
             panel5.add(trackWidthDone = new JButton(Bundle.getMessage("ButtonDone")));
             trackWidthDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     trackWidthDonePressed(e);
                 }
@@ -2315,6 +2379,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             // Cancel
             panel5.add(trackWidthCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             trackWidthCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     trackWidthCancelPressed(e);
                 }
@@ -2326,6 +2391,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         mainlineWidthField.setText("" + getMainlineTrackWidth());
         sideWidthField.setText("" + getSideTrackWidth());
         enterTrackWidthFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 trackWidthCancelPressed(null);
             }
@@ -2450,6 +2516,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             panel5.setLayout(new FlowLayout());
             panel5.add(reporterDone = new JButton(rb.getString("AddNewLabel")));
             reporterDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     reporterDonePressed(e);
                 }
@@ -2469,6 +2536,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             // Cancel
             panel5.add(reporterCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             reporterCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     reporterCancelPressed(e);
                 }
@@ -2481,6 +2549,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         xPositionField.setText("" + defaultX);
         yPositionField.setText("" + defaultY);
         enterReporterFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 reporterCancelPressed(null);
             }
@@ -2641,6 +2710,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             panel5.setLayout(new FlowLayout());
             panel5.add(scaleTrackDiagramDone = new JButton(rb.getString("ScaleTranslate")));
             scaleTrackDiagramDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     scaleTrackDiagramDonePressed(e);
                 }
@@ -2659,6 +2729,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             panel5.add(scaleTrackDiagramCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             scaleTrackDiagramCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     scaleTrackDiagramCancelPressed(e);
                 }
@@ -2672,6 +2743,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         xTranslateField.setText("0");
         yTranslateField.setText("0");
         scaleTrackDiagramFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 scaleTrackDiagramCancelPressed(null);
             }
@@ -2883,6 +2955,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             panel5.setLayout(new FlowLayout());
             panel5.add(moveSelectionDone = new JButton(rb.getString("MoveSelection")));
             moveSelectionDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     moveSelectionDonePressed(e);
                 }
@@ -2901,6 +2974,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             panel5.add(moveSelectionCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             moveSelectionCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     moveSelectionCancelPressed(e);
                 }
@@ -2912,6 +2986,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         xMoveField.setText("0");
         yMoveField.setText("0");
         moveSelectionFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 moveSelectionCancelPressed(null);
             }
@@ -3145,6 +3220,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             //final String desiredName = name;
             final Color desiredColor = color;
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (!defaultBackgroundColor.equals(desiredColor)) {
                     defaultBackgroundColor = desiredColor;
@@ -3173,6 +3249,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             //final String desiredName = name;
             final Color desiredColor = color;
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (!defaultTrackColor.equals(desiredColor)) {
                     defaultTrackColor = desiredColor;
@@ -3200,6 +3277,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             //final String desiredName = name;
             final Color desiredColor = color;
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (!defaultOccupiedTrackColor.equals(desiredColor)) {
                     defaultOccupiedTrackColor = desiredColor;
@@ -3227,6 +3305,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             //final String desiredName = name;
             final Color desiredColor = color;
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (!defaultAlternativeTrackColor.equals(desiredColor)) {
                     defaultAlternativeTrackColor = desiredColor;
@@ -3278,6 +3357,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             //final String desiredName = name;
             final Color desiredColor = color;
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (!defaultTextColor.equals(desiredColor)) {
                     defaultTextColor = desiredColor;
@@ -3304,6 +3384,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         ActionListener a = new ActionListener() {
             final Color desiredColor = color;
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 turnoutCircleColor = desiredColor;
                 setDirty(true);
@@ -3328,6 +3409,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         ActionListener a = new ActionListener() {
             final int desiredSize = size;
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (turnoutCircleSize != desiredSize) {
                     turnoutCircleSize = desiredSize;
@@ -3392,6 +3474,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
     }
 
+    @Override
     public void setScroll(int state) {
         if (isEditable()) {
             //In edit mode the scroll bars are always displayed, however we will want to set the scroll for when we exit edit mode
@@ -4595,6 +4678,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (showAlignPopup()) {
                 setShowAlignmentMenu(popup);
                 popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         deleteSelectedItems();
                     }
@@ -4663,6 +4747,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private long whenReleased = 0;  // used to identify event that was popup trigger
     private boolean awaitingIconChange = false;
 
+    @Override
     public void mouseClicked(MouseEvent event) {
         if ((!event.isMetaDown()) && (!event.isPopupTrigger()) && (!event.isAltDown())
                 && (!awaitingIconChange) && (!event.isShiftDown()) && (!event.isControlDown())) {
@@ -5791,11 +5876,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (showAlignPopup()) {
             JMenu edit = new JMenu(rb.getString("EditAlignment"));
             edit.add(new AbstractAction(rb.getString("AlignX")) {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     alignSelection(true);
                 }
             });
             edit.add(new AbstractAction(rb.getString("AlignY")) {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     alignSelection(false);
                 }
@@ -7068,6 +7155,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return found;
     }
 
+    @Override
     public boolean removeFromContents(Positionable l) {
         return remove(l);
     }
@@ -7866,6 +7954,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         l.setForeground(defaultTextColor);
     }
 
+    @Override
     public void putItem(Positionable l) {
         super.putItem(l);
         if (l instanceof SensorIcon) {
@@ -7980,6 +8069,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     /**
      * Add a loco marker to the target
      */
+    @Override
     public LocoIcon addLocoIcon(String name) {
         LocoIcon l = new LocoIcon(this);
         Point2D pt = windowCenter();
@@ -7989,6 +8079,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return l;
     }
 
+    @Override
     public void putLocoIcon(LocoIcon l, String name) {
         super.putLocoIcon(l, name);
         markerImage.add(l);
@@ -8068,6 +8159,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * Size comes from the preferredSize; location comes from the fields where
      * the user can spec it.
      */
+    @Override
     protected void setNextLocation(Positionable obj) {
         obj.setLocation(xLoc, yLoc);
     }
@@ -8089,6 +8181,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     /**
      * Invoked by DeletePanel menu item Validate user intent before deleting
      */
+    @Override
     public boolean deletePanel() {
         // verify deletion
         if (!super.deletePanel()) {
@@ -8111,6 +8204,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      *
      * @param editable true for editable.
      */
+    @Override
     public void setAllEditable(boolean editable) {
         int restoreScroll = _scrollState;
         super.setAllEditable(editable);
@@ -8135,6 +8229,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      *
      * @param state true for positionable.
      */
+    @Override
     public void setAllPositionable(boolean state) {
         super.setAllPositionable(state);
         for (int i = 0; i < markerImage.size(); i++) {
@@ -8551,6 +8646,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * Special internal class to allow drawing of layout to a JLayeredPane This
      * is the 'target' pane where the layout is displayed
      */
+    @Override
     protected void paintTargetPanel(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         //drawPositionableLabelBorder(g2);
@@ -9236,6 +9332,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return (new Point2D.Double(0.0, 0.0));
     }
 
+    @Override
     protected boolean showAlignPopup(Positionable l) {
         return false;
     }
@@ -9370,10 +9467,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
     }
 
+    @Override
     public String toString() {
         return getLayoutName();
     }
 
+    @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         NamedBean nb = (NamedBean) evt.getOldValue();
         if ("CanDelete".equals(evt.getPropertyName())) { //IN18N

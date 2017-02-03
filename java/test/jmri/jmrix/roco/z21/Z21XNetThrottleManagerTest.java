@@ -26,6 +26,7 @@ public class Z21XNetThrottleManagerTest extends XNetThrottleManagerTest {
     }
 
     @After
+    @Override
     public void tearDown() {
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();

@@ -91,6 +91,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         }
     }
 
+    @Override
     public void setElement(int n, int v) {
         _dataChars[n] = v;
     }
@@ -207,6 +208,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // display format
+    @Override
     public String toString(){
        // default to not SIIBootMode being false.
        return this.toString(false);

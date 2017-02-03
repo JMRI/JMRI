@@ -12,6 +12,7 @@ public class SensorTablePanel extends jmri.jmrit.beantable.BeanTablePane {
     public SensorTablePanel() {
     }
 
+    @Override
     public void initComponents() throws Exception {
         createModel();
         init(m);

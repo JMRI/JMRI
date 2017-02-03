@@ -34,11 +34,14 @@ public class AddNodeFrameTest {
         Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         tc = new XBeeTrafficController() {
+            @Override
             public void setInstance() {
             }
+            @Override
             protected jmri.jmrix.AbstractMRReply newReply() {
                 return null;
             }
+            @Override
             public jmri.jmrix.ieee802154.IEEE802154Node newNode() {
                 return null;
             }

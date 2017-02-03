@@ -250,12 +250,14 @@ public class NceConnectionStatus implements NceListener {
 
     }
 
+    @Override
     public void message(NceMessage m) {
         if (log.isDebugEnabled()) {
             log.debug("unexpected message");
         }
     }
 
+    @Override
     public void reply(NceReply r) {
         if (r.getNumDataElements() == REPLY_LEN) {
 

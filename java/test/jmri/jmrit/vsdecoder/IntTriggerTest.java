@@ -65,12 +65,15 @@ public class IntTriggerTest {
         Assert.assertEquals("set trigger type", Trigger.TriggerType.INT,
                 uut.getTriggerType());
         TriggerListener tl = new TriggerListener() {
+            @Override
             public void takeAction() {
             }
 
+            @Override
             public void takeAction(int i) {
             }
 
+            @Override
             public void takeAction(float f) {
             }
         };
@@ -86,14 +89,17 @@ public class IntTriggerTest {
         uut.setEventName("test event");
         uut.setMatchValue(2);
         uut.setCallback(new TriggerListener() {
+            @Override
             public void takeAction() {
                 Assert.assertTrue("callback called", true);
             }
 
+            @Override
             public void takeAction(int i) {
                 Assert.fail("wrong callback called");
             }
 
+            @Override
             public void takeAction(float f) {
                 Assert.fail("wrong callback called");
             }

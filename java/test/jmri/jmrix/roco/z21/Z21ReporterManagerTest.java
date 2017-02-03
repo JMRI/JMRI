@@ -17,6 +17,7 @@ public class Z21ReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
     }
 
    @Before
+    @Override
    public void setUp(){
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();

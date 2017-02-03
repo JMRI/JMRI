@@ -47,6 +47,7 @@ public class EditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.EditNo
     /**
      * Initialize the config window
      */
+    @Override
     public void initComponents() {
         setTitle(Bundle.getMessage("EditNodeWindowTitle"));
         Container contentPane = getContentPane();
@@ -75,6 +76,7 @@ public class EditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.EditNo
         editButton.setVisible(true);
         editButton.setToolTipText(Bundle.getMessage("TipEditButton"));
         editButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 editButtonActionPerformed();
             }
@@ -86,6 +88,7 @@ public class EditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.EditNo
         cancelButton.setToolTipText(Bundle.getMessage("TipCancelButton"));
         panel4.add(cancelButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 cancelButtonActionPerformed();
             }
@@ -99,6 +102,7 @@ public class EditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.EditNo
     /**
      * Method to handle edit button
      */
+    @Override
     public void editButtonActionPerformed() {
         if(nodeAddr64Field.getText().equals("") &&
            nodeAddrField.getText().equals("")) {
@@ -156,6 +160,7 @@ public class EditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.EditNo
     /**
      * Method to handle cancel button
      */
+    @Override
     public void cancelButtonActionPerformed() {
         // Reset 
         curNode = null;
@@ -166,6 +171,7 @@ public class EditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.EditNo
     }
 
     // Initilize the text boxes for the addresses.
+    @Override
     protected void initAddressBoxes() {
         nodeAddrField.setText(jmri.util.StringUtil.hexStringFromBytes(curNode.getUserAddress()));
         nodeAddr64Field.setText(jmri.util.StringUtil.hexStringFromBytes(curNode.getGlobalAddress()));

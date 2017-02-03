@@ -160,6 +160,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
                 JOptionPane.QUESTION_MESSAGE, null, null, null);
         if (retval == 0) {
             final PropertyChangeListener propertyNXListener = new PropertyChangeListener() {
+                @Override
                 public void propertyChange(PropertyChangeEvent evt) {
                     if (evt.getPropertyName().equals("autoGenerateComplete")) {
                         if (entryExitFrame != null) {

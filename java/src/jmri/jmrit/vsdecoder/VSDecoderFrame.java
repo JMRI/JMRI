@@ -79,6 +79,7 @@ class VSDecoderFrame extends JmriJFrame {
 
     }
 
+    @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         // Call the superclass function
         super.windowClosing(e);

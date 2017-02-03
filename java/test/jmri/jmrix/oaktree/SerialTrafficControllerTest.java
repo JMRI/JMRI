@@ -103,10 +103,12 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
             rcvdMsg = null;
         }
 
+        @Override
         public void message(SerialMessage m) {
             rcvdMsg = m;
         }
 
+        @Override
         public void reply(SerialReply r) {
             rcvdReply = r;
         }
@@ -117,17 +119,21 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     // internal class to simulate a PortController
     class SerialPortControllerScaffold extends SerialPortController {
 
+        @Override
         public java.util.Vector<String> getPortNames() {
             return null;
         }
 
+        @Override
         public String openPort(String portName, String appName) {
             return null;
         }
 
+        @Override
         public void configure() {
         }
 
+        @Override
         public String[] validBaudRates() {
             return null;
         }
@@ -144,16 +150,19 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
         }
 
         // returns the InputStream from the port
+        @Override
         public DataInputStream getInputStream() {
             return istream;
         }
 
         // returns the outputStream to the port
+        @Override
         public DataOutputStream getOutputStream() {
             return ostream;
         }
 
         // check that this object is ready to operate
+        @Override
         public boolean status() {
             return true;
         }

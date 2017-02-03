@@ -145,6 +145,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         addButton.setToolTipText(Bundle.getMessage("ToolTipButtonMSFAdd"));
         addButton.setMnemonic(Mnemonics.get("AddButton")); // NOI18N
         addButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 addButtonPressed(e);
             }
@@ -154,6 +155,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         closeButton.setToolTipText(Bundle.getMessage("ToolTipButtonMSFClose"));
         closeButton.setMnemonic(Mnemonics.get("CloseButton")); // NOI18N
         closeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 closeButtonPressed(e);
             }
@@ -162,6 +164,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         saveButton.setToolTipText(Bundle.getMessage("ToolTipButtonMSFSave"));
         saveButton.setMnemonic(Mnemonics.get("SaveButton")); // NOI18N
         saveButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 saveButtonPressed(e);
             }
@@ -248,6 +251,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         cTab = CurrentTab.SENSOR;
         tabbedPane.setSelectedIndex(0);
         tabbedPane.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 switch(tabbedPane.getSelectedIndex()) {
                     case 2:
@@ -318,6 +322,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
     }
 
     // DCCppListener Methods
+    @Override
     public void message(DCCppReply r) {
         // When we get a SensorDefReply message, add the
         // sensor information to the data map for the model.
@@ -349,10 +354,12 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         }
     }
 
+    @Override
     public void message(DCCppMessage m) {
         // Do nothing
     }
 
+    @Override
     public void notifyTimeout(DCCppMessage m) {
         // Do nothing
     }
@@ -366,6 +373,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
      *
      * WARNING: BORROWED FROM JmriJFrame.
      */
+    @Override
     public void addHelpMenu(String ref, boolean direct) {
         // only works if no menu present?
         JMenuBar bar = getJMenuBar();
@@ -686,26 +694,32 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             return(rowData);
         }
 
+        @Override
         public String getColumnName(int col) {
             return columnNames[col];
         }
 
+        @Override
         public int getRowCount() {
             return rowData.size();
         }
 
+        @Override
         public int getColumnCount() {
             return columnNames.length;
         }
 
+        @Override
         public Object getValueAt(int row, int col) {
             return rowData.elementAt(row).elementAt(col);
         }
 
+        @Override
         public boolean isCellEditable(int row, int col) {
             return true;
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             rowData.elementAt(row).setElementAt(value, col);
             if (col < 3) {
@@ -716,6 +730,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             fireTableCellUpdated(row, col);
         }
 
+        @Override
         public Class<?> getColumnClass(int columnIndex) {
             switch (columnIndex) {
                 case 0:
@@ -838,26 +853,32 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             return(rowData);
         }
 
+        @Override
         public String getColumnName(int col) {
             return columnNames[col];
         }
 
+        @Override
         public int getRowCount() {
             return rowData.size();
         }
 
+        @Override
         public int getColumnCount() {
             return columnNames.length;
         }
 
+        @Override
         public Object getValueAt(int row, int col) {
             return rowData.elementAt(row).elementAt(col);
         }
 
+        @Override
         public boolean isCellEditable(int row, int col) {
             return true;
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             rowData.elementAt(row).setElementAt(value, col);
             if (col < 3) {
@@ -868,6 +889,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             fireTableCellUpdated(row, col);
         }
 
+        @Override
         public Class<?> getColumnClass(int columnIndex) {
             switch (columnIndex) {
                 case 0:
@@ -991,26 +1013,32 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             return(rowData);
         }
 
+        @Override
         public String getColumnName(int col) {
             return columnNames[col];
         }
 
+        @Override
         public int getRowCount() {
             return rowData.size();
         }
 
+        @Override
         public int getColumnCount() {
             return columnNames.length;
         }
 
+        @Override
         public Object getValueAt(int row, int col) {
             return rowData.elementAt(row).elementAt(col);
         }
 
+        @Override
         public boolean isCellEditable(int row, int col) {
             return true;
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             rowData.elementAt(row).setElementAt(value, col);
             if (col < 5) {
@@ -1021,6 +1049,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             fireTableCellUpdated(row, col);
         }
 
+        @Override
         public Class<?> getColumnClass(int columnIndex) {
             switch (columnIndex) {
                 case 0:
@@ -1049,6 +1078,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             setOpaque(true);
         }
 
+        @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
                         boolean isSelected, boolean hasFocus, int row, int column) {
             if (isSelected) {
@@ -1076,12 +1106,14 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             button.setOpaque(true);
             table = t;
             button.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     fireEditingStopped();
                 }
             });
         }
 
+        @Override
         public Component getTableCellEditorComponent(JTable table, Object value,
                     boolean isSelected, int row, int column) {
             if (isSelected) {
@@ -1097,6 +1129,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             return button;
         }
 
+        @Override
         public Object getCellEditorValue() {
             if (isPushed) {
                 int sel = table.getEditingRow();
@@ -1118,11 +1151,13 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             return label;
         }
 
+        @Override
         public boolean stopCellEditing() {
             isPushed = false;
             return super.stopCellEditing();
         }
 
+        @Override
         protected void fireEditingStopped() {
             super.fireEditingStopped();
         }

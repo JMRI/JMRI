@@ -28,6 +28,7 @@ public class MonitorFrameTest {
 
         MonitorPane f = new MonitorPane() {
 
+            @Override
             public void nextLine(String s1, String s2) {
                 testFormatted = s1;
                 testRaw = s2;
@@ -52,6 +53,7 @@ public class MonitorFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         MonitorPane f = new MonitorPane() {
+            @Override
             public void nextLine(String s1, String s2) {
                 testFormatted = s1;
                 testRaw = s2;

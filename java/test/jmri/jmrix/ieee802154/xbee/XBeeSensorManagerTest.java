@@ -88,10 +88,13 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
 
         XBeeTrafficController tc = new XBeeTrafficController() {
+            @Override
             public void setInstance() {
             }
+            @Override
             public void sendXBeeMessage(XBeeMessage m,XBeeListener l){
             }
+            @Override
             public XBeeDevice getXBee() {
                return localDevice;
             }

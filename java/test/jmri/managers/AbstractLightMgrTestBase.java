@@ -35,6 +35,7 @@ public abstract class AbstractLightMgrTestBase {
 
     protected class Listen implements PropertyChangeListener {
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             listenerResult = true;
         }

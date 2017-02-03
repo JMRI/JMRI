@@ -65,6 +65,7 @@ public class BlockTest extends TestCase {
         SensorManager sm = new jmri.managers.InternalSensorManager();
         count = 0;
         Block b = new Block("SystemName") {
+            @Override
             void handleSensorChange(java.beans.PropertyChangeEvent e) {
                 count++;
             }
@@ -342,12 +343,14 @@ public class BlockTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         JUnitUtil.resetInstanceManager();
         super.tearDown();

@@ -166,6 +166,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         return f;
     }
 
+    @Override
     public String toString() {
        QsiSystemConnectionMemo memo = jmri.InstanceManager.getDefault(jmri.jmrix.qsi.QsiSystemConnectionMemo.class);
        return toString(memo.getQsiTrafficController());

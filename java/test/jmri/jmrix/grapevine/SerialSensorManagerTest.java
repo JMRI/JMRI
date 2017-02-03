@@ -96,6 +96,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         return 1009;
     }
 
+    @Override
     protected int getNumToTest2() {
         return 1007;
     }

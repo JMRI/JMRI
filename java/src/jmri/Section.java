@@ -2661,6 +2661,7 @@ public class Section extends AbstractNamedBean
         return Bundle.getMessage("BeanNameSection");
     }
 
+    @Override
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
             NamedBean nb = (NamedBean) evt.getOldValue();

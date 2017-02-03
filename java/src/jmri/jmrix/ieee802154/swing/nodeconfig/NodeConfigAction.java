@@ -42,6 +42,7 @@ public class NodeConfigAction extends AbstractAction {
         this("Configure IEEE802154 Nodes", cm);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         NodeConfigFrame f = new NodeConfigFrame(icm.getTrafficController());
         try {

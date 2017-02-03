@@ -44,6 +44,7 @@ public class EditNodeFrame extends jmri.util.JmriJFrame {
     /**
      * Initialize the config window
      */
+    @Override
     public void initComponents() {
         setTitle(Bundle.getMessage("EditNodeWindowTitle"));
         Container contentPane = getContentPane();
@@ -69,6 +70,7 @@ public class EditNodeFrame extends jmri.util.JmriJFrame {
         editButton.setVisible(true);
         editButton.setToolTipText(Bundle.getMessage("TipEditButton"));
         editButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 editButtonActionPerformed();
             }
@@ -80,6 +82,7 @@ public class EditNodeFrame extends jmri.util.JmriJFrame {
         cancelButton.setToolTipText(Bundle.getMessage("TipCancelButton"));
         panel4.add(cancelButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 cancelButtonActionPerformed();
             }

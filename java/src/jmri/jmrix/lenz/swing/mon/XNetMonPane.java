@@ -54,6 +54,7 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
         super.dispose();
     }
 
+    @Override
     public synchronized void message(XNetReply l) {				// receive a XpressNet message and log it
         // display the raw data if requested
         StringBuilder raw = new StringBuilder();
@@ -70,6 +71,7 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
 
     // listen for the messages to the LI100/LI101
     @SuppressWarnings("fallthrough")
+    @Override
     public synchronized void message(XNetMessage l) {
         // display the raw data if requested  
         StringBuilder raw = new StringBuilder("packet: ");
@@ -85,6 +87,7 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());

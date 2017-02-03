@@ -359,6 +359,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @Override
     protected Point2D rotatePoint(Point2D p, double sineRot, double cosineRot) {
         double cX = center.getX();
         double cY = center.getY();
@@ -1776,6 +1777,7 @@ public class LayoutTurnout extends LayoutTrack {
         if (namedTurnout != null) {
             namedTurnout.getBean().addPropertyChangeListener(mTurnoutListener
                     = new java.beans.PropertyChangeListener() {
+                @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     if (secondNamedTurnout != null) {
                         if (e.getSource().equals(secondNamedTurnout.getBean()) && e.getNewValue().equals(secondNamedTurnout.getBean().getState())
@@ -2015,6 +2017,7 @@ public class LayoutTurnout extends LayoutTrack {
                 JMenuItem rotateItem = new JMenuItem(rb.getString("Rotate") + "...");
                 popup.add(rotateItem);
                 rotateItem.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent event) {
                         boolean entering = true;
                         boolean error = false;
@@ -2053,6 +2056,7 @@ public class LayoutTurnout extends LayoutTrack {
             disableItem.setSelected(disabled);
             popup.add(disableItem);
             disableItem.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     disabled = disableItem.isSelected();
                 }
@@ -2063,6 +2067,7 @@ public class LayoutTurnout extends LayoutTrack {
             disableWhenOccupiedItem.setSelected(disableWhenOccupied);
             popup.add(disableWhenOccupiedItem);
             disableWhenOccupiedItem.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     disableWhenOccupied = disableWhenOccupiedItem.isSelected();
                 }
@@ -2091,16 +2096,19 @@ public class LayoutTurnout extends LayoutTrack {
             }
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
             popup.add(new AbstractAction(rb.getString("UseSizeAsDefault")) {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setUpDefaultSize();
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     editLayoutTurnout();
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     if (layoutEditor.removeLayoutTurnout(instance)) {
                         // Returned true if user did not cancel
@@ -2111,6 +2119,7 @@ public class LayoutTurnout extends LayoutTrack {
             });
             if (getTurnout() != null) {
                 popup.add(new AbstractAction(rb.getString("SetSignals")) {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -2147,6 +2156,7 @@ public class LayoutTurnout extends LayoutTrack {
 
                     if (blockBName.equals("") && blockCName.equals("") && blockDName.equals("")) {
                         popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
+                            @Override
                             public void actionPerformed(ActionEvent e) {
                                 AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
                                 routeTableAction.actionPerformed(e);
@@ -2155,6 +2165,7 @@ public class LayoutTurnout extends LayoutTrack {
                     } else {
                         JMenu viewRouting = new JMenu(rb.getString("ViewBlockRouting"));
                         viewRouting.add(new AbstractAction(blockName) {
+                            @Override
                             public void actionPerformed(ActionEvent e) {
                                 AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockName, getLayoutBlock());
                                 routeTableAction.actionPerformed(e);
@@ -2162,6 +2173,7 @@ public class LayoutTurnout extends LayoutTrack {
                         });
                         if (!blockBName.equals("") && !blockBName.equals(blockName)) {
                             viewRouting.add(new AbstractAction(blockBName) {
+                                @Override
                                 public void actionPerformed(ActionEvent e) {
                                     AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockBName, getLayoutBlockB());
                                     routeTableAction.actionPerformed(e);
@@ -2171,6 +2183,7 @@ public class LayoutTurnout extends LayoutTrack {
 
                         if (!blockCName.equals("") && !blockCName.equals(blockName) && !blockCName.equals(blockBName)) {
                             viewRouting.add(new AbstractAction(blockCName) {
+                                @Override
                                 public void actionPerformed(ActionEvent e) {
                                     AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockCName, getLayoutBlockC());
                                     routeTableAction.actionPerformed(e);
@@ -2180,6 +2193,7 @@ public class LayoutTurnout extends LayoutTrack {
 
                         if (!blockDName.equals("") && !blockDName.equals(blockName) && !blockDName.equals(blockBName) && !blockDName.equals(blockCName)) {
                             viewRouting.add(new AbstractAction(blockDName) {
+                                @Override
                                 public void actionPerformed(ActionEvent e) {
                                     AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockDName, getLayoutBlockD());
                                     routeTableAction.actionPerformed(e);
@@ -2193,6 +2207,7 @@ public class LayoutTurnout extends LayoutTrack {
 
                 if (blockBoundaries) {
                     popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             if (tools == null) {
                                 tools = new LayoutEditorTools(layoutEditor);
@@ -2203,6 +2218,7 @@ public class LayoutTurnout extends LayoutTrack {
                         }
                     });
                     popup.add(new AbstractAction(rb.getString("SetSensors")) {
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             if (tools == null) {
                                 tools = new LayoutEditorTools(layoutEditor);
@@ -2425,6 +2441,7 @@ public class LayoutTurnout extends LayoutTrack {
             panel1a.setLayout(new BoxLayout(panel1a, BoxLayout.Y_AXIS));
             secondTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getSecondTurnout(), JmriBeanComboBox.DISPLAYNAME);
             additionalTurnout.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     if (additionalTurnout.isSelected()) {
                         secondTurnoutLabel.setEnabled(true);
@@ -2483,6 +2500,7 @@ public class LayoutTurnout extends LayoutTrack {
             blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             panel2.add(turnoutEditBlock = new JButton(rb.getString("CreateEdit")));
             turnoutEditBlock.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     turnoutEditBlockPressed(e);
                 }
@@ -2502,6 +2520,7 @@ public class LayoutTurnout extends LayoutTrack {
 
                 panel21.add(turnoutEditBlockB = new JButton(rb.getString("CreateEdit")));
                 turnoutEditBlockB.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         turnoutEditBlockBPressed(e);
                     }
@@ -2521,6 +2540,7 @@ public class LayoutTurnout extends LayoutTrack {
                 panel22.add(blockCNameComboBox);
                 panel22.add(turnoutEditBlockC = new JButton(rb.getString("CreateEdit")));
                 turnoutEditBlockC.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         turnoutEditBlockCPressed(e);
                     }
@@ -2540,6 +2560,7 @@ public class LayoutTurnout extends LayoutTrack {
                 panel23.add(blockDNameComboBox);
                 panel23.add(turnoutEditBlockD = new JButton(rb.getString("CreateEdit")));
                 turnoutEditBlockD.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         turnoutEditBlockDPressed(e);
                     }
@@ -2567,6 +2588,7 @@ public class LayoutTurnout extends LayoutTrack {
             });
 
             turnoutEditDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     turnoutEditDonePressed(e);
                 }
@@ -2575,6 +2597,7 @@ public class LayoutTurnout extends LayoutTrack {
             // Cancel
             panel5.add(turnoutEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             turnoutEditCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     turnoutEditCancelPressed(e);
                 }
@@ -2609,6 +2632,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
 
         editLayoutTurnoutFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 turnoutEditCancelPressed(null);
             }

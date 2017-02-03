@@ -97,6 +97,7 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
         return leaves;
     }
 
+    @Override
     public Enumeration<CatalogTreeNode> children() {
         return super.children();
     }

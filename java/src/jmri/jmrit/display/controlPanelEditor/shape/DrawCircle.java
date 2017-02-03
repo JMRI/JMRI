@@ -29,6 +29,7 @@ public class DrawCircle extends DrawFrame {
     /**
      * Create a new PositionableShape
      */
+    @Override
     protected JPanel makeParamsPanel(PositionableShape ps) {
         JPanel panel = super.makeParamsPanel(ps);
 
@@ -40,16 +41,19 @@ public class DrawCircle extends DrawFrame {
         _diameterText.setText(Integer.toString(_shape.getWidth()));
         _diameterText.setHorizontalAlignment(JTextField.RIGHT);
         pp.add(_diameterText);
-        _diameterText.addMouseMotionListener( new MouseMotionListener() {
+        _diameterText.addMouseMotionListener(new MouseMotionListener() {
+            @Override
             public void mouseDragged( MouseEvent e) {               
                 updateShape();
             }
+            @Override
             public void mouseMoved(MouseEvent e) {
                 _shape.setWidth(Integer.parseInt(_diameterText.getText()));
                 updateShape();
             }
         });
-        _diameterText.addActionListener( new ActionListener() {
+        _diameterText.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 _shape.setWidth(Integer.parseInt(_diameterText.getText()));
                 updateShape();
@@ -62,6 +66,7 @@ public class DrawCircle extends DrawFrame {
         return panel;
     }
 
+    @Override
     protected boolean makeFigure(MouseEvent event) {
         ControlPanelEditor ed = _parent.getEditor();
         Rectangle r = ed.getSelectRect();
@@ -78,9 +83,11 @@ public class DrawCircle extends DrawFrame {
         return true;
     }
 
+    @Override
     void setDisplayWidth(int w) {
         _diameterText.setText(Integer.toString(w));        
     }
+    @Override
     void setDisplayHeight(int h) {
         _diameterText.setText(Integer.toString(h));        
     }

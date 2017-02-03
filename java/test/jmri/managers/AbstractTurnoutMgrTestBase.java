@@ -33,6 +33,7 @@ public abstract class AbstractTurnoutMgrTestBase {
 
     protected class Listen implements PropertyChangeListener {
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             listenerResult = true;
         }

@@ -44,11 +44,14 @@ public class TransitCreationToolTest {
         // add a new named bean to the list.
         try {
            t.addNamedBean(new jmri.implementation.AbstractNamedBean("sys","usr"){
+               @Override
                public int getState() {
                    return 0;
                }
+               @Override
                public void setState(int i) {
                }
+               @Override
                public String getBeanType() {
                    return "";
                }
@@ -67,11 +70,14 @@ public class TransitCreationToolTest {
         // add a new named bean to the list.
         try {
            t.addNamedBean(new jmri.implementation.AbstractNamedBean("sys","usr"){
+               @Override
                public int getState() {
                    return 0;
                }
+               @Override
                public void setState(int i) {
                }
+               @Override
                public String getBeanType() {
                    return "";
                }

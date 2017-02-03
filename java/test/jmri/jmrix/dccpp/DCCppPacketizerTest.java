@@ -33,12 +33,15 @@ public class DCCppPacketizerTest extends DCCppTrafficControllerTest{
         }
 
         // methods removed for testing
+        @Override
         protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
         } // don't care about timeout
 
+        @Override
         protected void reportReceiveLoopException(Exception e) {
         }
 
+        @Override
         protected void portWarn(Exception e) {
         }
     }

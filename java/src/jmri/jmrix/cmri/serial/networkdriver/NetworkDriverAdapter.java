@@ -22,6 +22,7 @@ public class NetworkDriverAdapter extends SerialNetworkPortController {
     /**
      * set up all of the other objects to operate connected to this port
      */
+    @Override
     public void configure() {
         // connect to the traffic controller
         SerialTrafficController tc = new SerialTrafficController();

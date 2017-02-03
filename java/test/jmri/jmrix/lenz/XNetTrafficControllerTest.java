@@ -13,6 +13,7 @@ import org.junit.Before;
 public class XNetTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
@@ -24,6 +25,7 @@ public class XNetTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContr
     }
 
     @After
+    @Override
     public void tearDown(){
        tc = null;
         JUnitUtil.resetInstanceManager();

@@ -39,6 +39,7 @@ public class XNetSimulatorPortControllerTest extends jmri.jmrix.AbstractSerialPo
             /**
              * Get an array of valid baud rates; used to display valid options.
              */
+            @Override
             public String[] validBaudRates(){
                String[] retval = {"9600"};
                return retval;

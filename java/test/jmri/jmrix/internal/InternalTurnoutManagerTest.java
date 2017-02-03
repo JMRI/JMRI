@@ -12,6 +12,7 @@ import org.junit.Before;
  */
 public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
+    @Override
     public String getSystemName(int i) {
         return "IT" + i;
     }

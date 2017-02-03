@@ -102,6 +102,7 @@ public class XBeeLight extends AbstractLight {
         }
     }
 
+    @Override
     protected void doNewState(int oldState, int newState) {
         try  {
             if((newState == Light.ON) ) {

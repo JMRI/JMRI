@@ -31,11 +31,14 @@ public class NodeConfigFrameTest {
         Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         tc = new IEEE802154TrafficController() {
+            @Override
             public void setInstance() {
             }
+            @Override
             protected jmri.jmrix.AbstractMRReply newReply() {
                 return null;
             }
+            @Override
             public jmri.jmrix.ieee802154.IEEE802154Node newNode() {
                 return null;
             }

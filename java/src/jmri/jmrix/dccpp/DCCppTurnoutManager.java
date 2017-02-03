@@ -27,12 +27,14 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
         tc.addDCCppListener(DCCppInterface.FEEDBACK, this);
     }
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
     protected String prefix = null;
 
     // DCCpp-specific methods
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
         Turnout t = new DCCppTurnout(prefix, addr, tc);
@@ -41,6 +43,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     }
 
     // listen for turnouts, creating them as needed
+    @Override
     public void message(DCCppReply l) {
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l.toString());
@@ -75,6 +78,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
      * Allows text other than "CLOSED" to be use with certain hardware system to
      * represent the Turnout.CLOSED state.
      */
+    @Override
     public String getClosedText() {
         return rbt.getString("TurnoutStateClosed");
     }
@@ -84,15 +88,18 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
      * Allows text other than "THROWN" to be use with certain hardware system to
      * represent the Turnout.THROWN state.
      */
+    @Override
     public String getThrownText() {
         return rbt.getString("TurnoutStateThrown");
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     public void message(DCCppMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());

@@ -88,6 +88,7 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
         internalState = oldState;
     }
 
+    @Override
     synchronized public void message(XNetReply l) {
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l);
@@ -130,6 +131,7 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
         }
     }
 
+    @Override
     protected XNetMessage getOffMessage() {
         return( Z21XNetMessage.getZ21SetTurnoutRequestMessage(mNumber,
                 (getCommandedState() ==  _mThrown),

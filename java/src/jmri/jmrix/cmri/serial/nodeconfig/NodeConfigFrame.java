@@ -101,6 +101,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Initialize the config window
      */
+    @Override
     public void initComponents() {
         setTitle(rb.getString("WindowTitle"));
 
@@ -125,6 +126,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         nodeTypeBox.addItem("USIC_SUSIC");
 // Here add code for other types of nodes
         nodeTypeBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent event) {
                 String s = (String) nodeTypeBox.getSelectedItem();
                 if (s.equals("SMINI")) {
@@ -159,6 +161,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         cardSizeBox.addItem(rb.getString("CardSize32"));
 // here add code for other node types, if required
         cardSizeBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent event) {
                 String s = (String) cardSizeBox.getSelectedItem();
                 if (s.equals(rb.getString("CardSize24"))) {
@@ -278,6 +281,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         addButton.setVisible(true);
         addButton.setToolTipText(rb.getString("TipAddButton"));
         addButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 addButtonActionPerformed();
             }
@@ -288,6 +292,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         editButton.setToolTipText(rb.getString("TipEditButton"));
         panel4.add(editButton);
         editButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 editButtonActionPerformed();
             }
@@ -298,6 +303,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         deleteButton.setToolTipText(rb.getString("TipDeleteButton"));
         panel4.add(deleteButton);
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 deleteButtonActionPerformed();
             }
@@ -308,6 +314,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         doneButton.setToolTipText(rb.getString("TipDoneButton"));
         panel4.add(doneButton);
         doneButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 doneButtonActionPerformed();
             }
@@ -318,6 +325,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         updateButton.setToolTipText(rb.getString("TipUpdateButton"));
         panel4.add(updateButton);
         updateButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 updateButtonActionPerformed();
             }
@@ -329,6 +337,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         cancelButton.setToolTipText(rb.getString("TipCancelButton"));
         panel4.add(cancelButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 cancelButtonActionPerformed();
             }
@@ -620,6 +629,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Method to close the window when the close box is clicked
      */
+    @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         doneButtonActionPerformed();
         super.windowClosing(e);
@@ -933,22 +943,27 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */
     public class CardConfigModel extends AbstractTableModel {
 
+        @Override
         public String getColumnName(int c) {
             return cardConfigColumnNames[c];
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             return String.class;
         }
 
+        @Override
         public int getColumnCount() {
             return 2;
         }
 
+        @Override
         public int getRowCount() {
             return 64;
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             if (c == 0) {
                 return Integer.toString(r);
@@ -958,12 +973,14 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             return "";
         }
 
+        @Override
         public void setValueAt(Object type, int r, int c) {
             if (c == 1) {
                 cardType[r] = (String) type;
             }
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             return (c == 1);
         }
@@ -981,10 +998,12 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */
     public class SearchlightConfigModel extends AbstractTableModel {
 
+        @Override
         public String getColumnName(int c) {
             return searchlightConfigColumnNames[c];
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             if (c > 0) {
                 return Boolean.class;
@@ -993,14 +1012,17 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             }
         }
 
+        @Override
         public int getColumnCount() {
             return 9;
         }
 
+        @Override
         public int getRowCount() {
             return 6;
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             if (c == 0) {
                 switch (r) {
@@ -1029,6 +1051,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             }
         }
 
+        @Override
         public void setValueAt(Object type, int r, int c) {
             if (c > 0) {
                 int index = (r * 8) + (c - 1);
@@ -1061,6 +1084,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             }
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             return (c != 0);
         }

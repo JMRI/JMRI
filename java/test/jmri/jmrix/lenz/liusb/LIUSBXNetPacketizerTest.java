@@ -15,6 +15,7 @@ import org.junit.Test;
 public class LIUSBXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest {
 
     @Test
+    @Override
     public void testOutbound() throws Exception {
         LIUSBXNetPacketizer c = (LIUSBXNetPacketizer)tc;
         // connect to iostream via port controller scaffold

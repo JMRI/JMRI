@@ -22,6 +22,7 @@ public class LnMessageClientAction extends AbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         try {
             // get the portname and timeout

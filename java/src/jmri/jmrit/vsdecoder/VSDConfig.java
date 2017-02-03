@@ -113,6 +113,7 @@ public class VSDConfig {
         roster = r;
     }
 
+    @Override
     public String toString() {
         return ("Config: ID:" + my_id
                 + " Path:" + vsd_path

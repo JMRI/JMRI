@@ -38,6 +38,7 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
      * Set up all of the other objects to operate with a LocoBuffer connected to
      * this port.
      */
+    @Override
     public void configure() {
 
         setCommandStationType(getOptionState(option2Name));
@@ -71,6 +72,7 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
+    @Override
     public boolean okToSend() {
         return true;
     }
@@ -78,6 +80,7 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
     /**
      * Local method to do specific configuration, overridden in class
      */
+    @Override
     protected void setSerialPort(SerialPort activeSerialPort) throws gnu.io.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(mBaudRate);

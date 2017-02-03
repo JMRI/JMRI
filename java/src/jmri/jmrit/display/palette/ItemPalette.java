@@ -355,6 +355,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
 //        long t = System.currentTimeMillis();
         loadIcons(editor);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 closePanels(e);
                 ImageIndexEditor.checkImageIndex();
@@ -459,6 +460,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
 //        _tabPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);    	
     }
 
+    @Override
     public void stateChanged(ChangeEvent e) {
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
 //        long t = System.currentTimeMillis();
@@ -486,6 +488,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         editItem.addActionListener(new ActionListener() {
             Editor editor;
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 ImageIndexEditor ii = ImageIndexEditor.instance(editor);
                 ii.pack();
@@ -502,6 +505,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
 
         JMenuItem openItem = new JMenuItem(Bundle.getMessage("openDirMenu"));
         openItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 DirectorySearcher.instance().openDirectory(false);
             }

@@ -364,6 +364,7 @@ public class SerialNodeTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -373,6 +374,7 @@ public class SerialNodeTest extends TestCase {
         memo.setTrafficController(stcs);
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
         jmri.util.JUnitUtil.resetInstanceManager();

@@ -304,6 +304,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      * 
      * @return String form of message.
      */
+    @Override
     public String toString() {
         return(myMessage.toString());
         /*
@@ -327,6 +328,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         return(this.myMessage.charAt(n));
     }
     
+    @Override
     public void setElement(int n, int v) {
         // We want the ASCII value, not the string interpretation of the int
         char c = (char)(v & 0xFF);
@@ -343,6 +345,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     // directly
     // WARNING: use this only with opcodes that have a variable number 
     // of arguments following included. Otherwise, just use setElement
+    @Override
     public void setOpCode(int i) {
         if (i > 0xFF || i < 0) {
             log.error("Opcode invalid: " + i);
@@ -351,6 +354,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         myMessage.setCharAt(0, opcode);
     }
 
+    @Override
     public int getOpCode() {
         return(opcode & 0xFF);
     }

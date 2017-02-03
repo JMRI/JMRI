@@ -41,6 +41,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
      * This should probably use a local cache instead of counting/searching each
      * time.
      */
+    @Override
     public int getRowCount() {
         int nMax = SprogConstants.MAX_SLOTS;
         if (_allSlots) {
@@ -58,10 +59,12 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         return n;
     }
 
+    @Override
     public int getColumnCount() {
         return NUMCOLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case SLOTCOLUMN:
@@ -82,6 +85,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case SLOTCOLUMN:
@@ -99,6 +103,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
 //        case ESTOPCOLUMN:
@@ -113,6 +118,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
     static final Boolean False = Boolean.valueOf("False");
 
     @SuppressWarnings("null")
+    @Override
     public Object getValueAt(int row, int col) {
         SprogSlot s = _memo.getCommandStation().slot(slotNum(row));
         if (s == null) {
@@ -216,6 +222,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         // check for in use
         SprogSlot s = _memo.getCommandStation().slot(slotNum(row));
@@ -290,6 +297,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
 //			.setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
 //    }
     // methods to communicate with SprogSlotManager
+    @Override
     public synchronized void notifyChangedSlot(SprogSlot s) {
         // update model from this slot
 
@@ -313,6 +321,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
             _model = model;
         }
 
+        @Override
         public void run() {
             if (-1 == _row) {  // notify about entire table
                 _model.fireTableDataChanged();  // just that row

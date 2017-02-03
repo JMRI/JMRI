@@ -18,6 +18,7 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
     private AcelaSystemConnectionMemo _memo = null;
     private AcelaTrafficControlScaffold tcis = null;
 
+    @Override
     public String getSystemName(int i) {
         return "AL" + i;
     }
@@ -52,6 +53,7 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
