@@ -8,6 +8,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -620,7 +621,14 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         return true; // no validity checking performed
     }
 
-    static class DataPair<K, V> {
+    /**
+     * Retain the key/value pair of a Map or Dictionary as a pair.
+     * 
+     * @param <K> key class
+     * @param <V> value class
+     */
+    // Can uses of DataPair be replaced with used of Map.Entry or AbstractMap.SimpleEntry?
+    static class DataPair<K, V> implements Map.Entry<K, V> {
 
         K key;
         V value;
@@ -630,7 +638,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             value = v;
         }
 
-        K getKey() {
+        @Override
+        public K getKey() {
             return key;
         }
 
@@ -638,13 +647,17 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             key = k;
         }
 
-        V getValue() {
+        @Override
+        public V getValue() {
             return value;
         }
 
-        void setValue(V v) {
+        @Override
+        public V setValue(V v) {
             value = v;
+            return value;
         }
+
     }
 
     /* *********************** SpeedName Table ******************************/
