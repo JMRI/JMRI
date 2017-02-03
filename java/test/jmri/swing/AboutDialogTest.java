@@ -1,17 +1,16 @@
 package jmri.swing;
 
 import apps.tests.Log4JFixture;
+import java.awt.GraphicsEnvironment;
+import javax.swing.JFrame;
 import jmri.util.JUnitUtil;
-import jmri.util.ThreadingUtil;
+import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JDialogOperator;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
-import javax.swing.JFrame;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
 
 /**
  * Test simple functioning of AboutDialog
@@ -25,19 +24,28 @@ public class AboutDialogTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame frame = new JFrame("Test Frame");
         AboutDialog dialog = new AboutDialog(frame,true);
-        Assert.assertNotNull("exists", dialog);
+    }
+
+    @Test
+    public void testShowAndClose() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JFrame frame = new JFrame("Test Frame");
+        AboutDialog dialog = new AboutDialog(frame,true);
+
+        // because we set the dialog to be modal, the Jemmy operators have to
+        // be started in their own thread.
         Thread waitThread = new Thread(){
            public void run(){
+              // constructor for jfo and jdo will wait until the frame and
+              // dialog are visible.
               JFrameOperator jfo = new JFrameOperator("Test Frame");
-              JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("TitleAbout","JMRI"));
+              JDialogOperator jdo = new JDialogOperator(jfo,Bundle.getMessage("TitleAbout","JMRI"));
               jdo.close();
            }
         };
         waitThread.start();
-        ThreadingUtil.runOnGUI( () -> {
-            frame.setVisible(true);
-            dialog.setVisible(true);
-        }); 
+        frame.setVisible(true);
+        dialog.setVisible(true);
     }
 
     @Before
