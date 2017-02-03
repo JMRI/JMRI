@@ -686,7 +686,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         pack();
     }
 
-    public void addDirectoryToCatalog(java.io.File dir) {
+    public void addDirectoryToCatalog() {
         if (_catalog == null) {
             _catalog = CatalogPanel.makeDefaultCatalog();
         }
@@ -694,8 +694,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _changeButton.setVisible(false);
             _closeButton.setVisible(true);
         }
-        String name = dir.getName();
-        _catalog.createNewBranch("IF" + name, name, dir.getAbsolutePath());
         this.add(_catalog);
         this.pack();
     }
