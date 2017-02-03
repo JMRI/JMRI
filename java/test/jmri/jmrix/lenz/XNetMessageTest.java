@@ -987,6 +987,54 @@ public class XNetMessageTest{
     }
 
     @Test
+    public void testToMonitorStringSpeedAndDirectin128SpeedSteps(){
+       XNetMessage m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode128,0.5f,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Address: 1234 To Speed Step 64 and direction Forward In 128 speed step mode.",m.toMonitorString());
+       m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode128,0.5f,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Address: 1234 To Speed Step 64 and direction Reverse In 128 speed step mode.",m.toMonitorString());
+       m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode128,0,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Address: 1234 To Speed Step 0 and direction Forward In 128 speed step mode.",m.toMonitorString());
+       m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode128,0,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Address: 1234 To Speed Step 0 and direction Reverse In 128 speed step mode.",m.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringSpeedAndDirectin28SpeedSteps(){
+       XNetMessage m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode28,0.5f,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Address: 1234 To Speed Step 14 and direction Forward In 28 speed step mode.",m.toMonitorString());
+       m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode28,0.5f,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Address: 1234 To Speed Step 14 and direction Reverse In 28 speed step mode.",m.toMonitorString());
+       m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode28,0,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Address: 1234 To Speed Step 0 and direction Forward In 28 speed step mode.",m.toMonitorString());
+       m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode28,0,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Address: 1234 To Speed Step 0 and direction Reverse In 28 speed step mode.",m.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringSpeedAndDirectin27SpeedSteps(){
+       XNetMessage m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode27,0.5f,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Address: 1234 To Speed Step 14 and direction Forward In 27 speed step mode.",m.toMonitorString());
+       m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode27,0.5f,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Address: 1234 To Speed Step 14 and direction Reverse In 27 speed step mode.",m.toMonitorString());
+       m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode27,0,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Address: 1234 To Speed Step 0 and direction Forward In 27 speed step mode.",m.toMonitorString());
+       m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode27,0,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Address: 1234 To Speed Step 0 and direction Reverse In 27 speed step mode.",m.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringSpeedAndDirectin14SpeedSteps(){
+       XNetMessage m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode14,0.5f,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Address: 1234 To Speed Step 8 and direction Forward In 14 speed step mode.",m.toMonitorString());
+       m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode14,0.5f,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Address: 1234 To Speed Step 8 and direction Reverse In 14 speed step mode.",m.toMonitorString());
+       m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode14,0,true);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Address: 1234 To Speed Step 0 and direction Forward In 14 speed step mode.",m.toMonitorString());
+       m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode14,0,false);
+       Assert.assertEquals("Monitor String","Mobile Decoder Operations Request: Set Address: 1234 To Speed Step 0 and direction Reverse In 14 speed step mode.",m.toMonitorString());
+    }
+
+    @Test
     public void testGetFunctionGroup1OpsMsg() {
        // all off
        XNetMessage m = XNetMessage.getFunctionGroup1OpsMsg(1234,

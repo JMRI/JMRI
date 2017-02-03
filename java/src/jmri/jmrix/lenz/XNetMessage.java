@@ -1597,7 +1597,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                     if ((getElement(4) & 0x80) != 0) {
                         text += " and direction Forward";
                     } else {
-                        text += "and direction Reverse";
+                        text += " and direction Reverse";
                     }
                     text += " In 27 speed step mode.";
                     break;
@@ -1616,7 +1616,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                     if ((getElement(4) & 0x80) != 0) {
                         text += " and direction Forward";
                     } else {
-                        text += "and direction Reverse";
+                        text += " and direction Reverse";
                     }
                     text += " In 28 speed step mode.";
                     break;
@@ -2081,21 +2081,17 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
             }
             // Accessory Info Request message
         } else if (getElement(0) == XNetConstants.ACC_INFO_REQ) {
-            text = "Accessory Decoder/Feedback Encoder Status Request: "
-                    + "Base Address " + getElement(1) + ",";
-            text
-                    = text + (((getElement(2) & 0x01) == 0x01) ? "Upper" : "Lower")
-                    + " Nibble.";
+            String nibblekey=(((getElement(2) & 0x01) == 0x01) ? "FeedbackEncoderUpperNibble" : "FeedbackEncoderLowerNibble");
+            text = Bundle.getMessage("XNetMessageFeedbackRequest",
+                       getElement(1),
+                       Bundle.getMessage(nibblekey));
         } else if (getElement(0) == XNetConstants.ACC_OPER_REQ) {
-            text = "Accessory Decoder Operations Request: ";
+            String messageKey =(((getElement(2) & 0x08) == 0x08) ? "XNetMessageAccessoryDecoderOnRequest" : "XNetMessageAccessoryDecoderOffRequest");
             int baseaddress = getElement(1);
             int subaddress = ((getElement(2) & 0x06) >> 1);
             int address = (baseaddress * 4) + subaddress + 1;
-            text = text + "Turnout Address " + address + "("
-                    + "Base Address " + getElement(1) + ","
-                    + "Sub Address " + ((getElement(2) & 0x06) >> 1) + ") ";
-            text = text + "Turn Output " + (getElement(2) & 0x01)
-                    + " " + (((getElement(2) & 0x08) == 0x08) ? "On." : "Off.");
+            int output = (getElement(2) & 0x01);
+            text = Bundle.getMessage(messageKey,address, baseaddress,subaddress,output);
         } else {
             text = toString();
         }
