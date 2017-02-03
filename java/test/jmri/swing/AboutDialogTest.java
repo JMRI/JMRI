@@ -30,25 +30,19 @@ public class AboutDialogTest {
     @Test
     public void testShowAndClose() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        JFrame frame = new JFrame("Test Frame");
-        AboutDialog dialog = new AboutDialog(frame,true);
 
-        // because we set the dialog to be modal, the Jemmy operators have to
-        // be started in their own thread.
-        Thread waitThread = new Thread(){
-           public void run(){
-              // constructor for jfo and jdo will wait until the frame and
-              // dialog are visible.
-              JFrameOperator jfo = new JFrameOperator("Test Frame");
-              JDialogOperator jdo = new JDialogOperator(jfo,Bundle.getMessage("TitleAbout","JMRI"));
-              jdo.close();
-           }
-        };
-        waitThread.start();
-        ThreadingUtil.runOnGUI( ()->{
+        ThreadingUtil.runOnGUIEventually( ()->{
+           JFrame frame = new JFrame("Test Frame");
+           AboutDialog dialog = new AboutDialog(frame,true);
            frame.setVisible(true);
            dialog.setVisible(true);
         });
+
+        // constructor for jfo and jdo will wait until the frame and
+        // dialog are visible.
+        JFrameOperator jfo = new JFrameOperator("Test Frame");
+        JDialogOperator jdo = new JDialogOperator(jfo,Bundle.getMessage("TitleAbout","JMRI"));
+        jdo.close();
     }
 
     @Before
