@@ -1,10 +1,16 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.BasicStroke;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Arc2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
@@ -49,7 +55,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (c) 2004-2009
  */
-public class TrackSegment {
+public class TrackSegment extends LayoutTrack {
 
     // Defined text resource
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
@@ -85,16 +91,16 @@ public class TrackSegment {
         }
         connect1 = c1;
         connect2 = c2;
-        if ((t1 < LayoutEditor.POS_POINT)
-                || (((t1 > LayoutEditor.LEVEL_XING_D) && (t1 < LayoutEditor.SLIP_A))
-                || ((t1 > LayoutEditor.SLIP_D) && (t1 < LayoutEditor.TURNTABLE_RAY_OFFSET)))) {
+        if ((t1 < POS_POINT)
+                || (((t1 > LEVEL_XING_D) && (t1 < SLIP_A))
+                || ((t1 > SLIP_D) && (t1 < TURNTABLE_RAY_OFFSET)))) {
             log.error("Invalid connect type 1 in TrackSegment constructor - " + id);
         } else {
             type1 = t1;
         }
-        if ((t2 < LayoutEditor.POS_POINT)
-                || (((t2 > LayoutEditor.LEVEL_XING_D) && (t2 < LayoutEditor.SLIP_A))
-                || ((t2 > LayoutEditor.SLIP_D) && (t2 < LayoutEditor.TURNTABLE_RAY_OFFSET)))) {
+        if ((t2 < POS_POINT)
+                || (((t2 > LEVEL_XING_D) && (t2 < SLIP_A))
+                || ((t2 > SLIP_D) && (t2 < TURNTABLE_RAY_OFFSET)))) {
             log.error("Invalid connect type 2 in TrackSegment constructor - " + id);
         } else {
             type2 = t2;
@@ -122,6 +128,11 @@ public class TrackSegment {
         dashed = dash;
         mainline = main;
         hidden = hide;
+    }
+
+    // this should only be used for debugging…
+    public String toString() {
+        return "TrackSegment " + ident;
     }
 
     /**
@@ -258,22 +269,22 @@ public class TrackSegment {
     }
 
     private String getConnectName(Object o, int type) {
-        if (type == LayoutEditor.POS_POINT) {
+        if (type == POS_POINT) {
             return ((PositionablePoint) o).getID();
         }
-        if ((type == LayoutEditor.TURNOUT_A) || (type == LayoutEditor.TURNOUT_B)
-                || (type == LayoutEditor.TURNOUT_C) || (type == LayoutEditor.TURNOUT_D)) {
+        if ((type == TURNOUT_A) || (type == TURNOUT_B)
+                || (type == TURNOUT_C) || (type == TURNOUT_D)) {
             return ((LayoutTurnout) o).getName();
         }
-        if ((type == LayoutEditor.LEVEL_XING_A) || (type == LayoutEditor.LEVEL_XING_B)
-                || (type == LayoutEditor.LEVEL_XING_C) || (type == LayoutEditor.LEVEL_XING_D)) {
+        if ((type == LEVEL_XING_A) || (type == LEVEL_XING_B)
+                || (type == LEVEL_XING_C) || (type == LEVEL_XING_D)) {
             return ((LevelXing) o).getID();
         }
-        if ((type == LayoutEditor.SLIP_A) || (type == LayoutEditor.SLIP_B)
-                || (type == LayoutEditor.SLIP_C) || (type == LayoutEditor.SLIP_D)) {
+        if ((type == SLIP_A) || (type == SLIP_B)
+                || (type == SLIP_C) || (type == SLIP_D)) {
             return ((LayoutSlip) o).getName();
         }
-        if (type >= LayoutEditor.TURNTABLE_RAY_OFFSET) {
+        if (type >= TURNTABLE_RAY_OFFSET) {
             return ((LayoutTurntable) o).getID();
         }
         return "";
@@ -299,8 +310,13 @@ public class TrackSegment {
                 log.error("bad blockname '" + tBlockName + "' in tracksegment " + ident);
             }
         }
-        connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
-        connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
+
+        //NOTE: testing "type-less" connects
+        // (read comments for findObjectByName in LayoutEditorFindItems.java)
+        // connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
+        // connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
+        connect1 = p.getFinder().findObjectByName(tConnect1Name);
+        connect2 = p.getFinder().findObjectByName(tConnect2Name);
     }
 
     /**
@@ -354,7 +370,7 @@ public class TrackSegment {
         if (connect == null) {
             return null;
         }
-        if (type == LayoutEditor.POS_POINT) {
+        if (type == POS_POINT) {
             PositionablePoint p = (PositionablePoint) connect;
             if (p.getConnect1() != instance) {
                 if (p.getConnect1() != null) {
@@ -653,15 +669,15 @@ public class TrackSegment {
 
     void segmentEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newBlockName = blockNameComboBox.getSelectedDisplayName();
-        newBlockName = (null != newBlockName) ? newBlockName.trim() : "";
-        if (!blockName.equals(newBlockName)) {
+        String newName = (String) blockNameComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
+        if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if (block != null) {
                 block.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockName = newBlockName;
+            blockName = newName;
             try {
                 block = layoutEditor.provideLayoutBlock(blockName);
             } catch (IllegalArgumentException ex) {
@@ -717,15 +733,15 @@ public class TrackSegment {
             needsRedraw = true;
         }
         // check if Block changed
-        String newBlockName = blockNameComboBox.getSelectedDisplayName();
-        newBlockName = (null != newBlockName) ? newBlockName.trim() : "";
-        if (!blockName.equals(newBlockName)) {
+        String newName = (String) blockNameComboBox.getEditor().getItem();
+        newName = (null != newName) ? newName.trim() : "";
+        if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if (block != null) {
                 block.decrementUse();
             }
             // get new block, or null if block has been removed
-            blockName = newBlockName;
+            blockName = newName;
             try {
                 block = layoutEditor.provideLayoutBlock(blockName);
             } catch (IllegalArgumentException ex) {
@@ -784,9 +800,9 @@ public class TrackSegment {
         return active;
     }
 
-    public final static int SHOWCON = 0x01;
-    public final static int HIDECON = 0x02; //flag set on a segment basis.
-    public final static int HIDECONALL = 0x04;  //Used by layout editor for hiding all
+    public static final int SHOWCON = 0x01;
+    public static final int HIDECON = 0x02; //flag set on a segment basis.
+    public static final int HIDECONALL = 0x04;  //Used by layout editor for hiding all
 
     public int showConstructionLine = SHOWCON;
 
@@ -1016,15 +1032,11 @@ public class TrackSegment {
         if ((getTmpPt1() != pt1) || (getTmpPt2() != pt2) || trackNeedsRedraw()) {
             setTmpPt1(pt1);
             setTmpPt2(pt2);
-            //setTrackStrokeWidth(g2,false);
-            double pt2x;
-            double pt2y;
-            double pt1x;
-            double pt1y;
-            pt2x = pt2.getX();
-            pt2y = pt2.getY();
-            pt1x = pt1.getX();
-            pt1y = pt1.getY();
+
+            double pt2x = pt2.getX();
+            double pt2y = pt2.getY();
+            double pt1x = pt1.getX();
+            double pt1y = pt1.getY();
 
             if (getAngle() == 0.0D) {
                 setTmpAngle(90.0D);
@@ -1032,22 +1044,20 @@ public class TrackSegment {
                 setTmpAngle(getAngle());
             }
             // Convert angle to radiants in order to speed up maths
-            double halfAngle = java.lang.Math.toRadians(getTmpAngle()) / 2.0D;
-            double chord;
-            double a;
-            double o;
-            double radius;
+            double halfAngleRAD = java.lang.Math.toRadians(getTmpAngle()) / 2.0D;
+
             // Compute arc's chord
-            a = pt2x - pt1x;
-            o = pt2y - pt1y;
-            chord = java.lang.Math.sqrt(((a * a) + (o * o)));
+            double a = pt2x - pt1x;
+            double o = pt2y - pt1y;
+            double chord = java.lang.Math.sqrt(((a * a) + (o * o)));
             setChordLength(chord);
+
             // Make sure chord is not null
             // In such a case (pt1 == pt2), there is no arc to draw
             if (chord > 0.0D) {
-                radius = (chord / 2) / (java.lang.Math.sin(halfAngle));
+                double radius = (chord / 2) / (java.lang.Math.sin(halfAngleRAD));
                 // Circle
-                double startRad = java.lang.Math.atan2(a, o) - halfAngle;
+                double startRad = java.lang.Math.atan2(a, o) - halfAngleRAD;
                 setStartadj(java.lang.Math.toDegrees(startRad));
                 if (getCircle()) {
                     // Circle - Compute center
@@ -1060,9 +1070,9 @@ public class TrackSegment {
                     setCX(getCentreX() - (radius));
                     setCY(getCentreY() - (radius));
 
-                    //Compute the vlues for locating the circle
-                    setCentreSegX(getCentreX() + radius * java.lang.Math.cos(startRad + halfAngle));
-                    setCentreSegY(getCentreY() - java.lang.Math.sin(startRad + halfAngle) * radius);
+                    // Compute the vlues for locating the circle
+                    setCentreSegX(getCentreX() + radius * java.lang.Math.cos(startRad + halfAngleRAD));
+                    setCentreSegY(getCentreY() - java.lang.Math.sin(startRad + halfAngleRAD) * radius);
 
                 } else {
                     // Ellipse - Round start angle to the closest multiple of 90
@@ -1083,6 +1093,115 @@ public class TrackSegment {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class.getName());
+    public void draw(Graphics2D g2) {
+        LayoutBlock b = getLayoutBlock();
+        if (b != null) {
+            g2.setColor(b.getBlockColor());
+        } else {
+            g2.setColor(defaultTrackColor);
+        }
+        g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+        g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect1(), getType1()),
+            layoutEditor.getCoords(getConnect2(), getType2())));
+    }   // draw(Graphics2D g2)
 
+
+    public void drawDashed(Graphics2D g2, boolean mainline) {
+        if ((!getHidden()) && getDashed() && (mainline == getMainline())) {
+            LayoutBlock b = getLayoutBlock();
+            if (b != null) {
+                g2.setColor(b.getBlockColor());
+            } else {
+                g2.setColor(defaultTrackColor);
+            }
+            float trackWidth = layoutEditor.setTrackStrokeWidth(g2, mainline);
+            if (getArc()) {
+                calculateTrackSegmentAngle();
+                Stroke originalStroke = g2.getStroke();
+                Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
+                g2.setStroke(drawingStroke);
+                g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
+                g2.setStroke(originalStroke);
+            } else {
+                Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
+                Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
+                double delX = end1.getX() - end2.getX();
+                double delY = end1.getY() - end2.getY();
+                double cLength = Math.sqrt((delX * delX) + (delY * delY));
+                // note: The preferred dimension of a dash (solid + blank space) is
+                //         5 * the track width - about 60% solid and 40% blank.
+                int nDashes = (int) (cLength / ((trackWidth) * 5.0));
+                if (nDashes < 3) {
+                    nDashes = 3;
+                }
+                double delXDash = -delX / ((nDashes) - 0.5);
+                double delYDash = -delY / ((nDashes) - 0.5);
+                double begX = end1.getX();
+                double begY = end1.getY();
+                for (int k = 0; k < nDashes; k++) {
+                    g2.draw(new Line2D.Double(new Point2D.Double(begX, begY),
+                            new Point2D.Double((begX + (delXDash * 0.5)), (begY + (delYDash * 0.5)))));
+                    begX += delXDash;
+                    begY += delYDash;
+                }
+            }
+        }
+    }
+
+    public void drawSolid(Graphics2D g2, boolean isMainline) {
+        if ((!getHidden()) && (!getDashed()) && (isMainline == getMainline())) {
+            LayoutBlock b = getLayoutBlock();
+            if (b != null) {
+                g2.setColor(b.getBlockColor());
+            } else {
+                g2.setColor(defaultTrackColor);
+            }
+            if (getArc()) {
+                calculateTrackSegmentAngle();
+                g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
+            } else {
+                Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
+                Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
+                g2.draw(new Line2D.Double(end1, end2));
+            }
+            trackRedrawn();
+        }
+    }
+
+    public void drawOvals(Graphics2D g2) {
+        LayoutBlock b = getLayoutBlock();
+        if (b != null) {
+            g2.setColor(b.getBlockColor());
+        } else {
+            g2.setColor(defaultTrackColor);
+        }
+        if (getCircle()) {
+            if (showConstructionLinesLE()) {
+                g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect1(), getType1()),
+                    new Point2D.Double(getCentreX(), getCentreY())));
+                g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect2(), getType2()),
+                    new Point2D.Double(getCentreX(), getCentreY())));
+                g2.draw(new Ellipse2D.Double(getCentreSegX() - controlPointSize2, getCentreSegY() - controlPointSize2,
+                    controlPointSize2 + controlPointSize2, controlPointSize2 + controlPointSize2));
+            }
+        } else {
+            Point2D pt1 = layoutEditor.getCoords(getConnect1(), getType1());
+            Point2D pt2 = layoutEditor.getCoords(getConnect2(), getType2());
+            double cX = (pt1.getX() + pt2.getX()) / 2.0D;
+            double cY = (pt1.getY() + pt2.getY()) / 2.0D;
+            if (showConstructionLinesLE()) { //draw track circles
+                g2.draw(new Ellipse2D.Double(
+                        cX - controlPointSize2, cY - controlPointSize2,
+                        controlPointSize2 + controlPointSize2,
+                        controlPointSize2 + controlPointSize2));
+            }
+            if (getArc()) {
+                g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect1(), getType1()),
+                    layoutEditor.getCoords(getConnect2(), getType2())));
+            }
+        }
+        g2.setColor(defaultTrackColor);
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class.getName());
 }

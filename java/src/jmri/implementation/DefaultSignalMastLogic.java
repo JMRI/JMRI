@@ -850,7 +850,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
     volatile boolean inWait = false;
     Thread thr = null;
 
-    /* 
+    /*
      * Before going active or checking that we can go active, we will wait 500ms
      * for things to settle down to help prevent a race condition
      */
@@ -981,7 +981,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
                         }
                     }
                     if ((eitherAspects.equals(divergAspects)) && (divergAspects.size() < nonDivergAspects.size())) {
-                        //There are no unique diverging aspects 
+                        //There are no unique diverging aspects
                         log.debug("'Either' aspects equals divergAspects and is less than non-diverging aspects");
                         divergFlagsAvailable = false;
                     }
@@ -992,9 +992,9 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
                             if (log.isDebugEnabled()) {
                                 log.debug("Aspect Speed = " + strSpeed + " for aspect " + advancedAspect[i]);
                             }
-                            /*  if the diverg flags available is set and the diverg aspect 
+                            /*  if the diverg flags available is set and the diverg aspect
                              array contains the entry then we will check this aspect.
-                                
+
                              If the diverg flag has not been set then we will check.
                              */
                             log.debug(advancedAspect[i]);
@@ -1810,7 +1810,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
 
         boolean inWait = false;
 
-        /* 
+        /*
          * Before going active or checking that we can go active, we will wait 500ms
          * for things to settle down to help prevent a race condition
          */
@@ -1989,7 +1989,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
                 }
             }
 
-            /*This check is purely for use with the dispatcher, it will check to see if any of the blocks are set to "useExtraColor" 
+            /*This check is purely for use with the dispatcher, it will check to see if any of the blocks are set to "useExtraColor"
              which is a means to determine if the block is in a section that is occupied and it not ours thus we can set the signal to danger.*/
             if (state && getAssociatedSection() != null
                     && jmri.InstanceManager.getNullableDefault(jmri.jmrit.dispatcher.DispatcherFrame.class) != null
@@ -2270,7 +2270,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
                     }
                 }
                 String lBlksNames = new String(lBlksNamesBuf);
-                
+
                 if (protectingBlock == null) {
                     throw new jmri.JmriException("Path not valid, protecting block null. Protecting block: " + pBlkNames + " not connected to " + facingBlock.blockName + " layout block names: " + lBlksNames);
                 }
@@ -2536,7 +2536,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
         }
 
         void lockTurnouts() {
-            //We do not allow the turnouts to be locked, if we are disposed the logic, 
+            //We do not allow the turnouts to be locked, if we are disposed the logic,
             //the logic is not active, or if we do not allow the turnouts to be locked
             if ((disposed) || (!lockTurnouts) || (!active)) {
                 return;
@@ -2554,7 +2554,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
         }
 
         void clearTurnoutLock() {
-            //We do not allow the turnout lock to be cleared, if we are not active, 
+            //We do not allow the turnout lock to be cleared, if we are not active,
             //and the lock flag has not been set.
             if ((!lockTurnouts) && (!active)) {
                 return;
