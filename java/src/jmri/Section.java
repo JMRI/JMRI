@@ -12,6 +12,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
+import jmri.jmrit.display.layoutEditor.LayoutTrack;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
@@ -364,7 +365,7 @@ public class Section extends AbstractNamedBean
     String tempSensorName = "";
 
     private Sensor validateSensor() {
-        // check if anything entered	
+        // check if anything entered
         if (tempSensorName.length() < 1) {
             // no sensor specified
             return null;
@@ -490,14 +491,14 @@ public class Section extends AbstractNamedBean
         if (mBlockEntries.isEmpty()) {
             mFirstBlock = b;
         } else {
-            // check that block is unique 
+            // check that block is unique
             for (int i = 0; i < mBlockEntries.size(); i++) {
                 if (mBlockEntries.get(i) == b) {
                     // block is already present
                     return false;
                 }
             }
-            // Note: connectivity to current block is assumed to have been checked		
+            // Note: connectivity to current block is assumed to have been checked
         }
         // add Block to the Block list
         mBlockEntries.add(b);
@@ -968,7 +969,7 @@ public class Section extends AbstractNamedBean
             // using Entry Points directly will lead to a problem, try following track - first from A following B
             int dir = EntryPoint.UNKNOWN;
             Block tBlock = null;
-            TrackNode tn = new TrackNode(t, LayoutEditor.TURNOUT_A, (TrackSegment) t.getConnectA(),
+            TrackNode tn = new TrackNode(t, LayoutTrack.TURNOUT_A, (TrackSegment) t.getConnectA(),
                     false, Turnout.CLOSED);
             while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                 tn = cUtil.getNextNode(tn, 0);
@@ -976,7 +977,7 @@ public class Section extends AbstractNamedBean
             }
             if (tBlock == null) {
                 // try from A following C
-                tn = new TrackNode(t, LayoutEditor.TURNOUT_A, (TrackSegment) t.getConnectA(),
+                tn = new TrackNode(t, LayoutTrack.TURNOUT_A, (TrackSegment) t.getConnectA(),
                         false, Turnout.THROWN);
                 while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                     tn = cUtil.getNextNode(tn, 0);
@@ -992,7 +993,7 @@ public class Section extends AbstractNamedBean
             if (dir == EntryPoint.UNKNOWN) {
                 // try from B following A
                 tBlock = null;
-                tn = new TrackNode(t, LayoutEditor.TURNOUT_B, (TrackSegment) t.getConnectB(),
+                tn = new TrackNode(t, LayoutTrack.TURNOUT_B, (TrackSegment) t.getConnectB(),
                         false, Turnout.CLOSED);
                 while ((tBlock == null) && (tn != null && (!tn.reachedEndOfTrack()))) {
                     tn = cUtil.getNextNode(tn, 0);
@@ -1118,7 +1119,7 @@ public class Section extends AbstractNamedBean
                 // set direction by tracking from a or b
                 int dir = EntryPoint.UNKNOWN;
                 Block tBlock = null;
-                TrackNode tn = new TrackNode(t, LayoutEditor.TURNOUT_A, (TrackSegment) t.getConnectA(),
+                TrackNode tn = new TrackNode(t, LayoutTrack.TURNOUT_A, (TrackSegment) t.getConnectA(),
                         false, Turnout.CLOSED);
                 while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                     tn = cUtil.getNextNode(tn, 0);
@@ -1130,7 +1131,7 @@ public class Section extends AbstractNamedBean
                         dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
                     }
                 } else {
-                    tn = new TrackNode(t, LayoutEditor.TURNOUT_B, (TrackSegment) t.getConnectB(),
+                    tn = new TrackNode(t, LayoutTrack.TURNOUT_B, (TrackSegment) t.getConnectB(),
                             false, Turnout.CLOSED);
                     while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                         tn = cUtil.getNextNode(tn, 0);
@@ -1194,7 +1195,7 @@ public class Section extends AbstractNamedBean
                 // set direction by tracking from c or d
                 int dir = EntryPoint.UNKNOWN;
                 Block tBlock = null;
-                TrackNode tn = new TrackNode(t, LayoutEditor.TURNOUT_D, (TrackSegment) t.getConnectD(),
+                TrackNode tn = new TrackNode(t, LayoutTrack.TURNOUT_D, (TrackSegment) t.getConnectD(),
                         false, Turnout.CLOSED);
                 while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                     tn = cUtil.getNextNode(tn, 0);
@@ -1206,7 +1207,7 @@ public class Section extends AbstractNamedBean
                         dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
                     }
                 } else {
-                    tn = new TrackNode(t, LayoutEditor.TURNOUT_C, (TrackSegment) t.getConnectC(),
+                    tn = new TrackNode(t, LayoutTrack.TURNOUT_C, (TrackSegment) t.getConnectC(),
                             false, Turnout.CLOSED);
                     while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                         tn = cUtil.getNextNode(tn, 0);
@@ -1289,7 +1290,7 @@ public class Section extends AbstractNamedBean
         if ((containsBlock(aBlock.getBlock())) || (containsBlock(cBlock.getBlock()))) {
             LayoutBlock exBlock = null;
             if (aBlock == cBlock) {
-                if ((t.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP) && (bBlock == dBlock)) {
+                if ((t.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) && (bBlock == dBlock)) {
                     exBlock = bBlock;
                 }
             }
@@ -1297,8 +1298,8 @@ public class Section extends AbstractNamedBean
                 // set direction by tracking from a or b
                 int dir = EntryPoint.UNKNOWN;
                 Block tBlock = null;
-                TrackNode tn = new TrackNode(t, LayoutEditor.SLIP_A, (TrackSegment) t.getConnectA(),
-                        false, LayoutSlip.STATE_AC);
+                TrackNode tn = new TrackNode(t, LayoutTrack.SLIP_A, (TrackSegment) t.getConnectA(),
+                        false, LayoutTurnout.STATE_AC);
                 while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                     tn = cUtil.getNextNode(tn, 0);
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
@@ -1309,8 +1310,8 @@ public class Section extends AbstractNamedBean
                         dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
                     }
                 } else {
-                    tn = new TrackNode(t, LayoutEditor.SLIP_C, (TrackSegment) t.getConnectC(),
-                            false, LayoutSlip.STATE_AC);
+                    tn = new TrackNode(t, LayoutTrack.SLIP_C, (TrackSegment) t.getConnectC(),
+                            false, LayoutTurnout.STATE_AC);
                     while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                         tn = cUtil.getNextNode(tn, 0);
                         tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
@@ -1356,7 +1357,7 @@ public class Section extends AbstractNamedBean
         if ((containsBlock(dBlock.getBlock())) || (containsBlock(bBlock.getBlock()))) {
             LayoutBlock exBlock = null;
             if (dBlock == bBlock) {
-                if ((t.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP) && (cBlock == aBlock)) {
+                if ((t.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) && (cBlock == aBlock)) {
                     exBlock = aBlock;
                 }
             }
@@ -1364,8 +1365,8 @@ public class Section extends AbstractNamedBean
                 // set direction by tracking from c or d
                 int dir = EntryPoint.UNKNOWN;
                 Block tBlock = null;
-                TrackNode tn = new TrackNode(t, LayoutEditor.SLIP_D, (TrackSegment) t.getConnectD(),
-                        false, LayoutSlip.STATE_BD);
+                TrackNode tn = new TrackNode(t, LayoutTrack.SLIP_D, (TrackSegment) t.getConnectD(),
+                        false, LayoutTurnout.STATE_BD);
                 while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                     tn = cUtil.getNextNode(tn, 0);
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
@@ -1376,8 +1377,8 @@ public class Section extends AbstractNamedBean
                         dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
                     }
                 } else {
-                    tn = new TrackNode(t, LayoutEditor.TURNOUT_B, (TrackSegment) t.getConnectB(),
-                            false, LayoutSlip.STATE_BD);
+                    tn = new TrackNode(t, LayoutTrack.TURNOUT_B, (TrackSegment) t.getConnectB(),
+                            false, LayoutTurnout.STATE_BD);
                     while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                         tn = cUtil.getNextNode(tn, 0);
                         tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
@@ -1414,7 +1415,7 @@ public class Section extends AbstractNamedBean
                     return dir;
                 }
             }
-            if (t.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP) {
+            if (t.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
                 int dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, aBlock);
                 if (dir != EntryPoint.UNKNOWN) {
                     return dir;
@@ -1548,14 +1549,14 @@ public class Section extends AbstractNamedBean
                 return EntryPoint.REVERSE;
             }
         }
-        // should never get here										
+        // should never get here
         log.error("Unexpected error in getDirectionForBlocks when working with LevelCrossing in Section "
                 + getSystemName());
         return EntryPoint.UNKNOWN;
     }
 
-    /* 
-     * Returns 'true' if successfully checked direction sensor by follow connectivity from specified 
+    /*
+     * Returns 'true' if successfully checked direction sensor by follow connectivity from specified
      *		track node.  Returns 'false' if an error occurred.
      */
     private boolean setDirectionSensorByConnectivity(TrackNode tNode, TrackNode altNode, SignalHead sh,
@@ -1691,9 +1692,9 @@ public class Section extends AbstractNamedBean
                         // have a signaled AC level crossing internal to this block
                         if ((x.getSignalAName() != null) && (!x.getSignalAName().equals(""))) {
                             // there is a signal at A in the level crossing
-                            TrackNode tn = new TrackNode(x, LayoutEditor.LEVEL_XING_A,
+                            TrackNode tn = new TrackNode(x, LayoutTrack.LEVEL_XING_A,
                                     (TrackSegment) x.getConnectA(), false, 0);
-                            TrackNode altNode = new TrackNode(x, LayoutEditor.LEVEL_XING_C,
+                            TrackNode altNode = new TrackNode(x, LayoutTrack.LEVEL_XING_C,
                                     (TrackSegment) x.getConnectC(), false, 0);
                             SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
                                     x.getSignalAName());
@@ -1703,9 +1704,9 @@ public class Section extends AbstractNamedBean
                         }
                         if ((x.getSignalCName() != null) && (!x.getSignalCName().equals(""))) {
                             // there is a signal at C in the level crossing
-                            TrackNode tn = new TrackNode(x, LayoutEditor.LEVEL_XING_C,
+                            TrackNode tn = new TrackNode(x, LayoutTrack.LEVEL_XING_C,
                                     (TrackSegment) x.getConnectC(), false, 0);
-                            TrackNode altNode = new TrackNode(x, LayoutEditor.LEVEL_XING_A,
+                            TrackNode altNode = new TrackNode(x, LayoutTrack.LEVEL_XING_A,
                                     (TrackSegment) x.getConnectA(), false, 0);
                             SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
                                     x.getSignalCName());
@@ -1750,9 +1751,9 @@ public class Section extends AbstractNamedBean
                         // have a signaled BD level crossing internal to this block
                         if ((x.getSignalBName() != null) && (!x.getSignalBName().equals(""))) {
                             // there is a signal at B in the level crossing
-                            TrackNode tn = new TrackNode(x, LayoutEditor.LEVEL_XING_B,
+                            TrackNode tn = new TrackNode(x, LayoutTrack.LEVEL_XING_B,
                                     (TrackSegment) x.getConnectB(), false, 0);
-                            TrackNode altNode = new TrackNode(x, LayoutEditor.LEVEL_XING_D,
+                            TrackNode altNode = new TrackNode(x, LayoutTrack.LEVEL_XING_D,
                                     (TrackSegment) x.getConnectD(), false, 0);
                             SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
                                     x.getSignalBName());
@@ -1762,9 +1763,9 @@ public class Section extends AbstractNamedBean
                         }
                         if ((x.getSignalDName() != null) && (!x.getSignalDName().equals(""))) {
                             // there is a signal at C in the level crossing
-                            TrackNode tn = new TrackNode(x, LayoutEditor.LEVEL_XING_D,
+                            TrackNode tn = new TrackNode(x, LayoutTrack.LEVEL_XING_D,
                                     (TrackSegment) x.getConnectD(), false, 0);
-                            TrackNode altNode = new TrackNode(x, LayoutEditor.LEVEL_XING_B,
+                            TrackNode altNode = new TrackNode(x, LayoutTrack.LEVEL_XING_B,
                                     (TrackSegment) x.getConnectB(), false, 0);
                             SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
                                     x.getSignalDName());
@@ -2163,7 +2164,7 @@ public class Section extends AbstractNamedBean
                     } else if ((t.getTurnoutType() == LayoutTurnout.RH_XOVER)
                             || (t.getTurnoutType() == LayoutTurnout.LH_XOVER)
                             || (t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)) {
-                        // crossover turnout 
+                        // crossover turnout
                         // Note: direction is for proceeding from A to B (or D to C)
                         int direction = getDirectionXoverTurnout(t, cUtil);
                         int altDirection = EntryPoint.FORWARD;
@@ -2230,7 +2231,7 @@ public class Section extends AbstractNamedBean
                                 }
                             }
                         }
-                    } else if (t.getTurnoutType() == LayoutTurnout.SINGLE_SLIP || t.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP) {
+                    } else if (t.getTurnoutType() == LayoutSlip.SINGLE_SLIP || t.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
                         int direction = getDirectionSlip((LayoutSlip) t, cUtil);
                         int altDirection = EntryPoint.FORWARD;
                         if (direction == EntryPoint.FORWARD) {
@@ -2245,7 +2246,7 @@ public class Section extends AbstractNamedBean
                             if (!checkDirectionSensor(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(t.getSignalA2Name()), altDirection, ConnectivityUtil.OVERALL, cUtil)) {
                                 errorCount++;
                             }
-                            if (t.getTurnoutType() == LayoutTurnout.SINGLE_SLIP) {
+                            if (t.getTurnoutType() == LayoutSlip.SINGLE_SLIP) {
                                 if (!checkDirectionSensor(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(t.getSignalB1Name()), altDirection, ConnectivityUtil.OVERALL, cUtil)) {
                                     errorCount++;
                                 }
@@ -2257,7 +2258,7 @@ public class Section extends AbstractNamedBean
                                     errorCount++;
                                 }
                             }
-                            if (t.getTurnoutType() == LayoutTurnout.SINGLE_SLIP) {
+                            if (t.getTurnoutType() == LayoutSlip.SINGLE_SLIP) {
                                 if (!checkDirectionSensor(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(t.getSignalC1Name()), direction, ConnectivityUtil.OVERALL, cUtil)) {
                                     errorCount++;
                                 }
@@ -2359,7 +2360,7 @@ public class Section extends AbstractNamedBean
         ArrayList<EntryPoint> epList = getListOfForwardBlockEntryPoints(eBlock);
         if (epList.size() > 0) {
 
-// djd debugging - need code to fully implement checkSignals		
+// djd debugging - need code to fully implement checkSignals
         }
         return true;
     }
@@ -2421,7 +2422,7 @@ public class Section extends AbstractNamedBean
                 }
             }
         }
-        // validate entry points 
+        // validate entry points
         if ((mForwardEntryPoints.size() == 0) && (mReverseEntryPoints.size() == 0)) {
             String s = "Section " + getSystemName() + "has no Entry Points.";
             return s;
