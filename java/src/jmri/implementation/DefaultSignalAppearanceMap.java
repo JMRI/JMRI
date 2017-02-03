@@ -136,7 +136,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
             loadAspectRelationMap(signalSystemName, aspectMapName, map, root);
             log.debug("loading complete");
         } catch (java.io.IOException | org.jdom2.JDOMException e) {
-            log.error("error reading file "+file.getPath(), e);
+            log.error("error reading file " + file.getPath(), e);
             return null;
         }
 
@@ -393,12 +393,26 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     }
     protected SignalSystem systemDefn;
 
+    /**
+     * {@inheritDoc}
+     *
+     * This method returns a constant result on the DefaultSignalAppearanceMap.
+     *
+     * @return {@link jmri.NamedBean#INCONSISTENT}
+     */
+    @Override
     public int getState() {
-        throw new NoSuchMethodError();
+        return INCONSISTENT;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * This method has no effect on the DefaultSignalAppearanceMap.
+     */
+    @Override
     public void setState(int s) {
-        throw new NoSuchMethodError();
+        // do nothing
     }
 
     public int[] getAspectSettings(String aspect) {
