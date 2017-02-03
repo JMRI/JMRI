@@ -183,7 +183,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         hash = 97 * hash + Objects.hashCode(this._pathName);
         hash = 97 * hash + (int) (this._entryTime ^ (this._entryTime >>> 32));
         hash = 97 * hash + (this._metric ? 1 : 0);
-        hash = 97 * hash + Objects.hashCode(this._sharedTO);
         hash = 97 * hash + Objects.hashCode(this._markerForeground);
         hash = 97 * hash + Objects.hashCode(this._markerBackground);
         hash = 97 * hash + Objects.hashCode(this._markerFont);
