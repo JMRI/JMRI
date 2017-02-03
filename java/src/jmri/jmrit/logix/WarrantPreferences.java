@@ -7,6 +7,7 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import jmri.InstanceManager;
@@ -15,7 +16,6 @@ import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.logix.WarrantPreferencesPanel.DataPair;
 import jmri.util.FileUtil;
-import jmri.util.OrderedHashtable;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Document;
@@ -109,8 +109,8 @@ public class WarrantPreferences extends Bean {
     private int _searchDepth = 20;      // How many tree nodes (blocks) to walk in finding routes
     private float _throttleScale = 0.5f;  // factor to approximate throttle setting to track speed
 
-    private OrderedHashtable<String, Float> _speedNames;
-    private OrderedHashtable<String, String> _headAppearances;
+    private LinkedHashMap<String, Float> _speedNames;
+    private LinkedHashMap<String, String> _headAppearances;
     private int _interpretation = SignalSpeedMap.PERCENT_NORMAL;    // Interpretation of values in speed name table
 
     private int _msIncrTime = 1000;         // time in milliseconds between speed changes ramping up or down
@@ -188,14 +188,14 @@ public class WarrantPreferences extends Bean {
             return;
         }
         Iterator<String> it = map.getValidSpeedNames().iterator();
-        _speedNames = new jmri.util.OrderedHashtable<>();
+        _speedNames = new LinkedHashMap<>();
         while (it.hasNext()) {
             String name = it.next();
             _speedNames.put(name, map.getSpeed(name));
         }
 
         Enumeration<String> en = map.getAppearanceIterator();
-        _headAppearances = new OrderedHashtable<>();
+        _headAppearances = new LinkedHashMap<>();
         while (en.hasMoreElements()) {
             String name = en.nextElement();
             _headAppearances.put(name, map.getAppearanceSpeed(name));
@@ -257,7 +257,7 @@ public class WarrantPreferences extends Bean {
                 log.error("Unable to read interpetation of Speed Map. Setting to default value % normal.", ex);
             }
         }
-        _speedNames = new OrderedHashtable<>();
+        _speedNames = new LinkedHashMap<>();
         List<Element> list = rampParms.getChildren();
         for (int i = 0; i < list.size(); i++) {
             String name = list.get(i).getName();
@@ -275,7 +275,7 @@ public class WarrantPreferences extends Bean {
         if (rampParms == null) {
             return false;
         }
-        _headAppearances = new OrderedHashtable<>();
+        _headAppearances = new LinkedHashMap<>();
         list = rampParms.getChildren();
         for (int i = 0; i < list.size(); i++) {
             String name = Bundle.getMessage(list.get(i).getName());
@@ -500,8 +500,7 @@ public class WarrantPreferences extends Bean {
 
     /**
      * @param ti the throttle increment
-     * @deprecated since 4.7.1; use {@link #setThrottleIncrement(float)}
-     * instead
+     * @deprecated since 4.7.1; use {@link #setThrottleIncrement(float)} instead
      */
     @Deprecated
     void setThrottleIncre(float ti) {
@@ -525,7 +524,7 @@ public class WarrantPreferences extends Bean {
     }
 
     void setSpeedNames(ArrayList<DataPair<String, Float>> speedNameMap) {
-        _speedNames = new jmri.util.OrderedHashtable<>();
+        _speedNames = new LinkedHashMap<>();
         for (int i = 0; i < speedNameMap.size(); i++) {
             DataPair<String, Float> dp = speedNameMap.get(i);
             _speedNames.put(dp.getKey(), dp.getValue());
@@ -549,7 +548,7 @@ public class WarrantPreferences extends Bean {
     }
 
     void setAppearances(ArrayList<DataPair<String, String>> appearanceMap) {
-        _headAppearances = new jmri.util.OrderedHashtable<>();
+        _headAppearances = new LinkedHashMap<>();
         for (int i = 0; i < appearanceMap.size(); i++) {
             DataPair<String, String> dp = appearanceMap.get(i);
             _headAppearances.put(dp.getKey(), dp.getValue());
