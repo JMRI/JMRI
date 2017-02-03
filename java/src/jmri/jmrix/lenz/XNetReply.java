@@ -723,9 +723,9 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                  text = toString();
            }
         } else if (getElement(0) == XNetConstants.LI_VERSION_RESPONSE) {
-            text = "LI10x hardware Version:  "
-                    + (getElementBCD(1).floatValue()) / 10
-                    + " Software Version: " + getElementBCD(2);
+            text = Bundle.getMessage("XNetReplyLIVersion",
+                        (getElementBCD(1).floatValue())/10,
+                        (getElementBCD(2).floatValue())/10);
         } else if (getElement(0) == XNetConstants.LI101_REQUEST) {
             // The request and response for baud rate look the same,
             // so we need this for both incoming and outgoing directions
@@ -734,22 +734,26 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                     text = "RESPONSE LI101 Address " + getElement(2);
                     break;
                 case XNetConstants.LI101_REQUEST_BAUD:
-                    text = "RESPONSE LI101 Baud Rate: ";
                     switch (getElement(2)) {
                         case 1:
-                            text += "19200bps (default)";
+                            text = Bundle.getMessage("XNetReplyLIBaud",
+                                   Bundle.getMessage("LIBaud19200"));
                             break;
                         case 2:
-                            text += "38400bps";
+                            text = Bundle.getMessage("XNetReplyLIBaud",
+                                   Bundle.getMessage("LIBaud38400"));
                             break;
                         case 3:
-                            text += "57600bps";
+                            text = Bundle.getMessage("XNetReplyLIBaud",
+                                   Bundle.getMessage("LIBaud57600"));
                             break;
                         case 4:
-                            text += "115200bps";
+                            text = Bundle.getMessage("XNetReplyLIBaud",
+                                   Bundle.getMessage("LIBaud115200"));
                             break;
                         default:
-                            text += "<undefined>";
+                            text = Bundle.getMessage("XNetReplyLIBaud",
+                                   Bundle.getMessage("LIBaudOther"));
                     }
                     break;
                 default:
@@ -885,40 +889,33 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
             // MU and Double Header Related Responses
         } else if (getElement(0) == XNetConstants.LOCO_MU_DH_ERROR) {
-            text = "XpressNet MU+DH error: ";
             switch (getElement(1)) {
                 case 0x81:
-                    text
-                            = text
-                            + "Selected Locomotive has not been operated by this XPressNet device or address 0 selected";
+                    text = Bundle.getMessage("XNetReplyDHErrorNotOperated");
                     break;
                 case 0x82:
-                    text
-                            = text
-                            + "Selected Locomotive is being operated by another XPressNet device";
+                    text = Bundle.getMessage("XNetReplyDHErrorInUse");
                     break;
                 case 0x83:
-                    text = text + "Selected Locomotive already in MU or DH";
+                    text = Bundle.getMessage("XNetReplyDHErrorAlreadyDH");
                     break;
                 case 0x84:
-                    text
-                            = text
-                            + "Unit selected for MU or DH has speed setting other than 0";
+                    text = Bundle.getMessage("XNetReplyDHErrorNonZeroSpeed");
                     break;
                 case 0x85:
-                    text = text + "Locomotive not in a MU";
+                    text = Bundle.getMessage("XNetReplyDHErrorLocoNotMU");
                     break;
                 case 0x86:
-                    text = text + "Locomotive address not a multi-unit base address";
+                    text = Bundle.getMessage("XNetReplyDHErrorLocoNotMUBase");
                     break;
                 case 0x87:
-                    text = text + "It is not possible to delete the locomotive";
+                    text = Bundle.getMessage("XNetReplyDHErrorCanNotDelete");
                     break;
                 case 0x88:
-                    text = text + "The Command Station Stack is Full";
+                    text = Bundle.getMessage("XNetReplyDHErrorStackFull");
                     break;
                 default:
-                    text = text + getElement(1);
+                    text = Bundle.getMessage("XNetReplyDHErrorOther",(getElement(1)-0x80));
             }
             // Loco Information Response Messages
         } else if (getElement(0) == XNetConstants.LOCO_INFO_NORMAL_UNIT) {
