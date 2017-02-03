@@ -41,8 +41,10 @@ public class WarrantPreferences extends Bean {
     public static final String RAMP_INCREMENT = "rampIncrement"; // NOI18N
     public static final String STEP_INCREMENTS = "stepIncrements"; // NOI18N
     public static final String SPEED_NAME_PREFS = "speedNames";   // NOI18N
+    public static final String SPEED_NAMES = SPEED_NAME_PREFS;
     public static final String INTERPRETATION = "interpretation"; // NOI18N
     public static final String APPEARANCE_PREFS = "appearancePrefs"; // NOI18N
+    public static final String APPEARANCES = "appearances"; // NOI18N
     /**
      * @deprecated since 4.7.1; use {@link #LAYOUT_PARAMS} instead
      */
@@ -392,6 +394,7 @@ public class WarrantPreferences extends Bean {
     }
 
     private void setNXdata() {
+        // TODO: make the NXFrame instance listen to property changes in this class
         if (!GraphicsEnvironment.isHeadless()) {
             NXFrame frame = NXFrame.getDefault();
             frame.setScale(_scale);
@@ -448,17 +451,17 @@ public class WarrantPreferences extends Bean {
     public void setLayoutScale(float scale) {
         float oldScale = this._scale;
         _scale = scale;
-        propertyChangeSupport.firePropertyChange(LAYOUT_SCALE, oldScale, scale);
+        this.firePropertyChange(LAYOUT_SCALE, oldScale, scale);
     }
 
     public float getThrottleScale() {
         return _throttleScale;
     }
 
-    void setThrottleScale(float scale) {
+    public void setThrottleScale(float scale) {
         float oldScale = this._throttleScale;
         _throttleScale = scale;
-        propertyChangeSupport.firePropertyChange(THROTTLE_SCALE, oldScale, scale);
+        this.firePropertyChange(THROTTLE_SCALE, oldScale, scale);
     }
 
     int getSearchDepth() {
@@ -468,7 +471,7 @@ public class WarrantPreferences extends Bean {
     void setSearchDepth(int depth) {
         int oldDepth = this._searchDepth;
         _searchDepth = depth;
-        propertyChangeSupport.firePropertyChange(SEARCH_DEPTH, oldDepth, depth);
+        this.firePropertyChange(SEARCH_DEPTH, oldDepth, depth);
     }
 
     /**
@@ -524,11 +527,13 @@ public class WarrantPreferences extends Bean {
     }
 
     void setSpeedNames(ArrayList<DataPair<String, Float>> speedNameMap) {
+        LinkedHashMap<String, Float> old = new LinkedHashMap<>(_speedNames);
         _speedNames = new LinkedHashMap<>();
         for (int i = 0; i < speedNameMap.size(); i++) {
             DataPair<String, Float> dp = speedNameMap.get(i);
             _speedNames.put(dp.getKey(), dp.getValue());
         }
+        this.firePropertyChange(SPEED_NAMES, old, new LinkedHashMap<>(_speedNames));
     }
 
     Iterator<Entry<String, String>> getAppearanceEntryIterator() {
@@ -548,11 +553,13 @@ public class WarrantPreferences extends Bean {
     }
 
     void setAppearances(ArrayList<DataPair<String, String>> appearanceMap) {
+        LinkedHashMap<String, String> old = new LinkedHashMap<>(_headAppearances);
         _headAppearances = new LinkedHashMap<>();
         for (int i = 0; i < appearanceMap.size(); i++) {
             DataPair<String, String> dp = appearanceMap.get(i);
             _headAppearances.put(dp.getKey(), dp.getValue());
         }
+        this.firePropertyChange(APPEARANCES, old, _headAppearances);
     }
 
     int getInterpretation() {
@@ -562,13 +569,8 @@ public class WarrantPreferences extends Bean {
     void setInterpretation(int interp) {
         int oldInterpretation = this._interpretation;
         _interpretation = interp;
-        propertyChangeSupport.firePropertyChange(INTERPRETATION, oldInterpretation, interp);
+        this.firePropertyChange(INTERPRETATION, oldInterpretation, interp);
     }
-
-    public static class WarrantPreferencesXml extends XmlFile {
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(WarrantPreferences.class);
 
     /**
      * Get the time increment.
@@ -587,7 +589,7 @@ public class WarrantPreferences extends Bean {
     public void setTimeIncrement(int increment) {
         int oldIncrement = this._msIncrTime;
         this._msIncrTime = increment;
-        propertyChangeSupport.firePropertyChange(TIME_INCREMENT, oldIncrement, increment);
+        this.firePropertyChange(TIME_INCREMENT, oldIncrement, increment);
     }
 
     /**
@@ -607,6 +609,11 @@ public class WarrantPreferences extends Bean {
     public void setThrottleIncrement(float increment) {
         float oldIncrement = this._throttleIncr;
         this._throttleIncr = increment;
-        propertyChangeSupport.firePropertyChange(RAMP_INCREMENT, oldIncrement, increment);
+        this.firePropertyChange(RAMP_INCREMENT, oldIncrement, increment);
     }
+
+    public static class WarrantPreferencesXml extends XmlFile {
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(WarrantPreferences.class);
 }
