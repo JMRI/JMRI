@@ -3,7 +3,6 @@ package jmri.jmrix.ieee802154.xbee.swing.nodeconfig;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
 import jmri.jmrix.ieee802154.xbee.XBeeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

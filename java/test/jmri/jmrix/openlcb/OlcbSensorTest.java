@@ -2,7 +2,6 @@ package jmri.jmrix.openlcb;
 
 import jmri.Sensor;
 import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.TestTrafficController;
 import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;

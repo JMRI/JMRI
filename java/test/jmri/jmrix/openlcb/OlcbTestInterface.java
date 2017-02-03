@@ -7,9 +7,7 @@ import org.openlcb.can.CanInterface;
 
 import java.util.concurrent.Semaphore;
 
-import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TestTrafficController;
-import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.CanMessage;
 
 /**

@@ -2,7 +2,6 @@ package jmri.jmrix.sprog.sprogslotmon;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import jmri.jmrix.sprog.SprogCommandStation;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**

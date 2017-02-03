@@ -19,7 +19,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
-import jmri.jmrix.openlcb.swing.networktree.NetworkTreePane;
 import jmri.util.JmriJFrame;
 
 /**

@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.swing.JComboBox;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;

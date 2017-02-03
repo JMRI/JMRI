@@ -1,7 +1,6 @@
 package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 
 import java.beans.PropertyChangeListener;
-import java.util.ResourceBundle;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import org.slf4j.Logger;

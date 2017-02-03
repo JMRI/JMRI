@@ -5,10 +5,7 @@ import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetThrottleManagerTest;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 
 /**

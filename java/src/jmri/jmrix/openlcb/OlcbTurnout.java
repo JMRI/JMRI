@@ -1,6 +1,5 @@
 package jmri.jmrix.openlcb;
 
-import org.openlcb.EventID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.BitProducerConsumer;
 import org.openlcb.implementations.VersionedValueListener;

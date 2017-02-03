@@ -1,14 +1,8 @@
 package jmri.jmrix.internal;
 
-import jmri.Turnout;
-import jmri.TurnoutManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 
 /**

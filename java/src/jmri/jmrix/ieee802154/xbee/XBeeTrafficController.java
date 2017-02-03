@@ -1,9 +1,7 @@
 package jmri.jmrix.ieee802154.xbee;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import com.digi.xbee.api.models.ATCommandResponse;
 import com.digi.xbee.api.XBeeDevice;
-import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.exceptions.TimeoutException;
 import com.digi.xbee.api.RemoteXBeeDevice;

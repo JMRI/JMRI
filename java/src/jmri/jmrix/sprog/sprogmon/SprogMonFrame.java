@@ -3,7 +3,6 @@ package jmri.jmrix.sprog.sprogmon;
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
-import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**

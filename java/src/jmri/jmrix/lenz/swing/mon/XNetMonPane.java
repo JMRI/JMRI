@@ -1,6 +1,5 @@
 package jmri.jmrix.lenz.swing.mon;
 
-import jmri.jmrix.lenz.XNetConstants;
 import jmri.jmrix.lenz.XNetListener;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetReply;

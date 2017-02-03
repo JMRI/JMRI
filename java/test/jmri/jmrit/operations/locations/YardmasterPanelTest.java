@@ -2,9 +2,6 @@ package jmri.jmrit.operations.locations;
 
 import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.After;
 import org.junit.Before;
 
 /**

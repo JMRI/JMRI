@@ -2,7 +2,6 @@ package jmri.jmrix.cmri.serial.networkdriver;
 
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNetworkPortController;
-import jmri.jmrix.cmri.serial.SerialSensorManager;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 
 /**

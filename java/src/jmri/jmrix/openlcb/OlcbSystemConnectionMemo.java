@@ -1,6 +1,5 @@
 package jmri.jmrix.openlcb;
 
-import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
 
 import java.util.ResourceBundle;

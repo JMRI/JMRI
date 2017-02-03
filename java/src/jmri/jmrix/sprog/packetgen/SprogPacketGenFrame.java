@@ -3,7 +3,6 @@ package jmri.jmrix.sprog.packetgen;
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import jmri.jmrix.sprog.SprogMessage;
-import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**

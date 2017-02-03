@@ -6,7 +6,6 @@ import jmri.implementation.AbstractTurnoutTestBase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.dcc.DccTurnout class

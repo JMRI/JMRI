@@ -10,7 +10,6 @@ import jmri.Memory;
 import jmri.Path;
 import jmri.Section;
 import jmri.Sensor;
-import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import junit.framework.Test;

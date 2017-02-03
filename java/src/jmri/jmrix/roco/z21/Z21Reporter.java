@@ -1,10 +1,7 @@
 package jmri.jmrix.roco.z21;
 
-import jmri.Reporter;
 import jmri.RailCom; 
-import jmri.IdTag; 
 import jmri.RailComManager;
-import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.DccLocoAddress;
 

@@ -1,13 +1,9 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import com.digi.xbee.api.models.ATCommandResponse;
 import com.digi.xbee.api.models.DiscoveryOptions;
-import com.digi.xbee.api.XBeeDevice;
 import com.digi.xbee.api.XBeeNetwork;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.listeners.IDiscoveryListener;
-import com.digi.xbee.api.models.XBee16BitAddress;
-import com.digi.xbee.api.models.XBee64BitAddress;
 import java.util.EnumSet;
 import java.util.List;
 import org.slf4j.Logger;

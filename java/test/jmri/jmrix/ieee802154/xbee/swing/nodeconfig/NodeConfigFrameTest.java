@@ -3,7 +3,6 @@ package jmri.jmrix.ieee802154.xbee.swing.nodeconfig;
 import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
-import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;

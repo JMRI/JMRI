@@ -1,6 +1,5 @@
 package jmri.jmrix.sprog.configurexml;
 
-import jmri.jmrix.sprog.SprogTurnoutManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

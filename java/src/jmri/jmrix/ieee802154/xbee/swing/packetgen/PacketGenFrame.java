@@ -1,6 +1,5 @@
 package jmri.jmrix.ieee802154.xbee.swing.packetgen;
 
-import com.digi.xbee.api.XBeeDevice;
 import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.packet.GenericXBeePacket;
 import com.digi.xbee.api.packet.XBeeAPIPacket;

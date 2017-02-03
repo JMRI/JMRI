@@ -1,13 +1,9 @@
 package jmri.jmrix.ieee802154.xbee;
 
 import jmri.Sensor;
-import jmri.SensorManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -16,7 +12,6 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.digi.xbee.api.connection.IConnectionInterface;
-import com.digi.xbee.api.exceptions.OperationNotSupportedException;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
 import com.digi.xbee.api.models.XBeeProtocol;

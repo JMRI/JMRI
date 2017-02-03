@@ -3,7 +3,6 @@ package jmri.jmrix.acela.acelamon;
 import jmri.jmrix.acela.AcelaListener;
 import jmri.jmrix.acela.AcelaMessage;
 import jmri.jmrix.acela.AcelaReply;
-import jmri.jmrix.acela.AcelaTrafficController;
 
 /**
  * Frame displaying (and logging) Acela command messages

@@ -12,7 +12,6 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.ResourceBundle;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import jmri.ConfigureManager;

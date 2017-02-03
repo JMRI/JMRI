@@ -3,7 +3,6 @@ package jmri.jmrix.ieee802154.swing.packetgen;
 import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import jmri.jmrix.ieee802154.IEEE802154TrafficController;
-import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;

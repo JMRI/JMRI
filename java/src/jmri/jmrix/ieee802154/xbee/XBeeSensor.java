@@ -7,10 +7,6 @@ import com.digi.xbee.api.io.IOSample;
 import com.digi.xbee.api.io.IOLine;
 import com.digi.xbee.api.io.IOValue;
 import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
-import com.digi.xbee.api.models.XBee16BitAddress;
-import com.digi.xbee.api.models.XBee64BitAddress;
-import com.digi.xbee.api.packet.common.RemoteATCommandResponsePacket;
-import com.digi.xbee.api.packet.common.IODataSampleRxIndicatorPacket;
 import com.digi.xbee.api.RemoteXBeeDevice;
 
 import jmri.Sensor;

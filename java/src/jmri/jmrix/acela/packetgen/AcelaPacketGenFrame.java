@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import jmri.jmrix.acela.AcelaMessage;
 import jmri.jmrix.acela.AcelaReply;
-import jmri.jmrix.acela.AcelaTrafficController;
 
 /**
  *

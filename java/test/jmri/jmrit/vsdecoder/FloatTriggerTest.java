@@ -4,8 +4,6 @@ import java.beans.PropertyChangeEvent;
 import org.jdom2.Element;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Ignore;
 
 /**

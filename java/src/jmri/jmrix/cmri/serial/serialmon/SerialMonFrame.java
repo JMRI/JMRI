@@ -3,7 +3,6 @@ package jmri.jmrix.cmri.serial.serialmon;
 import jmri.jmrix.cmri.serial.SerialListener;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialReply;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**

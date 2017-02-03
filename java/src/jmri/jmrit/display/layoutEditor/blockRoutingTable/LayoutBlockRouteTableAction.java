@@ -1,7 +1,6 @@
 package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 

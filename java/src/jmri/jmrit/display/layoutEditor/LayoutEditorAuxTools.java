@@ -2,7 +2,6 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import jmri.BeanSetting;
 import jmri.InstanceManager;
 import jmri.Path;

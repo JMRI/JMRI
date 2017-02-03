@@ -1,7 +1,6 @@
 package jmri.jmrix.ieee802154.xbee;
 
 import com.digi.xbee.api.packet.XBeePacket;
-import com.digi.xbee.api.packet.GenericXBeePacket;
 import com.digi.xbee.api.packet.UnknownXBeePacket;
 
 /**

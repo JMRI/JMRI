@@ -20,7 +20,6 @@ import javax.swing.table.TableModel;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialSensorManager;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

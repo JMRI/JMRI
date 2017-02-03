@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import jmri.jmrix.qsi.QsiMessage;
 import jmri.jmrix.qsi.QsiReply;
-import jmri.jmrix.qsi.QsiTrafficController;
 import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 
 /**

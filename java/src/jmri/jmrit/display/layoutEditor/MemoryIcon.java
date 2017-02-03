@@ -1,6 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionListener;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JOptionPane;

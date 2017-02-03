@@ -2,9 +2,7 @@ package jmri.jmrit.logix;
 
 import jmri.managers.AbstractManager;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.CheckReturnValue;
 
 /**
  * Basic Implementation of a OBlockManager.

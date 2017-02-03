@@ -4,10 +4,6 @@ import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JToggleButtonOperator;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
 
 /*
  *  Helper class for operating the Speedometer Frame.

@@ -2,8 +2,6 @@ package jmri.jmrix.dcc;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 

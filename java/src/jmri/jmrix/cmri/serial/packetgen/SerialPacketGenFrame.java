@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialReply;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.util.StringUtil;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 

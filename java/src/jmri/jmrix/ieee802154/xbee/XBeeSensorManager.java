@@ -1,9 +1,5 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import com.digi.xbee.api.packet.common.RemoteATCommandResponsePacket;
-import com.digi.xbee.api.models.XBee64BitAddress;
-import com.digi.xbee.api.packet.XBeePacket;
-import com.digi.xbee.api.packet.common.IODataSampleRxIndicatorPacket;
 import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
 import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
 import com.digi.xbee.api.exceptions.TimeoutException;

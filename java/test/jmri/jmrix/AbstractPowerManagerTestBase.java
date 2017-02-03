@@ -3,7 +3,6 @@ package jmri.jmrix;
 import java.beans.PropertyChangeListener;
 import jmri.JmriException;
 import jmri.PowerManager;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

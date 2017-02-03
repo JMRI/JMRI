@@ -3,7 +3,6 @@ package jmri.jmrix.sprog.sprogslotmon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import jmri.jmrix.sprog.SprogCommandStation;
 import jmri.jmrix.sprog.SprogConstants;
 import jmri.jmrix.sprog.SprogSlot;
 import jmri.jmrix.sprog.SprogSlotListener;
