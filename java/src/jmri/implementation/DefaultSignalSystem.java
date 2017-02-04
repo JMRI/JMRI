@@ -107,13 +107,26 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
         setProperty(aspect, key, value);
 
     }
-
+    /**
+     * {@inheritDoc}
+     *
+     * This method returns a constant result on the DefaultSignalSystem.
+     *
+     * @return {@link jmri.NamedBean#INCONSISTENT}
+     */
+    @Override
     public int getState() {
-        throw new NoSuchMethodError();
+        return INCONSISTENT;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * This method has no effect on the DefaultSignalSystem.
+     */
+    @Override
     public void setState(int s) {
-        throw new NoSuchMethodError();
+        // do nothing
     }
 
     float maximumLineSpeed = 0.0f;
