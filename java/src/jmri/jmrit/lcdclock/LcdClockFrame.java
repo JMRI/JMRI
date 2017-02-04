@@ -101,6 +101,7 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
 
         // request callback to update time
         clock.addMinuteChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 update();
             }
@@ -109,6 +110,7 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
         // Add component listener to handle frame resizing event
         this.addComponentListener(
                 new ComponentAdapter() {
+                    @Override
                     public void componentResized(ComponentEvent e) {
                         scaleImage();
                     }
@@ -161,6 +163,7 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
         m2.setIcon(tubes[minutes - (minutes / 10) * 10]);
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }
@@ -168,6 +171,7 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
     /**
      * Handle a change to clock properties
      */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         boolean now = clock.getRun();
         if (now) {
@@ -181,6 +185,7 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
 
     private class ButtonListener implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent a) {
             boolean next = !clock.getRun();
             clock.setRun(next);

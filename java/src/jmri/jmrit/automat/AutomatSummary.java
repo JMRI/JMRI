@@ -142,6 +142,7 @@ public class AutomatSummary {
         Object arg2;
         String property;
 
+        @Override
         public void run() {
             prop.firePropertyChange(property, arg1, arg2);
         }

@@ -21,6 +21,7 @@ public class SystemInfoAction extends AbstractXPressNetAction {
         this("Xpressnet System Information", memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create an SystemInfoFrame
         SystemInfoFrame f = new SystemInfoFrame(_memo);

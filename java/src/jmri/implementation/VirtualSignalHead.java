@@ -18,9 +18,11 @@ public class VirtualSignalHead extends DefaultSignalHead {
         super(sys);
     }
 
+    @Override
     protected void updateOutput() {
     }
 
+    @Override
     boolean isTurnoutUsed(jmri.Turnout t) {
         return false;
     }
@@ -29,6 +31,7 @@ public class VirtualSignalHead extends DefaultSignalHead {
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
      */
+    @Override
     public void dispose() {
         super.dispose();
     }

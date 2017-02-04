@@ -9,7 +9,6 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Description:	JUnit tests for the AcelaTrafficController class
@@ -73,10 +72,12 @@ public class AcelaTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffic
             rcvdMsg = null;
         }
 
+        @Override
         public void message(AcelaMessage m) {
             rcvdMsg = m;
         }
 
+        @Override
         public void reply(AcelaReply r) {
             rcvdReply = r;
         }
@@ -87,17 +88,21 @@ public class AcelaTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffic
     // internal class to simulate a AcelaPortController
     class AcelaPortControllerScaffold extends AcelaPortController {
 
+        @Override
         public Vector<String> getPortNames() {
             return null;
         }
 
+        @Override
         public String openPort(String portName, String appName) {
             return null;
         }
 
+        @Override
         public void configure() {
         }
 
+        @Override
         public String[] validBaudRates() {
             return null;
         }
@@ -114,16 +119,19 @@ public class AcelaTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffic
         }
 
         // returns the InputStream from the port
+        @Override
         public DataInputStream getInputStream() {
             return istream;
         }
 
         // returns the outputStream to the port
+        @Override
         public DataOutputStream getOutputStream() {
             return ostream;
         }
 
         // check that this object is ready to operate
+        @Override
         public boolean status() {
             return true;
         }

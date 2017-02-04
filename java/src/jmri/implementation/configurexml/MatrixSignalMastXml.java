@@ -27,6 +27,7 @@ public class MatrixSignalMastXml
      * @param o Object to store, of type MatrixSignalMast
      * @return e Element containing the complete info
      */
+    @Override
     public Element store(Object o) { // from mast p to XML
         MatrixSignalMast p = (MatrixSignalMast) o;
 
@@ -159,6 +160,7 @@ public class MatrixSignalMastXml
         return true;
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

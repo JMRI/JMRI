@@ -33,6 +33,7 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
         options.put(option1Name, new Option("ZTC640 connection uses : ", validOption1));
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         // open the port in XPressNet mode, check ability to set moderators
         try {
@@ -81,6 +82,7 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
             }
             // arrange to notify later
             activeSerialPort.addEventListener(new SerialPortEventListener() {
+                @Override
                 public void serialEvent(SerialPortEvent e) {
                     int type = e.getEventType();
                     switch (type) {
@@ -209,6 +211,7 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
      * set up all of the other objects to operate with a ZTC640 connected to
      * this port
      */
+    @Override
     public void configure() {
         // connect to a packetizing traffic controller
         XNetTrafficController packets = new ZTC640XNetPacketizer(new LenzCommandStation());
@@ -221,6 +224,7 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
     }
 
     // base class methods for the XNetSerialPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -229,6 +233,7 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -241,6 +246,7 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }

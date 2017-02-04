@@ -29,6 +29,7 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
         this.tc = tc;
     }
 
+    @Override
     protected int skipPrefix(int index) {
         // start at index, passing any control characters at the start of the buffer
         int len = "COMMAND: ".length();
@@ -47,6 +48,7 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
         return index;
     }
 
+    @Override
     public int value() {
         if (isBinary()) {
             return getElement(0) & 0xFF;  // avoid stupid sign extension
@@ -58,6 +60,7 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
     /**
      * Extract poll values from binary reply
      */
+    @Override
     public int pollValue() {  // integer value of first two bytes
         int first = 0xFF & ((byte) getElement(0));
         int second = 0xFF & ((byte) getElement(1));
@@ -77,6 +80,7 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
                 && getNumDataElements() == 3;
     }
 
+    @Override
     public boolean isUnsolicited() {
 // Boudreau: check for unsolicited AIU messages in pre 2006 EPROMs    	
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {

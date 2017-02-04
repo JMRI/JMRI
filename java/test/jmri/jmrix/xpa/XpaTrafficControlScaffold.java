@@ -20,6 +20,7 @@ public class XpaTrafficControlScaffold extends XpaTrafficController {
     }
 
     // override some XpaTrafficController methods for test purposes
+    @Override
     public boolean status() {
         return true;
     }
@@ -29,6 +30,7 @@ public class XpaTrafficControlScaffold extends XpaTrafficController {
      */
     public Vector<XpaMessage> outbound = new Vector<XpaMessage>();  // public OK here, so long as this is a test class
 
+    @Override
     public void sendXpaMessage(XpaMessage m, XpaListener reply) {
         if (log.isDebugEnabled()) {
             log.debug("sendXpaMessage [" + m + "]");

@@ -26,15 +26,18 @@ public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
         super.dispose();
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         return "true";
     }
 
+    @Override
     public void configure() {
         this.getSystemConnectionMemo().configureManagers();
 
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -42,19 +45,23 @@ public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
     /**
      * Get an array of valid baud rates.
      */
+    @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked");
         return null;
     }
 
+    @Override
     public String getCurrentBaudRate() {
         return "";
     }
 
+    @Override
     public java.io.DataInputStream getInputStream() {
         return null;
     }
 
+    @Override
     public java.io.DataOutputStream getOutputStream() {
         return null;
     }
@@ -64,6 +71,7 @@ public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
         return (InternalSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
+    @Override
     public void recover() {
 
     }

@@ -113,6 +113,7 @@ class Diesel3Sound extends EngineSound {
     }
 
     // Responds to "CHANGE" trigger
+    @Override
     public void changeThrottle(float s) {
         // This is all we have to do.  The loop thread will handle everything else.
         if (_loopThread != null) {
@@ -641,6 +642,7 @@ class Diesel3Sound extends EngineSound {
             }
         }
 
+        @Override
         public void run() {
             try {
                 while (is_running) {

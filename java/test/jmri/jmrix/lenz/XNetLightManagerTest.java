@@ -20,6 +20,7 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
 
     XNetInterfaceScaffold xnis = null;
 
+    @Override
     public String getSystemName(int i) {
         return "XL" + i;
     }
@@ -85,6 +86,7 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     // from here down is testing infrastructure
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();

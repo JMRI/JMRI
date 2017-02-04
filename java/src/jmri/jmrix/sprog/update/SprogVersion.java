@@ -145,6 +145,7 @@ public class SprogVersion {
      *
      * @return String representation of SPROG version
      */
+    @Override
     public String toString() {
         return this.toString(this);
     }

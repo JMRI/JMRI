@@ -20,6 +20,7 @@ public class NodeConfigAction extends AbstractAction {
         this("Configure Oak Tree Systems Nodes");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         NodeConfigFrame f = new NodeConfigFrame();
         try {

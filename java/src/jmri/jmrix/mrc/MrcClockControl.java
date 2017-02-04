@@ -122,6 +122,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         return;
     }
 
+    @Override
     public synchronized void notifyXmit(Date timestamp, MrcMessage m) {
     }
 
@@ -148,6 +149,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     /**
      * Mrc clock runs stable enough
      */
+    @Override
     public boolean canCorrectHardwareClock() {
         if (DEBUG_SHOW_PUBLIC_CALLS) {
             log.debug("getHardwareClockName"); //IN18N
@@ -158,6 +160,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     /**
      * Mrc clock supports 12/24 operation
      */
+    @Override
     public boolean canSet12Or24HourClock() {
         if (DEBUG_SHOW_PUBLIC_CALLS) {
             log.debug("canSet12Or24HourClock"); //IN18N
@@ -168,6 +171,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     /**
      * sets Mrc clock speed, must be 1 to 60
      */
+    @Override
     public void setRate(double newRate) {
         if (DEBUG_SHOW_PUBLIC_CALLS) {
             log.debug("setRate: " + newRate); //IN18N
@@ -183,6 +187,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     /**
      * Mrc only supports integer rates
      */
+    @Override
     public boolean requiresIntegerRate() {
         if (DEBUG_SHOW_PUBLIC_CALLS) {
             log.debug("requiresIntegerRate"); //IN18N
@@ -193,6 +198,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     /**
      * last known ratio from Mrc clock
      */
+    @Override
     public double getRate() {
         if (DEBUG_SHOW_PUBLIC_CALLS) {
             log.debug("getRate: {}", mrcLastRatio); //IN18N
@@ -204,6 +210,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
      * set the time, the date part is ignored
      */
     @SuppressWarnings("deprecation")
+    @Override
     public void setTime(Date now) {
         if (DEBUG_SHOW_PUBLIC_CALLS) {
             log.debug("setTime: {}", now); //IN18N
@@ -215,6 +222,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
      * returns the current Mrc time, does not have a date component
      */
     @SuppressWarnings("deprecation")
+    @Override
     public Date getTime() {
         Date now = internalClock.getTime();
         if (lastClockReadPacket != null) {
@@ -240,6 +248,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
      * set Mrc clock and start clock
      */
     @SuppressWarnings("deprecation")
+    @Override
     public void startHardwareClock(Date now) {
         if (DEBUG_SHOW_PUBLIC_CALLS) {
             log.debug("startHardwareClock: {}", now); //IN18N
@@ -248,6 +257,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     }
 
     @SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="testing for any change from previous value")
+    @Override
     public void initializeHardwareClock(double rate, Date now, boolean getTime) {
         // clockMode controls what we are doing: SYNCMODE_OFF, SYNCMODE_INTERNAL_MASTER, SYNCMODE_MRC_MASTER
         boolean synchronizeWithInternalClock = internalClock.getSynchronize();

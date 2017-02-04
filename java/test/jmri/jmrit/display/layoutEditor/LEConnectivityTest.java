@@ -344,6 +344,7 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
@@ -356,6 +357,7 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
 
     }
 
+    @Override
     protected void tearDown() throws Exception {
         // dispose of the single PanelMenu instance
         jmri.jmrit.display.PanelMenu.dispose();

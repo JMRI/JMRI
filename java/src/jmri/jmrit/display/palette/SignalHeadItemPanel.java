@@ -33,6 +33,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         super(parentFrame, type, family, model, editor);
     }
 
+    @Override
     protected JPanel initTablePanel(PickListModel model, Editor editor) {
         _table = model.makePickTable();
         ROW_HEIGHT = _table.getRowHeight();
@@ -48,6 +49,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         JPanel panel = new JPanel();
         JButton clearSelectionButton = new JButton(Bundle.getMessage("ClearSelection"));
         clearSelectionButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 _table.clearSelection();
             }
@@ -58,10 +60,12 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         return topPanel;
     }
 
+    @Override
     protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
         super.makeDndIconPanel(iconMap, "SignalHeadStateRed");
     }
 
+    @Override
     protected void showIcons() {
         //updateFamiliesPanel();
         _iconFamilyPanel.remove(_iconPanel);
@@ -75,6 +79,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         _showIconsButton.setText(Bundle.getMessage("HideIcons"));
     }
 
+    @Override
     protected void addIconsToPanel(HashMap<String, NamedIcon> allIconsMap) {
         HashMap<String, NamedIcon> iconMap = getFilteredIconMap(allIconsMap);
         if (iconMap == null) {
@@ -91,6 +96,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
     /**
      * ListSelectionListener action
      */
+    @Override
     public void valueChanged(ListSelectionEvent e) {
         if (_table == null || _updateButton == null) {
             return;
@@ -158,6 +164,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         return allIconsMap;
     }
 
+    @Override
     protected JLabel getDragger(DataFlavor flavor, HashMap<String, 
             NamedIcon> map, NamedIcon icon) {
         return new IconDragJLabel(flavor, map, icon);
@@ -173,6 +180,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
             iMap = map;
         }
 
+        @Override
         protected boolean okToDrag() {
             NamedBean bean = getDeviceNamedBean();
             if (bean == null) {
@@ -183,6 +191,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
             return true;
         }
 
+        @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {
                 return null;

@@ -18,6 +18,7 @@ public class InternalSensorManagerXml extends jmri.managers.configurexml.Interna
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element sensors) {
         sensors.setAttribute("class", this.getClass().getName());
     }

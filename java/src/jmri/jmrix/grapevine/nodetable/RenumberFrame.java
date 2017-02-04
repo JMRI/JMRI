@@ -34,6 +34,7 @@ public class RenumberFrame extends jmri.util.JmriJFrame {
     /**
      * Initialize the window
      */
+    @Override
     public void initComponents() {
         setTitle(rb.getString("WindowTitleRenumber"));
 
@@ -59,6 +60,7 @@ public class RenumberFrame extends jmri.util.JmriJFrame {
         JButton b = new JButton(rb.getString("ButtonExec"));
         p.add(b);
         b.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 execute();
             }

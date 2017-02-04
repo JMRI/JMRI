@@ -20,6 +20,7 @@ public class EasyDccMonAction extends AbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a EasyDccMonFrame
         EasyDccMonFrame f = new EasyDccMonFrame();

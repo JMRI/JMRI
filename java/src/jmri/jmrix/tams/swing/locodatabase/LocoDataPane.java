@@ -45,6 +45,7 @@ public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
         super();
     }
 
+    @Override
     public void initComponents(jmri.jmrix.tams.TamsSystemConnectionMemo memo) {
         super.initComponents(memo);
 
@@ -74,6 +75,7 @@ public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
 
         // add listener object so checkboxes function
         addButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 addLoco();
             }
@@ -118,14 +120,17 @@ public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
         locoModel.addLoco(m);
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.tams.swing.locodatabase.LocoDataFrame";
     }
 
+    @Override
     public String getTitle() {
         return rb.getString("Title");
     }
 
+    @Override
     public void dispose() {
         locoModel.dispose();
         locoModel = null;

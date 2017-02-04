@@ -147,6 +147,7 @@ public class UDPInputStream extends InputStream {
      ***                ***
      *****************************************************************
      */
+    @Override
     public void close() throws IOException {
         dsock.close();
         dsock = null;
@@ -175,6 +176,7 @@ public class UDPInputStream extends InputStream {
      ***                ***
      *****************************************************************
      */
+    @Override
     public int available() throws IOException {
         return packSize - packIdx;
     }
@@ -196,6 +198,7 @@ public class UDPInputStream extends InputStream {
      ***                ***
      *****************************************************************
      */
+    @Override
     public int read() throws IOException {
         if (packIdx == packSize) {
             receive();
@@ -223,6 +226,7 @@ public class UDPInputStream extends InputStream {
      ***                ***
      *****************************************************************
      */
+    @Override
     public int read(byte[] buff) throws IOException {
         return read(buff, 0, buff.length);
     }
@@ -244,6 +248,7 @@ public class UDPInputStream extends InputStream {
      ***                ***
      *****************************************************************
      */
+    @Override
     public int read(byte[] buff, int off, int len) throws IOException {
         if (packIdx == packSize) {
             receive();
@@ -286,6 +291,7 @@ public class UDPInputStream extends InputStream {
      ***                ***
      *****************************************************************
      */
+    @Override
     public long skip(long len) throws IOException {
         if (packIdx == packSize) {
             receive();
@@ -332,13 +338,16 @@ public class UDPInputStream extends InputStream {
     /*
      * ******* marking and reseting are unsupported *******
      */
+    @Override
     public void mark(int readlimit) {
     }
 
+    @Override
     public void reset() throws IOException {
         throw new IOException("Marks are not supported by UDPInputStream.");
     }
 
+    @Override
     public boolean markSupported() {
         return false;
     }

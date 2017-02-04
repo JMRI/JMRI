@@ -20,6 +20,7 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
         super(memo);
     }
 
+    @Override
     protected void init() {
         if (log.isDebugEnabled()) {
             log.debug("Init called");

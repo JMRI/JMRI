@@ -1,11 +1,7 @@
 package jmri.jmrix.roco.z21;
 
-import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Test;
 import jmri.jmrix.lenz.LenzCommandStation;
 
 /**

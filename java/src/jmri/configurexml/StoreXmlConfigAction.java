@@ -80,6 +80,7 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
         return file;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         File file = getFileName(getConfigFileChooser());
         if (file == null) {

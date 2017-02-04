@@ -69,6 +69,7 @@ public class LightTableAction extends AbstractTableAction {
 
     protected LightManager lightManager = InstanceManager.getNullableDefault(jmri.LightManager.class);
 
+    @Override
     public void setManager(Manager man) {
         lightManager = (LightManager) man;
     }
@@ -77,6 +78,7 @@ public class LightTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes for the specific case
      * of Lights
      */
+    @Override
     protected void createModel() {
         m = new BeanTableDataModel() {
             static public final int ENABLECOL = NUMCOLUMN;
@@ -85,10 +87,12 @@ public class LightTableAction extends AbstractTableAction {
             protected String enabledString = Bundle.getMessage("ColumnHeadEnabled");
             protected String intensityString = Bundle.getMessage("ColumnHeadIntensity");
 
+            @Override
             public int getColumnCount() {
                 return NUMCOLUMN + 3;
             }
 
+            @Override
             public String getColumnName(int col) {
                 if (col == EDITCOL) {
                     return "";    // no heading on "Edit"
@@ -103,6 +107,7 @@ public class LightTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public Class<?> getColumnClass(int col) {
                 if (col == EDITCOL) {
                     return JButton.class;
@@ -117,6 +122,7 @@ public class LightTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public int getPreferredWidth(int col) {
                 // override default value for UserName column
                 if (col == USERNAMECOL) {
@@ -135,6 +141,7 @@ public class LightTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public boolean isCellEditable(int row, int col) {
                 if (col == EDITCOL) {
                     return true;
@@ -149,6 +156,7 @@ public class LightTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public String getValue(String name) {
                 Light l = lightManager.getBySystemName(name);
                 if (l == null) {
@@ -175,6 +183,7 @@ public class LightTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public Object getValueAt(int row, int col) {
                 if (col == EDITCOL) {
                     return Bundle.getMessage("ButtonEdit");
@@ -187,6 +196,7 @@ public class LightTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public void setValueAt(Object value, int row, int col) {
                 if (col == EDITCOL) {
                     // Use separate Runnable so window is created on top
@@ -198,6 +208,7 @@ public class LightTableAction extends AbstractTableAction {
                             row = r;
                         }
 
+                        @Override
                         public void run() {
                             // set up to edit
                             addPressed(null);
@@ -237,32 +248,39 @@ public class LightTableAction extends AbstractTableAction {
              * <P>
              * Deactivate the light, then use the superclass to delete it.
              */
+            @Override
             void doDelete(NamedBean bean) {
                 ((Light) bean).deactivateLight();
                 super.doDelete(bean);
             }
 
             // all properties update for now
+            @Override
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 return true;
             }
 
+            @Override
             public Manager getManager() {
                 return lightManager;
             }
 
+            @Override
             public NamedBean getBySystemName(String name) {
                 return lightManager.getBySystemName(name);
             }
 
+            @Override
             public NamedBean getByUserName(String name) {
                 return lightManager.getByUserName(name);
             }
 
+            @Override
             protected String getMasterClassName() {
                 return getClassName();
             }
 
+            @Override
             public void clickOn(NamedBean t) {
                 int oldState = ((Light) t).getState();
                 int newState;
@@ -281,20 +299,24 @@ public class LightTableAction extends AbstractTableAction {
                 ((Light) t).setState(newState);
             }
 
+            @Override
             public JButton configureButton() {
                 return new JButton(" " + Bundle.getMessage("LightStateOff") + " ");
             }
 
+            @Override
             protected String getBeanType() {
                 return Bundle.getMessage("BeanNameLight");
             }
         };
     }
 
+    @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleLightTable"));
     }
 
+    @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.LightTable";
     }
@@ -349,6 +371,7 @@ public class LightTableAction extends AbstractTableAction {
     JLabel labelTransitionTime = new JLabel(Bundle.getMessage("LightTransitionTime") + "  ");
     JTextField fieldTransitionTime = new JTextField(5);
 
+    @Override
     protected void addPressed(ActionEvent e) {
         if (inEditMode) {
             // cancel Edit and reactivate the edited light
@@ -369,6 +392,7 @@ public class LightTableAction extends AbstractTableAction {
             panel1.add(addRangeBox);
             addRangeBox.setToolTipText(Bundle.getMessage("LightAddRangeHint"));
             addRangeBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     addRangeChanged();
                 }
@@ -379,6 +403,7 @@ public class LightTableAction extends AbstractTableAction {
             fixedSystemName.setVisible(false);
             prefixBox.setToolTipText(Bundle.getMessage("LightSystemHint"));
             prefixBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     prefixChanged();
                 }
@@ -463,6 +488,7 @@ public class LightTableAction extends AbstractTableAction {
             panel35.setLayout(new FlowLayout());
             panel35.add(addControl = new JButton(Bundle.getMessage("LightAddControlButton")));
             addControl.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     addControlPressed(e);
                 }
@@ -496,6 +522,7 @@ public class LightTableAction extends AbstractTableAction {
             panel5.setLayout(new FlowLayout(FlowLayout.TRAILING));
             panel5.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
             cancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelPressed(e);
                 }
@@ -503,6 +530,7 @@ public class LightTableAction extends AbstractTableAction {
             cancel.setToolTipText(Bundle.getMessage("LightCancelButtonHint"));
             panel5.add(create = new JButton(Bundle.getMessage("ButtonCreate")));
             create.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     createPressed(e);
                 }
@@ -510,6 +538,7 @@ public class LightTableAction extends AbstractTableAction {
             create.setToolTipText(Bundle.getMessage("LightCreateButtonHint"));
             panel5.add(update = new JButton(Bundle.getMessage("ButtonUpdate")));
             update.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     updatePressed(e);
                 }
@@ -522,6 +551,7 @@ public class LightTableAction extends AbstractTableAction {
         }
         prefixChanged();
         addFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 cancelPressed(null);
             }
@@ -1064,6 +1094,7 @@ public class LightTableAction extends AbstractTableAction {
             WindowMaker() {
             }
 
+            @Override
             public void run() {
                 addEditControlWindow();
             }
@@ -1097,6 +1128,7 @@ public class LightTableAction extends AbstractTableAction {
             timedOnControlIndex = 4;
             twoSensorControlIndex = 5;
             typeBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     controlTypeChanged();
                 }
@@ -1142,6 +1174,7 @@ public class LightTableAction extends AbstractTableAction {
             panel5.setLayout(new FlowLayout(FlowLayout.TRAILING));
             panel5.add(cancelControl = new JButton(Bundle.getMessage("ButtonCancel")));
             cancelControl.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelControlPressed(e);
                 }
@@ -1149,6 +1182,7 @@ public class LightTableAction extends AbstractTableAction {
             cancelControl.setToolTipText(Bundle.getMessage("LightCancelButtonHint"));
             panel5.add(createControl = new JButton(Bundle.getMessage("ButtonCreate")));
             createControl.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     createControlPressed(e);
                 }
@@ -1156,6 +1190,7 @@ public class LightTableAction extends AbstractTableAction {
             createControl.setToolTipText(Bundle.getMessage("LightCreateControlButtonHint"));
             panel5.add(updateControl = new JButton(Bundle.getMessage("ButtonUpdate")));
             updateControl.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     updateControlPressed(e);
                 }
@@ -1166,6 +1201,7 @@ public class LightTableAction extends AbstractTableAction {
             createControl.setVisible(true);
             contentPane.add(panel5);
             addControlFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     cancelControlPressed(null);
                 }
@@ -1797,6 +1833,7 @@ public class LightTableAction extends AbstractTableAction {
             super();
         }
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("length")) {
                 // a new LightControl item is available in the manager
@@ -1804,6 +1841,7 @@ public class LightTableAction extends AbstractTableAction {
             }
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             if (c == TYPE_COLUMN) {
                 return String.class;
@@ -1820,14 +1858,17 @@ public class LightTableAction extends AbstractTableAction {
             return String.class;
         }
 
+        @Override
         public int getColumnCount() {
             return REMOVE_COLUMN + 1;
         }
 
+        @Override
         public int getRowCount() {
             return (controlList.size());
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             if (c == TYPE_COLUMN) {
                 return (false);
@@ -1844,6 +1885,7 @@ public class LightTableAction extends AbstractTableAction {
             return (false);
         }
 
+        @Override
         public String getColumnName(int col) {
             if (col == TYPE_COLUMN) {
                 return Bundle.getMessage("LightControlType");
@@ -1867,6 +1909,7 @@ public class LightTableAction extends AbstractTableAction {
             return new JTextField(8).getPreferredSize().width;
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             int rx = r;
             if (rx > controlList.size()) {
@@ -1887,6 +1930,7 @@ public class LightTableAction extends AbstractTableAction {
             }
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             if (col == EDIT_COLUMN) {
                 // set up to edit. Use separate Runnable so window is created on top
@@ -1897,6 +1941,7 @@ public class LightTableAction extends AbstractTableAction {
                     }
                     int row;
 
+                    @Override
                     public void run() {
                         editControlAction(row);
                     }
@@ -1911,10 +1956,12 @@ public class LightTableAction extends AbstractTableAction {
         }
     }
 
+    @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleLightTable");
     }
 
+    @Override
     protected String getClassName() {
         return LightTableAction.class.getName();
     }

@@ -52,6 +52,7 @@ public class Siglet extends AbstractAutomaton {
      * Implements AbstractAutomaton method to initialise connections to the
      * layout.
      */
+    @Override
     protected void init() {
         defineIO();
     }
@@ -60,6 +61,7 @@ public class Siglet extends AbstractAutomaton {
      * Implements AbstractAutomaton method to wait for state changes and
      * respond.
      */
+    @Override
     protected boolean handle() {
         // update the result
         setOutput();

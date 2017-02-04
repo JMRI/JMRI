@@ -20,10 +20,12 @@ public class JMRIClientTurnoutManager extends jmri.managers.AbstractTurnoutManag
         this.prefix = memo.getSystemPrefix();
     }
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
         int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();

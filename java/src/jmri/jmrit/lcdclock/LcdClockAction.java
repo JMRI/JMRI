@@ -21,6 +21,7 @@ public class LcdClockAction extends AbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         LcdClockFrame f = new LcdClockFrame();

@@ -40,6 +40,7 @@ public class LZ100Frame extends jmri.util.JmriJFrame {
 
         // install close button handler
         closeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 setVisible(false);
                 dispose();
@@ -51,6 +52,7 @@ public class LZ100Frame extends jmri.util.JmriJFrame {
 
     JToggleButton closeButton = new JToggleButton("Close");
 
+    @Override
     public void dispose() {
         // take apart the JFrame
         super.dispose();

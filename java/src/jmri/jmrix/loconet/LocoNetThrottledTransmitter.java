@@ -46,6 +46,7 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
 
         // put a shutdown request on the queue after any existing
         Memo m = new Memo(null, calcSendTimeMSec(), TimeUnit.MILLISECONDS) {
+            @Override
             boolean requestsShutDown() {
                 return true;
             }
@@ -60,14 +61,17 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
     LocoNetInterface controller;
 
     // Forward methods to underlying interface
+    @Override
     public void addLocoNetListener(int mask, LocoNetListener listener) {
         controller.addLocoNetListener(mask, listener);
     }
 
+    @Override
     public void removeLocoNetListener(int mask, LocoNetListener listener) {
         controller.removeLocoNetListener(mask, listener);
     }
 
+    @Override
     public boolean status() {
         return controller.status();
     }
@@ -75,6 +79,7 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
     /**
      * Accept a message to be sent after suitable delay.
      */
+    @Override
     public void sendLocoNetMessage(LocoNetMessage msg) {
         if (disposed) {
             log.error("Message sent after queue disposed");
@@ -113,6 +118,7 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
 
     class ServiceThread extends Thread {
 
+        @Override
         public void run() {
             running = true;
             while (true) {
@@ -164,11 +170,13 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
         long endTimeMsec;
         LocoNetMessage msg;
 
+        @Override
         public long getDelay(TimeUnit unit) {
             long delay = endTimeMsec - nowMSec();
             return unit.convert(delay, TimeUnit.MILLISECONDS);
         }
 
+        @Override
         public int compareTo(Delayed d) {
             // -1 means this is less than m
             long delta = this.getDelay(TimeUnit.MILLISECONDS)
@@ -183,6 +191,7 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
         }
 
         // ensure consistent with compareTo
+        @Override
         public boolean equals(Object o) {
             if (o == null) {
                 return false;
@@ -194,6 +203,7 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
             }
         }
 
+        @Override
         public int hashCode() {
             return (int) (this.getDelay(TimeUnit.MILLISECONDS) & 0xFFFFFF);
         }

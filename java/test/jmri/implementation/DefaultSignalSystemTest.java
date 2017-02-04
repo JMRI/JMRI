@@ -1,62 +1,67 @@
 package jmri.implementation;
 
+import jmri.NamedBean;
 import jmri.SignalSystem;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the DefaultSignalSystem interface implementation
  *
  * @author	Bob Jacobsen Copyright (C) 2009
  */
-public class DefaultSignalSystemTest extends TestCase {
+public class DefaultSignalSystemTest {
 
+    @Test
     public void testCtor() {
-        new DefaultSignalSystem("sys", "user");
+        DefaultSignalSystem dss = new DefaultSignalSystem("sys", "user");
+        Assert.assertNotNull(dss);
     }
 
+    @Test
     public void testOneAspectOneProperty() {
         SignalSystem t = new DefaultSignalSystem("sys", "user");
 
-        t.setProperty("Stop", "Speed", Integer.valueOf(0));
+        t.setProperty("Stop", "Speed", 0);
 
-        Assert.assertEquals(Integer.valueOf(0), t.getProperty("Stop", "Speed"));
+        Assert.assertEquals(0, t.getProperty("Stop", "Speed"));
     }
 
+    @Test
     public void testTwoAspectOneProperty() {
         SignalSystem t = new DefaultSignalSystem("sys", "user");
 
-        t.setProperty("Stop", "Speed", Integer.valueOf(0));
-        t.setProperty("Clear", "Speed", Integer.valueOf(10));
+        t.setProperty("Stop", "Speed", 0);
+        t.setProperty("Clear", "Speed", 10);
 
-        Assert.assertEquals("Stop", Integer.valueOf(0), t.getProperty("Stop", "Speed"));
-        Assert.assertEquals("Clear", Integer.valueOf(10), t.getProperty("Clear", "Speed"));
+        Assert.assertEquals("Stop", 0, t.getProperty("Stop", "Speed"));
+        Assert.assertEquals("Clear", 10, t.getProperty("Clear", "Speed"));
     }
 
+    @Test
     public void testTwoAspectTwoProperties() {
         SignalSystem t = new DefaultSignalSystem("sys", "user");
 
-        t.setProperty("Stop", "Speed", Integer.valueOf(0));
-        t.setProperty("Clear", "Speed", Integer.valueOf(10));
+        t.setProperty("Stop", "Speed", 0);
+        t.setProperty("Clear", "Speed", 10);
         t.setProperty("Stop", "Biff", "ffiB");
         t.setProperty("Clear", "Biff", "beef");
 
-        Assert.assertEquals("Stop", Integer.valueOf(0), t.getProperty("Stop", "Speed"));
-        Assert.assertEquals("Clear", Integer.valueOf(10), t.getProperty("Clear", "Speed"));
+        Assert.assertEquals("Stop", 0, t.getProperty("Stop", "Speed"));
+        Assert.assertEquals("Clear", 10, t.getProperty("Clear", "Speed"));
         Assert.assertEquals("Stop", "ffiB", t.getProperty("Stop", "Biff"));
         Assert.assertEquals("Clear", "beef", t.getProperty("Clear", "Biff"));
     }
 
+    @Test
     public void testGetAspects() {
         SignalSystem t = new DefaultSignalSystem("sys", "user");
 
-        t.setProperty("Stop", "Speed", Integer.valueOf(0));
-        t.setProperty("Approach", "Speed", Integer.valueOf(5));
-        t.setProperty("Clear", "Speed", Integer.valueOf(10));
+        t.setProperty("Stop", "Speed", 0);
+        t.setProperty("Approach", "Speed", 5);
+        t.setProperty("Clear", "Speed", 10);
 
         java.util.Enumeration<String> e = t.getAspects();
 
@@ -68,34 +73,37 @@ public class DefaultSignalSystemTest extends TestCase {
 
     }
 
+    @Test
     public void testGetNullProperties() {
         SignalSystem t = new DefaultSignalSystem("sys", "user");
 
-        t.setProperty("Stop", "Speed", Integer.valueOf(0));
-        t.setProperty("Approach", "Speed", Integer.valueOf(5));
+        t.setProperty("Stop", "Speed", 0);
+        t.setProperty("Approach", "Speed", 5);
 
         Assert.assertEquals("Stop", null, t.getProperty("Stop", "None"));
         Assert.assertEquals("Clear", null, t.getProperty("Clear", "Speed"));
 
     }
 
+    @Test
     public void testCheckAspect() {
         SignalSystem t = new DefaultSignalSystem("sys", "user");
 
-        t.setProperty("Stop", "Speed", Integer.valueOf(0));
-        t.setProperty("Approach", "Speed", Integer.valueOf(5));
+        t.setProperty("Stop", "Speed", 0);
+        t.setProperty("Approach", "Speed", 5);
 
         Assert.assertTrue("Stop", t.checkAspect("Stop"));
         Assert.assertFalse("Clear", t.checkAspect("Clear"));
 
     }
 
+    @Test
     public void testGetKeys() {
         SignalSystem t = new DefaultSignalSystem("sys", "user");
 
-        t.setProperty("Stop", "A", Integer.valueOf(0));
-        t.setProperty("Approach", "C", Integer.valueOf(5));
-        t.setProperty("Clear", "B", Integer.valueOf(10));
+        t.setProperty("Stop", "A", 0);
+        t.setProperty("Approach", "C", 5);
+        t.setProperty("Clear", "B", 10);
 
         java.util.Enumeration<String> e = t.getKeys();
 
@@ -107,14 +115,15 @@ public class DefaultSignalSystemTest extends TestCase {
 
     }
 
+    @Test
     public void testGetKeysOverlap() {
         SignalSystem t = new DefaultSignalSystem("sys", "user");
 
-        t.setProperty("Stop", "A", Integer.valueOf(0));
-        t.setProperty("Approach", "C", Integer.valueOf(5));
-        t.setProperty("Approach", "A", Integer.valueOf(5));
-        t.setProperty("Approach", "B", Integer.valueOf(5));
-        t.setProperty("Clear", "B", Integer.valueOf(10));
+        t.setProperty("Stop", "A", 0);
+        t.setProperty("Approach", "C", 5);
+        t.setProperty("Approach", "A", 5);
+        t.setProperty("Approach", "B", 5);
+        t.setProperty("Clear", "B", 10);
 
         java.util.Enumeration<String> e = t.getKeys();
 
@@ -126,6 +135,7 @@ public class DefaultSignalSystemTest extends TestCase {
 
     }
 
+    @Test
     public void testDefaults() {
         DefaultSignalSystem t = new DefaultSignalSystem("sys", "user");
 
@@ -151,30 +161,27 @@ public class DefaultSignalSystemTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public DefaultSignalSystemTest(String s) {
-        super(s);
+    @Test
+    public void testGetState() {
+        DefaultSignalSystem dss = new DefaultSignalSystem("sys", "user");
+        Assert.assertEquals(NamedBean.INCONSISTENT, dss.getState());
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {DefaultSignalSystemTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Test
+    public void testSetState() {
+        DefaultSignalSystem dss = new DefaultSignalSystem("sys", "user");
+        dss.setState(NamedBean.UNKNOWN);
+        // verify getState did not change
+        Assert.assertEquals(NamedBean.INCONSISTENT, dss.getState());
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DefaultSignalSystemTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-    static protected Logger log = LoggerFactory.getLogger(DefaultSignalSystemTest.class.getName());
 }

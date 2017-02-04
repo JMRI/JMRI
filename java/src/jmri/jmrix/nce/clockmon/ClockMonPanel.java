@@ -192,6 +192,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         super();
     }
 
+    @Override
     public void initContext(Object context) throws Exception {
         if (context instanceof NceSystemConnectionMemo) {
             try {
@@ -202,10 +203,12 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         }
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.nce.clockmon.ClockMonFrame";
     }
 
+    @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
         if (memo != null) {
@@ -218,6 +221,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         return x.toString();
     }
 
+    @Override
     public void initComponents(NceSystemConnectionMemo m) throws Exception {
         this.memo = m;
         this.tc = m.getNceTrafficController();
@@ -414,6 +418,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
 //        add(pane2);
         // install "read" button handler
         readButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 issueReadAllRequest();
             }
@@ -421,6 +426,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         );
         // install "set" button handler
         setClockButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 issueClockSet(Integer.parseInt(hours.getText().trim()),
                         Integer.parseInt(minutes.getText().trim()),
@@ -431,6 +437,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         );
         // install "stop" clock button handler
         setStopNceButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 issueClockStop();
             }
@@ -438,6 +445,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         );
         // install "start" clock button handler
         setStartNceButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 issueClockStart();
             }
@@ -445,6 +453,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         );
         // install set fast clock ratio
         setRatioButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 changeNceClockRatio();
             }
@@ -452,6 +461,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         );
         // install set 12/24 button
         set1224Button.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 issueClock1224(twentyFour.isSelected());
             }
@@ -459,6 +469,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         );
         // install Sync Change Clock button
         setSyncButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 changeSyncMode();
             }
@@ -467,6 +478,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
 
         // install "setPolling" button handler
         setPollingSpeedButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 changePollingSpeed(Double.parseDouble(pollingSpeed.getText().trim()));
             }
@@ -475,6 +487,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
 
         // install "setPid" button handler
         setPidButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 changePidValues();
             }
@@ -499,6 +512,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
             return;
         }
         minuteChangeListener = new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 newInternalMinute();
             }
@@ -510,10 +524,12 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
     }
 
     //  ignore replies
+    @Override
     public void message(NceMessage m) {
         log.error("clockmon message received: " + m);
     }
 
+    @Override
     public void reply(NceReply r) {
         if (log.isDebugEnabled() && extraDebug) {
             log.debug("nceReplyCatcher() waiting: " + waiting
@@ -684,6 +700,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         // initialize things if not running
         if (timerDisplayUpdate == null) {
             timerDisplayUpdate = new javax.swing.Timer((int) (pollingInterval * 1000.0), new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     alarmDisplayUpdateHandler();
                 }
@@ -701,6 +718,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         if (alarmSyncUpdate == null) {
             alarmSyncUpdate = new javax.swing.Timer(delay,
                     new java.awt.event.ActionListener() {
+                        @Override
                         public void actionPerformed(java.awt.event.ActionEvent e) {
                             alarmSyncHandler();
                         }
@@ -1767,6 +1785,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         //super.windowClosing(e);
     }
 
+    @Override
     public void dispose() {
         // stop alarm
         if (timerDisplayUpdate != null) {

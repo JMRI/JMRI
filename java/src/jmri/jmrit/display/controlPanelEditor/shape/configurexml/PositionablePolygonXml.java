@@ -22,6 +22,7 @@ public class PositionablePolygonXml extends PositionableShapeXml {
      * @param o Object to store, of type PositionableShape
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         PositionablePolygon p = (PositionablePolygon) o;
 
@@ -63,6 +64,7 @@ public class PositionablePolygonXml extends PositionableShapeXml {
      * @param element Top level Element to unpack.
      * @param o       Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         Editor ed = (Editor) o;

@@ -38,10 +38,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     public ConfigXmlManager() {
     }
 
+    @Override
     public void registerConfig(Object o) {
         registerConfig(o, 50);
     }
 
+    @Override
     public void registerPref(Object o) {
         // skip if already present, leaving in original order
         if (plist.contains(o)) {
@@ -91,11 +93,13 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * Remove the registered preference items. This is used e.g. when a GUI
      * wants to replace the preferences with new values.
      */
+    @Override
     public void removePrefItems() {
         log.debug("removePrefItems dropped {}", plist.size());
         plist.clear();
     }
 
+    @Override
     public Object findInstance(Class<?> c, int index) {
         ArrayList<Object> temp = new ArrayList<Object>(plist);
         temp.addAll(clist.keySet());
@@ -112,6 +116,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         return null;
     }
 
+    @Override
     public ArrayList<Object> getInstanceList(Class<?> c) {
         ArrayList<Object> temp = new ArrayList<Object>(plist);
         ArrayList<Object> returnlist = new ArrayList<Object>();
@@ -132,6 +137,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     }
 
+    @Override
     public void registerConfig(Object o, int x) {
         // skip if already present, leaving in original order
         if (clist.containsKey(o)) {
@@ -145,6 +151,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         clist.put(o, x);
     }
 
+    @Override
     public void registerTool(Object o) {
         // skip if already present, leaving in original order
         if (tlist.contains(o)) {
@@ -163,6 +170,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      *
      * @param o The object, which must have an associated adapter class.
      */
+    @Override
     public void registerUser(Object o) {
         // skip if already present, leaving in original order
         if (ulist.contains(o)) {
@@ -175,6 +183,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         ulist.add(o);
     }
 
+    @Override
     public void registerUserPrefs(Object o) {
         // skip if already present, leaving in original order
         if (uplist.contains(o)) {
@@ -187,6 +196,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         uplist.add(o);
     }
 
+    @Override
     public void deregister(Object o) {
         plist.remove(o);
         if (o != null) {
@@ -266,6 +276,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         ArrayList<Map.Entry<Object, Integer>> l = new ArrayList<Map.Entry<Object, Integer>>(clist.entrySet());
         Collections.sort(l, new Comparator<Map.Entry<Object, Integer>>() {
 
+            @Override
             public int compare(Map.Entry<Object, Integer> o1, Map.Entry<Object, Integer> o2) {
                 return o1.getValue().compareTo(o2.getValue());
             }
@@ -375,6 +386,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      *
      * @param file config file to write
      */
+    @Override
     public boolean storeAll(File file) {
         boolean result = true;
         Element root = initStore();
@@ -400,10 +412,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     /**
      * Writes prefs to a predefined File location.
      */
+    @Override
     public void storePrefs() {
         storePrefs(prefsFile);
     }
 
+    @Override
     public void storePrefs(File file) {
         synchronized (this) {
             Element root = initStore();
@@ -412,6 +426,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         }
     }
 
+    @Override
     public void storeUserPrefs(File file) {
         synchronized (this) {
             Element root = initStore();
@@ -436,6 +451,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      *
      * @param file config file to write.
      */
+    @Override
     public boolean storeConfig(File file) {
         boolean result = true;
         Element root = initStore();
@@ -457,6 +473,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      *
      * @param file config file to write
      */
+    @Override
     public boolean storeUser(File file) {
         boolean result = true;
         Element root = initStore();
@@ -473,6 +490,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         return result;
     }
 
+    @Override
     public boolean makeBackup(File file) {
         return makeBackupFile(defaultBackupDirectory, file);
     }
@@ -531,10 +549,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      *
      * @return true if no problems during the load
      */
+    @Override
     public boolean load(File fi) throws JmriConfigureXmlException {
         return load(fi, false);
     }
 
+    @Override
     public boolean load(URL url) throws JmriConfigureXmlException {
         return load(url, false);
     }
@@ -640,6 +660,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             ArrayList<Map.Entry<Element, Integer>> l = new ArrayList<Map.Entry<Element, Integer>>(loadlist.entrySet());
             Collections.sort(l, new Comparator<Map.Entry<Element, Integer>>() {
 
+                @Override
                 public int compare(Map.Entry<Element, Integer> o1, Map.Entry<Element, Integer> o2) {
                     return o1.getValue().compareTo(o2.getValue());
                 }

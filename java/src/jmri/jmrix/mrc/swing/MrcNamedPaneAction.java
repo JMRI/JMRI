@@ -31,6 +31,7 @@ public class MrcNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     MrcSystemConnectionMemo memo;
 
+    @Override
     public JmriPanel makePanel() {
         JmriPanel p = super.makePanel();
         if (p == null) {

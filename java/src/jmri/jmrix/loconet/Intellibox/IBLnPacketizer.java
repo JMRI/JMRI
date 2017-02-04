@@ -72,6 +72,7 @@ public class IBLnPacketizer extends LnPacketizer {
             }
         }
 
+        @Override
         public void run() {
 
             int opCode;
@@ -178,6 +179,7 @@ public class IBLnPacketizer extends LnPacketizer {
                             LocoNetMessage msgForLater = thisMsg;
                             LnPacketizer myTC = thisTC;
 
+                            @Override
                             public void run() {
                                 myTC.notify(msgForLater);
                             }
@@ -203,6 +205,7 @@ public class IBLnPacketizer extends LnPacketizer {
      */
     class XmtHandler implements Runnable {
 
+        @Override
         public void run() {
 
             while (true) {   // loop permanently
@@ -261,6 +264,7 @@ public class IBLnPacketizer extends LnPacketizer {
     /**
      * Invoked at startup to start the threads needed here.
      */
+    @Override
     public void startThreads() {
         int priority = Thread.currentThread().getPriority();
         log.debug("startThreads current priority = " + priority

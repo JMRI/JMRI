@@ -47,6 +47,7 @@ class NotchTrigger extends Trigger implements PropertyChangeListener {
         return (current_notch);
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent event) {
 
         // Validate

@@ -21,6 +21,7 @@ public class SRCPTrafficControlScaffold extends SRCPTrafficController {
     }
 
     // override some SRCPTrafficController methods for test purposes
+    @Override
     public boolean status() {
         return true;
     }
@@ -30,6 +31,7 @@ public class SRCPTrafficControlScaffold extends SRCPTrafficController {
      */
     public Vector<SRCPMessage> outbound = new Vector<SRCPMessage>();  // public OK here, so long as this is a test class
 
+    @Override
     public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
         if (log.isDebugEnabled()) {
             log.debug("sendSRCPMessage [" + m + "]");

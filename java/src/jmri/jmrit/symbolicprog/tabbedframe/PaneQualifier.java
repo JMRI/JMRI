@@ -29,11 +29,13 @@ public class PaneQualifier extends ArithmeticQualifier {
         setWatchedAvailable(currentDesiredState());
     }
 
+    @Override
     public void setWatchedAvailable(boolean enable) {
         log.debug("setWatchedAvailable with " + enable + " on " + index);
         tabs.setEnabledAt(index, enable);
     }
 
+    @Override
     protected boolean currentAvailableState() {
         return tabs.isEnabledAt(index);
     }

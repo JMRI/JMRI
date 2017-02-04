@@ -344,17 +344,16 @@ public class LayoutEditorTest {
     public void testGetTurnoutCircleSize() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor();
-        // defaults to 2.
-        Assert.assertEquals("turnout circle size", 2, e.getTurnoutCircleSize());
+        // defaults to 4.
+        Assert.assertEquals("turnout circle size", 4, e.getTurnoutCircleSize());
     }
 
     @Test
     public void testSetTurnoutCircleSize() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor();
-        // set to known value
-        e.setTurnoutCircleSize(10);
-        Assert.assertEquals("turnout circle size after set", 10, e.getTurnoutCircleSize());
+        e.setTurnoutCircleSize(11);
+        Assert.assertEquals("turnout circle size after set", 11, e.getTurnoutCircleSize());
     }
 
     @Test
@@ -412,7 +411,7 @@ public class LayoutEditorTest {
     public void testGetDrawGrid() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor();
-        // default to false 
+        // default to false
         Assert.assertFalse("getDrawGrid", e.getDrawGrid());
     }
 
@@ -429,7 +428,7 @@ public class LayoutEditorTest {
     public void testGetSnapOnAdd() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor();
-        // default to false 
+        // default to false
         Assert.assertFalse("getSnapOnAdd", e.getSnapOnAdd());
     }
 
@@ -446,7 +445,7 @@ public class LayoutEditorTest {
     public void testGetSnapOnMove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor();
-        // default to false 
+        // default to false
         Assert.assertFalse("getSnapOnMove", e.getSnapOnMove());
     }
 
@@ -463,7 +462,7 @@ public class LayoutEditorTest {
     public void testGetAntialiasingOn() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor();
-        // default to false 
+        // default to false
         Assert.assertFalse("getAntialiasingOn", e.getAntialiasingOn());
     }
 
@@ -480,7 +479,7 @@ public class LayoutEditorTest {
     public void testGetTurnoutCircles() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor();
-        // default to false 
+        // default to false
         Assert.assertFalse("getTurnoutCircles", e.getTurnoutCircles());
     }
 
@@ -497,7 +496,7 @@ public class LayoutEditorTest {
     public void testGetTooltipsNotEdit() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor();
-        // default to false 
+        // default to false
         Assert.assertFalse("getTooltipsNotEdit", e.getTooltipsNotEdit());
     }
 
@@ -514,7 +513,7 @@ public class LayoutEditorTest {
     public void testGetTooltipsInEdit() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor();
-        // default to true 
+        // default to true
         Assert.assertTrue("getTooltipsInEdit", e.getTooltipsInEdit());
     }
 
@@ -531,7 +530,7 @@ public class LayoutEditorTest {
     public void testGetAutoBlockAssignment() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor();
-        // default to false 
+        // default to false
         Assert.assertFalse("getAutoBlockAssignment", e.getAutoBlockAssignment());
     }
 
@@ -548,7 +547,7 @@ public class LayoutEditorTest {
     public void testGetTurnoutBX() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor();
-        // defaults to 20. 
+        // defaults to 20.
         Assert.assertEquals("getTurnoutBX", 20.0, e.getTurnoutBX(), 0.0);
     }
 
@@ -691,7 +690,7 @@ public class LayoutEditorTest {
     public void testGetDirectTurnoutControl() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor();
-        // default to false 
+        // default to false
         Assert.assertFalse("getDirectTurnoutControl", e.getDirectTurnoutControl());
     }
 
@@ -710,7 +709,7 @@ public class LayoutEditorTest {
         apps.tests.Log4JFixture.setUp();
         // dispose of the single PanelMenu instance
         jmri.jmrit.display.PanelMenu.dispose();
-        // reset the instance manager. 
+        // reset the instance manager.
         JUnitUtil.resetInstanceManager();
     }
 

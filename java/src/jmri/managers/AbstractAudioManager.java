@@ -161,6 +161,7 @@ public abstract class AbstractAudioManager extends AbstractManager
      */
     abstract protected Audio createNewAudio(String systemName, String userName) throws AudioException;
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameAudio");
     }

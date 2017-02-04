@@ -11,12 +11,14 @@ public class LabelMacro extends SdfMacro {
         this.label = label;
     }
 
+    @Override
     public String name() {
         return "";
     }
 
     String label;
 
+    @Override
     public int length() {
         return 0;
     }
@@ -29,19 +31,23 @@ public class LabelMacro extends SdfMacro {
     /**
      * Store into a buffer.
      */
+    @Override
     public void loadByteArray(SdfBuffer buffer) {
         // store children
         super.loadByteArray(buffer);
     }
 
+    @Override
     public String toString() {
         return label + '\n';
     }
 
+    @Override
     public String oneInstructionString() {
         return label + '\n';
     }
 
+    @Override
     public String allInstructionString(String indent) {
         // not indented
         return oneInstructionString();

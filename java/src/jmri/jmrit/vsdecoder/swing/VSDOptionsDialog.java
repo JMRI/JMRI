@@ -55,6 +55,7 @@ public class VSDOptionsDialog extends JDialog {
         closeButton.setEnabled(true);
         closeButton.setToolTipText(Bundle.getMessage("ToolTipCloseDialog"));
         closeButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 closeButtonActionPerformed(e);
             }
