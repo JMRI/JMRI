@@ -37,6 +37,7 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead implements java.b
 
     @SuppressWarnings("fallthrough")
     @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @Override
     protected void updateOutput() {
         // assumes that writing a turnout to an existing state is cheap!
         if (mLit == false) {
@@ -84,6 +85,7 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead implements java.b
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
      */
+    @Override
     public void dispose() {
         mRed = null;
         mGreen = null;
@@ -110,6 +112,7 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead implements java.b
         mGreen = t;
     }
 
+    @Override
     boolean isTurnoutUsed(Turnout t) {
         if (getRed() != null && t.equals(getRed().getBean())) {
             return true;

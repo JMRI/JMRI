@@ -1,7 +1,6 @@
 package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 
 import java.beans.PropertyChangeListener;
-import java.util.ResourceBundle;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import org.slf4j.Logger;
@@ -32,10 +31,12 @@ public class LayoutBlockThroughPathsTableModel extends javax.swing.table.Abstrac
         lBlock.addPropertyChangeListener(this);
     }
 
+    @Override
     public int getRowCount() {
         return lBlock.getNumberOfThroughPaths();
     }
 
+    @Override
     public int getColumnCount() {
         return NUMCOL;
     }
@@ -68,6 +69,7 @@ public class LayoutBlockThroughPathsTableModel extends javax.swing.table.Abstrac
         return false;
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("length")) {
             fireTableDataChanged();
@@ -92,6 +94,7 @@ public class LayoutBlockThroughPathsTableModel extends javax.swing.table.Abstrac
     /**
      * Provides the empty String if attribute doesn't exist.
      */
+    @Override
     public Object getValueAt(int row, int col) {
         // get roster entry for row
         if (lBlock == null) {

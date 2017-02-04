@@ -33,6 +33,7 @@ public class JmriMemoryPropertyListener extends JmriSimplePropertyListener {
         _data = data;
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         log.debug("\"" + _varName + "\" sent PropertyChangeEvent " + evt.getPropertyName()
                 + ", old value =\"" + evt.getOldValue() + "\", new value =\"" + evt.getNewValue()

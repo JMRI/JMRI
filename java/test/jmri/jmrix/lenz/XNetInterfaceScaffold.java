@@ -20,6 +20,7 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
     }
 
     // override some XNetTrafficController methods for test purposes
+    @Override
     public boolean status() {
         return true;
     }
@@ -29,6 +30,7 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
      */
     public Vector<XNetMessage> outbound = new Vector<XNetMessage>();  // public OK here, so long as this is a test class
 
+    @Override
     public void sendXNetMessage(XNetMessage m, XNetListener replyTo) {
         if (log.isDebugEnabled()) {
             log.debug("sendXNetMessage [" + m + "]");
@@ -37,6 +39,7 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
         outbound.addElement(m);
     }
 
+    @Override
     public void sendHighPriorityXNetMessage(XNetMessage m, XNetListener replyTo) {
         if (log.isDebugEnabled()) {
             log.debug("sendXNetMessage [" + m + "]");
@@ -68,15 +71,18 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
     /**
      * Avoid error message, normal in parent
      */
+    @Override
     protected void connectionWarn() {
     }
 
     /**
      * Avoid error message, normal in parent
      */
+    @Override
     protected void portWarn(Exception e) {
     }
 
+    @Override
     public void receiveLoop() {
     }
 

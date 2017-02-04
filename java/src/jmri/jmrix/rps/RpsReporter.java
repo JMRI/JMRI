@@ -34,6 +34,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
         Model.instance().addRegion(region);
     }
 
+    @Override
     public void notify(Measurement r) {
         Point3d p = new Point3d(r.getX(), r.getY(), r.getZ());
         Integer id = Integer.valueOf(r.getReading().getID());
@@ -98,13 +99,16 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
     /**
      * Numerical state is the number of transmitters in the region
      */
+    @Override
     public int getState() {
         return contents.size();
     }
 
+    @Override
     public void setState(int i) {
     }
 
+    @Override
     public void dispose() {
         Model.instance().removeRegion(region);
     }

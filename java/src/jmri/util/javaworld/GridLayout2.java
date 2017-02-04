@@ -24,6 +24,7 @@ public class GridLayout2 extends GridLayout {
         super(rows, cols, hgap, vgap);
     }
 
+    @Override
     public Dimension preferredLayoutSize(Container parent) {
         synchronized (parent.getTreeLock()) {
             Insets insets = parent.getInsets();
@@ -62,6 +63,7 @@ public class GridLayout2 extends GridLayout {
         }
     }
 
+    @Override
     public Dimension minimumLayoutSize(Container parent) {
         synchronized (parent.getTreeLock()) {
             Insets insets = parent.getInsets();
@@ -100,6 +102,7 @@ public class GridLayout2 extends GridLayout {
         }
     }
 
+    @Override
     public void layoutContainer(Container parent) {
         synchronized (parent.getTreeLock()) {
             Insets insets = parent.getInsets();

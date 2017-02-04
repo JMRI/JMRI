@@ -2,7 +2,6 @@ package jmri.jmrix.oaktree.nodeconfig;
 
 import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
-import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;

@@ -30,6 +30,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
      *
      * @return null if this is a Mac OS X system that can't run MS100
      */
+    @Override
     public String name() {
         if (SystemType.isMacOSX()
                 || (SystemType.isWindows() && Double.valueOf(System.getProperty("os.version")) >= 6)) { // NOI18N
@@ -39,6 +40,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         }
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new MS100Adapter();

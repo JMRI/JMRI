@@ -156,6 +156,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
      * @param t The throttle which has been found
      */
 //    public void notifyAddressThrottleFound(DccThrottle throttle){
+    @Override
     public void notifyThrottleFound(DccThrottle t) {
         if (isAddressSet) {
             log.debug("Throttle: " + getCurrentAddressString() + " is already set. (Found is: " + t.getLocoAddress().toString() + ")");
@@ -201,6 +202,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     }
 
+    @Override
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
         log.error("Throttle request failed for " + address + " because " + reason);
     }
@@ -214,6 +216,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
      *
      * Bound params: SpeedSteps, IsForward, SpeedSetting, F##, F##Momentary
      */
+    @Override
     public void propertyChange(PropertyChangeEvent event) {
         String eventName = event.getPropertyName();
         if (log.isDebugEnabled()) {

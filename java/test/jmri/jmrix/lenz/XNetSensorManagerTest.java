@@ -19,6 +19,7 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         
     private XNetInterfaceScaffold xnis; 
 
+    @Override
     public String getSystemName(int i) {
         return "XS" + i;
     }
@@ -39,6 +40,7 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     }
 
     @Test
+    @Override
     public void testMisses() {
         // sample turnout object
         Sensor s = l.newSensor("XS22", "test");

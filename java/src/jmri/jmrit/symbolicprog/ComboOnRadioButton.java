@@ -20,6 +20,7 @@ public class ComboOnRadioButton extends ComboRadioButtons {
     /**
      * Make only the "on" button visible
      */
+    @Override
     void addToPanel(JRadioButton b, int i) {
         if (i == 1) {
             add(b);

@@ -122,6 +122,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
     private void initGUI() {
         setTitle("Throttle");
         this.addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 _warrantFrame.stopRunTrain();
                 dispose();
@@ -177,6 +178,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         ButtonGroup buttonGroup = new ButtonGroup();
         JRadioButtonMenuItem displaySlider = new JRadioButtonMenuItem(Bundle.getMessage("ButtonDisplaySpeedSlider"));
         displaySlider.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 _controlPanel.setSpeedController(true);
             }
@@ -186,6 +188,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         speedControl.add(displaySlider);
         JRadioButtonMenuItem displaySteps = new JRadioButtonMenuItem(Bundle.getMessage("ButtonDisplaySpeedSteps"));
         displaySteps.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 _controlPanel.setSpeedController(false);
             }
@@ -209,6 +212,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
             JMenuItem powerOn = new JMenuItem(Bundle.getMessage("ThrottleMenuPowerOn"));
             powerMenu.add(powerOn);
             powerOn.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     powerControl.onButtonPushed();
                 }
@@ -217,6 +221,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
             JMenuItem powerOff = new JMenuItem(Bundle.getMessage("ThrottleMenuPowerOff"));
             powerMenu.add(powerOff);
             powerOff.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     powerControl.offButtonPushed();
                 }
@@ -231,6 +236,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         addHelpMenu("package.jmri.jmrit.throttle.ThrottleFrame", true);
     }
 
+    @Override
     public void dispose() {
         if (_throttle!=null) {
             InstanceManager.throttleManagerInstance().releaseThrottle(_throttle, _warrantFrame.getWarrant());            
@@ -247,6 +253,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
      * implement a property change listener for power and throttle Set the GUI's
      * to correspond to the throttle settings
      */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (log.isDebugEnabled()) {
             log.debug("propertyChange " + evt.getPropertyName() + "= " + evt.getNewValue());
@@ -358,6 +365,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
          *
          * @param e Description of the Parameter
          */
+        @Override
         public void keyPressed(KeyEvent e) {
             if ((e.getKeyCode() == accelerateKey) || (e.getKeyCode() == accelerateKey1)) {
                 _controlPanel.accelerate1();
@@ -414,6 +422,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
             forwardLight = new JLabel();
             forwardLight.setIcon(directionOffIcon);
             forwardButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setIsForward(true);
                 }
@@ -427,6 +436,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
             reverseLight = new JLabel();
             reverseLight.setIcon(directionOffIcon);
             reverseButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setIsForward(false);
                 }
@@ -442,6 +452,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
             _gap = -(stopIcon.getIconWidth() + stopLabel.getPreferredSize().width) / 2;
             stopButton = new JButton(Bundle.getMessage("EStop"));
             stopButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     stop();
                 }

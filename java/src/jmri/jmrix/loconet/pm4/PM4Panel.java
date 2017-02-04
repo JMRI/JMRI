@@ -91,10 +91,12 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.loconet.pm4.PM4Frame"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemPM4Programmer"));
     }
@@ -126,6 +128,7 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
      * <p>
      * Used before write operations start
      */
+    @Override
     protected void copyToOpsw() {
         // copy over the display
         setSpeedFromDisplay(3, slow1);
@@ -158,6 +161,7 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         box.setSelectedIndex(index);
     }
 
+    @Override
     protected void updateDisplay() {
         setDisplaySpeed(3, slow1);
         rev1.setSelected(opsw[6]);
@@ -184,6 +188,7 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         current.setSelectedIndex(index);
     }
 
+    @Override
     protected int nextState(int state) {
         switch (state) {
             case 1:

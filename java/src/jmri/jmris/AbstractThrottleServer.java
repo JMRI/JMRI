@@ -143,6 +143,7 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
 
 
     // implementation of ThrottleListener
+    @Override
     public void notifyThrottleFound(DccThrottle t){
        throttleList.add(t);
        t.addPropertyChangeListener(new throttlePropertyChangeListener(this,t));
@@ -153,6 +154,7 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
        }
     }
 
+    @Override
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason){
        try{
          sendErrorStatus();
@@ -175,6 +177,7 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
        }
 
        // update the state of this throttle if any of the properties change
+       @Override
        public void propertyChange(java.beans.PropertyChangeEvent e) {
           if (e.getPropertyName().equals("SpeedSetting")) {
              try {

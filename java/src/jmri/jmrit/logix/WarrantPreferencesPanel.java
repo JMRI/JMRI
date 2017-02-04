@@ -246,11 +246,13 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             _speedNameTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
         ActionListener insertAction = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 insertSpeedNameRow();
             }
         };
         ActionListener deleteAction = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 deleteSpeedNameRow();
             }
@@ -367,6 +369,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             int value;
             JRadioButton but;
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (but.isSelected()) {
                     _interpretation = value;
@@ -400,6 +403,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         p.add(WarrantFrame.makeTextBoxPanel(vertical, _rampIncre, "RampIncrement", "ToolTipRampIncrement"));
         p.setToolTipText(Bundle.getMessage("ToolTipRampIncrement"));
         _rampIncre.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 String text = _rampIncre.getText();
                 boolean showdialog = false;
@@ -654,10 +658,12 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             super();
         }
 
+        @Override
         public int getColumnCount() {
             return 2;
         }
 
+        @Override
         public int getRowCount() {
             return _speedNameMap.size();
         }
@@ -687,6 +693,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             return new JTextField(8).getPreferredSize().width;
         }
 
+        @Override
         public Object getValueAt(int row, int col) {
             // some error checking
             if (row >= _speedNameMap.size()) {

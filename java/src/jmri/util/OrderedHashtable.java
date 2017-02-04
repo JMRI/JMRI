@@ -50,10 +50,12 @@ public class OrderedHashtable<K, V> extends Hashtable<K, V> {
 
     class LocalEnumeration implements Enumeration<K> {
 
+        @Override
         public boolean hasMoreElements() {
             return (i < keys.size());
         }
 
+        @Override
         public K nextElement() {
             return keys.get(i++);
         }

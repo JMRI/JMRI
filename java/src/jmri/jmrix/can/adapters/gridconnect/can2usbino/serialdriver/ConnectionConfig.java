@@ -26,10 +26,12 @@ public class ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
         super();
     }
 
+    @Override
     public String name() {
         return "CAN via TCH Tech CAN/USB adapter";
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SerialDriverAdapter();

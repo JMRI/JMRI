@@ -29,6 +29,7 @@ public class RaspberryPiSensorManager extends jmri.managers.AbstractSensorManage
     private String prefix = null;
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
         super.dispose();
     }

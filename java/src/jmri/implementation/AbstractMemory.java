@@ -21,10 +21,12 @@ public abstract class AbstractMemory extends AbstractNamedBean implements Memory
         super(systemName.toUpperCase(), userName);
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameMemory");
     }
 
+    @Override
     public Object getValue() {
         return _current;
     }
@@ -32,6 +34,7 @@ public abstract class AbstractMemory extends AbstractNamedBean implements Memory
     /**
      * Provide a general method for updating the report.
      */
+    @Override
     public void setValue(Object v) {
         Object old = _current;
         _current = v;

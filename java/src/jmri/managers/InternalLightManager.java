@@ -15,38 +15,47 @@ public class InternalLightManager extends AbstractLightManager {
     /**
      * Create and return an internal (no layout connection) Light
      */
+    @Override
     protected Light createNewLight(String systemName, String userName) {
         return new AbstractVariableLight(systemName, userName) {
  
             //protected void forwardCommandChangeToLayout(int s) {}
+            @Override
             protected void sendIntensity(double intensity) {
             }
 
+            @Override
             protected void sendOnOffCommand(int newState) {
             }
 
+            @Override
             protected int getNumberOfSteps() {
                 return 100;
             }
         };
     }
 
+    @Override
     public String getSystemPrefix() {
         return "I";
     }
 
+    @Override
     public boolean validSystemNameConfig(String systemName) {
         return true;
     }
 
+    @Override
     public boolean validSystemNameFormat(String systemName) {
         return true;
     }
 
+    @Override
     public boolean supportsVariableLights(String systemName) {
         return true;
     }
 
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }

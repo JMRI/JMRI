@@ -18,6 +18,7 @@ import org.junit.Test;
  */
 public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
+    @Override
     public String getSystemName(int i) {
         return "IL" + i;
     }
@@ -66,6 +67,7 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         // create and register the manager object

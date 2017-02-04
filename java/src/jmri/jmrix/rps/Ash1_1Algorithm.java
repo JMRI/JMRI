@@ -153,6 +153,7 @@ public class Ash1_1Algorithm implements Calculator {
     double Yt = 0.0;
     double Zt = 0.0;
 
+    @Override
     public Measurement convert(Reading r) {
 
         int nr = r.getNValues();
@@ -185,6 +186,7 @@ public class Ash1_1Algorithm implements Calculator {
     /**
      * Seed the conversion using an estimated position
      */
+    @Override
     public Measurement convert(Reading r, Point3d guess) {
         this.Xt = guess.x;
         this.Yt = guess.y;
@@ -196,6 +198,7 @@ public class Ash1_1Algorithm implements Calculator {
     /**
      * Seed the conversion using a last measurement
      */
+    @Override
     public Measurement convert(Reading r, Measurement last) {
         if (last != null) {
             this.Xt = last.getX();

@@ -66,6 +66,7 @@ public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
      * called when OK button pressed in config panel, to retrieve and set new
      * values
      */
+    @Override
     public void endConfigure() {
         int newInterval = ((Integer) intervalSpinner.getValue()).intValue();
         myOp.setInterval(newInterval);

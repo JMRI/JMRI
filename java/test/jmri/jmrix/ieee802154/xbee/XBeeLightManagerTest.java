@@ -54,6 +54,7 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     // from here down is testing infrastructure
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         //apps.tests.Log4JFixture.setUp();
         XBeeTrafficController tc = new XBeeInterfaceScaffold();
@@ -73,10 +74,12 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
      * Number of light to test. Made a separate method so it can be overridden
      * in subclasses that do or don't support various numbers
      */
+    @Override
     protected int getNumToTest1() {
         return 2;
     }
 
+    @Override
     protected int getNumToTest2() {
         return 7;
     }

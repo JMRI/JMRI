@@ -186,6 +186,7 @@ public class LayoutBlockRouteTable extends jmri.util.swing.JmriPanel {
         return this.neighbourDataModel;
     }
 
+    @Override
     public void dispose() {
         if (dataModel != null) {
             dataModel.dispose();

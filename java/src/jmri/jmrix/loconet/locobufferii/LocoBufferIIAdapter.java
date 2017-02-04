@@ -19,6 +19,7 @@ public class LocoBufferIIAdapter extends LocoBufferAdapter {
      * comments. Because the speeds are the same as the parent class (19200 and
      * 57600), we don't override validBaudNumber().
      */
+    @Override
     public String[] validBaudRates() {
         return new String[]{"19,200 baud (Sw1 off, Sw3 off)",
             "57,600 baud (Sw1 on, Sw3 off)"};

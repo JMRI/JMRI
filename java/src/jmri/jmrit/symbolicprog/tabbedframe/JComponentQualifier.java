@@ -23,10 +23,12 @@ public class JComponentQualifier extends ArithmeticQualifier {
         setWatchedAvailable(currentDesiredState());
     }
 
+    @Override
     public void setWatchedAvailable(boolean enable) {
         component.setVisible(enable);
     }
 
+    @Override
     protected boolean currentAvailableState() {
         return component.isVisible();
     }

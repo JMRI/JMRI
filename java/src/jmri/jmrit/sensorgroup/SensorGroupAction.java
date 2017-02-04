@@ -23,6 +23,7 @@ public class SensorGroupAction extends AbstractAction {
         this("Define Sensor Group...");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SensorGroupFrame f = new SensorGroupFrame();
         f.initComponents();

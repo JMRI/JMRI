@@ -22,25 +22,30 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
     SerialTrafficController tc = null;
 
+    @Override
     protected String title() {
         return "Powerline Device Command Monitor";
     }
 
+    @Override
     protected void init() {
         // connect to TrafficController
         tc.addSerialListener(this);
     }
 
+    @Override
     public void dispose() {
         tc.removeSerialListener(this);
         super.dispose();
     }
 
+    @Override
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         nextLine(l.toMonitorString(), l.toString());
         return;
     }
 
+    @Override
     public synchronized void reply(SerialReply l) {  // receive a reply message and log it
         nextLine(l.toMonitorString(), l.toString());
     }

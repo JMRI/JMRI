@@ -44,6 +44,7 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
         super();
     }
 
+    @Override
     public void initContext(Object context) throws Exception {
         if (context instanceof NceSystemConnectionMemo) {
             try {
@@ -54,10 +55,12 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
         }
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.nce.macro.NceMacroEditFrame";
     }
 
+    @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
         if (memo != null) {
@@ -70,6 +73,7 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
         return x.toString();
     }
 
+    @Override
     public void initComponents(NceSystemConnectionMemo memo) throws Exception {
         this.memo = memo;
         tc = memo.getNceTrafficController();
@@ -97,6 +101,7 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
         addItem(sendButton, 0, 3);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -123,9 +128,11 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
         tc.sendNceMessage(m2, this);
     }
 
+    @Override
     public void message(NceMessage m) {
     }  // ignore replies
 
+    @Override
     public void reply(NceReply r) {
         if (r.getNumDataElements() == REPLY_LEN) {
 

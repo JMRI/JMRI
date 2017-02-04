@@ -33,6 +33,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
      * @param o Object to store, of type PositionableLabel
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         getInstance(o);
 
@@ -88,6 +89,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
      *
      * @param e Element being created, update as needed
      */
+    @Override
     protected void extendElement(Element e) {
     }
 
@@ -189,6 +191,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
      *
      * @param element Top level Element to unpack.
      */
+    @Override
     public void load(Element element, Object o) {
         log.error("method with two args invoked");
     }

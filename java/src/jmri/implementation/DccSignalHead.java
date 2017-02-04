@@ -105,6 +105,7 @@ public class DccSignalHead extends AbstractSignalHead {
         }
     }
 
+    @Override
     public void setLit(boolean newLit) {
         boolean oldLit = mLit;
         mLit = newLit;

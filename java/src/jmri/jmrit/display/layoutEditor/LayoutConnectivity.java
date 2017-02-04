@@ -77,6 +77,12 @@ public class LayoutConnectivity {
     int xoverBoundaryType = NONE;
     PositionablePoint anchor = null;
 
+    // this should only be used for debugging…
+    public String toString() {
+        return "between " + block1 + " and "
+                + block2 + " in direction " + Path.decodeDirection(direction);
+    }
+
     /**
      * Accessor routines
      */

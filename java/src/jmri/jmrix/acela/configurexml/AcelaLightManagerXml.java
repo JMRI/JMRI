@@ -22,10 +22,12 @@ public class AcelaLightManagerXml extends jmri.managers.configurexml.AbstractLig
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element lights) {
         lights.setAttribute("class", "jmri.jmrix.acela.configurexml.AcelaLightManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

@@ -61,6 +61,7 @@ public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
      * <p>
      * This sends "Extended Cmd Dim" commands.
      */
+    @Override
     protected void sendIntensity(double intensity) {
         if (log.isDebugEnabled()) {
             log.debug("sendIntensity(" + intensity + ")" + " lastOutputStep: " + lastOutputStep + " maxDimStep: " + maxDimStep);

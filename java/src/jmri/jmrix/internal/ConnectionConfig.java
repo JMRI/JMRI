@@ -21,10 +21,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         super();
     }
 
+    @Override
     public String name() {
         return "No Connection";
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new InternalAdapter();

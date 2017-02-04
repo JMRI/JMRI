@@ -46,6 +46,7 @@ public class DrawRectangle extends DrawFrame {
         p.add(pp);
         p.add(Box.createHorizontalStrut(STRUT_SIZE));
         _widthText.addActionListener( new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 _shape.setWidth(Integer.parseInt(_widthText.getText()));                
                 updateShape();
@@ -61,15 +62,18 @@ public class DrawRectangle extends DrawFrame {
         pp.add(new JLabel(Bundle.getMessage("height")));
         p.add(pp);
         _heightText.addActionListener( new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 _shape.setHeight(Integer.parseInt(_heightText.getText()));
                 updateShape();
             }
         });
         p.addMouseMotionListener( new MouseMotionListener() {
+            @Override
             public void mouseDragged( MouseEvent e) {               
                 updateShape();
             }
+            @Override
             public void mouseMoved(MouseEvent e) {
                 int w = Integer.parseInt(_widthText.getText());
                 int h = Integer.parseInt(_heightText.getText());
@@ -128,9 +132,11 @@ public class DrawRectangle extends DrawFrame {
         _height = pos.getHeight();
     }
 
+    @Override
     void setDisplayWidth(int w) {
         _widthText.setText(Integer.toString(w));        
     }
+    @Override
     void setDisplayHeight(int h) {
         _heightText.setText(Integer.toString(h));        
     }

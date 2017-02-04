@@ -42,6 +42,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
      * @param o Object to start process, but not actually used
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         Enumeration<BlockBossLogic> e = BlockBossLogic.entries();
@@ -360,10 +361,12 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @param o       ignored
      */
+    @Override
     public void load(Element element, Object o) {
         log.error("load(Element, Object) called unexpectedly");
     }
 
+    @Override
     public int loadOrder() {
         return jmri.Manager.BLOCKBOSS;
     }

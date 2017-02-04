@@ -28,6 +28,7 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.s
         tc = memo.getTrafficController();
     }
 
+    @Override
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
 
@@ -53,6 +54,7 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.s
         getContentPane().add(sendButton);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -72,12 +74,15 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.s
         tc.sendSRCPMessage(m, this);
     }
 
+    @Override
     public void message(SRCPMessage m) {
     }  // ignore replies
 
+    @Override
     public void reply(SRCPReply r) {
     } // ignore replies
 
+    @Override
     public void reply(jmri.jmrix.srcp.parser.SimpleNode n) {
     } // ignore replies
 }

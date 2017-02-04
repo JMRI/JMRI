@@ -52,6 +52,7 @@ public abstract class ArithmeticQualifier extends AbstractQualifier {
         this.value = value;
     }
 
+    @Override
     public boolean currentDesiredState() {
         if (returnFromExistsLogic()) {
             return valueOfExistsLogic();
@@ -60,6 +61,7 @@ public abstract class ArithmeticQualifier extends AbstractQualifier {
         return availableStateFromValue(watchedVal.getIntValue());
     }
 
+    @Override
     protected boolean availableStateFromValue(int now) {
         if (returnFromExistsLogic()) {
             return valueOfExistsLogic();
@@ -85,6 +87,7 @@ public abstract class ArithmeticQualifier extends AbstractQualifier {
 
     }
 
+    @Override
     public void update() {
         setWatchedAvailable(currentDesiredState());
     }

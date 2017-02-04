@@ -26,6 +26,7 @@ public class JmriSRCPPowerServer extends AbstractPowerServer {
     /*
      * Protocol Specific Abstract Functions
      */
+    @Override
     public void sendStatus(int Status) throws IOException {
         if (Status == PowerManager.ON) {
             TimeStampedOutput.writeTimestamp(output, "100 INFO 0 POWER ON\n\r");
@@ -37,10 +38,12 @@ public class JmriSRCPPowerServer extends AbstractPowerServer {
         }
     }
 
+    @Override
     public void sendErrorStatus() throws IOException {
         TimeStampedOutput.writeTimestamp(output, "499 ERROR unspecified error\n\r");
     }
 
+    @Override
     public void parseStatus(String statusString) throws jmri.JmriException {
         if (statusString.contains("ON")) {
             if (log.isDebugEnabled()) {

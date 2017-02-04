@@ -29,6 +29,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         super();
     }
 
+    @Override
     public String name() {
         return "Lenz LIUSB Ethernet";
     }
@@ -37,12 +38,14 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
      * Load the adapter with an appropriate object
      * <i>unless</i> it has already been set.
      */
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new LIUSBEthernetAdapter();
         }
     }
 
+    @Override
     public void loadDetails(JPanel details) {
         super.loadDetails(details);
         hostNameField.setText(adapter.getHostName());

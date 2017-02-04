@@ -29,6 +29,7 @@ public class AlignTableAction extends AbstractAction {
 
     AlignTableFrame f;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (f == null) {
             f = new AlignTableFrame();

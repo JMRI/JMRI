@@ -107,6 +107,7 @@ public class SignalMastRepeater {
     }
 
     PropertyChangeListener mastListener = new PropertyChangeListener() {
+        @Override
         public void propertyChange(PropertyChangeEvent e) {
             if (disposed) {
                 return;

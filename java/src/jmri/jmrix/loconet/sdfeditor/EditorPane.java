@@ -69,6 +69,7 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
     /**
      * Handle tree selection
      */
+    @Override
     public void valueChanged(TreeSelectionEvent e) {
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
 

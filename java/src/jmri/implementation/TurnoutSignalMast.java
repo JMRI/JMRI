@@ -258,6 +258,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
 
     static int lastRef = 0;
 
+    @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
             if (evt.getOldValue() instanceof Turnout) {
@@ -271,6 +272,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         }
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }

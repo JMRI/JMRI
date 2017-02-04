@@ -678,6 +678,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         }
     }
 
+    @Override
     public void dispose() {
         super.dispose();
         // de-register to be notified if the consist list changes.
@@ -691,6 +692,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
     private boolean _readConsistFile = true;
 
     // ConsistListListener interface
+    @Override
     public void notifyConsistListChanged() {
         if (_readConsistFile) {
             // read the consist file after the consist manager has

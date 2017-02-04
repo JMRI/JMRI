@@ -59,6 +59,7 @@ public class LoadVSDFileAction extends AbstractAction {
      *
      * @param e The event causing the action.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (fileChooser == null) {
             // Need to somehow give the user a history...

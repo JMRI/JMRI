@@ -13,10 +13,12 @@ class QsiListenerScaffold implements QsiListener {
         rcvdMsg = null;
     }
 
+    @Override
     public void message(QsiMessage m) {
         rcvdMsg = m;
     }
 
+    @Override
     public void reply(QsiReply r) {
         rcvdReply = r;
     }

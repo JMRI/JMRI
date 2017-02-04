@@ -24,6 +24,7 @@ public class MemoryInputIconXml extends PositionableLabelXml {
      * @param o Object to store, of type MemorySpinnerIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         MemoryInputIcon p = (MemoryInputIcon) o;
@@ -47,6 +48,7 @@ public class MemoryInputIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         Editor p = (Editor) o;

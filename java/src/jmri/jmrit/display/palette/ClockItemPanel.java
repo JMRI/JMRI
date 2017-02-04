@@ -41,6 +41,7 @@ public class ClockItemPanel extends IconItemPanel {
         return panel;
     }
 
+    @Override
     protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap) {
         _iconPanel = new JPanel();
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
@@ -70,6 +71,7 @@ public class ClockItemPanel extends IconItemPanel {
         add(_iconPanel, 1);
     }
 
+    @Override
     public void initButtonPanel() {
     }
 
@@ -79,6 +81,7 @@ public class ClockItemPanel extends IconItemPanel {
             super(flavor);
         }
 
+        @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {
                 return null;

@@ -97,6 +97,7 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
         return roundDecimal(value, Math.log10(INT_PRECISION));
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameAudio");
     }

@@ -34,6 +34,7 @@ public class SignallingSourceAction extends AbstractAction {
 
     jmri.SignalMast source = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SignallingSourceFrame f = new SignallingSourceFrame();
         try {

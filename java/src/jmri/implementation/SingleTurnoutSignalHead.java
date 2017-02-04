@@ -105,6 +105,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
      */
+    @Override
     public void dispose() {
         setOutput(null);
         super.dispose();

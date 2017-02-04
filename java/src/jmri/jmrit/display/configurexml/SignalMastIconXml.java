@@ -24,6 +24,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
      * @param o Object to store, of type SignalMastIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         SignalMastIcon p = (SignalMastIcon) o;
@@ -49,6 +50,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         Editor ed = (Editor) o;

@@ -32,64 +32,80 @@ public class ProgrammerScaffold implements Programmer {
         this.lastSeenMode = matchesMode;
     }
 
+    @Override
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
     }
 
+    @Override
     public void readCV(int CV, ProgListener p) throws ProgrammerException {
     }
 
+    @Override
     public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
     }
 
+    @Override
     public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
         writeCV(Integer.parseInt(CV), val, p);
     }
 
+    @Override
     public void readCV(String CV, ProgListener p) throws ProgrammerException {
         readCV(Integer.parseInt(CV), p);
     }
 
+    @Override
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         confirmCV(Integer.parseInt(CV), val, p);
     }
 
+    @Override
     public void setMode(ProgrammingMode p) {
         // temporary implementation, have to remove the "mode" int value eventually
         lastSeenMode = p;
     }
 
+    @Override
     public ProgrammingMode getMode() {
         return lastSeenMode;
     }
 
+    @Override
     public List<ProgrammingMode> getSupportedModes() {
         return Arrays.asList(
                 new ProgrammingMode[]{matchesMode}
         );
     }
 
+    @Override
     public boolean getCanRead() {
         return true;
     }
 
+    @Override
     public boolean getCanRead(String addr) {
         return Integer.parseInt(addr) <= 1024;
     }
 
+    @Override
     public boolean getCanWrite() {
         return true;
     }
 
+    @Override
     public boolean getCanWrite(String addr) {
         return Integer.parseInt(addr) <= 1024;
     }
 
+    @Override
     public void addPropertyChangeListener(PropertyChangeListener p) {
     }
 
+    @Override
     public void removePropertyChangeListener(PropertyChangeListener p) {
     }
 
+    @Override
     public String decodeErrorCode(int i) {
         return null;
     }

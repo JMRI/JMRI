@@ -27,6 +27,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     /**
      * Returns the system letter for Acela
      */
+    @Override
     public String getSystemPrefix() {
         return _memo.getSystemPrefix();
     }
@@ -36,6 +37,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      * system name is not in a valid format Assumes calling method has checked
      * that a Light with this system name does not already exist
      */
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout trn = null;
         // check if the output bit is available

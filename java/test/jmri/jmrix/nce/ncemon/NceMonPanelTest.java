@@ -1,14 +1,11 @@
 package jmri.jmrix.nce.ncemon;
 
-import java.util.Vector;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
-import jmri.jmrix.nce.NceTrafficController;
 import jmri.jmrix.nce.NceInterfaceScaffold;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
-import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;

@@ -386,6 +386,7 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
         }
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         log.debug("property change: {} old: {} new: {}", e.getPropertyName(), e.getOldValue(), e.getNewValue());
         if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {

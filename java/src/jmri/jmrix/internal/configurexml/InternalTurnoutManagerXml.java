@@ -19,6 +19,7 @@ public class InternalTurnoutManagerXml extends jmri.managers.configurexml.Intern
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element turnouts) {
         turnouts.setAttribute("class", this.getClass().getName());
     }

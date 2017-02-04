@@ -42,6 +42,7 @@ public abstract class Mx1TrafficController implements Mx1Interface {
     }
 
     // Abstract methods for the Mx1Interface
+    @Override
     abstract public boolean status();
 
     /**
@@ -49,11 +50,13 @@ public abstract class Mx1TrafficController implements Mx1Interface {
      *
      * @param m Message to send; will be updated with CRC
      */
+    @Override
     abstract public void sendMx1Message(Mx1Message m, Mx1Listener reply);
 
     // The methods to implement adding and removing listeners
     protected Vector<Mx1Listener> listeners = new Vector<Mx1Listener>();
 
+    @Override
     public synchronized void addMx1Listener(int mask, Mx1Listener l) {
         // add only if not already registered
         if (l == null) {
@@ -64,6 +67,7 @@ public abstract class Mx1TrafficController implements Mx1Interface {
         }
     }
 
+    @Override
     public synchronized void removeMx1Listener(int mask, Mx1Listener l) {
         if (listeners.contains(l)) {
             listeners.removeElement(l);
