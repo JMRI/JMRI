@@ -152,14 +152,14 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
     @Override
     public void setDestinationMast(SignalMast dest) {
         if (destList.containsKey(dest)) {
-            log.warn("Destination mast "{}" was already defined in SML with this source mast", dest.getDisplayName());
+            log.warn("Destination mast '{}' was already defined in SML with this source mast", dest.getDisplayName());
             return;
         }
         int oldSize = destList.size();
         destList.put(dest, new DestinationMast(dest));
         //InstanceManager.getDefault(jmri.SignalMastLogicManager.class).addDestinationMastToLogic(this, dest);
         firePropertyChange("length", oldSize, Integer.valueOf(destList.size()));
-        // make new dest mast appear in (update) SignallingSourcePanel Table by having that table listen to SML TODO
+        // make new dest mast appear in (update of) SignallingSourcePanel Table by having that table listen to PropertyChange Events from SML TODO
     }
 
     @Override
