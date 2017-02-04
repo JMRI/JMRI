@@ -31,6 +31,7 @@ public class XmlFileCheckAction extends jmri.util.swing.JmriAbstractAction {
 
     Component _who;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (fci == null) {
             fci = jmri.jmrit.XmlFile.userFileChooser("XML files", "xml");

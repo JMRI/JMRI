@@ -3,8 +3,6 @@ package jmri.jmrit.display;
 import java.util.Locale;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
 
 /**
  * Tests for the Bundle class

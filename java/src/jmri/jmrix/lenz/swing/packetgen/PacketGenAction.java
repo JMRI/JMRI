@@ -23,6 +23,7 @@ public class PacketGenAction extends AbstractXPressNetAction {
         this("Generate XPressNet message", memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a PacketGenFrame
         PacketGenFrame f = new PacketGenFrame();

@@ -12,7 +12,11 @@ import javax.annotation.Nonnull;
  * Each object has a two names. The "user" name is entirely free form, and can
  * be used for any purpose. The "system" name is provided by the system-specific
  * implementations, and provides a unique mapping to the layout control system
- * (e.g. LocoNet, NCE, etc) and address within that system.
+ * (e.g. LocoNet, NCE, etc) and address within that system. Each of these two
+ * names must be unique for every NamedBean on the layout and a single NamedBean
+ * cannot have a user name that is the same as its system name. Note that this
+ * restriction is not currently enforced, only warned about; a future version of
+ * JMRI will enforce this restriction.
  *
  * <hr>
  * This file is part of JMRI.
@@ -26,7 +30,7 @@ import javax.annotation.Nonnull;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2004
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2004
  * @see jmri.Manager
  */
 public interface NamedBean {
@@ -47,7 +51,8 @@ public interface NamedBean {
 
     /**
      * User's identification for the item. Bound parameter so manager(s) can
-     * listen
+     * listen to changes. Any given user name must be unique within the layout.
+     * Must not match the system name.
      *
      * @return null if not set
      */
@@ -59,7 +64,7 @@ public interface NamedBean {
 
     /**
      * Get a system-specific name. This encodes the hardware addressing
-     * information.
+     * information. Any given system name must be unique within the layout.
      *
      * @return the system-specific name.
      */

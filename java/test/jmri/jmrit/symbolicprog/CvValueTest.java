@@ -135,10 +135,12 @@ public class CvValueTest extends TestCase {
     private final static Logger log = LoggerFactory.getLogger(CvValueTest.class.getName());
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

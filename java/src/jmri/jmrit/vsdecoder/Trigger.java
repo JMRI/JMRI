@@ -61,6 +61,7 @@ abstract public class Trigger implements PropertyChangeListener {
         trigger_type = TriggerType.NONE;
     }
 
+    @Override
     abstract public void propertyChange(PropertyChangeEvent event);
 
     // JavaBean set/get functions

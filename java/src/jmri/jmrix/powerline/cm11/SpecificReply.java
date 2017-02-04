@@ -36,6 +36,7 @@ public class SpecificReply extends SerialReply {
 
     SerialTrafficController tc = null;
 
+    @Override
     public String toMonitorString() {
         // check for valid length
         StringBuffer sb = new StringBuffer();

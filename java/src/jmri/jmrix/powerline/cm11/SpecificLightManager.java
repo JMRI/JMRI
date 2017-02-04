@@ -25,6 +25,7 @@ public class SpecificLightManager extends jmri.jmrix.powerline.SerialLightManage
     /**
      * Create light of a specific type for the interface
      */
+    @Override
     protected Light createNewSpecificLight(String systemName, String userName) {
         return new SpecificLight(systemName, tc, userName);
     }

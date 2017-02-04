@@ -62,6 +62,7 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
         return null;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (rb == null) {
             rb = ResourceBundle.getBundle("jmri.jmrit.decoderdefn.DecoderFile");
@@ -192,6 +193,7 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

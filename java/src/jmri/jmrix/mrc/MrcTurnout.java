@@ -47,11 +47,13 @@ public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
     /**
      * MRC turnouts can be inverted
      */
+    @Override
     public boolean canInvert() {
         return true;
     }
 
     // Handle a request to change state by sending a formatted DCC packet
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states
         if ((s & Turnout.CLOSED) != 0) {
@@ -80,6 +82,7 @@ public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
         tc.sendMrcMessage(m);
     }
 
+    @Override
     public void notifyRcv(Date timestamp, MrcMessage m) {
         if (m.getMessageClass() != MrcInterface.TURNOUTS) {
             return;
@@ -101,12 +104,15 @@ public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
         newKnownState(m.getAccState());
     }
 
+    @Override
     public void notifyXmit(Date timestamp, MrcMessage m) {/* message(m); */
 
     }
 
+    @Override
     public void notifyFailedXmit(Date timestamp, MrcMessage m) { /*message(m);*/ }
 
+    @Override
     protected void turnoutPushbuttonLockout(boolean pushButtonLockout) {
     }
 

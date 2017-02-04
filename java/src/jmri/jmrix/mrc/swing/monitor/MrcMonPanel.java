@@ -23,10 +23,12 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
         super();
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.mrc.swing.monitor.MrcMonPanel";
     }//NOI18N
 
+    @Override
     public String getTitle() {
         return(Bundle.getMessage("MrcMonPanelName"));
     }
@@ -81,6 +83,7 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
         logMessage(timestamp, m, Bundle.getMessage("MrcMonPanelTextXmit")); //NOI18N
     }
 
+    @Override
     public synchronized void notifyFailedXmit(Date timestamp, MrcMessage m) {
 
         logMessage(timestamp, m, Bundle.getMessage("MrcMonPanelTextFailed"));   //NOI18N

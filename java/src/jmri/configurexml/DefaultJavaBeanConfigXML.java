@@ -27,6 +27,7 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
         return true;
     }
 
+    @Override
     public void load(Element e, Object o) throws Exception {
     }
 
@@ -75,6 +76,7 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
         return o;
     }
 
+    @Override
     public Element store(Object o) {
         Element e = new Element("javabean");
         e.setAttribute("class", this.getClass().getName());

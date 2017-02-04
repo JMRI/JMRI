@@ -13,14 +13,17 @@ public class LightTableTabAction extends AbstractTableTabAction {
         this("Multiple Tabbed");
     }
 
+    @Override
     protected Manager getManager() {
         return InstanceManager.lightManagerInstance();
     }
 
+    @Override
     protected String getClassName() {
         return LightTableAction.class.getName();
     }
 
+    @Override
     protected AbstractTableAction getNewTableAction(String choice) {
         return new LightTableAction(choice);
     }

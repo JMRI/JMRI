@@ -42,8 +42,8 @@ public class PackageTest extends TestCase {
         suite.addTest(DefaultConditionalActionTest.suite());
         suite.addTest(new JUnit4TestAdapter(DefaultIdTagTest.class));
         suite.addTest(DefaultLogixTest.suite());
-        suite.addTest(DefaultSignalSystemTest.suite());
-        suite.addTest(DefaultSignalAppearanceMapTest.suite());
+        suite.addTest(new JUnit4TestAdapter(DefaultSignalSystemTest.class));
+        suite.addTest(new JUnit4TestAdapter(DefaultSignalAppearanceMapTest.class));
         suite.addTest(MultiIndexProgrammerFacadeTest.suite());
         suite.addTest(OffsetHighCvProgrammerFacadeTest.suite());
         suite.addTest(ResettingOffsetHighCvProgrammerFacadeTest.suite());

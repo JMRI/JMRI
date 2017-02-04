@@ -47,6 +47,7 @@ import jmri.jmrit.logix.OBlock;
             g2d.drawString(trainName, hOffset, vOffset);
         }
 
+        @Override
         public boolean storeItem() {
             return false;
         }

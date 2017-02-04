@@ -85,12 +85,14 @@ public class SpeedoDial extends JPanel {
 
         // Add component listener to handle frame resizing event
         this.addComponentListener(new ComponentAdapter() {
+            @Override
             public void componentResized(ComponentEvent e) {
                 scaleFace();
             }
         });
     }
 
+    @Override
     public void paint(Graphics g) {
         super.paint(g);
         if (!(g instanceof Graphics2D) ) {

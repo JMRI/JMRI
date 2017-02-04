@@ -23,6 +23,7 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
     private static final RosterIconFactory iconFactory = new RosterIconFactory(32);
     final static int height = 42;
 
+    @Override
     public Component getTableCellRendererComponent(JTable jtable, Object value, boolean bln, boolean bln1, int i, int i1) {
         JPanel retPanel = new JPanel();
         retPanel.setLayout(new BorderLayout());

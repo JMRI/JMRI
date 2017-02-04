@@ -64,10 +64,12 @@ public class AcelaSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         AcelaTrafficController.instance().setTurnoutManager(t);
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.acela.AcelaActionListBundle");
     }
 
+    @Override
     public void dispose() {
         tc = null;
         InstanceManager.deregister(this, AcelaSystemConnectionMemo.class);

@@ -29,6 +29,7 @@ public class TurnoutController extends AbstractController implements PropertyCha
         }
     }
 
+    @Override
     boolean verifyCreation() {
 
         return isValid;
@@ -48,6 +49,7 @@ public class TurnoutController extends AbstractController implements PropertyCha
         sysNameList = tempList;
     }
 
+    @Override
     void handleMessage(String message) {
         try {
             if (message.charAt(0) == 'A') {
@@ -142,6 +144,7 @@ public class TurnoutController extends AbstractController implements PropertyCha
     /**
      *
      */
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("KnownState")) {
             Turnout t = (Turnout) evt.getSource();
@@ -159,6 +162,7 @@ public class TurnoutController extends AbstractController implements PropertyCha
         }
     }
 
+    @Override
     public void register() {
         for (String sysName : sysNameList) {
             Turnout t = manager.getBySystemName(sysName);
@@ -172,6 +176,7 @@ public class TurnoutController extends AbstractController implements PropertyCha
         }
     }
 
+    @Override
     public void deregister() {
         if (sysNameList.isEmpty()) {
             return;

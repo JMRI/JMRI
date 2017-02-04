@@ -125,6 +125,7 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
 
     // get notified of the final result
     // Note this assumes that there's only one phase to the operation
+    @Override
     public void programmingOpReply(int value, int status) {
         if (log.isDebugEnabled()) {
             log.debug("notifyProgListenerEnd value " + value + " status " + status);
@@ -170,18 +171,22 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
     }
 
     // Access to full address space provided by this.
+    @Override
     public boolean getCanRead() {
         return true;
     }
 
+    @Override
     public boolean getCanRead(String addr) {
         return Integer.parseInt(addr) <= 1024;
     }
 
+    @Override
     public boolean getCanWrite() {
         return true;
     }
 
+    @Override
     public boolean getCanWrite(String addr) {
         return Integer.parseInt(addr) <= 1024;
     }

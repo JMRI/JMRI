@@ -23,6 +23,7 @@ public class ProxyTurnoutManagerXml extends AbstractXmlAdapter {
      * @param o Object to store, of type PositionableLabel
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         return null;
     }
@@ -38,6 +39,7 @@ public class ProxyTurnoutManagerXml extends AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @param o       PanelEditor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
     }
 

@@ -223,9 +223,11 @@ class SoundBite extends VSDSound {
         sound_src.setFadeOut(out);
     }
 
+    @Override
     public void shutdown() {
     }
 
+    @Override
     public void mute(boolean m) {
         if (m) {
             volume = sound_src.getGain();
@@ -235,21 +237,25 @@ class SoundBite extends VSDSound {
         }
     }
 
+    @Override
     public void setVolume(float v) {
         volume = v * gain;
         sound_src.setGain(volume);
     }
 
+    @Override
     public void play() {
         sound_src.play();
         is_playing = true;
     }
 
+    @Override
     public void loop() {
         sound_src.play();
         is_playing = true;
     }
 
+    @Override
     public void stop() {
         sound_src.stop();
         is_playing = false;
@@ -264,6 +270,7 @@ class SoundBite extends VSDSound {
         sound_src.rewind();
     }
 
+    @Override
     public void fadeOut() {
         // Skip the fade action if the fade out time is zero.
         if (sound_src.getFadeOut() == 0) {
@@ -274,6 +281,7 @@ class SoundBite extends VSDSound {
         is_playing = false;
     }
 
+    @Override
     public void fadeIn() {
         // Skip the fade action if the fade in time is zero.
         if (sound_src.getFadeIn() == 0) {

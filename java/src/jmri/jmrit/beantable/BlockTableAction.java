@@ -91,6 +91,7 @@ public class BlockTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes for the specific case
      * of Block objects
      */
+    @Override
     protected void createModel() {
         m = new BeanTableDataModel() {
             static public final int EDITCOL = NUMCOLUMN;
@@ -104,6 +105,7 @@ public class BlockTableAction extends AbstractTableAction {
             static public final int PERMISCOL = CURRENTREPCOL + 1;
             static public final int SPEEDCOL = PERMISCOL + 1;
 
+            @Override
             public String getValue(String name) {
                 if (name == null) {
                     log.warn("requested getValue(null)");
@@ -122,32 +124,39 @@ public class BlockTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public Manager getManager() {
                 return InstanceManager.getDefault(jmri.BlockManager.class);
             }
 
+            @Override
             public NamedBean getBySystemName(String name) {
                 return InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(name);
             }
 
+            @Override
             public NamedBean getByUserName(String name) {
                 return InstanceManager.getDefault(jmri.BlockManager.class).getByUserName(name);
             }
 
+            @Override
             protected String getMasterClassName() {
                 return getClassName();
             }
 
+            @Override
             public void clickOn(NamedBean t) {
                 // don't do anything on click; not used in this class, because 
                 // we override setValueAt
             }
 
             //Permissive and speed columns are temp disabled
+            @Override
             public int getColumnCount() {
                 return SPEEDCOL + 1;
             }
 
+            @Override
             public Object getValueAt(int row, int col) {
                 // some error checking
                 if (row >= sysNameList.size()) {
@@ -225,6 +234,7 @@ public class BlockTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public void setValueAt(Object value, int row, int col) {
                 Block b = (Block) getBySystemName(sysNameList.get(row));
                 if (col == VALUECOL) {
@@ -299,6 +309,7 @@ public class BlockTableAction extends AbstractTableAction {
                             this.b = b;
                         }
 
+                        @Override
                         public void run() {
                             editButton(b); // don't really want to stop Route w/o user action
                         }
@@ -311,6 +322,7 @@ public class BlockTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public String getColumnName(int col) {
                 if (col == DIRECTIONCOL) {
                     return Bundle.getMessage("BlockDirection");
@@ -348,6 +360,7 @@ public class BlockTableAction extends AbstractTableAction {
                 return super.getColumnName(col);
             }
 
+            @Override
             public Class<?> getColumnClass(int col) {
                 if (col == DIRECTIONCOL) {
                     return String.class;
@@ -386,6 +399,7 @@ public class BlockTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public int getPreferredWidth(int col) {
                 if (col == DIRECTIONCOL) {
                     return new JTextField(7).getPreferredSize().width;
@@ -421,10 +435,12 @@ public class BlockTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public void configValueColumn(JTable table) {
                 // value column isn't button, so config is null
             }
 
+            @Override
             public boolean isCellEditable(int row, int col) {
                 if (col == CURVECOL) {
                     return true;
@@ -449,6 +465,7 @@ public class BlockTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public void configureTable(JTable table) {
                 table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
                 table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
@@ -457,16 +474,19 @@ public class BlockTableAction extends AbstractTableAction {
                 super.configureTable(table);
             }
 
+            @Override
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 return true;
                 // return (e.getPropertyName().indexOf("alue")>=0);
             }
 
+            @Override
             public JButton configureButton() {
                 log.error("configureButton should not have been called");
                 return null;
             }
 
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 if (e.getSource() instanceof jmri.SensorManager) {
                     if (e.getPropertyName().equals("length") || e.getPropertyName().equals("DisplayListName")) {
@@ -480,10 +500,12 @@ public class BlockTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             protected String getBeanType() {
                 return Bundle.getMessage("BeanNameBlock");
             }
 
+            @Override
             synchronized public void dispose() {
                 super.dispose();
                 jmri.InstanceManager.sensorManagerInstance().removePropertyChangeListener(this);
@@ -523,6 +545,7 @@ public class BlockTableAction extends AbstractTableAction {
         m.fireTableDataChanged();
     }
 
+    @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleBlockTable"));
     }
@@ -536,11 +559,13 @@ public class BlockTableAction extends AbstractTableAction {
      * add radio buttons to a ButtongGroup
      * delete extra inchBoxChanged() and centimeterBoxChanged() methods
      */
+    @Override
     public void addToFrame(BeanTableFrame f) {
         //final BeanTableFrame finalF = f;	// needed for anonymous ActionListener class
         f.addToBottomBox(inchBox, this.getClass().getName());
         inchBox.setToolTipText(Bundle.getMessage("InchBoxToolTip"));
         inchBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 inchBoxChanged();
             }
@@ -548,6 +573,7 @@ public class BlockTableAction extends AbstractTableAction {
         f.addToBottomBox(centimeterBox, this.getClass().getName());
         centimeterBox.setToolTipText(Bundle.getMessage("CentimeterBoxToolTip"));
         centimeterBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 centimeterBoxChanged();
             }
@@ -580,6 +606,7 @@ public class BlockTableAction extends AbstractTableAction {
         JMenuItem item = new JMenuItem(Bundle.getMessage("MenuItemDeletePaths"));
         pathMenu.add(item);
         item.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 deletePaths(finalF);
             }
@@ -590,6 +617,7 @@ public class BlockTableAction extends AbstractTableAction {
         item = new JMenuItem(Bundle.getMessage("SpeedsMenuItemDefaults"));
         speedMenu.add(item);
         item.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setDefaultSpeeds(finalF);
             }
@@ -638,6 +666,7 @@ public class BlockTableAction extends AbstractTableAction {
         m.fireTableDataChanged();  // update view
     }
 
+    @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.BlockTable";
     }
@@ -659,6 +688,7 @@ public class BlockTableAction extends AbstractTableAction {
     JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     jmri.UserPreferencesManager pref;
 
+    @Override
     protected void addPressed(ActionEvent e) {
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame == null) {
@@ -666,11 +696,13 @@ public class BlockTableAction extends AbstractTableAction {
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.BlockAddEdit", true); //NOI18N
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             ActionListener oklistener = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     okPressed(e);
                 }
             };
             ActionListener cancellistener = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) { cancelPressed(e); }
             };
             addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, _autoSystemName, "ButtonOK", oklistener, cancellistener));
@@ -710,9 +742,11 @@ public class BlockTableAction extends AbstractTableAction {
 
         //return displayList;
         lengthField.addKeyListener(new KeyListener() {
+            @Override
             public void keyPressed(KeyEvent keyEvent) {
             }
 
+            @Override
             public void keyReleased(KeyEvent keyEvent) {
                 String text = lengthField.getText();
                 if (!validateNumericalInput(text)) {
@@ -721,6 +755,7 @@ public class BlockTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public void keyTyped(KeyEvent keyEvent) {
             }
         });
@@ -858,10 +893,12 @@ public class BlockTableAction extends AbstractTableAction {
         super.dispose();
     }
 
+    @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleBlockTable");
     }
 
+    @Override
     protected String getClassName() {
         return BlockTableAction.class.getName();
     }

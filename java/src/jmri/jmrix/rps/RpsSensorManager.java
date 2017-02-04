@@ -15,15 +15,18 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
         super();
     }
 
+    @Override
     public String getSystemPrefix() {
         return "R";
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
         super.dispose();
     }
 
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         try {
            RpsSensor r = new RpsSensor(systemName, userName);

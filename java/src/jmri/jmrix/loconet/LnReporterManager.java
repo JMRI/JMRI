@@ -35,10 +35,12 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
     LnTrafficController tc;
     String prefix;
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
+    @Override
     public void dispose() {
         if (tc != null) {
             tc.removeLocoNetListener(~0, this);
@@ -46,6 +48,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
         super.dispose();
     }
 
+    @Override
     public Reporter createNewReporter(String systemName, String userName) {
         Reporter t;
         int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
@@ -57,6 +60,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
     }
 
     // listen for transponder messages, creating Reporters as needed
+    @Override
     public void message(LocoNetMessage l) {
         // check message type
         if (l.getOpCode() != 0xD0) {

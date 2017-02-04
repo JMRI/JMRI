@@ -38,11 +38,14 @@ public class NodeConfigActionTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         XBeeConnectionMemo memo = new XBeeConnectionMemo();
         XBeeTrafficController tc = new XBeeTrafficController(){
+            @Override
             public void setInstance() {
             }
+            @Override
             protected jmri.jmrix.AbstractMRReply newReply() {
                 return null;
             }
+            @Override
             public jmri.jmrix.ieee802154.IEEE802154Node newNode() {
                 return null;
             }
@@ -57,11 +60,14 @@ public class NodeConfigActionTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         XBeeConnectionMemo memo = new XBeeConnectionMemo();
         XBeeTrafficController tc = new XBeeTrafficController(){
+            @Override
             public void setInstance() {
             }
+            @Override
             protected jmri.jmrix.AbstractMRReply newReply() {
                 return null;
             }
+            @Override
             public jmri.jmrix.ieee802154.IEEE802154Node newNode() {
                 return null;
             }

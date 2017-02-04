@@ -22,6 +22,7 @@ public class DefaultMemoryManagerXml extends AbstractMemoryManagerConfigXML {
      *
      * @param memories The top-level element being created
      */
+    @Override
     public void setStoreElementClass(Element memories) {
         memories.setAttribute("class", this.getClass().getName());
     }
@@ -33,6 +34,7 @@ public class DefaultMemoryManagerXml extends AbstractMemoryManagerConfigXML {
      * @param sharedMemories Top level Element to unpack.
      * @return true if successful
      */
+    @Override
     public boolean load(Element sharedMemories, Element perNodeMemories) {
         // ensure the master object exists
         InstanceManager.memoryManagerInstance();

@@ -40,4 +40,4 @@ matrix:
     env: HEADLESS=true
 
 after_success:
-  - mvn jacoco:report coveralls:report -U -P travis-coverage
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]] ; then mvn jacoco:report coveralls:report -U -P travis-coverage ; fi

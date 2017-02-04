@@ -41,6 +41,7 @@ public class SignalHeadIconXml extends PositionableLabelXml {
      * @param o Object to store, of type SignalHeadIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         SignalHeadIcon p = (SignalHeadIcon) o;
@@ -113,6 +114,7 @@ public class SignalHeadIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         Editor ed = (Editor) o;

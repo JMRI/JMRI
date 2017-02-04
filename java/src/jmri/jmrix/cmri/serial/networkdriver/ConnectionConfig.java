@@ -30,12 +30,14 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         super();
     }
 
+    @Override
     public String name() {
         return NAME;
     }
 
     JButton b = new JButton("Configure C/MRI nodes");
 
+    @Override
     public void loadDetails(JPanel details) {
 
         b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
@@ -46,6 +48,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
 
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new NetworkDriverAdapter();

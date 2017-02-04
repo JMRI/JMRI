@@ -19,6 +19,7 @@ public class AlignmentPanelAction extends AbstractAction {
         this("RPS Alignment Tool");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         jmri.util.JmriJFrame f = new jmri.util.JmriJFrame("RPS Alignment");
 

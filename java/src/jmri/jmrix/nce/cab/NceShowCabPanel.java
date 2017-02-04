@@ -241,6 +241,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         super();
     }
 
+    @Override
     public void initContext(Object context) throws Exception {
         if (context instanceof NceSystemConnectionMemo) {
             try {
@@ -251,10 +252,12 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         }
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.nce.cab.NceShowCabFrame";
     }
 
+    @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
         if (memo != null) {
@@ -267,6 +270,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         return x.toString();
     }
 
+    @Override
     public void initComponents(NceSystemConnectionMemo m) throws Exception {
         this.memo = m;
         this.tc = m.getNceTrafficController();
@@ -388,6 +392,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         }
         textStatus.setText(rb.getString("StatusProcessingMemory"));
         NceCabUpdateThread = new Thread(new Runnable() {
+            @Override
             public void run() {
                 if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
                     if (purgeRequested) {
@@ -1518,6 +1523,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         return true;
     }
 
+    @Override
     public void message(NceMessage m) {
     }  // ignore replies
 
@@ -1526,6 +1532,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     int[] recChars = new int[16];
 
     @SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification = "Thread wait from main transfer loop")
+    @Override
     public void reply(NceReply r) {
         if (log.isDebugEnabled()) {
             log.debug("Receive character");
@@ -1693,6 +1700,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
     private void addButtonAction(JButton b) {
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 buttonActionPerformed(e);
             }
@@ -1701,6 +1709,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
     private void addCheckBoxAction(JCheckBox b) {
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 checkBoxActionPerformed(e);
             }
@@ -1720,6 +1729,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                 .setPreferredWidth(new JButton(rb.getString("ButtonPurgeCab")).getPreferredSize().width + 1);
     }
 
+    @Override
     public void dispose() {
         cabModel = null;
         cabData = null;
@@ -1783,10 +1793,12 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         private boolean showAllFunctions = false;
         private boolean showCabDisplay = false;
 
+        @Override
         public int getColumnCount() {
             return columnNames1LineText.length;
         }
 
+        @Override
         public int getRowCount() {
             int activeRows = 0;
             if (!getShowAllCabs()) {
@@ -1821,10 +1833,12 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
             }
         }
 
+        @Override
         public String getColumnName(int col) {
             return columnNames1LineText[col];
         }
 
+        @Override
         public Object getValueAt(int row, int col) {
             int cabId = getCabIdForRow(row);
             if (cabId == -1 && !getShowAllCabs()) {
@@ -1931,6 +1945,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
             return null;
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             int cabId = getCabIdForRow(row);
             if (col == 2) {
@@ -1938,6 +1953,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
             }
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             if (c == 0 || c == 4 || c == 5 || c == 6 || c == 8) {
                 return Integer.class;
@@ -1980,6 +1996,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
             return width;
         }
 
+        @Override
         public boolean isCellEditable(int row, int col) {
             if (col == 2) {
                 return true;

@@ -27,6 +27,7 @@ public class SerialPacketGenAction extends AbstractAction {
 
     SerialTrafficController tc = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SerialPacketGenFrame f = new SerialPacketGenFrame(tc);
         try {

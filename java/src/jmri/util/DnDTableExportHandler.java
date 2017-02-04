@@ -16,10 +16,12 @@ import org.slf4j.LoggerFactory;
 
 public class DnDTableExportHandler extends TransferHandler {
 
+    @Override
     public int getSourceActions(JComponent c) {
         return COPY;
     }
 
+    @Override
     public Transferable createTransferable(JComponent c) {
         JTable table = (JTable) c;
         int col = table.getSelectedColumn();
@@ -44,6 +46,7 @@ public class DnDTableExportHandler extends TransferHandler {
         }
     }
 
+    @Override
     public void exportDone(JComponent c, Transferable t, int action) {
         if (log.isDebugEnabled()) {
             log.debug("TransferHandler.exportDone ");

@@ -71,6 +71,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
      * Modified from DefaultSignalHead
      * removed software flashing!!!
      */
+    @Override
     public void setAppearance(int newAppearance) {
         int oldAppearance = mAppearance;
         mAppearance = newAppearance;
@@ -110,6 +111,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
 
     }
 
+    @Override
     public void setLit(boolean newLit) {
         boolean oldLit = mLit;
         mLit = newLit;
@@ -120,6 +122,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         }
     }
 
+    @Override
     protected void updateOutput() {
         // assumes that writing a turnout to an existing state is cheap!
         switch (mAppearance) {
@@ -167,6 +170,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
      */
+    @Override
     public void dispose() {
         mInput1 = null;
         mInput2 = null;
@@ -339,6 +343,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         }
     }
 
+    @Override
     boolean isTurnoutUsed(Turnout t) {
         if (getInput1() != null && t.equals(getInput1().getBean())) {
             return true;

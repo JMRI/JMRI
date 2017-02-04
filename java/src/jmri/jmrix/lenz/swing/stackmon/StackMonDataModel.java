@@ -48,6 +48,7 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
         _stackFrame = stackFrame;
     }
 
+    @Override
     public int getRowCount() {
         try {
             return (_addressList.size());
@@ -56,10 +57,12 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
+    @Override
     public int getColumnCount() {
         return NUMCOLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case ADDRCOLUMN:
@@ -71,6 +74,7 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case ADDRCOLUMN:
@@ -82,6 +86,7 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         log.debug("isCellEditable called for row: " + row + " column: " + col);
         if (col == DELCOLUMN) {
@@ -91,6 +96,7 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         log.debug("getValueAt called for row: " + row + " column: " + col);
         // some error checking
@@ -110,6 +116,7 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         log.debug("setValueAt called for row: " + row + " column: " + col);
         switch (col) {

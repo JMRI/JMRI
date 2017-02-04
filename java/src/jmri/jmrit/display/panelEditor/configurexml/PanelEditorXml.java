@@ -32,6 +32,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
      * @param o Object to store, of type PanelEditor
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         PanelEditor p = (PanelEditor) o;
         Element panel = new Element("paneleditor");
@@ -83,6 +84,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         return panel;
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -236,6 +238,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         return result;
     }
 
+    @Override
     public int loadOrder() {
         return jmri.Manager.PANELFILES;
     }

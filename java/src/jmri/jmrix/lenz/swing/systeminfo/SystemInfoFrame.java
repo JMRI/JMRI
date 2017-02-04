@@ -68,6 +68,7 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
 
         // Add Get SystemInfo button handler
         getSystemInfoButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 getSystemInfo();
             }
@@ -76,6 +77,7 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
 
         // install close button handler
         closeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 setVisible(false);
                 dispose();
@@ -122,6 +124,7 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
     }
 
     // listen for responses from the LI101
+    @Override
     public void message(XNetReply l) {
 
         // Check to see if this is a response for the LI version info
@@ -167,10 +170,12 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     public void message(XNetMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
@@ -201,6 +206,7 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         }
     }
 
+    @Override
     public void dispose() {
         // take apart the JFrame
         super.dispose();

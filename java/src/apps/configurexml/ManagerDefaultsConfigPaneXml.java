@@ -23,6 +23,7 @@ public class ManagerDefaultsConfigPaneXml extends jmri.configurexml.AbstractXmlA
      * @param o Object to store, ignored
      * @return null after others arranged
      */
+    @Override
     public Element store(Object o) {
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
@@ -43,6 +44,7 @@ public class ManagerDefaultsConfigPaneXml extends jmri.configurexml.AbstractXmlA
      * @param element Top level Element to unpack.
      * @param o       ignored
      */
+    @Override
     public void load(Element element, Object o) {
         log.error("Unexpected call of load(Element, Object)");
     }

@@ -1630,8 +1630,6 @@
 
 <mapID target="package.jmri.jmrit.beantable.BlockEdit_usage" url="package/jmri/jmrit/beantable/BlockEdit.shtml#usage"/>
 
-<mapID target="html.doc.Technical.JUnit_complicatedGuiTesting" url="html/doc/Technical/JUnit.shtml#complicatedGuiTesting"/>
-
 <mapID target="package.jmri.jmrix.nce.usbinterface.UsbInterfacePanel" url="package/jmri/jmrix/nce/usbinterface/UsbInterfacePanel.shtml"/>
 
 <mapID target="html.hardware.hardware-template" url="html/hardware/hardware-template.shtml"/>
@@ -2612,6 +2610,8 @@
 
 <mapID target="html.tools.signaling.interlock.index" url="html/tools/signaling/interlock/index.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_ControllingCarsToSpur" url="package/jmri/jmrit/operations/Operations.shtml#ControllingCarsToSpur"/>
+
 <mapID target="html.hardware.hardware-template_hardware" url="html/hardware/hardware-template.shtml#hardware"/>
 
 <mapID target="html.hardware.loconet.LocoNetTools_tools" url="html/hardware/loconet/LocoNetTools.shtml#tools"/>
@@ -2990,6 +2990,8 @@
 
 <mapID target="html.hardware.loconet.Addressing_reporter" url="html/hardware/loconet/Addressing.shtml#reporter"/>
 
+<mapID target="html.apps.DecoderPro.CreateDecoderAdvanced_idwarn" url="html/apps/DecoderPro/CreateDecoderAdvanced.shtml#idwarn"/>
+
 <mapID target="manual.DecoderPro.Main_Menu_Top" url="manual/DecoderPro/Main_Menu.shtml#Top"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_AddInterchange_Top" url="manual/JMRI_OPS_UsersGuide/Ops_AddInterchange.shtml#Top"/>
@@ -3017,6 +3019,8 @@
 <mapID target="manual.DecoderPro3.Main_LocoNet_FirmwareDownloader" url="manual/DecoderPro3/Main_LocoNet.shtml#FirmwareDownloader"/>
 
 <mapID target="html.hardware.XPressNet.index_connectLi100" url="html/hardware/XPressNet/index.shtml#connectLi100"/>
+
+<mapID target="html.apps.DecoderPro.CreateDecoderAdvanced_prodidwarn" url="html/apps/DecoderPro/CreateDecoderAdvanced.shtml#prodidwarn"/>
 
 <mapID target="html.hardware.PDA" url="html/hardware/PDA.shtml"/>
 

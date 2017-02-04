@@ -6,7 +6,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import java.awt.GraphicsEnvironment;
 
@@ -29,6 +28,7 @@ public class MonitorFrameTest {
 
         MonitorPane f = new MonitorPane() {
 
+            @Override
             public void nextLine(String s1, String s2) {
                 testFormatted = s1;
                 testRaw = s2;
@@ -53,6 +53,7 @@ public class MonitorFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         MonitorPane f = new MonitorPane() {
+            @Override
             public void nextLine(String s1, String s2) {
                 testFormatted = s1;
                 testRaw = s2;

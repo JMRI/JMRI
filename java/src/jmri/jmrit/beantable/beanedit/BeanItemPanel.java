@@ -56,10 +56,12 @@ public class BeanItemPanel extends JPanel {
 
     String name;
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
 
+    @Override
     public String getName() {
         return name;
     }

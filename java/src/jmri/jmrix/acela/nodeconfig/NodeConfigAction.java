@@ -23,6 +23,7 @@ public class NodeConfigAction extends AbstractAction {
         this("Configure Acela Nodes",jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         NodeConfigFrame f = new NodeConfigFrame(_memo);
         try {

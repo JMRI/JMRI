@@ -30,15 +30,18 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
     // base class. Implementations will provide InputStream and OutputStream
     // objects to XNetTrafficController classes, who in turn will deal in messages.    
     // returns the InputStream from the port
+    @Override
     public abstract DataInputStream getInputStream();
 
     // returns the outputStream to the port
+    @Override
     public abstract DataOutputStream getOutputStream();
 
     /**
      * Check that this object is ready to operate. This is a question of
      * configuration, not transient hardware status.
      */
+    @Override
     public abstract boolean status();
 
     /**
@@ -108,6 +111,7 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
      * only be set to false by external processes
      *
      */
+    @Override
     synchronized public void setOutputBufferEmpty(boolean s) {
         OutputBufferEmpty = s;
     }

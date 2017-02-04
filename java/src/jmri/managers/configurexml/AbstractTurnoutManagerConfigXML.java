@@ -39,6 +39,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
      * @param o Object to store, of type TurnoutManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element turnouts = new Element("turnouts");
         setStoreElementClass(turnouts);
@@ -380,6 +381,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
         return result;
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.turnoutManagerInstance().getXMLOrder();
     }
