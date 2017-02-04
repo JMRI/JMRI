@@ -24,6 +24,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public String name() {
         return "RPS Base Station";
     }
@@ -33,6 +34,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return ResourceBundle.getBundle("jmri.jmrix.rps.RpsActionListBundle");
     }
 
+    @Override
     protected void setInstance() {
         adapter = SerialAdapter.instance();
     }

@@ -24,6 +24,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         super();
     }
 
+    @Override
     public String name() {
         return "ECOS via network";
     }
@@ -34,6 +35,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     /*public String getMode() {
      return opt2Box.getSelectedItem().toString();
      }*/
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new NetworkDriverAdapter();

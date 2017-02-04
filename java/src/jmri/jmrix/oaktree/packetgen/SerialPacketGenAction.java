@@ -21,6 +21,7 @@ public class SerialPacketGenAction extends AbstractAction {
         this("Send Oak Tree message");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SerialPacketGenFrame f = new SerialPacketGenFrame();
         try {

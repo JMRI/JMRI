@@ -1453,6 +1453,7 @@ public class MemoryContents {
     /**
      * Summarize contents
      */
+    @Override
     public String toString() {
         StringBuffer retval = new StringBuffer("Pages occupied: ");
         for (int page=0; page<PAGES; page++) {

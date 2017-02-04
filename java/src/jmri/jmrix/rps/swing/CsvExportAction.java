@@ -37,6 +37,7 @@ public class CsvExportAction extends AbstractAction implements ReadingListener {
     PrintStream str;
     JFileChooser fileChooser;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (logging) {
             stopLogging(e);
@@ -91,6 +92,7 @@ public class CsvExportAction extends AbstractAction implements ReadingListener {
         }
     }
 
+    @Override
     public void notify(Reading r) {
         if (!logging || str == null) {
             return;

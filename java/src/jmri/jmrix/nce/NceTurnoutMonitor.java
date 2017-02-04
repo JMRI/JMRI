@@ -138,6 +138,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
         // This protects pollMessage (xmt) and reply threads if there's lockup!
         if (NceTurnoutMonitorThread == null) {
             NceTurnoutMonitorThread = new Thread(new Runnable() {
+                @Override
                 public void run() {
                     turnoutUpdate();
                 }
@@ -170,6 +171,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
         }
     }
 
+    @Override
     public void message(NceMessage m) {
         if (log.isDebugEnabled()) {
             log.debug("unexpected message");
@@ -177,6 +179,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
     }
 
     @SuppressFBWarnings(value = "NN_NAKED_NOTIFY") // notify not naked, command station is shared state
+    @Override
     public void reply(NceReply r) {
         if (r.getNumDataElements() == REPLY_LEN) {
 
@@ -460,6 +463,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
         }
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("feedbackchange")) {
             if (((Integer) e.getNewValue()).intValue() == Turnout.MONITORING) {

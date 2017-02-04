@@ -38,10 +38,12 @@ public class FileChooserFilter extends javax.swing.filechooser.FileFilter {
         return null;
     }
 
+    @Override
     public String getDescription() {
         return mDescription;
     }
 
+    @Override
     public boolean accept(File f) {
         if (allowedExtensions.isEmpty()) {
             return true;

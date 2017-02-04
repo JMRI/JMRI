@@ -20,6 +20,7 @@ public class Z21InterfaceScaffold extends Z21TrafficController {
     }
 
     // override some Z21TrafficController methods for test purposes
+    @Override
     public boolean status() {
         return true;
     }

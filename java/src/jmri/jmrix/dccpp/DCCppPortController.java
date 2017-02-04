@@ -15,6 +15,7 @@ public interface DCCppPortController extends jmri.jmrix.PortAdapter {
      * Check that this object is ready to operate. This is a question of
      * configuration, not transient hardware status.
      */
+    @Override
     public boolean status();
 
     /**

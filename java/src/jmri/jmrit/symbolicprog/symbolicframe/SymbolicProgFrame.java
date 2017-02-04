@@ -133,21 +133,25 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame {
 
         // add actions to buttons
         selectFileButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 selectFileButtonActionPerformed(e);
             }
         });
         storeFileButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 writeFile();
             }
         });
         newCvButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 cvModel.addCV(newCvNum.getText(), false, false, false);
             }
         });
         newVarButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 newVarButtonPerformed();
             }
@@ -260,6 +264,7 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame {
     }
 
     // Close the window when the close box is clicked
+    @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         // check for various types of dirty - first table data not written back
         if (cvModel.decoderDirty() || variableModel.decoderDirty()) {

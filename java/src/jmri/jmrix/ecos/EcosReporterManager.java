@@ -18,14 +18,17 @@ public class EcosReporterManager extends jmri.managers.AbstractReporterManager {
 
     EcosSystemConnectionMemo memo;
 
+    @Override
     public String getSystemPrefix() {
         return memo.getSystemPrefix();
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }
 
+    @Override
     public Reporter createNewReporter(String systemName, String userName) {
         Reporter r = new EcosReporter(systemName, userName);
         register(r);

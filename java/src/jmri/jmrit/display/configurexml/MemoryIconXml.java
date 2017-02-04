@@ -27,6 +27,7 @@ public class MemoryIconXml extends PositionableLabelXml {
      * @param o Object to store, of type MemoryIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         MemoryIcon p = (MemoryIcon) o;
@@ -80,6 +81,7 @@ public class MemoryIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
 
         Editor ed = null;

@@ -28,6 +28,7 @@ public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnecti
         super();
     }
 
+    @Override
     public String name() {
         return "Lenz LIUSB";
     }
@@ -40,6 +41,7 @@ public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnecti
         return new String[]{};
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new LIUSBAdapter();

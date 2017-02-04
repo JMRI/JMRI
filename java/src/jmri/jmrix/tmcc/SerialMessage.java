@@ -61,6 +61,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
+    @Override
     public String toString() {
         String s = "";
         for (int i = 0; i < getNumDataElements(); i++) {

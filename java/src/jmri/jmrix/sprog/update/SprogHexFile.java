@@ -55,6 +55,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     /**
      * @return name of the open file
      */
+    @Override
     public String getName() {
         return name;
     }

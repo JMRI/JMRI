@@ -91,12 +91,14 @@ public class TransitTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes for the specific case
      * of Transit objects
      */
+    @Override
     protected void createModel() {
         m = new BeanTableDataModel() {
 
             static public final int EDITCOL = NUMCOLUMN;
             static public final int DUPLICATECOL = EDITCOL + 1;
 
+            @Override
             public String getValue(String name) {
                 if (name == null) {
                     log.warn("requested getValue(null)");
@@ -110,29 +112,36 @@ public class TransitTableAction extends AbstractTableAction {
                 return "Transit";
             }
 
+            @Override
             public Manager getManager() {
                 return InstanceManager.getDefault(jmri.TransitManager.class);
             }
 
+            @Override
             public NamedBean getBySystemName(String name) {
                 return InstanceManager.getDefault(jmri.TransitManager.class).getBySystemName(name);
             }
 
+            @Override
             public NamedBean getByUserName(String name) {
                 return InstanceManager.getDefault(jmri.TransitManager.class).getByUserName(name);
             }
 
+            @Override
             protected String getMasterClassName() {
                 return getClassName();
             }
 
+            @Override
             public void clickOn(NamedBean t) {
             }
 
+            @Override
             public int getColumnCount() {
                 return DUPLICATECOL + 1;
             }
 
+            @Override
             public Object getValueAt(int row, int col) {
                 if (col == VALUECOL) {
                     // some error checking
@@ -161,6 +170,7 @@ public class TransitTableAction extends AbstractTableAction {
                 return null;
             }
 
+            @Override
             public void setValueAt(Object value, int row, int col) {
                 if (col == EDITCOL) {
                     class WindowMaker implements Runnable {
@@ -171,6 +181,7 @@ public class TransitTableAction extends AbstractTableAction {
                             row = r;
                         }
 
+                        @Override
                         public void run() {
                             String sName = (String) getValueAt(row, SYSNAMECOL);
                             editPressed(sName);
@@ -188,6 +199,7 @@ public class TransitTableAction extends AbstractTableAction {
                             row = r;
                         }
 
+                        @Override
                         public void run() {
                             String sName = (String) getValueAt(row, SYSNAMECOL);
                             duplicatePressed(sName);
@@ -200,6 +212,7 @@ public class TransitTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public String getColumnName(int col) {
                 if (col == EDITCOL) {
                     return "";   // no namne on Edit column
@@ -210,6 +223,7 @@ public class TransitTableAction extends AbstractTableAction {
                 return super.getColumnName(col);
             }
 
+            @Override
             public Class<?> getColumnClass(int col) {
                 if (col == VALUECOL) {
                     return String.class;  // not a button
@@ -224,6 +238,7 @@ public class TransitTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public boolean isCellEditable(int row, int col) {
                 if (col == VALUECOL) {
                     return false;
@@ -238,6 +253,7 @@ public class TransitTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public int getPreferredWidth(int col) {
                 // override default value for SystemName and UserName columns
                 if (col == SYSNAMECOL) {
@@ -260,30 +276,36 @@ public class TransitTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public void configValueColumn(JTable table) {
                 // value column isn't button, so config is null
             }
 
+            @Override
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 return true;
                 // return (e.getPropertyName().indexOf("alue")=0);
             }
 
+            @Override
             public JButton configureButton() {
                 log.error("configureButton should not have been called");
                 return null;
             }
 
+            @Override
             protected String getBeanType() {
                 return "Transit";
             }
         };
     }
 
+    @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleTransitTable"));
     }
 
+    @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.TransitTable";
     }
@@ -344,6 +366,7 @@ public class TransitTableAction extends AbstractTableAction {
     /**
      * Responds to the Add... button and the Edit buttons in Transit Table
      */
+    @Override
     protected void addPressed(ActionEvent e) {
         editMode = false;
         duplicateMode = false;
@@ -401,6 +424,7 @@ public class TransitTableAction extends AbstractTableAction {
             ((FlowLayout) p.getLayout()).setVgap(0);
             p.add(_autoSystemName);
             _autoSystemName.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     autoSystemName();
                 }
@@ -454,6 +478,7 @@ public class TransitTableAction extends AbstractTableAction {
             primarySectionBox.setToolTipText(rbx.getString("PrimarySectionBoxHint"));
             p13.add(addNextSection = new JButton(rbx.getString("AddPrimaryButton")));
             addNextSection.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     addNextSectionPressed(e);
                 }
@@ -466,6 +491,7 @@ public class TransitTableAction extends AbstractTableAction {
             alternateSectionBox.setToolTipText(rbx.getString("AlternateSectionBoxHint"));
             p14.add(addAlternateSection = new JButton(rbx.getString("AddAlternateButton")));
             addAlternateSection.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     addAlternateSectionPressed(e);
                 }
@@ -476,6 +502,7 @@ public class TransitTableAction extends AbstractTableAction {
             insertAtBeginningBox.setToolTipText(rbx.getString("InsertAtBeginningBoxHint"));
             p14.add(insertAtBeginning = new JButton(rbx.getString("InsertAtBeginningButton")));
             insertAtBeginning.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     insertAtBeginningPressed(e);
                 }
@@ -487,6 +514,7 @@ public class TransitTableAction extends AbstractTableAction {
             p15.setLayout(new FlowLayout());
             p15.add(deleteSections = new JButton(rbx.getString("DeleteSectionsButton")));
             deleteSections.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     deleteAllSections(e);
                 }
@@ -495,6 +523,7 @@ public class TransitTableAction extends AbstractTableAction {
             p15.add(new JLabel("     "));
             p15.add(removeLastSection = new JButton(rbx.getString("RemoveLastButton")));
             removeLastSection.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     removeLastSectionPressed(e);
                 }
@@ -503,6 +532,7 @@ public class TransitTableAction extends AbstractTableAction {
             p15.add(new JLabel("     "));
             p15.add(removeFirstSection = new JButton(rbx.getString("RemoveFirstButton")));
             removeFirstSection.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     removeFirstSectionPressed(e);
                 }
@@ -520,6 +550,7 @@ public class TransitTableAction extends AbstractTableAction {
             p17.setLayout(new FlowLayout());
             p17.add(replacePrimaryForSequence = new JButton(rbx.getString("ReplacePrimaryForSeqButton")));
             replacePrimaryForSequence.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     replacePrimaryForSeqPressed(e);
                 }
@@ -528,6 +559,7 @@ public class TransitTableAction extends AbstractTableAction {
             p17.add(new JLabel("     "));
             p17.add(deleteAlternateForSequence = new JButton(rbx.getString("DeleteAlternateForSeqButton")));
             deleteAlternateForSequence.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     deleteAlternateForSeqPressed(e);
                 }
@@ -536,6 +568,7 @@ public class TransitTableAction extends AbstractTableAction {
             p17.add(new JLabel("     "));
             p17.add(addAlternateForSequence = new JButton(rbx.getString("AddAlternateForSeqButton")));
             addAlternateForSequence.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     addAlternateForSeqPressed(e);
                 }
@@ -550,6 +583,7 @@ public class TransitTableAction extends AbstractTableAction {
             pb.setLayout(new FlowLayout());
             pb.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
             cancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelPressed(e);
                 }
@@ -557,6 +591,7 @@ public class TransitTableAction extends AbstractTableAction {
             cancel.setToolTipText(rbx.getString("CancelButtonHint"));
             pb.add(create = new JButton(Bundle.getMessage("ButtonCreate")));
             create.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     createPressed(e);
                 }
@@ -564,6 +599,7 @@ public class TransitTableAction extends AbstractTableAction {
             create.setToolTipText(rbx.getString("SectionCreateButtonHint"));
             pb.add(update = new JButton(Bundle.getMessage("ButtonUpdate")));
             update.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     updatePressed(e);
                 }
@@ -1521,6 +1557,7 @@ public class TransitTableAction extends AbstractTableAction {
             JButton newActionButton = new JButton(rbx.getString("ButtonAddNewAction"));
             panel4.add(newActionButton);
             newActionButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     newActionPressed(e);
                 }
@@ -1529,6 +1566,7 @@ public class TransitTableAction extends AbstractTableAction {
             JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
             panel4.add(doneButton);
             doneButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     doneWithActionsPressed(e);
                 }
@@ -1540,6 +1578,7 @@ public class TransitTableAction extends AbstractTableAction {
         fixedSectionLabel.setText(getSectionNameByRow(r) + "    "
                 + rbx.getString("SequenceAbbrev") + ": " + sequence[r]);
         actionTableFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 if (actionTableFrame != null) {
                     actionTableFrame.setVisible(false);
@@ -1613,6 +1652,7 @@ public class TransitTableAction extends AbstractTableAction {
             panel1.add(whenBox);
             whenBox.setToolTipText(rbx.getString("WhenBoxTip"));
             whenBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setWhen(whenBox.getSelectedIndex() + 1);
                 }
@@ -1639,6 +1679,7 @@ public class TransitTableAction extends AbstractTableAction {
             panel2.add(whatBox);
             whatBox.setToolTipText(rbx.getString("WhatBoxTip"));
             whatBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setWhat(whatBox.getSelectedIndex() + 1);
                 }
@@ -1665,6 +1706,7 @@ public class TransitTableAction extends AbstractTableAction {
             createActionButton = new JButton(rbx.getString("CreateActionButton"));
             but.add(createActionButton);
             createActionButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     createActionPressed(e);
                 }
@@ -1673,6 +1715,7 @@ public class TransitTableAction extends AbstractTableAction {
             updateActionButton = new JButton(rbx.getString("UpdateActionButton"));
             but.add(updateActionButton);
             updateActionButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     updateActionPressed(e);
                 }
@@ -1680,6 +1723,7 @@ public class TransitTableAction extends AbstractTableAction {
             updateActionButton.setToolTipText(rbx.getString("UpdateActionButtonHint"));
             but.add(cancelAddEditActionButton = new JButton(Bundle.getMessage("ButtonCancel")));
             cancelAddEditActionButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelAddEditActionPressed(e);
                 }
@@ -1718,6 +1762,7 @@ public class TransitTableAction extends AbstractTableAction {
             setBlockBox();
         }
         addEditActionFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 if (addEditActionFrame != null) {
                     addEditActionFrame.setVisible(false);
@@ -2373,6 +2418,7 @@ public class TransitTableAction extends AbstractTableAction {
             sectionManager.addPropertyChangeListener(this);
         }
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("length")) {
                 // a new NamedBean is available in the manager
@@ -2380,6 +2426,7 @@ public class TransitTableAction extends AbstractTableAction {
             }
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             if (c == ACTION_COLUMN) {
                 return JButton.class;
@@ -2387,14 +2434,17 @@ public class TransitTableAction extends AbstractTableAction {
             return String.class;
         }
 
+        @Override
         public int getColumnCount() {
             return ALTERNATE_COLUMN + 1;
         }
 
+        @Override
         public int getRowCount() {
             return (sectionList.size());
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             if (c == ACTION_COLUMN) {
                 return (true);
@@ -2402,6 +2452,7 @@ public class TransitTableAction extends AbstractTableAction {
             return (false);
         }
 
+        @Override
         public String getColumnName(int col) {
             switch (col) {
                 case SEQUENCE_COLUMN:
@@ -2435,6 +2486,7 @@ public class TransitTableAction extends AbstractTableAction {
             return new JTextField(5).getPreferredSize().width;
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             int rx = r;
             if (rx > sectionList.size()) {
@@ -2464,6 +2516,7 @@ public class TransitTableAction extends AbstractTableAction {
             }
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             if (col == ACTION_COLUMN) {
                 addEditActionsPressed(row);
@@ -2488,6 +2541,7 @@ public class TransitTableAction extends AbstractTableAction {
             sectionManager.addPropertyChangeListener(this);
         }
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("length")) {
                 // a new NamedBean is available in the manager
@@ -2495,6 +2549,7 @@ public class TransitTableAction extends AbstractTableAction {
             }
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             if (c == WHEN_COLUMN) {
                 return String.class;
@@ -2511,14 +2566,17 @@ public class TransitTableAction extends AbstractTableAction {
             return String.class;
         }
 
+        @Override
         public int getColumnCount() {
             return REMOVE_COLUMN + 1;
         }
 
+        @Override
         public int getRowCount() {
             return (action[activeRow].size());
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             if (c == WHEN_COLUMN) {
                 return (false);
@@ -2535,6 +2593,7 @@ public class TransitTableAction extends AbstractTableAction {
             return (false);
         }
 
+        @Override
         public String getColumnName(int col) {
             if (col == WHEN_COLUMN) {
                 return rbx.getString("WhenColName");
@@ -2558,6 +2617,7 @@ public class TransitTableAction extends AbstractTableAction {
             return new JTextField(8).getPreferredSize().width;
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             int rx = r;
             if (rx > sectionList.size()) {
@@ -2577,6 +2637,7 @@ public class TransitTableAction extends AbstractTableAction {
             }
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             if (col == EDIT_COLUMN) {
                 // set up to edit
@@ -2589,10 +2650,12 @@ public class TransitTableAction extends AbstractTableAction {
         }
     }
 
+    @Override
     protected String getClassName() {
         return TransitTableAction.class.getName();
     }
 
+    @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleTransitTable");
     }

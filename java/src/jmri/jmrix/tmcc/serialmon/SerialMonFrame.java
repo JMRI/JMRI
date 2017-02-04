@@ -16,20 +16,24 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         super();
     }
 
+    @Override
     protected String title() {
         return "TMCC Serial Command Monitor";
     }
 
+    @Override
     public void dispose() {
         SerialTrafficController.instance().removeSerialListener(this);
         super.dispose();
     }
 
+    @Override
     protected void init() {
         // connect to TrafficController
         SerialTrafficController.instance().addSerialListener(this);
     }
 
+    @Override
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         // check for valid length
         if (l.getNumDataElements() < 3) {
@@ -41,6 +45,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         }
     }
 
+    @Override
     public synchronized void reply(SerialReply l) {  // receive a reply message and log it
         // check for valid length
         if (l.getNumDataElements() < 2) {

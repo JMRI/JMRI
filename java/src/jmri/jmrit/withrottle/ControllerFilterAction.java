@@ -26,6 +26,7 @@ public class ControllerFilterAction extends AbstractAction {
         return "jmri.jmrit.withrottle.ControllerFilterFrame";
     }
 
+    @Override
     public void actionPerformed(ActionEvent ae) {
         JmriJFrame frame = new ControllerFilterFrame();
         try {

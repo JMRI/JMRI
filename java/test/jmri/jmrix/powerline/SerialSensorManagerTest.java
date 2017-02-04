@@ -1,9 +1,6 @@
 package jmri.jmrix.powerline;
 
 import jmri.Sensor;
-import jmri.SensorManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -91,6 +88,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         t.setAdapterMemo(m);
 
         l = new SerialSensorManager(t) {
+            @Override
             public void reply(SerialReply r) {
             }
         };

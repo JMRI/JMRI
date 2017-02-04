@@ -37,6 +37,7 @@ public class PacketPro extends Apps {
         super(p);
     }
 
+    @Override
     protected String line1() {
         return MessageFormat.format(Bundle.getMessage("PacketProVersionCredit"),
                 new Object[]{jmri.Version.name()});

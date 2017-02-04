@@ -77,6 +77,7 @@ public class NceTurnout extends AbstractTurnout {
     }
 
     // Handle a request to change state by sending a turnout command
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
@@ -106,6 +107,7 @@ public class NceTurnout extends AbstractTurnout {
      * Send a message to the layout to lock or unlock the turnout pushbuttons if
      * true, pushbutton lockout enabled
      */
+    @Override
     protected void turnoutPushbuttonLockout(boolean pushButtonLockout) {
         if (log.isDebugEnabled()) {
             log.debug("Send command to "
@@ -159,6 +161,7 @@ public class NceTurnout extends AbstractTurnout {
     /**
      * NCE turnouts can be inverted
      */
+    @Override
     public boolean canInvert() {
         return true;
     }
@@ -167,6 +170,7 @@ public class NceTurnout extends AbstractTurnout {
      * NCE turnouts support two types of lockouts, pushbutton and cab. Cab
      * lockout requires the feedback mode to be Monitoring
      */
+    @Override
     public boolean canLock(int turnoutLockout) {
         // can not lock if using a USB
         if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
@@ -189,6 +193,7 @@ public class NceTurnout extends AbstractTurnout {
     /**
      * Control which turnout locks are enabled
      */
+    @Override
     public void enableLockOperation(int turnoutLockout, boolean enabled) {
         if ((turnoutLockout & CABLOCKOUT) != 0) {
             if (enabled) {

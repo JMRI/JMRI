@@ -1,11 +1,7 @@
 package jmri.jmrix.can.cbus;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import jmri.Reporter;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.TrafficControllerScaffold;

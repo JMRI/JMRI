@@ -20,6 +20,7 @@ public class PreferencesFrameAction extends AbstractAction {
 
     EcosSystemConnectionMemo adaptermemo;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         PreferencesFrame f = new PreferencesFrame();
         try {

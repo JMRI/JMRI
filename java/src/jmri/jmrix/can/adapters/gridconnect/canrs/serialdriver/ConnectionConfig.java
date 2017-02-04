@@ -25,6 +25,7 @@ public class ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
         super();
     }
 
+    @Override
     public String name() {
         return "CAN via MERG CAN-RS or CAN-USB";
     }
@@ -33,6 +34,7 @@ public class ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
         return false;
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SerialDriverAdapter();

@@ -39,6 +39,7 @@ public class SignallingSourceAction extends AbstractAction {
      * Open a SignallingSourceFrame pane
      * Displayed when user clicks Edit Logic button in the Signal Mast table
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         SignallingSourceFrame f = new SignallingSourceFrame();
         try {

@@ -28,6 +28,7 @@ public class RemoveObjectFromEcos implements EcosListener {
         tc.sendEcosMessage(m, this);
     }
 
+    @Override
     public void reply(EcosReply m) {
 
         String msg = m.toString();
@@ -76,6 +77,7 @@ public class RemoveObjectFromEcos implements EcosListener {
         tc.sendEcosMessage(m, this);
     }
 
+    @Override
     public void message(EcosMessage m) {
         // messages are ignored
     }

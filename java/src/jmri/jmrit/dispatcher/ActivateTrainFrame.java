@@ -184,6 +184,7 @@ public class ActivateTrainFrame {
             p0.setLayout(new FlowLayout());
             p0.add(loadButton = new JButton(Bundle.getMessage("LoadButton")));
             loadButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     loadTrainInfo(e);
                 }
@@ -191,6 +192,7 @@ public class ActivateTrainFrame {
             loadButton.setToolTipText(Bundle.getMessage("LoadButtonHint"));
             p0.add(saveButton = new JButton(Bundle.getMessage("SaveButton")));
             saveButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     saveTrainInfo(e);
                 }
@@ -198,6 +200,7 @@ public class ActivateTrainFrame {
             saveButton.setToolTipText(Bundle.getMessage("SaveButtonHint"));
             p0.add(deleteButton = new JButton(Bundle.getMessage("ButtonDelete")));
             deleteButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     deleteTrainInfo(e);
                 }
@@ -211,6 +214,7 @@ public class ActivateTrainFrame {
             p1.add(new JLabel(Bundle.getMessage("TransitBoxLabel") + " :"));
             p1.add(transitSelectBox);
             transitSelectBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleTransitSelectionChanged(e);
                 }
@@ -233,6 +237,7 @@ public class ActivateTrainFrame {
             p2.setLayout(new FlowLayout());
             p2.add(inTransitBox);
             inTransitBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleInTransitClick(e);
                 }
@@ -245,6 +250,7 @@ public class ActivateTrainFrame {
             p3.add(startingBlockBox);
             startingBlockBox.setToolTipText(Bundle.getMessage("StartingBlockBoxHint"));
             startingBlockBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleStartingBlockSelectionChanged(e);
                 }
@@ -265,6 +271,7 @@ public class ActivateTrainFrame {
             p6.setLayout(new FlowLayout());
             p6.add(resetWhenDoneBox);
             resetWhenDoneBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleResetWhenDoneClick(e);
                 }
@@ -277,6 +284,7 @@ public class ActivateTrainFrame {
             p6a.add(delayedReStartLabel);
             p6a.add(delayedReStartBox);
             delayedReStartBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleResetWhenDoneClick(e);
                 }
@@ -303,6 +311,7 @@ public class ActivateTrainFrame {
             reverseAtEndBox.setToolTipText(Bundle.getMessage("ReverseAtEndBoxHint"));
             initiatePane.add(p10);
             reverseAtEndBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleReverseAtEndBoxClick(e);
                 }
@@ -331,6 +340,7 @@ public class ActivateTrainFrame {
             p9.add(delayedStartBox);
             delayedStartBox.setToolTipText(Bundle.getMessage("DelayedStartHint"));
             delayedStartBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleDelayStartClick(e);
                 }
@@ -360,6 +370,7 @@ public class ActivateTrainFrame {
             p5.setLayout(new FlowLayout());
             p5.add(autoRunBox);
             autoRunBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleAutoRunClick(e);
                 }
@@ -375,6 +386,7 @@ public class ActivateTrainFrame {
             JButton cancelButton = null;
             p7.add(cancelButton = new JButton(Bundle.getMessage("ButtonCancel")));
             cancelButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelInitiateTrain(e);
                 }
@@ -382,6 +394,7 @@ public class ActivateTrainFrame {
             cancelButton.setToolTipText(Bundle.getMessage("CancelButtonHint"));
             p7.add(addNewTrainButton = new JButton(Bundle.getMessage("AddNewTrainButton")));
             addNewTrainButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     addNewTrain(e);
                 }
@@ -818,6 +831,7 @@ public class ActivateTrainFrame {
             }
             if (trainSelectBoxListener == null) {
                 trainSelectBoxListener = new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         RosterEntry r = trainBoxList.get(trainSelectBox.getSelectedIndex());
                         if (transitsFromSpecificBlock) {

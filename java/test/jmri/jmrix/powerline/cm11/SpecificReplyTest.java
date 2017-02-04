@@ -58,6 +58,7 @@ public class SpecificReplyTest extends TestCase {
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 
+    @Override
     protected void tearDown(){
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();

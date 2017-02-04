@@ -36,6 +36,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         t.registerNode(new SerialNode());
         // create and register the turnout manager object
         l = new SerialTurnoutManager() {
+            @Override
             public void notifyTurnoutCreationError(String conflict, int bitNum) {
             }
         };

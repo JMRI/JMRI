@@ -1,10 +1,7 @@
 package jmri.jmrix.powerline.cp290;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 /**
  * Tests for SpecificTrafficController class.

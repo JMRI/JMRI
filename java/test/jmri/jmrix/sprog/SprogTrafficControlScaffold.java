@@ -18,6 +18,7 @@ public class SprogTrafficControlScaffold extends SprogTrafficController {
     }
 
     // override some SprogTrafficController methods for test purposes
+    @Override
     public boolean status() {
         return true;
     }

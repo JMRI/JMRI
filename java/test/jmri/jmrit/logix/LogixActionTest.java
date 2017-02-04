@@ -160,6 +160,7 @@ public class LogixActionTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
@@ -175,6 +176,7 @@ public class LogixActionTest extends TestCase {
         JUnitUtil.initConditionalManager();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();

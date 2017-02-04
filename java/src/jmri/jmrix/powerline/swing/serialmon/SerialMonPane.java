@@ -22,10 +22,12 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialL
         super();
     }
 
+    @Override
     public String getHelpTarget() {
         return null;
     }
 
+    @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
         if (memo != null) {
@@ -38,6 +40,7 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialL
         return x.toString();
     }
 
+    @Override
     public void dispose() {
         // disconnect from the SerialTrafficController
         if (memo != null) {
@@ -47,27 +50,32 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialL
         super.dispose();
     }
 
+    @Override
     public void init() {
     }
 
     SerialSystemConnectionMemo memo;
 
+    @Override
     public void initContext(Object context) {
         if (context instanceof SerialSystemConnectionMemo) {
             initComponents((SerialSystemConnectionMemo) context);
         }
     }
 
+    @Override
     public void initComponents(SerialSystemConnectionMemo memo) {
         this.memo = memo;
         // connect to the SerialTrafficController
         memo.getTrafficController().addSerialListener(this);
     }
 
+    @Override
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         nextLine(l.toMonitorString(), l.toString());
     }
 
+    @Override
     public synchronized void reply(SerialReply l) {  // receive a reply message and log it
         nextLine(l.toMonitorString(), l.toString());
     }

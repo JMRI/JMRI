@@ -29,6 +29,7 @@ public class SwingShutDownTaskTest extends TestCase {
                 "Do Something quits, click Continue Qutting to quit, Cancel Quit to continue",
                 "Do Something and Stop",
                 null) {
+                    @Override
                     public boolean checkPromptNeeded() {
                         log.debug("mDST " + modalDialogStopsTest);
                         return !modalDialogStopsTest;
@@ -48,11 +49,13 @@ public class SwingShutDownTaskTest extends TestCase {
                 "Do Something repeats, click Continue Qutting to quit, Cancel Quit to continue",
                 "Do Something and repeats",
                 null) {
+                    @Override
                     public boolean checkPromptNeeded() {
                         log.debug("mDST " + modalDialogStopsTest);
                         return !modalDialogStopsTest;
                     }
 
+                    @Override
                     public boolean doPrompt() {
                         return false;
                     }
@@ -84,10 +87,12 @@ public class SwingShutDownTaskTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

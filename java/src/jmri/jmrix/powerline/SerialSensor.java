@@ -32,6 +32,7 @@ public class SerialSensor extends AbstractSensor {
      * Eventually, we may want to have this move the related AIU to the top of
      * the polling queue.
      */
+    @Override
     public void requestUpdateFromLayout() {
     }
 

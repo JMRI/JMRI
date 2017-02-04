@@ -355,9 +355,9 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
 //        long t = System.currentTimeMillis();
         loadIcons(editor);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 closePanels(e);
-                ImageIndexEditor.checkImageIndex();
             }
         });
 
@@ -459,6 +459,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
 //        _tabPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);    	
     }
 
+    @Override
     public void stateChanged(ChangeEvent e) {
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
 //        long t = System.currentTimeMillis();
@@ -486,6 +487,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         editItem.addActionListener(new ActionListener() {
             Editor editor;
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 ImageIndexEditor ii = ImageIndexEditor.instance(editor);
                 ii.pack();
@@ -502,28 +504,21 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
 
         JMenuItem openItem = new JMenuItem(Bundle.getMessage("openDirMenu"));
         openItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
-                DirectorySearcher.instance().openDirectory(false);
+                DirectorySearcher.instance().openDirectory();
             }
         });
         findIcon.add(openItem);
-        /*
+
          JMenuItem searchItem = new JMenuItem(Bundle.getMessage("searchFSMenu"));
          searchItem.addActionListener(new ActionListener() {
-         IconAdder ea;
-         public void actionPerformed(ActionEvent e) {
-         File dir = jmri.jmrit.catalog.DirectorySearcher.instance().searchFS();
-         if (dir != null) {
-         ea.addDirectoryToCatalog(dir);
-         }
-         }
-         ActionListener init() {
-         //                ea = ed;
-         return this;
-         }
-         }.init());
+             public void actionPerformed(ActionEvent e) {
+                 jmri.jmrit.catalog.DirectorySearcher.instance().searchFS();
+             }
+         });
          findIcon.add(searchItem);
-         */
+        
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.display.ItemPalette", true);
     }

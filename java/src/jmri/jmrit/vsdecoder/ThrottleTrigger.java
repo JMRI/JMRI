@@ -33,6 +33,7 @@ class ThrottleTrigger extends Trigger implements PropertyChangeListener {
         this.setTriggerType(Trigger.TriggerType.THROTTLE);
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent event) {
 
         // Validate

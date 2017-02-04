@@ -43,6 +43,7 @@ public interface SignalMastLogicManager extends Manager {
      */
     public void discoverSignallingDest(SignalMast source, LayoutEditor layout) throws JmriException;
 
+    @Override
     public void dispose();
 
     /**

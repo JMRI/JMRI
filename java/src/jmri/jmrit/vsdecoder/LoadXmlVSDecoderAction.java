@@ -47,6 +47,7 @@ public class LoadXmlVSDecoderAction extends AbstractAction {
      *
      * @param e The event causing the action.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (fileChooser == null) {
             fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");

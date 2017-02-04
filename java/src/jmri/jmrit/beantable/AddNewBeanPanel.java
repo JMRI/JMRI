@@ -84,12 +84,14 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
 
         addRange.addItemListener(
                 new ItemListener() {
+                    @Override
                     public void itemStateChanged(ItemEvent e) {
                         rangeState();
                     }
                 });
 
         sysName.addKeyListener(new KeyAdapter() {
+            @Override
             public void keyReleased(KeyEvent a) {
                 if (sysName.getText().length() > 0) {
                     ok.setEnabled(true);
@@ -102,6 +104,7 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
 
         autoSystem.addItemListener(
                 new ItemListener() {
+                    @Override
                     public void itemStateChanged(ItemEvent e) {
                         autoSystemName();
                     }

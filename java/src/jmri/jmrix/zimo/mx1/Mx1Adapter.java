@@ -36,6 +36,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
 
     SerialPort activeSerialPort = null;
 
+    @Override
     public String openPort(String portName, String appName) {
         // open the port in MX-1 mode, check ability to set moderators
         try {
@@ -85,6 +86,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
             if (log.isDebugEnabled()) {
                 // arrange to notify later
                 activeSerialPort.addEventListener(new SerialPortEventListener() {
+                    @Override
                     public void serialEvent(SerialPortEvent e) {
                         int type = e.getEventType();
                         switch (type) {
@@ -170,6 +172,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
      * buffer length. This might go false for short intervals, but it might also
      * stick off if something goes wrong.
      */
+    @Override
     public boolean okToSend() {
         return activeSerialPort.isCTS();
     }
@@ -178,6 +181,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
      * set up all of the other objects to operate with a MX-1 connected to this
      * port
      */
+    @Override
     public void configure() {
         Mx1CommandStation cs = new Mx1CommandStation();
         this.getSystemConnectionMemo().setCommandStation(cs);
@@ -193,6 +197,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
     }
 
 // base class methods for the ZimoPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -201,6 +206,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -213,6 +219,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }

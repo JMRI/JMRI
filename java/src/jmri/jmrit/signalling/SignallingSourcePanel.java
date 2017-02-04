@@ -86,6 +86,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
 
         footer.add(discoverPairs);
         discoverPairs.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 discoverPressed(e);
             }
@@ -94,12 +95,14 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         JButton addLogic = new JButton(rb.getString("AddLogic"));
         footer.add(addLogic);
         addLogic.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 class WindowMaker implements Runnable {
 
                     WindowMaker() {
                     }
 
+                    @Override
                     public void run() {
                         //int oldListSize;
                         //if (sml == null) { // no existing SML's for this source mast
@@ -162,6 +165,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removePropertyChangeListener(this);
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("autoSignalMastGenerateComplete")) {
             signalMastLogicFrame.setVisible(false);
@@ -292,6 +296,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             }
         }
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("length")) { // should pick up adding an new destination mast, but doesn't refresh by itself
                 _signalMastList = sml.getDestinationList();
@@ -307,7 +312,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                 fireTableDataChanged();
             } else if ((e.getPropertyName().equals("state")) || (e.getPropertyName().equals("Enabled"))) {
                 fireTableDataChanged();
-                fireTableRowsUpdated(0, _signalMastList.size());
+                fireTableRowsUpdated(0, _signalMastList.size()-1);
             }
             //log.debug("SSP 312 Event: {}", e.getPropertyName());
         }
@@ -332,6 +337,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                     .setPreferredWidth((sample.getPreferredSize().width) + 4);
         }
 
+        @Override
         public int getColumnCount() {
             return 6;
         }
@@ -360,6 +366,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                     row = r;
                 }
 
+                @Override
                 public void run() {
                     log.debug("SML Edit existing logic started");
                     SignallingAction sigLog = new SignallingAction();
@@ -386,6 +393,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         public void setSetToState(String x) {
         }
 
+        @Override
         public int getRowCount() {
             if (_signalMastList == null) {
                 return 0;
@@ -393,6 +401,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             return _signalMastList.size();
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             if (sml == null) {
                 return null;
