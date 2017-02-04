@@ -438,6 +438,9 @@ public class PositionablePoint {
                 log.error("Unable to find Signal Mast " + signalMast);
                 return;
             }
+        } else {
+            eastBoundSignalMastNamed = null;
+            return;
         }
         if (getType() == EDGE_CONNECTOR) {
             int dir = getConnect1Dir();
@@ -499,6 +502,9 @@ public class PositionablePoint {
                 log.error("Unable to find Signal Mast " + signalMast);
                 return;
             }
+        } else {
+            westBoundSignalMastNamed = null;
+            return;
         }
         if (getType() == EDGE_CONNECTOR) {
             int dir = getConnect1Dir();
