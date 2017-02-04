@@ -1,6 +1,8 @@
 package jmri;
 
+import java.util.Hashtable;
 import jmri.InstanceManager;
+import jmri.NamedBeanHandle;
 import jmri.SignalMastLogic;
 import jmri.SignalMast;
 import jmri.Sensor;
@@ -19,6 +21,7 @@ public class SignalMastLogicTest {
 
     @Test
     public void testSetup() {
+        jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
         // provide 2 turnouts:
         Turnout it1 = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         Turnout it2 = InstanceManager.turnoutManagerInstance().provideTurnout("IT2");
@@ -43,17 +46,44 @@ public class SignalMastLogicTest {
         Assert.assertEquals("IS1 included", true, sml.isSensorIncluded(is1, sm2));
         Assert.assertEquals("IS2 not included", false, sml.isSensorIncluded(is2, sm2));
         Assert.assertEquals("IS1 state", 1, sml.getSensorState(is1, sm2));
-        // add a control turnout
-        //sml.addTurnout("IT1", "Closed", sm2); // wrong method name
+        // add 1 control turnout
+        Hashtable<NamedBeanHandle<Turnout>, Integer> hashTurnouts = new Hashtable<NamedBeanHandle<Turnout>, Integer>();
+        NamedBeanHandle<Turnout> namedTurnout1 = nbhm.getNamedBeanHandle("IT1", it1);
+        hashTurnouts.put(namedTurnout1, 1); // 1 = Closed
+        sml.setTurnouts(hashTurnouts, sm2);
         // check config
-        //Assert.assertEquals("IT1 included", true, sml.isTurnoutIncluded(it1, sm2));
-        //Assert.assertEquals("IT2 not included", false, sml.isTurnoutIncluded(it2, sm2));
-        //Assert.assertEquals("IS1 state", jmri.InstanceManager.turnoutManagerInstance().getClosedText(), sml.getTurnoutState(it1, sm2));
+        Assert.assertTrue("IT1 included", sml.isTurnoutIncluded(it1, sm2));
+        Assert.assertFalse("IT2 before", sml.isTurnoutIncluded(it2, sm2));
+        // add another control turnout
+        NamedBeanHandle<Turnout> namedTurnout2 = nbhm.getNamedBeanHandle("IT2", it2);
+        hashTurnouts.put(namedTurnout2, 2); // 2 = Thrown
+        sml.setTurnouts(hashTurnouts, sm2);
+        Assert.assertEquals("IT2 after", true, sml.isTurnoutIncluded(it2, sm2));
+        Assert.assertEquals("IT1 state", 1, sml.getTurnoutState(it1, sm2));
         // add a control signal mast
-        //sml.addSignalMast("SM3", "Stop", sm2); // wrong method name
+        Hashtable<SignalMast, String> hashSignalMast = new Hashtable<SignalMast, String>();
+        hashSignalMast.put(sm3, "Stop");
+        sml.setMasts(hashSignalMast, sm2);
         // check config
-        //Assert.assertEquals("SM3 included", true, sml.isSignalMastIncluded(sm3, sm2));
-        //Assert.assertEquals("SM3 aspect", "Stop", sml.getSignalMastState(sm3, sm2));
+        Assert.assertEquals("SM3 included", true, sml.isSignalMastIncluded(sm3, sm2));
+        Assert.assertEquals("SM3 aspect before", "Stop", sml.getSignalMastState(sm3, sm2));
+        // set aspect to Proceed
+        hashSignalMast.put(sm3, "Proceed");
+        sml.setMasts(hashSignalMast, sm2);
+        Assert.assertEquals("SM3 aspect after", "Proceed", sml.getSignalMastState(sm3, sm2));
+        // set comment
+        sml.setComment("SMLTest", sm2);
+        Assert.assertEquals("comment", "SMLTest", sml.getComment(sm2));
+        sml.initialise(sm2);
+        // set SML disabled
+        sml.setDisabled(sm2);
+        Assert.assertEquals("disabled", false, sml.isEnabled(sm2));
+        // change source mast and check
+        sml.replaceSourceMast(sm1, sm3);
+        Assert.assertFalse("sourcemast", sml.getSourceMast() == sm1);
+        Assert.assertTrue("sourcemast", sml.getSourceMast() == sm3);
+        // clean up
+        sml.dispose();
     }
 
     // The minimal setup for log4J
