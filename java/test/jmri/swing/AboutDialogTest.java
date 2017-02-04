@@ -28,12 +28,39 @@ public class AboutDialogTest {
     }
 
     @Test
+    public void testShowAndCloseLinux() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // only run this version of the test on Linux.
+        Assume.assumeTrue(jmri.util.SystemType.isLinux());
+        JFrame frame = new JFrame("Test Frame");
+        AboutDialog dialog = new AboutDialog(frame,true);
+
+        Thread waitThread = new Thread(){
+           @Override
+           public void run(){
+              // constructor for jfo and jdo will wait until the frame and
+              // dialog are visible.
+              JFrameOperator jfo = new JFrameOperator("Test Frame");
+              JDialogOperator jdo = new JDialogOperator(jfo,Bundle.getMessage("TitleAbout",jmri.Application.getApplicationName()));
+              jdo.close();
+           }
+        };
+        waitThread.start();
+        frame.setVisible(true);
+        dialog.setVisible(true);
+    }
+
+    @Test
+
     public void testShowAndClose() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // Don't run this version of the test on Linux.
+        Assume.assumeFalse(jmri.util.SystemType.isLinux());
+           
+        JFrame frame = new JFrame("Test Frame");
+        AboutDialog dialog = new AboutDialog(frame,true);
 
         ThreadingUtil.runOnGUIEventually( ()->{
-           JFrame frame = new JFrame("Test Frame");
-           AboutDialog dialog = new AboutDialog(frame,true);
            frame.setVisible(true);
            dialog.setVisible(true);
         });
