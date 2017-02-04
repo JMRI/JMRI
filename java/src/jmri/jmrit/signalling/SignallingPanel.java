@@ -29,6 +29,7 @@ import javax.swing.JTable;
 import javax.swing.SortOrder;
 import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -400,6 +401,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         _blockModel = new BlockModel();
         JTable manualBlockTable = new JTable(_blockModel);
         TableRowSorter<BlockModel> manualBlockSorter = new TableRowSorter<>(_blockModel);
+        // configure row height for comboBox
+        manualBlockTable.setRowHeight(Sizer.getPreferredSize().height - 2); // row height has to be greater than for plain tables
         manualBlockSorter.setComparator(BlockModel.SNAME_COLUMN, new SystemNameComparator());
         RowSorterUtil.setSortOrder(manualBlockSorter, BlockModel.SNAME_COLUMN, SortOrder.ASCENDING);
         manualBlockTable.setRowSorter(manualBlockSorter);
@@ -425,6 +428,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         TableColumn stateColumnC = _manualBlockColumnModel.
                 getColumn(BlockModel.STATE_COLUMN);
         stateColumnC.setCellEditor(new DefaultCellEditor(stateCCombo));
+        //stateColumnC.setCellRenderer(new ComboBoxRenderer()); // display a real JComboBox to indicate configurability TODO
         stateColumnC.setResizable(false);
         stateColumnC.setMinWidth(90);
         stateColumnC.setMaxWidth(100);
@@ -529,7 +533,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         JTable manualTurnoutTable = new JTable(_turnoutModel);
         TableRowSorter<TurnoutModel> manualTurnoutSorter = new TableRowSorter<>(_turnoutModel);
         // configure row height for comboBox
-        manualTurnoutTable.setRowHeight(Sizer.getPreferredSize().height); // row height has to be greater than for plain tables
+        manualTurnoutTable.setRowHeight(Sizer.getPreferredSize().height - 2); // row height has to be greater than for plain tables
         manualTurnoutSorter.setComparator(TurnoutModel.SNAME_COLUMN, new SystemNameComparator());
         RowSorterUtil.setSortOrder(manualTurnoutSorter, TurnoutModel.SNAME_COLUMN, SortOrder.ASCENDING);
         manualTurnoutTable.setRowSorter(manualTurnoutSorter);
@@ -555,6 +559,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         TableColumn stateColumnC = _manualTurnoutColumnModel.
                 getColumn(TurnoutModel.STATE_COLUMN);
         stateColumnC.setCellEditor(new DefaultCellEditor(stateCCombo));
+        //stateColumnC.setCellRenderer(new ComboBoxRenderer()); // display a real JComboBox to indicate configurability TODO
         stateColumnC.setResizable(false);
         stateColumnC.setMinWidth(90);
         stateColumnC.setMaxWidth(100);
@@ -647,7 +652,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         JTable manualSensorTable = new JTable(_sensorModel);
         TableRowSorter<SensorModel> manualSensorSorter = new TableRowSorter<>(_sensorModel);
         // configure row height for comboBox
-        manualSensorTable.setRowHeight(Sizer.getPreferredSize().height); // row height has to be greater than for plain tables
+        manualSensorTable.setRowHeight(Sizer.getPreferredSize().height - 2); // row height has to be greater than for plain tables
         manualSensorSorter.setComparator(SensorModel.SNAME_COLUMN, new SystemNameComparator());
         RowSorterUtil.setSortOrder(manualSensorSorter, SensorModel.SNAME_COLUMN, SortOrder.ASCENDING);
         manualSensorTable.setRowSorter(manualSensorSorter);
@@ -672,6 +677,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         TableColumn stateColumnC = _manualSensorColumnModel.
                 getColumn(SensorModel.STATE_COLUMN);
         stateColumnC.setCellEditor(new DefaultCellEditor(stateCCombo));
+        //stateColumnC.setCellRenderer(new ComboBoxRenderer(stateCCombo)); // display a real JComboBox to indicate configurability TODO
         stateColumnC.setResizable(false);
         stateColumnC.setMinWidth(90);
         stateColumnC.setMaxWidth(100);
@@ -719,7 +725,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         _signalMastModel = new SignalMastModel();
         TableRowSorter<SignalMastModel> sorter = new TableRowSorter<>(_signalMastModel);
-        JTable manualSignalMastTable = new JTable(_signalMastModel); // don't use makeTable()
+        JTable manualSignalMastTable = new JTable(_signalMastModel); // don't use makeTable() since 4.7.1
         // configure (extra) row height for comboBox
         manualSignalMastTable.setRowHeight(Sizer.getPreferredSize().height - 2);
         // row height has to be greater than plain tables to properly show comboBox shape, but tightened a bit over preferred
@@ -793,7 +799,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     /**
-     * Update changes in SML when Update button is pressed
+     * Update changes in SML when Update button is pressed in the Edit Logic > Add Logic pane
      */
     void updatePressed(ActionEvent e) {
         sourceMast = (SignalMast) sourceMastBox.getSelectedBean();
@@ -815,7 +821,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         if (sml == null) { // a new SML
             sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).newSignalMastLogic(sourceMast);
-            sml.setDestinationMast(destMast);
+            sml.setDestinationMast(destMast); // check if a similar SML pair already exists when in Add New session
+            // show replace/update dialog TODO
             fixedSourceMastLabel.setText(sourceMast.getDisplayName());
             fixedDestMastLabel.setText(destMast.getDisplayName());
             sourceMastBox.setVisible(false);
@@ -858,7 +865,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().getTurnout(_includedManualTurnoutList.get(i).getDisplayName());
             NamedBeanHandle<Turnout> namedTurnout = nbhm.getNamedBeanHandle(turnoutName, turnout);
             hashTurnouts.put(namedTurnout, _includedManualTurnoutList.get(i).getState());
-            // no specific, just show the current state as selection in comboBox.
+            // no specific, just show the current turnout state as selection in comboBox.
             // for existing SML pair, will be updated to show present setting by editDetails()
         }
         sml.setTurnouts(hashTurnouts, destMast);
@@ -869,7 +876,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             Sensor sensor = jmri.InstanceManager.sensorManagerInstance().getSensor(_includedManualSensorList.get(i).getDisplayName());
             NamedBeanHandle<Sensor> namedSensor = nbhm.getNamedBeanHandle(sensorName, sensor);
             hashSensors.put(namedSensor, _includedManualSensorList.get(i).getState());
-            // no specific, just show the current state as selection in comboBox.
+            // no specific, just show the current sensor state as selection in comboBox.
             // for existing SML pair, will be updated to show present setting by editDetails()
         }
         sml.setSensors(hashSensors, destMast);
@@ -877,14 +884,14 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         Hashtable<SignalMast, String> hashSignalMasts = new Hashtable<SignalMast, String>();
         for (int i = 0; i < _includedManualSignalMastList.size(); i++) {
             if (_includedManualSignalMastList.get(i).getMast() == sourceMast || _includedManualSignalMastList.get(i).getMast() == destMast) {
-                // warn user that control mast is either source or destination mast of thsi pair, allow as valid choice
+                // warn user that control mast is either source or destination mast of this pair, but allow as a valid choice
                 int mes = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(rb.getString("SignalMastCriteriaOwn"),
                         new Object[]{_includedManualSignalMastList.get(i).getMast().getDisplayName()}),
                         rb.getString("SignalMastCriteriaOwnTitle"),
                         JOptionPane.YES_NO_OPTION);
-                if (mes == 0) {
+                if (mes == 0) { // Yes
                     hashSignalMasts.put(_includedManualSignalMastList.get(i).getMast(), _includedManualSignalMastList.get(i).getSetToState());
-                } else {
+                } else { // No
                     _includedManualSignalMastList.get(i).setIncluded(false); // deselect "Included" checkBox for signal mast in manualSignalList
                     initializeIncludedList();
                     _signalMastModel.fireTableDataChanged();
@@ -894,10 +901,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
         sml.setMasts(hashSignalMasts, destMast);
+
         sml.allowTurnoutLock(lockTurnouts.isSelected(), destMast);
         sml.initialise(destMast);
-        // still need to fireTableRowsUpdated to show new SML in underlying table TODO
-        cancelPressed(null); // use actions from cancelPressed (after storing edits) to close panel to signal acceptence of edits/apply
+        // _AppearanceModel.fireTableRowsUpdated to show new SML in underlying table via SignalMastAppearanceModel() TODO
+        // via sml > listener ?
+        //cancelPressed(null); // after storing edits (above) use actions from cancelPressed (below) to close panel signaling acceptance of edits/Update to the user
     }
 
     /**
@@ -1374,6 +1383,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         public Class<?> getColumnClass(int c) {
             if (c == INCLUDE_COLUMN) {
                 return Boolean.class;
+            } else if (c == STATE_COLUMN) {
+                return JComboBox.class;
             } else {
                 return String.class;
             }
@@ -1509,6 +1520,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                     blockList.get(r).setIncluded(((Boolean) type).booleanValue());
                     break;
                 case STATE_COLUMN:
+                    log.debug("State = " + type);
                     blockList.get(r).setSetToState((String) type);
                     break;
                 default:
@@ -1553,7 +1565,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 case UNAME_COLUMN:
                     return turnoutList.get(r).getUserName();
                 case STATE_COLUMN:
-                    return turnoutList.get(r).getSetToState(); // TODO show proper JComboBox
+                    return turnoutList.get(r).getSetToState(); // TODO show proper JComboBox:
                 default:
                     return null;
             }
@@ -1572,7 +1584,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                     turnoutList.get(r).setIncluded(((Boolean) type).booleanValue());
                     break;
                 case STATE_COLUMN:
-                    turnoutList.get(r).setSetToState((String) type); // TODO show proper JComboBox
+                    log.debug("State = " + type);
+                    if ((String) type != null){
+                    turnoutList.get(r).setSetToState((String) type);
+                    fireTableRowsUpdated(r, r); // use new value
+                    }
                     break;
                 default:
                     break;
@@ -1582,10 +1598,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         @Override
         public Class<?> getColumnClass(int c) {
             if (c == STATE_COLUMN) {
-                return JComboBox.class; // Use a State ComboBox
+                return JComboBox.class; // State ComboBox still looks like a JLabel
+                //return ComboBoxRenderer.class; // Use a State ComboBox TODO
             }
             return super.getColumnClass(c);
         }
+
     }
 
     /**
@@ -1660,6 +1678,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
             return super.getColumnClass(c);
         }
+
     }
 
     /**
@@ -1766,14 +1785,13 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
 
         /**
-         * Customize the SignalMast State (Appearance) column to show an appropriate ComboBox of available Aspects
-         * when the TableDataModel is being called from ListedTableAction.
+         * Customize the SignalMast State (Appearance) column to show an appropriate ComboBox of available Aspects.
          * @param table a JTable of Signal Masts
          */
         protected void configStateColumn(JTable table) {
-            // have the sate column hold a JPanel with a JComboBox for Aspects
+            // have the state column hold a JPanel with a JComboBox for Aspects
             // add extras, override BeanTableDataModel
-            log.debug("Mast configSateColumn (I am {})", super.toString());
+            log.debug("Mast configStateColumn (I am {})", super.toString());
             table.setDefaultEditor(RowComboBoxPanel.class, new AspectComboBoxPanel());
             table.setDefaultRenderer(RowComboBoxPanel.class, new AspectComboBoxPanel()); // create a separate instance for the renderer
             // Set more things?
@@ -2135,6 +2153,36 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 default:
                     return null;
             }
+        }
+    }
+
+    /**
+     * Provide a table cell renderer looking like a JComboBox
+     * Class to be moved to jmri.util.swing after 4.7.1 TODO
+     */
+    static class ComboBoxRenderer extends JComboBox implements TableCellRenderer {
+
+        public ComboBoxRenderer() {
+            super();
+        }
+
+        // TODO create method to fill in current value when called without arguments, look at SignalMastTableDataModel
+
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus, int row, int column) {
+            if (isSelected) {
+                setForeground(table.getSelectionForeground());
+                super.setBackground(table.getSelectionBackground());
+            } else {
+                setForeground(table.getForeground());
+                setBackground(table.getBackground());
+            }
+            if (value != null) {
+                setSelectedItem((String) value);
+            } else {
+                setSelectedItem(null);
+            }
+            return this;
         }
     }
 

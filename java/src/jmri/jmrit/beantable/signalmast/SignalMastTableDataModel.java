@@ -91,9 +91,9 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         } else if (col == HELDCOL) {
             return new JTextField(Bundle.getMessage("ColumnHeadHeld").length()).getPreferredSize().width;
         } else if (col == EDITLOGICCOL) {
-            return new JTextField(Bundle.getMessage("ButtonEdit").length()).getPreferredSize().width;
-        } else if (col == EDITMASTCOL) {
             return new JTextField(Bundle.getMessage("EditSignalLogicButton").length()).getPreferredSize().width;
+        } else if (col == EDITMASTCOL) {
+            return new JTextField(Bundle.getMessage("ButtonEdit").length()).getPreferredSize().width;
         } else {
             return super.getPreferredWidth(col);
         }

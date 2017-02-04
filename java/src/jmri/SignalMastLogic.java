@@ -199,7 +199,7 @@ public interface SignalMastLogic {
     public boolean removeDestination(SignalMast dest);
 
     /**
-     * Set which blocks must be inactive for the signal not to be set at a stop
+     * Set which blocks must be inactive for the signal not to be set to a Stop
      * aspect. These blocks are not stored in the panel file.
      *
      * @param blocks blocks to be inactive
@@ -215,13 +215,13 @@ public interface SignalMastLogic {
     public void setAutoMasts(Hashtable<SignalMast, String> masts, SignalMast destination);
 
     /**
-     * Set which blocks must be inactive for the signal not to be set at a stop
+     * Set which turnouts must be Thrown for the signal not to be set to a Stop
      * aspect. These Turnouts are not stored in the panel file.
      */
     public void setAutoTurnouts(Hashtable<Turnout, Integer> turnouts, SignalMast destination);
 
     /**
-     * Set which blocks must be inactive for the signal not to be set at a stop
+     * Set which blocks must be inactive for the signal not to be set to a Stop
      * aspect.
      *
      * @param blocks blocks to be inactive
@@ -280,8 +280,8 @@ public interface SignalMastLogic {
     public void setStore(int store, SignalMast destination);
 
     /**
-     * Set the states that each turnout must be in for signal not to be set at
-     * a stop aspect.
+     * Set the states that each turnout must be in for signal not to be set to
+     * a Stop aspect.
      *
      * @param turnouts Named turnouts to check for state
      */
