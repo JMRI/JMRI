@@ -41,7 +41,7 @@ public class AboutDialogTest {
         // constructor for jfo and jdo will wait until the frame and
         // dialog are visible.
         JFrameOperator jfo = new JFrameOperator("Test Frame");
-        JDialogOperator jdo = new JDialogOperator(jfo,Bundle.getMessage("TitleAbout","JMRI"));
+        JDialogOperator jdo = new JDialogOperator(jfo,Bundle.getMessage("TitleAbout",jmri.Application.getApplicationName()));
         jdo.close();
     }
 
