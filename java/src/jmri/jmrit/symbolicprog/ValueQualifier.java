@@ -17,10 +17,12 @@ public class ValueQualifier extends ArithmeticQualifier {
 
     VariableValue qualifiedVal;
 
+    @Override
     public void setWatchedAvailable(boolean enable) {
         qualifiedVal.setAvailable(enable);
     }
 
+    @Override
     protected boolean currentAvailableState() {
         return qualifiedVal.getAvailable();
     }

@@ -18,10 +18,12 @@ public class NceTurnoutManagerXml extends jmri.managers.configurexml.AbstractTur
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element turnouts) {
         turnouts.setAttribute("class", "jmri.jmrix.nce.configurexml.NceTurnoutManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

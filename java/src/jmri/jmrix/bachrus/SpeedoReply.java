@@ -97,6 +97,7 @@ public class SpeedoReply {
     }
 
     // display format
+    @Override
     public String toString() {
 //        String s = "";
 //        for (int i = 0; i < _nDataChars; i++) {

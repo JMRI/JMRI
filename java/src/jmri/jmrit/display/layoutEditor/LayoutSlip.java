@@ -162,6 +162,7 @@ public class LayoutSlip extends LayoutTurnout {
         }
     }
 
+    @Override
     public Object getConnection(int location) throws jmri.JmriException {
         switch (location) {
             case SLIP_A:
@@ -177,6 +178,7 @@ public class LayoutSlip extends LayoutTurnout {
         throw new jmri.JmriException("Invalid Point");
     }
 
+    @Override
     public void setConnection(int location, Object o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
             log.error("unexpected type of connection to layoutturnout - " + type);
@@ -323,6 +325,7 @@ public class LayoutSlip extends LayoutTurnout {
         if (namedTurnout != null) {
             namedTurnout.getBean().addPropertyChangeListener(mTurnoutListener
                     = new java.beans.PropertyChangeListener() {
+                        @Override
                         public void propertyChange(java.beans.PropertyChangeEvent e) {
                             updateState();
                         }
@@ -331,6 +334,7 @@ public class LayoutSlip extends LayoutTurnout {
         if (namedTurnoutB != null) {
             namedTurnoutB.getBean().addPropertyChangeListener(mTurnoutListener
                     = new java.beans.PropertyChangeListener() {
+                        @Override
                         public void propertyChange(java.beans.PropertyChangeEvent e) {
                             updateState();
                         }
@@ -348,28 +352,33 @@ public class LayoutSlip extends LayoutTurnout {
         }
     }
 
+    @Override
     public Point2D getCoordsCenter() {
         return center;
     }
 
+    @Override
     public Point2D getCoordsA() {
         double x = center.getX() + dispC.getX();
         double y = center.getY() + dispC.getY();
         return new Point2D.Double(x, y);
     }
 
+    @Override
     public Point2D getCoordsB() {
         double x = center.getX() + dispB.getX();
         double y = center.getY() + dispB.getY();
         return new Point2D.Double(x, y);
     }
 
+    @Override
     public Point2D getCoordsC() {
         double x = center.getX() - dispC.getX();
         double y = center.getY() - dispC.getY();
         return new Point2D.Double(x, y);
     }
 
+    @Override
     public Point2D getCoordsD() {
         double x = center.getX() - dispB.getX();
         double y = center.getY() - dispB.getY();
@@ -410,6 +419,7 @@ public class LayoutSlip extends LayoutTurnout {
         reCheckBlockBoundary();
     }
 
+    @Override
     public void reCheckBlockBoundary() {
         if (connectA == null && connectB == null && connectC == null && connectD == null) {
             //This is no longer a block boundary, therefore will remove signal masts and sensors if present
@@ -505,34 +515,40 @@ public class LayoutSlip extends LayoutTurnout {
     /**
      * Modify coordinates methods
      */
+    @Override
     public void setCoordsCenter(Point2D p) {
         center = p;
     }
 
+    @Override
     public void setCoordsA(Point2D p) {
         double x = center.getX() - p.getX();
         double y = center.getY() - p.getY();
         dispC = new Point2D.Double(-x, -y);
     }
 
+    @Override
     public void setCoordsB(Point2D p) {
         double x = center.getX() - p.getX();
         double y = center.getY() - p.getY();
         dispB = new Point2D.Double(-x, -y);
     }
 
+    @Override
     public void setCoordsC(Point2D p) {
         double x = center.getX() - p.getX();
         double y = center.getY() - p.getY();
         dispC = new Point2D.Double(x, y);
     }
 
+    @Override
     public void setCoordsD(Point2D p) {
         double x = center.getX() - p.getX();
         double y = center.getY() - p.getY();
         dispB = new Point2D.Double(x, y);
     }
 
+    @Override
     public void scaleCoords(float xFactor, float yFactor) {
         Point2D pt = new Point2D.Double(Math.round(center.getX() * xFactor),
                 Math.round(center.getY() * yFactor));
@@ -550,6 +566,7 @@ public class LayoutSlip extends LayoutTurnout {
      * PositionablePointXml, then the following method is called after the
      * entire LayoutEditor is loaded to set the specific TrackSegment objects.
      */
+    @Override
     public void setObjects(LayoutEditor p) {
         connectA = p.getFinder().findTrackSegmentByName(connectAName);
         connectB = p.getFinder().findTrackSegmentByName(connectBName);
@@ -572,6 +589,7 @@ public class LayoutSlip extends LayoutTurnout {
     /**
      * Display popup menu for information and editing
      */
+    @Override
     protected void showPopUp(MouseEvent e, boolean editable) {
         if (popup != null) {
             popup.removeAll();
@@ -596,11 +614,13 @@ public class LayoutSlip extends LayoutTurnout {
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     editLayoutSlip(instance);
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     if (layoutEditor.removeLayoutSlip(instance)) {
                         // Returned true if user did not cancel
@@ -614,6 +634,7 @@ public class LayoutSlip extends LayoutTurnout {
                 JMenuItem rotateItem = new JMenuItem(rb.getString("Rotate") + "...");
                 popup.add(rotateItem);
                 rotateItem.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent event) {
                         boolean entering = true;
                         boolean error = false;
@@ -648,6 +669,7 @@ public class LayoutSlip extends LayoutTurnout {
             }
             if (blockAssigned) {
                 popup.add(new AbstractAction(rb.getString("SetSignals")) {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -668,6 +690,7 @@ public class LayoutSlip extends LayoutTurnout {
             }
             if (blockBoundaries) {
                 popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -676,6 +699,7 @@ public class LayoutSlip extends LayoutTurnout {
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSensors")) {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -688,6 +712,7 @@ public class LayoutSlip extends LayoutTurnout {
             if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
                 if (blockAssigned) {
                     popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
                             routeTableAction.actionPerformed(e);
@@ -704,6 +729,7 @@ public class LayoutSlip extends LayoutTurnout {
         }
     }
 
+    @Override
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];
 
@@ -806,6 +832,7 @@ public class LayoutSlip extends LayoutTurnout {
             panel2.add(testPanel);
             JButton testButton = new JButton("Test");
             testButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     toggleStateTest();
                 }
@@ -837,6 +864,7 @@ public class LayoutSlip extends LayoutTurnout {
             // Edit Block
             panel4.add(turnoutEditBlock = new JButton(Bundle.getMessage("EditBlock", "")));
             turnoutEditBlock.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     turnoutEditBlockPressed(e);
                 }
@@ -860,6 +888,7 @@ public class LayoutSlip extends LayoutTurnout {
             });
 
             slipEditDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     slipEditDonePressed(e);
                 }
@@ -868,6 +897,7 @@ public class LayoutSlip extends LayoutTurnout {
             // Cancel
             panel5.add(slipEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             slipEditCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     slipEditCancelPressed(e);
                 }
@@ -882,6 +912,7 @@ public class LayoutSlip extends LayoutTurnout {
         blockNameComboBox.getEditor().setItem(blockName);
 
         editLayoutTurnoutFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 slipEditCancelPressed(null);
             }
@@ -1061,6 +1092,7 @@ public class LayoutSlip extends LayoutTurnout {
 
     class TestState extends JPanel {
 
+        @Override
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g;
@@ -1157,6 +1189,7 @@ public class LayoutSlip extends LayoutTurnout {
      * Clean up when this object is no longer needed. Should not be called while
      * the object is still displayed; see remove()
      */
+    @Override
     void dispose() {
         if (popup != null) {
             popup.removeAll();
@@ -1167,6 +1200,7 @@ public class LayoutSlip extends LayoutTurnout {
     /**
      * Removes this object from display and persistance
      */
+    @Override
     void remove() {
 
         disableSML(getSignalAMast());
@@ -1193,6 +1227,7 @@ public class LayoutSlip extends LayoutTurnout {
     /**
      * "active" means that the object is still displayed, and should be stored.
      */
+    @Override
     public boolean isActive() {
         return active;
     }

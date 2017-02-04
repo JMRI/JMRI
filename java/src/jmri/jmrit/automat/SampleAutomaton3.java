@@ -60,6 +60,7 @@ public class SampleAutomaton3 extends AbstractAutomaton {
     int locoNumber = 77;
     boolean locoLong = false;
 
+    @Override
     protected void init() {
         // get references to sample layout objects
 
@@ -81,6 +82,7 @@ public class SampleAutomaton3 extends AbstractAutomaton {
      *
      * @return Always returns true to continue operation
      */
+    @Override
     protected boolean handle() {
 
         // we're supposed to be moving forward here

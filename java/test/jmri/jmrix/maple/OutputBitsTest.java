@@ -68,6 +68,7 @@ public class OutputBitsTest extends TestCase {
 
     private OutputBits obit;
 
+    @Override
     protected void setUp() {
         // The minimal setup for log4J
         apps.tests.Log4JFixture.setUp();
@@ -75,6 +76,7 @@ public class OutputBitsTest extends TestCase {
         obit = OutputBits.instance();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

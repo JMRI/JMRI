@@ -8,7 +8,6 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -202,18 +201,21 @@ public class SignalHeadSignalMastTest {
         JUnitUtil.resetInstanceManager();
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH1") {
+                    @Override
                     protected void updateOutput() {
                     }
                 }
         );
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH2") {
+                    @Override
                     protected void updateOutput() {
                     }
                 }
         );
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH3") {
+                    @Override
                     protected void updateOutput() {
                     }
                 }

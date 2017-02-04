@@ -39,14 +39,17 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
         InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
     }
 
+    @Override
     public int getXMLOrder() {
         return jmri.Manager.LAYOUTBLOCKS;
     }
 
+    @Override
     public String getSystemPrefix() {
         return "I";
     }
 
+    @Override
     public char typeLetter() {
         return 'B';
     }
@@ -2144,6 +2147,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             }
         }
         Runnable r = new Runnable() {
+            @Override
             public void run() {
                 try {
                     firePropertyChange("topology", true, false);
@@ -2254,6 +2258,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
         return lastRoutingChange;
     }
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameLayoutBlock");
     }

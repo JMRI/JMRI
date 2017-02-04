@@ -150,6 +150,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         destPanel.add(fixedDestMastLabel);
 
         destMastBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (useLayoutEditor.isSelected()) {
                     try {
@@ -179,6 +180,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         useLayoutEditorTurnout.setVisible(false);
 
         useLayoutEditor.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
 
                 useLayoutEditorBlock.setVisible(useLayoutEditor.isSelected());
@@ -227,6 +229,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         selGroup.add(allButton);
         py.add(allButton);
         allButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 // Setup for display of all Turnouts, if needed
                 if (!showAll) {
@@ -242,6 +245,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         selGroup.add(includedButton);
         py.add(includedButton);
         includedButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 // Setup for display of included Turnouts only, if needed
                 if (showAll) {
@@ -275,6 +279,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         //Cancel button
         footer.add(cancelButton);
         cancelButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 cancelPressed(e);
             }
@@ -283,6 +288,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         //Update button
         footer.add(updateButton);
         updateButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 updatePressed(e);
             }
@@ -880,6 +886,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         sml.initialise(destMast);
     }
 
+    @Override
     public void initComponents() {
 
     }
@@ -972,6 +979,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
 
     }
@@ -1173,10 +1181,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
         Block block;
 
+        @Override
         String getSysName() {
             return block.getSystemName();
         }
 
+        @Override
         String getUserName() {
             return block.getUserName();
         }
@@ -1189,6 +1199,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             return block.getBlockSpeed();
         }
 
+        @Override
         String getSetToState() {
             switch (_setToState) {
                 case Block.OCCUPIED:
@@ -1199,6 +1210,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             return SET_TO_ANY;
         }
 
+        @Override
         void setSetToState(String state) {
             if (SET_TO_UNOCCUPIED.equals(state)) {
                 _setToState = Block.UNOCCUPIED;
@@ -1216,6 +1228,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             super(block);
         }
 
+        @Override
         void setSetToState(String state) {
         }
     }
@@ -1226,6 +1239,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             super(sysName, userName);
         }
 
+        @Override
         String getSetToState() {
             switch (_setToState) {
                 case Turnout.THROWN:
@@ -1236,6 +1250,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             return SET_TO_ANY;
         }
 
+        @Override
         void setSetToState(String state) {
             if (SET_TO_THROWN.equals(state)) {
                 _setToState = Turnout.THROWN;
@@ -1253,6 +1268,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             super(sysName, userName);
         }
 
+        @Override
         void setSetToState(String state) {
         }
     }
@@ -1263,6 +1279,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             super(sysName, userName);
         }
 
+        @Override
         String getSetToState() {
             switch (_setToState) {
                 case Sensor.INACTIVE:
@@ -1273,6 +1290,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             return "";
         }
 
+        @Override
         void setSetToState(String state) {
             if (SET_TO_INACTIVE.equals(state)) {
                 _setToState = Sensor.INACTIVE;
@@ -1296,18 +1314,22 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             return mast;
         }
 
+        @Override
         String getSysName() {
             return mast.getSystemName();
         }
 
+        @Override
         String getUserName() {
             return mast.getUserName();
         }
 
+        @Override
         String getSetToState() {
             return _setToAspect;
         }
 
+        @Override
         void setSetToState(String state) {
             _setToAspect = state;
         }
@@ -1319,6 +1341,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             super(s);
         }
 
+        @Override
         void setSetToState(String state) {
         }
 
@@ -1329,6 +1352,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
     abstract class TableModel extends AbstractTableModel implements PropertyChangeListener {
 
+        @Override
         public Class<?> getColumnClass(int c) {
             if (c == INCLUDE_COLUMN) {
                 return Boolean.class;
@@ -1337,6 +1361,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("length")) {
                 // a new NamedBean is available in the manager
@@ -1348,6 +1373,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             jmri.InstanceManager.turnoutManagerInstance().removePropertyChangeListener(this);
         }
 
+        @Override
         public String getColumnName(int col) {
             switch (col) {
                 case SNAME_COLUMN:
@@ -1363,10 +1389,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
+        @Override
         public int getColumnCount() {
             return 4;
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             return ((c == INCLUDE_COLUMN) || (c == STATE_COLUMN));
         }
@@ -1383,6 +1411,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             jmri.InstanceManager.getDefault(jmri.BlockManager.class).addPropertyChangeListener(this);
         }
 
+        @Override
         public int getRowCount() {
             if (showAll) {
                 return _manualBlockList.size();
@@ -1394,10 +1423,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         public static final int SPEED_COLUMN = 4;
         public static final int PERMISSIVE_COLUMN = 5;
 
+        @Override
         public int getColumnCount() {
             return 6;
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             ArrayList<ManualBlockList> blockList = null;
             if (showAll) {
@@ -1423,6 +1454,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             if (c == PERMISSIVE_COLUMN) {
                 return Boolean.class;
@@ -1430,6 +1462,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             return super.getColumnClass(c);
         }
 
+        @Override
         public String getColumnName(int col) {
             switch (col) {
                 case SPEED_COLUMN:
@@ -1440,6 +1473,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             return super.getColumnName(col);
         }
 
+        @Override
         public void setValueAt(Object type, int r, int c) {
             ArrayList<ManualBlockList> blockList = null;
             if (showAll) {
@@ -1466,6 +1500,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             jmri.InstanceManager.turnoutManagerInstance().addPropertyChangeListener(this);
         }
 
+        @Override
         public int getRowCount() {
             if (showAll) {
                 return _manualTurnoutList.size();
@@ -1474,6 +1509,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             ArrayList<ManualTurnoutList> turnoutList = null;
             if (showAll) {
@@ -1495,6 +1531,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
+        @Override
         public void setValueAt(Object type, int r, int c) {
             ArrayList<ManualTurnoutList> turnoutList = null;
             if (showAll) {
@@ -1524,6 +1561,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
         }
 
+        @Override
         public int getRowCount() {
             if (showAll) {
                 return _manualSensorList.size();
@@ -1532,6 +1570,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             ArrayList<ManualSensorList> sensorList = null;
             if (showAll) {
@@ -1558,6 +1597,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
+        @Override
         public void setValueAt(Object type, int r, int c) {
             ArrayList<ManualSensorList> sensorList = null;
             if (showAll) {
@@ -1584,6 +1624,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).addPropertyChangeListener(this);
         }
 
+        @Override
         public int getRowCount() {
             if (showAll) {
                 return _manualSignalMastList.size();
@@ -1592,6 +1633,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             ArrayList<ManualSignalMastList> signalMastList = null;
             if (showAll) {
@@ -1622,6 +1664,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
+        @Override
         public String getColumnName(int col) {
             if (col == STATE_COLUMN) {
                 return rb.getString("ColumnAspect");
@@ -1630,6 +1673,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
+        @Override
         public void setValueAt(Object type, int r, int c) {
             ArrayList<ManualSignalMastList> signalMastList = null;
 
@@ -1655,6 +1699,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         protected JTable makeJTable(SignalMastModel model) {
             return new JTable(model) {
 
+                @Override
                 public TableCellRenderer getCellRenderer(int row, int column) {
                     if (column == STATE_COLUMN) {
                         return getRenderer(row);
@@ -1663,6 +1708,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                     }
                 }
 
+                @Override
                 public TableCellEditor getCellEditor(int row, int column) {
                     if (column == STATE_COLUMN) {
                         return getEditor(row);
@@ -1723,6 +1769,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             return String.class;
         }
@@ -1731,6 +1778,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             jmri.InstanceManager.turnoutManagerInstance().removePropertyChangeListener(this);
         }
 
+        @Override
         public String getColumnName(int col) {
             switch (col) {
                 case SNAME_COLUMN:
@@ -1745,10 +1793,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
+        @Override
         public int getColumnCount() {
             return 3;
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             return false;
         }
@@ -1769,10 +1819,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         public static final int SPEED_COLUMN = 3;
         public static final int PERMISSIVE_COLUMN = 4;
 
+        @Override
         public int getColumnCount() {
             return 5;
         }
 
+        @Override
         public String getColumnName(int col) {
             switch (col) {
                 case SPEED_COLUMN:
@@ -1785,6 +1837,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             return super.getColumnName(col);
         }
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("autoblocks")) {
                 // a new NamedBean is available in the manager
@@ -1793,6 +1846,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             if (c == PERMISSIVE_COLUMN) {
                 return Boolean.class;
@@ -1800,10 +1854,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             return super.getColumnClass(c);
         }
 
+        @Override
         public int getRowCount() {
             return _automaticBlockList.size();
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             switch (c) {
                 case SNAME_COLUMN:  // slot number
@@ -1822,9 +1878,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
+        @Override
         public void setValueAt(Object type, int r, int c) {
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             return false;
         }
@@ -1836,10 +1894,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             super();
         }
 
+        @Override
         public int getRowCount() {
             return _automaticTurnoutList.size();
         }
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("autoturnouts")) {
                 // a new NamedBean is available in the manager
@@ -1848,6 +1908,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             switch (c) {
                 case SNAME_COLUMN:  // slot number
@@ -1868,10 +1929,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             super();
         }
 
+        @Override
         public int getRowCount() {
             return _automaticSignalMastList.size();
         }
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("automasts")) {
                 // a new NamedBean is available in the manager
@@ -1880,6 +1943,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             switch (c) {
                 case SNAME_COLUMN:  // slot number
@@ -1907,6 +1971,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             super(items);
         }
 
+        @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
                 boolean isSelected, boolean hasFocus, int row, int column) {
             if (isSelected) {

@@ -98,6 +98,7 @@ public class XBeeNode extends IEEE802154Node {
      * Create the needed Initialization packet (AbstractMRMessage) for this
      * node. Returns null if not needed.
      */
+    @Override
     public AbstractMRMessage createInitPacket() {
         return null;
     }
@@ -105,6 +106,7 @@ public class XBeeNode extends IEEE802154Node {
     /**
      * Create an Transmit packet (AbstractMRMessage) to send current state
      */
+    @Override
     public AbstractMRMessage createOutPacket() {
         return null;
     } //TODO
@@ -113,6 +115,7 @@ public class XBeeNode extends IEEE802154Node {
      * Are there sensors present, and hence this node will need to be polled?
      * Note: returns 'true' if at least one sensor is active for this node
      */
+    @Override
     public boolean getSensorsActive() {
         if (getPoll()) {
             for (Object bean : pinObjects.values()) {
@@ -142,6 +145,7 @@ public class XBeeNode extends IEEE802154Node {
      * @param l listener that sent the message
      * @return true if initialization required
      */
+    @Override
     public boolean handleTimeout(AbstractMRMessage m, AbstractMRListener l) {
         return false;
     }
@@ -149,6 +153,7 @@ public class XBeeNode extends IEEE802154Node {
     /**
      * A reply was received, so there was not timeout, do any needed processing.
      */
+    @Override
     public void resetTimeout(AbstractMRMessage m) {
         return;
     }

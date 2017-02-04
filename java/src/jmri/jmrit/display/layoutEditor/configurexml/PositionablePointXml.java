@@ -26,6 +26,7 @@ public class PositionablePointXml extends AbstractXmlAdapter {
      * @param o Object to store, of type PositionablePoint
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         PositionablePoint p = (PositionablePoint) o;
@@ -86,6 +87,7 @@ public class PositionablePointXml extends AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @param o       LayoutEditor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         LayoutEditor p = (LayoutEditor) o;

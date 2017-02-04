@@ -39,6 +39,7 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
     }
 
     @Test
+    @Override
     public void testMisses() {
         // sample turnout object
         Sensor t = l.newSensor("LS22", "test");

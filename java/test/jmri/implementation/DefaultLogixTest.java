@@ -16,6 +16,7 @@ public class DefaultLogixTest extends NamedBeanTest {
     /**
      * Operate parent NamedBeanTest tests.
      */
+    @Override
     protected NamedBean createInstance() {
         return new DefaultLogix("IX 0");
     }

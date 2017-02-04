@@ -205,6 +205,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         super();
     }
 
+    @Override
     public void initContext(Object context) throws Exception {
         if (context instanceof NceSystemConnectionMemo) {
             try {
@@ -215,10 +216,12 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         }
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.nce.consist.NceConsistEditFrame";
     }
 
+    @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
         if (memo != null) {
@@ -231,6 +234,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         return x.toString();
     }
 
+    @Override
     public List<JMenu> getMenus() {
         // build menu
         JMenu toolMenu = new JMenu("Tools");
@@ -240,6 +244,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         return l;
     }
 
+    @Override
     public void initComponents(NceSystemConnectionMemo m) throws Exception {
         this.memo = m;
         this.tc = m.getNceTrafficController();
@@ -1325,12 +1330,14 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         sendNceMessage(bl, NceMessage.REPLY_1);
     }
 
+    @Override
     public void message(NceMessage m) {
     } // ignore replies
 
     // NCE CS response from add, delete, save, get, next, previous, etc
     // A single byte response is expected from commands
     // A 16 byte response is expected when loading a consist or searching
+    @Override
     public void reply(NceReply r) {
         if (waiting <= 0) {
             log.error("unexpected response");
@@ -1977,6 +1984,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 
     private void addButtonAction(JButton b) {
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 buttonActionPerformed(e);
             }
@@ -1985,6 +1993,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 
     private void addCheckBoxAction(JCheckBox cb) {
         cb.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 checkBoxActionPerformed(e);
             }
@@ -2044,6 +2053,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         adrButton.setEnabled(false);
         adrButton.setToolTipText("Press to change address type");
         adrButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 buttonActionAdrPerformed(e);
             }
@@ -2053,6 +2063,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         locoRosterBox.setEnabled(false);
         locoRosterBox.setToolTipText("Select loco from roster");
         locoRosterBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 locoSelected(e);
             }
@@ -2063,6 +2074,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         dirButton.setEnabled(false);
         dirButton.setToolTipText("Press to change loco direction");
         dirButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 buttonActionDirPerformed(e);
             }
@@ -2073,6 +2085,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         cmdButton.setEnabled(false);
         cmdButton.setToolTipText(rb.getString("ToolTipAdd"));
         cmdButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 buttonActionCmdPerformed(e);
             }
@@ -2095,6 +2108,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         conRosterBox.setEnabled(false);
         conRosterBox.setToolTipText("Select consist from roster");
         conRosterBox.addActionListener(consistRosterListener = new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 consistRosterSelected(e);
             }
@@ -2118,6 +2132,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         // Bad to stop receive thread with JOptionPane error message
         // so start up a new thread to report error
         Thread errorThread = new Thread(new Runnable() {
+            @Override
             public void run() {
                 reportError();
             }

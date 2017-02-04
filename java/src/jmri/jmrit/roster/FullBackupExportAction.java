@@ -47,6 +47,7 @@ public class FullBackupExportAction
         _parent = parent;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         Roster roster = Roster.getDefault();
 
@@ -148,6 +149,7 @@ public class FullBackupExportAction
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

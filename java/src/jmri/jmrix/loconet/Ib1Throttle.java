@@ -20,6 +20,7 @@ public class Ib1Throttle extends LocoNetThrottle {
         log.debug("Ib1Throttle created");
     }
 
+    @Override
     protected void sendFunctionGroup3() {
         // Special LocoNet messages for Uhlenbrock Intellibox-I version 2.x implementation
         // Intellibox-II uses another implementation for these functions

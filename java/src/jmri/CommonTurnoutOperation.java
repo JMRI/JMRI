@@ -41,6 +41,7 @@ public abstract class CommonTurnoutOperation extends TurnoutOperation {
      *
      * @return	the operator
      */
+    @Override
     public abstract TurnoutOperator getOperator(AbstractTurnout t);
 
     public int getInterval() {
@@ -55,6 +56,7 @@ public abstract class CommonTurnoutOperation extends TurnoutOperation {
 
     public abstract int getDefaultMaxTries();
 
+    @Override
     public boolean equivalentTo(TurnoutOperation other) {
         if (this.getClass() == other.getClass()) {
             return interval == ((CommonTurnoutOperation) other).interval

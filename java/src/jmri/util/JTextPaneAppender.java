@@ -75,6 +75,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
      */
     // original source had this marked as an over-ride, but it isn't
     //@Override
+    @Override
     public void close() {
         //
     }
@@ -344,6 +345,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
     // original code had this marked as an override, but it isn't,
     // at least for Log4J 1.2.15
     //@Override
+    @Override
     public boolean requiresLayout() {
         return true;
     }

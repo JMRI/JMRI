@@ -19,6 +19,7 @@ public class AddEntryExitPairAction extends AbstractAction {
     }
     LayoutEditor panel;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         AddEntryExitPairFrame f = new AddEntryExitPairFrame();
         try {

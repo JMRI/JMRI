@@ -28,9 +28,11 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
     /*abstract*/ public void checkOffMsgSent() {}
 
     // load t with actual object; create scaffolds as needed
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         t = new AbstractSensor("Foo", "Bar"){
+            @Override
                 public void requestUpdateFromLayout(){}
         };
     }
@@ -41,6 +43,7 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
 
     protected class Listen implements PropertyChangeListener {
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             listenerResult = true;
         }
@@ -143,6 +146,7 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

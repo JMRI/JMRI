@@ -29,6 +29,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         super(systemName);
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameSignalAppMap");
     }
@@ -260,10 +261,12 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     /**
      * Get a property associated with a specific aspect
      */
+    @Override
     public String getProperty(String aspect, String key) {
         return aspectAttributeMap.get(aspect).get(key);
     }
 
+    @Override
     public String getImageLink(String aspect, String type) {
         if (type == null || type.equals("")) {
             type = "default";
@@ -283,6 +286,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         return value;
     }
 
+    @Override
     public Vector<String> getImageTypes(String aspect) {
         if (!checkAspect(aspect)) {
             return new Vector<String>();
@@ -337,6 +341,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         }
     }
 
+    @Override
     public boolean checkAspect(String aspect) {
         if (aspect == null) {
             return false;
@@ -352,10 +357,12 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         table.put(aspect, appearances);
     }
 
+    @Override
     public java.util.Enumeration<String> getAspects() {
         return table.keys();
     }
 
+    @Override
     public String getSpecificAppearance(int appearance) {
         if (specificMaps.containsKey(appearance)) {
             return specificMaps.get(appearance);
@@ -367,6 +374,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
      * Returns a list of potential aspects that we could set the signalmast to
      * given the state of the advanced signal mast.
      */
+    @Override
     public String[] getValidAspectsForAdvancedAspect(String advancedAspect) {
         if (aspectRelationshipMap == null) {
             log.error("aspect relationships have not been defined or loaded");
@@ -384,6 +392,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         return null;
     }
 
+    @Override
     public SignalSystem getSignalSystem() {
         return systemDefn;
     }

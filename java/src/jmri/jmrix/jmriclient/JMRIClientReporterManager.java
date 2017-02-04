@@ -20,10 +20,12 @@ public class JMRIClientReporterManager extends jmri.managers.AbstractReporterMan
         this.prefix = memo.getSystemPrefix();
     }
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
+    @Override
     public Reporter createNewReporter(String systemName, String userName) {
         Reporter t;
         int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();

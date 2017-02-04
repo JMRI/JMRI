@@ -16,6 +16,7 @@ public class Mx1CommandStation implements jmri.jmrix.DccCommandStation {
     /**
      * Zimo does use a service mode
      */
+    @Override
     public boolean getHasServiceMode() {
         return true;
     }
@@ -24,6 +25,7 @@ public class Mx1CommandStation implements jmri.jmrix.DccCommandStation {
      * If this command station has a service mode, is the command station
      * currently in that mode?
      */
+    @Override
     public boolean getInServiceMode() {
         return mInServiceMode;
     }
@@ -33,6 +35,7 @@ public class Mx1CommandStation implements jmri.jmrix.DccCommandStation {
      * function is not yet implemented...
      *
      */
+    @Override
     public String getVersionString() {
         return "<unknown>";
     }

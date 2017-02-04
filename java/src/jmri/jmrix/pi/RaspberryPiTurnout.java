@@ -57,6 +57,7 @@ public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java
    }
     
    //support inversion for RPi turnouts
+   @Override
    public boolean canInvert() {
        return true;
    }

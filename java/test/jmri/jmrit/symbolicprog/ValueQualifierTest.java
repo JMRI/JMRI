@@ -108,6 +108,7 @@ public class ValueQualifierTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         v = createCvMap();
@@ -121,6 +122,7 @@ public class ValueQualifierTest extends TestCase {
         watched = makeVar("label check", "comment", "", false, false, false, false, "81", "XXVVVVVV", 0, 255, v, null, "item check");
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

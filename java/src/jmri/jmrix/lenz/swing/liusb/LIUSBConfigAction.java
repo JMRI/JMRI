@@ -20,6 +20,7 @@ public class LIUSBConfigAction extends AbstractXPressNetAction {
         this("LIUSB Configuration Manager", memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create an LIUSBConfigFrame
         LIUSBConfigFrame f = new LIUSBConfigFrame(_memo);

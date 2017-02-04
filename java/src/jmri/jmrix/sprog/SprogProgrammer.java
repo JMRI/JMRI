@@ -51,6 +51,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     int _val;	// remember the value being read/written for confirmative reply
 
     // programming interface
+    @Override
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " mode " + getMode() + " listens " + p);
@@ -65,6 +66,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         readCV(CV, p);
     }
 
+    @Override
     synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " mode " + getMode() + " listens " + p);
@@ -120,9 +122,11 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         }
     }
 
+    @Override
     public void notifyMessage(SprogMessage m) {
     }
 
+    @Override
     synchronized public void notifyReply(SprogReply reply) {
 
         if (progState == NOTPROGRAMMING) {
@@ -168,6 +172,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     /**
      * Internal routine to handle a timeout
      */
+    @Override
     synchronized protected void timeout() {
         if (progState != NOTPROGRAMMING) {
             // we're programming, time to stop

@@ -77,6 +77,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         JMenuItem storeItem = new JMenuItem(Bundle.getMessage("MIStoreImageIndex"));
         findIcon.add(storeItem);
         storeItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 storeImageIndex();
             }
@@ -85,6 +86,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         findIcon.addSeparator();
         JMenuItem openItem = new JMenuItem(Bundle.getMessage("openDirMenu"));
         openItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 DirectorySearcher.instance().openDirectory();
             }
@@ -103,6 +105,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         menuBar.add(editMenu);
         JMenuItem addItem = new JMenuItem(Bundle.getMessage("addNode"));
         addItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 addNode();
             }
@@ -110,6 +113,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         editMenu.add(addItem);
         JMenuItem renameItem = new JMenuItem(Bundle.getMessage("renameNode"));
         renameItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 renameNode();
             }
@@ -117,6 +121,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         editMenu.add(renameItem);
         JMenuItem deleteItem = new JMenuItem(Bundle.getMessage("deleteNode"));
         deleteItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 deleteNode();
             }
@@ -140,6 +145,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         getContentPane().add(mainPanel);
 
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 DirectorySearcher.instance().close();
             }
@@ -157,10 +163,12 @@ public final class ImageIndexEditor extends JmriJFrame {
                     _shutDownTask = new SwingShutDownTask("PanelPro Save default icon check",
                             Bundle.getMessage("IndexChanged"),
                             Bundle.getMessage("SaveAndQuit"), null) {
+                                @Override
                                 public boolean checkPromptNeeded() {
                                     return !_indexChanged;
                                 }
 
+                                @Override
                                 public boolean doPrompt() {
                                     storeImageIndex();
                                     return true;

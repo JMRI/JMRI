@@ -94,6 +94,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     // directly
     // WARNING: use this only with opcodes that have a variable number 
     // of arguments following included. Otherwise, just use setElement
+    @Override
     public void setOpCode(int i) {
         if (i > 0xF || i < 0) {
             log.error("Opcode invalid: " + i);
@@ -101,6 +102,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         setElement(0, ((i * 16) & 0xF0) | ((getNumDataElements() - 2) & 0xF));
     }
 
+    @Override
     public int getOpCode() {
         return (getElement(0) / 16) & 0xF;
     }
@@ -108,6 +110,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     /**
      * Get a String representation of the op code in hex
      */
+    @Override
     public String getOpCodeHex() {
         return "0x" + Integer.toHexString(getOpCode());
     }

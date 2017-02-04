@@ -408,11 +408,13 @@ public class LayoutTurntable extends LayoutTrack {
         popup.add(rb.getString("Turntable"));
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
         popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 editTurntable(instance);
             }
         });
         popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (layoutEditor.removeTurntable(instance)) {
                     // Returned true if user did not cancel
@@ -534,6 +536,7 @@ public class LayoutTurntable extends LayoutTrack {
             panel3.add(addRayTrack = new JButton(rb.getString("AddRayTrack")));
             addRayTrack.setToolTipText(rb.getString("AddRayTrackHint"));
             addRayTrack.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     addRayTrackPressed(e);
                     updateRayPanel();
@@ -543,6 +546,7 @@ public class LayoutTurntable extends LayoutTrack {
             panel3.add(dccControlled = new JCheckBox(rb.getString("TurntableDCCControlled")));
             dccControlled.setSelected(isTurnoutControlled());
             dccControlled.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setTurnoutControlled(dccControlled.isSelected());
                     for (RayTrack ray : rayList) {
@@ -557,6 +561,7 @@ public class LayoutTurntable extends LayoutTrack {
             panel5.setLayout(new FlowLayout());
             panel5.add(turntableEditDone = new JButton(Bundle.getMessage("ButtonDone")));
             turntableEditDone.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     turntableEditDonePressed(e);
                 }
@@ -576,6 +581,7 @@ public class LayoutTurntable extends LayoutTrack {
             // Cancel
             panel5.add(turntableEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             turntableEditCancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     turntableEditCancelPressed(e);
                 }
@@ -598,6 +604,7 @@ public class LayoutTurntable extends LayoutTrack {
         oldRadius = radiusField.getText();
         angleField.setText("0");
         editTurntableFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 turntableEditCancelPressed(null);
             }
@@ -807,6 +814,7 @@ public class LayoutTurntable extends LayoutTrack {
             Turnout turnout = null;
             if (mTurnoutListener == null) {
                 mTurnoutListener = new java.beans.PropertyChangeListener() {
+                    @Override
                     public void propertyChange(java.beans.PropertyChangeEvent e) {
                         if (getTurnout().getKnownState() == turnoutState) {
                             lastKnownIndex = connectionIndex;
@@ -881,9 +889,11 @@ public class LayoutTurntable extends LayoutTrack {
                 top.add(angle = new JTextField(5));
                 angle.addFocusListener(
                         new FocusListener() {
+                    @Override
                     public void focusGained(FocusEvent e) {
                     }
 
+                    @Override
                     public void focusLost(FocusEvent e) {
                         try {
                             Float.parseFloat(angle.getText());
@@ -924,6 +934,7 @@ public class LayoutTurntable extends LayoutTrack {
                 top.add(deleteRayButton = new JButton(Bundle.getMessage("ButtonDelete")));
                 deleteRayButton.setToolTipText(rb.getString("DeleteRayTrack"));
                 deleteRayButton.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         delete();
                         updateRayPanel();

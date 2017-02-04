@@ -27,6 +27,7 @@ public class DccSignalMastXml
      * @param o Object to store, of type TripleDccSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         DccSignalMast p = (DccSignalMast) o;
         Element e = new Element("dccsignalmast");
@@ -122,6 +123,7 @@ public class DccSignalMastXml
 
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

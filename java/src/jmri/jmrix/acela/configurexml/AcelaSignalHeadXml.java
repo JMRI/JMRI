@@ -32,6 +32,7 @@ public class AcelaSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
      * @param o Object to store, of type AcelaSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         AcelaSignalHead p = (AcelaSignalHead) o;
 
@@ -85,6 +86,7 @@ public class AcelaSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
         return true;
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

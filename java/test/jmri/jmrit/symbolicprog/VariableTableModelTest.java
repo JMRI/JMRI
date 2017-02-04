@@ -259,6 +259,7 @@ public class VariableTableModelTest extends TestCase {
     public void testVarTableLoadBogus() {
         String[] args = {"CV", "Name"};
         VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p), null) {
+            @Override
             void reportBogus() {
             }
         };
@@ -355,10 +356,12 @@ public class VariableTableModelTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

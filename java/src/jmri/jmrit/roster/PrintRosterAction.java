@@ -53,6 +53,7 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
      */
     boolean isPreview;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // obtain a HardcopyWriter to do this
         Roster r = Roster.getDefault();
@@ -113,10 +114,12 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
 
+    @Override
     public void setParameter(String parameter, String value) {
         parameter = parameter.toLowerCase();
         value = value.toLowerCase();

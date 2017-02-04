@@ -3,7 +3,6 @@ package jmri.jmrix.pi;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.pi4j.io.gpio.GpioFactory;

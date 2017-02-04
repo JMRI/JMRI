@@ -104,6 +104,7 @@ public class LocoIOData
         dataListeners.removePropertyChangeListener(pcl);
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         String s = "LocoIOData: " + evt.getPropertyName() // NOI18N
                 + " := " + evt.getNewValue() // NOI18N
@@ -387,6 +388,7 @@ public class LocoIOData
      * <P>
      * @param m Incoming message
      */
+    @Override
     public synchronized void message(LocoNetMessage m) {
         // sort out the opCode
         int opCode = m.getOpCode();
@@ -714,6 +716,7 @@ public class LocoIOData
     protected void restartTimer(int delay) {
         if (timer == null) {
             timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     timeout();
                 }

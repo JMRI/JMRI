@@ -49,6 +49,7 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
     /*
      * Dispose of the light object
      */
+    @Override
     public void dispose() {
         tc.removeDCCppListener(DCCppInterface.FEEDBACK | DCCppInterface.COMMINFO | DCCppInterface.CS_INFO, this);
         super.dispose();
@@ -91,6 +92,7 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
     /**
      * Return the current state of this Light
      */
+    @Override
     synchronized public int getState() {
         return mState;
     }
@@ -99,6 +101,7 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
      * Set the current state of this Light This routine requests the hardware to
      * change.
      */
+    @Override
     synchronized public void setState(int newState) {
         if (newState != ON && newState != OFF) {
             // Unsuported state
@@ -135,6 +138,7 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
      *  NOTE: We aren't registered as a listener, so This is only triggered 
      *  when we send out a message
      */
+    @Override
     synchronized public void message(DCCppReply l) {
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l);
@@ -143,10 +147,12 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     public void message(DCCppMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());

@@ -58,11 +58,13 @@ abstract public class AbstractTableAction extends AbstractAction {
             /**
              * Include an "add" button
              */
+            @Override
             void extras() {
                 if (includeAddButton) {
                     JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
                     addToBottomBox(addButton, this.getClass().getName());
                     addButton.addActionListener(new ActionListener() {
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             addPressed(e);
                         }

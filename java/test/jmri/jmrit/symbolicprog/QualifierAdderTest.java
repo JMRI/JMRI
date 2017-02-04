@@ -40,9 +40,11 @@ public class QualifierAdderTest extends TestCase {
             super(watchedVal, value, relation);
         }
 
+        @Override
         public void setWatchedAvailable(boolean t) {
         }
 
+        @Override
         public boolean currentAvailableState() {
             return true;
         }
@@ -59,10 +61,12 @@ public class QualifierAdderTest extends TestCase {
      */
     protected QualifierAdder processModifierElements(final Element e, final VariableValue v) {
         QualifierAdder qa = new QualifierAdder() {
+            @Override
             protected Qualifier createQualifier(VariableValue var, String relation, String value) {
                 return new ValueQualifier(v, var, Integer.parseInt(value), relation);
             }
 
+            @Override
             protected void addListener(java.beans.PropertyChangeListener qc) {
                 v.addPropertyChangeListener(qc);
             }
@@ -265,6 +269,7 @@ public class QualifierAdderTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
 
@@ -324,6 +329,7 @@ public class QualifierAdderTest extends TestCase {
         v3 = model.findVar("three");
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

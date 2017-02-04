@@ -42,6 +42,7 @@ public class ConsistToolAction extends JmriAbstractAction {
         this("Consist Tool");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         ConsistToolFrame f = new ConsistToolFrame();
@@ -50,6 +51,7 @@ public class ConsistToolAction extends JmriAbstractAction {
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

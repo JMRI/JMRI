@@ -59,6 +59,7 @@ public class CatalogTreeFS extends AbstractCatalogTree {
      * @param pParent Node for the parent of the resource to be scanned, e.g.
      *                where in the tree to insert it.
      */
+    @Override
     public void insertNodes(String pName, String pPath, CatalogTreeNode pParent) {
         File fp = new File(pPath);
         if (!fp.exists()) {
@@ -96,6 +97,7 @@ public class CatalogTreeFS extends AbstractCatalogTree {
         }
     }
 
+    @Override
     public void setProperty(String key, Object value) {
         if (parameters == null) {
             parameters = new HashMap<String, Object>();
@@ -103,6 +105,7 @@ public class CatalogTreeFS extends AbstractCatalogTree {
         parameters.put(key, value);
     }
 
+    @Override
     public Object getProperty(String key) {
         if (parameters == null) {
             parameters = new HashMap<String, Object>();
@@ -110,6 +113,7 @@ public class CatalogTreeFS extends AbstractCatalogTree {
         return parameters.get(key);
     }
 
+    @Override
     public java.util.Set<String> getPropertyKeys() {
         if (parameters == null) {
             parameters = new HashMap<String, Object>();
@@ -117,6 +121,7 @@ public class CatalogTreeFS extends AbstractCatalogTree {
         return parameters.keySet();
     }
 
+    @Override
     public void removeProperty(String key) {
         if (parameters == null || key == null) {
             return;

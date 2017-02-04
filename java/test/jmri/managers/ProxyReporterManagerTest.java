@@ -82,6 +82,7 @@ public class ProxyReporterManagerTest extends AbstractReporterMgrTestBase {
 
         InternalReporterManager m = new InternalReporterManager() {
 
+            @Override
             public String getSystemPrefix() {
                 return "J";
             }

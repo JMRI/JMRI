@@ -30,6 +30,7 @@ public class LogPanel extends JPanel {
 
         sendButton.setToolTipText("Add message to the log file");
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }

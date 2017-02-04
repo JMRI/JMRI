@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -161,6 +160,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
                 JOptionPane.QUESTION_MESSAGE, null, null, null);
         if (retval == 0) {
             final PropertyChangeListener propertyNXListener = new PropertyChangeListener() {
+                @Override
                 public void propertyChange(PropertyChangeEvent evt) {
                     if (evt.getPropertyName().equals("autoGenerateComplete")) {
                         if (entryExitFrame != null) {

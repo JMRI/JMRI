@@ -19,10 +19,12 @@ import jmri.jmrix.marklin.networkdriver.NetworkDriverAdapter;
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
+    @Override
     protected void getInstance() {
         adapter = new NetworkDriverAdapter();
     }
 
+    @Override
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig) object).getAdapter();
     }

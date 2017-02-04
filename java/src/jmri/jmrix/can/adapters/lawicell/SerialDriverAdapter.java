@@ -28,6 +28,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         options.put(option1Name, new Option("Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         String[] baudRates = validBaudRates();
         int[] baudValues = validBaudValues();
@@ -105,6 +106,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
      * set up all of the other objects to operate with a CAN RS adapter
      * connected to this port
      */
+    @Override
     public void configure() {
 
         // Register the CAN traffic controller being used for this connection
@@ -129,6 +131,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
     }
 
     // base class methods for the PortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -137,6 +140,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -149,6 +153,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }

@@ -26,6 +26,7 @@ public class AcelaMonAction extends AbstractAction {
         this("Acela message monitor",jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a AcelaMonFrame
         AcelaMonFrame f = new AcelaMonFrame(_memo);
