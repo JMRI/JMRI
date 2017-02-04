@@ -5,11 +5,14 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -69,7 +72,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (c) 2007
  */
-public class LayoutTurntable {
+public class LayoutTurntable extends LayoutTrack {
 
     // Defined text resource
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
@@ -98,6 +101,12 @@ public class LayoutTurntable {
         center = c;
         radius = 25.0;
     }
+
+    // this should only be used for debugging…
+    public String toString() {
+        return "LayoutTurntable " + ident;
+    }
+
 
     /**
      * Accessor methods
@@ -796,35 +805,6 @@ public class LayoutTurntable {
         // initialization instance variable (used when loading a LayoutEditor)
         public String connectName = "";
 
-        public double normalizeAngle(double a) {
-            double angle = a;
-            while (angle < 0.0) {
-                angle += 360.0;
-            }
-            while (angle >= 360.0) {
-                angle -= 360.0;
-            }
-            return angle;
-        }
-
-        public double diffAngle(double a, double b) {
-            double anA = normalizeAngle(a);
-            double anB = normalizeAngle(b);
-            if (anA >= anB) {
-                if ((anA - anB) <= 180.0) {
-                    return (anA - anB);
-                } else {
-                    return (anB + 360.0 - anA);
-                }
-            } else {
-                if ((anB - anA) <= 180.0) {
-                    return (anB - anA);
-                } else {
-                    return (anA + 360.0 - anB);
-                }
-            }
-        }
-
         NamedBeanHandle<Turnout> namedTurnout;
         //Turnout t;
         int turnoutState;
@@ -1020,32 +1000,39 @@ public class LayoutTurntable {
         }
     }
 
-    public double normalizeAngle(double a) {
-        double angle = a;
-        while (angle < 0.0) {
-            angle += 360.0;
-        }
-        while (angle >= 360.0) {
-            angle -= 360.0;
-        }
-        return angle;
-    }
-
-    public double diffAngle(double a, double b) {
-        double anA = normalizeAngle(a);
-        double anB = normalizeAngle(b);
-        if (anA >= anB) {
-            if ((anA - anB) <= 180.0) {
-                return (anA - anB);
+    private void draw(Graphics2D g2) {
+        // draw turntable circle - default track color, side track width
+        layoutEditor.setTrackStrokeWidth(g2, false);
+        double r = getRadius();
+        g2.setColor(defaultTrackColor);
+        g2.draw(new Ellipse2D.Double(
+                center.getX() - r, center.getY() - r, r + r, r + r));
+        // draw ray tracks
+        for (int j = 0; j < getNumberRays(); j++) {
+            Point2D pt = getRayCoordsOrdered(j);
+            TrackSegment t = getRayConnectOrdered(j);
+            if (t != null) {
+                layoutEditor.setTrackStrokeWidth(g2, t.getMainline());
+                LayoutBlock b = t.getLayoutBlock();
+                if (b != null) {
+                    g2.setColor(b.getBlockColor());
+                } else {
+                    g2.setColor(defaultTrackColor);
+                }
             } else {
-                return (anB + 360.0 - anA);
+                layoutEditor.setTrackStrokeWidth(g2, false);
+                g2.setColor(defaultTrackColor);
             }
-        } else {
-            if ((anB - anA) <= 180.0) {
-                return (anB - anA);
-            } else {
-                return (anA + 360.0 - anB);
-            }
+            g2.draw(new Line2D.Double(new Point2D.Double(
+                    pt.getX() - ((pt.getX() - center.getX()) * 0.2),
+                    pt.getY() - ((pt.getY() - center.getY()) * 0.2)), pt));
+        }
+        if (isTurnoutControlled() && getPosition() != -1) {
+            Point2D pt = getRayCoordsIndexed(getPosition());
+            g2.draw(new Line2D.Double(new Point2D.Double(
+                    pt.getX() - ((pt.getX() - center.getX()) * 1.8/* 2 */),
+                    pt.getY() - ((pt.getY() - center.getY()) * 1.8/* * * 2 */
+                    )), pt));
         }
     }
 

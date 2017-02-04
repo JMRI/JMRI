@@ -358,7 +358,6 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 closePanels(e);
-                ImageIndexEditor.checkImageIndex();
             }
         });
 
@@ -507,27 +506,19 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         openItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DirectorySearcher.instance().openDirectory(false);
+                DirectorySearcher.instance().openDirectory();
             }
         });
         findIcon.add(openItem);
-        /*
+
          JMenuItem searchItem = new JMenuItem(Bundle.getMessage("searchFSMenu"));
          searchItem.addActionListener(new ActionListener() {
-         IconAdder ea;
-         public void actionPerformed(ActionEvent e) {
-         File dir = jmri.jmrit.catalog.DirectorySearcher.instance().searchFS();
-         if (dir != null) {
-         ea.addDirectoryToCatalog(dir);
-         }
-         }
-         ActionListener init() {
-         //                ea = ed;
-         return this;
-         }
-         }.init());
+             public void actionPerformed(ActionEvent e) {
+                 jmri.jmrit.catalog.DirectorySearcher.instance().searchFS();
+             }
+         });
          findIcon.add(searchItem);
-         */
+        
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.display.ItemPalette", true);
     }

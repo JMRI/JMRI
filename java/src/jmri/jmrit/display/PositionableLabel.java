@@ -17,7 +17,6 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
-import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -606,12 +605,6 @@ public class PositionableLabel extends JLabel implements Positionable {
         _paletteFrame = new jmri.util.JmriJFrame(title, false, false);
         _paletteFrame.setLocationRelativeTo(this);
         _paletteFrame.toFront();
-        _paletteFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                ImageIndexEditor.checkImageIndex();   // write maps to tree
-            }
-        });
     }
 
     /**

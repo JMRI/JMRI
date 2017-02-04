@@ -23,7 +23,6 @@ import java.awt.event.MouseMotionListener;
 import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -2501,10 +2500,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    File dir = jmri.jmrit.catalog.DirectorySearcher.instance().searchFS();
-                    if (dir != null) {
-                        ea.addDirectoryToCatalog(dir);
-                    }
+                    jmri.jmrit.catalog.DirectorySearcher.instance().searchFS();
+                    ea.addDirectoryToCatalog();
                 }
 
                 ActionListener init(IconAdder ed) {
@@ -2521,7 +2518,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 frame.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
-                        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
                         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
                         if (log.isDebugEnabled()) {
                             log.debug("windowClosing: HIDE {}", toString());

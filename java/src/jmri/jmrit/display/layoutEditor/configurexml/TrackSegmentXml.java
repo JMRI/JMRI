@@ -2,6 +2,7 @@ package jmri.jmrit.display.layoutEditor.configurexml;
 
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutTrack;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
@@ -76,8 +77,8 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
 
         // get attributes
         String name = element.getAttribute("ident").getValue();
-        int type1 = LayoutEditor.NONE;
-        int type2 = LayoutEditor.NONE;
+        int type1 = LayoutTrack.NONE;
+        int type2 = LayoutTrack.NONE;
         try {
             type1 = element.getAttribute("type1").getIntValue();
             type2 = element.getAttribute("type2").getIntValue();

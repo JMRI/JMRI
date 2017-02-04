@@ -752,7 +752,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 prefixBox.addItem(station.getUserName());
             }
             dccSignalPanel();
- 
+
             to1 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
             to2 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
             to3 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
@@ -1522,13 +1522,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
                         log.warn("skipping creation of signal " + systemName.getText() + " due to error");
                         return;
                     }
-                    s = new jmri.implementation.LsDecSignalHead(systemName.getText(), 
-                            nbhm.getNamedBeanHandle(t1.getDisplayName(), t1), s1, 
-                            nbhm.getNamedBeanHandle(t2.getDisplayName(), t2), s2, 
-                            nbhm.getNamedBeanHandle(t3.getDisplayName(), t3), s3, 
-                            nbhm.getNamedBeanHandle(t4.getDisplayName(), t4), s4, 
-                            nbhm.getNamedBeanHandle(t5.getDisplayName(), t5), s5, 
-                            nbhm.getNamedBeanHandle(t6.getDisplayName(), t6), s6, 
+                    s = new jmri.implementation.LsDecSignalHead(systemName.getText(),
+                            nbhm.getNamedBeanHandle(t1.getDisplayName(), t1), s1,
+                            nbhm.getNamedBeanHandle(t2.getDisplayName(), t2), s2,
+                            nbhm.getNamedBeanHandle(t3.getDisplayName(), t3), s3,
+                            nbhm.getNamedBeanHandle(t4.getDisplayName(), t4), s4,
+                            nbhm.getNamedBeanHandle(t5.getDisplayName(), t5), s5,
+                            nbhm.getNamedBeanHandle(t6.getDisplayName(), t6), s6,
                             nbhm.getNamedBeanHandle(t7.getDisplayName(), t7), s7);
                     s.setUserName(userName.getText());
                     InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
@@ -1540,10 +1540,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
             } else {
                 log.error("Unexpected type: " + typeBox.getSelectedItem());
             }
-            
+
         } catch (NumberFormatException ex) {
             handleCreateException(ex, systemName.getText());
-            return; // without creating    
+            return; // without creating
         }
     }
 
@@ -1601,11 +1601,12 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
         // if no selection was made severeal exeptions as cast to the console, most start in the createbeanpane
         try {
-            if (to1.getDisplayName() == "" || to2.getDisplayName() == "" || to1.getDisplayName() == null || to1.getDisplayName() == null) {
+            if ((to1 == null) || (to2 == null) || (to1.getDisplayName() == null) || (to2.getDisplayName() == null) ||
+            (to1.getDisplayName().equals("")) || to2.getDisplayName().equals("")) {
                 return;
             }
         } catch (NumberFormatException ex) {
-            if (to1.getDisplayName() == "") {
+            if (to1.getDisplayName().equals("")) {
                 msg = Bundle.getMessage("se8c4SkippingDueToErrorInFirst");
             } else {
                 msg = Bundle.getMessage("se8c4SkippingDueToErrorInSecond");
@@ -1631,7 +1632,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 // user input no good
                 handleCreate2TurnoutException(t1.getSystemName(),
                         t2.getSystemName(), userName.getText());
-                return; // without creating any 
+                return; // without creating any
             }
             InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
         } else {
@@ -1658,7 +1659,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 Bundle.getMessage("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
-    
+
     void handleSE8cTypeChanged() {
         hideAllOptions();
         userNameLabel.setText(Bundle.getMessage("LabelUserName"));
@@ -2543,7 +2544,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
              if (!((curS.getUserName()!=null) && (curS.getUserName().equals(nam)))) {
              if(checkUserName(nam))
              curS.setUserName(nam);
-            
+
              }*/
             AcelaNode tNode = AcelaAddress.getNodeFromSystemName(curS.getSystemName(),jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
             if (tNode == null) {
@@ -2554,7 +2555,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             int headnumber = Integer.parseInt(curS.getSystemName().substring(2, curS.getSystemName().length()));
             tNode.setOutputSignalHeadTypeString(headnumber, estBox.getSelectedItem().toString());
 //          setSignalheadTypeInBox(estBox, tNode.getOutputSignalHeadType(headnumber), signalheadTypeValues);
-//          ((jmri.AcelaSignalHead)curS).setDarkState(signalheadTypeFromBox(estBox));    
+//          ((jmri.AcelaSignalHead)curS).setDarkState(signalheadTypeFromBox(estBox));
         } else if (className.equals("jmri.implementation.MergSD2SignalHead")) {
             switch (ukSignalAspectsFromBox(emsaBox)) {
                 case 4:

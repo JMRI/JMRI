@@ -97,6 +97,11 @@ public class PositionablePoint {
         coords = p;
     }
 
+    // this should only be used for debugging…
+    public String toString() {
+        return "PositionablePoint " + ident;
+    }
+
     /**
      * Accessor methods
      */
