@@ -72,6 +72,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     JLabel destMastLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("DestMast")));
     JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
     JButton updateButton = new JButton(rb.getString("UpdateLogic"));
+    JButton applyButton = new JButton(Bundle.getMessage("ButtonUpdate"));
     JCheckBox useLayoutEditor = new JCheckBox(rb.getString("UseLayoutEditorPaths"));
     JCheckBox useLayoutEditorTurnout = new JCheckBox(rb.getString("UseTurnoutDetails"));
     JCheckBox useLayoutEditorBlock = new JCheckBox(rb.getString("UseBlockDetails"));
@@ -304,6 +305,19 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         });
         updateButton.setToolTipText(rb.getString("UpdateButtonToolTip"));
         updateButton.setVisible(true);
+
+        //Apply (and Close) button
+        footer.add(applyButton);
+        applyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updatePressed(e); // store edits
+                cancelPressed(e); // close panel signaling acceptance of edits/Apply to the user
+
+            }
+        });
+        applyButton.setToolTipText(rb.getString("ApplyButtonToolTip"));
+        applyButton.setVisible(true);
 
         containerPanel.add(footer, BorderLayout.SOUTH);
 
@@ -805,7 +819,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     /**
-     * Update changes in SML when Update button is pressed in the Edit Logic > Add Logic pane
+     * Update changes in SML when Update button is pressed in the Edit Logic - Add Logic pane
      */
     void updatePressed(ActionEvent e) {
         sourceMast = (SignalMast) sourceMastBox.getSelectedBean();
@@ -912,7 +926,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         sml.initialise(destMast);
         // _AppearanceModel.fireTableRowsUpdated to show new SML in underlying table via SignalMastAppearanceModel() TODO
         // via sml > listener ?
-        //cancelPressed(null); // after storing edits (above) use actions from cancelPressed (below) to close panel signaling acceptance of edits/Update to the user
     }
 
     /**
@@ -1834,13 +1847,13 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
 
             /**
-             * Call method {@link getApectEditorBox()} in the surrounding method for the SignalMastTable
+             * Call method {@link #getAspectEditorBox(int)} in the surrounding method for the SignalMastTable
              * @param row Index of the row clicked in the table
              * @return an appropriate combobox for this signal mast
              */
             @Override
             protected JComboBox getEditorBox(int row) {
-                return getApectEditorBox(row);
+                return getAspectEditorBox(row);
             }
 
         }
@@ -1866,7 +1879,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
          * @param row Index number (in TableDataModel)
          * @return A combobox containing the valid aspect names for this mast
          */
-        JComboBox getApectEditorBox(int row) {
+        JComboBox getAspectEditorBox(int row) {
             JComboBox editCombo = editorMap.get(this.getValueAt(row, SNAME_COLUMN));
             if (editCombo == null) {
                 // create a new one with correct aspects
@@ -1879,7 +1892,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         /**
          * Holds a Hashtable of valid aspects per signal mast
-         * used by getEditorBox()
+         * used by getAspectEditorBox()
          * @param row Index number (in TableDataModel)
          * @return The Vector of valid aspect names for this mast to show in the JComboBox
          */
@@ -1900,7 +1913,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         // end of methods to display STATE_COLUMN (Aspect) ComboBox
 
         /**
-         * @deprecated since 4.5.7, use {@link #getAspectEditorBox()}
+         * @deprecated since 4.5.7, use {@link #getAspectEditorBox(int) }
          */
         @Deprecated
         protected JTable makeJTable(SignalMastModel model) {
@@ -2183,7 +2196,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     /**
-     * Provide a table cell renderer looking like a JComboBox
+     * Provide a table cell renderer looking like a JComboBox (not yet active in 4.7.1)
      * Class to be moved to jmri.util.swing after 4.7.1 TODO
      */
     static class ComboBoxRenderer extends JComboBox implements TableCellRenderer {
@@ -2213,7 +2226,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     /**
-     * @deprecated since 4.7.1
+     * @deprecated since 4.7.1, use {@link SignalMastModel#getAspectEditorBox(int)}
      */
     @Deprecated
     public static class MyComboBoxEditor extends DefaultCellEditor {
@@ -2224,7 +2237,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     /**
-     * @deprecated since 4.7.1, use {@link #getAspectEditorBox()}
+     * @deprecated since 4.7.1, use {@link SignalMastModel#getAspectEditorBox(int)}
      */
     @Deprecated
     public static class MyComboBoxRenderer extends JComboBox<String> implements TableCellRenderer {
