@@ -427,7 +427,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
             public Object getValueAt(int row, int col) {
                 // some error checking
                 if (row >= signalMastLogicList.size()) {
-                    log.debug("row is greater than list size");
+                    log.debug("row is greater than signalMastLogicList size");
                     return null;
                 }
                 SignalMastLogic b = getLogicFromRow(row);
