@@ -29,11 +29,9 @@ public class AboutDialogTest {
     }
 
     @Test
-    public void testShowAndCloseLinux() {
+    public void testShowAndClose() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        // only run this version of the test on Linux.
-        Assume.assumeTrue(jmri.util.SystemType.isLinux());
-        JFrame frame = new JFrame("Test Frame");
+        JFrame frame = new JFrame("About Dialog Test Frame");
         AboutDialog dialog = new AboutDialog(frame,true);
 
         Thread waitThread = new Thread(){
@@ -41,7 +39,7 @@ public class AboutDialogTest {
            public void run(){
               // constructor for jfo and jdo will wait until the frame and
               // dialog are visible.
-              JFrameOperator jfo = new JFrameOperator("Test Frame");
+              JFrameOperator jfo = new JFrameOperator("About Dialog Test Frame");
               JDialogOperator jdo = new JDialogOperator(jfo,Bundle.getMessage("TitleAbout",jmri.Application.getApplicationName()));
               jdo.close();
            }
@@ -49,28 +47,6 @@ public class AboutDialogTest {
         waitThread.start();
         frame.setVisible(true);
         dialog.setVisible(true);
-    }
-
-    @Test
-    @Ignore("attempt to make a version of the test above that works on Appveyor (in Windows) and MacOS on travis")
-    public void testShowAndClose() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        // Don't run this version of the test on Linux.
-        Assume.assumeFalse(jmri.util.SystemType.isLinux());
-           
-        JFrame frame = new JFrame("Test Frame");
-        AboutDialog dialog = new AboutDialog(frame,true);
-
-        ThreadingUtil.runOnGUIEventually( ()->{
-           frame.setVisible(true);
-           dialog.setVisible(true);
-        });
-
-        // constructor for jfo and jdo will wait until the frame and
-        // dialog are visible.
-        JFrameOperator jfo = new JFrameOperator("Test Frame");
-        JDialogOperator jdo = new JDialogOperator(jfo,Bundle.getMessage("TitleAbout",jmri.Application.getApplicationName()));
-        jdo.close();
     }
 
     @Before
