@@ -52,10 +52,14 @@ class SoundBite extends VSDSound {
     // Constructor to replace QueueSoundBite, really.
     public SoundBite(String name, BufferMode mode) {
         super(name);
-        this.filename = null;
         system_name = VSDSound.SrcSysNamePrefix + name;
         user_name = VSDSound.SrcUserNamePrefix + name;
         bufferMode = mode;
+        if (bufferMode == BufferMode.BOUND_MODE) {
+            this.filename = name;
+        } else {
+            this.filename = null;
+        }
         initialized = init(null, mode);
     }
 
@@ -100,7 +104,7 @@ class SoundBite extends VSDSound {
                     sound_buf = (AudioBuffer) am.provideAudio(BufSysNamePrefix + system_name);
                     sound_buf.setUserName(BufUserNamePrefix + user_name);
                     if (vf == null) {
-                        sound_buf.setURL(vsd_file_base + filename);
+                        sound_buf.setURL(vsd_file_base + "/" + filename);
                     } else {
                         java.io.InputStream ins = vf.getInputStream(filename);
                         if (ins != null) {
