@@ -15,10 +15,12 @@ class NceListenerScaffold implements jmri.jmrix.nce.NceListener {
         rcvdMsg = null;
     }
 
+    @Override
     public void message(NceMessage m) {
         rcvdMsg = m;
     }
 
+    @Override
     public void reply(NceReply r) {
         rcvdReply = r;
     }

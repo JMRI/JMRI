@@ -131,6 +131,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
 
     // Set the Commanded State.   This method overrides setCommandedState in 
     // the Abstract Turnout class.
+    @Override
     public void setCommandedState(int s) {
         if (log.isDebugEnabled()) {
             log.debug("set commanded state for turnout " + getSystemName() + " to " + s);
@@ -151,6 +152,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     }
 
     // Handle a request to change state by sending a DCC++ command
+    @Override
     synchronized protected void forwardCommandChangeToLayout(int s) {
 	DCCppMessage msg;
         if (s != _mClosed && s != _mThrown) {
@@ -175,6 +177,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
 	tc.sendDCCppMessage(msg, this);
     }
 
+    @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
             log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton " + _prefix + "T" + mNumber);
@@ -206,6 +209,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
 
     }
 
+    @Override
     synchronized public void setInverted(boolean inverted) {
         if (log.isDebugEnabled()) {
             log.debug("Inverting Turnout State for turnout xt" + mNumber);
@@ -221,6 +225,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         super.setInverted(inverted);
     }
 
+    @Override
     public boolean canInvert() {
         return true;
     }
@@ -243,6 +248,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     /*
      *  Handle an incoming message from the DCC++
      */
+    @Override
     synchronized public void message(DCCppReply l) {
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l);
@@ -263,10 +269,12 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     public void message(DCCppMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
@@ -472,6 +480,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     //         return (-1);
     //     }
 
+    @Override
     public void dispose() {
         this.removePropertyChangeListener(_stateListener);
         super.dispose();
@@ -493,6 +502,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
          * If we're using DIRECT mode, all of this is handled from the 
          * XPressNet Messages
          */
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent event) {
             if (log.isDebugEnabled()) {
                 log.debug("propertyChange called");

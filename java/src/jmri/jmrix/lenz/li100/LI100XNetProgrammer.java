@@ -42,6 +42,7 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
     }
 
     // programming interface
+    @Override
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
@@ -80,10 +81,12 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
         }
     }
 
+    @Override
     synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
+    @Override
     synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
@@ -127,6 +130,7 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
         }
     }
 
+    @Override
     synchronized public void message(XNetReply m) {
         if (m.getElement(0) == XNetConstants.CS_INFO
                 && m.getElement(1) == XNetConstants.BC_SERVICE_MODE_ENTRY) {
@@ -382,6 +386,7 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     synchronized public void message(XNetMessage l) {
     }
 

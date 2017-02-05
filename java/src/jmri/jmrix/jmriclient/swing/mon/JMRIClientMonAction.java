@@ -23,6 +23,7 @@ public class JMRIClientMonAction extends AbstractAction {
         _memo = memo;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a JMRIClientMonFrame
         JMRIClientMonFrame f = new JMRIClientMonFrame(_memo);

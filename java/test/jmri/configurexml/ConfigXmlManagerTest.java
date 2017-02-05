@@ -45,6 +45,7 @@ public class ConfigXmlManagerTest extends TestCase {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager();
         innerFlag = false;
         configxmlmanager.setErrorHandler(new ErrorHandler(){
+            @Override
             public void handle(ErrorMemo e) {
                 innerFlag = true;
             }
@@ -104,10 +105,12 @@ public class ConfigXmlManagerTest extends TestCase {
     
     public void testFindFile() throws FileNotFoundException, IOException {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager() {
+            @Override
             void locateClassFailed(Throwable ex, String adapterName, Object o) {
                 innerFlag = true;
             }
 
+            @Override
             void locateFileFailed(String f) {
                 // suppress warning during testing
             }
@@ -165,11 +168,13 @@ public class ConfigXmlManagerTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

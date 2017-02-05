@@ -5,18 +5,6 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
 /**
  *
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
- *
  * @author	Kevin Dickerson Copyright (C) 2011
  */
 public interface SignalMastLogicManager extends Manager {
@@ -25,7 +13,7 @@ public interface SignalMastLogicManager extends Manager {
     /**
      * This will replace all instances of an old SignalMast (either source or
      * destination) with the new signal mast instance. This is for use with such
-     * tools as the layout editor where a signalmast can at a certain location
+     * tools as the Layout Editor where a signalmast at a certain location
      * can be replaced with another, while the remainder of the configuration
      * stays the same.
      */
@@ -33,12 +21,12 @@ public interface SignalMastLogicManager extends Manager {
 
     /**
      * Discover all possible valid source and destination signalmasts past pairs
-     * on all layout editor panels.
+     * on all Layout Editor Panels.
      */
     public void automaticallyDiscoverSignallingPairs() throws JmriException;
 
     /**
-     * This uses the layout editor to check if the destination signalmast is
+     * This uses the Layout Editor to check if the destination signalmast is
      * reachable from the source signalmast
      *
      * @param sourceMast Source SignalMast
@@ -48,13 +36,14 @@ public interface SignalMastLogicManager extends Manager {
     // public boolean checkValidDest(SignalMast sourceMast, SignalMast destMast) throws JmriException;
     /**
      * Discover valid destination signalmasts for a given source signal on a
-     * given layout editor panel.
+     * given Layout Editor Panel.
      *
      * @param source Source SignalMast
      * @param layout Layout Editor panel to check.
      */
     public void discoverSignallingDest(SignalMast source, LayoutEditor layout) throws JmriException;
 
+    @Override
     public void dispose();
 
     /**

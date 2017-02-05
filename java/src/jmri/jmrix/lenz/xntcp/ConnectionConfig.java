@@ -49,6 +49,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         super();
     }
 
+    @Override
     public String name() {
         return "XnTcp";
     }
@@ -95,6 +96,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
 
         if (options.get("XnTcpInterface").getComponent() instanceof JComboBox) {
             ((JComboBox<Option>) options.get("XnTcpInterface").getComponent()).addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     enableInput();
                 }
@@ -102,6 +104,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         }
     }
 
+    @Override
     protected void showAdvancedItems() {
         super.showAdvancedItems();
         enableInput();
@@ -135,6 +138,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         manufacturerName = manu;
     }
 
+    @Override
     public boolean isHostNameAdvanced() {
         return true;
     }

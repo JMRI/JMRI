@@ -40,6 +40,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         super(parentFrame, type, family, model, editor);
     }
 
+    @Override
     public void init() {
         if (!_initialized) {
             super.init();
@@ -65,6 +66,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         return panel;
     }
 
+    @Override
     protected void initIconFamiliesPanel() {
         _iconFamilyPanel = new JPanel();
         _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
@@ -91,6 +93,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         hideIcons();
     }
 
+    @Override
     protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
         if (_update) {
             return;
@@ -118,10 +121,12 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         _dragIconPanel.add(panel);
     }
 
+    @Override
     protected void makeBottomPanel(ActionListener doneAction) {
         JPanel panel = new JPanel();
         _showIconsButton = new JButton(Bundle.getMessage("ShowIcons"));
         _showIconsButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (_iconPanel.isVisible()) {
                     hideIcons();
@@ -203,6 +208,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
     /**
      * ListSelectionListener action
      */
+    @Override
     public void valueChanged(ListSelectionEvent e) {
         if (_table == null) {
             return;
@@ -242,6 +248,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             super(flavor, icon);
         }
 
+        @Override
         protected boolean okToDrag() {
             NamedBean bean = getDeviceNamedBean();
             if (bean == null) {
@@ -252,6 +259,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             return true;
         }
 
+        @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {
                 return null;

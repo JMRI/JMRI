@@ -66,6 +66,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
     /**
      * Provide Uhlenbrock-specific slot implementation
      */
+    @Override
     protected void loadSlots() {
         // initialize slot array
         for (int i = 0; i < NUM_SLOTS; i++) {
@@ -73,6 +74,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
         }
     }
 
+    @Override
     protected boolean checkLackByte1(int Byte1) {
         //    log.info("Uhlenbrock checkLackByte1 "+Byte1);
         if ((Byte1 & 0xED) == 0x6D) {
@@ -82,6 +84,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
         }
     }
 
+    @Override
     protected boolean checkLackTaskAccepted(int Byte2) {
         //    log.info("Uhlenbrock checkLackTaskAccepted "+Byte2);
         if (Byte2 == 1 // task accepted
@@ -93,6 +96,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
         }
     }
 
+    @Override
     protected boolean checkLackAcceptedBlind(int Byte2) {
         //    log.info("Uhlenbrock checkLackAcceptedBlind "+Byte2);
         if (Byte2 == 0x40 || Byte2 == 0x7F) {
@@ -108,6 +112,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
      *
      * @param m incoming message
      */
+    @Override
     public void message(LocoNetMessage m) {
 
         // see if message for Intellibox-II functions F9 thru F12
@@ -260,6 +265,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
     /*
      * Internal method to create the LocoNetMessage for programmer task start 
      */
+    @Override
     protected LocoNetMessage progTaskStart(int pcmd, int val, int cvnum, boolean write) {
         switch (pcmd) {
             case 0x67:

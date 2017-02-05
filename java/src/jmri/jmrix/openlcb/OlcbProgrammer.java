@@ -80,10 +80,13 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
     }
     
+    @Override
     public boolean getLongAddress() { return false;}
 
+    @Override
     public int getAddressNumber() {return 0;}
 
+    @Override
     public String getAddress() { return "";}
 
 }

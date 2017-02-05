@@ -67,6 +67,7 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
      * @param	o	TurnoutOperation object
      * @return	partially filled element
      */
+    @Override
     public Element store(Object o) {
         TurnoutOperation myOp = (TurnoutOperation) o;
         Element elem = new Element("operation");

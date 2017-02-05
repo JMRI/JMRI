@@ -209,12 +209,14 @@ public class OBlockTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         blkMgr = new OBlockManager();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

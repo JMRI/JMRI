@@ -83,6 +83,7 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
     }
 
     // programming interface
+    @Override
     synchronized public void writeCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         _val = val;
         useProgrammer(p);
@@ -98,10 +99,12 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
         }
     }
 
+    @Override
     synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
+    @Override
     synchronized public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         useProgrammer(p);
         parseCV(CV);
@@ -157,6 +160,7 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
 
     // get notified of the final result
     // Note this assumes that there's only one phase to the operation
+    @Override
     public void programmingOpReply(int value, int status) {
         if (log.isDebugEnabled()) {
             log.debug("notifyProgListenerEnd value " + value + " status " + status);
@@ -171,6 +175,7 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
         ActionListener taskPerformer = new ActionListener() {
             final int myValue = value;
             final int myStatus = status;
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 processProgrammingOpReply(myValue, myStatus);
             }

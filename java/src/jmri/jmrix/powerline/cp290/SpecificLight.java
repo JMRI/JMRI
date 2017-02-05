@@ -58,6 +58,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
      * <p>
      * Invoked the first time intensity is set.
      */
+    @Override
     protected void initIntensity(double intensity) {
         maxDimStep = tc.getNumberOfIntensitySteps();
 

@@ -2,7 +2,6 @@ package jmri.jmrix.cmri.serial.networkdriver;
 
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNetworkPortController;
-import jmri.jmrix.cmri.serial.SerialSensorManager;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 
 /**
@@ -23,6 +22,7 @@ public class NetworkDriverAdapter extends SerialNetworkPortController {
     /**
      * set up all of the other objects to operate connected to this port
      */
+    @Override
     public void configure() {
         // connect to the traffic controller
         SerialTrafficController tc = new SerialTrafficController();

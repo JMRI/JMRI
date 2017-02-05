@@ -26,6 +26,7 @@ public class PowerPanelFrame extends JmriJFrame {
         pack();
     }
 
+    @Override
     public void dispose() {
         pane.dispose();
         super.dispose();

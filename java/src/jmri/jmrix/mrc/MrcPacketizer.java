@@ -58,6 +58,7 @@ public class MrcPacketizer extends MrcTrafficController {
     }
 
     // The methods to implement the MrcInterface
+    @Override
     public boolean status() {
         return (ostream != null && istream != null);
     }
@@ -87,6 +88,7 @@ public class MrcPacketizer extends MrcTrafficController {
      *
      * @param m Message to send;
      */
+    @Override
     public void sendMrcMessage(MrcMessage m) {
         // update statistics
         transmittedMsgCount++;
@@ -122,6 +124,7 @@ public class MrcPacketizer extends MrcTrafficController {
      *
      * @return true if busy, false if nothing waiting to send
      */
+    @Override
     public boolean isXmtBusy() {
         if (controller == null) {
             return false;
@@ -458,6 +461,7 @@ public class MrcPacketizer extends MrcTrafficController {
                             MrcMessage msgForLater = thisMsg;
                             MrcPacketizer myTC = thisTC;
 
+                            @Override
                             public void run() {
                                 myTC.notifyRcv(time, msgForLater);
                             }
@@ -504,6 +508,7 @@ public class MrcPacketizer extends MrcTrafficController {
      */
     class XmtHandler implements Runnable {
 
+        @Override
         public void run() {
             byte msg[];
             MrcMessage m;
@@ -651,6 +656,7 @@ public class MrcPacketizer extends MrcTrafficController {
         MrcMessage msgForLater;
         Date timestamp;
 
+        @Override
         public void run() {
             msgForLater.getSource().notifyFailedXmit(timestamp, msgForLater);
         }
@@ -682,6 +688,7 @@ public class MrcPacketizer extends MrcTrafficController {
         MrcPacketizer myTc;
         Date timestamp;
 
+        @Override
         public void run() {
             myTc.notifyXmit(timestamp, msgForLater);
         }

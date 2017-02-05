@@ -98,6 +98,7 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
     }
 
     // programming interface
+    @Override
     synchronized public void writeCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         _val = val;
         useProgrammer(p);
@@ -112,10 +113,12 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
         }
     }
 
+    @Override
     synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
+    @Override
     synchronized public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         useProgrammer(p);
         parseCV(CV);
@@ -153,6 +156,7 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
 
     // get notified of the final result
     // Note this assumes that there's only one phase to the operation
+    @Override
     public void programmingOpReply(int value, int status) {
         if (log.isDebugEnabled()) {
             log.debug("notifyProgListenerEnd value " + value + " status " + status);

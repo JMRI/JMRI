@@ -36,6 +36,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         return getElement(0);
     }
 
+    @Override
     protected int skipPrefix(int index) {
         // doesn't have to do anything
         return index;

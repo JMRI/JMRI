@@ -209,6 +209,7 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 	multiMeter = m;
     }
 
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
@@ -249,6 +250,7 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
@@ -289,10 +291,12 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return null; // nothing, by default
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.dccpp.DCCppActionListBundle");
     }
 
+    @Override
     public void dispose() {
         xt = null;
         InstanceManager.deregister(this, DCCppSystemConnectionMemo.class);

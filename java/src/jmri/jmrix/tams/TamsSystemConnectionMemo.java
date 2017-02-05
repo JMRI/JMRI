@@ -74,6 +74,7 @@ public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.tams.TamsActionListBundle");
     }
@@ -119,6 +120,7 @@ public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     /**
      * Tells which managers this provides by class
      */
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
@@ -149,6 +151,7 @@ public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;

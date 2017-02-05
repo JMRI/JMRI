@@ -60,6 +60,7 @@ public class Ash2_1Algorithm extends AbstractCalculator {
     double Yt = 0.0;
     double Zt = 0.0;
 
+    @Override
     public Measurement convert(Reading r) {
 
         if (log.isDebugEnabled()) {
@@ -88,6 +89,7 @@ public class Ash2_1Algorithm extends AbstractCalculator {
     /**
      * Seed the conversion using an estimated position
      */
+    @Override
     public Measurement convert(Reading r, Point3d guess) {
         this.Xt = guess.x;
         this.Yt = guess.y;
@@ -99,6 +101,7 @@ public class Ash2_1Algorithm extends AbstractCalculator {
     /**
      * Seed the conversion using a last measurement
      */
+    @Override
     public Measurement convert(Reading r, Measurement last) {
         if (last != null) {
             this.Xt = last.getX();

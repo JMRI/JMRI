@@ -37,6 +37,7 @@ public class MergReply extends GridConnectReply {
      *
      * @return the CAN header as an int
      */
+    @Override
     public int getHeader() {
         int val = super.getHeader();
         // Adjust standard header from MERG adapter received as 11 bits left

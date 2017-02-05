@@ -68,6 +68,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
      * Override parent method to ensure that message always has valid error
      * check byte
      */
+    @Override
     public void setElement(int element, int value) {
         super.setElement(element, value);
         int ecb = getElement(0) ^ getElement(1) ^ getElement(2) ^ getElement(3);

@@ -163,6 +163,7 @@ public class LnSensorAddress {
         return _valid;
     }
 
+    @Override
     public String toString() {
         return getNumericAddress() + ":"
                 + getDS54Address() + ":"

@@ -51,6 +51,7 @@ public class StoreXmlVSDecoderAction extends AbstractAction {
      *
      * @param e The event causing the action.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
         fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);

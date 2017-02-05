@@ -210,7 +210,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         try {
             ALut.alutLoadWAVFile(stream, format, data, size, freq, loop);
         } catch (ALException e) {
-            log.warn("Error loading JoalAudioBuffer from stream", e);
+            log.warn("Exception loading JoalAudioBuffer from stream: {}", e.toString());
             return false;
         }
 
@@ -232,7 +232,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         try {
             ALut.alutLoadWAVFile(FileUtil.getExternalFilename(this.getURL()), format, data, size, freq, loop);
         } catch (ALException e) {
-            log.warn("Error loading JoalAudioBuffer from file", e);
+            log.warn("Exception loading JoalAudioBuffer from file: {}", e.toString());
             return false;
         }
 

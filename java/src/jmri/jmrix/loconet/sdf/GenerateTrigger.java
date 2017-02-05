@@ -12,12 +12,14 @@ public class GenerateTrigger extends SdfMacro {
         this.trigger = trigger;
     }
 
+    @Override
     public String name() {
         return "GENERATE_TRIGGER"; // NOI18N
     }
 
     int trigger;
 
+    @Override
     public int length() {
         return 2;
     }
@@ -41,6 +43,7 @@ public class GenerateTrigger extends SdfMacro {
     /**
      * Store into a buffer.
      */
+    @Override
     public void loadByteArray(SdfBuffer buffer) {
         // data
         buffer.setAtIndexAndInc(0xB1);
@@ -50,14 +53,17 @@ public class GenerateTrigger extends SdfMacro {
         super.loadByteArray(buffer);
     }
 
+    @Override
     public String toString() {
         return "Cause Trigger " + triggerVal() + '\n'; // NOI18N
     }
 
+    @Override
     public String oneInstructionString() {
         return name() + ' ' + triggerVal() + '\n'; // NOI18N
     }
 
+    @Override
     public String allInstructionString(String indent) {
         return indent + oneInstructionString();
     }

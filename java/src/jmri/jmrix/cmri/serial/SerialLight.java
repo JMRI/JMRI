@@ -64,6 +64,7 @@ public class SerialLight extends AbstractLight {
      * SerialNode), a Transmit packet will be sent before this Node is next
      * polled.
      */
+    @Override
     protected void doNewState(int oldState, int newState) {
         SerialNode mNode = (SerialNode) SerialAddress.getNodeFromSystemName(getSystemName(),_memo.getTrafficController());
         if (mNode != null) {

@@ -31,6 +31,7 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
 
     SerialPort activeSerialPort = null;
 
+    @Override
     public String openPort(String portName, String appName) {
         // open the port, check ability to set moderators
         try {
@@ -98,6 +99,7 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
      * set up all of the other objects to operate with an EasyDcc command
      * station connected to this port
      */
+    @Override
     public void configure() {
         // connect to the traffic controller
         EasyDccTrafficController control = EasyDccTrafficController.instance();
@@ -109,6 +111,7 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
     }
 
     // base class methods for the EasyDccPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -117,6 +120,7 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -129,6 +133,7 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -136,6 +141,7 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
     /**
      * Get an array of valid baud rates. This is currently only 19,200 bps
      */
+    @Override
     public String[] validBaudRates() {
         return new String[]{"9,600 bps"};
     }

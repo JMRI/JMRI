@@ -35,6 +35,7 @@ public class XNetTimeSlotListener implements XNetListener {
      * @param msg The received XNet message. Note that this same object may be
      *            presented to multiple users. It should not be modified here.
      */
+    @Override
     public void message(XNetReply msg){
         log.debug("Time Slot Listener received {}",msg);
         if(msg.isTimeSlotErrorMessage()){
@@ -59,6 +60,7 @@ public class XNetTimeSlotListener implements XNetListener {
      * @param msg The received XNet message. Note that this same object may be
      *            presented to multiple users. It should not be modified here.
      */
+    @Override
     public void message(XNetMessage msg){
        // do nothing
     }
@@ -68,6 +70,7 @@ public class XNetTimeSlotListener implements XNetListener {
      * sender that an outgoing message timed out and was dropped from the *
      * queue.
      */
+    @Override
     public void notifyTimeout(XNetMessage msg){
        // do nothing
     }

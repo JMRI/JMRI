@@ -25,11 +25,13 @@ public class RpsTrackingFrame extends jmri.util.JmriJFrame {
         this("RPS Tracking Display");
     }
 
+    @Override
     public void dispose() {
         panel.dispose();
         super.dispose();
     }
 
+    @Override
     public void initComponents() {
 
         addHelpMenu("package.jmri.jmrix.rps.trackingpanel.RpsTrackingFrame", true);
@@ -46,6 +48,7 @@ public class RpsTrackingFrame extends jmri.util.JmriJFrame {
 
         clearButton = new JButton("Clear");
         clearButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 clearButtonChanged();
             }
@@ -55,6 +58,7 @@ public class RpsTrackingFrame extends jmri.util.JmriJFrame {
         // button for handling errors
         showErrButton = new JCheckBox("Show error points");
         showErrButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 showErrButtonChanged();
             }
@@ -64,6 +68,7 @@ public class RpsTrackingFrame extends jmri.util.JmriJFrame {
         // button for showing receivers
         showRecButton = new JCheckBox("Show receivers");
         showRecButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 showRecButtonChanged();
             }
@@ -75,6 +80,7 @@ public class RpsTrackingFrame extends jmri.util.JmriJFrame {
         // button for showing regions
         showRegButton = new JCheckBox("Show regions");
         showRegButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 showRegButtonChanged();
             }

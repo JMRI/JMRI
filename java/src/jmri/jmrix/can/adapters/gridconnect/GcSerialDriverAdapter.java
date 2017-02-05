@@ -28,6 +28,7 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
         this.manufacturerName = jmri.jmrix.merg.MergConnectionTypeList.MERG;
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         String[] baudRates = validBaudRates();
         int[] baudValues = validBaudValues();
@@ -105,6 +106,7 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
      * set up all of the other objects to operate with a CAN RS adapter
      * connected to this port
      */
+    @Override
     public void configure() {
         // Register the CAN traffic controller being used for this connection
         //GcTrafficController.instance();
@@ -128,6 +130,7 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
     }
 
     // base class methods for the PortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -136,6 +139,7 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -148,6 +152,7 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -155,6 +160,7 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
     /**
      * Get an array of valid baud rates.
      */
+    @Override
     public String[] validBaudRates() {
         return new String[]{"57,600", "115,200", "230,400", "250,000", "333,333", "460,800"};
     }

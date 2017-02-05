@@ -14,6 +14,7 @@ public class DefaultUserMessagePreferencesTest extends TestCase {
 
     public void testSetGet() {
         DefaultUserMessagePreferences d = new DefaultUserMessagePreferences() {
+            @Override
             public void displayRememberMsg() {
             }
         };
@@ -49,12 +50,14 @@ public class DefaultUserMessagePreferencesTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         System.setProperty("org.jmri.Apps.configFilename", "jmriconfig2.xml");
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
         jmri.util.JUnitUtil.resetInstanceManager();

@@ -1,6 +1,5 @@
 package jmri.jmrix;
 
-import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -30,7 +29,9 @@ public abstract class AbstractMonPaneTestBase {
     @Before
     public void setUp(){
         pane = new AbstractMonPane() {
+            @Override
             public String getTitle() { return "title"; }
+            @Override
             protected void init() {}
         };
     }

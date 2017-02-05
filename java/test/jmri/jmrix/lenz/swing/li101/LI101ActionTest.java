@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.After;
 import javax.swing.JFrame;
 import org.netbeans.jemmy.operators.JFrameOperator;
-import java.util.ResourceBundle;
 
 /**
  * Tests for the jmri.jmrix.lenz.packetgen.LI101Action class

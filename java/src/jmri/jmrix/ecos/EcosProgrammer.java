@@ -43,6 +43,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
     int _cv;	// remember the cv being read/written
 
     // programming interface
+    @Override
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
@@ -69,6 +70,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
         readCV(CV, p);
     }
 
+    @Override
     synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
@@ -106,10 +108,12 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
         }
     }
 
+    @Override
     public void message(EcosMessage m) {
         log.info("message: "+m);
     }
 
+    @Override
     synchronized public void reply(EcosReply reply) {
         log.info("reply: "+reply);
         if (progState == NOTPROGRAMMING) {
@@ -192,6 +196,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
     /**
      * Internal routine to handle a timeout
      */
+    @Override
     synchronized protected void timeout() {
         if (progState != NOTPROGRAMMING) {
             // we're programming, time to stop

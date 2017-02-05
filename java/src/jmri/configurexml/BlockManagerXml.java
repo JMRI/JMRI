@@ -38,6 +38,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      *
      * @param memories The top-level element being created
      */
+    @Override
     public void setStoreElementClass(Element memories) {
         memories.setAttribute("class", "jmri.configurexml.BlockManagerXml");
     }
@@ -48,6 +49,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      * @param o Object to store, of type BlockManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element blocks = new Element("blocks");
         setStoreElementClass(blocks);
@@ -430,6 +432,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
 
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.getDefault(jmri.BlockManager.class).getXMLOrder();
     }

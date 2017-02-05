@@ -15,35 +15,43 @@ public class TestTrafficController extends TrafficController {
 
     public CanMessage rcvMessage = null;
 
+    @Override
     public void sendCanMessage(CanMessage m, CanListener l) {
         rcvMessage = m;
         log.debug("Message sent: header {} body {}", Integer.toHexString(m.getHeader()), m);
     }
 
     // dummies
+    @Override
     public jmri.jmrix.AbstractMRMessage encodeForHardware(CanMessage m) {
         return null;
     }
 
+    @Override
     public CanReply decodeFromHardware(jmri.jmrix.AbstractMRReply r) {
         return null;
     }
 
+    @Override
     public jmri.jmrix.AbstractMRMessage newMessage() {
         return null;
     }
 
+    @Override
     public boolean endOfMessage(jmri.jmrix.AbstractMRReply r) {
         return true;
     }
 
+    @Override
     public jmri.jmrix.AbstractMRReply newReply() {
         return null;
     }
 
+    @Override
     public void forwardReply(jmri.jmrix.AbstractMRListener l, jmri.jmrix.AbstractMRReply r) {
     }
 
+    @Override
     public void forwardMessage(jmri.jmrix.AbstractMRListener l, jmri.jmrix.AbstractMRMessage r) {
     }
 }

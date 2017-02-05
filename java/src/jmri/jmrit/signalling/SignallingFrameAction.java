@@ -23,6 +23,7 @@ public class SignallingFrameAction extends AbstractAction {
         super(rb.getString("SignallingPairs"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SignallingFrame f = new SignallingFrame();
         try {

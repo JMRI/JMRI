@@ -17,21 +17,25 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         super();
     }
 
+    @Override
     protected String title() {
         return "SECSI Serial Command Monitor";
     }
 
+    @Override
     protected void init() {
         // connect to TrafficController
         SerialTrafficController.instance().addSerialListener(this);
     }
 
+    @Override
     public void dispose() {
         SerialTrafficController.instance().removeSerialListener(this);
         super.dispose();
     }
 
     @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "string concatenation, efficiency not as important as clarity here")
+    @Override
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         // check for valid length
         if (l.getNumDataElements() < 5) {
@@ -51,6 +55,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     }
 
     @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "string concatenation, efficiency not as important as clarity here")
+    @Override
     public synchronized void reply(SerialReply l) {  // receive a reply message and log it
         // check for valid length
         if (l.getNumDataElements() == 1) {

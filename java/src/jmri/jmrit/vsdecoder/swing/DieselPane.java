@@ -70,6 +70,7 @@ public class DieselPane extends EnginePane {
     /**
      * Init Context.
      */
+    @Override
     public void initContext(Object context) {
         initComponents();
     }
@@ -77,6 +78,7 @@ public class DieselPane extends EnginePane {
     /**
      * Build teh GUI components
      */
+    @Override
     public void initComponents() {
         listenerList = new javax.swing.event.EventListenerList();
 
@@ -94,6 +96,7 @@ public class DieselPane extends EnginePane {
         start_button.setText(Bundle.getMessage("ButtonEngineStart"));
         start_button.setToolTipText(Bundle.getMessage("ToolTipDP_StartButton"));
         start_button.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 startButtonChange(e);
             }
@@ -144,6 +147,7 @@ public class DieselPane extends EnginePane {
     /**
      * set the throttle spinner value
      */
+    @Override
     public void setThrottle(int t) {
         throttle_spinner.setValue(t);
     }

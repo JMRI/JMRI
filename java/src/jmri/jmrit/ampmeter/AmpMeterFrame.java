@@ -116,6 +116,7 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         // request callback to update time
 	// Again, adding updates.
 	java.beans.PropertyChangeListener du_listener = new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 update();
             }
@@ -125,6 +126,7 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         // Add component listener to handle frame resizing event
         this.addComponentListener(
                 new ComponentAdapter() {
+                    @Override
                     public void componentResized(ComponentEvent e) {
                         scaleImage();
                     }
@@ -184,6 +186,7 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         d3.setIcon(digits[v3]);
     }
 
+    @Override
     public void dispose() {
 	meter.disable();
 	meter.removePropertyChangeListener(this);
@@ -194,6 +197,7 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
     /**
      * Handle a change to clock properties
      */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
 	/*
         boolean now = clock.getRun();
@@ -209,6 +213,7 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
 
     static private class ButtonListener implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent a) {
 	    /*
             boolean next = !clock.getRun();
