@@ -52,7 +52,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         super();
         sml = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sourceMast);
         this.sourceMast = sourceMast;
-        fixedSourceMastLabel = new JLabel(Bundle.getMessage("SourceMast") + " " + sourceMast.getDisplayName());
+        fixedSourceMastLabel = new JLabel(Bundle.getMessage("SourceMast") + ": " + sourceMast.getDisplayName());
         if (sml != null) {
             _signalMastList = sml.getDestinationList();
         }
@@ -104,9 +104,21 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
 
                     @Override
                     public void run() {
-                        SignallingAction sigLog = new SignallingAction();
+                        //int oldListSize;
+                        //if (sml == null) { // no existing SML's for this source mast
+                        //    oldListSize = 0;}
+                        //else {
+                        //    oldListSize = sml.getDestinationList().size();
+                        //}
+                        //log.debug("SML Add started. List size = {}", oldListSize);
+                        SignallingAction sigLog = new SignallingAction(); // opens a frame, opens a panel in that frame
                         sigLog.setMast(sourceMast, null);
                         sigLog.actionPerformed(null);
+                        //log.debug("SML Add ready"); // this is too quick, will never call:
+                        //if (sml != null && sml.getDestinationList().size() > oldListSize) {
+                        //    log.debug("SML Add added a Logic");
+                        //    _AppearanceModel.fireTableDataChanged(); // update list display after edit, but not when Add was cancelled by user
+                        //}
                     }
                 }
                 WindowMaker t = new WindowMaker();
@@ -168,6 +180,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             boolean newValue = (Boolean) e.getNewValue();
             discoverPairs.setEnabled(newValue);
         }
+        //log.debug("SSP 179 Event: {}", e.getPropertyName());
     }
 
     private ArrayList<SignalMast> _signalMastList;
@@ -285,7 +298,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
 
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
-            if (e.getPropertyName().equals("length")) {
+            if (e.getPropertyName().equals("length")) { // should pick up adding an new destination mast, but doesn't refresh by itself
                 _signalMastList = sml.getDestinationList();
                 int length = (Integer) e.getNewValue();
                 if (length == 0) {
@@ -301,11 +314,11 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                 fireTableDataChanged();
                 fireTableRowsUpdated(0, _signalMastList.size()-1);
             }
+            //log.debug("SSP 312 Event: {}", e.getPropertyName());
         }
 
         protected void configEditColumn(JTable table) {
             // have the delete column hold a button
-            /*AbstractTableAction.rb.getString("EditDelete")*/
             setColumnToHoldButton(table, EDIT_COLUMN,
                     new JButton(Bundle.getMessage("ButtonEdit")));
             setColumnToHoldButton(table, DEL_COLUMN,
@@ -313,7 +326,6 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         }
 
         protected void setColumnToHoldButton(JTable table, int column, JButton sample) {
-            //TableColumnModel tcm = table.getColumnModel();
             // install a button renderer & editor
             ButtonRenderer buttonRenderer = new ButtonRenderer();
             table.setDefaultRenderer(JButton.class, buttonRenderer);
@@ -356,9 +368,11 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
 
                 @Override
                 public void run() {
+                    log.debug("SML Edit existing logic started");
                     SignallingAction sigLog = new SignallingAction();
                     sigLog.setMast(sourceMast, _signalMastList.get(row));
                     sigLog.actionPerformed(null);
+                    //cannot tell if Edit pair was cancelled
                 }
             }
             WindowMaker t = new WindowMaker(r);

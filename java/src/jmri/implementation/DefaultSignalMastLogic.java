@@ -152,12 +152,14 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
     @Override
     public void setDestinationMast(SignalMast dest) {
         if (destList.containsKey(dest)) {
+            log.warn("Destination mast '{}' was already defined in SML with this source mast", dest.getDisplayName());
             return;
         }
         int oldSize = destList.size();
         destList.put(dest, new DestinationMast(dest));
         //InstanceManager.getDefault(jmri.SignalMastLogicManager.class).addDestinationMastToLogic(this, dest);
         firePropertyChange("length", oldSize, Integer.valueOf(destList.size()));
+        // make new dest mast appear in (update of) SignallingSourcePanel Table by having that table listen to PropertyChange Events from SML TODO
     }
 
     @Override
@@ -327,7 +329,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
             log.debug("Set use layout editor");
             ArrayList<LayoutEditor> layout = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
             /*We don't care which layout editor panel the signalmast is on, just so long as
-             as the routing is done via layout blocks*/
+             the routing is done via layout blocks*/
             // TODO: what is this?
             log.debug("userLayoutEditor finds layout size is {}", Integer.toString(layout.size()));
             for (int i = 0; i < layout.size(); i++) {
@@ -953,8 +955,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
     }
 
     /**
-     * Evaluates the destination signal mast appearance and sets ours
-     * accordingly
+     * Evaluates the destination signal mast Aspect and sets ours
+     * accordingly.
      */
     void setMastAppearance() {
         synchronized (this) {
@@ -2968,7 +2970,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         NamedBean nb = (NamedBean) evt.getOldValue();
-        if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
+        if ("CanDelete".equals(evt.getPropertyName())) { //NOI18N
             boolean found = false;
             StringBuilder message = new StringBuilder();
             if (nb instanceof SignalMast) {
