@@ -3,6 +3,7 @@ package jmri.jmrix.cmri.serial.serialdriver.configurexml;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import jmri.jmrix.cmri.serial.serialdriver.ConnectionConfig;
 import jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter;
