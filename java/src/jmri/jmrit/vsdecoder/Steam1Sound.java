@@ -636,7 +636,7 @@ class Steam1Sound extends EngineSound {
             coast_notch = null;
             helper_notch = null;
             // Sound for queueing.
-            _sound = new SoundBite(s + "_QUEUE", SoundBite.BufferMode.QUEUE_MODE);
+            _sound = new SoundBite(s + "_QUEUE");
             _sound.setGain(VSDSound.default_gain); // All chuff sounds will have this gain
             _parent = d;
             _top_speed = ts;
@@ -810,6 +810,7 @@ class Steam1Sound extends EngineSound {
         //
         //   LOOP-PLAYER
         //
+        @Override
         public void run() {
             try {
                 while (is_running) {
