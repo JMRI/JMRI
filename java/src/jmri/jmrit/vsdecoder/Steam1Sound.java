@@ -509,8 +509,6 @@ class Steam1Sound extends EngineSound {
                 b = (AudioBuffer) am.provideAudio(VSDSound.BufSysNamePrefix + sname + filename);
                 b.setUserName(VSDSound.BufUserNamePrefix + uname);
                 if (vf == null) {
-                    // Need to fix this.
-                    //buf.setURL(vsd_file_base + filename);
                     log.warn("No VSD File");
                     return null;
                 } else {
