@@ -25,6 +25,7 @@ class XnTcpPortControllerScaffold extends XnTcpAdapter {
         return null;
     }
 
+    @Override
     public void configure() {
     }
 
@@ -68,6 +69,7 @@ class XnTcpPortControllerScaffold extends XnTcpAdapter {
     /**
      * Returns the InputStream from the port.
      */
+    @Override
     public DataInputStream getInputStream() {
         return istream;
     }
@@ -75,6 +77,7 @@ class XnTcpPortControllerScaffold extends XnTcpAdapter {
     /**
      * Returns the outputStream to the port.
      */
+    @Override
     public DataOutputStream getOutputStream() {
         return ostream;
     }
@@ -82,14 +85,17 @@ class XnTcpPortControllerScaffold extends XnTcpAdapter {
     /**
      * Check that this object is ready to operate.
      */
+    @Override
     public boolean status() {
         return true;
     }
 
+    @Override
     public boolean okToSend() {
         return true;
     }
 
+    @Override
     public void setOutputBufferEmpty(boolean s) {
     }
 

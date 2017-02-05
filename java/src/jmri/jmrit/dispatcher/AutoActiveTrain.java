@@ -268,6 +268,7 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     // Throttle feedback method - Initiates running AutoEngineer with the new throttle
+    @Override
     public void notifyThrottleFound(DccThrottle t) {
         _throttle = t;
         if (_throttle == null) {
@@ -300,6 +301,7 @@ public class AutoActiveTrain implements ThrottleListener {
         return _throttle;
     }
 
+    @Override
     public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason) {
         log.error("Throttle request failed for " + address + " because " + reason);
     }
@@ -584,6 +586,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 _controllingSignal = sh;
                 _conSignalProtectedBlock = _nextBlock;
                 sh.addPropertyChangeListener(_conSignalListener = new PropertyChangeListener() {
+                    @Override
                     public void propertyChange(PropertyChangeEvent e) {
                         if (e.getPropertyName().equals("Appearance")) {
                             // controlling signal has changed appearance
@@ -627,6 +630,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 _controllingSignalMast = sm;
                 _conSignalProtectedBlock = nB;
                 sm.addPropertyChangeListener(_conSignalMastListener = new PropertyChangeListener() {
+                    @Override
                     public void propertyChange(PropertyChangeEvent e) {
                         if (e.getPropertyName().equals("Aspect")) {
                             // controlling signal has changed appearance
@@ -905,6 +909,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 }
                 _stopSensor.addPropertyChangeListener(_stopSensorListener
                         = new java.beans.PropertyChangeListener() {
+                            @Override
                             public void propertyChange(java.beans.PropertyChangeEvent e) {
                                 if (e.getPropertyName().equals("KnownState")) {
                                     handleStopSensorChange();
@@ -1282,6 +1287,7 @@ public class AutoActiveTrain implements ThrottleListener {
             _task = task;
         }
 
+        @Override
         public void run() {
             boolean waitingOnTrain = true;
             try {
@@ -1314,6 +1320,7 @@ public class AutoActiveTrain implements ThrottleListener {
             _fastMinutes = fastMinutes;
         }
 
+        @Override
         public void run() {
             // set to pause at a fast ramp rate
             _pausingActive = true;
@@ -1347,6 +1354,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 java.beans.PropertyChangeListener _clockListener = null;
                 _clock.addMinuteChangeListener(_clockListener
                         = new java.beans.PropertyChangeListener() {
+                    @Override
                             public void propertyChange(java.beans.PropertyChangeEvent e) {
                                 _fastMinutes--;
                             }
@@ -1405,6 +1413,7 @@ public class AutoActiveTrain implements ThrottleListener {
 //        private int _fullRampTime = 8000;
         private float _speedIncrement = 0.0f  ; //will be recalculated
 
+        @Override
         public void run() {
             _abort = false;
             setHalt(false);

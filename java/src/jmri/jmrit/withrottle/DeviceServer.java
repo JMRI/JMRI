@@ -153,6 +153,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
     }
 
+    @Override
     public void run() {
         for (int i = 0; i < listeners.size(); i++) {
             DeviceListener l = listeners.get(i);
@@ -435,6 +436,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         stopEKGCount = 0;
         ekg = new Timer();
         TimerTask task = new TimerTask() {
+            @Override
             public void run() {  //  Drops on second pass
                 if (!heartbeat) {
                     stopEKGCount++;
@@ -571,6 +573,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
      *
      * @param message The string to send.
      */
+    @Override
     public void sendPacketToDevice(String message) {
         if (message == null) {
             return; //  Do not send a null.
@@ -609,6 +612,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         }
     }
 
+    @Override
     public void notifyControllerAddressFound(ThrottleController TC) {
 
         for (int i = 0; i < listeners.size(); i++) {
@@ -620,6 +624,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         }
     }
 
+    @Override
     public void notifyControllerAddressReleased(ThrottleController TC) {
 
         for (int i = 0; i < listeners.size(); i++) {

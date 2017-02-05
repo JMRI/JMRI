@@ -80,12 +80,14 @@ public class SignalHeadTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes for the specific case
      * of SignalHeads
      */
+    @Override
     protected void createModel() {
         m = new BeanTableDataModel() {
             static public final int LITCOL = NUMCOLUMN;
             static public final int HELDCOL = LITCOL + 1;
             static public final int EDITCOL = HELDCOL + 1;
 
+            @Override
             public int getColumnCount() {
                 return NUMCOLUMN + 3;
             }
@@ -250,20 +252,24 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public Manager getManager() {
                 return InstanceManager.getDefault(jmri.SignalHeadManager.class);
             }
 
+            @Override
             public NamedBean getBySystemName(String name) {
                 return InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(name);
             }
 
+            @Override
             public NamedBean getByUserName(String name) {
                 return InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(name);
             }
             /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"delete"); }
              public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "delete", boo); }*/
 
+            @Override
             protected String getMasterClassName() {
                 return getClassName();
             }
@@ -312,6 +318,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 return b;
             }
 
+            @Override
             public boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().indexOf("Lit") >= 0 || e.getPropertyName().indexOf("Held") >= 0 || e.getPropertyName().indexOf("ValidStatesChanged") >= 0) {
                     return true;
@@ -320,6 +327,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             protected String getBeanType() {
                 return Bundle.getMessage("BeanNameSignalHead");
             }
@@ -463,10 +471,12 @@ public class SignalHeadTableAction extends AbstractTableAction {
         };
     }
 
+    @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleSignalTable"));
     }
 
+    @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.SignalHeadTable";
     }
@@ -734,6 +744,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
      * inputs, we directly manipulate which parts of the GUI are displayed when
      * the selected type is changed.
      */
+    @Override
     protected void addPressed(ActionEvent e) {
         if (addFrame == null) {
             for (Object obj : jmri.InstanceManager.getList(jmri.CommandStation.class)) {
@@ -768,6 +779,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 typeBox.addItem(grapevine);
             }
             typeBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     typeChanged();
                 }
@@ -887,6 +899,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             JButton cancelNew = new JButton(Bundle.getMessage("ButtonCancel"));
             panelBottom.add(cancelNew);
             cancelNew.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelNewPressed(e);
                 }
@@ -895,6 +908,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             JButton ok;
             panelBottom.add(ok = new JButton(Bundle.getMessage("ButtonCreate")));
             ok.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     okPressed(e);
                 }
@@ -1142,6 +1156,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v4Border.setTitle(Bundle.getMessage("InputNum", " 2 "));
             v5Border.setTitle(Bundle.getMessage("InputNum", " 3 "));
             msaBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     ukAspectChange(false);
                 }
@@ -1807,6 +1822,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
         // create the Edit Logix Window
         // Use separate Runnable so window is created on top
         Runnable t = new Runnable() {
+            @Override
             public void run() {
                 makeEditSignalWindow();
             }
@@ -1960,6 +1976,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             JButton cancel;
             p.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
             cancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelPressed(e);
                 }
@@ -1967,6 +1984,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             JButton update;
             p.add(update = new JButton(Bundle.getMessage("ButtonUpdate")));
             update.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     updatePressed(e);
                 }
@@ -1974,6 +1992,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             panelBottom.add(p);
             editFrame.getContentPane().add(panelBottom, BorderLayout.PAGE_END);
             editFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     cancelPressed(null);
                 }
@@ -2259,6 +2278,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 eto5.setDefaultNamedBean(((jmri.implementation.MergSD2SignalHead) curS).getInput3().getBean());
             }
             emsaBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     ukAspectChange(true);
                 }
@@ -2702,6 +2722,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
     }
 
+    @Override
     public void dispose() {
         if (to1 != null) {
             to1.dispose();
@@ -2793,10 +2814,12 @@ public class SignalHeadTableAction extends AbstractTableAction {
         }
     }
 
+    @Override
     protected String getClassName() {
         return SignalHeadTableAction.class.getName();
     }
 
+    @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleSignalTable");
     }

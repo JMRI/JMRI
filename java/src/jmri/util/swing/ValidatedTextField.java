@@ -69,11 +69,13 @@ public class ValidatedTextField extends javax.swing.JTextField {
         thisone = this;
         thisone.setInputVerifier(verifier);
         thisone.addFocusListener(new FocusListener() {
+            @Override
             public void focusGained(FocusEvent e) {
                 setEditable(true);
                 setEnabled(true);
             }
 
+            @Override
             public void focusLost(FocusEvent e) {
                 exitFieldColorizer();
                 setEditable(true);
@@ -147,11 +149,13 @@ public class ValidatedTextField extends javax.swing.JTextField {
         thisone = this;
         thisone.setInputVerifier(verifier);
         thisone.addFocusListener(new FocusListener() {
+            @Override
             public void focusGained(FocusEvent e) {
                 setEditable(true);
                 setEnabled(true);
             }
 
+            @Override
             public void focusLost(FocusEvent e) {
                 exitFieldColorizer();
                 setEditable(true);
@@ -205,11 +209,13 @@ public class ValidatedTextField extends javax.swing.JTextField {
         thisone = this;
         thisone.setInputVerifier(verifier);
         thisone.addFocusListener(new FocusListener() {
+            @Override
             public void focusGained(FocusEvent e) {
                 setEditable(true);
                 setEnabled(true);
             }
 
+            @Override
             public void focusLost(FocusEvent e) {
                 exitFieldColorizer();
                 setEditable(true);
@@ -262,11 +268,13 @@ public class ValidatedTextField extends javax.swing.JTextField {
         thisone = this;
         thisone.setInputVerifier(verifier);
         thisone.addFocusListener(new FocusListener() {
+            @Override
             public void focusGained(FocusEvent e) {
                 setEditable(true);
                 setEnabled(true);
             }
 
+            @Override
             public void focusLost(FocusEvent e) {
                 exitFieldColorizer();
                 setEditable(true);
@@ -339,6 +347,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
      *
      * @return true if current field information is valid; otherwise false
      */
+    @Override
     public boolean isValid() {
         String value;
         if (thisone == null) {
@@ -468,6 +477,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
      */
     private class MyVerifier extends javax.swing.InputVerifier implements java.awt.event.ActionListener {
 
+        @Override
         public boolean shouldYieldFocus(javax.swing.JComponent input) {
             if (input.getClass() == ValidatedTextField.class) {
 
@@ -496,6 +506,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
             }
         }
 
+        @Override
         public boolean verify(javax.swing.JComponent input) {
             if (input.getClass() == ValidatedTextField.class) {
                 return ((ValidatedTextField) input).isValid();
@@ -504,6 +515,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
             }
         }
 
+        @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
             javax.swing.JTextField source = (javax.swing.JTextField) e.getSource();
             shouldYieldFocus(source); //ignore return value

@@ -1,18 +1,8 @@
 package jmri.jmrix.can.adapters.loopback;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.util.ResourceBundle;
-import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Test;
-import jmri.jmrix.AbstractMRListener;
-import jmri.jmrix.AbstractMRMessage;
-import jmri.jmrix.AbstractMRReply;
 
 /**
  * Tests for LoopbackTrafficController.

@@ -73,6 +73,7 @@ public class ThrottleFramePropertyEditor extends JDialog {
         titleField = new JTextField();
         titleField.setColumns(24);
         titleField.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 titleFieldChanged();
             }
@@ -115,6 +116,7 @@ public class ThrottleFramePropertyEditor extends JDialog {
 
         JButton saveButton = new JButton(Bundle.getMessage("ButtonOK"));
         saveButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 saveProperties();
             }
@@ -122,6 +124,7 @@ public class ThrottleFramePropertyEditor extends JDialog {
 
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 finishEdit();
             }

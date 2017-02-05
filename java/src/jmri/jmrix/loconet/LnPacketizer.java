@@ -47,6 +47,7 @@ public class LnPacketizer extends LnTrafficController {
     }
 
     // The methods to implement the LocoNetInterface
+    @Override
     public boolean status() {
         return (ostream != null && istream != null);
     }
@@ -77,6 +78,7 @@ public class LnPacketizer extends LnTrafficController {
      *
      * @param m Message to send; will be updated with CRC
      */
+    @Override
     public void sendLocoNetMessage(LocoNetMessage m) {
         // update statistics
         transmittedMsgCount++;
@@ -111,6 +113,7 @@ public class LnPacketizer extends LnTrafficController {
      *
      * @return true if busy, false if nothing waiting to send
      */
+    @Override
     public boolean isXmtBusy() {
         if (controller == null) {
             return false;
@@ -280,6 +283,7 @@ public class LnPacketizer extends LnTrafficController {
                         LocoNetMessage msgForLater = thisMsg;
                         LnPacketizer myTC = thisTC;
 
+                        @Override
                         public void run() {
                             myTC.notify(msgForLater);
                         }
@@ -322,6 +326,7 @@ public class LnPacketizer extends LnTrafficController {
             trafficController = lt;
         }
 
+        @Override
         public void run() {
 
             int opCode;
@@ -413,6 +418,7 @@ public class LnPacketizer extends LnTrafficController {
                             LocoNetMessage msgForLater = thisMsg;
                             LnPacketizer myTC = thisTC;
 
+                            @Override
                             public void run() {
                                 myTC.notify(msgForLater);
                             }
@@ -447,6 +453,7 @@ public class LnPacketizer extends LnTrafficController {
      */
     class XmtHandler implements Runnable {
 
+        @Override
         public void run() {
 
             while (true) {   // loop permanently
@@ -517,6 +524,7 @@ public class LnPacketizer extends LnTrafficController {
         LocoNetMessage msgForLater;
         LnPacketizer myTc;
 
+        @Override
         public void run() {
             myTc.notify(msgForLater);
         }

@@ -30,6 +30,7 @@ public class StoreDefaultXmlThrottlesLayoutAction extends AbstractAction {
      *
      * @param e The event causing the action.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         StoreXmlThrottlesLayoutAction sxta = new StoreXmlThrottlesLayoutAction();
         sxta.saveThrottlesLayout(new File(ThrottleFrame.getDefaultThrottleFilename()));

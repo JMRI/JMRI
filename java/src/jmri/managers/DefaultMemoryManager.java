@@ -10,10 +10,12 @@ import jmri.implementation.DefaultMemory;
  */
 public class DefaultMemoryManager extends AbstractMemoryManager {
 
+    @Override
     public String getSystemPrefix() {
         return "I";
     }
 
+    @Override
     protected Memory createNewMemory(String systemName, String userName) {
         // we've decided to enforce that memory system
         // names start with IM by prepending if not present

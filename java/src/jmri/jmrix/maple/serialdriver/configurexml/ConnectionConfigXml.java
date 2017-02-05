@@ -36,6 +36,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      *
      * @param e Element being extended
      */
+    @Override
     protected void extendElement(Element e) {
         SerialNode node = (SerialNode) SerialTrafficController.instance().getNode(0);
         int index = 1;
@@ -64,6 +65,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         return p;
     }
 
+    @Override
     protected void getInstance() {
         adapter = SerialDriverAdapter.instance();
     }

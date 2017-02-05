@@ -3,7 +3,6 @@ package jmri.jmrit.roster.swing;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import jmri.jmrit.roster.Roster;
@@ -81,6 +80,7 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

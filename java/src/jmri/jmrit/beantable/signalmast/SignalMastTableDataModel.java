@@ -96,9 +96,9 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             case HELDCOL:
                 return new JTextField(Bundle.getMessage("ColumnHeadHeld").length()).getPreferredSize().width;
             case EDITLOGICCOL:
-                return new JTextField(Bundle.getMessage("ButtonEdit").length()).getPreferredSize().width;
-            case EDITMASTCOL:
                 return new JTextField(Bundle.getMessage("EditSignalLogicButton").length()).getPreferredSize().width;
+            case EDITMASTCOL:
+                return new JTextField(Bundle.getMessage("ButtonEdit").length()).getPreferredSize().width;
             default:
                 return super.getPreferredWidth(col);
         }
@@ -148,7 +148,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     public Object getValueAt(int row, int col) {
         // some error checking
         if (row >= sysNameList.size()) {
-            log.debug("row is greater than name list");
+            log.debug("row index is greater than name list");
             return "error";
         }
         String name = sysNameList.get(row);
@@ -440,10 +440,8 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         }
 
         /**
-         * Call method getApectEditorBox() in the surrounding method for the
-         * SignalMastTable
-         *
-         * @param row the user clicked on in the table
+         * Call method getApectEditorBox() in the surrounding method for the SignalMastTable.
+         * @param row Index of the row clicked in the table
          * @return an appropriate combobox for this signal mast
          */
         @Override

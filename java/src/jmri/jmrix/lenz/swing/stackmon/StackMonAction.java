@@ -18,6 +18,7 @@ public class StackMonAction extends AbstractXPressNetAction {
         this("Stack Monitor", memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         // create a StackMonFrame

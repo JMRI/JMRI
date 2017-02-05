@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * </P>
+ *
  * @author	Pete Cressman Copyright 2010
  *
  */
@@ -41,7 +42,7 @@ public class DirectorySearcher {
     static JFileChooser _directoryChooser = null;
     static DirectorySearcher _instance;
 
-     PreviewDialog _previewDialog = null;
+    PreviewDialog _previewDialog = null;
     Seacher _searcher;
     JFrame _waitDialog;
     JLabel _waitText;
@@ -57,10 +58,12 @@ public class DirectorySearcher {
     }
 
     /**
-     * Open file anywhere in the file system and let the user decide whether
-     * to add it to the Catalog
-     * @param msg title
-     * @param recurse if directory choice has no images, set chooser to sub directory so user can continue looking
+     * Open file anywhere in the file system and let the user decide whether to
+     * add it to the Catalog
+     *
+     * @param msg     title
+     * @param recurse if directory choice has no images, set chooser to sub
+     *                directory so user can continue looking
      * @return chosen directory or null to cancel operation
      */
     private static File getDirectory(String msg, boolean recurse) {
@@ -85,14 +88,14 @@ public class DirectorySearcher {
             dir = _directoryChooser.getSelectedFile();
             if (dir != null) {
                 if (!recurse) {
-                    return dir;            
+                    return dir;
                 }
                 int cnt = numImageFiles(dir);
                 if (cnt > 0) {
                     return dir;
                 } else {
                     int choice = JOptionPane.showOptionDialog(null,
-                            Bundle.getMessage("NoImagesInDir", dir), Bundle.getMessage("QuestionTitle"), 
+                            Bundle.getMessage("NoImagesInDir", dir), Bundle.getMessage("QuestionTitle"),
                             JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                             new String[]{Bundle.getMessage("Quit"), Bundle.getMessage("ButtonKeepLooking")}, 1);
                     switch (choice) {
@@ -102,16 +105,16 @@ public class DirectorySearcher {
                             _directoryChooser.setCurrentDirectory(dir);
                             break;
                         default:
-                            return dir;   
-                    }                  
+                            return dir;
+                    }
                 }
-            }     
+            }
         }
     }
 
     protected static int numImageFiles(File dir) {
         File[] files = dir.listFiles();
-        if (files==null) {
+        if (files == null) {
             return 0;
         }
         int count = 0;
@@ -127,7 +130,7 @@ public class DirectorySearcher {
     }
 
     private void showWaitFrame(String msgkey, File dir) {
-        if (_waitDialog==null) {
+        if (_waitDialog == null) {
             _waitDialog = new JFrame();
             _waitDialog.setUndecorated(true);
             JPanel panel = new JPanel();
@@ -141,12 +144,12 @@ public class DirectorySearcher {
 
             _waitDialog.getContentPane().add(panel);
             _waitDialog.setLocationRelativeTo(null);
-            _waitDialog.setVisible(false);            
+            _waitDialog.setVisible(false);
         }
-        if (dir!=null) {
+        if (dir != null) {
             _waitText.setText(Bundle.getMessage(msgkey, dir.getName()));
             _waitDialog.setVisible(true);
-            _waitDialog.pack();            
+            _waitDialog.pack();
         }
     }
 
@@ -158,16 +161,17 @@ public class DirectorySearcher {
     }
 
     private void clearSearch() {
-        if (_previewDialog!=null) {
+        if (_previewDialog != null) {
             _previewDialog.dispose();
         }
-        if (_searcher!=null) {
-            synchronized (_searcher){
-                _searcher.notify();                
-            }            
+        if (_searcher != null) {
+            synchronized (_searcher) {
+                _searcher.notify();
+            }
         }
-        
+
     }
+
     /**
      * Open one directory.
      *
@@ -191,37 +195,44 @@ public class DirectorySearcher {
             _searcher.start();
         }
     }
-    
+
     void searcherDone(File dir, int count) {
-        if (_previewDialog!=null) {
+        if (_previewDialog != null) {
             _previewDialog.dispose();
         }
         JOptionPane.showMessageDialog(null, Bundle.getMessage("numFound", count, dir.getAbsolutePath()),
                 Bundle.getMessage("info"), JOptionPane.INFORMATION_MESSAGE);
     }
-    
+
     class Seacher extends Thread implements Runnable {
+
         File dir;
         boolean quit = false;
         int count;
-        
+
         Seacher(File d) {
-            dir =d;
+            dir = d;
         }
-        
+
         void quit() {
             quit = true;
         }
+
+        @Override
         public void run() {
             getImageDirectory(dir, CatalogTreeManager.IMAGE_FILTER);
-            if (log.isDebugEnabled()) log.debug("Searcher done for directory {}  quit={}", dir.getAbsolutePath(), quit);
+            if (log.isDebugEnabled()) {
+                log.debug("Searcher done for directory {}  quit={}", dir.getAbsolutePath(), quit);
+            }
             ThreadingUtil.runOnGUI(() -> {
                 searcherDone(dir, count);
             });
         }
+
         /**
          * Find a Directory with image files
-         * @param dir directory
+         *
+         * @param dir    directory
          * @param filter file filter for images
          */
         private void getImageDirectory(File dir, String[] filter) {
@@ -232,7 +243,9 @@ public class DirectorySearcher {
             int cnt = numImageFiles(dir);
             count += cnt;
             if (cnt > 0) {
-                if (log.isDebugEnabled()) log.debug("getImageDirectory dir= {} has {} files", dir.getAbsolutePath(), numImageFiles(dir));
+                if (log.isDebugEnabled()) {
+                    log.debug("getImageDirectory dir= {} has {} files", dir.getAbsolutePath(), numImageFiles(dir));
+                }
                 ThreadingUtil.runOnGUI(() -> {
                     doPreviewDialog(dir, new MActionListener(dir, false),
                             new LActionListener(dir), new CActionListener(), 0);
@@ -266,6 +279,7 @@ public class DirectorySearcher {
 
     // More action.  Directory dir has too many icons - display in separate windows 
     class MActionListener implements ActionListener {
+
         File dir;
         boolean oneDir;
 
@@ -273,6 +287,8 @@ public class DirectorySearcher {
             dir = d;
             oneDir = o;
         }
+
+        @Override
         public void actionPerformed(ActionEvent a) {
             displayMore(dir, oneDir);
         }
@@ -280,11 +296,14 @@ public class DirectorySearcher {
 
     // Continue looking for images
     class LActionListener implements ActionListener {
+
         File dir;
- 
+
         public LActionListener(File d) {
             dir = d;
         }
+
+        @Override
         public void actionPerformed(ActionEvent a) {
             keepLooking(dir);
         }
@@ -293,6 +312,7 @@ public class DirectorySearcher {
     // Cancel -Quit
     class CActionListener implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent a) {
             cancelLooking();
         }
@@ -301,42 +321,47 @@ public class DirectorySearcher {
     private void doPreviewDialog(File dir, ActionListener moreAction,
             ActionListener lookAction, ActionListener cancelAction, int startNum) {
         showWaitFrame("previewWait", dir);
-        if (log.isDebugEnabled()) log.debug("doPreviewDialog dir= {}", dir.getAbsolutePath());
-        
+        if (log.isDebugEnabled()) {
+            log.debug("doPreviewDialog dir= {}", dir.getAbsolutePath());
+        }
+
         _previewDialog = new PreviewDialog(null, "previewDir", dir, CatalogTreeManager.IMAGE_FILTER);
         _previewDialog.init(moreAction, lookAction, cancelAction, startNum);
         _waitDialog.setVisible(false);
     }
 
-
     private void displayMore(File dir, boolean oneDir) {
-        if (log.isDebugEnabled()) log.debug("displayMore: dir= {} has {} files", dir.getName(), numImageFiles(dir));
+        if (log.isDebugEnabled()) {
+            log.debug("displayMore: dir= {} has {} files", dir.getName(), numImageFiles(dir));
+        }
         if (_previewDialog != null) {
             int numFilesShown = _previewDialog.getNumFilesShown();
             ActionListener lookAction = _previewDialog.getLookActionListener();
             _previewDialog.dispose();
-            if (numFilesShown>0) {
+            if (numFilesShown > 0) {
                 doPreviewDialog(dir, new MActionListener(dir, oneDir),
                         lookAction, new CActionListener(), numFilesShown);
             }
-            
+
         } else {
-            synchronized (_searcher){
-                _searcher.notify();                
+            synchronized (_searcher) {
+                _searcher.notify();
             }
         }
     }
 
     private void keepLooking(File dir) {
-        if (log.isDebugEnabled()) log.debug("keepLooking: dir= {} has {} files", dir.getName(), numImageFiles(dir));
+        if (log.isDebugEnabled()) {
+            log.debug("keepLooking: dir= {} has {} files", dir.getName(), numImageFiles(dir));
+        }
         if (_previewDialog != null) {
             _previewDialog.dispose();
             _previewDialog = null;
         }
-        if (_searcher!=null) {
-            synchronized (_searcher){
-                _searcher.notify();                
-            }            
+        if (_searcher != null) {
+            synchronized (_searcher) {
+                _searcher.notify();
+            }
         }
     }
 
@@ -347,9 +372,9 @@ public class DirectorySearcher {
             _previewDialog = null;
         }
         if (_searcher != null) {
-            synchronized (_searcher){
+            synchronized (_searcher) {
                 _searcher.quit();
-                _searcher.notify();                
+                _searcher.notify();
             }
         }
     }
@@ -358,6 +383,6 @@ public class DirectorySearcher {
         closeWaitFrame();
         cancelLooking();
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(DirectorySearcher.class.getName());
 }

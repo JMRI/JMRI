@@ -228,6 +228,7 @@ public class WarrantFrame extends WarrantRoute {
         _calculateButton = new JButton(Bundle.getMessage("Calculate"));
         _calculateButton.setMaximumSize(_calculateButton.getPreferredSize());
         _calculateButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 calculate();
             }
@@ -248,6 +249,7 @@ public class WarrantFrame extends WarrantRoute {
         _stopButton = new JButton(Bundle.getMessage("Stop"));
         _stopButton.setMaximumSize(_stopButton.getPreferredSize());
         _stopButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 stopRouteFinder();
             }
@@ -372,6 +374,7 @@ public class WarrantFrame extends WarrantRoute {
         startStopPanel.add(Box.createVerticalStrut(STRUT_SIZE));
         JButton startButton = new JButton(Bundle.getMessage("Start"));
         startButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 showCommands(true);
                 runLearnModeTrain();
@@ -379,6 +382,7 @@ public class WarrantFrame extends WarrantRoute {
         });
         JButton stopButton = new JButton(Bundle.getMessage("Stop"));
         stopButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 stopRunTrain();
             }
@@ -434,6 +438,7 @@ public class WarrantFrame extends WarrantRoute {
         bPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         JButton runButton = new JButton(Bundle.getMessage("ARun"));
         runButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 runTrain();
             }
@@ -457,21 +462,25 @@ public class WarrantFrame extends WarrantRoute {
         runPanel.add(panel);
 
         _halt.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 doControlCommand(Warrant.HALT);
             }
         });
         _resume.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 doControlCommand(Warrant.RESUME);
             }
         });
         _eStop.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 doControlCommand(Warrant.ESTOP);
             }
         });
         _abort.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 doControlCommand(Warrant.ABORT);
             }
@@ -508,11 +517,13 @@ public class WarrantFrame extends WarrantRoute {
         buttonPanel.add(showRoute);
         buttonPanel.add(showScript);
         showRoute.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 showCommands(false);
             }
         });
         showScript.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 showCommands(true);
             }
@@ -549,6 +560,7 @@ public class WarrantFrame extends WarrantRoute {
 
         JButton insertButton = new JButton(Bundle.getMessage("buttonInsertRow"));
         insertButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 insertRow();
             }
@@ -558,6 +570,7 @@ public class WarrantFrame extends WarrantRoute {
 
         JButton deleteButton = new JButton(Bundle.getMessage("buttonDeleteRow"));
         deleteButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 deleteRow();
             }
@@ -628,6 +641,7 @@ public class WarrantFrame extends WarrantRoute {
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
         saveButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (save()) {
                     close();                   
@@ -643,6 +657,7 @@ public class WarrantFrame extends WarrantRoute {
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         JButton copyButton = new JButton(Bundle.getMessage("ButtonCopy"));
         copyButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 copy();
             }
@@ -656,6 +671,7 @@ public class WarrantFrame extends WarrantRoute {
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 close();
             }
@@ -1184,10 +1200,12 @@ public class WarrantFrame extends WarrantRoute {
             super();
         }
 
+        @Override
         public int getColumnCount() {
             return NUMCOLS;
         }
 
+        @Override
         public int getRowCount() {
             return _throttleCommands.size();
         }
@@ -1238,6 +1256,7 @@ public class WarrantFrame extends WarrantRoute {
             return new JTextField(12).getPreferredSize().width;
         }
 
+        @Override
         public Object getValueAt(int row, int col) {
             // some error checking
             if (row >= _throttleCommands.size()) {

@@ -18,20 +18,24 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         super();
     }
 
+    @Override
     protected String title() {
         return "Grapevine Serial Command Monitor";
     }
 
+    @Override
     protected void init() {
         // connect to TrafficController
         SerialTrafficController.instance().addSerialListener(this);
     }
 
+    @Override
     public void dispose() {
         SerialTrafficController.instance().removeSerialListener(this);
         super.dispose();
     }
 
+    @Override
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         if (log.isDebugEnabled()) {
             log.debug("Message: " + l.toString());
@@ -39,6 +43,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         nextLine("M: " + l.format() + "\n", l.toString());
     }
 
+    @Override
     public synchronized void reply(SerialReply l) {  // receive a reply and log it
         if (log.isDebugEnabled()) {
             log.debug("Reply: " + l.toString());

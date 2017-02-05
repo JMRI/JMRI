@@ -21,6 +21,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         super(p);
     }
 
+    @Override
     public String name() {
         return "EasyDCC via network";
     }
@@ -34,6 +35,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
      *
      * @return human-readable connection information
      */
+    @Override
     public String getInfo() {
         String t = adapter.getHostName();
         if (t != null && !t.equals("")) {
@@ -43,10 +45,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         }
     }
 
+    @Override
     protected void setInstance() {
         adapter = NetworkDriverAdapter.instance();
     }
 
+    @Override
     public boolean isPortAdvanced() {
         return false;
     }

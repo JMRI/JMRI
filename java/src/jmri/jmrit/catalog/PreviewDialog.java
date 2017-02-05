@@ -78,6 +78,7 @@ public class PreviewDialog extends JDialog {
             log.debug("Enter _previewDialog.init dir= {}", _currentDir.getPath());
         }
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 DirectorySearcher.instance().close();
                 dispose();
@@ -179,16 +180,19 @@ public class PreviewDialog extends JDialog {
         JRadioButton grayButton = new JRadioButton(Bundle.getMessage("lightGray"), true);
         JRadioButton darkButton = new JRadioButton(Bundle.getMessage("darkGray"), false);
         whiteButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setBackGround(Color.white);
             }
         });
         grayButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setBackGround(_grayColor);
             }
         });
         darkButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setBackGround(new Color(150, 150, 150));
             }
@@ -257,6 +261,7 @@ public class PreviewDialog extends JDialog {
 
     class MemoryExceptionHandler implements Thread.UncaughtExceptionHandler {
 
+        @Override
         public void uncaughtException(Thread t, Throwable e) {
             _noMemory = true;
             log.error("MemoryExceptionHandler: {} {} files read from directory {}", e, _cnt, _currentDir);
@@ -425,6 +430,7 @@ public class PreviewDialog extends JDialog {
         return total;
     }
 
+    @Override
     public void dispose() {
         if (_preview != null) {
             resetPanel();

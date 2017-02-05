@@ -38,6 +38,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     }
 
+    @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         ln = memo.getLnTrafficController();
@@ -91,8 +92,8 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         p1.add(subAddrField);
         p1.add(Box.createGlue());  // -------------------
         probeButton = new JButton("Probe");
-        probeButton.addActionListener(
-                new ActionListener() {
+        probeButton.addActionListener(new ActionListener() {
+            @Override
                     public void actionPerformed(ActionEvent a) {
                         data.setLIOVersion("<Not found>");
                         LocoIO.probeLocoIOs(ln);
@@ -101,16 +102,16 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         p1.add(probeButton);
         p1.add(Box.createGlue());  // -------------------
         readAllButton = new JButton("Read All");
-        readAllButton.addActionListener(
-                new ActionListener() {
+        readAllButton.addActionListener(new ActionListener() {
+            @Override
                     public void actionPerformed(ActionEvent a) {
                         data.readAll();
                     }
                 });
         p1.add(readAllButton);
         writeAllButton = new JButton("Write All");
-        writeAllButton.addActionListener(
-                new ActionListener() {
+        writeAllButton.addActionListener(new ActionListener() {
+            @Override
                     public void actionPerformed(ActionEvent a) {
                         data.writeAll();
                     }
@@ -119,8 +120,8 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         p1.add(Box.createGlue());  // -------------------
         addrSetButton = new JButton("Set address");
         p1.add(addrSetButton);
-        addrSetButton.addActionListener(
-                new ActionListener() {
+        addrSetButton.addActionListener(new ActionListener() {
+            @Override
                     public void actionPerformed(ActionEvent a) {
                         addrSet();
                     }
@@ -157,6 +158,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
 
         // updating the Board address needs to be conveyed to the table
         ActionListener al4UnitAddress = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 try {
                     data.setUnitAddress(
@@ -168,9 +170,11 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
             }
         };
         FocusListener fl4UnitAddress = new FocusListener() {
+            @Override
             public void focusGained(FocusEvent event) {
             }
 
+            @Override
             public void focusLost(FocusEvent event) {
                 try {
                     data.setUnitAddress(
@@ -197,10 +201,12 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     LnTrafficController ln;
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.loconet.locoio.LocoIOFrame"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemLocoIOProgrammer"));
     }
@@ -245,6 +251,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         LocoIO.programLocoIOAddress(address, subAddress, ln);
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // these messages can arrive without a complete
         // GUI, in which case we just ignore them
@@ -307,6 +314,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
     JTable table;
     JScrollPane scroll;
 
+    @Override
     public void dispose() {
         // dispose of the model
         model.dispose();

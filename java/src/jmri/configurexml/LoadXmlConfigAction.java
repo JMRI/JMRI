@@ -30,6 +30,7 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         loadFile(getConfigFileChooser());
     }

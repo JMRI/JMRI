@@ -11,12 +11,14 @@ public class CommentMacro extends SdfMacro {
         this.comment = comment;
     }
 
+    @Override
     public String name() {
         return "";
     }
 
     String comment;
 
+    @Override
     public int length() {
         return 0;
     }
@@ -26,14 +28,17 @@ public class CommentMacro extends SdfMacro {
         return null;
     }
 
+    @Override
     public String toString() {
         return ";" + comment + '\n';
     }
 
+    @Override
     public String oneInstructionString() {
         return ";" + comment + '\n';
     }
 
+    @Override
     public String allInstructionString(String indent) {
         return indent + oneInstructionString();
     }

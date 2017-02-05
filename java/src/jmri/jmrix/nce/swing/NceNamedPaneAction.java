@@ -30,6 +30,7 @@ public class NceNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     NceSystemConnectionMemo memo;
 
+    @Override
     public JmriPanel makePanel() {
         JmriPanel p = super.makePanel();
         if (p == null) {

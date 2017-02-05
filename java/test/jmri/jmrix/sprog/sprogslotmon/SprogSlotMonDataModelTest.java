@@ -2,7 +2,6 @@ package jmri.jmrix.sprog.sprogslotmon;
 
 import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
-import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -11,8 +10,6 @@ import org.junit.Test;
 import java.awt.GraphicsEnvironment;
 
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
-import jmri.jmrix.sprog.SprogCommandStation;
-import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.SprogTrafficControlScaffold;
 
 /**

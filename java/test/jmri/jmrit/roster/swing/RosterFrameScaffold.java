@@ -2,10 +2,6 @@ package jmri.jmrit.roster.swing;
 
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
 
 /*
  *  Helper class for operating the RosterFrame Frame.

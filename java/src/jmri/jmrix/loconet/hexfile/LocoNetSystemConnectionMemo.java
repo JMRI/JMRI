@@ -14,6 +14,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "This is ineffect the same as its super class")
 public class LocoNetSystemConnectionMemo extends jmri.jmrix.loconet.LocoNetSystemConnectionMemo {
 
+    @Override
     public jmri.jmrix.loconet.LnSensorManager getSensorManager() {
         if (getDisabled()) {
             return null;

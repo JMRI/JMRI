@@ -26,6 +26,7 @@ public class ServerAction
         Server.getInstance();
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         ServerFrame f = ServerFrame.getInstance();
         f.setVisible(true);

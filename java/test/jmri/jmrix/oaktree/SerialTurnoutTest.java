@@ -1,10 +1,7 @@
 package jmri.jmrix.oaktree;
 
 import jmri.implementation.AbstractTurnoutTestBase;
-import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.oaktree.SerialTurnout class

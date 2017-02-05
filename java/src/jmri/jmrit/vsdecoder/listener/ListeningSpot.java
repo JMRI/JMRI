@@ -228,6 +228,7 @@ public class ListeningSpot {
         }
     }
 
+    @Override
     public String toString() {
         if ((_location == null) || (_lookAt == null) || (_up == null)) {
             return ("ListeningSpot (undefined)");

@@ -38,6 +38,7 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
         summary.addPropertyChangeListener(this);
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("Insert")) {
             // fireTableRowsInserted(((Integer)e.getNewValue()).intValue(), ((Integer)e.getNewValue()).intValue());
@@ -57,14 +58,17 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
         }
     }
 
+    @Override
     public int getColumnCount() {
         return NUMCOLUMN;
     }
 
+    @Override
     public int getRowCount() {
         return AutomatSummary.instance().length();
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case NAMECOL:
@@ -82,6 +86,7 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
     /**
      * Note that this returns String even for columns that contain buttons
      */
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case NAMECOL:
@@ -94,6 +99,7 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case KILLCOL:
@@ -103,6 +109,7 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
         }
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         switch (col) {
             case NAMECOL:
@@ -131,6 +138,7 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         if (col == KILLCOL) {
             // button fired, handle

@@ -286,6 +286,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return _errNamedSensor;
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (log.isDebugEnabled()) {
             log.debug("property change: " + getDisplayName() + " property " + evt.getPropertyName() + " is now "

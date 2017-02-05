@@ -52,6 +52,7 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
     int _cv;	// remember the cv being read/written
 
     // programming interface
+    @Override
     public synchronized void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
@@ -75,6 +76,7 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
         readCV(CV, p);
     }
 
+    @Override
     public synchronized void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
@@ -110,10 +112,12 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
         }
     }
 
+    @Override
     public void message(QsiMessage m) {
         log.error("message received unexpectedly: " + m.toString());
     }
 
+    @Override
     synchronized public void reply(QsiReply m) {
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
@@ -174,6 +178,7 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
     /**
      * Internal routine to handle a timeout
      */
+    @Override
     synchronized protected void timeout() {
         if (progState != NOTPROGRAMMING) {
             // we're programming, time to stop

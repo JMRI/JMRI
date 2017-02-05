@@ -98,6 +98,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         if (manager == null) {
             return null;
@@ -105,6 +106,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return manager.getActionModelResourceBundle();
     }
 
+    @Override
     public void dispose() {
         if (manager != null) {
             manager.dispose();

@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,6 +75,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
     int _cv;	// remember the cv being read/written
 
     // programming interface
+    @Override
     public synchronized void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         log.debug("writeCV {} listens {}", CV, p); //IN18N
         useProgrammer(p);
@@ -102,6 +102,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
         readCV(CV, p);
     }
 
+    @Override
     public synchronized void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         log.debug("readCV {} listens {}", CV, p); //IN18N
         useProgrammer(p);
@@ -157,9 +158,11 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
         return m;
     }
 
+    @Override
     public synchronized void notifyXmit(Date timestamp, MrcMessage m) {
     }
 
+    @Override
     public synchronized void notifyFailedXmit(Date timestamp, MrcMessage m) {
         if (progState == NOTPROGRAMMING && m.getMessageClass() != MrcInterface.PROGRAMMING) {
             return;
@@ -167,6 +170,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
         timeout();
     }
 
+    @Override
     public synchronized void notifyRcv(Date timestamp, MrcMessage m) {
         //public synchronized void message(MrcMessage m) {
         if (progState == NOTPROGRAMMING) {
@@ -201,6 +205,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
     /**
      * Internal routine to handle a timeout
      */
+    @Override
     protected synchronized void timeout() {
         if (progState != NOTPROGRAMMING) {
             // we're programming, time to stop

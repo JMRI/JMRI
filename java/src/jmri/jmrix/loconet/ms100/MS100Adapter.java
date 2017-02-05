@@ -42,6 +42,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
 
     Vector<String> portNameVector = null;
 
+    @Override
     public Vector<String> getPortNames() {
         portNameVector = null;
         try {
@@ -207,6 +208,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
         }
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         try {
             // this has to work through one of two sets of class. If
@@ -247,6 +249,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
      * set up all of the other objects to operate with a MS100 connected to this
      * port
      */
+    @Override
     public void configure() {
 
         setCommandStationType(getOptionState(option2Name));
@@ -267,6 +270,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
     }
 
     // base class methods for the LnPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("called before load(), stream not available"); // NOI18N
@@ -275,6 +279,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
         return new DataInputStream(serialInStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available"); // NOI18N
@@ -283,6 +288,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
         return new DataOutputStream(serialOutStream);
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -291,6 +297,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
      * Get an array of valid baud rates. This is currently just a message saying
      * its fixed
      */
+    @Override
     public String[] validBaudRates() {
         return new String[]{"fixed at 16600 baud"};
     }
@@ -299,6 +306,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
      * Set the second port option. Only to be used after construction, but
      * before the openPort call
      */
+    @Override
     public void configureOption2(String value) {
         super.configureOption2(value);
         log.debug("configureOption2: " + value); // NOI18N

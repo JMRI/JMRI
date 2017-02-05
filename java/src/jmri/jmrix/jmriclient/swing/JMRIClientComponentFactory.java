@@ -20,6 +20,7 @@ public class JMRIClientComponentFactory extends jmri.jmrix.swing.ComponentFactor
     /**
      * Provide a menu with all items attached to this system connection
      */
+    @Override
     public javax.swing.JMenu getMenu() {
         if (memo.getDisabled()) {
             return null;

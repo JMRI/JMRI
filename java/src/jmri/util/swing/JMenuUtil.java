@@ -162,6 +162,7 @@ public class JMenuUtil extends GuiUtilBase {
 
         try {
             methodListener.invoke(context, new PropertyChangeListener() {
+                @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     if (e.getPropertyName().equals(ref)) {
                         String method = (String) e.getOldValue();

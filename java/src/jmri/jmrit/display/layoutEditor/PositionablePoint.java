@@ -438,6 +438,9 @@ public class PositionablePoint {
                 log.error("Unable to find Signal Mast " + signalMast);
                 return;
             }
+        } else {
+            eastBoundSignalMastNamed = null;
+            return;
         }
         if (getType() == EDGE_CONNECTOR) {
             int dir = getConnect1Dir();
@@ -499,6 +502,9 @@ public class PositionablePoint {
                 log.error("Unable to find Signal Mast " + signalMast);
                 return;
             }
+        } else {
+            westBoundSignalMastNamed = null;
+            return;
         }
         if (getType() == EDGE_CONNECTOR) {
             int dir = getConnect1Dir();
@@ -762,6 +768,7 @@ public class PositionablePoint {
         }
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
         popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (layoutEditor.removePositionablePoint(instance)) {
                     // user is serious about removing this point from the panel
@@ -773,11 +780,13 @@ public class PositionablePoint {
         if (blockBoundary) {
             if (getType() == EDGE_CONNECTOR) {
                 popup.add(new AbstractAction(rb.getString("EdgeEditLink")) {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setLink();
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSignals")) {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         tools = new LayoutEditorTools(layoutEditor);
                         // bring up signals at level crossing tool dialog
@@ -786,6 +795,7 @@ public class PositionablePoint {
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
+                    @Override
                     public void actionPerformed(ActionEvent event) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -796,6 +806,7 @@ public class PositionablePoint {
                 });
             } else {
                 popup.add(new AbstractAction(rb.getString("SetSignals")) {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -806,6 +817,7 @@ public class PositionablePoint {
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSensors")) {
+                    @Override
                     public void actionPerformed(ActionEvent event) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -816,6 +828,7 @@ public class PositionablePoint {
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
+                    @Override
                     public void actionPerformed(ActionEvent event) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -828,6 +841,7 @@ public class PositionablePoint {
         }
         if (endBumper) {
             popup.add(new AbstractAction(rb.getString("SetSensors")) {
+                @Override
                 public void actionPerformed(ActionEvent event) {
                     if (tools == null) {
                         tools = new LayoutEditorTools(layoutEditor);
@@ -838,6 +852,7 @@ public class PositionablePoint {
                 }
             });
             popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
+                @Override
                 public void actionPerformed(ActionEvent event) {
                     if (tools == null) {
                         tools = new LayoutEditorTools(layoutEditor);
@@ -967,6 +982,7 @@ public class PositionablePoint {
         JButton done = new JButton(Bundle.getMessage("ButtonDone"));
         done.addActionListener(
                 new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 updateLink();
             }
@@ -1011,6 +1027,7 @@ public class PositionablePoint {
         }
 
         ActionListener selectPanelListener = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 updatePointBox();
             }

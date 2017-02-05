@@ -152,14 +152,18 @@ public class IEEE802154TrafficControllerTest extends jmri.jmrix.AbstractMRNodeTr
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         tc = new IEEE802154TrafficController() {
+            @Override
             public void setInstance() {
             }
+            @Override
             protected AbstractMRReply newReply() {
                 return null;
             }
+            @Override
             public IEEE802154Node newNode() {
                 return new IEEE802154Node(){
                      @Override
@@ -187,6 +191,7 @@ public class IEEE802154TrafficControllerTest extends jmri.jmrix.AbstractMRNodeTr
     }
 
     @After
+    @Override
     public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

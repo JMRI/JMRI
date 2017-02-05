@@ -105,6 +105,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
         JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
         doneButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (!findErrors()) {
                     closingEvent();
@@ -145,6 +146,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
         JButton clearButton = new JButton(Bundle.getMessage("buttonClearSelection"));
         clearButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 clearListSelection();
             }
@@ -163,6 +165,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         panel = new JPanel();
         JButton addButton = new JButton(Bundle.getMessage("buttonAddPath"));
         addButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 addPath();
             }
@@ -172,6 +175,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         
         JButton changeButton = new JButton(Bundle.getMessage("buttonChangeName"));
         changeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 changePathName();
             }
@@ -181,6 +185,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
         JButton deleteButton = new JButton(Bundle.getMessage("buttonDeletePath"));
         deleteButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 deletePath();
             }
@@ -198,6 +203,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
                 false, _length, "Length", true, "TooltipPathLength"));
         _length.setPreferredSize(new Dimension(100, _length.getPreferredSize().height));
         _length.addActionListener(new ActionListener(){
+            @Override
             public void actionPerformed(ActionEvent event) {
                 _pathChange = true;
             }            
@@ -205,6 +211,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         _units = new JToggleButton("", !_block.isMetric());
         _units.setToolTipText(Bundle.getMessage("TooltipPathUnitButton"));
         _units.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 changeUnits();
             }
@@ -275,6 +282,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
     private static class PathCellRenderer extends JLabel implements ListCellRenderer<OPath> {
 
+        @Override
         public Component getListCellRendererComponent(
                 JList<? extends OPath> list, // the list
                 OPath value, // value to display
@@ -300,10 +308,12 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
     class PathListModel extends AbstractListModel<OPath> {
 
+        @Override
         public int getSize() {
             return _block.getPaths().size();
         }
 
+        @Override
         public OPath getElementAt(int index) {
             return (OPath) _block.getPaths().get(index);
         }
@@ -313,6 +323,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         }
     }
 
+    @Override
     public void valueChanged(ListSelectionEvent e) {
         clearPath();
         OPath path = _pathList.getSelectedValue();

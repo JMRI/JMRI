@@ -20,10 +20,12 @@ public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager
         this.prefix = memo.getSystemPrefix();
     }
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor t;
         int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();

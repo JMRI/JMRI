@@ -97,6 +97,7 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
         return leaves;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public Enumeration<CatalogTreeNode> children() {
         return super.children();

@@ -63,6 +63,7 @@ public class RosterEntryTest extends TestCase {
                 .setAttribute("fileName", "file here"); // end create element
 
         RosterEntry r = new RosterEntry(e) {
+            @Override
             protected void warnShortLong(String s) {
             }
         };
@@ -91,6 +92,7 @@ public class RosterEntryTest extends TestCase {
                 ); // end create element
 
         RosterEntry r = new RosterEntry(e) {
+            @Override
             protected void warnShortLong(String s) {
             }
         };
@@ -146,6 +148,7 @@ public class RosterEntryTest extends TestCase {
                 ); // end create element
 
         RosterEntry r = new RosterEntry(e) {
+            @Override
             protected void warnShortLong(String s) {
             }
         };
@@ -184,6 +187,7 @@ public class RosterEntryTest extends TestCase {
                 ); // end create element
 
         RosterEntry r = new RosterEntry(e) {
+            @Override
             protected void warnShortLong(String s) {
             }
         };
@@ -322,6 +326,7 @@ public class RosterEntryTest extends TestCase {
                 ); // end create element
 
         RosterEntry r = new RosterEntry(e) {
+            @Override
             protected void warnShortLong(String s) {
             }
         };
@@ -372,11 +377,13 @@ public class RosterEntryTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         InstanceManager.setDefault(RosterConfigManager.class, new RosterConfigManager());
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

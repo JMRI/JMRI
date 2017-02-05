@@ -33,6 +33,7 @@ public class TurnoutIconXml extends PositionableLabelXml {
      * @param o Object to store, of type TurnoutIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         TurnoutIcon p = (TurnoutIcon) o;
@@ -72,6 +73,7 @@ public class TurnoutIconXml extends PositionableLabelXml {
      * @param o       Editor as an Object
      */
     @SuppressWarnings("null")
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         Editor p = (Editor) o;

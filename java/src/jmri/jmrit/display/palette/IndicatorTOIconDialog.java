@@ -40,11 +40,13 @@ public class IndicatorTOIconDialog extends IconDialog {
     /**
      * Add/Delete icon family for types that may have more than 1 family
      */
+    @Override
     protected void makeAddIconButtonPanel(JPanel buttonPanel, String addTip, String deleteTip) {
         JPanel panel1 = new JPanel();
         panel1.setLayout(new FlowLayout());
         JButton addFamilyButton = new JButton(Bundle.getMessage("addMissingStatus"));
         addFamilyButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 addFamilySet();
                 dispose();
@@ -55,6 +57,7 @@ public class IndicatorTOIconDialog extends IconDialog {
 
         JButton deleteButton = new JButton(Bundle.getMessage("deleteStatus"));
         deleteButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 deleteFamilySet();
                 dispose();
