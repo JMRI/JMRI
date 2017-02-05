@@ -479,6 +479,17 @@ public class XNetReplyTest {
         Assert.assertEquals("Feedback Encoder Message Address", -1, r.getFeedbackEncoderMsgAddr(1));
     }
 
+    @Test
+    public void testToMonitorStringFeedbackResponse() {
+        // feedback message for turnout
+        XNetReply r = new XNetReply("42 05 04 43");
+        Assert.assertEquals("Monitor String","Feedback Response:Turnout with out Feedback  Turnout: 21 State: Not Operated; Turnout: 22 State: Thrown Left",r.toMonitorString());
+        r = new XNetReply("42 05 24 63");
+        Assert.assertEquals("Monitor String","Feedback Response:Turnout with Feedback  Turnout: 21 State: Not Operated; Turnout: 22 State: Thrown Left",r.toMonitorString());
+        r = new XNetReply("42 05 48 0F");
+        Assert.assertEquals("Monitor String","Feedback Response:Feedback Encoder Base Address: 6 Contact: 1 State: Off; Contact: 2 State: Off; Contact: 3 State: Off; Contact: 4 State: On;",r.toMonitorString());
+    }
+
     // throttle related replies.
     @Test
     public void testGetThrottleMsgAddr() {
