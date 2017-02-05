@@ -23,6 +23,7 @@ public class BlockBossAction extends AbstractAction {
         this(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Simple_Signal_Logic"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         // create the frame

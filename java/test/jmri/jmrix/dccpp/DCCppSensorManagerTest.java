@@ -40,6 +40,7 @@ public class DCCppSensorManagerTest extends jmri.managers.AbstractSensorMgrTestB
     }
 
     @Test
+    @Override
     public void testMisses() {
         // sample turnout object
         Sensor s = l.newSensor("DCCPPS22", "test");

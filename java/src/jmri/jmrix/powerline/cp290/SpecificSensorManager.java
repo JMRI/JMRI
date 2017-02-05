@@ -33,6 +33,7 @@ public class SpecificSensorManager extends SerialSensorManager {
     /**
      * Process a reply to a poll of Sensors of one node
      */
+    @Override
     public synchronized void reply(SerialReply r) {
         // process for updates
         processForPollReq(r);

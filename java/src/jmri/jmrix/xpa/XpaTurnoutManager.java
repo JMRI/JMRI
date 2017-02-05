@@ -21,11 +21,13 @@ public class XpaTurnoutManager extends jmri.managers.AbstractTurnoutManager {
          memo = m;
     }
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
     // Xpa-specific methods
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
         Turnout t = new XpaTurnout(addr,memo);

@@ -72,6 +72,7 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
          jmri.InstanceManager.setReporterManager(reporterManager);*/
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.marklin.MarklinActionListBundle");
     }
@@ -106,6 +107,7 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     /**
      * Tells which managers this provides by class
      */
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
@@ -128,6 +130,7 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;

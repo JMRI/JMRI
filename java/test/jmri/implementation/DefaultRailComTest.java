@@ -7,7 +7,6 @@ import jmri.Reporter;
 import org.junit.Assert;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -58,10 +57,12 @@ public class DefaultRailComTest {
     public void testHasBeenSeen() throws InterruptedException {
         RailCom r = new DefaultRailCom("ID0413276BC1");
         Reporter rep = new AbstractReporter("IR1") {
+            @Override
             public int getState() {
                 return state;
             }
 
+            @Override
             public void setState(int s) {
                 state = s;
             }

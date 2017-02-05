@@ -25,6 +25,7 @@ import jmri.util.swing.JmriBeanComboBox;
  */
 public class TurnoutEditAction extends BeanEditAction {
 
+    @Override
     public String helpTarget() {
         return "package.jmri.jmrit.beantable.TurnoutTable";
     } //IN18N
@@ -44,10 +45,12 @@ public class TurnoutEditAction extends BeanEditAction {
         speed();
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameTurnout");
     }
 
+    @Override
     public NamedBean getByUserName(String name) {
         return InstanceManager.turnoutManagerInstance().getByUserName(name);
     }
@@ -102,6 +105,7 @@ public class TurnoutEditAction extends BeanEditAction {
         modeBox.setSelectedItem(oldModeSelection);
 
         modeBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 updateFeedbackOptions();
             }
@@ -139,6 +143,7 @@ public class TurnoutEditAction extends BeanEditAction {
 
         feedback.setSaveItem(new AbstractAction() {
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Turnout t = (Turnout) bean;
                 String modeName = (String) modeBox.getSelectedItem();
@@ -192,6 +197,7 @@ public class TurnoutEditAction extends BeanEditAction {
 
         feedback.setResetItem(new AbstractAction() {
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Turnout t = (Turnout) bean;
 
@@ -217,6 +223,7 @@ public class TurnoutEditAction extends BeanEditAction {
     JTextField operationsName = new JTextField(10);
 
     transient ActionListener automationSelectionListener = new ActionListener() {
+        @Override
         public void actionPerformed(ActionEvent e) {
             updateAutomationOptions();
         }
@@ -300,6 +307,7 @@ public class TurnoutEditAction extends BeanEditAction {
         lockOperationBox = new JComboBox<String>(lockOperations);
         lock.addItem(new BeanEditItem(lockOperationBox, Bundle.getMessage("LockMode"), Bundle.getMessage("LockModeToolTip")));
         lockOperationBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (lockOperationBox.getSelectedItem().equals(noneText)) {
                     lockBox.setEnabled(false);
@@ -314,6 +322,7 @@ public class TurnoutEditAction extends BeanEditAction {
 
         lock.setSaveItem(new AbstractAction() {
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Turnout t = (Turnout) bean;
                 String lockOpName = (String) lockOperationBox.getSelectedItem();
@@ -337,6 +346,7 @@ public class TurnoutEditAction extends BeanEditAction {
 
         lock.setResetItem(new AbstractAction() {
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Turnout t = (Turnout) bean;
                 lockBox.setSelectedItem(t.getDecoderName());
@@ -404,6 +414,7 @@ public class TurnoutEditAction extends BeanEditAction {
 
         speed.setSaveItem(new AbstractAction() {
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Turnout t = (Turnout) bean;
                 String speed = (String) closedSpeedBox.getSelectedItem();
@@ -429,6 +440,7 @@ public class TurnoutEditAction extends BeanEditAction {
 
         speed.setResetItem(new AbstractAction() {
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Turnout t = (Turnout) bean;
 

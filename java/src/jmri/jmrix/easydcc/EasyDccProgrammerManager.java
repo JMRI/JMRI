@@ -26,14 +26,17 @@ public class EasyDccProgrammerManager extends DefaultProgrammerManager {
      *
      * @return true
      */
+    @Override
     public boolean isAddressedModePossible() {
         return true;
     }
 
+    @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new EasyDccOpsModeProgrammer(pAddress, pLongAddress);
     }
 
+    @Override
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }

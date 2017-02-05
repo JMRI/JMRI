@@ -26,6 +26,7 @@ public class NceThrottleManager extends AbstractThrottleManager {
     NceTrafficController tc = null;
     String prefix = "";
 
+    @Override
     public void requestThrottleSetup(LocoAddress a, boolean control) {
         // the NCE protocol doesn't require an interaction with the command
         // station for this, so immediately trigger the callback.
@@ -38,6 +39,7 @@ public class NceThrottleManager extends AbstractThrottleManager {
      * Addresses 0-10239 can be long
      *
      */
+    @Override
     public boolean canBeLongAddress(int address) {
         return ((address >= 0) && (address <= 10239));
     }
@@ -46,6 +48,7 @@ public class NceThrottleManager extends AbstractThrottleManager {
      * The short addresses 1-127 are available
      *
      */
+    @Override
     public boolean canBeShortAddress(int address) {
         return ((address >= 1) && (address <= 127));
     }
@@ -53,14 +56,17 @@ public class NceThrottleManager extends AbstractThrottleManager {
     /**
      * Are there any ambiguous addresses (short vs long) on this system?
      */
+    @Override
     public boolean addressTypeUnique() {
         return false;
     }
 
+    @Override
     public int supportedSpeedModes() {
         return (DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
     }
 
+    @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
             NceThrottle nct = (NceThrottle) t;

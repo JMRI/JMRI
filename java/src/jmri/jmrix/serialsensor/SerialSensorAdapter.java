@@ -38,10 +38,12 @@ public class SerialSensorAdapter extends AbstractSerialPortController
         });
     }
 
+    @Override
     public void configure() {
         log.debug("Configure doesnt do anything here");
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         // open the port, check ability to set moderators
         try {
@@ -75,6 +77,7 @@ public class SerialSensorAdapter extends AbstractSerialPortController
 
             // arrange to notify of sensor changes
             activeSerialPort.addEventListener(new SerialPortEventListener() {
+                @Override
                 public void serialEvent(SerialPortEvent e) {
                     int type = e.getEventType();
                     switch (type) {
@@ -148,6 +151,7 @@ public class SerialSensorAdapter extends AbstractSerialPortController
 
     }
 
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -156,6 +160,7 @@ public class SerialSensorAdapter extends AbstractSerialPortController
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -168,6 +173,7 @@ public class SerialSensorAdapter extends AbstractSerialPortController
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -175,6 +181,7 @@ public class SerialSensorAdapter extends AbstractSerialPortController
     /**
      * Get an array of valid baud rates. This is currently only 19,200 bps
      */
+    @Override
     public String[] validBaudRates() {
         return new String[]{"9,600 bps"};
     }
@@ -183,6 +190,7 @@ public class SerialSensorAdapter extends AbstractSerialPortController
      * Set the baud rate. This currently does nothing, as there's only one
      * possible value
      */
+    @Override
     public void configureBaudRate(String rate) {
     }
 
@@ -210,6 +218,7 @@ public class SerialSensorAdapter extends AbstractSerialPortController
             mValue = pValue;
         }
 
+        @Override
         public void run() {
             log.debug("serial sensor notify starts");
             int value = Sensor.INACTIVE;

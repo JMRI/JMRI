@@ -28,6 +28,7 @@ public class TurnoutSignalMastXml
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         TurnoutSignalMast p = (TurnoutSignalMast) o;
         Element e = new Element("turnoutsignalmast");
@@ -142,6 +143,7 @@ public class TurnoutSignalMastXml
         return true;
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

@@ -30,6 +30,7 @@ public class PrintAction extends AbstractAction {
      */
     boolean isPreview;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         mFrame.printPanes(isPreview);
     }

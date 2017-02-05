@@ -486,6 +486,7 @@ public class VSDecoderManager implements PropertyChangeListener {
          */
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         log.debug("property change type " + evt.getSource().getClass().getName()
                 + " name " + evt.getPropertyName() + " old " + evt.getOldValue()

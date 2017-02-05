@@ -32,6 +32,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
      * @param o Object to store, of type PositionablePoint
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         EntryExitPairs p = (EntryExitPairs) o;
@@ -130,6 +131,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         messages.setAttribute("class", "jmri.jmrit.signalling.configurexml.EntryExitPairsXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -317,6 +319,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         return Color.black;
     }
 
+    @Override
     public int loadOrder() {
         if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.signalling.EntryExitPairs.class) == null) {
             jmri.InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);

@@ -57,6 +57,7 @@ public class NceLight extends AbstractLight {
      * Set the current state of this Light This routine requests the hardware to
      * change.
      */
+    @Override
     protected void doNewState(int oldState, int newState) {
         boolean state = true;
         if (newState == OFF) {

@@ -36,6 +36,7 @@ public class Z21MonAction extends AbstractAction {
         this("Z21 Monitor");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a Z21MonFrame
         Z21MonFrame f = new Z21MonFrame(_memo);

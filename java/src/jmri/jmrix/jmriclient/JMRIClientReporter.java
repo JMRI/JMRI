@@ -47,6 +47,7 @@ public class JMRIClientReporter extends AbstractReporter implements JMRIClientLi
     }
 
     // to listen for status changes from JMRIClient system
+    @Override
     public void reply(JMRIClientReply m) {
         String message = m.toString();
         log.debug("Message Received: " + m);
@@ -70,15 +71,18 @@ public class JMRIClientReporter extends AbstractReporter implements JMRIClientLi
         }
     }
 
+    @Override
     public void message(JMRIClientMessage m) {
     }
 
     private int state = UNKNOWN;
 
+    @Override
     public void setState(int s) {
         state = s;
     }
 
+    @Override
     public int getState() {
         return state;
     }

@@ -19,6 +19,7 @@ public class DrawEllipse extends DrawRectangle {
     /**
      * Create a new PositionableShape
      */
+    @Override
     protected boolean makeFigure(MouseEvent event) {
         ControlPanelEditor ed = _parent.getEditor();
         Rectangle r = ed.getSelectRect();
@@ -39,6 +40,7 @@ public class DrawEllipse extends DrawRectangle {
     /**
      * Set parameters on the popup that will edit the PositionableShape
      */
+    @Override
     protected void setDisplayParams(PositionableShape p) {
         super.setDisplayParams(p);
         PositionableEllipse pos = (PositionableEllipse) p;

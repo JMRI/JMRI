@@ -33,9 +33,11 @@ public class QualifierCombinerTest {
             super(watchedVal, value, relation);
         }
 
+        @Override
         public void setWatchedAvailable(boolean t) {
         }
 
+        @Override
         public boolean currentAvailableState() {
             return true;
         }

@@ -113,6 +113,7 @@ public class AcelaTurnout extends AbstractTurnout {
      }
      */
     // Handle a request to change state by sending a turnout command
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         if ((s & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
@@ -134,6 +135,7 @@ public class AcelaTurnout extends AbstractTurnout {
      * Send a message to the layout to lock or unlock the turnout pushbuttons if
      * true, pushbutton lockout enabled
      */
+    @Override
     protected void turnoutPushbuttonLockout(boolean pushButtonLockout) {
         // Acela turnouts do not currently support lockout
 /*
@@ -149,6 +151,7 @@ public class AcelaTurnout extends AbstractTurnout {
     }
 
     // Acela turnouts do support inversion
+    @Override
     public boolean canInvert() {
         return true;
     }

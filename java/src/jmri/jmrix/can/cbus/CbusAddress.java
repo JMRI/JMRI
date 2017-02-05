@@ -128,6 +128,7 @@ public class CbusAddress {
     /**
      * Two addresses are equal if they result in the same numeric contents
      */
+    @Override
     public boolean equals(Object r) {
         if (r == null) {
             return false;
@@ -148,6 +149,7 @@ public class CbusAddress {
         return true;
     }
 
+    @Override
     public int hashCode() {
         int ret = 0;
         for (int i = 0; i < this.aFrame.length; i++) {
@@ -255,6 +257,7 @@ public class CbusAddress {
         return aFrame;
     }
 
+    @Override
     public String toString() {
         return aString;
     }

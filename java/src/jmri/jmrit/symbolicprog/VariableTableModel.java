@@ -55,14 +55,17 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     }
 
     // basic methods for AbstractTableModel implementation
+    @Override
     public int getRowCount() {
         return rowVector.size();
     }
 
+    @Override
     public int getColumnCount() {
         return headers.length;
     }
 
+    @Override
     public String getColumnName(int col) {
         if (log.isDebugEnabled()) {
             log.debug("getColumnName " + col);
@@ -70,6 +73,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         return headers[col];
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         // if (log.isDebugEnabled()) log.debug("getColumnClass "+col);
         if (headers[col].equals("Value")) {
@@ -83,6 +87,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         if (log.isDebugEnabled()) {
             log.debug("isCellEditable " + col);
@@ -143,6 +148,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         return v.getNewRep(format);
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         // if (log.isDebugEnabled()) log.debug("getValueAt "+row+" "+col);
         if (row >= rowVector.size()) {
@@ -191,6 +197,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         if (log.isDebugEnabled()) {
             log.debug("setvalueAt " + row + " " + col + " " + value);
@@ -332,10 +339,12 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      */
     protected void processModifierElements(final Element e, final VariableValue v) {
         QualifierAdder qa = new QualifierAdder() {
+            @Override
             protected Qualifier createQualifier(VariableValue var, String relation, String value) {
                 return new ValueQualifier(v, var, Integer.parseInt(value), relation);
             }
 
+            @Override
             protected void addListener(java.beans.PropertyChangeListener qc) {
                 v.addPropertyChangeListener(qc);
             }
@@ -933,6 +942,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         v.addPropertyChangeListener(this);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("action performed,  command: " + e.getActionCommand());
@@ -972,6 +982,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         v.writeAll();
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("prop changed " + e.getPropertyName()

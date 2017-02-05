@@ -2,8 +2,6 @@ package jmri.jmrix.openlcb;
 
 import jmri.Turnout;
 import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.TestTrafficController;
-import jmri.jmrix.can.adapters.loopback.LoopbackTrafficController;
 
 import org.junit.Assert;
 import org.slf4j.Logger;
@@ -16,12 +14,9 @@ import junit.framework.TestSuite;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbTurnout class.
  *
@@ -267,6 +262,7 @@ public class OlcbTurnoutTest extends TestCase {
     OlcbTestInterface t;
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
 
@@ -275,6 +271,7 @@ public class OlcbTurnoutTest extends TestCase {
         t.waitForStartup();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

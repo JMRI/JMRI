@@ -30,6 +30,7 @@ public class LIUSBXNetPacketizer extends XNetPacketizer {
      * @param msg The output byte stream
      * @return next location in the stream to fill
      */
+    @Override
     protected int addHeaderToOutput(byte[] msg, jmri.jmrix.AbstractMRMessage m) {
         if (log.isDebugEnabled()) {
             log.debug("Appending 0xFF 0xFE to start of outgoing message");
@@ -46,6 +47,7 @@ public class LIUSBXNetPacketizer extends XNetPacketizer {
      * @param m The message to be sent
      * @return Number of bytes
      */
+    @Override
     protected int lengthOfByteStream(jmri.jmrix.AbstractMRMessage m) {
         int len = m.getNumDataElements() + 2;
         int cr = 0;

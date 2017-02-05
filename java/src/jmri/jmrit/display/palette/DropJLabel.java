@@ -45,22 +45,27 @@ public class DropJLabel extends JLabel implements DropTargetListener {
         _update = update;
     }
 
+    @Override
     public void dragExit(DropTargetEvent dte) {
         //if (log.isDebugEnabled()) log.debug("DropJLabel.dragExit ");
     }
 
+    @Override
     public void dragEnter(DropTargetDragEvent dtde) {
         //if (log.isDebugEnabled()) log.debug("DropJLabel.dragEnter ");
     }
 
+    @Override
     public void dragOver(DropTargetDragEvent dtde) {
         //if (log.isDebugEnabled()) log.debug("DropJLabel.dragOver ");
     }
 
+    @Override
     public void dropActionChanged(DropTargetDragEvent dtde) {
         //if (log.isDebugEnabled()) log.debug("DropJLabel.dropActionChanged ");
     }
 
+    @Override
     public void drop(DropTargetDropEvent e) {
         try {
             Transferable tr = e.getTransferable();

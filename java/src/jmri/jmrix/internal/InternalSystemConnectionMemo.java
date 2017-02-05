@@ -123,6 +123,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         return programManager;
     }
 
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
@@ -201,11 +202,13 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         return null; // nothing, by default
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         //No actions to add at start up
         return null;
     }
 
+    @Override
     public void dispose() {
         if (sensorManager != null) {
             sensorManager.dispose();

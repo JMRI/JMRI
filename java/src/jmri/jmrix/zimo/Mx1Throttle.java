@@ -76,10 +76,12 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
     int addressLo = 0x00;
     int addressHi = 0x00;
 
+    @Override
     public LocoAddress getLocoAddress() {
         return address;
     }
 
+    @Override
     protected void sendFunctionGroup1() {
         sendSpeedCmd();
         /*int data = 0x00 |
@@ -98,6 +100,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
     /**
      * Send the message to set the state of functions F5, F6, F7, F8.
      */
+    @Override
     protected void sendFunctionGroup2() {
         sendSpeedCmd();
         // Always need speed command before function group command to reset consist pointer
@@ -160,6 +163,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
     /**
      * Send the message to set the state of functions F21 to F28. MRC Group 6
      */
+    @Override
     protected void sendFunctionGroup5() {
         /* int data = 0x00 |
          (f28 ? 0x80 : 0) |
@@ -183,6 +187,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @Override
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
@@ -259,6 +264,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
         return data;
     }
 
+    @Override
     public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
@@ -269,10 +275,12 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
         }
     }
 
+    @Override
     protected void throttleDispose() {
         finishRecord();
     }
 
+    @Override
     public void message(Mx1Message m) {
 
     }

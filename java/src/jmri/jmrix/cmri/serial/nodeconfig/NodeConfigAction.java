@@ -24,6 +24,7 @@ public class NodeConfigAction extends AbstractAction {
         this("Configure C/MRI Nodes",memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         NodeConfigFrame f = new NodeConfigFrame(_memo);
         try {

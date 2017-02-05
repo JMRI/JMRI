@@ -11,10 +11,12 @@ import jmri.managers.AbstractReporterManager;
  */
 public class RpsReporterManager extends AbstractReporterManager {
 
+    @Override
     public String getSystemPrefix() {
         return "R";
     }
 
+    @Override
     protected Reporter createNewReporter(String systemName, String userName) {
         RpsReporter r = new RpsReporter(systemName, userName);
         Distributor.instance().addMeasurementListener(r);

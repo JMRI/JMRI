@@ -16,15 +16,18 @@ public class XNetListenerScaffold implements jmri.jmrix.lenz.XNetListener {
         rcvCount = 0;
     }
 
+    @Override
     public void message(XNetReply m) {
         rcvdRply = m;
         rcvCount++;
     }
 
+    @Override
     public void message(XNetMessage m) {
         rcvdMsg = m;
     }
 
+    @Override
     public void notifyTimeout(XNetMessage m) {
         timeOutMsg = m;
     }

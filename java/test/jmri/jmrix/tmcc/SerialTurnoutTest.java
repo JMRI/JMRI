@@ -1,10 +1,7 @@
 package jmri.jmrix.tmcc;
 
 import jmri.implementation.AbstractTurnoutTestBase;
-import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the SerialTurnout class
@@ -36,6 +33,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 //       Assert.assertEquals("content", "41 54 08", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
     }
 
+    @Override
     public void checkClosedMsgSent() {
 //       tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
 //       Assert.assertTrue("message sent", tcis.outbound.size()>0);

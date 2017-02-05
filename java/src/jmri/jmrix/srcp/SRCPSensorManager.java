@@ -19,10 +19,12 @@ public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
         _bus = bus;
     }
 
+    @Override
     public String getSystemPrefix() {
         return _memo.getSystemPrefix();
     }
 
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor t;
         int addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();

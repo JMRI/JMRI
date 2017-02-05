@@ -70,6 +70,7 @@ public class AcelaSignalHead extends DefaultSignalHead {
     /**
      * Handle a request to change state on layout
      */
+    @Override
     protected void updateOutput() {
         AcelaNode tNode = AcelaAddress.getNodeFromSystemName(tSystemName,_memo);
         if (tNode == null) {

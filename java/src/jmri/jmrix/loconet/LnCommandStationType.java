@@ -75,6 +75,7 @@ public enum LnCommandStationType {
         return canRead;
     }
 
+    @Override
     public String toString() {
         return name;
     }

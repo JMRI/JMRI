@@ -18,6 +18,7 @@ abstract public class EcosPanel extends jmri.util.swing.JmriPanel implements Eco
      */
     protected EcosSystemConnectionMemo memo;
 
+    @Override
     public void initComponents(EcosSystemConnectionMemo memo) {
         this.memo = memo;
     }

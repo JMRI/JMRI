@@ -242,6 +242,7 @@ public class UDPOutputStream extends OutputStream {
      ***                ***
      *****************************************************************
      */
+    @Override
     public void close() throws IOException {
         dsock.close();
         dsock = null;
@@ -267,6 +268,7 @@ public class UDPOutputStream extends OutputStream {
      ***                ***
      *****************************************************************
      */
+    @Override
     public void flush() throws IOException {
         if (idx == 0) {  // no data in buffer
             return;
@@ -311,6 +313,7 @@ public class UDPOutputStream extends OutputStream {
      ***                ***
      *****************************************************************
      */
+    @Override
     public void write(int value) throws IOException {
         buffer[idx] = (byte) (value & 0x0ff);
         idx++;
@@ -337,6 +340,7 @@ public class UDPOutputStream extends OutputStream {
      ***                ***
      *****************************************************************
      */
+    @Override
     public void write(byte[] data) throws IOException {
         write(data, 0, data.length);
     }
@@ -358,6 +362,7 @@ public class UDPOutputStream extends OutputStream {
      ***                ***
      *****************************************************************
      */
+    @Override
     public void write(byte[] data, int off, int len) throws IOException {
         int lenRemaining = len;
 

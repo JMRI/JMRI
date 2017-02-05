@@ -3,7 +3,6 @@ package jmri.jmrix.sprog.packetgen;
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import jmri.jmrix.sprog.SprogMessage;
-import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
@@ -24,6 +23,7 @@ public class SprogPacketGenFrame extends jmri.util.JmriJFrame {
         _memo = memo;
     }
 
+    @Override
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
 
@@ -50,6 +50,7 @@ public class SprogPacketGenFrame extends jmri.util.JmriJFrame {
         getContentPane().add(sendButton);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }

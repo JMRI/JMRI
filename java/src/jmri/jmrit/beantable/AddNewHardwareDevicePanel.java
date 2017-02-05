@@ -81,6 +81,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
 
         addRange.addItemListener(
                 new ItemListener() {
+                    @Override
                     public void itemStateChanged(ItemEvent e) {
                         rangeState();
                     }

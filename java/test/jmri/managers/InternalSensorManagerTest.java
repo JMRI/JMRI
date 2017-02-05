@@ -18,6 +18,7 @@ import org.junit.Test;
  */
 public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
+    @Override
     public String getSystemName(int i) {
         return "IS" + i;
     }

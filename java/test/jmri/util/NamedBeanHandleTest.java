@@ -21,9 +21,11 @@ public class NamedBeanHandleTest extends TestCase {
     public void testHoldsTurnout() {
         Turnout t = new AbstractTurnout("name") {
 
+            @Override
             protected void forwardCommandChangeToLayout(int s) {
             }
 
+            @Override
             protected void turnoutPushbuttonLockout(boolean b) {
             }
         };

@@ -25,6 +25,7 @@ public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
 
     LayoutBlock lBlock = null;
 
+    @Override
     public void setBlock(jmri.NamedBeanHandle<Block> m) {
         super.setBlock(m);
         if (getBlock() != null) {
@@ -32,6 +33,7 @@ public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
         }
     }
 
+    @Override
     protected void addRosterToIcon(RosterEntry roster) {
         if (!jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() || lBlock == null) {
             super.addRosterToIcon(roster);

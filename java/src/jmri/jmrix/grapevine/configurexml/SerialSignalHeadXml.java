@@ -26,6 +26,7 @@ public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
      * @param o Object to store, of type SerialSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         SerialSignalHead p = (SerialSignalHead) o;
 
@@ -57,6 +58,7 @@ public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         return true;
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
