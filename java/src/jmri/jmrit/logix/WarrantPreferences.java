@@ -4,10 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.beans.Bean;
 import jmri.implementation.SignalSpeedMap;
@@ -109,8 +112,8 @@ public class WarrantPreferences extends Bean {
     private int _searchDepth = 20;      // How many tree nodes (blocks) to walk in finding routes
     private float _throttleScale = 0.5f;  // factor to approximate throttle setting to track speed
 
-    private LinkedHashMap<String, Float> _speedNames;
-    private LinkedHashMap<String, String> _headAppearances;
+    private final LinkedHashMap<String, Float> _speedNames = new LinkedHashMap<>();
+    private final LinkedHashMap<String, String> _headAppearances = new LinkedHashMap<>();
     private int _interpretation = SignalSpeedMap.PERCENT_NORMAL;    // Interpretation of values in speed name table
 
     private int _msIncrTime = 1000;         // time in milliseconds between speed changes ramping up or down
@@ -188,18 +191,20 @@ public class WarrantPreferences extends Bean {
             return;
         }
         Iterator<String> it = map.getValidSpeedNames().iterator();
-        _speedNames = new LinkedHashMap<>();
+        LinkedHashMap<String, Float> names = new LinkedHashMap<>();
         while (it.hasNext()) {
             String name = it.next();
-            _speedNames.put(name, map.getSpeed(name));
+            names.put(name, map.getSpeed(name));
         }
+        this.setSpeedNames(names);
 
         Enumeration<String> en = map.getAppearanceIterator();
-        _headAppearances = new LinkedHashMap<>();
+        LinkedHashMap<String, String> heads = new LinkedHashMap<>();
         while (en.hasMoreElements()) {
             String name = en.nextElement();
-            _headAppearances.put(name, map.getAppearanceSpeed(name));
+            heads.put(name, map.getAppearanceSpeed(name));
         }
+        this.setAppearances(heads);
         setTimeIncrement(map.getStepDelay());
         setThrottleIncrement(map.getStepIncrement());
     }
@@ -257,7 +262,7 @@ public class WarrantPreferences extends Bean {
                 log.error("Unable to read interpetation of Speed Map. Setting to default value % normal.", ex);
             }
         }
-        _speedNames = new LinkedHashMap<>();
+        HashMap<String, Float> map = new LinkedHashMap<>();
         List<Element> list = rampParms.getChildren();
         for (int i = 0; i < list.size(); i++) {
             String name = list.get(i).getName();
@@ -268,22 +273,23 @@ public class WarrantPreferences extends Bean {
                 log.error("Speed names has invalid content for {} = ", name, list.get(i).getText());
             }
             log.debug("Add {}, {} to AspectSpeed Table", name, speed);
-            _speedNames.put(name, speed);
+            map.put(name, speed);
         }
+        this.setSpeedNames(map);
 
         rampParms = child.getChild(APPEARANCE_PREFS);
         if (rampParms == null) {
             return false;
         }
-        _headAppearances = new LinkedHashMap<>();
+        LinkedHashMap<String, String> heads = new LinkedHashMap<>();
         list = rampParms.getChildren();
         for (int i = 0; i < list.size(); i++) {
             String name = Bundle.getMessage(list.get(i).getName());
             String speed = list.get(i).getText();
-            _headAppearances.put(name, speed);
+            heads.put(name, speed);
         }
-
-        setSpeedMap();
+        this.setAppearances(heads);
+        
         return true;
     }
 
@@ -384,20 +390,11 @@ public class WarrantPreferences extends Bean {
     }
 
     /**
-     * Apply to classes that use this data
+     * @deprecated since 4.7.2 without replacement. Classes interested in
+     * changes to the warrant preferences listen for those changes.
      */
+    @Deprecated
     public void apply() {
-        setSpeedMap();
-    }
-
-    private void setSpeedMap() {
-        SignalSpeedMap map = new SignalSpeedMap();
-        map.setAspectTable(getSpeedNameEntryIterator(), _interpretation);
-        map.setAppearanceTable(getAppearanceEntryIterator());
-        map.setRampParams(_throttleIncr, _msIncrTime);
-        map.setDefaultThrottleFactor(_throttleScale);
-        map.setLayoutScale(_scale);
-        jmri.InstanceManager.setDefault(SignalSpeedMap.class, map);
     }
 
     /**
@@ -502,6 +499,13 @@ public class WarrantPreferences extends Bean {
         return vec.iterator();
     }
 
+    /**
+     *
+     * @return the number of speed names
+     * @deprecated since 4.7.2; use {@link java.util.HashMap#size()} on the
+     * result of {@link #getSpeedNames()} instead.
+     */
+    @Deprecated
     int getSpeedNamesSize() {
         return _speedNames.size();
     }
@@ -510,14 +514,26 @@ public class WarrantPreferences extends Bean {
         return _speedNames.get(key);
     }
 
-    void setSpeedNames(ArrayList<DataPair<String, Float>> speedNameMap) {
+    @Nonnull
+    @CheckReturnValue
+    public HashMap<String, Float> getSpeedNames() {
+        return new HashMap<>(this._speedNames);
+    }
+
+    public void setSpeedNames(@Nonnull HashMap<String, Float> map) {
         LinkedHashMap<String, Float> old = new LinkedHashMap<>(_speedNames);
-        _speedNames = new LinkedHashMap<>();
+        _speedNames.clear();
+        _speedNames.putAll(map);
+        this.firePropertyChange(SPEED_NAMES, old, new LinkedHashMap<>(_speedNames));
+    }
+
+    void setSpeedNames(ArrayList<DataPair<String, Float>> speedNameMap) {
+        LinkedHashMap<String, Float> map = new LinkedHashMap<>();
         for (int i = 0; i < speedNameMap.size(); i++) {
             DataPair<String, Float> dp = speedNameMap.get(i);
-            _speedNames.put(dp.getKey(), dp.getValue());
+            map.put(dp.getKey(), dp.getValue());
         }
-        this.firePropertyChange(SPEED_NAMES, old, new LinkedHashMap<>(_speedNames));
+        this.setSpeedNames(map);
     }
 
     Iterator<Entry<String, String>> getAppearanceEntryIterator() {
@@ -528,6 +544,13 @@ public class WarrantPreferences extends Bean {
         return vec.iterator();
     }
 
+    /**
+     *
+     * @return the number of signal head appearances
+     * @deprecated since 4.7.2; use {@link java.util.HashMap#size()} on the
+     * results of {@link #getAppearances()} instead
+     */
+    @Deprecated
     int getAppeaancesSize() {
         return _headAppearances.size();
     }
@@ -536,17 +559,34 @@ public class WarrantPreferences extends Bean {
         return _headAppearances.get(key);
     }
 
-    void setAppearances(ArrayList<DataPair<String, String>> appearanceMap) {
-        LinkedHashMap<String, String> old = new LinkedHashMap<>(_headAppearances);
-        _headAppearances = new LinkedHashMap<>();
-        for (int i = 0; i < appearanceMap.size(); i++) {
-            DataPair<String, String> dp = appearanceMap.get(i);
-            _headAppearances.put(dp.getKey(), dp.getValue());
-        }
-        this.firePropertyChange(APPEARANCES, old, _headAppearances);
+    /**
+     * Get a map of signal head appearances.
+     *
+     * @return a map of appearances or an empty map if none are defined
+     */
+    @Nonnull
+    @CheckReturnValue
+    public HashMap<String, String> getAppearances() {
+        return new HashMap<>(this._headAppearances);
     }
 
-    int getInterpretation() {
+    public void setAppearances(HashMap<String, String> map) {
+        LinkedHashMap<String, String> old = new LinkedHashMap<>(this._headAppearances);
+        this._headAppearances.clear();
+        this._headAppearances.putAll(map);
+        this.firePropertyChange(APPEARANCES, old, new LinkedHashMap<>(this._headAppearances));
+    }
+
+    void setAppearances(ArrayList<DataPair<String, String>> appearanceMap) {
+        LinkedHashMap<String, String> map = new LinkedHashMap<>();
+        for (int i = 0; i < appearanceMap.size(); i++) {
+            DataPair<String, String> dp = appearanceMap.get(i);
+            map.put(dp.getKey(), dp.getValue());
+        }
+        this.setAppearances(map);
+    }
+
+    public int getInterpretation() {
         return _interpretation;
     }
 

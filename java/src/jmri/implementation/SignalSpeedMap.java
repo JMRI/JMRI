@@ -1,15 +1,21 @@
 package jmri.implementation;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.net.URL;
+import java.util.Collections;
 import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Vector;
 import javax.annotation.Nonnull;
+import jmri.InstanceManagerAutoDefault;
+import jmri.beans.Bean;
+import jmri.jmrit.logix.WarrantPreferences;
 import jmri.util.FileUtil;
-import jmri.util.OrderedHashtable;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
@@ -24,12 +30,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (C) 2010
  */
-public class SignalSpeedMap
-        implements jmri.InstanceManagerAutoDefault // auto-initialize in InstanceManager
+public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault // auto-initialize in InstanceManager
 {
 
-    private Hashtable<String, Float> _table;
-    private Hashtable<String, String> _headTable;
+    private final HashMap<String, Float> _table = new LinkedHashMap<>();
+    private final HashMap<String, String> _headTable = new LinkedHashMap<>();
     private int _interpretation;
     private int _sStepDelay;     // ramp step time interval
     private int _numSteps = 4;   // num throttle steps per ramp step - deprecated
@@ -41,9 +46,35 @@ public class SignalSpeedMap
     static public final int PERCENT_THROTTLE = 2;
     static public final int SPEED_MPH = 3;
     static public final int SPEED_KMPH = 4;
+    private PropertyChangeListener warrantPreferencesListener = null;
 
     public SignalSpeedMap() {
         loadMap();
+        WarrantPreferences.getDefault().addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            WarrantPreferences preferences = WarrantPreferences.getDefault();
+            SignalSpeedMap map = SignalSpeedMap.this;
+            switch (evt.getPropertyName()) {
+                case WarrantPreferences.APPEARANCES:
+                    map.setAppearances(preferences.getAppearances());
+                    break;
+                case WarrantPreferences.LAYOUT_SCALE:
+                    map.setLayoutScale(preferences.getLayoutScale());
+                    break;
+                case WarrantPreferences.SPEED_NAMES:
+                case WarrantPreferences.INTERPRETATION:
+                    map.setAspects(preferences.getSpeedNames(), preferences.getInterpretation());
+                    break;
+                case WarrantPreferences.THROTTLE_SCALE:
+                    map.setDefaultThrottleFactor(preferences.getThrottleScale());
+                    break;
+                case WarrantPreferences.TIME_INCREMENT:
+                case WarrantPreferences.RAMP_INCREMENT:
+                    map.setRampParams(preferences.getThrottleIncrement(), preferences.getTimeIncrement());
+                    break;
+                default:
+                // ignore other properties
+            }
+        });
     }
 
     void loadMap() {
@@ -103,7 +134,7 @@ public class SignalSpeedMap
             }
 
             List<Element> list = root.getChild("aspectSpeeds").getChildren();
-            _table = new OrderedHashtable<>();
+            _table.clear();
             for (int i = 0; i < list.size(); i++) {
                 String name = list.get(i).getName();
                 Float speed;
@@ -119,7 +150,7 @@ public class SignalSpeedMap
                 _table.put(name, speed);
             }
 
-            _headTable = new OrderedHashtable<>();
+            _headTable.clear();
             List<Element> l = root.getChild("appearanceSpeeds").getChildren();
             for (int i = 0; i < l.size(); i++) {
                 String name = l.get(i).getName();
@@ -175,16 +206,16 @@ public class SignalSpeedMap
     }
 
     public Enumeration<String> getAppearanceIterator() {
-        return _headTable.keys();
+        return Collections.enumeration(_headTable.keySet());
     }
 
     public Enumeration<String> getSpeedIterator() {
-        return _table.keys();
+        return Collections.enumeration(_table.keySet());
     }
 
-    public java.util.Vector<String> getValidSpeedNames() {
-        java.util.Enumeration<String> e = _table.keys();
-        java.util.Vector<String> v = new java.util.Vector<>();
+    public Vector<String> getValidSpeedNames() {
+        Enumeration<String> e = this.getSpeedIterator();
+        Vector<String> v = new Vector<>();
         while (e.hasMoreElements()) {
             v.add(e.nextElement());
         }
@@ -202,19 +233,16 @@ public class SignalSpeedMap
         if (speed == null) {
             return 0.0f;
         }
-        return speed.floatValue();
+        return speed;
     }
 
-    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "want to detect lack of exact match in == speed test")
     public String getNamedSpeed(float speed) {
-        java.util.Enumeration<String> e = _table.keys();
+        Enumeration<String> e = this.getSpeedIterator();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
-
-            if (_table.get(key) == speed) {
+            if (_table.get(key).equals(speed)) {
                 return key;
             }
-
         }
         return null;
     }
@@ -241,8 +269,22 @@ public class SignalSpeedMap
         return _numSteps;
     }
 
+    public void setAspects(@Nonnull HashMap<String, Float> map, int interpretation) {
+        HashMap<String, Float> oldMap = new HashMap<>(this._table);
+        int oldInterpretation = this._interpretation;
+        this._table.clear();
+        this._table.putAll(map);
+        this._interpretation = interpretation;
+        if (interpretation != oldInterpretation) {
+            this.firePropertyChange("interpretation", oldInterpretation, interpretation);
+        }
+        if (!map.equals(oldMap)) {
+            this.firePropertyChange("aspects", oldMap, new HashMap<>(map));
+        }
+    }
+
     public void setAspectTable(@Nonnull Iterator<Entry<String, Float>> iter, int interpretation) {
-        _table = new OrderedHashtable<>();
+        _table.clear();
         while (iter.hasNext()) {
             Entry<String, Float> ent = iter.next();
             _table.put(ent.getKey(), ent.getValue());
@@ -250,8 +292,17 @@ public class SignalSpeedMap
         _interpretation = interpretation;
     }
 
+    public void setAppearances(@Nonnull HashMap<String, String> map) {
+        HashMap<String, String> old = new HashMap<>(_headTable);
+        _headTable.clear();
+        _headTable.putAll(map);
+        if (!map.equals(old)) {
+            this.firePropertyChange("Appearances", old, new HashMap<>(_headTable));
+        }
+    }
+
     public void setAppearanceTable(@Nonnull Iterator<Entry<String, String>> iter) {
-        _headTable = new OrderedHashtable<>();
+        _headTable.clear();
         while (iter.hasNext()) {
             Entry<String, String> ent = iter.next();
             _headTable.put(ent.getKey(), ent.getValue());
