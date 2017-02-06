@@ -25,6 +25,7 @@ import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
+import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.managers.AbstractSignalHeadManager;
 import jmri.managers.DefaultConditionalManager;
@@ -412,6 +413,10 @@ public class JUnitUtil {
         InstanceManager.store(
                 new apps.StartupActionsManager(),
                 apps.StartupActionsManager.class);
+    }
+
+    public static void initConnectionConfigManager() {
+        InstanceManager.setDefault(ConnectionConfigManager.class, new ConnectionConfigManager());
     }
 
     /*

@@ -225,7 +225,7 @@ public class LRouteTableAction extends AbstractTableAction {
         /**
          * Delete the bean after all the checking has been done.
          * <P>
-         * Deactivate the Logix and remove it's conditionals
+         * Deactivate the Logix and remove its conditionals
          */
         @Override
         void doDelete(NamedBean bean) {
