@@ -492,8 +492,6 @@ class Diesel3Sound extends EngineSound {
         static public List<AudioBuffer> getBufferList(VSDFile vf, String filename, String sname, String uname) {
             List<AudioBuffer> buflist = null;
             if (vf == null) {
-                // Need to fix this.
-                //buf.setURL(vsd_file_base + filename);
                 log.debug("No VSD File");
                 return (null);
             } else {
@@ -516,8 +514,6 @@ class Diesel3Sound extends EngineSound {
                 buf = (AudioBuffer) am.provideAudio(VSDSound.BufSysNamePrefix + filename);
                 buf.setUserName(VSDSound.BufUserNamePrefix + uname);
                 if (vf == null) {
-                    // Need to fix this.
-                    //buf.setURL(vsd_file_base + filename);
                     log.debug("No VSD File");
                     return (null);
                 } else {

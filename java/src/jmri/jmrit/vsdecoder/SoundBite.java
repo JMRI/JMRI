@@ -292,7 +292,6 @@ class SoundBite extends VSDSound {
 
     public void setURL(String filename) {
         this.filename = filename;
-        //sound_buf.setURL(vsd_file_base + filename);
         sound_buf.setURL(filename); // Path must be provided by caller.
     }
 

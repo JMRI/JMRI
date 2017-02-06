@@ -546,8 +546,6 @@ class Steam1Sound extends EngineSound {
 
         static public java.io.InputStream getWavStream(VSDFile vf, String filename) {
             if (vf == null) {
-                // Need to fix this.
-                //buf.setURL(vsd_file_base + filename);
                 log.warn("No VSD File");
                 return null;
             } else {
