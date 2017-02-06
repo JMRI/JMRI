@@ -343,23 +343,27 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                     inPackage = null;
                 } else { //in.readLine() IS null
                     consecutiveErrors += 1;
-                    log.error("null readLine() from socket, consecutive error # {}", consecutiveErrors);
+                    log.warn("null readLine() from device '{}', consecutive error # {}", getName(), consecutiveErrors);
                 }
 
             } catch (IOException exa) {
                 consecutiveErrors += 1;
-                log.error("readLine from device failed, consecutive error # {}", consecutiveErrors);
+                log.warn("readLine from device '{}' failed, consecutive error # {}", getName(), consecutiveErrors);
             } catch (IndexOutOfBoundsException exb) {
-                log.warn("Bad message \"" + inPackage + "\" from device: " + getName());
+                log.warn("Bad message '{}' from device '{}'", inPackage, getName());
             }
-//            try{    //  Some layout connections cannot handle rapid inputs
-//                Thread.sleep(20);
-//            } catch (java.lang.InterruptedException ex){}
-            if (consecutiveErrors > 25) { //stop reading if number of errors exceeded
-                keepReading = false;
+            if (consecutiveErrors > 0) { //a read error was encountered
+                if (consecutiveErrors < 25) { //pause thread to give time for reconnection
+                    try{  
+                        Thread.sleep(200); 
+                    } catch (java.lang.InterruptedException ex){}
+                } else {
+                    keepReading = false;
+                    log.error("readLine failure limit exceeded, ending thread run loop for device '{}'", getName());
+                }
             }
         } while (keepReading);	//	'til we tell it to stop
-        log.debug("Ending thread run loop for device: " + getName());
+        log.debug("Ending thread run loop for device '{}'", getName());
         closeThrottles();
 
     }
