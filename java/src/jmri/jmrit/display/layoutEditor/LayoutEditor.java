@@ -309,7 +309,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     // note: these only change when setTurnoutCircleSize is called
     // using these avoids having to call getTurnoutCircleSize() and
     // the multiply (x2) and the int -> double conversion overhead
-    private double circleRadius = getTurnoutCircleSize();
+    private double circleRadius = SIZE * getTurnoutCircleSize();
     private double circleDiameter = 2.0 * circleRadius;
 
     // selection variables
@@ -8475,7 +8475,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         turnoutCircleSize = size;
 
         // these are doubles
-        circleRadius = size;
+        circleRadius = SIZE * size;
         circleDiameter = 2.0 * circleRadius;
 
         setOptionMenuTurnoutCircleSize();

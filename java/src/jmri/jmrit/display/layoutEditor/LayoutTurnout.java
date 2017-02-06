@@ -235,12 +235,6 @@ public class LayoutTurnout extends LayoutTrack {
 
     protected boolean hidden = false;
 
-    // note: these only change when setTurnoutCircleSize is called
-    // using these will avoid having to call getTurnoutCircleSize(),
-    // the multiply (x2) and the int -> double conversion.
-    protected double circleRadius = 4;  //matches earlier versions
-    protected double circleDiameter = 2.0 * circleRadius;
-
     private boolean useBlockSpeed = false;
 
     protected LayoutTurnout() {
@@ -430,11 +424,6 @@ public class LayoutTurnout extends LayoutTrack {
 
     public void setHidden(boolean hide) {
         hidden = hide;
-    }
-
-    public void setTurnoutCircleSize(int newSize) {
-        circleRadius = newSize;
-        circleDiameter = 2.0 * circleRadius;
     }
 
     public String getBlockName() {
