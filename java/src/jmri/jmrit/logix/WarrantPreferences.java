@@ -1,9 +1,7 @@
 package jmri.jmrit.logix;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -328,7 +326,7 @@ public class WarrantPreferences extends Bean {
     public boolean store(Element root) {
         Element prefs = new Element(LAYOUT_PARAMS);
         try {
-            prefs.setAttribute(LAYOUT_SCALE, Float.toString(getScale()));
+            prefs.setAttribute(LAYOUT_SCALE, Float.toString(getLayoutScale()));
             prefs.setAttribute(SEARCH_DEPTH, Integer.toString(getSearchDepth()));
             root.addContent(prefs);
 
@@ -390,20 +388,6 @@ public class WarrantPreferences extends Bean {
      */
     public void apply() {
         setSpeedMap();
-        setNXdata();
-    }
-
-    private void setNXdata() {
-        // TODO: make the NXFrame instance listen to property changes in this class
-        if (!GraphicsEnvironment.isHeadless()) {
-            NXFrame frame = NXFrame.getDefault();
-            frame.setScale(_scale);
-            frame.setDepth(_searchDepth);
-            frame.setTimeInterval(_msIncrTime);
-            frame.setThrottleIncrement(_throttleIncr);
-            frame.setThrottleFactor(_throttleScale);
-            frame.updatePanel(_interpretation);
-        }
     }
 
     private void setSpeedMap() {
@@ -422,7 +406,7 @@ public class WarrantPreferences extends Bean {
      */
     @Deprecated
     float getScale() {
-        return _scale;
+        return this.getLayoutScale();
     }
 
     /**
@@ -513,7 +497,7 @@ public class WarrantPreferences extends Bean {
     Iterator<Entry<String, Float>> getSpeedNameEntryIterator() {
         List<Entry<String, Float>> vec = new java.util.ArrayList<>();
         _speedNames.entrySet().forEach((entry) -> {
-            vec.add(new AbstractMap.SimpleEntry<>(entry.getKey(), entry.getValue()));
+            vec.add(new DataPair<>(entry.getKey(), entry.getValue()));
         });
         return vec.iterator();
     }
@@ -539,7 +523,7 @@ public class WarrantPreferences extends Bean {
     Iterator<Entry<String, String>> getAppearanceEntryIterator() {
         List<Entry<String, String>> vec = new ArrayList<>();
         _headAppearances.entrySet().stream().forEach((entry) -> {
-            vec.add(new AbstractMap.SimpleEntry<>(entry.getKey(), entry.getValue()));
+            vec.add(new DataPair<>(entry.getKey(), entry.getValue()));
         });
         return vec.iterator();
     }
