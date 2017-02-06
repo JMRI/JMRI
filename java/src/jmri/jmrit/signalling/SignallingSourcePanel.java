@@ -75,6 +75,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         sorter.setComparator(SignalMastAppearanceModel.SYSNAME_COLUMN, new SystemNameComparator());
         RowSorterUtil.setSortOrder(sorter, SignalMastAppearanceModel.SYSNAME_COLUMN, SortOrder.ASCENDING);
         table.setRowSorter(sorter);
+        table.addPropertyChangeListener(this); // will this update the table?
         table.setRowSelectionAllowed(false);
         table.setPreferredScrollableViewportSize(new java.awt.Dimension(600, 120));
         _AppearanceModel.configureTable(table);
@@ -180,7 +181,10 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             boolean newValue = (Boolean) e.getNewValue();
             discoverPairs.setEnabled(newValue);
         }
-        //log.debug("SSP 179 Event: {}", e.getPropertyName());
+        log.debug("SSP 183 Event: {}", e.getPropertyName());
+        if (e.getPropertyName().equals("size")) {
+            _AppearanceModel.fireTableDataChanged();
+        }
     }
 
     private ArrayList<SignalMast> _signalMastList;
@@ -298,7 +302,8 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
 
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
-            if (e.getPropertyName().equals("length")) { // should pick up adding an new destination mast, but doesn't refresh by itself
+            if (e.getPropertyName().equals("length")) {
+                // should pick up adding a new destination mast, but doesn't refresh table by itself
                 _signalMastList = sml.getDestinationList();
                 int length = (Integer) e.getNewValue();
                 if (length == 0) {
@@ -314,7 +319,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                 fireTableDataChanged();
                 fireTableRowsUpdated(0, _signalMastList.size()-1);
             }
-            //log.debug("SSP 312 Event: {}", e.getPropertyName());
+            //log.debug("SSP 317 Event: {}", e.getPropertyName());
         }
 
         protected void configEditColumn(JTable table) {
