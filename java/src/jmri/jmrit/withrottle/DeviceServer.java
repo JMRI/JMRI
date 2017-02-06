@@ -387,10 +387,11 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                 }
                 multiThrottles.get(key).dispose();
             }
+        }
+        if (multiThrottles != null) {
             multiThrottles.clear();
             multiThrottles = null;
         }
-
         throttleController = null;
         secondThrottleController = null;
         if (trackPower != null) {
