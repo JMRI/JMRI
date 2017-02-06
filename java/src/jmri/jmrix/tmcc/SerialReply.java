@@ -27,6 +27,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
     @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
+    @Override
     public String toString() {
         String s = "";
         for (int i = 0; i < getNumDataElements(); i++) {
@@ -42,6 +43,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         return (getElement(1) & 0xFF) * 256 + (getElement(2) & 0xFF);
     }
 
+    @Override
     protected int skipPrefix(int index) {
         // doesn't have to do anything
         return index;

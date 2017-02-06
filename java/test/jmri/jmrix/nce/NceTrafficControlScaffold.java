@@ -19,6 +19,7 @@ public class NceTrafficControlScaffold extends NceTrafficController {
     }
 
     // override some NceTrafficController methods for test purposes
+    @Override
     public boolean status() {
         return true;
     }
@@ -28,6 +29,7 @@ public class NceTrafficControlScaffold extends NceTrafficController {
      */
     public Vector<NceMessage> outbound = new Vector<NceMessage>();  // public OK here, so long as this is a test class
 
+    @Override
     public void sendNceMessage(NceMessage m, NceListener reply) {
         if (log.isDebugEnabled()) {
             log.debug("sendNceMessage [" + m + "]");

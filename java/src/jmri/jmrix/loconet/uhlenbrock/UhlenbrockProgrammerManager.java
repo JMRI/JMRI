@@ -19,6 +19,7 @@ public class UhlenbrockProgrammerManager extends LnProgrammerManager {
         super(pSlotManager, memo);
     }
 
+    @Override
     public boolean isAddressedModePossible() {
         return true;
     }

@@ -36,14 +36,17 @@ public class DefaultConditionalManager extends AbstractManager
         super();
     }
 
+    @Override
     public int getXMLOrder() {
         return jmri.Manager.CONDITIONALS;
     }
 
+    @Override
     public String getSystemPrefix() {
         return "I";
     }
 
+    @Override
     public char typeLetter() {
         return 'X';
     }
@@ -57,6 +60,7 @@ public class DefaultConditionalManager extends AbstractManager
      * @return null if a Conditional with the same systemName or userName
      *         already exists, or if there is trouble creating a new Conditional
      */
+    @Override
     public Conditional createNewConditional(String systemName, String userName) {
         // check that Conditional with same system name does not already exist
         Conditional c = getBySystemName(systemName);
@@ -100,6 +104,7 @@ public class DefaultConditionalManager extends AbstractManager
      *
      * @param name - system name of Conditional (must be trimmed and upper case)
      */
+    @Override
     public Logix getParentLogix(String name) {
         if (name.length() < 4) {
             return null;
@@ -117,6 +122,7 @@ public class DefaultConditionalManager extends AbstractManager
      * Remove an existing Conditional. Parent Logix must have been deactivated
      * before invoking this.
      */
+    @Override
     public void deleteConditional(Conditional c) {
         deregister(c);
     }
@@ -131,6 +137,7 @@ public class DefaultConditionalManager extends AbstractManager
      * @param name - name to look up
      * @return null if no match found
      */
+    @Override
     public Conditional getConditional(Logix x, String name) {
         Conditional c = null;
         if (x != null) {
@@ -142,6 +149,7 @@ public class DefaultConditionalManager extends AbstractManager
         return getBySystemName(name);
     }
 
+    @Override
     public Conditional getConditional(String name) {
         Conditional c = getBySystemName(name);
         if (c == null) {
@@ -150,6 +158,7 @@ public class DefaultConditionalManager extends AbstractManager
         return c;
     }
 
+    @Override
     public Conditional getByUserName(String key) {
         if (key == null) {
             return null;
@@ -180,6 +189,7 @@ public class DefaultConditionalManager extends AbstractManager
         return null;
     }
 
+    @Override
     public Conditional getByUserName(Logix x, String key) {
         if (x == null) {
             return null;
@@ -196,6 +206,7 @@ public class DefaultConditionalManager extends AbstractManager
         return null;
     }
 
+    @Override
     public Conditional getBySystemName(String name) {
         if (name == null) {
             return null;
@@ -207,6 +218,7 @@ public class DefaultConditionalManager extends AbstractManager
      * Get a list of all Conditional system names with the specified Logix
      * parent
      */
+    @Override
     public List<String> getSystemNameListForLogix(Logix x) {
         log.error("getSystemNameListForLogix - Not implemented yet.");
         return null;
@@ -221,6 +233,7 @@ public class DefaultConditionalManager extends AbstractManager
         return (_instance);
     }
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameConditional");
     }

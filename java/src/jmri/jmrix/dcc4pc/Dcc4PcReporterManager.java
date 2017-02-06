@@ -16,14 +16,17 @@ public class Dcc4PcReporterManager extends jmri.managers.AbstractReporterManager
 
     Dcc4PcSystemConnectionMemo memo;
 
+    @Override
     public String getSystemPrefix() {
         return memo.getSystemPrefix();
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }
 
+    @Override
     public Reporter createNewReporter(String systemName, String userName) {
         Reporter r = new Dcc4PcReporter(systemName, userName);
         register(r);

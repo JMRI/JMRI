@@ -23,30 +23,37 @@ public class ProducerTableModel extends AbstractTableModel {
     public static final int NUMBER_COLUMN = 2;
     String[] columnName = new String[]{"User Name", "Node", "Event"};
 
+    @Override
     public String getColumnName(int c) {
         return columnName[c];
     }
 
+    @Override
     public Class<?> getColumnClass(int c) {
         return String.class;
     }
 
+    @Override
     public boolean isCellEditable(int r, int c) {
         return false;
     }
 
+    @Override
     public int getColumnCount() {
         return columnName.length;
     }
 
+    @Override
     public int getRowCount() {
         return dummy.length;
     }
 
+    @Override
     public Object getValueAt(int r, int c) {
         return dummy[r][c];  // for testing
     }
 
+    @Override
     public void setValueAt(Object type, int r, int c) {
         // nothing is stored here
     }

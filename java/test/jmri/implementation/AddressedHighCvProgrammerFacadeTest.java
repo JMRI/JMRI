@@ -29,6 +29,7 @@ public class AddressedHighCvProgrammerFacadeTest extends TestCase {
 
         Programmer p = new AddressedHighCvProgrammerFacade(dp, "256", "253", "254", "255", "100");
         ProgListener l = new ProgListener() {
+            @Override
             public void programmingOpReply(int value, int status) {
                 log.debug("callback value=" + value + " status=" + status);
                 replied = true;
@@ -55,6 +56,7 @@ public class AddressedHighCvProgrammerFacadeTest extends TestCase {
 
         Programmer p = new AddressedHighCvProgrammerFacade(dp, "256", "253", "254", "255", "100");
         ProgListener l = new ProgListener() {
+            @Override
             public void programmingOpReply(int value, int status) {
                 log.debug("callback value=" + value + " status=" + status);
                 replied = true;
@@ -81,6 +83,7 @@ public class AddressedHighCvProgrammerFacadeTest extends TestCase {
 
         Programmer p = new AddressedHighCvProgrammerFacade(dp, "256", "253", "254", "255", "100");
         ProgListener l = new ProgListener() {
+            @Override
             public void programmingOpReply(int value, int status) {
                 log.debug("callback value=" + value + " status=" + status);
                 replied = true;
@@ -109,6 +112,7 @@ public class AddressedHighCvProgrammerFacadeTest extends TestCase {
         dp.setTestWriteLimit(256);
         Programmer p = new AddressedHighCvProgrammerFacade(dp, "256", "253", "254", "255", "100");
         ProgListener l = new ProgListener() {
+            @Override
             public void programmingOpReply(int value, int status) {
                 log.debug("callback value=" + value + " status=" + status);
                 replied = true;

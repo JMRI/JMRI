@@ -76,6 +76,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
         this.tc = t;
     }
 
+    @Override
     public void run() {
 
         // Get file to read from
@@ -245,10 +246,12 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
         return m;
     }
 
+    @Override
     public void message(NceMessage m) {
     } // ignore replies
 
     @SuppressFBWarnings(value = "NN_NAKED_NOTIFY")
+    @Override
     public void reply(NceReply r) {
         if (log.isDebugEnabled()) {
             log.debug("waiting for " + waiting + " responses ");
@@ -280,6 +283,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 
     private static class textFilter extends javax.swing.filechooser.FileFilter {
 
+        @Override
         public boolean accept(File f) {
             if (f.isDirectory()) {
                 return true;
@@ -292,6 +296,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
             }
         }
 
+        @Override
         public String getDescription() {
             return "Text Documents (*.txt)";
         }

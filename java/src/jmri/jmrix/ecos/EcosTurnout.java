@@ -128,6 +128,7 @@ public class EcosTurnout extends AbstractTurnout
     }
 
     // Handle a request to change state by sending a turnout command
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
@@ -191,6 +192,7 @@ public class EcosTurnout extends AbstractTurnout
         newKnownState(state);
     }
 
+    @Override
     public void turnoutPushbuttonLockout(boolean b) {
     }
 
@@ -296,6 +298,7 @@ public class EcosTurnout extends AbstractTurnout
     // to listen for status changes from Ecos system
     int newstate = UNKNOWN;
     int newstateext = UNKNOWN;
+    @Override
     public void reply(EcosReply m) {
 
         String msg = m.toString();
@@ -386,6 +389,7 @@ public class EcosTurnout extends AbstractTurnout
         }
     }
 
+    @Override
     public void message(EcosMessage m) {
         // messages are ignored
     }

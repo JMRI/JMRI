@@ -1,10 +1,6 @@
 package jmri.jmrix.dccpp.dccppovertcp;
 
-import org.junit.Assert;
-import junit.framework.TestCase;
 import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;

@@ -405,7 +405,6 @@ public class PanelEditor extends Editor implements ItemListener {
 
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
-                jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
                 Iterator<JFrameItem> iter = iconAdderFrames.values().iterator();
                 while (iter.hasNext()) {
                     JFrameItem frame = iter.next();

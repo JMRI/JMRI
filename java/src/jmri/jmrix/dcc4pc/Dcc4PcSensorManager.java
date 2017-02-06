@@ -52,15 +52,18 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     Dcc4PcTrafficController tc;
     Dcc4PcSystemConnectionMemo memo;
 
+    @Override
     public Dcc4PcSensor getSensor(String name) {
         return (Dcc4PcSensor) super.getSensor(name);
 
     }
 
+    @Override
     public String getSystemPrefix() {
         return memo.getSystemPrefix();
     }
 
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor s = new Dcc4PcSensor(systemName, userName);
         extractBoardID(systemName);
@@ -97,11 +100,13 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
 
     ArrayList<Integer> boards = new ArrayList<Integer>();
 
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
     //we want the system name to be in the format of board:input
+    @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         String iName;
         if (curAddress.contains(":")) {
@@ -137,6 +142,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     int board;
     int channel;
 
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) {
 
         String tmpSName = "";
@@ -198,6 +204,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
 
             if (pollThread == null) {
                 pollThread = new Thread(new Runnable() {
+                    @Override
                     public void run() {
                         pollManager();
                     }
@@ -211,6 +218,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
 
     protected void startBuildOfReaders() {
         Runnable r = new Runnable() {
+            @Override
             public void run() {
                 buildActiveRCReaders(MINRC);
             }
@@ -248,6 +256,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
 
     ArrayList<Dcc4PcMessage> messageList = new ArrayList<Dcc4PcMessage>();
 
+    @Override
     public void reply(Dcc4PcReply r) {
         if (log.isDebugEnabled()) {
             log.debug("Reply details sm: " + r.toHexString());
@@ -279,6 +288,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                         this.boardAddress = boardAddress;
                     }
 
+                    @Override
                     public void run() {
                         ActiveBoard curBoard = activeBoards.get(boardAddress);
                         curBoard.processInputPacket(reply);
@@ -376,6 +386,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                             this.boardAddress = boardAddress;
                         }
 
+                        @Override
                         public void run() {
                             createSensorsFromReply(boardAddress, reply);
                         }
@@ -624,6 +635,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         log.debug("     created {} sensors", x);
     }
 
+    @Override
     public void handleTimeout(Dcc4PcMessage m) {
         if (log.isDebugEnabled()) {
             log.debug("timeout recieved to our last message " + m.toString());
@@ -647,6 +659,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
 
     boolean processing = false;
 
+    @Override
     public void processingData() {
         synchronized (this) {
             processing = true;
@@ -656,6 +669,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
 
     boolean waitingForMoreData = false;
 
+    @Override
     public void message(Dcc4PcMessage m) {
 
     }
@@ -1194,6 +1208,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         return activeBoards.get(board).getDescription();
     }
 
+    @Override
     public void dispose() {
         stopPolling = true;		// tell polling thread to go away
         super.dispose();

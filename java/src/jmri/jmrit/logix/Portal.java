@@ -376,12 +376,14 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         }
     }
 
+    @Override
     public void setState(int s) throws JmriException {
         int old = _state;
         _state = s;
         firePropertyChange("Direction", old, _state);
     }
 
+    @Override
     public int getState() {
         return _state;
     }
@@ -624,6 +626,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         return ("Portal \"" + getUserName() + "\" from block \"" + getFromBlockName() + "\" to block \"" + getToBlockName() + "\"");
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNamePortal");
     }

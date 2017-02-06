@@ -63,11 +63,13 @@ public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener
         return mNumber;
     }
 
+    @Override
     public String getSystemName() {
         return "LH" + getNumber(); // NOI18N
     }
 
     // Handle a request to change state by sending a LocoNet command
+    @Override
     protected void updateOutput() {
         // send SWREQ for close
         LocoNetMessage l = new LocoNetMessage(4);
@@ -135,6 +137,7 @@ public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener
     //						Object oldValue,
     //						Object newValue)
     // _once_ if anything has changed state (or set the commanded state directly)
+    @Override
     public void message(LocoNetMessage l) {
         int oldAppearance = mAppearance;
         // parse message type
@@ -225,6 +228,7 @@ public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener
         }
     }
 
+    @Override
     public void dispose() {
         tc.removeLocoNetListener(~0, this);
     }

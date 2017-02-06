@@ -271,6 +271,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
     /**
      * set up all of the other objects to operate with a XnTcp interface
      */
+    @Override
     public void configure() {
         // connect to a packetizing traffic controller
         XNetTrafficController packets = new XnTcpXNetPacketizer(new LenzCommandStation());
@@ -333,6 +334,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
             count = -1; // First byte should contain packet's length
         }
 
+        @Override
         public void write(int b) throws java.io.IOException {
             // Make sure that we don't interleave bytes, if called
             // at the same time by different threads
@@ -356,6 +358,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
             }
         }
 
+        @Override
         public void write(byte[] b, int off, int len) throws java.io.IOException {
             // Make sure that we don't mix bytes of different packets, 
             // if called at the same time by different threads

@@ -5,6 +5,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import jmri.jmrix.cmri.serial.serialdriver.ConnectionConfig;
+import jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter;
+import jmri.jmrix.cmri.serial.SerialTrafficControlScaffold;
+import jmri.jmrix.cmri.serial.SerialTrafficController;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * ConnectionConfigXmlTest.java
@@ -20,14 +25,42 @@ public class ConnectionConfigXmlTest {
       Assert.assertNotNull("ConnectionConfigXml constructor",new ConnectionConfigXml());
     }
 
+    @Test
+    @Ignore("causes errors")
+    public void testStore(){
+      // tests that store produces an XML element from a new ConnectionConfig object.
+      ConnectionConfigXml c = new ConnectionConfigXml();
+      SerialDriverAdapter p = new SerialDriverAdapter(){
+              /**
+               * set up all of the other objects to operate connected to this port
+               */
+              @Override
+              public void configure() {
+                // connect to the traffic controller
+                SerialTrafficController tc = new SerialTrafficControlScaffold();
+                tc.connectPort(this);
+                ((CMRISystemConnectionMemo)getSystemConnectionMemo()).setTrafficController(tc);
+                ((CMRISystemConnectionMemo)getSystemConnectionMemo()).configureManagers();
+              }
+      };
+      ConnectionConfig cc = new ConnectionConfig(p);
+      p.configure();
+      c.getInstance(cc);
+      Assert.assertNotNull("ConnectionConfigXml store()",c.store(cc));
+    }
+
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @After
     public void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

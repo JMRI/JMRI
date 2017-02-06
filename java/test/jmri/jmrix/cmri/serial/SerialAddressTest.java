@@ -38,11 +38,13 @@ public class SerialAddressTest extends TestCase {
         
         // create and register the manager objects
         jmri.TurnoutManager l = new SerialTurnoutManager(memo) {
+            @Override
             public void notifyTurnoutCreationError(String conflict, int bitNum) {}
         };
         jmri.InstanceManager.setTurnoutManager(l);
 
         jmri.LightManager lgt = new SerialLightManager(memo) {
+            @Override
             public void notifyLightCreationError(String conflict, int bitNum) {}
         };
         jmri.InstanceManager.setLightManager(lgt);

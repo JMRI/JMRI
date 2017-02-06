@@ -42,6 +42,7 @@ public class PositionablePolygon extends PositionableShape {
         return finishClone(pos);
     }
 
+    @Override
     protected Positionable finishClone(PositionableShape pos) {
         GeneralPath path = new GeneralPath(GeneralPath.WIND_EVEN_ODD);
         path.append(getPathIterator(null), false);
@@ -77,6 +78,7 @@ public class PositionablePolygon extends PositionableShape {
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = Bundle.getMessage("editShape", Bundle.getMessage("Polygon"));
         popup.add(new javax.swing.AbstractAction(txt) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (_editFrame == null) {
                     _editFrame = new DrawPolygon("editShape", "Polygon", null);

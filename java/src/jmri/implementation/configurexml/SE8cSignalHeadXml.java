@@ -26,6 +26,7 @@ public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedB
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         SE8cSignalHead p = (SE8cSignalHead) o;
 
@@ -118,6 +119,7 @@ public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedB
         }
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

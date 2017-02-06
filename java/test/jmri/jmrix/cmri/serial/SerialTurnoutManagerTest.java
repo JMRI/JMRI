@@ -30,6 +30,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         memo.setTrafficController(stcs);
         // create and register the turnout manager object
         l = new SerialTurnoutManager(memo) {
+            @Override
             public void notifyTurnoutCreationError(String conflict, int bitNum) {
             }
         };

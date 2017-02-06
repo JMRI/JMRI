@@ -34,6 +34,7 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         super();
     }
 
+    @Override
     public void initContext(Object context) throws Exception {
         if (context instanceof NceSystemConnectionMemo) {
             try {
@@ -44,10 +45,12 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         }
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.nce.packetgen.NcePacketGenFrame";
     }
 
+    @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
         if (memo != null) {
@@ -60,6 +63,7 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         return x.toString();
     }
 
+    @Override
     public void initComponents(NceSystemConnectionMemo m) throws Exception {
         this.memo = m;
         this.tc = m.getNceTrafficController();
@@ -95,6 +99,7 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         add(replyLenTextField);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -134,9 +139,11 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         }
     }
 
+    @Override
     public void message(NceMessage m) {
     }  // ignore replies
 
+    @Override
     public void reply(NceReply r) {
     } // ignore replies
 

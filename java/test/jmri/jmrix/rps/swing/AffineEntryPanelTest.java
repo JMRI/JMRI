@@ -31,6 +31,7 @@ public class AffineEntryPanelTest {
         f.setTitle("Test RPS Listener");
         f.setVisible(true);
         java.beans.PropertyChangeListener l = new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("value")) {
                     System.out.println("See " + e.getPropertyName() + " as " + e.getNewValue());

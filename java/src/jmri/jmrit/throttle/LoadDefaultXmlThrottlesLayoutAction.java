@@ -54,6 +54,7 @@ public class LoadDefaultXmlThrottlesLayoutAction extends JmriAbstractAction {
      *
      * @param e The event causing the action.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         // load throttle preference 
         LoadXmlThrottlesLayoutAction lxta = new LoadXmlThrottlesLayoutAction();

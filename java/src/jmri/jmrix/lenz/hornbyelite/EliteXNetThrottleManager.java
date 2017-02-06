@@ -26,6 +26,7 @@ public class EliteXNetThrottleManager extends jmri.jmrix.lenz.XNetThrottleManage
      * throttle listeners know about it.
      *
      */
+    @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         EliteXNetThrottle throttle;
         if (log.isDebugEnabled()) {

@@ -35,13 +35,16 @@ public abstract class MrcTrafficController implements MrcInterface {
     }
 
     // Abstract methods for the MrcInterface
+    @Override
     abstract public boolean status();
 
+    @Override
     abstract public void sendMrcMessage(MrcMessage m);
 
     // The methods to implement adding and removing listeners
     protected Vector<MrcTrafficListenerFilter> trafficListeners = new Vector<MrcTrafficListenerFilter>();
 
+    @Override
     public synchronized void addTrafficListener(int mask, MrcTrafficListener l) {
         if (l == null) {
             throw new java.lang.NullPointerException();
@@ -54,6 +57,7 @@ public abstract class MrcTrafficController implements MrcInterface {
         }
     }
 
+    @Override
     public synchronized void removeTrafficListener(int mask, MrcTrafficListener l) {
         if (l == null) {
             throw new java.lang.NullPointerException();
@@ -65,6 +69,7 @@ public abstract class MrcTrafficController implements MrcInterface {
         }
     }
 
+    @Override
     public synchronized void changeTrafficListener(int mask, MrcTrafficListener l) {
         if (l == null) {
             throw new java.lang.NullPointerException();

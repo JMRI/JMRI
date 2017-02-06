@@ -1,5 +1,7 @@
 package apps.tests;
 
+import jmri.util.JUnitUtil;
+
 public class Log4JFixture extends java.lang.Object {
 
     public Log4JFixture() {
@@ -15,6 +17,8 @@ public class Log4JFixture extends java.lang.Object {
         } catch (Throwable e) {
             System.err.println("Could not start JUnitAppender, but test continues:\n" + e);
         }
+        // silence the Jemmy GUI unit testing framework
+        JUnitUtil.silenceGUITestOutput();
     }
 
     static public void tearDown() {

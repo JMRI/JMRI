@@ -42,6 +42,7 @@ public class SimpleProgAction extends JmriAbstractAction {
         this(Bundle.getMessage("MenuItemSingleCVProgrammer"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         // create a SimpleProgFrame
@@ -51,6 +52,7 @@ public class SimpleProgAction extends JmriAbstractAction {
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

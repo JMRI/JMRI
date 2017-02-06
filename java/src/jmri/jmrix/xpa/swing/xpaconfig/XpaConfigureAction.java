@@ -19,6 +19,7 @@ public class XpaConfigureAction extends AbstractAction {
         memo = m;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         XpaConfigureFrame f = new XpaConfigureFrame(memo);
         try {

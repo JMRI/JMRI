@@ -30,35 +30,42 @@ public class TrafficControllerScaffold extends TrafficController {
     }
 
     // non-functional dummy
+    @Override
     public AbstractMRMessage encodeForHardware(CanMessage m) {
         return null;
     }
 
     // non-functional dummy
+    @Override
     public CanReply decodeFromHardware(AbstractMRReply r) {
         return null;
     }
 
     // non-functional dummy
+    @Override
     public AbstractMRMessage newMessage() {
         return null;
     }
 
     // non-functional dummy
+    @Override
     public AbstractMRReply newReply() {
         return null;
     }
 
     // non-functional dummy
+    @Override
     public boolean endOfMessage(AbstractMRReply r) {
         return false;
     }
 
     // non-functional dummy
+    @Override
     public void forwardMessage(AbstractMRListener l, AbstractMRMessage r) {
     }
 
     // non-functional dummy
+    @Override
     public void forwardReply(AbstractMRListener l, AbstractMRReply r) {
     }
 
@@ -70,6 +77,7 @@ public class TrafficControllerScaffold extends TrafficController {
      */
     public Vector<CanMessage> outbound = new Vector<CanMessage>();  // public OK here, so long as this is a test class
 
+    @Override
     public void sendCanMessage(CanMessage m, CanListener l) {
         if (log.isDebugEnabled()) {
             log.debug("sendCanMessage [" + m + "]");

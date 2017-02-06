@@ -36,6 +36,7 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
         setManufacturer(jmri.jmrix.wangrow.WangrowConnectionTypeList.WANGROW);
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         // open the port, check ability to set moderators
         try {
@@ -97,6 +98,7 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
      * set up all of the other objects to operate with an NCE command station
      * connected to this port
      */
+    @Override
     public void configure() {
         NceTrafficController tc = new NceTrafficController();
         this.getSystemConnectionMemo().setNceTrafficController(tc);
@@ -111,6 +113,7 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
     }
 
     // base class methods for the NcePortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -119,6 +122,7 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -131,6 +135,7 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -138,6 +143,7 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
     /**
      * Get an array of valid baud rates. This is currently only 9,600 bps
      */
+    @Override
     public String[] validBaudRates() {
         return new String[]{"9,600 bps"};
     }

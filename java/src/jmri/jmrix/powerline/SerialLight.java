@@ -90,6 +90,7 @@ abstract public class SerialLight extends AbstractVariableLight {
     /**
      * Send a On/Off Command to the hardware
      */
+    @Override
     protected void sendOnOffCommand(int newState) {
         if (log.isDebugEnabled()) {
             log.debug("sendOnOff(" + newState + ") Current: " + mState);

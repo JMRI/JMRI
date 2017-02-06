@@ -216,6 +216,7 @@ public class SprogType {
      *
      * @return String representation of a SPROG type
      */
+    @Override
     public String toString() {
         return this.toString(sprogType);
     }

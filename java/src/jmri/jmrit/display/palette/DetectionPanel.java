@@ -46,11 +46,13 @@ public class DetectionPanel extends JPanel {
         super();
         _parent = parent;
         _occDetectorName.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 checkDetection();
             }
         });
         _occDetectorName.addFocusListener(new FocusAdapter() {
+            @Override
             public void focusLost(FocusEvent e) {
                 checkDetection();
             }
@@ -61,6 +63,7 @@ public class DetectionPanel extends JPanel {
         panel.add(makeSensorPanel(_occDetectorName, "DetectionSensor", "ToolTipOccupancySensor"));
         _openPicklistButton = new JButton(Bundle.getMessage("OpenPicklist"));
         _openPicklistButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (_pickFrame == null) {
                     openPickList();
@@ -132,6 +135,7 @@ public class DetectionPanel extends JPanel {
 
         _pickFrame.setContentPane(content);
         _pickFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 closePickList();
             }

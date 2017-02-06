@@ -163,6 +163,7 @@ public class JmriSRCPServerPreferencesPanel extends JPanel implements Preference
      *
      * @return true if the preferences are valid, false otherwise
      */
+    @Override
     public boolean isPreferencesValid() {
         return false;
     }

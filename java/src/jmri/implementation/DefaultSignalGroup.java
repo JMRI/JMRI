@@ -15,9 +15,10 @@ import org.slf4j.LoggerFactory;
 /**
  * DefaultSignalGroup.java
  *
- * A Conditional type to provide Signal Groups (n signalHeads w/Conditionals for a main Mast).
+ * A Conditional type to provide Signal Groups (n Signal Heads w/Conditionals for a main Mast).
  * <P>
- * @author	Pete Cressman Copyright (C) 2009
+ * @see jmri.SignalGroup SignalGroup
+ * @author Pete Cressman Copyright (C) 2009
  * @author Egbert Broerse 2017
  */
 public class DefaultSignalGroup extends AbstractNamedBean implements jmri.SignalGroup {
@@ -30,6 +31,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         super(systemName, null);
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameSignalGroup");
     }
@@ -42,16 +44,18 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
 
     private boolean enabled = true;
 
+    @Override
     public void setEnabled(boolean boo) {
         enabled = boo;
     }
 
+    @Override
     public boolean getEnabled() {
         return enabled;
     }
 
+    @Override
     public void setSignalMast(String pName) {
-
         SignalMast mMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(pName);
         if (mMast == null) {
             mMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName(pName);
@@ -63,12 +67,14 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         setSignalMast(mMast, pName);
     }
 
-    public void setSignalMast(SignalMast mMast, String pName) {
+    @Override
+    public void setSignalMast(SignalMast signalMast, String mastName) {
         if (_signalMast != null) {
             getSignalMast().removePropertyChangeListener(mSignalMastListener);
         }
-        _signalMast = new NamedBeanHandle<SignalMast>(pName, mMast);
+        _signalMast = new NamedBeanHandle<SignalMast>(mastName, signalMast);
         getSignalMast().addPropertyChangeListener(mSignalMastListener = new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("Aspect")) {
                     String now = ((String) e.getNewValue());
@@ -83,14 +89,17 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
 
     }
 
+    @Override
     public SignalMast getSignalMast() {
         return _signalMast.getBean();
     }
 
+    @Override
     public String getSignalMastName() {
         return _signalMast.getName();
     }
 
+    @Override
     public void addSignalMastAspect(String aspect) {
         if (isSignalMastAspectIncluded(aspect)) {
             return;
@@ -98,6 +107,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         _signalMastAspects.add(aspect);
     }
 
+    @Override
     public boolean isSignalMastAspectIncluded(String aspect) {
         for (int i = 0; i < _signalMastAspects.size(); i++) {
             if (_signalMastAspects.get(i).equals(aspect)) {
@@ -108,14 +118,17 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         return false;
     }
 
+    @Override
     public void deleteSignalMastAspect(String aspect) {
         _signalMastAspects.remove(aspect);
     }
 
+    @Override
     public int getNumSignalMastAspects() {
         return _signalMastAspects.size();
     }
 
+    @Override
     public String getSignalMastAspectByIndex(int x) {
         try {
             return _signalMastAspects.get(x);
@@ -124,21 +137,23 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
+    @Override
     public void clearSignalMastAspect() {
         _signalMastAspects = new ArrayList<String>();
     }
 
-    /*
-     Add a new signalhead to the group
+    /**
+     * Add a new Signal Head to the group by Bean
      */
-    public void addSignalHead(NamedBeanHandle<SignalHead> sh) {
-        SignalHeadItem signalitem = new SignalHeadItem(sh);
-        _signalHeadItem.add(signalitem);
+    @Override
+    public void addSignalHead(NamedBeanHandle<SignalHead> headBean) {
+        SignalHeadItem shi = new SignalHeadItem(headBean);
+        _signalHeadItem.add(shi);
     }
-    /*
-     Add a new signalhead to the group
-     */
 
+    /**
+     * Add a new Signal Head to the group by name
+     */
     public void addSignalHead(String pName) {
         SignalHead mHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(pName);
         if (mHead == null) {
@@ -151,109 +166,118 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
-    public void addSignalHead(SignalHead mHead) {
-        addSignalHead(new NamedBeanHandle<SignalHead>(mHead.getDisplayName(), mHead));
+    @Override
+    public void addSignalHead(SignalHead signalHead) {
+        addSignalHead(new NamedBeanHandle<SignalHead>(signalHead.getDisplayName(), signalHead));
     }
 
     protected PropertyChangeListener mSignalMastListener = null;
 
-    public void setHeadAlignTurnout(SignalHead mHead, Turnout mTurn, int state) {
-        SignalHeadItem sh = getSignalHeadItem(mHead);
-        sh.addTurnout(mTurn, state);
+    @Override
+    public void setHeadAlignTurnout(SignalHead signalHead, Turnout turnout, int state) {
+        SignalHeadItem shi = getHeadItem(signalHead);
+        shi.addTurnout(turnout, state);
     }
 
-    public void setHeadAlignSensor(SignalHead mHead, Sensor mSen, int state) {
-        SignalHeadItem sh = getSignalHeadItem(mHead);
-        sh.addSensor(mSen, state);
+    @Override
+    public void setHeadAlignSensor(SignalHead signalHead, Sensor sensor, int state) {
+        SignalHeadItem shi = getHeadItem(signalHead);
+        shi.addSensor(sensor, state);
     }
 
-    /*
-     Returns the 'n' signalheaditem
-     */
-    private SignalHeadItem getSignalHeadItemByIndex(int n) {
+    private SignalHeadItem getHeadItemByIndex(int x) {
         try {
-            return _signalHeadItem.get(n);
+            return _signalHeadItem.get(x);
         } catch (IndexOutOfBoundsException ioob) {
             return null;
         }
     }
 
-    public String getHeadItemNameByIndex(int n) {
+    @Override
+    public String getHeadItemNameByIndex(int x) {
         try {
-            return getSignalHeadItemByIndex(n).getName();
+            return getHeadItemByIndex(x).getName();
         } catch (IndexOutOfBoundsException ioob) {
             return null;
         }
     }
 
-    public SignalHead getHeadItemBeanByIndex(int n) {
+    @Override
+    public SignalHead getHeadItemBeanByIndex(int x) {
         try {
-            return getSignalHeadItemByIndex(n).getSignalHead();
+            return getHeadItemByIndex(x).getSignalHead();
         } catch (IndexOutOfBoundsException ioob) {
             return null;
         }
     }
 
-    /*
-     Returns the number of signal heads in this group
-     */
+    @Override
     public int getNumHeadItems() {
         return _signalHeadItem.size();
     }
 
-    public int getHeadOffState(SignalHead bean) {
+    @Override
+    public int getHeadOffState(SignalHead headBean) {
         try {
-            return getSignalHeadItem(bean).getOffAppearance();
+            return getHeadItem(headBean).getOffAppearance();
         } catch (NullPointerException e) {
             return -1;
         }
     }
 
-    public int getHeadOnState(SignalHead bean) {
+    @Override
+    public int getHeadOnState(SignalHead headBean) {
         try {
-            return getSignalHeadItem(bean).getOnAppearance();
+            return getHeadItem(headBean).getOnAppearance();
         } catch (NullPointerException e) {
             return -1;
         }
     }
 
-    public int getHeadOnStateByIndex(int n) {
+    @Override
+    public int getHeadOnStateByIndex(int x) {
         try {
-            return getSignalHeadItemByIndex(n).getOnAppearance();
+            return getHeadItemByIndex(x).getOnAppearance();
         } catch (IndexOutOfBoundsException ioob) {
             return -1;
         }
     }
 
-    public int getHeadOffStateByIndex(int n) {
+    @Override
+    public int getHeadOffStateByIndex(int x) {
         try {
-            return getSignalHeadItemByIndex(n).getOffAppearance();
+            return getHeadItemByIndex(x).getOffAppearance();
         } catch (IndexOutOfBoundsException ioob) {
             return -1;
         }
     }
 
-    public void deleteSignalHead(SignalHead pSignal) {
-        _signalHeadItem.remove(getSignalHeadItem(pSignal));
+    @Override
+    public void deleteSignalHead(SignalHead sh) {
+        _signalHeadItem.remove(getHeadItem(sh));
     }
 
-    public void deleteSignalHead(NamedBeanHandle<SignalHead> sh) {
-        _signalHeadItem.remove(getSignalHeadItem(sh.getName()));
+    @Override
+    public void deleteSignalHead(NamedBeanHandle<SignalHead> headBean) {
+        _signalHeadItem.remove(getHeadItem(headBean.getName()));
     }
 
+    @Override
     public void setHeadOnState(SignalHead head, int state) {
-        getSignalHeadItem(head).setOnAppearance(state);
+        getHeadItem(head).setOnAppearance(state);
         firePropertyChange("UpdateCondition", null, null);
     }
 
+    @Override
     public void setHeadOffState(SignalHead head, int state) {
-        getSignalHeadItem(head).setOffAppearance(state);
+        getHeadItem(head).setOffAppearance(state);
         firePropertyChange("UpdateCondition", null, null);
     }
 
-    public boolean isHeadIncluded(SignalHead bean) {
+    @Override
+    public boolean isHeadIncluded(SignalHead signalHead) {
         for (int i = 0; i < _signalHeadItem.size(); i++) {
-            if (_signalHeadItem.get(i).getSignalHead() == bean) {
+            if (_signalHeadItem.get(i).getSignalHead() == signalHead) {
                 // Found head
                 return true;
             }
@@ -261,10 +285,10 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         return false;
     }
 
-    /*
-     Returns a signal head item
+    /**
+     * Get a Signal Head item by its name from the Signal Group
      */
-    private SignalHeadItem getSignalHeadItem(String name) {
+    private SignalHeadItem getHeadItem(String name) {
         for (int i = 0; i < _signalHeadItem.size(); i++) {
             if (_signalHeadItem.get(i).getName().equals(name)) {
                 return _signalHeadItem.get(i);
@@ -273,114 +297,133 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         return null;
     }
 
-    private SignalHeadItem getSignalHeadItem(NamedBean bean) {
+    /**
+     * Get a Signal Head item by its Bean from the Signal Group
+     */
+    private SignalHeadItem getHeadItem(NamedBean headBean) {
         for (int i = 0; i < _signalHeadItem.size(); i++) {
-            if (_signalHeadItem.get(i).getSignalHead().equals(bean)) {
+            if (_signalHeadItem.get(i).getSignalHead().equals(headBean)) {
                 return _signalHeadItem.get(i);
             }
         }
         return null;
     }
 
-    public boolean isTurnoutIncluded(SignalHead pSignal, Turnout pTurnout) {
-        return getSignalHeadItem(pSignal).isTurnoutIncluded(pTurnout);
+    @Override
+    public boolean isTurnoutIncluded(SignalHead signalHead, Turnout turnout) {
+        return getHeadItem(signalHead).isTurnoutIncluded(turnout);
     }
 
-    public int getTurnoutState(SignalHead pSignal, Turnout pTurnout) {
-        SignalHeadItem shi = getSignalHeadItem(pSignal);
+    @Override
+    public int getTurnoutState(SignalHead signalHead, Turnout turnout) {
+        SignalHeadItem shi = getHeadItem(signalHead);
         if (shi != null) {
-            return shi.getTurnoutState(pTurnout);
+            return shi.getTurnoutState(turnout);
         }
         return -1;
     }
 
-    public int getTurnoutStateByIndex(int x, Turnout pTurnout) {
+    @Override
+    public int getTurnoutStateByIndex(int x, Turnout turnout) {
         try {
-            return getSignalHeadItemByIndex(x).getTurnoutState(pTurnout);
+            return getHeadItemByIndex(x).getTurnoutState(turnout);
         } catch (IndexOutOfBoundsException ioob) {
             return -1;
         }
     }
 
+    @Override
     public int getTurnoutStateByIndex(int x, int pTurnout) {
         try {
-            return getSignalHeadItemByIndex(x).getTurnoutState(pTurnout);
+            return getHeadItemByIndex(x).getTurnoutState(pTurnout);
         } catch (IndexOutOfBoundsException ioob) {
             return -1;
         }
     }
 
+    @Override
     public String getTurnoutNameByIndex(int x, int pTurnout) {
         try {
-            return getSignalHeadItemByIndex(x).getTurnoutName(pTurnout);
+            return getHeadItemByIndex(x).getTurnoutName(pTurnout);
         } catch (IndexOutOfBoundsException ioob) {
             return null;
         }
     }
 
+    @Override
     public Turnout getTurnoutByIndex(int x, int pTurnout) {
         try {
-            return getSignalHeadItemByIndex(x).getTurnout(pTurnout);
+            return getHeadItemByIndex(x).getTurnout(pTurnout);
         } catch (IndexOutOfBoundsException ioob) {
             return null;
         }
     }
 
+    @Override
     public int getSensorStateByIndex(int x, int pSensor) {
         try {
-            return getSignalHeadItemByIndex(x).getSensorState(pSensor);
+            return getHeadItemByIndex(x).getSensorState(pSensor);
         } catch (IndexOutOfBoundsException ioob) {
             return -1;
         }
     }
 
+    @Override
     public String getSensorNameByIndex(int x, int pSensor) {
         try {
-            return getSignalHeadItemByIndex(x).getSensorName(pSensor);
+            return getHeadItemByIndex(x).getSensorName(pSensor);
         } catch (IndexOutOfBoundsException ioob) {
             return null;
         }
     }
 
+    @Override
     public Sensor getSensorByIndex(int x, int pSensor) {
         try {
-            return getSignalHeadItemByIndex(x).getSensor(pSensor);
+            return getHeadItemByIndex(x).getSensor(pSensor);
         } catch (IndexOutOfBoundsException ioob) {
             return null;
         }
     }
 
-    public boolean isSensorIncluded(SignalHead pSignal, Sensor pSensor) {
-        return getSignalHeadItem(pSignal).isSensorIncluded(pSensor);
+    @Override
+    public boolean isSensorIncluded(SignalHead signalHead, Sensor sensor) {
+        return getHeadItem(signalHead).isSensorIncluded(sensor);
     }
 
-    public int getSensorState(SignalHead pSignal, Sensor pSensor) {
-        SignalHeadItem shi = getSignalHeadItem(pSignal);
+    @Override
+    public int getSensorState(SignalHead signalHead, Sensor sensor) {
+        SignalHeadItem shi = getHeadItem(signalHead);
         if (shi != null) {
-            return shi.getSensorState(pSensor);
+            return shi.getSensorState(sensor);
         }
         return -1;
     }
 
-    public boolean getSensorTurnoutOper(SignalHead pSignal) {
-        return getSignalHeadItem(pSignal).getSensorTurnoutOper();
+    @Override
+    public boolean getSensorTurnoutOper(SignalHead signalHead) {
+        return getHeadItem(signalHead).getSensorTurnoutOper();
     }
 
+    @Override
     public boolean getSensorTurnoutOperByIndex(int x) {
-        return getSignalHeadItemByIndex(x).getSensorTurnoutOper();
+        return getHeadItemByIndex(x).getSensorTurnoutOper();
     }
 
-    public void setSensorTurnoutOper(SignalHead pSignal, boolean boo) {
-        getSignalHeadItem(pSignal).setSensorTurnoutOper(boo);
+    @Override
+    public void setSensorTurnoutOper(SignalHead signalHead, boolean boo) {
+        getHeadItem(signalHead).setSensorTurnoutOper(boo);
         firePropertyChange("UpdateCondition", null, null);
     }
 
-    public void clearHeadTurnout(SignalHead pSignal) {
-        getSignalHeadItem(pSignal).clearSignalTurnouts();
+    @Override
+    public void clearHeadTurnout(SignalHead signalHead) {
+        getHeadItem(signalHead).clearSignalTurnouts();
     }
 
-    public void clearHeadSensor(SignalHead pSignal) {
-        getSignalHeadItem(pSignal).clearSignalSensors();
+    @Override
+    public void clearHeadSensor(SignalHead signalHead) {
+        getHeadItem(signalHead).clearSignalSensors();
     }
 
     private void resetHeads() {
@@ -406,18 +449,20 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
+    @Override
     public int getNumHeadSensorsByIndex(int x) {
         try {
 
-            return getSignalHeadItemByIndex(x).getNumSensors();
+            return getHeadItemByIndex(x).getNumSensors();
         } catch (IndexOutOfBoundsException ioob) {
             return -1;
         }
     }
 
+    @Override
     public int getNumHeadTurnoutsByIndex(int x) {
         try {
-            return getSignalHeadItemByIndex(x).getNumTurnouts();
+            return getHeadItemByIndex(x).getNumTurnouts();
         } catch (IndexOutOfBoundsException ioob) {
             return -1;
         }
@@ -472,11 +517,17 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
             return turnoutSensorOper;
         }
 
+        /**
+         * Set whether the sensors and turnouts should be treated as separate
+         * calculations (OR) or as one (AND), when determining if the Signal Head in this item
+         * should be On or Off.
+         * @param boo Provide true for AND, false for OR
+         */
         public void setSensorTurnoutOper(boolean boo) {
             turnoutSensorOper = boo;
         }
 
-        //Don't yet have the AND or OR set yet.
+        // Don't yet have the AND or OR set.
         public boolean checkActive() {
             boolean state = false;
             for (int x = 0; x < _signalTurnoutList.size(); x++) {
@@ -488,7 +539,6 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
                     break;
                 }
             }
-
             for (int x = 0; x < _signalSensorList.size(); x++) {
                 if (_signalSensorList.get(x).getSensor().getKnownState() == _signalSensorList.get(x).getState()) {
                     state = true;
@@ -529,7 +579,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
                     return false;
                 }
                 if ((state != Turnout.THROWN) && (state != Turnout.CLOSED)) {
-                    log.warn("Illegal Turnout state " + state + ": " + getName());
+                    log.warn("Illegal Turnout state " + state + " for : " + getName());
                     return false;
                 }
                 _state = state;
@@ -575,9 +625,9 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
             return _signalTurnoutList.get(x).getState();
         }
 
-        boolean isTurnoutIncluded(Turnout pTurnout) {
+        boolean isTurnoutIncluded(Turnout turnout) {
             for (int i = 0; i < _signalTurnoutList.size(); i++) {
-                if (_signalTurnoutList.get(i).getTurnout() == pTurnout) {
+                if (_signalTurnoutList.get(i).getTurnout() == turnout) {
                     return true;
                 }
             }
@@ -666,9 +716,9 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
             return _signalSensorList.get(x).getState();
         }
 
-        boolean isSensorIncluded(Sensor pSensor) {
+        boolean isSensorIncluded(Sensor sensor) {
             for (int i = 0; i < _signalSensorList.size(); i++) {
-                if (_signalSensorList.get(i).getSensor() == pSensor) {
+                if (_signalSensorList.get(i).getSensor() == sensor) {
                     // Found Sensor
                     return true;
                 }
@@ -677,10 +727,12 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
+    @Override
     public int getState() {
         return 0x00;
     }
 
+    @Override
     public void setState(int state) {
 
     }
@@ -689,24 +741,29 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
      * Number of current listeners. May return -1 if the information is not
      * available for some reason.
      */
+    @Override
     public synchronized int getNumPropertyChangeListeners() {
         return pcs.getPropertyChangeListeners().length;
     }
 
+    @Override
     public synchronized java.beans.PropertyChangeListener[] getPropertyChangeListeners() {
         return pcs.getPropertyChangeListeners();
     }
 
+    @Override
     protected void firePropertyChange(String p, Object old, Object n) {
         if (pcs != null) {
             pcs.firePropertyChange(p, old, n);
         }
     }
 
+    @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }

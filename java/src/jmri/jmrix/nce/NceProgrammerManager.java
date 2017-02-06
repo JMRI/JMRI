@@ -28,6 +28,7 @@ public class NceProgrammerManager extends DefaultProgrammerManager {
      *
      * @return true
      */
+    @Override
     public boolean isAddressedModePossible() {
         return true;
     }
@@ -38,6 +39,7 @@ public class NceProgrammerManager extends DefaultProgrammerManager {
      *
      * @return true if not USB connect to SB3,PowerPro,SB5
      */
+    @Override
     public boolean isGlobalProgrammerAvailable() {
         return checkGlobalProgrammerAvailable(tc);
     }
@@ -60,15 +62,18 @@ public class NceProgrammerManager extends DefaultProgrammerManager {
      * Note: The NCE service mode programmer might exist, but not be able to function.
      * Not a great situation, but there it is.  We therefore check before returning it.
      */
+    @Override
     public Programmer getGlobalProgrammer() {
         if ( ! isGlobalProgrammerAvailable() ) return null;
         return super.getGlobalProgrammer();
     }
 
+    @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new NceOpsModeProgrammer(tc, pAddress, pLongAddress);
     }
 
+    @Override
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }

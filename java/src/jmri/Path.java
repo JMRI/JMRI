@@ -1,8 +1,9 @@
 package jmri;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Represents a particular set of NamedBean (usually turnout) settings to put a
@@ -130,7 +131,7 @@ public class Path {
         if (_beans.isEmpty()) {
             return true;
         }
-        // check the status of all BeanSettings 
+        // check the status of all BeanSettings
         for (int i = 0; i < _beans.size(); i++) {
             if (!(_beans.get(i)).check()) {
                 return false;
@@ -302,7 +303,7 @@ public class Path {
     }
 
     @Override
-    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "equals operator should actually check for equality")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "equals operator should actually check for equality")
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -316,8 +317,7 @@ public class Path {
         } else {
             Path p = (Path) obj;
 
-            // next line is the FE_FLOATING_POINT_EQUALITY annotated above
-            if (p._length != this._length) {
+            if (!Float.valueOf(p._length).equals(this._length)) {
                 return false;
             }
 
@@ -347,17 +347,44 @@ public class Path {
                 }
             }
         }
-        return true;
+        return this.hashCode() == obj.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        String separator = ""; // no separator on first item // NOI18N
+        for (BeanSetting beanSetting : this.getSettings()) {
+            result.append(separator).append(MessageFormat.format("{0} with state {1}", beanSetting.getBean().getDisplayName(), toSettingString(beanSetting.getSetting()))); // NOI18N
+            separator = ", "; // NOI18N
+        }
+        return MessageFormat.format("Path: \"{0}\" ({1}): {2}", getBlock().getDisplayName(), decodeDirection(getToBlockDirection()), result.toString()); // NOI18N
+    }
+
+    private String toSettingString(int setting) {
+        switch (setting) {
+            case Turnout.CLOSED:
+                return "CLOSED"; // NOI18N
+            case Turnout.THROWN:
+                return "THROWN"; // NOI18N
+            default:
+                return Integer.toString(setting);
+        }
     }
 
     // Can't include _toBlockDirection, _fromBlockDirection, or block information as they can change
     @Override
     public int hashCode() {
-        int hash = 100;
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this._beans);
+        hash = 89 * hash + Objects.hashCode(this._block);
+        hash = 89 * hash + this._toBlockDirection;
+        hash = 89 * hash + this._fromBlockDirection;
+        hash = 89 * hash + Float.floatToIntBits(this._length);
         return hash;
     }
 
-    private ArrayList<BeanSetting> _beans = new ArrayList<BeanSetting>();
+    private final ArrayList<BeanSetting> _beans = new ArrayList<>();
     private Block _block;
     private int _toBlockDirection;
     private int _fromBlockDirection;

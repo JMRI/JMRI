@@ -60,6 +60,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
     }
 
+    @Override
     public void init() {
         if (!_initialized) {
             Thread.yield();
@@ -191,6 +192,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
 
         _catalogButton = new JButton(Bundle.getMessage("ButtonShowCatalog"));
         _catalogButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (_catalog.isVisible()) {
                     hideCatalog();
@@ -206,6 +208,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
 
         JButton addIconButton = new JButton(Bundle.getMessage("addIcon"));
         addIconButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 addNewIcon();
             }
@@ -217,6 +220,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
 
         deleteIconButton = new JButton(Bundle.getMessage("deleteIcon"));
         deleteIconButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 deleteIcon();
             }
@@ -341,19 +345,24 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         }
     }
 
+    @Override
     public void mouseClicked(MouseEvent event) {
         clickEvent(event);
     }
 
+    @Override
     public void mousePressed(MouseEvent event) {
     }
 
+    @Override
     public void mouseReleased(MouseEvent event) {
     }
 
+    @Override
     public void mouseEntered(MouseEvent event) {
     }
 
+    @Override
     public void mouseExited(MouseEvent event) {
     }
 
@@ -369,9 +378,11 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             //if (log.isDebugEnabled()) log.debug("DropJLabel ctor");            
         }
 
+        @Override
         public boolean isDataFlavorSupported(DataFlavor flavor) {
             return _dataFlavor.equals(flavor);
         }
+        @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {
                 return null;
@@ -400,22 +411,27 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             return null;
         }
 
+        @Override
         public void dragExit(DropTargetEvent dte) {
             //if (log.isDebugEnabled()) log.debug("DropJLabel.dragExit ");
         }
 
+        @Override
         public void dragEnter(DropTargetDragEvent dtde) {
             //if (log.isDebugEnabled()) log.debug("DropJLabel.dragEnter ");
         }
 
+        @Override
         public void dragOver(DropTargetDragEvent dtde) {
             //if (log.isDebugEnabled()) log.debug("DropJLabel.dragOver ");
         }
 
+        @Override
         public void dropActionChanged(DropTargetDragEvent dtde) {
             //if (log.isDebugEnabled()) log.debug("DropJLabel.dropActionChanged ");
         }
 
+        @Override
         public void drop(DropTargetDropEvent e) {
             try {
                 Transferable tr = e.getTransferable();

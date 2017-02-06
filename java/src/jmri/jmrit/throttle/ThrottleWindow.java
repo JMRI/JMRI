@@ -112,6 +112,7 @@ public class ThrottleWindow extends JmriJFrame {
         KeyListenerInstaller.installKeyListenerOnAllComponents(throttlePanelsCyclingKeyListener, getCurrentThrottleFrame());
 
         this.addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 ThrottleWindow me = (ThrottleWindow) e.getSource();
                 ThrottleFrameManager.instance().requestThrottleWindowDestruction(me);
@@ -173,6 +174,7 @@ public class ThrottleWindow extends JmriJFrame {
         jbNew.setVerticalTextPosition(JButton.BOTTOM);
         jbNew.setHorizontalTextPosition(JButton.CENTER);
         jbNew.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 addThrottleFrame();
             }
@@ -186,6 +188,7 @@ public class ThrottleWindow extends JmriJFrame {
         jbClose.setVerticalTextPosition(JButton.BOTTOM);
         jbClose.setHorizontalTextPosition(JButton.CENTER);
         jbClose.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 removeThrottleFrame();
             }
@@ -201,6 +204,7 @@ public class ThrottleWindow extends JmriJFrame {
         jbPreviousRunning.setHorizontalTextPosition(JButton.CENTER);
         jbPreviousRunning.setToolTipText(Bundle.getMessage("ThrottleToolBarPrevRunToolTip"));
         jbPreviousRunning.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 previousRunningThrottleFrame();
             }
@@ -214,6 +218,7 @@ public class ThrottleWindow extends JmriJFrame {
         jbPrevious.setHorizontalTextPosition(JButton.CENTER);
         jbPrevious.setToolTipText(Bundle.getMessage("ThrottleToolBarPrevToolTip"));
         jbPrevious.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 previousThrottleFrame();
             }
@@ -227,6 +232,7 @@ public class ThrottleWindow extends JmriJFrame {
         jbNext.setVerticalTextPosition(JButton.BOTTOM);
         jbNext.setHorizontalTextPosition(JButton.CENTER);
         jbNext.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 nextThrottleFrame();
             }
@@ -241,6 +247,7 @@ public class ThrottleWindow extends JmriJFrame {
         jbNextRunning.setVerticalTextPosition(JButton.BOTTOM);
         jbNextRunning.setHorizontalTextPosition(JButton.CENTER);
         jbNextRunning.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 nextRunningThrottleFrame();
             }
@@ -264,6 +271,7 @@ public class ThrottleWindow extends JmriJFrame {
         jbMode.setVerticalTextPosition(JButton.BOTTOM);
         jbMode.setHorizontalTextPosition(JButton.CENTER);
         jbMode.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 switchMode();
             }
@@ -283,6 +291,7 @@ public class ThrottleWindow extends JmriJFrame {
 
         // Receptacle for Jynstruments
         new FileDrop(throttleToolBar, new Listener() {
+            @Override
             public void filesDropped(File[] files) {
                 for (int i = 0; i < files.length; i++) {
                     ynstrument(files[i].getPath());
@@ -327,6 +336,7 @@ public class ThrottleWindow extends JmriJFrame {
         JMenuItem fileMenuLoad = new JMenuItem(Bundle.getMessage("ThrottleFileMenuLoadThrottle"));
         fileMenuLoad.addActionListener(new AbstractAction() {
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 getCurrentThrottleFrame().loadThrottle(null);
             }
@@ -334,6 +344,7 @@ public class ThrottleWindow extends JmriJFrame {
         fileMenuSave = new JMenuItem(Bundle.getMessage("ThrottleFileMenuSaveThrottle"));
         fileMenuSave.addActionListener(new AbstractAction() {
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 getCurrentThrottleFrame().saveThrottle();
             }
@@ -341,6 +352,7 @@ public class ThrottleWindow extends JmriJFrame {
         JMenuItem fileMenuSaveAs = new JMenuItem(Bundle.getMessage("ThrottleFileMenuSaveAsThrottle"));
         fileMenuSaveAs.addActionListener(new AbstractAction() {
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 getCurrentThrottleFrame().saveThrottleAs();
             }
@@ -365,6 +377,7 @@ public class ThrottleWindow extends JmriJFrame {
         viewAddressPanel.setSelected(true);
         viewAddressPanel.addItemListener(new ItemListener() {
 
+            @Override
             public void itemStateChanged(ItemEvent e) {
                 getCurrentThrottleFrame().getAddressPanel().setVisible(e.getStateChange() == ItemEvent.SELECTED);
             }
@@ -374,6 +387,7 @@ public class ThrottleWindow extends JmriJFrame {
         viewControlPanel.setSelected(true);
         viewControlPanel.addItemListener(new ItemListener() {
 
+            @Override
             public void itemStateChanged(ItemEvent e) {
                 getCurrentThrottleFrame().getControlPanel().setVisible(e.getStateChange() == ItemEvent.SELECTED);
             }
@@ -382,6 +396,7 @@ public class ThrottleWindow extends JmriJFrame {
         viewFunctionPanel.setSelected(true);
         viewFunctionPanel.addItemListener(new ItemListener() {
 
+            @Override
             public void itemStateChanged(ItemEvent e) {
                 getCurrentThrottleFrame().getFunctionPanel().setVisible(e.getStateChange() == ItemEvent.SELECTED);
             }
@@ -390,6 +405,7 @@ public class ThrottleWindow extends JmriJFrame {
         viewAllButtons = new JMenuItem(Bundle.getMessage("ThrottleMenuViewAllFunctionButtons"));
         viewAllButtons.addActionListener(new AbstractAction() {
 
+            @Override
             public void actionPerformed(ActionEvent ev) {
                 getCurrentThrottleFrame().getFunctionPanel().resetFnButtons();
                 getCurrentThrottleFrame().getFunctionPanel().setEnabled();
@@ -399,6 +415,7 @@ public class ThrottleWindow extends JmriJFrame {
         JMenuItem makeAllComponentsInBounds = new JMenuItem(Bundle.getMessage("ThrottleMenuViewMakeAllComponentsInBounds"));
         makeAllComponentsInBounds.addActionListener(new AbstractAction() {
 
+            @Override
             public void actionPerformed(ActionEvent ev) {
                 getCurrentThrottleFrame().makeAllComponentsInBounds();
             }
@@ -407,6 +424,7 @@ public class ThrottleWindow extends JmriJFrame {
         JMenuItem switchViewMode = new JMenuItem(Bundle.getMessage("ThrottleMenuViewSwitchMode"));
         switchViewMode.addActionListener(new AbstractAction() {
 
+            @Override
             public void actionPerformed(ActionEvent ev) {
                 switchMode();
             }
@@ -429,6 +447,7 @@ public class ThrottleWindow extends JmriJFrame {
         editMenu.add(preferencesItem);
         preferencesItem.addActionListener(new ActionListener() {
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 editPreferences();
             }
@@ -437,6 +456,7 @@ public class ThrottleWindow extends JmriJFrame {
         editMenu.add(editMenuExportRoster);
         editMenuExportRoster.addActionListener(new ActionListener() {
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 getCurrentThrottleFrame().saveRosterChanges();
             }
@@ -455,6 +475,7 @@ public class ThrottleWindow extends JmriJFrame {
             powerMenu.add(powerOn);
             powerOn.addActionListener(new ActionListener() {
 
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
                         powerMgr.setPower(PowerManager.ON);
@@ -468,6 +489,7 @@ public class ThrottleWindow extends JmriJFrame {
             powerMenu.add(powerOff);
             powerOff.addActionListener(new ActionListener() {
 
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
                         powerMgr.setPower(PowerManager.OFF);
@@ -505,6 +527,7 @@ public class ThrottleWindow extends JmriJFrame {
      * </ol>
      *
      */
+    @Override
     public void dispose() {
         if ((throttleFrames != null) && (!throttleFrames.isEmpty())) {
             for (Iterator<ThrottleFrame> tfi = throttleFrames.values().iterator(); tfi.hasNext();) {
@@ -769,6 +792,7 @@ public class ThrottleWindow extends JmriJFrame {
          *
          * @param e Description of the Parameter
          */
+        @Override
         public void keyReleased(KeyEvent e) {
             if (e.isAltDown() && e.getKeyCode() == NEXT_THROTTLE_KEY) {
                 log.debug("next");
@@ -780,10 +804,12 @@ public class ThrottleWindow extends JmriJFrame {
         }
     }
 
+    @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }

@@ -48,6 +48,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
         super(title, parent);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         // ensure preferences will be found for read
@@ -78,6 +79,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
 
             inputfile = new FileInputStream(filename);
             zipper = new ZipInputStream(inputfile) {
+                @Override
                 public void close() {
                 } // SaxReader calls close when reading XML stream, ignore
                 // and close directly later

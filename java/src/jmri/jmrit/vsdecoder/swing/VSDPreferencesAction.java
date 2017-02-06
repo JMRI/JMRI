@@ -40,6 +40,7 @@ public class VSDPreferencesAction extends AbstractAction {
         this("VSDecoder preferences");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         JmriJFrame f = new JmriJFrame(Bundle.getMessage("VSDecoderFileMenuPreferences"), false, false); // used here for the Frame Title
         VSDecoderPreferencesPane tpP = new VSDecoderPreferencesPane(VSDecoderManager.instance().getVSDecoderPreferences());

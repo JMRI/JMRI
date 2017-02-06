@@ -1,12 +1,8 @@
 package jmri.jmrix.lenz;
 
-import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * JUnit tests for the XNetSerialPortController class
@@ -43,6 +39,7 @@ public class XNetSerialPortControllerTest extends jmri.jmrix.AbstractSerialPortC
             /**
              * Get an array of valid baud rates; used to display valid options.
              */
+            @Override
             public String[] validBaudRates(){
                String[] retval = {"9600"};
                return retval;

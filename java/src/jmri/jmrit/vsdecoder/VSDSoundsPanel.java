@@ -45,10 +45,12 @@ public class VSDSoundsPanel extends JmriPanel {
     public void init() {
     }
 
+    @Override
     public void initContext(Object context) {
         initComponents();
     }
 
+    @Override
     public void initComponents() {
 
         this.setLayout(new GridLayout(0, 3));

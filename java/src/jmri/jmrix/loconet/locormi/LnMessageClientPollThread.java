@@ -18,6 +18,7 @@ class LnMessageClientPollThread extends Thread {
         this.start();
     }
 
+    @Override
     public void run() {
         try {
             Object[] lnMessages = null;

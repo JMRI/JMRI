@@ -164,11 +164,13 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         add(swingTempPanel);
 
         swingSetButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 setButtonActionPerformed();
             }
         });
         swingReadButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 scanButtonActionPerformed();
             }
@@ -431,6 +433,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
      * StatusDontBlastError, StatusLineUpdate, NumberOfUr92sUpdate,
      *
      */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         // these messages can arrive without a complete
         // GUI, in which case we just ignore them

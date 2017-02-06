@@ -109,6 +109,7 @@ public class LocoNetThrottleTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         // prepare an interface
         lnis = new LocoNetInterfaceScaffold();
@@ -131,6 +132,7 @@ public class LocoNetThrottleTest extends TestCase {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
