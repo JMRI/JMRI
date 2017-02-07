@@ -1281,7 +1281,7 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     public void draw(Graphics2D g2) {
-        if (!getHidden() || layoutEditor.isEditable()) {
+        if (!isHidden() || layoutEditor.isEditable()) {
             Point2D pointA = getCoordsA();
             Point2D pointB = getCoordsB();
             Point2D pointC = getCoordsC();

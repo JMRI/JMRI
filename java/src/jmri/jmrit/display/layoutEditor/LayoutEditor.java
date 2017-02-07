@@ -309,7 +309,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     // note: these only change when setTurnoutCircleSize is called
     // using these avoids having to call getTurnoutCircleSize() and
     // the multiply (x2) and the int -> double conversion overhead
-    private double circleRadius = getTurnoutCircleSize();
+    private double circleRadius = SIZE * getTurnoutCircleSize();
     private double circleDiameter = 2.0 * circleRadius;
 
     // selection variables
@@ -8475,7 +8475,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         turnoutCircleSize = size;
 
         // these are doubles
-        circleRadius = size;
+        circleRadius = SIZE * size;
         circleDiameter = 2.0 * circleRadius;
 
         setOptionMenuTurnoutCircleSize();
@@ -8781,7 +8781,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     protected void drawTurnouts(Graphics2D g2) {
         // loop over all defined turnouts
         for (LayoutTurnout t : turnoutList) {
-            if (!t.getHidden() || isEditable()) {
+            if (!t.isHidden() || isEditable()) {
                 t.draw(g2);
             }
         }
@@ -8790,7 +8790,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private void drawXings(Graphics2D g2) {
         // loop over all defined level crossings
         for (LevelXing x : xingList) {
-            if (!(x.getHidden() && !isEditable())) {
+            if (!(x.isHidden() && !isEditable())) {
                 x.draw(g2);
             }
         }
@@ -8806,7 +8806,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // loop over all defined turnouts
         for (LayoutTurnout t : turnoutList) {
             g2.setColor(turnoutCircleColor);
-            if (!(t.getHidden() && !isEditable())) {
+            if (!(t.isHidden() && !isEditable())) {
                 t.drawTurnoutCircle(g2);
             }
         }
@@ -8816,7 +8816,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // loop over all defined slips
         g2.setColor(turnoutCircleColor);
         for (LayoutSlip sl : slipList) {
-            if (!(sl.getHidden() && !isEditable())) {
+            if (!(sl.isHidden() && !isEditable())) {
                 sl.drawSlipCircles(g2);
             }
         }
@@ -8912,7 +8912,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private void drawSlipRects(Graphics2D g2) {
         // loop over all defined slips
         for (LayoutSlip sl : slipList) {
-            if (!(sl.getHidden() && !isEditable())) {
+            if (!(sl.isHidden() && !isEditable())) {
                 g2.setColor(turnoutCircleColor);
                 sl.drawSlipRect(g2);
             }
@@ -8940,7 +8940,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void drawHiddenTrack(Graphics2D g2) {
         for (TrackSegment t : trackList) {
-            if (isEditable() && t.getHidden()) {
+            if (isEditable() && t.isHidden()) {
                 t.draw(g2);
                 setTrackStrokeWidth(g2, !main);
             }
@@ -8957,7 +8957,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private void drawSolidTrack(Graphics2D g2, boolean isMainline) {
         for (TrackSegment t : trackList) {
             setTrackStrokeWidth(g2, isMainline);
-            if ((!t.getHidden()) && (!t.getDashed()) && (isMainline == t.getMainline())) {
+            if ((!t.isHidden()) && (!t.getDashed()) && (isMainline == t.getMainline())) {
                 t.drawSolid(g2, isMainline);
             }
         }
