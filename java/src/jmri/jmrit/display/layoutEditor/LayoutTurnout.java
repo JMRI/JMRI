@@ -233,8 +233,6 @@ public class LayoutTurnout extends LayoutTrack {
     public String linkedTurnoutName = ""; // name of the linked Turnout (as entered in tool)
     public int linkType = NO_LINK;
 
-    protected boolean hidden = false;
-
     private boolean useBlockSpeed = false;
 
     protected LayoutTurnout() {
@@ -416,14 +414,6 @@ public class LayoutTurnout extends LayoutTrack {
             return secondNamedTurnout.getName();
         }
         return secondTurnoutName;
-    }
-
-    public boolean getHidden() {
-        return hidden;
-    }
-
-    public void setHidden(boolean hide) {
-        hidden = hide;
     }
 
     public String getBlockName() {
