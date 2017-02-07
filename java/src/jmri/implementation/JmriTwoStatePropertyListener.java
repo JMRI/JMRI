@@ -36,6 +36,7 @@ public class JmriTwoStatePropertyListener extends JmriSimplePropertyListener {
         super(propName, type, namedBean, varType, client);
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (log.isDebugEnabled()) {
             log.debug("\"" + _varName + "\" sent PropertyChangeEvent \"" + evt.getPropertyName()

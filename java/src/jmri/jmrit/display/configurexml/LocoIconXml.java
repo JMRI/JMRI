@@ -25,6 +25,7 @@ public class LocoIconXml extends PositionableLabelXml {
      * @param o Object to store, of type LocoIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         LocoIcon p = (LocoIcon) o;
@@ -58,6 +59,7 @@ public class LocoIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         Editor ed = (Editor) o;
         LocoIcon l = new LocoIcon(ed);

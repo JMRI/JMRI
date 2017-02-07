@@ -38,6 +38,7 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
     /*
      * Protocol Specific Abstract Functions
      */
+    @Override
     public void sendStatus(String turnoutName, int Status) throws IOException {
         TimeStampedOutput.writeTimestamp(output, "499 ERROR unspecified error\n\r");
     }
@@ -72,10 +73,12 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
         }
     }
 
+    @Override
     public void sendErrorStatus(String turnoutName) throws IOException {
         TimeStampedOutput.writeTimestamp(output, "499 ERROR unspecified error\n\r");
     }
 
+    @Override
     public void parseStatus(String statusString) throws jmri.JmriException, java.io.IOException {
         TimeStampedOutput.writeTimestamp(output, "499 ERROR unspecified error\n\r");
     }

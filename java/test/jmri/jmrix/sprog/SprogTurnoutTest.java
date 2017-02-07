@@ -3,8 +3,6 @@ package jmri.jmrix.sprog;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 /**
  * <P>
@@ -35,6 +33,7 @@ public class SprogTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
 
     // The minimal setup for log4J
     @Before
+   @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         // prepare an interface

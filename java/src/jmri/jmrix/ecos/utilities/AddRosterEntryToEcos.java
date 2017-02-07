@@ -47,6 +47,7 @@ public class AddRosterEntryToEcos extends AbstractAction {
     JComboBox<String> selections;
     Roster roster;
 
+    @Override
     public void actionPerformed(ActionEvent event) {
 
         roster = Roster.getDefault();

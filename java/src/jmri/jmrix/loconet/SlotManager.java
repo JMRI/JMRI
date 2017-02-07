@@ -56,6 +56,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         // We will scan the slot table every 10 s for in-use slots that are stale
         staleSlotCheckTimer = new javax.swing.Timer(10000, new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 checkStaleSlots();
             }
@@ -81,6 +82,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * interface.
      *
      */
+    @Override
     public void sendPacket(byte[] packet, int repeats) {
         if (repeats > 7) {
             log.error("Too many repeats!");
@@ -264,6 +266,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      *
      * @param m incoming message
      */
+    @Override
     public void message(LocoNetMessage m) {
         // LACK processing for resend of immediate command
         if (!mTurnoutNoRetry && immedPacket != null && m.getOpCode() == LnConstants.OPC_LONG_ACK && m.getElement(1) == 0x6D && m.getElement(2) == 0x00) {
@@ -532,6 +535,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                     // allow command station time to execute
                     int delay = 100; // milliseconds
                     javax.swing.Timer timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                        @Override
                         public void actionPerformed(java.awt.event.ActionEvent e) {
                             notifyProgListenerEnd(-1, 0); // no value (e.g. -1), no error status (e.g.0)
                         }
@@ -726,6 +730,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     /**
      * Internal routine to handle a timeout
      */
+    @Override
     synchronized protected void timeout() {
         if (log.isDebugEnabled()) {
             log.debug("timeout fires in state " + progState);
@@ -1023,6 +1028,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             this.status = status;
         }
 
+        @Override
         public void run() {
             synchronized (this) {
                 try {
@@ -1049,6 +1055,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             this.status = status;
         }
 
+        @Override
         public void run() {
             p.programmingOpReply(value, status);
         }
@@ -1072,6 +1079,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         if (mProgEndSequence) {
             if (mPowerTimer == null) {
                 mPowerTimer = new javax.swing.Timer(2000, new java.awt.event.ActionListener() {
+                    @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         doEndOfProgramming();
                     }
@@ -1138,6 +1146,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // schedule next read if needed
         if (nextReadSlot < 127) {
             javax.swing.Timer t = new javax.swing.Timer(500, new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     readNextSlot();
                 }
@@ -1166,6 +1175,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     LocoNetSystemConnectionMemo adaptermemo;
 
+    @Override
     public String getUserName() {
         if (adaptermemo == null) {
             return "LocoNet"; // NOI18N
@@ -1173,6 +1183,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         return adaptermemo.getUserName();
     }
 
+    @Override
     public String getSystemPrefix() {
         if (adaptermemo == null) {
             return "L";

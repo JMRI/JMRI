@@ -1,7 +1,5 @@
 package jmri.jmrix.pi;
 
-import com.pi4j.io.gpio.GpioFactory;
-import com.pi4j.io.gpio.GpioProvider;
 import com.pi4j.io.gpio.WiringPiGpioProviderBase;
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.PinMode;

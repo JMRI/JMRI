@@ -27,6 +27,7 @@ public class NodeTableFrame extends jmri.util.JmriJFrame {
     /**
      * Initialize the window
      */
+    @Override
     public void initComponents() {
         setTitle(rb.getString("WindowTitle"));
 
@@ -47,6 +48,7 @@ public class NodeTableFrame extends jmri.util.JmriJFrame {
         pack();
     }
 
+    @Override
     public void dispose() {
         SerialTrafficController.instance().removeSerialListener(p);
         super.dispose();

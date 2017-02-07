@@ -41,6 +41,7 @@ public class JythonSiglet extends Siglet {
      * Initialization of the Python in the actual script file is deferred until
      * the {@link #handle} method.
      */
+    @Override
     public void defineIO() {
 
         try {
@@ -101,6 +102,7 @@ public class JythonSiglet extends Siglet {
     /**
      * Invoke the Jython setOutput function
      */
+    @Override
     public void setOutput() {
         if (interp == null) {
             log.error("No interpreter, so cannot handle automat");

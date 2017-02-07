@@ -24,6 +24,7 @@ public class SerialMonAction extends AbstractAction {
         this("C/MRI monitor",memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a SerialMonFrame
         SerialMonFrame f = new SerialMonFrame(_memo);

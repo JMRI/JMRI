@@ -88,6 +88,7 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
                 entry = speeds.higherEntry(entry.getKey());
             }
         }
+        @Override
         public int getColumnCount() {
             return NUMCOLS;
         }
@@ -96,6 +97,7 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
         public int getRowCount() {
             return speedArray.size();
         }
+        @Override
         public String getColumnName(int col) {
             String rate;
             switch(interp) {
@@ -123,6 +125,7 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
             }
             return "";
         }
+        @Override
         public Class<?> getColumnClass(int col) {
             return String.class;
         }
@@ -142,6 +145,7 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
             return new JTextField(8).getPreferredSize().width;
         }
         
+        @Override
         public boolean isCellEditable(int row, int col) {
             return false;
         }
@@ -186,6 +190,7 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
             return "";
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
         }
     }

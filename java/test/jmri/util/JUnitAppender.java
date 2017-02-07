@@ -23,6 +23,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     /**
      * Called for each logging event.
      */
+    @Override
     public synchronized void append(LoggingEvent event) {
         if (hold) {
             list.add(event);
@@ -36,6 +37,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      *
      * Currently just reflects back to super-class.
      */
+    @Override
     public void activateOptions() {
         if (JUnitAppender.instance != null) {
             System.err.println("JUnitAppender initialized more than once"); // can't count on logging here
@@ -50,6 +52,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      *
      * Currently just reflects back to super-class.
      */
+    @Override
     public synchronized void close() {
         list.clear();
         super.close();

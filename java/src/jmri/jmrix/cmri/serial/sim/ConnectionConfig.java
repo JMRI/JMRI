@@ -29,6 +29,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         super();
     }
 
+    @Override
     public void loadDetails(JPanel details) {
         // have to embed the usual one in a new JPanel
 
@@ -53,10 +54,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
      return portNameVector;
      }*/
     //public boolean isPortAdvanced() { return true; }
+    @Override
     public String name() {
         return "Simulator";
     }
 
+    @Override
     protected void setInstance() {
         if(adapter == null ) {
            adapter = new SimDriverAdapter();

@@ -32,6 +32,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE80215
     }
 
     @Test
+    @Override
     public void testGetNodeFromAddressTest() {
         // test the code to get an IEEE802154 node from its address
         // specified as a string to make sure it returns null on failure.
@@ -48,6 +49,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE80215
     }
 
     @Test
+    @Override
     public void testGetNodeFromUserAddressIntTest() {
         // test the code to get an IEEE802154 node from its User address
         // specified as an integer array.
@@ -64,6 +66,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE80215
     }
 
     @Test
+    @Override
     public void testGetNodeFromUserAddressByteTest() {
         // test the code to get an IEEE802154 node from its User address
         // specified as a byte array.
@@ -79,6 +82,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE80215
     }
 
     @Test
+    @Override
     public void testGetNodeFromUserAddressTest() {
         // test the code to get an IEEE802154 node from its User address
         // specified as a string.
@@ -96,6 +100,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE80215
     }
 
     @Test
+    @Override
     public void testGetNodeFromAddressGlobalByteTest() {
         // test the code to get an IEEE802154 node from its Global address
         // specified as a byte array.
@@ -113,6 +118,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE80215
     }
 
     @Test
+    @Override
     public void testGetNodeFromAddressGlobalIntTest() {
         // test the code to get an IEEE802154 node from its Global address
         // specified as an integer array.

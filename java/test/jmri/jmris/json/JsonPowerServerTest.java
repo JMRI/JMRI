@@ -63,6 +63,7 @@ public class JsonPowerServerTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
@@ -74,6 +75,7 @@ public class JsonPowerServerTest extends TestCase {
         jmri.util.JUnitUtil.initDebugPowerManager();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         jmri.util.JUnitUtil.resetInstanceManager();
         super.tearDown();

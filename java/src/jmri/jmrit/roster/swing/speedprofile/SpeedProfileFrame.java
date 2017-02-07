@@ -16,6 +16,7 @@ public class SpeedProfileFrame extends jmri.util.JmriJFrame {
 
     SpeedProfilePanel spPanel;
 
+    @Override
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
 

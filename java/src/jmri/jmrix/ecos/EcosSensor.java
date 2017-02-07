@@ -32,6 +32,7 @@ public class EcosSensor extends AbstractSensor {
         objectNumber = o;
     }
 
+    @Override
     public void requestUpdateFromLayout() {
     }
 

@@ -13,6 +13,7 @@ import junit.framework.TestSuite;
   */
 public class SerialAddressTest extends TestCase {
 
+    @Override
     public void setUp() {
         // log4j
         apps.tests.Log4JFixture.setUp();
@@ -43,6 +44,7 @@ public class SerialAddressTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

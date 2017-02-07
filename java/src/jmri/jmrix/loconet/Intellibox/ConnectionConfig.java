@@ -23,10 +23,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public String name() {
         return "Intellibox-I (Serial)";
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new IntelliboxAdapter();

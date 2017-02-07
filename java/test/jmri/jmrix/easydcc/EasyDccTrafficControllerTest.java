@@ -81,10 +81,12 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
             rcvdMsg = null;
         }
 
+        @Override
         public void message(EasyDccMessage m) {
             rcvdMsg = m;
         }
 
+        @Override
         public void reply(EasyDccReply r) {
             rcvdReply = r;
         }
@@ -95,17 +97,21 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
     // internal class to simulate a EasyDccPortController
     class EasyDccPortControllerScaffold extends EasyDccPortController {
 
+        @Override
         public Vector<String> getPortNames() {
             return null;
         }
 
+        @Override
         public String openPort(String portName, String appName) {
             return null;
         }
 
+        @Override
         public void configure() {
         }
 
+        @Override
         public String[] validBaudRates() {
             return null;
         }
@@ -122,16 +128,19 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
         }
 
         // returns the InputStream from the port
+        @Override
         public DataInputStream getInputStream() {
             return istream;
         }
 
         // returns the outputStream to the port
+        @Override
         public DataOutputStream getOutputStream() {
             return ostream;
         }
 
         // check that this object is ready to operate
+        @Override
         public boolean status() {
             return true;
         }

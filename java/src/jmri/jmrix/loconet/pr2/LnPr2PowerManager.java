@@ -36,6 +36,7 @@ public class LnPr2PowerManager extends LnPowerManager {
     LnTrafficController tc;
     LocoNetSystemConnectionMemo memo;
 
+    @Override
     public void setPower(int v) throws JmriException {
         power = UNKNOWN;
 
@@ -54,6 +55,7 @@ public class LnPr2PowerManager extends LnPowerManager {
                 // start making sure that the power is refreshed
                 if (timer == null) {
                     timer = new javax.swing.Timer(2 * 1000, new java.awt.event.ActionListener() {
+                        @Override
                         public void actionPerformed(java.awt.event.ActionEvent e) {
                             refresh();
                         }
@@ -91,6 +93,7 @@ public class LnPr2PowerManager extends LnPowerManager {
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
         super.dispose();
     }
@@ -104,6 +107,7 @@ public class LnPr2PowerManager extends LnPowerManager {
     }
 
     // to listen for status changes from LocoNet
+    @Override
     public void message(LocoNetMessage m) {
         if (m.getOpCode() == LnConstants.OPC_GPON) {
             power = ON;

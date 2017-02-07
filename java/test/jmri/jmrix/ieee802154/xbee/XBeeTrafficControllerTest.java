@@ -23,11 +23,13 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
     }
 
     @Test
+    @Override
     public void testGetIEEE802154Messge() {
         Assert.assertNull("IEEE802154Message", ((XBeeTrafficController)tc).getIEEE802154Message(5));
     }
 
     @Test
+    @Override
     public void testGetPollReplyHandler() {
         Assert.assertNull("pollReplyHandler", ((XBeeTrafficController)tc).pollReplyHandler());
     }
@@ -39,24 +41,28 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
     }
 
     @Test
+    @Override
     public void checkPollMessageNoNodes() {
         // no nodes, should return null.
         Assert.assertNull("pollMessage", ((XBeeTrafficController)tc).pollMessage());
     }
 
     @Test
+    @Override
     public void checkPollReplyHandler() {
         // always returns null.
         Assert.assertNull("pollReplyHandler", ((XBeeTrafficController)tc).pollReplyHandler());
     }
 
     @Test
+    @Override
     public void checkEnterProgMode() {
         // No Programming Mode, returns null.
         Assert.assertNull("enterProgMode", ((XBeeTrafficController)tc).enterProgMode());
     }
 
     @Test
+    @Override
     public void checkExitProgMode() {
         // No Programming Mode, returns null.
         Assert.assertNull("enterNormalMode", ((XBeeTrafficController)tc).enterNormalMode());
@@ -69,6 +75,7 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
     }
 
     @Test
+    @Override
     public void testGetNodeFromAddressTest() {
         // test the code to get an XBee node from its address
         // specified as a string to make sure it returns null on failure.
@@ -85,6 +92,7 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
     }
 
     @Test
+    @Override
     public void testGetNodeFromUserAddressIntTest() {
         // test the code to get an XBee node from its User address
         // specified as an integer array.
@@ -101,6 +109,7 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
     }
 
     @Test
+    @Override
     public void testGetNodeFromUserAddressByteTest() {
         // test the code to get an XBee node from its User address
         // specified as a byte array.
@@ -116,6 +125,7 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
     }
 
    @Test
+    @Override
     public void testGetNodeFromUserAddressTest() {
         // test the code to get an XBee node from its User address
         // specified as a string.
@@ -132,6 +142,7 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
     }
 
     @Test
+    @Override
     public void testGetNodeFromAddressGlobalByteTest() {
         // test the code to get an IEEE802154 node from its Global address
         // specified as a byte array.
@@ -149,6 +160,7 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
     }
 
     @Test
+    @Override
     public void testGetNodeFromAddressGlobalIntTest() {
         // test the code to get an IEEE802154 node from its Global address
         // specified as an intger array.
@@ -184,15 +196,18 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         tc = new XBeeTrafficController() {
+            @Override
             public void setInstance() {
             }
         };
     }
 
     @After
+    @Override
     public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

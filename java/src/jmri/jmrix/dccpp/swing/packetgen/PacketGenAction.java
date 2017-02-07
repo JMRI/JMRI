@@ -27,6 +27,7 @@ public class PacketGenAction extends AbstractAction {
         this("Generate DCC++ message", memo);
     }
 
+       @Override
     public void actionPerformed(ActionEvent e) {
         // create a PacketGenFrame
         PacketGenFrame f = new PacketGenFrame();

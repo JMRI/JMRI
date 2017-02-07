@@ -217,10 +217,12 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
     private EasyDccCommandStation commandStation;
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.easydcc.EasyDccActionListBundle");
     }
 
+    @Override
     public void dispose() {
         et = null;
         InstanceManager.deregister(this, EasyDccSystemConnectionMemo.class);

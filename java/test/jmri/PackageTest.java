@@ -40,8 +40,9 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.PathTest.suite());
         suite.addTest(jmri.PathLengthTest.suite());
         suite.addTest(jmri.PushbuttonPacketTest.suite());
-        suite.addTest(new JUnit4TestAdapter(jmri.SignalGroupTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SectionTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.SignalGroupTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.SignalMastLogicTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TransitTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TransitSectionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TransitSectionActionTest.class));
@@ -78,10 +79,12 @@ public class PackageTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

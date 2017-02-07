@@ -19,6 +19,7 @@ public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVers
         _memo = memo;
     }
 
+    @Override
     synchronized public void initComponents() throws Exception {
         setTitle("SPROG Version");
 
@@ -30,6 +31,7 @@ public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVers
         query.requestVersion(this);
     }
 
+    @Override
     synchronized public void notifyVersion(SprogVersion v) {
         if (log.isDebugEnabled()) {
             log.debug("Version " + v.toString() + " notified");

@@ -58,6 +58,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
      *
      * @param m Message to send; will be updated with CRC
      */
+    @Override
     public void sendLocoNetMessage(LocoNetMessage m) {
         log.debug("add to queue message " + m);
         // update statistics
@@ -112,6 +113,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
             trafficController = lt;
         }
 
+        @Override
         public void run() {
 
             int opCode;
@@ -225,6 +227,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                             LocoNetMessage msgForLater = thisMsg;
                             LnPacketizer myTC = thisTC;
 
+                            @Override
                             public void run() {
                                 myTC.notify(msgForLater);
                             }
@@ -262,6 +265,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
      */
     class XmtHandler implements Runnable {
 
+        @Override
         public void run() {
 
             while (true) {   // loop permanently
@@ -341,6 +345,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
     /**
      * Invoked at startup to start the threads needed here.
      */
+    @Override
     public void startThreads() {
         int priority = Thread.currentThread().getPriority();
         log.debug("startThreads current priority = " + priority

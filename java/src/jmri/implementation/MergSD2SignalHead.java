@@ -122,6 +122,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         }
     }
 
+    @Override
     protected void updateOutput() {
         // assumes that writing a turnout to an existing state is cheap!
         switch (mAppearance) {
@@ -169,6 +170,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
      */
+    @Override
     public void dispose() {
         mInput1 = null;
         mInput2 = null;

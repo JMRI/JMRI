@@ -16,6 +16,7 @@ public class LnHexFileAction extends AbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a LnHexFileFrame
         HexFileFrame f = new HexFileFrame();

@@ -18,6 +18,7 @@ abstract public class MarklinPanel extends jmri.util.swing.JmriPanel implements 
      */
     protected MarklinSystemConnectionMemo memo;
 
+    @Override
     public void initComponents(MarklinSystemConnectionMemo memo) {
         this.memo = memo;
     }

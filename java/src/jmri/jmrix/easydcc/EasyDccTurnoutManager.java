@@ -15,10 +15,12 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
 
     }
 
+    @Override
     public String getSystemPrefix() {
         return "E";
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
         int addr = Integer.valueOf(systemName.substring(2)).intValue();

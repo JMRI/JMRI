@@ -45,6 +45,7 @@ public class PacketScript extends Apps {
         debugMenu(menuBar, wi);
     }
 
+    @Override
     protected String line1() {
         return MessageFormat.format(Bundle.getMessage("PacketScriptVersionCredit"),
                 new Object[]{jmri.Version.name()});

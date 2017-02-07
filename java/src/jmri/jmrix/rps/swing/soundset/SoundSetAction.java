@@ -20,6 +20,7 @@ public class SoundSetAction extends AbstractAction {
         this("RPS Sound Speed Monitor");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         log.debug("starting frame creation");
         SoundSetFrame f = new SoundSetFrame();

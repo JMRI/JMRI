@@ -50,6 +50,7 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     int productID = -1;
 
     // steps of the identification state machine
+    @Override
     public boolean test1() {
         // read cv8
         statusUpdate("Read MFG ID - CV 8");
@@ -57,6 +58,7 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         return false;
     }
 
+    @Override
     public boolean test2(int value) {
         mfgID = value;
         statusUpdate("Read MFG version - CV 7");
@@ -64,6 +66,7 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         return false;
     }
 
+    @Override
     public boolean test3(int value) {
         modelID = value;
         if (mfgID == 113) {  // QSI
@@ -98,6 +101,7 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         return true;
     }
 
+    @Override
     public boolean test4(int value) {
         if (mfgID == 113) {  // QSI
             statusUpdate("Set SI for Read Product ID High Byte");
@@ -131,6 +135,7 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         return true;
     }
 
+    @Override
     public boolean test5(int value) {
         if (mfgID == 113) {  // QSI
             statusUpdate("Read Product ID High Byte");
@@ -154,6 +159,7 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         return true;
     }
 
+    @Override
     public boolean test6(int value) {
         if (mfgID == 113) {  // QSI
             productIDhigh = value;
@@ -170,6 +176,7 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         return true;
     }
 
+    @Override
     public boolean test7(int value) {
         if (mfgID == 113) {  // QSI
             statusUpdate("Read Product ID Low Byte");
@@ -185,6 +192,7 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         return true;
     }
 
+    @Override
     public boolean test8(int value) {
         if (mfgID == 113) {  // QSI
             productIDlow = value;
@@ -200,6 +208,7 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         return true;
     }
 
+    @Override
     public boolean test9(int value) {
         if (mfgID == 151) {  // ESU
             productID = productID + (value * 256 * 256 * 256);
@@ -210,6 +219,7 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         return true;
     }
 
+    @Override
     protected void statusUpdate(String s) {
         message(s);
         if (s.equals("Done")) {

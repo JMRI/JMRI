@@ -17,6 +17,7 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
         super(memo);
     }
 
+    @Override
     protected void init() {
         if (log.isDebugEnabled()) {
             log.debug("Init called");

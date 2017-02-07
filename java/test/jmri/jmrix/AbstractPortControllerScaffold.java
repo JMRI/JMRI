@@ -42,16 +42,19 @@ public class AbstractPortControllerScaffold extends AbstractPortController {
     }
 
     // returns the InputStream from the port
+    @Override
     public DataInputStream getInputStream() {
        return istream;
     }
 
     // returns the outputStream to the port
+    @Override
     public DataOutputStream getOutputStream() {
        return ostream;
     }
 
     // check that this object is ready to operate
+    @Override
     public boolean status() {
        return true;
     }

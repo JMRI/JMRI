@@ -20,10 +20,12 @@ public class JMRIClientReporterManagerXml extends jmri.managers.configurexml.Abs
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element reporters) {
         reporters.setAttribute("class", "jmri.jmrix.jmriclient.configurexml.JMRIClientReporterManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) throws jmri.configurexml.JmriConfigureXmlException {
         log.error("Invalid method called");
     }

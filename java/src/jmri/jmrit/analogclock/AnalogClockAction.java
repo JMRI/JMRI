@@ -19,6 +19,7 @@ public class AnalogClockAction extends AbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         AnalogClockFrame f = new AnalogClockFrame();

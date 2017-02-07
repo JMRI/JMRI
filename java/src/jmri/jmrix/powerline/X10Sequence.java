@@ -117,6 +117,7 @@ public class X10Sequence {
         int house;
         int device;
 
+        @Override
         public int getHouseCode() {
             return house;
         }
@@ -125,10 +126,12 @@ public class X10Sequence {
             return device;
         }
 
+        @Override
         public boolean isAddress() {
             return true;
         }
 
+        @Override
         public boolean isFunction() {
             return false;
         }
@@ -148,6 +151,7 @@ public class X10Sequence {
         int function;
         int dimcount;
 
+        @Override
         public int getHouseCode() {
             return house;
         }
@@ -160,10 +164,12 @@ public class X10Sequence {
             return dimcount;
         }
 
+        @Override
         public boolean isAddress() {
             return false;
         }
 
+        @Override
         public boolean isFunction() {
             return true;
         }
@@ -193,6 +199,7 @@ public class X10Sequence {
             return cmd;
         }
 
+        @Override
         public int getHouseCode() {
             return house;
         }
@@ -201,10 +208,12 @@ public class X10Sequence {
             return device;
         }
 
+        @Override
         public boolean isAddress() {
             return false;
         }
 
+        @Override
         public boolean isFunction() {
             return false;
         }

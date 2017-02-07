@@ -27,6 +27,7 @@ public class SerialMonAction extends AbstractAction {
         this("Powerline Device Monitor", tc);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a SerialMonFrame
         SerialMonFrame f = new SerialMonFrame(tc);
