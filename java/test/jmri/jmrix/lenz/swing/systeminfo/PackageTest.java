@@ -11,7 +11,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     SystemInfoFrameTest.class,
-    SystemInfoActionTest.class
+    SystemInfoActionTest.class,
+    BundleTest.class
 })
 public class PackageTest {
 }
