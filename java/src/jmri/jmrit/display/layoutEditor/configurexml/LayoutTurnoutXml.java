@@ -56,8 +56,8 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
             element.setAttribute("blockdname", p.getBlockDName());
         }
         element.setAttribute("type", "" + p.getTurnoutType());
-        if (p.getHidden()) {
-            element.setAttribute("hidden", "" + (p.getHidden() ? "yes" : "no"));
+        if (p.isHidden()) {
+            element.setAttribute("hidden", "" + (p.isHidden() ? "yes" : "no"));
         }
         if (p.getConnectA() != null) {
             element.setAttribute("connectaname", ((TrackSegment) p.getConnectA()).getID());
