@@ -12,11 +12,14 @@ import java.util.Map.Entry;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
-import jmri.beans.Bean;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.logix.WarrantPreferencesPanel.DataPair;
+import jmri.profile.Profile;
+import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
+import jmri.util.prefs.AbstractPreferencesManager;
+import jmri.util.prefs.InitializationException;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Document;
@@ -30,7 +33,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (C) 2015
  */
-public class WarrantPreferences extends Bean {
+public class WarrantPreferences extends AbstractPreferencesManager {
 
     public static final String LAYOUT_PARAMS = "layoutParams"; // NOI18N
     public static final String LAYOUT_SCALE = "layoutScale"; // NOI18N
@@ -119,10 +122,6 @@ public class WarrantPreferences extends Bean {
     private int _msIncrTime = 1000;         // time in milliseconds between speed changes ramping up or down
     private float _throttleIncr = 0.04f;    // throttle increment for each ramp speed change
 
-    WarrantPreferences(String fileName) {
-        openFile(fileName);
-    }
-
     /**
      * Get the default instance.
      *
@@ -130,8 +129,13 @@ public class WarrantPreferences extends Bean {
      */
     public static WarrantPreferences getDefault() {
         return InstanceManager.getOptionalDefault(WarrantPreferences.class).orElseGet(() -> {
-            return InstanceManager.setDefault(WarrantPreferences.class, new WarrantPreferences(FileUtil.getUserFilesPath()
-                    + "signal" + File.separator + "WarrantPreferences.xml"));
+            WarrantPreferences preferences = InstanceManager.setDefault(WarrantPreferences.class, new WarrantPreferences());
+            try {
+                preferences.initialize(ProfileManager.getDefault().getActiveProfile());
+            } catch (InitializationException ex) {
+                log.error("Error initializing default WarrantPreferences", ex);
+            }
+            return preferences;
         });
     }
 
@@ -289,7 +293,7 @@ public class WarrantPreferences extends Bean {
             heads.put(name, speed);
         }
         this.setAppearances(heads);
-        
+
         return true;
     }
 
@@ -634,6 +638,21 @@ public class WarrantPreferences extends Bean {
         float oldIncrement = this._throttleIncr;
         this._throttleIncr = increment;
         this.firePropertyChange(RAMP_INCREMENT, oldIncrement, increment);
+
+    }
+
+    @Override
+    public void initialize(Profile profile) throws InitializationException {
+        if (!this.isInitialized(profile) && !this.isInitializing(profile)) {
+            this.setInitializing(profile, true);
+            this.openFile(FileUtil.getUserFilesPath() + "signal" + File.separator + "WarrantPreferences.xml");
+            this.setInitialized(profile, true);
+        }
+    }
+
+    @Override
+    public void savePreferences(Profile profile) {
+        this.save();
     }
 
     public static class WarrantPreferencesXml extends XmlFile {
