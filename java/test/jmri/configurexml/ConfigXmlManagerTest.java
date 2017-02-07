@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URL;
 import jmri.util.FileUtil;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for ConfigXmlManager.
@@ -38,13 +38,13 @@ public class ConfigXmlManagerTest extends TestCase {
         configxmlmanager.registerConfig(o1);
         Assert.assertTrue("stored in clist", configxmlmanager.clist.size() == 1);
         configxmlmanager.deregister(o1);
-        Assert.assertTrue("removed from clist", configxmlmanager.clist.size() == 0);
+        Assert.assertTrue("removed from clist", configxmlmanager.clist.isEmpty());
     }
 
     public void testLogErrorOnStore() {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager();
         innerFlag = false;
-        configxmlmanager.setErrorHandler(new ErrorHandler(){
+        ConfigXmlManager.setErrorHandler(new ErrorHandler(){
             @Override
             public void handle(ErrorMemo e) {
                 innerFlag = true;
@@ -56,7 +56,7 @@ public class ConfigXmlManagerTest extends TestCase {
      
         // this will fail before reaching file
         try {
-            configxmlmanager.storeAll(new File("none"));
+            configxmlmanager.storeAll(new File(FileUtil.getUserFilesPath(), "none"));
         } catch (Exception e) {
             // check that the handler was invoked
             Assert.assertTrue(innerFlag);
