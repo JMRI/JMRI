@@ -44,16 +44,16 @@ public class ConfigXmlManagerTest extends TestCase {
     public void testLogErrorOnStore() {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager();
         innerFlag = false;
-        ConfigXmlManager.setErrorHandler(new ErrorHandler(){
+        ConfigXmlManager.setErrorHandler(new ErrorHandler() {
             @Override
             public void handle(ErrorMemo e) {
                 innerFlag = true;
             }
         });
-        
+
         Object o1 = new jmri.ConfigXmlHandle();
         configxmlmanager.registerUser(o1);
-     
+
         // this will fail before reaching file
         try {
             configxmlmanager.storeAll(new File(FileUtil.getUserFilesPath(), "none"));
@@ -62,7 +62,7 @@ public class ConfigXmlManagerTest extends TestCase {
             Assert.assertTrue(innerFlag);
         }
     }
-    
+
     public void testFind() throws ClassNotFoundException {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager() {
             @SuppressWarnings("unused")
@@ -102,7 +102,7 @@ public class ConfigXmlManagerTest extends TestCase {
         Assert.assertEquals("migrated", "jmri.managers.configurexml.DccSignalHeadXml",
                 ConfigXmlManager.currentClassName("jmri.configurexml.DccSignalHeadXml"));
     }
-    
+
     public void testFindFile() throws FileNotFoundException, IOException {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager() {
             @Override
