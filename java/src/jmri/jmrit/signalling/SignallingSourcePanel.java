@@ -75,7 +75,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         sorter.setComparator(SignalMastAppearanceModel.SYSNAME_COLUMN, new SystemNameComparator());
         RowSorterUtil.setSortOrder(sorter, SignalMastAppearanceModel.SYSNAME_COLUMN, SortOrder.ASCENDING);
         table.setRowSorter(sorter);
-        table.addPropertyChangeListener(this); // will this update the table?
+        table.addPropertyChangeListener(this); // should update the table in the Signal Mast Table > Edit Logic pane
         table.setRowSelectionAllowed(false);
         table.setPreferredScrollableViewportSize(new java.awt.Dimension(600, 120));
         _AppearanceModel.configureTable(table);
@@ -105,21 +105,10 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
 
                     @Override
                     public void run() {
-                        //int oldListSize;
-                        //if (sml == null) { // no existing SML's for this source mast
-                        //    oldListSize = 0;}
-                        //else {
-                        //    oldListSize = sml.getDestinationList().size();
-                        //}
-                        //log.debug("SML Add started. List size = {}", oldListSize);
                         SignallingAction sigLog = new SignallingAction(); // opens a frame, opens a panel in that frame
                         sigLog.setMast(sourceMast, null);
                         sigLog.actionPerformed(null);
-                        //log.debug("SML Add ready"); // this is too quick, will never call:
-                        //if (sml != null && sml.getDestinationList().size() > oldListSize) {
-                        //    log.debug("SML Add added a Logic");
-                        //    _AppearanceModel.fireTableDataChanged(); // update list display after edit, but not when Add was cancelled by user
-                        //}
+                        // unable to receive changes in created panel, so listen to common parent object
                     }
                 }
                 WindowMaker t = new WindowMaker();
@@ -181,8 +170,11 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             boolean newValue = (Boolean) e.getNewValue();
             discoverPairs.setEnabled(newValue);
         }
-        log.debug("SSP 183 Event: {}", e.getPropertyName());
-        if (e.getPropertyName().equals("size")) {
+        log.debug("SSP 173 Event: {}; Source: {}", e.getPropertyName(), e.toString()); // doesn't get notified, newDestination
+        if (e.getPropertyName().equals("Frame.active")) { // a very blunt way of redrawing the Pairs table
+            updateDetails();
+        }
+        if (e.getPropertyName().equals("length")) {
             _AppearanceModel.fireTableDataChanged();
         }
     }
@@ -203,7 +195,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         SignalMastAppearanceModel() {
             super();
             if (sml != null) {
-                sml.addPropertyChangeListener(this);
+                sml.addPropertyChangeListener(this); // pick up creation of a new pair in the sml
             }
         }
 
@@ -319,7 +311,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                 fireTableDataChanged();
                 fireTableRowsUpdated(0, _signalMastList.size()-1);
             }
-            //log.debug("SSP 317 Event: {}", e.getPropertyName());
+            log.debug("SSP 310 Event: {}", e.getPropertyName());
         }
 
         protected void configEditColumn(JTable table) {
