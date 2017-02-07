@@ -173,6 +173,18 @@ public class XNetReplyTest {
         r = new XNetReply("01 04 05");
         Assert.assertFalse(r.isServiceModeResponse());
     }
+ 
+   @Test
+    public void testToMonitorStringServiceModeDirectResponse(){
+        XNetReply r = new XNetReply("63 14 01 04 72");
+        Assert.assertEquals("Monitor String","Service Mode: Direct Programming Mode Response: CV:1 Value: 4",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringServiceModePagedResponse(){
+        XNetReply r = new XNetReply("63 10 01 04 76");
+        Assert.assertEquals("Monitor String","Service Mode: Register or Paged Mode Response: CV:1 Value: 4",r.toMonitorString());
+    }
 
     // check is paged mode response
     @Test
@@ -1050,6 +1062,40 @@ public class XNetReplyTest {
     public void testToMonitorStringLIBaud5Reply(){
         XNetReply r = new XNetReply("F2 02 05 F1");
         Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: <undefined>",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringCSStatusReply(){
+        XNetReply r = new XNetReply("62 22 00 40");
+        Assert.assertEquals("Monitor String","Command Station Status: Manual power-up Mode",r.toMonitorString());
+        r = new XNetReply("62 22 FF BF");
+        Assert.assertEquals("Monitor String","Command Station Status: Emergency Off Emergency Stop Service Mode Powering up Auto power-up Mode RAM check error!",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringCSVersionReply(){
+        XNetReply r = new XNetReply("63 21 36 00 55");
+        Assert.assertEquals("Monitor String","Command Station Software Version: 3.6 Type: LZ100/LZV100",r.toMonitorString());
+        r = new XNetReply("63 21 36 01 55");
+        Assert.assertEquals("Monitor String","Command Station Software Version: 3.6 Type: LH200",r.toMonitorString());
+        r = new XNetReply("63 21 36 02 55");
+        Assert.assertEquals("Monitor String","Command Station Software Version: 3.6 Type: Compact or Other",r.toMonitorString());
+        r = new XNetReply("63 21 36 10 55");
+        Assert.assertEquals("Monitor String","Command Station Software Version: 3.6 Type: multiMaus",r.toMonitorString());
+        r = new XNetReply("63 21 36 20 55");
+        Assert.assertEquals("Monitor String","Command Station Software Version: 3.6 Type: 32",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringCSV1VersionReply(){
+        XNetReply r = new XNetReply("62 21 21 62");
+        Assert.assertEquals("Monitor String","Command Station Software Version: 2.1 Type: Unknown (X-Bus V1 or V2)",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringBCEmeregncyStop(){
+        XNetReply r = new XNetReply("81 00 81");
+        Assert.assertEquals("Monitor String","Broadcast: Emergency Stop (track power on)",r.toMonitorString());
     }
 
     // The minimal setup for log4J
