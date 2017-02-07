@@ -491,20 +491,15 @@ class Diesel3Sound extends EngineSound {
 
         static public List<AudioBuffer> getBufferList(VSDFile vf, String filename, String sname, String uname) {
             List<AudioBuffer> buflist = null;
-            if (vf == null) {
-                log.debug("No VSD File");
-                return (null);
+            java.io.InputStream ins = vf.getInputStream(filename);
+            if (ins != null) {
+                //buflist = AudioUtil.getSplitInputStream(VSDSound.BufSysNamePrefix+filename, ins, 250, 100);
+                buflist = AudioUtil.getAudioBufferList(VSDSound.BufSysNamePrefix + filename, ins, 250, 100);
             } else {
-                java.io.InputStream ins = vf.getInputStream(filename);
-                if (ins != null) {
-                    //buflist = AudioUtil.getSplitInputStream(VSDSound.BufSysNamePrefix+filename, ins, 250, 100);
-                    buflist = AudioUtil.getAudioBufferList(VSDSound.BufSysNamePrefix + filename, ins, 250, 100);
-                } else {
-                    log.debug("Input Stream failed");
-                    return (null);
-                }
-                return (buflist);
+                log.debug("Input Stream failed");
+                return (null);
             }
+            return (buflist);
         }
 
         static public AudioBuffer getBuffer(VSDFile vf, String filename, String sname, String uname) {
@@ -513,17 +508,12 @@ class Diesel3Sound extends EngineSound {
             try {
                 buf = (AudioBuffer) am.provideAudio(VSDSound.BufSysNamePrefix + filename);
                 buf.setUserName(VSDSound.BufUserNamePrefix + uname);
-                if (vf == null) {
-                    log.debug("No VSD File");
-                    return (null);
+                java.io.InputStream ins = vf.getInputStream(filename);
+                if (ins != null) {
+                    buf.setInputStream(ins);
                 } else {
-                    java.io.InputStream ins = vf.getInputStream(filename);
-                    if (ins != null) {
-                        buf.setInputStream(ins);
-                    } else {
-                        log.debug("Input Stream failed");
-                        return (null);
-                    }
+                    log.debug("Input Stream failed");
+                    return (null);
                 }
             } catch (AudioException | IllegalArgumentException ex) {
                 log.error("Problem creating SoundBite: " + ex);

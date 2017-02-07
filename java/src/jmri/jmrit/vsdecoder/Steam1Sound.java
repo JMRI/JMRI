@@ -545,17 +545,12 @@ class Steam1Sound extends EngineSound {
         }
 
         static public java.io.InputStream getWavStream(VSDFile vf, String filename) {
-            if (vf == null) {
-                log.warn("No VSD File");
-                return null;
+            java.io.InputStream ins = vf.getInputStream(filename);
+            if (ins != null) {
+                return ins;
             } else {
-                java.io.InputStream ins = vf.getInputStream(filename);
-                if (ins != null) {
-                    return ins;
-                } else {
-                    log.warn("input Stream failed for {}", filename);
-                    return null;
-                }
+                log.warn("input Stream failed for {}", filename);
+                return null;
             }
         }
 
