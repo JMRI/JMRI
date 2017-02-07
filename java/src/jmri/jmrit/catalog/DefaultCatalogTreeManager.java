@@ -24,10 +24,12 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
      * automatically as part of the general storage mechanism.
      *
      */
+    @Override
     protected void registerSelf() {
         log.debug("not registering");
     }
 
+    @Override
     public int getXMLOrder() {
         return 65400;
     }
@@ -36,6 +38,7 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
      * This is a bogus systemPrefix. Naming is enforced in method
      * createNewCatalogTree below.
      */
+    @Override
     public String getSystemPrefix() {
         return "0";
     }
@@ -43,10 +46,12 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
     /**
      * Bogus typeLetter
      */
+    @Override
     public char typeLetter() {
         return '0';
     }
 
+    @Override
     public CatalogTree getCatalogTree(String name) {
         CatalogTree t = getByUserName(name);
         if (t != null) {
@@ -56,6 +61,7 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
         return getBySystemName(name);
     }
 
+    @Override
     public CatalogTree getBySystemName(String key) {
         String name = key.toUpperCase();
         if (log.isDebugEnabled()) {
@@ -70,10 +76,12 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
         return (CatalogTree) _tsys.get(name);
     }
 
+    @Override
     public CatalogTree getByUserName(String key) {
         return (CatalogTree) _tuser.get(key);
     }
 
+    @Override
     public CatalogTree newCatalogTree(String sysName, String userName) {
         if (log.isDebugEnabled()) {
             log.debug("new CatalogTree: systemName= " + sysName
@@ -177,6 +185,7 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
     }
     private static DefaultCatalogTreeManager _instance;
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameCatalog");
     }

@@ -97,6 +97,7 @@ public class GraphPane extends JPanel implements Printable {
         return units;
     }
 
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         drawGraph(g);
@@ -259,6 +260,7 @@ public class GraphPane extends JPanel implements Printable {
         }
     }
 
+    @Override
     public int print(Graphics g, PageFormat pf, int page) throws
             PrinterException {
 

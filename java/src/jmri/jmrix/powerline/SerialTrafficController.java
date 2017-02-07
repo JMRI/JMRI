@@ -94,14 +94,17 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
     protected boolean logDebug = false;
 
     // The methods to implement the SerialInterface
+    @Override
     public synchronized void addSerialListener(SerialListener l) {
         this.addListener(l);
     }
 
+    @Override
     public synchronized void removeSerialListener(SerialListener l) {
         this.removeListener(l);
     }
 
+    @Override
     protected int enterProgModeDelayTime() {
         // we should to wait at least a second after enabling the programming track
         return 1000;
@@ -110,6 +113,7 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
     /**
      * Forward a SerialMessage to all registered SerialInterface listeners.
      */
+    @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
         ((SerialListener) client).message((SerialMessage) m);
     }
@@ -117,6 +121,7 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
     /**
      * Forward a reply to all registered SerialInterface listeners.
      */
+    @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply r) {
         ((SerialListener) client).reply((SerialReply) r);
     }
@@ -134,11 +139,13 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
     /**
      * Eventually, do initialization if needed
      */
+    @Override
     protected AbstractMRMessage pollMessage() {
         return null;
 
     }
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         return null;
     }
@@ -146,10 +153,12 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
     /**
      * Forward a preformatted message to the actual interface.
      */
+    @Override
     public void sendSerialMessage(SerialMessage m, SerialListener reply) {
         sendMessage(m, reply);
     }
 
+    @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (logDebug) {
             log.debug("forward " + m);
@@ -158,10 +167,12 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
         super.forwardToPort(m, reply);
     }
 
+    @Override
     protected AbstractMRMessage enterProgMode() {
         return null;
     }
 
+    @Override
     protected AbstractMRMessage enterNormalMode() {
         return null;
     }
@@ -200,6 +211,7 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
      */
+    @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         return true;
     }
@@ -209,6 +221,7 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
      */
+    @Override
     protected AbstractMRReply newReply() {
         return null;
     }

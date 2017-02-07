@@ -792,7 +792,7 @@ public class ConditionalVariable {
             case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
                 return Bundle.getMessage("SignalHeadStateFlashingGreen"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_HELD:
-                return Bundle.getMessage("SignalHeadTypeHeld"); // NOI18N
+                return Bundle.getMessage("SignalHeadStateHeld"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_LUNAR:
                 return Bundle.getMessage("SignalHeadStateLunar"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_FLASHLUNAR:

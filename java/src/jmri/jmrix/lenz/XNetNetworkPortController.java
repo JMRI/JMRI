@@ -25,6 +25,7 @@ public abstract class XNetNetworkPortController extends jmri.jmrix.AbstractNetwo
      * Check that this object is ready to operate. This is a question of
      * configuration, not transient hardware status.
      */
+    @Override
     public abstract boolean status();
 
     /**
@@ -74,6 +75,7 @@ public abstract class XNetNetworkPortController extends jmri.jmrix.AbstractNetwo
     /**
      * We need a way to say if the output buffer is empty or not
      */
+    @Override
     public void setOutputBufferEmpty(boolean s) {
     } // Maintained for compatibility with XNetPortController. Simply ignore calls !!!
 

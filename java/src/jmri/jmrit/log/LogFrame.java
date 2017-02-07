@@ -13,6 +13,7 @@ public class LogFrame extends jmri.util.JmriJFrame {
         super();
     }
 
+    @Override
     public void initComponents() throws Exception {
 
         setTitle("Make Log Entry");

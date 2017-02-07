@@ -226,10 +226,12 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * The consequent device or element type
      */
+    @Override
     public int getType() {
         return _type;
     }
 
+    @Override
     public void setType(int type) {
         _type = type;
     }
@@ -237,6 +239,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * Sets type from user's name for it
      */
+    @Override
     public void setType(String type) {
         _type = stringToActionType(type);
     }
@@ -244,6 +247,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * Name of the device or element that is effected
      */
+    @Override
     public String getDeviceName() {
         if (_namedBean != null) {
             return _namedBean.getName();
@@ -255,6 +259,7 @@ public class DefaultConditionalAction implements ConditionalAction {
         return _deviceName;
     }
 
+    @Override
     public void setDeviceName(String deviceName) {
         _deviceName = deviceName;
         NamedBean bean = getIndirectBean(_deviceName);
@@ -268,6 +273,7 @@ public class DefaultConditionalAction implements ConditionalAction {
         }
     }
 
+    @Override
     public NamedBeanHandle<?> getNamedBean() {
         if (_indirectAction) {
             Memory m = (Memory) (_namedBean.getBean());
@@ -282,6 +288,7 @@ public class DefaultConditionalAction implements ConditionalAction {
         return _namedBean;
     }
 
+    @Override
     public NamedBean getBean() {
         if (_namedBean != null) {
             return (NamedBean) getNamedBean().getBean();
@@ -296,10 +303,12 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * Options on when action is taken
      */
+    @Override
     public int getOption() {
         return _option;
     }
 
+    @Override
     public void setOption(int option) {
         _option = option;
     }
@@ -307,10 +316,12 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * Integer data for action
      */
+    @Override
     public int getActionData() {
         return _actionData;
     }
 
+    @Override
     public void setActionData(int actionData) {
         _actionData = actionData;
     }
@@ -318,6 +329,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * Sets action data from user's name for it
      */
+    @Override
     public void setActionData(String actionData) {
         _actionData = stringToActionData(actionData);
     }
@@ -325,6 +337,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * String data for action
      */
+    @Override
     public String getActionString() {
         if (_actionString == null) {
             _actionString = getTypeString();
@@ -332,6 +345,7 @@ public class DefaultConditionalAction implements ConditionalAction {
         return _actionString;
     }
 
+    @Override
     public void setActionString(String actionString) {
         _actionString = actionString;
     }
@@ -339,6 +353,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     /*
      * get timer for delays and other timed events
      */
+    @Override
     public Timer getTimer() {
         return _timer;
     }
@@ -346,14 +361,17 @@ public class DefaultConditionalAction implements ConditionalAction {
     /*
      * set timer for delays and other timed events
      */
+    @Override
     public void setTimer(Timer timer) {
         _timer = timer;
     }
 
+    @Override
     public boolean isTimerActive() {
         return _timerActive;
     }
 
+    @Override
     public void startTimer() {
         if (_timer != null) {
             _timer.start();
@@ -363,6 +381,7 @@ public class DefaultConditionalAction implements ConditionalAction {
         }
     }
 
+    @Override
     public void stopTimer() {
         if (_timer != null) {
             _timer.stop();
@@ -373,6 +392,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     /*
      * set listener for delays and other timed events
      */
+    @Override
     public ActionListener getListener() {
         return _listener;
     }
@@ -380,6 +400,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     /*
      * set listener for delays and other timed events
      */
+    @Override
     public void setListener(ActionListener listener) {
         _listener = listener;
     }
@@ -387,6 +408,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * get Sound file
      */
+    @Override
     public Sound getSound() {
         return _sound;
     }
@@ -404,6 +426,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * return String name of this consequent type
      */
+    @Override
     public String getTypeString() {
         return getActionTypeString(_type);
     }
@@ -411,10 +434,12 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * return String name of the option for this consequent type
      */
+    @Override
     public String getOptionString(boolean type) {
         return getOptionString(_option, type);
     }
 
+    @Override
     public String getActionDataString() {
         return getActionDataString(_type, _actionData);
     }
@@ -755,6 +780,7 @@ public class DefaultConditionalAction implements ConditionalAction {
         return "";
     }
 
+    @Override
     public String description(boolean triggerType) {
         String str = getOptionString(triggerType) + ", " + getTypeString();
         if (_deviceName.length() > 0) {

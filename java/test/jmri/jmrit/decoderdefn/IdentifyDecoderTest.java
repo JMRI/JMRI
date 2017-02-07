@@ -19,6 +19,7 @@ public class IdentifyDecoderTest extends TestCase {
     public void testIdentifyStandard() {
         // initialize the system
         jmri.progdebugger.ProgDebugger p = new jmri.progdebugger.ProgDebugger() {
+            @Override
             public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
                 cvRead = CV;
             }
@@ -27,12 +28,15 @@ public class IdentifyDecoderTest extends TestCase {
 
         // create our test object
         IdentifyDecoder i = new IdentifyDecoder(p) {
+            @Override
             public void done(int mfgID, int modelID, int productID) {
             }
 
+            @Override
             public void message(String m) {
             }
 
+            @Override
             public void error() {
             }
         };
@@ -57,6 +61,7 @@ public class IdentifyDecoderTest extends TestCase {
     public void testIdentifyHarman() {
         // initialize the system
         jmri.progdebugger.ProgDebugger p = new jmri.progdebugger.ProgDebugger() {
+            @Override
             public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
                 cvRead = CV;
             }
@@ -65,12 +70,15 @@ public class IdentifyDecoderTest extends TestCase {
 
         // create our test object
         IdentifyDecoder i = new IdentifyDecoder(p) {
+            @Override
             public void done(int mfgID, int modelID, int productID) {
             }
 
+            @Override
             public void message(String m) {
             }
 
+            @Override
             public void error() {
             }
         };
@@ -107,6 +115,7 @@ public class IdentifyDecoderTest extends TestCase {
     public void testIdentifyTsu2() {
         // initialize the system
         jmri.progdebugger.ProgDebugger p = new jmri.progdebugger.ProgDebugger() {
+            @Override
             public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
                 cvRead = CV;
             }
@@ -115,12 +124,15 @@ public class IdentifyDecoderTest extends TestCase {
 
         // create our test object
         IdentifyDecoder i = new IdentifyDecoder(p) {
+            @Override
             public void done(int mfgID, int modelID, int productID) {
             }
 
+            @Override
             public void message(String m) {
             }
 
+            @Override
             public void error() {
             }
         };
@@ -171,6 +183,7 @@ public class IdentifyDecoderTest extends TestCase {
         return suite;
     }
 
+    @Override
     public void setUp() throws Exception {
         super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();

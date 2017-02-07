@@ -10,7 +10,6 @@ import jmri.Memory;
 import jmri.Path;
 import jmri.Section;
 import jmri.Sensor;
-import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import junit.framework.Test;
@@ -550,10 +549,12 @@ public class SectionManagerXmlTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

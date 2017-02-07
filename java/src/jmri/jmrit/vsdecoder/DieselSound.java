@@ -90,6 +90,7 @@ class DieselSound extends EngineSound {
                 // Handle notch transition...
                 t = newTimer(notch_transition.getLengthAsInt() - notch_sounds.get(new_notch).getFadeInTime(), false,
                         new ActionListener() {
+                            @Override
                             public void actionPerformed(ActionEvent e) {
                                 handleNotchTimerPop(e);
                             }

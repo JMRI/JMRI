@@ -48,6 +48,7 @@ public class AffineEntryPanel extends javax.swing.JPanel {
 
         JButton b = new JButton("Set");
         b.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 update();
             }

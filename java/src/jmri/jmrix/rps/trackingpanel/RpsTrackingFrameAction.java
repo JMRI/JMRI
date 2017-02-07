@@ -18,6 +18,7 @@ public class RpsTrackingFrameAction extends AbstractAction {
         this("RPS Tracking Display");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         RpsTrackingFrame f = new RpsTrackingFrame("RPS Tracking");
 

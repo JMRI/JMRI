@@ -48,6 +48,7 @@ public class WiThrottleCreationAction extends JmriAbstractAction {
      *
      * @param e The event causing the action.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         GraphicsEnvironment.getLocalGraphicsEnvironment();
         // create GUI, unless running in headless mode
@@ -65,6 +66,7 @@ public class WiThrottleCreationAction extends JmriAbstractAction {
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

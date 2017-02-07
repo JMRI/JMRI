@@ -17,6 +17,7 @@ public class JMRIClientTrafficControlScaffold extends JMRIClientTrafficControlle
     }
 
     // override some JMRIClientTrafficController methods for test purposes
+    @Override
     public boolean status() {
         return true;
     }
@@ -26,6 +27,7 @@ public class JMRIClientTrafficControlScaffold extends JMRIClientTrafficControlle
      */
     public Vector<JMRIClientMessage> outbound = new Vector<JMRIClientMessage>();  // public OK here, so long as this is a test class
 
+    @Override
     public void sendJMRIClientMessage(JMRIClientMessage m, JMRIClientListener reply) {
         if (log.isDebugEnabled()) {
             log.debug("sendJMRIClientMessage [" + m + "]");

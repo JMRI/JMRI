@@ -40,6 +40,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
 
     Component mParent;
 
+    @Override
     public void actionPerformed(ActionEvent event) {
 
         // select the "from" entry/file
@@ -198,6 +199,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

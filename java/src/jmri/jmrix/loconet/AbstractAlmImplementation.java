@@ -63,6 +63,7 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
      *
      * @param msg Input message
      */
+    @Override
     public void message(LocoNetMessage msg) {
         // sort on opcode and ALM number
         if (msg.getOpCode() == 0xEE && msg.getElement(2) == mNumber) {

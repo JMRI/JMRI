@@ -1,7 +1,6 @@
 package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 
@@ -50,6 +49,7 @@ public class LayoutBlockRouteTableAction extends AbstractAction {
         f.setVisible(true);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         actionPerformed();
     }

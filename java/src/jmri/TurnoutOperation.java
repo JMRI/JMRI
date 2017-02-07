@@ -129,6 +129,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
      * @param other	other TurnoutOperation object
      * @return usual compareTo return values
      */
+    @Override
     public int compareTo(Object other) {
         return name.compareTo(((TurnoutOperation) other).name);
     }
@@ -136,6 +137,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     /**
      * The identity of an operation is its name
      */
+    @Override
     public boolean equals(Object ro) {
         if (ro == null) return false;
         if (ro instanceof TurnoutOperation)
@@ -144,6 +146,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
             return false;
     }
     
+    @Override
     public int hashCode() {
         return name.hashCode();
     }

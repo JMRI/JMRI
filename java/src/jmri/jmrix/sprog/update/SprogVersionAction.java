@@ -20,6 +20,7 @@ public class SprogVersionAction extends AbstractAction {
         _memo = memo;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a SprogVersionFrame
         SprogVersionFrame f = new SprogVersionFrame(_memo);

@@ -40,6 +40,7 @@ public abstract class ProgModeSelector extends javax.swing.JPanel {
      *
      * @param enabled false disables GUI user changes
      */
+    @Override
     public void setEnabled(boolean enabled) {
     }
 

@@ -26,6 +26,7 @@ public class ProxySensorManagerTest extends TestCase {
 
     protected class Listen implements PropertyChangeListener {
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             listenerResult = true;
         }
@@ -143,6 +144,7 @@ public class ProxySensorManagerTest extends TestCase {
         Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class).provideSensor("IS1"));
 
         InternalSensorManager m = new InternalSensorManager() {
+            @Override
             public String getSystemPrefix() {
                 return "J";
             }
@@ -183,10 +185,12 @@ public class ProxySensorManagerTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         // create and register the manager object
         l = new InternalSensorManager() {
+            @Override
             public String getSystemPrefix() {
                 return "J";
             }

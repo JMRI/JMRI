@@ -32,10 +32,12 @@ import org.slf4j.LoggerFactory;
  */
 public class ClockMonPane extends LnPanel implements SlotListener {
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.loconet.clockmon.ClockMonFrame"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemClockMon"));
     }
@@ -44,6 +46,7 @@ public class ClockMonPane extends LnPanel implements SlotListener {
         super();
     }
 
+    @Override
     public void initComponents(final LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
 
@@ -77,6 +80,7 @@ public class ClockMonPane extends LnPanel implements SlotListener {
 
         // install "read" button handler
         readButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 memo.getSlotManager().sendReadSlot(LnConstants.FC_SLOT);
             }
@@ -95,6 +99,7 @@ public class ClockMonPane extends LnPanel implements SlotListener {
      * Handle changed slot contents, due to clock changes.
      *
      */
+    @Override
     public void notifyChangedSlot(LocoNetSlot s) {
         if (s.getSlot() != LnConstants.FC_SLOT) {
             return; // only watch clock slot
@@ -111,6 +116,7 @@ public class ClockMonPane extends LnPanel implements SlotListener {
         frac_mins.setText("" + s.getFcFracMins());
     }
 
+    @Override
     public void dispose() {
         // Drop loconet connection
         if (memo.getSlotManager() != null) {

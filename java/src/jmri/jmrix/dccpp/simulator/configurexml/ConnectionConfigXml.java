@@ -34,6 +34,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
      *
      * @return Formatted element containing no attributes except the class name
      */
+    @Override
     public Element store(Object o) {
         getInstance(o);
 
@@ -66,6 +67,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         return result;
     }
 
+    @Override
     protected void getInstance() {
         if (adapter == null) {
             adapter = new DCCppSimulatorAdapter();

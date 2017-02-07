@@ -13,14 +13,17 @@ public class TurnoutTableTabAction extends AbstractTableTabAction {
         this("Multiple Tabbed");
     }
 
+    @Override
     protected Manager getManager() {
         return InstanceManager.turnoutManagerInstance();
     }
 
+    @Override
     protected String getClassName() {
         return TurnoutTableAction.class.getName();
     }
 
+    @Override
     protected AbstractTableAction getNewTableAction(String choice) {
         return new TurnoutTableAction(choice);
     }

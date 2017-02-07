@@ -79,6 +79,7 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
     /**
      * request an update on status by sending a DCC++ message
      */
+    @Override
     public void requestUpdateFromLayout() {
 	// Yeah... this isn't really supported.  Yet.
 	//
@@ -123,6 +124,7 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
      * directly)
      *
      */
+    @Override
     public synchronized void message(DCCppReply l) {
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l);
@@ -158,16 +160,19 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     public void message(DCCppMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
         }
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }

@@ -60,10 +60,12 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         setTypeWord(0x71);  // configure BDL16x message type
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.loconet.bdl16.BDL16Frame"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemBDL16Programmer"));
     }
@@ -73,6 +75,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
      * <p>
      * Used before write operations start
      */
+    @Override
     protected void copyToOpsw() {
         // copy over the display
         opsw[1] = commonrail.isSelected();
@@ -99,6 +102,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
     }
 
+    @Override
     protected void updateDisplay() {
         commonrail.setSelected(opsw[1]);
         polarity.setSelected(opsw[3]);
@@ -123,6 +127,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         setdefault.setSelected(opsw[40]);
     }
 
+    @Override
     protected int nextState(int state) {
         switch (state) {
             case 1:

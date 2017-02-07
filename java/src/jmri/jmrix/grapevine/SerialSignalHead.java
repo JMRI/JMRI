@@ -51,6 +51,7 @@ public class SerialSignalHead extends DefaultSignalHead {
     /**
      * Handle a request to change state on layout
      */
+    @Override
     protected void updateOutput() {
         SerialNode tNode = SerialAddress.getNodeFromSystemName(tSystemName);
         if (tNode == null) {
@@ -122,9 +123,11 @@ public class SerialSignalHead extends DefaultSignalHead {
 
     // flashing is done on the cards, so we don't have to
     // do it manually
+    @Override
     public void startFlash() {
     }
 
+    @Override
     public void stopFlash() {
     }
 

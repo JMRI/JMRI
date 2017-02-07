@@ -2,10 +2,7 @@ package jmri.jmrix.lenz;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for XNetTrafficController
@@ -16,6 +13,7 @@ import org.junit.Test;
 public class XNetTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
@@ -27,6 +25,7 @@ public class XNetTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContr
     }
 
     @After
+    @Override
     public void tearDown(){
        tc = null;
         JUnitUtil.resetInstanceManager();

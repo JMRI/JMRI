@@ -31,14 +31,17 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
 
         ActionListener okListener = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 okPressed(e);
             }
         };
         ActionListener cancelListener = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) { cancelPressed(e); }
         };
         ActionListener rangeListener = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 canAddRange(e);
             }

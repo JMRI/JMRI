@@ -28,6 +28,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
      * @param o Object to store, of type LayoutTurnout
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         LayoutTurnout p = (LayoutTurnout) o;
@@ -166,6 +167,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @param o       LayoutEditor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         LayoutEditor p = (LayoutEditor) o;

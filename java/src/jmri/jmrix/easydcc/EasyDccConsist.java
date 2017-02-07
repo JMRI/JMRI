@@ -29,11 +29,13 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
     }
 
     // Clean Up local storag
+    @Override
     public void dispose() {
         super.dispose();
     }
 
     // Set the Consist Type
+    @Override
     public void setConsistType(int consist_type) {
         if (consist_type == Consist.ADVANCED_CONSIST) {
             ConsistType = consist_type;
@@ -50,6 +52,7 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
      * On EasyDCC systems, All addresses but 0 can be used in a consist 
      * (Either an Advanced Consist or a Standard Consist).
      */
+    @Override
     public boolean isAddressAllowed(DccLocoAddress address) {
         if (address.getNumber() != 0) {
             return (true);
@@ -63,6 +66,7 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
      * For Decoder Assisted Consists, returns -1 (no limit)
      * return 0 for any other consist type.
      */
+    @Override
     public int sizeLimit() {
         if (ConsistType == ADVANCED_CONSIST) {
             return -1;
@@ -74,6 +78,7 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
     }
 
     // does the consist contain the specified address?
+    @Override
     public boolean contains(DccLocoAddress address) {
         if (ConsistType == ADVANCED_CONSIST || ConsistType == CS_CONSIST) {
             return ConsistList.contains(address);
@@ -86,6 +91,7 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
 
     // get the relative direction setting for a specific
     // locomotive in the consist
+    @Override
     public boolean getLocoDirection(DccLocoAddress address) {
         if (ConsistType == ADVANCED_CONSIST || ConsistType == CS_CONSIST) {
             Boolean Direction = ConsistDir.get(address);
@@ -131,6 +137,7 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
      *  @param directionNormal is True if the locomotive is traveling 
      *        the same direction as the consist, or false otherwise.
      */
+    @Override
     public synchronized void add(DccLocoAddress LocoAddress, boolean directionNormal) {
         if (ConsistType == ADVANCED_CONSIST) {
             addToConsistList(LocoAddress, directionNormal);
@@ -158,6 +165,7 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
      *  @param directionNormal is True if the locomotive is traveling
      *        the same direction as the consist, or false otherwise.
      */
+    @Override
     public synchronized void restore(DccLocoAddress LocoAddress, boolean directionNormal) {
         if (ConsistType == ADVANCED_CONSIST) {
             addToConsistList(LocoAddress, directionNormal);
@@ -173,6 +181,7 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
      *  Remove a Locomotive from this Consist
      *  @param address is the Locomotive address to add to the locomotive
      */
+    @Override
     public synchronized void remove(DccLocoAddress LocoAddress) {
         if (ConsistType == ADVANCED_CONSIST) {
             removeFromAdvancedConsist(LocoAddress);
@@ -296,10 +305,12 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
     }
 
     // Listeners for messages from the command station
+    @Override
     public void message(EasyDccMessage m) {
         log.error("message received unexpectedly: " + m.toString());
     }
 
+    @Override
     public void reply(EasyDccReply r) {
         // There isn't anything meaningful coming back at this time.
         if (log.isDebugEnabled()) {

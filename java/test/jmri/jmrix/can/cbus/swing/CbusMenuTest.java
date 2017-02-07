@@ -5,7 +5,6 @@ import jmri.util.JUnitUtil;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.TestTrafficController;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;

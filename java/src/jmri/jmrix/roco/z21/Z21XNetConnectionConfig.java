@@ -31,20 +31,24 @@ public class Z21XNetConnectionConfig extends jmri.jmrix.AbstractStreamConnection
         super();
     }
 
+    @Override
     public String name() {
         return "Z21 XPressNet Stream";
     }
 
     String manufacturerName = "Roco";
 
+    @Override
     public String getManufacturer() {
         return manufacturerName;
     }
 
+    @Override
     public void setManufacturer(String manu) {
         manufacturerName = manu;
     }
 
+    @Override
     protected void setInstance() {
        log.error("Unexpected call to setInstance");
     }

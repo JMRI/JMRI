@@ -25,6 +25,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public String name() {
         if (SystemType.isMacOSX()
                 || (SystemType.isWindows() && Double.valueOf(System.getProperty("os.version")) >= 6)) {
@@ -34,6 +35,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return "Direct Drive (Serial)";
     }
 
+    @Override
     protected void setInstance() {
         adapter = SerialDriverAdapter.instance();
     }

@@ -31,6 +31,7 @@ public class PowerlineNamedPaneAction extends jmri.util.swing.JmriNamedPaneActio
 
     SerialSystemConnectionMemo memo;
 
+    @Override
     public JmriPanel makePanel() {
         JmriPanel p = super.makePanel();
         if (p == null) {

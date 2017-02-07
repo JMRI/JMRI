@@ -16,11 +16,13 @@ public class PollTableFrame extends JmriJFrame {
         super(Bundle.getMessage("TitlePolling"));
     }
 
+    @Override
     public void dispose() {
         pane.dispose(); // drop table
         super.dispose();
     }
 
+    @Override
     public void initComponents() {
         // only one, so keep around on close
         setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
@@ -39,6 +41,7 @@ public class PollTableFrame extends JmriJFrame {
         pack();
     }
 
+    @Override
     protected void storeValues() {
         pane.setDefaults();
         setModifiedFlag(false);

@@ -46,6 +46,7 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
     }
 
     // accessors to the bulk data
+    @Override
     public void setElement(int n, int v) {
         _dataChars[n] = v;
         _nDataChars = Math.max(_nDataChars, n + 1);
@@ -102,6 +103,7 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
     }
 
     // display format
+    @Override
     public String toString() {
        QsiSystemConnectionMemo memo = jmri.InstanceManager.getDefault(jmri.jmrix.qsi.QsiSystemConnectionMemo.class);
        return toString(memo.getQsiTrafficController());

@@ -224,6 +224,7 @@ public class WarrantTest extends TestCase {
         WarrantListener( Warrant w) {
             warrant = w;
         }
+        @Override
         public void propertyChange(PropertyChangeEvent e) {
 //            String property = e.getPropertyName();
 //            System.out.println("propertyChange \""+property+

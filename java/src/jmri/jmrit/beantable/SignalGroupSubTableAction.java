@@ -345,6 +345,7 @@ public class SignalGroupSubTableAction {
             selGroup.add(allButton);
             py.add(allButton);
             allButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     // Setup for display of all Turnouts, if needed
                     if (!showAll) {
@@ -358,6 +359,7 @@ public class SignalGroupSubTableAction {
             selGroup.add(includedButton);
             py.add(includedButton);
             includedButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     // Setup for display of included Turnouts only, if needed
                     if (showAll) {
@@ -495,6 +497,7 @@ public class SignalGroupSubTableAction {
             // add Cancel button
             pb.add(cancelButton);
             cancelButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelSubPressed(e);
                 }
@@ -502,6 +505,7 @@ public class SignalGroupSubTableAction {
             // add Update SignalGroup button
             pb.add(updateSubButton);
             updateSubButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     updateSubPressed(e, false);
                 }
@@ -516,6 +520,7 @@ public class SignalGroupSubTableAction {
         }
         // set listener for window closing
         addSubFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 addSubFrame.setVisible(false);
                 cancelSubEdit();
@@ -959,6 +964,7 @@ public class SignalGroupSubTableAction {
          * Get the configured On state for the Control Sensor Conditional to be True
          * @return A string describing the On state for use in the GUI (read from a Properties file, localizable)
          */
+        @Override
         String getSetToState() {
             switch (_setToState) {
                 case Sensor.INACTIVE:
@@ -974,6 +980,7 @@ public class SignalGroupSubTableAction {
          * Pairs should correspond with values in getSetToState()
          * @param state Choice from the comboBox, localizable i.e. Active
          */
+        @Override
         void setSetToState(String state) {
             if (SET_TO_INACTIVE.equals(state)) {
                 _setToState = Sensor.INACTIVE;
@@ -1008,6 +1015,7 @@ public class SignalGroupSubTableAction {
          * Get the configured On state for the Control Turnout Conditional to be True
          * @return A string describing the On state for use in the GUI
          */
+        @Override
         String getSetToState() {
             switch (_setToState) {
                 case Turnout.CLOSED:
@@ -1023,6 +1031,7 @@ public class SignalGroupSubTableAction {
          * Pairs should correspond with values in getSetToState()
          * @param state Choice from the comboBox, localizable i.e. Thrown.
          */
+        @Override
         void setSetToState(String state) {
             if (SET_TO_CLOSED.equals(state)) {
                 _setToState = Turnout.CLOSED;

@@ -99,6 +99,7 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
 
         // request callback to update time
         clock.addMinuteChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 update();
             }
@@ -107,6 +108,7 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
         // Add component listener to handle frame resizing event
         this.addComponentListener(
                 new ComponentAdapter() {
+                    @Override
                     public void componentResized(ComponentEvent e) {
                         scaleImage();
                     }
@@ -159,6 +161,7 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
         m2.setIcon(tubes[minutes - (minutes / 10) * 10]);
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }
@@ -166,6 +169,7 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
     /**
      * Handle a change to clock properties
      */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         boolean now = clock.getRun();
         if (now) {
@@ -179,6 +183,7 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
 
     private class ButtonListener implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent a) {
             boolean next = !clock.getRun();
             clock.setRun(next);

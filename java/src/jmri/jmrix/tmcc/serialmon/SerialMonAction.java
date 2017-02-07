@@ -20,6 +20,7 @@ public class SerialMonAction extends AbstractAction {
         this("TMCC monitor");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a SerialMonFrame
         SerialMonFrame f = new SerialMonFrame();

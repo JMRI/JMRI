@@ -36,6 +36,7 @@ public class PacketGenAction extends AbstractAction {
         this("Send IEEE 802.15.4 Message");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a PacketGenFrame
         PacketGenFrame f = new PacketGenFrame();

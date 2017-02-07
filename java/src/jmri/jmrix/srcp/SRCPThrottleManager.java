@@ -27,6 +27,7 @@ public class SRCPThrottleManager extends AbstractThrottleManager {
         bus = memo.getBus();
     }
 
+    @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         log.debug("new SRCPThrottle for " + address);
         // Notify ready to go (without waiting for OK?)
@@ -41,6 +42,7 @@ public class SRCPThrottleManager extends AbstractThrottleManager {
     }
 
     // KSL 20040409 - SRCP does not have a 'dispatch' function.
+    @Override
     public boolean hasDispatchFunction() {
         return false;
     }
@@ -49,6 +51,7 @@ public class SRCPThrottleManager extends AbstractThrottleManager {
      * Address 100 and above is a long address
      *
      */
+    @Override
     public boolean canBeLongAddress(int address) {
         return isLongAddress(address);
     }
@@ -57,6 +60,7 @@ public class SRCPThrottleManager extends AbstractThrottleManager {
      * Address 99 and below is a short address
      *
      */
+    @Override
     public boolean canBeShortAddress(int address) {
         return !isLongAddress(address);
     }
@@ -64,6 +68,7 @@ public class SRCPThrottleManager extends AbstractThrottleManager {
     /**
      * Are there any ambiguous addresses (short vs long) on this system?
      */
+    @Override
     public boolean addressTypeUnique() {
         return true;
     }
@@ -75,10 +80,12 @@ public class SRCPThrottleManager extends AbstractThrottleManager {
         return (num >= 100);
     }
 
+    @Override
     public int supportedSpeedModes() {
         return (DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
     }
 
+    @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
             // Form a message to release the loco

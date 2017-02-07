@@ -45,12 +45,14 @@ public class TamsPowerManager implements PowerManager, TamsListener {
     TamsTrafficController tc;
     Thread TamsPowerMonitorThread;
 
+    @Override
     public String getUserName() {
         return "Tams";
     }
 
     int power = UNKNOWN;
 
+    @Override
     public void setPower(int v) throws JmriException {
         log.debug("*** setPower ***");
         power = UNKNOWN; // while waiting for reply
@@ -70,12 +72,14 @@ public class TamsPowerManager implements PowerManager, TamsListener {
 
     int lastRequest = 0;
 
+    @Override
     public int getPower() {
         log.debug("*** getPower ***");
         return power;
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() throws JmriException {
         TamsMessage tm = TamsMessage.getXStatus();
         tc.removePollMessage(tm, this);
@@ -91,6 +95,7 @@ public class TamsPowerManager implements PowerManager, TamsListener {
     // to hear of changes
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
+    @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
@@ -99,11 +104,13 @@ public class TamsPowerManager implements PowerManager, TamsListener {
         pcs.firePropertyChange(p, old, n);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
 
     // to listen for status changes from Tams system
+    @Override
     public void reply(TamsReply tr) {
         if (tm.getReplyType() == 'P'){
             log.debug("*** TamsReply ***");
@@ -151,6 +158,7 @@ public class TamsPowerManager implements PowerManager, TamsListener {
         }
     }
 
+    @Override
     public void message(TamsMessage tm) {
         // messages are ignored
     }

@@ -120,10 +120,12 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
         }
     }
 
+    @Override
     public void message(CanMessage m) {
         log.debug("message received and ignored: " + m.toString());
     }
 
+    @Override
     synchronized public void reply(jmri.jmrix.can.CanReply m) {
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
@@ -157,6 +159,7 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
     /**
      * Internal routine to handle a timeout
      */
+    @Override
     synchronized protected void timeout() {
         if (progState != NOTPROGRAMMING) {
             // we're programming, time to stop
@@ -170,14 +173,17 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
         }
     }
 
+    @Override
     public boolean getLongAddress() {
         return false;
     }
 
+    @Override
     public int getAddressNumber() {
         return nodenumber;
     }
 
+    @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
     }

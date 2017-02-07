@@ -598,6 +598,7 @@ public class RosterSpeedProfile {
         stepQueue.removeFirst();
         _throttle.setSpeedSetting(ss.getSpeedStep());
         stopTimer = new javax.swing.Timer(ss.getDuration(), new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 setNextStep();
             }

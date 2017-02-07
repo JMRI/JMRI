@@ -35,6 +35,7 @@ public class SimpleTurnoutCtrlAction extends JmriAbstractAction {
         this(java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle").getString("Turnouts"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         SimpleTurnoutCtrlFrame f = new SimpleTurnoutCtrlFrame();
@@ -43,6 +44,7 @@ public class SimpleTurnoutCtrlAction extends JmriAbstractAction {
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

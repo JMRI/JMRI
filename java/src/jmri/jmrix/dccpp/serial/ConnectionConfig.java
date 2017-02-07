@@ -30,6 +30,7 @@ public class ConnectionConfig extends jmri.jmrix.dccpp.AbstractDCCppSerialConnec
         super();
     }
 
+    @Override
     public String name() {
         return "DCC++ Serial Port";
     }
@@ -42,6 +43,7 @@ public class ConnectionConfig extends jmri.jmrix.dccpp.AbstractDCCppSerialConnec
         return new String[]{};
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new DCCppAdapter();

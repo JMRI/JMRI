@@ -28,6 +28,7 @@ public class DefaultSignalMastManagerXml
      * @param o Object to store
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         DefaultSignalMastManager m = (DefaultSignalMastManager) o;
 
@@ -213,10 +214,12 @@ public class DefaultSignalMastManagerXml
         return true;
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.getDefault(jmri.SignalMastManager.class).getXMLOrder();
     }

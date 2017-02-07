@@ -113,6 +113,7 @@ public class BeanTablePane extends jmri.util.swing.JmriPanel {
         ++bottomBoxIndex;
     }
 
+    @Override
     public void dispose() {
         if (dataModel != null) {
             dataModel.dispose();

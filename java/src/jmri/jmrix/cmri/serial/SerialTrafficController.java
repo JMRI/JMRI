@@ -40,10 +40,12 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     // The methods to implement the SerialInterface
+    @Override
     public synchronized void addSerialListener(SerialListener l) {
         this.addListener(l);
     }
 
+    @Override
     public synchronized void removeSerialListener(SerialListener l) {
         this.removeListener(l);
     }
@@ -64,11 +66,13 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         }
     }
 
+    @Override
     protected AbstractMRMessage enterProgMode() {
         log.warn("enterProgMode doesnt make sense for C/MRI serial");
         return null;
     }
 
+    @Override
     protected AbstractMRMessage enterNormalMode() {
         // can happen during error recovery, null is OK
         return null;
@@ -77,6 +81,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     /**
      * Forward a SerialMessage to all registered SerialInterface listeners.
      */
+    @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
         ((SerialListener) client).message((SerialMessage) m);
     }
@@ -84,6 +89,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     /**
      * Forward a SerialReply to all registered SerialInterface listeners.
      */
+    @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply m) {
         ((SerialListener) client).reply((SerialReply) m);
     }
@@ -98,6 +104,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * Handles initialization, output and polling for C/MRI Serial Nodes from
      * within the running thread
      */
+    @Override
     protected synchronized AbstractMRMessage pollMessage() {
         // ensure validity of call
         if (getNumNodes() <= 0) {
@@ -147,6 +154,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         }
     }
 
+    @Override
     protected synchronized void handleTimeout(AbstractMRMessage m, AbstractMRListener l) {
         // don't use super behavior, as timeout to init, transmit message is normal
 
@@ -157,6 +165,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     }
 
+    @Override
     protected synchronized void resetTimeout(AbstractMRMessage m) {
         // don't use super behavior, as timeout to init, transmit message is normal
 
@@ -165,6 +174,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     }
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         return mSensorManager;
     }
@@ -172,6 +182,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     /**
      * Forward a preformatted message to the actual interface.
      */
+    @Override
     public void sendSerialMessage(SerialMessage m, SerialListener reply) {
         sendMessage(m, reply);
     }
@@ -207,16 +218,19 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         self = this;
     }
 
+    @Override
     protected AbstractMRReply newReply() {
         return new SerialReply();
     }
 
+    @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         // our version of loadChars doesn't invoke this, so it shouldn't be called
         log.error("Not using endOfMessage, should not be called");
         return false;
     }
 
+    @Override
     protected void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
         int i;
         for (i = 0; i < msg.maxSize(); i++) {
@@ -231,6 +245,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         }
     }
 
+    @Override
     protected void waitForStartOfReply(DataInputStream istream) throws java.io.IOException {
         // loop looking for the start character
         while (readByteProtected(istream) != 0x02) {
@@ -243,6 +258,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * @param msg The output byte stream
      * @return next location in the stream to fill
      */
+    @Override
     protected int addHeaderToOutput(byte[] msg, AbstractMRMessage m) {
         msg[0] = (byte) 0xFF;
         msg[1] = (byte) 0xFF;
@@ -256,6 +272,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * @param msg    The output byte stream
      * @param offset the first byte not yet used
      */
+    @Override
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
         msg[offset] = 0x03;  // etx
     }
@@ -267,6 +284,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * @param m The message to be sent
      * @return Number of bytes
      */
+    @Override
     protected int lengthOfByteStream(AbstractMRMessage m) {
         int len = m.getNumDataElements();
         int cr = 4;

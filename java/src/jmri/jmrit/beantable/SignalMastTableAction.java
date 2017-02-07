@@ -42,14 +42,17 @@ public class SignalMastTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes for the specific case
      * of Signal Masts
      */
+    @Override
     protected void createModel() {
         m = new SignalMastTableDataModel();
     }
 
+    @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleSignalMastTable"));
     }
 
+    @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.SignalMastTable";
     }
@@ -61,6 +64,7 @@ public class SignalMastTableAction extends AbstractTableAction {
     final static int VALUECOL = BeanTableDataModel.VALUECOL;
     final static int SYSNAMECOL = BeanTableDataModel.SYSNAMECOL;
 
+    @Override
     protected void addPressed(ActionEvent e) {
         if (addFrame == null) {
             addFrame = new jmri.jmrit.beantable.signalmast.AddSignalMastJFrame();
@@ -95,6 +99,7 @@ public class SignalMastTableAction extends AbstractTableAction {
         JMenuItem item = new JMenuItem(Bundle.getMessage("MenuItemRepeaters"));
         pathMenu.add(item);
         item.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 jmri.jmrit.beantable.signalmast.SignalMastRepeaterJFrame frame = new jmri.jmrit.beantable.signalmast.SignalMastRepeaterJFrame();
                 frame.setVisible(true);
@@ -123,6 +128,7 @@ public class SignalMastTableAction extends AbstractTableAction {
             super(items);
         }
 
+        @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
                 boolean isSelected, boolean hasFocus, int row, int column) {
             if (isSelected) {
@@ -139,10 +145,12 @@ public class SignalMastTableAction extends AbstractTableAction {
         }
     }
 
+    @Override
     protected String getClassName() {
         return SignalMastTableAction.class.getName();
     }
 
+    @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleSignalGroupTable");
     }

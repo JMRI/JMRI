@@ -156,11 +156,13 @@ public interface Timebase extends NamedBean {
     /**
      * Request a call-back when the bound Rate or Run property changes.
      */
+    @Override
     public void addPropertyChangeListener(PropertyChangeListener l);
 
     /**
      * Remove a request for a call-back when a bound property changes.
      */
+    @Override
     public void removePropertyChangeListener(PropertyChangeListener l);
 
     /**
@@ -183,6 +185,7 @@ public interface Timebase extends NamedBean {
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
      */
+    @Override
     public void dispose();
 
 }

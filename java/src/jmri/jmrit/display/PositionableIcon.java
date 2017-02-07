@@ -32,6 +32,7 @@ public class PositionableIcon extends PositionableLabel {
         super(s, editor);
     }
 
+    @Override
     public Positionable deepClone() {
         PositionableIcon pos = new PositionableIcon(_editor);
         return finishClone(pos);
@@ -64,6 +65,7 @@ public class PositionableIcon extends PositionableLabel {
         return _iconMap.keySet().iterator();
     }
 
+    @Override
     public int maxHeight() {
         int max = super.maxHeight();
         if (_iconMap != null) {
@@ -75,6 +77,7 @@ public class PositionableIcon extends PositionableLabel {
         return max;
     }
 
+    @Override
     public int maxWidth() {
         int max = super.maxWidth();
         if (_iconMap != null) {
@@ -92,6 +95,7 @@ public class PositionableIcon extends PositionableLabel {
     /**
      * ****** popup AbstractAction method overrides ********
      */
+    @Override
     protected void rotateOrthogonal() {
         Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
         while (it.hasNext()) {
@@ -101,6 +105,7 @@ public class PositionableIcon extends PositionableLabel {
         updateSize();
     }
 
+    @Override
     public void setScale(double s) {
         _scale = s;
         if (_iconMap == null) {
@@ -114,6 +119,7 @@ public class PositionableIcon extends PositionableLabel {
         updateSize();
     }
 
+    @Override
     public int getDegrees() {
         if (_text) {
             return super.getDegrees();
@@ -127,6 +133,7 @@ public class PositionableIcon extends PositionableLabel {
         return super.getDegrees();
     }
 
+    @Override
     public void rotate(int deg) {
         _rotate = deg % 360;
         setDegrees(deg);

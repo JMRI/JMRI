@@ -16,10 +16,12 @@ public class NceMessageTest extends TestCase {
     int saveCommandOptions;
     NceTrafficController tc = new NceTrafficController();
 
+    @Override
     public void setUp() {
         saveCommandOptions = tc.getCommandOptions();
     }
 
+    @Override
     public void tearDown() {
         tc.commandOptionSet = false;	// kill warning message
         tc.setCommandOptions(saveCommandOptions);
