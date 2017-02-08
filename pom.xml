@@ -361,6 +361,8 @@
                     <excludes>
                         <!-- ignore until #2601 is resolved -->
                         <exclude>jmri.jmrit.decoderdefn.DuplicateTest</exclude>
+                        <!-- ignore until #2671 is resolved -->
+                        <exclude>jmri.jmrix.roco.z21.simulator.Z21SimulatorAdapterTest</exclude>
                         <!-- ignore to avoid duplicate test runs -->
                         <exclude>apps.tests.AllTest</exclude>
                         <exclude>jmri.HeadLessTest</exclude>
