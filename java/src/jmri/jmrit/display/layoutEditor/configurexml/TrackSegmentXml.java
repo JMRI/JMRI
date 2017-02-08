@@ -44,7 +44,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         element.setAttribute("type2", "" + p.getType2());
         element.setAttribute("dashed", "" + (p.getDashed() ? "yes" : "no"));
         element.setAttribute("mainline", "" + (p.getMainline() ? "yes" : "no"));
-        element.setAttribute("hidden", "" + (p.getHidden() ? "yes" : "no"));
+        element.setAttribute("hidden", "" + (p.isHidden() ? "yes" : "no"));
         element.setAttribute("arc", "" + (p.getArc() ? "yes" : "no"));
         if (p.getArc()) {
             element.setAttribute("flip", "" + (p.getFlip() ? "yes" : "no"));

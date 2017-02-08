@@ -75,7 +75,6 @@ public class TrackSegment extends LayoutTrack {
     private int type2 = 0;
     private boolean dashed = false;
     private boolean mainline = false;
-    private boolean hidden = false;
     private boolean arc = false;
     private boolean flip = false;
     private double angle = 0.0D;
@@ -179,14 +178,6 @@ public class TrackSegment extends LayoutTrack {
 
     public void setDashed(boolean dash) {
         dashed = dash;
-    }
-
-    public boolean getHidden() {
-        return hidden;
-    }
-
-    public void setHidden(boolean hide) {
-        hidden = hide;
     }
 
     public boolean getMainline() {
@@ -1120,7 +1111,7 @@ public class TrackSegment extends LayoutTrack {
 
 
     public void drawDashed(Graphics2D g2, boolean mainline) {
-        if ((!getHidden()) && getDashed() && (mainline == getMainline())) {
+        if ((!isHidden()) && getDashed() && (mainline == getMainline())) {
             LayoutBlock b = getLayoutBlock();
             if (b != null) {
                 g2.setColor(b.getBlockColor());
@@ -1162,7 +1153,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public void drawSolid(Graphics2D g2, boolean isMainline) {
-        if ((!getHidden()) && (!getDashed()) && (isMainline == getMainline())) {
+        if ((!isHidden()) && (!getDashed()) && (isMainline == getMainline())) {
             LayoutBlock b = getLayoutBlock();
             if (b != null) {
                 g2.setColor(b.getBlockColor());
