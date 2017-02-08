@@ -171,7 +171,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             discoverPairs.setEnabled(newValue);
         }
         log.debug("SSP 173 Event: {}; Source: {}", e.getPropertyName(), e.toString()); // doesn't get notified, newDestination
-        if (e.getPropertyName().equals("Frame.active")) { // a very blunt way of redrawing the Pairs table
+        if (e.getPropertyName().equals("Frame.active")) { // a blunt way of redrawing the Pairs table
             updateDetails();
         }
         if (e.getPropertyName().equals("length")) {

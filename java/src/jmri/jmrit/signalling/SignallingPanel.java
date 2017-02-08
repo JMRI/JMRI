@@ -819,14 +819,20 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         return SignalMastPanel;
     }
 
+    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+
     /**
      * Update changes in SML when Update button is pressed in the Edit Logic - Add Logic pane
      */
     void updatePressed(ActionEvent e) {
         sourceMast = (SignalMast) sourceMastBox.getSelectedBean();
         destMast = (SignalMast) destMastBox.getSelectedBean();
-        boolean smlAdded = false;
+        boolean smlPairAdded = false;
 
+        if (sourceMast == destMast || fixedSourceMastLabel.getText() == destMast.getDisplayName()) {
+            JOptionPane.showMessageDialog(null, rb.getString("ErrorSignalMastIdentical"));
+            return;
+        }
         if ((sml == null) && (useLayoutEditor.isSelected())) {
             boolean valid = false;
             try {
@@ -841,11 +847,21 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
-        if (sml == null) { // a new SML
-            smlAdded = true;
+        if (sml == null) { // a new SML directly from the SML Table
             sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).newSignalMastLogic(sourceMast);
-            sml.setDestinationMast(destMast); // check if a similar SML pair already exists when in Add New session
-            // show replace/update dialog TODO
+            // check if a similar SML pair already exists when in Add New session
+            if (!sml.getDestinationList().contains(destMast)) { // not yet defined as a pair
+                smlPairAdded = true;
+                sml.setDestinationMast(destMast);
+            } else {
+                // show replace/update dialog
+                int mes = JOptionPane.showConfirmDialog(null, rb.getString("WarningExistingPair"),
+                        Bundle.getMessage("WarningTitle"),
+                        JOptionPane.YES_NO_OPTION);
+                if (mes == JOptionPane.NO_OPTION) {
+                    return;
+                }
+            }
             fixedSourceMastLabel.setText(sourceMast.getDisplayName());
             fixedDestMastLabel.setText(destMast.getDisplayName());
             sourceMastBox.setVisible(false);
@@ -888,7 +904,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().getTurnout(_includedManualTurnoutList.get(i).getDisplayName());
             NamedBeanHandle<Turnout> namedTurnout = nbhm.getNamedBeanHandle(turnoutName, turnout);
             hashTurnouts.put(namedTurnout, _includedManualTurnoutList.get(i).getState());
-            // no specific, just show the current turnout state as selection in comboBox.
+            // no specific value, just show the current turnout state as selection in comboBox.
             // for existing SML pair, will be updated to show present setting by editDetails()
         }
         sml.setTurnouts(hashTurnouts, destMast);
@@ -899,7 +915,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             Sensor sensor = jmri.InstanceManager.sensorManagerInstance().getSensor(_includedManualSensorList.get(i).getDisplayName());
             NamedBeanHandle<Sensor> namedSensor = nbhm.getNamedBeanHandle(sensorName, sensor);
             hashSensors.put(namedSensor, _includedManualSensorList.get(i).getState());
-            // no specific, just show the current sensor state as selection in comboBox.
+            // no specific value, just show the current sensor state as selection in comboBox.
             // for existing SML pair, will be updated to show present setting by editDetails()
         }
         sml.setSensors(hashSensors, destMast);
@@ -927,8 +943,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         sml.allowTurnoutLock(lockTurnouts.isSelected(), destMast);
         sml.initialise(destMast);
-        if (smlAdded) {firePropertyChange("newDestination", null, destMastBox.getSelectedBean());} // is not picked up by SML SignallingSourcePanel
-        // show new SML in underlying table via SignalMastAppearanceModel()
+        if (smlPairAdded) {
+            log.debug("New SML");
+            firePropertyChange("newDestination", null, destMastBox.getSelectedBean());
+        } // is not picked up by SML SignallingSourcePanel so instead we use a blunt WindowClose event listener
+        // to show new SML in underlying table
     }
 
     /**
@@ -1448,7 +1467,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                     //clearStateVector(row); // activate this method below
                 }
             }
-            //super.propertyChange(e);
         }
 
         public void dispose() {
