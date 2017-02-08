@@ -75,7 +75,6 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         sorter.setComparator(SignalMastAppearanceModel.SYSNAME_COLUMN, new SystemNameComparator());
         RowSorterUtil.setSortOrder(sorter, SignalMastAppearanceModel.SYSNAME_COLUMN, SortOrder.ASCENDING);
         table.setRowSorter(sorter);
-        table.addPropertyChangeListener(this); // should update the table in the Signal Mast Table > Edit Logic pane
         table.setRowSelectionAllowed(false);
         table.setPreferredScrollableViewportSize(new java.awt.Dimension(600, 120));
         _AppearanceModel.configureTable(table);
@@ -173,9 +172,6 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         log.debug("SSP 173 Event: {}; Source: {}", e.getPropertyName(), e.toString()); // doesn't get notified, newDestination
         if (e.getPropertyName().equals("Frame.active")) { // a blunt way of redrawing the Pairs table
             updateDetails();
-        }
-        if (e.getPropertyName().equals("length")) {
-            _AppearanceModel.fireTableDataChanged();
         }
     }
 
