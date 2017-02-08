@@ -117,6 +117,7 @@ public abstract class AppsBase {
         if (preferenceFileExists && !GraphicsEnvironment.isHeadless()) {
             r = new Runnable() {
 
+                @Override
                 public void run() {
                     try {
                         InstanceManager.getOptionalDefault(TabbedPreferences.class).ifPresent(tp -> {
@@ -134,6 +135,7 @@ public abstract class AppsBase {
         if (Boolean.getBoolean("org.jmri.python.preload")) {
             r = new Runnable() {
 
+                @Override
                 public void run() {
                     try {
                         JmriScriptEngineManager.getDefault().initializeAllEngines();
@@ -345,6 +347,7 @@ public abstract class AppsBase {
         InstanceManager.getDefault(jmri.ShutDownManager.class).
                 register(new AbstractShutDownTask("Writing Blocks") {
 
+                    @Override
                     public boolean execute() {
                         // Save block values prior to exit, if necessary
                         log.debug("Start writing block info");

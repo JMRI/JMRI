@@ -31,6 +31,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     JButton b = new JButton("Configure C/MRI nodes");
 
+    @Override
     public void loadDetails(JPanel details) {
 
         setInstance();
@@ -48,10 +49,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return ResourceBundle.getBundle("jmri.jmrix.cmri.CmriActionListBundle");
     }
 
+    @Override
     public String name() {
         return "Serial";
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SerialDriverAdapter();

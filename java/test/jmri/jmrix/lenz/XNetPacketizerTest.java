@@ -1,9 +1,7 @@
 package jmri.jmrix.lenz;
 
-import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,12 +31,15 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
         }
 
         // methods removed for testing
+        @Override
         protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
         } // don't care about timeout
 
+        @Override
         protected void reportReceiveLoopException(Exception e) {
         }
 
+        @Override
         protected void portWarn(Exception e) {
         }
     }

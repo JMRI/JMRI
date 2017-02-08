@@ -7,7 +7,6 @@ import com.digi.xbee.api.packet.common.RemoteATCommandPacket;
 import com.digi.xbee.api.packet.common.TransmitPacket;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
-import com.digi.xbee.api.io.IOValue;
 
 /**
  * This is a wrapper class for a Digi XBeeAPIPacket.
@@ -71,6 +70,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
         xbm = request;
     }
 
+    @Override
     public String toMonitorString() {
         if (xbm != null) {
             return xbm.toString();
@@ -79,6 +79,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
         }
     }
 
+    @Override
     public String toString() {
         String s = "";
         byte packet[] = xbm.getPacketData();

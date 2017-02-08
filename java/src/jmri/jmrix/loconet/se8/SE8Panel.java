@@ -75,10 +75,12 @@ public class SE8Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         setTypeWord(0x72);  // configure SE8 message type
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.loconet.se8.SE8Frame"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemSE8cProgrammer"));
     }
@@ -88,6 +90,7 @@ public class SE8Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
      * <p>
      * Used before write operations start
      */
+    @Override
     protected void copyToOpsw() {
         opsw[1] = fullmode.isSelected();
         opsw[2] = twoaspects.isSelected();
@@ -151,6 +154,7 @@ public class SE8Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         }
     }
 
+    @Override
     protected void updateDisplay() {
         // binary switches
         fullmode.setSelected(opsw[1]);
@@ -202,6 +206,7 @@ public class SE8Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
     }
 
+    @Override
     protected int nextState(int state) {
         switch (state) {
             case 1:

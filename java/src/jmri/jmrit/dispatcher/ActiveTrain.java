@@ -428,6 +428,7 @@ public class ActiveTrain {
         if (delaySensorListener == null) {
             final ActiveTrain at = this;
             delaySensorListener = new java.beans.PropertyChangeListener() {
+                @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     if (e.getPropertyName().equals("KnownState")) {
                         if (((Integer) e.getNewValue()).intValue() == jmri.Sensor.ACTIVE) {
@@ -456,6 +457,7 @@ public class ActiveTrain {
         if (restartSensorListener == null) {
             final ActiveTrain at = this;
             restartSensorListener = new java.beans.PropertyChangeListener() {
+                @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     if (e.getPropertyName().equals("KnownState")) {
                         if (((Integer) e.getNewValue()).intValue() == jmri.Sensor.ACTIVE) {

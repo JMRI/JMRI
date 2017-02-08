@@ -1,13 +1,11 @@
 package jmri.managers;
 
-import jmri.Throttle;
 import jmri.DccThrottle;
 import jmri.ThrottleManager;
 import jmri.ThrottleListener;
 import jmri.DccLocoAddress;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 

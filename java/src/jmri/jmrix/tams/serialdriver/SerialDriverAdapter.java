@@ -32,6 +32,7 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
         setManufacturer(jmri.jmrix.tams.TamsConnectionTypeList.TAMS);
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         // open the port, check ability to set moderators
         try {
@@ -112,6 +113,7 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
      * set up all of the other objects to operate with an NCE command station
      * connected to this port
      */
+    @Override
     public void configure() {
         TamsTrafficController tc = new TamsTrafficController();
         this.getSystemConnectionMemo().setTamsTrafficController(tc);
@@ -123,6 +125,7 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
     }
 
     // base class methods for the TamsPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -131,6 +134,7 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -143,6 +147,7 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }

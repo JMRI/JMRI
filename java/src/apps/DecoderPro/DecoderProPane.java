@@ -32,23 +32,28 @@ public class DecoderProPane extends apps.AppsLaunchPane {
         super();
     }
 
+    @Override
     protected String windowHelpID() {
         return "package.apps.DecoderPro.DecoderPro";
     }
 
+    @Override
     protected String logo() {
         return "resources/DecoderPro.gif";
     }
 
+    @Override
     protected String line1() {
         return MessageFormat.format(Bundle.getMessage("DecoderProVersionCredit"),
                 new Object[]{jmri.Version.name()});
     }
 
+    @Override
     protected String line2() {
         return "http://jmri.org/DecoderPro ";
     }
 
+    @Override
     protected JPanel statusPanel() {
         JPanel j = new JPanel();
         j.setLayout(new BoxLayout(j, BoxLayout.Y_AXIS));
@@ -58,6 +63,7 @@ public class DecoderProPane extends apps.AppsLaunchPane {
         Action serviceprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("DpButtonUseProgrammingTrack"));
         Action opsprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("DpButtonProgramOnMainTrack"));
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Apps.handleQuit();
             }

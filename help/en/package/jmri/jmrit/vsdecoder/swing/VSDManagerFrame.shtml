@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- $Id$ -->
 
-  <title>JMRI: Virtual Sound Decoder</title>
+  <title>JMRI: Virtual Sound Decoder Manager Window</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <meta content="Mark Underwood" name="Author">
@@ -28,8 +28,9 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI Virtual Sound Decoder</h1>This is the quick
-      reference page for the JMRI Virtual Sound Decoder tool.<br>
+      <h1>JMRI Virtual Sound Decoder Manager Window</h1>
+      This is the quick
+      reference page for the Manager window in the JMRI Virtual Sound Decoder tool.<br>
       <br>
       What is this thing? The Virtual Sound Secoder ("VSDecoder"
       for short) sits on your computer, listening to its assigned
@@ -77,7 +78,10 @@
 
       <h4>Profile Selection</h4>To select a profile, you must first
       load a "VSD File". An example VSD file is included with the
-      package, and you can make (and share!) your own. Click the
+      package, 
+      more examples are available for download
+      <a href="https://github.com/JMRI/vsdecoder">on the web</a>
+      and you can make (and share!) your own. Click the
       "Load VSD File" button or choose "File-&gt;Load VSD File"
       from the menu bar to load a VSD file. You can't do anything
       else (except pick a roster entry) until a VSD file is

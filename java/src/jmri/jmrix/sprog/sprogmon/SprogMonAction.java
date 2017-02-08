@@ -20,6 +20,7 @@ public class SprogMonAction extends AbstractAction {
         _memo = memo;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a SprogMonFrame
         SprogMonFrame f = new SprogMonFrame(_memo);

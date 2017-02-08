@@ -65,14 +65,17 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
     protected boolean logDebug = false;
 
     // The methods to implement the IEEE802154Interface
+    @Override
     public synchronized void addIEEE802154Listener(IEEE802154Listener l) {
         this.addListener(l);
     }
 
+    @Override
     public synchronized void removeIEEE802154Listener(IEEE802154Listener l) {
         this.removeListener(l);
     }
 
+    @Override
     protected int enterProgModeDelayTime() {
         // we should to wait at least a second after enabling the programming track
         return 1000;
@@ -90,6 +93,7 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
     /**
      * Forward a reply to all registered IEEE802154Interface listeners.
      */
+    @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply r) {
         ((IEEE802154Listener) client).reply((IEEE802154Reply) r);
     }
@@ -97,10 +101,12 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
     /**
      * Eventually, do initialization if needed
      */
+    @Override
     protected AbstractMRMessage pollMessage() {
         return null;
     }
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         return null;
     }
@@ -108,10 +114,12 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
     /**
      * Forward a preformatted message to the actual interface.
      */
+    @Override
     public void sendIEEE802154Message(IEEE802154Message m, IEEE802154Listener reply) {
         sendMessage(m, reply);
     }
 
+    @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (logDebug) {
             log.debug("forward " + m);
@@ -119,10 +127,12 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
         super.forwardToPort(m, reply);
     }
 
+    @Override
     protected AbstractMRMessage enterProgMode() {
         return null;
     }
 
+    @Override
     protected AbstractMRMessage enterNormalMode() {
         return null;
     }
@@ -140,6 +150,7 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
     /**
      * IEEE 802.15.4 messages start with a 0x7E delimiter byte.
      */
+    @Override
     protected void waitForStartOfReply(java.io.DataInputStream istream) throws java.io.IOException {
         // loop looking for the start character
         while (readByteProtected(istream) != 0x7E) {

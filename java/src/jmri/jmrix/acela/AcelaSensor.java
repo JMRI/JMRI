@@ -27,6 +27,7 @@ public class AcelaSensor extends AbstractSensor {
      * <P>
      * Since status is continually being updated, this isn't active now.
      */
+    @Override
     public void requestUpdateFromLayout() {
     }
 }

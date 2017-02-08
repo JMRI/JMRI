@@ -2,12 +2,9 @@ package jmri.jmrix.mrc;
 
 import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
-import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**

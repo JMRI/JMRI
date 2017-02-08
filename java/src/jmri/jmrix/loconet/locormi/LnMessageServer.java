@@ -27,6 +27,7 @@ public class LnMessageServer extends UnicastRemoteObject implements LnMessageSer
         super();
     }
 
+    @Override
     public LnMessageBufferInterface getMessageBuffer() throws RemoteException {
         return new LnMessageBuffer();
     }

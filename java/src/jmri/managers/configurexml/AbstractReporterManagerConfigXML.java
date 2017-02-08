@@ -31,6 +31,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
      * @param o Object to store, of type ReporterManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element reporters = new Element("reporters");
         setStoreElementClass(reporters);
@@ -113,6 +114,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         return result;
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.getDefault(jmri.ReporterManager.class).getXMLOrder();
     }

@@ -21,14 +21,17 @@ public class InternalSensorManagerXml extends jmri.managers.configurexml.Abstrac
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element sensors) {
         sensors.setAttribute("class", this.getClass().getName());
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
 
+    @Override
     public Element store(Object o) {
         Element sensors = new Element("sensors");
 

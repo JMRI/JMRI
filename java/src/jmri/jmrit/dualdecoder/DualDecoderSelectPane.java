@@ -52,6 +52,7 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
             buttons[i] = b;
             b.setActionCommand("" + i);
             b.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     select(e.getActionCommand());
                 }
@@ -67,12 +68,14 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
         JButton t;
         pane2.add(searchButton);
         searchButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 search();
             }
         });
         pane2.add(t = new JButton("Reset"));
         t.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 reset();
             }
@@ -83,6 +86,7 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
         pane3.add(t = new JButton("Init DH163 + Soundtraxx"));
         t.setToolTipText("This will configure a loco contains a DH163 and a decoder not supporting the proposed protocol");
         t.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 doInit();
             }
@@ -186,6 +190,7 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
     final int SECONDCV16 = 13;
     int state = IDLE;
 
+    @Override
     public void programmingOpReply(int value, int retcode) {
         switch (mode) {
             case SEARCH:

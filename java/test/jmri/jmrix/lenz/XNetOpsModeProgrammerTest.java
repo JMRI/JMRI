@@ -5,7 +5,6 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -155,6 +154,7 @@ public class XNetOpsModeProgrammerTest {
         op = new XNetOpsModeProgrammer(5, tc);
 
         pl = new jmri.ProgListener(){
+           @Override
            public void programmingOpReply(int value, int status){
                  lastValue = value;
                  lastStatus = status;

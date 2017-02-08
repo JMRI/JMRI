@@ -3,7 +3,6 @@ package jmri;
 import java.util.List;
 import jmri.jmrit.audio.AudioFactory;
 
-import javax.annotation.CheckReturnValue;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 

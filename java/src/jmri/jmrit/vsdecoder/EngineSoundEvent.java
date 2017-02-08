@@ -167,6 +167,7 @@ public class EngineSoundEvent extends SoundEvent implements PropertyChangeListen
 
         // Get the SoundEvent's button type and create it.
         engine_pane.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 guiAction(evt);
             }

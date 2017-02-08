@@ -70,6 +70,7 @@ public class OsIndicatorPanel extends BasePanel {
 
         viewButton = new JButton(rb.getString("ButtonView"));
         viewButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 viewPressed();
             }
@@ -77,6 +78,7 @@ public class OsIndicatorPanel extends BasePanel {
         p2xs.add(viewButton);
         addButton = new JButton(rb.getString("ButtonAddUpdate"));
         addButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 addPressed();
             }

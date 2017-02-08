@@ -18,6 +18,7 @@ public class NixieClockAction extends AbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         NixieClockFrame f = new NixieClockFrame();

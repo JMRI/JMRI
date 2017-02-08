@@ -54,6 +54,7 @@ public class AllocatedSection {
         }
         // listen for changes in Section occupancy
         mSection.addPropertyChangeListener(mSectionListener = new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 handleSectionChange(e);
             }
@@ -266,6 +267,7 @@ public class AllocatedSection {
             if (b != null) {
                 final int index = i;  // block index
                 b.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
+                    @Override
                     public void propertyChange(java.beans.PropertyChangeEvent e) {
                         handleBlockChange(index, e);
                     }
@@ -367,6 +369,7 @@ public class AllocatedSection {
             _occ = occ;
         }
 
+        @Override
         public void run() {
             // delay to insure that change is not a short spike
             try {

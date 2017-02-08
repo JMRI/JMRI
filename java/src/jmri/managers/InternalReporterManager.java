@@ -18,13 +18,16 @@ public class InternalReporterManager extends AbstractReporterManager {
      *
      * @return new null
      */
+    @Override
     protected Reporter createNewReporter(String systemName, String userName) {
         return new AbstractReporter(systemName, userName) {
 
+            @Override
             public int getState() {
                 return state;
             }
 
+            @Override
             public void setState(int s) {
                 state = s;
             }
@@ -37,6 +40,7 @@ public class InternalReporterManager extends AbstractReporterManager {
         return true;
     }
 
+    @Override
     public String getSystemPrefix() {
         return "I";
     }

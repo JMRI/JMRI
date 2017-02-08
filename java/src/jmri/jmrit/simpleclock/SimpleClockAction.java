@@ -20,6 +20,7 @@ public class SimpleClockAction extends AbstractAction {
         super("Fast Clock Setup");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         SimpleClockFrame f = new SimpleClockFrame();

@@ -84,6 +84,7 @@ public class PositionablePopupUtil {
         return util;
     }
 
+    @Override
     public String toString() {
         return _parent.getNameString() + ": fixedWidth= " + fixedWidth + ", fixedHeight= " + fixedHeight
                 + ", margin= " + margin + ", borderSize= " + borderSize;

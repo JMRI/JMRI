@@ -107,6 +107,7 @@ public class DebuggerTimePane extends JPanel
 
     Measurement lastPoint = null;
 
+    @Override
     public void notify(Reading r) {
         // Display this set of time values
         for (int i = 1; i <= Math.min(r.getNValues(), times.length - 1); i++) {
@@ -115,6 +116,7 @@ public class DebuggerTimePane extends JPanel
 
     }
 
+    @Override
     public void notify(Measurement m) {
         try {
             for (int i = 1; i <= NUMSENSORS; i++) {

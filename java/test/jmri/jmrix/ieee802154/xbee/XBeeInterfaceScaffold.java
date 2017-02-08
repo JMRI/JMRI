@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import com.digi.xbee.api.connection.IConnectionInterface;
-import com.digi.xbee.api.exceptions.OperationNotSupportedException;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
 import com.digi.xbee.api.models.XBeeProtocol;
@@ -107,15 +106,18 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
     /**
      * Avoid error message, normal in parent
      */
+    @Override
     protected void connectionWarn() {
     }
 
     /**
      * Avoid error message, normal in parent
      */
+    @Override
     protected void portWarn(Exception e) {
     }
 
+    @Override
     public void receiveLoop() {
     }
 

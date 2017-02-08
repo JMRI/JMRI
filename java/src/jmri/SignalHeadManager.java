@@ -29,6 +29,7 @@ import javax.annotation.Nonnull;
 public interface SignalHeadManager extends Manager {
 
     // to free resources when no longer used
+    @Override
     public void dispose();
 
     /**
@@ -50,6 +51,7 @@ public interface SignalHeadManager extends Manager {
     /**
      * Get a list of all SignalHead system names.
      */
-    @Nonnull public List<String> getSystemNameList();
+    @Nonnull@Override
+ public List<String> getSystemNameList();
 
 }

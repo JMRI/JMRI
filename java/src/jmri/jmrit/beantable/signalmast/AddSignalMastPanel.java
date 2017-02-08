@@ -206,6 +206,7 @@ public class AddSignalMastPanel extends JPanel {
         cancel.setVisible(true);
         buttonHolder.add(cancel);
         cancel.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 cancelPressed(e);
             } // Cancel button on add new mast pane
@@ -213,6 +214,7 @@ public class AddSignalMastPanel extends JPanel {
         cancel.setVisible(true);
         buttonHolder.add(create);
         create.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 okPressed(e);
             } // Create button on add new mast pane
@@ -220,6 +222,7 @@ public class AddSignalMastPanel extends JPanel {
         create.setVisible(true);
         buttonHolder.add(apply);
         apply.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 okPressed(e);
             } // Apply button on Edit existing mast pane
@@ -233,18 +236,21 @@ public class AddSignalMastPanel extends JPanel {
         }
 
         signalMastDriver.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 updateSelectedDriver();
             }
         });
 
         allowUnLit.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 updateUnLit();
             }
         });
 
         includeUsed.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 refreshHeadComboBox();
             }
@@ -265,6 +271,7 @@ public class AddSignalMastPanel extends JPanel {
         updateHeads();
         refreshHeadComboBox();
         sigSysBox.addItemListener(new ItemListener() {
+            @Override
             public void itemStateChanged(ItemEvent e) {
                 loadMastDefinitions();
                 updateSelectedDriver();
@@ -683,6 +690,7 @@ public class AddSignalMastPanel extends JPanel {
             log.warn("in loadMastDefinitions", e);
         }
         mastBox.addItemListener(new ItemListener() {
+            @Override
             public void itemStateChanged(ItemEvent e) {
                 updateSelectedDriver();
             }
@@ -1315,6 +1323,7 @@ public class AddSignalMastPanel extends JPanel {
                 panel.setBorder(border);
 
                 disabledCheck.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setAspectDisabled(disabledCheck.isSelected());
                     }
@@ -1342,6 +1351,7 @@ public class AddSignalMastPanel extends JPanel {
         border.setTitle(Bundle.getMessage("DCCUnlitAspectNumber"));
         dccUnLitPanel.setBorder(border);
         unLitAspectField.addFocusListener(new FocusListener() {
+            @Override
             public void focusLost(FocusEvent e) {
                 if (unLitAspectField.getText().equals("")) {
                     return;
@@ -1351,6 +1361,7 @@ public class AddSignalMastPanel extends JPanel {
                 }
             }
 
+            @Override
             public void focusGained(FocusEvent e) {
             }
 
@@ -1397,6 +1408,7 @@ public class AddSignalMastPanel extends JPanel {
         dccMastPanel.add(dccAspectAddressField);
         if (dccAddressListener == null) {
             dccAddressListener = new FocusListener() {
+                @Override
                 public void focusLost(FocusEvent e) {
                     if (dccAspectAddressField.getText().equals("")) {
                         return;
@@ -1404,6 +1416,7 @@ public class AddSignalMastPanel extends JPanel {
                     validateDCCAddress();
                 }
 
+                @Override
                 public void focusGained(FocusEvent e) {
                 }
 
@@ -1499,6 +1512,7 @@ public class AddSignalMastPanel extends JPanel {
             mastSelect.setSelectedIndex(0);
             mastSelect.addActionListener(new ActionListener() {
                 @SuppressWarnings("unchecked") // e.getSource() cast from mastSelect source
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     JComboBox<String> eb = (JComboBox<String>) e.getSource();
                     String sourceMast = (String) eb.getSelectedItem();
@@ -1590,6 +1604,7 @@ public class AddSignalMastPanel extends JPanel {
                 border.setTitle(aspect);
                 panel.setBorder(border);
                 aspectId.addFocusListener(new FocusListener() {
+                    @Override
                     public void focusLost(FocusEvent e) {
                         if (aspectId.getText().equals("")) {
                             return;
@@ -1599,11 +1614,13 @@ public class AddSignalMastPanel extends JPanel {
                         }
                     }
 
+                    @Override
                     public void focusGained(FocusEvent e) {
                     }
 
                 });
                 disabledCheck.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setAspectDisabled(disabledCheck.isSelected());
                     }
@@ -1648,6 +1665,7 @@ public class AddSignalMastPanel extends JPanel {
         }
         columnChoice.setSelectedIndex(bitNum - 1);
         columnChoice.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 String newBitnumString = (String) columnChoice.getSelectedItem();
                 bitNumChanged(Integer.valueOf(newBitnumString));
@@ -1977,31 +1995,37 @@ public class AddSignalMastPanel extends JPanel {
         matrixUnLitPanel.setToolTipText(Bundle.getMessage("MatrixUnlitTooltip"));
 
         UnLitCheck1.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setUnLitBit(1, UnLitCheck1.isSelected());
             }
         });
         UnLitCheck2.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setUnLitBit(2, UnLitCheck2.isSelected());
             }
         });
         UnLitCheck3.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setUnLitBit(3, UnLitCheck3.isSelected());
             }
         });
         UnLitCheck4.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setUnLitBit(4, UnLitCheck4.isSelected());
             }
         });
         UnLitCheck5.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setUnLitBit(5, UnLitCheck5.isSelected());
             }
         });
         UnLitCheck6.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) { setUnLitBit(6, UnLitCheck6.isSelected());
             }
         });
@@ -2230,37 +2254,44 @@ public class AddSignalMastPanel extends JPanel {
                 panel.setBorder(border);
 
                 disabledCheck.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setAspectDisabled(disabledCheck.isSelected());
                     }
                 });
 
                 bitCheck1.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setBit(1, bitCheck1.isSelected());
                     }
                 });
                 bitCheck2.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setBit(2, bitCheck2.isSelected());
                     }
                 });
                 bitCheck3.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setBit(3, bitCheck3.isSelected());
                     }
                 });
                 bitCheck4.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setBit(4, bitCheck4.isSelected());
                     }
                 });
                 bitCheck5.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setBit(5, bitCheck5.isSelected());
                     }
                 });
                 bitCheck6.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) { setBit(6, bitCheck6.isSelected());
                     }
                 });

@@ -52,6 +52,7 @@ class FloatTrigger extends Trigger implements PropertyChangeListener {
         return (compare_type);
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent event) {
         Float next;
         boolean compare = false;

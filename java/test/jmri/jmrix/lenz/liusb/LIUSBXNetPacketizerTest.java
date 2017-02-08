@@ -1,9 +1,7 @@
 package jmri.jmrix.lenz.liusb;
 
-import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,6 +15,7 @@ import org.junit.Test;
 public class LIUSBXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest {
 
     @Test
+    @Override
     public void testOutbound() throws Exception {
         LIUSBXNetPacketizer c = (LIUSBXNetPacketizer)tc;
         // connect to iostream via port controller scaffold

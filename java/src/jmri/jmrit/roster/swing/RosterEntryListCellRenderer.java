@@ -21,6 +21,7 @@ public class RosterEntryListCellRenderer extends JLabel implements ListCellRende
     }
 
     // FIXME: JList needs typed
+    @Override
     public Component getListCellRendererComponent(@SuppressWarnings("rawtypes") JList list, Object value,
             int index, boolean isSelected, boolean cellHasFocus) {
         if (value != null) {

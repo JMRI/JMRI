@@ -18,6 +18,7 @@ public class CanUsbDriverAdapter
     /**
      * Get an array of valid baud rates.
      */
+    @Override
     public String[] validBaudRates() {
         return new String[]{"57,600", "115,200", "230,400", "250,000", "333,333", "460,800", "500,000"};
     }
@@ -25,6 +26,7 @@ public class CanUsbDriverAdapter
     /**
      * And the corresponding values.
      */
+    @Override
     public int[] validBaudValues() {
         return new int[]{57600, 115200, 230400, 250000, 333333, 460800, 500000};
     }

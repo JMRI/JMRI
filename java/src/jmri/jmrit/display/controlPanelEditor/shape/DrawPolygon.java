@@ -34,6 +34,7 @@ public class DrawPolygon extends DrawFrame {
         _editing = false;
     }
 
+    @Override
     protected JPanel makeParamsPanel(PositionableShape ps) {
         JPanel panel = super.makeParamsPanel(ps);
        _pShape = (PositionablePolygon)ps;
@@ -229,8 +230,10 @@ public class DrawPolygon extends DrawFrame {
         return false;
     }
 
+    @Override
     void setDisplayWidth(int w) {
     }
+    @Override
     void setDisplayHeight(int h) {
     }
 

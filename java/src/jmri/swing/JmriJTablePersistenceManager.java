@@ -600,6 +600,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
 
         @Override
         public void columnRemoved(TableColumnModelEvent e) {
+            this.manager.clearState(this.table); // deletes column data from xml file
             this.saveState();
             log.debug("Got columnRemoved for {} ({} -> {})", this.table.getName(), e.getFromIndex(), e.getToIndex());
         }

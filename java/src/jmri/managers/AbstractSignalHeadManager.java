@@ -24,18 +24,22 @@ public class AbstractSignalHeadManager extends AbstractManager
         jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
     }
 
+    @Override
     public int getXMLOrder() {
         return Manager.SIGNALHEADS;
     }
 
+    @Override
     public String getSystemPrefix() {
         return "I";
     }
 
+    @Override
     public char typeLetter() {
         return 'H';
     }
 
+    @Override
     public SignalHead getSignalHead(String name) {
         if (name == null || name.length() == 0) {
             return null;
@@ -48,14 +52,17 @@ public class AbstractSignalHeadManager extends AbstractManager
         return getBySystemName(name);
     }
 
+    @Override
     public SignalHead getBySystemName(String name) {
         return (SignalHead) _tsys.get(name);
     }
 
+    @Override
     public SignalHead getByUserName(String key) {
         return (SignalHead) _tuser.get(key);
     }
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameSignalHead");
     }

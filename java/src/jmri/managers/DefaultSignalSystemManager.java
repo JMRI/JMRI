@@ -38,6 +38,7 @@ public class DefaultSignalSystemManager extends AbstractManager
         load();
     }
 
+    @Override
     public int getXMLOrder() {
         return 65400;
     }
@@ -49,14 +50,17 @@ public class DefaultSignalSystemManager extends AbstractManager
     protected void registerSelf() {
     }
 
+    @Override
     public String getSystemPrefix() {
         return "I";
     }
 
+    @Override
     public char typeLetter() {
         return 'F';
     }
 
+    @Override
     public SignalSystem getSystem(String name) {
         SignalSystem t = getByUserName(name);
         if (t != null) {
@@ -66,10 +70,12 @@ public class DefaultSignalSystemManager extends AbstractManager
         return getBySystemName(name);
     }
 
+    @Override
     public SignalSystem getBySystemName(String key) {
         return (SignalSystem) _tsys.get(key);
     }
 
+    @Override
     public SignalSystem getByUserName(String key) {
         return (SignalSystem) _tuser.get(key);
     }
@@ -263,6 +269,7 @@ public class DefaultSignalSystemManager extends AbstractManager
     static class AspectFile extends XmlFile {
     }
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameSignalSystem");
     }

@@ -133,6 +133,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         add(p);
 
         scanLoopButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (scanLoopButton.getText().equals(rb.getString("ButtonScanChannelsStop"))) {
                     scanLoopStopButtonActionPerformed();
@@ -144,6 +145,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         });
 
         clearButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 scanLoopStopButtonActionPerformed();
                 clearButtonActionPerformed();
@@ -207,6 +209,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
      * match, a message is displayed on the status line in the GUI, else nothing
      * is displayed in the GUI status line.
      */
+    @Override
     public void message(LocoNetMessage m) {
         if (stopRequested == true) {
             return;
@@ -374,6 +377,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         updateScanLoopCountStatus(loopNum, whenToStop);
 
         tmr = new javax.swing.Timer(scanLoopDelay, new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 tmr.stop();
                 if (stopRequested == true) {
@@ -465,6 +469,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
 
         if (waitingForPreviousGroupChannel == false) {
             exitTmr = new javax.swing.Timer(200, new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     if (memo.getLnTrafficController() != null) {
                         memo.getLnTrafficController().removeLocoNetListener(~0, safe);
@@ -488,6 +493,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     private final static Logger log = LoggerFactory.getLogger(DuplexGroupScanPanel.class.getName());
 
+    @Override
     public void stateChanged(javax.swing.event.ChangeEvent e) {
         graphicArea.repaint();
     }

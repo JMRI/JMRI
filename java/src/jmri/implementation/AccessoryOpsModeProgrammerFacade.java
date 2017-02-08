@@ -65,23 +65,28 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
      * Don't pass this mode through, as the underlying doesn't have it (although
      * we should check)
      */
+    @Override
     public void setMode(ProgrammingMode p) {
     }
 
     AddressedProgrammer aprog;
 
+    @Override
     public boolean getCanRead() {
         return prog.getCanRead();
     }
 
+    @Override
     public boolean getCanRead(String addr) {
         return prog.getCanRead(addr);
     }
 
+    @Override
     public boolean getCanWrite() {
         return prog.getCanWrite();
     }
 
+    @Override
     public boolean getCanWrite(String addr) {
         return prog.getCanWrite(addr);
     }
@@ -91,6 +96,7 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
     String _cv;	// remember the cv number being read/written
 
     // programming interface
+    @Override
     synchronized public void writeCV(String cv, int val, ProgListener p) throws ProgrammerException {
         _val = val;
         useProgrammer(p);
@@ -104,10 +110,12 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
         p.programmingOpReply(val, ProgListener.OK);
     }
 
+    @Override
     synchronized public void confirmCV(String cv, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(cv, p);
     }
 
+    @Override
     synchronized public void readCV(String cv, jmri.ProgListener p) throws jmri.ProgrammerException {
         useProgrammer(p);
         state = ProgState.PROGRAMMING;
@@ -138,6 +146,7 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
 
     // get notified of the final result
     // Note this assumes that there's only one phase to the operation
+    @Override
     public void programmingOpReply(int value, int status) {
         if (log.isDebugEnabled()) {
             log.debug("notifyProgListenerEnd value " + value + " status " + status);

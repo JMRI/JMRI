@@ -25,6 +25,7 @@ public class LoadStorePanel extends javax.swing.JPanel {
         b1 = new JButton("Set Defaults");
         b1.setToolTipText("Store new default values");
         b1.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 storeDefault();
             }
@@ -33,6 +34,7 @@ public class LoadStorePanel extends javax.swing.JPanel {
         b1 = new JButton("Store...");
         b1.setToolTipText("Store in a user-selected file");
         b1.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 store();
             }
@@ -41,6 +43,7 @@ public class LoadStorePanel extends javax.swing.JPanel {
         b1 = new JButton("Load...");
         b1.setToolTipText("Load from a user-selected file");
         b1.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 load();
             }

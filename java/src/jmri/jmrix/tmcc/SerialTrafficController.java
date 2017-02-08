@@ -37,19 +37,23 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     }
 
     // The methods to implement the SerialInterface
+    @Override
     public synchronized void addSerialListener(SerialListener l) {
         this.addListener(l);
     }
 
+    @Override
     public synchronized void removeSerialListener(SerialListener l) {
         this.removeListener(l);
     }
 
+    @Override
     protected AbstractMRMessage enterProgMode() {
         log.warn("enterProgMode doesnt make sense for TMCC serial");
         return null;
     }
 
+    @Override
     protected AbstractMRMessage enterNormalMode() {
         return null;
     }
@@ -57,6 +61,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     /**
      * Forward a SerialMessage to all registered SerialInterface listeners.
      */
+    @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
         ((SerialListener) client).message((SerialMessage) m);
     }
@@ -64,6 +69,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     /**
      * Forward a SerialReply to all registered SerialInterface listeners.
      */
+    @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply m) {
         ((SerialListener) client).reply((SerialReply) m);
     }
@@ -72,11 +78,13 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
      * Handles initialization, output and polling for TMCC from within the
      * running thread
      */
+    @Override
     protected synchronized AbstractMRMessage pollMessage() {
         // no polling in this protocol
         return null;
     }
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         return null;
     }
@@ -84,6 +92,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     /**
      * Forward a preformatted message to the actual interface.
      */
+    @Override
     public void sendSerialMessage(SerialMessage m, SerialListener reply) {
         sendMessage(m, reply);
     }
@@ -119,16 +128,19 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         self = this;
     }
 
+    @Override
     protected AbstractMRReply newReply() {
         return new SerialReply();
     }
 
+    @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         // our version of loadChars doesn't invoke this, so it shouldn't be called
         log.error("Not using endOfMessage, should not be called");
         return false;
     }
 
+    @Override
     protected void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
         byte char1;
         char1 = readByteProtected(istream);
@@ -145,6 +157,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         msg.setElement(2, char1 & 0xFF);
     }
 
+    @Override
     protected void waitForStartOfReply(DataInputStream istream) throws java.io.IOException {
     }
 
@@ -154,6 +167,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
      * @param msg The output byte stream
      * @return next location in the stream to fill
      */
+    @Override
     protected int addHeaderToOutput(byte[] msg, AbstractMRMessage m) {
         return 0;
     }
@@ -164,6 +178,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
      * @param msg    The output byte stream
      * @param offset the first byte not yet used
      */
+    @Override
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
     }
 
@@ -174,6 +189,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
      * @param m The message to be sent
      * @return Number of bytes for msg (3) plus preceeding NOP (3)
      */
+    @Override
     protected int lengthOfByteStream(AbstractMRMessage m) {
         return 6;
     }
@@ -184,6 +200,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used in debug log, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
+    @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (log.isDebugEnabled()) {
             log.debug("forwardToPort message: [" + m + "]");

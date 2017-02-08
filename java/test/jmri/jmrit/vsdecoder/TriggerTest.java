@@ -47,12 +47,15 @@ public class TriggerTest extends TestCase {
         Assert.assertEquals("set trigger type", Trigger.TriggerType.BOOLEAN,
                 uut.getTriggerType());
         TriggerListener tl = new TriggerListener() {
+            @Override
             public void takeAction() {
             }
 
+            @Override
             public void takeAction(int i) {
             }
 
+            @Override
             public void takeAction(float f) {
             }
         };

@@ -52,6 +52,7 @@ public class SampleAutomaton2 extends AbstractAutomaton {
      * By default, monitors sensor "32" and controls locomotive 1234(long).
      *
      */
+    @Override
     protected void init() {
         // get references to sample layout objects
 
@@ -73,6 +74,7 @@ public class SampleAutomaton2 extends AbstractAutomaton {
      *
      * @return Always returns true to continue operation
      */
+    @Override
     protected boolean handle() {
         log.debug("Waiting for state change");
 

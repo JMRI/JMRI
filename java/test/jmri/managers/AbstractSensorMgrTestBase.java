@@ -8,7 +8,6 @@ package jmri.managers;
 import java.beans.PropertyChangeListener;
 import jmri.Sensor;
 import jmri.SensorManager;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,6 +35,7 @@ public abstract class AbstractSensorMgrTestBase {
 
     protected class Listen implements PropertyChangeListener {
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             listenerResult = true;
         }

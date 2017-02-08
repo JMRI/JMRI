@@ -6,7 +6,6 @@ import jmri.implementation.AbstractTurnoutTestBase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.dcc.DccTurnout class
@@ -47,14 +46,17 @@ public class DccTurnoutTest extends AbstractTurnoutTestBase {
 
         java.util.ArrayList<byte[]> outbound = new java.util.ArrayList<byte[]>();
 
+        @Override
         public void sendPacket(byte[] packet, int repeats) {
             outbound.add(packet);
         }
 
+        @Override
         public String getUserName() {
             return "";
         }
 
+        @Override
         public String getSystemPrefix() {
             return "";
         }

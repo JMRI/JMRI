@@ -16,10 +16,12 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
         super();
     }
 
+    @Override
     protected AbstractManager makeInternalManager() {
         return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getReporterManager();
     }
 
+    @Override
     public int getXMLOrder() {
         return jmri.Manager.REPORTERS;
     }
@@ -29,14 +31,17 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
      *
      * @return Null if nothing by that name exists
      */
+    @Override
     public Reporter getReporter(String name) {
         return (Reporter) super.getNamedBean(name);
     }
 
+    @Override
     protected NamedBean makeBean(int i, String systemName, String userName) {
         return ((ReporterManager) getMgr(i)).newReporter(systemName, userName);
     }
 
+    @Override
     public Reporter provideReporter(String sName) throws IllegalArgumentException {
         return (Reporter) super.provideNamedBean(sName);
     }
@@ -47,6 +52,7 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
      *
      * @return requested Reporter object or null if none exists
      */
+    @Override
     public Reporter getBySystemName(String sName) {
         return (Reporter) super.getBeanBySystemName(sName);
     }
@@ -57,10 +63,12 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
      *
      * @return requested Reporter object or null if none exists
      */
+    @Override
     public Reporter getByUserName(String userName) {
         return (Reporter) super.getBeanByUserName(userName);
     }
 
+    @Override
     public Reporter getByDisplayName(String key) {
         // First try to find it in the user list.
         // If that fails, look it up in the system list
@@ -100,10 +108,12 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
      *
      * @return requested Reporter object (never null)
      */
+    @Override
     public Reporter newReporter(String systemName, String userName) {
         return (Reporter) newNamedBean(systemName, userName);
     }
 
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
@@ -112,6 +122,7 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
         return ((ReporterManager) getMgr(0)).allowMultipleAdditions(systemName);
     }
 
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) {
         for (int i = 0; i < nMgrs(); i++) {
             if (prefix.equals(
@@ -123,6 +134,7 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
         return null;
     }
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameReporter");
     }

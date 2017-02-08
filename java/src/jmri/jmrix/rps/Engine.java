@@ -141,6 +141,7 @@ public class Engine implements ReadingListener {
 
     String algorithm = "Ash 2.1";  // default value, configured separately
 
+    @Override
     public void notify(Reading r) {
         // This implementation creates a new Calculator
         // each time to ensure that the most recent
@@ -462,6 +463,7 @@ public class Engine implements ReadingListener {
     void startpoll() {
         // time to start operation
         pollThread = new Thread() {
+            @Override
             public void run() {
                 log.debug("Polling starts");
                 while (true) {

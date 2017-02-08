@@ -37,14 +37,17 @@ public class TransitManager extends AbstractManager
         InstanceManager.getDefault(jmri.SectionManager.class).addVetoableChangeListener(this);
     }
 
+    @Override
     public int getXMLOrder() {
         return Manager.TRANSITS;
     }
 
+    @Override
     public String getSystemPrefix() {
         return "I";
     }
 
+    @Override
     public char typeLetter() {
         return 'Z';
     }
@@ -215,6 +218,7 @@ public class TransitManager extends AbstractManager
         return (_instance);
     }
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameTransit");
     }

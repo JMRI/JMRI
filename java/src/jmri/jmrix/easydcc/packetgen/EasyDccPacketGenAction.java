@@ -20,6 +20,7 @@ public class EasyDccPacketGenAction extends AbstractAction {
         this("Generate EasyDCC message");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         EasyDccPacketGenFrame f = new EasyDccPacketGenFrame();
         try {

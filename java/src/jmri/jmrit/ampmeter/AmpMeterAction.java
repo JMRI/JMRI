@@ -23,6 +23,7 @@ public class AmpMeterAction extends AbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         AmpMeterFrame f = new AmpMeterFrame();

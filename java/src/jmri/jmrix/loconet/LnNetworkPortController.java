@@ -94,6 +94,7 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
      * Set the third port option. Only to be used after construction, but before
      * the openPort call
      */
+    @Override
     public void configureOption3(String value) {
         super.configureOption3(value);
         log.debug("configureOption3: " + value);

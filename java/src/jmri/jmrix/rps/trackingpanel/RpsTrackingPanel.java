@@ -54,6 +54,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
      *
      * @return null if no object under mouse; this suppresses ToolTip
      */
+    @Override
     public String getToolTipText(MouseEvent e) {
         // get mouse coordinates
         try {
@@ -132,6 +133,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
     // current transform to graphics coordinates
     AffineTransform currentAT;
 
+    @Override
     public void paint(Graphics g) {
         // draw everything else
         super.paint(g);
@@ -206,6 +208,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
         return new Color(red, green, blue);
     }
 
+    @Override
     public void notify(Measurement m) {
         String id = m.getID();
         TransmitterStatus transmitter = transmitters.get(id);

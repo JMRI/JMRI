@@ -400,6 +400,9 @@ public class NamedIcon extends ImageIcon {
             if (limit > 0.0) {
                 scale = Math.max(scale, limit);  // but not too small
             }
+//            java.awt.Image im = getImage();
+//            im.getScaledInstance((int)Math.ceil(scale * w), (int)Math.ceil(scale * h), java.awt.Image.SCALE_DEFAULT);
+//            setImage(im);
             AffineTransform t = AffineTransform.getScaleInstance(scale, scale);
             transformImage((int) Math.ceil(scale * w), (int) Math.ceil(scale * h), t, null);
         }

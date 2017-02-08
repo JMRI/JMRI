@@ -26,10 +26,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         this.register(new ConnectionConfig(adapter));
     }
 
+    @Override
     protected void getInstance() {
         adapter = new SerialDriverAdapter();
     }
 
+    @Override
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig) object).getAdapter();
     }

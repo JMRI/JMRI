@@ -20,10 +20,12 @@ public class JMRIClientSensorManagerXml extends jmri.managers.configurexml.Abstr
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element sensors) {
         sensors.setAttribute("class", "jmri.jmrix.jmriclient.configurexml.JMRIClientSensorManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

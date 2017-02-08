@@ -23,6 +23,7 @@ public class NewPanelAction extends AbstractAction {
         this(Bundle.getMessage("MenuItemNew"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // allow user to choose a panel editor
         int response = JOptionPane.showOptionDialog(null,

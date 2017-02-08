@@ -34,6 +34,7 @@ public class DnDTableImportExportHandler extends DnDTableExportHandler {
         }
     }
 
+    @Override
     public boolean canImport(TransferHandler.TransferSupport support) {
         DataFlavor[] flavors =  support.getDataFlavors();
         for (int k = 0; k < flavors.length; k++) {
@@ -44,6 +45,7 @@ public class DnDTableImportExportHandler extends DnDTableExportHandler {
         return false;
     }
 
+    @Override
     public boolean importData(TransferHandler.TransferSupport support) {
         if (!canImport(support)) {
             return false;

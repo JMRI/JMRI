@@ -4,9 +4,6 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TestTrafficController;
 
 import jmri.Sensor;
-import jmri.SensorManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -28,11 +25,13 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     }
 
     @Test
+    @Override
     public void testCreate() {
         Assert.assertNotNull("creaesSensor",l.provideSensor(memo.getSystemPrefix() + "SX0A;+N15E6"));
     }
 
     @Test
+    @Override
     public void testDefaultSystemName() {
         // create
         Sensor t = l.provideSensor("MSX0A;+N15E" + getNumToTest1());
@@ -42,6 +41,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     }
 
     @Test
+    @Override
     public void testUpperLower() {
         Sensor t = l.provideSensor("MSX0A;+N15E" + getNumToTest2());
         String name = t.getSystemName();

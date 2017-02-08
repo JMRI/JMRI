@@ -70,8 +70,10 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
      *
      * @param m Message to send; will be updated with CRC
      */
+    @Override
     abstract public void sendDCCppMessage(DCCppMessage m, DCCppListener reply);
 
+    @Override
     protected int lengthOfByteStream(AbstractMRMessage m) {
         int len = m.getNumDataElements();
         return len + 2;
@@ -82,6 +84,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
      *
      * @param m Message to send;
      */
+    @Override
     public void forwardMessage(AbstractMRListener reply, AbstractMRMessage m) {
         ((DCCppListener) reply).message((DCCppMessage) m);
     }
@@ -170,6 +173,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
         }
     }
 
+    @Override
     protected AbstractMRMessage pollMessage() {
         try {
             if (HighPriorityQueue.peek() == null) {
@@ -183,6 +187,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
         return null;
     }
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         try {
             if (HighPriorityListeners.peek() == null) {
@@ -196,6 +201,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
         return null;
     }
 
+    @Override
     public synchronized void addDCCppListener(int mask, DCCppListener l) {
         addListener(l);
         // This is adds all the mask information.  A better way to do
@@ -203,6 +209,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
         mListenerMasks.put(l, Integer.valueOf(mask));
     }
 
+    @Override
     public synchronized void removeDCCppListener(int mask, DCCppListener l) {
         removeListener(l);
         // This is removes all the mask information.  A better way to do 
@@ -249,6 +256,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
 	    return false;
     }
 
+    @Override
     protected AbstractMRReply newReply() {
         return new DCCppReply();
     }
@@ -303,6 +311,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
 //    }
 
 
+    @Override
     protected void handleTimeout(AbstractMRMessage msg, AbstractMRListener l) {
         super.handleTimeout(msg, l);
         if (l != null) {

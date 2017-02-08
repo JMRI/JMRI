@@ -14,6 +14,7 @@ public class JmriAbstractActionTest extends TestCase {
     public void testAccess() {
         JmriAbstractAction a = new JmriAbstractAction("foo", new jmri.util.swing.sdi.JmriJFrameInterface()) {
 
+            @Override
             public jmri.util.swing.JmriPanel makePanel() {
                 return null;
             }
@@ -23,6 +24,7 @@ public class JmriAbstractActionTest extends TestCase {
 
         javax.swing.Icon i = new javax.swing.ImageIcon("resources/icons/throttles/PowerRed24.png");
         a = new JmriAbstractAction("foo", i, null) {
+            @Override
             public jmri.util.swing.JmriPanel makePanel() {
                 return null;
             }
@@ -51,10 +53,12 @@ public class JmriAbstractActionTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

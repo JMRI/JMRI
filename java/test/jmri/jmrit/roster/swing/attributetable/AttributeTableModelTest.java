@@ -55,6 +55,7 @@ public class AttributeTableModelTest extends TestCase {
     static int NENTRIES = 3;
     static int NKEYS = 4;
 
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
 
@@ -85,6 +86,7 @@ public class AttributeTableModelTest extends TestCase {
                 ); // end create element
 
         r = new RosterEntry(e) {
+            @Override
             protected void warnShortLong(String s) {
             }
         };
@@ -109,6 +111,7 @@ public class AttributeTableModelTest extends TestCase {
                 ); // end create element
 
         r = new RosterEntry(e) {
+            @Override
             protected void warnShortLong(String s) {
             }
         };
@@ -136,6 +139,7 @@ public class AttributeTableModelTest extends TestCase {
                 ); // end create element
 
         r = new RosterEntry(e) {
+            @Override
             protected void warnShortLong(String s) {
             }
         };
@@ -161,6 +165,7 @@ public class AttributeTableModelTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
