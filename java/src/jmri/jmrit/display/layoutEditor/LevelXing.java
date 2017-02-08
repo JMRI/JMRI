@@ -106,8 +106,6 @@ public class LevelXing extends LayoutTrack {
     public static final int POINTC = 0x20;
     public static final int POINTD = 0x30;
 
-    private boolean hidden = false;
-
     /**
      * constructor method
      */
@@ -128,14 +126,6 @@ public class LevelXing extends LayoutTrack {
      */
     public String getID() {
         return ident;
-    }
-
-    public boolean getHidden() {
-        return hidden;
-    }
-
-    public void setHidden(boolean hide) {
-        hidden = hide;
     }
 
     public String getBlockNameAC() {
