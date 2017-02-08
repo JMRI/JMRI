@@ -50,7 +50,7 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
 
     public SignalSpeedMap() {
         loadMap();
-        WarrantPreferences.getDefault().addPropertyChangeListener((PropertyChangeEvent evt) -> {
+        this.warrantPreferencesListener = (PropertyChangeEvent evt) -> {
             WarrantPreferences preferences = WarrantPreferences.getDefault();
             SignalSpeedMap map = SignalSpeedMap.this;
             switch (evt.getPropertyName()) {
@@ -74,7 +74,8 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
                 default:
                 // ignore other properties
             }
-        });
+        };
+        WarrantPreferences.getDefault().addPropertyChangeListener(this.warrantPreferencesListener);
     }
 
     void loadMap() {
