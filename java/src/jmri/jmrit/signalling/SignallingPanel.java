@@ -1450,7 +1450,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         /**
          * Respond to change from bean. Prevent State change during edit.
-         * @Param e A property change of any bean
+         * @param e A property change of any bean
          */
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
