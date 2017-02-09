@@ -58,6 +58,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         }
 
         jmri.InstanceManager.getDefault(LayoutBlockManager.class).addPropertyChangeListener(this);
+        jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).addPropertyChangeListener(this);
 
         setLayout(new BorderLayout());
 
@@ -170,7 +171,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             discoverPairs.setEnabled(newValue);
         }
         log.debug("SSP 173 Event: {}; Source: {}", e.getPropertyName(), e.toString()); // doesn't get notified, newDestination
-        if (e.getPropertyName().equals("Frame.active")) { // a blunt way of redrawing the Pairs table
+        if (e.getPropertyName().equals("length")) { // redraw the Pairs table
             updateDetails();
         }
     }
