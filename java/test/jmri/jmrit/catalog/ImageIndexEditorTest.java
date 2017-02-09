@@ -37,7 +37,6 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
             indexEditor.addNode();
         });
         flushAWT();
-//        confirmJOptionPane(null, Bundle.getMessage("info"), Bundle.getMessage("selectAddNode"), "OK");
         java.awt.Container pane = findContainer(Bundle.getMessage("info"));
         Assert.assertNotNull("Select node prompt not found", pane);
         pressButton(pane, "OK");
@@ -65,27 +64,31 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
         JFileChooser chooser = (JFileChooser) finder.find();
         Assert.assertNotNull(" JFileChooser not found", chooser);
         File file = FileUtil.getFile(FileUtil.getAbsoluteFilename("program:resources/icons"));
-//        System.out.println(file.getPath());
         Assert.assertTrue(file.getPath()+" File does not exist", file.exists());
         flushAWT();
-        // Test sometimes fails here trying to update chooser layout ???
         jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
             chooser.setCurrentDirectory(file);
-//          chooser.setSelectedFile(file);
         });
         pressButton(chooser, "Open");
 
+        // search a few directories
         int cnt = 0;
-        while (cnt<5) {
+        while (cnt<2) {     // was 5.  not enough memory on test machine
             java.awt.Container pane = findContainer(Bundle.getMessage("previewDir"));
             Assert.assertNotNull("Preview directory not found", pane);
             pressButton(pane, Bundle.getMessage("ButtonKeepLooking"));
             cnt++;
         }
-        
+
+        // cancel search of more directories
         java.awt.Container pane = findContainer(Bundle.getMessage("previewDir"));
-        Assert.assertNotNull("Preview directory not found", pane);
+        Assert.assertNotNull("Preview Cancel not found", pane);
         pressButton(pane, Bundle.getMessage("ButtonCancel"));
+
+        // dismiss info dialog of count of number of icons found
+        pane = findContainer(Bundle.getMessage("info"));
+        Assert.assertNotNull("Preview dismiss not found", pane);
+        pressButton(pane, "OK");
     }
     
     java.awt.Container findContainer(String title) {
