@@ -312,9 +312,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         applyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updatePressed(e); // store edits
-                cancelPressed(e); // close panel signaling acceptance of edits/Apply to the user
-
+                applyPressed(e);
             }
         });
         applyButton.setToolTipText(rb.getString("ApplyButtonToolTip"));
@@ -828,9 +826,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         sourceMast = (SignalMast) sourceMastBox.getSelectedBean();
         destMast = (SignalMast) destMastBox.getSelectedBean();
         boolean smlPairAdded = false;
+        destOK = true;
 
         if (sourceMast == destMast || fixedSourceMastLabel.getText() == destMast.getDisplayName()) {
             JOptionPane.showMessageDialog(null, rb.getString("ErrorSignalMastIdentical"));
+            destOK = false;
+            log.debug("Destination Mast check failed, keep pane open");
             return;
         }
         if ((sml == null) && (useLayoutEditor.isSelected())) {
@@ -945,14 +946,22 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         sml.initialise(destMast);
         if (smlPairAdded) {
             log.debug("New SML");
-            firePropertyChange("newDestination", null, destMastBox.getSelectedBean());
-        } // is not picked up by SML SignallingSourcePanel so instead we use a blunt WindowClose event listener
-        // to show new SML in underlying table
+            firePropertyChange("newDestination", null, destMastBox.getSelectedBean()); // to show new SML in underlying table
+        }
     }
 
-    /**
-     * Clean up when Cancel button is pressed
-     */
+    private boolean destOK = true; // false indicates destMast and sourceMast are identical
+
+    void applyPressed(ActionEvent e) {
+        updatePressed(e); // store edits
+        if (destOK) { // enable user to correct configuration if warned the destMast in incorrect by skipping pane closing
+            cancelPressed(e); // close panel signaling acceptance of edits/Apply to the user
+        }
+    }
+
+        /**
+         * Clean up when Cancel button is pressed
+         */
     void cancelPressed(ActionEvent e) {
         jFrame.setVisible(false);
         jFrame.dispose();

@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -121,6 +122,13 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         add(footer, BorderLayout.SOUTH);
     }
 
+    @Override
+    public void dispose() {
+        jmri.InstanceManager.getDefault(LayoutBlockManager.class).removePropertyChangeListener(this);
+        jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removePropertyChangeListener(this);
+        super.dispose();
+    }
+
     JmriJFrame signalMastLogicFrame = null;
     JLabel sourceLabel = new JLabel();
 
@@ -133,26 +141,37 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             }
         }
 
-        signalMastLogicFrame = new JmriJFrame("Discover Signal Mast Pairs", false, false);
-        signalMastLogicFrame.setPreferredSize(null);
-        JPanel panel1 = new JPanel();
-        sourceLabel = new JLabel("Discovering Signalmasts");
-        panel1.add(sourceLabel);
-        signalMastLogicFrame.add(sourceLabel);
-        signalMastLogicFrame.pack();
-        signalMastLogicFrame.setVisible(true);
-
         ArrayList<LayoutEditor> layout = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
-        jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).addPropertyChangeListener(this);
-        for (int i = 0; i < layout.size(); i++) {
-            try {
-                jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).discoverSignallingDest(sourceMast, layout.get(i));
-            } catch (jmri.JmriException ex) {
-                signalMastLogicFrame.setVisible(false);
-                JOptionPane.showMessageDialog(null, ex.toString());
+        if (layout.size() > 0) {
+            signalMastLogicFrame = new JmriJFrame(rb.getString("DiscoverMastsTitle"), false, false);
+            signalMastLogicFrame.setPreferredSize(null);
+            JPanel panel1 = new JPanel();
+            sourceLabel = new JLabel(rb.getString("DiscoveringMasts"));
+            sourceLabel.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20));
+            panel1.add(sourceLabel);
+            signalMastLogicFrame.add(sourceLabel);
+            signalMastLogicFrame.pack();
+            signalMastLogicFrame.setVisible(true);
+
+            jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).addPropertyChangeListener(this);
+            for (int i = 0; i < layout.size(); i++) {
+                try {
+                    jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).discoverSignallingDest(sourceMast, layout.get(i));
+                    //String dots = "";
+                    //for (int j = 1; j == (i + 4) % 4; j++) { // skip 0
+                    //    dots = dots + "."; // animate the Discovering pane
+                    //}
+                    sourceLabel.setText(rb.getString("DiscoveringMasts")); // + dots); // LE not ready for testing
+                } catch (jmri.JmriException ex) {
+                    signalMastLogicFrame.setVisible(false);
+                    JOptionPane.showMessageDialog(null, ex.toString());
+                }
             }
+            jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removePropertyChangeListener(this);
+        } else {
+            // don't take the trouble of searching
+            JOptionPane.showMessageDialog(null, rb.getString("GenSkipped"));
         }
-        jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removePropertyChangeListener(this);
     }
 
     @Override
@@ -164,7 +183,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             if (sml == null) {
                 updateDetails();
             }
-            JOptionPane.showMessageDialog(null, "Generation of Signalling Pairs Completed");
+            JOptionPane.showMessageDialog(null, rb.getString("GenComplete"));
         }
         if (e.getPropertyName().equals("advancedRoutingEnabled")) {
             boolean newValue = (Boolean) e.getNewValue();
