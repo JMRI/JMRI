@@ -3,6 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
     <version>0.1-SNAPSHOT</version>
@@ -118,12 +119,12 @@
                         <artifactId>coveralls-maven-plugin</artifactId>
                         <version>4.3.0</version>
                         <configuration>
-                           <sourceDirectories>
-                                  <!-- Additional source directories -->
-                                  <File>java/tmp</File>
-                                  <File>target/generated-sources/javacc</File>
-                                  <File>target/generated-sources/jjtree</File>
-                           </sourceDirectories>
+                            <sourceDirectories>
+                                <!-- Additional source directories -->
+                                <File>java/tmp</File>
+                                <File>target/generated-sources/javacc</File>
+                                <File>target/generated-sources/jjtree</File>
+                            </sourceDirectories>
                         </configuration>
                     </plugin>
                     <plugin>
@@ -131,19 +132,19 @@
                         <artifactId>jacoco-maven-plugin</artifactId>
                         <version>0.7.8</version>
                         <configuration>
-                           <dataFile>jacoco.exec</dataFile>
-                           <excludes>
-                               <File>**/*Test*.class</File>
-                               <!-- Exclude testing infrastructure classes -->
-                               <File>**/*Scaffold.class"</File>
-                               <File>**/*JUnit*.class</File>
-                               <File>**/*Demo.class</File>
-                               <File>**/*Mock*.class</File>
-                               <File>jmri/jmrit/symbolicprog/tabbedframe/CheckProgrammerNames.class</File>
-                               <File>jmri/jmrix/openlcb/SampleFactory.class</File>
-                               <File>jmri/util/swing/SamplePane.class</File>
-                               <File>apps/tests/Log4JFixture.class</File>
-                           </excludes>
+                            <dataFile>jacoco.exec</dataFile>
+                            <excludes>
+                                <File>**/*Test*.class</File>
+                                <!-- Exclude testing infrastructure classes -->
+                                <File>**/*Scaffold.class"</File>
+                                <File>**/*JUnit*.class</File>
+                                <File>**/*Demo.class</File>
+                                <File>**/*Mock*.class</File>
+                                <File>jmri/jmrit/symbolicprog/tabbedframe/CheckProgrammerNames.class</File>
+                                <File>jmri/jmrix/openlcb/SampleFactory.class</File>
+                                <File>jmri/util/swing/SamplePane.class</File>
+                                <File>apps/tests/Log4JFixture.class</File>
+                            </excludes>
                         </configuration>
                         <executions>
                             <execution>
@@ -322,7 +323,7 @@
                 <version>2.3.2</version>
                 <configuration>
                     <source>1.8</source>
-                    <target>1.8</target>                        
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -766,6 +767,9 @@
     </dependencies>
 
     <repositories>
+        <!--
+        Repository hosting libraries not available through maven.org
+        -->
         <repository>
             <id>lib</id>
             <name>lib</name>
@@ -779,4 +783,5 @@
             <url>file://${project.basedir}/lib</url>
         </repository>
     </repositories>
+
 </project>
