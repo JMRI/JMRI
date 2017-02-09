@@ -21,6 +21,7 @@ import jmri.spi.PreferencesManager;
 public abstract class AbstractPreferencesManager extends Bean implements PreferencesManager {
 
     private final HashMap<Profile, Boolean> initialized = new HashMap<>();
+    private final HashMap<Profile, Boolean> initializing = new HashMap<>();
     private final HashMap<Profile, List<Exception>> exceptions = new HashMap<>();
 
     @Override
@@ -38,6 +39,17 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
     @Override
     public List<Exception> getInitializationExceptions(@Nonnull Profile profile) {
         return new ArrayList<>(this.exceptions.getOrDefault(profile, new ArrayList<>()));
+    }
+
+    /**
+     * Test if the manager is being initialized.
+     *
+     * @param profile the profile against which the manager is being initialized
+     * @return true if being initialized; false otherwise
+     */
+    protected boolean isInitializing(@Nonnull Profile profile) {
+        return !this.initialized.getOrDefault(profile, false)
+                && this.initializing.getOrDefault(profile, false);
     }
 
     /**
@@ -82,13 +94,28 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
     }
 
     /**
-     * Set the initialized state for the given profile.
+     * Set the initialized state for the given profile. Sets
+     * {@link #isInitializing(jmri.profile.Profile)} to false if setting
+     * initialized to false.
      *
      * @param profile     the profile to set initialized against
      * @param initialized the initialized state to set
      */
     protected void setInitialized(@Nonnull Profile profile, boolean initialized) {
         this.initialized.put(profile, initialized);
+        if (initialized) {
+            this.setInitializing(profile, false);
+        }
+    }
+
+    /**
+     * Protect against circular attempts to initialize during initialization.
+     *
+     * @param profile      the profile for which initializing is ongoing
+     * @param initializing the initializing state to set
+     */
+    protected void setInitializing(@Nonnull Profile profile, boolean initializing) {
+        this.initializing.put(profile, initializing);
     }
 
     /**
