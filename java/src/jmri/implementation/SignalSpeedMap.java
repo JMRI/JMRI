@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Vector;
 import javax.annotation.Nonnull;
+import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.beans.Bean;
 import jmri.jmrit.logix.WarrantPreferences;
@@ -75,7 +76,14 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
                 // ignore other properties
             }
         };
-        WarrantPreferences.getDefault().addPropertyChangeListener(this.warrantPreferencesListener);
+        InstanceManager.getOptionalDefault(WarrantPreferences.class).ifPresent((wp) -> {
+            wp.addPropertyChangeListener(this.warrantPreferencesListener);
+        });
+        InstanceManager.addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            if (evt.getPropertyName().equals(InstanceManager.getDefaultsPropertyName(WarrantPreferences.class))) {
+                InstanceManager.getDefault(WarrantPreferences.class).addPropertyChangeListener(this.warrantPreferencesListener);
+            }
+        });
     }
 
     void loadMap() {
@@ -84,13 +92,11 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
         };
         try {
             loadRoot(xf.rootFromURL(path));
-        } catch (org.jdom2.JDOMException e) {
-            log.error("error reading file \"" + path + "\" due to: " + e);
         } catch (java.io.FileNotFoundException e) {
-            log.error("signalSpeeds file (" + path + ") doesn't exist in XmlFile search path.");
+            log.warn("signalSpeeds file ({}) doesn't exist in XmlFile search path.", path);
             throw new IllegalArgumentException("signalSpeeds file (" + path + ") doesn't exist in XmlFile search path.");
-        } catch (java.io.IOException ioe) {
-            log.error("error reading file \"" + path + "\" due to: " + ioe);
+        } catch (org.jdom2.JDOMException | java.io.IOException e) {
+            log.error("error reading file \"{}\" due to: {}", path, e);
         }
     }
 
@@ -105,9 +111,7 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
             } else {
                 throw new JDOMException("invalid content for interpretation: " + sval);
             }
-            if (log.isDebugEnabled()) {
-                log.debug("_interpretation= " + _interpretation);
-            }
+            log.debug("_interpretation= {}", _interpretation);
 
             e = root.getChild("msPerIncrement");
             _sStepDelay = 1000;
@@ -120,9 +124,7 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
                 _sStepDelay = 200;
                 log.warn("\"msPerIncrement\" must be at least 200 milliseconds.");
             }
-            if (log.isDebugEnabled()) {
-                log.debug("_sStepDelay = " + _sStepDelay);
-            }
+            log.debug("_sStepDelay = {}", _sStepDelay);
 
             e = root.getChild("stepsPerIncrement");
             try {
@@ -142,12 +144,10 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
                 try {
                     speed = Float.valueOf(list.get(i).getText());
                 } catch (NumberFormatException nfe) {
-                    log.error("invalid content for " + name + " = " + list.get(i).getText());
+                    log.error("invalid content for {} = {}", name, list.get(i).getText());
                     throw new JDOMException("invalid content for " + name + " = " + list.get(i).getText());
                 }
-                if (log.isDebugEnabled()) {
-                    log.debug("Add " + name + ", " + speed + " to AspectSpeed Table");
-                }
+                log.debug("Add {}, {} to AspectSpeed Table", name, speed);
                 _table.put(name, speed);
             }
 
@@ -157,12 +157,10 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
                 String name = l.get(i).getName();
                 String speed = l.get(i).getText();
                 _headTable.put(Bundle.getMessage(name), speed);
-                if (log.isDebugEnabled()) {
-                    log.debug("Add " + name + "=" + Bundle.getMessage(name) + ", " + speed + " to AppearanceSpeed Table");
-                }
+                log.debug("Add {}={}, {} to AppearanceSpeed Table", name, Bundle.getMessage(name), speed);
             }
         } catch (org.jdom2.JDOMException e) {
-            log.error("error reading speed map elements due to: " + e);
+            log.error("error reading speed map elements due to: {}", e);
         }
     }
 
@@ -177,33 +175,27 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
      * @return speed from SignalMast Aspect name
      */
     public String getAspectSpeed(@Nonnull String aspect, @Nonnull jmri.SignalSystem system) {
-        if (log.isDebugEnabled()) {
-            log.debug("getAspectSpeed: aspect=" + aspect + ", speed="
-                    + system.getProperty(aspect, "speed"));
-        }
-        return (String) system.getProperty(aspect, "speed");
+        String property = (String) system.getProperty(aspect, "speed");
+        log.debug("getAspectSpeed: aspect={}, speed={}", aspect, property);
+        return property;
     }
 
     /**
      * @return speed from SignalMast Aspect name
      */
     public String getAspectExitSpeed(@Nonnull String aspect, @Nonnull jmri.SignalSystem system) {
-        if (log.isDebugEnabled()) {
-            log.debug("getAspectExitSpeed: aspect=" + aspect + ", speed2="
-                    + system.getProperty(aspect, "speed2"));
-        }
-        return (String) system.getProperty(aspect, "speed2");
+        String property = (String) system.getProperty(aspect, "speed2");
+        log.debug("getAspectSpeed: aspect={}, speed2={}", aspect, property);
+        return property;
     }
 
     /**
      * @return speed from SignalHead Appearance name
      */
     public String getAppearanceSpeed(@Nonnull String name) throws NumberFormatException {
-        if (log.isDebugEnabled()) {
-            log.debug("getAppearanceSpeed Appearance= " + name
-                    + ", speed=" + _headTable.get(name));
-        }
-        return _headTable.get(name);
+        String speed = _headTable.get(name);
+        log.debug("getAppearanceSpeed Appearance={}, speed={}", name, speed);
+        return speed;
     }
 
     public Enumeration<String> getAppearanceIterator() {
