@@ -1,6 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-
 import java.awt.Color;
 import java.awt.geom.Point2D;
 import java.util.ResourceBundle;
@@ -8,7 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract base class for all layout track objects (LayoutTurnout, LayoutSlip, LayoutTurntable, LevelXing, TrackSegment)
+ * Abstract base class for all layout track objects (LayoutTurnout, LayoutSlip,
+ * LayoutTurntable, LevelXing, TrackSegment)
  *
  * @author George Warner Copyright (c) 2017
  */
@@ -49,7 +49,6 @@ public abstract class LayoutTrack {
     // dashed line parameters
     //private static int minNumDashes = 3;
     //private static double maxDashLength = 10;
-
     public Point2D center = new Point2D.Double(50.0, 50.0);
 
     protected boolean hidden = false;
@@ -68,7 +67,6 @@ public abstract class LayoutTrack {
     /**
      * accessor method
      */
-
     public static void setDefaultTrackColor(Color color) {
         defaultTrackColor = color;
     }
@@ -76,10 +74,9 @@ public abstract class LayoutTrack {
     /**
      * useful math methods (should be class extension for Double and Point2D)
      */
-
-   //return a Double between a & b for t:0 ==> a and t:1 ==> b
+    //return a Double between a & b for t:0 ==> a and t:1 ==> b
     public static Double lerp(Double a, Double b, Double t) {
-          return ((1.0 - t) * a) + (t * b);
+        return ((1.0 - t) * a) + (t * b);
     }
 
     //return a Point2D between a & b for t:0 ==> a and t:1 ==> b
@@ -95,12 +92,12 @@ public abstract class LayoutTrack {
 
     // return a Point2D one third of the way from p1 to p2
     public static Point2D third(Point2D p1, Point2D p2) {
-        return lerp(p1, p2, 1.0/3.0);
+        return lerp(p1, p2, 1.0 / 3.0);
     }
 
     // return a Point2D one forth of the way from p1 to p2
     public static Point2D fourth(Point2D p1, Point2D p2) {
-        return lerp(p1, p2, 1.0/4.0);
+        return lerp(p1, p2, 1.0 / 4.0);
     }
 
     //
@@ -147,6 +144,30 @@ public abstract class LayoutTrack {
         double x = cX + cosineRot * deltaX - sineRot * deltaY;
         double y = cY + sineRot * deltaX + cosineRot * deltaY;
         return new Point2D.Double(x, y);
+    }
+
+    /**
+     * Get the hidden state of the track element.
+     *
+     * @return true if hidden; false otherwise
+     */
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    /**
+     * Get the hidden state of the track element.
+     *
+     * @return true if hidden; false otherwise
+     * @deprecated since 4.7.2; use {@link #isHidden()} instead
+     */
+    @Deprecated // Java standard pattern for boolean getters is "isHidden()"  
+    public boolean getHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hide) {
+        hidden = hide;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class.getName());
