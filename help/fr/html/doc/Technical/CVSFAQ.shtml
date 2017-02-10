@@ -1,10 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Blorec Herv&#233; 2013-09-25-->  
 <html lang="fr">
 <head>
     <TITLE>
- 	JMRI: CVS FAQhttps://ixquick.com/do/search
+ 	JMRI: CVS FAQ
     </TITLE>
     <META content="Bob Jacobsen" name=Author>
     <meta name="keywords" content="JMRI technical code CVS FAQ">
@@ -17,8 +16,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1
-">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -29,13 +27,15 @@
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+<div id="mainContent">
 
 	    <H1>JMRI:Foire Aux Questions CVS (FAQ)</H1>
 Ceci est une liste de questions fr&#233;quemment pos&#233;es sur CVS, en particulier sur la fa&#231;on dont nous l'utilisons avec JMRI.
 
-<P>
-Voir aussi l'
+<em> Note: Le code JMRI n'est plus maintenu dans CVS</em>
+Pour obtenir le code actuel, veuillez consulter les pages
+<a href="getgitcode.shtml">Acc&#232;s au code via le R&#233;pertoire Git</em>.
+
 <A HREF="index.shtml"> Index Technique </a>
 pour plus d'informations sur la maintenance du code JMRI.
 
@@ -130,10 +130,10 @@ Si vous utilisez Mac OS X, CVS peut vous donner des messages &#224; propos de ".
 de ". DS_Store"  (sans les guillemets). CVS va ignorer tous les . DS_Store dans tous les arbres extrait de votre r&#233;pertoire extrait.
 
 <A name="tags">
-<h3>Quelle est la convention pour les noms de balise?</h3>
+<h3>Quelle est la convention pour les noms d'&#233;tiquettes</h3>
 </a>
 
-En r&#232;gle g&#233;n&#233;rale, trois types de noms de balises sont utilis&#233;s:
+En r&#232;gle g&#233;n&#233;rale, trois types de noms d'&#233;tiquettessont utilis&#233;s:
 <OL>
 <LI> "Release-1-5-4 » - la balise d&#233;finissant une version sp&#233;cifique du code publi&#233;.
 Elles sont cr&#233;&#233;es lors de la lib&#233;ration de la version, et ne devrait pas &#234;tre chang&#233;es.
@@ -183,4 +183,3 @@ remarquer le probl&#232;me, et les changements ne peuvent pas &#234;tre v&#233;r
 	</div> <!-- closes #mBody-->
 </body>
 </html>
-
