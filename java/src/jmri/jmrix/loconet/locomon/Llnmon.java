@@ -3610,7 +3610,6 @@ public class Llnmon {
                     } else {
                         // immediate packet not addressed to a multi-function (mobile) decoder
                     }
-                    String generic = "";
                     if ((mobileDecoderAddress >= 0)
                             && (nmraInstructionType == 1)
                             && (nmraSubInstructionType == 0x1D)) {
@@ -3629,7 +3628,7 @@ public class Llnmon {
                         if ((packetInt[2] & 0xFF) == 0xDF) {
                             // Functions 21-28
                             return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F21_TO_F28", 
-                                    address, 
+                                    Integer.toString(address), 
                                     Bundle.getMessage(((packetInt[3] & 0x01) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
                                     Bundle.getMessage(((packetInt[3] & 0x02) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
                                     Bundle.getMessage(((packetInt[3] & 0x04) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
@@ -3641,23 +3640,23 @@ public class Llnmon {
                         } else if ((packetInt[2] & 0xFF) == 0xDE) {
                             // Functions 13-20
                             return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F13_TO_F20", 
-                                    address, 
-                                    Bundle.getMessage(((packetInt[3] & 0x01) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x02) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x04) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x08) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x10) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x20) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x40) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x80) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
+                                    Integer.toString(address), 
+                                    Bundle.getMessage((((packetInt[3] & 0x01) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage((((packetInt[3] & 0x02) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage((((packetInt[3] & 0x04) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage((((packetInt[3] & 0x08) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage((((packetInt[3] & 0x10) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage((((packetInt[3] & 0x20) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage((((packetInt[3] & 0x40) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage((((packetInt[3] & 0x80) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
                         } else if ((packetInt[2] & 0xF0) == 0xA0) {
                             // Functions 9-12
                             return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F9_TO_F12", 
-                                    address, 
-                                    Bundle.getMessage(((packetInt[3] & 0x01) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x02) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x04) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x08) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
+                                    Integer.toString(address), 
+                                    Bundle.getMessage((((packetInt[2] & 0x01) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage((((packetInt[2] & 0x02) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage((((packetInt[2] & 0x04) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage((((packetInt[2] & 0x08) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
                         } else {
                             // Unknown
                                                 /*
