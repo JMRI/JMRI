@@ -24,55 +24,55 @@ public class LlnmonTest extends TestCase {
     public void testTransponding() {
         LocoNetMessage l;
         
-        l = new LocoNetMessage(new int[]{0xD0, 0x01, 0x20, 0x08, 0x20, 0x26});
+        l = new LocoNetMessage(new int[] {0xD0, 0x01, 0x20, 0x08, 0x20, 0x26});
         assertEquals("out A", "Transponder address 1056 (long) absent at LR161 () (BDL16x Board ID 11 RX4 zone A).\n", f.displayMessage(l));
 
-        l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x20, 0x08, 0x20, 0x04});
+        l = new LocoNetMessage(new int[] {0xD0, 0x21, 0x20, 0x08, 0x20, 0x04});
         assertEquals(" in A", "Transponder address 1056 (long) present at LR161 () (BDL16x Board ID 11 RX4 zone A).\n", f.displayMessage(l));
 
-        l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x22, 0x08, 0x20, 0x24});
+        l = new LocoNetMessage(new int[] {0xD0, 0x21, 0x22, 0x08, 0x20, 0x24});
         assertEquals(" in B", "Transponder address 1056 (long) present at LR163 () (BDL16x Board ID 11 RX4 zone B).\n", f.displayMessage(l));
 
-        l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x24, 0x08, 0x20, 0x04});
+        l = new LocoNetMessage(new int[] {0xD0, 0x21, 0x24, 0x08, 0x20, 0x04});
         assertEquals(" in C", "Transponder address 1056 (long) present at LR165 () (BDL16x Board ID 11 RX4 zone C).\n", f.displayMessage(l));
 
-        l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x26, 0x08, 0x20, 0x04});
+        l = new LocoNetMessage(new int[] {0xD0, 0x21, 0x26, 0x08, 0x20, 0x04});
         assertEquals(" in D", "Transponder address 1056 (long) present at LR167 () (BDL16x Board ID 11 RX4 zone D).\n", f.displayMessage(l));
 
-        l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x28, 0x08, 0x20, 0x04});
+        l = new LocoNetMessage(new int[] {0xD0, 0x21, 0x28, 0x08, 0x20, 0x04});
         assertEquals(" in E", "Transponder address 1056 (long) present at LR169 () (BDL16x Board ID 11 RX4 zone E).\n", f.displayMessage(l));
 
-        l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x2A, 0x08, 0x20, 0x04});
+        l = new LocoNetMessage(new int[] {0xD0, 0x21, 0x2A, 0x08, 0x20, 0x04});
         assertEquals(" in F", "Transponder address 1056 (long) present at LR171 () (BDL16x Board ID 11 RX4 zone F).\n", f.displayMessage(l));
 
-        l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x2C, 0x08, 0x20, 0x04});
+        l = new LocoNetMessage(new int[] {0xD0, 0x21, 0x2C, 0x08, 0x20, 0x04});
         assertEquals(" in G", "Transponder address 1056 (long) present at LR173 () (BDL16x Board ID 11 RX4 zone G).\n", f.displayMessage(l));
 
-        l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x2E, 0x08, 0x20, 0x04});
+        l = new LocoNetMessage(new int[] {0xD0, 0x21, 0x2E, 0x08, 0x20, 0x04});
         assertEquals(" in H", "Transponder address 1056 (long) present at LR175 () (BDL16x Board ID 11 RX4 zone H).\n", f.displayMessage(l));
     }
 
     public void testSVProgrammingProtocolV1() {
         LocoNetMessage l;
 
-        l = new LocoNetMessage(new int[]{0xE5, 0x10, 0x50, 0x53, 0x01, 0x00, 0x02, 0x03, 0x00, 0x00, 0x10, 0x01, 0x00, 0x00, 0x00, 0x18});
+        l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x50, 0x53, 0x01, 0x00, 0x02, 0x03, 0x00, 0x00, 0x10, 0x01, 0x00, 0x00, 0x00, 0x18});
         assertEquals(" read SV 3", "LocoBuffer => LocoIO@0x53/0x01 Query SV3.\n", f.displayMessage(l));
     }
     
     public void testSVProgrammingProtocolV2() {
         LocoNetMessage l;
 
-        l = new LocoNetMessage(new int[]{0xE5, 0x10, 0x01, 0x02, 0x02, 0x10, 0x23, 0x00, 0x03, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00});
+        l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x02, 0x02, 0x10, 0x23, 0x00, 0x03, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00});
         assertEquals(" SV2 test 1", "(SV Format 2) Read single SV request to destination address 35 initiated by agent 1:\n"
                 +"\tRead request for SV3\n"
                 , f.displayMessage(l));
 
-        l = new LocoNetMessage(new int[]{0xE5, 0x10, 0x01, 0x48, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x49});
+        l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x48, 0x02, 0x10, 0x01, 0x02, 0x03, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x49});
         assertEquals(" SV2 test 2", "(SV Format 2) Reply from destination address 513 to Identify device request initiated by agent 1:\n"
                 +"\tDevice characteristics are manufacturer 3, developer number 4, product 1,541, serial number 2,055\n"
                 , f.displayMessage(l));
 
-        l = new LocoNetMessage(new int[]{0xE5, 0x10, 0x01, 0x01, 0x02, 0x12, 0x40, 0x20, 0x10, 0x08, 0x10, 0x04, 0x02, 0x01, 0x7F, 0x0A});
+        l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x01, 0x01, 0x02, 0x12, 0x40, 0x20, 0x10, 0x08, 0x10, 0x04, 0x02, 0x01, 0x7F, 0x0A});
         assertEquals(" SV2 test 3","(SV Format 2) Write single SV request to destination address 41,024 initiated by agent 1:\n"
                 +"\tChange SV2,064 to 4\n"
                 , f.displayMessage(l));
@@ -328,20 +328,112 @@ public class LlnmonTest extends TestCase {
     }
     
     public void testLissy1() {
-        LocoNetMessage l = new LocoNetMessage(new int[]{0xE4, 0x08, 0x00, 0x60, 0x01, 0x42, 0x35, 0x05});
+        LocoNetMessage l = new LocoNetMessage(new int[] {0xE4, 0x08, 0x00, 0x60, 0x01, 0x42, 0x35, 0x05});
 
         assertEquals("Lissy message 1", "Lissy 1 IR Report: Loco 8501 moving south\n", f.displayMessage(l));
     }
 
     public void testLissy2() {
-        LocoNetMessage l = new LocoNetMessage(new int[]{0xE4, 0x08, 0x00, 0x40, 0x01, 0x42, 0x35, 0x25});
+        LocoNetMessage l = new LocoNetMessage(new int[] {0xE4, 0x08, 0x00, 0x40, 0x01, 0x42, 0x35, 0x25});
 
         assertEquals("Lissy message 2", "Lissy 1 IR Report: Loco 8501 moving north\n", f.displayMessage(l));
     }
 
     public void testLACK() {
-        LocoNetMessage l = new LocoNetMessage(new int[]{0xB4, 0x6F, 0x23, 0x07});
-        assertEquals("LACK 23", "LONG_ACK: DCS51 programming reply, thought to mean OK.\n", f.displayMessage(l));
+        LocoNetMessage l;
+        
+        l =new LocoNetMessage(new int[] {0xB4, 0x6F, 0x23, 0x07});
+        assertEquals("LACK 0x6f 0x23", "LONG_ACK: DCS51 programming reply, thought to mean OK.\n", f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xB4, 0x30, 0x00, 0x7B});
+        assertEquals("LACK 0x30 0x00", "LONG_ACK: Switch request Failed!\n", f.displayMessage(l));
+    }
+    
+    public void testOpsModeProgrammingMessages() {
+        LocoNetMessage l;
+        
+        l = new LocoNetMessage(new int[] {0xEF, 0x0E, 0x7C, 0x67, 0x00, 0x28, 0x23, 0x00, 0x02, 0x10, 0x54, 0x33, 0x44, 0x3F});
+        assertEquals("OpsModeProg test 1", "Byte Write (No feedback) on Main Track: Decoder address 5155: CV17 value 212 (0xD4, 11010100b)\n", 
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xB4, 0x6F, 0x40, 0x64});
+        assertEquals("OpsModeProg test 2", "LONG_ACK: The Slot Write command was accepted blind (no response will be sent).\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xEF, 0x0E, 0x7C, 0x2F, 0x00, 0x28, 0x23, 0x00, 0x02, 0x11, 0x54, 0x33, 0x44, 0x76});
+        assertEquals("OpsModeProg test 3", "Byte Read on Main Track (Ops mode): Decoder address 5155: CV18\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xB4, 0x6F, 0x7F, 0x5B});
+        assertEquals("OpsModeProg test 4", 
+                "LONG_ACK: Function not implemented, no reply will follow.\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7C, 0x2F, 0x10, 0x28, 0x23, 0x00, 0x00, 0x11, 0x23, 0x33, 0x44, 0x1B});
+        assertEquals("OpsModeProg test 5", 
+                "Programming Response: Byte Read on Main Track (Ops mode) Was successful via RX4/BDL16x: Decoder address 5155: CV18 value 35 (0x23, 00100011b).\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xEF, 0x0E, 0x7C, 0x67, 0x00, 0x28, 0x23, 0x00, 0x00, 0x11, 0x23, 0x33, 0x44, 0x4B});
+        assertEquals("OpsModeProg test 7", 
+                "Byte Write (No feedback) on Main Track: Decoder address 5155: CV18 value 35 (0x23, 00100011b)\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xEF, 0x0E, 0x7C, 0x2F, 0x00, 0x28, 0x23, 0x00, 0x00, 0x11, 0x23, 0x33, 0x44, 0x03});
+        assertEquals("OpsModeProg test 8", 
+                "Byte Read on Main Track (Ops mode): Decoder address 5155: CV18\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xB4, 0x6F, 0x7F, 0x5B});
+        assertEquals("OpsModeProg test 9", 
+                "LONG_ACK: Function not implemented, no reply will follow.\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7C, 0x2F, 0x10, 0x28, 0x23, 0x00, 0x00, 0x11, 0x23, 0x33, 0x44, 0x1B});
+        assertEquals("OpsModeProg test 10", 
+                "Programming Response: Byte Read on Main Track (Ops mode) Was successful via RX4/BDL16x: Decoder address 5155: CV18 value 35 (0x23, 00100011b).\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xEF, 0x0E, 0x7C, 0x2F, 0x00, 0x28, 0x23, 0x00, 0x00, 0x10, 0x23, 0x33, 0x44, 0x02});
+        assertEquals("OpsModeProg test 11", 
+                "Byte Read on Main Track (Ops mode): Decoder address 5155: CV17\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xB4, 0x6F, 0x7F, 0x5B});
+        assertEquals("OpsModeProg test 12", 
+                "LONG_ACK: Function not implemented, no reply will follow.\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7C, 0x2F, 0x10, 0x28, 0x23, 0x00, 0x02, 0x10, 0x54, 0x33, 0x44, 0x6F});
+        assertEquals("OpsModeProg test 13", 
+                "Programming Response: Byte Read on Main Track (Ops mode) Was successful via RX4/BDL16x: Decoder address 5155: CV17 value 212 (0xD4, 11010100b).\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xEF, 0x0E, 0x7C, 0x2F, 0x00, 0x28, 0x23, 0x00, 0x02, 0x11, 0x54, 0x33, 0x44, 0x76});
+        assertEquals("OpsModeProg test 14", 
+                "Byte Read on Main Track (Ops mode): Decoder address 5155: CV18\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xB4, 0x6F, 0x7F, 0x5B});
+        assertEquals("OpsModeProg test 15", 
+                "LONG_ACK: Function not implemented, no reply will follow.\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7C, 0x2F, 0x10, 0x01, 0x00, 0x00, 0x00, 0x01, 0x40, 0x33, 0x44, 0x1B});
+        assertEquals("OpsModeProg test 16", 
+                "Programming Response: Byte Read on Main Track (Ops mode) Was successful via RX4/BDL16x: Decoder address 128: CV2 value 64 (0x40, 01000000b).\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xEF, 0x0E, 0x7C, 0x2F, 0x00, 0x00, 0x01, 0x00, 0x00, 0x65, 0x23, 0x33, 0x44, 0x02});
+        assertEquals("OpsModeProg test 17", 
+                "Byte Read on Main Track (Ops mode): Decoder address 1: CV102\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7C, 0x2F, 0x10, 0x00, 0x01, 0x00, 0x02, 0x7f, 0x00, 0x33, 0x44, 0x6F});
+        assertEquals("OpsModeProg test 19", 
+                "Programming Response: Byte Read on Main Track (Ops mode) Was successful via RX4/BDL16x: Decoder address 1: CV128 value 128 (0x80, 10000000b).\n", 
+                f.displayMessage(l));
+
     }
     
     public void testBasicConsistingMessages() {

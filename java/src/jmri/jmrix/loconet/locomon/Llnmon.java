@@ -1868,7 +1868,9 @@ public class Llnmon {
                                         return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BYTE_WR_NO_FEEDBACK",
                                                 convertToMixed(lopsa, hopsa),
                                                 Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
-                                                        cvNumber, cvData));
+                                                        cvNumber, cvData, 
+                                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                        StringUtil.twoHexFromInt(cvData)), StringUtil.to8Bits(cvData, true)));
                                     case LnConstants.OPS_BYTE_FEEDBACK:
                                         return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BYTE_RD_FEEDBACK",
                                                 convertToMixed(lopsa, hopsa),
