@@ -15,8 +15,10 @@
   <version author="Simon Ginsburg" version="1" lastUpdated="20130317"/>
   <version author="Michael Mosher" version="2" lastUpdated="20130712"/>
   <version author="Simon Ginsburg" version="3" lastUpdated="20150706"/>
+  <version author="Michael Mosher" version="4" lastUpdated="20170209"/>
   <!-- V2 added new models & CV140-157 -->
   <!-- V3 added new models -->
+  <!-- V4 added EU821 model -->
   <decoder>
     <family name="Jan 2012" mfg="Train Control Systems" comment="TCS FW Starting Jan 2012">
       <model model="A4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="4">
@@ -155,13 +157,29 @@
         <output name="BEMF"/>
         <output name="Brake"/>
       </model>
-      <model model="EU621" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="44">
-        <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
-        <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
-        <output name="4" label="Purple" connection="wire" maxcurrent="100 mA"/>
-        <output name="5" label="Brown" connection="wire" maxcurrent="100 mA"/>
-        <output name="6" label="Pink" connection="wire" maxcurrent="100 mA"/>
+      <model model="EU621" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="21MTC" lowVersionID="86" highVersionID="88" productID="44">
+        <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
+        <output name="3" label="Green" connection="plug" maxcurrent="100 mA"/>
+        <output name="4" label="Purple" connection="plug" maxcurrent="100 mA"/>
+        <output name="5" label="Brown" connection="plug" maxcurrent="100 mA"/>
+        <output name="6" label="Pink" connection="plug" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="0.78" width="0.59" height="0.13" units="inches"/>
+      </model>
+      <model model="EU821" numOuts="8" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="21MTC" lowVersionID="88" highVersionID="88" productID="65">
+        <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
+        <output name="3" label="Green" connection="plug" maxcurrent="100 mA"/>
+        <output name="4" label="Purple" connection="plug" maxcurrent="100 mA"/>
+        <output name="5" label="Brown" connection="plug" maxcurrent="logic level"/>
+        <output name="6" label="Pink" connection="plug" maxcurrent="logic level"/>
+        <output name="7" label="Pnk/Pur" connection="plug" maxcurrent="logic level"/>
+        <output name="8" label="Grn/Brn" connection="plug" maxcurrent="logic level"/>
         <output name="Dim"/>
         <output name="Ditch"/>
         <output name="Motor"/>
