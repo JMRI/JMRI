@@ -519,28 +519,28 @@ public class LlnmonTest extends TestCase {
         assertEquals(" PM42 Events test 01", "PM4x (Board ID 102) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Shorted.\n\tSub-District 2 - Circuit-Breaker mode - Unshorted.\n\tSub-District 3 - Circuit-Breaker mode - Unshorted.\n\tSub-District 4 - Circuit-Breaker mode - Shorted.\n", f.displayMessage(l));
         
         l = new LocoNetMessage(new int[] {0xD0, 0x62, 0x65, 0x30, 0x1B, 0x03});
-        assertEquals(" PM42 Events test 01", "PM4x (Board ID 102) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Shorted.\n\tSub-District 2 - Circuit-Breaker mode - Shorted.\n\tSub-District 3 - Circuit-Breaker mode - Unshorted.\n\tSub-District 4 - Circuit-Breaker mode - Shorted.\n", f.displayMessage(l));
+        assertEquals(" PM42 Events test 02", "PM4x (Board ID 102) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Shorted.\n\tSub-District 2 - Circuit-Breaker mode - Shorted.\n\tSub-District 3 - Circuit-Breaker mode - Unshorted.\n\tSub-District 4 - Circuit-Breaker mode - Shorted.\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x62, 0x65, 0x30, 0x1F, 0x07});
-        assertEquals(" PM42 Events test 01", "PM4x (Board ID 102) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Shorted.\n\tSub-District 2 - Circuit-Breaker mode - Shorted.\n\tSub-District 3 - Circuit-Breaker mode - Shorted.\n\tSub-District 4 - Circuit-Breaker mode - Shorted.\n", f.displayMessage(l));
+        assertEquals(" PM42 Events test 03", "PM4x (Board ID 102) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Shorted.\n\tSub-District 2 - Circuit-Breaker mode - Shorted.\n\tSub-District 3 - Circuit-Breaker mode - Shorted.\n\tSub-District 4 - Circuit-Breaker mode - Shorted.\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x62, 0x64, 0x30, 0x18, 0x01});
-        assertEquals(" PM42 Events test 01", "PM4x (Board ID 101) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Unshorted.\n\tSub-District 2 - Circuit-Breaker mode - Unshorted.\n\tSub-District 3 - Circuit-Breaker mode - Unshorted.\n\tSub-District 4 - Circuit-Breaker mode - Shorted.\n", f.displayMessage(l));
+        assertEquals(" PM42 Events test 04", "PM4x (Board ID 101) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Unshorted.\n\tSub-District 2 - Circuit-Breaker mode - Unshorted.\n\tSub-District 3 - Circuit-Breaker mode - Unshorted.\n\tSub-District 4 - Circuit-Breaker mode - Shorted.\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x62, 0x64, 0x30, 0x1A, 0x03});
-        assertEquals(" PM42 Events test 01", "PM4x (Board ID 101) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Unshorted.\n\tSub-District 2 - Circuit-Breaker mode - Shorted.\n\tSub-District 3 - Circuit-Breaker mode - Unshorted.\n\tSub-District 4 - Circuit-Breaker mode - Shorted.\n", f.displayMessage(l));
+        assertEquals(" PM42 Events test 05", "PM4x (Board ID 101) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Unshorted.\n\tSub-District 2 - Circuit-Breaker mode - Shorted.\n\tSub-District 3 - Circuit-Breaker mode - Unshorted.\n\tSub-District 4 - Circuit-Breaker mode - Shorted.\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x62, 0x65, 0x30, 0x16, 0x0E});
-        assertEquals(" PM42 Events test 01", "PM4x (Board ID 102) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Unshorted.\n\tSub-District 2 - Circuit-Breaker mode - Shorted.\n\tSub-District 3 - Circuit-Breaker mode - Shorted.\n\tSub-District 4 - Circuit-Breaker mode - Unshorted.\n", f.displayMessage(l));
+        assertEquals(" PM42 Events test 06", "PM4x (Board ID 102) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Unshorted.\n\tSub-District 2 - Circuit-Breaker mode - Shorted.\n\tSub-District 3 - Circuit-Breaker mode - Shorted.\n\tSub-District 4 - Circuit-Breaker mode - Unshorted.\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x62, 0x65, 0x30, 0x14, 0x0C});
-        assertEquals(" PM42 Events test 01", "PM4x (Board ID 102) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Unshorted.\n\tSub-District 2 - Circuit-Breaker mode - Unshorted.\n\tSub-District 3 - Circuit-Breaker mode - Shorted.\n\tSub-District 4 - Circuit-Breaker mode - Unshorted.\n", f.displayMessage(l));
+        assertEquals(" PM42 Events test 07", "PM4x (Board ID 102) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Unshorted.\n\tSub-District 2 - Circuit-Breaker mode - Unshorted.\n\tSub-District 3 - Circuit-Breaker mode - Shorted.\n\tSub-District 4 - Circuit-Breaker mode - Unshorted.\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x62, 0x64, 0x30, 0x10, 0x09});
-        assertEquals(" PM42 Events test 01", "PM4x (Board ID 101) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Unshorted.\n\tSub-District 2 - Circuit-Breaker mode - Unshorted.\n\tSub-District 3 - Circuit-Breaker mode - Unshorted.\n\tSub-District 4 - Circuit-Breaker mode - Unshorted.\n", f.displayMessage(l));
+        assertEquals(" PM42 Events test 08", "PM4x (Board ID 101) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Unshorted.\n\tSub-District 2 - Circuit-Breaker mode - Unshorted.\n\tSub-District 3 - Circuit-Breaker mode - Unshorted.\n\tSub-District 4 - Circuit-Breaker mode - Unshorted.\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x62, 0x65, 0x30, 0x10, 0x08});
-        assertEquals(" PM42 Events test 01", "PM4x (Board ID 102) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Unshorted.\n\tSub-District 2 - Circuit-Breaker mode - Unshorted.\n\tSub-District 3 - Circuit-Breaker mode - Unshorted.\n\tSub-District 4 - Circuit-Breaker mode - Unshorted.\n", f.displayMessage(l));
+        assertEquals(" PM42 Events test 09", "PM4x (Board ID 102) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Unshorted.\n\tSub-District 2 - Circuit-Breaker mode - Unshorted.\n\tSub-District 3 - Circuit-Breaker mode - Unshorted.\n\tSub-District 4 - Circuit-Breaker mode - Unshorted.\n", f.displayMessage(l));
 
     }
     public void testBasicSlotAccessMessages() {
