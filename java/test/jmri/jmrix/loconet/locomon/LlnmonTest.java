@@ -473,6 +473,76 @@ public class LlnmonTest extends TestCase {
         l = new LocoNetMessage(new int[] {0xB0, 0x2D, 0x21, 0x45});
         assertEquals(" Turnout Control test 24", "Requesting Switch at LT174 to Closed (Output Off).\n", f.displayMessage(l));
     }
+    
+    public void testTetherlessQueryAndReplies() {
+        LocoNetMessage l;
+
+        l = new LocoNetMessage(new int[] {0xDF, 0x00, 0x00, 0x00, 0x00, 0x20});
+        assertEquals(" Tetherless Query/Reply test 01", 
+                "Query Tetherless Receivers.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x03, 0x10, 0x00, 0x45, 0x4E, 0x4C, 0x32, 0x00, 0x30, 0x31, 0x31, 0x20, 0x00, 0x00, 0x00, 0x1A, 0x00, 0x62});
+        assertEquals(" Tetherless Query/Reply test 02", 
+                "Reported Duplex Group Name=\"ENL2011 \", Password=00000000, Channel=26, ID=0.\n" ,
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xD7, 0x12, 0x00, 0x0F, 0x20, 0x15});
+        assertEquals(" Tetherless Query/Reply test 03", "UR92 Responding with LocoNet ID 7, duplex enabled.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xD7, 0x1F, 0x00, 0x06, 0x00, 0x30});
+        assertEquals(" Tetherless Query/Reply test 04", "UR91 Responding with LocoNet ID 6.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xD7, 0x1F, 0x00, 0x00, 0x00, 0x30});
+        assertEquals(" Tetherless Query/Reply test 05", "UR91 Responding with LocoNet ID 0.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x02, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04});
+        assertEquals(" Tetherless Query/Reply test 06", "Query Duplex Channel.\n", f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x02, 0x10, 0x00, 0x1A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06});
+        assertEquals(" Tetherless Query/Reply test 07", "Reported Duplex Channel is 26.\n", f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x07, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01});
+        assertEquals(" Tetherless Query/Reply test 08", "Query Duplex Password.\n", f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x07, 0x10, 0x00, 0x30, 0x30, 0x30, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x19});
+        assertEquals(" Tetherless Query/Reply test 09", "Reported Duplex Password is 0000.\n", f.displayMessage(l));
+    }
+    
+    public void testBasicPM42Events() {
+        LocoNetMessage l;
+        
+        l = new LocoNetMessage(new int[] {0xD0, 0x62, 0x65, 0x30, 0x19, 0x01});
+        assertEquals(" PM42 Events test 01", "PM4x (Board ID 102) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Shorted.\n\tSub-District 2 - Circuit-Breaker mode - Unshorted.\n\tSub-District 3 - Circuit-Breaker mode - Unshorted.\n\tSub-District 4 - Circuit-Breaker mode - Shorted.\n", f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xD0, 0x62, 0x65, 0x30, 0x1B, 0x03});
+        assertEquals(" PM42 Events test 01", "PM4x (Board ID 102) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Shorted.\n\tSub-District 2 - Circuit-Breaker mode - Shorted.\n\tSub-District 3 - Circuit-Breaker mode - Unshorted.\n\tSub-District 4 - Circuit-Breaker mode - Shorted.\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x62, 0x65, 0x30, 0x1F, 0x07});
+        assertEquals(" PM42 Events test 01", "PM4x (Board ID 102) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Shorted.\n\tSub-District 2 - Circuit-Breaker mode - Shorted.\n\tSub-District 3 - Circuit-Breaker mode - Shorted.\n\tSub-District 4 - Circuit-Breaker mode - Shorted.\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x62, 0x64, 0x30, 0x18, 0x01});
+        assertEquals(" PM42 Events test 01", "PM4x (Board ID 101) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Unshorted.\n\tSub-District 2 - Circuit-Breaker mode - Unshorted.\n\tSub-District 3 - Circuit-Breaker mode - Unshorted.\n\tSub-District 4 - Circuit-Breaker mode - Shorted.\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x62, 0x64, 0x30, 0x1A, 0x03});
+        assertEquals(" PM42 Events test 01", "PM4x (Board ID 101) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Unshorted.\n\tSub-District 2 - Circuit-Breaker mode - Shorted.\n\tSub-District 3 - Circuit-Breaker mode - Unshorted.\n\tSub-District 4 - Circuit-Breaker mode - Shorted.\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x62, 0x65, 0x30, 0x16, 0x0E});
+        assertEquals(" PM42 Events test 01", "PM4x (Board ID 102) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Unshorted.\n\tSub-District 2 - Circuit-Breaker mode - Shorted.\n\tSub-District 3 - Circuit-Breaker mode - Shorted.\n\tSub-District 4 - Circuit-Breaker mode - Unshorted.\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x62, 0x65, 0x30, 0x14, 0x0C});
+        assertEquals(" PM42 Events test 01", "PM4x (Board ID 102) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Unshorted.\n\tSub-District 2 - Circuit-Breaker mode - Unshorted.\n\tSub-District 3 - Circuit-Breaker mode - Shorted.\n\tSub-District 4 - Circuit-Breaker mode - Unshorted.\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x62, 0x64, 0x30, 0x10, 0x09});
+        assertEquals(" PM42 Events test 01", "PM4x (Board ID 101) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Unshorted.\n\tSub-District 2 - Circuit-Breaker mode - Unshorted.\n\tSub-District 3 - Circuit-Breaker mode - Unshorted.\n\tSub-District 4 - Circuit-Breaker mode - Unshorted.\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xD0, 0x62, 0x65, 0x30, 0x10, 0x08});
+        assertEquals(" PM42 Events test 01", "PM4x (Board ID 102) Power Status Report\n\tSub-District 1 - Circuit-Breaker mode - Unshorted.\n\tSub-District 2 - Circuit-Breaker mode - Unshorted.\n\tSub-District 3 - Circuit-Breaker mode - Unshorted.\n\tSub-District 4 - Circuit-Breaker mode - Unshorted.\n", f.displayMessage(l));
+
+    }
     public void testBasicSlotAccessMessages() {
         LocoNetMessage l;
         l = new LocoNetMessage(new int[] {0xBB, 0x40, 0x00, 0x04}  );
