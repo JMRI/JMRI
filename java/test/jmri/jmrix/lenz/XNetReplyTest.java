@@ -371,6 +371,10 @@ public class XNetReplyTest {
         r = new XNetReply("42 05 18 53");
         Assert.assertEquals("Broadcast Turnout Message Address", 23, r.getTurnoutMsgAddr(1));
 
+        // feedback message for turnout 23
+        r = new XNetReply("42 05 11 53");
+        Assert.assertEquals("Turnout Message Address", 23, r.getTurnoutMsgAddr(1));
+
         // feedback message for turnout 23 or 24, but neither 23 or 24 operated.
         r = new XNetReply("42 05 10 53");
         Assert.assertEquals("Broadcast Turnout Message Address", 23, r.getTurnoutMsgAddr(1));
@@ -1133,7 +1137,7 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringCSStatusReply(){
         XNetReply r = new XNetReply("62 22 00 40");
-        Assert.assertEquals("Monitor String","Command Station Status: Manual power-up Mode",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Command Station Status: Manual power-up Mode ",r.toMonitorString());
         r = new XNetReply("62 22 FF BF");
         Assert.assertEquals("Monitor String","Command Station Status: Emergency Off Emergency Stop Service Mode Powering up Auto power-up Mode RAM check error!",r.toMonitorString());
     }
