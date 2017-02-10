@@ -76,7 +76,6 @@ public class DefaultSignalMastManager extends AbstractManager
         SignalMast m = getSignalMast(name);
         if (m == null) {
             m = new jmri.implementation.SignalHeadSignalMast(name);
-
             register(m);
         }
         return m;

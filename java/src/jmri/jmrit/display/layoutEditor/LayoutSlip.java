@@ -1281,7 +1281,7 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     public void draw(Graphics2D g2) {
-        if (!getHidden() || layoutEditor.isEditable()) {
+        if (!isHidden() || layoutEditor.isEditable()) {
             Point2D pointA = getCoordsA();
             Point2D pointB = getCoordsB();
             Point2D pointC = getCoordsC();
@@ -1374,29 +1374,29 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     public void drawSlipCircles(Graphics2D g2) {
-        int circleSize = layoutEditor.getTurnoutCircleSize();
+        Double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
         Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
-        Double leftFract = circleSize / center.distance(leftCenter);
+        Double leftFract = circleRadius / center.distance(leftCenter);
         Point2D leftCircleCenter = lerp(center, leftCenter, leftFract);
         g2.draw(layoutEditor.turnoutCircleAt(leftCircleCenter));
 
         Point2D rightCenter = midpoint(getCoordsC(), getCoordsD());
-        Double rightFract = circleSize / center.distance(rightCenter);
+        Double rightFract = circleRadius / center.distance(rightCenter);
         Point2D rightCircleCenter = lerp(center, rightCenter, rightFract);
         g2.draw(layoutEditor.turnoutCircleAt(rightCircleCenter));
     }
 
     public void drawSlipRect(Graphics2D g2) {
         // draw east/west turnout (control) circles
-        int circleSize = layoutEditor.getTurnoutCircleSize();
+        Double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
 
         Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
-        Double leftFract = circleSize / center.distance(leftCenter);
+        Double leftFract = circleRadius / center.distance(leftCenter);
         Point2D leftCircleCenter = lerp(center, leftCenter, leftFract);
         g2.draw(layoutEditor.turnoutCircleAt(leftCircleCenter));
 
         Point2D rightCenter = midpoint(getCoordsC(), getCoordsD());
-        Double rightFract = circleSize / center.distance(rightCenter);
+        Double rightFract = circleRadius / center.distance(rightCenter);
         Point2D rightCircleCenter = lerp(center, rightCenter, rightFract);
         g2.draw(layoutEditor.turnoutCircleAt(rightCircleCenter));
 

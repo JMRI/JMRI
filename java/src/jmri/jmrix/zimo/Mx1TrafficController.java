@@ -46,15 +46,16 @@ public abstract class Mx1TrafficController implements Mx1Interface {
     abstract public boolean status();
 
     /**
-     * Forward a preformatted Mx1Message to the actual interface.
+     * Forward a pre-formatted Mx1Message to the actual interface.
      *
-     * @param m Message to send; will be updated with CRC
+     * @param m     Message to send; will be updated with CRC
+     * @param reply the listener to notify of a response
      */
     @Override
     abstract public void sendMx1Message(Mx1Message m, Mx1Listener reply);
 
     // The methods to implement adding and removing listeners
-    protected Vector<Mx1Listener> listeners = new Vector<Mx1Listener>();
+    protected Vector<Mx1Listener> listeners = new Vector<>();
 
     @Override
     public synchronized void addMx1Listener(int mask, Mx1Listener l) {

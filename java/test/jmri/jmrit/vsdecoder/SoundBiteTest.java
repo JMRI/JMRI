@@ -21,17 +21,18 @@ public class SoundBiteTest {
 
     @Test
     public void testCreateSimple() {
-        SoundBite uut = new SoundBite("unitUnderTest");
+        SoundBite uut = new SoundBite("unitUnderTest"); // QUEUE_MODE
         Assert.assertEquals("sound name", "unitUnderTest", uut.getName());
         Assert.assertFalse("is playing", uut.isPlaying());
     }
 
+    String filename = "java/test/jmri/jmrit/vsdecoder/test.wav";
+
     @Test
-    @Ignore("Causes NPE")
     public void testCreateFull() {
-        SoundBite uut = new SoundBite(null, "test.wav", "sysname", "uname");
+        SoundBite uut = new SoundBite(null, filename, "sysname", "uname"); // BOUND_MODE
         Assert.assertEquals("sound name", "uname", uut.getName());
-        Assert.assertEquals("file name", "filename", uut.getFileName());
+        Assert.assertEquals("file name", filename, uut.getFileName());
         Assert.assertEquals("system name", "sysname", uut.getSystemName());
         Assert.assertEquals("user name", "uname", uut.getUserName());
         Assert.assertTrue("initialized", uut.isInitialized());
@@ -40,7 +41,7 @@ public class SoundBiteTest {
 
     @Test
     public void TestSetGet() {
-        SoundBite uut = new SoundBite("unitUnderTest");
+        SoundBite uut = new SoundBite("unitUnderTest"); // QUEUE_MODE
         uut.setName("new name");
         Assert.assertEquals("set name", "new name", uut.getName());
         uut.setLooped(true);
@@ -56,7 +57,7 @@ public class SoundBiteTest {
 
     @Test
     public void testSetXML() {
-        SoundBite uut = new SoundBite("unitUnderTest");
+        SoundBite uut = new SoundBite("unitUnderTest"); // QUEUE_MODE
         Element e = buildTestXML();
         uut.setXml(e);
         // SoundBite.setXml() does nothing.

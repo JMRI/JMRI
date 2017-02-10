@@ -176,7 +176,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
                         log.debug("Appearance for head {} not set", row);
                         return Bundle.getMessage("BeanStateUnknown"); // use place holder string in table
                     }
-
                 } else {
                     return super.getValueAt(row, col);
                 }
@@ -367,7 +366,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 // add extras, override BeanTableDataModel
                 log.debug("Head configValueColumn (I am {})", super.toString());
                 table.setDefaultEditor(RowComboBoxPanel.class, new AppearanceComboBoxPanel());
-                table.setDefaultRenderer(RowComboBoxPanel.class, new AppearanceComboBoxPanel()); // create a separate class for the renderer
+                table.setDefaultRenderer(RowComboBoxPanel.class, new AppearanceComboBoxPanel()); // use same class for the renderer
                 // Set more things?
             }
 
@@ -406,7 +405,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
              * @param row Index of the signal mast (in TableDataModel) to be rebuilt in the Hashtables
              */
 
-          public void clearAppearanceVector(int row) {
+            public void clearAppearanceVector(int row) {
                 boxMap.remove(this.getValueAt(row, SYSNAMECOL));
                 editorMap.remove(this.getValueAt(row, SYSNAMECOL));
             }
