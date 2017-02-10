@@ -1051,10 +1051,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                             text = text + "Thrown Left";
                         } else if ((getElement(i + 1) & 0x03) == 0x02) {
                             text = text + "Thrown Right";
-                        } else if ((getElement(i + 1) & 0x03) == 0x03) {
-                            text = text + "<Invalid>";
                         } else {
-                            text = text + "<Unknown>";
+                            text = text + "<Invalid>";
                         }
                         text = text + "; Turnout: " + (getTurnoutMsgAddr(i) + 1)
                                 + " State: ";
@@ -1064,10 +1062,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                             text = text + "Thrown Left";
                         } else if ((getElement(i + 1) & 0x0C) == 0x08) {
                             text = text + "Thrown Right";
-                        } else if ((getElement(i + 1) & 0x0C) == 0x0C) {
-                            text = text + "<Invalid>";
                         } else {
-                            text = text + "<Unknown>";
+                            text = text + "<Invalid>";
                         }
                         break;
                     case 1:
@@ -1079,10 +1075,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                             text = text + "Thrown Left";
                         } else if ((getElement(i + 1) & 0x03) == 0x02) {
                             text = text + "Thrown Right";
-                        } else if ((getElement(i + 1) & 0x03) == 0x03) {
-                            text = text + "<Invalid>";
                         } else {
-                            text = text + "<Unknown>";
+                            text = text + "<Invalid>";
                         }
                         text = text + "; Turnout: " + (getTurnoutMsgAddr() + 1)
                                 + " State: ";
@@ -1092,10 +1086,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                             text = text + "Thrown Left";
                         } else if ((getElement(i + 1) & 0x0C) == 0x08) {
                             text = text + "Thrown Right";
-                        } else if ((getElement(i + 1) & 0x0C) == 0x0C) {
-                            text = text + "<Invalid>";
                         } else {
-                            text = text + "<Unknown>";
+                            text = text + "<Invalid>";
                         }
                         break;
                     case 2:
