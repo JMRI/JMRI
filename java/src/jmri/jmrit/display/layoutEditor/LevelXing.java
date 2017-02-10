@@ -1268,7 +1268,8 @@ public class LevelXing extends LayoutTrack {
 
     void xingEdit1BlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = block1NameComboBox.getSelectedItem().toString();
+        String newName = block1NameComboBox.getEditor().getItem().toString();
+        newName = (null != newName) ? newName.trim() : "";
         if (!blockNameAC.equals(newName)) {
             // block 1 has changed, if old block exists, decrement use
             if ((blockAC != null) && (blockAC != blockBD)) {
@@ -1309,7 +1310,8 @@ public class LevelXing extends LayoutTrack {
 
     void xingEdit2BlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = block2NameComboBox.getSelectedItem().toString();
+        String newName = block2NameComboBox.getEditor().getItem().toString();
+        newName = (null != newName) ? newName.trim() : "";
         if (!blockNameBD.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if ((blockBD != null) && (blockBD != blockAC)) {
@@ -1350,7 +1352,8 @@ public class LevelXing extends LayoutTrack {
 
     void xingEditDonePressed(ActionEvent a) {
         // check if Blocks changed
-        String newName = block1NameComboBox.getSelectedItem().toString();
+        String newName = block1NameComboBox.getEditor().getItem().toString();
+        newName = (null != newName) ? newName.trim() : "";
         if (!blockNameAC.equals(newName)) {
             // block 1 has changed, if old block exists, decrement use
             if ((blockAC != null) && (blockAC != blockBD)) {
@@ -1378,7 +1381,8 @@ public class LevelXing extends LayoutTrack {
             layoutEditor.auxTools.setBlockConnectivityChanged();
             needsBlockUpdate = true;
         }
-        newName = block2NameComboBox.getSelectedItem().toString();
+        newName = block2NameComboBox.getEditor().getItem().toString();
+        newName = (null != newName) ? newName.trim() : "";
         if (!blockNameBD.equals(newName)) {
             // block 2 has changed, if old block exists, decrement use
             if ((blockBD != null) && (blockBD != blockAC)) {

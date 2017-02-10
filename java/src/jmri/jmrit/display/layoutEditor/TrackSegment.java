@@ -554,6 +554,7 @@ public class TrackSegment extends LayoutTrack {
             editTrackSegmentFrame.setLocation(50, 30);
             Container contentPane = editTrackSegmentFrame.getContentPane();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+
             // add dashed choice
             JPanel panel31 = new JPanel();
             panel31.setLayout(new FlowLayout());
@@ -566,6 +567,7 @@ public class TrackSegment extends LayoutTrack {
             panel31.add(new JLabel(rb.getString("Style") + " : "));
             panel31.add(dashedBox);
             contentPane.add(panel31);
+
             // add mainline choice
             JPanel panel32 = new JPanel();
             panel32.setLayout(new FlowLayout());
@@ -577,12 +579,14 @@ public class TrackSegment extends LayoutTrack {
             mainlineBox.setToolTipText(rb.getString("MainlineToolTip"));
             panel32.add(mainlineBox);
             contentPane.add(panel32);
+
             // add hidden choice
             JPanel panel33 = new JPanel();
             panel33.setLayout(new FlowLayout());
             hiddenBox.setToolTipText(rb.getString("HiddenToolTip"));
             panel33.add(hiddenBox);
             contentPane.add(panel33);
+
             // setup block name
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
@@ -593,7 +597,9 @@ public class TrackSegment extends LayoutTrack {
             blockNameComboBox.setSelectedIndex(-1);
             blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             panel2.add(blockNameComboBox);
+
             contentPane.add(panel2);
+
             if ((getArc()) && (getCircle())) {
                 JPanel panel20 = new JPanel();
                 panel20.setLayout(new FlowLayout());
@@ -604,9 +610,11 @@ public class TrackSegment extends LayoutTrack {
                 contentPane.add(panel20);
                 arcField.setText("" + getAngle());
             }
+
             // set up Edit Block, Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
+
             // Edit Block
             panel5.add(segmentEditBlock = new JButton(Bundle.getMessage("EditBlock", "")));
             segmentEditBlock.addActionListener(new ActionListener() {
@@ -673,7 +681,8 @@ public class TrackSegment extends LayoutTrack {
 
     void segmentEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = blockNameComboBox.getSelectedItem().toString();
+        String newName = blockNameComboBox.getEditor().getItem().toString();
+        newName = (null != newName) ? newName.trim() : "";
         if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if (block != null) {
@@ -736,7 +745,8 @@ public class TrackSegment extends LayoutTrack {
             needsRedraw = true;
         }
         // check if Block changed
-        String newName = blockNameComboBox.getSelectedItem().toString();
+        String newName = blockNameComboBox.getEditor().getItem().toString();
+        newName = (null != newName) ? newName.trim() : "";
         if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if (block != null) {

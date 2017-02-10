@@ -6761,7 +6761,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             turnoutNameComboBox.setSelectedIndex(-1);
         }
 
-        turnoutName = extraTurnoutNameComboBox.getSelectedItem().toString();
+        turnoutName = extraTurnoutNameComboBox.getEditor().getItem().toString();
         turnoutName = (null != turnoutName) ? turnoutName.trim() : "";
         if (validatePhysicalTurnout(turnoutName, this)) {
             // turnout is valid and unique.
