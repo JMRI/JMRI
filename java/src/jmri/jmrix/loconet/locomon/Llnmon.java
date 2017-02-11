@@ -419,8 +419,6 @@ public class Llnmon {
      */
     protected String format(LocoNetMessage l) {
 
-        int minutes; // temporary time values
-        int hours;
 
         /*
          * 2 Byte MESSAGE OPCODES
@@ -717,127 +715,12 @@ public class Llnmon {
              * Page 9 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_LONG_ACK: {
-                int opcode = l.getElement(1);
-                int ack1 = l.getElement(2);
-
-                switch (opcode | 0x80) {
-                    case (LnConstants.OPC_LOCO_ADR):
-                        // response for OPC_LOCO_ADR
-                        return Bundle.getMessage("LN_MSG_LONG_ACK_LOCO_ADR");
-
-                    case (LnConstants.OPC_LINK_SLOTS):
-                        // response for OPC_LINK_SLOTS
-                        return Bundle.getMessage("LN_MSG_LONG_ACK_LINK_SLOTS");
-
-                    case (LnConstants.OPC_SW_ACK):
-                        // response for OPC_SW_ACK
-                        switch (ack1) {
-                            case 0:
-                                return Bundle.getMessage("LN_MSG_LONG_ACK_SW_ACK_FULL");
-                            case 0x7f:
-                                return Bundle.getMessage("LN_MSG_LONG_ACK_SW_ACK_ACCEPT");
-                            default:
-                                forceHex = true;
-                                return Bundle.getMessage("LN_MSG_LONG_ACK_SW_ACK_UNKNOWN",
-                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                StringUtil.twoHexFromInt(ack1)));
-                        }
-                    case (LnConstants.OPC_SW_REQ):
-                        // response for OPC_SW_REQ
-                        return Bundle.getMessage("LN_MSG_LONG_ACK_SW_REQ_FAIL");
-
-                    case (LnConstants.OPC_WR_SL_DATA):
-                        // response for OPC_WR_SL_DATA
-                        switch (ack1) {
-                            case 0:
-                                return Bundle.getMessage("LN_MSG_LONG_ACK_WR_SL_FAIL");
-                            case 0x01:
-                                return Bundle.getMessage("LN_MSG_LONG_ACK_WR_SL_OK");
-                            case 0x23:
-                            case 0x2b:
-                            case 0x6B:
-                                return Bundle.getMessage("LN_MSG_LONG_ACK_WR_SL_PROG_DCS51_OK");
-                            case 0x40:
-                                return Bundle.getMessage("LN_MSG_LONG_ACK_WR_SL_BLIND");
-                            case 0x7f:
-                                return Bundle.getMessage("LN_MSG_LONG_ACK_WR_SL_NOT_IMPL");
-                            default:
-                                forceHex = true;
-                                return Bundle.getMessage("LN_MSG_LONG_ACK_WR_SL_UNKNOWN",
-                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                StringUtil.twoHexFromInt(ack1)));
-                        }
-
-                    case (LnConstants.OPC_SW_STATE):
-                        // response for OPC_SW_STATE
-                        return Bundle.getMessage("LN_MSG_LONG_ACK_SW_STATE",
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                        StringUtil.twoHexFromInt(ack1)),
-                                Bundle.getMessage((((ack1 & 0x20) != 0)
-                                        ? "LN_MSG_SWITCH_STATE_CLOSED"
-                                        : "LN_MSG_SWITCH_STATE_THROWN")));
-
-                    case (LnConstants.OPC_MOVE_SLOTS):
-                        // response for OPC_MOVE_SLOTS
-                        switch (ack1) {
-                            case 0:
-                                return Bundle.getMessage("LN_MSG_LONG_ACK_MOVE_SL_REJECT");
-                            case 0x7f:
-                                return Bundle.getMessage("LN_MSG_LONG_ACK_MOVE_SL_ACCEPT");
-                            default:
-                                forceHex = true;
-                                return Bundle.getMessage("LN_MSG_LONG_ACK_MOVE_SL_UNKNOWN",
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                        StringUtil.twoHexFromInt(ack1)));
-                        }
-
-                    case LnConstants.OPC_IMM_PACKET:
-                        // response for OPC_IMM_PACKET
-                        if (ack1 == 0) {
-                            return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_REJECT");
-                        } else if (ack1 == 0x7f) {
-                            return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_ACCEPT");
-                        } else if (l.getElement(1) == 0x6D && l.getElement(2) == 0x01) {
-                            return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_UHL_PROG");
-
-                        } else {
-                            forceHex = true;
-                            return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_UNKNOWN",
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                        StringUtil.twoHexFromInt(ack1)));
-                        }
-
-                    case LnConstants.OPC_IMM_PACKET_2:
-                        // response for OPC_IMM_PACKET
-                        return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_LIM_MASTER",
-                                ack1, Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                        StringUtil.twoHexFromInt(ack1)));
-
-                    case (LnConstants.RE_LACK_SPEC_CASE1 | 0x80): // 0x50 plus opcode bit so can match the switch'd value:
-                    case (LnConstants.RE_LACK_SPEC_CASE2 | 0x80): //0x00 plus opcode bit so can match the switch'd value:
-                        // OpSwitch read response reverse-engineered by B. Milhaupt and
-                        // used with permission
-                        int responseValue = l.getElement(2);
-                        if (responseValue == 0x7f) {
-                            return Bundle.getMessage("LN_MSG_LONG_ACK_SPEC_CASE1_2_ACCEPTED");
-                        } else {
-                            return Bundle.getMessage("LN_MSG_LONG_ACK_SPEC_CASE1_2_REPORT",
-                                    (((responseValue & 0x20) == 0x20) ? 1 : 0),
-                                    (((responseValue & 0x20) == 0x20)
-                                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_CLOSED")
-                                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_THROWN")));
-                        }
-                    case LnConstants.OPC_ALM_READ:
-                        if (l.getElement(2) == 0) {
-                        return Bundle.getMessage("LN_MSG_LONG_ACK_SLOT_NOT_SUPPORTED",
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                        StringUtil.twoHexFromInt(opcode)));
-                    }
-                    default:
-                        return Bundle.getMessage("LN_MSG_LONG_ACK_IS_NOT_DECODED",
-                                ack1, Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION", StringUtil.twoHexFromInt(ack1)),
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION", StringUtil.twoHexFromInt(opcode)));
-                } // switch (opcode | 0x80)
+                String result;
+                result = interpretLongAck(l);
+                if (result.length() > 0) {
+                    return result;
+                }
+                break;
             } // case LnConstants.OPC_LONG_ACK
 
             /*
@@ -1094,6 +977,7 @@ public class Llnmon {
                 }
                 // Odd case - should not get here!
                 forceHex = true;
+                log.warn("Unexpected program fall-through in OPC_SW_REQ decode for LocoNet message "+l.toString());
                 return "Unexpected program decode behavior for OPC_SW_REQ.  Code should not get here.\n";  // NOI18N
             } // case LnConstants.OPC_SW_REQ
 
@@ -1239,253 +1123,12 @@ public class Llnmon {
              * performed by Al Silverstein, and corrections added by B. Milhaupt.
              */
             case LnConstants.OPC_MULTI_SENSE: {
-                int type = l.getElement(1) & LnConstants.OPC_MULTI_SENSE_MSG;
-                switch (type) {
-                    case LnConstants.OPC_MULTI_SENSE_POWER:
-                        // This is a PM42 power event.
-                        int pCMD = (l.getElement(3) & 0xF0);
-
-                        if ((pCMD == 0x30) || (pCMD == 0x10)) {
-                            // autoreverse
-                            int cm1 = l.getElement(3);
-                            int cm2 = l.getElement(4);
-                            String sect1Mode, sect1State;
-                            String sect2Mode, sect2State;
-                            String sect3Mode, sect3State;
-                            String sect4Mode, sect4State;
-
-                            if ((cm1 & 1) != 0) {
-                                sect1Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_AUTOREV");
-                                sect1State = ((cm2 & 1) != 0)
-                                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_REV")
-                                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NORM");
-                            } else {
-                                sect1Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_PROTECT");
-                                sect1State = ((cm2 & 1) != 0)
-                                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_SHORT")
-                                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NONSHORT");
-                            }
-
-                            if ((cm1 & 2) != 0) {
-                                sect2Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_AUTOREV");
-                                sect2State = ((cm2 & 2) != 0)
-                                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_REV")
-                                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NORM");
-                            } else {
-                                sect2Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_PROTECT");
-                                sect2State = ((cm2 & 2) != 0)
-                                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_SHORT")
-                                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NONSHORT");
-                            }
-
-                            if ((cm1 & 4) != 0) {
-                                sect3Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_AUTOREV");
-                                sect3State = ((cm2 & 4) != 0)
-                                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_REV")
-                                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NORM");
-                            } else {
-                                sect3Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_PROTECT");
-                                sect3State = ((cm2 & 4) != 0)
-                                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_SHORT")
-                                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NONSHORT");
-                            }
-
-                            if ((cm1 & 8) != 0) {
-                                sect4Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_AUTOREV");
-                                sect4State = ((cm2 & 8) != 0)
-                                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_REV")
-                                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NORM");
-                            } else {
-                                sect4Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_PROTECT");
-                                sect4State = ((cm2 & 8) != 0)
-                                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_SHORT")
-                                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NONSHORT");
-                            }
-                            return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X",
-                                    (l.getElement(2) + 1) + ((l.getElement(1) & 0x1) << 7),
-                                    sect1Mode, sect1State, sect2Mode, sect2State,
-                                    sect3Mode, sect3State, sect4Mode, sect4State);
-                        } else if (pCMD == 0x70) {
-                            // programming
-                            int deviceType = l.getElement(3) & 0x7;
-                            String device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_UNKNOWN");
-                            switch (deviceType) {
-                                case LnConstants.RE_MULTI_SENSE_DEV_TYPE_PM4X:
-                                    device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_PM4X");
-                                    break;
-                                case LnConstants.RE_MULTI_SENSE_DEV_TYPE_BDL16X:
-                                    device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_BDL16X");
-                                    break;
-                                case LnConstants.RE_MULTI_SENSE_DEV_TYPE_SE8:
-                                    device = device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_SE8C");
-                                    break;
-                                case LnConstants.RE_MULTI_SENSE_DEV_TYPE_DS64:
-                                    device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_DS64");
-                                    break;
-                            }
-
-                            int bit = (l.getElement(4) & 0x0E) / 2;
-                            int val = (l.getElement(4) & 0x01);
-                            int wrd = (l.getElement(4) & 0x70) / 16;
-                            int opsw = (l.getElement(4) & 0x7E) / 2 + 1;
-                            int bdaddr = l.getElement(2) + 1;
-                            if ((l.getElement(1) & 0x1) != 0) {
-                                bdaddr += 128;
-                            }
-                            String accessType = ((l.getElement(1) & 0x10) != 0)
-                                    ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_OPSW_WRITE")
-                                    : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_OPSW_READ");
-                            String valType = (val == 1)
-                                    ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_CLOSED")
-                                    : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_THROWN");
-                            if ((deviceType == 0) && (bdaddr == 0) && (bit == 0) && (val == 0) && (wrd == 0) && (opsw == 1)) {
-                                return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_ACCESS_QUERY",
-                                        device, bdaddr, accessType, opsw, val, valType
-                                        );
-                            }
-                            return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_ACCESS",
-                                    device, bdaddr, accessType, opsw, val, valType
-                                    );
-                        } else if (pCMD == 0x00) {
-                            /**
-                             * **************************************************
-                             * Device type report * The message bytes as
-                             * assigned as follows:
-                             *
-                             * <0xD0> <DQT_REQ> <DQT_BRD> <DQT_B3> <DQT_B4>
-                             * <CHK> * * where:
-                             *
-                             * <DQT_REQ> contains the device query request, *
-                             * encoded as: * bits 7-4 always 0110b * bits 3-1
-                             * always 001b * bit 0 (BoardID-1)<7>
-                             *
-                             * <DQT_BRD> contains most the device board ID
-                             * number, * encoded as: * bit 7 always 0b * bits
-                             * 6-0 (BoardID-1)<6:0>
-                             *
-                             * <DQT_B3> contains the board type identification,
-                             * * encoded as: * bits 7-4 always 0000b * bits 3-0
-                             * contain the encoded device type, * encoded as: *
-                             * 0000b PM4x device * 0001b BDL16x device * 0010b
-                             * SE8C device * 0011b DS64 device * others Unknown
-                             * device type
-                             *
-                             * <DQT_B4> contains device version number: * bit 7
-                             * always 0b * bits 6-0 VersionNumber(6:0) * *
-                             * Information reverse-engineered by B. Milhaupt and
-                             * used  with permission *
-                             * **************************************************
-                             */
-                            // This message is a report which is sent by a LocoNet device
-                            // in response to a query of attached devices
-                            // Note - this scheme is supported by only some Digitrax devices.
-                            //
-                            // A VersionNumber of 0 implies the hardware does not report
-                            // a valid version number.
-                            //
-                            // Device type report reverse-engineered by B. Milhaupt and
-                            // used with permission
-                            int deviceType = l.getElement(3) & 0x7;
-                            String device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_UNKNOWN");
-                            switch (deviceType) {
-                                case LnConstants.RE_MULTI_SENSE_DEV_TYPE_PM4X:
-                                    device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_PM4X");
-                                    break;
-                                case LnConstants.RE_MULTI_SENSE_DEV_TYPE_BDL16X:
-                                    device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_BDL16X");
-                                    break;
-                                case LnConstants.RE_MULTI_SENSE_DEV_TYPE_SE8:
-                                    device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_SE8C");
-                                    break;
-                                case LnConstants.RE_MULTI_SENSE_DEV_TYPE_DS64:
-                                    device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_DS64");
-                                    break;
-                            }
-
-                            int bdaddr = l.getElement(2) + 1;
-                            if ((l.getElement(1) & 0x1) != 0) {
-                                bdaddr += 128;
-                            }
-                            String versionNumber = Integer.toString(l.getElement(4));
-                            if (l.getElement(4) == 0) {
-                                versionNumber = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_VER_UNKNOWN");
-                            }
-                            return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_DEV_TYPE_RPT",
-                                    device, bdaddr, versionNumber);
-                        } else {
-                            // beats me
-                            forceHex = true;
-                            return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_UNKNOWN_OP",
-                                (l.getElement(2) + 1),
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                        StringUtil.twoHexFromInt(pCMD)));
-                        }
-
-                    case LnConstants.OPC_MULTI_SENSE_PRESENT:
-                    case LnConstants.OPC_MULTI_SENSE_ABSENT:
-                        // Transponding Event
-                        // get system and user names
-                        String reporterSystemName;
-                        String reporterUserName;
-                        String zone;
-                        switch (l.getElement(2) & 0x0F) {
-                            case 0x00:
-                                zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEA");
-                                break;
-                            case 0x02:
-                                zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEB");
-                                break;
-                            case 0x04:
-                                zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEC");
-                                break;
-                            case 0x06:
-                                zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONED");
-                                break;
-                            case 0x08:
-                                zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEE");
-                                break;
-                            case 0x0A:
-                                zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEF");
-                                break;
-                            case 0x0C:
-                                zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEG");
-                                break;
-                            case 0x0E:
-                                zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEH");
-                                break;
-                            default:
-                                zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONE_UNKNOWN",
-                                        (l.getElement(2) & 0x0F));
-                                break;
-                        }
-
-                        reporterSystemName = locoNetReporterPrefix
-                                + ((l.getElement(1) & 0x1F) * 128 + l.getElement(2) + 1);
-
-                        Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
-                        reporterUserName = "";
-                        if (reporter != null) {
-                            String uname = reporter.getUserName();
-                            if ((uname != null) && (!uname.isEmpty())) {
-                                reporterUserName = uname;
-                            }
-                        }
-                        int section = 1 + (l.getElement(2) / 16) + (l.getElement(1) & 0x1F) * 8;
-
-                        String locoAddr = ((l.getElement(3) == 0x7d)
-                                ? Bundle.getMessage("LN_ADDRESS_HELPER_SHORT", Integer.toString(l.getElement(4)))
-                                : Bundle.getMessage("LN_ADDRESS_HELPER_LONG", Integer.toString(l.getElement(3) * 128 + l.getElement(4))));
-                        String transpActivity = (type == LnConstants.OPC_MULTI_SENSE_PRESENT)
-                                ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_PRESENT")
-                                : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_ABSENT");
-
-                        return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_REPORT",
-                                locoAddr, transpActivity, reporterSystemName,
-                                reporterUserName, section, zone);
-                    default:
-                        forceHex = true;
-                        return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_UNKNOWN_OP");
+                String result;
+                result = interpretOpcMultiSense(l);
+                if (result.length() > 0) {
+                    return result;
                 }
+                break;
             } //  case LnConstants.OPC_MULTI_SENSE
 
             /**
@@ -1569,737 +1212,13 @@ public class Llnmon {
              */
             case LnConstants.OPC_WR_SL_DATA:
             case LnConstants.OPC_SL_RD_DATA: {
-                if (l.getElement(1) == 0x0E) {
-                    // message length is correct for "standard" slot read and write
-                    // data as described in the LocoNet PE document.
-                    int slot = l.getElement(2); // slot number for this request
-                    String mode;
-                    int command = l.getElement(0);
-                    int id1 = l.getElement(11); // ls 7 bits of ID code
-                    int id2 = l.getElement(12); // ms 7 bits of ID code
-                    /*
-                     * These messages share a common data format with the only difference being
-                     * whether we are reading or writing the slot data.
-                     */
-                    if (command == LnConstants.OPC_WR_SL_DATA) {
-                        mode = Bundle.getMessage("LN_MSG_SLOT_HELPER_ACCESS_TYPE_REQUEST");
-                    } else {
-                        mode = Bundle.getMessage("LN_MSG_SLOT_HELPER_ACCESS_TYPE_RESPONSE");
-                    }
-                    switch (slot) {
-                        case LnConstants.FC_SLOT:
-                            /**
-                             * ********************************************************************************************
-                             * FAST Clock: * =========== * The system FAST clock and
-                             * parameters are implemented in Slot#123 <7B>. * * Use
-                             * <EF>
-                             * to write new clock information, Slot read of
-                             * 0x7B,<BB><7B>.., will return current * System clock
-                             * information, and other throttles will update to this
-                             * SYNC. Note that all * attached display devices keep a
-                             * current clock calculation based on this SYNC read
-                             * value, * i.e. devices MUST not continuously poll the
-                             * clock SLOT to generate time, but use this * merely to
-                             * restore SYNC and follow current RATE etc. This clock
-                             * slot is typically "pinged" * or read SYNC'd every 70
-                             * to 100 seconds , by a single user, so all attached
-                             * devices can * synchronise any phase drifts. Upon
-                             * seeing a SYNC read, all devices should reset their
-                             * local * sub-minute phase counter and invalidate the
-                             * SYNC update ping generator. * * Clock Slot Format:
-                             *
-                             * <0xEF>,<0E>,<7B>,<CLK_RATE>,<FRAC_MINSL>,<FRAC_MINSH>,<256-MINS_60>,
-                             *
-                             * <TRK><256-HRS_24>,<DAYS>,<CLK_CNTRL>,<ID1>,<1D2>,<CHK>
-                             *
-                             * * <CLK_RATE> 0=Freeze clock, * 1=normal 1:1 rate, *
-                             * 10=10:1 etc, max VALUE is 7F/128 to 1
-                             *
-                             * <FRAC_MINSL> FRAC mins hi/lo are a sub-minute counter
-                             * , depending * on the CLOCK generator
-                             *
-                             * <FRAC_MINSH> Not for ext. usage. This counter is
-                             * reset when valid
-                             *
-                             * <E6><7B> SYNC msg seen
-                             *
-                             * <256-MINS_60> This is FAST clock MINUTES subtracted
-                             * from 256. Modulo 0-59
-                             *
-                             * <256-HRS_24> This is FAST clock HOURS subtracted from
-                             * 256. Modulo 0-23
-                             *
-                             * <DAYS> number of 24 Hr clock rolls, positive count
-                             *
-                             * <CLK_CNTRL> Clock Control Byte * D6- 1=This is valid
-                             * Clock information, * 0=ignore this <E6><7B>, SYNC
-                             * reply
-                             *
-                             * <ID1>,<1D2> This is device ID last setting the clock.
-                             *
-                             * <00><00> shows no set has happened
-                             *
-                             * <7F><7x> are reserved for PC access *
-                             * ********************************************************************************************
-                             */
+                String result;
+                result = interpretOpcWrSlDataOpcSlRdData(l);
+                if (result.length() > 0) {
+                    return result;
+                }
+                break;
 
-                            int clk_rate = l.getElement(3); // 0 = Freeze clock, 1 = normal,
-                            // 10 = 10:1 etc. Max is 0x7f
-                            int mins_60 = l.getElement(6); // 256 - minutes
-                            int track_stat = l.getElement(7); // track status
-                            int hours_24 = l.getElement(8); // 256 - hours
-                            int days = l.getElement(9); // clock rollovers
-                            int clk_cntrl = l.getElement(10); // bit 6 = 1; data is valid
-                            // clock info
-                            // "  " 0; ignore this reply
-                            // id1/id2 is device id of last device to set the clock
-                            // "   " = zero shows not set has happened
-
-                            /* recover hours and minutes values */
-                            minutes = ((255 - mins_60) & 0x7f) % 60;
-                            hours = ((256 - hours_24) & 0x7f) % 24;
-                            hours = (24 - hours) % 24;
-                            minutes = (60 - minutes) % 60;
-
-                            /* check track status value and display */
-                            if (trackStatus != track_stat) {
-                                trackStatus = track_stat;
-                            }
-
-                            return Bundle.getMessage("LN_MSG_SLOT_ACCESS_FAST_CLOCK",
-                                    mode,
-                                    ((clk_cntrl & 0x20) != 0 ? "" : Bundle.getMessage("LN_MSG_SLOT_HELPER_FC_SYNC")),
-                                    (clk_rate != 0 ? Bundle.getMessage("LN_MSG_SLOT_HELPER_FC_RUNNING")
-                                            : Bundle.getMessage("LN_MSG_SLOT_HELPER_FC_FROZEN")),
-                                    clk_rate,
-                                    days,
-                                    fcTimeToString(hours, minutes),
-                                    idString(id1, id2),
-                                    trackStatusByteToString(track_stat));
-                            // end fast clock block
-                        case LnConstants.PRG_SLOT:
-                            /**
-                             * ********************************************************************************************
-                             * Programmer track: * ================= * The
-                             * programmer track is accessed as Special slot #124 (
-                             * $7C, 0x7C). It is a full * asynchronous shared system
-                             * resource. * * To start Programmer task, write to slot
-                             * 124. There will be an immediate LACK acknowledge *
-                             * that indicates what programming will be allowed. If a
-                             * valid programming task is started, * then at the
-                             * final (asynchronous) programming completion, a Slot
-                             * read <E7> from slot 124 * will be sent. This is the
-                             * final task status reply. * * Programmer Task Start: *
-                             * ----------------------
-                             *
-                             * <0xEF>,<0E>,<7C>,<PCMD>,<0>,<HOPSA>,<LOPSA>,<TRK>;<CVH>,<CVL>,
-                             *
-                             * <DATA7>,<0>,<0>,<CHK> * * This OPC leads to immediate
-                             * LACK codes:
-                             *
-                             * <B4>,<7F>,<7F>,<chk> Function NOT implemented, no
-                             * reply.
-                             *
-                             * <B4>,<7F>,<0>,<chk> Programmer BUSY , task aborted,
-                             * no reply.
-                             *
-                             * <B4>,<7F>,<1>,<chk> Task accepted , <E7> reply at
-                             * completion.
-                             *
-                             * <B4>,<7F>,<0x40>,<chk> Task accepted blind NO <E7>
-                             * reply at completion. * * Note that the <7F> code will
-                             * occur in Operations Mode Read requests if the System
-                             * is not * configured for and has no Advanced
-                             * Acknowlegement detection installed.. Operations Mode
-                             * * requests can be made and executed whilst a current
-                             * Service Mode programming task is keeping * the
-                             * Programming track BUSY. If a Programming request is
-                             * rejected, delay and resend the * complete request
-                             * later. Some readback operations can keep the
-                             * Programming track busy for up * to a minute. Multiple
-                             * devices, throttles/PC's etc, can share and
-                             * sequentially use the * Programming track as long as
-                             * they correctly interpret the response messages. Any
-                             * Slot RD * from the master will also contain the
-                             * Programmer Busy status in bit 3 of the <TRK> byte. *
-                             * * A <PCMD> value of
-                             * <00> will abort current SERVICE mode programming task
-                             * and will echo with * an <E6> RD the command string
-                             * that was aborted. * * <PCMD> Programmer Command: *
-                             * -------------------------- * Defined as * D7 -0 * D6
-                             * -Write/Read 1= Write, * 0=Read * D5 -Byte Mode 1=
-                             * Byte operation, * 0=Bit operation (if possible) * D4
-                             * -TY1 Programming Type select bit * D3 -TY0 Prog type
-                             * select bit * D2 -Ops Mode 1=Ops Mode on Mainlines, *
-                             * 0=Service Mode on Programming Track * D1 -0 reserved
-                             * * D0 -0-reserved * * Type codes: * ----------- * Byte
-                             * Mode Ops Mode TY1 TY0 Meaning * 1 0 0 0 Paged mode
-                             * byte Read/Write on Service Track * 1 0 0 0 Paged mode
-                             * byte Read/Write on Service Track * 1 0 0 1 Direct
-                             * mode byteRead/Write on Service Track * 0 0 0 1 Direct
-                             * mode bit Read/Write on Service Track * x 0 1 0
-                             * Physical Register byte Read/Write on Service Track *
-                             * x 0 1 1 Service Track- reserved function * 1 1 0 0
-                             * Ops mode Byte program, no feedback * 1 1 0 1 Ops mode
-                             * Byte program, feedback * 0 1 0 0 Ops mode Bit
-                             * program, no feedback * 0 1 0 1 Ops mode Bit program,
-                             * feedback * * <HOPSA>Operations Mode Programming * 7
-                             * High address bits of Loco to program, 0 if Service
-                             * Mode
-                             *
-                             * <LOPSA>Operations Mode Programming * 7 Low address
-                             * bits of Loco to program, 0 if Service Mode
-                             *
-                             * <TRK> Normal Global Track status for this Master, *
-                             * Bit 3 also is 1 WHEN Service Mode track is BUSY
-                             *
-                             * <CVH> High 3 BITS of CV#, and ms bit of DATA.7
-                             *
-                             * <0,0,CV9,CV8 - 0,0, D7,CV7>
-                             *
-                             * <CVL> Low 7 bits of 10 bit CV address.
-                             *
-                             * <0,CV6,CV5,CV4-CV3,CV2,CV1,CV0>
-                             *
-                             * <DATA7>Low 7 BITS OF data to WR or RD COMPARE
-                             *
-                             * <0,D6,D5,D4 - D3,D2,D1,D0> * ms bit is at CVH bit 1
-                             * position. * * Programmer Task Final Reply: *
-                             * ---------------------------- * (if saw LACK
-                             * <B4>,<7F>,<1>,<chk> code reply at task start)
-                             *
-                             * <0xE7>,<0E>,<7C>,<PCMD>,<PSTAT>,<HOPSA>,<LOPSA>,<TRK>;<CVH>,<CVL>,
-                             *
-                             * <DATA7>,<0>,<0>,<CHK> * * <PSTAT> Programmer Status
-                             * error flags. Reply codes resulting from * completed
-                             * task in PCMD * D7-D4 -reserved * D3 -1= User Aborted
-                             * this command * D2 -1= Failed to detect READ Compare
-                             * acknowledge response * from decoder * D1 -1= No Write
-                             * acknowledge response from decoder * D0 -1= Service
-                             * Mode programming track empty- No decoder detected * *
-                             * This <E7> response is issued whenever a Programming
-                             * task is completed. It echos most of the * request
-                             * information and returns the PSTAT status code to
-                             * indicate how the task completed. * If a READ was
-                             * requested <DATA7> and <CVH> contain the returned
-                             * data, if the PSTAT indicates * a successful readback
-                             * (typically =0). Note that if a Paged Read fails to
-                             * detect a * successful Page write acknowledge when
-                             * first setting the Page register, the read will be *
-                             * aborted, showing no Write acknowledge flag D1=1. *
-                             * ********************************************************************************************
-                             */
-                            int cvData;
-                            int cvNumber;
-
-                            // progTask = (progTaskMsg *) msgBuf;
-                            // slot - slot number for this request - slot 124 is programmer
-                            int pcmd = l.getElement(3); // programmer command
-                            int pstat = l.getElement(4); // programmer status error flags in
-                            // reply message
-                            int hopsa = l.getElement(5); // Ops mode - 7 high address bits
-                            // of loco to program
-                            int lopsa = l.getElement(6); // Ops mode - 7 low address bits of
-                            // loco to program
-                            /* trk - track status. Note: bit 3 shows if prog track is busy */
-                            int cvh = l.getElement(8); // hi 3 bits of CV# and msb of data7
-                            int cvl = l.getElement(9); // lo 7 bits of CV#
-                            int data7 = l.getElement(10); // 7 bits of data to program, msb
-                            // is in cvh above
-
-                            cvData = (((cvh & LnConstants.CVH_D7) << 6) | (data7 & 0x7f)); // was
-                            // PROG_DATA
-                            cvNumber = (((((cvh & LnConstants.CVH_CV8_CV9) >> 3) | (cvh & LnConstants.CVH_CV7)) * 128) + (cvl & 0x7f)) + 1; // was
-                            // PROG_CV_NUM(progTask)
-
-                            if (command == LnConstants.OPC_WR_SL_DATA) {
-                                /* interpret the programming mode request (to programmer) */
-                                switch ((pcmd & (LnConstants.PCMD_MODE_MASK | LnConstants.PCMD_RW))) {
-                                    case LnConstants.PAGED_ON_SRVC_TRK :
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_PAGED_RD",
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
-                                                cvNumber));
-                                    case LnConstants.PAGED_ON_SRVC_TRK | LnConstants.PCMD_RW:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_PAGED_WR",
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
-                                                cvNumber, cvData));
-                                    case LnConstants.DIR_BYTE_ON_SRVC_TRK:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_DIR_BYTE_RD",
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
-                                                cvNumber));
-                                    case LnConstants.DIR_BYTE_ON_SRVC_TRK | LnConstants.PCMD_RW:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_DIR_BYTE_WR",
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
-                                                cvNumber, cvData));
-                                    case LnConstants.DIR_BIT_ON_SRVC_TRK:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_DIR_BIT_RD",
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
-                                                cvNumber));
-                                    case LnConstants.DIR_BIT_ON_SRVC_TRK | LnConstants.PCMD_RW:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_DIR_BIT_WR",
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
-                                                cvNumber, cvData));
-                                    case LnConstants.REG_BYTE_RW_ON_SRVC_TRK:
-                                    case LnConstants.REG_BYTE_RW_ON_SRVC_TRK | LnConstants.PCMD_BYTE_MODE:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_REG_BYTE_RD",
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
-                                                cvNumber));
-                                    case LnConstants.REG_BYTE_RW_ON_SRVC_TRK | LnConstants.PCMD_RW:
-                                    case LnConstants.REG_BYTE_RW_ON_SRVC_TRK | LnConstants.PCMD_BYTE_MODE | LnConstants.PCMD_RW:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_REG_BYTE_WR",
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
-                                                cvNumber, cvData));
-                                    case LnConstants.SRVC_TRK_RESERVED:
-                                    case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_MODE_MASK:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_RD_RESERVED",
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
-                                                        cvNumber));
-                                    case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_RW:
-                                    case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_MODE_MASK | LnConstants.PCMD_RW:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_WR_RESERVED",
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
-                                                        cvNumber, cvData));
-                                    case LnConstants.OPS_BYTE_NO_FEEDBACK:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BYTE_RD_NO_FEEDBACK",
-                                                convertToMixed(lopsa, hopsa),
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
-                                                        cvNumber));
-                                    case LnConstants.OPS_BYTE_NO_FEEDBACK | LnConstants.PCMD_RW:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BYTE_WR_NO_FEEDBACK",
-                                                convertToMixed(lopsa, hopsa),
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
-                                                        cvNumber, cvData, 
-                                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                        StringUtil.twoHexFromInt(cvData)), StringUtil.to8Bits(cvData, true)));
-                                    case LnConstants.OPS_BYTE_FEEDBACK:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BYTE_RD_FEEDBACK",
-                                                convertToMixed(lopsa, hopsa),
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
-                                                        cvNumber));
-                                    case LnConstants.OPS_BYTE_FEEDBACK | LnConstants.PCMD_RW:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BYTE_WR_FEEDBACK",
-                                                convertToMixed(lopsa, hopsa),
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
-                                                        cvNumber, cvData));
-                                    case LnConstants.OPS_BIT_NO_FEEDBACK:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BIT_RD_NO_FEEDBACK",
-                                                convertToMixed(lopsa, hopsa),
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
-                                                        cvNumber));
-                                    case LnConstants.OPS_BIT_NO_FEEDBACK | LnConstants.PCMD_RW:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BIT_WR_NO_FEEDBACK",
-                                                convertToMixed(lopsa, hopsa),
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
-                                                        cvNumber, cvData));
-                                                                            case LnConstants.OPS_BIT_FEEDBACK:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BIT_RD_FEEDBACK",
-                                                convertToMixed(lopsa, hopsa),
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
-                                                        cvNumber));
-                                    case LnConstants.OPS_BIT_FEEDBACK | LnConstants.PCMD_RW:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BIT_WR_FEEDBACK",
-                                                convertToMixed(lopsa, hopsa),
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
-                                                        cvNumber, cvData));
-                                    case 0:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_UHLENBROCK_RD",
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
-                                                        cvNumber));
-                                    case LnConstants.PCMD_RW:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_UHLENBROCK_WR",
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
-                                                        cvNumber, cvData));
-                                    default:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_UNKNOWN",
-                                                pcmd,
-                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                    StringUtil.twoHexFromInt(pcmd)),
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
-                                                        cvNumber, cvData));
-                                }
-                            } else {
-                                /* interpret the  programming mode response (from programmer) */
-                                /* if we're reading the slot back, check the status
-                                 * this is supposed to be the Programming task final reply
-                                 * and will have the resulting status byte
-                                 */
-                                String responseMessage = "(ODD BEHAVIOR - Default value not overwritten - report to developers!"; // NOI18N
-                                forceHex = true;
-                                if (pstat != 0) {
-                                    if ((pstat & LnConstants.PSTAT_USER_ABORTED) != 0) {
-                                        responseMessage = Bundle.getMessage("LN_MSG_SLOT_PROG_HELPER_RESPONSE_USER_ABORT");
-                                        forceHex = false;
-                                    } else if ((pstat & LnConstants.PSTAT_READ_FAIL) != 0) {
-                                        responseMessage = Bundle.getMessage("LN_MSG_SLOT_PROG_HELPER_RESPONSE_NO_READ_COMPARE_ACK_DETECT");
-                                        forceHex = false;
-                                    } else if ((pstat & LnConstants.PSTAT_WRITE_FAIL) != 0) {
-                                        responseMessage = Bundle.getMessage("LN_MSG_SLOT_PROG_HELPER_RESPONSE_NO_WRITE_ACK_DETECT");
-                                        forceHex = false;
-                                    } else if ((pstat & LnConstants.PSTAT_NO_DECODER) != 0) {
-                                        responseMessage = Bundle.getMessage("LN_MSG_SLOT_PROG_HELPER_RESPONSE_NO_LOCO_ON_PROGRAMMING_TRACK");
-                                        forceHex = false;
-                                    } else if ((pstat & 0xF0) != 0) {
-                                        if ((pstat & 0xF0) == 0x10) {
-                                            // response from transponding decoder
-                                            responseMessage = Bundle.getMessage("LN_MSG_SLOT_PROG_HELPER_RESPONSE_SUCCESS_VIA_RX4_BDL16X");
-                                            forceHex = false;
-
-                                        } else {
-                                            responseMessage = Bundle.getMessage("LN_MSG_SLOT_PROG_HELPER_RESPONSE_UNDECODED",
-                                                    Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                StringUtil.twoHexFromInt(pstat)));
-                                        }
-                                    }
-                                } else {
-                                    responseMessage = Bundle.getMessage("LN_MSG_SLOT_PROG_HELPER_RESPONSE_SUCCEEDED");
-                                    forceHex = false;
-                                }
-
-                                switch ((pcmd & (LnConstants.PCMD_MODE_MASK | LnConstants.PCMD_RW))) {
-                                    case LnConstants.PAGED_ON_SRVC_TRK :
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_PAGED_RD",
-                                                responseMessage,
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
-                                                        cvNumber, cvData,
-                                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                                StringUtil.twoHexFromInt(cvData)),
-                                                        StringUtil.to8Bits(cvData, true)));
-                                    case LnConstants.PAGED_ON_SRVC_TRK | LnConstants.PCMD_RW:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_PAGED_WR",
-                                                responseMessage,
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
-                                                        cvNumber, cvData,
-                                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                                StringUtil.twoHexFromInt(cvData)),
-                                                        StringUtil.to8Bits(cvData, true)));
-                                    case LnConstants.DIR_BYTE_ON_SRVC_TRK:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_DIR_BYTE_RD",
-                                                responseMessage,
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
-                                                        cvNumber, cvData,
-                                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                                StringUtil.twoHexFromInt(cvData)),
-                                                        StringUtil.to8Bits(cvData, true)));
-                                    case LnConstants.DIR_BYTE_ON_SRVC_TRK | LnConstants.PCMD_RW:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_DIR_BYTE_WR",
-                                                responseMessage,
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
-                                                        cvNumber,
-                                                        cvData,
-                                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                                StringUtil.twoHexFromInt(cvData)),
-                                                        StringUtil.to8Bits(cvData, true)));
-                                    case LnConstants.DIR_BIT_ON_SRVC_TRK:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_DIR_BIT_RD",
-                                                responseMessage,
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
-                                                        cvNumber, cvData,
-                                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                                StringUtil.twoHexFromInt(cvData)),
-                                                        StringUtil.to8Bits(cvData, true)));
-                                    case LnConstants.DIR_BIT_ON_SRVC_TRK | LnConstants.PCMD_RW:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_DIR_BIT_WR",
-                                                responseMessage,
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
-                                                        cvNumber, cvData,
-                                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                                StringUtil.twoHexFromInt(cvData)),
-                                                        StringUtil.to8Bits(cvData, true)));
-                                    case LnConstants.REG_BYTE_RW_ON_SRVC_TRK:
-                                    case LnConstants.REG_BYTE_RW_ON_SRVC_TRK | LnConstants.PCMD_BYTE_MODE:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_REG_BYTE_RD",
-                                                responseMessage,
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
-                                                        cvNumber, cvData,
-                                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                                StringUtil.twoHexFromInt(cvData)),
-                                                        StringUtil.to8Bits(cvData, true)));
-                                    case LnConstants.REG_BYTE_RW_ON_SRVC_TRK | LnConstants.PCMD_RW:
-                                    case LnConstants.REG_BYTE_RW_ON_SRVC_TRK | LnConstants.PCMD_BYTE_MODE | LnConstants.PCMD_RW:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_REG_BYTE_WR",
-                                                responseMessage,
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
-                                                        cvNumber, cvData,
-                                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                                StringUtil.twoHexFromInt(cvData)),
-                                                        StringUtil.to8Bits(cvData, true)));
-                                    case LnConstants.SRVC_TRK_RESERVED:
-                                    case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_MODE_MASK:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_RD_RESERVED",
-                                                responseMessage,
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
-                                                        cvNumber, cvData,
-                                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                                StringUtil.twoHexFromInt(cvData)),
-                                                        StringUtil.to8Bits(cvData, true)));
-                                    case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_RW:
-                                    case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_MODE_MASK | LnConstants.PCMD_RW:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_WR_RESERVED",
-                                                responseMessage,
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
-                                                        cvNumber, cvData,
-                                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                                StringUtil.twoHexFromInt(cvData)),
-                                                        StringUtil.to8Bits(cvData, true)));
-                                    case LnConstants.OPS_BYTE_NO_FEEDBACK:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BYTE_RD_NO_FEEDBACK",
-                                                responseMessage,
-                                                convertToMixed(lopsa, hopsa),
-
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
-                                                        cvNumber, cvData,
-                                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                                StringUtil.twoHexFromInt(cvData)),
-                                                        StringUtil.to8Bits(cvData, true)));
-                                    case LnConstants.OPS_BYTE_NO_FEEDBACK | LnConstants.PCMD_RW:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BYTE_WR_NO_FEEDBACK",
-                                                responseMessage,
-                                                convertToMixed(lopsa, hopsa),
-
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
-                                                        cvNumber, cvData,
-                                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                                StringUtil.twoHexFromInt(cvData)),
-                                                        StringUtil.to8Bits(cvData, true)));
-                                    case LnConstants.OPS_BYTE_FEEDBACK:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BYTE_RD_FEEDBACK",
-                                                responseMessage,
-                                                convertToMixed(lopsa, hopsa),
-
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
-                                                        cvNumber, cvData,
-                                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                                StringUtil.twoHexFromInt(cvData)),
-                                                        StringUtil.to8Bits(cvData, true)));
-                                    case LnConstants.OPS_BYTE_FEEDBACK | LnConstants.PCMD_RW:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BYTE_WR_FEEDBACK",
-                                                responseMessage,
-                                                convertToMixed(lopsa, hopsa),
-
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
-                                                        cvNumber, cvData,
-                                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                                StringUtil.twoHexFromInt(cvData)),
-                                                        StringUtil.to8Bits(cvData, true)));
-                                    case LnConstants.OPS_BIT_NO_FEEDBACK:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BIT_RD_NO_FEEDBACK",
-                                                responseMessage,
-                                                convertToMixed(lopsa, hopsa),
-
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
-                                                        cvNumber, cvData,
-                                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                                StringUtil.twoHexFromInt(cvData)),
-                                                        StringUtil.to8Bits(cvData, true)));
-                                    case LnConstants.OPS_BIT_NO_FEEDBACK | LnConstants.PCMD_RW:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BIT_WR_NO_FEEDBACK",
-                                                responseMessage,
-                                                convertToMixed(lopsa, hopsa),
-
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
-                                                        cvNumber, cvData,
-                                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                                StringUtil.twoHexFromInt(cvData)),
-                                                        StringUtil.to8Bits(cvData, true)));
-                                    case LnConstants.OPS_BIT_FEEDBACK:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BIT_RD_FEEDBACK",
-                                                responseMessage,
-                                                convertToMixed(lopsa, hopsa),
-
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
-                                                        cvNumber, cvData,
-                                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                                StringUtil.twoHexFromInt(cvData)),
-                                                        StringUtil.to8Bits(cvData, true)));
-                                    case LnConstants.OPS_BIT_FEEDBACK | LnConstants.PCMD_RW:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BIT_WR_FEEDBACK",
-                                                responseMessage,
-                                                convertToMixed(lopsa, hopsa),
-
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
-                                                        cvNumber, cvData,
-                                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                                StringUtil.twoHexFromInt(cvData)),
-                                                        StringUtil.to8Bits(cvData, true)));
-                                    case 0:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_UHLENBROCK_RD",
-                                                responseMessage,
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
-                                                        cvNumber, cvData,
-                                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                                StringUtil.twoHexFromInt(cvData)),
-                                                        StringUtil.to8Bits(cvData, true)));
-                                    case LnConstants.PCMD_RW:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_UHLENBROCK_WR",
-                                                responseMessage,
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
-                                                        cvNumber, cvData,
-                                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                                StringUtil.twoHexFromInt(cvData)),
-                                                        StringUtil.to8Bits(cvData, true)));
-                                    default:
-                                        return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_UNKNOWN",
-                                                pcmd,
-                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                    StringUtil.twoHexFromInt(pcmd)),
-                                                responseMessage,
-                                                Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
-                                                        cvNumber, cvData,
-                                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                                StringUtil.twoHexFromInt(cvData)),
-                                                        StringUtil.to8Bits(cvData, true)));
-                                }
-                            }
-
-                                // end programming track block
-                        case LnConstants.CFG_SLOT:
-                            /**
-                             * ************************************************
-                             * Configuration slot, holding op switches
-                             * ************************************************
-                             *
-                             * NOTE: previously, this message provided specific
-                             * text about the meaning of each OpSw when it was
-                             * closed.  With the advent of newer Digitrax command
-                             * stations, the specific information was no longer
-                             * completely accurate.  As such, this information
-                             * now only shows bits as "closed" or "thrown".
-                             */
-                            String thrown = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_THROWN");
-                            String closed = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_CLOSED");
-
-                            String opswGroup1, opswGroup2, opswGroup3, opswGroup4,
-                                    opswGroup5, opswGroup6, opswGroup7, opswGroup8;
-                            opswGroup1 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
-                                    1, ((l.getElement(3) & 0x01) != 0 ? closed : thrown),
-                                    2, ((l.getElement(3) & 0x02) != 0 ? closed : thrown),
-                                    3, ((l.getElement(3) & 0x04) != 0 ? closed : thrown),
-                                    4, ((l.getElement(3) & 0x08) != 0 ? closed : thrown),
-                                    5, ((l.getElement(3) & 0x10) != 0 ? closed : thrown),
-                                    6, ((l.getElement(3) & 0x20) != 0 ? closed : thrown),
-                                    7, ((l.getElement(3) & 0x40) != 0 ? closed : thrown),
-                                    8, thrown);
-                            opswGroup2 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
-                                    9, ((l.getElement(4) & 0x01) != 0 ? closed : thrown),
-                                    10, ((l.getElement(4) & 0x02) != 0 ? closed : thrown),
-                                    11, ((l.getElement(4) & 0x04) != 0 ? closed : thrown),
-                                    12, ((l.getElement(4) & 0x08) != 0 ? closed : thrown),
-                                    13, ((l.getElement(4) & 0x10) != 0 ? closed : thrown),
-                                    14, ((l.getElement(4) & 0x20) != 0 ? closed : thrown),
-                                    15, ((l.getElement(4) & 0x40) != 0 ? closed : thrown),
-                                    16, thrown);
-                            opswGroup3 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
-                                    17, ((l.getElement(5) & 0x01) != 0 ? closed : thrown),
-                                    18, ((l.getElement(5) & 0x02) != 0 ? closed : thrown),
-                                    19, ((l.getElement(5) & 0x04) != 0 ? closed : thrown),
-                                    20, ((l.getElement(5) & 0x08) != 0 ? closed : thrown),
-                                    21, ((l.getElement(5) & 0x10) != 0 ? closed : thrown),
-                                    22, ((l.getElement(5) & 0x20) != 0 ? closed : thrown),
-                                    23, ((l.getElement(5) & 0x40) != 0 ? closed : thrown),
-                                    24, thrown);
-                            opswGroup4 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
-                                    25, ((l.getElement(6) & 0x01) != 0 ? closed : thrown),
-                                    26, ((l.getElement(6) & 0x02) != 0 ? closed : thrown),
-                                    27, ((l.getElement(6) & 0x04) != 0 ? closed : thrown),
-                                    28, ((l.getElement(6) & 0x08) != 0 ? closed : thrown),
-                                    29, ((l.getElement(6) & 0x10) != 0 ? closed : thrown),
-                                    30, ((l.getElement(6) & 0x20) != 0 ? closed : thrown),
-                                    31, ((l.getElement(6) & 0x40) != 0 ? closed : thrown),
-                                    32, thrown);
-                            opswGroup5 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
-                                    33, ((l.getElement(8) & 0x01) != 0 ? closed : thrown),
-                                    34, ((l.getElement(8) & 0x02) != 0 ? closed : thrown),
-                                    35, ((l.getElement(8) & 0x04) != 0 ? closed : thrown),
-                                    36, ((l.getElement(8) & 0x08) != 0 ? closed : thrown),
-                                    37, ((l.getElement(8) & 0x10) != 0 ? closed : thrown),
-                                    38, ((l.getElement(8) & 0x20) != 0 ? closed : thrown),
-                                    39, ((l.getElement(8) & 0x40) != 0 ? closed : thrown),
-                                    40, thrown);
-                            opswGroup6 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
-                                    41, ((l.getElement(9) & 0x01) != 0 ? closed : thrown),
-                                    42, ((l.getElement(9) & 0x02) != 0 ? closed : thrown),
-                                    43, ((l.getElement(9) & 0x04) != 0 ? closed : thrown),
-                                    44, ((l.getElement(9) & 0x08) != 0 ? closed : thrown),
-                                    45, ((l.getElement(9) & 0x10) != 0 ? closed : thrown),
-                                    46, ((l.getElement(9) & 0x20) != 0 ? closed : thrown),
-                                    47, ((l.getElement(9) & 0x40) != 0 ? closed : thrown),
-                                    48, thrown);
-                            opswGroup7 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
-                                    49, ((l.getElement(10) & 0x01) != 0 ? closed : thrown),
-                                    50, ((l.getElement(10) & 0x02) != 0 ? closed : thrown),
-                                    51, ((l.getElement(10) & 0x04) != 0 ? closed : thrown),
-                                    52, ((l.getElement(10) & 0x08) != 0 ? closed : thrown),
-                                    53, ((l.getElement(10) & 0x10) != 0 ? closed : thrown),
-                                    54, ((l.getElement(10) & 0x20) != 0 ? closed : thrown),
-                                    55, ((l.getElement(10) & 0x40) != 0 ? closed : thrown),
-                                    56, thrown);
-                            opswGroup8 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
-                                    57, ((l.getElement(11) & 0x01) != 0 ? closed : thrown),
-                                    58, ((l.getElement(11) & 0x02) != 0 ? closed : thrown),
-                                    59, ((l.getElement(11) & 0x04) != 0 ? closed : thrown),
-                                    60, ((l.getElement(11) & 0x08) != 0 ? closed : thrown),
-                                    61, ((l.getElement(11) & 0x10) != 0 ? closed : thrown),
-                                    62, ((l.getElement(11) & 0x20) != 0 ? closed : thrown),
-                                    63, ((l.getElement(11) & 0x40) != 0 ? closed : thrown),
-                                    64, thrown);
-                            return Bundle.getMessage(((command == LnConstants.OPC_WR_SL_DATA)
-                                    ? "LN_MSG_SLOT_CMD_STN_CFG_WRITE_REQ"
-                                    : "LN_MSG_SLOT_CMD_STN_CFG_READ_REPORT"),
-                                    opswGroup1, opswGroup2, opswGroup3, opswGroup4,
-                                    opswGroup5, opswGroup6, opswGroup7, opswGroup8);
-                        default:
-                            /**
-                             * ************************************************
-                             * normal slot read/write message - see info above *
-                             * ************************************************
-                             */
-
-                            trackStatus = l.getElement(7); // track status
-                            int stat = l.getElement(3); // slot status
-                            int adr = l.getElement(4); // loco address
-                            int spd = l.getElement(5); // command speed
-                            int dirf = l.getElement(6); // direction and F0-F4 bits
-                            String [] dirf0_4 = interpretF0_F4toStrings(dirf);
-                            int ss2 = l.getElement(8); // slot status 2 (tells how to use
-                            // ID1/ID2 & ADV Consist)
-                            int adr2 = l.getElement(9); // loco address high
-                            int snd = l.getElement(10); // Sound 1-4 / F5-F8
-                            String [] sndf5_8 = interpretF5_F8toStrings(snd);
-
-                            String logString;
-
-                            String locoAdrStr = figureAddressIncludingAliasing(adr, adr2, ss2, id1, id2);
-                                return Bundle.getMessage(((command == LnConstants.OPC_WR_SL_DATA)
-                                    ? "LN_MSG_SLOT_LOCO_INFO_WRITE"
-                                    : "LN_MSG_SLOT_LOCO_INFO_READ"),
-                                        slot,
-                                        locoAdrStr,
-                                        LnConstants.CONSIST_STAT(stat),
-                                        LnConstants.LOCO_STAT(stat),
-                                        LnConstants.DEC_MODE(stat),
-                                        directionOfTravelString((dirf & LnConstants.DIRF_DIR) == 0),
-                                        spd,    // needs re-interpretation for some cases of slot consisting state
-                                        dirf0_4[0],
-                                        dirf0_4[1],
-                                        dirf0_4[2],
-                                        dirf0_4[3],
-                                        dirf0_4[4],
-                                        sndf5_8[0],
-                                        sndf5_8[1],
-                                        sndf5_8[2],
-                                        sndf5_8[3],
-                                        trackStatusByteToString(trackStatus),
-                                        Bundle.getMessage("LN_MSG_SLOT_HELPER_SS2_SIMPLE",
-                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                        StringUtil.twoHexFromInt(ss2))),
-                                        Bundle.getMessage("LN_MSG_SLOT_HELPER_ID1_ID2_AS_THROTTLE_ID",
-                                                idString(id1, id2) ));
-
-                    } // end switch (slot)
-                } // end if (l.getElement(1) == 0x0E
-
-                forceHex = true;
-                return Bundle.getMessage("LN_MSG_SLOT_READ_OR_WRITE_UNDECODED");
             }// case LnConstants.OPC_WR_SL_DATA & case LnConstants.OPC_SL_RD_DATA
 
             case LnConstants.OPC_ALM_WRITE:
@@ -2354,6 +1273,549 @@ public class Llnmon {
              * B. Milhaupt.
              */
             case LnConstants.OPC_PEER_XFER: {
+                String result;
+                result = interpretOpcPeerXfer(l);
+                if (result.length() > 0) {
+                    return result;
+                }
+                break;
+            } // case LnConstants.OPC_PEER_XFER
+
+            case LnConstants.OPC_LISSY_UPDATE: {
+                /*
+                 * OPC_LISSY_UPDATE   0xE4
+                 *
+                 * LISSY is an automatic train detection system made by Uhlenbrock.
+                 * All documentation appears to be in German.
+                 *
+                 */
+                switch (l.getElement(1)) {
+                    case 0x08: // Format LISSY message
+                        int unit = (l.getElement(4) & 0x7F);
+                        int address = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
+                        switch (l.getElement(2)) {
+                            case 0x00:
+                                // Reverse-engineering note: interpretation of element 2 per wiki.rocrail.net
+                                // OPC_LISSY_REP
+                                return Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_LOCO_MOVEMENT",
+                                        unit,
+                                        Integer.toString(address),
+                                        ((l.getElement(3) & 0x20) == 0
+                                                ? Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_NORTH")
+                                                : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_SOUTH")));
+                            case 0x01:
+                                // Reverse-engineering note: interpretation of element 2 per wiki.rocrail.net
+                                // OPC_WHEELCNT_REP
+                                int wheelCount = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
+                                return Bundle.getMessage("LN_MSG_LISSY_WHEEL_REPORT_LOCO_MOVEMENT",
+                                        unit, wheelCount,
+                                        ((l.getElement(3) & 0x20) == 0
+                                                ? Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_NORTH")
+                                                : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_SOUTH")));
+                            default:
+                                break;
+                        }
+                        break;
+
+                    case 0x0A: // Format special message
+                        int element = l.getElement(2) * 128 + l.getElement(3);
+                        int stat1 = l.getElement(5);
+                        int stat2 = l.getElement(6);
+                        String status;
+                        switch (stat1 & 0x30) {
+                            case 0x30:
+                                status = Bundle.getMessage("LN_MSG_SE_REPORT_HELPER_BOTH_RES");
+                                break;
+                            case 0x10:
+                                status = Bundle.getMessage("LN_MSG_SE_REPORT_HELPER_AX_RES");
+                                break;
+                            case 0x20:
+                                status = Bundle.getMessage("LN_MSG_SE_REPORT_HELPER_XA_RES");
+                                break;
+                            default:
+                                status = Bundle.getMessage("LN_MSG_SE_REPORT_HELPER_NO_RES");
+                                break;
+                        }
+
+                        return Bundle.getMessage("LN_MSG_SE_REPORT",
+                                (element + 1), element,
+                                l.getElement(7), l.getElement(8),
+                                status,
+                                Bundle.getMessage(((stat2 & 0x01) != 0)
+                                        ? "LN_MSG_SWITCH_STATE_THROWN"
+                                        : "LN_MSG_SWITCH_STATE_CLOSED"),
+                                Bundle.getMessage(((stat1 & 0x01) != 0)
+                                        ? "LN_MSG_SE_REPORT_HELPER_OCCUPIED"
+                                        : "LN_MSG_SE_REPORT_HELPER_UNOCCUPIED"));
+                    case 0x09:
+                        if (l.getElement(4) == 0x00) {
+                            forceHex = true;
+                            return Bundle.getMessage("LN_MSG_UNRECOGNIZED_SIG_STATE_REPORT_MAY_BE_FROM_CML_HW");
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            } // case LnConstants.OPC_LISSY_UPDATE
+
+            /*
+             * OPC_IMM_PACKET   0xED   ;SEND n-byte packet immediate LACK
+             *                         ; Follow on message: LACK
+             *                         ; <0xED>,<0B>,<7F>,<REPS>,<DHI>,<IM1>,<IM2>,
+             *                         ;        <IM3>,<IM4>,<IM5>,<CHK>
+             *                         ;   <DHI>=<0,0,1,IM5.7-IM4.7,IM3.7,IM2.7,IM1.7>
+             *                         ;   <REPS>  D4,5,6=#IM bytes,
+             *                         ;           D3=0(reserved);
+             *                         ;           D2,1,0=repeat CNT
+             *                         ; IF Not limited MASTER then
+             *                         ;   LACK=<B4>,<7D>,<7F>,<chk> if CMD ok
+             *                         ; IF limited MASTER then Lim Masters respond
+             *                         ;   with <B4>,<7E>,<lim adr>,<chk>
+             *                         ; IF internal buffer BUSY/full respond
+             *                         ;   with <B4>,<7D>,<0>,<chk>
+             *                         ;   (NOT IMPLEMENTED IN DT200)
+             *
+             * This sends a raw NMRA packet across the LocoNet.
+             *
+             * Page 11 of LocoNet Personal Edition v1.0.
+             *
+             * Decodes for the F9-F28 functions taken from the NMRA standards and
+             * coded by Leo Bicknell.
+             */
+            case LnConstants.OPC_IMM_PACKET: {
+                // sendPkt = (sendPktMsg *) msgBuf;
+                int val7f = l.getElement(2);
+                /* fixed value of 0x7f */
+
+                int reps = l.getElement(3);
+                /* repeat count */
+
+                int dhi = l.getElement(4);
+                /* high bits of data bytes */
+
+                int im1 = l.getElement(5);
+                int im2 = l.getElement(6);
+                int im3 = l.getElement(7);
+                int im4 = l.getElement(8);
+                int im5 = l.getElement(9);
+                int mobileDecoderAddress = -999;
+                int nmraInstructionType = -999;
+                int nmraSubInstructionType = -999;
+                int playableWhistleLevel = -999;
+
+                // see if it really is a 'Send Packet' as defined in LocoNet PE
+                if (val7f == 0x7f) {
+                    int len = ((reps & 0x70) >> 4);
+                    // duplication of packet data as packetInt was deemed necessary
+                    // due to issues with msBit loss when converting from "byte" to
+                    // integral forms
+                    byte[] packet = new byte[len];
+                    int[] packetInt = new int[len];
+                    packet[0] = (byte) (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
+                    packetInt[0] = (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
+                    if (len >= 2) {
+                        packet[1] = (byte) (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
+                        packetInt[1] = (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
+                    }
+                    if (len >= 3) {
+                        packet[2] = (byte) (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));
+                        packetInt[2] = (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));
+                    }
+                    if (len >= 4) {
+                        packet[3] = (byte) (im4 + ((dhi & 0x08) != 0 ? 0x80 : 0));
+                        packetInt[3] = (im4 + ((dhi & 0x08) != 0 ? 0x80 : 0));
+                    }
+                    if (len >= 5) {
+                        packet[4] = (byte) (im5 + ((dhi & 0x10) != 0 ? 0x80 : 0));
+                        packetInt[4] = (im5 + ((dhi & 0x10) != 0 ? 0x80 : 0));
+                    }
+
+                    int address;
+                    // compute some information which is useful for decoding
+                    // the "Playable" whistle message
+                    // Information reverse-engineered by B. Milhaupt and used with permission
+                    if ((packetInt[0] & 0x80) == 0x0) {
+                        // immediate packet addresses a 7-bit multi-function (mobile) decoder
+                        mobileDecoderAddress = packetInt[0];
+                        nmraInstructionType = (packetInt[1] & 0xE) >> 5;
+                        nmraSubInstructionType = (packetInt[1] & 0x1f);
+                        if ((nmraSubInstructionType == 0x1d) && (packetInt[2] == 0x7f)) {
+                            playableWhistleLevel = packetInt[3];
+                        }
+                    } else if ((packetInt[0] & 0xC0) == 0xC0) {
+                        // immediate packet addresses a 14-bit multi-function (mobile) decoder
+                        mobileDecoderAddress = ((packetInt[0] & 0x3F) << 8) + packetInt[1];
+                        nmraInstructionType = (packetInt[2] & 0xE0) >> 5;
+                        nmraSubInstructionType = (packetInt[2] & 0x1f);
+                        if ((nmraSubInstructionType == 0x1d) && (packetInt[3] == 0x7f)) {
+                            playableWhistleLevel = packetInt[4];
+                        }
+                    } else {
+                        // immediate packet not addressed to a multi-function (mobile) decoder
+                    }
+                    if ((mobileDecoderAddress >= 0)
+                            && (nmraInstructionType == 1)
+                            && (nmraSubInstructionType == 0x1D)) {
+                        // the "Playable" whistle message
+                        // Information reverse-engineered by B. Milhaupt and used with permission
+                        return Bundle.getMessage("LN_MSG_PLAYABLE_WHISTLE_CONTROL",
+                                mobileDecoderAddress,
+                                playableWhistleLevel,
+                                (reps & 0x7));
+                    }
+
+                    // F9-F28 w/a long address.
+                    if ((packetInt[0] & 0xC0) == 0xC0) {
+                        address = ((packetInt[0] & 0x3F) << 8) + packetInt[1];
+
+                        if ((packetInt[2] & 0xFF) == 0xDF) {
+                            // Functions 21-28
+                            return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F21_TO_F28",
+                                    Integer.toString(address),
+                                    Bundle.getMessage(((packetInt[3] & 0x01) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[3] & 0x02) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[3] & 0x04) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[3] & 0x08) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[3] & 0x10) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[3] & 0x20) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[3] & 0x40) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[3] & 0x80) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
+                        } else if ((packetInt[2] & 0xFF) == 0xDE) {
+                            // Functions 13-20
+                            return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F13_TO_F20",
+                                    Integer.toString(address),
+                                    Bundle.getMessage((((packetInt[3] & 0x01) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage((((packetInt[3] & 0x02) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage((((packetInt[3] & 0x04) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage((((packetInt[3] & 0x08) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage((((packetInt[3] & 0x10) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage((((packetInt[3] & 0x20) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage((((packetInt[3] & 0x40) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage((((packetInt[3] & 0x80) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
+                        } else if ((packetInt[2] & 0xF0) == 0xA0) {
+                            // Functions 9-12
+                            return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F9_TO_F12",
+                                    Integer.toString(address),
+                                    Bundle.getMessage((((packetInt[2] & 0x01) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage((((packetInt[2] & 0x02) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage((((packetInt[2] & 0x04) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage((((packetInt[2] & 0x08) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
+                        } else {
+                            // Unknown
+                                                /*
+                     * We use this two places below, so we generate it once here.
+                     * That seems wrong, but what we really need is to be able to
+                     * decode any NMRA packet here, which is a lot more work!
+                     */
+                    return Bundle.getMessage("LN_MSG_OPC_IMM_PKT_GENERIC",
+                            ((reps & 0x70) >> 4),
+                            (reps & 0x07),
+                            reps,
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(dhi)),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(im1)),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(im2)),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(im3)),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(im4)),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(im5)),
+                            NmraPacket.format(packet));
+                        }
+                    } else { // F9-F28 w/a short address.
+                        address = packetInt[0];
+                        if ((packetInt[1] & 0xFF) == 0xDF) {
+                            // Functions 21-28
+                            return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F21_TO_F28",
+                                    address,
+                                    Bundle.getMessage(((packetInt[2] & 0x01) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[2] & 0x02) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[2] & 0x04) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[2] & 0x08) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[2] & 0x10) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[2] & 0x20) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[2] & 0x40) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[2] & 0x80) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
+
+                        } else if ((packetInt[1] & 0xFF) == 0xDE) {
+                            // Functions 13-20
+                            return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F13_TO_F20",
+                                    address,
+                                    Bundle.getMessage(((packetInt[2] & 0x01) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[2] & 0x02) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[2] & 0x04) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[2] & 0x08) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[2] & 0x10) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[2] & 0x20) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[2] & 0x40) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[2] & 0x80) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
+                        } else if ((packetInt[1] & 0xF0) == 0xA0) {
+                            // Functions 9-12
+                            return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F9_TO_F12",
+                                    address,
+                                    Bundle.getMessage(((packetInt[2] & 0x01) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[2] & 0x02) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[2] & 0x04) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                                    Bundle.getMessage(((packetInt[2] & 0x08) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
+                        } else {
+                            // Unknown
+                    return Bundle.getMessage("LN_MSG_OPC_IMM_PKT_GENERIC",
+                            ((reps & 0x70) >> 4),
+                            (reps & 0x07),
+                            reps,
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(dhi)),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(im1)),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(im2)),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(im3)),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(im4)),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(im5)),
+                            NmraPacket.format(packet));
+                        }
+                    } // else { // F9-F28 w/a short address.
+                } else if (l.getElement(1) == 0x1F && l.getElement(2) == 0x01 && l.getElement(3) == 0x49 && l.getElement(4) == 0x42
+                        && l.getElement(6) != 0x5E && l.getElement(10) == 0x70 && l.getElement(11) == 0x00 && l.getElement(15) == 0x10) {
+                    // Uhlenbrock IB-COM / Intellibox I and II read or write CV value on programming track
+                    String cv = Integer.toString(l.getElement(8) * 256 + ((l.getElement(5) & 0x02) * 64) + l.getElement(7));
+                    int val = l.getElement(9) + 16 * (l.getElement(5) & 0x08);
+                    switch (l.getElement(6)) {
+                        case 0x6C:
+                            return Bundle.getMessage("LN_MSG_UHLEN_READ_CV_REG_MODE_FROM_PT", cv);
+                        case 0x6D:
+                            return Bundle.getMessage("LN_MSG_UHLEN_WRITE_CV_REG_MODE_FROM_PT", cv);
+                        case 0x6E:
+                            return Bundle.getMessage("LN_MSG_UHLEN_READ_CV_PAGED_MODE_FROM_PT", cv);
+                        case 0x6F:
+                            return Bundle.getMessage("LN_MSG_UHLEN_WRITE_CV_PAGED_MODE_FROM_PT", cv);
+                        case 0x71:
+                            return Bundle.getMessage("LN_MSG_UHLEN_WRITE_CV_DIRECT_BYTE_MODE_FROM_PT",
+                                    cv, val);
+                        case 0x70: // observed on Intellibox II, even though it does not work on IB-COM
+                        case 0x72:
+                            return Bundle.getMessage("LN_MSG_UHLEN_READ_CV_DIRECT_BYTE_MODE_FROM_PT", cv);
+                    }
+                    return Bundle.getMessage("LN_MSG_UHLEN_CV_OPERATION_UNKNOWN", cv, val);
+                } else if (l.getElement(1) == 0x1F && l.getElement(2) == 0x01 && l.getElement(3) == 0x49 && l.getElement(4) == 0x42
+                        && l.getElement(6) == 0x5E) {
+                    // Uhlenbrock IB-COM / Intellibox I and II write CV value on main track
+                    int addr = l.getElement(8) * 256 + ((l.getElement(5) & 0x02) * 64) + l.getElement(7);
+                    String cv = Integer.toString(l.getElement(11) * 256 + ((l.getElement(5) & 0x08) << 4) + l.getElement(9));
+                    int val = ((l.getElement(10) & 0x02) << 6) + l.getElement(12);
+                    return Bundle.getMessage("LN_MSG_UHLEN_CV_OPS_MODE_WRITE",
+                            addr, cv, val);
+                } else {
+                    /* Hmmmm... */
+                    forceHex = true;
+                    return Bundle.getMessage("LN_MSG_UHLEN_SEND_PKT_IMM_UNDEFINED",
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(val7f)));
+                }
+            } // case LnConstants.OPC_IMM_PACKET
+
+            case LnConstants.RE_OPC_PR3_MODE: {
+                /*
+                 * Sets the operating mode of the PR3 device, if present.
+                 *
+                 * Information reverse-engineered by B. Milhaupt and used with permission
+                 */
+
+                if ((l.getElement(1) == 0x10) && ((l.getElement(2) & 0x7c) == 0)
+                        && (l.getElement(3) == 0) && (l.getElement(4) == 0)) {
+                    // set PR3 mode of operation, where LS 2 bits of byte 2 are encoded as:
+                    //	0x00	Set the PR3 mode to MS100 interface mode with PR3 LocoNet termination disabled
+                    //  0x01	Set the PR3 to decoder programming track mode
+                    //  0x03	Set the PR3 to MS100 interface mode with PR3 LocoNet termination enabled
+
+                    switch (l.getElement(2) & 0x3) {
+                        case 0x00: {
+                            return Bundle.getMessage("LN_MSG_SET_PR3_MODE_LOCONET_IF_WITHOUT_TERM");
+                        }
+                        case 0x01: {
+                            return Bundle.getMessage("LN_MSG_SET_PR3_MODE_PR3_PROGRAMMING_TRACK_ONLY");
+                        }
+                        case 0x03: {
+                            return Bundle.getMessage("LN_MSG_SET_PR3_MODE_LN_MSG_SET_PR3_MODE_LOCONET_IF_WITH_TERM");
+                        }
+                        default: {
+                            break;
+                        }
+                    }
+                }
+                break;
+            }
+
+            case LnConstants.RE_OPC_IB2_F9_F12: {
+                // Intellibox-II function control message for mobile decoder F9 thru F12.
+                int slot = l.getElement(1);
+                int funcs = l.getElement(2);
+                return Bundle.getMessage("LN_MSG_INTELLIBOX_SLOT_SET_F9_TO_F12",
+                        slot,
+                        Bundle.getMessage(((funcs & LnConstants.RE_IB2_F9_MASK)  != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                        Bundle.getMessage(((funcs & LnConstants.RE_IB2_F10_MASK) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                        Bundle.getMessage(((funcs & LnConstants.RE_IB2_F11_MASK) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                        Bundle.getMessage(((funcs & LnConstants.RE_IB2_F12_MASK) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
+
+            } // case LnConstants.RE_OPC_IB2_F8_F12
+
+            case LnConstants.RE_OPC_IB2_SPECIAL: { //0xD4
+                // Intellibox function control message for mobile decoder F0-F28 (IB-I) and F13-F28 (IB-II)
+                if ((l.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN)
+                        && ((l.getElement(3) == LnConstants.RE_IB1_SPECIAL_F5_F11_TOKEN)
+                        || (l.getElement(3) == LnConstants.RE_IB2_SPECIAL_F13_F19_TOKEN)
+                        || (l.getElement(3) == LnConstants.RE_IB2_SPECIAL_F21_F27_TOKEN))) {
+                    // Intellibox-I function control message for mobile decoder F5 thru F27 except F12 and F20
+                    // Intellibox-II function control message for mobile decoder F13 thru F27 except F20
+                    // Note: Intellibox-II documentation implies capability to control
+                    // MANY more functions.  This capability may be extended by
+                    // additional tokens in element 3, including the special-case encoding
+                    // for the "eighth bit" as handled in the following case, below,
+                    // for F12, F20 & F28
+                    int funcOffset = 5 + 8 * (l.getElement(3) - LnConstants.RE_IB1_SPECIAL_F5_F11_TOKEN);
+                    String encodingType;
+                    if (l.getElement(3) == LnConstants.RE_IB1_SPECIAL_F5_F11_TOKEN) {
+                        encodingType = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_IB1");
+                    } else {
+                        encodingType = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_IB2");
+                    }
+                    String funcInfo[] = new String[7];
+                    int mask = 1;
+                    for (int i = 0; i < 7; i++) {
+                        // handle 7 bits of data
+                        funcInfo[i] = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_INDIV_FUNC",
+                                funcOffset+i,
+                                Bundle.getMessage(((l.getElement(4) & mask) != 0)
+                                        ? "LN_MSG_FUNC_ON"
+                                        : "LN_MSG_FUNC_OFF"));
+                        mask *= 2;
+                    }
+                    return Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL",
+                            encodingType, l.getElement(2), funcInfo[0],
+                            funcInfo[1], funcInfo[2], funcInfo[3],
+                            funcInfo[4], funcInfo[5], funcInfo[6]);
+                } else if ((l.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN)
+                        & (l.getElement(3) == LnConstants.RE_IB2_SPECIAL_F20_F28_TOKEN)) {
+                    // Special-case for F12, F20 and F28, since the tokens from the previous case
+                    // can only encode 7 bits of data in element(4).
+                    return Bundle.getMessage("LN_MSG_INTELLIBOX_SPECIAL_FUNC_CTL",
+                            l.getElement(2),
+                            Bundle.getMessage(((l.getElement(4) & LnConstants.RE_IB2_SPECIAL_F12_MASK) != 0)
+                                    ? "LN_MSG_FUNC_ON"
+                                    : "LN_MSG_FUNC_OFF"),
+                            Bundle.getMessage(((l.getElement(4) & LnConstants.RE_IB2_SPECIAL_F20_MASK) != 0)
+                                    ? "LN_MSG_FUNC_ON"
+                                    : "LN_MSG_FUNC_OFF"),
+                            Bundle.getMessage(((l.getElement(4) & LnConstants.RE_IB2_SPECIAL_F28_MASK) != 0)
+                                    ? "LN_MSG_FUNC_ON"
+                                    : "LN_MSG_FUNC_OFF"));
+                } else if ((l.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN)
+                    & (l.getElement(3) == LnConstants.RE_IB1_SPECIAL_F0_F4_TOKEN)) {
+                    // For Intellibox-I "one" with SW version 2.x - Special-case for F0 to F4
+                    String funcInfo[] = new String[7];
+                    funcInfo[0] = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_INDIV_FUNC",
+                            0,
+                            (l.getElement(4) & LnConstants.RE_IB1_F0_MASK) == 0 ? Bundle.getMessage("LN_MSG_FUNC_ON")
+                                        : Bundle.getMessage("LN_MSG_FUNC_OFF"));
+                    int mask = 1;
+                    for (int i = 0; i < 4; i++) {
+                        // handle 7 bits of data
+                        funcInfo[i+1] = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_INDIV_FUNC",
+                                i+1,
+                                Bundle.getMessage(((l.getElement(4) & mask) != 0)
+                                        ? "LN_MSG_FUNC_ON"
+                                        : "LN_MSG_FUNC_OFF"));
+                        mask *= 2;
+                    }
+                    return Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_F0_TO_F4",
+                            l.getElement(2),
+                            funcInfo[0], funcInfo[1], funcInfo[2], funcInfo[3],
+                            funcInfo[4]);
+                }
+                break;
+                // Because the usage of other tokens in message element(3) are not yet
+                // understood, let execution fall thru to the "default" case
+            }//  case LnConstants.RE_OPC_IB2_SPECIAL: { //0xD4
+
+            //$FALL-THROUGH$
+
+            default:
+                break;
+        } // end switch over opcode type
+        forceHex = true;
+        return Bundle.getMessage("LN_MSG_UNKNOWN_MESSAGE");
+    } // end of protected String format(LocoNetMessage l)
+
+    /**
+     * This function creates a string representation of a LocoNet buffer. The
+     * string may be more than one line, and is terminated with a newline.
+     *
+     * @param l the message
+     * @return The created string representation.
+     */
+    public String displayMessage(LocoNetMessage l) {
+
+        forceHex = false;
+        String s = format(l);
+        if (forceHex) {
+            s += Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO",
+                    l.toString());
+        }
+        if (showOpCode) {
+            s = Bundle.getMessage("LN_MONITOR_MESSAGE_PREPEND_OPCODE_INFO",
+                    LnConstants.OPC_NAME(l.getOpCode()), s);
+        }
+        return s;
+    } // end of public String displayMessage(LocoNetMessage l)
+
+    private TurnoutManager turnoutManager;
+    private SensorManager sensorManager;
+    private ReporterManager reporterManager;
+    private String locoNetTurnoutPrefix = "";
+    private String locoNetSensorPrefix = "";
+    private String locoNetReporterPrefix = "";
+
+    /**
+     * Set the LocoNet turnout manager used to find turnout "user names" from
+     * turnout "system names"
+     *
+     * @param turnoutManager the manager
+     */
+    public final void setLocoNetTurnoutManager(@Nonnull TurnoutManager turnoutManager) {
+        this.turnoutManager = turnoutManager;
+        this.locoNetTurnoutPrefix = turnoutManager.getSystemPrefix() + "T";
+    }
+
+    /**
+     * Set the LocoNet sensor manager used to find sensor "user names" from
+     * sensor "system names".
+     *
+     * @param sensorManager the manager
+     */
+    public final void setLocoNetSensorManager(@Nonnull SensorManager sensorManager) {
+        this.sensorManager = sensorManager;
+        this.locoNetSensorPrefix = sensorManager.getSystemPrefix() + "S";
+    }
+
+    /**
+     * Set the LocoNet reporter manager used to find reported "user names" from
+     * reporter "system names".
+     *
+     * @param reporterManager the manager
+     */
+    public final void setLocoNetReporterManager(@Nonnull ReporterManager reporterManager) {
+        this.reporterManager = reporterManager;
+        this.locoNetReporterPrefix = reporterManager.getSystemPrefix() + "R";
+    }
+
+    private String interpretOpcPeerXfer(LocoNetMessage l) {
                 // The first byte seems to determine the type of message.
                 switch (l.getElement(1)) {
                     case 0x10: {
@@ -3435,542 +2897,1116 @@ public class Llnmon {
                         break;
                     }
                 } // end of switch (l.getElement(1))
-            forceHex = true;
-            return Bundle.getMessage("LN_MSG_OPC_0XE5_UNKNOWN");
-            } // case LnConstants.OPC_PEER_XFER
+                return "";
 
-            case LnConstants.OPC_LISSY_UPDATE: {
-                /*
-                 * OPC_LISSY_UPDATE   0xE4
-                 *
-                 * LISSY is an automatic train detection system made by Uhlenbrock.
-                 * All documentation appears to be in German.
-                 *
-                 */
-                switch (l.getElement(1)) {
-                    case 0x08: // Format LISSY message
-                        int unit = (l.getElement(4) & 0x7F);
-                        int address = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
-                        switch (l.getElement(2)) {
-                            case 0x00:
-                                // Reverse-engineering note: interpretation of element 2 per wiki.rocrail.net
-                                // OPC_LISSY_REP
-                                return Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_LOCO_MOVEMENT",
-                                        unit,
-                                        Integer.toString(address),
-                                        ((l.getElement(3) & 0x20) == 0
-                                                ? Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_NORTH")
-                                                : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_SOUTH")));
-                            case 0x01:
-                                // Reverse-engineering note: interpretation of element 2 per wiki.rocrail.net
-                                // OPC_WHEELCNT_REP
-                                int wheelCount = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
-                                return Bundle.getMessage("LN_MSG_LISSY_WHEEL_REPORT_LOCO_MOVEMENT",
-                                        unit, wheelCount,
-                                        ((l.getElement(3) & 0x20) == 0
-                                                ? Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_NORTH")
-                                                : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_SOUTH")));
-                            default:
-                                break;
-                        }
+    }
+
+    private String interpretLongAck(LocoNetMessage l) {
+        int opcode = l.getElement(1);
+        int ack1 = l.getElement(2);
+
+        switch (opcode | 0x80) {
+            case (LnConstants.OPC_LOCO_ADR):
+                // response for OPC_LOCO_ADR
+                return Bundle.getMessage("LN_MSG_LONG_ACK_LOCO_ADR");
+
+            case (LnConstants.OPC_LINK_SLOTS):
+                // response for OPC_LINK_SLOTS
+                return Bundle.getMessage("LN_MSG_LONG_ACK_LINK_SLOTS");
+
+            case (LnConstants.OPC_SW_ACK):
+                // response for OPC_SW_ACK
+                switch (ack1) {
+                    case 0:
+                        return Bundle.getMessage("LN_MSG_LONG_ACK_SW_ACK_FULL");
+                    case 0x7f:
+                        return Bundle.getMessage("LN_MSG_LONG_ACK_SW_ACK_ACCEPT");
+                    default:
+                        forceHex = true;
+                        return Bundle.getMessage("LN_MSG_LONG_ACK_SW_ACK_UNKNOWN",
+                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                        StringUtil.twoHexFromInt(ack1)));
+                }
+            case (LnConstants.OPC_SW_REQ):
+                // response for OPC_SW_REQ
+                return Bundle.getMessage("LN_MSG_LONG_ACK_SW_REQ_FAIL");
+
+            case (LnConstants.OPC_WR_SL_DATA):
+                // response for OPC_WR_SL_DATA
+                switch (ack1) {
+                    case 0:
+                        return Bundle.getMessage("LN_MSG_LONG_ACK_WR_SL_FAIL");
+                    case 0x01:
+                        return Bundle.getMessage("LN_MSG_LONG_ACK_WR_SL_OK");
+                    case 0x23:
+                    case 0x2b:
+                    case 0x6B:
+                        return Bundle.getMessage("LN_MSG_LONG_ACK_WR_SL_PROG_DCS51_OK");
+                    case 0x40:
+                        return Bundle.getMessage("LN_MSG_LONG_ACK_WR_SL_BLIND");
+                    case 0x7f:
+                        return Bundle.getMessage("LN_MSG_LONG_ACK_WR_SL_NOT_IMPL");
+                    default:
+                        forceHex = true;
+                        return Bundle.getMessage("LN_MSG_LONG_ACK_WR_SL_UNKNOWN",
+                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                        StringUtil.twoHexFromInt(ack1)));
+                }
+
+            case (LnConstants.OPC_SW_STATE):
+                // response for OPC_SW_STATE
+                return Bundle.getMessage("LN_MSG_LONG_ACK_SW_STATE",
+                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                StringUtil.twoHexFromInt(ack1)),
+                        Bundle.getMessage((((ack1 & 0x20) != 0)
+                                ? "LN_MSG_SWITCH_STATE_CLOSED"
+                                : "LN_MSG_SWITCH_STATE_THROWN")));
+
+            case (LnConstants.OPC_MOVE_SLOTS):
+                // response for OPC_MOVE_SLOTS
+                switch (ack1) {
+                    case 0:
+                        return Bundle.getMessage("LN_MSG_LONG_ACK_MOVE_SL_REJECT");
+                    case 0x7f:
+                        return Bundle.getMessage("LN_MSG_LONG_ACK_MOVE_SL_ACCEPT");
+                    default:
+                        forceHex = true;
+                        return Bundle.getMessage("LN_MSG_LONG_ACK_MOVE_SL_UNKNOWN",
+                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                StringUtil.twoHexFromInt(ack1)));
+                }
+
+            case LnConstants.OPC_IMM_PACKET:
+                // response for OPC_IMM_PACKET
+                if (ack1 == 0) {
+                    return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_REJECT");
+                } else if (ack1 == 0x7f) {
+                    return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_ACCEPT");
+                } else if (l.getElement(1) == 0x6D && l.getElement(2) == 0x01) {
+                    return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_UHL_PROG");
+
+                } else {
+                    forceHex = true;
+                    return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_UNKNOWN",
+                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                StringUtil.twoHexFromInt(ack1)));
+                }
+
+            case LnConstants.OPC_IMM_PACKET_2:
+                // response for OPC_IMM_PACKET
+                return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_LIM_MASTER",
+                        ack1, Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                StringUtil.twoHexFromInt(ack1)));
+
+            case (LnConstants.RE_LACK_SPEC_CASE1 | 0x80): // 0x50 plus opcode bit so can match the switch'd value:
+            case (LnConstants.RE_LACK_SPEC_CASE2 | 0x80): //0x00 plus opcode bit so can match the switch'd value:
+                // OpSwitch read response reverse-engineered by B. Milhaupt and
+                // used with permission
+                int responseValue = l.getElement(2);
+                if (responseValue == 0x7f) {
+                    return Bundle.getMessage("LN_MSG_LONG_ACK_SPEC_CASE1_2_ACCEPTED");
+                } else {
+                    return Bundle.getMessage("LN_MSG_LONG_ACK_SPEC_CASE1_2_REPORT",
+                            (((responseValue & 0x20) == 0x20) ? 1 : 0),
+                            (((responseValue & 0x20) == 0x20)
+                                ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_CLOSED")
+                                : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_THROWN")));
+                }
+            case LnConstants.OPC_ALM_READ:
+                if (l.getElement(2) == 0) {
+                return Bundle.getMessage("LN_MSG_LONG_ACK_SLOT_NOT_SUPPORTED",
+                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                StringUtil.twoHexFromInt(opcode)));
+            }
+            default:
+                return "";
+        } // switch (opcode | 0x80)
+    }
+
+    private String interpretOpcMultiSense(LocoNetMessage l ) {
+        int type = l.getElement(1) & LnConstants.OPC_MULTI_SENSE_MSG;
+        switch (type) {
+            case LnConstants.OPC_MULTI_SENSE_POWER:
+                // This is a PM42 power event.
+                int pCMD = (l.getElement(3) & 0xF0);
+
+                if ((pCMD == 0x30) || (pCMD == 0x10)) {
+                    // autoreverse
+                    int cm1 = l.getElement(3);
+                    int cm2 = l.getElement(4);
+                    String sect1Mode, sect1State;
+                    String sect2Mode, sect2State;
+                    String sect3Mode, sect3State;
+                    String sect4Mode, sect4State;
+
+                    if ((cm1 & 1) != 0) {
+                        sect1Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_AUTOREV");
+                        sect1State = ((cm2 & 1) != 0)
+                                ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_REV")
+                                : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NORM");
+                    } else {
+                        sect1Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_PROTECT");
+                        sect1State = ((cm2 & 1) != 0)
+                                ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_SHORT")
+                                : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NONSHORT");
+                    }
+
+                    if ((cm1 & 2) != 0) {
+                        sect2Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_AUTOREV");
+                        sect2State = ((cm2 & 2) != 0)
+                                ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_REV")
+                                : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NORM");
+                    } else {
+                        sect2Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_PROTECT");
+                        sect2State = ((cm2 & 2) != 0)
+                                ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_SHORT")
+                                : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NONSHORT");
+                    }
+
+                    if ((cm1 & 4) != 0) {
+                        sect3Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_AUTOREV");
+                        sect3State = ((cm2 & 4) != 0)
+                                ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_REV")
+                                : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NORM");
+                    } else {
+                        sect3Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_PROTECT");
+                        sect3State = ((cm2 & 4) != 0)
+                                ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_SHORT")
+                                : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NONSHORT");
+                    }
+
+                    if ((cm1 & 8) != 0) {
+                        sect4Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_AUTOREV");
+                        sect4State = ((cm2 & 8) != 0)
+                                ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_REV")
+                                : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NORM");
+                    } else {
+                        sect4Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_PROTECT");
+                        sect4State = ((cm2 & 8) != 0)
+                                ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_SHORT")
+                                : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NONSHORT");
+                    }
+                    return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X",
+                            (l.getElement(2) + 1) + ((l.getElement(1) & 0x1) << 7),
+                            sect1Mode, sect1State, sect2Mode, sect2State,
+                            sect3Mode, sect3State, sect4Mode, sect4State);
+                } else if (pCMD == 0x70) {
+                    // programming
+                    int deviceType = l.getElement(3) & 0x7;
+                    String device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_UNKNOWN");
+                    switch (deviceType) {
+                        case LnConstants.RE_MULTI_SENSE_DEV_TYPE_PM4X:
+                            device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_PM4X");
+                            break;
+                        case LnConstants.RE_MULTI_SENSE_DEV_TYPE_BDL16X:
+                            device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_BDL16X");
+                            break;
+                        case LnConstants.RE_MULTI_SENSE_DEV_TYPE_SE8:
+                            device = device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_SE8C");
+                            break;
+                        case LnConstants.RE_MULTI_SENSE_DEV_TYPE_DS64:
+                            device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_DS64");
+                            break;
+                    }
+
+                    int bit = (l.getElement(4) & 0x0E) / 2;
+                    int val = (l.getElement(4) & 0x01);
+                    int wrd = (l.getElement(4) & 0x70) / 16;
+                    int opsw = (l.getElement(4) & 0x7E) / 2 + 1;
+                    int bdaddr = l.getElement(2) + 1;
+                    if ((l.getElement(1) & 0x1) != 0) {
+                        bdaddr += 128;
+                    }
+                    String accessType = ((l.getElement(1) & 0x10) != 0)
+                            ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_OPSW_WRITE")
+                            : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_OPSW_READ");
+                    String valType = (val == 1)
+                            ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_CLOSED")
+                            : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_THROWN");
+                    if ((deviceType == 0) && (bdaddr == 0) && (bit == 0) && (val == 0) && (wrd == 0) && (opsw == 1)) {
+                        return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_ACCESS_QUERY",
+                                device, bdaddr, accessType, opsw, val, valType
+                                );
+                    }
+                    return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_ACCESS",
+                            device, bdaddr, accessType, opsw, val, valType
+                            );
+                } else if (pCMD == 0x00) {
+                    /**
+                     * **************************************************
+                     * Device type report * The message bytes as
+                     * assigned as follows:
+                     *
+                     * <0xD0> <DQT_REQ> <DQT_BRD> <DQT_B3> <DQT_B4>
+                     * <CHK> * * where:
+                     *
+                     * <DQT_REQ> contains the device query request, *
+                     * encoded as: * bits 7-4 always 0110b * bits 3-1
+                     * always 001b * bit 0 (BoardID-1)<7>
+                     *
+                     * <DQT_BRD> contains most the device board ID
+                     * number, * encoded as: * bit 7 always 0b * bits
+                     * 6-0 (BoardID-1)<6:0>
+                     *
+                     * <DQT_B3> contains the board type identification,
+                     * * encoded as: * bits 7-4 always 0000b * bits 3-0
+                     * contain the encoded device type, * encoded as: *
+                     * 0000b PM4x device * 0001b BDL16x device * 0010b
+                     * SE8C device * 0011b DS64 device * others Unknown
+                     * device type
+                     *
+                     * <DQT_B4> contains device version number: * bit 7
+                     * always 0b * bits 6-0 VersionNumber(6:0) * *
+                     * Information reverse-engineered by B. Milhaupt and
+                     * used  with permission *
+                     * **************************************************
+                     */
+                    // This message is a report which is sent by a LocoNet device
+                    // in response to a query of attached devices
+                    // Note - this scheme is supported by only some Digitrax devices.
+                    //
+                    // A VersionNumber of 0 implies the hardware does not report
+                    // a valid version number.
+                    //
+                    // Device type report reverse-engineered by B. Milhaupt and
+                    // used with permission
+                    int deviceType = l.getElement(3) & 0x7;
+                    String device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_UNKNOWN");
+                    switch (deviceType) {
+                        case LnConstants.RE_MULTI_SENSE_DEV_TYPE_PM4X:
+                            device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_PM4X");
+                            break;
+                        case LnConstants.RE_MULTI_SENSE_DEV_TYPE_BDL16X:
+                            device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_BDL16X");
+                            break;
+                        case LnConstants.RE_MULTI_SENSE_DEV_TYPE_SE8:
+                            device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_SE8C");
+                            break;
+                        case LnConstants.RE_MULTI_SENSE_DEV_TYPE_DS64:
+                            device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_DS64");
+                            break;
+                    }
+
+                    int bdaddr = l.getElement(2) + 1;
+                    if ((l.getElement(1) & 0x1) != 0) {
+                        bdaddr += 128;
+                    }
+                    String versionNumber = Integer.toString(l.getElement(4));
+                    if (l.getElement(4) == 0) {
+                        versionNumber = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_VER_UNKNOWN");
+                    }
+                    return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_DEV_TYPE_RPT",
+                            device, bdaddr, versionNumber);
+                } else {
+                    // beats me
+                    forceHex = true;
+                    return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_UNKNOWN_OP",
+                        (l.getElement(2) + 1),
+                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                StringUtil.twoHexFromInt(pCMD)));
+                }
+
+            case LnConstants.OPC_MULTI_SENSE_PRESENT:
+            case LnConstants.OPC_MULTI_SENSE_ABSENT:
+                // Transponding Event
+                // get system and user names
+                String reporterSystemName;
+                String reporterUserName;
+                String zone;
+                switch (l.getElement(2) & 0x0F) {
+                    case 0x00:
+                        zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEA");
                         break;
-
-                    case 0x0A: // Format special message
-                        int element = l.getElement(2) * 128 + l.getElement(3);
-                        int stat1 = l.getElement(5);
-                        int stat2 = l.getElement(6);
-                        String status;
-                        switch (stat1 & 0x30) {
-                            case 0x30:
-                                status = Bundle.getMessage("LN_MSG_SE_REPORT_HELPER_BOTH_RES");
-                                break;
-                            case 0x10:
-                                status = Bundle.getMessage("LN_MSG_SE_REPORT_HELPER_AX_RES");
-                                break;
-                            case 0x20:
-                                status = Bundle.getMessage("LN_MSG_SE_REPORT_HELPER_XA_RES");
-                                break;
-                            default:
-                                status = Bundle.getMessage("LN_MSG_SE_REPORT_HELPER_NO_RES");
-                                break;
-                        }
-
-                        return Bundle.getMessage("LN_MSG_SE_REPORT",
-                                (element + 1), element,
-                                l.getElement(7), l.getElement(8),
-                                status,
-                                Bundle.getMessage(((stat2 & 0x01) != 0)
-                                        ? "LN_MSG_SWITCH_STATE_THROWN"
-                                        : "LN_MSG_SWITCH_STATE_CLOSED"),
-                                Bundle.getMessage(((stat1 & 0x01) != 0)
-                                        ? "LN_MSG_SE_REPORT_HELPER_OCCUPIED"
-                                        : "LN_MSG_SE_REPORT_HELPER_UNOCCUPIED"));
-                    case 0x09:
-                        if (l.getElement(4) == 0x00) {
-                            forceHex = true;
-                            return Bundle.getMessage("LN_MSG_UNRECOGNIZED_SIG_STATE_REPORT_MAY_BE_FROM_CML_HW");
-                        }
+                    case 0x02:
+                        zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEB");
+                        break;
+                    case 0x04:
+                        zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEC");
+                        break;
+                    case 0x06:
+                        zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONED");
+                        break;
+                    case 0x08:
+                        zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEE");
+                        break;
+                    case 0x0A:
+                        zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEF");
+                        break;
+                    case 0x0C:
+                        zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEG");
+                        break;
+                    case 0x0E:
+                        zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEH");
                         break;
                     default:
+                        zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONE_UNKNOWN",
+                                (l.getElement(2) & 0x0F));
                         break;
                 }
-                break;
-            } // case LnConstants.OPC_LISSY_UPDATE
 
-            /*
-             * OPC_IMM_PACKET   0xED   ;SEND n-byte packet immediate LACK
-             *                         ; Follow on message: LACK
-             *                         ; <0xED>,<0B>,<7F>,<REPS>,<DHI>,<IM1>,<IM2>,
-             *                         ;        <IM3>,<IM4>,<IM5>,<CHK>
-             *                         ;   <DHI>=<0,0,1,IM5.7-IM4.7,IM3.7,IM2.7,IM1.7>
-             *                         ;   <REPS>  D4,5,6=#IM bytes,
-             *                         ;           D3=0(reserved);
-             *                         ;           D2,1,0=repeat CNT
-             *                         ; IF Not limited MASTER then
-             *                         ;   LACK=<B4>,<7D>,<7F>,<chk> if CMD ok
-             *                         ; IF limited MASTER then Lim Masters respond
-             *                         ;   with <B4>,<7E>,<lim adr>,<chk>
-             *                         ; IF internal buffer BUSY/full respond
-             *                         ;   with <B4>,<7D>,<0>,<chk>
-             *                         ;   (NOT IMPLEMENTED IN DT200)
-             *
-             * This sends a raw NMRA packet across the LocoNet.
-             *
-             * Page 11 of LocoNet Personal Edition v1.0.
-             *
-             * Decodes for the F9-F28 functions taken from the NMRA standards and
-             * coded by Leo Bicknell.
-             */
-            case LnConstants.OPC_IMM_PACKET: {
-                // sendPkt = (sendPktMsg *) msgBuf;
-                int val7f = l.getElement(2);
-                /* fixed value of 0x7f */
+                reporterSystemName = locoNetReporterPrefix
+                        + ((l.getElement(1) & 0x1F) * 128 + l.getElement(2) + 1);
 
-                int reps = l.getElement(3);
-                /* repeat count */
-
-                int dhi = l.getElement(4);
-                /* high bits of data bytes */
-
-                int im1 = l.getElement(5);
-                int im2 = l.getElement(6);
-                int im3 = l.getElement(7);
-                int im4 = l.getElement(8);
-                int im5 = l.getElement(9);
-                int mobileDecoderAddress = -999;
-                int nmraInstructionType = -999;
-                int nmraSubInstructionType = -999;
-                int playableWhistleLevel = -999;
-
-                // see if it really is a 'Send Packet' as defined in LocoNet PE
-                if (val7f == 0x7f) {
-                    int len = ((reps & 0x70) >> 4);
-                    // duplication of packet data as packetInt was deemed necessary
-                    // due to issues with msBit loss when converting from "byte" to
-                    // integral forms
-                    byte[] packet = new byte[len];
-                    int[] packetInt = new int[len];
-                    packet[0] = (byte) (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
-                    packetInt[0] = (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
-                    if (len >= 2) {
-                        packet[1] = (byte) (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
-                        packetInt[1] = (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
-                    }
-                    if (len >= 3) {
-                        packet[2] = (byte) (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));
-                        packetInt[2] = (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));
-                    }
-                    if (len >= 4) {
-                        packet[3] = (byte) (im4 + ((dhi & 0x08) != 0 ? 0x80 : 0));
-                        packetInt[3] = (im4 + ((dhi & 0x08) != 0 ? 0x80 : 0));
-                    }
-                    if (len >= 5) {
-                        packet[4] = (byte) (im5 + ((dhi & 0x10) != 0 ? 0x80 : 0));
-                        packetInt[4] = (im5 + ((dhi & 0x10) != 0 ? 0x80 : 0));
-                    }
-
-                    int address;
-                    // compute some information which is useful for decoding
-                    // the "Playable" whistle message
-                    // Information reverse-engineered by B. Milhaupt and used with permission
-                    if ((packetInt[0] & 0x80) == 0x0) {
-                        // immediate packet addresses a 7-bit multi-function (mobile) decoder
-                        mobileDecoderAddress = packetInt[0];
-                        nmraInstructionType = (packetInt[1] & 0xE) >> 5;
-                        nmraSubInstructionType = (packetInt[1] & 0x1f);
-                        if ((nmraSubInstructionType == 0x1d) && (packetInt[2] == 0x7f)) {
-                            playableWhistleLevel = packetInt[3];
-                        }
-                    } else if ((packetInt[0] & 0xC0) == 0xC0) {
-                        // immediate packet addresses a 14-bit multi-function (mobile) decoder
-                        mobileDecoderAddress = ((packetInt[0] & 0x3F) << 8) + packetInt[1];
-                        nmraInstructionType = (packetInt[2] & 0xE0) >> 5;
-                        nmraSubInstructionType = (packetInt[2] & 0x1f);
-                        if ((nmraSubInstructionType == 0x1d) && (packetInt[3] == 0x7f)) {
-                            playableWhistleLevel = packetInt[4];
-                        }
-                    } else {
-                        // immediate packet not addressed to a multi-function (mobile) decoder
-                    }
-                    if ((mobileDecoderAddress >= 0)
-                            && (nmraInstructionType == 1)
-                            && (nmraSubInstructionType == 0x1D)) {
-                        // the "Playable" whistle message
-                        // Information reverse-engineered by B. Milhaupt and used with permission
-                        return Bundle.getMessage("LN_MSG_PLAYABLE_WHISTLE_CONTROL",
-                                mobileDecoderAddress,
-                                playableWhistleLevel,
-                                (reps & 0x7));
-                    }
-
-                    // F9-F28 w/a long address.
-                    if ((packetInt[0] & 0xC0) == 0xC0) {
-                        address = ((packetInt[0] & 0x3F) << 8) + packetInt[1];
-
-                        if ((packetInt[2] & 0xFF) == 0xDF) {
-                            // Functions 21-28
-                            return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F21_TO_F28", 
-                                    Integer.toString(address), 
-                                    Bundle.getMessage(((packetInt[3] & 0x01) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x02) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x04) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x08) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x10) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x20) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x40) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x80) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
-                        } else if ((packetInt[2] & 0xFF) == 0xDE) {
-                            // Functions 13-20
-                            return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F13_TO_F20", 
-                                    Integer.toString(address), 
-                                    Bundle.getMessage((((packetInt[3] & 0x01) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage((((packetInt[3] & 0x02) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage((((packetInt[3] & 0x04) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage((((packetInt[3] & 0x08) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage((((packetInt[3] & 0x10) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage((((packetInt[3] & 0x20) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage((((packetInt[3] & 0x40) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage((((packetInt[3] & 0x80) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
-                        } else if ((packetInt[2] & 0xF0) == 0xA0) {
-                            // Functions 9-12
-                            return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F9_TO_F12", 
-                                    Integer.toString(address), 
-                                    Bundle.getMessage((((packetInt[2] & 0x01) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage((((packetInt[2] & 0x02) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage((((packetInt[2] & 0x04) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage((((packetInt[2] & 0x08) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
-                        } else {
-                            // Unknown
-                                                /*
-                     * We use this two places below, so we generate it once here.
-                     * That seems wrong, but what we really need is to be able to
-                     * decode any NMRA packet here, which is a lot more work!
-                     */
-                    return Bundle.getMessage("LN_MSG_OPC_IMM_PKT_GENERIC", 
-                            ((reps & 0x70) >> 4),
-                            (reps & 0x07),
-                            reps, 
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(dhi)),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(im1)),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(im2)),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(im3)),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(im4)),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(im5)),
-                            NmraPacket.format(packet));
-                        }
-                    } else { // F9-F28 w/a short address.
-                        address = packetInt[0];
-                        if ((packetInt[1] & 0xFF) == 0xDF) {
-                            // Functions 21-28
-                            return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F21_TO_F28", 
-                                    address, 
-                                    Bundle.getMessage(((packetInt[2] & 0x01) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x02) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x04) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x08) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x10) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x20) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x40) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x80) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
-                            
-                        } else if ((packetInt[1] & 0xFF) == 0xDE) {
-                            // Functions 13-20
-                            return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F13_TO_F20", 
-                                    address, 
-                                    Bundle.getMessage(((packetInt[2] & 0x01) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x02) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x04) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x08) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x10) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x20) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x40) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x80) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
-                        } else if ((packetInt[1] & 0xF0) == 0xA0) {
-                            // Functions 9-12
-                            return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F9_TO_F12", 
-                                    address, 
-                                    Bundle.getMessage(((packetInt[2] & 0x01) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x02) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x04) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x08) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
-                        } else {
-                            // Unknown
-                    return Bundle.getMessage("LN_MSG_OPC_IMM_PKT_GENERIC", 
-                            ((reps & 0x70) >> 4),
-                            (reps & 0x07),
-                            reps, 
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(dhi)),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(im1)),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(im2)),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(im3)),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(im4)),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(im5)),
-                            NmraPacket.format(packet));
-                        }
-                    } // else { // F9-F28 w/a short address.
-                } else if (l.getElement(1) == 0x1F && l.getElement(2) == 0x01 && l.getElement(3) == 0x49 && l.getElement(4) == 0x42
-                        && l.getElement(6) != 0x5E && l.getElement(10) == 0x70 && l.getElement(11) == 0x00 && l.getElement(15) == 0x10) {
-                    // Uhlenbrock IB-COM / Intellibox I and II read or write CV value on programming track
-                    String cv = Integer.toString(l.getElement(8) * 256 + ((l.getElement(5) & 0x02) * 64) + l.getElement(7));
-                    int val = l.getElement(9) + 16 * (l.getElement(5) & 0x08);
-                    switch (l.getElement(6)) {
-                        case 0x6C:
-                            return Bundle.getMessage("LN_MSG_UHLEN_READ_CV_REG_MODE_FROM_PT", cv);
-                        case 0x6D:
-                            return Bundle.getMessage("LN_MSG_UHLEN_WRITE_CV_REG_MODE_FROM_PT", cv);
-                        case 0x6E:
-                            return Bundle.getMessage("LN_MSG_UHLEN_READ_CV_PAGED_MODE_FROM_PT", cv);
-                        case 0x6F:
-                            return Bundle.getMessage("LN_MSG_UHLEN_WRITE_CV_PAGED_MODE_FROM_PT", cv);
-                        case 0x71:
-                            return Bundle.getMessage("LN_MSG_UHLEN_WRITE_CV_DIRECT_BYTE_MODE_FROM_PT", 
-                                    cv, val);
-                        case 0x70: // observed on Intellibox II, even though it does not work on IB-COM
-                        case 0x72:
-                            return Bundle.getMessage("LN_MSG_UHLEN_READ_CV_DIRECT_BYTE_MODE_FROM_PT", cv);
-                    }
-                    return Bundle.getMessage("LN_MSG_UHLEN_CV_OPERATION_UNKNOWN", cv, val);
-                } else if (l.getElement(1) == 0x1F && l.getElement(2) == 0x01 && l.getElement(3) == 0x49 && l.getElement(4) == 0x42
-                        && l.getElement(6) == 0x5E) {
-                    // Uhlenbrock IB-COM / Intellibox I and II write CV value on main track
-                    int addr = l.getElement(8) * 256 + ((l.getElement(5) & 0x02) * 64) + l.getElement(7);
-                    String cv = Integer.toString(l.getElement(11) * 256 + ((l.getElement(5) & 0x08) << 4) + l.getElement(9));
-                    int val = ((l.getElement(10) & 0x02) << 6) + l.getElement(12);
-                    return Bundle.getMessage("LN_MSG_UHLEN_CV_OPS_MODE_WRITE", 
-                            addr, cv, val);
-                } else {
-                    /* Hmmmm... */
-                    forceHex = true;
-                    return Bundle.getMessage("LN_MSG_UHLEN_SEND_PKT_IMM_UNDEFINED", 
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(val7f)));
-                }
-            } // case LnConstants.OPC_IMM_PACKET
-
-            case LnConstants.RE_OPC_PR3_MODE: {
-                /*
-                 * Sets the operating mode of the PR3 device, if present.
-                 *
-                 * Information reverse-engineered by B. Milhaupt and used with permission
-                 */
-
-                if ((l.getElement(1) == 0x10) && ((l.getElement(2) & 0x7c) == 0)
-                        && (l.getElement(3) == 0) && (l.getElement(4) == 0)) {
-                    // set PR3 mode of operation, where LS 2 bits of byte 2 are encoded as:
-                    //	0x00	Set the PR3 mode to MS100 interface mode with PR3 LocoNet termination disabled
-                    //  0x01	Set the PR3 to decoder programming track mode
-                    //  0x03	Set the PR3 to MS100 interface mode with PR3 LocoNet termination enabled
-
-                    switch (l.getElement(2) & 0x3) {
-                        case 0x00: {
-                            return Bundle.getMessage("LN_MSG_SET_PR3_MODE_LOCONET_IF_WITHOUT_TERM");
-                        }
-                        case 0x01: {
-                            return Bundle.getMessage("LN_MSG_SET_PR3_MODE_PR3_PROGRAMMING_TRACK_ONLY");
-                        }
-                        case 0x03: {
-                            return Bundle.getMessage("LN_MSG_SET_PR3_MODE_LN_MSG_SET_PR3_MODE_LOCONET_IF_WITH_TERM");
-                        }
-                        default: {
-                            break;
-                        }
+                Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
+                reporterUserName = "";
+                if (reporter != null) {
+                    String uname = reporter.getUserName();
+                    if ((uname != null) && (!uname.isEmpty())) {
+                        reporterUserName = uname;
                     }
                 }
-                break;
-            }
+                int section = 1 + (l.getElement(2) / 16) + (l.getElement(1) & 0x1F) * 8;
 
-            case LnConstants.RE_OPC_IB2_F9_F12: {
-                // Intellibox-II function control message for mobile decoder F9 thru F12.
-                int slot = l.getElement(1);
-                int funcs = l.getElement(2);
-                return Bundle.getMessage("LN_MSG_INTELLIBOX_SLOT_SET_F9_TO_F12",
-                        slot, 
-                        Bundle.getMessage(((funcs & LnConstants.RE_IB2_F9_MASK)  != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                        Bundle.getMessage(((funcs & LnConstants.RE_IB2_F10_MASK) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                        Bundle.getMessage(((funcs & LnConstants.RE_IB2_F11_MASK) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                        Bundle.getMessage(((funcs & LnConstants.RE_IB2_F12_MASK) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
+                String locoAddr = ((l.getElement(3) == 0x7d)
+                        ? Bundle.getMessage("LN_ADDRESS_HELPER_SHORT", Integer.toString(l.getElement(4)))
+                        : Bundle.getMessage("LN_ADDRESS_HELPER_LONG", Integer.toString(l.getElement(3) * 128 + l.getElement(4))));
+                String transpActivity = (type == LnConstants.OPC_MULTI_SENSE_PRESENT)
+                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_PRESENT")
+                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_ABSENT");
 
-            } // case LnConstants.RE_OPC_IB2_F8_F12
-
-            case LnConstants.RE_OPC_IB2_SPECIAL: { //0xD4
-                // Intellibox function control message for mobile decoder F0-F28 (IB-I) and F13-F28 (IB-II)
-                if ((l.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN)
-                        && ((l.getElement(3) == LnConstants.RE_IB1_SPECIAL_F5_F11_TOKEN)
-                        || (l.getElement(3) == LnConstants.RE_IB2_SPECIAL_F13_F19_TOKEN)
-                        || (l.getElement(3) == LnConstants.RE_IB2_SPECIAL_F21_F27_TOKEN))) {
-                    // Intellibox-I function control message for mobile decoder F5 thru F27 except F12 and F20
-                    // Intellibox-II function control message for mobile decoder F13 thru F27 except F20
-                    // Note: Intellibox-II documentation implies capability to control
-                    // MANY more functions.  This capability may be extended by
-                    // additional tokens in element 3, including the special-case encoding
-                    // for the "eighth bit" as handled in the following case, below,
-                    // for F12, F20 & F28
-                    int funcOffset = 5 + 8 * (l.getElement(3) - LnConstants.RE_IB1_SPECIAL_F5_F11_TOKEN);
-                    String encodingType;
-                    if (l.getElement(3) == LnConstants.RE_IB1_SPECIAL_F5_F11_TOKEN) {
-                        encodingType = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_IB1");
-                    } else {
-                        encodingType = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_IB2");
-                    }
-                    String funcInfo[] = new String[7];
-                    int mask = 1;
-                    for (int i = 0; i < 7; i++) {
-                        // handle 7 bits of data
-                        funcInfo[i] = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_INDIV_FUNC", 
-                                funcOffset+i, 
-                                Bundle.getMessage(((l.getElement(4) & mask) != 0)
-                                        ? "LN_MSG_FUNC_ON" 
-                                        : "LN_MSG_FUNC_OFF"));
-                        mask *= 2;
-                    }
-                    return Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL",
-                            encodingType, l.getElement(2), funcInfo[0],
-                            funcInfo[1], funcInfo[2], funcInfo[3],
-                            funcInfo[4], funcInfo[5], funcInfo[6]);
-                } else if ((l.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN)
-                        & (l.getElement(3) == LnConstants.RE_IB2_SPECIAL_F20_F28_TOKEN)) {
-                    // Special-case for F12, F20 and F28, since the tokens from the previous case
-                    // can only encode 7 bits of data in element(4).
-                    return Bundle.getMessage("LN_MSG_INTELLIBOX_SPECIAL_FUNC_CTL",
-                            l.getElement(2),
-                            Bundle.getMessage(((l.getElement(4) & LnConstants.RE_IB2_SPECIAL_F12_MASK) != 0)
-                                    ? "LN_MSG_FUNC_ON" 
-                                    : "LN_MSG_FUNC_OFF"),
-                            Bundle.getMessage(((l.getElement(4) & LnConstants.RE_IB2_SPECIAL_F20_MASK) != 0)
-                                    ? "LN_MSG_FUNC_ON"
-                                    : "LN_MSG_FUNC_OFF"),
-                            Bundle.getMessage(((l.getElement(4) & LnConstants.RE_IB2_SPECIAL_F28_MASK) != 0)
-                                    ? "LN_MSG_FUNC_ON"
-                                    : "LN_MSG_FUNC_OFF"));
-                } else if ((l.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN)
-                    & (l.getElement(3) == LnConstants.RE_IB1_SPECIAL_F0_F4_TOKEN)) {
-                    // For Intellibox-I "one" with SW version 2.x - Special-case for F0 to F4
-                    String funcInfo[] = new String[7];
-                    funcInfo[0] = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_INDIV_FUNC", 
-                            0,
-                            (l.getElement(4) & LnConstants.RE_IB1_F0_MASK) == 0 ? Bundle.getMessage("LN_MSG_FUNC_ON") 
-                                        : Bundle.getMessage("LN_MSG_FUNC_OFF"));
-                    int mask = 1;
-                    for (int i = 0; i < 4; i++) {
-                        // handle 7 bits of data
-                        funcInfo[i+1] = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_INDIV_FUNC", 
-                                i+1, 
-                                Bundle.getMessage(((l.getElement(4) & mask) != 0)
-                                        ? "LN_MSG_FUNC_ON"
-                                        : "LN_MSG_FUNC_OFF"));
-                        mask *= 2;
-                    }
-                    return Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_F0_TO_F4",
-                            l.getElement(2),
-                            funcInfo[0], funcInfo[1], funcInfo[2], funcInfo[3],
-                            funcInfo[4]);
-                }
-                break;
-                // Because the usage of other tokens in message element(3) are not yet
-                // understood, let execution fall thru to the "default" case
-            }//  case LnConstants.RE_OPC_IB2_SPECIAL: { //0xD4
-
-            //$FALL-THROUGH$
-
+                return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_REPORT",
+                        locoAddr, transpActivity, reporterSystemName,
+                        reporterUserName, section, zone);
             default:
                 break;
-        } // end switch over opcode type
-        forceHex = true;
-        return Bundle.getMessage("LN_MSG_UNKNOWN_MESSAGE");
-    } // end of protected String format(LocoNetMessage l)
-
-    /**
-     * This function creates a string representation of a LocoNet buffer. The
-     * string may be more than one line, and is terminated with a newline.
-     *
-     * @param l the message
-     * @return The created string representation.
-     */
-    public String displayMessage(LocoNetMessage l) {
-
-        forceHex = false;
-        String s = format(l);
-        if (forceHex) {
-            s += Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO", 
-                    l.toString());
         }
-        if (showOpCode) {
-            s = Bundle.getMessage("LN_MONITOR_MESSAGE_PREPEND_OPCODE_INFO",
-                    LnConstants.OPC_NAME(l.getOpCode()), s);
-        }
-        return s;
-    } // end of public String displayMessage(LocoNetMessage l)
-
-    private TurnoutManager turnoutManager;
-    private SensorManager sensorManager;
-    private ReporterManager reporterManager;
-    private String locoNetTurnoutPrefix = "";
-    private String locoNetSensorPrefix = "";
-    private String locoNetReporterPrefix = "";
-
-    /**
-     * Set the LocoNet turnout manager used to find turnout "user names" from
-     * turnout "system names"
-     *
-     * @param turnoutManager the manager
-     */
-    public final void setLocoNetTurnoutManager(@Nonnull TurnoutManager turnoutManager) {
-        this.turnoutManager = turnoutManager;
-        this.locoNetTurnoutPrefix = turnoutManager.getSystemPrefix() + "T";
+        return "";
     }
 
-    /**
-     * Set the LocoNet sensor manager used to find sensor "user names" from
-     * sensor "system names".
-     *
-     * @param sensorManager the manager
-     */
-    public final void setLocoNetSensorManager(@Nonnull SensorManager sensorManager) {
-        this.sensorManager = sensorManager;
-        this.locoNetSensorPrefix = sensorManager.getSystemPrefix() + "S";
-    }
+    private String interpretOpcWrSlDataOpcSlRdData(LocoNetMessage l) {
+            if (l.getElement(1) == 0x0E) {
+            // message length is correct for "standard" slot read and write
+            // data as described in the LocoNet PE document.
+            int slot = l.getElement(2); // slot number for this request
+            String mode;
+            int command = l.getElement(0);
+            int id1 = l.getElement(11); // ls 7 bits of ID code
+            int id2 = l.getElement(12); // ms 7 bits of ID code
+            /*
+             * These messages share a common data format with the only difference being
+             * whether we are reading or writing the slot data.
+             */
+            if (command == LnConstants.OPC_WR_SL_DATA) {
+                mode = Bundle.getMessage("LN_MSG_SLOT_HELPER_ACCESS_TYPE_REQUEST");
+            } else {
+                mode = Bundle.getMessage("LN_MSG_SLOT_HELPER_ACCESS_TYPE_RESPONSE");
+            }
+            switch (slot) {
+                case LnConstants.FC_SLOT:
+                    /**
+                     * ********************************************************************************************
+                     * FAST Clock: * =========== * The system FAST clock and
+                     * parameters are implemented in Slot#123 <7B>. * * Use
+                     * <EF>
+                     * to write new clock information, Slot read of
+                     * 0x7B,<BB><7B>.., will return current * System clock
+                     * information, and other throttles will update to this
+                     * SYNC. Note that all * attached display devices keep a
+                     * current clock calculation based on this SYNC read
+                     * value, * i.e. devices MUST not continuously poll the
+                     * clock SLOT to generate time, but use this * merely to
+                     * restore SYNC and follow current RATE etc. This clock
+                     * slot is typically "pinged" * or read SYNC'd every 70
+                     * to 100 seconds , by a single user, so all attached
+                     * devices can * synchronise any phase drifts. Upon
+                     * seeing a SYNC read, all devices should reset their
+                     * local * sub-minute phase counter and invalidate the
+                     * SYNC update ping generator. * * Clock Slot Format:
+                     *
+                     * <0xEF>,<0E>,<7B>,<CLK_RATE>,<FRAC_MINSL>,<FRAC_MINSH>,<256-MINS_60>,
+                     *
+                     * <TRK><256-HRS_24>,<DAYS>,<CLK_CNTRL>,<ID1>,<1D2>,<CHK>
+                     *
+                     * * <CLK_RATE> 0=Freeze clock, * 1=normal 1:1 rate, *
+                     * 10=10:1 etc, max VALUE is 7F/128 to 1
+                     *
+                     * <FRAC_MINSL> FRAC mins hi/lo are a sub-minute counter
+                     * , depending * on the CLOCK generator
+                     *
+                     * <FRAC_MINSH> Not for ext. usage. This counter is
+                     * reset when valid
+                     *
+                     * <E6><7B> SYNC msg seen
+                     *
+                     * <256-MINS_60> This is FAST clock MINUTES subtracted
+                     * from 256. Modulo 0-59
+                     *
+                     * <256-HRS_24> This is FAST clock HOURS subtracted from
+                     * 256. Modulo 0-23
+                     *
+                     * <DAYS> number of 24 Hr clock rolls, positive count
+                     *
+                     * <CLK_CNTRL> Clock Control Byte * D6- 1=This is valid
+                     * Clock information, * 0=ignore this <E6><7B>, SYNC
+                     * reply
+                     *
+                     * <ID1>,<1D2> This is device ID last setting the clock.
+                     *
+                     * <00><00> shows no set has happened
+                     *
+                     * <7F><7x> are reserved for PC access *
+                     * ********************************************************************************************
+                     */
 
-    /**
-     * Set the LocoNet reporter manager used to find reported "user names" from
-     * reporter "system names".
-     *
-     * @param reporterManager the manager
-     */
-    public final void setLocoNetReporterManager(@Nonnull ReporterManager reporterManager) {
-        this.reporterManager = reporterManager;
-        this.locoNetReporterPrefix = reporterManager.getSystemPrefix() + "R";
+                    int minutes; // temporary time values
+                    int hours;
+                    int clk_rate = l.getElement(3); // 0 = Freeze clock, 1 = normal,
+                    // 10 = 10:1 etc. Max is 0x7f
+                    int mins_60 = l.getElement(6); // 256 - minutes
+                    int track_stat = l.getElement(7); // track status
+                    int hours_24 = l.getElement(8); // 256 - hours
+                    int days = l.getElement(9); // clock rollovers
+                    int clk_cntrl = l.getElement(10); // bit 6 = 1; data is valid
+                    // clock info
+                    // "  " 0; ignore this reply
+                    // id1/id2 is device id of last device to set the clock
+                    // "   " = zero shows not set has happened
+
+                    /* recover hours and minutes values */
+                    minutes = ((255 - mins_60) & 0x7f) % 60;
+                    hours = ((256 - hours_24) & 0x7f) % 24;
+                    hours = (24 - hours) % 24;
+                    minutes = (60 - minutes) % 60;
+
+                    /* check track status value and display */
+                    if (trackStatus != track_stat) {
+                        trackStatus = track_stat;
+                    }
+
+                    return Bundle.getMessage("LN_MSG_SLOT_ACCESS_FAST_CLOCK",
+                            mode,
+                            ((clk_cntrl & 0x20) != 0 ? "" : Bundle.getMessage("LN_MSG_SLOT_HELPER_FC_SYNC")),
+                            (clk_rate != 0 ? Bundle.getMessage("LN_MSG_SLOT_HELPER_FC_RUNNING")
+                                    : Bundle.getMessage("LN_MSG_SLOT_HELPER_FC_FROZEN")),
+                            clk_rate,
+                            days,
+                            fcTimeToString(hours, minutes),
+                            idString(id1, id2),
+                            trackStatusByteToString(track_stat));
+                    // end fast clock block
+                case LnConstants.PRG_SLOT:
+                    /**
+                     * ********************************************************************************************
+                     * Programmer track: * ================= * The
+                     * programmer track is accessed as Special slot #124 (
+                     * $7C, 0x7C). It is a full * asynchronous shared system
+                     * resource. * * To start Programmer task, write to slot
+                     * 124. There will be an immediate LACK acknowledge *
+                     * that indicates what programming will be allowed. If a
+                     * valid programming task is started, * then at the
+                     * final (asynchronous) programming completion, a Slot
+                     * read <E7> from slot 124 * will be sent. This is the
+                     * final task status reply. * * Programmer Task Start: *
+                     * ----------------------
+                     *
+                     * <0xEF>,<0E>,<7C>,<PCMD>,<0>,<HOPSA>,<LOPSA>,<TRK>;<CVH>,<CVL>,
+                     *
+                     * <DATA7>,<0>,<0>,<CHK> * * This OPC leads to immediate
+                     * LACK codes:
+                     *
+                     * <B4>,<7F>,<7F>,<chk> Function NOT implemented, no
+                     * reply.
+                     *
+                     * <B4>,<7F>,<0>,<chk> Programmer BUSY , task aborted,
+                     * no reply.
+                     *
+                     * <B4>,<7F>,<1>,<chk> Task accepted , <E7> reply at
+                     * completion.
+                     *
+                     * <B4>,<7F>,<0x40>,<chk> Task accepted blind NO <E7>
+                     * reply at completion. * * Note that the <7F> code will
+                     * occur in Operations Mode Read requests if the System
+                     * is not * configured for and has no Advanced
+                     * Acknowlegement detection installed.. Operations Mode
+                     * * requests can be made and executed whilst a current
+                     * Service Mode programming task is keeping * the
+                     * Programming track BUSY. If a Programming request is
+                     * rejected, delay and resend the * complete request
+                     * later. Some readback operations can keep the
+                     * Programming track busy for up * to a minute. Multiple
+                     * devices, throttles/PC's etc, can share and
+                     * sequentially use the * Programming track as long as
+                     * they correctly interpret the response messages. Any
+                     * Slot RD * from the master will also contain the
+                     * Programmer Busy status in bit 3 of the <TRK> byte. *
+                     * * A <PCMD> value of
+                     * <00> will abort current SERVICE mode programming task
+                     * and will echo with * an <E6> RD the command string
+                     * that was aborted. * * <PCMD> Programmer Command: *
+                     * -------------------------- * Defined as * D7 -0 * D6
+                     * -Write/Read 1= Write, * 0=Read * D5 -Byte Mode 1=
+                     * Byte operation, * 0=Bit operation (if possible) * D4
+                     * -TY1 Programming Type select bit * D3 -TY0 Prog type
+                     * select bit * D2 -Ops Mode 1=Ops Mode on Mainlines, *
+                     * 0=Service Mode on Programming Track * D1 -0 reserved
+                     * * D0 -0-reserved * * Type codes: * ----------- * Byte
+                     * Mode Ops Mode TY1 TY0 Meaning * 1 0 0 0 Paged mode
+                     * byte Read/Write on Service Track * 1 0 0 0 Paged mode
+                     * byte Read/Write on Service Track * 1 0 0 1 Direct
+                     * mode byteRead/Write on Service Track * 0 0 0 1 Direct
+                     * mode bit Read/Write on Service Track * x 0 1 0
+                     * Physical Register byte Read/Write on Service Track *
+                     * x 0 1 1 Service Track- reserved function * 1 1 0 0
+                     * Ops mode Byte program, no feedback * 1 1 0 1 Ops mode
+                     * Byte program, feedback * 0 1 0 0 Ops mode Bit
+                     * program, no feedback * 0 1 0 1 Ops mode Bit program,
+                     * feedback * * <HOPSA>Operations Mode Programming * 7
+                     * High address bits of Loco to program, 0 if Service
+                     * Mode
+                     *
+                     * <LOPSA>Operations Mode Programming * 7 Low address
+                     * bits of Loco to program, 0 if Service Mode
+                     *
+                     * <TRK> Normal Global Track status for this Master, *
+                     * Bit 3 also is 1 WHEN Service Mode track is BUSY
+                     *
+                     * <CVH> High 3 BITS of CV#, and ms bit of DATA.7
+                     *
+                     * <0,0,CV9,CV8 - 0,0, D7,CV7>
+                     *
+                     * <CVL> Low 7 bits of 10 bit CV address.
+                     *
+                     * <0,CV6,CV5,CV4-CV3,CV2,CV1,CV0>
+                     *
+                     * <DATA7>Low 7 BITS OF data to WR or RD COMPARE
+                     *
+                     * <0,D6,D5,D4 - D3,D2,D1,D0> * ms bit is at CVH bit 1
+                     * position. * * Programmer Task Final Reply: *
+                     * ---------------------------- * (if saw LACK
+                     * <B4>,<7F>,<1>,<chk> code reply at task start)
+                     *
+                     * <0xE7>,<0E>,<7C>,<PCMD>,<PSTAT>,<HOPSA>,<LOPSA>,<TRK>;<CVH>,<CVL>,
+                     *
+                     * <DATA7>,<0>,<0>,<CHK> * * <PSTAT> Programmer Status
+                     * error flags. Reply codes resulting from * completed
+                     * task in PCMD * D7-D4 -reserved * D3 -1= User Aborted
+                     * this command * D2 -1= Failed to detect READ Compare
+                     * acknowledge response * from decoder * D1 -1= No Write
+                     * acknowledge response from decoder * D0 -1= Service
+                     * Mode programming track empty- No decoder detected * *
+                     * This <E7> response is issued whenever a Programming
+                     * task is completed. It echos most of the * request
+                     * information and returns the PSTAT status code to
+                     * indicate how the task completed. * If a READ was
+                     * requested <DATA7> and <CVH> contain the returned
+                     * data, if the PSTAT indicates * a successful readback
+                     * (typically =0). Note that if a Paged Read fails to
+                     * detect a * successful Page write acknowledge when
+                     * first setting the Page register, the read will be *
+                     * aborted, showing no Write acknowledge flag D1=1. *
+                     * ********************************************************************************************
+                     */
+                    int cvData;
+                    int cvNumber;
+
+                    // progTask = (progTaskMsg *) msgBuf;
+                    // slot - slot number for this request - slot 124 is programmer
+                    int pcmd = l.getElement(3); // programmer command
+                    int pstat = l.getElement(4); // programmer status error flags in
+                    // reply message
+                    int hopsa = l.getElement(5); // Ops mode - 7 high address bits
+                    // of loco to program
+                    int lopsa = l.getElement(6); // Ops mode - 7 low address bits of
+                    // loco to program
+                    /* trk - track status. Note: bit 3 shows if prog track is busy */
+                    int cvh = l.getElement(8); // hi 3 bits of CV# and msb of data7
+                    int cvl = l.getElement(9); // lo 7 bits of CV#
+                    int data7 = l.getElement(10); // 7 bits of data to program, msb
+                    // is in cvh above
+
+                    cvData = (((cvh & LnConstants.CVH_D7) << 6) | (data7 & 0x7f)); // was
+                    // PROG_DATA
+                    cvNumber = (((((cvh & LnConstants.CVH_CV8_CV9) >> 3) | (cvh & LnConstants.CVH_CV7)) * 128) + (cvl & 0x7f)) + 1; // was
+                    // PROG_CV_NUM(progTask)
+
+                    if (command == LnConstants.OPC_WR_SL_DATA) {
+                        /* interpret the programming mode request (to programmer) */
+                        switch ((pcmd & (LnConstants.PCMD_MODE_MASK | LnConstants.PCMD_RW))) {
+                            case LnConstants.PAGED_ON_SRVC_TRK :
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_PAGED_RD",
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
+                                        cvNumber));
+                            case LnConstants.PAGED_ON_SRVC_TRK | LnConstants.PCMD_RW:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_PAGED_WR",
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
+                                        cvNumber, cvData));
+                            case LnConstants.DIR_BYTE_ON_SRVC_TRK:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_DIR_BYTE_RD",
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
+                                        cvNumber));
+                            case LnConstants.DIR_BYTE_ON_SRVC_TRK | LnConstants.PCMD_RW:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_DIR_BYTE_WR",
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
+                                        cvNumber, cvData));
+                            case LnConstants.DIR_BIT_ON_SRVC_TRK:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_DIR_BIT_RD",
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
+                                        cvNumber));
+                            case LnConstants.DIR_BIT_ON_SRVC_TRK | LnConstants.PCMD_RW:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_DIR_BIT_WR",
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
+                                        cvNumber, cvData));
+                            case LnConstants.REG_BYTE_RW_ON_SRVC_TRK:
+                            case LnConstants.REG_BYTE_RW_ON_SRVC_TRK | LnConstants.PCMD_BYTE_MODE:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_REG_BYTE_RD",
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
+                                        cvNumber));
+                            case LnConstants.REG_BYTE_RW_ON_SRVC_TRK | LnConstants.PCMD_RW:
+                            case LnConstants.REG_BYTE_RW_ON_SRVC_TRK | LnConstants.PCMD_BYTE_MODE | LnConstants.PCMD_RW:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_REG_BYTE_WR",
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
+                                        cvNumber, cvData));
+                            case LnConstants.SRVC_TRK_RESERVED:
+                            case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_MODE_MASK:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_RD_RESERVED",
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
+                                                cvNumber));
+                            case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_RW:
+                            case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_MODE_MASK | LnConstants.PCMD_RW:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_WR_RESERVED",
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
+                                                cvNumber, cvData));
+                            case LnConstants.OPS_BYTE_NO_FEEDBACK:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BYTE_RD_NO_FEEDBACK",
+                                        convertToMixed(lopsa, hopsa),
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
+                                                cvNumber));
+                            case LnConstants.OPS_BYTE_NO_FEEDBACK | LnConstants.PCMD_RW:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BYTE_WR_NO_FEEDBACK",
+                                        convertToMixed(lopsa, hopsa),
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
+                                                cvNumber, cvData,
+                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                StringUtil.twoHexFromInt(cvData)), StringUtil.to8Bits(cvData, true)));
+                            case LnConstants.OPS_BYTE_FEEDBACK:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BYTE_RD_FEEDBACK",
+                                        convertToMixed(lopsa, hopsa),
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
+                                                cvNumber));
+                            case LnConstants.OPS_BYTE_FEEDBACK | LnConstants.PCMD_RW:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BYTE_WR_FEEDBACK",
+                                        convertToMixed(lopsa, hopsa),
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
+                                                cvNumber, cvData));
+                            case LnConstants.OPS_BIT_NO_FEEDBACK:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BIT_RD_NO_FEEDBACK",
+                                        convertToMixed(lopsa, hopsa),
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
+                                                cvNumber));
+                            case LnConstants.OPS_BIT_NO_FEEDBACK | LnConstants.PCMD_RW:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BIT_WR_NO_FEEDBACK",
+                                        convertToMixed(lopsa, hopsa),
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
+                                                cvNumber, cvData));
+                                                                    case LnConstants.OPS_BIT_FEEDBACK:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BIT_RD_FEEDBACK",
+                                        convertToMixed(lopsa, hopsa),
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
+                                                cvNumber));
+                            case LnConstants.OPS_BIT_FEEDBACK | LnConstants.PCMD_RW:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BIT_WR_FEEDBACK",
+                                        convertToMixed(lopsa, hopsa),
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
+                                                cvNumber, cvData));
+                            case 0:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_UHLENBROCK_RD",
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
+                                                cvNumber));
+                            case LnConstants.PCMD_RW:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_UHLENBROCK_WR",
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
+                                                cvNumber, cvData));
+                            default:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_UNKNOWN",
+                                        pcmd,
+                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                            StringUtil.twoHexFromInt(pcmd)),
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
+                                                cvNumber, cvData));
+                        }
+                    } else {
+                        /* interpret the  programming mode response (from programmer) */
+                        /* if we're reading the slot back, check the status
+                         * this is supposed to be the Programming task final reply
+                         * and will have the resulting status byte
+                         */
+                        String responseMessage = "(ODD BEHAVIOR - Default value not overwritten - report to developers!"; // NOI18N
+                        forceHex = true;
+                        if (pstat != 0) {
+                            if ((pstat & LnConstants.PSTAT_USER_ABORTED) != 0) {
+                                responseMessage = Bundle.getMessage("LN_MSG_SLOT_PROG_HELPER_RESPONSE_USER_ABORT");
+                                forceHex = false;
+                            } else if ((pstat & LnConstants.PSTAT_READ_FAIL) != 0) {
+                                responseMessage = Bundle.getMessage("LN_MSG_SLOT_PROG_HELPER_RESPONSE_NO_READ_COMPARE_ACK_DETECT");
+                                forceHex = false;
+                            } else if ((pstat & LnConstants.PSTAT_WRITE_FAIL) != 0) {
+                                responseMessage = Bundle.getMessage("LN_MSG_SLOT_PROG_HELPER_RESPONSE_NO_WRITE_ACK_DETECT");
+                                forceHex = false;
+                            } else if ((pstat & LnConstants.PSTAT_NO_DECODER) != 0) {
+                                responseMessage = Bundle.getMessage("LN_MSG_SLOT_PROG_HELPER_RESPONSE_NO_LOCO_ON_PROGRAMMING_TRACK");
+                                forceHex = false;
+                            } else if ((pstat & 0xF0) != 0) {
+                                if ((pstat & 0xF0) == 0x10) {
+                                    // response from transponding decoder
+                                    responseMessage = Bundle.getMessage("LN_MSG_SLOT_PROG_HELPER_RESPONSE_SUCCESS_VIA_RX4_BDL16X");
+                                    forceHex = false;
+
+                                } else {
+                                    responseMessage = Bundle.getMessage("LN_MSG_SLOT_PROG_HELPER_RESPONSE_UNDECODED",
+                                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                        StringUtil.twoHexFromInt(pstat)));
+                                }
+                            }
+                        } else {
+                            responseMessage = Bundle.getMessage("LN_MSG_SLOT_PROG_HELPER_RESPONSE_SUCCEEDED");
+                            forceHex = false;
+                        }
+
+                        switch ((pcmd & (LnConstants.PCMD_MODE_MASK | LnConstants.PCMD_RW))) {
+                            case LnConstants.PAGED_ON_SRVC_TRK :
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_PAGED_RD",
+                                        responseMessage,
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
+                                                cvNumber, cvData,
+                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                        StringUtil.twoHexFromInt(cvData)),
+                                                StringUtil.to8Bits(cvData, true)));
+                            case LnConstants.PAGED_ON_SRVC_TRK | LnConstants.PCMD_RW:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_PAGED_WR",
+                                        responseMessage,
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
+                                                cvNumber, cvData,
+                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                        StringUtil.twoHexFromInt(cvData)),
+                                                StringUtil.to8Bits(cvData, true)));
+                            case LnConstants.DIR_BYTE_ON_SRVC_TRK:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_DIR_BYTE_RD",
+                                        responseMessage,
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
+                                                cvNumber, cvData,
+                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                        StringUtil.twoHexFromInt(cvData)),
+                                                StringUtil.to8Bits(cvData, true)));
+                            case LnConstants.DIR_BYTE_ON_SRVC_TRK | LnConstants.PCMD_RW:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_DIR_BYTE_WR",
+                                        responseMessage,
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
+                                                cvNumber,
+                                                cvData,
+                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                        StringUtil.twoHexFromInt(cvData)),
+                                                StringUtil.to8Bits(cvData, true)));
+                            case LnConstants.DIR_BIT_ON_SRVC_TRK:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_DIR_BIT_RD",
+                                        responseMessage,
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
+                                                cvNumber, cvData,
+                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                        StringUtil.twoHexFromInt(cvData)),
+                                                StringUtil.to8Bits(cvData, true)));
+                            case LnConstants.DIR_BIT_ON_SRVC_TRK | LnConstants.PCMD_RW:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_DIR_BIT_WR",
+                                        responseMessage,
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
+                                                cvNumber, cvData,
+                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                        StringUtil.twoHexFromInt(cvData)),
+                                                StringUtil.to8Bits(cvData, true)));
+                            case LnConstants.REG_BYTE_RW_ON_SRVC_TRK:
+                            case LnConstants.REG_BYTE_RW_ON_SRVC_TRK | LnConstants.PCMD_BYTE_MODE:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_REG_BYTE_RD",
+                                        responseMessage,
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
+                                                cvNumber, cvData,
+                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                        StringUtil.twoHexFromInt(cvData)),
+                                                StringUtil.to8Bits(cvData, true)));
+                            case LnConstants.REG_BYTE_RW_ON_SRVC_TRK | LnConstants.PCMD_RW:
+                            case LnConstants.REG_BYTE_RW_ON_SRVC_TRK | LnConstants.PCMD_BYTE_MODE | LnConstants.PCMD_RW:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_REG_BYTE_WR",
+                                        responseMessage,
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
+                                                cvNumber, cvData,
+                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                        StringUtil.twoHexFromInt(cvData)),
+                                                StringUtil.to8Bits(cvData, true)));
+                            case LnConstants.SRVC_TRK_RESERVED:
+                            case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_MODE_MASK:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_RD_RESERVED",
+                                        responseMessage,
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
+                                                cvNumber, cvData,
+                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                        StringUtil.twoHexFromInt(cvData)),
+                                                StringUtil.to8Bits(cvData, true)));
+                            case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_RW:
+                            case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_MODE_MASK | LnConstants.PCMD_RW:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_WR_RESERVED",
+                                        responseMessage,
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
+                                                cvNumber, cvData,
+                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                        StringUtil.twoHexFromInt(cvData)),
+                                                StringUtil.to8Bits(cvData, true)));
+                            case LnConstants.OPS_BYTE_NO_FEEDBACK:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BYTE_RD_NO_FEEDBACK",
+                                        responseMessage,
+                                        convertToMixed(lopsa, hopsa),
+
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
+                                                cvNumber, cvData,
+                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                        StringUtil.twoHexFromInt(cvData)),
+                                                StringUtil.to8Bits(cvData, true)));
+                            case LnConstants.OPS_BYTE_NO_FEEDBACK | LnConstants.PCMD_RW:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BYTE_WR_NO_FEEDBACK",
+                                        responseMessage,
+                                        convertToMixed(lopsa, hopsa),
+
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
+                                                cvNumber, cvData,
+                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                        StringUtil.twoHexFromInt(cvData)),
+                                                StringUtil.to8Bits(cvData, true)));
+                            case LnConstants.OPS_BYTE_FEEDBACK:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BYTE_RD_FEEDBACK",
+                                        responseMessage,
+                                        convertToMixed(lopsa, hopsa),
+
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
+                                                cvNumber, cvData,
+                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                        StringUtil.twoHexFromInt(cvData)),
+                                                StringUtil.to8Bits(cvData, true)));
+                            case LnConstants.OPS_BYTE_FEEDBACK | LnConstants.PCMD_RW:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BYTE_WR_FEEDBACK",
+                                        responseMessage,
+                                        convertToMixed(lopsa, hopsa),
+
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
+                                                cvNumber, cvData,
+                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                        StringUtil.twoHexFromInt(cvData)),
+                                                StringUtil.to8Bits(cvData, true)));
+                            case LnConstants.OPS_BIT_NO_FEEDBACK:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BIT_RD_NO_FEEDBACK",
+                                        responseMessage,
+                                        convertToMixed(lopsa, hopsa),
+
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
+                                                cvNumber, cvData,
+                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                        StringUtil.twoHexFromInt(cvData)),
+                                                StringUtil.to8Bits(cvData, true)));
+                            case LnConstants.OPS_BIT_NO_FEEDBACK | LnConstants.PCMD_RW:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BIT_WR_NO_FEEDBACK",
+                                        responseMessage,
+                                        convertToMixed(lopsa, hopsa),
+
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
+                                                cvNumber, cvData,
+                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                        StringUtil.twoHexFromInt(cvData)),
+                                                StringUtil.to8Bits(cvData, true)));
+                            case LnConstants.OPS_BIT_FEEDBACK:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BIT_RD_FEEDBACK",
+                                        responseMessage,
+                                        convertToMixed(lopsa, hopsa),
+
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
+                                                cvNumber, cvData,
+                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                        StringUtil.twoHexFromInt(cvData)),
+                                                StringUtil.to8Bits(cvData, true)));
+                            case LnConstants.OPS_BIT_FEEDBACK | LnConstants.PCMD_RW:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BIT_WR_FEEDBACK",
+                                        responseMessage,
+                                        convertToMixed(lopsa, hopsa),
+
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
+                                                cvNumber, cvData,
+                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                        StringUtil.twoHexFromInt(cvData)),
+                                                StringUtil.to8Bits(cvData, true)));
+                            case 0:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_UHLENBROCK_RD",
+                                        responseMessage,
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
+                                                cvNumber, cvData,
+                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                        StringUtil.twoHexFromInt(cvData)),
+                                                StringUtil.to8Bits(cvData, true)));
+                            case LnConstants.PCMD_RW:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_UHLENBROCK_WR",
+                                        responseMessage,
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
+                                                cvNumber, cvData,
+                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                        StringUtil.twoHexFromInt(cvData)),
+                                                StringUtil.to8Bits(cvData, true)));
+                            default:
+                                return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_UNKNOWN",
+                                        pcmd,
+                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                            StringUtil.twoHexFromInt(pcmd)),
+                                        responseMessage,
+                                        Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
+                                                cvNumber, cvData,
+                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                        StringUtil.twoHexFromInt(cvData)),
+                                                StringUtil.to8Bits(cvData, true)));
+                        }
+                    }
+
+                        // end programming track block
+                case LnConstants.CFG_SLOT:
+                    /**
+                     * ************************************************
+                     * Configuration slot, holding op switches
+                     * ************************************************
+                     *
+                     * NOTE: previously, this message provided specific
+                     * text about the meaning of each OpSw when it was
+                     * closed.  With the advent of newer Digitrax command
+                     * stations, the specific information was no longer
+                     * completely accurate.  As such, this information
+                     * now only shows bits as "closed" or "thrown".
+                     */
+                    String thrown = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_THROWN");
+                    String closed = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_CLOSED");
+
+                    String opswGroup1, opswGroup2, opswGroup3, opswGroup4,
+                            opswGroup5, opswGroup6, opswGroup7, opswGroup8;
+                    opswGroup1 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
+                            1, ((l.getElement(3) & 0x01) != 0 ? closed : thrown),
+                            2, ((l.getElement(3) & 0x02) != 0 ? closed : thrown),
+                            3, ((l.getElement(3) & 0x04) != 0 ? closed : thrown),
+                            4, ((l.getElement(3) & 0x08) != 0 ? closed : thrown),
+                            5, ((l.getElement(3) & 0x10) != 0 ? closed : thrown),
+                            6, ((l.getElement(3) & 0x20) != 0 ? closed : thrown),
+                            7, ((l.getElement(3) & 0x40) != 0 ? closed : thrown),
+                            8, thrown);
+                    opswGroup2 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
+                            9, ((l.getElement(4) & 0x01) != 0 ? closed : thrown),
+                            10, ((l.getElement(4) & 0x02) != 0 ? closed : thrown),
+                            11, ((l.getElement(4) & 0x04) != 0 ? closed : thrown),
+                            12, ((l.getElement(4) & 0x08) != 0 ? closed : thrown),
+                            13, ((l.getElement(4) & 0x10) != 0 ? closed : thrown),
+                            14, ((l.getElement(4) & 0x20) != 0 ? closed : thrown),
+                            15, ((l.getElement(4) & 0x40) != 0 ? closed : thrown),
+                            16, thrown);
+                    opswGroup3 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
+                            17, ((l.getElement(5) & 0x01) != 0 ? closed : thrown),
+                            18, ((l.getElement(5) & 0x02) != 0 ? closed : thrown),
+                            19, ((l.getElement(5) & 0x04) != 0 ? closed : thrown),
+                            20, ((l.getElement(5) & 0x08) != 0 ? closed : thrown),
+                            21, ((l.getElement(5) & 0x10) != 0 ? closed : thrown),
+                            22, ((l.getElement(5) & 0x20) != 0 ? closed : thrown),
+                            23, ((l.getElement(5) & 0x40) != 0 ? closed : thrown),
+                            24, thrown);
+                    opswGroup4 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
+                            25, ((l.getElement(6) & 0x01) != 0 ? closed : thrown),
+                            26, ((l.getElement(6) & 0x02) != 0 ? closed : thrown),
+                            27, ((l.getElement(6) & 0x04) != 0 ? closed : thrown),
+                            28, ((l.getElement(6) & 0x08) != 0 ? closed : thrown),
+                            29, ((l.getElement(6) & 0x10) != 0 ? closed : thrown),
+                            30, ((l.getElement(6) & 0x20) != 0 ? closed : thrown),
+                            31, ((l.getElement(6) & 0x40) != 0 ? closed : thrown),
+                            32, thrown);
+                    opswGroup5 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
+                            33, ((l.getElement(8) & 0x01) != 0 ? closed : thrown),
+                            34, ((l.getElement(8) & 0x02) != 0 ? closed : thrown),
+                            35, ((l.getElement(8) & 0x04) != 0 ? closed : thrown),
+                            36, ((l.getElement(8) & 0x08) != 0 ? closed : thrown),
+                            37, ((l.getElement(8) & 0x10) != 0 ? closed : thrown),
+                            38, ((l.getElement(8) & 0x20) != 0 ? closed : thrown),
+                            39, ((l.getElement(8) & 0x40) != 0 ? closed : thrown),
+                            40, thrown);
+                    opswGroup6 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
+                            41, ((l.getElement(9) & 0x01) != 0 ? closed : thrown),
+                            42, ((l.getElement(9) & 0x02) != 0 ? closed : thrown),
+                            43, ((l.getElement(9) & 0x04) != 0 ? closed : thrown),
+                            44, ((l.getElement(9) & 0x08) != 0 ? closed : thrown),
+                            45, ((l.getElement(9) & 0x10) != 0 ? closed : thrown),
+                            46, ((l.getElement(9) & 0x20) != 0 ? closed : thrown),
+                            47, ((l.getElement(9) & 0x40) != 0 ? closed : thrown),
+                            48, thrown);
+                    opswGroup7 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
+                            49, ((l.getElement(10) & 0x01) != 0 ? closed : thrown),
+                            50, ((l.getElement(10) & 0x02) != 0 ? closed : thrown),
+                            51, ((l.getElement(10) & 0x04) != 0 ? closed : thrown),
+                            52, ((l.getElement(10) & 0x08) != 0 ? closed : thrown),
+                            53, ((l.getElement(10) & 0x10) != 0 ? closed : thrown),
+                            54, ((l.getElement(10) & 0x20) != 0 ? closed : thrown),
+                            55, ((l.getElement(10) & 0x40) != 0 ? closed : thrown),
+                            56, thrown);
+                    opswGroup8 = Bundle.getMessage("LN_MSG_SLOT_CMD_STN_CFG_HELPER_EIGHT_OPSWS",
+                            57, ((l.getElement(11) & 0x01) != 0 ? closed : thrown),
+                            58, ((l.getElement(11) & 0x02) != 0 ? closed : thrown),
+                            59, ((l.getElement(11) & 0x04) != 0 ? closed : thrown),
+                            60, ((l.getElement(11) & 0x08) != 0 ? closed : thrown),
+                            61, ((l.getElement(11) & 0x10) != 0 ? closed : thrown),
+                            62, ((l.getElement(11) & 0x20) != 0 ? closed : thrown),
+                            63, ((l.getElement(11) & 0x40) != 0 ? closed : thrown),
+                            64, thrown);
+                    return Bundle.getMessage(((command == LnConstants.OPC_WR_SL_DATA)
+                            ? "LN_MSG_SLOT_CMD_STN_CFG_WRITE_REQ"
+                            : "LN_MSG_SLOT_CMD_STN_CFG_READ_REPORT"),
+                            opswGroup1, opswGroup2, opswGroup3, opswGroup4,
+                            opswGroup5, opswGroup6, opswGroup7, opswGroup8);
+                default:
+                    /**
+                     * ************************************************
+                     * normal slot read/write message - see info above *
+                     * ************************************************
+                     */
+
+                    trackStatus = l.getElement(7); // track status
+                    int stat = l.getElement(3); // slot status
+                    int adr = l.getElement(4); // loco address
+                    int spd = l.getElement(5); // command speed
+                    int dirf = l.getElement(6); // direction and F0-F4 bits
+                    String [] dirf0_4 = interpretF0_F4toStrings(dirf);
+                    int ss2 = l.getElement(8); // slot status 2 (tells how to use
+                    // ID1/ID2 & ADV Consist)
+                    int adr2 = l.getElement(9); // loco address high
+                    int snd = l.getElement(10); // Sound 1-4 / F5-F8
+                    String [] sndf5_8 = interpretF5_F8toStrings(snd);
+
+                    String logString;
+
+                    String locoAdrStr = figureAddressIncludingAliasing(adr, adr2, ss2, id1, id2);
+                        return Bundle.getMessage(((command == LnConstants.OPC_WR_SL_DATA)
+                            ? "LN_MSG_SLOT_LOCO_INFO_WRITE"
+                            : "LN_MSG_SLOT_LOCO_INFO_READ"),
+                                slot,
+                                locoAdrStr,
+                                LnConstants.CONSIST_STAT(stat),
+                                LnConstants.LOCO_STAT(stat),
+                                LnConstants.DEC_MODE(stat),
+                                directionOfTravelString((dirf & LnConstants.DIRF_DIR) == 0),
+                                spd,    // needs re-interpretation for some cases of slot consisting state
+                                dirf0_4[0],
+                                dirf0_4[1],
+                                dirf0_4[2],
+                                dirf0_4[3],
+                                dirf0_4[4],
+                                sndf5_8[0],
+                                sndf5_8[1],
+                                sndf5_8[2],
+                                sndf5_8[3],
+                                trackStatusByteToString(trackStatus),
+                                Bundle.getMessage("LN_MSG_SLOT_HELPER_SS2_SIMPLE",
+                                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                                StringUtil.twoHexFromInt(ss2))),
+                                Bundle.getMessage("LN_MSG_SLOT_HELPER_ID1_ID2_AS_THROTTLE_ID",
+                                        idString(id1, id2) ));
+
+            } // end switch (slot)
+        } // end if (l.getElement(1) == 0x0E
+
+            return "";
+
     }
 
     private static String ds54sensors[] = {"AuxA", "SwiA", "AuxB", "SwiB", "AuxC", "SwiC", "AuxD", "SwiD"};    // NOI18N

@@ -355,54 +355,78 @@ public class LlnmonTest extends TestCase {
         LocoNetMessage l;
 
         l =new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x5C, 0x18, 0x00, 0x04, 0x00, 0x07, 0x6A, 0x01, 0x40, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x58});
-        assertEquals("IPL test 1", 
-                "IPL Identity report.\n\tHost: Digitrax UR92 host, S/N=40016A, S/W Version=0.4\n\tSlave: Digitrax RF24 slave, S/N=AEE, S/W Version=0.7.\n", 
+        assertEquals("IPL test 1",
+                "IPL Identity report.\n\tHost: Digitrax UR92 host, S/N=40016A, S/W Version=0.4\n\tSlave: Digitrax RF24 slave, S/N=AEE, S/W Version=0.7.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08});
-        assertEquals("IPL test 2", 
-                "Discover all IPL-capable devices request.\n", 
+        assertEquals("IPL test 2",
+                "Discover all IPL-capable devices request.\n",
                 f.displayMessage(l));
-        
+
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x5C, 0x00, 0x01, 0x00, 0x00, 0x00, 0x6A, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3F});
-        assertEquals("IPL test 3", 
-                "Discover Digitrax UR92 host devices and/or Digitrax (no slave device type specified) devices.\n", 
+        assertEquals("IPL test 3",
+                "Discover Digitrax UR92 host devices and/or Digitrax (no slave device type specified) devices.\n",
                 f.displayMessage(l));
-        
+
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
-        assertEquals("IPL test 4", 
-                "Pinging device with serial number 0xAEE.\n", 
+        assertEquals("IPL test 4",
+                "Pinging device with serial number 0xAEE.\n",
                 f.displayMessage(l));
-        
+
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0f, 0x10, 0x00, 0x2A, 0x18, 0x00, 0x05, 0x00, 0x07, 0x7e, 0x43, 0x00, 0x01, 0x70, 0x0a, 0x00, 0x00, 0x67});
-        assertEquals("IPL test 5", 
-                "IPL Identity report.\n\tHost: Digitrax DT402(x) host, S/N=437E, S/W Version=0.5\n\tSlave: Digitrax RF24 slave, S/N=AF0, S/W Version=0.7.\n", 
+        assertEquals("IPL test 5",
+                "IPL Identity report.\n\tHost: Digitrax DT402(x) host, S/N=437E, S/W Version=0.5\n\tSlave: Digitrax RF24 slave, S/N=AF0, S/W Version=0.7.\n",
                 f.displayMessage(l));
-        
+
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x23, 0x00, 0x00, 0x08, 0x00, 0x01, 0x01, 0x7F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x45});
-        assertEquals("IPL test 6", 
-                "IPL Identity report.\n\tHost: Digitrax PR3 host, S/N=7F01, S/W Version=1.0\n\tSlave: None.\n", 
+        assertEquals("IPL test 6",
+                "IPL Identity report.\n\tHost: Digitrax PR3 host, S/N=7F01, S/W Version=1.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x04, 0x00, 0x00, 0x08, 0x00, 0x01, 0x40, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x5D});
-        assertEquals("IPL test 7", 
-                "IPL Identity report.\n\tHost: Digitrax UT4(x) host, S/N=140, S/W Version=1.0\n\tSlave: None.\n", 
+        assertEquals("IPL test 7",
+                "IPL Identity report.\n\tHost: Digitrax UT4(x) host, S/N=140, S/W Version=1.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
-                
+
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x33, 0x00, 0x00, 0x08, 0x00, 0x05, 0x59, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 8", 
-                "IPL Identity report.\n\tHost: Digitrax DCS51 host, S/N=159, S/W Version=1.0\n\tSlave: None.\n", 
+        assertEquals("IPL test 8",
+                "IPL Identity report.\n\tHost: Digitrax DCS51 host, S/N=159, S/W Version=1.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 /*
         l = new LocoNetMessage(new int[] {0x});
-        assertEquals("IPL test 9", 
-                ".\n", 
+        assertEquals("IPL test 9",
+                ".\n",
                 f.displayMessage(l));
 */
     }
 
+    public void testSv1Messages() {
+        LocoNetMessage l;
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x10, 0x50, 0x51, 0x01, 0x00, 0x01, 0x02, 0x13, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x00});
+        assertEquals("SV1 test 1",
+                "LocoBuffer => LocoIO@0x51/0x05 Write SV2=0x04 Firmware rev 1.9.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x50, 0x04, 0x01, 0x00, 0x01, 0x10, 0x07, 0x14, 0x10, 0x05, 0x06, 0x07, 0x08, 0x12});
+        assertEquals("SV1 test 2",
+                "LocoBuffer => LocoIO@0x04/0x05 Write SV16=0x14 Firmware rev 7.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x50, 0x04, 0x01, 0x00, 0x01, 0x10, 0x78, 0x24, 0x1F, 0x05, 0x06, 0x07, 0x08, 0x12});
+        assertEquals("SV1 test 3",
+                "LocoBuffer => LocoIO@0x04/0x85 Write SV16=0x24 Firmware rev 1.2.0.\n",
+                f.displayMessage(l));
+/*
+        l = new LocoNetMessage(new int[] {0x});
+        assertEquals("SV1 test 2",
+                ".\n",
+                f.displayMessage(l));
+*/
+    }
     public void testOpsModeProgrammingMessages() {
         LocoNetMessage l;
 
@@ -785,7 +809,7 @@ public class LlnmonTest extends TestCase {
                 f.displayMessage(l));
 
     }
-    
+
     public void testPM42OpSwMessages() {
         LocoNetMessage l;
 
@@ -793,29 +817,29 @@ public class LlnmonTest extends TestCase {
         assertEquals("PM42 OpSws test 1",
                 "PM4x 1 read OpSw1 value=0 (Thrown).\n",
                 f.displayMessage(l));
-        
+
         l = new LocoNetMessage(new int[] {0xD0, 0x62, 0x00, 0x01, 0x15, 0x59});
         assertEquals("PM42 OpSws test 2",
                 "Device type report - BDL16x Board ID 1 Version 21 is present.\n",
                 f.displayMessage(l));
-        
+
         l = new LocoNetMessage(new int[] {0xD0, 0x62, 0x01, 0x00, 0x00, 0x4C});
         assertEquals("PM42 OpSws test 3",
                 "Device type report - PM4x Board ID 2 Version (unknown) is present.\n",
                 f.displayMessage(l));
-        
+
         l = new LocoNetMessage(new int[] {0xD0, 0x62, 0x02, 0x02, 0x01, 0x4C});
         assertEquals("PM42 OpSws test 4",
                 "Device type report - SE8C Board ID 3 Version 1 is present.\n",
                 f.displayMessage(l));
-        
+
         l = new LocoNetMessage(new int[] {0xD0, 0x62, 0x40, 0x03, 0x28, 0x4C});
         assertEquals("PM42 OpSws test 5",
                 "Device type report - DS64 Board ID 65 Version 40 is present.\n",
                 f.displayMessage(l));
-        
+
     }
-    
+
     public void testDS64OpSwMessages() {
         LocoNetMessage l;
 
@@ -1207,7 +1231,7 @@ public class LlnmonTest extends TestCase {
                 "\tOpSw49=Thrown, OpSw50=Thrown, OpSw51=Thrown, OpSw52=Thrown, OpSw53=Thrown, OpSw54=Thrown, OpSw55=Thrown, OpSw56=Thrown,\n" +
                 "\tOpSw57=Thrown, OpSw58=Thrown, OpSw59=Thrown, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
                 f.displayMessage(l));
-        
+
         l = new LocoNetMessage(new int[] {0xA3, 0x02, 0x01, 0x5F});
         assertEquals(" Slot test 51",
                 "Set (Intellibox-II format) loco in slot 2 F9=On F10=Off F11=Off F12=Off.\n",
@@ -1262,59 +1286,59 @@ public class LlnmonTest extends TestCase {
         assertEquals(" Slot test 61",
                 "Set (Intellibox-II format) loco in slot 2 F13=Off F14=Off F15=Off F16=Off F17=Off F18=Off F19=On.\n",
                 f.displayMessage(l));
-        
+
         l = new LocoNetMessage(new int[] {0xD4, 0x20, 0x70, 0x09, 0x01, 0x01});
         assertEquals(" Slot test 62",
                 "Set (Intellibox-II format) loco in slot 112 F21=On F22=Off F23=Off F24=Off F25=Off F26=Off F27=Off.\n",
                 f.displayMessage(l));
-        
+
         l = new LocoNetMessage(new int[] {0xD4, 0x20, 0x70, 0x09, 0x02, 0x01});
         assertEquals(" Slot test 63",
                 "Set (Intellibox-II format) loco in slot 112 F21=Off F22=On F23=Off F24=Off F25=Off F26=Off F27=Off.\n",
                 f.displayMessage(l));
-        
+
         l = new LocoNetMessage(new int[] {0xD4, 0x20, 0x70, 0x09, 0x04, 0x01});
         assertEquals(" Slot test 64",
                 "Set (Intellibox-II format) loco in slot 112 F21=Off F22=Off F23=On F24=Off F25=Off F26=Off F27=Off.\n",
                 f.displayMessage(l));
-        
+
         l = new LocoNetMessage(new int[] {0xD4, 0x20, 0x70, 0x09, 0x08, 0x01});
         assertEquals(" Slot test 65",
                 "Set (Intellibox-II format) loco in slot 112 F21=Off F22=Off F23=Off F24=On F25=Off F26=Off F27=Off.\n",
                 f.displayMessage(l));
-        
+
         l = new LocoNetMessage(new int[] {0xD4, 0x20, 0x70, 0x09, 0x10, 0x01});
         assertEquals(" Slot test 66",
                 "Set (Intellibox-II format) loco in slot 112 F21=Off F22=Off F23=Off F24=Off F25=On F26=Off F27=Off.\n",
                 f.displayMessage(l));
-        
+
         l = new LocoNetMessage(new int[] {0xD4, 0x20, 0x70, 0x09, 0x20, 0x01});
         assertEquals(" Slot test 67",
                 "Set (Intellibox-II format) loco in slot 112 F21=Off F22=Off F23=Off F24=Off F25=Off F26=On F27=Off.\n",
                 f.displayMessage(l));
-        
+
         l = new LocoNetMessage(new int[] {0xD4, 0x20, 0x70, 0x09, 0x40, 0x01});
         assertEquals(" Slot test 68",
                 "Set (Intellibox-II format) loco in slot 112 F21=Off F22=Off F23=Off F24=Off F25=Off F26=Off F27=On.\n",
                 f.displayMessage(l));
-        
+
         l = new LocoNetMessage(new int[] {0xD4, 0x20, 0x01, 0x05, 0x10, 0x01});
         assertEquals(" Slot test 69",
                 "Set (Intellibox-II format) loco in slot 1 F12=On F20=Off F28=Off.\n",
                 f.displayMessage(l));
-        
+
         l = new LocoNetMessage(new int[] {0xD4, 0x20, 0x70, 0x05, 0x20, 0x01});
         assertEquals(" Slot test 70",
                 "Set (Intellibox-II format) loco in slot 112 F12=Off F20=On F28=Off.\n",
                 f.displayMessage(l));
-        
+
         l = new LocoNetMessage(new int[] {0xD4, 0x20, 0x70, 0x05, 0x40, 0x01});
         assertEquals(" Slot test 71",
                 "Set (Intellibox-II format) loco in slot 112 F12=Off F20=Off F28=On.\n",
                 f.displayMessage(l));
-        
 
-        
+
+
     }
 
 
