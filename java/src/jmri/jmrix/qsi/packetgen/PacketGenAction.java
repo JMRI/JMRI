@@ -25,6 +25,7 @@ public class PacketGenAction extends AbstractAction {
                 .getString("MenuItemSendCommand"),memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         PacketGenFrame f = new PacketGenFrame(_memo);
         try {

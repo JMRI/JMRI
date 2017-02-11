@@ -1,9 +1,6 @@
 package jmri.jmrix.openlcb;
 
 import jmri.Sensor;
-import jmri.SensorManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,7 +11,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen Copyright 2008, 2010
  */
-public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     @Override
     public String getSystemName(int i) {

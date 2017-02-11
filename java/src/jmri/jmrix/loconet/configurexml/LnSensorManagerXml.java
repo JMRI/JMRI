@@ -19,10 +19,12 @@ public class LnSensorManagerXml extends jmri.managers.configurexml.AbstractSenso
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element sensors) {
-        sensors.setAttribute("class", this.getClass().getName());
+        sensors.setAttribute("class", this.getClass().getName()); // NOI18N
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

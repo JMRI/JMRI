@@ -14,6 +14,7 @@ public class SampleAutomaton2Action extends AbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a SampleAutomaton2
         AbstractAutomaton f = new SampleAutomaton2();

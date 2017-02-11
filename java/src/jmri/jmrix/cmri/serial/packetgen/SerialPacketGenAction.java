@@ -25,6 +25,7 @@ public class SerialPacketGenAction extends AbstractAction {
         this("Send C/MRI message",memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SerialPacketGenFrame f = new SerialPacketGenFrame(_memo);
         try {

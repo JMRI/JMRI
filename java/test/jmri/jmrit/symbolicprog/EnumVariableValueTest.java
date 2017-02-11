@@ -15,9 +15,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2003
  */
-public class EnumVariableValueTest extends VariableValueTest {
+public class EnumVariableValueTest extends AbstractVariableValueTestBase {
 
-    // abstract members invoked by tests in parent VariableValueTest class
+    // abstract members invoked by tests in parent AbstractVariableValueTestBase class
+    @Override
     VariableValue makeVar(String label, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
             String cvNum, String mask, int minVal, int maxVal,
@@ -43,14 +44,17 @@ public class EnumVariableValueTest extends VariableValueTest {
         return v1;
     }
 
+    @Override
     void setValue(VariableValue var, String val) {
         ((JComboBox<?>) var.getCommonRep()).setSelectedItem(val);
     }
 
+    @Override
     void setReadOnlyValue(VariableValue var, String val) {
         ((EnumVariableValue) var).setValue(Integer.valueOf(val).intValue());
     }
 
+    @Override
     void checkValue(VariableValue var, String comment, String val) {
         // we treat one test case (from the parent) specially...
         if (val.equals("14")) {
@@ -60,6 +64,7 @@ public class EnumVariableValueTest extends VariableValueTest {
         }
     }
 
+    @Override
     void checkReadOnlyValue(VariableValue var, String comment, String val) {
         checkValue(var, comment, val);
     }
@@ -67,6 +72,7 @@ public class EnumVariableValueTest extends VariableValueTest {
     // check synchonization of value, representations.
     // This replaces a parent member function (test) that had just
     // too many casts in it to work.
+    @Override
     public void testVariableSynch() {
 
         HashMap<String, CvValue> v = createCvMap();

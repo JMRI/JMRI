@@ -55,6 +55,7 @@ public class OptionsMenu extends JMenu {
         autoDispatchItem = new JCheckBoxMenuItem(rb.getString("AutoDispatchItem"));
         this.add(autoDispatchItem);
         autoDispatchItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 handleAutoDispatch(event);
             }
@@ -62,6 +63,7 @@ public class OptionsMenu extends JMenu {
         autoTurnoutsItem = new JCheckBoxMenuItem(rb.getString("AutoTurnoutsItem"));
         this.add(autoTurnoutsItem);
         autoTurnoutsItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 handleAutoTurnouts(event);
             }
@@ -69,6 +71,7 @@ public class OptionsMenu extends JMenu {
         JMenuItem optionWindowItem = new JMenuItem(rb.getString("OptionWindowItem") + "...");
         this.add(optionWindowItem);
         optionWindowItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 optionWindowRequested(event);
             }
@@ -76,6 +79,7 @@ public class OptionsMenu extends JMenu {
         JMenuItem saveOptionsItem = new JMenuItem(rb.getString("SaveOptionsItem") + "...");
         this.add(saveOptionsItem);
         saveOptionsItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 saveRequested(event);
             }
@@ -158,6 +162,7 @@ public class OptionsMenu extends JMenu {
             trainsGroup.add(trainsFromRoster);
 
             ActionListener useRosterEntryListener = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     if (trainsFromRoster.isSelected()) {
                         rosterInBlockCheckBox.setEnabled(true);
@@ -295,8 +300,9 @@ public class OptionsMenu extends JMenu {
             JPanel p9 = new JPanel();
             p9.setLayout(new FlowLayout());
             JButton cancelButton = null;
-            p9.add(cancelButton = new JButton(rb.getString("CancelButton")));
+            p9.add(cancelButton = new JButton(Bundle.getMessage("ButtonCancel")));
             cancelButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelOptions(e);
                 }
@@ -304,8 +310,9 @@ public class OptionsMenu extends JMenu {
             cancelButton.setToolTipText(rb.getString("CancelButtonHint2"));
             p9.add(new JLabel("     "));
             JButton applyButton = null;
-            p9.add(applyButton = new JButton(rb.getString("ApplyButton")));
+            p9.add(applyButton = new JButton(Bundle.getMessage("ButtonApply")));
             applyButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     applyOptions(e);
                 }

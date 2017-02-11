@@ -2,7 +2,9 @@ package apps.systemconsole;
 
 import apps.SystemConsole;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
@@ -40,6 +42,7 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
      * per-application instead of per-profile.
      */
     private boolean initialized = false;
+    private final List<InitializationException> exceptions = new ArrayList<>();
     private static final Logger log = LoggerFactory.getLogger(SystemConsolePreferencesManager.class);
 
     @Override
@@ -72,7 +75,7 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
 
     @Override
     public boolean isInitialized(Profile profile) {
-        return this.initialized;
+        return this.initialized && this.exceptions.isEmpty();
     }
 
     @Override
@@ -193,6 +196,16 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
             this.firePropertyChange(WRAP_STYLE, oldWrapStyle, wrapStyle);
             SystemConsole.getInstance().setWrapStyle(this.getWrapStyle());
         }
+    }
+
+    @Override
+    public boolean isInitializedWithExceptions(Profile profile) {
+        return this.initialized && !this.exceptions.isEmpty();
+    }
+
+    @Override
+    public List<Exception> getInitializationExceptions(Profile profile) {
+        return new ArrayList<>(this.exceptions);
     }
 
 }

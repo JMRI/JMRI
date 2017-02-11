@@ -297,10 +297,12 @@ public class SignalTableModel extends AbstractTableModel {
 
     }
 
+    @Override
     public int getColumnCount() {
         return NUMCOLS;
     }
 
+    @Override
     public int getRowCount() {
         return _signalList.size() + 1;
     }
@@ -324,6 +326,7 @@ public class SignalTableModel extends AbstractTableModel {
         return "";
     }
 
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         //if (log.isDebugEnabled()) log.debug("getValueAt rowIndex= "+rowIndex+" _lastIdx= "+_lastIdx);
         if (_signalList.size() == rowIndex) {

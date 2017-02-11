@@ -1,5 +1,7 @@
 package jmri.jmrix.nce;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Create a "Systems" menu containing the Jmri NCE-specific tools.
  * <P>
@@ -10,7 +12,7 @@ package jmri.jmrix.nce;
  * @author kcameron 2010
  */
 @Deprecated
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class NceMenu extends jmri.jmrix.nce.swing.NceMenu {
 
     public NceMenu(NceSystemConnectionMemo memo) {

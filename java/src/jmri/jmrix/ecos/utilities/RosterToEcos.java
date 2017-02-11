@@ -96,6 +96,7 @@ public class RosterToEcos implements EcosListener {
 
     //Need to deal with the loco not being created somehow.
     //If we get the error, then we could simply delete the loco from our loco list.
+    @Override
     public void reply(EcosReply m) {
         int start;
         int end;
@@ -140,6 +141,7 @@ public class RosterToEcos implements EcosListener {
         }
     }
 
+    @Override
     public void message(EcosMessage m) {
 
     }

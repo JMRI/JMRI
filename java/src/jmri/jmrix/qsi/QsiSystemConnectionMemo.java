@@ -121,10 +121,12 @@ public class QsiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         programmerManager = p;
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.qsi.QsiActionListBundle");
     }
 
+    @Override
     public void dispose() {
         st = null;
         InstanceManager.deregister(this, QsiSystemConnectionMemo.class);
@@ -136,4 +138,4 @@ public class QsiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 }
 
 
-/* @(#)QsiSystemConnectionMemo.java */
+

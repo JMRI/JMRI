@@ -15,4 +15,4 @@ public interface SRCPListener extends jmri.jmrix.AbstractMRListener {
     public void reply(jmri.jmrix.srcp.parser.SimpleNode n);
 }
 
-/* @(#)SRCPListener.java */
+

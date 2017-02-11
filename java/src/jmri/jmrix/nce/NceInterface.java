@@ -1,4 +1,3 @@
-// NceInterface.java
 package jmri.jmrix.nce;
 
 /**
@@ -29,4 +28,4 @@ public interface NceInterface {
     void sendNceMessage(NceMessage m, NceListener l);
 }
 
-/* @(#)NceInterface.java */
+

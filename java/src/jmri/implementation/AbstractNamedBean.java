@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -29,6 +30,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     /**
      * Get associated comment text.
      */
+    @Override
     public String getComment() {
         return this.comment;
     }
@@ -40,13 +42,19 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
      *
      * @param comment Null means no comment associated.
      */
+    @Override
     public void setComment(String comment) {
         String old = this.comment;
-        this.comment = comment;
+        if (comment == null || comment.isEmpty() || comment.trim().length() < 1 ) {
+            this.comment = null;
+        } else {
+            this.comment = comment;
+        }
         firePropertyChange("Comment", old, comment);
     }
     private String comment;
 
+    @Override
     public String getDisplayName() {
         String name = getUserName();
         if (name != null && name.length() > 0) {
@@ -56,6 +64,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         }
     }
 
+    @Override
     public String getFullyFormattedDisplayName() {
         String name = getUserName();
         if (name != null && name.length() > 0 && !name.equals(getSystemName())) {
@@ -78,6 +87,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     final Hashtable<PropertyChangeListener, String> register = new Hashtable<>();
     final Hashtable<PropertyChangeListener, String> listenerRefs = new Hashtable<>();
 
+    @Override
     public synchronized void addPropertyChangeListener(PropertyChangeListener l, String beanRef, String listenerRef) {
         pcs.addPropertyChangeListener(l);
         if (beanRef != null) {
@@ -88,10 +98,12 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         }
     }
 
+    @Override
     public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
         if (l != null) {
@@ -100,6 +112,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         }
     }
 
+    @Override
     public synchronized PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
         ArrayList<PropertyChangeListener> list = new ArrayList<>();
         Enumeration<PropertyChangeListener> en = register.keys();
@@ -113,6 +126,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     }
 
     /* This allows a meaning full list of places where the bean is in use!*/
+    @Override
     public synchronized ArrayList<String> getListenerRefs() {
         ArrayList<String> list = new ArrayList<String>();
         Enumeration<PropertyChangeListener> en = listenerRefs.keys();
@@ -123,12 +137,14 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         return list;
     }
 
+    @Override
     public synchronized void updateListenerRef(PropertyChangeListener l, String newName) {
         if (listenerRefs.containsKey(l)) {
             listenerRefs.put(l, newName);
         }
     }
 
+    @Override
     public synchronized String getListenerRef(PropertyChangeListener l) {
         return listenerRefs.get(l);
     }
@@ -137,6 +153,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
      * Number of current listeners. May return -1 if the information is not
      * available for some reason.
      */
+    @Override
     public synchronized int getNumPropertyChangeListeners() {
         return pcs.getPropertyChangeListeners().length;
     }
@@ -145,21 +162,24 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         return pcs.getPropertyChangeListeners();
     }
 
+    @Override
     public String getSystemName() {
         return mSystemName;
     }
 
+    @Override
     public String getUserName() {
         return mUserName;
     }
 
+    @Override
     public void setUserName(String s) {
         String old = mUserName;
         mUserName = s;
         firePropertyChange("UserName", old, s);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
             justification = "Sync of mUserName protected by ctor invocation")
     protected String mUserName;
 
@@ -169,6 +189,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         pcs.firePropertyChange(p, old, n);
     }
 
+    @Override
     public void dispose() {
         PropertyChangeListener[] listeners = pcs.getPropertyChangeListeners();
         for (PropertyChangeListener l : listeners) {
@@ -178,6 +199,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
        }
     }
 
+    @Override
     public void setProperty(String key, Object value) {
         if (parameters == null) {
             parameters = new HashMap<String, Object>();
@@ -185,6 +207,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         parameters.put(key, value);
     }
 
+    @Override
     public Object getProperty(String key) {
         if (parameters == null) {
             parameters = new HashMap<String, Object>();
@@ -192,6 +215,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         return parameters.get(key);
     }
 
+    @Override
     public java.util.Set<String> getPropertyKeys() {
         if (parameters == null) {
             parameters = new HashMap<String, Object>();
@@ -199,6 +223,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         return parameters.keySet();
     }
 
+    @Override
     public void removeProperty(String key) {
         if (parameters == null || key == null) {
             return;
@@ -208,6 +233,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
 
     HashMap<String, Object> parameters = null;
 
+    @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
     }
 }

@@ -28,6 +28,7 @@ import javax.swing.text.BadLocationException;
 import jmri.script.JmriScriptEngineManager;
 import jmri.script.ScriptFileChooser;
 import jmri.script.ScriptOutput;
+import jmri.UserPreferencesManager;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import org.python.google.common.io.Files;
@@ -46,13 +47,18 @@ public class InputWindow extends JPanel {
     JButton button;
     JButton loadButton;
     JButton storeButton;
+    private UserPreferencesManager pref;
     JLabel status;
     JCheckBox alwaysOnTopCheckBox = new JCheckBox();
     JComboBox<String> languages = new JComboBox<>();
 
     JFileChooser userFileChooser = new ScriptFileChooser(FileUtil.getScriptsPath());
 
+    public static final String languageSelection = InputWindow.class.getName() + ".language";
+    public static final String alwaysOnTopChecked  = InputWindow.class.getName() + ".alwaysOnTopChecked";
+
     public InputWindow() {
+        pref = jmri.InstanceManager.getDefault(UserPreferencesManager.class);
 
         //setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
         setLayout(new BorderLayout());
@@ -101,6 +107,8 @@ public class InputWindow extends JPanel {
             names.add(factory.getLanguageName());
         });
         languages = new JComboBox<>(names);
+        if (pref.getComboBoxLastSelection(languageSelection) != null) 
+            languages.setSelectedItem((String)pref.getComboBoxLastSelection(languageSelection));
 
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout());
@@ -132,11 +140,17 @@ public class InputWindow extends JPanel {
             storeButtonPressed();
         });
 
+        languages.addItemListener((java.awt.event.ItemEvent e) -> {
+            pref.setComboBoxLastSelection(languageSelection, (String)languages.getSelectedItem());
+        });
+
         alwaysOnTopCheckBox.addActionListener((ActionEvent e) -> {
             if (getTopLevelAncestor() != null) {
                 ((JmriJFrame) getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
             }
+            pref.setSimplePreferenceState(alwaysOnTopChecked, alwaysOnTopCheckBox.isSelected());
         });
+        alwaysOnTopCheckBox.setSelected(pref.getSimplePreferenceState(alwaysOnTopChecked));    
 
         // set a monospaced font
         int size = area.getFont().getSize();

@@ -43,7 +43,6 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
@@ -621,14 +620,13 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         });
         popupMenu.add(menuItem);
 
-        menuItem = new JMenuItem(Bundle.getMessage("Delete"));
+        menuItem = new JMenuItem(Bundle.getMessage("ButtonDelete"));
         menuItem.addActionListener((ActionEvent e1) -> {
             deleteBean(rowindex, 0);
         });
         popupMenu.add(menuItem);
 
         popupMenu.show(e.getComponent(), e.getX(), e.getY());
-
     }
 
     public void copyName(int row, int column) {
@@ -763,7 +761,6 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                     showInfoMessage("Reminder", getBeanType() + " " + Bundle.getMessage("UpdateComplete"), getMasterClassName(), "remindSaveReLoad");
             //JOptionPane.showMessageDialog(null, getBeanType() + " " + Bundle.getMessage("UpdateComplete"));
         }
-
     }
 
     protected void showTableHeaderPopup(MouseEvent e, JTable table) {

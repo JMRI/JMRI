@@ -35,7 +35,6 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
     JTextField _userNametext;
     jmri.jmrit.picker.PickFrame _pickTables; // Opened from LogixTableAction
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2")
     public PickPanel(PickListModel[] models) {
         _tabPane = new JTabbedPane();
         _models = new PickListModel[models.length];
@@ -60,12 +59,14 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
         _userNametext = new JTextField();
 
         ActionListener cancelListener = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 //do nothing as Cancel button is hidden on Pick Lists
             }
         };
 
         ActionListener okListener = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 addToTable();
             }
@@ -106,6 +107,7 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
         }
     }
 
+    @Override
     public void stateChanged(ChangeEvent e) {
         PickListModel model = _models[_tabPane.getSelectedIndex()];
         if (model.canAddBean()) {
@@ -117,6 +119,7 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
         }
     }
 
+    @Override
     public void valueChanged(ListSelectionEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("ListSelectionEvent from " + e.getSource().getClass().getName()

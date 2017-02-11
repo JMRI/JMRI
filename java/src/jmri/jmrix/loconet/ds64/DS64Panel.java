@@ -31,7 +31,7 @@ public class DS64Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     public DS64Panel(int boardNum) {
         super(boardNum);
 
-        appendLine(provideAddressing("DS64"));  // add read/write buttons, address
+        appendLine(provideAddressing("DS64"));  // add read/write buttons, address // NOI18N
 
         appendLine(opsw1);
         appendLine(opsw2);
@@ -63,10 +63,12 @@ public class DS64Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         setTypeWord(0x73);  // configure DS64 message type
     }
 
+    @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.ds64.DS64Frame";
+        return "package.jmri.jmrix.loconet.ds64.DS64Frame"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemDS64Programmer"));
     }
@@ -76,6 +78,7 @@ public class DS64Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
      * <p>
      * Used before write operations start
      */
+    @Override
     protected void copyToOpsw() {
         // copy over the display
         opsw[1] = opsw1.isSelected();
@@ -102,6 +105,7 @@ public class DS64Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
     }
 
+    @Override
     protected void updateDisplay() {
         opsw1.setSelected(opsw[1]);
         opsw2.setSelected(opsw[2]);
@@ -126,6 +130,7 @@ public class DS64Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         opsw21.setSelected(opsw[21]);
     }
 
+    @Override
     protected int nextState(int state) {
         switch (state) {
             case 1:

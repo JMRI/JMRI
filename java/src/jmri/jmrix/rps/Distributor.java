@@ -1,4 +1,3 @@
-// Distributor.java
 package jmri.jmrix.rps;
 
 import java.util.Vector;
@@ -125,6 +124,7 @@ public class Distributor {
             this.client = client;
         }
 
+        @Override
         public void run() {
             client.notify(s);
         }
@@ -143,6 +143,7 @@ public class Distributor {
             this.client = client;
         }
 
+        @Override
         public void run() {
             client.notify(s);
         }
@@ -150,4 +151,4 @@ public class Distributor {
 
 }
 
-/* @(#)Distributor.java */
+

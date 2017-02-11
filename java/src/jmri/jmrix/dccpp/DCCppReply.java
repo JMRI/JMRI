@@ -1,4 +1,3 @@
-// DCCppReply.java
 package jmri.jmrix.dccpp;
 
 import java.util.ArrayList;
@@ -275,6 +274,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
+    @Override
     public int getOpCode() {
         return((opcode) & 0x00FF);
 //	return((getElement(0) & 0x00FF));
@@ -302,6 +302,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
+    @Override
     public void setElement(int n, int v) {
         // We want the ASCII value, not the string interpretation of the int
         char c = (char)(v & 0xFF);
@@ -1026,4 +1027,4 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
 }
 
-/* @(#)DCCppReply.java */
+

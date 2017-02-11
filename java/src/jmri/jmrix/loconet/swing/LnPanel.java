@@ -1,4 +1,3 @@
-// LnPanel.java
 package jmri.jmrix.loconet.swing;
 
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -19,10 +18,12 @@ abstract public class LnPanel extends jmri.util.swing.JmriPanel implements LnPan
      */
     protected LocoNetSystemConnectionMemo memo;
 
+    @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         this.memo = memo;
     }
 
+    @Override
     public void initContext(Object context) {
         if (context instanceof LocoNetSystemConnectionMemo) {
             initComponents((LocoNetSystemConnectionMemo) context);
@@ -39,8 +40,8 @@ abstract public class LnPanel extends jmri.util.swing.JmriPanel implements LnPan
         if (memo != null) {
             uName = memo.getUserName();
             // string "LocoNet" is hard coded
-            if (!"LocoNet".equals(uName)) {
-                uName = uName + ": ";
+            if (!"LocoNet".equals(uName)) { // NOI18N
+                uName = uName + ": "; // NOI18N
             } else {
                 uName = "";
             }

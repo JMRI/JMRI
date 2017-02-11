@@ -42,14 +42,17 @@ public class SignalMastTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes for the specific case
      * of Signal Masts
      */
+    @Override
     protected void createModel() {
         m = new SignalMastTableDataModel();
     }
 
+    @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleSignalMastTable"));
     }
 
+    @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.SignalMastTable";
     }
@@ -61,6 +64,7 @@ public class SignalMastTableAction extends AbstractTableAction {
     final static int VALUECOL = BeanTableDataModel.VALUECOL;
     final static int SYSNAMECOL = BeanTableDataModel.SYSNAMECOL;
 
+    @Override
     protected void addPressed(ActionEvent e) {
         if (addFrame == null) {
             addFrame = new jmri.jmrit.beantable.signalmast.AddSignalMastJFrame();
@@ -70,13 +74,32 @@ public class SignalMastTableAction extends AbstractTableAction {
         addFrame.setVisible(true);
     }
 
+    /**
+     * Insert a table specific Tools menu.
+     * Account for the Window and Help menus, which are already added to the menu bar
+     * as part of the creation of the JFrame, by adding the Tools menu 2 places earlier
+     * unless the table is part of the ListedTableFrame, that adds the Help menu later on.
+     * @param f the JFrame of this table
+     */
+    @Override
     public void setMenuBar(BeanTableFrame f) {
         JMenuBar menuBar = f.getJMenuBar();
+        int pos = menuBar.getMenuCount() -1; // count the number of menus to insert the TableMenu before 'Window' and 'Help'
+        int offset = 1;
+        log.debug("setMenuBar number of menu items = " + pos);
+        for (int i = 0; i <= pos; i++) {
+            if (menuBar.getComponent(i) instanceof JMenu) {
+                if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
+                    offset = -1; // correct for use as part of ListedTableAction where the Help Menu is not yet present
+                }
+            }
+        }
         JMenu pathMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        menuBar.add(pathMenu);
+        menuBar.add(pathMenu, pos + offset);
         JMenuItem item = new JMenuItem(Bundle.getMessage("MenuItemRepeaters"));
         pathMenu.add(item);
         item.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 jmri.jmrit.beantable.signalmast.SignalMastRepeaterJFrame frame = new jmri.jmrit.beantable.signalmast.SignalMastRepeaterJFrame();
                 frame.setVisible(true);
@@ -105,6 +128,7 @@ public class SignalMastTableAction extends AbstractTableAction {
             super(items);
         }
 
+        @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
                 boolean isSelected, boolean hasFocus, int row, int column) {
             if (isSelected) {
@@ -121,10 +145,12 @@ public class SignalMastTableAction extends AbstractTableAction {
         }
     }
 
+    @Override
     protected String getClassName() {
         return SignalMastTableAction.class.getName();
     }
 
+    @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleSignalGroupTable");
     }

@@ -36,6 +36,7 @@ public class JMRIdemo extends Apps {
         super(p);
     }
 
+    @Override
     protected String line1() {
         return MessageFormat.format(Bundle.getMessage("JmriDemoVersionCredit"),
                 new Object[]{jmri.Version.name()});

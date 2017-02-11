@@ -1,4 +1,3 @@
-// ClientRxHandler.java
 package jmri.jmrix.dccpp.dccppovertcp;
 
 import java.io.BufferedReader;
@@ -45,6 +44,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
     }
 
     @SuppressWarnings("null")
+    @Override
     public void run() {
 
         try {
@@ -130,6 +130,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
             parentThread = creator;
         }
 
+        @Override
         public void run() {
 
             try {
@@ -181,9 +182,11 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
         }
     }
 
+    @Override
     public void message(DCCppMessage msg) {
     }
 
+    @Override
     public void message(DCCppReply msg) {
         synchronized (replyQueue) {
             replyQueue.add(msg);
@@ -192,6 +195,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
         }
     }
 
+    @Override
     public void notifyTimeout(DCCppMessage m) {
     }
 

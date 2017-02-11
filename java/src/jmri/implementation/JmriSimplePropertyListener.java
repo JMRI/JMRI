@@ -102,6 +102,7 @@ public class JmriSimplePropertyListener implements PropertyChangeListener {
      * Conditional.calculates its state and trigger its actions if its state has
      * changed.
      */
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         //log.debug("\""+_varName+"\" sent PropertyChangeEvent "+evt.getPropertyName()+
         //    ", old value =\""+evt.getOldValue()+"\", new value =\""+evt.getNewValue()+

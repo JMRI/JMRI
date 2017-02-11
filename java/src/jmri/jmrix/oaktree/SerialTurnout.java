@@ -1,4 +1,3 @@
-// SerialTurnout.java
 package jmri.jmrix.oaktree;
 
 import jmri.Turnout;
@@ -21,11 +20,6 @@ import org.slf4j.LoggerFactory;
 public class SerialTurnout extends AbstractTurnout {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -5521009807673626376L;
-
-    /**
      * Create a Turnout object, with both system and user names.
      * <P>
      * 'systemName' was previously validated in SerialTurnoutManager
@@ -41,6 +35,7 @@ public class SerialTurnout extends AbstractTurnout {
     /**
      * Handle a request to change state by sending a turnout command
      */
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
@@ -66,6 +61,7 @@ public class SerialTurnout extends AbstractTurnout {
         }
     }
 
+    @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
             log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton");
@@ -88,4 +84,4 @@ public class SerialTurnout extends AbstractTurnout {
     private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
 }
 
-/* @(#)SerialTurnout.java */
+

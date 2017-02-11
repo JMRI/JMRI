@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 import jmri.jmrix.loconet.LnNetworkPortController;
@@ -40,7 +41,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
     static final String RECEIVE_PREFIX = "RECEIVE";
     static final String SEND_PREFIX = "SEND";
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization")
     public LnOverTcpPacketizer() {
         self = this;
@@ -108,6 +109,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
         // readline is deprecated, but there are no problems
         // with multi-byte characters here.
         @SuppressWarnings({"deprecation", "null"})
+        @Override
         public void run() {
 
             String rxLine;
@@ -195,6 +197,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                             LocoNetMessage msgForLater = thisMsg;
                             LnPacketizer myTC = thisTC;
 
+                            @Override
                             public void run() {
                                 myTC.notify(msgForLater);
                             }
@@ -228,6 +231,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
      */
     class XmtHandler implements Runnable {
 
+        @Override
         public void run() {
 
             while (true) {   // loop permanently

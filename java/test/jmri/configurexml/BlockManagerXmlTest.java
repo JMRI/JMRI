@@ -10,7 +10,6 @@ import jmri.Path;
 import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.implementation.AbstractSensor;
-import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import junit.framework.Test;
@@ -345,6 +344,7 @@ public class BlockManagerXmlTest extends TestCase {
         Block b2 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("SystemNameb2", "");
 
         Sensor s2 = new AbstractSensor("IS2") {
+            @Override
             public void requestUpdateFromLayout() {
             }
         };
@@ -357,9 +357,11 @@ public class BlockManagerXmlTest extends TestCase {
         p21.setFromBlockDirection(Path.RIGHT);
         p21.setToBlockDirection(Path.LEFT);
         p21.addSetting(new BeanSetting(new jmri.implementation.AbstractTurnout("IT1") {
+            @Override
             public void turnoutPushbuttonLockout(boolean b) {
             }
 
+            @Override
             public void forwardCommandChangeToLayout(int i) {
             }
         },
@@ -443,10 +445,12 @@ public class BlockManagerXmlTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

@@ -760,9 +760,9 @@ public class ConditionalVariable {
             case Conditional.TYPE_SENSOR_INACTIVE:
                 return Bundle.getMessage("SensorStateInactive"); // NOI18N
             case Conditional.TYPE_TURNOUT_THROWN:
-                return rbx.getString("TurnoutThrown"); // NOI18N
+                return Bundle.getMessage("TurnoutStateThrown"); // NOI18N
             case Conditional.TYPE_TURNOUT_CLOSED:
-                return rbx.getString("TurnoutClosed"); // NOI18N
+                return Bundle.getMessage("TurnoutStateClosed"); // NOI18N
             case Conditional.TYPE_CONDITIONAL_TRUE:
                 return rbx.getString("True"); // NOI18N
             case Conditional.TYPE_CONDITIONAL_FALSE:
@@ -778,27 +778,27 @@ public class ConditionalVariable {
             case Conditional.TYPE_FAST_CLOCK_RANGE:
                 return ""; // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_RED:
-                return rbx.getString("StateSignalHeadRed"); // NOI18N
+                return Bundle.getMessage("SignalHeadStateRed"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
-                return rbx.getString("StateSignalHeadYellow"); // NOI18N
+                return Bundle.getMessage("SignalHeadStateYellow"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_GREEN:
-                return rbx.getString("StateSignalHeadGreen"); // NOI18N
+                return Bundle.getMessage("SignalHeadStateGreen"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_DARK:
-                return rbx.getString("StateSignalHeadDark"); // NOI18N
+                return Bundle.getMessage("SignalHeadStateDark"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
-                return rbx.getString("StateSignalHeadFlashRed"); // NOI18N
+                return Bundle.getMessage("SignalHeadStateFlashingRed"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
-                return rbx.getString("StateSignalHeadFlashYellow"); // NOI18N
+                return Bundle.getMessage("SignalHeadStateFlashingYellow"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
-                return rbx.getString("StateSignalHeadFlashGreen"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_LIT:
-                return rbx.getString("StateSignalHeadLit"); // NOI18N
+                return Bundle.getMessage("SignalHeadStateFlashingGreen"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_HELD:
-                return rbx.getString("TypeSignalHeadHeld"); // NOI18N
+                return Bundle.getMessage("SignalHeadStateHeld"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_LUNAR:
-                return rbx.getString("StateSignalHeadLunar"); // NOI18N
+                return Bundle.getMessage("SignalHeadStateLunar"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_FLASHLUNAR:
-                return rbx.getString("StateSignalHeadFlashLunar"); // NOI18N
+                return Bundle.getMessage("SignalHeadStateFlashingLunar"); // NOI18N
+            case Conditional.TYPE_SIGNAL_HEAD_LIT:
+                return rbx.getString("TypeSignalHeadLit"); // NOI18N
             case Conditional.TYPE_MEMORY_EQUALS_INSENSITIVE:
                 return rbx.getString("StateMemoryEqualsInsensitive"); // NOI18N
             case Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE:
@@ -910,7 +910,7 @@ public class ConditionalVariable {
             case Conditional.TYPE_ENTRYEXIT_INACTIVE:
                 return rbx.getString("TypeEntryExitInactive"); // NOI18N
         }
-        return "None";
+        return Bundle.getMessage("NONE");
     }
 
     public static String getCompareOperationString(int index) {

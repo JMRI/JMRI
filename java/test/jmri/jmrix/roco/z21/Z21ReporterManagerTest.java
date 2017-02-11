@@ -1,10 +1,7 @@
 package jmri.jmrix.roco.z21;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 /**
  * Tests for Z21ReporterManager class.
@@ -12,7 +9,7 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2016
  **/
 
-public class Z21ReporterManagerTest extends jmri.managers.AbstractReporterMgrTest {
+public class Z21ReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
     @Override
     public String getSystemName(int i) {
@@ -20,6 +17,7 @@ public class Z21ReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
     }
 
    @Before
+    @Override
    public void setUp(){
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();

@@ -1,4 +1,3 @@
-// CatalogTreeNode.java
 package jmri.jmrit.catalog;
 
 import java.util.ArrayList;
@@ -98,6 +97,8 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
         return leaves;
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
     public Enumeration<CatalogTreeNode> children() {
         return super.children();
     }

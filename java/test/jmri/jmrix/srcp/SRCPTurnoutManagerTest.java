@@ -1,6 +1,5 @@
 package jmri.jmrix.srcp;
 
-import org.junit.Assert;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,7 +12,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen
  */
-public class SRCPTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class SRCPTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     @Override
     public String getSystemName(int i){

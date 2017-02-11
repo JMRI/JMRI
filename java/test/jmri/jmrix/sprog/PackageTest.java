@@ -32,7 +32,15 @@ import org.junit.runners.Suite;
    jmri.jmrix.sprog.sprogmon.PackageTest.class,
    jmri.jmrix.sprog.sprogslotmon.PackageTest.class,
    SPROGMenuTest.class,
-   SPROGCSMenuTest.class
+   SPROGCSMenuTest.class,
+   SprogPortControllerTest.class,
+   SprogOpsModeProgrammerTest.class,
+   SprogProgrammerTest.class,
+   SprogProgrammerManagerTest.class,
+   SprogThrottleManagerTest.class,
+   SprogCSThrottleManagerTest.class,
+   SprogThrottleTest.class,
+   SprogCSThrottleTest.class
 })
 public class PackageTest {
 }

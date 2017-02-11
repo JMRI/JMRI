@@ -1,4 +1,3 @@
-// EditorFrame.java
 package jmri.jmrix.loconet.sdfeditor;
 
 import java.util.ResourceBundle;
@@ -16,11 +15,6 @@ import jmri.util.JmriJFrame;
  * @author	Bob Jacobsen Copyright (C) 2007
  */
 public class EditorFrame extends JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7106886649627618274L;
 
     // GUI member declarations
     EditorPane pane;
@@ -48,6 +42,7 @@ public class EditorFrame extends JmriJFrame {
 
     }
 
+    @Override
     public void dispose() {
         pane.dispose();
         super.dispose();

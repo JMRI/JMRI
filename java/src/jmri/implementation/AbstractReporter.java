@@ -26,6 +26,7 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
         super(systemName.toUpperCase(), userName);
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameReporter");
     }
@@ -36,10 +37,12 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
         return getDisplayName();
     }
 
+    @Override
     public Object getCurrentReport() {
         return _currentReport;
     }
 
+    @Override
     public Object getLastReport() {
         return _lastReport;
     }
@@ -47,6 +50,7 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
     /**
      * Provide a general method for updating the report.
      */
+    @Override
     public void setReport(Object r) {
         if (r == _currentReport) {
             return;

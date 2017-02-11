@@ -1,4 +1,3 @@
-// XpaPowerManager.java
 package jmri.jmrix.xpa;
 
 import jmri.JmriException;
@@ -19,6 +18,7 @@ public class XpaPowerManager implements PowerManager, XpaListener {
         tc.addXpaListener(this);
     }
 
+    @Override
     public String getUserName() {
         return "XPA";
     }
@@ -28,6 +28,7 @@ public class XpaPowerManager implements PowerManager, XpaListener {
     boolean waiting = false;
     int onReply = UNKNOWN;
 
+    @Override
     public void setPower(int v) throws JmriException {
         power = UNKNOWN; // while waiting for reply
         checkTC();
@@ -47,11 +48,13 @@ public class XpaPowerManager implements PowerManager, XpaListener {
         firePropertyChange("Power", null, null);
     }
 
+    @Override
     public int getPower() {
         return power;
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() throws JmriException {
         tc.removeXpaListener(this);
         tc = null;
@@ -66,6 +69,7 @@ public class XpaPowerManager implements PowerManager, XpaListener {
     // to hear of changes
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
+    @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
@@ -74,6 +78,7 @@ public class XpaPowerManager implements PowerManager, XpaListener {
         pcs.firePropertyChange(p, old, n);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
@@ -81,6 +86,7 @@ public class XpaPowerManager implements PowerManager, XpaListener {
     XpaTrafficController tc = null;
 
     // to listen for status changes from Xpa system
+    @Override
     public void reply(XpaMessage m) {
         if (waiting) {
             power = onReply;
@@ -89,9 +95,10 @@ public class XpaPowerManager implements PowerManager, XpaListener {
         waiting = false;
     }
 
+    @Override
     public void message(XpaMessage m) {
     }
 
 }
 
-/* @(#)XpaPowerManager.java */
+

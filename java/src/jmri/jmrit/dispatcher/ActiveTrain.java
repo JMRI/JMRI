@@ -173,6 +173,7 @@ public class ActiveTrain {
     private String mDccAddress = "";
     private boolean mResetWhenDone = true;
     private boolean mReverseAtEnd = false;
+    private boolean mAllocateAllTheWay = false;
         public final static int NODELAY = 0x00;
         public final static int TIMEDDELAY = 0x01;
         public final static int SENSORDELAY = 0x02;
@@ -427,6 +428,7 @@ public class ActiveTrain {
         if (delaySensorListener == null) {
             final ActiveTrain at = this;
             delaySensorListener = new java.beans.PropertyChangeListener() {
+                @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     if (e.getPropertyName().equals("KnownState")) {
                         if (((Integer) e.getNewValue()).intValue() == jmri.Sensor.ACTIVE) {
@@ -455,6 +457,7 @@ public class ActiveTrain {
         if (restartSensorListener == null) {
             final ActiveTrain at = this;
             restartSensorListener = new java.beans.PropertyChangeListener() {
+                @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     if (e.getPropertyName().equals("KnownState")) {
                         if (((Integer) e.getNewValue()).intValue() == jmri.Sensor.ACTIVE) {
@@ -779,7 +782,7 @@ public class ActiveTrain {
 
     public String getLastAllocatedSectionName() {
         if (mLastAllocatedSection == null) {
-            return rb.getString("None");
+            return "<" + Bundle.getMessage("None").toLowerCase() + ">"; // <none>
         }
         return getSectionName(mLastAllocatedSection);
     }
@@ -794,7 +797,7 @@ public class ActiveTrain {
 
     public String getNextSectionToAllocateName() {
         if (mNextSectionToAllocate == null) {
-            return rb.getString("None");
+            return "<" + Bundle.getMessage("None").toLowerCase() + ">"; // <none>
         }
         return getSectionName(mNextSectionToAllocate);
     }
@@ -888,6 +891,14 @@ public class ActiveTrain {
         mReverseAtEnd = s;
     }
 
+    public boolean getAllocateAllTheWay() {
+        return mAllocateAllTheWay;
+    }
+    
+    public void setAllocateAllTheWay(boolean s) {
+        mAllocateAllTheWay = s;
+    }
+    
     protected jmri.Section getSecondAllocatedSection() {
         return mSecondAllocatedSection;
     }

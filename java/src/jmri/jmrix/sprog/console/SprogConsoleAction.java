@@ -20,6 +20,7 @@ public class SprogConsoleAction extends AbstractAction {
         _memo = memo;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SprogConsoleFrame f = new SprogConsoleFrame(_memo);
         try {
@@ -33,4 +34,4 @@ public class SprogConsoleAction extends AbstractAction {
 }
 
 
-/* @(#)SprogConsoleAction.java */
+

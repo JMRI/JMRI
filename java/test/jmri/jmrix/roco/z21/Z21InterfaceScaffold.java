@@ -20,6 +20,7 @@ public class Z21InterfaceScaffold extends Z21TrafficController {
     }
 
     // override some Z21TrafficController methods for test purposes
+    @Override
     public boolean status() {
         return true;
     }
@@ -36,8 +37,6 @@ public class Z21InterfaceScaffold extends Z21TrafficController {
         }
         // save a copy
         outbound.addElement(m);
-
-        Z21Reply testReply = new Z21Reply();
     }
 
     // test control member functions
@@ -78,6 +77,18 @@ public class Z21InterfaceScaffold extends Z21TrafficController {
     public void receiveLoop() {
     }
 
+    /**
+     * This is normal, don't log at ERROR level
+     */
+    @Override 
+    protected void reportReceiveLoopException(Exception e) {
+        log.debug("run: Exception: {} in {} (considered normal in testing)", e.toString(), this.getClass().toString(), e);
+        jmri.jmrix.ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
+        if (controller instanceof jmri.jmrix.AbstractNetworkPortController) {
+            portWarnTCP(e);
+        }
+    }
+    
     private final static Logger log = LoggerFactory.getLogger(Z21InterfaceScaffold.class.getName());
 
 }

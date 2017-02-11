@@ -115,7 +115,7 @@ public interface XNetInterface {
     public static final int CONSIST = 32;
 
     /**
-     * Mask value to request notification of messages associated with consists
+     * Mask value to request notification of messages associated with the interface
      *
      */
     public static final int INTERFACE = 64;
@@ -123,4 +123,4 @@ public interface XNetInterface {
 }
 
 
-/* @(#)XNetInterface.java */
+

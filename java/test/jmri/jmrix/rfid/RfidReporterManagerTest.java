@@ -1,7 +1,6 @@
 package jmri.jmrix.rfid;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -14,7 +13,7 @@ import jmri.Reporter;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTest {
+public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
     RfidTrafficController tc = null;
 

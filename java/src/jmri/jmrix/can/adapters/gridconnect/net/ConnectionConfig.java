@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.can.adapters.gridconnect.net;
 
 import java.awt.event.ActionEvent;
@@ -34,6 +33,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         super();
     }
 
+    @Override
     public String name() {
         return NAME;
     }
@@ -52,6 +52,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         updateUserNameField();
 
         ((JComboBox<Option>) options.get("Protocol").getComponent()).addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 updateUserNameField();
             }
@@ -86,6 +87,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     /*public String getMode() {
      return opt2Box.getSelectedItem().toString();
      }*/
+    @Override
     public boolean isPortAdvanced() {
         return false;
     }
@@ -94,6 +96,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         return false;
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new NetworkDriverAdapter();

@@ -21,11 +21,6 @@ import org.slf4j.LoggerFactory;
 public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConnectionAction {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = 3189519475374368759L;
-
-    /**
      * Enhanced constructor for placing the pane in various GUIs
      */
     public LnNamedPaneAction(String s, WindowInterface wi, String paneClass, LocoNetSystemConnectionMemo memo) {

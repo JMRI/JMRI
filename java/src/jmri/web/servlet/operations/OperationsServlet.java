@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,12 +36,14 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood (C) 2014
  * @author Steve Todd (C) 2013
  */
+@WebServlet(name = "OperationsServlet",
+        urlPatterns = {
+            "/operations", // default
+            "/web/operationsConductor.html", // redirect to default since ~ 13 May 2014
+            "/web/operationsManifest.html", // redirect to default since ~ 13 May 2014
+            "/web/operationsTrains.html" // redirect to default since ~ 13 May 2014
+        })
 public class OperationsServlet extends HttpServlet {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5856610982342205832L;
 
     private ObjectMapper mapper;
 
@@ -48,10 +51,12 @@ public class OperationsServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        super.init();
-        this.mapper = new ObjectMapper();
-        // ensure all operations managers are functional before handling first request
-        OperationsManager.getInstance();
+        // only do complete initialization for default path, not redirections
+        if (this.getServletContext().getContextPath().equals("/operations")) { // NOI18N
+            this.mapper = new ObjectMapper();
+            // ensure all operations managers are functional before handling first request
+            OperationsManager.getInstance();
+        }
     }
 
     /*
@@ -61,6 +66,12 @@ public class OperationsServlet extends HttpServlet {
      * /operations/conductor/id - get the conductor's screen for train with Id "id"
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (request.getRequestURI().equals("/web/operationsConductor.html") // NOI18N
+                || request.getRequestURI().equals("/web/operationsManifest.html") // NOI18N
+                || request.getRequestURI().equals("/web/operationsTrains.html")) { // NOI18N
+            response.sendRedirect("/operations"); // NOI18N
+            return;
+        }
         String[] pathInfo = request.getPathInfo().substring(1).split("/");
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
         if (pathInfo[0].equals("") || (pathInfo[0].equals(JsonOperations.TRAINS) && pathInfo.length == 1)) {

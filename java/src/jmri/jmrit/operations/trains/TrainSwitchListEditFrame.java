@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.trains;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -306,7 +307,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
      * @param isUpdate true if only updating switch lists (no printing or
      *            preview)
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
+    @SuppressFBWarnings(
             value = {"UC_USELESS_CONDITION", "RpC_REPEATED_CONDITIONAL_TEST"}, // NOI18N
             justification = "isChanged value is dependent on which user button is activated") // NOI18N
     private void buildSwitchList(boolean isPreview, boolean isChanged, boolean isCsv, boolean isUpdate) {
@@ -444,7 +445,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
      *            locations that have changes. When isChanged is false, create
      *            custom switch lists for all enabled locations.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
+    @SuppressFBWarnings(
             value = {"UC_USELESS_CONDITION", "RpC_REPEATED_CONDITIONAL_TEST"}, // NOI18N
             justification = "isChanged value is dependent on which user button is activated") // NOI18N
     private void runCustomSwitchLists(boolean isChanged) {

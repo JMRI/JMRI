@@ -1,4 +1,3 @@
-// RpsReporterManager.java
 package jmri.jmrix.rps;
 
 import jmri.Reporter;
@@ -12,10 +11,12 @@ import jmri.managers.AbstractReporterManager;
  */
 public class RpsReporterManager extends AbstractReporterManager {
 
+    @Override
     public String getSystemPrefix() {
         return "R";
     }
 
+    @Override
     protected Reporter createNewReporter(String systemName, String userName) {
         RpsReporter r = new RpsReporter(systemName, userName);
         Distributor.instance().addMeasurementListener(r);
@@ -41,4 +42,4 @@ public class RpsReporterManager extends AbstractReporterManager {
     }
 }
 
-/* @(#)Rps ReporterManager.java */
+

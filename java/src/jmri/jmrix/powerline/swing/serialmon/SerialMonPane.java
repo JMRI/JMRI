@@ -1,12 +1,3 @@
-/**
- * SerialMonPane.java
- *
- * Description:	Swing action to create and register a MonFrame object
- *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008 copied from Ecos and converted
- * to Powerline
- * @author	Ken Cameron Copyright (C) 2011
-  */
 package jmri.jmrix.powerline.swing.serialmon;
 
 import java.util.ResourceBundle;
@@ -16,22 +7,27 @@ import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.swing.PowerlinePanelInterface;
 
+/**
+ * Swing action to create and register a MonFrame object
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001, 2008 copied from Ecos and converted
+ * to Powerline
+ * @author	Ken Cameron Copyright (C) 2011
+  */
 public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialListener, PowerlinePanelInterface {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5452592994756329128L;
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.powerline.swing.serialmon.SerialMonBundle");
 
     public SerialMonPane() {
         super();
     }
 
+    @Override
     public String getHelpTarget() {
         return null;
     }
 
+    @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
         if (memo != null) {
@@ -44,6 +40,7 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialL
         return x.toString();
     }
 
+    @Override
     public void dispose() {
         // disconnect from the SerialTrafficController
         if (memo != null) {
@@ -53,27 +50,32 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialL
         super.dispose();
     }
 
+    @Override
     public void init() {
     }
 
     SerialSystemConnectionMemo memo;
 
+    @Override
     public void initContext(Object context) {
         if (context instanceof SerialSystemConnectionMemo) {
             initComponents((SerialSystemConnectionMemo) context);
         }
     }
 
+    @Override
     public void initComponents(SerialSystemConnectionMemo memo) {
         this.memo = memo;
         // connect to the SerialTrafficController
         memo.getTrafficController().addSerialListener(this);
     }
 
+    @Override
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         nextLine(l.toMonitorString(), l.toString());
     }
 
+    @Override
     public synchronized void reply(SerialReply l) {  // receive a reply message and log it
         nextLine(l.toMonitorString(), l.toString());
     }
@@ -82,11 +84,6 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialL
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.powerline.swing.PowerlineNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2564227328398852669L;
 
         public Default() {
             super("Open Powerline Monitor",
@@ -98,5 +95,3 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialL
     }
 
 }
-
-/* @(#)MonAction.java */

@@ -7,7 +7,6 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -162,15 +161,18 @@ public class DccSignalHeadTest {
         JUnitUtil.initInternalTurnoutManager();
 
         CommandStation c = new CommandStation() {
+            @Override
             public void sendPacket(byte[] packet, int repeats) {
                 lastSentPacket = packet;
                 sentPacketCount++;
             }
 
+            @Override
             public String getUserName() {
                 return null;
             }
 
+            @Override
             public String getSystemPrefix() {
                 return "I";
             }

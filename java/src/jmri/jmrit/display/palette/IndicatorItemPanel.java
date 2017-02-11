@@ -37,6 +37,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     /**
      * Init for creation insert panels for detection and train id
      */
+    @Override
     public void init() {
         if (!_initialized) {
             super.init();
@@ -53,6 +54,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
      * Init for update of existing track block _bottom3Panel has "Update Panel"
      * button put into _bottom1Panel
      */
+    @Override
     public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
         super.init(doneAction, iconMap);
         _detectPanel = new DetectionPanel(this);
@@ -62,16 +64,19 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     /**
      * Init for conversion of plain track to indicator track
      */
+    @Override
     public void init(ActionListener doneAction) {
         super.init(doneAction);
     }
 
+    @Override
     public void dispose() {
         if (_detectPanel != null) {
             _detectPanel.dispose();
         }
     }
 
+    @Override
     protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
         super.makeDndIconPanel(iconMap, "ClearTrack");
     }
@@ -119,6 +124,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     /**
      * ****************************************************
      */
+    @Override
     protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
         return new IndicatorDragJLabel(flavor, map, icon);
     }
@@ -127,16 +133,17 @@ public class IndicatorItemPanel extends FamilyItemPanel {
 
         HashMap<String, NamedIcon> iconMap;
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // icon map is within package 
         public IndicatorDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
             super(flavor, icon);
-            iconMap = map;
+            iconMap = new HashMap<>(map);
         }
 
+        @Override
         public boolean isDataFlavorSupported(DataFlavor flavor) {
             return super.isDataFlavorSupported(flavor);
         }
 
+        @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {
                 return null;

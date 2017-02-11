@@ -1,4 +1,3 @@
-// CopyAutomationAction.java
 package jmri.jmrit.operations.automation;
 
 import java.awt.Frame;

@@ -17,11 +17,6 @@ import jmri.util.JmriJFrame;
  */
 public class FileHistoryAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7063215106558684398L;
-
     public FileHistoryAction(String s) {
         super(s);
     }
@@ -30,6 +25,7 @@ public class FileHistoryAction extends AbstractAction {
         this("File History");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         JFrame frame = new JmriJFrame() {
         };  // JmriJFrame to ensure fits on screen

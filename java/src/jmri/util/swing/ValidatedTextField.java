@@ -7,10 +7,9 @@ import java.awt.event.FocusListener;
  * Extends JTextField to provide a data validation function and a colorization
  * function.
  *
- * Supports two types of validated field: . generic text fields with length
- * and/or character set limited by a JAVA regular expression
- *
- * . integral numeric fields with minimum and maximum allowed values
+ * Supports two types of validated field: a generic text fields with length
+ * and/or character set limited by a JAVA regular expression or an integral
+ * numeric fields with minimum and maximum allowed values.
  *
  * @author B. Milhaupt Copyright 2010, 2011
  */
@@ -28,26 +27,25 @@ public class ValidatedTextField extends javax.swing.JTextField {
      *
      * When focus leaves the field and the field value is valid, the value will
      * be checked against the "Last Queried Value". If the current field value
-     * matches the "Last Queried Value", the field is colorized using the
-     * default field foreground and background colors. If instead the current
-     * field value does not match the "Last Queried Value", the field background
-     * color is changed to reflect that the value is not yet saved. Use the
+     * matches the "Last Queried Value", the field is colored using the default
+     * field foreground and background colors. If instead the current field
+     * value does not match the "Last Queried Value", the field background color
+     * is changed to reflect that the value is not yet saved. Use the
      * setLastQueriedValue() method to set the value for this comparison.
      *
-     * Parameter len defines the width of the text field entry box, in
-     * characters.
-     *
-     * Parameter forceUppercase determines if all alphabetic characters are
-     * forced to uppercase.
-     *
-     * Parameter validationRegExpr defines a java regular expression which is
-     * used when validating the text input. A string such as
-     * "^[0-9]{2}[a-zA-Z]{3,4}$" would require the text field to be a 5 or 6
-     * character string which starts with exactly two digits and followed by
-     * either 3 or 4 upper-case or lower-case letters.
-     *
-     * Parameter validationErrorMessage is passed as an argument to the property
-     * change listener for the instantiating class.
+     * @param len                    defines the width of the text field entry
+     *                               box, in characters
+     * @param forceUppercase         determines if all alphabetic characters are
+     *                               forced to uppercase
+     * @param validationRegExpr      defines a java regular expression which is
+     *                               used when validating the text input. A
+     *                               string such as "^[0-9]{2}[a-zA-Z]{3,4}$"
+     *                               would require the text field to be a 5 or 6
+     *                               character string which starts with exactly
+     *                               two digits and followed by either 3 or 4
+     *                               upper-case or lower-case letters
+     * @param validationErrorMessage is passed as an argument to the property
+     *                               change listener for the instantiating class
      *
      */
     public ValidatedTextField(Integer len,
@@ -71,11 +69,13 @@ public class ValidatedTextField extends javax.swing.JTextField {
         thisone = this;
         thisone.setInputVerifier(verifier);
         thisone.addFocusListener(new FocusListener() {
+            @Override
             public void focusGained(FocusEvent e) {
                 setEditable(true);
                 setEnabled(true);
             }
 
+            @Override
             public void focusLost(FocusEvent e) {
                 exitFieldColorizer();
                 setEditable(true);
@@ -101,27 +101,30 @@ public class ValidatedTextField extends javax.swing.JTextField {
      * color is changed to reflect that the value is not yet saved. Use the
      * setLastQueriedValue() method to set the value for this comparison.
      *
-     * Parameter len defines the width of the text field entry box, in
-     * characters.
+     * @param len                    defines the width of the text field entry
+     *                               box, in characters.
      *
-     * Parameter allow0LengthValue determines if a value of 0 characters is
-     * allowed as a valid value.
+     * @param allow0LengthValue      determines if a value of 0 characters is
+     *                               allowed as a valid value.
      *
-     * Parameter forceUppercase determines if all alphabetic characters are
-     * forced to uppercase.
+     * @param forceUppercase         determines if all alphabetic characters are
+     *                               forced to uppercase.
      *
-     * Parameter minValue is the smallest allowed value.
+     * @param minValue               is the smallest allowed value.
      *
-     * Parameter maxValue is the largest allowed value.
+     * @param maxValue               is the largest allowed value.
      *
-     * Parameter validationRegExpr defines a java regular expression which is
-     * used when validating the text input. A string such as
-     * "^[0-9]{2}[a-zA-Z]{3,4}$" would require the text field to be a 5 or 6
-     * character string which starts with exactly two digits and followed by
-     * either 3 or 4 upper-case or lower-case letters.
+     * @param validationRegExpr      defines a java regular expression which is
+     *                               used when validating the text input. A
+     *                               string such as "^[0-9]{2}[a-zA-Z]{3,4}$"
+     *                               would require the text field to be a 5 or 6
+     *                               character string which starts with exactly
+     *                               two digits and followed by either 3 or 4
+     *                               upper-case or lower-case letters.
      *
-     * Parameter validationErrorMessage is passed as an argument to the property
-     * change listener for the instantiating class.
+     * @param validationErrorMessage is passed as an argument to the property
+     *                               change listener for the instantiating
+     *                               class.
      *
      */
     public ValidatedTextField(
@@ -146,11 +149,13 @@ public class ValidatedTextField extends javax.swing.JTextField {
         thisone = this;
         thisone.setInputVerifier(verifier);
         thisone.addFocusListener(new FocusListener() {
+            @Override
             public void focusGained(FocusEvent e) {
                 setEditable(true);
                 setEnabled(true);
             }
 
+            @Override
             public void focusLost(FocusEvent e) {
                 exitFieldColorizer();
                 setEditable(true);
@@ -168,25 +173,21 @@ public class ValidatedTextField extends javax.swing.JTextField {
      *
      * When focus leaves the field and the field value is valid, the value will
      * be checked against the "Last Queried Value". If the current field value
-     * matches the "Last Queried Value", the field is colorized using the
-     * default field foreground and background colors. If instead the current
-     * field value does not match the "Last Queried Value", the field background
-     * color is changed to reflect that the value is not yet saved. Use the
+     * matches the "Last Queried Value", the field is colored using the default
+     * field foreground and background colors. If instead the current field
+     * value does not match the "Last Queried Value", the field background color
+     * is changed to reflect that the value is not yet saved. Use the
      * setLastQueriedValue() method to set the value for this comparison.
      *
-     * Parameter len defines the width of the text field entry box, in
-     * characters.
-     *
-     * Parameter allow0LengthValue determines if a value of 0 characters is
-     * allowed as a valid value.
-     *
-     * Parameter minValue is the smallest allowed value.
-     *
-     * Parameter maxValue is the largest allowed value.
-     *
-     * Parameter validationErrorMessage is passed as an argument to the property
-     * change listener for the instantiating class.
-     *
+     * @param len                    defines the width of the text field entry
+     *                               box, in characters
+     * @param allow0LengthValue      determines if a value of 0 characters is
+     *                               allowed as a valid value
+     * @param minValue               is the smallest allowed value
+     * @param maxValue               is the largest allowed value
+     * @param validationErrorMessage is passed as an argument to the property
+     *                               change listener for the instantiating
+     *                               class.
      */
     public ValidatedTextField(
             Integer len,
@@ -208,11 +209,13 @@ public class ValidatedTextField extends javax.swing.JTextField {
         thisone = this;
         thisone.setInputVerifier(verifier);
         thisone.addFocusListener(new FocusListener() {
+            @Override
             public void focusGained(FocusEvent e) {
                 setEditable(true);
                 setEnabled(true);
             }
 
+            @Override
             public void focusLost(FocusEvent e) {
                 exitFieldColorizer();
                 setEditable(true);
@@ -231,24 +234,17 @@ public class ValidatedTextField extends javax.swing.JTextField {
      *
      * When focus leaves the field and the field value is valid, the value will
      * be checked against the "Last Queried Value". If the current field value
-     * matches the "Last Queried Value", the field is colorized using the
-     * default field foreground and background colors. If instead the current
-     * field value does not match the "Last Queried Value", the field background
-     * color is changed to reflect that the value is not yet saved. Use the
+     * matches the "Last Queried Value", the field is colored using the default
+     * field foreground and background colors. If instead the current field
+     * value does not match the "Last Queried Value", the field background color
+     * is changed to reflect that the value is not yet saved. Use the
      * setLastQueriedValue() method to set the value for this comparison.
      *
-     * Parameter minAcceptableVal defines the lowest acceptable value.
-     *
-     * Parameter maxAcceptableVal defines the lowest acceptable value.
-     *
-     * Parameter validationRegExpr defines a java regular expression which is
-     * used when validating the text input. A string such as
-     * "^[0-9]{2}[a-zA-Z]{3,4}$" would require the text field to be a 5 or 6
-     * character string which starts with exactly two digits and followed by
-     * either 3 or 4 upper-case or lower-case letters.
-     *
-     * Parameter validationErrorMessage is passed as an argument to the property
-     * change listener for the instantiating class.
+     * @param len                    the length of the field
+     * @param minAcceptableVal       defines the lowest acceptable value
+     * @param maxAcceptableVal       defines the lowest acceptable value
+     * @param validationErrorMessage is passed as an argument to the property
+     *                               change listener for the instantiating class
      *
      */
     public ValidatedTextField(Integer len,
@@ -272,11 +268,13 @@ public class ValidatedTextField extends javax.swing.JTextField {
         thisone = this;
         thisone.setInputVerifier(verifier);
         thisone.addFocusListener(new FocusListener() {
+            @Override
             public void focusGained(FocusEvent e) {
                 setEditable(true);
                 setEnabled(true);
             }
 
+            @Override
             public void focusLost(FocusEvent e) {
                 exitFieldColorizer();
                 setEditable(true);
@@ -336,10 +334,8 @@ public class ValidatedTextField extends javax.swing.JTextField {
                 // match between last queried value and current field value
                 thisone.setBackground(COLOR_BG_UNEDITED);
             }
-            return;
         } else {
             // don't change background color of disabled field
-            return;
         }
     }
 
@@ -347,8 +343,9 @@ public class ValidatedTextField extends javax.swing.JTextField {
      * Validates the field information. Does not make any GUI changes. A field
      * value that is zero-length is considered invalid.
      *
-     * @return TRUE if current field information is valid, else FALSE
+     * @return true if current field information is valid; otherwise false
      */
+    @Override
     public boolean isValid() {
         String value;
         if (thisone == null) {
@@ -376,7 +373,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
                 } else {
                     return false;
                 }
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 return false;
             }
         } else if (fieldType == FieldType.INTEGRALNUMERICPLUSSTRING) {
@@ -410,28 +407,22 @@ public class ValidatedTextField extends javax.swing.JTextField {
 
             try {
                 Integer address = Integer.parseInt(value.substring(0, findLocation));
-                if ((address < minAllowedValue)
-                        || (address > maxAllowedValue)) {
-                    return false;
-                } else if ((value.length() < 2) || (!value.matches(validateRegExpr))) {
-                    return false;
-                } else {
-                    return true;
-                }
-            } catch (Exception e) {
+                return (address >= minAllowedValue
+                        && address <= maxAllowedValue
+                        && value.length() >= 2
+                        && value.matches(validateRegExpr));
+            } catch (NumberFormatException e) {
                 return false;
             }
         } else if (fieldType == FieldType.LIMITEDHEX) {
             try {
-                if (value.length() == 0) {
+                if (value.isEmpty()) {
                     return false;
-                } else if ((Integer.parseInt(value, 16) >= minAllowedValue)
-                        && (Integer.parseInt(value, 16) <= maxAllowedValue)) {
-                    return true;
                 } else {
-                    return false;
+                    return Integer.parseInt(value, 16) >= minAllowedValue
+                            && Integer.parseInt(value, 16) <= maxAllowedValue;
                 }
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 return false;
             }
         } else {
@@ -444,6 +435,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
      * Method to set the "Last Queried Value". This value is used by the
      * colorization process when focus is exiting the field.
      *
+     * @param lastQueriedValue the last value verified
      */
     public void setLastQueriedValue(String lastQueriedValue) {
         lastQueryValue = lastQueriedValue;
@@ -454,7 +446,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
      * Method to retrieve the current value of the "Last Queried Value". See
      * also setLastQueriedValue().
      *
-     * @return lastQueryValue
+     * @return the last value verified
      */
     public String getLastQueriedValue() {
         return lastQueryValue;
@@ -477,6 +469,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
      */
     private class MyVerifier extends javax.swing.InputVerifier implements java.awt.event.ActionListener {
 
+        @Override
         public boolean shouldYieldFocus(javax.swing.JComponent input) {
             if (input.getClass() == ValidatedTextField.class) {
 
@@ -505,6 +498,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
             }
         }
 
+        @Override
         public boolean verify(javax.swing.JComponent input) {
             if (input.getClass() == ValidatedTextField.class) {
                 return ((ValidatedTextField) input).isValid();
@@ -513,6 +507,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
             }
         }
 
+        @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
             javax.swing.JTextField source = (javax.swing.JTextField) e.getSource();
             shouldYieldFocus(source); //ignore return value
@@ -525,7 +520,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
      * Sets the color used for the field background when the field value is
      * invalid.
      * <p>
-     * @param c - Background Color to be used when the value is invalid
+     * @param c background Color to be used when the value is invalid
      */
     public void setInvalidBackgroundColor(java.awt.Color c) {
         invalidBackgroundColor = c;

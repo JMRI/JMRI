@@ -1,4 +1,3 @@
-// XBeeMenu.java
 package jmri.jmrix.ieee802154.xbee.swing;
 
 import java.util.ResourceBundle;

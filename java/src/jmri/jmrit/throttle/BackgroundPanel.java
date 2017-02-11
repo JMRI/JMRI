@@ -23,6 +23,7 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
         this.addressPanel = addressPanel;
     }
 
+    @Override
     public void notifyAddressThrottleFound(DccThrottle t) {
         RosterEntry rosterEntry = null;
         if (addressPanel != null) {
@@ -42,20 +43,25 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
         }
     }
 
+    @Override
     public void notifyAddressReleased(LocoAddress la) {
         setImagePath(null);
         setVisible(false);
     }
 
+    @Override
     public void notifyAddressChosen(LocoAddress l) {
     }
 
+    @Override
     public void notifyConsistAddressChosen(int newAddress, boolean isLong) {
     }
 
+    @Override
     public void notifyConsistAddressReleased(int address, boolean isLong) {
     }
 
+    @Override
     public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
     }
 }

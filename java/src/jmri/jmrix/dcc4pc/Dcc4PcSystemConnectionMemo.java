@@ -1,4 +1,3 @@
-// Dcc4PcSystemConnectionMemo.javaf
 package jmri.jmrix.dcc4pc;
 
 import java.util.List;
@@ -184,10 +183,12 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
         return programManager;
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.dcc4pc.Dcc4PcActionListBundle");
     }
 
+    @Override
     public void dispose() {
         tc = null;
         InstanceManager.deregister(this, Dcc4PcSystemConnectionMemo.class);
@@ -209,6 +210,3 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
         progManager = prog;
     }
 }
-
-
-/* @(#)Dcc4PcSystemConnectionMemo.java */

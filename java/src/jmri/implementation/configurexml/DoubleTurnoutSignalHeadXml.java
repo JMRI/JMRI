@@ -27,6 +27,7 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         DoubleTurnoutSignalHead p = (DoubleTurnoutSignalHead) o;
 
@@ -119,6 +120,7 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
         }
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

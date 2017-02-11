@@ -57,6 +57,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
      * Can the port accept additional characters? return true if the port is
      * opened.
      */
+    @Override
      public boolean okToSend() {
         return status();
     }
@@ -104,6 +105,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
     private void keepAliveTimer() {
         if (keepAliveTimer == null) {
             keepAliveTimer = new java.util.TimerTask(){
+                @Override
                 public void run() {
                     // If the timer times out, send a request for status
                     DCCppEthernetAdapter.this.getSystemConnectionMemo().getDCCppTrafficController()

@@ -134,6 +134,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
      *                error-correction byte. Must not be null.
      * @param repeats Number of times to repeat the transmission.
      */
+    @Override
     public void sendPacket(byte[] packet, int repeats) {
 
         if (_tc == null) {
@@ -165,6 +166,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
 
     DCCppSystemConnectionMemo adaptermemo;
 
+    @Override
     public String getUserName() {
         if (adaptermemo == null) {
             return "DCC++";
@@ -172,6 +174,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
         return adaptermemo.getUserName();
     }
 
+    @Override
     public String getSystemPrefix() {
         if (adaptermemo == null) {
             return "DCCPP";

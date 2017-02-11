@@ -1,4 +1,3 @@
-// HexFileServer.java
 package jmri.jmrix.loconet.hexfile;
 
 import jmri.jmrix.loconet.LnCommandStationType;

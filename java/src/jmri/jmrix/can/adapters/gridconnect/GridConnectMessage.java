@@ -1,4 +1,3 @@
-// GridConnectMessage.java
 package jmri.jmrix.can.adapters.gridconnect;
 
 import jmri.jmrix.AbstractMRMessage;
@@ -53,6 +52,7 @@ public class GridConnectMessage extends AbstractMRMessage {
     }
 
     // accessors to the bulk data
+    @Override
     public int getNumDataElements() {
         return _nDataChars;
     }
@@ -61,10 +61,12 @@ public class GridConnectMessage extends AbstractMRMessage {
         _nDataChars = (n <= 28) ? n : 28;
     }
 
+    @Override
     public int getElement(int n) {
         return _dataChars[n];
     }
 
+    @Override
     public void setElement(int n, int v) {
         _dataChars[n] = v;
     }
@@ -149,4 +151,4 @@ public class GridConnectMessage extends AbstractMRMessage {
     private final static Logger log = LoggerFactory.getLogger(GridConnectMessage.class.getName());
 }
 
-/* @(#)GridConnectMessage.java */
+

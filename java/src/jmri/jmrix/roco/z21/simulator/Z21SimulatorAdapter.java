@@ -70,6 +70,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
        super.connect();
     }
 
+    @Override
     public void run() {
         // The server just opens a DatagramSocket using the specified port number,
         // and then goes into an infinite loop.

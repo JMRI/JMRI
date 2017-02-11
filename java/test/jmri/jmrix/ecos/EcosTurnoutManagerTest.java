@@ -1,11 +1,7 @@
 package jmri.jmrix.ecos;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import jmri.Turnout;
 
 /**
  * EcosTurnoutManagerTest.java
@@ -14,7 +10,7 @@ import jmri.Turnout;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class EcosTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class EcosTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     @Override
     public String getSystemName(int i) {

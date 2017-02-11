@@ -2,7 +2,6 @@ package jmri.jmrix.dccpp.swing.mon;
 
 import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
-import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,16 +12,16 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class DCCppMonPaneTest {
+public class DCCppMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     jmri.jmrix.dccpp.DCCppSystemConnectionMemo memo = null;
 
     @Test
     public void testCtor() {
-        DCCppMonPane action = new DCCppMonPane();
-        Assert.assertNotNull("exists", action);
+        Assert.assertNotNull("exists", pane );
     }
 
+    @Override
     @Before
     public void setUp() {
         Log4JFixture.setUp();
@@ -31,8 +30,10 @@ public class DCCppMonPaneTest {
         memo = new jmri.jmrix.dccpp.DCCppSystemConnectionMemo(t);
 
         jmri.InstanceManager.store(memo, jmri.jmrix.dccpp.DCCppSystemConnectionMemo.class);
+        pane = new DCCppMonPane();
     }
 
+    @Override
     @After
     public void tearDown() {
         JUnitUtil.resetInstanceManager();

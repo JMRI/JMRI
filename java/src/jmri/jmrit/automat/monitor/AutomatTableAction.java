@@ -24,6 +24,7 @@ public class AutomatTableAction extends AbstractAction {
 
     AutomatTableFrame f;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create the frame
         f = new AutomatTableFrame(new AutomatTableDataModel());

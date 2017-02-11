@@ -41,15 +41,18 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.managers.configurexml.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(InternalReporterManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ProxyReporterManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ManagerDefaultSelectorTest.class));
 
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

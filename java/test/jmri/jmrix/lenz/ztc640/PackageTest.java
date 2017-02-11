@@ -26,7 +26,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.lenz.ztc640");  // no tests in this class itself
         suite.addTest(new TestSuite(ZTC640AdapterTest.class));
-        suite.addTest(new TestSuite(ZTC640XNetPacketizerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ZTC640XNetPacketizerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.lenz.ztc640.configurexml.PackageTest.class));
         return suite;

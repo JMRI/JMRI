@@ -10,6 +10,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppInitializationManager;
 import jmri.jmrix.dccpp.DCCppSerialPortController;
@@ -35,6 +36,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         this.manufacturerName = jmri.jmrix.dccpp.DCCppConnectionTypeList.DCCPP;
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         // open the port in DCC++ mode, check ability to set moderators
         try {
@@ -87,6 +89,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
             }
             // arrange to notify later
             activeSerialPort.addEventListener(new SerialPortEventListener() {
+                @Override
                 public void serialEvent(SerialPortEvent e) {
                     int type = e.getEventType();
                     switch (type) {
@@ -207,6 +210,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
      * set up all of the other objects to operate with a DCC++ Device connected to this
      * port
      */
+    @Override
     public void configure() {
         // connect to a packetizing traffic controller
 	DCCppTrafficController packets = new SerialDCCppPacketizer(new DCCppCommandStation());
@@ -228,6 +232,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         return new BufferedReader(new InputStreamReader(serialStream));
     }
 
+    @Override
     public DataInputStream getInputStream() {
 	//log.error("Not Using DataInputStream version anymore!");
     	//return(null);
@@ -242,6 +247,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         return null;
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -254,6 +260,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -289,13 +296,9 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         //    checkBuffer = true;
     }
 
-    /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     protected String[] validSpeeds = new String[]{"115,200 baud"};

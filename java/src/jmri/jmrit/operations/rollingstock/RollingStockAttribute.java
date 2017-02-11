@@ -1,4 +1,3 @@
-// RollingStockAttribute.java
 package jmri.jmrit.operations.rollingstock;
 
 import java.util.ArrayList;

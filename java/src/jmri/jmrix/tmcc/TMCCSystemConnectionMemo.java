@@ -54,6 +54,7 @@ public class TMCCSystemConnectionMemo extends SystemConnectionMemo {
      * Tells which managers this provides by class
      */
     @SuppressWarnings("deprecation")
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
@@ -74,6 +75,7 @@ public class TMCCSystemConnectionMemo extends SystemConnectionMemo {
      * Provide manager by class
      */
     @SuppressWarnings({"unchecked", "deprecation"})
+    @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
@@ -97,6 +99,7 @@ public class TMCCSystemConnectionMemo extends SystemConnectionMemo {
         return SerialThrottleManager.instance();
     }
 
+    @Override
     public void dispose() {
         trafficController = null;
         InstanceManager.deregister(this, TMCCSystemConnectionMemo.class);

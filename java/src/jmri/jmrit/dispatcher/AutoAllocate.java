@@ -88,20 +88,6 @@ public class AutoAllocate {
     private ConnectivityUtil _conUtil = null;
     private ArrayList<AllocationPlan> _planList = new ArrayList<AllocationPlan>();
     private int nextPlanNum = 1;
-    // Jay Janzen
-    // Flag to control type of allocations (classic or NX)
-    // Currently there are no methods provided to set or change this flag.
-    // It is created here in anticipation of future capabilities.
-    // Terms classic and NX are my descriptions only. Classic refers to 
-    // allowing Dispatcher to allocate no more than three blocks ahead (which 
-    // has always been therefore I label it classic). NX (which has no 
-    // connection with the "Entry/Exit (NX) Routing" feature of JMRI) refers to
-    // allowing Dispatcher to allocate without bounds as to the number of blocks.
-    // I label this NX because that best describes the way I am using transits.
-    // The starting block of the transit is the N and the ending block of the transit
-    // is the X. Most of the time these two blocks are NOT the very first block or 
-    // the very last block of the transit.
-    private boolean allocateAllTheWay = false;   
     private ArrayList<AllocationRequest> orderedRequests = new ArrayList<AllocationRequest>();
 
     /**
@@ -388,11 +374,11 @@ public class AutoAllocate {
         }
     }
 
+    // test to see how far ahead allocations have already been made
+    // and go no farther than three unless the "all the way" attribute 
+    // for the train is true then always allocate the request
     private boolean allocateIfLessThanThreeAhead(AllocationRequest ar) {
-        // Jay Janzen for NX type operation we want to allocate from eNtrance to eXit
-        // regardless of the number of sections allocated. 
-        // See comments on declaration of allocateAllTheWay.
-        if (allocateAllTheWay == true) {
+        if (ar.getActiveTrain().getAllocateAllTheWay()) {
             _dispatcher.allocateSection(ar, null);
             return true;
         }        

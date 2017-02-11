@@ -1,4 +1,3 @@
-// SpeedoDial.java
 package jmri.jmrix.bachrus;
 
 import java.awt.Color;
@@ -25,10 +24,6 @@ import jmri.jmrit.catalog.NamedIcon;
  */
 public class SpeedoDial extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8451435603320207793L;
     // GUI member declarations
     float speedAngle = 0.0F;
     int speedDigits = 0;
@@ -90,12 +85,14 @@ public class SpeedoDial extends JPanel {
 
         // Add component listener to handle frame resizing event
         this.addComponentListener(new ComponentAdapter() {
+            @Override
             public void componentResized(ComponentEvent e) {
                 scaleFace();
             }
         });
     }
 
+    @Override
     public void paint(Graphics g) {
         super.paint(g);
         if (!(g instanceof Graphics2D) ) {

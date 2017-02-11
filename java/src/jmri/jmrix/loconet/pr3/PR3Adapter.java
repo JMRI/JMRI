@@ -1,4 +1,3 @@
-// PR3Adapter.java
 package jmri.jmrix.loconet.pr3;
 
 import gnu.io.SerialPort;
@@ -27,6 +26,7 @@ public class PR3Adapter extends LocoBufferAdapter {
     /**
      * Always use flow control, not considered a user-settable option
      */
+    @Override
     protected void setSerialPort(SerialPort activeSerialPort) throws gnu.io.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = 57600;  // default, but also defaulted in the initial value of selectedSpeed
@@ -48,9 +48,9 @@ public class PR3Adapter extends LocoBufferAdapter {
             flow = SerialPort.FLOWCONTROL_NONE;
         }
         activeSerialPort.setFlowControlMode(flow);
-        log.debug("Found flow control " + activeSerialPort.getFlowControlMode()
-                + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT
-                + " RTSCTS_IN= " + SerialPort.FLOWCONTROL_RTSCTS_IN);
+        log.debug("Found flow control " + activeSerialPort.getFlowControlMode() // NOI18N
+                + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT // NOI18N
+                + " RTSCTS_IN= " + SerialPort.FLOWCONTROL_RTSCTS_IN); // NOI18N
     }
 
     /**
@@ -59,6 +59,7 @@ public class PR3Adapter extends LocoBufferAdapter {
      * duplicate much of the functionality there, so the code is basically
      * copied.
      */
+    @Override
     public void configure() {
         setCommandStationType(getOptionState(option2Name));
         setTurnoutHandling(getOptionState(option3Name));
@@ -126,14 +127,16 @@ public class PR3Adapter extends LocoBufferAdapter {
     /**
      * Get an array of valid baud rates.
      */
+    @Override
     public String[] validBaudRates() {
-        return new String[]{"57,600 baud"};
+        return new String[]{"57,600 baud"}; // NOI18N
     }
 
     /**
      * Get an array of valid baud rates as integers. This allows subclasses to
      * change the arrays of speeds.
      */
+    @Override
     public int[] validBaudNumber() {
         return new int[]{57600};
     }

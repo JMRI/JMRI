@@ -56,6 +56,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
             return;
         }
         minuteChangeListener = new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 newInternalMinute();
             }
@@ -132,12 +133,14 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     java.beans.PropertyChangeListener minuteChangeListener;
 
     //  ignore replies
+    @Override
     public void message(NceMessage m) {
         log.error("message received: " + m);
     }
 
     // TODO: Why does this if statement contain a direct false? FIXME!
     @SuppressWarnings("unused")
+    @Override
     public void reply(NceReply r) {
         if (false && log.isDebugEnabled()) {
             log.debug("NceReply(len " + r.getNumDataElements() + ") waiting: " + waiting
@@ -244,6 +247,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     /**
      * name of Nce clock
      */
+    @Override
     public String getHardwareClockName() {
         if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
             log.debug("getHardwareClockName");
@@ -254,6 +258,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     /**
      * Nce clock runs stable enough
      */
+    @Override
     public boolean canCorrectHardwareClock() {
         if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
             log.debug("getHardwareClockName");
@@ -264,6 +269,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     /**
      * Nce clock supports 12/24 operation
      */
+    @Override
     public boolean canSet12Or24HourClock() {
         if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
             log.debug("canSet12Or24HourClock");
@@ -274,6 +280,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     /**
      * sets Nce clock speed, must be 1 to 15
      */
+    @Override
     public void setRate(double newRate) {
         if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
             log.debug("setRate: " + newRate);
@@ -289,6 +296,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     /**
      * Nce only supports integer rates
      */
+    @Override
     public boolean requiresIntegerRate() {
         if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
             log.debug("requiresIntegerRate");
@@ -299,6 +307,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     /**
      * last known ratio from Nce clock
      */
+    @Override
     public double getRate() {
         issueReadOnlyRequest();	// get the current rate
         //issueDeferredGetRate = true;
@@ -312,6 +321,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
      * set the time, the date part is ignored
      */
     @SuppressWarnings("deprecation")
+    @Override
     public void setTime(Date now) {
         if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
             log.debug("setTime: " + now);
@@ -323,6 +333,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
      * returns the current Nce time, does not have a date component
      */
     @SuppressWarnings("deprecation")
+    @Override
     public Date getTime() {
         issueReadOnlyRequest();	// go get the current time value
         issueDeferredGetTime = true;
@@ -350,6 +361,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
      * set Nce clock and start clock
      */
     @SuppressWarnings("deprecation")
+    @Override
     public void startHardwareClock(Date now) {
         if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
             log.debug("startHardwareClock: " + now);
@@ -364,6 +376,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     /**
      * stops the Nce Clock
      */
+    @Override
     public void stopHardwareClock() {
         if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
             log.debug("stopHardwareClock");
@@ -552,4 +565,4 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     private final static Logger log = LoggerFactory.getLogger(NceClockControl.class.getName());
 }
 
-/* @(#)NceClockControl.java */
+

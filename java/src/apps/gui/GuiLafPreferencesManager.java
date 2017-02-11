@@ -1,8 +1,10 @@
 package apps.gui;
 
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.prefs.BackingStoreException;
@@ -11,6 +13,7 @@ import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
+import jmri.InstanceManagerAutoDefault;
 import jmri.beans.Bean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
@@ -24,12 +27,13 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2015
  */
-public class GuiLafPreferencesManager extends Bean implements PreferencesManager {
+public class GuiLafPreferencesManager extends Bean implements PreferencesManager, InstanceManagerAutoDefault {
 
     public static final String FONT_SIZE = "fontSize";
     public static final String LOCALE = "locale";
     public static final String LOOK_AND_FEEL = "lookAndFeel";
     public static final String NONSTANDARD_MOUSE_EVENT = "nonstandardMouseEvent";
+    public static final String VERTICAL_TOOLBAR = "verticalToolBar";
     public final static String SHOW_TOOL_TIP_TIME = "showToolTipDismissDelay";
     /**
      * Smallest font size a user can set the font size to other than zero
@@ -53,6 +57,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     private int fontSize = 0;
     private int defaultFontSize = 0;
     private boolean nonStandardMouseEvent = false;
+    private boolean verticalToolBar = false;
     private String lookAndFeel = UIManager.getLookAndFeel().getClass().getName();
     private int toolTipDismissDelay = ToolTipManager.sharedInstance().getDismissDelay();
     private boolean dirty = false;
@@ -63,6 +68,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * be per-application instead of per-profile.
      */
     private boolean initialized = false;
+    private final List<InitializationException> exceptions = new ArrayList<>();
     private final static Logger log = LoggerFactory.getLogger(GuiLafPreferencesManager.class);
 
     @Override
@@ -77,6 +83,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
                 this.setFontSize(this.getDefaultFontSize());
             }
             this.setNonStandardMouseEvent(preferences.getBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent()));
+            this.setVerticalToolBar(preferences.getBoolean(VERTICAL_TOOLBAR, this.isVerticalToolBar()));
             this.setToolTipDismissDelay(preferences.getInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay()));
             Locale.setDefault(this.getLocale());
             this.applyLookAndFeel();
@@ -90,7 +97,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
     @Override
     public boolean isInitialized(Profile profile) {
-        return this.initialized;
+        return this.initialized && this.exceptions.isEmpty();
     }
 
     @Override
@@ -118,6 +125,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             preferences.putInt(FONT_SIZE, temp);
         }
         preferences.putBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent());
+        preferences.putBoolean(VERTICAL_TOOLBAR, this.isVerticalToolBar());
         preferences.putInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay());
         try {
             preferences.sync();
@@ -193,7 +201,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
                 return;
             }
         }
-        defaultFontSize = 11;	// couldn't find the default return a reasonable font size
+        defaultFontSize = 11;   // couldn't find the default return a reasonable font size
     }
 
     /**
@@ -201,7 +209,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      */
     private void logAllFonts() {
         // avoid any activity if logging at this level is disabled to avoid
-        // the unnessesary overhead of getting the fonts 
+        // the unnessesary overhead of getting the fonts
         if (log.isTraceEnabled()) {
             log.trace("******** LAF={}", UIManager.getLookAndFeel().getClass().getName());
             java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
@@ -253,6 +261,24 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         this.setDirty(true);
         this.setRestartRequired(true);
         firePropertyChange(NONSTANDARD_MOUSE_EVENT, oldNonStandardMouseEvent, nonStandardMouseEvent);
+    }
+
+    /**
+     * @return the verticalToolBar
+     */
+    public boolean isVerticalToolBar() {
+        return verticalToolBar;
+    }
+
+    /**
+     * @param verticalToolBar the verticalToolBar to set
+     */
+    public void setVerticalToolBar(boolean verticalToolBar) {
+        boolean oldVerticalToolBar = this.verticalToolBar;
+        this.verticalToolBar = verticalToolBar;
+        this.setDirty(true);
+        this.setRestartRequired(true);
+        firePropertyChange(VERTICAL_TOOLBAR, oldVerticalToolBar, verticalToolBar);
     }
 
     /**
@@ -381,5 +407,15 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         if (oldRestartRequired != restartRequired) {
             propertyChangeSupport.firePropertyChange(PROP_RESTARTREQUIRED, oldRestartRequired, restartRequired);
         }
+    }
+
+    @Override
+    public boolean isInitializedWithExceptions(Profile profile) {
+        return this.initialized && !this.exceptions.isEmpty();
+    }
+
+    @Override
+    public List<Exception> getInitializationExceptions(Profile profile) {
+        return new ArrayList<>(this.exceptions);
     }
 }

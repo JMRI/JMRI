@@ -1,4 +1,3 @@
-// AutomationManager.java
 package jmri.jmrit.operations.automation;
 
 import java.util.ArrayList;
@@ -290,4 +289,4 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
 
 }
 
-/* @(#)AutomationManager.java */
+

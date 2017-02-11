@@ -1,4 +1,3 @@
-// ListAction.java
 package jmri.jmrix.maple.assignment;
 
 import java.awt.event.ActionEvent;
@@ -13,11 +12,6 @@ import org.slf4j.LoggerFactory;
   */
 public class ListAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 969660510115409385L;
-
     public ListAction(String s) {
         super(s);
     }
@@ -26,6 +20,7 @@ public class ListAction extends AbstractAction {
         this("List C/MRI Assignments");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         ListFrame f = new ListFrame();
         try {

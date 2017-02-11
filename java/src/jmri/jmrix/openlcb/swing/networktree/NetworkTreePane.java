@@ -1,16 +1,7 @@
 package jmri.jmrix.openlcb.swing.networktree;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.JTree;
-import javax.swing.Timer;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -25,10 +16,6 @@ import org.openlcb.Connection;
 import org.openlcb.MimicNodeStore;
 import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
-import org.openlcb.cdi.impl.ConfigRepresentation;
-import org.openlcb.cdi.jdom.CdiMemConfigReader;
-import org.openlcb.cdi.jdom.JdomCdiReader;
-import org.openlcb.cdi.swing.CdiPanel;
 import org.openlcb.implementations.MemoryConfigurationService;
 import org.openlcb.swing.memconfig.MemConfigDescriptionPane;
 import org.openlcb.swing.memconfig.MemConfigReadWritePane;
@@ -44,23 +31,20 @@ import org.slf4j.LoggerFactory;
  */
 public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanListener, CanPanelInterface {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2643128840399163414L;
-
     public NetworkTreePane() {
         super();
     }
 
     CanSystemConnectionMemo memo;
 
+    @Override
     public void initContext(Object context) {
         if (context instanceof CanSystemConnectionMemo) {
             initComponents((CanSystemConnectionMemo) context);
         }
     }
 
+    @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         this.memo = memo;
 
@@ -70,6 +54,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
 
         treePane = new TreePane();
+        treePane.setPreferredSize(new Dimension(300, 300));
 
         treePane.initComponents(
                 (MimicNodeStore) memo.get(MimicNodeStore.class),
@@ -80,6 +65,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
         add(treePane);
 
         treePane.addTreeSelectionListener(new TreeSelectionListener() {
+            @Override
             public void valueChanged(TreeSelectionEvent e) {
                 JTree tree = (JTree) e.getSource();
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
@@ -97,6 +83,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
 
     TreePane treePane;
 
+    @Override
     public String getTitle() {
         return "OpenLCB Network Tree";
     }
@@ -104,13 +91,16 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
     protected void init() {
     }
 
+    @Override
     public void dispose() {
         memo.getTrafficController().removeCanListener(this);
     }
 
+    @Override
     public synchronized void message(CanMessage l) {  // receive a message and log it
     }
 
+    @Override
     public synchronized void reply(CanReply l) {  // receive a reply and log it
     }
 
@@ -118,11 +108,6 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -9075693791903690311L;
 
         public Default() {
             super("Openlcb Network Tree",
@@ -150,16 +135,20 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
         MimicNodeStore store;
         MemoryConfigurationService mcs;
 
+        @Override
         public NodeTreeRep.SelectionKey cdiKey(String name, NodeID node) {
             return new NodeTreeRep.SelectionKey(name, node) {
+                @Override
                 public void select(DefaultMutableTreeNode rep) {
                     openCdiPane(node);
                 }
             };
         }
 
+        @Override
         public NodeTreeRep.SelectionKey configurationKey(String name, NodeID node) {
             return new NodeTreeRep.SelectionKey(name, node) {
+                @Override
                 public void select(DefaultMutableTreeNode rep) {
                     openConfigurePane(node);
                 }

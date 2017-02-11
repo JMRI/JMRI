@@ -1,5 +1,6 @@
 package jmri.jmrix.tams;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.LinkedList;
 import java.util.Queue;
 import jmri.DccLocoAddress;
@@ -100,6 +101,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
      * Send the message to set the state of functions F0, F1, F2, F3, F4. To
      * send function group 1 we have to also send speed, direction etc.
      */
+    @Override
     protected void sendFunctionGroup1() {
 
         StringBuilder sb = new StringBuilder();
@@ -127,6 +129,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
     /**
      * Send the message to set the state of functions F5, F6, F7, F8.
      */
+    @Override
     protected void sendFunctionGroup2() {
         StringBuilder sb = new StringBuilder();
         sb.append("xF ");
@@ -151,6 +154,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         tmq.add(tm);
     }
 
+    @Override
     protected void sendFunctionGroup3() {
         StringBuilder sb = new StringBuilder();
         sb.append("xFX ");
@@ -178,7 +182,8 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @Override
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
@@ -217,6 +222,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         }
     }
 
+    @Override
     public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
@@ -230,16 +236,19 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
 
     TamsTrafficController tc;
 
+    @Override
     public LocoAddress getLocoAddress() {
         return address;
     }
 
+    @Override
     protected void throttleDispose() {
         active = false;
         tm = TamsMessage.getXEvtLok();
         tc.removePollMessage(tm, this);
     }
 
+    @Override
     public void message(TamsMessage m) {
         // messages are ignored
     }
@@ -259,6 +268,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         }
     }
 
+    @Override
     public void reply(TamsReply tr) {
         //log.info("*** Loco reply ***");
         if(tmq.isEmpty()){

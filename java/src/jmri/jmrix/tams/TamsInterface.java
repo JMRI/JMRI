@@ -1,4 +1,3 @@
-// TamsInterface.java
 package jmri.jmrix.tams;
 
 /**
@@ -31,4 +30,4 @@ public interface TamsInterface {
     void sendTamsMessage(TamsMessage m, TamsListener l);
 }
 
-/* @(#)TamsInterface.java */
+

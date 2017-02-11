@@ -11,11 +11,6 @@ import jmri.jmrix.can.swing.CanNamedPaneAction;
  */
 public class OpenLcbMenu extends JMenu {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5110967735264499487L;
-
     public OpenLcbMenu(jmri.jmrix.can.CanSystemConnectionMemo memo) {
         super();
 

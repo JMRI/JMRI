@@ -3,7 +3,6 @@ package jmri.jmrix.cmri.serial.serialmon;
 import jmri.jmrix.cmri.serial.SerialListener;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialReply;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
@@ -20,20 +19,24 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         _memo = memo;
     }
 
+    @Override
     protected String title() {
         return "CMRI Serial Command Monitor";
     }
 
+    @Override
     protected void init() {
         // connect to TrafficController
         _memo.getTrafficController().addSerialListener(this);
     }
 
+    @Override
     public void dispose() {
         _memo.getTrafficController().removeSerialListener(this);
         super.dispose();
     }
 
+    @Override
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         // check for valid length
         if (l.getNumDataElements() < 2) {
@@ -78,6 +81,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         }
     }
 
+    @Override
     public synchronized void reply(SerialReply l) {  // receive a reply message and log it
         // check for valid length
         if (l.getNumDataElements() < 2) {

@@ -1,4 +1,3 @@
-// TieTableModel.java
 package jmri.jmrix.openlcb.swing.tie;
 
 import java.awt.Font;
@@ -17,41 +16,43 @@ import org.slf4j.LoggerFactory;
  */
 public class TieTableModel extends AbstractTableModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3376418873299331229L;
-
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
 
     public static final int USERNAME_COLUMN = 0;
     public static final int ID_COLUMN = 1;
     String[] columnName = new String[]{"User Name", "ID"};
 
+    @Override
     public String getColumnName(int c) {
         return columnName[c];
     }
 
+    @Override
     public Class<?> getColumnClass(int c) {
         return String.class;
     }
 
+    @Override
     public boolean isCellEditable(int r, int c) {
         return false;
     }
 
+    @Override
     public int getColumnCount() {
         return columnName.length;
     }
 
+    @Override
     public int getRowCount() {
         return dummy.length;
     }
 
+    @Override
     public Object getValueAt(int r, int c) {
         return dummy[r][c];  // for testing
     }
 
+    @Override
     public void setValueAt(Object type, int r, int c) {
         // nothing is stored here
     }
@@ -201,5 +202,3 @@ public class TieTableModel extends AbstractTableModel {
     private final static Logger log = LoggerFactory.getLogger(TieTableModel.class.getName());
 
 }
-
-/* @(#)TieTableModel.java */

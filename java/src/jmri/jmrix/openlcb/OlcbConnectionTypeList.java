@@ -1,4 +1,3 @@
-// OlcbConnectionTypeList.java
 package jmri.jmrix.openlcb;
 
 /**

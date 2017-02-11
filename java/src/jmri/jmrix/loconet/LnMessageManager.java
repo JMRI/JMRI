@@ -1,4 +1,3 @@
-// LnMessageManager.java
 package jmri.jmrix.loconet;
 
 /**
@@ -61,9 +60,7 @@ public class LnMessageManager implements LocoNetListener {
      * This doesn't do anything now. Eventually, it will handle the user
      * response.
      */
+    @Override
     public void message(LocoNetMessage m) {
     }
 }
-
-
-/* @(#)LnMessageManager.java */

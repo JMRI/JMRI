@@ -18,6 +18,7 @@ public class NamedBeanComparator extends SystemNameComparator {
     public NamedBeanComparator() {
     }
 
+    @Override
     public int compare(Object ob1, Object ob2) {
         String uName1 = ((NamedBean) ob1).getUserName();
         String uName2 = ((NamedBean) ob2).getUserName();

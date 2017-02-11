@@ -62,6 +62,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         JPanel panel = new JPanel();
         _addTableButton = new JButton(Bundle.getMessage("CreateNewItem"));
         _addTableButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 makeAddToTableWindow();
             }
@@ -77,6 +78,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         _selectionModel.setPositionRange(size - 3);
         JButton clearSelectionButton = new JButton(Bundle.getMessage("ClearSelection"));
         clearSelectionButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 clearSelections();
             }
@@ -122,6 +124,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         ButtonGroup group2 = new ButtonGroup();
         JRadioButton button = new JRadioButton(Bundle.getMessage("LeftRight"));
         button.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 _upDown = false;
             }
@@ -131,6 +134,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         button.setSelected(true);
         button = new JRadioButton(Bundle.getMessage("UpDown"));
         button.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 _upDown = true;
             }
@@ -340,12 +344,12 @@ public class MultiSensorItemPanel extends TableItemPanel {
 
         HashMap<String, NamedIcon> iconMap;
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // icon map is within package 
         public IconDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
             super(flavor, icon);
-            iconMap = map;
+            iconMap = new HashMap<>(map);
         }
 
+        @Override
         protected boolean okToDrag() {
             ArrayList<NamedBean> selections = _selectionModel.getSelections();
             if (selections == null) {

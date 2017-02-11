@@ -13,6 +13,7 @@ public interface Message {
 
     void setElement(int n, int v);
 
+    @Override
     String toString();
 
 }

@@ -1,4 +1,3 @@
-// XBeeConnectionMemo.java
 package jmri.jmrix.ieee802154.xbee;
 
 import java.util.ResourceBundle;
@@ -163,10 +162,12 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
 
     private TurnoutManager turnoutManager = null;
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.ieee802154.IEEE802154ActionListBundle");
     }
 
+    @Override
     public void dispose() {
         InstanceManager.deregister(this, XBeeConnectionMemo.class);
         super.dispose();
@@ -177,4 +178,4 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
 }
 
 
-/* @(#)XBeeConnectionMemo.java */
+

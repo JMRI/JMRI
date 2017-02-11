@@ -1,11 +1,10 @@
 package jmri.jmrit.logix;
 
-import jmri.*;
-
-import org.junit.Assert;
+import jmri.Block;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the OBlockManager class
@@ -40,8 +39,12 @@ public class OBlockManagerTest extends TestCase {
         } catch (IllegalArgumentException ex) {
             correct = true;
         }
-        Assert.assertTrue("Exception thrown properly", correct);
-        
+        Assert.assertTrue("Exception thrown properly", correct);     
+    }
+    
+    public void testCreateNewOBlock() {
+        Assert.assertNull("createNewOBlock", l.createNewOBlock("", "user"));
+        Assert.assertNull("createNewOBlock", l.createNewOBlock("OB", "user"));
     }
 
     // from here down is testing infrastructure

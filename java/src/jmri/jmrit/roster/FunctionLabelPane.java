@@ -266,9 +266,6 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     }
     boolean print = false;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     public void printPane(HardcopyWriter w) {
         // if pane is empty, don't print anything
         //if (varList.size() == 0 && cvList.size() == 0) return;
@@ -282,9 +279,9 @@ public class FunctionLabelPane extends javax.swing.JPanel {
 
         try {
             //Create a string of spaces the width of the first column
-            String spaces = "";
+            StringBuilder spaces = new StringBuilder();
             for (int i = 0; i < col1Width; i++) {
-                spaces = spaces + " ";
+                spaces.append(" ");
             }
             // start with pane name in bold
             String heading1 = "Function";
