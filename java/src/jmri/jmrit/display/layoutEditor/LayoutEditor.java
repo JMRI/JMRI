@@ -240,6 +240,20 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JLabel xLabel = new JLabel("00");
     private JLabel yLabel = new JLabel("00");
 
+    private JLabel zoomLabel = new JLabel("x1");
+
+    private JMenu zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
+    private JRadioButtonMenuItem zoom025Item = new JRadioButtonMenuItem("x 0.25");
+    private JRadioButtonMenuItem zoom05Item = new JRadioButtonMenuItem("x 0.5");
+    private JRadioButtonMenuItem zoom075Item = new JRadioButtonMenuItem("x 0.75");
+    private JRadioButtonMenuItem noZoomItem = new JRadioButtonMenuItem(rb.getString("NoZoom"));
+    private JRadioButtonMenuItem zoom15Item = new JRadioButtonMenuItem("x 1.5");
+    private JRadioButtonMenuItem zoom20Item = new JRadioButtonMenuItem("x 2.0");
+    private JRadioButtonMenuItem zoom30Item = new JRadioButtonMenuItem("x 3.0");
+    private JRadioButtonMenuItem zoom40Item = new JRadioButtonMenuItem("x 4.0");
+    private JRadioButtonMenuItem zoom50Item = new JRadioButtonMenuItem("x 5.0");
+    private JRadioButtonMenuItem zoom60Item = new JRadioButtonMenuItem("x 6.0");
+
     // end of main panel controls
     private boolean delayedPopupTrigger = false;
     private transient Point2D currentPoint = new Point2D.Double(100.0, 100.0);
@@ -730,6 +744,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         xLabel.setPreferredSize(coordSize);
         yLabel.setPreferredSize(coordSize);
 
+        JPanel zoomPanel = new JPanel();
+        zoomPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        zoomPanel.add(new JLabel(rb.getString("ZoomLabel") + ":"));
+        zoomPanel.add(zoomLabel);
+
         JPanel locationPanel = new JPanel();
         locationPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         locationPanel.add(new JLabel("    " + rb.getString("Location") + ":"));
@@ -836,7 +855,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         blockIDComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
-                String newName = (String) blockIDComboBox.getEditor().getItem();
+                String newName = blockIDComboBox.getEditor().getItem().toString();
                 newName = (null != newName) ? newName.trim() : "";
                 LayoutBlock b = provideLayoutBlock(newName);
                 if (b != null) {
@@ -1139,12 +1158,21 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             editToolBarPanel.add(Box.createVerticalGlue());
 
+            JPanel bottomPanel = new JPanel();
+            zoomPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, zoomPanel.getPreferredSize().height));
             locationPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, locationPanel.getPreferredSize().height));
-            editToolBarPanel.add(locationPanel, BorderLayout.SOUTH);;
+            bottomPanel.add(zoomPanel);
+            bottomPanel.add(locationPanel);
+            bottomPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, bottomPanel.getPreferredSize().height));
+            editToolBarPanel.add(bottomPanel, BorderLayout.SOUTH);;
         } else {
             top4.add(new JLabel("    "));
             top4.add(iconLabelButton);
             top4.add(changeIconsButton);
+
+            top4.add(Box.createHorizontalGlue());
+
+            top4.add(zoomPanel);
 
             top4.add(Box.createHorizontalGlue());
 
@@ -1319,9 +1347,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
 
                 String key = name.substring(3);
+                //log.info("VTCode[{}]:'{}'", key, code);
                 stringsToVTCodes.put(key, code);
             }
         }
+        return;
     }
 
     LayoutEditorTools tools = null;
@@ -1594,13 +1624,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         snapToGridOnAddItem.setSelected(snapToGridOnAdd);
         // snap to grid on move item
         snapToGridOnMoveItem = new JCheckBoxMenuItem(rb.getString("SnapToGridOnMove"));
-        if (SystemType.isMacOSX()) {
-            snapToGridOnMoveItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
-                    rb.getString("SnapToGridOnMoveAccelerator")), ActionEvent.META_MASK | ActionEvent.SHIFT_MASK));
-        } else {
-            snapToGridOnMoveItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
-                    rb.getString("SnapToGridOnMoveAccelerator")), primary_modifier | ActionEvent.SHIFT_MASK));
-        }
+        snapToGridOnMoveItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                rb.getString("SnapToGridOnMoveAccelerator")), primary_modifier | ActionEvent.SHIFT_MASK));
         optionMenu.add(snapToGridOnMoveItem);
         snapToGridOnMoveItem.addActionListener(new ActionListener() {
             @Override
@@ -2045,74 +2070,35 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     private void setupZoomMenu(JMenuBar menuBar) {
-        JMenu zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
         zoomMenu.setMnemonic(stringsToVTCodes.get(rb.getString("MenuZoomMnemonic")));
         menuBar.add(zoomMenu);
         ButtonGroup zoomButtonGroup = new ButtonGroup();
         // add zoom choices to menu
-        JRadioButtonMenuItem zoom025Item = new JRadioButtonMenuItem("x 0.25");
-        JRadioButtonMenuItem zoom05Item = new JRadioButtonMenuItem("x 0.5");
-        JRadioButtonMenuItem zoom075Item = new JRadioButtonMenuItem("x 0.75");
-        JRadioButtonMenuItem zoom15Item = new JRadioButtonMenuItem("x 1.5");
-        JRadioButtonMenuItem zoom20Item = new JRadioButtonMenuItem("x 2.0");
-        JRadioButtonMenuItem noZoomItem = new JRadioButtonMenuItem(rb.getString("NoZoom"));
-        JRadioButtonMenuItem zoom30Item = new JRadioButtonMenuItem("x 3.0");
-        JRadioButtonMenuItem zoom40Item = new JRadioButtonMenuItem("x 4.0");
-        JRadioButtonMenuItem zoom50Item = new JRadioButtonMenuItem("x 5.0");
-        JRadioButtonMenuItem zoom60Item = new JRadioButtonMenuItem("x 6.0");
-
         JMenuItem zoomInItem = new JMenuItem(rb.getString("ZoomIn"));
         zoomInItem.setMnemonic(stringsToVTCodes.get(rb.getString("zoomInMnemonic")));
         int primary_modifier = SystemType.isMacOSX() ? ActionEvent.META_MASK : ActionEvent.CTRL_MASK;
-        if (SystemType.isMacOSX()) {
-            zoomInItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
-                    rb.getString("zoomInAccelerator")), ActionEvent.META_MASK));
+        String zoomInAccelerator = rb.getString("zoomInAccelerator");
+        //log.info("zoomInAccelerator: " + zoomInAccelerator);
+        if (zoomInAccelerator.equals("EQUALS")) {
+            zoomInItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(zoomInAccelerator), primary_modifier | ActionEvent.SHIFT_MASK));
         } else {
-            zoomInItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
-                    rb.getString("zoomInAccelerator")), primary_modifier));
+            zoomInItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(zoomInAccelerator), primary_modifier));
         }
         zoomMenu.add(zoomInItem);
-        zoomInItem.addActionListener(new ActionListener() {
+        ActionListener pressedZoomInActionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                int newZoom = (int) (zoomIn() * 100);
-                switch (newZoom) {
-                    case 25:
-                        zoom025Item.setSelected(true);
-                        break;
-                    case 50:
-                        zoom05Item.setSelected(true);
-                        break;
-                    case 75:
-                        zoom075Item.setSelected(true);
-                        break;
-                    case 100:
-                        noZoomItem.setSelected(true);
-                        break;
-                    case 150:
-                        zoom15Item.setSelected(true);
-                        break;
-                    case 200:
-                        zoom20Item.setSelected(true);
-                        break;
-                    case 300:
-                        zoom30Item.setSelected(true);
-                        break;
-                    case 400:
-                        zoom40Item.setSelected(true);
-                        break;
-                    case 500:
-                        zoom50Item.setSelected(true);
-                        break;
-                    case 600:
-                        zoom60Item.setSelected(true);
-                        break;
-                    default:
-                        log.warn("Unexpected newZoom {}  in setupZoomMenu", newZoom);
-                        break;
-                }
+                zoomIn();
             }
-        });
+        };
+        zoomInItem.addActionListener(pressedZoomInActionListener);
+
+        // Sorry for leaving this in… trying to get both command-plus on keyboard and keypad to work…
+//        if (zoomInAccelerator.equals("ADD")) {
+//            editToolBarContainer.getInputMap().put(KeyStroke.getKeyStroke("PLUS"), "pressedZoomIn");
+//            editToolBarContainer.getActionMap().put("pressedZoomIn", pressedZoomIn);
+//        }
+
         JMenuItem zoomOutItem = new JMenuItem(rb.getString("ZoomOut"));
         zoomOutItem.setMnemonic(stringsToVTCodes.get(rb.getString("zoomOutMnemonic")));
         zoomOutItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
@@ -2121,42 +2107,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         zoomOutItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                int newZoom = (int) (zoomOut() * 100);
-                switch (newZoom) {
-                    case 25:
-                        zoom025Item.setSelected(true);
-                        break;
-                    case 50:
-                        zoom05Item.setSelected(true);
-                        break;
-                    case 75:
-                        zoom075Item.setSelected(true);
-                        break;
-                    case 100:
-                        noZoomItem.setSelected(true);
-                        break;
-                    case 150:
-                        zoom15Item.setSelected(true);
-                        break;
-                    case 200:
-                        zoom20Item.setSelected(true);
-                        break;
-                    case 300:
-                        zoom30Item.setSelected(true);
-                        break;
-                    case 400:
-                        zoom40Item.setSelected(true);
-                        break;
-                    case 500:
-                        zoom50Item.setSelected(true);
-                        break;
-                    case 600:
-                        zoom60Item.setSelected(true);
-                        break;
-                    default:
-                        log.warn("Unexpected newZoom {}  in setupZoomMenu", newZoom);
-                        break;
-                }
+                zoomOut();
             }
         });
         // add zoom choices to menu
@@ -2248,31 +2199,54 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         });
         zoomButtonGroup.add(zoom60Item);
 
+        // note: because this LayoutEditor object was just instantiated its
+        // zoom attribute is 1.0… if it's being instantiated from an XML file
+        // that has a zoom attribute for this object then setZoom will be
+        // called after this method returns and we'll select the appropriate
+        // menu item then.
         noZoomItem.setSelected(true);
     }
 
-    private void setZoom(double factor) {
-        setPaintScale(factor);
+    private void selectZoomMenuItem(double zoomFactor) {
+        // this will put zoomFactor on 25% increments
+        // (so it will more likely match one of these values)
+        int newZoomFactor = ((int) (zoomFactor * 4)) * 25;
+        zoom025Item.setSelected(newZoomFactor == 25);
+        zoom05Item.setSelected(newZoomFactor == 50);
+        zoom075Item.setSelected(newZoomFactor == 75);
+        noZoomItem.setSelected(newZoomFactor == 100);
+        zoom15Item.setSelected(newZoomFactor == 150);
+        zoom20Item.setSelected(newZoomFactor == 200);
+        zoom30Item.setSelected(newZoomFactor == 300);
+        zoom40Item.setSelected(newZoomFactor == 400);
+        zoom50Item.setSelected(newZoomFactor == 500);
+        zoom60Item.setSelected(newZoomFactor == 600);
+    }
+
+    public double setZoom(double zoomFactor) {
+        double newZoom = Math.min(Math.max(zoomFactor, minZoom), maxZoom);
+        if (newZoom != getPaintScale()) {
+            setPaintScale(newZoom);
+            zoomLabel.setText(String.format("x%1$,.2f", newZoom));
+            selectZoomMenuItem(newZoom);
+        }
+        return getPaintScale();
+    }
+
+    public double getZoom() {
+        return getPaintScale();
     }
 
     private double zoomIn() {
         double newScale;
         if (_paintScale < 1.0) {
             newScale = _paintScale + stepUnderOne;
-        } else if (_paintScale < 2) {
+        } else if (_paintScale < 2.0) {
             newScale = _paintScale + stepOverOne;
         } else {
             newScale = _paintScale + stepOverTwo;
         }
-
-        if (newScale > maxZoom) {
-            newScale = maxZoom;
-        } else if (newScale < minZoom) {
-            newScale = minZoom;
-        }
-
-        setZoom(newScale);
-        return newScale;
+        return setZoom(newScale);
     }
 
     private double zoomOut() {
@@ -2284,15 +2258,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         } else {
             newScale = _paintScale - stepUnderOne;
         }
-
-        if (newScale > maxZoom) {
-            newScale = maxZoom;
-        } else if (newScale < minZoom) {
-            newScale = minZoom;
-        }
-
-        setZoom(newScale);
-        return newScale;
+        return setZoom(newScale);
     }
 
     private Point2D windowCenter() {
@@ -6663,14 +6629,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setLink(newTrack, LayoutTrack.TRACK, beginObject, beginPointType);
         setLink(newTrack, LayoutTrack.TRACK, foundObject, foundPointType);
         // check on layout block
-        String newName = (String) blockIDComboBox.getEditor().getItem();
+        String newName = blockIDComboBox.getEditor().getItem().toString();
         newName = (null != newName) ? newName.trim() : "";
         LayoutBlock b = provideLayoutBlock(newName);
         if (b != null) {
             newTrack.setLayoutBlock(b);
             auxTools.setBlockConnectivityChanged();
             // check on occupancy sensor
-            String sensorName = (String) blockSensorComboBox.getEditor().getItem();
+            String sensorName = blockSensorComboBox.getEditor().getItem().toString();
             sensorName = (null != sensorName) ? sensorName.trim() : "";
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -6706,14 +6672,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         xingList.add(o);
         setDirty(true);
         // check on layout block
-        String newName = (String) blockIDComboBox.getEditor().getItem();
+        String newName = blockIDComboBox.getEditor().getItem().toString();
         newName = (null != newName) ? newName.trim() : "";
         LayoutBlock b = provideLayoutBlock(newName);
         if (b != null) {
             o.setLayoutBlockAC(b);
             o.setLayoutBlockBD(b);
             // check on occupancy sensor
-            String sensorName = (String) blockSensorComboBox.getEditor().getItem();
+            String sensorName = blockSensorComboBox.getEditor().getItem().toString();
             sensorName = (null != sensorName) ? sensorName.trim() : "";
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -6731,7 +6697,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      */
     public void addLayoutSlip(int type) {
         double rot = 0.0;
-        String s = rotationComboBox.getEditor().getItem().toString().trim();
+        String s = rotationComboBox.getEditor().getItem().toString();
+        s = (null != s) ? s.trim() : "";
         if (s.length() < 1) {
             rot = 0.0;
         } else {
@@ -6762,13 +6729,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setDirty(true);
 
         // check on layout block
-        String newName = (String) blockIDComboBox.getEditor().getItem();
+        String newName = blockIDComboBox.getEditor().getItem().toString();
         newName = (null != newName) ? newName.trim() : "";
         LayoutBlock b = provideLayoutBlock(newName);
         if (b != null) {
             o.setLayoutBlock(b);
             // check on occupancy sensor
-            String sensorName = (String) blockSensorComboBox.getEditor().getItem();
+            String sensorName = blockSensorComboBox.getEditor().getItem().toString();
             sensorName = (null != sensorName) ? sensorName.trim() : "";
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -6779,7 +6746,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
 
-        String turnoutName = (String) turnoutNameComboBox.getEditor().getItem();
+        String turnoutName = turnoutNameComboBox.getEditor().getItem().toString();
         turnoutName = (null != turnoutName) ? turnoutName.trim() : "";
         if (validatePhysicalTurnout(turnoutName, this)) {
             // turnout is valid and unique.
@@ -6793,7 +6760,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             turnoutNameComboBox.setSelectedIndex(-1);
         }
 
-        turnoutName = (String) extraTurnoutNameComboBox.getEditor().getItem();
+        turnoutName = extraTurnoutNameComboBox.getEditor().getItem().toString();
         turnoutName = (null != turnoutName) ? turnoutName.trim() : "";
         if (validatePhysicalTurnout(turnoutName, this)) {
             // turnout is valid and unique.
@@ -6814,7 +6781,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public void addLayoutTurnout(int type) {
         // get the rotation entry
         double rot = 0.0;
-        String s = rotationComboBox.getEditor().getItem().toString().trim();
+        String s = rotationComboBox.getEditor().getItem().toString();
+        s = (null != s) ? s.trim() : "";
         if (s.length() < 1) {
             rot = 0.0;
         } else {
@@ -6844,13 +6812,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         turnoutList.add(o);
         setDirty(true);
         // check on layout block
-        String newName = (String) blockIDComboBox.getEditor().getItem();
+        String newName = blockIDComboBox.getEditor().getItem().toString();
         newName = (null != newName) ? newName.trim() : "";
         LayoutBlock b = provideLayoutBlock(newName);
         if (b != null) {
             o.setLayoutBlock(b);
             // check on occupancy sensor
-            String sensorName = (String) blockSensorComboBox.getEditor().getItem();
+            String sensorName = blockSensorComboBox.getEditor().getItem().toString();
             sensorName = (null != sensorName) ? sensorName.trim() : "";
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -6863,7 +6831,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // set default continuing route Turnout State
         o.setContinuingSense(Turnout.CLOSED);
         // check on a physical turnout
-        String turnoutName = (String) turnoutNameComboBox.getEditor().getItem();
+        String turnoutName = turnoutNameComboBox.getEditor().getItem().toString();
         turnoutName = (null != turnoutName) ? turnoutName.trim() : "";
         if (validatePhysicalTurnout(turnoutName, this)) {
             // turnout is valid and unique.
@@ -7799,7 +7767,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * Add a sensor indicator to the Draw Panel
      */
     void addSensor() {
-        String newName = (String) sensorComboBox.getEditor().getItem();
+        String newName = sensorComboBox.getEditor().getItem().toString();
         newName = (null != newName) ? newName.trim() : "";
         if (newName.length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error10"),
@@ -7845,7 +7813,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      */
     void addSignalHead() {
         // check for valid signal head entry
-        String newName = (String) signalHeadComboBox.getEditor().getItem();
+        String newName = signalHeadComboBox.getEditor().getItem().toString();
         newName = (null != newName) ? newName.trim() : "";
 
         SignalHead mHead = null;
@@ -7931,7 +7899,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     void addSignalMast() {
         // check for valid signal head entry
-        String newName = (String) signalMastComboBox.getEditor().getItem();
+        String newName = signalMastComboBox.getEditor().getItem().toString();
         newName = (null != newName) ? newName.trim() : "";
         SignalMast mMast = null;
         if (!newName.equals("")) {
@@ -8031,7 +7999,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * Add a memory label to the Draw Panel
      */
     void addMemory() {
-        String memoryName = (String) textMemoryComboBox.getEditor().getItem();
+        String memoryName = textMemoryComboBox.getEditor().getItem().toString();
         memoryName = (null != memoryName) ? memoryName.trim() : "";
         if (memoryName.length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error11a"),
@@ -8057,7 +8025,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     void addBlockContents() {
-        String newName = (String) blockContentsComboBox.getEditor().getItem();
+        String newName = blockContentsComboBox.getEditor().getItem().toString();
         newName = (null != newName) ? newName.trim() : "";
         if (newName.length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error11b"),
