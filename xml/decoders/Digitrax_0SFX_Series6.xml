@@ -17,6 +17,7 @@
   <version author="Alain Le Marchand" version="1.1" lastUpdated="20140615"/>
   <version author="Alain Le Marchand" version="2" lastUpdated="20150614"/>
   <version author="John McMasters" version="3" lastUpdated="20150919"/>
+  <version author="Marc N Fournier" version="4" lastUpdated="20170211"/>
   <!-- Created from version 7 of the Digitrax_0SFX file -->
   <!--     and from Digitrax_2SFX file (John McMasters  1/26/2014, in JMRI Users file section)  -->
   <!--    Version 1 (Alain Le Marchand)                                             -->
@@ -30,9 +31,33 @@
    <!--   Version 3 (John McMasters)
 				 Create Extended Series 6 Steam and Diesel within Family for John McMasters' extended sound projects  -->
   <!-- WARNING :   Low and High Versions of decoders (CV07) unknown (by me) - to be adjusted after users feed back -->
+  <!--    Version 4 (Marc N Fournier) 
+                 Added 21MTC decoders: SDH186MT,SDXH186MT -->
   <decoder>
     <family name="SFX Sound Decoders - Series 6" mfg="Digitrax" lowVersionID="16" highVersionID="16">
-      <model model="SDH166D" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDH166D" comment="H0-Scale 8-bit Sound Decoder, wired">
+      <model model="SDH186MT" numOuts="8" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="21MTC" productID="SDH186MT" comment="H0-Scale 8-bit Sound Decoder, NMRA 21MTC">
+        <output name="1" label="White" connection="plug"/>
+        <output name="2" label="Yellow" connection="plug"/>
+        <output name="3" label="Green" connection="plug"/>
+        <output name="4" label="Violet" connection="plug"/>
+        <output name="5" label="F3-Brown" connection="plug"/>
+        <output name="6" label="F4-Yellow" connection="plug"/>
+		<output name="7" label="F5-Yellow" connection="plug"/>
+		<output name="8" label="F6-Yellow" connection="plug"/>
+        <size length="1.15" width="0.64" height="0.21" units="inches"/>
+      </model>
+	  <model model="SDXH186MT" numOuts="8" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="21MTC" productID="SDXH186MT" comment="H0-Scale 16-bit Sound Decoder, NMRA 21MTC">
+        <output name="1" label="White" connection="plug"/>
+        <output name="2" label="Yellow" connection="plug"/>
+        <output name="3" label="Green" connection="plug"/>
+        <output name="4" label="Violet" connection="plug"/>
+        <output name="5" label="F3-Brown" connection="plug"/>
+        <output name="6" label="F4-Yellow" connection="plug"/>
+		<output name="7" label="F5-Yellow" connection="plug"/>
+		<output name="8" label="F6-Yellow" connection="plug"/>
+        <size length="1.15" width="0.64" height="0.21" units="inches"/>
+      </model>
+	  <model model="SDH166D" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDH166D" comment="H0-Scale 8-bit Sound Decoder, wired">
         <output name="1" label="White" connection="wire"/>
         <output name="2" label="Yellow" connection="wire"/>
         <output name="3" label="Green" connection="wire"/>
@@ -261,7 +286,7 @@
         <label>Steam/Diesel Option</label>
         <label xml:lang="it">Opzioni Vapore-Diesel</label>
       </variable>
-      <variable CV="60" item="Sound Option 1" include="SDXH166D,SDXN136PS,SDXH166DExt">
+      <variable CV="60" item="Sound Option 1" include="SDXH166D,SDXH186MT,SDXN136PS,SDXH166DExt">
         <enumVal>
 		  <enumChoice choice="GP38 Diesel"/>
           <enumChoice choice="GE Evo Diesel"/>
@@ -275,7 +300,7 @@
         <label>Locomotive Sound Scheme</label>
         <label xml:lang="it">Schema Suoni Loco</label>
       </variable>
-      <variable CV="60" item="Sound Option 1" include="SDH166D,SDN136PS">
+      <variable CV="60" item="Sound Option 1" include="SDH166D,SDH186MT,SDN136PS">
         <enumVal>
           <enumChoice choice="Steam">
             <choice xml:lang="it">Vapore</choice>
@@ -288,7 +313,7 @@
         <label xml:lang="it">Opzioni Vapore-Diesel</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv61Series6.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv62.63LightingOptions.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv62.63.64LightingOptions.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <variable item="Speed Table" CV="67">
@@ -349,12 +374,12 @@
         <label>Steam Chuff/CAM Config</label>
         <label xml:lang="it">Configura Chuff-CAM</label>
       </variable>
-	  <variable CV="133" item="Sound Setting 15" default="63" include="SDXH166D,SDXN136PS,SDXH166DExt"> 
+	  <variable CV="133" item="Sound Setting 15" default="63" include="SDXH166D,SDXH186MT,SDXN136PS,SDXH166DExt"> 
         <decVal max="128"/>
         <label>Steam Chuff/CAM Config</label>
         <label xml:lang="it">Configura Chuff-CAM</label>
       </variable>
-	  <variable CV="133" item="Sound Setting 15" default="63" include="SDH166D,SDN136PS">
+	  <variable CV="133" item="Sound Setting 15" default="63" include="SDH166D,SDH186MT,SDN136PS">
         <decVal max="128"/>
         <label>Steam Chuff/CAM Config</label>
         <label xml:lang="it">Configura Chuff-CAM</label>
@@ -369,12 +394,12 @@
         <label>Steam Gear Ratio Trim</label>
         <label xml:lang="it">Regola rapporto marcia Vapore</label>
       </variable>
-      <variable CV="134" item="Sound Setting 16" tooltip="32=100%" default="32" include="SDXH166D,SDXN136PS,SDXH166DExt"> 
+      <variable CV="134" item="Sound Setting 16" tooltip="32=100%" default="32" include="SDXH166D,SDXH186MT,SDXN136PS,SDXH166DExt"> 
         <decVal max="128"/>
         <label>Steam Gear Ratio Trim</label>
         <label xml:lang="it">Regola rapporto marcia Vapore</label>
       </variable>
-      <variable CV="134" item="Sound Setting 16" tooltip="32=100%" default="32" include="SDH166D,SDN136PS">
+      <variable CV="134" item="Sound Setting 16" tooltip="32=100%" default="32" include="SDH166D,SDH186MT,SDN136PS">
         <decVal max="128"/>
         <label>Steam Gear Ratio Trim</label>
         <label xml:lang="it">Regola rapporto marcia Vapore</label>
@@ -389,12 +414,12 @@
         <label>Volume When Muted</label>
         <label xml:lang="it">Volume quando silenziato</label>
       </variable>
-      <variable CV="135" item="Sound Setting 3" include="SDXH166D,SDXN136PS,SDXH166DExt">
+      <variable CV="135" item="Sound Setting 3" include="SDXH166D,SDXH186MT,SDXN136PS,SDXH166DExt">
         <decVal/>
         <label>Volume When Muted</label>
         <label xml:lang="it">Volume quando silenziato</label>
       </variable>
-      <variable CV="135" item="Sound Setting 3" include="SDH166D,SDN136PS">
+      <variable CV="135" item="Sound Setting 3" include="SDH166D,SDH186MT,SDN136PS">
         <decVal/>
         <label>Volume When Muted</label>
         <label xml:lang="it">Volume quando silenziato</label>
@@ -409,12 +434,12 @@
         <label>Prime Mover Volume</label>
         <label xml:lang="it">Volume motore principale</label>
       </variable>
-      <variable CV="140" item="Sound Setting 4" default="60" include="SDXH166D,SDXN136PS,SDXH166DExt">
+      <variable CV="140" item="Sound Setting 4" default="60" include="SDXH166D,SDXH186MT,SDXN136PS,SDXH166DExt">
         <decVal max="64"/>
         <label>Prime Mover/Chuff Volume</label>
         <label xml:lang="it">Volume motore principale/Chuff</label>
       </variable>
-      <variable CV="140" item="Sound Setting 4" default="60" include="SDH166D,SDN136PS">
+      <variable CV="140" item="Sound Setting 4" default="60" include="SDH166D,SDH186MT,SDN136PS">
         <decVal max="64"/>
         <label>Prime Mover/Chuff Volume</label>
         <label xml:lang="it">Volume motore principale/Chuff</label>
@@ -429,12 +454,12 @@
         <label>Bell Volume</label>
         <label xml:lang="it">Volume Campana</label>
       </variable>
-      <variable CV="141" item="Sound Setting 5" default="25" include="SDXH166D,SDXN136PS,SDXH166DExt">
+      <variable CV="141" item="Sound Setting 5" default="25" include="SDXH166D,SDXH186MT,SDXN136PS,SDXH166DExt">
         <decVal max="64"/>
         <label>Bell Volume</label>
         <label xml:lang="it">Volume Campana</label>
       </variable>
-      <variable CV="141" item="Sound Setting 5" default="25" include="SDH166D,SDN136PS">
+      <variable CV="141" item="Sound Setting 5" default="25" include="SDH166D,SDH186MT,SDN136PS">
         <decVal max="64"/>
         <label>Bell Volume</label>
         <label xml:lang="it">Volume Campana</label>
@@ -449,12 +474,12 @@
         <label>Horn Volume</label>
         <label xml:lang="it">Volume Tromba</label>
       </variable>
-      <variable CV="142" item="Sound Setting 6" default="60" include="SDXH166D,SDXN136PS,SDXH166DExt">
+      <variable CV="142" item="Sound Setting 6" default="60" include="SDXH166D,SDXH186MT,SDXN136PS,SDXH166DExt">
         <decVal max="64"/>
         <label>Horn/Whistle Volume</label>
         <label xml:lang="it">Volume Tromba</label>
       </variable>
-      <variable CV="142" item="Sound Setting 6" default="60" include="SDH166D,SDN136PS">
+      <variable CV="142" item="Sound Setting 6" default="60" include="SDH166D,SDH186MT,SDN136PS">
         <decVal max="64"/>
         <label>Horn/Whistle Volume</label>
         <label xml:lang="it">Volume Tromba</label>
@@ -469,12 +494,12 @@
         <label>PopOff Volume</label>
         <label xml:lang="it">Volume Aria</label>
       </variable>
-      <variable CV="143" item="Sound Setting 7" default="30" include="SDXH166D,SDXN136PS,SDXH166DExt">
+      <variable CV="143" item="Sound Setting 7" default="30" include="SDXH166D,SDXH186MT,SDXN136PS,SDXH166DExt">
         <decVal max="64"/>
         <label>Air Features Volume</label>
         <label xml:lang="it">Volume Aria</label>
       </variable>
-      <variable CV="143" item="Sound Setting 7" default="30" include="SDH166D,SDN136PS">
+      <variable CV="143" item="Sound Setting 7" default="30" include="SDH166D,SDH186MT,SDN136PS">
         <decVal max="64"/>
         <label>Air Features Volume</label>
         <label xml:lang="it">Volume Aria</label>
@@ -489,12 +514,12 @@
         <label>Engine Brake Volume</label>
         <label xml:lang="it">Volume frenata</label>
       </variable>
-      <variable CV="144" item="Sound Setting 8" default="55" include="SDXH166D,SDXN136PS,SDXH166DExt">
+      <variable CV="144" item="Sound Setting 8" default="55" include="SDXH166D,SDXH186MT,SDXN136PS,SDXH166DExt">
         <decVal max="64"/>
         <label>Engine Brake Volume</label>
         <label xml:lang="it">Volume frenata</label>
       </variable>
-      <variable CV="144" item="Sound Setting 8" default="55" include="SDH166D,SDN136PS">
+      <variable CV="144" item="Sound Setting 8" default="55" include="SDH166D,SDH186MT,SDN136PS">
         <decVal max="64"/>
         <label>Dynamic Brake Volume</label>
         <label xml:lang="it">Volume frenata dinamica</label>
@@ -521,12 +546,12 @@
         <label>Air Drier Rate</label>
         <label xml:lang="it">Frequenza Compressore</label>
       </variable>
-      <variable CV="147" item="Sound Setting 11" tooltip="1= approx. 2 sec" default="22" include="SDXH166D,SDXN136PS,SDXH166DExt">
+      <variable CV="147" item="Sound Setting 11" tooltip="1= approx. 2 sec" default="22" include="SDXH166D,SDXH186MT,SDXN136PS,SDXH166DExt">
         <decVal max="64"/>
         <label>Air Drier Rate</label>
         <label xml:lang="it">Frequenza Compressore</label>
       </variable>
-      <variable CV="147" item="Sound Setting 11" tooltip="1= approx. 2 sec" default="2" include="SDH166D,SDN136PS">
+      <variable CV="147" item="Sound Setting 11" tooltip="1= approx. 2 sec" default="2" include="SDH166D,SDH186MT,SDN136PS">
         <decVal max="64"/>
         <label>Air Drier Rate</label>
         <label xml:lang="it">Frequenza Compressore</label>
@@ -541,12 +566,12 @@
         <label>Compressor Start Rate</label>
         <label xml:lang="it">Frequenza compressore Run</label>
       </variable>
-      <variable CV="148" item="Sound Setting 12" tooltip="Time ms. between Compressor cycles/Popoff" default="30" include="SDXH166D,SDXN136PS,SDXH166DExt">
+      <variable CV="148" item="Sound Setting 12" tooltip="Time ms. between Compressor cycles/Popoff" default="30" include="SDXH166D,SDXH186MT,SDXN136PS,SDXH166DExt">
         <decVal/>
         <label>Compressor Start Rate</label>
         <label xml:lang="it">Frequenza compressore Run/Popoff</label>
       </variable>
-      <variable CV="148" item="Sound Setting 12" tooltip="Time ms. between Compressor cycles/Popoff" default="30" include="SDH166D,SDN136PS">
+      <variable CV="148" item="Sound Setting 12" tooltip="Time ms. between Compressor cycles/Popoff" default="30" include="SDH166D,SDH186MT,SDN136PS">
         <decVal/>
         <label>Compressor Start Rate</label>
         <label xml:lang="it">Frequenza compressore Run/Popoff</label>
@@ -561,12 +586,12 @@
         <label>Compressor Run Time</label>
         <label xml:lang="it">Tempo accensione Compressore</label>
       </variable>
-      <variable CV="149" item="Sound Setting 13" default="20" include="SDXH166D,SDXN136PS,SDXH166DExt">
+      <variable CV="149" item="Sound Setting 13" default="20" include="SDXH166D,SDXH186MT,SDXN136PS,SDXH166DExt">
         <decVal/>
         <label>Compressor Run Time</label>
         <label xml:lang="it">Tempo accensione Compressore</label>
       </variable>
-      <variable CV="149" item="Sound Setting 13" default="20" include="SDH166D,SDN136PS">
+      <variable CV="149" item="Sound Setting 13" default="20" include="SDH166D,SDH186MT,SDN136PS">
         <decVal/>
         <label>Compressor On Time</label>
         <label xml:lang="it">Tempo accensione Compressore</label>
@@ -763,12 +788,12 @@
         <label>Sound Project Author ID</label>
         <label xml:lang="it">ID autore progetto Suono</label>
       </variable>
-      <variable item="Sound Project ID" CV="153" default="168" readOnly="yes" include="SDXH166D,SDXN136PS">
+      <variable item="Sound Project ID" CV="153" default="168" readOnly="yes" include="SDXH166D,SDXH186MT,SDXN136PS">
         <decVal/>
         <label>Sound Project ID</label>
         <label xml:lang="it">ID progetto Suono</label>
       </variable>
-      <variable item="Sound Project ID" CV="153" default="2" readOnly="yes" include="SDH166D,SDN136PS">
+      <variable item="Sound Project ID" CV="153" default="2" readOnly="yes" include="SDH166D,SDH186MT,SDN136PS">
         <decVal/>
         <label>Sound Project ID</label>
         <label xml:lang="it">ID progetto Suono</label>
@@ -778,12 +803,12 @@
         <label>Delay brake apply</label>
         <label xml:lang="it">Volume Spegnimento/Sicurezza Vapore</label>
       </variable>
-      <variable CV="154" item="Sound Setting 14" default="60" include="SDXH166D,SDXN136PS,SDXH166DExt">
+      <variable CV="154" item="Sound Setting 14" default="60" include="SDXH166D,SDXH186MT,SDXN136PS,SDXH166DExt">
         <decVal max="64"/>
         <label>Steam Blowdown/Safety Volume</label>
         <label xml:lang="it">Volume Spegnimento/Sicurezza Vapore</label>
       </variable>
-      <variable CV="154" item="Sound Setting 14" default="60" include="SDH166D,SDN136PS">
+      <variable CV="154" item="Sound Setting 14" default="60" include="SDH166D,SDH186MT,SDN136PS">
         <decVal max="64"/>
         <label>Steam Blowdown/Safety Volume</label>
         <label xml:lang="it">Volume Spegnimento/Sicurezza Vapore</label>
@@ -811,7 +836,7 @@
         <label>Playable Horn/Whistle Delay Rate</label>
         <label xml:lang="it">Tasso Ritardo Tromba</label>
       </variable>
-      <variable CV="157" item="Sound Option 4" include="SDXH166D,SDXN136PS,SDXH166DExt,SDXH166DExtS,SDXH166DExtD">
+      <variable CV="157" item="Sound Option 4" include="SDXH166D,SDXH186MT,SDXN136PS,SDXH166DExt,SDXH166DExtS,SDXH166DExtD">
         <enumVal>
           <enumChoice choice="Default Bell">
             <choice>Standard Bell</choice>

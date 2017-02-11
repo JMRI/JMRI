@@ -38,6 +38,12 @@
       <authorinitials>ALM</authorinitials>
       <revremark>Add minOut="1" to deal with "no function" Soundbugs(TM)</revremark>
     </revision>
+	<revision>
+      <revnumber>3</revnumber>
+      <date>2017-02-10</date>
+      <authorinitials>MFO</authorinitials>
+      <revremark>Add CV64 to deal with 21MTC Logic Level Compatability</revremark>
+    </revision>
   </revhistory>
   <variable CV="62" mask="VVVVXXXX" item="Global lighting option 1" minOut="1" tooltip="0 is no keep-alive, use with LEDs">
     <decVal max="15"/>
@@ -59,5 +65,19 @@
     <label xml:lang="it">Tempo di carica Luci Ditch</label>
     <comment>0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds</comment>
     <comment xml:lang="it">0=nessuno, 40 realistico (5sec), 255= circa 20 sec.</comment>
+  </variable>
+  <variable CV="64" item="Global lighting option 4"  mask="XVXXXXXX" default="0" include="DH166MT,SDH186MT,SDXH186MT" tooltip="Select between Logic Level compat or 12 V compat">
+    <enumVal>
+      <enumChoice choice="Logic Level Compatability">
+        <choice>Logic Level Compatability</choice>
+        <choice xml:lang="it">Logic Level Compatability</choice>
+      </enumChoice>
+      <enumChoice choice="12 Volt Compatability">
+        <choice>12 Volt Compatability</choice>
+        <choice xml:lang="it">12 Volt Compatability</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Logic Level Compatability</label>
+    <label xml:lang="it">Logic Level Compatability</label>
   </variable>
 </variables>
