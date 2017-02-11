@@ -2224,9 +2224,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     public double setZoom(double zoomFactor) {
-        setPaintScale(zoomFactor);
-        zoomLabel.setText(String.format("x%1$,.2f", zoomFactor));
-        selectZoomMenuItem(zoomFactor);
+        double newZoom = Math.min(Math.max(zoomFactor, minZoom), maxZoom);
+        if (newZoom != getPaintScale()) {
+            setPaintScale(newZoom);
+            zoomLabel.setText(String.format("x%1$,.2f", newZoom));
+            selectZoomMenuItem(newZoom);
+        }
         return getPaintScale();
     }
 
@@ -2243,9 +2246,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         } else {
             newScale = _paintScale + stepOverTwo;
         }
-        newScale = Math.min(newScale, maxZoom);
-        setZoom(newScale);
-        return newScale;
+        return setZoom(newScale);
     }
 
     private double zoomOut() {
@@ -2257,9 +2258,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         } else {
             newScale = _paintScale - stepUnderOne;
         }
-        newScale = Math.max(newScale, minZoom);
-        setZoom(newScale);
-        return newScale;
+        return setZoom(newScale);
     }
 
     private Point2D windowCenter() {
