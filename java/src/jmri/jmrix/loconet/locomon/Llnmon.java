@@ -2959,7 +2959,7 @@ public class Llnmon {
                                                     + ((l.getElement(7) + (((l.getElement(4) & 0x4) == 4) ? 128 : 0)) * 256 * 256)
                                                     + ((l.getElement(8) + (((l.getElement(4) & 0x8) == 8) ? 128 : 0)) * 256 * 256 * 256);
                                             return Bundle.getMessage("LN_MSG_DUPLEX_PING_REQUEST",
-                                                    StringUtil.twoHexFromInt(hostSnInt).toUpperCase());
+                                                    Integer.toHexString(hostSnInt).toUpperCase());
                                         }
                                         break;
                                     case 0x10:
@@ -3089,7 +3089,7 @@ public class Llnmon {
                                             device = getDeviceNameFromIPLInfo(l.getElement(4), l.getElement(5));
                                             String slave = getSlaveNameFromIPLInfo(l.getElement(4), l.getElement(6));
                                             return Bundle.getMessage("LN_MSG_IPL_DISCOVER_SPECIFIC_DEVICES",
-                                                    Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_MFG_PROD", device, slave));
+                                                    device, slave);
                                         }
                                         break;
                                     } // end case 0x08, which decodes 0xe5 0x14 0x0f 0x08
@@ -3233,7 +3233,7 @@ public class Llnmon {
                                         int hostSnInt = ((l.getElement(13) + (((l.getElement(9) & 0x8) == 8) ? 128 : 0)) * 256 * 256)
                                                 + ((l.getElement(12) + (((l.getElement(9) & 0x4) == 4) ? 128 : 0)) * 256)
                                                 + (l.getElement(11) + (((l.getElement(9) & 0x2) == 2) ? 128 : 0));
-                                        String hostSN = StringUtil.twoHexFromInt(hostSnInt).toUpperCase();
+                                        String hostSN = Integer.toHexString(hostSnInt).toUpperCase();
                                         String hostInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_HOST_DETAILS",
                                                 hostType, hostSN, hostVer);
 
@@ -3247,7 +3247,7 @@ public class Llnmon {
                                                     + ((l.getElement(17) + (((l.getElement(14) & 0x4) == 4) ? 128 : 0)) * 256 * 256)
                                                     + ((l.getElement(18) + (((l.getElement(14) & 0x8) == 8) ? 128 : 0)) * 256 * 256 * 256);
                                             slaveInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_SLAVE_DETAILS", slaveType,
-                                                    StringUtil.twoHexFromInt(slaveSnInt).toUpperCase(),
+                                                    Integer.toHexString(slaveSnInt).toUpperCase(),
                                                     slaveVer);
                                         }
                                         return Bundle.getMessage("LN_MSG_IPL_DEVICE_IDENTITY_REPORT",
