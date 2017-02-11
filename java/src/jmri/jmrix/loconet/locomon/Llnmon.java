@@ -824,8 +824,8 @@ public class Llnmon {
                             return Bundle.getMessage("LN_MSG_LONG_ACK_SPEC_CASE1_2_REPORT",
                                     (((responseValue & 0x20) == 0x20) ? 1 : 0),
                                     (((responseValue & 0x20) == 0x20)
-                                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_THROWN")
-                                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_CLOSED")));
+                                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_CLOSED")
+                                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_THROWN")));
                         }
                     case LnConstants.OPC_ALM_READ:
                         if (l.getElement(2) == 0) {
@@ -3851,8 +3851,8 @@ public class Llnmon {
                         funcInfo[i] = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_INDIV_FUNC", 
                                 funcOffset+i, 
                                 Bundle.getMessage(((l.getElement(4) & mask) != 0)
-                                        ? Bundle.getMessage("LN_MSG_FUNC_ON") 
-                                        : Bundle.getMessage("LN_MSG_FUNC_OFF")));
+                                        ? "LN_MSG_FUNC_ON" 
+                                        : "LN_MSG_FUNC_OFF"));
                         mask *= 2;
                     }
                     return Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL",
@@ -3865,15 +3865,15 @@ public class Llnmon {
                     // can only encode 7 bits of data in element(4).
                     return Bundle.getMessage("LN_MSG_INTELLIBOX_SPECIAL_FUNC_CTL",
                             l.getElement(2),
-                            Bundle.getMessage(((l.getElement(4) & LnConstants.RE_IB2_SPECIAL_F12_MASK) == 0)
-                                    ? Bundle.getMessage("LN_MSG_FUNC_ON") 
-                                    : Bundle.getMessage("LN_MSG_FUNC_OFF")),
-                            Bundle.getMessage(((l.getElement(4) & LnConstants.RE_IB2_SPECIAL_F20_MASK) == 0)
-                                    ? Bundle.getMessage("LN_MSG_FUNC_ON") 
-                                    : Bundle.getMessage("LN_MSG_FUNC_OFF")),
-                            Bundle.getMessage(((l.getElement(4) & LnConstants.RE_IB2_SPECIAL_F28_MASK) == 0)
-                                    ? Bundle.getMessage("LN_MSG_FUNC_ON") 
-                                    : Bundle.getMessage("LN_MSG_FUNC_OFF")));
+                            Bundle.getMessage(((l.getElement(4) & LnConstants.RE_IB2_SPECIAL_F12_MASK) != 0)
+                                    ? "LN_MSG_FUNC_ON" 
+                                    : "LN_MSG_FUNC_OFF"),
+                            Bundle.getMessage(((l.getElement(4) & LnConstants.RE_IB2_SPECIAL_F20_MASK) != 0)
+                                    ? "LN_MSG_FUNC_ON"
+                                    : "LN_MSG_FUNC_OFF"),
+                            Bundle.getMessage(((l.getElement(4) & LnConstants.RE_IB2_SPECIAL_F28_MASK) != 0)
+                                    ? "LN_MSG_FUNC_ON"
+                                    : "LN_MSG_FUNC_OFF"));
                 } else if ((l.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN)
                     & (l.getElement(3) == LnConstants.RE_IB1_SPECIAL_F0_F4_TOKEN)) {
                     // For Intellibox-I "one" with SW version 2.x - Special-case for F0 to F4
@@ -3888,8 +3888,8 @@ public class Llnmon {
                         funcInfo[i+1] = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_INDIV_FUNC", 
                                 i+1, 
                                 Bundle.getMessage(((l.getElement(4) & mask) != 0)
-                                        ? Bundle.getMessage("LN_MSG_FUNC_ON") 
-                                        : Bundle.getMessage("LN_MSG_FUNC_OFF")));
+                                        ? "LN_MSG_FUNC_ON"
+                                        : "LN_MSG_FUNC_OFF"));
                         mask *= 2;
                     }
                     return Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_F0_TO_F4",
