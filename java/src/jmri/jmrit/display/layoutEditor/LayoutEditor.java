@@ -1561,7 +1561,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         editModeItem.setSelected(isEditable());
 
         if (true) {
-            verticalToolBarItem = new JCheckBoxMenuItem(rb.getString("VerticalToolbarMode"));
+            verticalToolBarItem = new JCheckBoxMenuItem(rb.getString("VerticalToolBarMode"));
             optionMenu.add(verticalToolBarItem);
             //verticalToolBarItem.setMnemonic(stringsToVTCodes.get(rb.getString("VerticalToolBarMnemonic")));
             //verticalToolBarItem.setAccelerator(KeyStroke.getKeyStroke(
@@ -2238,7 +2238,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // NOTE: this is NOT working… (zoomProp is always null)
         UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(UserPreferencesManager.class);
         if (prefsMgr != null) {
-            prefsMgr.setProperty(getWindowFrameRef(), "Zoom2Zoom", Double.valueOf(666.999));
             Object zoomProp = prefsMgr.getProperty(getWindowFrameRef(), "zoom");
             if (zoomProp != null) {
                 setZoom(((Double) zoomProp).doubleValue());
