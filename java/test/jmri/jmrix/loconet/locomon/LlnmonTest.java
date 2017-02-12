@@ -732,6 +732,16 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x07, 0x10, 0x00, 0x30, 0x30, 0x30, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x19});
         assertEquals(" Tetherless Query/Reply test 09", "Reported Duplex Password is 0000.\n", f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xDF, 0x40, 0x1F, 0x05, 0x00, 0x00});
+        assertEquals(" Tetherless Query/Reply test 10",
+                "Set LocoNet ID to 5.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xDF, 0x30, 0x01, 0x05, 0x00, 0x00});
+        assertEquals(" Tetherless Query/Reply test 10",
+                "Unable to parse LocoNet message.\ncontents: DF 30 01 05 00 00\n",
+                f.displayMessage(l));
     }
 
     public void testBasicPM42Events() {
@@ -1021,26 +1031,22 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xBB, 0x7D, 0x00, 0x39} );
         assertEquals(" Slot test 7",
-                "Request data/status for slot 125.\n",
+                "Unable to parse LocoNet message.\ncontents: BB 7D 00 39\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7D, 0x00, 0x00, 0x00, 0x00, 0x05, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6C} );
         assertEquals(" Slot test 8",
-                "Report of slot 125 information:\n"
-                +"\tLoco 0 is Not Consisted, Free, operating in 28 SS mode, and is moving Forward at speed 0,\n"
-                +"\tF0=Off, F1=Off, F2=Off, F3=Off, F4=Off, F5=Off, F6=Off, F7=Off, F8=Off\n"
-                +"\tMaster supports LocoNet 1.1; Track Status: On/Paused; Programming Track Status: Available; STAT2=0x00, ThrottleID=0x00 0x00 (0).\n",
+                "Unable to parse LocoNet message.\ncontents: E7 0E 7D 00 00 00 00 05 00 00 00 00 00 6C\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xBB, 0x7E, 0x00, 0x3A} );
-        assertEquals(" Slot test 9", "Request data/status for slot 126.\n", f.displayMessage(l));
+        assertEquals(" Slot test 9", 
+                "Unable to parse LocoNet message.\ncontents: BB 7E 00 3A\n",
+                f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7E, 0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6F} );
         assertEquals(" Slot test 10",
-                "Report of slot 126 information:\n"
-                +"\tLoco 0 is Not Consisted, Free, operating in 28 SS mode, and is moving Forward at speed 0,\n"
-                +"\tF0=Off, F1=Off, F2=Off, F3=Off, F4=Off, F5=Off, F6=Off, F7=Off, F8=Off\n"
-                +"\tMaster supports LocoNet 1.1; Track Status: Off/Paused; Programming Track Status: Available; STAT2=0x00, ThrottleID=0x00 0x00 (0).\n",
+                "Unable to parse LocoNet message.\ncontents: E7 0E 7E 00 00 00 00 04 00 00 00 00 00 6F\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xBF, 0x21, 0x31, 0x50} );
@@ -1337,7 +1343,38 @@ public class LlnmonTest extends TestCase {
                 "Set (Intellibox-II format) loco in slot 112 F12=Off F20=Off F28=On.\n",
                 f.displayMessage(l));
 
+        l = new LocoNetMessage(new int[] {0xBB, 0x7f, 0x00, 0x3A} );
+        assertEquals(" Slot test 72",
+                "Request Command Station OpSwitches (or DCS210/DCS240 check for multiple command stations on LocoNet).\n",
+                f.displayMessage(l));
 
+        l = new LocoNetMessage(new int[] {0xBA, 0x04, 0x43, 0x41});
+        assertEquals(" Slot test 73", "Move data in slot 4 to slot 67.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xBA, 0x00, 0x43, 0x41});
+        assertEquals(" Slot test 74", "Get most recently dispatched slot.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xBB, 0x79, 0x00, 0x4D} );
+        assertEquals(" Slot test 75",
+                "Unable to parse LocoNet message.\ncontents: BB 79 00 4D\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xBB, 0x7A, 0x00, 0x4D} );
+        assertEquals(" Slot test 76",
+                "Unable to parse LocoNet message.\ncontents: BB 7A 00 4D\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xBB, 0x7D, 0x00, 0x4D} );
+        assertEquals(" Slot test 77",
+                "Unable to parse LocoNet message.\ncontents: BB 7D 00 4D\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xBB, 0x7E, 0x00, 0x4D} );
+        assertEquals(" Slot test 78",
+                "Unable to parse LocoNet message.\ncontents: BB 7E 00 4D\n",
+                f.displayMessage(l));
 
     }
 
