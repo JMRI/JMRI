@@ -5365,7 +5365,7 @@ public class LogixTableAction extends AbstractTableAction {
                             return rbx.getString("True");
                         case Conditional.FALSE:
                             return rbx.getString("False");
-                        case Conditional.UNKNOWN:
+                        case NamedBean.UNKNOWN:
                             return Bundle.getMessage("BeanStateUnknown");
                     }
                     break;
@@ -5401,7 +5401,7 @@ public class LogixTableAction extends AbstractTableAction {
                     } else if (state.equals(rbx.getString("False").toUpperCase().trim())) {
                         variable.setState(Conditional.FALSE);
                     } else {
-                        variable.setState(Conditional.UNKNOWN);
+                        variable.setState(NamedBean.UNKNOWN);
                     }
                     break;
                 case TRIGGERS_COLUMN:

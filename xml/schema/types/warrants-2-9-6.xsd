@@ -62,10 +62,11 @@
                         <xs:attribute name="userName" type="userNameType">
                             <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
                         </xs:attribute>
+                      <xs:attribute name="pathname" type="xs:string"></xs:attribute>
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>
-                  <xs:attribute name="pathName" type="xs:string" use="required"></xs:attribute>
+                  <xs:attribute name="pathName" type="xs:string"></xs:attribute>
                   <xs:attribute name="entryName" type="xs:string"></xs:attribute>
                   <xs:attribute name="exitName" type="xs:string"></xs:attribute>
                 </xs:complexType>
