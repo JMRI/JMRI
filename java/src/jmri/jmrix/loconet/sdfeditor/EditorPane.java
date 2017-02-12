@@ -50,7 +50,7 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
     DefaultMutableTreeNode topNode;
 
     JComponent newTree() {
-        topNode = new DefaultMutableTreeNode("file");
+        topNode = new DefaultMutableTreeNode("file"); // NOI18N
         tree = new JTree(topNode);
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
@@ -69,6 +69,7 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
     /**
      * Handle tree selection
      */
+    @Override
     public void valueChanged(TreeSelectionEvent e) {
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
 
@@ -116,7 +117,7 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
 
         p.add(explanation);
         explanation.setEditable(false);
-        explanation.setContentType("text/html");
+        explanation.setContentType("text/html"); // NOI18N
         explanation.setMinimumSize(new Dimension(600, 200));
         explanation.setPreferredSize(new Dimension(600, 200));
         explanation.setMaximumSize(new Dimension(600, 200));
@@ -136,7 +137,7 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
     JComponent newInstructionPane() {
         instruction.setLineWrap(true);
         instruction.setWrapStyleWord(true);
-        instruction.setText("Select an instruction in the tree to the left");
+        instruction.setText("Select an instruction in the tree to the left"); // NOI18N
         instruction.setEditable(false);
         instruction.setMinimumSize(new Dimension(600, 80));
         instruction.setPreferredSize(new Dimension(600, 80));

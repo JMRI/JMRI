@@ -1,5 +1,6 @@
 package jmri.jmrix.nce;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.CommandStation;
 import jmri.JmriException;
 import jmri.NmraPacket;
@@ -31,14 +32,17 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     }
 
     // The methods to implement the NceInterface
+    @Override
     public synchronized void addNceListener(NceListener l) {
         this.addListener(l);
     }
 
+    @Override
     public synchronized void removeNceListener(NceListener l) {
         this.removeListener(l);
     }
 
+    @Override
     protected int enterProgModeDelayTime() {
         // we should to wait at least a second after enabling the programming track
         return 1000;
@@ -47,6 +51,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     /**
      * CommandStation implementation
      */
+    @Override
     public void sendPacket(byte[] packet, int count) {
         NceMessage m;
         if (NmraPacket.isAccSignalDecoderPkt(packet)) {
@@ -63,6 +68,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     /**
      * Forward a NceMessage to all registered NceInterface listeners.
      */
+    @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
         ((NceListener) client).message((NceMessage) m);
     }
@@ -70,6 +76,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     /**
      * Forward a NceReply to all registered NceInterface listeners.
      */
+    @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply r) {
         ((NceListener) client).reply((NceReply) r);
     }
@@ -368,6 +375,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     /**
      * Check NCE EPROM and start NCE CS accessory memory poll
      */
+    @Override
     protected AbstractMRMessage pollMessage() {
 
         // Check to see if command options are valid
@@ -413,6 +421,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
     boolean expectReplyEprom = false;
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         // First time through, handle reply by checking EPROM revision
         // Second time through, handle AIU broadcast check
@@ -428,6 +437,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     /**
      * Forward a preformatted message to the actual interface.
      */
+    @Override
     public void sendNceMessage(NceMessage m, NceListener reply) {
         try {
             NceMessageCheck.checkMessage(getAdapterMemo(), m);
@@ -439,6 +449,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         sendMessage(m, reply);
     }
 
+    @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         replyBinary = m.isBinary();
         replyLen = ((NceMessage) m).getReplyLen();
@@ -449,10 +460,12 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     protected boolean replyBinary;
     protected boolean unsolicitedSensorMessageSeen = false;
 
+    @Override
     protected AbstractMRMessage enterProgMode() {
         return NceMessage.getProgMode(this);
     }
 
+    @Override
     protected AbstractMRMessage enterNormalMode() {
         return NceMessage.getExitProgMode(this);
     }
@@ -496,10 +509,11 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     public void setInstance() {
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
 //    protected synchronized void setInstance() { self = this; }
 
+    @Override
     protected AbstractMRReply newReply() {
         NceReply reply = new NceReply(this);
         reply.setBinary(replyBinary);
@@ -507,6 +521,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     }
 
     // pre 2006 EPROMs can't stop AIU broadcasts so we have to accept them
+    @Override
     protected boolean canReceive() {
         if (getCommandOptions() < OPTION_2006) {
             return true;
@@ -520,6 +535,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         }
     }
 
+    @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         msg.setBinary(replyBinary);
         // first try boolean
@@ -594,6 +610,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
     NceSystemConnectionMemo adaptermemo;
 
+    @Override
     public String getUserName() {
         if (adaptermemo == null) {
             return "NCE";
@@ -601,6 +618,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         return adaptermemo.getUserName();
     }
 
+    @Override
     public String getSystemPrefix() {
         if (adaptermemo == null) {
             return "N";

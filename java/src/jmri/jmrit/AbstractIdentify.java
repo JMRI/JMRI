@@ -93,6 +93,7 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
      * request terminates. Each will reduce (if possible) the list of consistent
      * decoders, and starts the next step.
      */
+    @Override
     public void programmingOpReply(int value, int status) {
         // we abort if there's no programmer
         //  (doing this now to simplify later)

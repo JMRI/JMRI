@@ -1,4 +1,3 @@
-// TrainIconAmination.java
 package jmri.jmrit.operations.trains;
 
 import jmri.jmrit.operations.routes.RouteLocation;

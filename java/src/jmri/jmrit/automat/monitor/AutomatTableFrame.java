@@ -48,6 +48,7 @@ public class AutomatTableFrame extends jmri.util.JmriJFrame {
         pack();
     }
 
+    @Override
     public void dispose() {
         dataModel.dispose();
         dataModel = null;

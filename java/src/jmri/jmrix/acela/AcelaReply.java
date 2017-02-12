@@ -1,4 +1,3 @@
-// AcelaReply.java
 package jmri.jmrix.acela;
 
 
@@ -27,10 +26,9 @@ public class AcelaReply extends jmri.jmrix.AbstractMRReply {
     }
 
     //  Must be here since it is declared abstract
+    @Override
     protected int skipPrefix(int index) {
         // doesn't have to do anything
         return index;
     }
 }
-
-/* @(#)AcelaReply.java */

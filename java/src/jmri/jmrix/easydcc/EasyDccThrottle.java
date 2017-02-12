@@ -1,5 +1,6 @@
 package jmri.jmrix.easydcc;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottle;
@@ -48,6 +49,7 @@ public class EasyDccThrottle extends AbstractThrottle {
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4.
      */
+    @Override
     protected void sendFunctionGroup1() {
         byte[] result = jmri.NmraPacket.function0Through4Packet(address.getNumber(),
                 address.isLongAddress(),
@@ -77,6 +79,7 @@ public class EasyDccThrottle extends AbstractThrottle {
     /**
      * Send the message to set the state of functions F5, F6, F7, F8.
      */
+    @Override
     protected void sendFunctionGroup2() {
 
         byte[] result = jmri.NmraPacket.function5Through8Packet(address.getNumber(),
@@ -101,6 +104,7 @@ public class EasyDccThrottle extends AbstractThrottle {
     /**
      * Send the message to set the state of functions F9, F10, F11, F12.
      */
+    @Override
     protected void sendFunctionGroup3() {
 
         byte[] result = jmri.NmraPacket.function9Through12Packet(address.getNumber(),
@@ -129,7 +133,8 @@ public class EasyDccThrottle extends AbstractThrottle {
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @Override
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
@@ -205,6 +210,7 @@ public class EasyDccThrottle extends AbstractThrottle {
         record(speed);
     }
 
+    @Override
     public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
@@ -218,10 +224,12 @@ public class EasyDccThrottle extends AbstractThrottle {
 
     EasyDccTrafficController tc;
 
+    @Override
     public LocoAddress getLocoAddress() {
         return address;
     }
 
+    @Override
     protected void throttleDispose() {
         active = false;
         finishRecord();

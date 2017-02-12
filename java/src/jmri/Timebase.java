@@ -48,7 +48,7 @@ public interface Timebase extends NamedBean {
      */
     public void userSetTime(@Nonnull Date d);
 
-    public @Nonnull Date getTime();
+    @Nonnull public Date getTime();
 
     public void setRun(boolean y);
 
@@ -125,7 +125,7 @@ public interface Timebase extends NamedBean {
 
     public boolean getStartSetTime();
 
-    public @Nonnull Date getStartTime();
+    @Nonnull public Date getStartTime();
 
     // methods to get set clock start start up option		
     public void setStartClockOption(int option);
@@ -156,11 +156,13 @@ public interface Timebase extends NamedBean {
     /**
      * Request a call-back when the bound Rate or Run property changes.
      */
+    @Override
     public void addPropertyChangeListener(PropertyChangeListener l);
 
     /**
      * Remove a request for a call-back when a bound property changes.
      */
+    @Override
     public void removePropertyChangeListener(PropertyChangeListener l);
 
     /**
@@ -177,12 +179,13 @@ public interface Timebase extends NamedBean {
     /**
      * Get the list of minute change listeners.
      */
-    public @Nonnull PropertyChangeListener[] getMinuteChangeListeners();
+    @Nonnull public PropertyChangeListener[] getMinuteChangeListeners();
 
     /**
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
      */
+    @Override
     public void dispose();
 
 }

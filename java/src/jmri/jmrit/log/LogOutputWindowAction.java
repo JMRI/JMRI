@@ -17,6 +17,7 @@ public class LogOutputWindowAction extends AbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         JFrame f = jmri.util.JLogoutputFrame.getInstance().getMainFrame();
         f.setVisible(true);

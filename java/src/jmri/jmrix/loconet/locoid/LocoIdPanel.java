@@ -29,6 +29,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         super();
     }
 
+    @Override
     public void initComponents() throws Exception {
         ResourceBundle rb = ResourceBundle
                 .getBundle("jmri.jmrix.loconet.locoid.LocoId");
@@ -57,25 +58,30 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
 
         // Set our callbacks
         setButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 setButtonActionPerformed();
             }
         });
         readButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 readButtonActionPerformed();
             }
         });
     }
 
+    @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.locoid.LocoIdFrame";
+        return "package.jmri.jmrix.loconet.locoid.LocoIdFrame"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemSetID"));
     }
 
+    @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
 
@@ -116,6 +122,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
      *
      * @param m Inbound LocoNet message to check.
      */
+    @Override
     public void message(LocoNetMessage m) {
 
         // The message is 6 bytes long.
@@ -182,6 +189,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         t.addLocoNetListener(~0, this);
     }
 
+    @Override
     public void dispose() {
         memo.getLnTrafficController().removeLocoNetListener(~0, this);
         super.dispose();

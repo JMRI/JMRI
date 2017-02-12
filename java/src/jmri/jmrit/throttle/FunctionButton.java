@@ -220,6 +220,7 @@ public class FunctionButton extends JToggleButton implements ActionListener {
         buttonLabel = label;
     }
 
+    @Override
     public void setText(String s) {
         if (s != null) {
             buttonLabel = s;
@@ -271,6 +272,7 @@ public class FunctionButton extends JToggleButton implements ActionListener {
      *
      * @param e The ActionEvent causing the action.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         FunctionButtonPropertyEditor editor = new FunctionButtonPropertyEditor();
         editor.setFunctionButton(this);
@@ -340,6 +342,7 @@ public class FunctionButton extends JToggleButton implements ActionListener {
          *
          * @param e The MouseEvent causing the action.
          */
+        @Override
         public void mousePressed(MouseEvent e) {
             if (log.isDebugEnabled()) {
                 log.debug("pressed " + (e.getModifiers() & MouseEvent.BUTTON1_MASK) + " " + e.isPopupTrigger()
@@ -368,6 +371,7 @@ public class FunctionButton extends JToggleButton implements ActionListener {
          *
          * @param e The MouseEvent causing the action.
          */
+        @Override
         public void mouseReleased(MouseEvent e) {
             if (log.isDebugEnabled()) {
                 log.debug("released " + (e.getModifiers() & MouseEvent.BUTTON1_MASK) + " " + e.isPopupTrigger()

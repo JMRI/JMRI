@@ -38,6 +38,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
      * @param o Object to store, of type LayoutEditor
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         LayoutEditor p = (LayoutEditor) o;
         Element panel = new Element("LayoutEditor");
@@ -46,7 +47,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("name", p.getLayoutName());
         panel.setAttribute("x", "" + p.getUpperLeftX());
         panel.setAttribute("y", "" + p.getUpperLeftY());
-        // From this version onwards separate sizes for window and panel are stored the 
+        // From this version onwards separate sizes for window and panel are stored the
         // following two statements allow files written here to be read in 2.2 and before
         panel.setAttribute("height", "" + p.getLayoutHeight());
         panel.setAttribute("width", "" + p.getLayoutWidth());
@@ -96,6 +97,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         p.resetDirty();
         panel.setAttribute("openDispatcher", p.getOpenDispatcherOnLoad() ? "yes" : "no");
         panel.setAttribute("useDirectTurnoutControl", p.getDirectTurnoutControl() ? "yes" : "no");
+        panel.setAttribute("zoom", Double.toString(p.getZoom()));
 
         // include contents (Icons and Labels)
         List<Positionable> contents = p.getContents();
@@ -230,6 +232,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         return panel;
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -424,7 +427,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             }
         }
         // grid size parameter
-        int iz = 10; // thisw value is never used but it's the default 
+        int iz = 10; // this value is never used but it's the default
         a = shared.getAttribute("gridSize");
         if (a != null) {
             try {
@@ -435,7 +438,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 result = false;
             }
         }
-        
+
         // set contents state
         String slValue = "both";
         if ((a = shared.getAttribute("sliders")) != null && a.getValue().equals("no")) {
@@ -543,7 +546,12 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 panel.setDirectTurnoutControl(true);
             }
         }
-        // Set editor's option flags, load content after 
+
+        if (shared.getAttribute("zoom") != null) {
+            panel.setZoom(Double.valueOf(shared.getAttribute("zoom").getValue()));
+        }
+
+        // Set editor's option flags, load content after
         // this so that individual item flags are set as saved
         panel.initView();
 
@@ -612,6 +620,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         return result;
     }
 
+    @Override
     public int loadOrder() {
         return jmri.Manager.PANELFILES;
     }

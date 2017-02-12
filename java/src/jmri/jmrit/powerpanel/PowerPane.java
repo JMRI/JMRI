@@ -18,10 +18,12 @@ import org.slf4j.LoggerFactory;
 public class PowerPane extends jmri.util.swing.JmriPanel
         implements java.beans.PropertyChangeListener {
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrit.powerpanel.PowerPanelFrame";
     }
 
+    @Override
     public String getTitle() {
         return res.getString("TitlePowerPanel");
     }
@@ -34,6 +36,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
 
     jmri.swing.PowerManagerMenu selectMenu;
 
+    @Override
     public List<JMenu> getMenus() {
         java.util.ArrayList<JMenu> list = new java.util.ArrayList<JMenu>();
         list.add(selectMenu);
@@ -44,11 +47,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
 
     public PowerPane() {
         selectMenu = new jmri.swing.PowerManagerMenu() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -7173050098266625273L;
-
+            @Override
             protected void choiceChanged() {
                 managerChanged();
             }
@@ -56,11 +55,13 @@ public class PowerPane extends jmri.util.swing.JmriPanel
 
         // add listeners to buttons
         onButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 onButtonPushed();
             }
         });
         offButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 offButtonPushed();
             }
@@ -140,6 +141,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         }
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent ev) {
         log.debug("PropertyChange received ");
         try {
@@ -158,6 +160,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         }
     }
 
+    @Override
     public void dispose() {
         if (listening != null) {
             listening.removePropertyChangeListener(this);

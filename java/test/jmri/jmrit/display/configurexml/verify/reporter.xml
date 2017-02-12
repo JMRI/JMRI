@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>7</minor>
+    <test>1</test>
+    <modifier>.1ish</modifier>
+  </jmriversion>
+  <reporters class="jmri.jmrix.internal.configurexml.InternalReporterManagerXml">
+    <reporter systemName="IR0" userName="rep-0">
+      <systemName>IR0</systemName>
+      <userName>rep-0</userName>
+    </reporter>
+  </reporters>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
+  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="Control Panel" x="448" y="93" height="312" width="535" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both" state="0" shapeSelect="yes">
+    <icons>
+      <visible>
+        <url>program:resources/icons/throttles/RoundRedCircle20.png</url>
+      </visible>
+      <path_edit>
+        <url>program:resources/icons/greenSquare.gif</url>
+      </path_edit>
+      <hidden>
+        <url>program:resources/icons/Invisible.gif</url>
+      </hidden>
+      <to_arrow>
+        <url>program:resources/icons/track/toArrow.gif</url>
+      </to_arrow>
+      <from_arrow>
+        <url>program:resources/icons/track/fromArrow.gif</url>
+      </from_arrow>
+    </icons>
+    <reportericon reporter="IR0" x="185" y="71" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="30" size="12" style="1" red="255" green="0" blue="0" hasBackground="yes" redBack="0" greenBack="204" blueBack="0" margin="5" borderSize="3" redBorder="0" greenBorder="0" blueBorder="255" justification="centre" class="jmri.jmrit.display.configurexml.ReporterIconXml">
+      <tooltip>rep-0 (IR0)</tooltip>
+    </reportericon>
+  </paneleditor>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Fri Jan 13 17:17:19 PST 2017</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Fri Jan 13 17:20:48 PST 2017</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.7.1ish-201701132336-SVD-Rc3204bd on Fri Jan 13 17:20:48 PST 2017 $Id$-->
+</layout-config>

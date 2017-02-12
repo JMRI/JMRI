@@ -2,7 +2,6 @@ package jmri.jmrix.lenz.swing.mon;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,7 +13,7 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2014,2016
  */
-public class XNetMonPaneTest extends jmri.jmrix.AbstractMonPaneTest {
+public class XNetMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         
     private jmri.jmrix.lenz.XNetSystemConnectionMemo memo = null;
 

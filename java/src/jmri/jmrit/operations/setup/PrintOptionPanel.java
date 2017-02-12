@@ -1,6 +1,6 @@
-// PrintOptionFrame.java
 package jmri.jmrit.operations.setup;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -493,7 +493,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
             justification = "checks for instance of PrintOptionFrame")  // NOI18N
     public void checkBoxActionPerformed(ActionEvent ae) {
         if (ae.getSource() == tabFormatCheckBox) {
@@ -560,7 +560,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         return null;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
             justification = "checks for instance of PrintOptionFrame")  // NOI18N
     private void updateLogoButtons() {
         boolean flag = Setup.getManifestLogoURL().equals(Setup.NONE);

@@ -27,7 +27,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.tmcc.SerialTest");
-        suite.addTest(SerialTurnoutTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SerialTurnoutTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialTurnoutManagerTest.class));
         suite.addTest(SerialMessageTest.suite());
         suite.addTest(SerialReplyTest.suite());
@@ -44,10 +44,12 @@ public class PackageTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

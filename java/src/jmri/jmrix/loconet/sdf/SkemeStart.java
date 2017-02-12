@@ -35,10 +35,12 @@ public class SkemeStart extends SdfMacro {
         byte2 = num;
     }
 
+    @Override
     public String name() {
-        return "SKEME_START";
+        return "SKEME_START"; // NOI18N
     }
 
+    @Override
     public int length() {
         return 4;
     }
@@ -80,6 +82,7 @@ public class SkemeStart extends SdfMacro {
     /**
      * Store into a buffer.
      */
+    @Override
     public void loadByteArray(SdfBuffer buffer) {
         // data
         buffer.setAtIndexAndInc(byte1);
@@ -91,14 +94,17 @@ public class SkemeStart extends SdfMacro {
         super.loadByteArray(buffer);
     }
 
+    @Override
     public String toString() {
-        return "Scheme " + number + "\n";
+        return "Scheme " + number + "\n"; // NOI18N
     }
 
+    @Override
     public String oneInstructionString() {
-        return name() + ' ' + number + "; length=" + length + '\n';
+        return name() + ' ' + number + "; length=" + length + '\n'; // NOI18N
     }
 
+    @Override
     public String allInstructionString(String indent) {
         String output;
         output = indent + oneInstructionString();

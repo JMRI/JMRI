@@ -61,6 +61,7 @@ public class ListedTableAction extends AbstractAction {
         /* create the frame outside of swing so that we do not 
          hog Swing/AWT execution, then finally display on Swing */
         Runnable r = new Runnable() {
+            @Override
             public void run() {
                 f = new ListedTableFrame(title) {};
                 f.initComponents();
@@ -85,6 +86,7 @@ public class ListedTableAction extends AbstractAction {
         thr.start();
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         actionPerformed();
     }

@@ -27,6 +27,7 @@ public class XpaThrottleManager extends AbstractThrottleManager implements Throt
      * throttle listeners know about it.
      *
      */
+    @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         XpaThrottle throttle = new XpaThrottle(address,tc);
         notifyThrottleKnown(throttle, address);
@@ -35,6 +36,7 @@ public class XpaThrottleManager extends AbstractThrottleManager implements Throt
     /*
      * The XPA DOES NOT use the Dispatch Function
      */
+    @Override
     public boolean hasDispatchFunction() {
         return false;
     }
@@ -43,6 +45,7 @@ public class XpaThrottleManager extends AbstractThrottleManager implements Throt
      * Address 100 and above is a long address
      *
      */
+    @Override
     public boolean canBeLongAddress(int address) {
         return isLongAddress(address);
     }
@@ -51,6 +54,7 @@ public class XpaThrottleManager extends AbstractThrottleManager implements Throt
      * Address 99 and below is a short address
      *
      */
+    @Override
     public boolean canBeShortAddress(int address) {
         return !isLongAddress(address);
     }
@@ -58,6 +62,7 @@ public class XpaThrottleManager extends AbstractThrottleManager implements Throt
     /**
      * Are there any ambiguous addresses (short vs long) on this system?
      */
+    @Override
     public boolean addressTypeUnique() {
         return true;
     }

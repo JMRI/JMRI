@@ -1,12 +1,8 @@
 package jmri.jmrix.qsi;
 
-import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * JUnit tests for the QsiPortController class
@@ -14,7 +10,7 @@ import org.junit.Test;
  *
  * @author      Paul Bender Copyright (C) 2016
  */
-public class QsiPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTest {
+public class QsiPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
     @Override
     @Before

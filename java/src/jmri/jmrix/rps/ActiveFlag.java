@@ -1,4 +1,3 @@
-// ActiveFlag.java
 package jmri.jmrix.rps;
 
 /**
@@ -26,4 +25,4 @@ abstract public class ActiveFlag {
 }
 
 
-/* @(#)ActiveFlag.java */
+

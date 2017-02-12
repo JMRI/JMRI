@@ -27,6 +27,7 @@ public class SerialTurnout extends AbstractTurnout {
     /**
      * Handle a request to change state by sending a turnout command
      */
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
 
         // sort out states
@@ -46,6 +47,7 @@ public class SerialTurnout extends AbstractTurnout {
         }
     }
 
+    @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
             log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton TT" + _number);

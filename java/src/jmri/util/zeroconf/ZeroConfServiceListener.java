@@ -1,4 +1,3 @@
-// ZeroConfServiceListener.java
 package jmri.util.zeroconf;
 
 import java.util.EventListener;

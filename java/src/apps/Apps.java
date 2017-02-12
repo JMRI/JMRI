@@ -1,6 +1,7 @@
 package apps;
 
 import apps.gui3.TabbedPreferences;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -111,7 +112,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     static String profileFilename;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "SC_START_IN_CTOR"},
+    @SuppressFBWarnings(value = {"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "SC_START_IN_CTOR"},
             justification = "only one application at a time. The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage")
     public Apps(JFrame frame) {
 
@@ -330,7 +331,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                         // return until deferred load is completed
                         SwingUtilities.invokeAndWait(new Runnable() {
                             @Override
-                            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "configDeferredLoadOK write is semi-global")
+                            @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "configDeferredLoadOK write is semi-global")
                             public void run() {
                                 configDeferredLoadOK = doDeferredLoad(file);
                             }
@@ -398,6 +399,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         if (Boolean.getBoolean("org.jmri.python.preload")) {
             r = new Runnable() {
+                @Override
                 public void run() {
                     try {
                         JmriScriptEngineManager.getDefault().initializeAllEngines();
@@ -492,7 +494,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * additional buttons appended to it later. The default implementation here
      * just creates an empty space for these to be added to.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "only one application at a time")
     protected void setButtonSpace() {
         _buttonSpace = new JPanel();
@@ -500,7 +502,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
     static JComponent _jynstrumentSpace = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "only one application at a time")
     protected void setJynstrumentSpace() {
         _jynstrumentSpace = new JPanel();
@@ -998,7 +1000,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             Toolkit.getDefaultToolkit().addAWTEventListener(
                     debugListener = new AWTEventListener() {
                 @Override
-                @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "debugmsg write is semi-global")
+                @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "debugmsg write is semi-global")
                 public void eventDispatched(AWTEvent e) {
                     if (!debugFired) {
                         /*We set the debugmsg flag on the first instance of the user pressing any button
@@ -1168,10 +1170,10 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     static String configFilename = System.getProperty("org.jmri.Apps.configFilename", "jmriconfig2.xml");  // usually overridden, this is default
     // The following MUST be protected for 3rd party applications 
     // (such as CATS) which are derived from this class.
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT",
+    @SuppressFBWarnings(value = "MS_PKGPROTECT",
             justification = "The following MUST be protected for 3rd party applications (such as CATS) which are derived from this class.")
     protected static boolean configOK;
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT",
+    @SuppressFBWarnings(value = "MS_PKGPROTECT",
             justification = "The following MUST be protected for 3rd party applications (such as CATS) which are derived from this class.")
     protected static boolean configDeferredLoadOK;
     // GUI members

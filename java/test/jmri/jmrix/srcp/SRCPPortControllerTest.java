@@ -1,12 +1,8 @@
 package jmri.jmrix.srcp;
 
-import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * JUnit tests for the SRCPPortController class
@@ -14,7 +10,7 @@ import org.junit.Test;
  *
  * @author      Paul Bender Copyright (C) 2016
  */
-public class SRCPPortControllerTest extends jmri.jmrix.AbstractNetworkPortControllerTest {
+public class SRCPPortControllerTest extends jmri.jmrix.AbstractNetworkPortControllerTestBase {
 
     @Override
     @Before

@@ -24,6 +24,7 @@ public class RPSItemPanel extends FamilyItemPanel {
         super(parentFrame, type, family, editor);
     }
 
+    @Override
     public void init() {
         if (!_initialized) {
             JPanel panel = new JPanel();
@@ -32,6 +33,7 @@ public class RPSItemPanel extends FamilyItemPanel {
         }
     }
 
+    @Override
     protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
         super.makeDndIconPanel(iconMap, "active");
     }
@@ -39,6 +41,7 @@ public class RPSItemPanel extends FamilyItemPanel {
     /**
      * ****************************************************
      */
+    @Override
     protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
         return new IconDragJLabel(flavor, map, icon);
     }
@@ -47,16 +50,17 @@ public class RPSItemPanel extends FamilyItemPanel {
 
         HashMap<String, NamedIcon> iconMap;
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // icon map is within package 
         public IconDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
             super(flavor, icon);
-            iconMap = map;
+            iconMap = new HashMap<>(map);
         }
 
+        @Override
         public boolean isDataFlavorSupported(DataFlavor flavor) {
             return super.isDataFlavorSupported(flavor);
         }
 
+        @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {
                 return null;

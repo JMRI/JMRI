@@ -1,5 +1,6 @@
 package jmri.jmrit.signalling.entryexit;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -38,6 +39,7 @@ import org.slf4j.LoggerFactory;
 
 public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameDestination");
     }
@@ -83,12 +85,14 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         mUserName = (src.getPoint().getDisplayName() + " to " + this.point.getDisplayName());
 
         propertyBlockListener = new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent e) {
                 blockStateUpdated(e);
             }
         };
     }
 
+    @Override
     public String getDisplayName() {
         return mUserName;
     }
@@ -156,7 +160,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED",
+    @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED",
             justification = "No auto serialization")
     transient protected PropertyChangeListener propertyBlockListener;
 
@@ -329,6 +333,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         }
         final ActiveTrain at = tmpat;
         Runnable setRouteRun = new Runnable() {
+            @Override
             public void run() {
                 src.getPoint().getPanel().getGlassPane().setVisible(true);
 
@@ -390,6 +395,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                         for (Map.Entry< Turnout, Integer> entry : turnoutSettings.entrySet()) {
                             entry.getKey().setCommandedState(entry.getValue());
                             Runnable r = new Runnable() {
+                                @Override
                                 public void run() {
                                     try {
                                         Thread.sleep(250 + manager.turnoutSetDelay);
@@ -449,6 +455,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                                 }
                             }
                             smSource.addPropertyChangeListener(new PropertyChangeListener() {
+                                @Override
                                 public void propertyChange(PropertyChangeEvent e) {
                                     SignalMast source = (SignalMast) e.getSource();
                                     source.removePropertyChangeListener(this);
@@ -473,6 +480,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     if (manager.useDifferentColorWhenSetting()) {
                         //final ArrayList<Color> realColorXtra = realColorXtra;
                         javax.swing.Timer resetColorBack = new javax.swing.Timer(manager.getSettingTimer(), new java.awt.event.ActionListener() {
+                            @Override
                             public void actionPerformed(java.awt.event.ActionEvent e) {
                                 for (int i = 0; i < routeBlocks.size(); i++) {
                                     LayoutBlock lbk = routeBlocks.get(i);
@@ -594,6 +602,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             cancelClearFrame.pack();
 
             jButton_Clear.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelClearFrame.setVisible(false);
                     threadAutoClearFrame.interrupt();
@@ -601,6 +610,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 }
             });
             jButton_Cancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelClearFrame.setVisible(false);
                     threadAutoClearFrame.interrupt();
@@ -608,6 +618,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 }
             });
             jButton_Stack.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelClearFrame.setVisible(false);
                     threadAutoClearFrame.interrupt();
@@ -615,6 +626,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 }
             });
             jButton_Exit.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelClearFrame.setVisible(false);
                     threadAutoClearFrame.interrupt();
@@ -643,6 +655,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             MessageTimeOut() {
             }
 
+            @Override
             public void run() {
                 try {
                     //Set a timmer before this window is automatically closed to 30 seconds
@@ -1108,6 +1121,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         }
     }
 
+    @Override
     public void dispose() {
         enabled = false;
         setActiveEntryExit(false);
@@ -1121,6 +1135,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         disposed = true;
     }
 
+    @Override
     public int getState() {
         if (activeEntryExit) {
             return 0x02;
@@ -1132,6 +1147,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         return activeEntryExit;
     }
 
+    @Override
     public void setState(int state) {
     }
 

@@ -1,5 +1,7 @@
 package jmri.implementation;
 
+import javax.annotation.CheckReturnValue;
+
 import jmri.Reporter;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -25,6 +27,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         super(systemName.toUpperCase(), userName);
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameSensor");
     }
@@ -35,6 +38,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     //					       Object oldValue,
     //					       Object newValue)
     // _once_ if anything has changed state
+    @Override
     public int getKnownState() {
         return _knownState;
     }
@@ -43,6 +47,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     protected long sensorDebounceGoingInActive = 0L;
     protected boolean useDefaultTimerSettings = false;
 
+    @Override
     public void setSensorDebounceGoingActiveTimer(long time) {
         if (sensorDebounceGoingActive == time) {
             return;
@@ -53,10 +58,12 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
 
     }
 
+    @Override
     public long getSensorDebounceGoingActiveTimer() {
         return sensorDebounceGoingActive;
     }
 
+    @Override
     public void setSensorDebounceGoingInActiveTimer(long time) {
         if (sensorDebounceGoingInActive == time) {
             return;
@@ -66,10 +73,12 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         firePropertyChange("InActiveTimer", oldValue, sensorDebounceGoingInActive);
     }
 
+    @Override
     public long getSensorDebounceGoingInActiveTimer() {
         return sensorDebounceGoingInActive;
     }
 
+    @Override
     public void useDefaultTimerSettings(boolean boo) {
         if (boo == useDefaultTimerSettings) {
             return;
@@ -82,6 +91,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         firePropertyChange("GlobalTimer", !boo, boo);
     }
 
+    @Override
     public boolean useDefaultTimerSettings() {
         return useDefaultTimerSettings;
     }
@@ -96,6 +106,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     protected void sensorDebounce() {
         final int lastKnownState = _knownState;
         r = new Runnable() {
+            @Override
             public void run() {
                 try {
                     long sensorDebounceTimer = sensorDebounceGoingInActive;
@@ -123,9 +134,20 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
 
     int restartcount = 0;
 
+    @Override
+    @CheckReturnValue
+    public String getStateString() {
+        switch (getState()) {
+            case ACTIVE: return Bundle.getMessage("SensorStateActive");
+            case INACTIVE: return Bundle.getMessage("SensorStateInactive");
+            default: return super.getStateString();
+        }
+    }
+
     // setKnownState() for implementations that can't
     // actually do it on the layout. Not intended for use by implementations
     // that can
+    @Override
     public void setKnownState(int s) throws jmri.JmriException {
         if (_rawState != s) {
             if (((s == ACTIVE) && (sensorDebounceGoingActive > 0))
@@ -194,6 +216,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         }
     }
 
+    @Override
     public int getRawState() {
         return _rawState;
     }
@@ -204,6 +227,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
      * This generally shouldn't be used by Java code; use setKnownState instead.
      * The is provided to make Jython script access easier to read.
      */
+    @Override
     public void setState(int s) throws jmri.JmriException {
         setKnownState(s);
     }
@@ -214,6 +238,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
      * This generally shouldn't be used by Java code; use getKnownState instead.
      * The is provided to make Jython script access easier to read.
      */
+    @Override
     public int getState() {
         return getKnownState();
     }
@@ -223,6 +248,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
      * e.g. the normal electrical signal that results in an ACTIVE state now
      * results in an INACTIVE state.
      */
+    @Override
     public void setInverted(boolean inverted) {
         boolean oldInverted = _inverted;
         _inverted = inverted;
@@ -244,6 +270,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
      * Used in polling loops in system-specific code, so made final to allow
      * optimization.
      */
+    @Override
     final public boolean getInverted() {
         return _inverted;
     }
@@ -264,10 +291,12 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
      * <p>
      * returns null if there is no direct reporter.
      */
+    @Override
     public void setReporter(Reporter er) {
         reporter = er;
     }
 
+    @Override
     public Reporter getReporter() {
         return reporter;
     }

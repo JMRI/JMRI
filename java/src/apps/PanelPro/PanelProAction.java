@@ -40,6 +40,7 @@ public class PanelProAction extends JmriAbstractAction {
      *
      * @param e The event causing the action.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (frame == null) {
             frame = new apps.AppsLaunchFrame(new PanelProPane(), "PanelPro");
@@ -48,6 +49,7 @@ public class PanelProAction extends JmriAbstractAction {
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

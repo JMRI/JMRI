@@ -1,4 +1,3 @@
-// GridConnectReply.java
 package jmri.jmrix.can.adapters.gridconnect;
 
 import jmri.jmrix.AbstractMRReply;
@@ -79,6 +78,7 @@ public class GridConnectReply extends AbstractMRReply {
         return true;
     }
 
+    @Override
     protected int skipPrefix(int index) {
         while (_dataChars[index] == ':') {
             index++;
@@ -87,6 +87,7 @@ public class GridConnectReply extends AbstractMRReply {
     }
 
     // accessors to the bulk data
+    @Override
     public int getNumDataElements() {
         return _nDataChars;
     }
@@ -95,10 +96,12 @@ public class GridConnectReply extends AbstractMRReply {
         _nDataChars = (n <= MAXLEN) ? n : MAXLEN;
     }
 
+    @Override
     public int getElement(int n) {
         return _dataChars[n];
     }
 
+    @Override
     public void setElement(int n, int v) {
         if (n < MAXLEN) {
             _dataChars[n] = v;
@@ -115,6 +118,7 @@ public class GridConnectReply extends AbstractMRReply {
     }
 
     // 
+    @Override
     public int maxSize() {
         return MAXLEN;
     }
@@ -200,4 +204,4 @@ public class GridConnectReply extends AbstractMRReply {
     private final static Logger log = LoggerFactory.getLogger(GridConnectReply.class.getName());
 }
 
-/* @(#)GridConnectReply.java */
+

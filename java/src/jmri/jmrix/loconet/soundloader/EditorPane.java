@@ -32,10 +32,12 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
     JButton save;
     LocoNetSystemConnectionMemo memo;
 
+    @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.soundloader.EditorFrame";
+        return "package.jmri.jmrix.loconet.soundloader.EditorFrame"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemSoundEditor"));
     }
@@ -52,6 +54,7 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
         // add file button
         open = new JButton(res.getString("ButtonOpen"));
         open.addActionListener(new AbstractAction() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 selectInputFile();
             }
@@ -59,6 +62,7 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
 
         save = new JButton(res.getString("ButtonSave"));
         save.addActionListener(new AbstractAction() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 selectSaveFile();
             }
@@ -97,7 +101,7 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
 
     void selectSaveFile() {
         if (chooser == null) {
-            chooser = new JFileChooser(System.getProperty("user.dir"));
+            chooser = new JFileChooser(System.getProperty("user.dir")); // NOI18N
         }
         int retVal = chooser.showSaveDialog(this);
         if (retVal != JFileChooser.APPROVE_OPTION) {
@@ -131,6 +135,7 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
         pane.saveFile(name);
     }
 
+    @Override
     public void dispose() {
         if (pane != null) {
             pane.dispose();

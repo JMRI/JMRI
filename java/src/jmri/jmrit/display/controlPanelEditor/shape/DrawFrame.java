@@ -110,6 +110,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         setContentPane(panel);
 
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 closingEvent(true);
             }
@@ -131,6 +132,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         _lineSlider = new JSlider(SwingConstants.HORIZONTAL, 1, 30, _lineWidth);
         _lineSlider.addChangeListener(
                 new ChangeListener() {
+                    @Override
                     public void stateChanged(ChangeEvent e) {
                         widthChange();
                     }
@@ -153,6 +155,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         _chooser.setColor(Color.green);
         _chooser.getSelectionModel().addChangeListener(
                 new ChangeListener() {
+                    @Override
                     public void stateChanged(ChangeEvent e) {
                         colorChange();
                     }
@@ -167,6 +170,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         _alphaSlider = new JSlider(SwingConstants.HORIZONTAL, 0, 255, _lineColor.getAlpha());
         _alphaSlider.addChangeListener(
                 new ChangeListener() {
+                    @Override
                     public void stateChanged(ChangeEvent e) {
                         alphaChange();
                     }
@@ -174,6 +178,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         pp.add(_alphaSlider);
         _lineColorButon.addChangeListener(
                 new ChangeListener() {
+                    @Override
                     public void stateChanged(ChangeEvent e) {
                         buttonChange();
                     }
@@ -195,6 +200,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         p.add(new JLabel(Bundle.getMessage("VisibleSensor") + ":"));
         p.add(_sensorName);
         _sensorName.addActionListener( new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 String msg =_shape.setControlSensor(_sensorName.getText(), _hideShape.isSelected(), _shape.getChangeLevel());                
                 if (msg != null) {
@@ -204,9 +210,11 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
             }
         });
         _sensorName.addMouseMotionListener( new MouseMotionListener() {
+            @Override
             public void mouseDragged( MouseEvent e) {               
                 updateShape();
             }
+            @Override
             public void mouseMoved(MouseEvent e) {
                 String msg =_shape.setControlSensor(_sensorName.getText(), _hideShape.isSelected(), _shape.getChangeLevel());                
                 if (msg != null) {
@@ -230,6 +238,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
             _levelComboBox.addItem(Bundle.getMessage("Level") + " " + Integer.valueOf(i));
         }
         _levelComboBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 int level = _levelComboBox.getSelectedIndex();
                 _shape.setChangeLevel(level);
@@ -237,11 +246,13 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
             
         });
         _hideShape.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 _levelComboBox.setEnabled(false);
             }
         });
         _changeLevel.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 _levelComboBox.setEnabled(true);
             }
@@ -323,6 +334,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         panel0.setLayout(new FlowLayout());
         JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
         doneButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 closingEvent(false);
             }
@@ -331,6 +343,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
 
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 closingEvent(true);
             }

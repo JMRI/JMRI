@@ -19,6 +19,7 @@ public class ControlPanelEditorAction extends AbstractAction {
         this("New Panel");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         String name = "Control Panel";
         for (int i = 2; i < 100; i++) {

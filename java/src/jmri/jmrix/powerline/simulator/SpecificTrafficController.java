@@ -48,6 +48,7 @@ public class SpecificTrafficController extends SerialTrafficController {
      * <p>
      * Makes them into the local messages and then queues in order
      */
+    @Override
     synchronized public void sendX10Sequence(X10Sequence s, SerialListener l) {
         s.reset();
         X10Sequence.Command c;
@@ -85,6 +86,7 @@ public class SpecificTrafficController extends SerialTrafficController {
      * <p>
      * Makes them into the local messages and then queues in order
      */
+    @Override
     synchronized public void sendInsteonSequence(InsteonSequence s, SerialListener l) {
         s.reset();
         InsteonSequence.Command c;
@@ -116,10 +118,12 @@ public class SpecificTrafficController extends SerialTrafficController {
     /**
      * Get a message of a specific length for filling in.
      */
+    @Override
     public SerialMessage getSerialMessage(int length) {
         return new SpecificMessage(length);
     }
 
+    @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (logDebug) {
             log.debug("forward " + m);
@@ -127,11 +131,13 @@ public class SpecificTrafficController extends SerialTrafficController {
         super.forwardToPort(m, reply);
     }
 
+    @Override
     protected AbstractMRReply newReply() {
         SpecificReply reply = new SpecificReply(memo.getTrafficController());
         return reply;
     }
 
+    @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         if (msg.getNumDataElements() >= 2) {
             if (msg.getElement(0) != Constants.HEAD_STX) {
@@ -191,6 +197,7 @@ public class SpecificTrafficController extends SerialTrafficController {
      * read a stream and pick packets out of it. knows the size of the packets
      * from the contents.
      */
+    @Override
     protected void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
         byte char1 = readByteProtected(istream);
         if (logDebug) {

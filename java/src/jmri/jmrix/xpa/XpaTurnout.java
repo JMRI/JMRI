@@ -35,6 +35,7 @@ public class XpaTurnout extends AbstractTurnout {
     }
 
     // Handle a request to change state by sending a formatted DCC packet
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         XpaMessage m = null;
         // sort out states
@@ -55,6 +56,7 @@ public class XpaTurnout extends AbstractTurnout {
         tc.sendXpaMessage(m, null);
     }
 
+    @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
             log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton PT" + _number);
@@ -65,4 +67,4 @@ public class XpaTurnout extends AbstractTurnout {
 
 }
 
-/* @(#)XpaTurnout.java */
+

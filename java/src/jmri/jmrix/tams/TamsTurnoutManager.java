@@ -30,10 +30,12 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
 
     String prefix;
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr;
         try {
@@ -49,6 +51,7 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
 
     boolean noWarnDelete = false;
 
+    @Override
     public void message(TamsMessage m) {
         //TamsMessages are ignored
     }
@@ -56,18 +59,22 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     // to hear of changes - copied from PowerManager
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
+    @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
+    @Override
     protected void firePropertyChange(String p, Object old, Object n) {
         pcs.firePropertyChange(p, old, n);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
 
+    @Override
     public void reply(TamsReply r) {//To listen for Turnout status changes
         //log.debug("*** TamsReply ***");
         TamsMessage tm = TamsMessage.getXEvtTrn();

@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.wangrow.serialdriver;
 
 import jmri.jmrix.nce.serialdriver.SerialDriverAdapter;
@@ -28,10 +27,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public String name() {
         return NAME;
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SerialDriverAdapter();

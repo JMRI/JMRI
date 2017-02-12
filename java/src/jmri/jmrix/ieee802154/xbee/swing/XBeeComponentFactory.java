@@ -1,4 +1,3 @@
-// XBeeComponentFactory.java
 package jmri.jmrix.ieee802154.xbee.swing;
 
 import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
@@ -19,6 +18,7 @@ public class XBeeComponentFactory extends jmri.jmrix.swing.ComponentFactory {
     /**
      * Provide a menu with all items attached to this system connection
      */
+    @Override
     public javax.swing.JMenu getMenu() {
         if (memo.getDisabled()) {
             return null;
@@ -27,4 +27,4 @@ public class XBeeComponentFactory extends jmri.jmrix.swing.ComponentFactory {
     }
 }
 
-/* @(#)XBeeComponentFactory.java */
+

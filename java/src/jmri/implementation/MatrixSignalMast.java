@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
 /**
@@ -161,6 +160,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         super.setAspect(aspect);
     }
 
+    @Override
     public void setLit(boolean newLit) {
         if (!allowUnLit() || newLit == getLit()) {
             return;
@@ -194,7 +194,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
     /**
      *  provide to panel for edit
      */
-    public @Nonnull char[] getUnLitBits() {
+    @Nonnull public char[] getUnLitBits() {
         if (unLitBits != null) {
             return unLitBits;
         } else {
@@ -206,7 +206,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  Hand unLitBits to xml
      *  @return String for 1-n 1/0 chararacters setting an unlit aspect
      */
-    public @Nonnull String getUnLitChars() {
+    @Nonnull public String getUnLitChars() {
         if (unLitBits != null) {
             return String.valueOf(unLitBits);
         } else {
@@ -215,7 +215,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         }
     }
 
-    public @CheckForNull Turnout getOutputBean(int colnum) { // as bean
+    @CheckForNull public Turnout getOutputBean(int colnum) { // as bean
         String key = "output" + Integer.toString(colnum);
         if (colnum > 0 && colnum <= outputsToBeans.size()) {
             return outputsToBeans.get(key).getBean();
@@ -230,7 +230,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  @param colnum int index (1 up to 6) for the column of the desired output
      *  @return NamedBeanHandle to the configured turnout output
      */
-    public @CheckForNull NamedBeanHandle<Turnout> getOutputHandle (int colnum) {
+    @CheckForNull public NamedBeanHandle<Turnout> getOutputHandle (int colnum) {
         String key = "output" + Integer.toString(colnum);
         if (colnum > 0 && colnum <= outputsToBeans.size()) {
             return outputsToBeans.get(key);
@@ -245,7 +245,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  @param colnum int index (1 up to 6) for the column of the desired output
      *  @return String with the desplay name of the configured turnout output
      */
-    public @Nonnull String getOutputName(int colnum) {
+    @Nonnull public String getOutputName(int colnum) {
         String key = "output" + Integer.toString(colnum);
         if (colnum > 0 && colnum <= outputsToBeans.size()) {
                 return outputsToBeans.get(key).getName();
@@ -288,7 +288,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  @return bitString String of 1 (= on) and 0 (= off) chars
      *  @param aspect String describing valid signal mast aspect, like "Clear"
      */
-    public @Nonnull String getBitstring(@Nonnull String aspect) {
+    @Nonnull public String getBitstring(@Nonnull String aspect) {
         if (aspectToOutput.containsKey(aspect)) { // hashtable
             String bitString = new String(aspectToOutput.get(aspect)); // convert char[] to string
             return bitString;
@@ -300,7 +300,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  Provide the names of the on/off turnout outputs from outputsToBeans hashmap to xml
      *  @return outputlist List&lt;String&gt; of display names for the outputs in order 1 to (max) 6
      */
-    public @Nonnull List<String> getOutputs() { // provide to xml
+    @Nonnull public List<String> getOutputs() { // provide to xml
         // to do: use for loop
         ArrayList<String> outputlist = new ArrayList<String>(); // (6) or (mastBitNum) ?
         //list = outputsToBeans.keySet();
@@ -426,6 +426,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     static int lastRef = 0;
 
+    @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { //NOI18N
             if (evt.getOldValue() instanceof Turnout) {
@@ -459,6 +460,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         return mastBitNum;
     }
 
+    @Override
     public void setAspectDisabled(String aspect) {
         if (aspect == null || aspect.equals("")) {
             return;
@@ -473,6 +475,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         }
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }

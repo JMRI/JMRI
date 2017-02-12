@@ -1,6 +1,6 @@
-// SerialReply.java
 package jmri.jmrix.grapevine;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,10 +35,12 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         return getElement(0) & 0x7F;
     }
 
+    @Override
     public boolean isUnsolicited() {
         return true;
     } //always unsolicited!
 
+    @Override
     protected int skipPrefix(int index) {
         // doesn't have to do anything
         return index;
@@ -97,7 +99,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
      * the Message method.
      */
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     public String format() {
         int b1 = -1;
         int b2 = -1;
@@ -124,4 +126,4 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
 }
 
-/* @(#)SerialReply.java */
+

@@ -25,6 +25,7 @@ import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
+import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.managers.AbstractSignalHeadManager;
 import jmri.managers.DefaultConditionalManager;
@@ -42,6 +43,7 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.progdebugger.DebugProgrammerManager;
 import org.junit.Assert;
+import org.netbeans.jemmy.TestOut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -203,6 +205,16 @@ public class JUnitUtil {
             log.error("Exception in waitFor condition.", ex);
             return false;
         }
+    }
+
+    /**
+     * Reset the user files path in the default
+     * {@link jmri.util.FileUtilSupport} object (used by
+     * {@link jmri.util.FileUtil}) to the default settings/user files path for
+     * tests of {@code git-working-copy/temp}.
+     */
+    public static void resetFileUtilSupport() {
+        FileUtilSupport.getDefault().setUserFilesPath(FileUtil.getPreferencesPath());
     }
 
     static public interface ReleaseUntil {
@@ -403,6 +415,10 @@ public class JUnitUtil {
                 apps.StartupActionsManager.class);
     }
 
+    public static void initConnectionConfigManager() {
+        InstanceManager.setDefault(ConnectionConfigManager.class, new ConnectionConfigManager());
+    }
+
     /*
      * Use reflection to reset the jmri.Application instance
      */
@@ -459,6 +475,30 @@ public class JUnitUtil {
      */
     public static void resetProfileManager(Profile profile) {
         ProfileManager.getDefault().setActiveProfile(profile);
+    }
+
+    /**
+     * Silences the outputs from the Jemmy GUI Test framework.
+     */
+    public static void silenceGUITestOutput() {
+        JUnitUtil.setGUITestOutput(TestOut.getNullOutput());
+    }
+
+    /**
+     * Sets the outputs for the Jemmy GUI Test framework to the defaults. Call
+     * this after setting up logging to enable outputs for a specific test.
+     */
+    public static void verboseGUITestOutput() {
+        JUnitUtil.setGUITestOutput(new TestOut());
+    }
+
+    /**
+     * Set the outputs for the Jemmy GUI Test framework.
+     *
+     * @param output a container for the input, output, and error streams
+     */
+    public static void setGUITestOutput(TestOut output) {
+        org.netbeans.jemmy.JemmyProperties.setCurrentOutput(output);
     }
 
     private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class.getName());

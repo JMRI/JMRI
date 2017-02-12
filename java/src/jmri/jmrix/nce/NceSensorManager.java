@@ -1,4 +1,3 @@
-// NceSensorManager.java
 package jmri.jmrix.nce;
 
 import jmri.JmriException;
@@ -28,9 +27,11 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
             aiuArray[i] = null;
         }
         listener = new NceListener() {
+            @Override
             public void message(NceMessage m) {
             }
 
+            @Override
             public void reply(NceReply r) {
                 if (r.isSensorMessage()) {
                     mInstance.handleSensorMessage(r);
@@ -45,17 +46,20 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
 
     private NceSensorManager mInstance = null;
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
         stopPolling = true;		// tell polling thread to go away
         tc.removeNceListener(listener);
         super.dispose();
     }
 
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         int number = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
 
@@ -140,6 +144,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         if (activeAIUMax > 0) {
             if (pollThread == null) {
                 pollThread = new Thread(new Runnable() {
+                    @Override
                     public void run() {
                         pollManager();
                     }
@@ -250,6 +255,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
+    @Override
     public void message(NceMessage r) {
         log.warn("unexpected message");
     }
@@ -257,6 +263,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Process single received reply from sensor poll
      */
+    @Override
     public void reply(NceReply r) {
         if (!r.isUnsolicited()) {
             int bits;
@@ -325,10 +332,12 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
+    @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         if (curAddress.contains(":")) {
             //Sensor address is presented in the format AIU Cab Address:Pin Number On AIU
@@ -373,6 +382,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     int pin = 0;
     int iName = 0;
 
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) {
 
         String tmpSName = "";
@@ -409,4 +419,4 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     private final static Logger log = LoggerFactory.getLogger(NceSensorManager.class.getName());
 }
 
-/* @(#)NceSensorManager.java */
+

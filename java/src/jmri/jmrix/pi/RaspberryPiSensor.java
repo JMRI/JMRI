@@ -1,4 +1,3 @@
-// RaspberryPiSensor.java
 
 package jmri.jmrix.pi;
 
@@ -71,6 +70,7 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
        else setOwnState(Sensor.INACTIVE);
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }
@@ -93,4 +93,4 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
 }
 
 
-/* @(#)RaspberryPiSensor.java */
+

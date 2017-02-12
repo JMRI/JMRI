@@ -1,21 +1,20 @@
+package jmri.jmrix.nce;
+
+import jmri.implementation.AbstractTurnoutTestBase;
+import org.junit.Assert;
+import org.junit.Before;
+
 /**
- * NceTurnoutTest.java
- *
- * Description:	tests for the jmri.jmrix.nce.NceTurnout class
+ * Tests for the jmri.jmrix.nce.NceTurnout class
  *
  * @author	Bob Jacobsen
   */
-package jmri.jmrix.nce;
-
-import jmri.implementation.AbstractTurnoutTest;
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-public class NceTurnoutTest extends AbstractTurnoutTest {
+public class NceTurnoutTest extends AbstractTurnoutTestBase {
 
     private NceTrafficControlScaffold tcis = null;
 
+    @Before
+    @Override
     public void setUp() {
         // prepare an interface
         tcis = new NceTrafficControlScaffold();
@@ -23,10 +22,12 @@ public class NceTurnoutTest extends AbstractTurnoutTest {
         t = new NceTurnout(tcis, "NT", 4);
     }
 
+    @Override
     public int numListeners() {
         return tcis.numListeners();
     }
 
+    @Override
     public void checkThrownMsgSent() {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
         // 2004 eprom output:
@@ -34,28 +35,12 @@ public class NceTurnoutTest extends AbstractTurnoutTest {
         Assert.assertEquals("content", "AD 00 04 04 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROWN message
     }
 
+    @Override
     public void checkClosedMsgSent() {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
         // 2004 eprom output:
         //Assert.assertEquals("content", "93 02 81 FF 7E", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
         Assert.assertEquals("content", "AD 00 04 03 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // CLOSED message
-    }
-
-    // from here down is testing infrastructure
-    public NceTurnoutTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {NceTurnoutTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(NceTurnoutTest.class);
-        return suite;
     }
 
 }

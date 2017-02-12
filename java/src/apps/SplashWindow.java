@@ -78,7 +78,4 @@ public class SplashWindow extends JFrame {
         // and show
         setVisible(true);
     }
-
-    /*  paint method required for Java 1.1.8 removed as it caused a
-     *  transparent frame under Java 1.6 */
 }

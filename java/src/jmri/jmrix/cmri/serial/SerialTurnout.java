@@ -70,6 +70,7 @@ public class SerialTurnout extends AbstractTurnout {
      *
      * @param newState desired new state, one of the Turnout class constants
      */
+     @Override
     protected void forwardCommandChangeToLayout(int newState) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
@@ -98,10 +99,12 @@ public class SerialTurnout extends AbstractTurnout {
     /**
      * C/MRI turnouts do support inversion
      */
+     @Override
     public boolean canInvert() {
         return true;
     }
 
+     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
             log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton ");
@@ -153,6 +156,7 @@ public class SerialTurnout extends AbstractTurnout {
                                 // start a timer to finish setting this turnout
                                 if (mPulseClosedTimer == null) {
                                     mPulseClosedTimer = new javax.swing.Timer(tNode.getPulseWidth(), new java.awt.event.ActionListener() {
+                                        @Override
                                         public void actionPerformed(java.awt.event.ActionEvent e) {
                                             tNode.setOutputBit(tBit, true ^ getInverted());
                                             mPulseClosedTimer.stop();
@@ -172,6 +176,7 @@ public class SerialTurnout extends AbstractTurnout {
                                 // start a timer to finish setting this turnout
                                 if (mPulseThrownTimer == null) {
                                     mPulseThrownTimer = new javax.swing.Timer(tNode.getPulseWidth(), new java.awt.event.ActionListener() {
+                                        @Override
                                         public void actionPerformed(java.awt.event.ActionEvent e) {
                                             tNode.setOutputBit(tBit, false ^ getInverted());
                                             mPulseThrownTimer.stop();
@@ -197,6 +202,7 @@ public class SerialTurnout extends AbstractTurnout {
                         // Start a timer to return bit to off state
                         if (mPulseClosedTimer == null) {
                             mPulseClosedTimer = new javax.swing.Timer(iTime, new java.awt.event.ActionListener() {
+                                @Override
                                 public void actionPerformed(java.awt.event.ActionEvent e) {
                                     tNode.setOutputBit(tBit, true ^ getInverted());
                                     mPulseClosedTimer.stop();
@@ -226,6 +232,7 @@ public class SerialTurnout extends AbstractTurnout {
                         // Start a timer to return bit to off state
                         if (mPulseClosedTimer == null) {
                             mPulseClosedTimer = new javax.swing.Timer(iTime, new java.awt.event.ActionListener() {
+                                @Override
                                 public void actionPerformed(java.awt.event.ActionEvent e) {
                                     tNode.setOutputBit(tBit, true ^ getInverted());
                                     mPulseClosedTimer.stop();
@@ -242,6 +249,7 @@ public class SerialTurnout extends AbstractTurnout {
                         // Start a timer to return bit to off state
                         if (mPulseThrownTimer == null) {
                             mPulseThrownTimer = new javax.swing.Timer(iTime, new java.awt.event.ActionListener() {
+                                @Override
                                 public void actionPerformed(java.awt.event.ActionEvent e) {
                                     tNode.setOutputBit(tBit + 1, true ^ getInverted());
                                     mPulseThrownTimer.stop();

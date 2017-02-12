@@ -1,12 +1,9 @@
 package jmri.jmrix.pi;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioProvider;
@@ -20,7 +17,7 @@ import jmri.Sensor;
  * </P>
  * @author Paul Bender Copyright (C) 2016
  */
-public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     private GpioProvider myprovider = null;
 

@@ -1,9 +1,6 @@
 package jmri.jmrix.rps;
 
 import jmri.Sensor;
-import jmri.SensorManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,7 +12,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen Copyright 2007
  * @author      Paul Bender Copyright (C) 2016
  */
-public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     @Override
     public String getSystemName(int i) {

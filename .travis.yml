@@ -6,8 +6,11 @@ addons:
     - graphviz
 
 before_install:
-  # set Linux to use JDK 8, accept defaults on OS X
+  # set Linux to use JDK 8, accept defaults on macOS
   - if [ "$TRAVIS_OS_NAME" == "linux" ] ; then jdk_switcher use "oraclejdk8" ; fi
+  # install graphviz on macOS
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install graphviz ; fi
 
 before_script:
   # setup a display on linux ( the sleep gives xvfb some time to start )
@@ -24,6 +27,8 @@ os:
   - linux
   - osx
 
+sudo: required
+
 env:
   matrix:
   - HEADLESS=true
@@ -33,3 +38,6 @@ matrix:
   exclude:
   - os: osx
     env: HEADLESS=true
+
+after_success:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]] ; then mvn jacoco:report coveralls:report -U -P travis-coverage ; fi

@@ -1,4 +1,3 @@
-// ProducerTableModel.java
 package jmri.jmrix.openlcb.swing.tie;
 
 import java.awt.Font;
@@ -17,11 +16,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ProducerTableModel extends AbstractTableModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1734913950207049663L;
-
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
 
     public static final int USERNAME_COLUMN = 0;
@@ -29,30 +23,37 @@ public class ProducerTableModel extends AbstractTableModel {
     public static final int NUMBER_COLUMN = 2;
     String[] columnName = new String[]{"User Name", "Node", "Event"};
 
+    @Override
     public String getColumnName(int c) {
         return columnName[c];
     }
 
+    @Override
     public Class<?> getColumnClass(int c) {
         return String.class;
     }
 
+    @Override
     public boolean isCellEditable(int r, int c) {
         return false;
     }
 
+    @Override
     public int getColumnCount() {
         return columnName.length;
     }
 
+    @Override
     public int getRowCount() {
         return dummy.length;
     }
 
+    @Override
     public Object getValueAt(int r, int c) {
         return dummy[r][c];  // for testing
     }
 
+    @Override
     public void setValueAt(Object type, int r, int c) {
         // nothing is stored here
     }
@@ -205,5 +206,3 @@ public class ProducerTableModel extends AbstractTableModel {
     private final static Logger log = LoggerFactory.getLogger(ProducerTableModel.class.getName());
 
 }
-
-/* @(#)ProducerTableModel.java */

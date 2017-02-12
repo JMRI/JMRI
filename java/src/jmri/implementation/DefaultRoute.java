@@ -115,6 +115,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
             super(name);
         }
 
+        @Override
         boolean setState(int state) {
             if (_sensor == null) {
                 return false;
@@ -135,6 +136,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
             }
         }
 
+        @Override
         public void propertyChange(PropertyChangeEvent e) {
             if (e.getPropertyName().equals("KnownState")) {
                 int now = ((Integer) e.getNewValue()).intValue();
@@ -202,6 +204,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
             }
         }
 
+        @Override
         public void propertyChange(PropertyChangeEvent e) {
             if (e.getPropertyName().equals("KnownState")
                     || e.getPropertyName().equals("CommandedState")) {

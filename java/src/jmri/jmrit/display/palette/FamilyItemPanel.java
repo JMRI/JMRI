@@ -140,6 +140,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     private void addShowButtonToBottom() {
         _showIconsButton = new JButton(Bundle.getMessage("ShowIcons"));
         _showIconsButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (_iconPanel.isVisible()) {
                     hideIcons();
@@ -158,6 +159,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         addShowButtonToBottom();
         _editIconsButton = new JButton(Bundle.getMessage("ButtonEditIcons"));
         _editIconsButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 openEditDialog();
             }
@@ -168,6 +170,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (!_update) {
             JButton createIconsButton = new JButton(Bundle.getMessage("createNewFamily"));
             createIconsButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent a) {
                     newFamilyDialog();
                 }
@@ -177,6 +180,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
             JButton deleteButton = new JButton(Bundle.getMessage("deleteFamily"));
             deleteButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent a) {
                     deleteFamilySet();
                     dispose();
@@ -349,6 +353,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             button.addActionListener(new ActionListener() {
                 String fam;
 
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setFamily(fam);
                 }
@@ -574,6 +579,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         panel.setLayout(new FlowLayout());
         JButton newFamilyButton = new JButton(Bundle.getMessage("createNewFamily"));
         newFamilyButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 newFamilyDialog();
             }
@@ -583,6 +589,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 updateFamiliesPanel();
             }

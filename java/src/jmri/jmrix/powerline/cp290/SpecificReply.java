@@ -1,4 +1,3 @@
-// SpecificReply.java
 package jmri.jmrix.powerline.cp290;
 
 import jmri.jmrix.powerline.SerialReply;
@@ -46,6 +45,7 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
     /**
      * Translate packet to text
      */
+    @Override
     public String toMonitorString() {
         String test = Constants.toMonitorString(this);
         return "Recv[" + getNumDataElements() + "]: " + test + "\n";
@@ -53,4 +53,4 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 
 }
 
-/* @(#)SpecificReply.java */
+

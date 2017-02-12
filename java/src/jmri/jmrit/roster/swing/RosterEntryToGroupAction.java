@@ -46,6 +46,7 @@ public class RosterEntryToGroupAction extends AbstractAction {
     Roster roster;
     String lastGroupSelect = null;
 
+    @Override
     public void actionPerformed(ActionEvent event) {
 
         roster = Roster.getDefault();
@@ -58,6 +59,7 @@ public class RosterEntryToGroupAction extends AbstractAction {
 
         rosterEntryUpdate();
         selections.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 rosterEntryUpdate();
             }
@@ -86,13 +88,10 @@ public class RosterEntryToGroupAction extends AbstractAction {
         if (rosterEntry != null) {
             rosterEntry.removeAllItems();
         }
-        String group = roster.getRosterGroupPrefix() + selections.getSelectedItem();
-        for (int i = 0; i < roster.numEntries(); i++) {
-            RosterEntry r = roster.getEntry(i);
-            if (r.getAttribute(group) == null) {
-                rosterEntry.addItem(r.titleString());
-            }
-        }
+        String group = Roster.ROSTER_GROUP_PREFIX + selections.getSelectedItem();
+        roster.getAllEntries().stream().filter((r) -> (r.getAttribute(group) == null)).forEachOrdered((r) -> {
+            rosterEntry.addItem(r.titleString());
+        });
     }
 
     // initialize logging

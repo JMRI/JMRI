@@ -80,6 +80,7 @@ public class Transit extends AbstractNamedBean
     /**
      * Query the state of the Transit
      */
+    @Override
     public int getState() {
         return mState;
     }
@@ -87,6 +88,7 @@ public class Transit extends AbstractNamedBean
     /**
      * Set the state of the Transit
      */
+    @Override
     public void setState(int state) {
         if ((state == Transit.IDLE) || (state == Transit.ASSIGNED)) {
             int old = mState;
@@ -544,10 +546,12 @@ public class Transit extends AbstractNamedBean
 
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameTransit");
     }
 
+    @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
             NamedBean nb = (NamedBean) evt.getOldValue();

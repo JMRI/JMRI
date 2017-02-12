@@ -45,10 +45,6 @@ import org.slf4j.LoggerFactory;
  */
 public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelectionListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8328681792874046328L;
     private OBlock _homeBlock;
     private CircuitBuilder _parent;
     private OBlock _adjacentBlock;
@@ -99,6 +95,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         setTitle(java.text.MessageFormat.format(title, _homeBlock.getDisplayName()));
 
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 closingEvent(true);
             }
@@ -136,6 +133,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
 
         JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
         doneButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 closingEvent(false);
             }
@@ -170,6 +168,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
 
         JButton clearButton = new JButton(Bundle.getMessage("buttonClearSelection"));
         clearButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 clearListSelection();
             }
@@ -190,6 +189,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         panel = new JPanel();
         JButton changeButton = new JButton(Bundle.getMessage("buttonChangeName"));
         changeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 changePortalName();
             }
@@ -199,6 +199,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
 
         JButton deleteButton = new JButton(Bundle.getMessage("buttonDeletePortal"));
         deleteButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 deletePortal();
             }
@@ -251,6 +252,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         _parent._editor.highlight(null);
     }
 
+    @Override
     public void valueChanged(ListSelectionEvent e) {
         Portal portal = _portalList.getSelectedValue();
         if (portal != null) {
@@ -597,15 +599,11 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
 
     public class IconDragJLabel extends DragJLabel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7136480915082749291L;
-
         public IconDragJLabel(DataFlavor flavor) {
             super(flavor);
         }
 
+        @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {
                 return null;

@@ -13,11 +13,6 @@ import javax.swing.AbstractAction;
   */
 public class LV102Action extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8355340585591242351L;
-
     public LV102Action(String s) {
         super(s);
     }
@@ -27,6 +22,7 @@ public class LV102Action extends AbstractAction {
         this(Bundle.getMessage("LV102Config"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create an LV102Frame
         LV102Frame f = new LV102Frame(Bundle.getMessage("LV102Config"));

@@ -146,6 +146,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                                 SymbolicProgBundle.getMessage("PromptQuitWindowNotWrittenDecoder"),
                                 (String) null, this
                         ) {
+                            @Override
                             public boolean checkPromptNeeded() {
                                 return !checkDirtyDecoder();
                             }
@@ -158,10 +159,12 @@ abstract public class PaneProgFrame extends JmriJFrame
                                 SymbolicProgBundle.getMessage("PromptQuitWindowNotWrittenConfig"),
                                 SymbolicProgBundle.getMessage("PromptSaveQuit"), this
                         ) {
+                            @Override
                             public boolean checkPromptNeeded() {
                                 return !checkDirtyFile();
                             }
 
+                            @Override
                             public boolean doPrompt() {
                                 boolean result = storeFile(); // storeFile false if failed, abort shutdown
                                 return result;
@@ -187,6 +190,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // Add a save item
         fileMenu.add(new AbstractAction(SymbolicProgBundle.getMessage("MenuSave")) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 storeFile();
             }
@@ -232,6 +236,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         enableReadButtons();
 
         readChangesButton.addItemListener(l1 = new ItemListener() {
+            @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     prepGlassPane(readChangesButton);
@@ -248,6 +253,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         });
 
         readAllButton.addItemListener(l3 = new ItemListener() {
+            @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     prepGlassPane(readAllButton);
@@ -265,6 +271,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         writeChangesButton.setToolTipText(SymbolicProgBundle.getMessage("TipWriteHighlightedValues"));
         writeChangesButton.addItemListener(l2 = new ItemListener() {
+            @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     prepGlassPane(writeChangesButton);
@@ -282,6 +289,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         writeAllButton.setToolTipText(SymbolicProgBundle.getMessage("TipWriteAllValues"));
         writeAllButton.addItemListener(l4 = new ItemListener() {
+            @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     prepGlassPane(writeAllButton);
@@ -347,6 +355,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         addHelpMenu("package.jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame", true);
     }
 
+    @Override
     public Dimension getPreferredSize() {
         Dimension screen = getMaximumSize();
         int width = Math.min(super.getPreferredSize().width, screen.width);
@@ -354,6 +363,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         return new Dimension(width, height);
     }
 
+    @Override
     public Dimension getMaximumSize() {
         Dimension screen = getToolkit().getScreenSize();
         return new Dimension(screen.width, screen.height - 35);
@@ -815,6 +825,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      *
      * @param e Not used
      */
+    @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
 
         // Don't want to actually close if we return early
@@ -1024,6 +1035,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         JButton store = new JButton(SymbolicProgBundle.getMessage("ButtonSave"));
         store.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         store.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 storeFile();
             }
@@ -1033,6 +1045,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         JButton reset = new JButton(SymbolicProgBundle.getMessage("ButtonResetDefaults"));
         reset.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         reset.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 resetToDefaults();
             }
@@ -1056,6 +1069,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // arrange for the dcc address to be updated
         java.beans.PropertyChangeListener dccNews = new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 updateDccAddress();
             }
@@ -1109,6 +1123,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         JButton store = new JButton(SymbolicProgBundle.getMessage("ButtonSave"));
         store.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         store.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 storeFile();
             }
@@ -1151,6 +1166,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         store.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         store.addActionListener(new ActionListener() {
 
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 storeFile();
             }
@@ -1183,6 +1199,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
 
         new DccAddressVarHandler(primaryAddr, extendAddr, addMode) {
+            @Override
             protected void doPrimary() {
                 // short address mode
                 longMode = false;
@@ -1191,6 +1208,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 }
             }
 
+            @Override
             protected void doExtended() {
                 // long address
                 if (extendAddr != null && !extendAddr.getValueString().equals("")) {
@@ -1246,10 +1264,12 @@ abstract public class PaneProgFrame extends JmriJFrame
      */
     protected void processModifierElements(Element e, final PaneProgPane pane, VariableTableModel model, final JTabbedPane tabPane, final int index) {
         QualifierAdder qa = new QualifierAdder() {
+            @Override
             protected Qualifier createQualifier(VariableValue var, String relation, String value) {
                 return new PaneQualifier(pane, var, Integer.parseInt(value), relation, tabPane, index);
             }
 
+            @Override
             protected void addListener(java.beans.PropertyChangeListener qc) {
                 pane.addPropertyChangeListener(qc);
             }
@@ -1258,6 +1278,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         qa.processModifierElements(e, model);
     }
 
+    @Override
     public BusyGlassPane getBusyGlassPane() {
         return glassPane;
     }
@@ -1265,6 +1286,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     /**
      *
      */
+    @Override
     public void prepGlassPane(AbstractButton activeButton) {
         List<Rectangle> rectangles = new ArrayList<>();
 
@@ -1300,6 +1322,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         this.setGlassPane(glassPane);
     }
 
+    @Override
     public void paneFinished() {
         if (!isBusy()) {
             if (glassPane != null) {
@@ -1320,6 +1343,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      *
      * @param stat Are reads possible? If false, so not enable the read buttons.
      */
+    @Override
     public void enableButtons(boolean stat) {
         if (stat) {
             enableReadButtons();
@@ -1336,6 +1360,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     boolean justChanges;
 
+    @Override
     public boolean isBusy() {
         return _busy;
     }
@@ -1553,6 +1578,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      *
      * @param e Event, used to find source
      */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // check for the right event
         if (_programmingPane == null) {
@@ -1659,6 +1685,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * local dispose, which also invokes parent. Note that we remove the
      * components (removeAll) before taking those apart.
      */
+    @Override
     public void dispose() {
 
         if (log.isDebugEnabled()) {

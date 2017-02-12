@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>3</minor>
+    <test>1</test>
+    <modifier>.1ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor systemName="IS1" inverted="false" userName="sen1">
+      <systemName>IS1</systemName>
+      <userName>sen1</userName>
+    </sensor>
+    <sensor systemName="IS2" inverted="false" userName="sen2">
+      <systemName>IS2</systemName>
+      <userName>sen2</userName>
+    </sensor>
+    <sensor systemName="ISCLOCKRUNNING" inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory systemName="IM1" userName="mem1" value="0">
+      <systemName>IM1</systemName>
+      <userName>mem1</userName>
+    </memory>
+    <memory systemName="IM2" userName="mem2" value="noFoop">
+      <systemName>IM2</systemName>
+      <userName>mem2</userName>
+    </memory>
+    <memory systemName="IM3" userName="mem3" value="14">
+      <systemName>IM3</systemName>
+      <userName>mem3</userName>
+    </memory>
+    <memory systemName="IM4" userName="mem4" value="Poot">
+      <systemName>IM4</systemName>
+      <userName>mem4</userName>
+    </memory>
+    <memory systemName="IMCURRENTTIME" value="10:33 AM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory systemName="IMPOOT" value="Boot">
+      <systemName>IMPOOT</systemName>
+    </memory>
+    <memory systemName="IMRATEFACTOR" value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml"></signalmasts>
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml"></signalgroups>
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml"></oblocks>
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml"></warrants>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Nov 23 16:04:17 PST 2015" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0"></timebase>
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml"></entryexitpairs>
+  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="Transparent Positionables" x="799" y="142" height="394" width="409" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both" redBackground="51" greenBackground="255" blueBackground="51" state="0" shapeSelect="yes">
+    <icons>
+      <visible>
+        <url>program:resources/icons/throttles/RoundRedCircle20.png</url>
+      </visible>
+      <path_edit>
+        <url>program:resources/icons/greenSquare.gif</url>
+      </path_edit>
+      <hidden>
+        <url>program:resources/icons/Invisible.gif</url>
+      </hidden>
+      <to_arrow>
+        <url>program:resources/icons/track/toArrow.gif</url>
+      </to_arrow>
+      <from_arrow>
+        <url>program:resources/icons/track/fromArrow.gif</url>
+      </from_arrow>
+    </icons>
+    <positionableRectangle x="19" y="31" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" lineWidth="1" hideOnSensor="false" changeLevelOnSensor="5" class="jmri.jmrit.display.controlPanelEditor.shape.configurexml.PositionableRectangleXml">
+      <toolTip>Graphic</toolTip>
+      <lineColor red="0" green="0" blue="0" alpha="255"></lineColor>
+      <fillColor red="255" green="0" blue="0" alpha="255"></fillColor>
+      <size width="176" height="161"></size>
+    </positionableRectangle>
+    <memoryicon memory="mem4" x="103" y="0" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="30" size="36" style="3" red="0" green="51" blue="0" hasBackground="no" margin="9" borderSize="3" redBorder="51" greenBorder="51" blueBorder="255" justification="centre" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+      <tooltip>mem1 (IM1)</tooltip>
+    </memoryicon>
+    <memoryInputIcon colWidth="5" memory="mem2" x="166" y="67" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="20" style="2" red="255" green="153" blue="0" hasBackground="no" margin="8" borderSize="6" redBorder="0" greenBorder="0" blueBorder="255" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml">
+      <tooltip>mem2 (IM2)</tooltip>
+    </memoryInputIcon>
+    <memoryicon memory="mem3" x="27" y="162" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="20" style="1" red="255" green="0" blue="51" hasBackground="no" margin="6" borderSize="4" redBorder="0" greenBorder="0" blueBorder="255" justification="centre" class="jmri.jmrit.display.configurexml.MemorySpinnerIconXml">
+      <tooltip>mem3 (IM3)</tooltip>
+    </memoryicon>
+    <memoryComboIcon memory="IMPOOT" x="138" y="154" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="24" style="0" red="255" green="0" blue="51" hasBackground="no" margin="8" borderSize="6" redBorder="51" greenBorder="51" blueBorder="255" justification="centre" class="jmri.jmrit.display.configurexml.MemoryComboIconXml">
+      <itemList>
+        <item index="5">Loot</item>
+        <item index="0">Poot</item>
+        <item index="2">Hoot</item>
+        <item index="3">Boot</item>
+        <item index="4">Moot</item>
+        <item index="1">Toot</item>
+      </itemList>
+      <tooltip>mem4 (IM4)</tooltip>
+    </memoryComboIcon>
+  </paneleditor>
+  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="Rotated Text" x="186" y="159" height="417" width="514" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both" redBackground="51" greenBackground="255" blueBackground="51" state="0" shapeSelect="yes">
+    <icons>
+      <visible>
+        <url>program:resources/icons/throttles/RoundRedCircle20.png</url>
+      </visible>
+      <path_edit>
+        <url>program:resources/icons/greenSquare.gif</url>
+      </path_edit>
+      <hidden>
+        <url>program:resources/icons/Invisible.gif</url>
+      </hidden>
+      <to_arrow>
+        <url>program:resources/icons/track/toArrow.gif</url>
+      </to_arrow>
+      <from_arrow>
+        <url>program:resources/icons/track/fromArrow.gif</url>
+      </from_arrow>
+    </icons>
+    <positionableRectangle x="107" y="62" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" lineWidth="1" hideOnSensor="false" changeLevelOnSensor="5" class="jmri.jmrit.display.controlPanelEditor.shape.configurexml.PositionableRectangleXml">
+      <toolTip>Graphic</toolTip>
+      <lineColor red="0" green="0" blue="0" alpha="255"></lineColor>
+      <fillColor red="255" green="0" blue="0" alpha="255"></fillColor>
+      <size width="176" height="161"></size>
+    </positionableRectangle>
+    <positionablelabel x="235" y="120" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="60" text="Sample" size="24" style="3" red="51" green="51" blue="51" hasBackground="no" margin="9" borderSize="5" redBorder="255" greenBorder="255" blueBorder="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <sensoricon sensor="IS1" x="347" y="35" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="60" momentary="false" icon="yes" text="Overlaid With Text" size="16" style="1" red="204" green="0" blue="51" hasBackground="yes" redBack="255" greenBack="255" blueBack="0" margin="2" borderSize="5" redBorder="0" greenBorder="0" blueBorder="153" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>sen1 (IS1)</tooltip>
+      <active url="program:resources/icons/markers/loco-yellow.gif" degrees="60" scale="1.25">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/markers/loco-blue.gif" degrees="60" scale="1.25">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/markers/loco-gray.gif" degrees="60" scale="1.25">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/markers/loco-red.gif" degrees="60" scale="1.25">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="Markers"></iconmaps>
+      <activeText text="sen1" red="255" green="0" blue="0"></activeText>
+      <inactiveText text="sen1" red="255" green="255" blue="0"></inactiveText>
+      <unknownText text="sen1" red="0" green="0" blue="255"></unknownText>
+      <inconsistentText text="sen1" red="0" green="0" blue="0"></inconsistentText>
+    </sensoricon>
+    <sensoricon sensor="sen2" x="97" y="195" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="30" momentary="false" icon="no" text="" size="24" style="1" red="0" green="0" blue="255" hasBackground="yes" redBack="255" greenBack="255" blueBack="255" borderSize="4" redBorder="255" greenBorder="255" blueBorder="0" fixedWidth="50" fixedHeight="30" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>sen2 (IS2)</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="30" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-on.gif" degrees="30" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/blue-on.gif" degrees="30" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/amber-on.gif" degrees="30" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="LargeJewel"></iconmaps>
+      <activeText text="On" red="0" green="0" blue="255" redBack="255" greenBack="255" blueBack="255"></activeText>
+      <inactiveText text="Off" red="255" green="0" blue="0" redBack="0" greenBack="0" blueBack="255"></inactiveText>
+      <unknownText text="??" red="0" green="0" blue="255" redBack="255" greenBack="200" blueBack="0"></unknownText>
+      <inconsistentText text="Err" red="0" green="0" blue="0" redBack="51" greenBack="255" blueBack="51"></inconsistentText>
+    </sensoricon>
+    <positionablelabel x="261" y="84" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Label" size="20" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <sensoricon sensor="sen2" x="68" y="143" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="no" text="On" size="24" style="1" red="0" green="0" blue="255" hasBackground="no" borderSize="4" redBorder="255" greenBorder="255" blueBorder="0" fixedWidth="50" fixedHeight="30" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>sen2 (IS2)</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/blue-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/amber-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="LargeJewel"></iconmaps>
+      <activeText text="On" red="0" green="0" blue="255"></activeText>
+      <inactiveText text="Off" red="255" green="0" blue="0" redBack="0" greenBack="0" blueBack="255"></inactiveText>
+      <unknownText text="??" red="0" green="0" blue="255"></unknownText>
+      <inconsistentText text="Err" red="0" green="0" blue="0" redBack="51" greenBack="255" blueBack="51"></inconsistentText>
+    </sensoricon>
+    <sensoricon sensor="sen2" x="187" y="197" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="30" momentary="false" icon="no" text="" size="24" style="1" red="0" green="0" blue="255" hasBackground="no" borderSize="4" redBorder="255" greenBorder="255" blueBorder="0" fixedWidth="50" fixedHeight="30" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>sen2 (IS2)</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="30" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-on.gif" degrees="30" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/blue-on.gif" degrees="30" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/amber-on.gif" degrees="30" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="LargeJewel"></iconmaps>
+      <activeText text="On" red="0" green="0" blue="255"></activeText>
+      <inactiveText text="Off" red="255" green="0" blue="0" redBack="0" greenBack="0" blueBack="255"></inactiveText>
+      <unknownText text="??" red="0" green="0" blue="255"></unknownText>
+      <inconsistentText text="Err" red="0" green="0" blue="0" redBack="51" greenBack="255" blueBack="51"></inconsistentText>
+    </sensoricon>
+    <sensoricon sensor="sen2" x="71" y="87" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="no" text="On" size="24" style="1" red="0" green="0" blue="255" hasBackground="yes" redBack="255" greenBack="255" blueBack="255" borderSize="4" redBorder="255" greenBorder="255" blueBorder="0" fixedWidth="50" fixedHeight="30" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>sen2 (IS2)</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/blue-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/amber-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="LargeJewel"></iconmaps>
+      <activeText text="On" red="0" green="0" blue="255" redBack="255" greenBack="255" blueBack="255"></activeText>
+      <inactiveText text="Off" red="255" green="0" blue="0" redBack="0" greenBack="0" blueBack="255"></inactiveText>
+      <unknownText text="??" red="0" green="0" blue="255" redBack="255" greenBack="200" blueBack="0"></unknownText>
+      <inconsistentText text="Err" red="0" green="0" blue="0" redBack="51" greenBack="255" blueBack="51"></inconsistentText>
+    </sensoricon>
+    <positionablelabel x="259" y="53" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Label" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="255" greenBack="255" blueBack="0" margin="2" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+  </paneleditor>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Tue Dec 08 10:30:05 PST 2015</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Tue Dec 08 10:30:05 PST 2015</date>
+      <filename>/C:/JmriUsers/Plain_PanelPro/UserPrefsProfileConfig.xml</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Tue Dec 08 10:30:12 PST 2015</date>
+      <filename>/C:/JmriPanels/BackgroundsCPE.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Sun Dec 06 22:19:59 PST 2015</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Sun Dec 06 22:19:59 PST 2015</date>
+          <filename>/C:/JmriUsers/Plain_PanelPro/UserPrefsProfileConfig.xml</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Sun Dec 06 22:20:06 PST 2015</date>
+          <filename>/C:/JmriPanels/BackgroundsCPE.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Fri Dec 04 18:08:49 PST 2015</date>
+              <filename>JMRI program</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Fri Dec 04 18:08:49 PST 2015</date>
+              <filename>/C:/JmriUsers/Plain_PanelPro/UserPrefsProfileConfig.xml</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Fri Dec 04 18:08:54 PST 2015</date>
+              <filename>/C:/JmriPanels/BackgroundsCPE.xml</filename>
+              <filehistory>
+                <operation>
+                  <type>app</type>
+                  <date>Fri Dec 04 11:41:14 PST 2015</date>
+                  <filename>JMRI program</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Fri Dec 04 11:41:14 PST 2015</date>
+                  <filename>/C:/JmriUsers/Plain_PanelPro/UserPrefsProfileConfig.xml</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Fri Dec 04 11:41:19 PST 2015</date>
+                  <filename>/C:/JmriPanels/BackgroundsCPE.xml</filename>
+                  <filehistory>
+                    <operation>
+                      <type>app</type>
+                      <date>Fri Dec 04 11:38:14 PST 2015</date>
+                      <filename>JMRI program</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Fri Dec 04 11:38:14 PST 2015</date>
+                      <filename>/C:/JmriUsers/Plain_PanelPro/UserPrefsProfileConfig.xml</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Fri Dec 04 11:38:22 PST 2015</date>
+                      <filename>/C:/JmriPanels/BackgroundsCPE.xml</filename>
+                      <filehistory>
+                        <operation>
+                          <type>app</type>
+                          <date>Wed Dec 02 21:20:07 PST 2015</date>
+                          <filename>JMRI program</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Wed Dec 02 21:20:07 PST 2015</date>
+                          <filename>/C:/JmriUsers/Plain_PanelPro/UserPrefsProfileConfig.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Wed Dec 02 21:20:15 PST 2015</date>
+                          <filename>/C:/JmriPanels/BackgroundsCPE.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Store</type>
+                          <date>Wed Dec 02 21:21:47 PST 2015</date>
+                          <filename></filename>
+                        </operation>
+                      </filehistory>
+                    </operation>
+                    <operation>
+                      <type>Store</type>
+                      <date>Fri Dec 04 11:41:01 PST 2015</date>
+                      <filename></filename>
+                    </operation>
+                  </filehistory>
+                </operation>
+                <operation>
+                  <type>Store</type>
+                  <date>Fri Dec 04 11:47:44 PST 2015</date>
+                  <filename></filename>
+                </operation>
+              </filehistory>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Fri Dec 04 18:14:23 PST 2015</date>
+              <filename></filename>
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Sun Dec 06 22:20:27 PST 2015</date>
+          <filename></filename>
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Tue Dec 08 10:33:26 PST 2015</date>
+      <filename></filename>
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.3.1ish-201512080748-SVD on Tue Dec 08 10:33:26 PST 2015 $Id$-->
+</layout-config>

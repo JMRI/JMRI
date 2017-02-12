@@ -1,5 +1,6 @@
 package jmri.jmrix.mrc;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.text.DecimalFormat;
 
 /**
@@ -441,7 +442,7 @@ public class MrcPackets {
     /**
      * Adds the description of the clock's mode to a message being built
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_NO_DEFAULT", justification = "covers all possible values")
+    @SuppressFBWarnings(value = "SF_SWITCH_NO_DEFAULT", justification = "covers all possible values")
     static void appendClockMessage(MrcMessage m, StringBuilder txt) {
         int clockModeBits = m.getElement(2) & 0xC0;
         switch (clockModeBits) {

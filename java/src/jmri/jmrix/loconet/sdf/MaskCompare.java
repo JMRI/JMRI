@@ -20,8 +20,9 @@ public class MaskCompare extends SdfMacro {
         skip = byte1 & 0x03;
     }
 
+    @Override
     public String name() {
-        return "MASK_COMPARE";
+        return "MASK_COMPARE"; // NOI18N
     }
 
     int src;
@@ -32,32 +33,33 @@ public class MaskCompare extends SdfMacro {
 
     byte[] bytes = new byte[4];
 
+    @Override
     public int length() {
         return 4;
     }
 
     String srcVal() {
-        return "(src = " + src + ")";
+        return "(src = " + src + ")"; // NOI18N
     }
 
     String immedVal() {
         if (immed != 0) {
-            return "IMMED_DATA";
+            return "IMMED_DATA"; // NOI18N
         } else {
-            return "TARGET_DATA";
+            return "TARGET_DATA"; // NOI18N
         }
     }
 
     String targVal() {
-        return "(target = " + targ + ")";
+        return "(target = " + targ + ")"; // NOI18N
     }
 
     String maskVal() {
-        return "(mask = " + mask + ")";
+        return "(mask = " + mask + ")"; // NOI18N
     }
 
     String skipVal() {
-        return "(skip = " + skip + ")";
+        return "(skip = " + skip + ")"; // NOI18N
     }
 
     static public SdfMacro match(SdfBuffer buff) {
@@ -74,6 +76,7 @@ public class MaskCompare extends SdfMacro {
     /**
      * Store into a buffer.
      */
+    @Override
     public void loadByteArray(SdfBuffer buffer) {
         // data
         buffer.setAtIndexAndInc(bytes[0]);
@@ -85,14 +88,17 @@ public class MaskCompare extends SdfMacro {
         super.loadByteArray(buffer);
     }
 
+    @Override
     public String toString() {
-        return "Check Mask\n";
+        return "Check Mask\n"; // NOI18N
     }
 
+    @Override
     public String oneInstructionString() {
         return name() + ' ' + jmri.util.StringUtil.hexStringFromBytes(bytes) + '\n';
     }
 
+    @Override
     public String allInstructionString(String indent) {
         return indent + oneInstructionString();
     }

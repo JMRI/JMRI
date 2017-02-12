@@ -1,4 +1,3 @@
-// IEEE802154Interface.java
 package jmri.jmrix.ieee802154;
 
 /**
@@ -17,4 +16,4 @@ public interface IEEE802154Interface {
 }
 
 
-/* @(#)IEEE802154Interface.java */
+

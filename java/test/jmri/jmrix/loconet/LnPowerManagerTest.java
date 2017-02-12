@@ -1,80 +1,72 @@
 package jmri.jmrix.loconet;
 
-import jmri.jmrix.AbstractPowerManagerTest;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import jmri.jmrix.AbstractPowerManagerTestBase;
+import org.junit.Before;
 
 /**
  * tests for the Jmri package LnPowerManager
  *
  * @author	Bob Jacobsen Copyright 2001
  */
-public class LnPowerManagerTest extends AbstractPowerManagerTest {
+public class LnPowerManagerTest extends AbstractPowerManagerTestBase {
 
     /**
      * service routines to simulate receiving on, off from interface
      */
+    @Override
     protected void hearOn() {
         LocoNetMessage l = new LocoNetMessage(2);
         l.setOpCode(LnConstants.OPC_GPON);
         controller.sendTestMessage(l);
     }
 
+    @Override
     protected void sendOnReply() {
         hearOn();
     }
 
+    @Override
     protected void hearOff() {
         LocoNetMessage l = new LocoNetMessage(2);
         l.setOpCode(LnConstants.OPC_GPOFF);
         controller.sendTestMessage(l);
     }
 
+    @Override
     protected void sendOffReply() {
         hearOff();
     }
 
+    @Override
     protected int numListeners() {
         return controller.numListeners();
     }
 
+    @Override
     protected int outboundSize() {
         return controller.outbound.size();
     }
 
+    @Override
     protected boolean outboundOnOK(int index) {
         return LnConstants.OPC_GPON
                 == controller.outbound.elementAt(index).getOpCode();
     }
 
+    @Override
     protected boolean outboundOffOK(int index) {
         return LnConstants.OPC_GPOFF
                 == controller.outbound.elementAt(index).getOpCode();
     }
 
     // setup a default interface
+    @Before
+    @Override
     public void setUp() {
         controller = new LocoNetInterfaceScaffold();
         p = new LnPowerManager(new LocoNetSystemConnectionMemo(controller, null));
     }
 
     LocoNetInterfaceScaffold controller;  // holds dummy for testing
-
-    // from here down is testing infrastructure
-    public LnPowerManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {LnPowerManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LnPowerManagerTest.class);
-        return suite;
-    }
 
 }

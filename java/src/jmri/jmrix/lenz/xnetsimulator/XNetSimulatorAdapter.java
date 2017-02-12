@@ -75,6 +75,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         csStatus = csNormalMode;
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         // open the port in XPressNet mode, check ability to set moderators
         setPort(portName);
@@ -86,6 +87,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
      * only be set to false by external processes
      *
      */
+    @Override
     synchronized public void setOutputBufferEmpty(boolean s) {
         OutputBufferEmpty = s;
     }
@@ -96,17 +98,18 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
      * buffer length. This might go false for short intervals, but it might also
      * stick off if something goes wrong.
      */
+    @Override
     public boolean okToSend() {
         if (CheckBuffer) {
             if (log.isDebugEnabled()) {
                 log.debug("Buffer Empty: " + OutputBufferEmpty);
             }
-            return (OutputBufferEmpty);
+            return (OutputBufferEmpty && super.okToSend() );
         } else {
             if (log.isDebugEnabled()) {
                 log.debug("No Flow Control or Buffer Check");
             }
-            return (true);
+            return (super.okToSend());
         }
     }
 
@@ -114,6 +117,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
      * set up all of the other objects to operate with a XNetSimulator connected
      * to this port
      */
+    @Override
     public void configure() {
         // connect to a packetizing traffic controller
         XNetTrafficController packets = new XNetPacketizer(new LenzCommandStation());
@@ -130,6 +134,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     }
 
     // base class methods for the XNetSimulatorPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (pin == null) {
             log.error("getInputStream called before load(), stream not available");
@@ -140,6 +145,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         return pin;
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (pout == null) {
             log.error("getOutputStream called before load(), stream not available");
@@ -150,16 +156,9 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         return pout;
     }
 
+    @Override
     public boolean status() {
         return (pout != null && pin != null);
-    }
-
-    /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed
-     */
-    public String[] validBaudRates() {
-        return null;
     }
 
     @Deprecated
@@ -170,6 +169,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         return mInstance;
     }
 
+    @Override
     public void run() { // start a new thread
         // this thread has one task.  It repeatedly reads from the input pipe
         // and writes modified data to the output pipe.  This is the heart

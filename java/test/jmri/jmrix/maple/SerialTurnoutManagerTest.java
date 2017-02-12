@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen
  */
-public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     @After
     public void tearDown(){
@@ -36,6 +36,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         t.registerNode(new SerialNode());
         // create and register the turnout manager object
         l = new SerialTurnoutManager() {
+            @Override
             public void notifyTurnoutCreationError(String conflict, int bitNum) {
             }
         };

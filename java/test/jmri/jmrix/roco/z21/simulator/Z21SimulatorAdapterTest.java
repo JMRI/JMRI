@@ -1,9 +1,8 @@
 package jmri.jmrix.roco.z21.simulator;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.net.DatagramSocket;
@@ -21,12 +20,12 @@ import jmri.jmrix.roco.z21.Z21Reply;
  */
 public class Z21SimulatorAdapterTest {
         
-    private java.net.InetAddress host;
+    private static java.net.InetAddress host;
     private static int port = 21105; // default port for Z21 connections.
+    private static Z21SimulatorAdapter a  = null;
 
     @Test
     public void testCtor() {
-        Z21SimulatorAdapter a = new Z21SimulatorAdapter();
         Assert.assertNotNull(a);
     }
 
@@ -35,8 +34,6 @@ public class Z21SimulatorAdapterTest {
      */ 
     @Test
     public void testConnection() {
-        // create a new simulator.
-        Z21SimulatorAdapter a = new Z21SimulatorAdapter();
         // connect the port
         try {
            a.connect();
@@ -82,13 +79,10 @@ public class Z21SimulatorAdapterTest {
         } catch(java.net.SocketException se) {
             Assert.fail("Failure Creating Socket");
         }
-        a.dispose();
     }
 
     @Test
     public void RailComDataChangedReply(){
-        // create a new simulator.
-        Z21SimulatorAdapter a = new Z21SimulatorAdapter();
         // NOTE: this test uses reflection to test a private method.
         java.lang.reflect.Method getZ21RailComDataChangedReplyMethod = null;
         try {
@@ -110,15 +104,12 @@ public class Z21SimulatorAdapterTest {
             Throwable cause = ite.getCause();
             Assert.fail("getZ21RailComDataChangedReply  executon failed reason: " + cause.getMessage());
         }
-        a.dispose();
 
     }
 
-
-
     // The minimal setup for log4J
-    @Before
-    public void setUp() {
+    @BeforeClass
+    static public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initConfigureManager();
@@ -127,10 +118,13 @@ public class Z21SimulatorAdapterTest {
         } catch(java.net.UnknownHostException uhe){
             Assert.fail("Unable to create host localhost");
         } 
+        // create a new simulator.
+        a = new Z21SimulatorAdapter();
     }
 
-    @After
-    public void tearDown() {
+    @AfterClass
+    static public void tearDown() {
+        a.dispose();
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }

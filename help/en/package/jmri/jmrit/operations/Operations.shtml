@@ -25,19 +25,26 @@
  <div class="nomenu" id="mBody">
   <div id="mainContent">
    <h1>JMRI: OperationsPro&trade;</h1>
-   The JMRI Operations program allows you to create computer generated train Manifests for your
-   railroad. A train <a href="#PrintingManifests">Manifest</a> details the work that a crew will
-   perform during an operations session. The Manifest provides a list of car pick up and set outs
-   and shows where the cars are located and where they should be eventually positioned on the
-   railroad. The program allows you to enter a roster of cars and locomotives, define locations
-   (stations) on the railroad, and routes for trains to travel. The car roster includes information
-   about the car, including road, number, type of car, color, length, weight, load, date built, and
-   owner. Trains are assigned routes that define locations or stations where cars can be picked up
-   or set out. Features include the ability to control what car types, roads, and car loads a
-   location or industry can service, the available track space for a location, and the maximum
-   length the train can be between any two locations in the train's route.
+			The JMRI Operations program allows you to create computer generated
+			train Manifests for your railroad. A train
+			<a href="#PrintingManifests">Manifest</a> details the work that a
+			crew will perform during an operations session. The Manifest provides
+			a list of car pick up and set outs and shows where the cars are
+			located and where they should be eventually positioned on the
+			railroad. The program allows you to enter a roster of
+			<a href="#Cars">cars</a> and <a href="#Locomotives">locomotives</a>,
+			define <a href="#Locations">locations</a> (stations) on the railroad,
+			and <a href="#Routes">routes</a> for <a href="#Trains">trains</a> to
+			travel. The car roster includes information about the car, including
+			road, number, type of car, color, length, weight, load, date built,
+			and owner. Trains are assigned routes that define locations or
+			stations where cars can be picked up or set out. Features include the
+			ability to control what car types, roads, and car loads a location or
+			industry can service, the available track space for a location, and
+			the maximum length the train can be between any two locations in the
+			train's route.
 
-   <p>
+			<p>
     Locations can have spurs, yards, staging and classification/interchange tracks. Spurs are used
     to service industries, and can optionally have <a href="#Schedules">schedules</a> assigned to
     them which allows for very fine control over car movement and loads. Trains can be configured to
@@ -242,6 +249,7 @@
 
        <ul>
         <li><a href="#LocomotiveModels">Locomotive Models</a></li>
+        <li><a href="#LocomotiveConsists">Locomotive Consists</a></li>
        </ul></li>
 
       <li><a href="#LocomotivesSet">Set Locomotive</a></li>
@@ -410,7 +418,7 @@
    <h3>Operations Demo Files</h3>
    The operations program provides a set of demo files to help introduce you to the some of the
    features and capabilities of this program. To load the demo files, first open the Operations
-   Settings window "Tools-&gt;Operations-&gt;Settings", and in the upper left corner of the Setting
+   <a href="#Settings">Settings</a> window "Tools-&gt;Operations-&gt;Settings", and in the upper left corner of the Setting
    window is the "Tools" menu, select "Load Demo Files". The program will create a <a
     href="#BackupRestore">backup</a> of your current configuration if you have one, and then loads
    the demo files. Restart JMRI to complete the demo load process.
@@ -479,7 +487,7 @@
     route by selecting them from the menu and pressing the "Add Location" button in the <a
      href="#AddRoute">Add Route</a> window. Try and keep it simple by only entering each of your
     locations once in the route. For now don't modify the route in any way, later you can come back
-    and modify how many cars are serviced at each location by adjusting the move count.
+    and modify how many cars are serviced at each location by adjusting the <a href="#EditRoute">move</a> count.
    </p>
 
    <p>
@@ -530,7 +538,7 @@
    <p>
     If you want a caboose or car with FRED for your train, first configure some of the cars to be
     the last car in the train by selecting the "Caboose" or "FRED" <a href="#CabooseFredHazardous">checkbox</a>
-    in the "Edit Car" window. Now change the optional train requirements radio button to "Caboose"
+    in the <a href="#CarsEdit">Edit Car</a> window. Now change the optional train requirements radio button to "Caboose"
     or "FRED" in the <a href="#TrainEdit">Edit Train</a> window. Be sure that the last location in
     your trains route has a track that will accept the caboose car or the train will not build
     properly.
@@ -620,6 +628,7 @@
     existing routes, and you can optionally have the program reduce all of your train's routes to
     the new shorter train length.</p>
 
+	<a name="MaximumNumberLocos" id="MaximumNumberLocos"></a>
    <h4>Maximum Number of Locomotives</h4>
    Now set the maximum number of locomotives that you want the program to assign to a train. If you
    don't want the program assigning locomotives, set this value to 0. <a name="HorsepowerPerTon"
@@ -734,11 +743,11 @@
     changes are made to the main operations files. This way, if anything gets messed up, there is a
     copy of the last known good data that can easily be restored to undo the damage. In normal
     operation, an automatic backup is made each time OperationsPro&trade; starts (if the "Auto
-    Backup" option is checked on the Settings page), and right before a Restore, Reset Database, or
+    Backup" option is checked on the <a href="#Settings">Settings</a> window), and right before a Restore, Reset Database, or
     Load Demo Files operation is done.</p>
 
    <p>Manual backups are done only when the user requests it by either clicking the "Backup"
-    button on the Settings page, or by selecting the "Backup" option from the "Tools" menu of the
+    button on the <a href="#Settings">Settings</a> window, or by selecting the "Backup" option from the "Tools" menu of the
     Operations Settings window. The Backup button will copy the files to the Manual Backup Store
     under the user's JMRI home directory as described above, while the Backup menu option will allow
     the user to specify any directory. This can be useful when making an archive copy that you want
@@ -757,8 +766,8 @@
     Automatic Backup is done just before the restore copies the files, "just in case".</p>
 
    <p>Backup Sets can be restored from either the Automatic Store or the Manual Store using the
-    "Restore" button on the Settings page. Alternatively, the "Restore" menu option in the "Tools"
-    menu of the Operations Settings page allows you to navigate to any directory, and would be used
+    "Restore" button on the <a href="#Settings">Settings</a> window. Alternatively, the "Restore" menu option in the "Tools"
+    menu of the Operations Settings window allows you to navigate to any directory, and would be used
     to restore an archived Backup Set.</p>
    <img src="images/RestoreDialog.png">
 
@@ -771,7 +780,7 @@
    <h3>Reset Database</h3>
 
    <p>To reset the operation database and remove all operation files, use the "Reset Database"
-    option on the "Tools" menu of the Operations Settings page. An automatic backup copy of the
+    option on the "Tools" menu of the Operations <a href="#Settings">Settings</a> window. An automatic backup copy of the
     current operation files will be made before deleting the main files. The results will be that
     the settings, cars, locomotives, locations, and trains files will be purged. Note that after
     this is done and JMRI restarts, the "Operations" menu item on the main menu will no longer be
@@ -2809,7 +2818,7 @@
    <h3>Moves, Wait and Last Time Moved</h3>
    You can edit the number of times a car has been moved by the program and the car's wait count
    directly from the "Cars" window. Double click on the cell in the Cars window to change. The built
-   and owner fields can be found in the "Edit Car" window. The last time moved is set by the
+   and owner fields can be found in the <a href="#CarsEdit">Edit Car</a> window. The last time moved is set by the
    program. <a name="ImportingCars" id="ImportingCars"></a>
 
    <h3>Importing Cars from a File</h3>
@@ -2876,7 +2885,7 @@
 
    <p>After importing your cars, you must save them if you want to keep them as part of your
     roster. Use the Cars "Save" button or select any car by pressing the edit button and then press
-    the "Save" button that can be found at the bottom right of the "Edit Car" window.</p>
+    the "Save" button that can be found at the bottom right of the <a href="#CarsEdit">Edit Car</a> window.</p>
 
    <h4>Importing Kernel Names</h4>
    To add kernel names to your cars you can import them by creating a file with the first line
@@ -2987,13 +2996,17 @@
    <h4>Kernel</h4>
    A "Kernel" is a group of cars that move as a single unit. If wish this car to be part of a kernel
    press "Edit" across from "Kernel" and create a kernel name. Then select the kernel name from the
-   menu box in the "Edit Car" window. The first car you assign to the kernel becomes the lead car.
+   menu box in the <a href="#CarsEdit">Edit Car</a> window. The first car you assign to the kernel becomes the lead car.
    The program when searching for a track to set out the kernel will only use the lead car's
    attributes when determining if the track can accept the kernel. However, the program does use the
    entire length of the kernel to determine if the group of cars will fit on the destination track.
    Manifest and switch lists will show the cars in the order that you assigned them to the kernel.
    Picking up or dropping off a kernel is regarded as one "move" when defining the number of moves
    in a train's route.
+   
+   <p>Kernels are shown on Manifests and switch lists in the order they are entered, with the lead
+    car being the first one entered. The lead car in a kernel will have an asterisk 
+    appended to the kernel name in the <a href="#Cars">Cars</a> window.</p>
 
    <h4>Optional Fields</h4>
    <p>Finally you can optionally enter the color, built date, owner and comment for this car.
@@ -3055,7 +3068,7 @@
 
    <a name="EditCarLoads" id="EditCarLoads"></a>
    <h3>Edit Car Loads</h3>
-   To edit a car's load, press the Load "Edit" button in the Edit Car window.
+   To edit a car's load, press the Load "Edit" button in the <a href="#CarsEdit">Edit Car</a> window.
 
    <p>
     <img src="images/EditCarLoads.png">
@@ -3362,11 +3375,16 @@
    engine in a consist. One useful trick is to assign the "B" unit designation to non-sound units to
    prevent them from becoming the lead engine when building a consist.
 
+	<a name="LocomotiveConsists" id="LocomotiveConsists"></a>
    <h4>Locomotive Consists</h4>
    <p>If wish this locomotive to be part of a consist assigned by you, press the "Edit" button
     across from "Consist" in the "Edit Locomotive" window. Now enter a consist name and press "Add"
     in the "Edit Locomotive Consist" window. Finally select the consist name from the menu box in
     the "Edit Locomotive" window and press save.</p>
+    
+    <p>Consists are shown on Manifests and switch lists in the order they are entered, with the lead
+    locomotive being the first one entered. The lead locomotive in a consist will have an asterisk 
+    appended to the consist name in the <a href="#Locomotives">Locomotives</a> window.</p>
 
    <a name="SynchronizeWithNCEConsists" id="SynchronizeWithNCEConsists"></a>
    <h4>Synchronize with NCE Consists</h4>
@@ -3420,7 +3438,7 @@
    <a name="AddRoute" id="AddRoute"></a>
    <h3>Add Route</h3>
 
-   <p>Press the "Add" button located at the bottom of the "Routes" window to create a new route
+   <p>Press the "Add" button located at the bottom of the <a href="#Routes">Routes</a> window to create a new route
     for your trains.</p>
 
    <p>
@@ -3428,7 +3446,7 @@
    </p>
 
    <p>
-    Enter the route name and an optional comment. This comment is shown in the routes window, and <a
+    Enter the route name and an optional comment. This comment is shown in the <a href="#Routes">Routes</a> window, and <a
      href="#ManifestComments">optionally</a> on your Manifests. Each route must have unique name.
     Then press the "Add Route" button located at the bottom of the window. Now select the location
     the train will depart by selecting the location in the menu box located at the left bottom side
@@ -3499,7 +3517,7 @@
    <p>If you want to delay the departure of the train from a location or increase the train's
     travel time, enter the number of minutes desired in the "Wait" cell. Another choice is to
     specify the train's departure time from a location by selecting the "Departure Time" radio
-    button in the lower right hand corner of the edit route window.</p>
+    button in the lower right hand corner of the <a href="#EditRoute">Edit Route</a> window.</p>
 
    <p>
     You can also adjust the <a href="#MaximumTrainLength">maximum train length</a> using <a
@@ -3558,11 +3576,11 @@
    <h3>Passenger Train Route</h3>
    <p>Normally passenger trains run on a schedule based on departure times. If you want your
     Manifests to show the departure times for your train, create a route in which you specify the
-    departure time at each location. In the lower right hand corner of the "Edit Route" window,
+    departure time at each location. In the lower right hand corner of the <a href="#EditRoute">Edit Route</a> window,
     select "Departure Time" in the Display box. Now select the departure time for each location in
     the train's route. The Manifest statement "No work at xxx" isn't appropriate for a passenger
     train. To eliminate this statement, simply add a comment to each location in the train's route.
-    Use the Edit Route window, and for each location, you can add a comment or edit an existing one.</p>
+    Use the <a href="#EditRoute">Edit Route</a> window, and for each location, you can add a comment or edit an existing one.</p>
 
    <a name="DepartingStagingRoute" id="DepartingStagingRoute"></a>
    <h3>Departing Staging Route</h3>
@@ -3622,7 +3640,7 @@
    <a name="CopyRoute" id="CopyRoute"></a>
    <h4>Copy Route</h4>
    <p>You can copy an existing route using this tool that can be found under "Tools" in both the
-    "Routes" window and "Edit Route" window. Enter the name of the new route and select the route
+    <a href="#Routes">Routes</a> window and <a href="#EditRoute">Edit Route</a> window. Enter the name of the new route and select the route
     that you want to copy. If you want to reverse the order of your route, select the "Invert"
     checkbox before pressing the "Copy" button.</p>
 
@@ -3636,7 +3654,7 @@
 
    <a name="Trains" id="Trains"></a>
    <h2>Trains</h2>
-   Now that we've created our routes we need trains to move cars! Create a train by selecting
+   Now that we've created our <a href="#Routes">Routes</a> we need trains to move cars! Create a train by selecting
    "Tools-&gt;Operations-&gt;Trains" from the top level menu.
 
    <p>
@@ -3668,7 +3686,7 @@
 
    <p>
     If you select the "Generate CSV Manifest" from the <a href="#ManifestOptions">Options</a> window
-    found under "Tools" in the Settings or Trains window, two additional checkboxes will appear
+    found under "Tools" in the <a href="#Settings">Settings</a> or <a href="#Trains">Trains</a> window, two additional checkboxes will appear
     labeled "Open" and "Run". If the "Open" checkbox is selected the "Function" button for a built
     train will become "Open" rather than "Print" or "Preview". Pressing a train's "Open" button will
     allow you to examine the train's comma separated value file. If you select the "Run" checkbox,
@@ -3729,10 +3747,13 @@
    You can control the number of locomotives that will be assigned to this train, and optionally,
    the locomotive's model and road. If you don't want the program assigning locomotives to your
    train, select 0 as the number of locos required. If you want two or more locomotives assigned to
-   a train, the locomotives must be part of a <a href="#LocomotivesAdd">consist</a> or you can
+   a train, the locomotives must be part of a <a href="#LocomotiveConsists">consist</a> or you can
    select the option to build a consist from single locos. See <a href="#BuildlocoConsist">Build
     loco consist from single locos</a> under the <a href="#TrainBuildOptions">Train Build Options</a>
    for more information.
+   
+   <p>The maximum number of locomotives that you can assign to a train is controlled by the <a href="#Settings">Settings</a>
+   window <a href="#MaximumNumberLocos">Maximum Number of Locomotives</a>.</p>
 
    <p>
     There are two other options available when requesting locomotives, "Auto" and "Auto HPT". "Auto"
@@ -4233,7 +4254,7 @@
    <p>
     In the upper left side of the "Trains" window is the "Tools" menu. The first three items; <a
      href="#SettingsOptions">Options</a>, <a href="#PrintOptions">Manifest Print Options</a>, and <a
-     href="#BuildReportDetails">Build Report Options</a> can also be accessed from the "Settings"
+     href="#BuildReportDetails">Build Report Options</a> can also be accessed from the <a href="#Settings">Settings</a>
     tools menu.
    </p>
 
@@ -4747,7 +4768,7 @@
     At the beginning of the train build process, if the train requires a locomotive or several
     locomotives, the program will look for locomotives at the start of the route and then determines
     if the termination location will accept them. Note that if two or more locomotives are required
-    for the train that the locomotives must be in a <a href="#LocomotivesAdd">consist</a>, or the
+    for the train that the locomotives must be in a <a href="#LocomotiveConsists">consist</a>, or the
     option to <a href="#TrainBuildOptions">build loco consist from single locos</a> must be enabled.
    </p>
 

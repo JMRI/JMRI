@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.jmriclient.networkdriver;
 
 import java.awt.event.ActionEvent;
@@ -35,16 +34,19 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         super();
     }
 
+    @Override
     public String name() {
         return "Simple Network Connection";
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new NetworkDriverAdapter();
         }
     }
 
+    @Override
     public boolean isPortAdvanced() {
         return true;
     }
@@ -55,17 +57,20 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         if (adapter.getSystemConnectionMemo() != null) {
             transmitPrefixField.setText(((JMRIClientSystemConnectionMemo) adapter.getSystemConnectionMemo()).getTransmitPrefix());
             transmitPrefixField.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     ((JMRIClientSystemConnectionMemo) adapter.getSystemConnectionMemo()).setTransmitPrefix(transmitPrefixField.getText());
                     transmitPrefixField.setText(((JMRIClientSystemConnectionMemo) adapter.getSystemConnectionMemo()).getTransmitPrefix());
                 }
             });
             transmitPrefixField.addFocusListener(new FocusListener() {
+                @Override
                 public void focusLost(FocusEvent e) {
                     ((JMRIClientSystemConnectionMemo) adapter.getSystemConnectionMemo()).setTransmitPrefix(transmitPrefixField.getText());
                     transmitPrefixField.setText(((JMRIClientSystemConnectionMemo) adapter.getSystemConnectionMemo()).getTransmitPrefix());
                 }
 
+                @Override
                 public void focusGained(FocusEvent e) {
                 }
             });

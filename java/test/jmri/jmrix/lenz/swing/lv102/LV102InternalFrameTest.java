@@ -1,8 +1,6 @@
 package jmri.jmrix.lenz.swing.lv102;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrix.lenz.LenzCommandStation;
-import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -39,6 +37,7 @@ public class LV102InternalFrameTest {
         operator.pushResetButton();
         Assert.assertEquals("Default Voltage","",operator.getSelectedVoltage());
         f.setVisible(false);
+        f.dispose();
     }
 
     @Test
@@ -55,6 +54,7 @@ public class LV102InternalFrameTest {
         operator.pushDefaultButton();
         Assert.assertEquals("Default Voltage","16V (factory default)",operator.getSelectedVoltage());
         f.setVisible(false);
+        f.dispose();
     }
 
 

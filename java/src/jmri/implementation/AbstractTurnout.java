@@ -1,5 +1,8 @@
 package jmri.implementation;
 
+import java.util.Arrays;
+import javax.annotation.CheckReturnValue;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBeanHandle;
@@ -70,9 +73,9 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
-    //		public void firePropertyChange(String propertyName,
-    //					       	Object oldValue,
-    //						Object newValue)
+    //        public void firePropertyChange(String propertyName,
+    //                               Object oldValue,
+    //                        Object newValue)
     // _once_ if anything has changed state
     /**
      * Sets a new Commanded state, if need be notifying the listeners, but does
@@ -162,7 +165,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     /**
      * Show whether state is one you can safely run trains over
      *
-     * @return	true iff state is a valid one and the known state is the same as
+     * @return    true iff state is a valid one and the known state is the same as
      *         commanded
      */
     @Override
@@ -210,6 +213,16 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return getKnownState();
     }
 
+    @Override
+    @CheckReturnValue
+    public String getStateString() {
+        switch (getState()) {
+            case THROWN: return Bundle.getMessage("TurnoutStateThrown");
+            case CLOSED: return Bundle.getMessage("TurnoutStateClosed");
+            default: return super.getStateString();
+        }
+    }
+
     protected String[] _validFeedbackNames = {"DIRECT", "ONESENSOR",
         "TWOSENSOR"};
 
@@ -254,10 +267,9 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return _validFeedbackTypes;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "OK until Java 1.6 allows return of cheap array copy")
     @Override
     public String[] getValidFeedbackNames() {
-        return _validFeedbackNames;
+        return Arrays.copyOf(_validFeedbackNames, _validFeedbackNames.length);
     }
 
     @Override
@@ -285,7 +297,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             firePropertyChange("feedbackchange", Integer.valueOf(oldMode),
                     Integer.valueOf(_activeFeedbackType));
         }
-        // unlock turnout if feedback is changed 
+        // unlock turnout if feedback is changed
         setLocked(CABLOCKOUT, false);
     }
 
@@ -460,10 +472,9 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     protected String[] _validDecoderNames = PushbuttonPacket
             .getValidDecoderNames();
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "OK until Java 1.6 allows return of cheap array copy")
     @Override
     public String[] getValidDecoderNames() {
-        return _validDecoderNames;
+        return Arrays.copyOf(_validDecoderNames, _validDecoderNames.length);
     }
 
     // set the turnout decoder default to unknown
@@ -542,7 +553,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * the corresponding operator Override this function if you want another way
      * to choose the operation
      *
-     * @return	newly-instantiated TurnoutOPerator, or null if nothing suitable
+     * @return    newly-instantiated TurnoutOPerator, or null if nothing suitable
      */
     protected TurnoutOperator getTurnoutOperator() {
         TurnoutOperator to = null;
@@ -565,7 +576,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * Allow an actual turnout class to transform private feedback types into
      * ones that the generic turnout operations know about
      *
-     * @return	apparent feedback mode for operation lookup
+     * @return    apparent feedback mode for operation lookup
      */
     protected int getFeedbackModeForOperation() {
         return getFeedbackMode();
@@ -667,7 +678,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     @Override
     public void setInitialKnownStateFromFeedback() {
         if (_activeFeedbackType == ONESENSOR) {
-            // ONESENSOR feedback 
+            // ONESENSOR feedback
             if (getFirstSensor() != null) {
                 // set according to state of sensor
                 int sState = getFirstSensor().getKnownState();

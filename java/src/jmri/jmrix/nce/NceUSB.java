@@ -1,4 +1,3 @@
-// NceUSB.java
 package jmri.jmrix.nce;
 
 /**
@@ -231,4 +230,4 @@ public class NceUSB {
 }
 
 
-/* @(#)NceUSB.java */
+

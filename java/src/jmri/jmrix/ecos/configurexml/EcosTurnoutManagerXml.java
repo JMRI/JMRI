@@ -18,10 +18,12 @@ public class EcosTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element turnouts) {
         turnouts.setAttribute("class", "jmri.jmrix.ecos.configurexml.EcosTurnoutManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

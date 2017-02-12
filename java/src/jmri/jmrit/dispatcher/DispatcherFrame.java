@@ -90,6 +90,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             log.error("Failed to instantiate a fast clock when constructing Dispatcher");
         } else {
             minuteChangeListener = new java.beans.PropertyChangeListener() {
+                @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     //process change to new minute
                     newFastClockMinute();
@@ -139,7 +140,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                     ActiveTrain at = createActiveTrain(info.getTransitName(), info.getTrainName(), tSource, 
                             startBlock, startBlockSeq, destinationBlock, destinationBlockSeq, 
                             info.getAutoRun(), info.getDCCAddress(), info.getPriority(),
-                            info.getResetWhenDone(), info.getReverseAtEnd(), true, null);
+                            info.getResetWhenDone(), info.getReverseAtEnd(), info.getAllocateAllTheWay(), true, null);
                     if (at != null) {
                         if (tSource == ActiveTrain.ROSTER) {
                             RosterEntry re = Roster.getDefault().getEntryForId(info.getTrainName());
@@ -345,6 +346,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             p13.setLayout(new FlowLayout());
             p13.add(addTrainButton = new JButton(rb.getString("InitiateTrain") + "..."));
             addTrainButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     if (!newTrainActive) {
                         atFrame.initiateTrain(e);
@@ -359,6 +361,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             p13.add(new JLabel("   "));
             p13.add(allocateExtraButton = new JButton(rb.getString("AllocateExtra") + "..."));
             allocateExtraButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     allocateExtraSection(e);
                 }
@@ -367,6 +370,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             p13.add(new JLabel("   "));
             p13.add(cancelRestartButton = new JButton(rb.getString("CancelRestart") + "..."));
             cancelRestartButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     if (!newTrainActive) {
                         cancelRestart(e);
@@ -383,6 +387,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             p13.add(new JLabel("   "));
             p13.add(terminateTrainButton = new JButton(rb.getString("TerminateTrain") + "..."));
             terminateTrainButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     if (!newTrainActive) {
                         terminateTrain(e);
@@ -465,6 +470,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             p30.add(autoReleaseBox);
             autoReleaseBox.setToolTipText(rb.getString("AutoReleaseBoxHint"));
             autoReleaseBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleAutoReleaseChanged(e);
                 }
@@ -474,6 +480,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             p30.add(autoAllocateBox);
             autoAllocateBox.setToolTipText(rb.getString("AutoAllocateBoxHint"));
             autoAllocateBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleAutoAllocateChanged(e);
                 }
@@ -554,6 +561,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             p1.add(new JLabel(rb.getString("ActiveColumnTitle") + ":"));
             p1.add(atSelectBox);
             atSelectBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleATSelectionChanged(e);
                 }
@@ -571,6 +579,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             JButton cancelButton = null;
             p7.add(cancelButton = new JButton(Bundle.getMessage("ButtonCancel")));
             cancelButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelExtraRequested(e);
                 }
@@ -580,6 +589,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             JButton aExtraButton = null;
             p7.add(aExtraButton = new JButton(rb.getString("AllocateButton")));
             aExtraButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     addExtraRequested(e);
                 }
@@ -921,6 +931,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
      * resetWhenDone - set to "true" if the Active Train is capable of continuous running 
      *   and the user has requested that it be automatically reset for another run thru its 
      *   Transit each time it completes running through its Transit. 
+     * allocateAllTheWay - set to "true" to allow Auto Allocate to allocate as many sections
+     *   as possible between the start section and the end section. Set to false Auto Allocate
+     *   allocates no more than three sections ahead.
      * showErrorMessages - "true" if error message dialogs are to be displayed for 
      *   detected errors Set to "false" to suppress error message dialogs from this method. 
      *   frame - window request is from, or "null" if not from a window
@@ -929,7 +942,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
      */
     public ActiveTrain createActiveTrain(String transitID, String trainID, int tSource, String startBlockName,
             int startBlockSectionSequenceNumber, String endBlockName, int endBlockSectionSequenceNumber,
-            boolean autoRun, String dccAddress, int priority, boolean resetWhenDone, boolean reverseAtEnd,
+            boolean autoRun, String dccAddress, int priority, boolean resetWhenDone, boolean reverseAtEnd, boolean allocateAllTheWay,
             boolean showErrorMessages, JmriJFrame frame) {
 //        log.debug("trainID:{}, tSource:{}, startBlockName:{}, startBlockSectionSequenceNumber:{}, endBlockName:{}, endBlockSectionSequenceNumber:{}",
 //                trainID,tSource,startBlockName,startBlockSectionSequenceNumber,endBlockName,endBlockSectionSequenceNumber);
@@ -1136,6 +1149,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         activeTrainsList.add(at);
         java.beans.PropertyChangeListener listener = null;
         at.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 handleActiveTrainChange(e);
             }
@@ -1152,6 +1166,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             restartingTrainsList.add(at);
         }
         at.setReverseAtEnd(reverseAtEnd);
+        at.setAllocateAllTheWay(allocateAllTheWay);
         at.setPriority(priority);
         at.setDccAddress(dccAddress);
         at.setAutoRun(autoRun);
@@ -2314,10 +2329,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     public class ActiveTrainsTableModel extends javax.swing.table.AbstractTableModel implements
             java.beans.PropertyChangeListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -612833010252140557L;
         public static final int TRANSIT_COLUMN = 0;
         public static final int TRAIN_COLUMN = 1;
         public static final int TYPE_COLUMN = 2;
@@ -2331,12 +2342,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             super();
         }
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("length")) {
                 fireTableDataChanged();
             }
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             if (c == ALLOCATEBUTTON_COLUMN) {
                 return JButton.class;
@@ -2344,14 +2357,17 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             return String.class;
         }
 
+        @Override
         public int getColumnCount() {
             return ALLOCATEBUTTON_COLUMN + 1;
         }
 
+        @Override
         public int getRowCount() {
             return (activeTrainsList.size());
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             if (c == ALLOCATEBUTTON_COLUMN) {
                 return (true);
@@ -2359,6 +2375,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             return (false);
         }
 
+        @Override
         public String getColumnName(int col) {
             switch (col) {
                 case TRANSIT_COLUMN:
@@ -2404,6 +2421,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             return new JTextField(5).getPreferredSize().width;
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             int rx = r;
             if (rx >= activeTrainsList.size()) {
@@ -2432,6 +2450,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             }
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             if (col == ALLOCATEBUTTON_COLUMN) {
                 // open an allocate window
@@ -2446,10 +2465,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     public class AllocationRequestTableModel extends javax.swing.table.AbstractTableModel implements
             java.beans.PropertyChangeListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1425670284957075595L;
         public static final int ACTIVE_COLUMN = 0;
         public static final int PRIORITY_COLUMN = 1;
         public static final int TRAINTYPE_COLUMN = 2;
@@ -2464,12 +2479,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             super();
         }
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("length")) {
                 fireTableDataChanged();
             }
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             if (c == CANCELBUTTON_COLUMN) {
                 return JButton.class;
@@ -2480,14 +2497,17 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             return String.class;
         }
 
+        @Override
         public int getColumnCount() {
             return CANCELBUTTON_COLUMN + 1;
         }
 
+        @Override
         public int getRowCount() {
             return (allocationRequests.size());
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             if (c == CANCELBUTTON_COLUMN) {
                 return (true);
@@ -2498,6 +2518,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             return (false);
         }
 
+        @Override
         public String getColumnName(int col) {
             switch (col) {
                 case ACTIVE_COLUMN:
@@ -2547,6 +2568,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             return new JTextField(5).getPreferredSize().width;
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             int rx = r;
             if (rx >= allocationRequests.size()) {
@@ -2589,6 +2611,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             }
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             if (col == ALLOCATEBUTTON_COLUMN) {
                 // open an allocate window
@@ -2607,10 +2630,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     public class AllocatedSectionTableModel extends javax.swing.table.AbstractTableModel implements
             java.beans.PropertyChangeListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -7179461629851240834L;
         public static final int ACTIVE_COLUMN = 0;
         public static final int SECTION_COLUMN = 1;
         public static final int OCCUPANCY_COLUMN = 2;
@@ -2622,12 +2641,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             super();
         }
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("length")) {
                 fireTableDataChanged();
             }
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             if (c == RELEASEBUTTON_COLUMN) {
                 return JButton.class;
@@ -2635,14 +2656,17 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             return String.class;
         }
 
+        @Override
         public int getColumnCount() {
             return RELEASEBUTTON_COLUMN + 1;
         }
 
+        @Override
         public int getRowCount() {
             return (allocatedSections.size());
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             if (c == RELEASEBUTTON_COLUMN) {
                 return (true);
@@ -2650,6 +2674,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             return (false);
         }
 
+        @Override
         public String getColumnName(int col) {
             switch (col) {
                 case ACTIVE_COLUMN:
@@ -2683,6 +2708,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             return new JTextField(5).getPreferredSize().width;
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             int rx = r;
             if (rx >= allocatedSections.size()) {
@@ -2720,6 +2746,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             }
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             if (col == RELEASEBUTTON_COLUMN) {
                 releaseAllocatedSectionFromTable(row);

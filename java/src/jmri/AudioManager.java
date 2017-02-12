@@ -3,7 +3,6 @@ package jmri;
 import java.util.List;
 import jmri.jmrit.audio.AudioFactory;
 
-import javax.annotation.CheckReturnValue;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
@@ -68,7 +67,7 @@ public interface AudioManager extends Manager {
      * @return Never null under normal circumstances
      * @throws AudioException if error occurs during creation
      */
-    public @Nonnull Audio provideAudio(@Nonnull String name) throws AudioException;
+    @Nonnull public Audio provideAudio(@Nonnull String name) throws AudioException;
 
     /**
      * Locate via user name, then system name if needed. If that fails, return
@@ -77,7 +76,7 @@ public interface AudioManager extends Manager {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    public @CheckForNull Audio getAudio(@Nonnull String name);
+    @CheckForNull public Audio getAudio(@Nonnull String name);
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
@@ -86,7 +85,7 @@ public interface AudioManager extends Manager {
      * @param systemName Audio object system name (e.g. IAS1, IAB4)
      * @return requested Audio object or null if none exists
      */
-    public @CheckForNull Audio getBySystemName(@Nonnull String systemName);
+    @CheckForNull public Audio getBySystemName(@Nonnull String systemName);
 
     /**
      * Locate an instance based on a user name. Returns null if no instance
@@ -95,7 +94,7 @@ public interface AudioManager extends Manager {
      * @param userName Audio object user name
      * @return requested Audio object or null if none exists
      */
-    public @CheckForNull Audio getByUserName(@Nonnull String userName);
+    @CheckForNull public Audio getByUserName(@Nonnull String userName);
 
     /**
      * Return an instance with the specified system and user names. Note that
@@ -124,7 +123,7 @@ public interface AudioManager extends Manager {
      * @return requested Audio object (never null)
      * @throws AudioException if error occurs during creation
      */
-    public @Nonnull Audio newAudio(@Nonnull String systemName, String userName) throws AudioException;
+    @Nonnull public Audio newAudio(@Nonnull String systemName, String userName) throws AudioException;
 
     /**
      * Returns the currently active AudioFactory object.
@@ -134,7 +133,7 @@ public interface AudioManager extends Manager {
      *
      * @return current active AudioFactory object
      */
-    public @CheckForNull AudioFactory getActiveAudioFactory();
+    @CheckForNull public AudioFactory getActiveAudioFactory();
 
     /**
      * Get a list of all Audio objects' system names.
@@ -142,7 +141,7 @@ public interface AudioManager extends Manager {
      * @return List of all Audio objects' system names
      */
     @Override
-    public @Nonnull List<String> getSystemNameList();
+    @Nonnull public List<String> getSystemNameList();
 
     /**
      * Get a list of specified Audio sub-type objects' system names.
@@ -150,7 +149,7 @@ public interface AudioManager extends Manager {
      * @param subType sub-type to retrieve
      * @return List of specified Audio sub-type objects' system names.
      */
-    public @Nonnull List<String> getSystemNameList(char subType);
+    @Nonnull public List<String> getSystemNameList(char subType);
 
     /**
      * Perform any initialisation operations

@@ -44,10 +44,12 @@ public class PowerButtonAction extends javax.swing.AbstractAction implements jav
         }
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent ev) {
         updateLabel();
     }
 
+    @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
         try {
             // alternate power state, updating name

@@ -1,4 +1,3 @@
-// SpecificReply.java
 package jmri.jmrix.powerline.cm11;
 
 import jmri.jmrix.powerline.SerialReply;
@@ -37,6 +36,7 @@ public class SpecificReply extends SerialReply {
 
     SerialTrafficController tc = null;
 
+    @Override
     public String toMonitorString() {
         // check for valid length
         StringBuffer sb = new StringBuffer();
@@ -114,4 +114,4 @@ public class SpecificReply extends SerialReply {
 
 }
 
-/* @(#)SpecificReply.java */
+

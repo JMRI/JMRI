@@ -38,6 +38,7 @@ public class CsvExportMeasurementAction extends AbstractAction implements Measur
     PrintStream str;
     JFileChooser fileChooser;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (logging) {
             stopLogging(e);
@@ -92,6 +93,7 @@ public class CsvExportMeasurementAction extends AbstractAction implements Measur
         }
     }
 
+    @Override
     public void notify(Measurement m) {
         if (!logging || str == null) {
             return;

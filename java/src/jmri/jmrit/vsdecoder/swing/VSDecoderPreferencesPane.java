@@ -1,23 +1,5 @@
 package jmri.jmrit.vsdecoder.swing;
 
-/*
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
- * <P>
- *
- * @author			Mark Underwood Copyright (C) 2011
- * 
- */
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -36,9 +18,25 @@ import javax.swing.JRadioButton;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrit.vsdecoder.VSDecoderPreferences;
 
+/*
+ * <hr>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under 
+ * the terms of version 2 of the GNU General Public License as published 
+ * by the Free Software Foundation. See the "COPYING" file for a copy
+ * of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * for more details.
+ * <P>
+ *
+ * @author			Mark Underwood Copyright (C) 2011
+ * 
+ */
 class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyChangeListener {
-
-    private static final long serialVersionUID = -5473594799045080011L;
 
     private javax.swing.JCheckBox cbAutoStartEngine;
     private javax.swing.JCheckBox cbAutoLoadVSDFile;
@@ -103,12 +101,14 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
         tfDefaultVSDFileName = new javax.swing.JTextField(40);
         JButton jbPathBrowse = new javax.swing.JButton(Bundle.getMessage("Browse"));
         jbPathBrowse.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbPathBrowseActionPerformed(evt);
             }
         });
         JButton jbFileBrowse = new javax.swing.JButton(Bundle.getMessage("Browse"));
         jbFileBrowse.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbFileBrowseActionPerformed(evt);
             }
@@ -137,6 +137,7 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
 
         // Set action listener to check consistency when the user makes changes.
         java.awt.event.ActionListener al = new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 checkConsistency();
             }
@@ -149,6 +150,7 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
         // Set action listeners for save / cancel / reset buttons
         jbSave.setText(Bundle.getMessage("ButtonSave"));
         jbSave.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbSaveActionPerformed(evt);
             }
@@ -157,6 +159,7 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
 
         jbCancel.setText(Bundle.getMessage("VSDecoderPrefsReset"));
         jbCancel.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbCancelActionPerformed(evt);
             }
@@ -164,6 +167,7 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
 
         jbApply.setText(Bundle.getMessage("ButtonApply"));
         jbApply.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbApplyActionPerformed(evt);
             }
@@ -333,6 +337,7 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
         jbCancel.setText(Bundle.getMessage("ButtonCancel"));
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if ((evt == null) || (evt.getPropertyName() == null)) {
             return;

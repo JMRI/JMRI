@@ -53,6 +53,7 @@ public class PositionableJComponent extends JComponent implements Positionable {
         return pos;
     }
 
+    @Override
     public JComponent getTextComponent() {
         return this;
     }
@@ -63,47 +64,58 @@ public class PositionableJComponent extends JComponent implements Positionable {
     /**
      * *************** Positionable methods *********************
      */
+    @Override
     public void setPositionable(boolean enabled) {
         _positionable = enabled;
     }
 
+    @Override
     public boolean isPositionable() {
         return _positionable;
     }
 
+    @Override
     public void setEditable(boolean enabled) {
         _editable = enabled;
         showHidden();
     }
 
+    @Override
     public boolean isEditable() {
         return _editable;
     }
 
+    @Override
     public void setViewCoordinates(boolean enabled) {
         _viewCoordinates = enabled;
     }
 
+    @Override
     public boolean getViewCoordinates() {
         return _viewCoordinates;
     }
 
+    @Override
     public void setControlling(boolean enabled) {
         _controlling = enabled;
     }
 
+    @Override
     public boolean isControlling() {
         return _controlling;
     }
 
+    @Override
     public void setHidden(boolean hide) {
         _hidden = hide;
     }
 
+    @Override
     public boolean isHidden() {
         return _hidden;
     }
 
+    @Override
     public void showHidden() {
         if (!_hidden || _editor.isEditable()) {
             setVisible(true);
@@ -119,6 +131,7 @@ public class PositionableJComponent extends JComponent implements Positionable {
         _displayLevel = l;
     }
 
+    @Override
     public void setDisplayLevel(int l) {
         int oldDisplayLevel = _displayLevel;
         _displayLevel = l;
@@ -128,80 +141,101 @@ public class PositionableJComponent extends JComponent implements Positionable {
         }
     }
 
+    @Override
     public int getDisplayLevel() {
         return _displayLevel;
     }
 
+    @Override
     public void setShowTooltip(boolean set) {
         _showTooltip = set;
     }
 
+    @Override
     public boolean showTooltip() {
         return _showTooltip;
     }
 
+    @Override
     public void setTooltip(ToolTip tip) {
         _tooltip = tip;
     }
 
+    @Override
     public ToolTip getTooltip() {
         return _tooltip;
     }
 
+    @Override
     public void setScale(double s) {
         _scale = s;
     }
 
+    @Override
     public double getScale() {
         return _scale;
     }
 
     // no subclasses support rotations (yet)
+    @Override
     public void rotate(int deg) {
     }
 
+    @Override
     public int getDegrees() {
         return 0;
     }
 
+    @Override
     public String getNameString() {
         return getName();
     }
 
+    @Override
     public Editor getEditor() {
         return _editor;
     }
 
+    @Override
     public void setEditor(Editor ed) {
         _editor = ed;
     }
 
     // overide where used - e.g. momentary
+    @Override
     public void doMousePressed(MouseEvent event) {
     }
 
+    @Override
     public void doMouseReleased(MouseEvent event) {
     }
 
+    @Override
     public void doMouseClicked(MouseEvent event) {
     }
 
+    @Override
     public void doMouseDragged(MouseEvent event) {
     }
 
+    @Override
     public void doMouseMoved(MouseEvent event) {
     }
 
+    @Override
     public void doMouseEntered(MouseEvent event) {
     }
 
+    @Override
     public void doMouseExited(MouseEvent event) {
     }
 
+    @Override
     public boolean storeItem() {
         return true;
     }
 
+    @Override
     public boolean doViemMenu() {
         return true;
     }
@@ -209,52 +243,65 @@ public class PositionableJComponent extends JComponent implements Positionable {
     /**
      * For over-riding in the using classes: add item specific menu choices
      */
+    @Override
     public boolean setRotateOrthogonalMenu(JPopupMenu popup) {
         return false;
     }
 
+    @Override
     public boolean setRotateMenu(JPopupMenu popup) {
         return false;
     }
 
+    @Override
     public boolean setScaleMenu(JPopupMenu popup) {
         return false;
     }
 
+    @Override
     public boolean setDisableControlMenu(JPopupMenu popup) {
         return false;
     }
 
+    @Override
     public boolean setTextEditMenu(JPopupMenu popup) {
         return false;
     }
 
+    @Override
     public boolean setEditItemMenu(JPopupMenu popup) {
         return false;
     }
 
+    @Override
     public boolean showPopUp(JPopupMenu popup) {
         return false;
     }
 
+    @Override
     public boolean setEditIconMenu(JPopupMenu popup) {
         return false;
     }
 
+    @Override
     public PositionablePopupUtil getPopupUtility() {
         return null;
     }
 
+    @Override
     public void setPopupUtility(PositionablePopupUtil tu) {
     }
 
+    @Override
     public void updateSize() {
     }
 
+    @Override
     public int maxWidth() {
         return getWidth();
     }
 
+    @Override
     public int maxHeight() {
         return getHeight();
     }
@@ -265,6 +312,7 @@ public class PositionableJComponent extends JComponent implements Positionable {
     /**
      * Removes this object from display and persistance
      */
+    @Override
     public void remove() {
         _editor.removeFromContents(this);
         cleanup();
@@ -287,6 +335,7 @@ public class PositionableJComponent extends JComponent implements Positionable {
         return active;
     }
 
+    @Override
     public jmri.NamedBean getNamedBean() {
         return null;
     }

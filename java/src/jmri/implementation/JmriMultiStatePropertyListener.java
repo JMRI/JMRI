@@ -48,6 +48,7 @@ public class JmriMultiStatePropertyListener extends JmriSimplePropertyListener {
         _states.add(Integer.valueOf(state));
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         log.debug("\"" + _varName + "\" sent PropertyChangeEvent " + evt.getPropertyName()
                 + ", old value =\"" + evt.getOldValue() + "\", new value =\"" + evt.getNewValue()

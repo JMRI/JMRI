@@ -28,13 +28,14 @@ public class HexFileFrame extends JmriJFrame {
 
     // to find and remember the log file
     final javax.swing.JFileChooser inputFileChooser
-            = jmri.jmrit.XmlFile.userFileChooser("Hex files", "hex");
+            = jmri.jmrit.XmlFile.userFileChooser("Hex files", "hex"); // NOI18N
 
     public HexFileFrame() {
         super();
     }
 
     //LocoNetSystemConnectionMemo adaptermemo = null;
+    @Override
     public void initComponents() throws Exception {
         if (port == null) {
             log.error("initComponents called before adapter has been set");
@@ -82,21 +83,25 @@ public class HexFileFrame extends JmriJFrame {
         getContentPane().add(pane3);
 
         openHexFileButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 openHexFileButtonActionPerformed(e);
             }
         });
         filePauseButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 filePauseButtonActionPerformed(e);
             }
         });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 jButton1ActionPerformed(e);
             }
         });
         delayField.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 delayFieldActionPerformed(e);
             }
@@ -111,6 +116,7 @@ public class HexFileFrame extends JmriJFrame {
 
     boolean connected = false;
 
+    @Override
     public void dispose() {
         // leaves the LocoNet Packetizer (e.g. the simulated connection)
         // running.
@@ -158,7 +164,7 @@ public class HexFileFrame extends JmriJFrame {
                 false, false);
         port.getSystemConnectionMemo().configureManagers();
         LnSensorManager LnSensorManager = (LnSensorManager) port.getSystemConnectionMemo().getSensorManager();
-        LnSensorManager.setDefaultSensorState(port.getOptionState("SensorDefaultState"));
+        LnSensorManager.setDefaultSensorState(port.getOptionState("SensorDefaultState")); // NOI18N
 
         // Install a debug programmer, replacing the existing LocoNet one
         jmri.ProgrammerManager ep = port.getSystemConnectionMemo().getProgrammerManager();

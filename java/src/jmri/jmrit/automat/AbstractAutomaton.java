@@ -130,6 +130,7 @@ public class AbstractAutomaton implements Runnable {
      * <p>
      * This is invoked on currentThread.
      */
+    @Override
     public void run() {
         try {
             inThread = true;
@@ -339,6 +340,7 @@ public class AbstractAutomaton implements Runnable {
         // register a listener
         java.beans.PropertyChangeListener l;
         mSensor.addPropertyChangeListener(l = new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 synchronized (self) {
                     self.notifyAll(); // should be only one thread waiting, but just in case
@@ -407,6 +409,7 @@ public class AbstractAutomaton implements Runnable {
         // register a listener
         java.beans.PropertyChangeListener l;
         mSensor.addPropertyChangeListener(l = new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 synchronized (self) {
                     self.notifyAll(); // should be only one thread waiting, but just in case
@@ -474,6 +477,7 @@ public class AbstractAutomaton implements Runnable {
         for (i = 0; i < mSensors.length; i++) {
 
             mSensors[i].addPropertyChangeListener(listeners[i] = new java.beans.PropertyChangeListener() {
+                @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     synchronized (self) {
                         log.debug("notify waitSensorState[] of property change");
@@ -522,6 +526,7 @@ public class AbstractAutomaton implements Runnable {
         // register listener
         java.beans.PropertyChangeListener listener;
         warrant.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 synchronized (self) {
                    log.debug("notify waitWarrantRunState of property change");
@@ -567,6 +572,7 @@ public class AbstractAutomaton implements Runnable {
         // register listener
         java.beans.PropertyChangeListener listener;
         warrant.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 synchronized (self) {
                    log.debug("notify waitWarrantBlock of property change");
@@ -617,6 +623,7 @@ public class AbstractAutomaton implements Runnable {
         blockName = null;
         java.beans.PropertyChangeListener listener;
         warrant.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 synchronized (self) {
                     if (e.getPropertyName().equals("blockChange")) {
@@ -672,6 +679,7 @@ public class AbstractAutomaton implements Runnable {
         for (i = 0; i < mTurnouts.length; i++) {
 
             mTurnouts[i].addPropertyChangeListener(listeners[i] = new java.beans.PropertyChangeListener() {
+                @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     synchronized (self) {
                         log.debug("notify waitTurnoutConsistent[] of property change");
@@ -746,6 +754,7 @@ public class AbstractAutomaton implements Runnable {
         for (i = 0; i < mInputs.length; i++) {
 
             mInputs[i].addPropertyChangeListener(listeners[i] = new java.beans.PropertyChangeListener() {
+                @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     synchronized (self) {
                         log.debug("notify waitChange[] of property change " + e.getPropertyName() + " from " + ((NamedBean) e.getSource()).getSystemName());
@@ -836,6 +845,7 @@ public class AbstractAutomaton implements Runnable {
         throttle = null;
         boolean ok = true;
         ThrottleListener throttleListener = new ThrottleListener() {
+            @Override
             public void notifyThrottleFound(DccThrottle t) {
                 throttle = t;
                 synchronized (self) {
@@ -843,6 +853,7 @@ public class AbstractAutomaton implements Runnable {
                 }
             }
 
+            @Override
             public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
@@ -899,6 +910,7 @@ public class AbstractAutomaton implements Runnable {
         throttle = null;
         boolean ok = true;
         ThrottleListener throttleListener = new ThrottleListener() {
+            @Override
             public void notifyThrottleFound(DccThrottle t) {
                 throttle = t;
                 synchronized (self) {
@@ -906,6 +918,7 @@ public class AbstractAutomaton implements Runnable {
                 }
             }
 
+            @Override
             public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason) {
                 log.error("Throttle request failed for " + address + " because " + reason);
                 failedThrottleRequest = true;
@@ -965,6 +978,7 @@ public class AbstractAutomaton implements Runnable {
         // do the write, response will wake the thread
         try {
             programmer.writeCV(CV, value, new ProgListener() {
+                @Override
                 public void programmingOpReply(int value, int status) {
                     synchronized (self) {
                         self.notifyAll(); // should be only one thread waiting, but just in case
@@ -1003,6 +1017,7 @@ public class AbstractAutomaton implements Runnable {
         cvReturnValue = -1;
         try {
             programmer.readCV(CV, new ProgListener() {
+                @Override
                 public void programmingOpReply(int value, int status) {
                     cvReturnValue = value;
                     synchronized (self) {
@@ -1041,6 +1056,7 @@ public class AbstractAutomaton implements Runnable {
         // do the write, response will wake the thread
         try {
             programmer.writeCV(CV, value, new ProgListener() {
+                @Override
                 public void programmingOpReply(int value, int status) {
                     synchronized (self) {
                         self.notifyAll(); // should be only one thread waiting, but just in case
@@ -1097,6 +1113,7 @@ public class AbstractAutomaton implements Runnable {
             }
         }
 
+        @Override
         public void run() {
             // create the frame if it doesn't exist
             if (mFrame == null) {
@@ -1110,6 +1127,7 @@ public class AbstractAutomaton implements Runnable {
                 mFrame.getContentPane().add(mArea, BorderLayout.CENTER);
                 mFrame.getContentPane().add(mButton, BorderLayout.SOUTH);
                 mButton.addActionListener(new java.awt.event.ActionListener() {
+                    @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         synchronized (self) {
                             self.notifyAll(); // should be only one thread waiting, but just in case
@@ -1157,6 +1175,7 @@ public class AbstractAutomaton implements Runnable {
     private void debuggingWait() {
         // post an event to the GUI pane
         Runnable r = new Runnable() {
+            @Override
             public void run() {
                 // create a prompting frame
                 if (debugWaitFrame == null) {
@@ -1164,6 +1183,7 @@ public class AbstractAutomaton implements Runnable {
                     JButton b = new JButton("Continue");
                     debugWaitFrame.getContentPane().add(b);
                     b.addActionListener(new java.awt.event.ActionListener() {
+                        @Override
                         public void actionPerformed(java.awt.event.ActionEvent e) {
                             synchronized (self) {
                                 self.notifyAll(); // should be only one thread waiting, but just in case

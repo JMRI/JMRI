@@ -1,5 +1,6 @@
 package jmri.jmrix.dccpp.dccppovertcp;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
@@ -74,7 +75,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
      */
     public LinkedList<DCCppMessage> xmtList = new LinkedList<DCCppMessage>();
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Only used during system initialization")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Only used during system initialization")
     public DCCppOverTcpPacketizer(DCCppCommandStation cs) {
         super(cs); // Don't need the command station (?)
 
@@ -132,6 +133,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
      *
      * @param m Message to send; will be updated with CRC
      */
+    @Override
     public void sendDCCppMessage(DCCppMessage m, DCCppListener reply) {
         // update statistics
         //transmittedMsgCount++;
@@ -200,6 +202,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
         // readline is deprecated, but there are no problems
         // with multi-byte characters here.
         @SuppressWarnings({"deprecation", "null"})
+        @Override
         public void run() {
 
             String rxLine;
@@ -251,6 +254,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     Runnable r = new Runnable() {
                         DCCppReply msgForLater = thisMsg;
 
+                        @Override
                         public void run() {
                             notifyReply(msgForLater, null);
                         }
@@ -283,6 +287,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
      */
     class XmtHandler implements Runnable {
 
+        @Override
         public void run() {
 
             while (true) {   // loop permanently

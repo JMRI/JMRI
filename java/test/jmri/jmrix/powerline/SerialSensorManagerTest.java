@@ -1,9 +1,6 @@
 package jmri.jmrix.powerline;
 
 import jmri.Sensor;
-import jmri.SensorManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,7 +14,7 @@ import org.junit.Test;
  * @author kcameron Copyright (C) 2011
  * @author      Paul Bender Copyright (C) 2016
  */
-public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
     @Override
     public String getSystemName(int i) {
         return "PSP" + i;
@@ -91,6 +88,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         t.setAdapterMemo(m);
 
         l = new SerialSensorManager(t) {
+            @Override
             public void reply(SerialReply r) {
             }
         };

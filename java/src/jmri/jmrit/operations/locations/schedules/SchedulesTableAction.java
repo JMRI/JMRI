@@ -1,4 +1,3 @@
-// SchedulesTableAction.java
 package jmri.jmrit.operations.locations.schedules;
 
 import java.awt.Frame;
@@ -30,4 +29,4 @@ public class SchedulesTableAction extends AbstractAction {
     }
 }
 
-/* @(#)SchedulesTableAction.java */
+

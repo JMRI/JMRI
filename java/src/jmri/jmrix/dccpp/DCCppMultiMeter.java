@@ -1,4 +1,3 @@
-// DCCppMultiMeter.java
 package jmri.jmrix.dccpp;
 
 import java.beans.PropertyChangeListener;
@@ -70,7 +69,6 @@ public class DCCppMultiMeter extends Bean implements MultiMeter, DCCppListener {
     // Timer task for periodic updates...
     private class UpdateTask extends TimerTask {
 
-        private final int sleep_interval = DCCppConstants.METER_INTERVAL_MS;
         private DCCppMultiMeter parent = null;
         private boolean is_enabled = false;
 
@@ -96,7 +94,7 @@ public class DCCppMultiMeter extends Bean implements MultiMeter, DCCppListener {
                     //log.debug("Timer Pop");
                     tc.sendDCCppMessage(DCCppMessage.makeReadTrackCurrentMsg(), parent);
                 }
-                Thread.sleep(sleep_interval);
+                Thread.sleep(DCCppConstants.METER_INTERVAL_MS);
             } catch (InterruptedException e) {
                 log.error("Error running timer update task! {}", e);
             }

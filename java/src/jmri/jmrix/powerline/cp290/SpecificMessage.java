@@ -1,4 +1,3 @@
-// SpecificMessage.java
 package jmri.jmrix.powerline.cp290;
 
 import jmri.jmrix.powerline.SerialMessage;
@@ -71,6 +70,7 @@ public class SpecificMessage extends SerialMessage {
     /**
      * Translate packet to text
      */
+    @Override
     public String toMonitorString() {
         String test = Constants.toMonitorString(this);
 //        // check for valid length
@@ -150,23 +150,28 @@ public class SpecificMessage extends SerialMessage {
 
     int responseLength = -1;  // -1 is an invalid value, indicating it hasn't been set
 
+    @Override
     public void setResponseLength(int l) {
         responseLength = l;
     }
 
+    @Override
     public int getResponseLength() {
         return responseLength;
     }
 
     // static methods to recognize a message
+    @Override
     public boolean isPoll() {
         return getElement(1) == 48;
     }
 
+    @Override
     public boolean isXmt() {
         return getElement(1) == 17;
     }
 
+    @Override
     public int getAddr() {
         return getElement(0);
     }
@@ -222,4 +227,4 @@ public class SpecificMessage extends SerialMessage {
     }
 }
 
-/* @(#)SpecificMessage.java */
+

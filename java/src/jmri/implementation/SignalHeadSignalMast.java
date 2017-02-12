@@ -209,6 +209,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
             final HashMap<SignalHead, Integer> thrDelayedSet = delayedSet;
             final int thrDelay = delay;
             Runnable r = new Runnable() {
+                @Override
                 public void run() {
                     setDelayedAppearances(thrDelayedSet, thrDelay);
                 }
@@ -228,6 +229,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
         for (SignalHead head : delaySet.keySet()) {
             final SignalHead thrHead = head;
             Runnable r = new Runnable() {
+                @Override
                 public void run() {
                     try {
                         thrHead.setAppearance(delaySet.get(thrHead));
@@ -284,6 +286,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
         return null;
     }
 
+    @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         NamedBean nb = (NamedBean) evt.getOldValue();
         if ("CanDelete".equals(evt.getPropertyName())) { //IN18N

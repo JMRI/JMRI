@@ -19,11 +19,6 @@ import org.slf4j.LoggerFactory;
  */
 public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListener, CanPanelInterface {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2953838883575771579L;
-
     public MonitorPane() {
         super();
     }
@@ -32,12 +27,14 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
     AliasMap aliasMap;
     MessageBuilder messageBuilder;
 
+    @Override
     public void initContext(Object context) {
         if (context instanceof CanSystemConnectionMemo) {
             initComponents((CanSystemConnectionMemo) context);
         }
     }
 
+    @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         this.memo = memo;
 
@@ -49,13 +46,16 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         setFixedWidthFont();
     }
 
+    @Override
     public String getTitle() {
         return "OpenLCB Monitor";
     }
 
+    @Override
     protected void init() {
     }
 
+    @Override
     public void dispose() {
         memo.getTrafficController().removeCanListener(this);
         super.dispose();
@@ -152,6 +152,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         nextLine(formatted + "\n", raw);
     }
 
+    @Override
     public synchronized void message(CanMessage l) {  // receive a message and log it
         if (log.isDebugEnabled()) {
             log.debug("Message: " + l.toString());
@@ -159,6 +160,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         format("S", l.isExtended(), l.getHeader(), l.getNumDataElements(), l.getData());
     }
 
+    @Override
     public synchronized void reply(CanReply l) {  // receive a reply and log it
         if (log.isDebugEnabled()) {
             log.debug("Reply: " + l.toString());
@@ -170,11 +172,6 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -5753208779918899593L;
 
         public Default() {
             super("Openlcb Monitor",

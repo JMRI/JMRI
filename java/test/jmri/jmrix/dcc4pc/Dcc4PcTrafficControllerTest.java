@@ -9,7 +9,6 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Description:	JUnit tests for the Dcc4PcTrafficController class
@@ -74,17 +73,21 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
             rcvdMsg = null;
         }
 
+        @Override
         public void message(Dcc4PcMessage m) {
             rcvdMsg = m;
         }
 
+        @Override
         public void reply(Dcc4PcReply r) {
             rcvdReply = r;
         }
 
+        @Override
         public void handleTimeout(Dcc4PcMessage m) {
         }
 
+        @Override
         public void processingData(){
         }
 
@@ -95,17 +98,21 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
     // internal class to simulate a Dcc4PcPortController
     class Dcc4PcPortControllerScaffold extends Dcc4PcPortController {
 
+        @Override
         public Vector<String> getPortNames() {
             return null;
         }
 
+        @Override
         public String openPort(String portName, String appName) {
             return null;
         }
 
+        @Override
         public void configure() {
         }
 
+        @Override
         public String[] validBaudRates() {
             return null;
         }
@@ -122,16 +129,19 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         }
 
         // returns the InputStream from the port
+        @Override
         public DataInputStream getInputStream() {
             return istream;
         }
 
         // returns the outputStream to the port
+        @Override
         public DataOutputStream getOutputStream() {
             return ostream;
         }
 
         // check that this object is ready to operate
+        @Override
         public boolean status() {
             return true;
         }

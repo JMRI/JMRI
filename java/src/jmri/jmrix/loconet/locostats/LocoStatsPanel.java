@@ -44,10 +44,12 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
     JPanel pr2Panel;
     JPanel ms100Panel;
 
+    @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.locostats.LocoStatsFrame";
+        return "package.jmri.jmrix.loconet.locostats.LocoStatsFrame"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemLocoStats"));
     }
@@ -58,6 +60,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.locostats.LocoStatsBundle");
 
+    @Override
     public void initComponents() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -119,6 +122,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
 
         // install "update" button handler
         updateButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 requestUpdate();
             }
@@ -135,6 +139,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
         // will connect when memo is available
     }
 
+    @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
 
@@ -153,6 +158,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
         log.error(msg);
     }
 
+    @Override
     public void message(LocoNetMessage msg) {
         if (updatePending
                 && (msg.getOpCode() == LnConstants.OPC_PEER_XFER)
@@ -244,6 +250,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
         memo.getLnTrafficController().sendLocoNetMessage(msg);
     }
 
+    @Override
     public void dispose() {
         // disconnect from the LnTrafficController
         memo.getLnTrafficController().removeLocoNetListener(~0, this);

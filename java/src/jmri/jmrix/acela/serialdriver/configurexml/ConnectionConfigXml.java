@@ -35,6 +35,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      *
      * @param e Element being extended
      */
+    @Override
     protected void extendElement(Element e) {
         AcelaNode node = (AcelaNode) AcelaTrafficController.instance().getNode(0);
         int index = 1;
@@ -364,5 +365,3 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 }
-
-/* @(#)ConnectionConfigXml.java */

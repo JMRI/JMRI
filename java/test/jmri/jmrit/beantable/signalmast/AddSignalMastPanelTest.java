@@ -1,16 +1,18 @@
 package jmri.jmrit.beantable.signalmast;
 
 import jmri.implementation.SignalSystemTestUtil;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author	Bob Jacobsen Copyright 2014
-  */
-public class AddSignalMastPanelTest extends TestCase {
+ */
+public class AddSignalMastPanelTest {
 
+    @Test
     public void testDefaultSystems() {
         AddSignalMastPanel a = new AddSignalMastPanel();
 
@@ -21,9 +23,10 @@ public class AddSignalMastPanelTest extends TestCase {
                 found = true;
             }
         }
-        Assert.assertTrue("found Basic Model Signals", found);
+        Assert.assertTrue("did not find Basic Model Signals", found);
     }
 
+    @Test
     public void testSearch() throws Exception {
         try {  // need try-finally to ensure junk deleted from user area
             SignalSystemTestUtil.createMockSystem();
@@ -37,46 +40,25 @@ public class AddSignalMastPanelTest extends TestCase {
                     found = true;
                 }
             }
-            Assert.assertTrue("found JUnit Test Signals", found);
+            Assert.assertTrue("did not find JUnit Test Signals", found);
         } finally {
             SignalSystemTestUtil.deleteMockSystem();
         }
     }
 
-    // from here down is testing infrastructure
-    public AddSignalMastPanelTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", AddSignalMastPanelTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(AddSignalMastPanelTest.class);
-
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        super.setUp();
-
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
     }
 
-    protected void tearDown() throws Exception {
-        jmri.util.JUnitUtil.resetInstanceManager();
-
-        super.tearDown();
+    @After
+    public void tearDown() {
+        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

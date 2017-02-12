@@ -1,4 +1,3 @@
-// AcelaLight.java
 package jmri.jmrix.acela;
 
 import jmri.implementation.AbstractLight;
@@ -78,6 +77,7 @@ public class AcelaLight extends AbstractLight {
     /**
      * Return the current state of this Light
      */
+    @Override
     public int getState() {
         return mState;
     }
@@ -88,6 +88,7 @@ public class AcelaLight extends AbstractLight {
      * AcelaNode), a Transmit packet will be sent before this Node is next
      * polled.
      */
+    @Override
     public void setState(int newState) {
         AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName,_memo);
 
@@ -112,5 +113,3 @@ public class AcelaLight extends AbstractLight {
 
     private final static Logger log = LoggerFactory.getLogger(AcelaLight.class.getName());
 }
-
-/* @(#)AcelaLight.java */

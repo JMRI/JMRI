@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.powerline.cp290;
 
 import javax.swing.BoxLayout;
@@ -27,6 +26,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public void loadDetails(JPanel details) {
         // have to embed the usual one in a new JPanel
 
@@ -37,6 +37,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         details.add(p);
     }
 
+    @Override
     public String name() {
         return "CP290";
     }
@@ -45,6 +46,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return false;
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SpecificDriverAdapter();

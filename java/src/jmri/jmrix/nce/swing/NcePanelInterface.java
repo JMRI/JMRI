@@ -1,4 +1,3 @@
-// NcePanelInterface.java
 package jmri.jmrix.nce.swing;
 
 import jmri.jmrix.nce.NceSystemConnectionMemo;
