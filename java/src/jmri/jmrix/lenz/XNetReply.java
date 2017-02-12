@@ -731,7 +731,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
             // so we need this for both incoming and outgoing directions
             switch (getElement(1)) {
                 case XNetConstants.LI101_REQUEST_ADDRESS:
-                    text = "RESPONSE LI101 Address " + getElement(2);
+                    text = Bundle.getMessage("XNetReplyLIAddress",
+                                   getElement(2));
                     break;
                 case XNetConstants.LI101_REQUEST_BAUD:
                     switch (getElement(2)) {
@@ -850,32 +851,32 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 	/* We want to look at responses to specific requests made to the Command Station */
         } else if (getElement(0) == XNetConstants.CS_REQUEST_RESPONSE) {
             if (getElement(1) == XNetConstants.CS_STATUS_RESPONSE) {
-                text = "Command Station Status:";
+                text = Bundle.getMessage("XNetReplyCSStatus");
                 int statusByte = getElement(2);
                 if ((statusByte & 0x01) == 0x01) {
                     // Command station is in Emergency Off Mode
-                    text = text + " Emergency Off";
+                    text += Bundle.getMessage("XNetCSStatusEmergencyOff");
                 }
                 if ((statusByte & 0x02) == 0x02) {
                     // Command station is in Emergency Stop Mode
-                    text = text + " Emergency Stop";
+                    text += Bundle.getMessage("XNetCSStatusEmergencyStop");
                 }
                 if ((statusByte & 0x08) == 0x08) {
                     // Command station is in Service Mode
-                    text = text + " Service Mode";
+                    text += Bundle.getMessage("XNetCSStatusServiceMode");
                 }
                 if ((statusByte & 0x40) == 0x40) {
                     // Command station is in Power Up Mode
-                    text = text + " Powering up";
+                    text += Bundle.getMessage("XNetCSStatusPoweringUp");
                 }
                 if ((statusByte & 0x04) == 0x04) {
-                    text = text + " Auto power-up Mode";
+                    text += Bundle.getMessage("XNetCSStatusPowerModeAuto");
                 } else {
-                    text = text + " Manual power-up Mode";
+                    text += Bundle.getMessage("XNetCSStatusPowerModeManual");
                 }
                 if ((statusByte & 0x80) == 0x80) {
                     // Command station has a experienced a ram check error
-                    text = text + " RAM check error!";
+                    text += Bundle.getMessage("XNetCSStatusRamCheck");
                 }
             } else if (getElement(1) == XNetConstants.CS_SOFTWARE_VERSION) {
                 /* This is a Software version response for XPressNet
@@ -1051,10 +1052,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                             text = text + "Thrown Left";
                         } else if ((getElement(i + 1) & 0x03) == 0x02) {
                             text = text + "Thrown Right";
-                        } else if ((getElement(i + 1) & 0x03) == 0x03) {
-                            text = text + "<Invalid>";
                         } else {
-                            text = text + "<Unknown>";
+                            text = text + "<Invalid>";
                         }
                         text = text + "; Turnout: " + (getTurnoutMsgAddr(i) + 1)
                                 + " State: ";
@@ -1064,10 +1063,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                             text = text + "Thrown Left";
                         } else if ((getElement(i + 1) & 0x0C) == 0x08) {
                             text = text + "Thrown Right";
-                        } else if ((getElement(i + 1) & 0x0C) == 0x0C) {
-                            text = text + "<Invalid>";
                         } else {
-                            text = text + "<Unknown>";
+                            text = text + "<Invalid>";
                         }
                         break;
                     case 1:
@@ -1079,10 +1076,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                             text = text + "Thrown Left";
                         } else if ((getElement(i + 1) & 0x03) == 0x02) {
                             text = text + "Thrown Right";
-                        } else if ((getElement(i + 1) & 0x03) == 0x03) {
-                            text = text + "<Invalid>";
                         } else {
-                            text = text + "<Unknown>";
+                            text = text + "<Invalid>";
                         }
                         text = text + "; Turnout: " + (getTurnoutMsgAddr() + 1)
                                 + " State: ";
@@ -1092,10 +1087,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                             text = text + "Thrown Left";
                         } else if ((getElement(i + 1) & 0x0C) == 0x08) {
                             text = text + "Thrown Right";
-                        } else if ((getElement(i + 1) & 0x0C) == 0x0C) {
-                            text = text + "<Invalid>";
                         } else {
-                            text = text + "<Unknown>";
+                            text = text + "<Invalid>";
                         }
                         break;
                     case 2:

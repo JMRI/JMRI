@@ -334,10 +334,8 @@ public class ValidatedTextField extends javax.swing.JTextField {
                 // match between last queried value and current field value
                 thisone.setBackground(COLOR_BG_UNEDITED);
             }
-            return;
         } else {
             // don't change background color of disabled field
-            return;
         }
     }
 
@@ -375,7 +373,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
                 } else {
                     return false;
                 }
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 return false;
             }
         } else if (fieldType == FieldType.INTEGRALNUMERICPLUSSTRING) {
@@ -409,28 +407,22 @@ public class ValidatedTextField extends javax.swing.JTextField {
 
             try {
                 Integer address = Integer.parseInt(value.substring(0, findLocation));
-                if ((address < minAllowedValue)
-                        || (address > maxAllowedValue)) {
-                    return false;
-                } else if ((value.length() < 2) || (!value.matches(validateRegExpr))) {
-                    return false;
-                } else {
-                    return true;
-                }
-            } catch (Exception e) {
+                return (address >= minAllowedValue
+                        && address <= maxAllowedValue
+                        && value.length() >= 2
+                        && value.matches(validateRegExpr));
+            } catch (NumberFormatException e) {
                 return false;
             }
         } else if (fieldType == FieldType.LIMITEDHEX) {
             try {
-                if (value.length() == 0) {
+                if (value.isEmpty()) {
                     return false;
-                } else if ((Integer.parseInt(value, 16) >= minAllowedValue)
-                        && (Integer.parseInt(value, 16) <= maxAllowedValue)) {
-                    return true;
                 } else {
-                    return false;
+                    return Integer.parseInt(value, 16) >= minAllowedValue
+                            && Integer.parseInt(value, 16) <= maxAllowedValue;
                 }
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 return false;
             }
         } else {
