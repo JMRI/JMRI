@@ -31,18 +31,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
- *
  * @author	Kevin Dickerson Copyright (C) 2011
  */
 public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.VetoableChangeListener {
@@ -62,7 +50,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
     boolean disposing = false;
 
     /**
-     * Initialise the signal mast logic
+     * Initialise the Signal Mast Logic
      *
      * @param source - The signalmast we are configuring
      */
@@ -280,7 +268,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
 
     /**
      *
-     * @param dest Destination SignalMast.
+     * @param dest The destination SignalMast
      * @return true if there are no more destination signal masts
      */
     @Override
@@ -316,7 +304,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
      *
      * @param boo         Use the layout editor details to determine logic
      *                    details.
-     * @param destination Destination SignalMast.
+     * @param destination The destination SignalMast
      *
      */
     @Override
@@ -352,7 +340,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
      * Query if we are using the layout editor panels to build the signal mast
      * logic, blocks, turnouts .
      *
-     * @param destination Destination SignalMast.
+     * @param destination The destination SignalMast
      * @return true if we are using the layout editor to build the signal mast
      *         logic.
      */
@@ -368,11 +356,11 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
      * Sets whether we should use the information from the layout editor for
      * either blocks or turnouts.
      *
-     * @param destination Destination SignalMast.
-     * @param blocks      set false if not to use the block information gathered
-     *                    from the layouteditor
      * @param turnouts    set false if not to use the turnout information
      *                    gathered from the layouteditor
+     * @param blocks      set false if not to use the block information gathered
+     *                    from the layouteditor
+     * @param destination Destination Signal Mast
      */
     @Override
     public void useLayoutEditorDetails(boolean turnouts, boolean blocks, SignalMast destination) throws jmri.JmriException {
@@ -390,7 +378,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
      * Query if we are using the layout editor turnout information in the signal
      * mast logic.
      *
-     * @param destination Destination SignalMast.
+     * @param destination The destination SignalMast
      * @return true if we are using the turnout information from the layout
      *         editor.
      */
@@ -406,7 +394,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
      * Query if we are using the layout editor block information in the signal
      * mast logic.
      *
-     * @param destination Destination SignalMast.
+     * @param destination The destination SignalMast
      * @return true if we are using the block information from the layout
      *         editor.
      */

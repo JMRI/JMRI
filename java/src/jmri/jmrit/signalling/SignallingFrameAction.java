@@ -15,10 +15,18 @@ public class SignallingFrameAction extends AbstractAction {
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
 
+    /**
+     * Create an action with the supplied name.
+     *
+     * @param s The name of the resulting action
+     */
     public SignallingFrameAction(String s) {
         super(s);
     }
 
+    /**
+     * Create an action with a preset name, localizable via the Bundle mechanism.
+     */
     public SignallingFrameAction() {
         super(rb.getString("SignallingPairs"));
     }
