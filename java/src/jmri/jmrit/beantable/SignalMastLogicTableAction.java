@@ -180,7 +180,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                 // updateNameList();
                 if (e.getPropertyName().equals("length") || e.getPropertyName().equals("updatedDestination") || e.getPropertyName().equals("updatedSource")) {
                     updateNameList();
-                    //log.debug("Table changed length to "+signalMastLogicList.size());
+                    log.debug("Table changed length to " + signalMastLogicList.size());
                     fireTableDataChanged();
                 } else if (e.getSource() instanceof SignalMastLogic) {
                     SignalMastLogic logic = (SignalMastLogic) e.getSource();
@@ -427,7 +427,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
             public Object getValueAt(int row, int col) {
                 // some error checking
                 if (row >= signalMastLogicList.size()) {
-                    log.debug("row is greater than signalMastLogicList size");
+                    log.debug("row index is greater than signalMastLogicList size");
                     return null;
                 }
                 SignalMastLogic b = getLogicFromRow(row);
