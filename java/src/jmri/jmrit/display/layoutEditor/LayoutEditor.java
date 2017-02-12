@@ -679,7 +679,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         blockContentsButton.addActionListener(selectionListAction);
         iconLabelButton.addActionListener(selectionListAction);
 
-        // setup top edit bar
+        // setup edit toolbar
         editToolBarPanel.setLayout(new BoxLayout(editToolBarPanel, BoxLayout.PAGE_AXIS));
         //editToolBarPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 
@@ -2236,8 +2236,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         // get the window specific saved zoom user preference
         // NOTE: this is NOT working… (zoomProp is always null)
-        UserPreferencesManager prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
+        UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(UserPreferencesManager.class);
         if (prefsMgr != null) {
+            prefsMgr.setProperty(getWindowFrameRef(), "Zoom2Zoom", Double.valueOf(666.999));
             Object zoomProp = prefsMgr.getProperty(getWindowFrameRef(), "zoom");
             if (zoomProp != null) {
                 setZoom(((Double) zoomProp).doubleValue());
@@ -2269,7 +2270,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             selectZoomMenuItem(newZoom);
 
             // save the window specific saved zoom user preference
-            UserPreferencesManager prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
+            UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(UserPreferencesManager.class);
             if (prefsMgr != null) {
                 prefsMgr.setProperty(getWindowFrameRef(), "zoom", Double.valueOf(zoomFactor));
             }
