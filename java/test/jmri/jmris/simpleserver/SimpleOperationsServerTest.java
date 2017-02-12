@@ -85,14 +85,14 @@ public class SimpleOperationsServerTest {
     @Test public void testSendTrainList() {
         SimpleOperationsServer a = new SimpleOperationsServer(input, output);
         a.sendTrainList();   
-        Assert.assertEquals("SendTrainList Check","",sb.toString());
+        Assert.assertEquals("SendTrainList Check","OPERATIONS , TRAINS=SFF\nOPERATIONS , TRAINS=STF\n",sb.toString());
     }
 
-    // test sending the train list.
+    // test sending the locations list.
     @Test public void testSendLocationList() {
         SimpleOperationsServer a = new SimpleOperationsServer(input, output);
-        a.sendTrainList();   
-        Assert.assertEquals("SendLocationList Check","",sb.toString());
+        a.sendLocationList();   
+        Assert.assertEquals("SendLocationList Check","OPERATIONS , LOCATIONS=North End\nOPERATIONS , LOCATIONS=North Industries\nOPERATIONS , LOCATIONS=South End\n",sb.toString());
     }
 
     // The minimal setup for log4J
@@ -105,6 +105,7 @@ public class SimpleOperationsServerTest {
         jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.JUnitUtil.initDebugThrottleManager();
         jmri.util.JUnitOperationsUtil.resetOperationsManager();
+        jmri.util.JUnitOperationsUtil.initOperationsData();
         sb = new StringBuilder();
         output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
