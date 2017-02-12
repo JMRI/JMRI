@@ -1,5 +1,6 @@
 package jmri.jmrit.catalog;
 
+import javax.annotation.CheckReturnValue;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
         this(sysname, "root");
     }
 
+    @CheckReturnValue
     @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameCatalog");
@@ -69,17 +71,19 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
      * Get the root element of the tree as a jmri.CatalogTreeNode object.
      * (Instead of Object, as parent swing.TreeModel provides)
      */
+    @CheckReturnValue
     @Override
     public CatalogTreeNode getRoot() {
         return (CatalogTreeNode) super.getRoot();
     }
 
-    /**
+    /*
      * ** NamedBean implementation (Copied from AbstractNamedBean) *********
      */
     /**
      * Get associated comment text.
      */
+    @CheckReturnValue
     @Override
     public String getComment() {
         return this.comment;
@@ -100,6 +104,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     }
     private String comment;
 
+    @CheckReturnValue
     @Override
     public String getDisplayName() {
         String name = getUserName();
@@ -110,6 +115,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
         }
     }
 
+    @CheckReturnValue
     @Override
     public String getFullyFormattedDisplayName() {
         String name = getUserName();
@@ -145,6 +151,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
      * Number of current listeners. May return -1 if the information is not
      * available for some reason.
      */
+    @CheckReturnValue
     @Override
     public synchronized int getNumPropertyChangeListeners() {
         return pcs.getPropertyChangeListeners().length;
@@ -164,6 +171,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
         }
     }
 
+    @CheckReturnValue
     @Override
     public synchronized PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
         ArrayList<PropertyChangeListener> list = new ArrayList<>();
@@ -178,6 +186,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     }
 
     /* This allows a meaning full list of places where the bean is in use!*/
+    @CheckReturnValue
     @Override
     public synchronized ArrayList<String> getListenerRefs() {
         ArrayList<String> list = new ArrayList<>();
@@ -196,16 +205,19 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
         }
     }
 
+    @CheckReturnValue
     @Override
     public synchronized String getListenerRef(java.beans.PropertyChangeListener l) {
         return listenerRefs.get(l);
     }
 
+    @CheckReturnValue
     @Override
     public String getSystemName() {
         return mSystemName;
     }
 
+    @CheckReturnValue
     @Override
     public String getUserName() {
         return mUserName;
@@ -228,8 +240,20 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     }
 
     @Override
+    @CheckReturnValue
     public int getState() {
         return 0;
+    }
+
+    @Override
+    @CheckReturnValue
+    public String getStateString() {
+        int state = getState();
+        switch (state) {
+            case UNKNOWN: return Bundle.getMessage("BeanStateUnknowng");
+            case INCONSISTENT: return Bundle.getMessage("BeanStateInconsistent");
+            default: return Bundle.getMessage("BeanStateUnexpected", state);
+        }
     }
 
     @Override
@@ -242,6 +266,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     public void removeDeleteLock(jmri.NamedBean lock) {
     }
 
+    @CheckReturnValue
     public boolean isDeleteAllowed() {
         return true;
     }

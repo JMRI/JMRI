@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.7.1ish-201612232359-heap-R742ac76 on Sat Dec 24 10:59:24 AEDT 2016 $Id$-->
-  <decoderIndex version="794">
+  <!--Written by JMRI version 4.7.1ish-201702110419-heap-Rf2b739a on Sat Feb 11 15:19:08 AEDT 2017 $Id$-->
+  <decoderIndex version="798">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -6626,6 +6626,78 @@
           <output name="2" label="Rear light " maxcurrent="180 mA" connection="wire" />
           <output name="3" label="   AUX1    " maxcurrent="180 mA" connection="wire" />
           <size length="25.5" width="15.5" height="4.5" units="mm" />
+        </model>
+      </family>
+      <family name="ESU SwitchPilot" lowVersionID="0" highVersionID="254" mfg="Electronic Solutions Ulm GmbH" file="ESU_SwitchPilot.xml">
+        <model model="SwitchPilot" connector="Wires">
+          <output name="1" label="Output|1" />
+          <output name="2" label="Output|2" />
+          <output name="3" label="Output|3" />
+          <output name="4" label="Output|4" />
+          <output name="5" label="Servo|1" />
+          <output name="6" label="Servo|2" />
+          <size length="86" width="86" height="25" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="SwitchPilot Servo" connector="Wires">
+          <output name="1" label="Servo|1" />
+          <output name="2" label="Servo|2" />
+          <output name="3" label="Servo|3" />
+          <output name="4" label="Servo|4" />
+          <size length="86" width="86" height="25" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="SwitchPilot Servo (MA)" connector="Wires">
+          <output name="1" label="Servo|1" />
+          <output name="2" label="Servo|2" />
+          <output name="3" label="Servo|3" />
+          <output name="4" label="Servo|4" />
+          <size length="86" width="86" height="25" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="SwitchPilot Servo (2013)" connector="Wires">
+          <output name="1" label="Servo|1" />
+          <output name="2" label="Servo|2" />
+          <output name="3" label="Servo|3" />
+          <output name="4" label="Servo|4" />
+          <size length="86" width="86" height="25" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="SwitchPilot V2.0" lowVersionID="115" highVersionID="115" connector="Wires" productID="33554520">
+          <output name="1" label="Output|1" />
+          <output name="2" label="Output|2" />
+          <output name="3" label="Output|3" />
+          <output name="4" label="Output|4" />
+          <output name="5" label="Servo|1" />
+          <output name="6" label="Servo|2" />
+          <size length="86" width="86" height="25" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="SwitchPilot Servo V2.0" lowVersionID="153" highVersionID="153" connector="Wires" productID="33554522">
+          <output name="1" label="Servo|1" />
+          <output name="2" label="Servo|2" />
+          <output name="3" label="Servo|3" />
+          <output name="4" label="Servo|4" />
+          <size length="86" width="86" height="25" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
         </model>
       </family>
       <family name="Fleischmann Loco Decoders" mfg="Fleischmann" file="Fleischmann_FMZ_DCC.xml">
@@ -21159,13 +21231,29 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="EU621" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="44">
-          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
-          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
-          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
-          <output name="5" label="Brown" connection="wire" maxcurrent="100 mA" />
-          <output name="6" label="Pink" connection="wire" maxcurrent="100 mA" />
+        <model model="EU621" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="21MTC" lowVersionID="86" highVersionID="88" productID="44">
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="plug" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="plug" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="plug" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="plug" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="0.78" width="0.59" height="0.13" units="inches" />
+        </model>
+        <model model="EU821" numOuts="8" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="21MTC" lowVersionID="88" highVersionID="88" productID="65">
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="plug" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="plug" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="plug" maxcurrent="logic level" />
+          <output name="6" label="Pink" connection="plug" maxcurrent="logic level" />
+          <output name="7" label="Pnk/Pur" connection="plug" maxcurrent="logic level" />
+          <output name="8" label="Grn/Brn" connection="plug" maxcurrent="logic level" />
           <output name="Dim" />
           <output name="Ditch" />
           <output name="Motor" />
@@ -23959,6 +24047,20 @@
           <output name="7" label="Signal" />
           <output name="8" label="Main Sw" />
           <output name="9" label="Vmid" />
+        </model>
+      </family>
+      <family name="Point Motor Decoders" mfg="Viessmann Modellspielwaren GmbH" lowVersionID="2" highVersionID="5" comment="NMRA DCC &amp; Märklin Motorola protocols, RailCom" file="Viessmann_45xx_Point_motor.xml">
+        <model model="4557" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="TT" connector="other" productID="4557" comment="TT Point motor for Tillig road bed point">
+          <size length="68.4" width="24.5" height="5.3" units="mm" />
+        </model>
+        <model model="4558" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="HO" connector="other" productID="4558" comment="H0 Point motor for Märklin/Trix C track">
+          <size length="104.9" width="24.5" height="5.3" units="mm" />
+        </model>
+        <model model="4559" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="HO" connector="other" productID="4559" comment="H0 Point motor for Roco geo-Line points">
+          <size length="68.4" width="24.2" height="5.3" units="mm" />
+        </model>
+        <model model="4560" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="all" connector="other" productID="4560" comment="Motorized point and universal drive (scale independent)">
+          <size length="50" width="20.2" height="5.8" units="mm" />
         </model>
       </family>
       <family name="Multi-Protocol Decoders" mfg="Viessmann Modellspielwaren GmbH" lowVersionID="1" highVersionID="255" comment="NMRA DCC &amp; Märklin Motorola protocols, RailCom, SUSI interface" file="Viessmann_524x.xml">

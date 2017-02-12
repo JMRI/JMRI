@@ -1,5 +1,8 @@
 package jmri;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
@@ -96,7 +99,7 @@ public interface NamedBean {
      * the known state, commanded state, user and system names.
      *
      * @param l           The listener. This may change in the future to be a
-     *                    subclass of NamedProprtyCHangeListener that carries
+     *                    subclass of NamedProprtyChangeListener that carries
      *                    the name and listenerRef values internally
      * @param name        The name (either system or user) that the listener
      *                    uses for this namedBean, this parameter is used to
@@ -105,20 +108,27 @@ public interface NamedBean {
      * @param listenerRef A textual reference for the listener, that can be
      *                    presented to the user when a delete is called
      */
-    public void addPropertyChangeListener(@Nonnull java.beans.PropertyChangeListener l, String name, String listenerRef);
+    public void addPropertyChangeListener(@Nonnull PropertyChangeListener l, String name, String listenerRef);
 
-    public void addPropertyChangeListener(@CheckForNull java.beans.PropertyChangeListener l);
+    /**
+     * Add a listener that receives a call-back when a bound property changes.
+     *
+     * @param l the listener to add; if null no action is taken and no exception
+     *          is thrown
+     */
+    public void addPropertyChangeListener(PropertyChangeListener l);
 
     /**
      * Remove a request for a call-back when a bound property changes.
      *
-     * @param l the listener to remove
+     * @param l the listener to remove; if null no action is taken and no
+     *          exception is thrown
      */
-    public void removePropertyChangeListener(@CheckForNull java.beans.PropertyChangeListener l);
+    public void removePropertyChangeListener(PropertyChangeListener l);
 
-    public void updateListenerRef(@Nonnull java.beans.PropertyChangeListener l, String newName);
+    public void updateListenerRef(@Nonnull PropertyChangeListener l, String newName);
 
-    public void vetoableChange(@Nonnull java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException;
+    public void vetoableChange(@Nonnull PropertyChangeEvent evt) throws PropertyVetoException;
 
     /**
      * Get the textual reference for the specific listener
@@ -127,7 +137,7 @@ public interface NamedBean {
      * @return the textual reference
      */
     @CheckReturnValue
-    public String getListenerRef(@Nonnull java.beans.PropertyChangeListener l);
+    public String getListenerRef(@Nonnull PropertyChangeListener l);
 
     /**
      * Returns a list of all the listeners references
@@ -156,7 +166,7 @@ public interface NamedBean {
      */
     @CheckReturnValue
     @Nonnull
-    public java.beans.PropertyChangeListener[] getPropertyChangeListenersByReference(@Nonnull String name);
+    public PropertyChangeListener[] getPropertyChangeListenersByReference(@Nonnull String name);
 
     /**
      * Deactivate this object, so that it releases as many resources as possible
@@ -200,6 +210,17 @@ public interface NamedBean {
      */
     @CheckReturnValue
     public int getState();
+
+    /**
+     * Provide human-readable access to internal state.
+     * <P>
+     * Prefer the int form when manipulating the state programmatically.
+     * This method is only intended for use when presenting to a person.
+     *
+     * @return the state in localized form
+     */
+    @CheckReturnValue
+    public String getStateString();
 
     /**
      * Get associated comment text.

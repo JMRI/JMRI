@@ -1,5 +1,7 @@
 package jmri.implementation;
 
+import javax.annotation.CheckReturnValue;
+
 import jmri.Reporter;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -131,6 +133,16 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     }
 
     int restartcount = 0;
+
+    @Override
+    @CheckReturnValue
+    public String getStateString() {
+        switch (getState()) {
+            case ACTIVE: return Bundle.getMessage("SensorStateActive");
+            case INACTIVE: return Bundle.getMessage("SensorStateInactive");
+            default: return super.getStateString();
+        }
+    }
 
     // setKnownState() for implementations that can't
     // actually do it on the layout. Not intended for use by implementations
