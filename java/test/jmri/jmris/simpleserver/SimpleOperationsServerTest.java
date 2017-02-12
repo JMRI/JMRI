@@ -112,6 +112,17 @@ public class SimpleOperationsServerTest {
         Assert.assertEquals("SendFullStatus Check","OPERATIONS , TRAIN=STF , TRAINLOCATION=North End , TRAINLENGTH=124 , TRAINWEIGHT=28 , TRAINCARS=3 , TRAINLEADLOCO , TRAINCABOOSE=CP C10099\n",sb.toString());
     }
 
+    //test parsing an message from the client.
+    @Test public void testParseStatus() throws jmri.JmriException,java.io.IOException{
+        String inputString = "OPERATIONS , TRAIN=STF , TRAINLENGTH";
+        
+        new jmri.jmrit.operations.trains.TrainBuilder().build(jmri.jmrit.operations.trains.TrainManager.instance().getTrainById("1"));
+        SimpleOperationsServer a = new SimpleOperationsServer(input, output);
+        a.parseStatus(inputString);
+        // parsing the input causes a status report to be generated.
+        Assert.assertEquals("Command Response Check","OPERATIONS , TRAIN=STF , TRAINLENGTH=124\n",sb.toString());
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
