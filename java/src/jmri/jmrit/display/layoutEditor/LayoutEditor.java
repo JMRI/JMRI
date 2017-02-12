@@ -2267,6 +2267,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             setPaintScale(newZoom);
             zoomLabel.setText(String.format("x%1$,.2f", newZoom));
             selectZoomMenuItem(newZoom);
+
             // save the window specific saved zoom user preference
             UserPreferencesManager prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
             if (prefsMgr != null) {
