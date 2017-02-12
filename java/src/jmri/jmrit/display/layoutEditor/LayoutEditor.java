@@ -2235,11 +2235,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         noZoomItem.setSelected(true);
 
         // get the window specific saved zoom user preference
+        // NOTE: this is NOT working… (zoomProp is always null)
         UserPreferencesManager prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
         if (prefsMgr != null) {
             Object zoomProp = prefsMgr.getProperty(getWindowFrameRef(), "zoom");
             if (zoomProp != null) {
-                this.setZoom(((Double) zoomProp).doubleValue());
+                setZoom(((Double) zoomProp).doubleValue());
             }
         }
     }
