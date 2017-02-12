@@ -95,6 +95,23 @@ public class SimpleOperationsServerTest {
         Assert.assertEquals("SendLocationList Check","OPERATIONS , LOCATIONS=North End\nOPERATIONS , LOCATIONS=North Industries\nOPERATIONS , LOCATIONS=South End\n",sb.toString());
     }
 
+    // test sending the full status of a train.
+    @Test public void testSendFullStatus() throws java.io.IOException {
+        new jmri.jmrit.operations.trains.TrainBuilder().build(jmri.jmrit.operations.trains.TrainManager.instance().getTrainById("1"));
+        SimpleOperationsServer a = new SimpleOperationsServer(input, output);
+        a.sendFullStatus(jmri.jmrit.operations.trains.TrainManager.instance().getTrainByName("STF"));   
+        Assert.assertEquals("SendFullStatus Check","OPERATIONS , TRAIN=STF , TRAINLOCATION=North End , TRAINLENGTH=124 , TRAINWEIGHT=28 , TRAINCARS=3 , TRAINLEADLOCO , TRAINCABOOSE=CP C10099\n",sb.toString());
+    }
+
+    // test sending the full status of a train.
+    @Test public void testTrainPropertyChangeListener() {
+        SimpleOperationsServer a = new SimpleOperationsServer(input, output);
+        // Building a train causes the property change listener to send
+        // full status of the train.
+        new jmri.jmrit.operations.trains.TrainBuilder().build(jmri.jmrit.operations.trains.TrainManager.instance().getTrainById("1"));
+        Assert.assertEquals("SendFullStatus Check","OPERATIONS , TRAIN=STF , TRAINLOCATION=North End , TRAINLENGTH=124 , TRAINWEIGHT=28 , TRAINCARS=3 , TRAINLEADLOCO , TRAINCABOOSE=CP C10099\n",sb.toString());
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
@@ -106,6 +123,7 @@ public class SimpleOperationsServerTest {
         jmri.util.JUnitUtil.initDebugThrottleManager();
         jmri.util.JUnitOperationsUtil.resetOperationsManager();
         jmri.util.JUnitOperationsUtil.initOperationsData();
+
         sb = new StringBuilder();
         output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
