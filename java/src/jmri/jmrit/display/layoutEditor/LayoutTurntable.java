@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static jmri.util.MathUtil.*;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -665,7 +667,7 @@ public class LayoutTurntable extends LayoutTrack {
         RayTrack closest = null;
         double bestDel = 360.0;
         for (int i = 0; i < rayList.size(); i++) {
-            double del = diffAngle((rayList.get(i)).getAngle(), ang);
+            double del = diffAngle(rayList.get(i).getAngle(), ang);
             if (del < bestDel) {
                 bestDel = del;
                 closest = rayList.get(i);

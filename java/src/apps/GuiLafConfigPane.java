@@ -97,7 +97,7 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     void doVerticalToolBar(JPanel panel) {
         panel.setLayout(new FlowLayout());
         mouseEvent = new JCheckBox(ConfigBundle.getMessage("GUIButtonVerticalToolBar"));
-        mouseEvent.setSelected(InstanceManager.getDefault(GuiLafPreferencesManager.class).isVerticalToolBar());
+        mouseEvent.setSelected(InstanceManager.getDefault(GuiLafPreferencesManager.class).isToolBarVertical());
         mouseEvent.addItemListener((ItemEvent e) -> {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setVerticalToolBar(mouseEvent.isSelected());
         });
