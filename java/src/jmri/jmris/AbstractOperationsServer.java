@@ -183,8 +183,9 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
             if (leadEngine != null) {
                 return leadEngine.toString();
             }
+        } else { // train is null
+            sendErrorStatus("ERROR train name doesn't exist " + trainName);
         }
-        sendErrorStatus("ERROR train name doesn't exist " + trainName);
         return null;
     }
 

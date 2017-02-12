@@ -61,7 +61,7 @@ public class ConditionalVariable {
     // Conditionals and this parameter nows controls whether, if its change of state changes the
     // state of the conditional, should that also  trigger the actions.
     private boolean _triggersActions = true;
-    private int _state = Conditional.UNKNOWN;        // tri-state
+    private int _state = NamedBean.UNKNOWN;        // tri-state
 
     public ConditionalVariable() {
     }
