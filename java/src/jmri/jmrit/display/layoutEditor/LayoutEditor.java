@@ -873,13 +873,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     } else {
                         blockSensorComboBox.getEditor().setItem("");
                     }
-                    // HACK: use the "reserved" color to show the selected block
-                    int count = blockIDComboBox.getItemCount();
-                    for (int i = 0; i < count; i++) {
-                        String blockNameI = blockIDComboBox.getItemAt(i);
-                        LayoutBlock bI = provideLayoutBlock(blockNameI);
-                        if (bI != null) {
-                            bI.setUseExtraColor(newName.equals(blockNameI));
+                    if (false) {
+                        // HACK: use the "Extra" color to highlight the selected block
+                        int count = blockIDComboBox.getItemCount();
+                        for (int i = 0; i < count; i++) {
+                            String blockNameI = blockIDComboBox.getItemAt(i);
+                            LayoutBlock bI = provideLayoutBlock(blockNameI);
+                            if (bI != null) {
+                                bI.setUseExtraColor(newName.equals(blockNameI));
+                            }
                         }
                     }
                 }
@@ -1545,13 +1547,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 } else {
                     setAllShowTooltip(tooltipsWithoutEditMode);
 
-                    // HACK: undo using the "reserved" color to show the selected block
-                    int count = blockIDComboBox.getItemCount();
-                    for (int i = 0; i < count; i++) {
-                        String blockNameI = blockIDComboBox.getItemAt(i);
-                        LayoutBlock bI = provideLayoutBlock(blockNameI);
-                        if (bI != null) {
-                            bI.setUseExtraColor(false);
+                    if (false) {
+                        // HACK: undo using the "Extra" color to highlight the selected block
+                        int count = blockIDComboBox.getItemCount();
+                        for (int i = 0; i < count; i++) {
+                            String blockNameI = blockIDComboBox.getItemAt(i);
+                            LayoutBlock bI = provideLayoutBlock(blockNameI);
+                            if (bI != null) {
+                                bI.setUseExtraColor(false);
+                            }
                         }
                     }
                 }
@@ -2234,15 +2238,20 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // menu item then.
         noZoomItem.setSelected(true);
 
-        // get the window specific saved zoom user preference
-        // NOTE: this is NOT working… (zoomProp is always null)
-        UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(UserPreferencesManager.class);
-        if (prefsMgr != null) {
-            Object zoomProp = prefsMgr.getProperty(getWindowFrameRef(), "zoom");
-            if (zoomProp != null) {
-                setZoom(((Double) zoomProp).doubleValue());
+        // Note: We have to invoke this later because everything's not setup yet
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                // get the window specific saved zoom user preference
+                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                    Object zoomProp = prefsMgr.getProperty(getWindowFrameRef(), "zoom");
+                    log.debug("{} zoom is {}", getWindowFrameRef(), zoomProp);
+                    if (zoomProp != null) {
+                        setZoom((Double) zoomProp);
+                    }
+                });
             }
-        }
+        });
     }
 
     private void selectZoomMenuItem(double zoomFactor) {
@@ -2264,15 +2273,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public double setZoom(double zoomFactor) {
         double newZoom = Math.min(Math.max(zoomFactor, minZoom), maxZoom);
         if (newZoom != getPaintScale()) {
+            log.debug("zoom: " + zoomFactor);
             setPaintScale(newZoom);
             zoomLabel.setText(String.format("x%1$,.2f", newZoom));
             selectZoomMenuItem(newZoom);
 
             // save the window specific saved zoom user preference
-            UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(UserPreferencesManager.class);
-            if (prefsMgr != null) {
-                prefsMgr.setProperty(getWindowFrameRef(), "zoom", Double.valueOf(zoomFactor));
-            }
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                prefsMgr.setProperty(getWindowFrameRef(), "zoom", zoomFactor);
+            });
         }
         return getPaintScale();
     }
