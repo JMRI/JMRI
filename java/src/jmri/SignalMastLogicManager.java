@@ -68,7 +68,6 @@ public interface SignalMastLogicManager extends Manager {
      * @param source The Source Signal Mast
      * @return The Signal Mast Logic for that mast
      */
-    @Override
     public SignalMastLogic getSignalMastLogic(SignalMast source);
 
     /**
@@ -76,7 +75,6 @@ public interface SignalMastLogicManager extends Manager {
      *
      * @return An ArrayList of all Signal Mast Logics
      */
-    @Override
     public ArrayList<SignalMastLogic> getSignalMastLogicList();
 
     /**

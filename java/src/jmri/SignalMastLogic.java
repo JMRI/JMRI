@@ -33,7 +33,7 @@ public interface SignalMastLogic {
     public int STORENONE = 4;
 
     /**
-     * Query if we are allowing the system to automatically generated a list of
+     * Query if we are allowing the system to automatically generate a list of
      * conflicting Signal Mast that have a direct effect on our logic.
      *
      * @param destination The destination Signal Mast
@@ -72,7 +72,7 @@ public interface SignalMastLogic {
     /**
      * Replace the existing source Signal Mast with another signal mast.
      * This is for use with such tools as the Layout Editor where a
-     * signalmast can at a certain location can be replaced with another,
+     * signal mast in a certain location can be replaced with another,
      * while the remainder of the configuration stays the same.
      *
      * @param oldMast Signal Mast currently configured as the source mast
@@ -83,7 +83,7 @@ public interface SignalMastLogic {
     /**
      * Replace the existing destination Signal Mast with another signal mast.
      * This is for use with such tools as the Layout Editor where a
-     * signalmast at a certain location can be replaced with another,
+     * signalmast in a certain location can be replaced with another,
      * while the remainder of the configuration stays the same.
      *
      * @param oldMast Signal Mast currently configured as the destination mast
@@ -95,7 +95,6 @@ public interface SignalMastLogic {
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
      */
-    @Override
     public void dispose();
 
     /**
@@ -208,31 +207,34 @@ public interface SignalMastLogic {
 
     public SignalMast getSourceMast();
 
-    /**
-     * Return where the signalmast logic should be stored, if so how much.
-     */
-    public int getStoreState(SignalMast destination);
-
     public int getTurnoutState(Turnout turnout, SignalMast destination);
 
     ArrayList<Turnout> getTurnouts(SignalMast destination);
 
     public ArrayList<NamedBeanHandle<Turnout>> getNamedTurnouts(SignalMast destination);
 
+    /**
+     * General method to initialise all SMLs using destList
+     */
     public void initialise();
 
     /**
      * Initialise the signalmast after all the parameters have been set.
+     *
+     * @param destination The destination Signal Mast
      */
     public void initialise(SignalMast destination);
 
     /**
-     * Query if the signalmast logic to the destination signal mast is active.
+     * Query if the Signal Mast Logic from the current source signal mast
+     * to the destination signal mast is active.
+     *
+     * @param dest The destination Signal Mast
      */
     public boolean isActive(SignalMast dest);
 
     /**
-     * Return the active destination Signal Mast for this Signal Mast Logic
+     * Return the active destination Signal Mast for this Signal Mast Logic.
      */
     public SignalMast getActiveDestination();
 
@@ -241,7 +243,10 @@ public interface SignalMastLogic {
     public boolean isDestinationValid(SignalMast dest);
 
     /**
-     * Query if the signalmast logic to the destination signal mast is enabled.
+     * Query if the Signal Mast Logic from the current source signal mast
+     * to the destination signal mast is enabled.
+     *
+     * @param dest The destination Signal Mast
      */
     public boolean isEnabled(SignalMast dest);
 
@@ -255,7 +260,7 @@ public interface SignalMastLogic {
      * Query if we are allowing the system to lock turnouts when the logic goes
      * active.
      *
-     * @param destination Destination Signal Mast
+     * @param destination The destination Signal Mast
      * @return true if locking is allowed.
      */
     public boolean isTurnoutLockAllowed(SignalMast destination);
@@ -263,39 +268,45 @@ public interface SignalMastLogic {
     public void removeConflictingLogic(SignalMast sm, LevelXing lx);
 
     /**
+     * Remove the destination signal mast as a pair in this SML.
      *
-     * @param dest Destination Signal Mast
+     * @param dest The destination Signal Mast
      * @return true if there are no more destination signal masts
      */
     public boolean removeDestination(SignalMast dest);
 
     /**
-     * Set which blocks must be inactive for the signal not to be set to a Stop
-     * aspect. These blocks are not stored in the panel file.
+     * Set which blocks must be in a given state for the signal mast not to be
+     * set to a Stop aspect. These blocks are not stored in the panel file.
      *
-     * @param blocks blocks to be inactive
+     * @param blocks A hashlist of {@link Block}s and their respective set to state
      */
     public void setAutoBlocks(LinkedHashMap<Block, Integer> blocks, SignalMast destination);
 
     /**
-     * Set which masts must be in a given state before our mast can be set.
-     * These masts are not stored in the panel file.
+     * Set which control signal masts must be in a given state before our source mast can be set.
+     * These Signal Masts are not stored in the panel file.
      *
-     * @param masts masts to be checked
+     * @param masts       A list of control signal masts and their respective set to state to be checked
+     * @param destination The destination Signal {@link SignalMast}s
      */
     public void setAutoMasts(Hashtable<SignalMast, String> masts, SignalMast destination);
 
     /**
-     * Set which turnouts must be Thrown for the signal not to be set to a Stop
-     * aspect. These Turnouts are not stored in the panel file.
+     * Set which turnouts must be set to a given state for the signal mast not to be
+     * set to a Stop aspect. These Turnouts are not stored in the panel file.
+     *
+     * @param turnouts    A hashlist of turnouts and their respective set to state
+     * @param destination The destination Signal Mast
      */
     public void setAutoTurnouts(Hashtable<Turnout, Integer> turnouts, SignalMast destination);
 
     /**
-     * Set which blocks must be Inactive for the signal not to be set to a Stop
+     * Set which blocks must be in a given state for the signal mast not to be set to a Stop
      * aspect.
      *
-     * @param blocks List of Blocks and their respective state
+     * @param blocks      A hashlist of Blocks and their respective set to state
+     * @param destination The destination Signal Mast
      */
     public void setBlocks(Hashtable<Block, Integer> blocks, SignalMast destination);
 
@@ -303,44 +314,61 @@ public interface SignalMastLogic {
 
     public void setConflictingLogic(SignalMast sm, LevelXing lx);
 
+    /**
+     * Set the destination signal mast for this SML.
+     *
+     * @param dest The destination Signal Mast
+     */
     public void setDestinationMast(SignalMast dest);
 
     /**
-     * Set the logic to the destination signal mast to disabled.
+     * Set the logic to the destination signal mast to Disabled.
      *
      * @param dest The destination Signal Mast
      */
     public void setDisabled(SignalMast dest);
 
     /**
-     * Set the logic to the destination signal mast to enabled.
+     * Set the logic to the destination signal mast to Enabled.
      */
     public void setEnabled(SignalMast dest);
 
+    /**
+     * Set the block facing our source signal mast.
+     *
+     * @param facing The Layout Block facing the source Signal Mast
+     */
     public void setFacingBlock(LayoutBlock facing);
 
     /**
-     * Set which masts must be in a given state before our mast can be set.
+     * Get the block defined as facing our source signal mast.
      *
-     * @param masts masts to be checked
+     * @return The Layout Block facing the source Signal Mast
+     */
+    public LayoutBlock getFacingBlock();
+
+    /**
+     * Set which control signal masts must be in a given state before our source mast can be set.
+     *
+     * @param masts Hashtable of control signal masts and respective set to states to be checked
      */
     public void setMasts(Hashtable<SignalMast, String> masts, SignalMast destination);
 
     /**
-     * Set which sensors must be in a given state before our mast can be set.
+     * Set which sensors must be in a given state before our source signal mast can be set.
      *
-     * @param sensors     The sensors to be checked
+     * @param sensors     The {@link Sensor}s to be checked
      * @param destination The destination Signal Mast
      */
     public void setSensors(Hashtable<NamedBeanHandle<Sensor>, Integer> sensors, SignalMast destination);
 
     /**
-     * Add an individual sensor and its state to the logic.
+     * Add an individual control sensor and its state to the logic.
      */
     public void addSensor(String sensorName, int state, SignalMast destination);
 
     /**
-     * Remove an individual sensor from the logic.
+     * Remove an individual control sensor from the logic.
      *
      * @param sensorName The sensor to be removed
      * @param destination The destination Signal Mast
@@ -348,7 +376,7 @@ public interface SignalMastLogic {
     public void removeSensor(String sensorName, SignalMast destination);
 
     /**
-     * Use this to determine if the signalmast logic is stored in the panel file
+     * Determine if the signal mast logic is stored in the panel file
      * and if all the information is stored.
      *
      * @param store one of {@link #STOREALL}, {@link #STOREMASTSONLY} or
@@ -358,10 +386,19 @@ public interface SignalMastLogic {
     public void setStore(int store, SignalMast destination);
 
     /**
-     * Set the states that each turnout must be in for signal not to be set to
-     * a Stop aspect.
+     * Return where the signal mast logic should be stored, if so how much.
      *
-     * @param turnouts A list of named turnouts to check for state
+     * @return one of {@link #STOREALL}, {@link #STOREMASTSONLY} or
+     *              {@link #STORENONE}
+     */
+    public int getStoreState(SignalMast destination);
+
+    /**
+     * Set the states that each control turnout must be in for the source
+     * signal mast not to be set to a Stop aspect.
+     *
+     * @param turnouts A list of named turnouts and their respective set to
+     *                 Aspect to check
      */
     public void setTurnouts(Hashtable<NamedBeanHandle<Turnout>, Integer> turnouts, SignalMast destination);
 
@@ -369,12 +406,12 @@ public interface SignalMastLogic {
 
     /**
      * Set whether this logic should use the details stored in the Layout
-     * Editor to determine the which blocks, turnouts will make up the logic
+     * Editor to determine which blocks, turnouts will make up the logic
      * between the source and destination signal mast.
      *
      * @param boo         Use the Layout Editor details to determine logic
      *                    details.
-     * @param destination Destination Signal Mast
+     * @param destination the Destination Signal Mast
      *
      */
     public void useLayoutEditor(boolean boo, SignalMast destination) throws JmriException;
@@ -400,8 +437,8 @@ public interface SignalMastLogic {
     public boolean useLayoutEditorBlocks(SignalMast destination);
 
     /**
-     * Set whether we should use the information from the Layout Editor for
-     * either blocks or turnouts.
+     * Set whether this logic should use the information from the Layout Editor
+     * for either blocks or turnouts.
      *
      * @param turnouts    set false if not to use the turnout information
      *                    gathered from the layouteditor
@@ -428,25 +465,23 @@ public interface SignalMastLogic {
     public void addPropertyChangeListener(java.beans.PropertyChangeListener l);
 
     /**
-     * Get the block facing our source signal mast.
-     */
-    public LayoutBlock getFacingBlock();
-
-    /**
      * Get the block that the source signal is protecting on the path to the
      * destination signal mast.
+     *
+     * @param destination The destination Signal Mast
+     * @return the Layout Block
      */
     public LayoutBlock getProtectingBlock(SignalMast destination);
 
     /**
      * Set the auto turnouts based upon a given list of layout blocks for a
-     * specific destination mast
+     * specific destination mast.
      *
      * @param blks        List of Layout Blocks.
      * @param destination Destination Signal Mast
      * @return A LinkedHashMap of the original blocks and their required state,
      *         plus any blocks found on double cross-overs that also need to be
-     *         un-occupied
+     *         un-occupied.
      */
     public LinkedHashMap<Block, Integer> setupLayoutEditorTurnoutDetails(List<LayoutBlock> blks, SignalMast destination);
 
