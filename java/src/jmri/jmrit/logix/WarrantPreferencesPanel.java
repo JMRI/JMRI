@@ -53,10 +53,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     private ArrayList<DataPair<String, Integer>> _stepIncrementMap;
 
     public WarrantPreferencesPanel() {
-        //  set local prefs to match instance prefs
-        //preferences.apply(WiThrottleManager.withrottlePreferencesInstance());
         initGUI();
-        setGUI();
     }
 
     private void initGUI() {
@@ -81,11 +78,6 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         panel.add(leftPanel);
         panel.add(rightPanel);
         add(panel);
-        add(applyPanel());
-    }
-
-    private void setGUI() {
-        WarrantPreferences.getDefault().apply();
     }
 
     private JPanel layoutScalePanel() {
@@ -233,11 +225,11 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
                 javax.swing.border.TitledBorder.TOP));
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
-        _speedNameMap = new ArrayList<DataPair<String, Float>>();
+        _speedNameMap = new ArrayList<>();
         Iterator<Entry<String, Float>> it = WarrantPreferences.getDefault().getSpeedNameEntryIterator();
         while (it.hasNext()) {
             Entry<String, Float> ent = it.next();
-            _speedNameMap.add(new DataPair<String, Float>(ent.getKey(), ent.getValue()));
+            _speedNameMap.add(new DataPair<>(ent.getKey(), ent.getValue()));
         }
         _speedNameModel = new SpeedNameTableModel();
         _speedNameTable = new JTable(_speedNameModel);
@@ -269,11 +261,11 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
                 javax.swing.border.TitledBorder.TOP));
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
-        _appearanceMap = new ArrayList<DataPair<String, String>>();
+        _appearanceMap = new ArrayList<>();
         Iterator<Entry<String, String>> it = WarrantPreferences.getDefault().getAppearanceEntryIterator();
         while (it.hasNext()) {
             Entry<String, String> ent = it.next();
-            _appearanceMap.add(new DataPair<String, String>(ent.getKey(), ent.getValue()));
+            _appearanceMap.add(new DataPair<>(ent.getKey(), ent.getValue()));
         }
         _appearanceModel = new AppearanceTableModel();
         _appearanceTable = new JTable(_appearanceModel);
@@ -547,23 +539,6 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         }
     }
 
-    private JPanel applyPanel() {
-        JPanel panel = new JPanel();
-        JButton applyB = new JButton(Bundle.getMessage("ButtonApply"));
-        applyB.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                setValues();
-                if (_isDirty) {
-                    WarrantPreferences.getDefault().apply();
-                }
-            }
-        });
-        panel.add(new JLabel(Bundle.getMessage("LabelApplyWarning")));
-        panel.add(applyB);
-        return panel;
-    }
-
     @Override
     public String getPreferencesItem() {
         return "WARRANTS"; // NOI18N
@@ -624,7 +599,14 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         return true; // no validity checking performed
     }
 
-    static class DataPair<K, V> {
+    /**
+     * Retain the key/value pair of a Map or Dictionary as a pair.
+     * 
+     * @param <K> key class
+     * @param <V> value class
+     */
+    // Can uses of DataPair be replaced with used of Map.Entry or AbstractMap.SimpleEntry?
+    static class DataPair<K, V> implements Entry<K, V> {
 
         K key;
         V value;
@@ -634,7 +616,13 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             value = v;
         }
 
-        K getKey() {
+        DataPair(Entry<K, V> entry) {
+            this.key = entry.getKey();
+            this.value = entry.getValue();
+        }
+        
+        @Override
+        public K getKey() {
             return key;
         }
 
@@ -642,13 +630,17 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             key = k;
         }
 
-        V getValue() {
+        @Override
+        public V getValue() {
             return value;
         }
 
-        void setValue(V v) {
+        @Override
+        public V setValue(V v) {
             value = v;
+            return value;
         }
+
     }
 
     /* *********************** SpeedName Table ******************************/

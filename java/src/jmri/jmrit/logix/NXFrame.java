@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Box;
@@ -72,6 +74,7 @@ public class NXFrame extends WarrantRoute {
     protected JPanel _controlPanel;
     private JPanel _autoRunPanel;
     private JPanel _manualPanel;
+    private PropertyChangeListener preferencesListener;
 
     /**
      * Get the default instance of the NXFrame.
@@ -113,6 +116,32 @@ public class NXFrame extends WarrantRoute {
 
     public void init() {
         makeMenus();
+        this.preferencesListener = (PropertyChangeEvent evt) -> {
+            WarrantPreferences preferences = (WarrantPreferences) evt.getSource();
+            switch (evt.getPropertyName()) {
+                case WarrantPreferences.LAYOUT_SCALE:
+                    NXFrame.this.setScale(preferences.getLayoutScale());
+                    break;
+                case WarrantPreferences.SEARCH_DEPTH:
+                    NXFrame.this.setDepth(preferences.getSearchDepth());
+                    break;
+                case WarrantPreferences.TIME_INCREMENT:
+                    NXFrame.this.setTimeInterval(preferences.getTimeIncrement());
+                    break;
+                case WarrantPreferences.RAMP_INCREMENT:
+                    NXFrame.this.setThrottleIncrement(preferences.getThrottleIncrement());
+                    break;
+                case WarrantPreferences.THROTTLE_SCALE:
+                    NXFrame.this.setThrottleFactor(preferences.getThrottleScale());
+                    break;
+                case WarrantPreferences.INTERPRETATION:
+                    NXFrame.this.updatePanel(preferences.getInterpretation());
+                    break;
+                default:
+                    // ignore other properties
+            }
+        };
+        WarrantPreferences.getDefault().addPropertyChangeListener(this.preferencesListener);
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout(10, 10));
         _controlPanel = new JPanel();
@@ -957,6 +986,12 @@ public class NXFrame extends WarrantRoute {
      */
     public void setThrottleFactor(float factor) {
         this._throttleFactor = factor;
+    }
+
+    @Override
+    public void dispose() {
+        WarrantPreferences.getDefault().removePropertyChangeListener(this.preferencesListener);
+        super.dispose();
     }
 
     private final static Logger log = LoggerFactory.getLogger(NXFrame.class.getName());
