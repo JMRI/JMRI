@@ -1,6 +1,7 @@
 package jmri.implementation;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javax.annotation.CheckReturnValue;
 import java.util.ArrayList;
 import jmri.Light;
 
@@ -71,6 +72,21 @@ public abstract class AbstractLight extends AbstractNamedBean
     protected boolean mEnabled = true;
     protected double mCurrentIntensity = 0.0;
     protected int mState = OFF;
+
+    @Override
+    @CheckReturnValue
+    public String getStateString() {
+        switch (getState()) {
+            case ON: return Bundle.getMessage("LightStateOn");
+            case OFF: return Bundle.getMessage("LightStateOff");
+            case INTERMEDIATE: return Bundle.getMessage("LightStateIntermediate");
+            case TRANSITIONINGTOFULLON: return Bundle.getMessage("LightStateTransitioningToFullOn");
+            case TRANSITIONINGHIGHER: return Bundle.getMessage("LightStateTransitioningHigher");
+            case TRANSITIONINGLOWER: return Bundle.getMessage("LightStateTransitioningLower");
+            case TRANSITIONINGTOFULLOFF: return Bundle.getMessage("LightStateTransitioningToFullOff");
+            default: return super.getStateString();
+        }
+    }
 
     /**
      * Get enabled status

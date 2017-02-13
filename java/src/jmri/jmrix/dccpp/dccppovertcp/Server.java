@@ -14,7 +14,6 @@ import jmri.InstanceManager;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmrix.dccpp.DCCppConstants;
 import jmri.util.FileUtil;
-import jmri.util.SocketUtil;
 import jmri.util.zeroconf.ZeroConfService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -223,10 +222,10 @@ public class Server {
             String remoteAddress;
             try {
                 serverSocket = new ServerSocket(getPortNumber());
-                SocketUtil.setReuseAddress(serverSocket, true);
+                serverSocket.setReuseAddress(true);
                 while (!socketListener.isInterrupted()) {
                     newClientConnection = serverSocket.accept();
-                    remoteAddress = SocketUtil.getRemoteSocketAddress(newClientConnection);
+                    remoteAddress = newClientConnection.getRemoteSocketAddress().toString();
                     log.info("Server: Connection from: " + remoteAddress);
                     addClient(new ClientRxHandler(remoteAddress, newClientConnection));
                 }

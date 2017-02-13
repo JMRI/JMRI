@@ -185,7 +185,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         panel.add(new JLabel("status"));
         _status.addMouseListener(this);
         _status.setBackground(Color.white);
-        _status.setFont(jmri.util.FontUtil.deriveFont(_status.getFont(), java.awt.Font.BOLD));
+        _status.setFont(_status.getFont().deriveFont(Font.BOLD));
         _status.setEditable(false);
         setStatusText(BLANK.substring(0, 90), null, false);
         panel.add(_status);

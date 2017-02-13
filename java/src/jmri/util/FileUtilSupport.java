@@ -986,21 +986,26 @@ public class FileUtilSupport extends Bean {
                     jarPath = jarPath.substring(9, jarPath.lastIndexOf("!"));
                 } else {
                     log.info("Running from classes not in jar file.");
+                    jarPath = ""; // set to empty String to bypass search
                     return null;
                 }
                 log.debug("jmri.jar path is {}", jarPath);
             }
             if (jarPath == null) {
                 log.error("Unable to locate jmri.jar");
+                jarPath = ""; // set to empty String to bypass search
                 return null;
             }
         }
-        try {
-            return new JarFile(jarPath);
-        } catch (IOException ex) {
-            log.error("Unable to open jmri.jar", ex);
-            return null;
+        if (!jarPath.isEmpty()) {
+            try {
+                return new JarFile(jarPath);
+            } catch (IOException ex) {
+                log.error("Unable to open jmri.jar", ex);
+                return null;
+            }
         }
+        return null;
     }
 
     /**

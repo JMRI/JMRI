@@ -62,7 +62,7 @@
                                     <goal>run</goal>
                                 </goals>
                             </execution>
-                        </executions>  
+                        </executions>
                     </plugin>
                     <!-- use surefire (maven default test harness) only for line endings -->
                     <plugin>
@@ -103,7 +103,7 @@
                                     <goal>run</goal>
                                 </goals>
                             </execution>
-                        </executions>  
+                        </executions>
                     </plugin>
                     <!-- use surefire (maven default test harness) only for line endings -->
                     <plugin>
@@ -181,7 +181,7 @@
                                     <goal>run</goal>
                                 </goals>
                             </execution>
-                        </executions>  
+                        </executions>
                     </plugin>
                     <!-- use surefire (maven default test harness) only for line endings -->
                     <plugin>
@@ -234,7 +234,7 @@
             </build>
         </profile>
     </profiles>
-    
+
     <build>
         <sourceDirectory>${basedir}/java/src</sourceDirectory>
         <testSourceDirectory>${basedir}/java/test</testSourceDirectory>
@@ -273,7 +273,7 @@
             <filter>${basedir}/release.properties</filter>
             <filter>${project.build.directory}/generated/build-metadata/build.properties</filter>
         </filters>
-                    
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -295,7 +295,7 @@
                             <goal>run</goal>
                         </goals>
                     </execution>
-                </executions>  
+                </executions>
                 -->
                 <dependencies>
                     <!-- use the version of ant we specify -->
@@ -315,7 +315,7 @@
                         <artifactId>ant-junit</artifactId>
                         <version>${ant.version}</version>
                     </dependency>
-                </dependencies>          
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -339,7 +339,7 @@
                             <goal>jjtree-javacc</goal>
                         </goals>
                     </execution>
-                </executions>            
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -352,7 +352,7 @@
                     <threshold>High</threshold>
                     <maxHeap>1536</maxHeap>
                     <timeout>1200000</timeout><!-- 20 minutes -->
-                </configuration>            
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -362,8 +362,6 @@
                     <excludes>
                         <!-- ignore until #2601 is resolved -->
                         <exclude>jmri.jmrit.decoderdefn.DuplicateTest</exclude>
-                        <!-- ignore until #2671 is resolved -->
-                        <exclude>jmri.jmrix.roco.z21.simulator.Z21SimulatorAdapterTest</exclude>
                         <!-- ignore to avoid duplicate test runs -->
                         <exclude>apps.tests.AllTest</exclude>
                         <exclude>jmri.HeadLessTest</exclude>
@@ -414,7 +412,7 @@
                         <goals>
                             <goal>create-metadata</goal>
                         </goals>
-                    </execution>                
+                    </execution>
                 </executions>
                 <configuration>
                     <shortRevisionLength>8</shortRevisionLength>
@@ -427,7 +425,7 @@
                     <!-- want true to generate distibutions -->
                     <doUpdate>false</doUpdate>
                 </configuration>
-            </plugin>        
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
@@ -489,7 +487,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>        
+            </plugin>
             -->
         </plugins>
     </build>
@@ -522,17 +520,17 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j.version}</version>
-        </dependency>        
+        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jul-to-slf4j</artifactId>
             <version>${slf4j.version}</version>
-        </dependency>        
+        </dependency>
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>javax.mail-api</artifactId>
             <version>1.5.4</version>
-        </dependency>        
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -724,7 +722,7 @@
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>findbugs-annotations</artifactId>
             <version>3.0.1</version>
-        </dependency>    
+        </dependency>
         <dependency>
             <groupId>xerces</groupId>
             <artifactId>xercesImpl</artifactId>
