@@ -487,6 +487,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         return Warrant.RUNNING;
     }
 
+    /**
+     * Calculates the scale speed of the current throttle setting for display
+     * @return text messgae
+     */
     public String getSpeedRestriction() {
         float curSpeed = _throttle.getSpeedSetting();
         String units;
@@ -495,7 +499,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (_speedProfile != null) {
             speed = scale * _speedProfile.getSpeed(curSpeed, _throttle.getIsForward()) / 1000;
         } else {
-            speed = curSpeed * _speedMap.getDefaultThrottleFactor() * 100;
+            speed = curSpeed * _speedMap.getDefaultThrottleFactor() * scale;
         }
 //        speed = speed * jmri.InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
 
@@ -910,6 +914,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (log.isDebugEnabled()) log.debug(msg);
     }
 
+    // todo replace generic factors with factors specific to locomotive
     protected float getDistanceTraveled(float speedSetting, String speedtype, long time) {
         float speed = modifySpeed(speedSetting, speedtype);
         float distance;

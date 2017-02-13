@@ -172,7 +172,7 @@ public class WarrantManagerXml //extends XmlFile
             return;
         }
         Element elem = new Element("nxparams");
-        NXFrame nxFrame = NXFrame.getDefault();
+        NXFrame nxFrame = NXFrame.getInstance();
         Element e = new Element("maxspeed");
         e.addContent(Float.toString(nxFrame.getMaxSpeed()));
         elem.addContent(e);
@@ -194,7 +194,7 @@ public class WarrantManagerXml //extends XmlFile
         }
         
         if (!GraphicsEnvironment.isHeadless()) {
-            NXFrame nxFrame = NXFrame.getDefault();
+            NXFrame nxFrame = NXFrame.getInstance();
             loadNXParams(nxFrame, shared.getChild("nxparams"));
 //            nxFrame.init();   don't make visible
         }
