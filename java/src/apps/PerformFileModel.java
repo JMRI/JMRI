@@ -29,7 +29,7 @@ public class PerformFileModel extends AbstractStartupModel {
 
     @Override
     public void performAction() throws JmriException {
-        log.info("Loading file {}" + this.getFileName());
+        log.info("Loading file {}", this.getFileName());
 
         // load the file
         File file = new File(this.getFileName());

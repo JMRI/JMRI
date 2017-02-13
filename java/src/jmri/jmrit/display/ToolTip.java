@@ -84,7 +84,7 @@ public class ToolTip {
     }
 
     public final void setfontSize(int size) {
-        _tFont = jmri.util.FontUtil.deriveFont(_tFont, size);
+        _tFont = _tFont.deriveFont(size);
     }
 
     public final int getFontSize() {

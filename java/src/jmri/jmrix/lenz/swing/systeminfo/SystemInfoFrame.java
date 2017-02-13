@@ -36,22 +36,22 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         tc = memo.getXNetTrafficController();
         getContentPane().setLayout(new GridLayout(0, 2));
 
-        getContentPane().add(new JLabel("Command Station: "));
+        getContentPane().add(new JLabel(Bundle.getMessage("CommandStationLabel")));
         getContentPane().add(CSType);
 
-        getContentPane().add(new JLabel("Software Version:"));
+        getContentPane().add(new JLabel(Bundle.getMessage("SoftwareVersionLabel")));
         getContentPane().add(CSSoftwareVersion);
 
-        getContentPane().add(new JLabel("Status:"));
+        getContentPane().add(new JLabel(Bundle.getMessage("StatusLabel")));
         getContentPane().add(CSStatus);
 
-        getContentPane().add(new JLabel("Interface: "));
+        getContentPane().add(new JLabel(Bundle.getMessage("InterfaceLabel")));
         getContentPane().add(LIType);
 
-        getContentPane().add(new JLabel("Hardware Version:"));
+        getContentPane().add(new JLabel(Bundle.getMessage("LIHardwareVersionLabel")));
         getContentPane().add(LIHardwareVersion);
 
-        getContentPane().add(new JLabel("Software Version:"));
+        getContentPane().add(new JLabel(Bundle.getMessage("LISoftwareVersionLabel")));
         getContentPane().add(LISoftwareVersion);
 
         getContentPane().add(getSystemInfoButton);
@@ -102,8 +102,8 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
     JLabel LIHardwareVersion = new JLabel("");
     JLabel LISoftwareVersion = new JLabel("");
 
-    JToggleButton getSystemInfoButton = new JToggleButton("Get System Info");
-    JToggleButton closeButton = new JToggleButton("Close");
+    JToggleButton getSystemInfoButton = new JToggleButton(Bundle.getMessage("GetSystemInfoButtonLabel"));
+    JToggleButton closeButton = new JToggleButton(Bundle.getMessage("CloseButtonLabel"));
 
     //Send Information request to LI100/LI101
     void getSystemInfo() {
@@ -192,17 +192,17 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
                 .getCommandStationSoftwareVersion());
         int cs_type = tc.getCommandStation().getCommandStationType();
         if (cs_type == jmri.jmrix.lenz.XNetConstants.CS_TYPE_LZ100) {
-            CSType.setText("LZ100/LZV100");
+            CSType.setText(Bundle.getMessage("CSTypeLZ100"));
         } else if (cs_type == jmri.jmrix.lenz.XNetConstants.CS_TYPE_LH200) {
-            CSType.setText("LH200");
+            CSType.setText(Bundle.getMessage("CSTypeLH200"));
         } else if (cs_type == jmri.jmrix.lenz.XNetConstants.CS_TYPE_COMPACT) {
-            CSType.setText("Compact or Other");
+            CSType.setText(Bundle.getMessage("CSTypeCompact"));
         } else if (cs_type == jmri.jmrix.lenz.XNetConstants.CS_TYPE_MULTIMAUS) {
-            CSType.setText("multiMAUS");
+            CSType.setText(Bundle.getMessage("CSTypeMultiMaus"));
         } else if (cs_type == jmri.jmrix.lenz.XNetConstants.CS_TYPE_Z21) {
-            CSType.setText("Z21");
+            CSType.setText(Bundle.getMessage("CSTypeZ21"));
         } else {
-            CSType.setText("<unknown>");
+            CSType.setText(Bundle.getMessage("CSTypeUNKNOWN"));
         }
     }
 

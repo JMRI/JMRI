@@ -39,10 +39,14 @@ import java.util.ArrayList;
  */
 public interface Conditional extends NamedBean {
 
-    // states 
-    public static final int TRUE = 0x01;
+    // states
+    /**
+     * @deprecated since 4.7.1; use {@link jmri.NamedBean#UNKNOWN} instead
+     */
+    @Deprecated
+    public static final int UNKNOWN = NamedBean.UNKNOWN;
     public static final int FALSE = 0x02;
-    public static final int UNKNOWN = 0x04;
+    public static final int TRUE = 0x04;
 
     // logic operators used in antecedent
     public static final int ALL_AND = 0x01;

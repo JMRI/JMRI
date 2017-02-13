@@ -260,7 +260,7 @@ public class DefaultLogix extends AbstractNamedBean
             Conditional conditional = cm.getBySystemName(_conditionalSystemNames.get(i));
             if (conditional != null) {
                 try {
-                    conditional.setState(Conditional.UNKNOWN);
+                    conditional.setState(NamedBean.UNKNOWN);
                 } catch (JmriException e) {
                     // ignore
                 }
