@@ -221,25 +221,34 @@ public class Llnmon {
     private static String convertToMixed(int addressLow, int addressHigh) {
 
         // if we have a 2 digit decoder address, proceed accordingly
+        String isShortAddress = "";
+        if (addressHigh == 0x7d) {
+            isShortAddress = Bundle.getMessage("LN_MSG_HELPER_IS_SHORT_ADDRESS");
+            addressHigh = 0;
+        }
         if (addressHigh == 0) {
             if (addressLow >= 120) {
-                return String.valueOf(addressLow) + " (c" +     // NOI18N
-                        String.valueOf(addressLow - 120) + ")";    // NOI18N
+                return Bundle.getMessage("LN_MSG_LOCO_ADDRESS_HELPER_MIXED_ADDRESS",
+                        String.valueOf(addressLow), isShortAddress, "(c" +     // NOI18N
+                        String.valueOf(addressLow - 120) + ")");    // NOI18N
             } else if (addressLow >= 110) {
-                return String.valueOf(addressLow) + " (b" +     // NOI18N
-                        String.valueOf(addressLow - 110) + ")";    // NOI18N
+                return Bundle.getMessage("LN_MSG_LOCO_ADDRESS_HELPER_MIXED_ADDRESS",
+                        String.valueOf(addressLow), isShortAddress, "(b" +     // NOI18N
+                        String.valueOf(addressLow - 110) + ")");    // NOI18N
             } else if (addressLow >= 100) {
-                return String.valueOf(addressLow) + " (a" +     // NOI18N
-                        String.valueOf(addressLow - 100) + ")";    // NOI18N
+               return  Bundle.getMessage("LN_MSG_LOCO_ADDRESS_HELPER_MIXED_ADDRESS",
+                        String.valueOf(addressLow), isShortAddress, "(a" +     // NOI18N
+                        String.valueOf(addressLow - 100) + ")");    // NOI18N
             } else {
-                return String.valueOf(addressLow & 0x7f);
+               return  Bundle.getMessage("LN_MSG_LOCO_ADDRESS_HELPER_UNMIXED_ADDRESS",
+                        String.valueOf(addressLow), isShortAddress);
             }
         } else {
             // return the full 4 digit address
             return String.valueOf(LOCO_ADR(addressHigh, addressLow));
         }
     } // end of private static String convertToMixed(int addressLow, int addressHigh)
-
+    
 
     private String trackStatusByteToString(int trackStatusByte) {
         return Bundle.getMessage("LN_MSG_SLOT_HELPER_TRK_STAT",
@@ -490,10 +499,9 @@ public class Llnmon {
              * Page 8 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_LOCO_ADR: {
-                int adrHi = l.getElement(1); // Hi address listed as zero above
-                int adrLo = l.getElement(2); // ADR above, the low part
+                String locoAddress = convertToMixed(l.getElement(2), l.getElement(1));
                 return Bundle.getMessage("LN_MSG_REQ_SLOT_FOR_ADDR",
-                        convertToMixed(adrLo, adrHi));
+                        locoAddress);
             } // case LnConstants.OPC_LOCO_ADR
 
             /*
@@ -518,19 +526,23 @@ public class Llnmon {
              */
             case LnConstants.OPC_SW_ACK: {
                 int sw2 = l.getElement(2);
+                if ((sw2 & 0x40) == 0x40) {
+                    break;
+                }
                 // get system and user names
-                String turnoutSystemName;
-                String turnoutUserName;
+                String turnoutSystemName = "";
+                String turnoutUserName = "";
                 turnoutSystemName = locoNetTurnoutPrefix
                         + SENSOR_ADR(l.getElement(1), l.getElement(2));
 
                 Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
-                String uname = turnout.getUserName();
-                if ((uname != null) && (!uname.isEmpty())) {
-                    turnoutUserName = uname ;
-                } else {
-                    turnoutUserName = "";
+                if (turnout != null) {
+                    String uname = turnout.getUserName();
+                    if ((uname != null) && (!uname.isEmpty())) {
+                        turnoutUserName = uname;
+                    }
                 }
+
                 String pointsDirection = ((sw2 & LnConstants.OPC_SW_ACK_CLOSED) != 0
                         ? Bundle.getMessage("LN_MSG_SW_POS_CLOSED")
                         : Bundle.getMessage("LN_MSG_SW_POS_THROWN"));
@@ -550,6 +562,9 @@ public class Llnmon {
              */
             case LnConstants.OPC_SW_STATE: {
                 // get system and user names
+                if ((l.getElement(2) & 0x70) != 0x00) {
+                    break;
+                }
                 String turnoutSystemName;
                 String turnoutUserName = "";
                 turnoutSystemName = locoNetTurnoutPrefix
@@ -2604,9 +2619,7 @@ public class Llnmon {
                                  * with permission *
                                  * **********************************************************************************
                                  */
-                                String locoAddr = ((l.getElement(3) == 0x7d)
-                                    ? Bundle.getMessage("LN_ADDRESS_HELPER_SHORT", Integer.toString(l.getElement(4)))
-                                    : Bundle.getMessage("LN_ADDRESS_HELPER_LONG", Integer.toString(l.getElement(3) * 128 + l.getElement(4))));
+                                String locoAddr = convertToMixed(l.getElement(4), l.getElement(3));
                                 return Bundle.getMessage("LN_MSG_TRANSP_FIND_QUERY",
                                         locoAddr);
                             }
@@ -2650,9 +2663,7 @@ public class Llnmon {
 
                                 int section = ((l.getElement(5) & 0x1F) << 3) + ((l.getElement(6) & 0x70) >> 4) + 1;
                                 String zone;
-                                String locoAddr = ((l.getElement(3) == 0x7d)
-                                    ? Bundle.getMessage("LN_ADDRESS_HELPER_SHORT", Integer.toString(l.getElement(4)))
-                                    : Bundle.getMessage("LN_ADDRESS_HELPER_LONG", Integer.toString(l.getElement(3) * 128 + l.getElement(4))));
+                                String locoAddr = convertToMixed(l.getElement(4), l.getElement(3));
 
                                 switch (l.getElement(6) & 0x0F) {
                                     case 0x00:
@@ -3103,9 +3114,7 @@ public class Llnmon {
                 }
                 int section = 1 + (l.getElement(2) / 16) + (l.getElement(1) & 0x1F) * 8;
 
-                String locoAddr = ((l.getElement(3) == 0x7d)
-                        ? Bundle.getMessage("LN_ADDRESS_HELPER_SHORT", Integer.toString(l.getElement(4)))
-                        : Bundle.getMessage("LN_ADDRESS_HELPER_LONG", Integer.toString(l.getElement(3) * 128 + l.getElement(4))));
+                String locoAddr = convertToMixed(l.getElement(4), l.getElement(3));
                 String transpActivity = (type == LnConstants.OPC_MULTI_SENSE_PRESENT)
                         ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_PRESENT")
                         : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_ABSENT");
@@ -3911,17 +3920,19 @@ public class Llnmon {
         int sn1 = l.getElement(1);
         int sn2 = l.getElement(2);
         // get system and user names
-        String turnoutSystemName = "";
+        String turnoutSystemName;
         String turnoutUserName = "";
         turnoutSystemName = locoNetTurnoutPrefix
                 + SENSOR_ADR(sn1, sn2);
-
+        
         Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
-        String uname = turnout.getUserName();
-        if ((uname != null) && (!uname.isEmpty())) {
-            turnoutUserName = uname;
-        } else {
-            turnoutUserName = "";
+        if (turnout != null) {
+            String uname = turnout.getUserName();
+            if ((uname != null) && (!uname.isEmpty())) {
+                turnoutUserName = uname;
+            } else {
+                turnoutUserName = "";
+            }
         }
 
         if ((sn2 & LnConstants.OPC_SW_REP_INPUTS) != 0) {
@@ -3947,8 +3958,9 @@ public class Llnmon {
     private String interpretOpcSwReq(LocoNetMessage l) {
         int sw1 = l.getElement(1);
         int sw2 = l.getElement(2);
-
-        String retVal;
+        if ((sw2 & 0x40) == 0x40) {
+            return "";
+        }
 
         if ((!(((sw2 & 0xCF) == 0x0F) && ((sw1 & 0xFC) == 0x78))) &&
                 (!(((sw2 & 0xCF) == 0x07) && ((sw1 & 0xFC) == 0x78)))) {
