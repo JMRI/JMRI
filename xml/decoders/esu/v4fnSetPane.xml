@@ -13,6 +13,7 @@
     <row>
       <display item="ESU V4 Function Settings General Slider 1" layout="above" label=""/>
       <display item="ESU V4 Function Settings General Slider 1" layout="above" format="hslider"/>
+      <display item="ESU V4 Function Settings General Check 1" format="checkbox"/>
     </row>
     <label>
       <text> </text>
@@ -20,6 +21,7 @@
     <row>
       <display item="ESU V4 Function Settings General Slider 2" layout="above" label=""/>
       <display item="ESU V4 Function Settings General Slider 2" layout="above" format="hslider"/>
+      <display item="ESU V4 Function Settings General Check 2" format="checkbox"/>
     </row>
     <label>
       <text> </text>
@@ -27,10 +29,12 @@
     <row>
       <display item="ESU V4 Function Settings General Slider 3" layout="above" label=""/>
       <display item="ESU V4 Function Settings General Slider 3" layout="above" format="hslider"/>
+      <display item="ESU V4 Function Settings General Check 3" format="checkbox"/>
     </row>
     <row>
       <display item="ESU V4 Function Settings General Slider 4" layout="above" label=""/>
       <display item="ESU V4 Function Settings General Slider 4" layout="above" format="hslider"/>
+      <display item="ESU V4 Function Settings General Check 4" format="checkbox"/>
     </row>
     <label>
       <text> </text>
@@ -38,10 +42,12 @@
     <row>
       <display item="ESU V4 Function Settings General Slider 5" layout="above" label=""/>
       <display item="ESU V4 Function Settings General Slider 5" layout="above" format="hslider"/>
+      <display item="ESU V4 Function Settings General Check 5" format="checkbox"/>
     </row>
     <row>
       <display item="ESU V4 Function Settings General Slider 6" layout="above" label=""/>
       <display item="ESU V4 Function Settings General Slider 6" layout="above" format="hslider"/>
+      <display item="ESU V4 Function Settings General Check 6" format="checkbox"/>
     </row>
     <label>
       <text> </text>

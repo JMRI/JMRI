@@ -172,6 +172,9 @@ public class XNetReplyTest {
         // not a service mode response.
         r = new XNetReply("01 04 05");
         Assert.assertFalse(r.isServiceModeResponse());
+        // Command Station Version reply
+        r = new XNetReply("63 21 36 00 55");
+        Assert.assertFalse(r.isServiceModeResponse());
     }
  
    @Test
@@ -309,11 +312,18 @@ public class XNetReplyTest {
         r = new XNetReply("42 05 24 63");
         Assert.assertEquals("Turnout Message Address", 21, r.getTurnoutMsgAddr() );
 
+        // turnout 21 with feedback 
+        r = new XNetReply("42 05 22 65");
+        Assert.assertEquals("Turnout Message Address", 21, r.getTurnoutMsgAddr() );
+
         // feedback message for turnout 21 or 22,but neither 21 or 22 operated.
         r = new XNetReply("42 05 00 47");
         Assert.assertEquals("Turnout Message Address", 21, r.getTurnoutMsgAddr());
-        // feedback message for turnout 23
+        // feedback message for turnout 24, returns 23.
         r = new XNetReply("42 05 14 53");
+        Assert.assertEquals("Turnout Message Address", 23, r.getTurnoutMsgAddr());
+        // feedback message for turnout 23
+        r = new XNetReply("42 05 11 53");
         Assert.assertEquals("Turnout Message Address", 23, r.getTurnoutMsgAddr());
         // feedback message for turnout 23 or 24,but neither 23 or 24 operated.
         r = new XNetReply("42 05 10 53");
@@ -361,6 +371,10 @@ public class XNetReplyTest {
         r = new XNetReply("42 05 18 53");
         Assert.assertEquals("Broadcast Turnout Message Address", 23, r.getTurnoutMsgAddr(1));
 
+        // feedback message for turnout 23
+        r = new XNetReply("42 05 11 53");
+        Assert.assertEquals("Turnout Message Address", 23, r.getTurnoutMsgAddr(1));
+
         // feedback message for turnout 23 or 24, but neither 23 or 24 operated.
         r = new XNetReply("42 05 10 53");
         Assert.assertEquals("Broadcast Turnout Message Address", 23, r.getTurnoutMsgAddr(1));
@@ -371,7 +385,7 @@ public class XNetReplyTest {
 
         // feedback message for a non-feedback message, should return -1.
         r = new XNetReply("63 10 01 04 76");
-        Assert.assertEquals("Broadcast Turnout Message Address for Feedback Other message", -1, r.getTurnoutMsgAddr() );
+        Assert.assertEquals("Broadcast Turnout Message Address for Feedback Other message", -1, r.getTurnoutMsgAddr(1) );
     }
 
     // getting the feedback message type (turnout without feedback, 
@@ -406,7 +420,7 @@ public class XNetReplyTest {
 
     // getting the status from a turnout feedback response
     @Test
-    public void testGetTurnoutMmessageStatus() {
+    public void testGetTurnoutMessageStatus() {
         // feedback message for turnout 22, closed
         XNetReply r = new XNetReply("42 05 04 43");
         Assert.assertEquals("Turnout Status", jmri.Turnout.CLOSED, r.getTurnoutStatus(0));
@@ -414,8 +428,8 @@ public class XNetReplyTest {
         r = new XNetReply("42 05 08 4F");
         Assert.assertEquals("Turnout Status", jmri.Turnout.THROWN, r.getTurnoutStatus(0));
 
-	// ask for address 21
-	Assert.assertEquals("Turnout Status", -1 , r.getTurnoutStatus(1));
+	    // ask for address 21
+	    Assert.assertEquals("Turnout Status", -1 , r.getTurnoutStatus(1));
         // feedback message for turnout 22, with invalid state.
         r = new XNetReply("42 05 0C 45");
         Assert.assertEquals("Turnout Status", -1 , r.getTurnoutStatus(0));
@@ -426,13 +440,19 @@ public class XNetReplyTest {
         // feedback message for turnout 21, thrown
         r = new XNetReply("42 05 02 45");
         Assert.assertEquals("Turnout Status", jmri.Turnout.THROWN, r.getTurnoutStatus(1));
-	// ask for address 22.
-	Assert.assertEquals("Turnout Status", -1 , r.getTurnoutStatus(0));
-	// send invalid value for parameter (only 0 and 1 are valid).
-	Assert.assertEquals("Turnout Status", -1 , r.getTurnoutStatus(3));
+	    // ask for address 22.
+	    Assert.assertEquals("Turnout Status", -1 , r.getTurnoutStatus(0));
+	    // send invalid value for parameter (only 0 and 1 are valid).
+	    Assert.assertEquals("Turnout Status", -1 , r.getTurnoutStatus(3));
         // feedback message for turnout 21, with invalid state.
         r = new XNetReply("42 05 03 47");
         Assert.assertEquals("Turnout Status", -1 , r.getTurnoutStatus(1));
+        // turnout status for a feedback message.
+        r = new XNetReply("42 05 48 0F");
+        Assert.assertEquals("Feedback Message Turnout Status", -1, r.getTurnoutStatus(1) );
+        // feedback message for a non-feedback message, should return -1.
+        r = new XNetReply("63 10 01 04 76");
+        Assert.assertEquals("Turnout Message Status for a non-FeedbackMessage", -1, r.getTurnoutStatus(1) );
     }
 
     // getting the status from a turnout broadcast feedback response
@@ -445,8 +465,8 @@ public class XNetReplyTest {
         r = new XNetReply("42 05 08 4F");
         Assert.assertEquals("Broadcast Turnout Status", jmri.Turnout.THROWN, r.getTurnoutStatus(1,0));
 
-	// ask for address 21
-	Assert.assertEquals("Broadcast Turnout Status", -1 , r.getTurnoutStatus(1,1));
+	    // ask for address 21
+	    Assert.assertEquals("Broadcast Turnout Status", -1 , r.getTurnoutStatus(1,1));
         // feedback message for turnout 22, with invalid state.
         r = new XNetReply("42 05 0C 45");
         Assert.assertEquals("Broadcast Turnout Status", -1 , r.getTurnoutStatus(1,0));
@@ -456,13 +476,19 @@ public class XNetReplyTest {
         // feedback message for turnout 21, thrown
         r = new XNetReply("42 05 02 45");
         Assert.assertEquals("Broadcast Turnout Status", jmri.Turnout.THROWN, r.getTurnoutStatus(1,1));
-	// ask for address 22.
-	Assert.assertEquals("Broadcast Turnout Status", -1 , r.getTurnoutStatus(1,0));
-	// send invalid value for parameter (only 0 and 1 are valid).
-	Assert.assertEquals("Broadcast Turnout Status", -1 , r.getTurnoutStatus(1,3));
+	    // ask for address 22.
+	    Assert.assertEquals("Broadcast Turnout Status", -1 , r.getTurnoutStatus(1,0));
+	    // send invalid value for parameter (only 0 and 1 are valid).
+	    Assert.assertEquals("Broadcast Turnout Status", -1 , r.getTurnoutStatus(1,3));
         // feedback message for turnout 21, with invalid state.
         r = new XNetReply("42 05 03 47");
         Assert.assertEquals("Broadcast Turnout Status", -1 , r.getTurnoutStatus(1,1));
+        // turnout status for a feedback message.
+        r = new XNetReply("42 05 48 0F");
+        Assert.assertEquals("Broadcast Feedback Message Turnout Status", -1, r.getTurnoutStatus(1,1) );
+        // feedback message for a non-feedback message, should return -1.
+        r = new XNetReply("63 10 01 04 76");
+        Assert.assertEquals("Broadcast Turnout Message Status for a non-FeedbackMessage", -1, r.getTurnoutStatus(1,1) );
     }
 
     // getting the address from a feedback encoder response
@@ -580,12 +606,20 @@ public class XNetReplyTest {
     public void testToMonitorStringNormalLocoInfoResponse() {
         XNetReply r= new XNetReply("E4 04 00 04 00 E4");
         Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit Direction Reverse,128 Speed Step Mode,Speed Step 0.  Address is Free for Operation. F0 off F1 off F2 off F3 on F4 off F5 off F6 off F7 off F8 off F9 off F10 off F11 off F12 off ",r.toMonitorString());
+        r= new XNetReply("E4 04 04 04 00 E0");
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit Direction Reverse,128 Speed Step Mode,Speed Step 3.  Address is Free for Operation. F0 off F1 off F2 off F3 on F4 off F5 off F6 off F7 off F8 off F9 off F10 off F11 off F12 off ",r.toMonitorString());
         r= new XNetReply("E4 0A 00 04 00 EA");
         Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit Direction Reverse,28 Speed Step Mode,Speed Step 0.  Address in use by another device. F0 off F1 off F2 off F3 on F4 off F5 off F6 off F7 off F8 off F9 off F10 off F11 off F12 off ",r.toMonitorString());
+        r= new XNetReply("E4 0A 0A 04 00 E0");
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit Direction Reverse,28 Speed Step Mode,Speed Step 17.  Address in use by another device. F0 off F1 off F2 off F3 on F4 off F5 off F6 off F7 off F8 off F9 off F10 off F11 off F12 off ",r.toMonitorString());
         r= new XNetReply("E4 01 00 1F FF F5");
         Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit Direction Reverse,27 Speed Step Mode,Speed Step 0.  Address is Free for Operation. F0 on F1 on F2 on F3 on F4 on F5 on F6 on F7 on F8 on F9 on F10 on F11 on F12 on ",r.toMonitorString());
+        r= new XNetReply("E4 01 05 1F FF F0");
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit Direction Reverse,27 Speed Step Mode,Speed Step 7.  Address is Free for Operation. F0 on F1 on F2 on F3 on F4 on F5 on F6 on F7 on F8 on F9 on F10 on F11 on F12 on ",r.toMonitorString());
         r= new XNetReply("E4 00 00 00 00 E4");
         Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit Direction Reverse,14 Speed Step Mode,Speed Step 0.  Address is Free for Operation. F0 off F1 off F2 off F3 off F4 off F5 off F6 off F7 off F8 off F9 off F10 off F11 off F12 off ",r.toMonitorString());
+        r= new XNetReply("E4 00 04 00 00 E0");
+        Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit Direction Reverse,14 Speed Step Mode,Speed Step 3.  Address is Free for Operation. F0 off F1 off F2 off F3 off F4 off F5 off F6 off F7 off F8 off F9 off F10 off F11 off F12 off ",r.toMonitorString());
     }
  
     @Test
@@ -746,6 +780,20 @@ public class XNetReplyTest {
         // CV 1 in register mode.
         r = new XNetReply("63 10 01 04 76");
         Assert.assertFalse(r.isTimeSlotRestored());
+    }
+
+   // check is this an Timeslot Revoked message
+    @Test
+    public void testIsTimeSlotRevokedMessage() {
+        // Timeslot restored message
+        XNetReply r = new XNetReply("01 05 04");
+        Assert.assertTrue(r.isTimeSlotRevoked());
+        // Error message
+        r = new XNetReply("01 01 00");
+        Assert.assertFalse(r.isTimeSlotRevoked());
+        // CV 1 in register mode.
+        r = new XNetReply("63 10 01 04 76");
+        Assert.assertFalse(r.isTimeSlotRevoked());
     }
  
     // check is this a CS Busy message
@@ -1089,7 +1137,7 @@ public class XNetReplyTest {
     @Test
     public void testToMonitorStringCSStatusReply(){
         XNetReply r = new XNetReply("62 22 00 40");
-        Assert.assertEquals("Monitor String","Command Station Status: Manual power-up Mode",r.toMonitorString());
+        Assert.assertEquals("Monitor String","Command Station Status: Manual power-up Mode ",r.toMonitorString());
         r = new XNetReply("62 22 FF BF");
         Assert.assertEquals("Monitor String","Command Station Status: Emergency Off Emergency Stop Service Mode Powering up Auto power-up Mode RAM check error!",r.toMonitorString());
     }
@@ -1148,6 +1196,56 @@ public class XNetReplyTest {
     public void testToMonitorStringSearchResponseFail(){
         XNetReply r = new XNetReply("E3 34 C1 04 15");
         Assert.assertEquals("Monitor String","Locomotive Information Response: Search Response, Search failed for: 260",r.toMonitorString());
+    }
+
+    // the following are invalid by the XPressNet Standard, but we want to
+    // to make sure the code prints out the message contents.
+    @Test
+    public void testToMonitorStringInvalidLIMessage(){
+        XNetReply r = new XNetReply("01 FF FE");
+        Assert.assertEquals("Monitor String","01 FF FE",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringInvalidLI101Message(){
+        XNetReply r = new XNetReply("F2 FF FF F2");
+        Assert.assertEquals("Monitor String","F2 FF FF F2",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringInvalidCSInfoMessage(){
+        XNetReply r = new XNetReply("61 FF 9E");
+        Assert.assertEquals("Monitor String","61 FF 9E",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringInvalidCSEStopMessage(){
+        XNetReply r = new XNetReply("81 FF 7E");
+        Assert.assertEquals("Monitor String","81 FF 7E",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringInvalidServiceModeReply(){
+        XNetReply r = new XNetReply("63 FF FF 00 63");
+        Assert.assertEquals("Monitor String","63 FF FF 00 63",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringInvalidCSStatusReply(){
+        XNetReply r = new XNetReply("62 FF FF 62");
+        Assert.assertEquals("Monitor String","62 FF FF 62",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringInvalidLocoInfoReply(){
+        XNetReply r = new XNetReply("E3 FF FF 00 E3");
+        Assert.assertEquals("Monitor String","E3 FF FF 00 E3",r.toMonitorString());
+    }
+
+    @Test
+    public void testToMonitorStringInvalidFeedbackReply(){
+        XNetReply r = new XNetReply("42 FF FF 42");
+        Assert.assertEquals("Monitor String","Feedback Response:255 255",r.toMonitorString());
     }
 
     // The minimal setup for log4J

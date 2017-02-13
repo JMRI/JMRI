@@ -53,7 +53,7 @@
       This script has been superceded by the "Lock" capability in
       JMRI 1.9.3 and later. You can directly request that JMRI
       lock/unlock a turnout via the Turnout Table, Routes and
-      Logi</p>
+      Logix</p>
 
       <p><a href=
       "../../../../../jython/AddButton.py">AddButton.py</a></p>
