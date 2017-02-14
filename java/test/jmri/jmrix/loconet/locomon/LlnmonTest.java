@@ -879,9 +879,56 @@ public class LlnmonTest extends TestCase {
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xDF, 0x30, 0x01, 0x05, 0x00, 0x00});
-        assertEquals(" Tetherless Query/Reply test 10",
+        assertEquals(" Tetherless Query/Reply test 11",
                 "Unable to parse LocoNet message.\ncontents: DF 30 01 05 00 00\n",
                 f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xD7, 0x17, 0x00, 0x00, 0x00, 0x3F});
+        assertEquals(" Tetherless Query/Reply test 12",
+                "UR90 Responding with LocoNet ID 0.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xD7, 0x17, 0x00, 0x01, 0x00, 0x3F});
+        assertEquals(" Tetherless Query/Reply test 13",
+                "UR90 Responding with LocoNet ID 1.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xD7, 0x17, 0x00, 0x02, 0x00, 0x3F});
+        assertEquals(" Tetherless Query/Reply test 14",
+                "UR90 Responding with LocoNet ID 2.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xD7, 0x17, 0x00, 0x03, 0x00, 0x3F});
+        assertEquals(" Tetherless Query/Reply test 15",
+                "UR90 Responding with LocoNet ID 3.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xD7, 0x17, 0x00, 0x04, 0x00, 0x3F});
+        assertEquals(" Tetherless Query/Reply test 16",
+                "UR90 Responding with LocoNet ID 4.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xD7, 0x17, 0x00, 0x05, 0x00, 0x3F});
+        assertEquals(" Tetherless Query/Reply test 17",
+                "UR90 Responding with LocoNet ID 5.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xD7, 0x17, 0x00, 0x06, 0x00, 0x3F});
+        assertEquals(" Tetherless Query/Reply test 18",
+                "UR90 Responding with LocoNet ID 6.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xD7, 0x17, 0x00, 0x07, 0x00, 0x3F});
+        assertEquals(" Tetherless Query/Reply test 19",
+                "UR90 Responding with LocoNet ID 7.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xDF, 0x40, 0x00, 0x00, 0x00, 0x60});
+        assertEquals(" Tetherless Query/Reply test 20", 
+                "Unable to parse LocoNet message.\ncontents: DF 40 00 00 00 60\n",
+                f.displayMessage(l));
+        
+
     }
 
     public void testBasicPM42Events() {
@@ -1318,32 +1365,32 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xA1, 0x55, 0x04, 0x49});
         assertEquals(" Slot test 37",
-                "Set loco in slot 85 direction to Forward F0=Off F1=Off F2=Off F3=On F4=Off.\n",
+                "Set loco in slot 85 direction Forward F0=Off F1=Off F2=Off F3=On F4=Off.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xA1, 0x13, 0x05, 0x1B});
         assertEquals(" Slot test 38",
-                "Set loco in slot 19 direction to Forward F0=Off F1=On F2=Off F3=On F4=Off.\n",
+                "Set loco in slot 19 direction Forward F0=Off F1=On F2=Off F3=On F4=Off.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xA1, 0x77, 0x10, 0x3B});
         assertEquals(" Slot test 39",
-                "Set loco in slot 119 direction to Forward F0=On F1=Off F2=Off F3=Off F4=Off.\n",
+                "Set loco in slot 119 direction Forward F0=On F1=Off F2=Off F3=Off F4=Off.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xA1, 0x01, 0x10, 0x3B});
         assertEquals(" Slot test 40",
-                "Set loco in slot 1 direction to Forward F0=On F1=Off F2=Off F3=Off F4=Off.\n",
+                "Set loco in slot 1 direction Forward F0=On F1=Off F2=Off F3=Off F4=Off.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xA1, 0x02, 0x36, 0x3B});
         assertEquals(" Slot test 41",
-                "Set loco in slot 2 direction to Reverse F0=On F1=Off F2=On F3=On F4=Off.\n",
+                "Set loco in slot 2 direction Reverse F0=On F1=Off F2=On F3=On F4=Off.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xA1, 0x38, 0x18, 0x7e});
         assertEquals(" Slot test 42",
-                "Set loco in slot 56 direction to Forward F0=On F1=Off F2=Off F3=Off F4=On.\n",
+                "Set loco in slot 56 direction Forward F0=On F1=Off F2=Off F3=Off F4=On.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xA2, 0x55, 0x00, 0x08});
@@ -1373,12 +1420,12 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xb6, 0x2F, 0x2C, 0x4A});
         assertEquals(" Slot test 48",
-                "Set consist in slot 47 direction to Reverse F0=Off F1=Off F2=Off F3=On F4=On.\n",
+                "Set consist in slot 47 direction Reverse F0=Off F1=Off F2=Off F3=On F4=On.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xb6, 0x2F, 0x2D, 0x4A});
         assertEquals(" Slot test 49",
-                "Set consist in slot 47 direction to Reverse F0=Off F1=On F2=Off F3=On F4=On.\n",
+                "Set consist in slot 47 direction Reverse F0=Off F1=On F2=Off F3=On F4=On.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x10, 0x40, 0x00, 0x08, 0x0D, 0x03, 0x08, 0x00, 0x78, 0x0F, 0x40});
@@ -1536,6 +1583,185 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xBF, 0x00, 0x70, 0x40} );
         assertEquals(" Slot test 80", "Request slot for loco address 112 (b2).\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xA2, 0x25, 0x07, 0x7E});
+        assertEquals(" Slot test 81",
+                "Set loco in slot 37 Sound1/F5=On Sound2/F6=On Sound3/F7=On Sound4/F8=Off.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xBA, 0x04, 0x79, 0x38});
+        assertEquals(" Slot test 82", 
+                "Unable to parse LocoNet message.\ncontents: BA 04 79 38\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xBA, 0x04, 0x7A, 0x3b});
+        assertEquals(" Slot test 83", 
+                "Unable to parse LocoNet message.\ncontents: BA 04 7A 3B\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xBA, 0x04, 0x7b, 0x3a});
+        assertEquals(" Slot test 84", 
+                "Unable to parse LocoNet message.\ncontents: BA 04 7B 3A\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xBA, 0x04, 0x7c, 0x3d});
+        assertEquals(" Slot test 85", 
+                "Unable to parse LocoNet message.\ncontents: BA 04 7C 3D\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xBA, 0x04, 0x7d, 0x3c});
+        assertEquals(" Slot test 86", 
+                "Unable to parse LocoNet message.\ncontents: BA 04 7D 3C\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xBA, 0x04, 0x7e, 0x3f});
+        assertEquals(" Slot test 87", 
+                "Unable to parse LocoNet message.\ncontents: BA 04 7E 3F\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xBA, 0x04, 0x7f, 0x3e});
+        assertEquals(" Slot test 87", 
+                "Unable to parse LocoNet message.\ncontents: BA 04 7F 3E\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7B, 0x04, 0x07, 0x7A, 0x65, 0x00, 0x6E, 0x20, 0x00, 0x00, 0x00, 0x38});
+        assertEquals(" Slot test 88", "Response Fast Clock is Synchronized, Running, rate is 4:1. Day 32, 06:34. Last set by ID 0x00 0x00 (0).\n"
+                +"\tMaster supports DT200; Track Status: Off/Paused; Programming Track Status: Available.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7B, 0x04, 0x07, 0x7A, 0x65, 0x01, 0x6E, 0x20, 0x00, 0x00, 0x00, 0x38});
+        assertEquals(" Slot test 89", "Response Fast Clock is Synchronized, Running, rate is 4:1. Day 32, 06:34. Last set by ID 0x00 0x00 (0).\n"
+                +"\tMaster supports DT200; Track Status: On/Paused; Programming Track Status: Available.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7B, 0x04, 0x07, 0x7A, 0x65, 0x02, 0x6E, 0x20, 0x00, 0x00, 0x00, 0x38});
+        assertEquals(" Slot test 90", "Response Fast Clock is Synchronized, Running, rate is 4:1. Day 32, 06:34. Last set by ID 0x00 0x00 (0).\n"
+                +"\tMaster supports DT200; Track Status: Off/Running; Programming Track Status: Available.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7B, 0x04, 0x07, 0x7A, 0x65, 0x03, 0x6E, 0x20, 0x00, 0x00, 0x00, 0x38});
+        assertEquals(" Slot test 91", "Response Fast Clock is Synchronized, Running, rate is 4:1. Day 32, 06:34. Last set by ID 0x00 0x00 (0).\n"
+                +"\tMaster supports DT200; Track Status: On/Running; Programming Track Status: Available.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7B, 0x04, 0x07, 0x7A, 0x65, 0x04, 0x6E, 0x20, 0x00, 0x00, 0x00, 0x38});
+        assertEquals(" Slot test 92", "Response Fast Clock is Synchronized, Running, rate is 4:1. Day 32, 06:34. Last set by ID 0x00 0x00 (0).\n"
+                +"\tMaster supports LocoNet 1.1; Track Status: Off/Paused; Programming Track Status: Available.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7B, 0x04, 0x07, 0x7A, 0x65, 0x05, 0x6E, 0x20, 0x00, 0x00, 0x00, 0x38});
+        assertEquals(" Slot test 93", "Response Fast Clock is Synchronized, Running, rate is 4:1. Day 32, 06:34. Last set by ID 0x00 0x00 (0).\n"
+                +"\tMaster supports LocoNet 1.1; Track Status: On/Paused; Programming Track Status: Available.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7B, 0x04, 0x07, 0x7A, 0x65, 0x06, 0x6E, 0x20, 0x00, 0x00, 0x00, 0x38});
+        assertEquals(" Slot test 94", "Response Fast Clock is Synchronized, Running, rate is 4:1. Day 32, 06:34. Last set by ID 0x00 0x00 (0).\n"
+                +"\tMaster supports LocoNet 1.1; Track Status: Off/Running; Programming Track Status: Available.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7B, 0x04, 0x07, 0x7A, 0x65, 0x08, 0x6E, 0x20, 0x00, 0x00, 0x00, 0x38});
+        assertEquals(" Slot test 88", "Response Fast Clock is Synchronized, Running, rate is 4:1. Day 32, 06:34. Last set by ID 0x00 0x00 (0).\n"
+                +"\tMaster supports DT200; Track Status: Off/Paused; Programming Track Status: Busy.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7B, 0x04, 0x07, 0x7A, 0x65, 0x09, 0x6E, 0x20, 0x00, 0x00, 0x00, 0x38});
+        assertEquals(" Slot test 95", "Response Fast Clock is Synchronized, Running, rate is 4:1. Day 32, 06:34. Last set by ID 0x00 0x00 (0).\n"
+                +"\tMaster supports DT200; Track Status: On/Paused; Programming Track Status: Busy.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7B, 0x04, 0x07, 0x7A, 0x65, 0x0A, 0x6E, 0x20, 0x00, 0x00, 0x00, 0x38});
+        assertEquals(" Slot test 96", "Response Fast Clock is Synchronized, Running, rate is 4:1. Day 32, 06:34. Last set by ID 0x00 0x00 (0).\n"
+                +"\tMaster supports DT200; Track Status: Off/Running; Programming Track Status: Busy.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7B, 0x04, 0x07, 0x7A, 0x65, 0x0b, 0x6E, 0x20, 0x00, 0x00, 0x00, 0x38});
+        assertEquals(" Slot test 97", "Response Fast Clock is Synchronized, Running, rate is 4:1. Day 32, 06:34. Last set by ID 0x00 0x00 (0).\n"
+                +"\tMaster supports DT200; Track Status: On/Running; Programming Track Status: Busy.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7B, 0x04, 0x07, 0x7A, 0x65, 0x0c, 0x6E, 0x20, 0x00, 0x00, 0x00, 0x38});
+        assertEquals(" Slot test 98", "Response Fast Clock is Synchronized, Running, rate is 4:1. Day 32, 06:34. Last set by ID 0x00 0x00 (0).\n"
+                +"\tMaster supports LocoNet 1.1; Track Status: Off/Paused; Programming Track Status: Busy.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7B, 0x04, 0x07, 0x7A, 0x65, 0x0d, 0x6E, 0x20, 0x00, 0x00, 0x00, 0x38});
+        assertEquals(" Slot test 99", "Response Fast Clock is Synchronized, Running, rate is 4:1. Day 32, 06:34. Last set by ID 0x00 0x00 (0).\n"
+                +"\tMaster supports LocoNet 1.1; Track Status: On/Paused; Programming Track Status: Busy.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7B, 0x04, 0x07, 0x7A, 0x65, 0x0e, 0x6E, 0x20, 0x00, 0x00, 0x00, 0x38});
+        assertEquals(" Slot test 100", "Response Fast Clock is Synchronized, Running, rate is 4:1. Day 32, 06:34. Last set by ID 0x00 0x00 (0).\n"
+                +"\tMaster supports LocoNet 1.1; Track Status: Off/Running; Programming Track Status: Busy.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7B, 0x04, 0x07, 0x7A, 0x65, 0x0f, 0x6E, 0x20, 0x00, 0x00, 0x00, 0x38});
+        assertEquals(" Slot test 101", "Response Fast Clock is Synchronized, Running, rate is 4:1. Day 32, 06:34. Last set by ID 0x00 0x00 (0).\n"
+                +"\tMaster supports LocoNet 1.1; Track Status: On/Running; Programming Track Status: Busy.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xb6, 0x2F, 0x2C, 0x4A});
+        assertEquals(" Slot test 102",
+                "Set consist in slot 47 direction Reverse F0=Off F1=Off F2=Off F3=On F4=On.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xb6, 0x2F, 0x00, 0x4A});
+        assertEquals(" Slot test 103",
+                "Set consist in slot 47 direction Forward F0=Off F1=Off F2=Off F3=Off F4=Off.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xb6, 0x2F, 0x01, 0x4A});
+        assertEquals(" Slot test 104",
+                "Set consist in slot 47 direction Forward F0=Off F1=On F2=Off F3=Off F4=Off.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xb6, 0x2F, 0x02, 0x4A});
+        assertEquals(" Slot test 105",
+                "Set consist in slot 47 direction Forward F0=Off F1=Off F2=On F3=Off F4=Off.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xb6, 0x2F, 0x04, 0x4A});
+        assertEquals(" Slot test 106",
+                "Set consist in slot 47 direction Forward F0=Off F1=Off F2=Off F3=On F4=Off.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xb6, 0x2F, 0x08, 0x4A});
+        assertEquals(" Slot test 107",
+                "Set consist in slot 47 direction Forward F0=Off F1=Off F2=Off F3=Off F4=On.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xb6, 0x2F, 0x10, 0x4A});
+        assertEquals(" Slot test 108",
+                "Set consist in slot 47 direction Forward F0=On F1=Off F2=Off F3=Off F4=Off.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xb6, 0x2F, 0x20, 0x4A});
+        assertEquals(" Slot test 109",
+                "Set consist in slot 47 direction Reverse F0=Off F1=Off F2=Off F3=Off F4=Off.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xb6, 0x2F, 0x40, 0x26});
+        assertEquals(" Slot test 110",
+                "Unable to parse LocoNet message.\ncontents: B6 2F 40 26\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xEF, 0x0E, 0x08, 0x33, 0x15, 0x00, 0x00, 0x27, 0x00, 0x0E, 0x00, 0x04, 0x44, 0x79});
+        assertEquals(" Slot test 111", "Write slot 8 information:\n"
+                +"\tLoco 1813 is Not Consisted, In-Use, operating in 128 SS mode, and is moving Forward at speed 0,\n"
+                +"\tF0=Off, F1=Off, F2=Off, F3=Off, F4=Off, F5=Off, F6=Off, F7=Off, F8=Off\n"
+                +"\tMaster supports LocoNet 1.1; Track Status: On/Running; Programming Track Status: Available; STAT2=0x00, ThrottleID=0x44 0x04 (8708).\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7B, 0x00, 0x39, 0x7F, 0x57, 0x07, 0x77, 0x1F, 0x00, 0x00, 0x00, 0x17} );
+        assertEquals(" Slot test 112",
+                "Response Fast Clock is Synchronized, Frozen, rate is 0:1. Day 31, 15:20. Last set by ID 0x00 0x00 (0).\n"
+                +"\tMaster supports LocoNet 1.1; Track Status: On/Running; Programming Track Status: Available.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7B, 0x01, 0x39, 0x7F, 0x57, 0x07, 0x77, 0x1F, 0x20, 0x00, 0x00, 0x17} );
+        assertEquals(" Slot test 113",
+                "Response Fast Clock is  Running, rate is 1:1. Day 31, 15:20. Last set by ID 0x00 0x00 (0).\n"
+                +"\tMaster supports LocoNet 1.1; Track Status: On/Running; Programming Track Status: Available.\n",
+                f.displayMessage(l));
 
     }
 
