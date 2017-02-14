@@ -136,11 +136,11 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
 
     @Override
     @CheckReturnValue
-    public String getStateString() {
-        switch (getState()) {
+    public String describeState(int state) {
+        switch (state) {
             case ACTIVE: return Bundle.getMessage("SensorStateActive");
             case INACTIVE: return Bundle.getMessage("SensorStateInactive");
-            default: return super.getStateString();
+            default: return super.describeState(state);
         }
     }
 
