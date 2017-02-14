@@ -17,7 +17,7 @@
   <version author="Alain Le Marchand" version="1.1" lastUpdated="20140615"/>
   <version author="Alain Le Marchand" version="2" lastUpdated="20150614"/>
   <version author="John McMasters" version="3" lastUpdated="20150919"/>
-  <version author="Alain Le Marchand" version="4" lastUpdated="20170213"/>
+  <version author="Alain Le Marchand" version="4" lastUpdated="20170214"/>
   <!-- Created from version 7 of the Digitrax_0SFX file -->
   <!--     and from Digitrax_2SFX file (John McMasters  1/26/2014, in JMRI Users file section)  -->
   <!--    Version 1 (Alain Le Marchand)                                             -->
@@ -29,10 +29,11 @@
                  Updated CV150 with default values from Digitrax documentation SDXH116D dated April 7, 2015
                  Updated Function labels for John McMasters' extended sound projects  -->
    <!--   Version 3 (John McMasters)
-				 Create Extended Series 6 Steam and Diesel within Family for John McMasters' extended sound projects  -->
+		 Create Extended Series 6 Steam and Diesel within Family for John McMasters' extended sound projects  -->
   <!--    Version 4 (Alain Le Marchand)
                  Added SDH186MT and SDXH186MT
-                 Defaut function labels according to Digitrax V2 manual  -->
+                 Added SDXN146K1E, SDXN146K2 and SDXN146K4
+                 Defaut function labels according to Digitrax V2 manual                                                               -->
   <!-- WARNING :   Low and High Versions of decoders (CV07) unknown (by me) - to be adjusted after users feed back -->
   <decoder>
     <family name="SFX Sound Decoders - Series 6" mfg="Digitrax" lowVersionID="16" highVersionID="16">
@@ -47,6 +48,27 @@
         <output name="2" label="Yellow" connection="plug"/>
         <output name="3" label="Green" connection="wire"/>
         <size length="1.0" width="0.41" height="0.19" units="inches"/>
+      </model>
+      <model model="SDXN146K1E" numOuts="4" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="DropIn" productID="SDXN146K1E" comment="16-bit Sound Decoder, for Kato N-Scale SD40-2 &amp; similar locos">
+        <output name="1" label="F0F Pad" connection="LED"/>
+        <output name="2" label="F0R Pad" connection="LED"/>
+        <output name="3" label="F1 Pad" connection="solder"/>
+        <output name="4" label="F2 Pad" connection="solder"/>
+        <size length="2.97" width="0.40" height="0.11" units="inches"/>
+      </model>
+      <model model="SDXN146K2" numOuts="4" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="DropIn" productID="SDXN146K2" comment="16-bit Sound Decoder, for Kato N-Scale SD80 MAC &amp; similar locos">
+        <output name="1" label="F0F Pad" connection="LED"/>
+        <output name="2" label="F0R Pad" connection="LED"/>
+        <output name="3" label="F1 Pad" connection="solder"/>
+        <output name="4" label="F2 Pad" connection="solder"/>
+        <size length="3.11" width="0.426" height="0.195" units="inches"/>
+      </model>
+      <model model="SDXN146K4" numOuts="4" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="DropIn" productID="SDXN146K4" comment="16-bit Sound Decoder, for Kato N Scale 4-8-4 FEF-3 &amp; similar locos">
+        <output name="1" label="F0F Pad" connection="LED"/>
+        <output name="2" label="F0R Pad" connection="LED"/>
+        <output name="3" label="F1 Pad" connection="solder"/>
+        <output name="4" label="F2 Pad" connection="solder"/>
+        <size length="3.11" width="0.426" height="0.195" units="inches"/>
       </model>
       <model model="SDH166D" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDH166D" comment="H0-Scale 8-bit Sound Decoder, wired">
         <output name="1" label="White" connection="wire"/>
