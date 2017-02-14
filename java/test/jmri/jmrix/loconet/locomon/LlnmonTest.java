@@ -1906,12 +1906,6 @@ public class LlnmonTest extends TestCase {
                 "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
                 "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Thrown, OpSw64=Thrown.\n",
                 f.displayMessage(l));
-
-
-
-
-
-
     }
 
     public void testDuplexRadioScan() {
