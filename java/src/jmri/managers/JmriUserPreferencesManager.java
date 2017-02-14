@@ -1151,6 +1151,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         if (element != null) {
             element.getChildren("window").stream().forEach((window) -> {
                 String reference = window.getAttributeValue("class");
+                log.debug("Reading window details for {}", reference);
                 try {
                     if (window.getAttribute("locX") != null && window.getAttribute("locX") != null) {
                         double x = window.getAttribute("locX").getDoubleValue();
