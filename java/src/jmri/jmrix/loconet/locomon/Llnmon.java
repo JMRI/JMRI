@@ -1572,1085 +1572,1121 @@ public class Llnmon {
         this.locoNetReporterPrefix = reporterManager.getSystemPrefix() + "R";
     }
 
-    private String interpretOpcPeerXfer(LocoNetMessage l) {
-                // The first byte seems to determine the type of message.
-                switch (l.getElement(1)) {
+    private String interpretOpcPeerXfer20(LocoNetMessage l) {
+        // Duplex Radio Management
+        // DigiIPL messages
+        // LocoIO, LocoServo, LocoBuffer, LocoBooster configuration messages
+
+        switch (l.getElement(2)) {
+            case 0x01: {
+                // Seems to be a query for just duplex devices.
+                switch (l.getElement(3)) {
+                    case 0x08: {
+                        return Bundle.getMessage("LN_MSG_DUPLEX_RECEIVER_QUERY");
+                    }
                     case 0x10: {
-                        /*
-                         * SRC=7F is THROTTLE msg xfer
-                         *  ; <DSTL><DSTH> encode ID#,
-                         *  ; <0><0> is THROT B'CAST
-                         *  ; <PXCT1>=<0,XC2,XC1,XC0 - D4.7,D3.7,D2.7,D1.7>
-                         *  ; XC0-XC2=ADR type CODE-0=7 bit Peer
-                         * TO Peer adrs *
-                         *  ; 1=<D1>is SRC HI,<D2>is DST HI
-                         *  ; <PXCT2>=<0,XC5,XC4,XC3 - D8.7,D7.7,D6.7,D5.7>
-                         *  ; XC3-XC5=data type CODE- 0=ANSI TEXT string,
-                         *  ; balance RESERVED *
-                         * ****************************************************
-                         * SV programming format 1
-                         *
-                         * This is the message format as implemented by the certain
-                         * existing devices. New designs should not use this format. The
-                         * message bytes are assigned as follows:
-                         *   ; <0xE5> <0x10> <SRC> <DST> <0x01> <PXCT1>
-                         *   ; <D1> <D2> <D3> <D4> <PXCT2>
-                         *   ; <D5> <D6> <D7> <D8> <CHK>
-                         *
-                         * The upper nibble of PXCT1 must be 0,
-                         * and the upper nibble of PXCT2 must be 1. The meanings of the
-                         * remaining bytes are as defined in the LocoNet Personal
-                         * Edition specification.
-                         * *********************************************
-                         * SV programming format 2
-                         *
-                         * This is the recommended format for new designs.
-                         * The message bytes as assigned as follows: *
-                         *  ; <0xE5> <0x10> <SRC> <SV_CMD> <SV_TYPE> <SVX1>
-                         *  ; <DST_L> <DST_H> <SV_ADRL> <SV_ADRH> <SVX2>
-                         *  ; <D1> <D2> <D3> <D4> <CHK>
-                         *
-                         * The upper nibble of both SVX1 (PXCT1) and SVX2 (PXCT2) must be 1.
-                         */
-
-                        int src = l.getElement(2); // source of transfer
-                        int dst_l = l.getElement(3); // ls 7 bits of destination
-                        int dst_h = l.getElement(4); // ms 7 bits of destination
-                        int pxct1 = l.getElement(5);
-                        int pxct2 = l.getElement(10);
-
-                        int d[] = l.getPeerXfrData();
-
-                        if ((src == 0x7F) && (dst_l == 0x7F) && (dst_h == 0x7F)
-                                && ((pxct1 & 0x70) == 0x40)) {
-                            // Download (firmware?) messages.
-                            int sub = pxct2 & 0x70;
-                            switch (sub) {
-                                case 0x00: // setup
-                                    return Bundle.getMessage("LN_MSG_IPL_SETUP",
-                                            l.getElement(6),
-                                            l.getElement(8),
-                                            l.getElement(9),
-                                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                    StringUtil.twoHexFromInt(l.getElement(7))),
-                                            l.getElement(11));
-                                case 0x10: // set address
-                                    return Bundle.getMessage("LN_MSG_IPL_SET_ADDRESS",
-                                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                    StringUtil.twoHexFromInt(d[0])
-                                                            + StringUtil.twoHexFromInt(d[1])
-                                                            + StringUtil.twoHexFromInt(d[2])));
-                                case 0x20: // send data
-                                case 0x30: // verify
-                                    return Bundle.getMessage((sub == 0x20) ? "LN_MSG_IPL_SEND_DATA" : "LN_MSG_IPL_VERIFY_REQUEST",
-                                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[0])),
-                                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[1])),
-                                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[2])),
-                                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[3])),
-                                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[4])),
-                                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[5])),
-                                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[6])),
-                                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[7])));
-                                case 0x40: // end op
-                                    return Bundle.getMessage("LN_MSG_IPL_END");
-                                default: // everything else isn't understood, go to default
-                                    break;
-                            }
-                        }
-                        if (src == 0x50) {
-                            // Packets from the LocoBuffer
-                            String dst_subaddrx = (dst_h != 0x01 ? "" : ((d[4] != 0)
-                                    ? "/" + Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[4]))
-                                    : ""));
-                            if (dst_h == 0x01 && ((pxct1 & 0xF0) == 0x00)
-                                    && ((pxct2 & 0xF0) == 0x10)) {
-                                // LocoBuffer to LocoIO
-                                if (d[2] == 0) {
-                                    if (d[0] == 2) {
-                                    return Bundle.getMessage("LN_MSG_LOCOIO_SV_QUERY",
-                                            (dst_l == 0)
-                                                    ? Bundle.getMessage("LN_MSG_LOCOIO_HELPER_BROADCAST")
-                                                    : Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(dst_l)) + dst_subaddrx,
-                                            d[1]);
-
-                                    }
-                                    return Bundle.getMessage("LN_MSG_LOCOIO_SV_WRITE",
-                                            (dst_l == 0)
-                                                    ? Bundle.getMessage("LN_MSG_LOCOIO_HELPER_BROADCAST")
-                                                    : Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(dst_l)) + dst_subaddrx,
-                                            d[1],
-                                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[3])));
-                                } else {
-                                    return Bundle.getMessage((d[0] == 2)
-                                            ? "LN_MSG_LOCOIO_SV_READ_FIRMWARE_REV"
-                                            : "LN_MSG_LOCOIO_SV_WRITE_FIRMWARE_REV",
-                                            (dst_l == 0) ? Bundle.getMessage("LN_MSG_LOCOIO_HELPER_BROADCAST")
-                                                    : Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                            StringUtil.twoHexFromInt(dst_l)) + dst_subaddrx,
-                                            d[1],
-                                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[3])),
-                                            dotme(d[2]));
-                                }
-                            }
-                        }
-                        if (dst_h == 0x01 && ((pxct1 & 0xF0) == 0x00)
-                                && ((pxct2 & 0xF0) == 0x00)) {
-                            // (Jabour/Deloof LocoIO), SV Programming messages format 1
-                            String src_subaddrx = ((d[4] != 0) ? "/"
-                                    + StringUtil.twoHexFromInt(d[4]) : ""); // should this be same as next line?
-                            String dst_subaddrx = ((d[4] != 0) ? "/"
-                                    + StringUtil.twoHexFromInt(d[4]) : "");
-
-                            String dst_dev = ((dst_l == 0x50) ? "LocoBuffer " // dst_h == 1 known to be true // NOI18N
-                                    : (((dst_h == 0x01) && (dst_l == 0x0))
-                                            ? Bundle.getMessage("LN_MSG_SV1_HELPER_DST_ADDRESS_IS_BROADCAST")
-                                            : "LocoIO@"     // NOI18N
-                                    + Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(dst_l))
-                                    + dst_subaddrx));
-                            if (d[2] == 0) {
-                                if (src == 0x50) {
-                                    if (d[0] == 2) {
-                                        return Bundle.getMessage("LN_MSG_LOCOBUF_SV1_QUERY",
-                                                dst_dev, d[1] );
-                                    } else {
-                                        return Bundle.getMessage("LN_MSG_LOCOBUF_SV1_WRITE",
-                                                dst_dev, d[1],
-                                                d[7],
-                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[7])));
-                                    }
-                                } else {
-                                    if (d[0] == 2) {
-                                        return Bundle.getMessage("LN_MSG_LOCOIO_SV1_REPORT",
-                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                        StringUtil.twoHexFromInt(src))
-                                                        + src_subaddrx,
-                                                dst_dev, d[1] );
-                                    } else {
-                                        return Bundle.getMessage("LN_MSG_LOCOIO_SV1_WRITE",
-                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                        StringUtil.twoHexFromInt(src))
-                                                        + src_subaddrx,
-                                                dst_dev, d[1],
-                                                d[7],
-                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[7])));
-                                    }
-                                }
-                            } else {
-                                if (src == 0x50) {
-                                    if (d[0] == 2) {
-                                        return Bundle.getMessage("LN_MSG_LOCOBUF_SV1_QUERY_FIRMWARE_REV",
-                                                dst_dev, d[1], dotme(d[2]) );
-                                    } else {
-                                        return Bundle.getMessage("LN_MSG_LOCOBUF_SV1_WRITE_FIRMWARE_REV",
-                                                dst_dev, d[1],
-                                                d[7],
-                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[7])),
-                                                dotme(d[2]) );
-                                    }
-                                } else {
-                                    if (d[0] == 2) {
-                                        return Bundle.getMessage("LN_MSG_LOCOIO_SV1_REPORT_FIRMWARE_REV",
-                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                        StringUtil.twoHexFromInt(src))
-                                                        + src_subaddrx,
-                                                dst_dev, d[1],
-                                                dotme(d[2]) );
-                                    } else {
-                                        return Bundle.getMessage("LN_MSG_LOCOIO_SV1_WRITE_FIRMWARE_REV",
-                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                                        StringUtil.twoHexFromInt(src))
-                                                        + src_subaddrx,
-                                                dst_dev, d[1],
-                                                d[7],
-                                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[7])),
-                                                dotme(d[2]) );
-                                    }
-                                }
-                            }
-                        }
-                        // check for a specific type - SV Programming messages format 2
-                        // (New Designs)
-                        String svReply = "";
-                        LnSv2MessageContents svmc = null;
-                        try {
-                            // assume the message is an SV2 message
-                            svmc = new LnSv2MessageContents(l);
-                        } catch (IllegalArgumentException e) {
-                            // message is not an SV2 message.  Ignore the exception.
-                        }
-                        if (svmc != null) {
-                            // the message was indeed an SV2 message
-                            try {
-                                // get string representation of the message from an
-                                // available translation which is best suited to
-                                // the currently-active "locale"
-                                svReply = svmc.toString();
-                            } catch (IllegalArgumentException e) {
-                                // message is not a properly-formatted SV2 message.  Ignore the exception.
-                            }
-
-                            if (svReply.length() > 1) {
-                                // was able to interpret message as an SV format 2 message, so
-                                // return its interpreted value
-                                return svReply;
-                            }
-                        }
-
-                        if ((src == 0x7F) && (dst_l == 0x0) && (dst_h == 0x0)
-                                && ((pxct1 & 0x3) == 0x00) && ((pxct2 & 0x70) == 0x70)) {
-                            // throttle semaphore symbol message
-                            return Bundle.getMessage("LN_MSG_THROTTLE_SEMAPHORE",
-                                    ((d[0] * 128) + d[1]),
-                                    Bundle.getMessage(((d[2] & 0x10) == 0x10)
-                                            ? "LN_MSG_THROTTLE_SEMAPHORE_HELPER_LIT"
-                                            : "LN_MSG_THROTTLE_SEMAPHORE_HELPER_UNLIT"),
-                                    Bundle.getMessage(((d[2] & 0x08) == 0x08)
-                                            ? "LN_MSG_THROTTLE_SEMAPHORE_HELPER_LIT"
-                                            : "LN_MSG_THROTTLE_SEMAPHORE_HELPER_UNLIT"),
-                                    Bundle.getMessage(((d[2] & 0x04) == 0x04)
-                                            ? "LN_MSG_THROTTLE_SEMAPHORE_HELPER_LIT"
-                                            : "LN_MSG_THROTTLE_SEMAPHORE_HELPER_UNLIT"),
-                                    Bundle.getMessage(((d[2] & 0x02) == 0x02)
-                                            ? "LN_MSG_THROTTLE_SEMAPHORE_HELPER_LIT"
-                                            : "LN_MSG_THROTTLE_SEMAPHORE_HELPER_UNLIT"),
-                                    Bundle.getMessage(((d[2] & 0x01) == 0x01)
-                                            ? "LN_MSG_THROTTLE_SEMAPHORE_HELPER_BLINKING"
-                                            : "LN_MSG_THROTTLE_SEMAPHORE_HELPER_UNBLINKING")
-                            );
-                        }
-                        if ((src == 0x7F) && ((pxct1 & 0x70) == 0x00)) {
-
-                            if ((dst_l == 0x00) && (dst_h == 0x00)) {
-                                return Bundle.getMessage("LN_MSG_THROTTLE_TEXT_MESSAGE_ALL_THROTTLES",
-                                    (char) d[0],
-                                    (char) d[1],
-                                    (char) d[2],
-                                    (char) d[3],
-                                    (char) d[4],
-                                    (char) d[5],
-                                    (char) d[6],
-                                    (char) d[7]);
-                            } else {
-                                return Bundle.getMessage("LN_MSG_THROTTLE_TEXT_MESSAGE_SPECIFIC_THROTTLE",
-                                    (char) d[0],
-                                    (char) d[1],
-                                    (char) d[2],
-                                    (char) d[3],
-                                    (char) d[4],
-                                    (char) d[5],
-                                    (char) d[6],
-                                    (char) d[7],
-                                    idString(dst_l, dst_h));
-                            }
-                        }
-
-                        // no specific interpretation is available, so simply return a generic format
-                        return Bundle.getMessage("LN_MSG_GENERIC_PEER_TO_PEER",
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(src)),
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(dst_l)),
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(dst_h)),
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(pxct1)),
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(pxct2)),
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[0])),
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[1])),
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[2])),
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[3])),
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[4])),
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[5])),
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[6])),
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[7]))
-                                );
-                    } // case 0x10
-
-                    case 0x0A: {
-                        // throttle status
-                        int tcntrl = l.getElement(2);
-                        String stat;
-                        switch (tcntrl) {
-                            case 0x40:
-                                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_OK");
-                                break;
-                            case 0x7F:
-                                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_NO_KEYPRESS");
-                                break;
-                            case 0x43:
-                                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_PLUS_KEY");
-                                break;
-                            case 0x42:
-                                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_MINUS_KEY");
-                                break;
-                            case 0x41:
-                                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_RUNSTOP_KEY");
-                                break;
-                            case 0x4e:
-                                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_RESP_SEM_DISP_CMD");
-                                break;
-                            default:
-                                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_UNKONWN");
-                                break;
-                        }
-
-                        return Bundle.getMessage("LN_MSG_THROTTLE_STATUS",
-                                StringUtil.twoHexFromInt(tcntrl),
-                                stat,
-                                idString(l.getElement(3), l.getElement(4)),
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                        StringUtil.twoHexFromInt(l.getElement(7))),
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                        StringUtil.twoHexFromInt(l.getElement(8))));
-                    } // case 0x0A
-
-                    case 0x14: {
-                        // Duplex Radio Management
-                        // DigiIPL messages
-                        // LocoIO, LocoServo, LocoBuffer, LocoBooster configuration messages
-
-                        switch (l.getElement(2)) {
-                            case 0x01: {
-                                // Seems to be a query for just duplex devices.
-                                switch (l.getElement(3)) {
-                                    case 0x08: {
-                                        return Bundle.getMessage("LN_MSG_DUPLEX_RECEIVER_QUERY");
-                                    }
-                                    case 0x10: {
-                                        return Bundle.getMessage("LN_MSG_DUPLEX_RECEIVER_RESPONSE");
-                                    }
-                                    default: {
-                                        break;
-                                    }
-                                } // end of switch (l.getElement(3))
-                                break;
-                            }
-                            case 0x02: {
-                                // Request Duplex Radio Channel
-                                switch (l.getElement(3)) {
-                                    case 0x00: {
-                                        int channel = l.getElement(5) | ((l.getElement(4) & 0x01) << 7);
-
-                                        return Bundle.getMessage("LN_MSG_DUPLEX_CHANNEL_SET",
-                                                Integer.toString(channel));
-                                    }
-                                    case 0x08: {
-                                        return Bundle.getMessage("LN_MSG_DUPLEX_CHANNEL_QUERY");
-                                    }
-                                    case 0x10: {
-                                        int channel = l.getElement(5) | ((l.getElement(4) & 0x01) << 7);
-
-                                        return Bundle.getMessage("LN_MSG_DUPLEX_CHANNEL_REPORT",
-                                                Integer.toString(channel));
-                                    }
-                                    default: {
-                                        break;
-                                    }
-                                } // end of switch (l.getElement(3))
-                                break;
-                            }
-
-                            case 0x03: {
-                                // Duplex Group Name
-                                // Characters appear to be 8 bit values, but transmitted over a 7 bit
-                                // encoding, so high order bits are stashed in element 4 and 9.
-                                char[] groupNameArray = {(char) (l.getElement(5) | ((l.getElement(4) & 0x01) << 7)),
-                                    (char) (l.getElement(6) | ((l.getElement(4) & 0x02) << 6)),
-                                    (char) (l.getElement(7) | ((l.getElement(4) & 0x04) << 5)),
-                                    (char) (l.getElement(8) | ((l.getElement(4) & 0x08) << 4)),
-                                    (char) (l.getElement(10) | ((l.getElement(9) & 0x01) << 7)),
-                                    (char) (l.getElement(11) | ((l.getElement(9) & 0x02) << 6)),
-                                    (char) (l.getElement(12) | ((l.getElement(9) & 0x04) << 5)),
-                                    (char) (l.getElement(13) | ((l.getElement(9) & 0x08) << 4))};
-                                String groupName = new String(groupNameArray);
-
-                                // The pass code is stuffed in here, each digit in 4 bits.  But again, it's a
-                                // 7 bit encoding, so the MSB of the "upper" half is stuffed into byte 14.
-                                int p1 = ((l.getElement(14) & 0x01) << 3) | ((l.getElement(15) & 0x70) >> 4);
-                                int p2 = l.getElement(15) & 0x0F;
-                                int p3 = ((l.getElement(14) & 0x02) << 2) | ((l.getElement(16) & 0x70) >> 4);
-                                int p4 = l.getElement(16) & 0x0F;
-
-                                // It's not clear you can set A-F from throttles or Digitrax's tools, but
-                                // they do take and get returned if you send them on the wire...
-                                String passcode = StringUtil.twoHexFromInt(p1) + StringUtil.twoHexFromInt(p2)
-                                        + StringUtil.twoHexFromInt(p3) + StringUtil.twoHexFromInt(p4);
-
-                                // The MSB is stuffed elsewhere again...
-                                int channel = l.getElement(17) | ((l.getElement(14) & 0x04) << 5);
-
-                                // The MSB is stuffed elsewhere one last time.
-                                int id = l.getElement(18) | ((l.getElement(14) & 0x08) << 4);
-
-                                switch (l.getElement(3)) {
-                                    case 0x00: {
-                                        return Bundle.getMessage("LN_MSG_DUPLEX_NAME_WRITE",
-                                                groupName);
-                                    }
-                                    case 0x08: {
-                                        return Bundle.getMessage("LN_MSG_DUPLEX_NAME_QUERY");
-                                    }
-                                    case 0x10: {
-                                        return Bundle.getMessage("LN_MSG_DUPLEX_NAME_REPORT",
-                                                groupName, passcode, channel, id);
-                                    }
-                                    default: {
-                                        break;
-                                    }
-                                } // end of switch (l.getElement(3))
-                                break;
-                            }
-                            case 0x04: {
-                                // Duplex Group ID
-
-                                // The MSB is stuffed elsewhere again...
-                                int id = l.getElement(5) | ((l.getElement(4) & 0x01) << 7);
-
-                                switch (l.getElement(3)) {
-                                    case 0x00: {
-                                        return Bundle.getMessage("LN_MSG_DUPLEX_ID_SET",id);
-                                    }
-                                    case 0x08: {
-                                        return Bundle.getMessage("LN_MSG_DUPLEX_ID_QUERY");
-                                    }
-                                    case 0x10: {
-                                        return Bundle.getMessage("LN_MSG_DUPLEX_ID_REPORT",id);
-                                    }
-                                    default: {
-                                        break;
-                                    }
-                                } // end of switch (l.getElement(3))
-                                break;
-                            }
-                            case 0x07: {
-                                // Duplex Group Password
-                                char[] groupPasswordArray = {(char) l.getElement(5),
-                                    (char) l.getElement(6),
-                                    (char) l.getElement(7),
-                                    (char) l.getElement(8)};
-                                String groupPassword = new String(groupPasswordArray);
-
-                                switch (l.getElement(3)) {
-                                    case 0x00: {
-                                        return Bundle.getMessage("LN_MSG_DUPLEX_PASSWORD_SET", groupPassword);
-                                    }
-                                    case 0x08: {
-                                        return Bundle.getMessage("LN_MSG_DUPLEX_PASSWORD_QUERY");
-                                    }
-                                    case 0x10: {
-                                        return Bundle.getMessage("LN_MSG_DUPLEX_PASSWORD_REPORT", groupPassword);
-                                    }
-                                    default: {
-                                        break;
-                                    }
-                                } // end of switch (l.getElement(3))
-                                break;
-                            }
-                            case 0x10: {
-                                // Radio Channel Noise/Activity
-                                switch (l.getElement(3)) {
-                                    case 0x08: {
-                                        return Bundle.getMessage("LN_MSG_DUPLEX_CHANNEL_SCAN_QUERY", l.getElement(5));
-                                    }
-                                    case 0x10: {
-                                        // High order bit stashed in another element again.
-                                        int level = (l.getElement(6) & 0x7F) | ((l.getElement(4) & 0x02) << 6);
-
-                                        return Bundle.getMessage("LN_MSG_DUPLEX_CHANNEL_SCAN_REPORT", l.getElement(5),
-                                                level);
-                                    }
-                                    default: {
-                                        break;
-                                    }
-                                } // end of switch (l.getElement(3))
-
-                            break;
-                            }
-
-                            case LnConstants.RE_IPL_PING_OPERATION: {
-
-                                /**
-                                 * **********************************************************************************
-                                 * IPL-capable device ping - OPC_RE_IPL (Device
-                                 * Ping Operations) * The message bytes as
-                                 * assigned as follows:
-                                 *
-                                 * <E5> <14> <08> <GR_OP_T> <DI_F2> <DI_Ss0>
-                                 * <DI_Ss1> ...
-                                 *
-                                 * <DI_Ss2> <DI_Ss3> <DI_U1> <00> <00> <DI_U2>
-                                 * <DI_U3> ...
-                                 *
-                                 * <00> <00><00> <00><00> <CHK> * where:
-                                 *
-                                 * <DI_F2> encodes additional bits for the Slave
-                                 * device serial number. * bits 7-4 always 0000b
-                                 * * bit 3 Bit 31 of Slave Device Serial Number
-                                 * * bit 2 Bit 23 of Slave Device Serial Number
-                                 * * bit 1 Bit 15 of Slave device Serial Number
-                                 * * bit 0 Bit 7 of Slave device Serial Number
-                                 *
-                                 * <DI_Ss0> encodes 7 bits of the 32 bit Host
-                                 * device serial number: * bit 7 always 0 * bits
-                                 * 6-0 Bits 6:0 of Slave device serial number
-                                 *
-                                 * <DI_Ss1> encodes 7 bits of the 32 bit Host
-                                 * device serial number: * bit 7 always 0 * bits
-                                 * 6-0 Bits 14:8 of Slave device serial number
-                                 *
-                                 * <DI_Ss2> encodes 7 bits of the 32 bit Host
-                                 * device serial number: * bit 7 always 0 * bits
-                                 * 6-0 Bits 22:16 of Slave device serial number
-                                 *
-                                 * <DI_Ss3> encodes 7 bits of the 32 bit Host
-                                 * device serial number: * bit 7 always 0 * bits
-                                 * 6-0 Bits 30:24 of Slave device serial number
-                                 *
-                                 * <DI_U1> unknown data * when <GR_OP_T> = 0x08
-                                 * * is always 0 * when <GR_OP_T> = 0x10 * is
-                                 * not reverse-engineered and may be non-zero.
-                                 *
-                                 * <DI_U2> unknown data * when <GR_OP_T> = 0x08
-                                 * * is always 0 * when <GR_OP_T> = 0x10 * is
-                                 * not reverse-engineered and may be non-zero.
-                                 *
-                                 * <DI_U3> unknown data * when <GR_OP_T> = 0x08
-                                 * * is always 0 * when <GR_OP_T> = 0x10 * is
-                                 * not reverse-engineered and may be non-zero. *
-                                 * * Information reverse-engineered by B.
-                                 * Milhaupt and used with permission *
-                                 * **********************************************************************************
-                                 */
-                                /* OPC_RE_IPL (IPL Ping Operation) */
-                                // Operations related to DigiIPL Device "Ping" operations
-                                //
-                                // "Ping" request issued from DigiIPL ver 1.09 issues this message on LocoNet.
-                                // The LocoNet request message encodes a serial number but NOT a device type.
-                                //
-                                // Depending on which devices are selected in DigiIPL when the "ping"
-                                // is selected, (and probably the S/Ns of the devices attached to the LocoNet,
-                                // the response is as follows:
-                                //     DT402D  LocoNet message includes the serial number from the DT402D's
-                                //             Slave (RF24) serial number.  If a UR92 is attached to LocoNet,
-                                //             it will send the message via its RF link to the addressed
-                                //             DT402D.  (UR92 apparantly assumes that the long 802.15.4
-                                //             address of the DT402D is based on the serial number embedded
-                                //             in the LocoNet message, with the MS 32 bits based on the UR92
-                                //             long address MS 32 bits).  If more than one UR92 is attached
-                                //             to LocoNet, all will pass the message to the RF interface.
-                                //     UR92    LocoNet message includes the Slave serial number from the UR92.
-                                //             These messages are not passed to the RF link by the addressed
-                                //             UR92.  If more than one UR92 is attached to LocoNet, and the
-                                //             addressed UR92 hears the RF version of the LocoNet message, it
-                                //             will respond via the RF interface with an acknowledge packet,
-                                //             and a UR92 (not sure which one) responds on LocoNet with a
-                                //             Ping report <e5><14><08><10>.
-                                //     PR3     LocoNet message includes an effective serial number of all
-                                //             zeros.  There is no LocoNet message reply generated to a
-                                //             request to a PR3 S/N, but there will be a reply on the PR3's
-                                //             computer interface if the ping request was sent via the PR3's
-                                //             computer interface (i.e. not from some other LocoNet agent).
-                                //     UT4D    While it has been suggested that the UT4D supports firmware
-                                //             updates, the UT4D does not respond to the Ping message.
-                                //     LNRP    While it has been suggested that the LNRP supports firmware
-                                //             updates, the LNRP does not respond to the Ping message.
-                                //
-                                // Ping Report values:
-                                //     <unkn1> Seems always to be <0C>.  None of the bytes relate to
-                                //             Duplex Channel Number.
-                                //     <unkn2> Matches byte 15 of the MAC payload of the reply sent by the
-                                //             targeted UR92.
-                                //     <unkn3> Unclear what this byte means.
-                                //
-                                // Information reverse-engineered by B. Milhaupt and used with permission
-                                switch (l.getElement(3)) {
-                                    case 0x08:
-                                        /* OPC_RE_IPL (IPL Ping Query) */
-                                        // Ping Request: <e5><14><08><08><msBits><Sn0><Sn1><Sn2><Sn3><0><0><0><0><0><0><0><0><0><0><0><Chk>
-
-                                        if ((((l.getElement(4) & 0xF) != 0) || (l.getElement(5) != 0)
-                                                || (l.getElement(6) != 0) || (l.getElement(7) != 0) || (l.getElement(8) != 0))
-                                                && (l.getElement(9) == 0) && (l.getElement(10) == 0)
-                                                && (l.getElement(11) == 0) && (l.getElement(12) == 0)
-                                                && (l.getElement(13) == 0) && (l.getElement(14) == 0)
-                                                && (l.getElement(15) == 0) && (l.getElement(16) == 0)
-                                                && (l.getElement(17) == 0) && (l.getElement(18) == 0)) {
-
-                                            int hostSnInt;
-                                            hostSnInt = (l.getElement(5) + (((l.getElement(4) & 0x1) == 1) ? 128 : 0))
-                                                    + ((l.getElement(6) + (((l.getElement(4) & 0x2) == 2) ? 128 : 0)) * 256)
-                                                    + ((l.getElement(7) + (((l.getElement(4) & 0x4) == 4) ? 128 : 0)) * 256 * 256)
-                                                    + ((l.getElement(8) + (((l.getElement(4) & 0x8) == 8) ? 128 : 0)) * 256 * 256 * 256);
-                                            return Bundle.getMessage("LN_MSG_DUPLEX_PING_REQUEST",
-                                                    Integer.toHexString(hostSnInt).toUpperCase());
-                                        }
-                                        break;
-                                    case 0x10:
-                                        /* OPC_RE_IPL (IPL Ping Report) */
-
-                                        // Ping Report:  <e5><14><08><10><msbits><Sn0><Sn1><Sn2><Sn3><unkn1><0><0><Unkn2><Unkn3><0><0><0><0><0><Chk>
-                                        if (((l.getElement(4) & 0xF) != 0) || (l.getElement(5) != 0) || (l.getElement(6) != 0)
-                                                || (l.getElement(7) != 0) || (l.getElement(8) != 0)) {   // if any serial number bit is non-zero //
-                                            int hostSnInt = (l.getElement(5) + (((l.getElement(4) & 0x1) == 1) ? 128 : 0))
-                                                    + ((l.getElement(6) + (((l.getElement(4) & 0x2) == 2) ? 128 : 0)) * 256)
-                                                    + ((l.getElement(7) + (((l.getElement(4) & 0x4) == 4) ? 128 : 0)) * 256 * 256)
-                                                    + ((l.getElement(8) + (((l.getElement(4) & 0x8) == 8) ? 128 : 0)) * 256 * 256 * 256);
-                                            return Bundle.getMessage("LN_MSG_DUPLEX_PING_REPORT",
-                                                    StringUtil.twoHexFromInt(hostSnInt).toUpperCase(),
-                                                    StringUtil.twoHexFromInt(l.getElement(12) + (((l.getElement(9)) & 0x4) == 0x4 ? 128 : 0)).toUpperCase(),
-                                                    StringUtil.twoHexFromInt(l.getElement(13) + (((l.getElement(9)) & 0x8) == 0x8 ? 128 : 0)).toUpperCase()
-                                                    );
-                                        }
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                break;
-                            } //end of case 0x08, which decodes 0xe5 0x14 0x08
-
-                            case LnConstants.RE_IPL_IDENTITY_OPERATION: {
-                                String interpretedMessage;
-                                // Operations related to DigiIPL "Ping", "Identify" and "Discover"
-                                String device;
-
-                                switch (l.getElement(3)) {
-                                    case 0x08: {
-                                        if ((l.getElement(4) == 0)
-                                                && (l.getElement(5) == 0) && (l.getElement(6) == 0)
-                                                && (l.getElement(7) == 0) && (l.getElement(8) == 0)
-                                                && (l.getElement(9) == 0) && (l.getElement(10) == 0)
-                                                && (l.getElement(11) == 1) && (l.getElement(12) == 0)
-                                                && (l.getElement(13) == 0) && (l.getElement(14) == 0)
-                                                && (l.getElement(15) == 0) && (l.getElement(16) == 0)
-                                                && (l.getElement(17) == 0) && (l.getElement(18) == 0)) {
-                                            /**
-                                             * **********************************************************************************
-                                             * IPL capable device query -
-                                             * RE_IPL_IDENTITY_OPERATION (Device
-                                             * Query) * The message bytes are
-                                             * assigned as follows:
-                                             *
-                                             * <E5> <14> <0F> <08> <00> <00>
-                                             * <00> <00> <00> <00> <00> <01>
-                                             * <00> <00> ...
-                                             *
-                                             * <00> <00> <00> <00> <00> <CHK> *
-                                             * * Information reverse-engineered
-                                             * by B. Milhaupt and used with
-                                             * permission *
-                                             * **********************************************************************************
-                                             */
-                                            // Request for all IPL-queryable devices to report their presence
-                                            //
-                                            // Information reverse-engineered by B. Milhaupt and used with permission
-
-                                            return Bundle.getMessage("LN_MSG_IPL_DISCOVER_ALL_DEVICES");
-                                        } else if (((l.getElement(5) != 0) || (l.getElement(6) != 0))) {
-                                            /**
-                                             * **********************************************************************************
-                                             * IPL device query by type -
-                                             * RE_IPL_IDENTITY_OPERATION (Device
-                                             * Query) * The message bytes are
-                                             * assigned as follows:
-                                             *
-                                             * <E5> <14> <0F> <08> <DI_Hmf>
-                                             * <DI_Hst> <DI_Slv> <00> <00> <00>
-                                             * <00> <01> ...
-                                             *
-                                             * <00> <00> <00> <00> <00> <00>
-                                             * <00> <CHK> * where:
-                                             *
-                                             * <DI_Hmf> DigiIPL-capable Host
-                                             * device manufacturer number. This
-                                             * is not * the same as an NMRA
-                                             * Manufacturer ID. * 0x00 Digitrax
-                                             * * Others No other Host device
-                                             * manufacturer * numbers have been
-                                             * reverse- * engineered
-                                             *
-                                             * <DI_Hst> encodes the
-                                             * DigiIPL-capable Host device type
-                                             * as follows: * When <DI_Hmf> =
-                                             * 0x00 * 0x00 (0 decimal) No Host
-                                             * device type reported * 0x04 (4
-                                             * decimal) UT4D (Note that UT4D,
-                                             * UT4 and UT4R do * not respond to
-                                             * this DigiIPL * request) * 0x18
-                                             * (24 decimal) RF24 - not typically
-                                             * a Host device * 0x23 (35 decimal)
-                                             * PR3 * 0x2A (42 decimal) DT402 (or
-                                             * DT402R or DT402D) * 0x33 (51
-                                             * decimal) DCS51 * 0x5C (92
-                                             * decimal) UR92 * Others No other
-                                             * Host device types have been *
-                                             * reverse-engineered * When
-                                             * <DI_Hmf> is not 0x00 * All values
-                                             * Not reverse-engineered
-                                             *
-                                             * <DI_Slv> encodes the
-                                             * DigiIPL-capable Slave device type
-                                             * as follows: * When <DI_Smf> =
-                                             * 0x00 * 0x00 (0 decimal) Report
-                                             * for all Slave device types * 0x18
-                                             * (24 decimal) RF24 * Others No
-                                             * other Slave device types have
-                                             * been * reverse-engineered * *
-                                             * Information reverse-engineered by
-                                             * B. Milhaupt and used with
-                                             * permission *
-                                             * **********************************************************************************
-                                             */
-                                            // Request for IPL-queryable devices of given manufacturer and type to report
-                                            // their presence
-                                            //
-                                            // Note that standard definitions are provided for UT4D and RF24, even though these
-                                            // devices do not respond to this query.  Note that UT4D will respond to IPL capable
-                                            // device query with DI_Hmf = 0, DI_Hst = 0, DI_Slv = 0, and DI_Smf = 0.
-                                            //
-                                            // Information reverse-engineered by B. Milhaupt and used with permission
-
-                                            device = getDeviceNameFromIPLInfo(l.getElement(4), l.getElement(5));
-                                            String slave = getSlaveNameFromIPLInfo(l.getElement(4), l.getElement(6));
-                                            return Bundle.getMessage("LN_MSG_IPL_DISCOVER_SPECIFIC_DEVICES",
-                                                    device, slave);
-                                        }
-                                        break;
-                                    } // end case 0x08, which decodes 0xe5 0x14 0x0f 0x08
-                                    case 0x10: {
-                                        /**
-                                         * **********************************************************************************
-                                         * IPL device identity report -
-                                         * RE_IPL_IDENTITY_OPERATION (Device
-                                         * Report) * The message bytes are
-                                         * assigned as follows:
-                                         *
-                                         * <E5> <14> <0F> <08> <DI_Hmf> <DI_Hst>
-                                         * <DI_Slv> <DI_Smf> <DI_Hsw> ...
-                                         *
-                                         * <DI_F1> <DI_Ssw> <DI_Hs0> <DI_Hs1>
-                                         * <DI_Hs2> <DI_F2> <DI_Ss0> ...
-                                         *
-                                         * <DI_Ss1> <DI_Ss2> <DI_Ss3> <CHK> *
-                                         * where:
-                                         *
-                                         * <DI_Hmf> DigiIPL-capable Host device
-                                         * manufacturer number. This is not *
-                                         * the same as an NMRA Manufacturer ID.
-                                         * * 0x00 Digitrax * Others No other
-                                         * Host device manufacturer * numbers
-                                         * have been reverse- * engineered
-                                         *
-                                         * <DI_Hst> encodes the DigiIPL-capable
-                                         * Host device type as follows: * When
-                                         * <DI_Hmf> = 0x00 * 0x00 (0 decimal) No
-                                         * Host device type reported * 0x04 (4
-                                         * decimal) UT4D * 0x23 (35 decimal) PR3
-                                         * * 0x2A (42 decimal) DT402 (or DT402R
-                                         * or DT402D) * 0x33 (51 decimal) DCS51
-                                         * * 0x5C (92 decimal) UR92 * Others No
-                                         * other Host device types have been *
-                                         * reverse-engineered * When <DI_Hmf> is
-                                         * not 0x00 * All values Not
-                                         * reverse-engineered
-                                         *
-                                         * <DI_Slv> encodes the DigiIPL-capable
-                                         * Slave device type as follows: * When
-                                         * <DI_Smf> = 0x00 * 0x00 (0 decimal)
-                                         * Report for all Slave device types *
-                                         * 0x18 (24 decimal) RF24 * Others No
-                                         * other Slave device types have been *
-                                         * reverse-engineered
-                                         *
-                                         * <DI_Smf> DigiIPL-capable Slave device
-                                         * manufacturer number. This is not *
-                                         * the same as an NMRA Manufacturer ID.
-                                         * * 0x00 Digitrax * Others No other
-                                         * Slave device manufacturer * numbers
-                                         * have been reverse- * engineered
-                                         *
-                                         * <DI_Hsw> encodes the DigiIPL-capable
-                                         * Host device firmware revision *
-                                         * number as follows: * bit 7 always 0 *
-                                         * bits 6-3 Host device firmware major
-                                         * revision number * bits 2-0 Host
-                                         * device firmware minor revision number
-                                         *
-                                         * <DI_F1> encodes additional bits for
-                                         * the Slave device firmware major *
-                                         * revision number and for the Host
-                                         * device serial number. * bits 7-4
-                                         * always 0000b * bit 3 Bit 23 of Host
-                                         * Device Serial Number * bit 2 Bit 15
-                                         * of Host Device Serial Number * bit 1
-                                         * Bit 7 of Host Device Serial Number *
-                                         * bit 0 bit 4 of Slave device firmware
-                                         * Major number
-                                         *
-                                         * <DI_Ssw> encodes the DigiIPL-capable
-                                         * Slave device firmware revision *
-                                         * number as follows: * bit 7 always 0 *
-                                         * bits 6-3 Host device firmware major
-                                         * revision number * bits 6-3 4
-                                         * least-significant bits of Slave
-                                         * device firmware major * revision
-                                         * number (see also <DI_F1>[0]) * bits
-                                         * 2-0 Slave device firmware minor
-                                         * revision number
-                                         *
-                                         * <DI_Hs0> encodes 7 bits of the 24 bit
-                                         * Host device serial number: * bit 7
-                                         * always 0 * bits 6-3 Bits 6-0 of Host
-                                         * device serial number
-                                         *
-                                         * <DI_Hs1> encodes 7 bits of the 24 bit
-                                         * Host device serial number: * bit 7
-                                         * always 0 * bits 6-3 Bits 14-9 of Host
-                                         * device serial number
-                                         *
-                                         * <DI_Hs2> encodes 7 bits of the 24 bit
-                                         * Host device serial number: * bit 7
-                                         * always 0 * bits 6-3 Bits 22-16 of
-                                         * Host device serial number
-                                         *
-                                         * <DI_F2> encodes additional bits for
-                                         * the Slave device serial number. *
-                                         * bits 7-4 always 0000b * bit 3 Bit 31
-                                         * of Slave Device Serial Number * bit 2
-                                         * Bit 23 of Slave Device Serial Number
-                                         * * bit 1 Bit 15 of Slave Device Serial
-                                         * Number * bit 0 Bit 7 of Slave Device
-                                         * Serial Number
-                                         *
-                                         * <DI_Ss0> encodes 7 bits of the 32 bit
-                                         * Slave device serial number: * bit 7
-                                         * always 0 * bits 6-3 Bits 6-0 of Slave
-                                         * device serial number
-                                         *
-                                         * <DI_Ss1> encodes 7 bits of the 32 bit
-                                         * Slave device serial number: * bit 7
-                                         * always 0 * bits 6-3 Bits 14-9 of
-                                         * Slave device serial number
-                                         *
-                                         * <DI_Ss2> encodes 7 bits of the 32 bit
-                                         * Slave device serial number: * bit 7
-                                         * always 0 * bits 6-3 Bits 22-16 of
-                                         * Slave device serial number
-                                         *
-                                         * <DI_Ss3> encodes 7 bits of the 32 bit
-                                         * Slave device serial number: * bit 7
-                                         * always 0 * bits 6-3 Bits 30-24 of
-                                         * Slave device serial number * *
-                                         * Information reverse-engineered by B.
-                                         * Milhaupt and used with permission *
-                                         * **********************************************************************************
-                                         */
-                                        // Request for one specific IPL-queryable device to return its identity information.
-                                        // Expected response is of type <E5><14><10>...
-                                        //
-                                        // Note that standard definitions are provided for RF24, even though these
-                                        // devices do not generate this report.
-                                        //
-                                        // Information reverse-engineered by B. Milhaupt and used with permission
-                                        String hostType = getDeviceNameFromIPLInfo(l.getElement(4), l.getElement(5));
-                                        String hostVer = ((l.getElement(8) & 0x78) >> 3) + "." + ((l.getElement(8) & 0x7));
-                                        int hostSnInt = ((l.getElement(13) + (((l.getElement(9) & 0x8) == 8) ? 128 : 0)) * 256 * 256)
-                                                + ((l.getElement(12) + (((l.getElement(9) & 0x4) == 4) ? 128 : 0)) * 256)
-                                                + (l.getElement(11) + (((l.getElement(9) & 0x2) == 2) ? 128 : 0));
-                                        String hostSN = Integer.toHexString(hostSnInt).toUpperCase();
-                                        String hostInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_HOST_DETAILS",
-                                                hostType, hostSN, hostVer);
-
-                                        String slaveType = getSlaveNameFromIPLInfo(l.getElement(4), l.getElement(6));
-                                        String slaveInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_SLAVE_NO_SLAVE");
-                                        if (l.getElement(6) != 0) {
-                                            String slaveVer = (((l.getElement(10) & 0x78) >> 3) + ((l.getElement(9) & 1) << 4)) + "." + ((l.getElement(10) & 0x7));
-                                            int slaveSnInt
-                                                    = ((l.getElement(15) + (((l.getElement(14) & 0x1) == 1) ? 128 : 0)))
-                                                    + ((l.getElement(16) + (((l.getElement(14) & 0x2) == 2) ? 128 : 0)) * 256)
-                                                    + ((l.getElement(17) + (((l.getElement(14) & 0x4) == 4) ? 128 : 0)) * 256 * 256)
-                                                    + ((l.getElement(18) + (((l.getElement(14) & 0x8) == 8) ? 128 : 0)) * 256 * 256 * 256);
-                                            slaveInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_SLAVE_DETAILS", slaveType,
-                                                    Integer.toHexString(slaveSnInt).toUpperCase(),
-                                                    slaveVer);
-                                        }
-                                        return Bundle.getMessage("LN_MSG_IPL_DEVICE_IDENTITY_REPORT",
-                                                hostInfo,
-                                                slaveInfo);
-                                    } // end case 0x10, which decodes 0xe5 0x14 0x0f 0x10
-                                    default: {
-                                        break;
-                                    }
-
-                                } // end of switch (l.getElement(3)), which decodes 0xe5 0x14 0x0f 0x??
-                                break;
-                            } //end of case 0x0f, which decodes 0xe5 0x14 0x0f
-
-                            default: {
-                                break;
-                            }
-                        } // switch (l.getElement(2))
-                        break;
-                    } // case 0x14  (length of message)
-                    case 0x09: {
-                        /*
-                         * Transponding "find" query and report messages
-                         *
-                         * Information reverse-engineered by B. Milhaupt and used with permission */
-                        switch (l.getElement(2)) {
-                            case 0x40: {
-                                /**
-                                 * **********************************************************************************
-                                 * Transponding "find" query message * The
-                                 * message bytes are assigned as follows:
-                                 *
-                                 * <0xE5> <0x09> <0x40> <AD_H> <AD_L> <0x00>
-                                 * <0x00> <0x00> <CHK> * where:
-                                 *
-                                 * <AD_H> is encoded as shown below: * When
-                                 * <AD_H> = 0x7D, * Address is a 7 bit value
-                                 * defined solely by <AD_L>. * When <AD_H> is
-                                 * not 0x7D, * Address is a 14 bit value;
-                                 * AD_H{6:0} represent the upper 7 bits * of the
-                                 * 14 bit address.
-                                 *
-                                 * <AD_L> contains the least significant 7 bits
-                                 * of the 14 or 7 bit address. * * Information
-                                 * reverse-engineered by B. Milhaupt and used
-                                 * with permission *
-                                 * **********************************************************************************
-                                 */
-                                String locoAddr = convertToMixed(l.getElement(4), l.getElement(3));
-                                return Bundle.getMessage("LN_MSG_TRANSP_FIND_QUERY",
-                                        locoAddr);
-                            }
-                            case 0x00: {
-                                /**
-                                 * **********************************************************************************
-                                 * Transponding "find" report message * The
-                                 * message bytes are assigned as follows:
-                                 *
-                                 * <0xE5> <0x09> <0x00> <AD_H> <AD_L> <TR_ST>
-                                 * <TR_ZS> <0x00> <CHK> * where:
-                                 *
-                                 * <AD_H> is encoded as shown below: * When
-                                 * <AD_H> = 0x7D, * Address is a 7 bit value
-                                 * defined solely by <AD_L>. * When <AD_H> is
-                                 * not 0x7D, * Address is a 14 bit value;
-                                 * AD_H{6:0} represent the upper 7 bits * of the
-                                 * 14 bit address.
-                                 *
-                                 * <AD_L> contains the least significant 7 bits
-                                 * of the 14 or 7 bit address.
-                                 *
-                                 * <TR_ST> contains the transponding status for
-                                 * the addressed equipment, * encoded as: * bits
-                                 * 7-6 always 00b * bit 5 encodes transponding
-                                 * presence * 0 = Addressed equipment is absent
-                                 * * 1 = Addressed equipment is present * bits
-                                 * 4-0 encode bits 7-3 of the Detection Section
-                                 *
-                                 * <TR_ZS> contains the zone number and
-                                 * detection section, encoded as: * bit 7 always
-                                 * 0 * bits 6-4 encode bits 2-0 of the Detection
-                                 * Section * bits 3-1 encode the Transponding
-                                 * Zone as shown below * 000b Zone A * 001b Zone
-                                 * B * 010b Zone C * 011b Zone D * 100b Zone E *
-                                 * 101b Zone F * 110b Zone G * 111b Zone H * bit
-                                 * 0 always 0 * * Information reverse-engineered
-                                 * by B. Milhaupt and used with permission *
-                                 * **********************************************************************************
-                                 */
-
-                                int section = ((l.getElement(5) & 0x1F) << 3) + ((l.getElement(6) & 0x70) >> 4) + 1;
-                                String zone;
-                                String locoAddr = convertToMixed(l.getElement(4), l.getElement(3));
-
-                                switch (l.getElement(6) & 0x0F) {
-                                    case 0x00:
-                                        zone = "A";
-                                        break;
-                                    case 0x02:
-                                        zone = "B";
-                                        break;
-                                    case 0x04:
-                                        zone = "C";
-                                        break;
-                                    case 0x06:
-                                        zone = "D";
-                                        break;
-                                    case 0x08:
-                                        zone = "E";
-                                        break;
-                                    case 0x0A:
-                                        zone = "F";
-                                        break;
-                                    case 0x0C:
-                                        zone = "G";
-                                        break;
-                                    case 0x0E:
-                                        zone = "H";
-                                        break;
-                                    default:
-                                        zone = Bundle.getMessage("LN_MSG_TRANSP_HELPER_UNKNOWN_ZONE",
-                                                l.getElement(6) & 0x0F);
-                                        break;
-                                }
-
-                                // get system and user names
-                                String reporterSystemName = locoNetReporterPrefix
-                                        + ((l.getElement(5) & 0x1F) * 128 + l.getElement(6) + 1);
-
-                                Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
-                                String reporterUserName = "";
-                                if (reporter != null) {
-                                    String uname = reporter.getUserName();
-                                    if ((uname != null) && (!uname.isEmpty())) {
-                                        reporterUserName = "(" + uname + ")";
-                                        return Bundle.getMessage("LN_MSG_TRANSP_REPORT_KNOWN_REPORTER_USERNAME",
-                                                locoAddr,
-                                                reporterSystemName,
-                                                reporterUserName,
-                                                section,
-                                                zone);
-                                    } else {
-                                        return Bundle.getMessage("LN_MSG_TRANSP_REPORT_KNOWN_REPORTER_UNKNOWN_USERNAME",
-                                                locoAddr,
-                                                reporterSystemName,
-                                                section,
-                                                zone);
-                                    }
-                                }
-                                return Bundle.getMessage("LN_MSG_TRANSP_REPORT_UNKNOWN_REPORTER_UNKNOWN_USERNAME",
-                                        locoAddr, section, zone);
-                            }
-                            default: {
-                                break;
-                            }
-                        } // end of switch (l.getElement(2))
-                        break;
-                    } // end of case 0x09:
-
-                    case 0x07: {
-                        // This might be Uhlenbrock IB-COM start/stop programming track
-                        if (l.getElement(2) == 0x01 && l.getElement(3) == 0x49 && l.getElement(4) == 0x42) {
-                            switch (l.getElement(5)) {
-                                case 0x40: {
-                                    return Bundle.getMessage("LN_MSG_UHLENBROCK_STOP_PROGRAMMING_TRACK");
-                                }
-                                case 0x41: {
-                                    return Bundle.getMessage("LN_MSG_UHLENBROCK_START_PROGRAMMING_TRACK");
-                                }
-                                default:
-                                    break;
-                            }
-                        } else {
-                            break;
-                        }
-                        break;
-
-                    } // end of case 0x07:
-
+                        return Bundle.getMessage("LN_MSG_DUPLEX_RECEIVER_RESPONSE");
+                    }
                     default: {
                         break;
                     }
-                } // end of switch (l.getElement(1))
-                return "";
+                } // end of switch (l.getElement(3))
+                break;
+            }
+            case 0x02: {
+                // Request Duplex Radio Channel
+                switch (l.getElement(3)) {
+                    case 0x00: {
+                        int channel = l.getElement(5) | ((l.getElement(4) & 0x01) << 7);
+
+                        return Bundle.getMessage("LN_MSG_DUPLEX_CHANNEL_SET",
+                                Integer.toString(channel));
+                    }
+                    case 0x08: {
+                        return Bundle.getMessage("LN_MSG_DUPLEX_CHANNEL_QUERY");
+                    }
+                    case 0x10: {
+                        int channel = l.getElement(5) | ((l.getElement(4) & 0x01) << 7);
+
+                        return Bundle.getMessage("LN_MSG_DUPLEX_CHANNEL_REPORT",
+                                Integer.toString(channel));
+                    }
+                    default: {
+                        break;
+                    }
+                } // end of switch (l.getElement(3))
+                break;
+            }
+
+            case 0x03: {
+                // Duplex Group Name
+                // Characters appear to be 8 bit values, but transmitted over a 7 bit
+                // encoding, so high order bits are stashed in element 4 and 9.
+                char[] groupNameArray = {(char) (l.getElement(5) | ((l.getElement(4) & 0x01) << 7)),
+                    (char) (l.getElement(6) | ((l.getElement(4) & 0x02) << 6)),
+                    (char) (l.getElement(7) | ((l.getElement(4) & 0x04) << 5)),
+                    (char) (l.getElement(8) | ((l.getElement(4) & 0x08) << 4)),
+                    (char) (l.getElement(10) | ((l.getElement(9) & 0x01) << 7)),
+                    (char) (l.getElement(11) | ((l.getElement(9) & 0x02) << 6)),
+                    (char) (l.getElement(12) | ((l.getElement(9) & 0x04) << 5)),
+                    (char) (l.getElement(13) | ((l.getElement(9) & 0x08) << 4))};
+                String groupName = new String(groupNameArray);
+
+                // The pass code is stuffed in here, each digit in 4 bits.  But again, it's a
+                // 7 bit encoding, so the MSB of the "upper" half is stuffed into byte 14.
+                int p1 = ((l.getElement(14) & 0x01) << 3) | ((l.getElement(15) & 0x70) >> 4);
+                int p2 = l.getElement(15) & 0x0F;
+                int p3 = ((l.getElement(14) & 0x02) << 2) | ((l.getElement(16) & 0x70) >> 4);
+                int p4 = l.getElement(16) & 0x0F;
+
+                // It's not clear you can set A-F from throttles or Digitrax's tools, but
+                // they do take and get returned if you send them on the wire...
+                String passcode = StringUtil.twoHexFromInt(p1) + StringUtil.twoHexFromInt(p2)
+                        + StringUtil.twoHexFromInt(p3) + StringUtil.twoHexFromInt(p4);
+
+                // The MSB is stuffed elsewhere again...
+                int channel = l.getElement(17) | ((l.getElement(14) & 0x04) << 5);
+
+                // The MSB is stuffed elsewhere one last time.
+                int id = l.getElement(18) | ((l.getElement(14) & 0x08) << 4);
+
+                switch (l.getElement(3)) {
+                    case 0x00: {
+                        return Bundle.getMessage("LN_MSG_DUPLEX_NAME_WRITE",
+                                groupName);
+                    }
+                    case 0x08: {
+                        return Bundle.getMessage("LN_MSG_DUPLEX_NAME_QUERY");
+                    }
+                    case 0x10: {
+                        return Bundle.getMessage("LN_MSG_DUPLEX_NAME_REPORT",
+                                groupName, passcode, channel, id);
+                    }
+                    default: {
+                        break;
+                    }
+                } // end of switch (l.getElement(3))
+                break;
+            }
+            case 0x04: {
+                // Duplex Group ID
+
+                // The MSB is stuffed elsewhere again...
+                int id = l.getElement(5) | ((l.getElement(4) & 0x01) << 7);
+
+                switch (l.getElement(3)) {
+                    case 0x00: {
+                        return Bundle.getMessage("LN_MSG_DUPLEX_ID_SET",id);
+                    }
+                    case 0x08: {
+                        return Bundle.getMessage("LN_MSG_DUPLEX_ID_QUERY");
+                    }
+                    case 0x10: {
+                        return Bundle.getMessage("LN_MSG_DUPLEX_ID_REPORT",id);
+                    }
+                    default: {
+                        break;
+                    }
+                } // end of switch (l.getElement(3))
+                break;
+            }
+            case 0x07: {
+                // Duplex Group Password
+                char[] groupPasswordArray = {(char) l.getElement(5),
+                    (char) l.getElement(6),
+                    (char) l.getElement(7),
+                    (char) l.getElement(8)};
+                String groupPassword = new String(groupPasswordArray);
+
+                switch (l.getElement(3)) {
+                    case 0x00: {
+                        return Bundle.getMessage("LN_MSG_DUPLEX_PASSWORD_SET", groupPassword);
+                    }
+                    case 0x08: {
+                        return Bundle.getMessage("LN_MSG_DUPLEX_PASSWORD_QUERY");
+                    }
+                    case 0x10: {
+                        return Bundle.getMessage("LN_MSG_DUPLEX_PASSWORD_REPORT", groupPassword);
+                    }
+                    default: {
+                        break;
+                    }
+                } // end of switch (l.getElement(3))
+                break;
+            }
+            case 0x10: {
+                // Radio Channel Noise/Activity
+                switch (l.getElement(3)) {
+                    case 0x08: {
+                        return Bundle.getMessage("LN_MSG_DUPLEX_CHANNEL_SCAN_QUERY", l.getElement(5));
+                    }
+                    case 0x10: {
+                        // High order bit stashed in another element again.
+                        int level = (l.getElement(6) & 0x7F) | ((l.getElement(4) & 0x02) << 6);
+
+                        return Bundle.getMessage("LN_MSG_DUPLEX_CHANNEL_SCAN_REPORT", l.getElement(5),
+                                level);
+                    }
+                    default: {
+                        break;
+                    }
+                } // end of switch (l.getElement(3))
+
+            break;
+            }
+
+            case LnConstants.RE_IPL_PING_OPERATION: {
+
+                /**
+                 * **********************************************************************************
+                 * IPL-capable device ping - OPC_RE_IPL (Device
+                 * Ping Operations) * The message bytes as
+                 * assigned as follows:
+                 *
+                 * <E5> <14> <08> <GR_OP_T> <DI_F2> <DI_Ss0>
+                 * <DI_Ss1> ...
+                 *
+                 * <DI_Ss2> <DI_Ss3> <DI_U1> <00> <00> <DI_U2>
+                 * <DI_U3> ...
+                 *
+                 * <00> <00><00> <00><00> <CHK> * where:
+                 *
+                 * <DI_F2> encodes additional bits for the Slave
+                 * device serial number. * bits 7-4 always 0000b
+                 * * bit 3 Bit 31 of Slave Device Serial Number
+                 * * bit 2 Bit 23 of Slave Device Serial Number
+                 * * bit 1 Bit 15 of Slave device Serial Number
+                 * * bit 0 Bit 7 of Slave device Serial Number
+                 *
+                 * <DI_Ss0> encodes 7 bits of the 32 bit Host
+                 * device serial number: * bit 7 always 0 * bits
+                 * 6-0 Bits 6:0 of Slave device serial number
+                 *
+                 * <DI_Ss1> encodes 7 bits of the 32 bit Host
+                 * device serial number: * bit 7 always 0 * bits
+                 * 6-0 Bits 14:8 of Slave device serial number
+                 *
+                 * <DI_Ss2> encodes 7 bits of the 32 bit Host
+                 * device serial number: * bit 7 always 0 * bits
+                 * 6-0 Bits 22:16 of Slave device serial number
+                 *
+                 * <DI_Ss3> encodes 7 bits of the 32 bit Host
+                 * device serial number: * bit 7 always 0 * bits
+                 * 6-0 Bits 30:24 of Slave device serial number
+                 *
+                 * <DI_U1> unknown data * when <GR_OP_T> = 0x08
+                 * * is always 0 * when <GR_OP_T> = 0x10 * is
+                 * not reverse-engineered and may be non-zero.
+                 *
+                 * <DI_U2> unknown data * when <GR_OP_T> = 0x08
+                 * * is always 0 * when <GR_OP_T> = 0x10 * is
+                 * not reverse-engineered and may be non-zero.
+                 *
+                 * <DI_U3> unknown data * when <GR_OP_T> = 0x08
+                 * * is always 0 * when <GR_OP_T> = 0x10 * is
+                 * not reverse-engineered and may be non-zero. *
+                 * * Information reverse-engineered by B.
+                 * Milhaupt and used with permission *
+                 * **********************************************************************************
+                 */
+                /* OPC_RE_IPL (IPL Ping Operation) */
+                // Operations related to DigiIPL Device "Ping" operations
+                //
+                // "Ping" request issued from DigiIPL ver 1.09 issues this message on LocoNet.
+                // The LocoNet request message encodes a serial number but NOT a device type.
+                //
+                // Depending on which devices are selected in DigiIPL when the "ping"
+                // is selected, (and probably the S/Ns of the devices attached to the LocoNet,
+                // the response is as follows:
+                //     DT402D  LocoNet message includes the serial number from the DT402D's
+                //             Slave (RF24) serial number.  If a UR92 is attached to LocoNet,
+                //             it will send the message via its RF link to the addressed
+                //             DT402D.  (UR92 apparantly assumes that the long 802.15.4
+                //             address of the DT402D is based on the serial number embedded
+                //             in the LocoNet message, with the MS 32 bits based on the UR92
+                //             long address MS 32 bits).  If more than one UR92 is attached
+                //             to LocoNet, all will pass the message to the RF interface.
+                //     UR92    LocoNet message includes the Slave serial number from the UR92.
+                //             These messages are not passed to the RF link by the addressed
+                //             UR92.  If more than one UR92 is attached to LocoNet, and the
+                //             addressed UR92 hears the RF version of the LocoNet message, it
+                //             will respond via the RF interface with an acknowledge packet,
+                //             and a UR92 (not sure which one) responds on LocoNet with a
+                //             Ping report <e5><14><08><10>.
+                //     PR3     LocoNet message includes an effective serial number of all
+                //             zeros.  There is no LocoNet message reply generated to a
+                //             request to a PR3 S/N, but there will be a reply on the PR3's
+                //             computer interface if the ping request was sent via the PR3's
+                //             computer interface (i.e. not from some other LocoNet agent).
+                //     UT4D    While it has been suggested that the UT4D supports firmware
+                //             updates, the UT4D does not respond to the Ping message.
+                //     LNRP    While it has been suggested that the LNRP supports firmware
+                //             updates, the LNRP does not respond to the Ping message.
+                //
+                // Ping Report values:
+                //     <unkn1> Seems always to be <0C>.  None of the bytes relate to
+                //             Duplex Channel Number.
+                //     <unkn2> Matches byte 15 of the MAC payload of the reply sent by the
+                //             targeted UR92.
+                //     <unkn3> Unclear what this byte means.
+                //
+                // Information reverse-engineered by B. Milhaupt and used with permission
+                switch (l.getElement(3)) {
+                    case 0x08:
+                        /* OPC_RE_IPL (IPL Ping Query) */
+                        // Ping Request: <e5><14><08><08><msBits><Sn0><Sn1><Sn2><Sn3><0><0><0><0><0><0><0><0><0><0><0><Chk>
+
+                        if ((((l.getElement(4) & 0xF) != 0) || (l.getElement(5) != 0)
+                                || (l.getElement(6) != 0) || (l.getElement(7) != 0) || (l.getElement(8) != 0))
+                                && (l.getElement(9) == 0) && (l.getElement(10) == 0)
+                                && (l.getElement(11) == 0) && (l.getElement(12) == 0)
+                                && (l.getElement(13) == 0) && (l.getElement(14) == 0)
+                                && (l.getElement(15) == 0) && (l.getElement(16) == 0)
+                                && (l.getElement(17) == 0) && (l.getElement(18) == 0)) {
+
+                            int hostSnInt;
+                            hostSnInt = (l.getElement(5) + (((l.getElement(4) & 0x1) == 1) ? 128 : 0))
+                                    + ((l.getElement(6) + (((l.getElement(4) & 0x2) == 2) ? 128 : 0)) * 256)
+                                    + ((l.getElement(7) + (((l.getElement(4) & 0x4) == 4) ? 128 : 0)) * 256 * 256)
+                                    + ((l.getElement(8) + (((l.getElement(4) & 0x8) == 8) ? 128 : 0)) * 256 * 256 * 256);
+                            return Bundle.getMessage("LN_MSG_DUPLEX_PING_REQUEST",
+                                    Integer.toHexString(hostSnInt).toUpperCase());
+                        }
+                        break;
+                    case 0x10:
+                        /* OPC_RE_IPL (IPL Ping Report) */
+
+                        // Ping Report:  <e5><14><08><10><msbits><Sn0><Sn1><Sn2><Sn3><unkn1><0><0><Unkn2><Unkn3><0><0><0><0><0><Chk>
+                        if (((l.getElement(4) & 0xF) != 0) || (l.getElement(5) != 0) || (l.getElement(6) != 0)
+                                || (l.getElement(7) != 0) || (l.getElement(8) != 0)) {   // if any serial number bit is non-zero //
+                            int hostSnInt = (l.getElement(5) + (((l.getElement(4) & 0x1) == 1) ? 128 : 0))
+                                    + ((l.getElement(6) + (((l.getElement(4) & 0x2) == 2) ? 128 : 0)) * 256)
+                                    + ((l.getElement(7) + (((l.getElement(4) & 0x4) == 4) ? 128 : 0)) * 256 * 256)
+                                    + ((l.getElement(8) + (((l.getElement(4) & 0x8) == 8) ? 128 : 0)) * 256 * 256 * 256);
+                            return Bundle.getMessage("LN_MSG_DUPLEX_PING_REPORT",
+                                    StringUtil.twoHexFromInt(hostSnInt).toUpperCase(),
+                                    StringUtil.twoHexFromInt(l.getElement(12) + (((l.getElement(9)) & 0x4) == 0x4 ? 128 : 0)).toUpperCase(),
+                                    StringUtil.twoHexFromInt(l.getElement(13) + (((l.getElement(9)) & 0x8) == 0x8 ? 128 : 0)).toUpperCase()
+                                    );
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            } //end of case 0x08, which decodes 0xe5 0x14 0x08
+
+            case LnConstants.RE_IPL_IDENTITY_OPERATION: {
+                String interpretedMessage;
+                // Operations related to DigiIPL "Ping", "Identify" and "Discover"
+                String device;
+
+                switch (l.getElement(3)) {
+                    case 0x08: {
+                        if ((l.getElement(4) == 0)
+                                && (l.getElement(5) == 0) && (l.getElement(6) == 0)
+                                && (l.getElement(7) == 0) && (l.getElement(8) == 0)
+                                && (l.getElement(9) == 0) && (l.getElement(10) == 0)
+                                && (l.getElement(11) == 1) && (l.getElement(12) == 0)
+                                && (l.getElement(13) == 0) && (l.getElement(14) == 0)
+                                && (l.getElement(15) == 0) && (l.getElement(16) == 0)
+                                && (l.getElement(17) == 0) && (l.getElement(18) == 0)) {
+                            /**
+                             * **********************************************************************************
+                             * IPL capable device query -
+                             * RE_IPL_IDENTITY_OPERATION (Device
+                             * Query) * The message bytes are
+                             * assigned as follows:
+                             *
+                             * <E5> <14> <0F> <08> <00> <00>
+                             * <00> <00> <00> <00> <00> <01>
+                             * <00> <00> ...
+                             *
+                             * <00> <00> <00> <00> <00> <CHK> *
+                             * * Information reverse-engineered
+                             * by B. Milhaupt and used with
+                             * permission *
+                             * **********************************************************************************
+                             */
+                            // Request for all IPL-queryable devices to report their presence
+                            //
+                            // Information reverse-engineered by B. Milhaupt and used with permission
+
+                            return Bundle.getMessage("LN_MSG_IPL_DISCOVER_ALL_DEVICES");
+                        } else if (((l.getElement(5) != 0) || (l.getElement(6) != 0))) {
+                            /**
+                             * **********************************************************************************
+                             * IPL device query by type -
+                             * RE_IPL_IDENTITY_OPERATION (Device
+                             * Query) * The message bytes are
+                             * assigned as follows:
+                             *
+                             * <E5> <14> <0F> <08> <DI_Hmf>
+                             * <DI_Hst> <DI_Slv> <00> <00> <00>
+                             * <00> <01> ...
+                             *
+                             * <00> <00> <00> <00> <00> <00>
+                             * <00> <CHK> * where:
+                             *
+                             * <DI_Hmf> DigiIPL-capable Host
+                             * device manufacturer number. This
+                             * is not * the same as an NMRA
+                             * Manufacturer ID. * 0x00 Digitrax
+                             * * Others No other Host device
+                             * manufacturer * numbers have been
+                             * reverse- * engineered
+                             *
+                             * <DI_Hst> encodes the
+                             * DigiIPL-capable Host device type
+                             * as follows: * When <DI_Hmf> =
+                             * 0x00 * 0x00 (0 decimal) No Host
+                             * device type reported * 0x04 (4
+                             * decimal) UT4D (Note that UT4D,
+                             * UT4 and UT4R do * not respond to
+                             * this DigiIPL * request) * 0x18
+                             * (24 decimal) RF24 - not typically
+                             * a Host device * 0x23 (35 decimal)
+                             * PR3 * 0x2A (42 decimal) DT402 (or
+                             * DT402R or DT402D) * 0x33 (51
+                             * decimal) DCS51 * 0x5C (92
+                             * decimal) UR92 * Others No other
+                             * Host device types have been *
+                             * reverse-engineered * When
+                             * <DI_Hmf> is not 0x00 * All values
+                             * Not reverse-engineered
+                             *
+                             * <DI_Slv> encodes the
+                             * DigiIPL-capable Slave device type
+                             * as follows: * When <DI_Smf> =
+                             * 0x00 * 0x00 (0 decimal) Report
+                             * for all Slave device types * 0x18
+                             * (24 decimal) RF24 * Others No
+                             * other Slave device types have
+                             * been * reverse-engineered * *
+                             * Information reverse-engineered by
+                             * B. Milhaupt and used with
+                             * permission *
+                             * **********************************************************************************
+                             */
+                            // Request for IPL-queryable devices of given manufacturer and type to report
+                            // their presence
+                            //
+                            // Note that standard definitions are provided for UT4D and RF24, even though these
+                            // devices do not respond to this query.  Note that UT4D will respond to IPL capable
+                            // device query with DI_Hmf = 0, DI_Hst = 0, DI_Slv = 0, and DI_Smf = 0.
+                            //
+                            // Information reverse-engineered by B. Milhaupt and used with permission
+
+                            device = getDeviceNameFromIPLInfo(l.getElement(4), l.getElement(5));
+                            String slave = getSlaveNameFromIPLInfo(l.getElement(4), l.getElement(6));
+                            return Bundle.getMessage("LN_MSG_IPL_DISCOVER_SPECIFIC_DEVICES",
+                                    device, slave);
+                        }
+                        break;
+                    } // end case 0x08, which decodes 0xe5 0x14 0x0f 0x08
+                    case 0x10: {
+                        /**
+                         * **********************************************************************************
+                         * IPL device identity report -
+                         * RE_IPL_IDENTITY_OPERATION (Device
+                         * Report) * The message bytes are
+                         * assigned as follows:
+                         *
+                         * <E5> <14> <0F> <08> <DI_Hmf> <DI_Hst>
+                         * <DI_Slv> <DI_Smf> <DI_Hsw> ...
+                         *
+                         * <DI_F1> <DI_Ssw> <DI_Hs0> <DI_Hs1>
+                         * <DI_Hs2> <DI_F2> <DI_Ss0> ...
+                         *
+                         * <DI_Ss1> <DI_Ss2> <DI_Ss3> <CHK> *
+                         * where:
+                         *
+                         * <DI_Hmf> DigiIPL-capable Host device
+                         * manufacturer number. This is not *
+                         * the same as an NMRA Manufacturer ID.
+                         * * 0x00 Digitrax * Others No other
+                         * Host device manufacturer * numbers
+                         * have been reverse- * engineered
+                         *
+                         * <DI_Hst> encodes the DigiIPL-capable
+                         * Host device type as follows: * When
+                         * <DI_Hmf> = 0x00 * 0x00 (0 decimal) No
+                         * Host device type reported * 0x04 (4
+                         * decimal) UT4D * 0x23 (35 decimal) PR3
+                         * * 0x2A (42 decimal) DT402 (or DT402R
+                         * or DT402D) * 0x33 (51 decimal) DCS51
+                         * * 0x5C (92 decimal) UR92 * Others No
+                         * other Host device types have been *
+                         * reverse-engineered * When <DI_Hmf> is
+                         * not 0x00 * All values Not
+                         * reverse-engineered
+                         *
+                         * <DI_Slv> encodes the DigiIPL-capable
+                         * Slave device type as follows: * When
+                         * <DI_Smf> = 0x00 * 0x00 (0 decimal)
+                         * Report for all Slave device types *
+                         * 0x18 (24 decimal) RF24 * Others No
+                         * other Slave device types have been *
+                         * reverse-engineered
+                         *
+                         * <DI_Smf> DigiIPL-capable Slave device
+                         * manufacturer number. This is not *
+                         * the same as an NMRA Manufacturer ID.
+                         * * 0x00 Digitrax * Others No other
+                         * Slave device manufacturer * numbers
+                         * have been reverse- * engineered
+                         *
+                         * <DI_Hsw> encodes the DigiIPL-capable
+                         * Host device firmware revision *
+                         * number as follows: * bit 7 always 0 *
+                         * bits 6-3 Host device firmware major
+                         * revision number * bits 2-0 Host
+                         * device firmware minor revision number
+                         *
+                         * <DI_F1> encodes additional bits for
+                         * the Slave device firmware major *
+                         * revision number and for the Host
+                         * device serial number. * bits 7-4
+                         * always 0000b * bit 3 Bit 23 of Host
+                         * Device Serial Number * bit 2 Bit 15
+                         * of Host Device Serial Number * bit 1
+                         * Bit 7 of Host Device Serial Number *
+                         * bit 0 bit 4 of Slave device firmware
+                         * Major number
+                         *
+                         * <DI_Ssw> encodes the DigiIPL-capable
+                         * Slave device firmware revision *
+                         * number as follows: * bit 7 always 0 *
+                         * bits 6-3 Host device firmware major
+                         * revision number * bits 6-3 4
+                         * least-significant bits of Slave
+                         * device firmware major * revision
+                         * number (see also <DI_F1>[0]) * bits
+                         * 2-0 Slave device firmware minor
+                         * revision number
+                         *
+                         * <DI_Hs0> encodes 7 bits of the 24 bit
+                         * Host device serial number: * bit 7
+                         * always 0 * bits 6-3 Bits 6-0 of Host
+                         * device serial number
+                         *
+                         * <DI_Hs1> encodes 7 bits of the 24 bit
+                         * Host device serial number: * bit 7
+                         * always 0 * bits 6-3 Bits 14-9 of Host
+                         * device serial number
+                         *
+                         * <DI_Hs2> encodes 7 bits of the 24 bit
+                         * Host device serial number: * bit 7
+                         * always 0 * bits 6-3 Bits 22-16 of
+                         * Host device serial number
+                         *
+                         * <DI_F2> encodes additional bits for
+                         * the Slave device serial number. *
+                         * bits 7-4 always 0000b * bit 3 Bit 31
+                         * of Slave Device Serial Number * bit 2
+                         * Bit 23 of Slave Device Serial Number
+                         * * bit 1 Bit 15 of Slave Device Serial
+                         * Number * bit 0 Bit 7 of Slave Device
+                         * Serial Number
+                         *
+                         * <DI_Ss0> encodes 7 bits of the 32 bit
+                         * Slave device serial number: * bit 7
+                         * always 0 * bits 6-3 Bits 6-0 of Slave
+                         * device serial number
+                         *
+                         * <DI_Ss1> encodes 7 bits of the 32 bit
+                         * Slave device serial number: * bit 7
+                         * always 0 * bits 6-3 Bits 14-9 of
+                         * Slave device serial number
+                         *
+                         * <DI_Ss2> encodes 7 bits of the 32 bit
+                         * Slave device serial number: * bit 7
+                         * always 0 * bits 6-3 Bits 22-16 of
+                         * Slave device serial number
+                         *
+                         * <DI_Ss3> encodes 7 bits of the 32 bit
+                         * Slave device serial number: * bit 7
+                         * always 0 * bits 6-3 Bits 30-24 of
+                         * Slave device serial number * *
+                         * Information reverse-engineered by B.
+                         * Milhaupt and used with permission *
+                         * **********************************************************************************
+                         */
+                        // Request for one specific IPL-queryable device to return its identity information.
+                        // Expected response is of type <E5><14><10>...
+                        //
+                        // Note that standard definitions are provided for RF24, even though these
+                        // devices do not generate this report.
+                        //
+                        // Information reverse-engineered by B. Milhaupt and used with permission
+                        String hostType = getDeviceNameFromIPLInfo(l.getElement(4), l.getElement(5));
+                        String hostVer = ((l.getElement(8) & 0x78) >> 3) + "." + ((l.getElement(8) & 0x7));
+                        int hostSnInt = ((l.getElement(13) + (((l.getElement(9) & 0x8) == 8) ? 128 : 0)) * 256 * 256)
+                                + ((l.getElement(12) + (((l.getElement(9) & 0x4) == 4) ? 128 : 0)) * 256)
+                                + (l.getElement(11) + (((l.getElement(9) & 0x2) == 2) ? 128 : 0));
+                        String hostSN = Integer.toHexString(hostSnInt).toUpperCase();
+                        String hostInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_HOST_DETAILS",
+                                hostType, hostSN, hostVer);
+
+                        String slaveType = getSlaveNameFromIPLInfo(l.getElement(4), l.getElement(6));
+                        String slaveInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_SLAVE_NO_SLAVE");
+                        if (l.getElement(6) != 0) {
+                            String slaveVer = (((l.getElement(10) & 0x78) >> 3) + ((l.getElement(9) & 1) << 4)) + "." + ((l.getElement(10) & 0x7));
+                            int slaveSnInt
+                                    = ((l.getElement(15) + (((l.getElement(14) & 0x1) == 1) ? 128 : 0)))
+                                    + ((l.getElement(16) + (((l.getElement(14) & 0x2) == 2) ? 128 : 0)) * 256)
+                                    + ((l.getElement(17) + (((l.getElement(14) & 0x4) == 4) ? 128 : 0)) * 256 * 256)
+                                    + ((l.getElement(18) + (((l.getElement(14) & 0x8) == 8) ? 128 : 0)) * 256 * 256 * 256);
+                            slaveInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_SLAVE_DETAILS", slaveType,
+                                    Integer.toHexString(slaveSnInt).toUpperCase(),
+                                    slaveVer);
+                        }
+                        return Bundle.getMessage("LN_MSG_IPL_DEVICE_IDENTITY_REPORT",
+                                hostInfo,
+                                slaveInfo);
+                    } // end case 0x10, which decodes 0xe5 0x14 0x0f 0x10
+                    default: {
+                        break;
+                    }
+
+                } // end of switch (l.getElement(3)), which decodes 0xe5 0x14 0x0f 0x??
+                break;
+            } //end of case 0x0f, which decodes 0xe5 0x14 0x0f
+
+            default: {
+                break;
+            }
+        } // switch (l.getElement(2))
+        return "";
+    }
+    private String interpretOpcPeerXfer16(LocoNetMessage l) {
+        /*
+         * SRC=7F is THROTTLE msg xfer
+         *  ; <DSTL><DSTH> encode ID#,
+         *  ; <0><0> is THROT B'CAST
+         *  ; <PXCT1>=<0,XC2,XC1,XC0 - D4.7,D3.7,D2.7,D1.7>
+         *  ; XC0-XC2=ADR type CODE-0=7 bit Peer
+         * TO Peer adrs *
+         *  ; 1=<D1>is SRC HI,<D2>is DST HI
+         *  ; <PXCT2>=<0,XC5,XC4,XC3 - D8.7,D7.7,D6.7,D5.7>
+         *  ; XC3-XC5=data type CODE- 0=ANSI TEXT string,
+         *  ; balance RESERVED *
+         * ****************************************************
+         * SV programming format 1
+         *
+         * This is the message format as implemented by the certain
+         * existing devices. New designs should not use this format. The
+         * message bytes are assigned as follows:
+         *   ; <0xE5> <0x10> <SRC> <DST> <0x01> <PXCT1>
+         *   ; <D1> <D2> <D3> <D4> <PXCT2>
+         *   ; <D5> <D6> <D7> <D8> <CHK>
+         *
+         * The upper nibble of PXCT1 must be 0,
+         * and the upper nibble of PXCT2 must be 1. The meanings of the
+         * remaining bytes are as defined in the LocoNet Personal
+         * Edition specification.
+         * *********************************************
+         * SV programming format 2
+         *
+         * This is the recommended format for new designs.
+         * The message bytes as assigned as follows: *
+         *  ; <0xE5> <0x10> <SRC> <SV_CMD> <SV_TYPE> <SVX1>
+         *  ; <DST_L> <DST_H> <SV_ADRL> <SV_ADRH> <SVX2>
+         *  ; <D1> <D2> <D3> <D4> <CHK>
+         *
+         * The upper nibble of both SVX1 (PXCT1) and SVX2 (PXCT2) must be 1.
+         */
+
+        int src = l.getElement(2); // source of transfer
+        int dst_l = l.getElement(3); // ls 7 bits of destination
+        int dst_h = l.getElement(4); // ms 7 bits of destination
+        int pxct1 = l.getElement(5);
+        int pxct2 = l.getElement(10);
+
+        int d[] = l.getPeerXfrData();
+
+        if ((src == 0x7F) && (dst_l == 0x7F) && (dst_h == 0x7F)
+                && ((pxct1 & 0x70) == 0x40)) {
+            // Download (firmware?) messages.
+            int sub = pxct2 & 0x70;
+            switch (sub) {
+                case 0x00: // setup
+                    return Bundle.getMessage("LN_MSG_IPL_SETUP",
+                            l.getElement(6),
+                            l.getElement(8),
+                            l.getElement(9),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(l.getElement(7))),
+                            l.getElement(11));
+                case 0x10: // set address
+                    return Bundle.getMessage("LN_MSG_IPL_SET_ADDRESS",
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(d[0])
+                                            + StringUtil.twoHexFromInt(d[1])
+                                            + StringUtil.twoHexFromInt(d[2])));
+                case 0x20: // send data
+                case 0x30: // verify
+                    return Bundle.getMessage((sub == 0x20) ? "LN_MSG_IPL_SEND_DATA" : "LN_MSG_IPL_VERIFY_REQUEST",
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[0])),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[1])),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[2])),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[3])),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[4])),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[5])),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[6])),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[7])));
+                case 0x40: // end op
+                    return Bundle.getMessage("LN_MSG_IPL_END");
+                default: // everything else isn't understood, go to default
+                    break;
+            }
+        }
+        if (src == 0x50) {
+            // Packets from the LocoBuffer
+            String dst_subaddrx = (dst_h != 0x01 ? "" : ((d[4] != 0)
+                    ? "/" + Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[4]))
+                    : ""));
+            if (dst_h == 0x01 && ((pxct1 & 0xF0) == 0x00)
+                    && ((pxct2 & 0xF0) == 0x10)) {
+                // LocoBuffer to LocoIO
+                if (d[2] == 0) {
+                    if (d[0] == 2) {
+                    return Bundle.getMessage("LN_MSG_LOCOIO_SV_QUERY",
+                            (dst_l == 0)
+                                    ? Bundle.getMessage("LN_MSG_LOCOIO_HELPER_BROADCAST")
+                                    : Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(dst_l)) + dst_subaddrx,
+                            d[1]);
+
+                    }
+                    return Bundle.getMessage("LN_MSG_LOCOIO_SV_WRITE",
+                            (dst_l == 0)
+                                    ? Bundle.getMessage("LN_MSG_LOCOIO_HELPER_BROADCAST")
+                                    : Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(dst_l)) + dst_subaddrx,
+                            d[1],
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[3])));
+                } else {
+                    return Bundle.getMessage((d[0] == 2)
+                            ? "LN_MSG_LOCOIO_SV_READ_FIRMWARE_REV"
+                            : "LN_MSG_LOCOIO_SV_WRITE_FIRMWARE_REV",
+                            (dst_l == 0) ? Bundle.getMessage("LN_MSG_LOCOIO_HELPER_BROADCAST")
+                                    : Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                            StringUtil.twoHexFromInt(dst_l)) + dst_subaddrx,
+                            d[1],
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[3])),
+                            dotme(d[2]));
+                }
+            }
+        }
+        if (dst_h == 0x01 && ((pxct1 & 0xF0) == 0x00)
+                && ((pxct2 & 0xF0) == 0x00)) {
+            // (Jabour/Deloof LocoIO), SV Programming messages format 1
+            String src_subaddrx = ((d[4] != 0) ? "/"
+                    + StringUtil.twoHexFromInt(d[4]) : ""); // should this be same as next line?
+            String dst_subaddrx = ((d[4] != 0) ? "/"
+                    + StringUtil.twoHexFromInt(d[4]) : "");
+
+            String dst_dev = ((dst_l == 0x50) ? "LocoBuffer " // dst_h == 1 known to be true // NOI18N
+                    : (((dst_h == 0x01) && (dst_l == 0x0))
+                            ? Bundle.getMessage("LN_MSG_SV1_HELPER_DST_ADDRESS_IS_BROADCAST")
+                            : "LocoIO@"     // NOI18N
+                    + Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(dst_l))
+                    + dst_subaddrx));
+            if (d[2] == 0) {
+                if (src == 0x50) {
+                    if (d[0] == 2) {
+                        return Bundle.getMessage("LN_MSG_LOCOBUF_SV1_QUERY",
+                                dst_dev, d[1] );
+                    } else {
+                        return Bundle.getMessage("LN_MSG_LOCOBUF_SV1_WRITE",
+                                dst_dev, d[1],
+                                d[7],
+                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[7])));
+                    }
+                } else {
+                    if (d[0] == 2) {
+                        return Bundle.getMessage("LN_MSG_LOCOIO_SV1_REPORT",
+                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                        StringUtil.twoHexFromInt(src))
+                                        + src_subaddrx,
+                                dst_dev, d[1] );
+                    } else {
+                        return Bundle.getMessage("LN_MSG_LOCOIO_SV1_WRITE",
+                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                        StringUtil.twoHexFromInt(src))
+                                        + src_subaddrx,
+                                dst_dev, d[1],
+                                d[7],
+                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[7])));
+                    }
+                }
+            } else {
+                if (src == 0x50) {
+                    if (d[0] == 2) {
+                        return Bundle.getMessage("LN_MSG_LOCOBUF_SV1_QUERY_FIRMWARE_REV",
+                                dst_dev, d[1], dotme(d[2]) );
+                    } else {
+                        return Bundle.getMessage("LN_MSG_LOCOBUF_SV1_WRITE_FIRMWARE_REV",
+                                dst_dev, d[1],
+                                d[7],
+                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[7])),
+                                dotme(d[2]) );
+                    }
+                } else {
+                    if (d[0] == 2) {
+                        return Bundle.getMessage("LN_MSG_LOCOIO_SV1_REPORT_FIRMWARE_REV",
+                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                        StringUtil.twoHexFromInt(src))
+                                        + src_subaddrx,
+                                dst_dev, d[1],
+                                dotme(d[2]) );
+                    } else {
+                        return Bundle.getMessage("LN_MSG_LOCOIO_SV1_WRITE_FIRMWARE_REV",
+                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                        StringUtil.twoHexFromInt(src))
+                                        + src_subaddrx,
+                                dst_dev, d[1],
+                                d[7],
+                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[7])),
+                                dotme(d[2]) );
+                    }
+                }
+            }
+        }
+        // check for a specific type - SV Programming messages format 2
+        // (New Designs)
+        String svReply = "";
+        LnSv2MessageContents svmc = null;
+        try {
+            // assume the message is an SV2 message
+            svmc = new LnSv2MessageContents(l);
+        } catch (IllegalArgumentException e) {
+            // message is not an SV2 message.  Ignore the exception.
+        }
+        if (svmc != null) {
+            // the message was indeed an SV2 message
+            try {
+                // get string representation of the message from an
+                // available translation which is best suited to
+                // the currently-active "locale"
+                svReply = svmc.toString();
+            } catch (IllegalArgumentException e) {
+                // message is not a properly-formatted SV2 message.  Ignore the exception.
+            }
+
+            if (svReply.length() > 1) {
+                // was able to interpret message as an SV format 2 message, so
+                // return its interpreted value
+                return svReply;
+            }
+        }
+
+        if ((src == 0x7F) && (dst_l == 0x0) && (dst_h == 0x0)
+                && ((pxct1 & 0x3) == 0x00) && ((pxct2 & 0x70) == 0x70)) {
+            // throttle semaphore symbol message
+            return Bundle.getMessage("LN_MSG_THROTTLE_SEMAPHORE",
+                    ((d[0] * 128) + d[1]),
+                    Bundle.getMessage(((d[2] & 0x10) == 0x10)
+                            ? "LN_MSG_THROTTLE_SEMAPHORE_HELPER_LIT"
+                            : "LN_MSG_THROTTLE_SEMAPHORE_HELPER_UNLIT"),
+                    Bundle.getMessage(((d[2] & 0x08) == 0x08)
+                            ? "LN_MSG_THROTTLE_SEMAPHORE_HELPER_LIT"
+                            : "LN_MSG_THROTTLE_SEMAPHORE_HELPER_UNLIT"),
+                    Bundle.getMessage(((d[2] & 0x04) == 0x04)
+                            ? "LN_MSG_THROTTLE_SEMAPHORE_HELPER_LIT"
+                            : "LN_MSG_THROTTLE_SEMAPHORE_HELPER_UNLIT"),
+                    Bundle.getMessage(((d[2] & 0x02) == 0x02)
+                            ? "LN_MSG_THROTTLE_SEMAPHORE_HELPER_LIT"
+                            : "LN_MSG_THROTTLE_SEMAPHORE_HELPER_UNLIT"),
+                    Bundle.getMessage(((d[2] & 0x01) == 0x01)
+                            ? "LN_MSG_THROTTLE_SEMAPHORE_HELPER_BLINKING"
+                            : "LN_MSG_THROTTLE_SEMAPHORE_HELPER_UNBLINKING")
+            );
+        }
+        if ((src == 0x7F) && ((pxct1 & 0x70) == 0x00)) {
+
+            if ((dst_l == 0x00) && (dst_h == 0x00)) {
+                return Bundle.getMessage("LN_MSG_THROTTLE_TEXT_MESSAGE_ALL_THROTTLES",
+                    (char) d[0],
+                    (char) d[1],
+                    (char) d[2],
+                    (char) d[3],
+                    (char) d[4],
+                    (char) d[5],
+                    (char) d[6],
+                    (char) d[7]);
+            } else {
+                return Bundle.getMessage("LN_MSG_THROTTLE_TEXT_MESSAGE_SPECIFIC_THROTTLE",
+                    (char) d[0],
+                    (char) d[1],
+                    (char) d[2],
+                    (char) d[3],
+                    (char) d[4],
+                    (char) d[5],
+                    (char) d[6],
+                    (char) d[7],
+                    idString(dst_l, dst_h));
+            }
+        }
+
+        // no specific interpretation is available, so simply return a generic format
+        return Bundle.getMessage("LN_MSG_GENERIC_PEER_TO_PEER",
+                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(src)),
+                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(dst_l)),
+                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(dst_h)),
+                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(pxct1)),
+                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(pxct2)),
+                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[0])),
+                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[1])),
+                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[2])),
+                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[3])),
+                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[4])),
+                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[5])),
+                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[6])),
+                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[7]))
+                );
+
+    }
+    private String interpretOpcPeerXfer10(LocoNetMessage l) {
+        // throttle status
+        int tcntrl = l.getElement(2);
+        String stat;
+        switch (tcntrl) {
+            case 0x40:
+                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_OK");
+                break;
+            case 0x7F:
+                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_NO_KEYPRESS");
+                break;
+            case 0x43:
+                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_PLUS_KEY");
+                break;
+            case 0x42:
+                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_MINUS_KEY");
+                break;
+            case 0x41:
+                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_RUNSTOP_KEY");
+                break;
+            case 0x4e:
+                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_RESP_SEM_DISP_CMD");
+                break;
+            default:
+                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_UNKONWN");
+                break;
+        }
+
+        return Bundle.getMessage("LN_MSG_THROTTLE_STATUS",
+                StringUtil.twoHexFromInt(tcntrl),
+                stat,
+                idString(l.getElement(3), l.getElement(4)),
+                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                        StringUtil.twoHexFromInt(l.getElement(7))),
+                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                        StringUtil.twoHexFromInt(l.getElement(8))));
+    }
+    
+    private String interpretOpcPeerXfer9(LocoNetMessage l) {
+        /*
+         * Transponding "find" query and report messages
+         *
+         * Information reverse-engineered by B. Milhaupt and used with permission */
+        switch (l.getElement(2)) {
+            case 0x40: {
+                /**
+                 * **********************************************************************************
+                 * Transponding "find" query message * The
+                 * message bytes are assigned as follows:
+                 *
+                 * <0xE5> <0x09> <0x40> <AD_H> <AD_L> <0x00>
+                 * <0x00> <0x00> <CHK> * where:
+                 *
+                 * <AD_H> is encoded as shown below: * When
+                 * <AD_H> = 0x7D, * Address is a 7 bit value
+                 * defined solely by <AD_L>. * When <AD_H> is
+                 * not 0x7D, * Address is a 14 bit value;
+                 * AD_H{6:0} represent the upper 7 bits * of the
+                 * 14 bit address.
+                 *
+                 * <AD_L> contains the least significant 7 bits
+                 * of the 14 or 7 bit address. * * Information
+                 * reverse-engineered by B. Milhaupt and used
+                 * with permission *
+                 * **********************************************************************************
+                 */
+                String locoAddr = convertToMixed(l.getElement(4), l.getElement(3));
+                return Bundle.getMessage("LN_MSG_TRANSP_FIND_QUERY",
+                        locoAddr);
+            }
+            case 0x00: {
+                /**
+                 * **********************************************************************************
+                 * Transponding "find" report message * The
+                 * message bytes are assigned as follows:
+                 *
+                 * <0xE5> <0x09> <0x00> <AD_H> <AD_L> <TR_ST>
+                 * <TR_ZS> <0x00> <CHK> * where:
+                 *
+                 * <AD_H> is encoded as shown below: * When
+                 * <AD_H> = 0x7D, * Address is a 7 bit value
+                 * defined solely by <AD_L>. * When <AD_H> is
+                 * not 0x7D, * Address is a 14 bit value;
+                 * AD_H{6:0} represent the upper 7 bits * of the
+                 * 14 bit address.
+                 *
+                 * <AD_L> contains the least significant 7 bits
+                 * of the 14 or 7 bit address.
+                 *
+                 * <TR_ST> contains the transponding status for
+                 * the addressed equipment, * encoded as: * bits
+                 * 7-6 always 00b * bit 5 encodes transponding
+                 * presence * 0 = Addressed equipment is absent
+                 * * 1 = Addressed equipment is present * bits
+                 * 4-0 encode bits 7-3 of the Detection Section
+                 *
+                 * <TR_ZS> contains the zone number and
+                 * detection section, encoded as: * bit 7 always
+                 * 0 * bits 6-4 encode bits 2-0 of the Detection
+                 * Section * bits 3-1 encode the Transponding
+                 * Zone as shown below * 000b Zone A * 001b Zone
+                 * B * 010b Zone C * 011b Zone D * 100b Zone E *
+                 * 101b Zone F * 110b Zone G * 111b Zone H * bit
+                 * 0 always 0 * * Information reverse-engineered
+                 * by B. Milhaupt and used with permission *
+                 * **********************************************************************************
+                 */
+
+                int section = ((l.getElement(5) & 0x1F) << 3) + ((l.getElement(6) & 0x70) >> 4) + 1;
+                String zone;
+                String locoAddr = convertToMixed(l.getElement(4), l.getElement(3));
+
+                switch (l.getElement(6) & 0x0F) {
+                    case 0x00:
+                        zone = "A";
+                        break;
+                    case 0x02:
+                        zone = "B";
+                        break;
+                    case 0x04:
+                        zone = "C";
+                        break;
+                    case 0x06:
+                        zone = "D";
+                        break;
+                    case 0x08:
+                        zone = "E";
+                        break;
+                    case 0x0A:
+                        zone = "F";
+                        break;
+                    case 0x0C:
+                        zone = "G";
+                        break;
+                    case 0x0E:
+                        zone = "H";
+                        break;
+                    default:
+                        zone = Bundle.getMessage("LN_MSG_TRANSP_HELPER_UNKNOWN_ZONE",
+                                l.getElement(6) & 0x0F);
+                        break;
+                }
+
+                // get system and user names
+                String reporterSystemName = locoNetReporterPrefix
+                        + ((l.getElement(5) & 0x1F) * 128 + l.getElement(6) + 1);
+
+                Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
+                String reporterUserName = "";
+                if (reporter != null) {
+                    String uname = reporter.getUserName();
+                    if ((uname != null) && (!uname.isEmpty())) {
+                        reporterUserName = "(" + uname + ")";
+                        return Bundle.getMessage("LN_MSG_TRANSP_REPORT_KNOWN_REPORTER_USERNAME",
+                                locoAddr,
+                                reporterSystemName,
+                                reporterUserName,
+                                section,
+                                zone);
+                    } else {
+                        return Bundle.getMessage("LN_MSG_TRANSP_REPORT_KNOWN_REPORTER_UNKNOWN_USERNAME",
+                                locoAddr,
+                                reporterSystemName,
+                                section,
+                                zone);
+                    }
+                }
+                return Bundle.getMessage("LN_MSG_TRANSP_REPORT_UNKNOWN_REPORTER_UNKNOWN_USERNAME",
+                        locoAddr, section, zone);
+            }
+            default: {
+                break;
+            }
+        } // end of switch (l.getElement(2))
+        return "";
+    }
+    
+    private String interpretOpcPeerXfer7(LocoNetMessage l) {
+        // This might be Uhlenbrock IB-COM start/stop programming track
+        if (l.getElement(2) == 0x01 && l.getElement(3) == 0x49 && l.getElement(4) == 0x42) {
+            switch (l.getElement(5)) {
+                case 0x40: {
+                    return Bundle.getMessage("LN_MSG_UHLENBROCK_STOP_PROGRAMMING_TRACK");
+                }
+                case 0x41: {
+                    return Bundle.getMessage("LN_MSG_UHLENBROCK_START_PROGRAMMING_TRACK");
+                }
+                default:
+                    break;
+            }
+        } 
+        return "";
+    }
+    
+    private String interpretOpcPeerXfer(LocoNetMessage l) {
+        String result = "";
+        // The first byte seems to determine the type of message.
+        switch (l.getElement(1)) {
+            case 0x10: { //l.getZElement(1)
+                result = interpretOpcPeerXfer16(l);
+                if (result.length() > 0) {
+                    return result;
+                }
+            } //  //l.getZElement(1) case 0x10
+
+            case 0x0A: {
+                result = interpretOpcPeerXfer10(l);
+                if (result.length() > 0) {
+                    return result;
+                }
+
+            } //  //l.getZElement(1)case 0x0A
+
+            case 0x14: {
+                result = interpretOpcPeerXfer20(l);
+                if (result.length() > 0) {
+                    return result;
+                }
+                break;
+            } //  //l.getElement(1) case 0x14  (length of message)
+            case 0x09: { // l.getZElement(1)
+                result = interpretOpcPeerXfer9(l);
+                if (result.length() > 0) {
+                    return result;
+                }
+                break;
+
+            } // end of  //l.getZElement(1) case 0x09:
+
+            case 0x07: {
+                result = interpretOpcPeerXfer7(l);
+                if (result.length() > 0) {
+                    return result;
+                }
+            } // end of  //l.getZElement(1) case 0x07:
+
+            default: {
+                break;
+            }
+        } // end of switch (l.getElement(1))
+        return "";
 
     }
 
