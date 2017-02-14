@@ -1011,7 +1011,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JTextArea helpTextArea2 = new JTextArea(rb.getString("Help2"));
         helpBar.add(helpTextArea2);
 
-        JPanel help3 = new JPanel();
         String helpText3 = "";
         switch (SystemType.getType()) {
             case SystemType.MACOSX:
@@ -8806,7 +8805,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public void setAntialiasingOn(boolean state) {
         if (antialiasingOn != state) {
             antialiasingOn = state;
-            
+
             // this may not be setup yet…
             if (antialiasingOnItem != null) {
                 antialiasingOnItem.setSelected(antialiasingOn);
