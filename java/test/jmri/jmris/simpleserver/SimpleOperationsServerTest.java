@@ -95,6 +95,69 @@ public class SimpleOperationsServerTest {
         Assert.assertEquals("SendLocationList Check","OPERATIONS , LOCATIONS=North End\nOPERATIONS , LOCATIONS=North Industries\nOPERATIONS , LOCATIONS=South End\n",sb.toString());
     }
 
+    // test sending the full status of a train.
+    @Test public void testSendFullStatus() throws java.io.IOException {
+        new jmri.jmrit.operations.trains.TrainBuilder().build(jmri.jmrit.operations.trains.TrainManager.instance().getTrainById("1"));
+        SimpleOperationsServer a = new SimpleOperationsServer(input, output);
+        a.sendFullStatus(jmri.jmrit.operations.trains.TrainManager.instance().getTrainByName("STF"));   
+        Assert.assertEquals("SendFullStatus Check","OPERATIONS , TRAIN=STF , TRAINLOCATION=North End , TRAINLENGTH=124 , TRAINWEIGHT=28 , TRAINCARS=3 , TRAINLEADLOCO , TRAINCABOOSE=CP C10099\n",sb.toString());
+    }
+
+    // test sending the full status of a train.
+    @Test public void testTrainPropertyChangeListener() {
+        SimpleOperationsServer a = new SimpleOperationsServer(input, output);
+        // Building a train causes the property change listener to send
+        // full status of the train.
+        new jmri.jmrit.operations.trains.TrainBuilder().build(jmri.jmrit.operations.trains.TrainManager.instance().getTrainById("1"));
+        Assert.assertEquals("SendFullStatus Check","OPERATIONS , TRAIN=STF , TRAINLOCATION=North End , TRAINLENGTH=124 , TRAINWEIGHT=28 , TRAINCARS=3 , TRAINLEADLOCO , TRAINCABOOSE=CP C10099\n",sb.toString());
+    }
+
+    //test parsing an message from the client.
+    @Test public void testParseTrainRequestStatus() throws jmri.JmriException,java.io.IOException{
+        String inputString = "OPERATIONS , TRAIN=STF , TRAINLENGTH , TRAINWEIGHT , TRAINCARS , TRAINLEADLOCO , TRAINCABOOSE , TRAINLOCATION";
+        
+        new jmri.jmrit.operations.trains.TrainBuilder().build(jmri.jmrit.operations.trains.TrainManager.instance().getTrainById("1"));
+        SimpleOperationsServer a = new SimpleOperationsServer(input, output);
+        a.parseStatus(inputString);
+        // parsing the input causes a status report to be generated.
+        Assert.assertEquals("Train Command Response Check","OPERATIONS , TRAIN=STF , TRAINLENGTH=124 , TRAINWEIGHT=28 , TRAINCARS=3 , TRAINCABOOSE=CP C10099 , TRAINLOCATION=North End\n",sb.toString());
+    }
+
+    @Test public void testParseTrainTerminateRequestStatus() throws jmri.JmriException,java.io.IOException{
+        String inputString = "OPERATIONS , TRAIN=STF , TERMINATE";
+        
+        new jmri.jmrit.operations.trains.TrainBuilder().build(jmri.jmrit.operations.trains.TrainManager.instance().getTrainById("1"));
+        SimpleOperationsServer a = new SimpleOperationsServer(input, output);
+        a.parseStatus(inputString);
+        // parsing the input causes a status report to be generated.
+        // in this case, we're checking the report contents using startsWith
+        // instead of an assertEquals because the report ends in a date, which
+        // changes with each run of the test.  We could generate the date, but 
+        // that is more work than required to verify the parsing was correct.
+        Assert.assertTrue("Terminate Command Response Check "+sb.toString(),sb.toString().startsWith("OPERATIONS , TRAIN=STF , TRAINLOCATION= , TRAINLENGTH=0 , TRAINWEIGHT=0 , TRAINCARS=0 , TRAINLEADLOCO , TRAINCABOOSE=\nOPERATIONS , TRAIN=STF , TERMINATE=Terminated"));
+    }
+
+
+    @Test public void testParseTrainsRequestStatus() throws jmri.JmriException,java.io.IOException{
+        String inputString = "OPERATIONS , TRAINS";
+        
+        new jmri.jmrit.operations.trains.TrainBuilder().build(jmri.jmrit.operations.trains.TrainManager.instance().getTrainById("1"));
+        SimpleOperationsServer a = new SimpleOperationsServer(input, output);
+        a.parseStatus(inputString);
+        // parsing the input causes a status report to be generated.
+        Assert.assertEquals("Trains Command Response Check","OPERATIONS , TRAINS=SFF\nOPERATIONS , TRAINS=STF\n",sb.toString());
+    }
+
+    @Test public void testParseLocationRequestStatus() throws jmri.JmriException,java.io.IOException{
+        String inputString = "OPERATIONS , LOCATIONS";
+        
+        new jmri.jmrit.operations.trains.TrainBuilder().build(jmri.jmrit.operations.trains.TrainManager.instance().getTrainById("1"));
+        SimpleOperationsServer a = new SimpleOperationsServer(input, output);
+        a.parseStatus(inputString);
+        // parsing the input causes a status report to be generated.
+        Assert.assertEquals("Locations Command Response Check","OPERATIONS , LOCATIONS=North End\nOPERATIONS , LOCATIONS=North Industries\nOPERATIONS , LOCATIONS=South End\n",sb.toString());
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
@@ -106,6 +169,7 @@ public class SimpleOperationsServerTest {
         jmri.util.JUnitUtil.initDebugThrottleManager();
         jmri.util.JUnitOperationsUtil.resetOperationsManager();
         jmri.util.JUnitOperationsUtil.initOperationsData();
+
         sb = new StringBuilder();
         output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {

@@ -79,7 +79,7 @@ public abstract class AbstractLightTestBase extends TestCase {
         t.setState(Light.OFF);
         // check
         Assert.assertEquals("state 1", jmri.Light.OFF, t.getState());
-        Assert.assertEquals("state 2", "Off", t.getStateString());
+        Assert.assertEquals("state 2", "Off", t.describeState(t.getState()));
         checkOffMsgSent();
     }
 
@@ -87,7 +87,7 @@ public abstract class AbstractLightTestBase extends TestCase {
         t.setState(Light.ON);
         // check
         Assert.assertEquals("state 1", jmri.Light.ON, t.getState());
-        Assert.assertEquals("state 2", "On", t.getStateString());
+        Assert.assertEquals("state 2", "On", t.describeState(t.getState()));
         checkOnMsgSent();
     }
 
