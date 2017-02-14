@@ -49,6 +49,7 @@ public class PackageTest extends TestCase {
 
         suite.addTest(SdiJfcUnitTest.suite());
         suite.addTest(new JUnit4TestAdapter(SdiWindowTest.class));
+        suite.addTest(new JUnit4TestAdapter(JmriJFrameInterfaceTest.class));
 
         return suite;
     }
