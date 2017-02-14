@@ -288,19 +288,15 @@ public class Llnmon {
         s[1] = (((dirf & LnConstants.DIRF_F1) == LnConstants.DIRF_F1)
                 ? Bundle.getMessage("LN_MSG_FUNC_ON")
                 : Bundle.getMessage("LN_MSG_FUNC_OFF"));
-
         s[2] = (((dirf & LnConstants.DIRF_F2) == LnConstants.DIRF_F2)
                 ? Bundle.getMessage("LN_MSG_FUNC_ON")
                 : Bundle.getMessage("LN_MSG_FUNC_OFF"));
-
         s[3] = (((dirf & LnConstants.DIRF_F3) == LnConstants.DIRF_F3)
                 ? Bundle.getMessage("LN_MSG_FUNC_ON")
                 : Bundle.getMessage("LN_MSG_FUNC_OFF"));
-
         s[4] = (((dirf & LnConstants.DIRF_F4) == LnConstants.DIRF_F4)
                 ? Bundle.getMessage("LN_MSG_FUNC_ON")
                 : Bundle.getMessage("LN_MSG_FUNC_OFF"));
-
         return s;
     }
 
@@ -525,32 +521,12 @@ public class Llnmon {
              * Page 8 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_SW_ACK: {
-                int sw2 = l.getElement(2);
-                if ((sw2 & 0x40) == 0x40) {
-                    break;
+                String result;
+                result = interpretOpcSwAck(l);
+                if (result.length() > 0) {
+                    return result;
                 }
-                // get system and user names
-                String turnoutSystemName = "";
-                String turnoutUserName = "";
-                turnoutSystemName = locoNetTurnoutPrefix
-                        + SENSOR_ADR(l.getElement(1), l.getElement(2));
-
-                Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
-                if (turnout != null) {
-                    String uname = turnout.getUserName();
-                    if ((uname != null) && (!uname.isEmpty())) {
-                        turnoutUserName = uname;
-                    }
-                }
-
-                String pointsDirection = ((sw2 & LnConstants.OPC_SW_ACK_CLOSED) != 0
-                        ? Bundle.getMessage("LN_MSG_SW_POS_CLOSED")
-                        : Bundle.getMessage("LN_MSG_SW_POS_THROWN"));
-                String outputState = (((sw2 & LnConstants.OPC_SW_ACK_OUTPUT) != 0)
-                        ? Bundle.getMessage("LN_MSG_SENSOR_SW_OUTPUT_STATE_ON")
-                        : Bundle.getMessage("LN_MSG_SENSOR_SW_OUTPUT_STATE_OFF"));
-                return Bundle.getMessage("LN_MSG_REQ_SWITCH", turnoutSystemName,
-                        turnoutUserName, pointsDirection, outputState);
+                break;
             } // case LnConstants.OPC_SW_ACK
 
             /*
@@ -561,24 +537,12 @@ public class Llnmon {
              * Page 8 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_SW_STATE: {
-                // get system and user names
-                if ((l.getElement(2) & 0x70) != 0x00) {
-                    break;
+                String result;
+                result = interpretOpcSwState(l);
+                if (result.length() > 0) {
+                    return result;
                 }
-                String turnoutSystemName;
-                String turnoutUserName = "";
-                turnoutSystemName = locoNetTurnoutPrefix
-                        + SENSOR_ADR(l.getElement(1), l.getElement(2));
-                Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
-                String uname = "";
-                if (turnout != null) {
-                    uname = turnout.getUserName();
-                    if ((uname != null) && (!uname.isEmpty())) {
-                        turnoutUserName = uname;
-                    }
-                }
-                return Bundle.getMessage("LN_MSG_SW_STATE", turnoutSystemName,
-                        turnoutUserName);
+                break;
             } // case LnConstants.OPC_SW_STATE
 
 
@@ -590,24 +554,12 @@ public class Llnmon {
              * Page 8 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_RQ_SL_DATA: {
-                int slot = l.getElement(1) + 128*l.getElement(2);
-
-                switch (slot) {
-                    // Slots > 120 are all special, but these are the only ones we know to decode.
-                    case LnConstants.FC_SLOT:
-                        return Bundle.getMessage("LN_MSG_SLOT_REQ_SLOT_FC_SLOT");
-                    case LnConstants.CFG_SLOT:
-                        return Bundle.getMessage("LN_MSG_SLOT_REQ_SLOT_CFG_SLOT");
-                    case LnConstants.PRG_SLOT:
-                        return Bundle.getMessage("LN_MSG_SLOT_REQ_SLOT_PRG_SLOT");
-                    case 0x79:
-                    case 0x7a:
-                    case 0x7d:
-                    case 0x7e:
-                        break;
-                    default:
-                        return Bundle.getMessage("LN_MSG_SLOT_REQ_SLOT_LOCO_SLOT", slot);
+                String result;
+                result = interpretOpcRqSlData(l);
+                if (result.length() > 0) {
+                    return result;
                 }
+                break;
             } // case LnConstants.OPC_RQ_SL_DATA
 
             /*
@@ -630,30 +582,12 @@ public class Llnmon {
              * Page 8 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_MOVE_SLOTS: {
-                int src = l.getElement(1);
-                int dest = l.getElement(2);
-                if ((src >= 0x79) && (src <= 0x7f)) {
-                        break;
+                String result;
+                result = interpretOpcMoveSlots(l);
+                if (result.length() > 0) {
+                    return result;
                 }
-
-                /* check special cases */
-                if (src == 0) {
-                    /* DISPATCH GET */
-
-                    return Bundle.getMessage("LN_MSG_MOVE_SL_GET_DISP");
-                } else if (src == dest) {
-                    /* IN USE */
-
-                    return Bundle.getMessage("LN_MSG_MOVE_SL_NULL_MOVE", src);
-                } else if (dest == 0) {
-                    /* DISPATCH PUT */
-
-                    return Bundle.getMessage("LN_MSG_MOVE_SL_DISPATCH_PUT", src);
-                } else {
-                    /* general move */
-
-                    return Bundle.getMessage("LN_MSG_MOVE_SL_MOVE", src, dest);
-                }
+                break;
             } // case LnConstants.OPC_MOVE_SLOTS
 
             /*
@@ -696,21 +630,12 @@ public class Llnmon {
              * Page 9 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_CONSIST_FUNC: {
-                int slot = l.getElement(1);
-                int dirf = l.getElement(2);
-                return Bundle.getMessage("LN_MSG_CONSIST_FUNC",
-                        slot,
-                        directionOfTravelString((dirf & LnConstants.DIRF_DIR) == 0),
-                        Bundle.getMessage((dirf & LnConstants.DIRF_F0) != 0
-                                ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF"),
-                        Bundle.getMessage((dirf & LnConstants.DIRF_F1) != 0
-                                ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF"),
-                        Bundle.getMessage((dirf & LnConstants.DIRF_F2) != 0
-                                ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF"),
-                        Bundle.getMessage((dirf & LnConstants.DIRF_F3) != 0
-                                ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF"),
-                        Bundle.getMessage((dirf & LnConstants.DIRF_F4) != 0
-                                ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF"));
+                String result;
+                result = interpretOpcConsistFunc(l);
+                if (result.length() > 0) {
+                    return result;
+                }
+                break;
             } // case LnConstants.OPC_CONSIST_FUNC
 
             /*
@@ -851,18 +776,12 @@ public class Llnmon {
              * Page 10 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_LOCO_SND: {
-                int slot = l.getElement(1);
-                int snd = l.getElement(2);
-                return Bundle.getMessage("LN_MSG_OPC_LOCO_SND",
-                        slot,
-                        Bundle.getMessage((snd & LnConstants.SND_F5) != 0
-                                ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF"),
-                        Bundle.getMessage((snd & LnConstants.SND_F6) != 0
-                                ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF"),
-                        Bundle.getMessage((snd & LnConstants.SND_F7) != 0
-                                ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF"),
-                        Bundle.getMessage((snd & LnConstants.SND_F8) != 0
-                                ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF"));
+                String result;
+                result = interpretOpcLocoSnd(l);
+                if (result.length() > 0) {
+                    return result;
+                }
+                break;
             } // case LnConstants.OPC_LOCO_SND
 
             /*
@@ -871,23 +790,12 @@ public class Llnmon {
              * Page 10 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_LOCO_DIRF: {
-                int slot = l.getElement(1);
-                int dirf = l.getElement(2);
-
-                return Bundle.getMessage("LN_MSG_OPC_LOCO_DIRF",
-                        slot,
-                        Bundle.getMessage((dirf & LnConstants.DIRF_DIR) != 0
-                                ? "LN_MSG_DIRECTION_REV" : "LN_MSG_DIRECTION_FWD"),
-                        Bundle.getMessage((dirf & LnConstants.DIRF_F0) != 0
-                                ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF"),
-                        Bundle.getMessage((dirf & LnConstants.DIRF_F1) != 0
-                                ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF"),
-                        Bundle.getMessage((dirf & LnConstants.DIRF_F2) != 0
-                                ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF"),
-                        Bundle.getMessage((dirf & LnConstants.DIRF_F3) != 0
-                                ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF"),
-                        Bundle.getMessage((dirf & LnConstants.DIRF_F4) != 0
-                                ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF"));
+                String result;
+                result = interpretOpcLocoDirf(l);
+                if (result.length() > 0) {
+                    return result;
+                }
+                break;
             } // case LnConstants.OPC_LOCO_DIRF
 
             /*
@@ -896,14 +804,12 @@ public class Llnmon {
              * Page 10 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_LOCO_SPD: {
-                int slot = l.getElement(1);
-                int spd = l.getElement(2);
-
-                if (spd == LnConstants.OPC_LOCO_SPD_ESTOP) {
-                    return Bundle.getMessage("LN_MSG_OPC_LOCO_SPD_ESTOP", slot);
-                } else {
-                    return Bundle.getMessage("LN_MSG_OPC_LOCO_SPD_NORMAL", slot, spd);
+                String result;
+                result = interpretOpcLocoSpd(l);
+                if (result.length() > 0) {
+                    return result;
                 }
+                break;
             } // case LnConstants.OPC_LOCO_SPD
 
             /*
@@ -916,23 +822,13 @@ public class Llnmon {
              */
 
             case LnConstants.OPC_PANEL_QUERY: {
-                switch (l.getElement(1)) {
-                    case 0x00: {
-                        return Bundle.getMessage("LN_MSG_OPC_DF_TETHERLESS_QUERY");
-                    }
-                    case 0x40: {
-                        if (l.getElement(2) == 0x1F) {
-                            // Some UR devices treat this operation as a set plus query, others
-                            // treat this only as a set.
-                            return Bundle.getMessage("LN_MSG_OPC_DF_SET_LOCONETID", l.getElement(3));
-                        }
-                        break;
-                    }
-                    default: {
-                        break;
-                    }
+                String result;
+                result = interpretOpcPanelQuery(l);
+                if (result.length() > 0) {
+                    return result;
                 }
                 break;
+                
             } // case LnConstants.OPC_PANEL_QUERY
 
             /*
@@ -2874,10 +2770,12 @@ public class Llnmon {
                 return Bundle.getMessage("LN_MSG_LONG_ACK_SLOT_NOT_SUPPORTED",
                         Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                 StringUtil.twoHexFromInt(opcode)));
-            }
+                }
+                break;
             default:
-                return "";
+                break;
         } // switch (opcode | 0x80)
+        return "";
     }
 
     private String interpretOpcMultiSense(LocoNetMessage l ) {
@@ -3146,100 +3044,510 @@ public class Llnmon {
         } else {
             mode = Bundle.getMessage("LN_MSG_SLOT_HELPER_ACCESS_TYPE_RESPONSE");
         }
+        
+        int track_stat = l.getElement(7);
+        /* check track status value and display */
+        if (trackStatus != track_stat) {
+            trackStatus = track_stat;
+        }
+        
         switch (slot) {
             case LnConstants.FC_SLOT:
-                /**
-                 * ********************************************************************************************
-                 * FAST Clock: * =========== * The system FAST clock and
-                 * parameters are implemented in Slot#123 <7B>. * * Use
-                 * <EF>
-                 * to write new clock information, Slot read of
-                 * 0x7B,<BB><7B>.., will return current * System clock
-                 * information, and other throttles will update to this
-                 * SYNC. Note that all * attached display devices keep a
-                 * current clock calculation based on this SYNC read
-                 * value, * i.e. devices MUST not continuously poll the
-                 * clock SLOT to generate time, but use this * merely to
-                 * restore SYNC and follow current RATE etc. This clock
-                 * slot is typically "pinged" * or read SYNC'd every 70
-                 * to 100 seconds , by a single user, so all attached
-                 * devices can * synchronise any phase drifts. Upon
-                 * seeing a SYNC read, all devices should reset their
-                 * local * sub-minute phase counter and invalidate the
-                 * SYNC update ping generator. * * Clock Slot Format:
-                 *
-                 * <0xEF>,<0E>,<7B>,<CLK_RATE>,<FRAC_MINSL>,<FRAC_MINSH>,<256-MINS_60>,
-                 *
-                 * <TRK><256-HRS_24>,<DAYS>,<CLK_CNTRL>,<ID1>,<1D2>,<CHK>
-                 *
-                 * * <CLK_RATE> 0=Freeze clock, * 1=normal 1:1 rate, *
-                 * 10=10:1 etc, max VALUE is 7F/128 to 1
-                 *
-                 * <FRAC_MINSL> FRAC mins hi/lo are a sub-minute counter
-                 * , depending * on the CLOCK generator
-                 *
-                 * <FRAC_MINSH> Not for ext. usage. This counter is
-                 * reset when valid
-                 *
-                 * <E6><7B> SYNC msg seen
-                 *
-                 * <256-MINS_60> This is FAST clock MINUTES subtracted
-                 * from 256. Modulo 0-59
-                 *
-                 * <256-HRS_24> This is FAST clock HOURS subtracted from
-                 * 256. Modulo 0-23
-                 *
-                 * <DAYS> number of 24 Hr clock rolls, positive count
-                 *
-                 * <CLK_CNTRL> Clock Control Byte * D6- 1=This is valid
-                 * Clock information, * 0=ignore this <E6><7B>, SYNC
-                 * reply
-                 *
-                 * <ID1>,<1D2> This is device ID last setting the clock.
-                 *
-                 * <00><00> shows no set has happened
-                 *
-                 * <7F><7x> are reserved for PC access *
-                 * ********************************************************************************************
-                 */
-
-                int minutes; // temporary time values
-                int hours;
-                int clk_rate = l.getElement(3); // 0 = Freeze clock, 1 = normal,
-                // 10 = 10:1 etc. Max is 0x7f
-                int mins_60 = l.getElement(6); // 256 - minutes
-                int track_stat = l.getElement(7); // track status
-                int hours_24 = l.getElement(8); // 256 - hours
-                int days = l.getElement(9); // clock rollovers
-                int clk_cntrl = l.getElement(10); // bit 6 = 1; data is valid
-                // clock info
-                // "  " 0; ignore this reply
-                // id1/id2 is device id of last device to set the clock
-                // "   " = zero shows not set has happened
-
-                /* recover hours and minutes values */
-                minutes = ((255 - mins_60) & 0x7f) % 60;
-                hours = ((256 - hours_24) & 0x7f) % 24;
-                hours = (24 - hours) % 24;
-                minutes = (60 - minutes) % 60;
-
-                /* check track status value and display */
-                if (trackStatus != track_stat) {
-                    trackStatus = track_stat;
+                String result;
+                result = interpretFastClockSlot(l, mode, id1, id2);
+                if (result.length() > 0) {
+                    return result;
                 }
-
-                return Bundle.getMessage("LN_MSG_SLOT_ACCESS_FAST_CLOCK",
-                        mode,
-                        ((clk_cntrl & 0x20) != 0 ? "" : Bundle.getMessage("LN_MSG_SLOT_HELPER_FC_SYNC")),
-                        (clk_rate != 0 ? Bundle.getMessage("LN_MSG_SLOT_HELPER_FC_RUNNING")
-                                : Bundle.getMessage("LN_MSG_SLOT_HELPER_FC_FROZEN")),
-                        clk_rate,
-                        days,
-                        fcTimeToString(hours, minutes),
-                        idString(id1, id2),
-                        trackStatusByteToString(track_stat));
-                // end fast clock block
+                break;
             case LnConstants.PRG_SLOT:
+                result = interpretProgSlot(l, mode, id1, id2, command);
+                if (result.length() > 0) {
+                    return result;
+                }
+                break;
+                
+            case 0x79:
+            case 0x7a:
+            case 0x7D:
+            case 0x7E:
+                return "";
+                    // end programming track block
+            case LnConstants.CFG_SLOT:
+                result = interpretCmdStnCfgSlotRdWr(l, command);
+                if (result.length() > 0) {
+                    return result;
+                }
+                break;
+                
+            default:
+                result = interpretStandardSlotRdWr(l, id1, id2, command, slot);
+                if (result.length() > 0) {
+                    return result;
+                }
+                break;
+            } // end switch (slot)
+        } // end if (l.getElement(1) == 0x0E
+
+        return "";
+
+    }
+    
+    private String interpretOpcInputRep(LocoNetMessage l) {
+        int in1 = l.getElement(1);
+        int in2 = l.getElement(2);
+        int contactNum = ((SENSOR_ADR(in1, in2) - 1) * 2 + ((in2 & LnConstants.OPC_INPUT_REP_SW) != 0 ? 2 : 1));
+        // get system and user names
+        String sensorSystemName = locoNetSensorPrefix + contactNum;
+        String sensorUserName = "";
+        Sensor sensor = sensorManager.getBySystemName(sensorSystemName);
+        sensorUserName = "";
+        if (sensor != null) {
+            String uname = sensor.getUserName();
+            if ((uname != null) && (!uname.isEmpty())) {
+                sensorUserName = uname;
+            }
+        }
+        int sensorid = (SENSOR_ADR(in1, in2) - 1) * 2
+                + ((in2 & LnConstants.OPC_INPUT_REP_SW) != 0 ? 2 : 1);
+
+        int bdlid = ((sensorid - 1) / 16) + 1;
+        int bdlin = ((sensorid - 1) % 16) + 1;
+        String bdl = Bundle.getMessage("LN_MSG_OPC_INPUT_REP_BDL_INFO",
+                bdlid, bdlin);
+
+        int boardid = ((sensorid - 1) / 8) + 1;
+        int boardindex = ((sensorid - 1) % 8);
+        String otherBoardsNames;
+        String otherBoardsInputs;
+        if (sensorid < 289) {
+            otherBoardsNames = Bundle.getMessage("LN_MSG_OPC_INPUT_REP_ALL_EQUIV_BOARDS", boardid);
+            otherBoardsInputs = Bundle.getMessage("LN_MSG_OPC_INPUT_REPORT_INPUT_NAMES_ALL_EQUIV_BOARDS",
+                    ds54sensors[boardindex], ds64sensors[boardindex],
+                    se8csensors[boardindex]);
+        } else {
+            otherBoardsNames = Bundle.getMessage("LN_MSG_OPC_INPUT_REP_NO_SE8C", boardid);
+            otherBoardsInputs = Bundle.getMessage("LN_MSG_OPC_INPUT_REPORT_INPUT_NAMES_NO_SE8C",
+                    ds54sensors[boardindex], ds64sensors[boardindex]);
+        }
+
+        // There is no way to tell what kind of a board sent the message.
+        // To be user friendly, we just print all the known combos.
+        return Bundle.getMessage("LN_MSG_OPC_INPUT_REP",
+                sensorSystemName, sensorUserName,
+                Bundle.getMessage((in2 & LnConstants.OPC_INPUT_REP_HI) != 0
+                        ? "LN_MSG_SENSOR_STATE_HIGH" : "LN_MSG_SENSOR_STATE_LOW"),
+                bdl,
+                otherBoardsNames, otherBoardsInputs);
+    }
+    
+    private String interpretOpcSwRep(LocoNetMessage l) {
+        int sn1 = l.getElement(1);
+        int sn2 = l.getElement(2);
+        // get system and user names
+        String turnoutSystemName;
+        String turnoutUserName = "";
+        turnoutSystemName = locoNetTurnoutPrefix
+                + SENSOR_ADR(sn1, sn2);
+        
+        Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
+        if (turnout != null) {
+            String uname = turnout.getUserName();
+            if ((uname != null) && (!uname.isEmpty())) {
+                turnoutUserName = uname;
+            } else {
+                turnoutUserName = "";
+            }
+        }
+
+        if ((sn2 & LnConstants.OPC_SW_REP_INPUTS) != 0) {
+            return Bundle.getMessage("LN_MSG_OPC_SW_REP_INPUTS_STATE",
+                    turnoutSystemName, turnoutUserName,
+                    Bundle.getMessage(((sn2 & LnConstants.OPC_SW_REP_SW) != 0
+                            ? "LN_MSG_SENSOR_SW_INPUT_TYPE_HI"
+                            : "LN_MSG_SENSOR_SW_INPUT_TYPE_LO")),
+                    Bundle.getMessage((((sn2 & LnConstants.OPC_SW_REP_HI) != 0)
+                            ? "LN_MSG_SENSOR_SW_INPUT_STATE_HI"
+                            : "LN_MSG_SENSOR_SW_INPUT_STATE_LO")));
+        }
+        return Bundle.getMessage("LN_MSG_OPC_SW_REP_OUTPUT_STATE",
+                turnoutSystemName, turnoutUserName,
+                Bundle.getMessage((((sn2 & LnConstants.OPC_SW_REP_CLOSED) != 0)
+                        ? "LN_MSG_SENSOR_SW_OUTPUT_STATE_ON"
+                        : "LN_MSG_SENSOR_SW_OUTPUT_STATE_OFF")),
+                Bundle.getMessage((((sn2 & LnConstants.OPC_SW_REP_THROWN) != 0)
+                        ? "LN_MSG_SENSOR_SW_OUTPUT_STATE_ON"
+                        : "LN_MSG_SENSOR_SW_OUTPUT_STATE_OFF")));
+    }
+    
+    private String interpretOpcSwAck(LocoNetMessage l) {
+        int sw2 = l.getElement(2);
+        if ((sw2 & 0x40) == 0x40) {
+            return "";
+        }
+        // get system and user names
+        String turnoutSystemName = "";
+        String turnoutUserName = "";
+        turnoutSystemName = locoNetTurnoutPrefix
+                + SENSOR_ADR(l.getElement(1), l.getElement(2));
+
+        Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
+        if (turnout != null) {
+            String uname = turnout.getUserName();
+            if ((uname != null) && (!uname.isEmpty())) {
+                turnoutUserName = uname;
+            }
+        }
+
+        String pointsDirection = ((sw2 & LnConstants.OPC_SW_ACK_CLOSED) != 0
+                ? Bundle.getMessage("LN_MSG_SW_POS_CLOSED")
+                : Bundle.getMessage("LN_MSG_SW_POS_THROWN"));
+        String outputState = (((sw2 & LnConstants.OPC_SW_ACK_OUTPUT) != 0)
+                ? Bundle.getMessage("LN_MSG_SENSOR_SW_OUTPUT_STATE_ON")
+                : Bundle.getMessage("LN_MSG_SENSOR_SW_OUTPUT_STATE_OFF"));
+        return Bundle.getMessage("LN_MSG_REQ_SWITCH", turnoutSystemName,
+                turnoutUserName, pointsDirection, outputState);
+    }
+
+    private String interpretOpcSwState(LocoNetMessage l) {
+        // get system and user names
+        if ((l.getElement(2) & 0x70) != 0x00) {
+            return "";
+        }
+        String turnoutSystemName;
+        String turnoutUserName = "";
+        turnoutSystemName = locoNetTurnoutPrefix
+                + SENSOR_ADR(l.getElement(1), l.getElement(2));
+        Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
+        String uname = "";
+        if (turnout != null) {
+            uname = turnout.getUserName();
+            if ((uname != null) && (!uname.isEmpty())) {
+                turnoutUserName = uname;
+            }
+        }
+        return Bundle.getMessage("LN_MSG_SW_STATE", turnoutSystemName,
+                turnoutUserName);
+    }
+    
+    private String interpretOpcRqSlData(LocoNetMessage l) {
+        int slot = l.getElement(1) + 128*l.getElement(2);
+
+        switch (slot) {
+            // Slots > 120 are all special, but these are the only ones we know to decode.
+            case LnConstants.FC_SLOT:
+                return Bundle.getMessage("LN_MSG_SLOT_REQ_SLOT_FC_SLOT");
+            case LnConstants.CFG_SLOT:
+                return Bundle.getMessage("LN_MSG_SLOT_REQ_SLOT_CFG_SLOT");
+            case LnConstants.PRG_SLOT:
+                return Bundle.getMessage("LN_MSG_SLOT_REQ_SLOT_PRG_SLOT");
+            case 0x79:
+            case 0x7a:
+            case 0x7d:
+            case 0x7e:
+                break;
+            default:
+                return Bundle.getMessage("LN_MSG_SLOT_REQ_SLOT_LOCO_SLOT", slot);
+        }
+        return "";
+    }
+
+    private String interpretOpcMoveSlots(LocoNetMessage l) {
+        int src = l.getElement(1);
+        int dest = l.getElement(2);
+        if ((src >= 0x79) && (src <= 0x7f)) {
+            return "";
+        }
+        if ((dest >= 0x79) && (dest <= 0x7f)) {
+            return "";
+        }
+
+        /* check special cases */
+        if (src == 0) {
+            /* DISPATCH GET */
+
+            return Bundle.getMessage("LN_MSG_MOVE_SL_GET_DISP");
+        } else if (src == dest) {
+            /* IN USE */
+
+            return Bundle.getMessage("LN_MSG_MOVE_SL_NULL_MOVE", src);
+        } else if (dest == 0) {
+            /* DISPATCH PUT */
+
+            return Bundle.getMessage("LN_MSG_MOVE_SL_DISPATCH_PUT", src);
+        } else {
+            /* general move */
+
+            return Bundle.getMessage("LN_MSG_MOVE_SL_MOVE", src, dest);
+        }
+    }
+
+    private String interpretOpcConsistFunc(LocoNetMessage l) {
+        int slot = l.getElement(1);
+        int dirf = l.getElement(2);
+        if ((dirf & 0x40) == 0x40) {
+            return "";
+        }
+        return Bundle.getMessage("LN_MSG_CONSIST_FUNC",
+                slot,
+                interpretDIRF(dirf));
+    }
+    
+    private String interpretOpcLocoSnd(LocoNetMessage l) {
+        int slot = l.getElement(1);
+        int snd = l.getElement(2);
+        return Bundle.getMessage("LN_MSG_OPC_LOCO_SND",
+                slot,
+                Bundle.getMessage((snd & LnConstants.SND_F5) != 0
+                        ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF"),
+                Bundle.getMessage((snd & LnConstants.SND_F6) != 0
+                        ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF"),
+                Bundle.getMessage((snd & LnConstants.SND_F7) != 0
+                        ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF"),
+                Bundle.getMessage((snd & LnConstants.SND_F8) != 0
+                        ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF"));
+
+    }
+    
+    private String interpretDIRF(int dirf) {
+        if ((dirf & 0x40) == 0x40) {
+            return "";
+        }
+        String dirf0_4[] = interpretF0_F4toStrings(dirf);
+        return  Bundle.getMessage("LN_MSG_HELPER_DIRF",
+                Bundle.getMessage((dirf & LnConstants.DIRF_DIR) != 0
+                        ? "LN_MSG_DIRECTION_REV" : "LN_MSG_DIRECTION_FWD"),
+                dirf0_4[0], dirf0_4[1], dirf0_4[2], dirf0_4[3], dirf0_4[4]);
+
+
+    }
+
+    private String interpretOpcLocoDirf(LocoNetMessage l) {
+        int slot = l.getElement(1);
+        int dirf = l.getElement(2);
+        if ((dirf & 0x40) == 0x40) {
+            return "";
+        }
+
+        String dirFinfo = interpretDIRF(dirf);
+        if (dirFinfo.length() == 0) {
+            return "";
+        }
+        
+        return Bundle.getMessage("LN_MSG_OPC_LOCO_DIRF",
+                slot, dirFinfo);
+    }
+    
+    private String interpretOpcLocoSpd(LocoNetMessage l) {
+        int slot = l.getElement(1);
+        int spd = l.getElement(2);
+
+        if (spd == LnConstants.OPC_LOCO_SPD_ESTOP) {
+            return Bundle.getMessage("LN_MSG_OPC_LOCO_SPD_ESTOP", slot);
+        } else {
+            return Bundle.getMessage("LN_MSG_OPC_LOCO_SPD_NORMAL", slot, spd);
+        }
+
+    }
+    
+    private String interpretOpcPanelQuery(LocoNetMessage l) {
+                switch (l.getElement(1)) {
+                    case 0x00: {
+                        return Bundle.getMessage("LN_MSG_OPC_DF_TETHERLESS_QUERY");
+                    }
+                    case 0x40: {
+                        if (l.getElement(2) == 0x1F) {
+                            // Some UR devices treat this operation as a set plus query, others
+                            // treat this only as a set.
+                            return Bundle.getMessage("LN_MSG_OPC_DF_SET_LOCONETID", l.getElement(3));
+                        }
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
+                }
+                return "";
+    }
+    private String interpretOpcSwReq(LocoNetMessage l) {
+        int sw1 = l.getElement(1);
+        int sw2 = l.getElement(2);
+        if ((sw2 & 0x40) == 0x40) {
+            return "";
+        }
+
+        if ((!(((sw2 & 0xCF) == 0x0F) && ((sw1 & 0xFC) == 0x78))) &&
+                (!(((sw2 & 0xCF) == 0x07) && ((sw1 & 0xFC) == 0x78)))) {
+            // ordinary form, LPU V1.0 page 9
+            // handle cases which are not "stationary decoder interrogate" messages
+            // get system and user names
+            String turnoutSystemName = "";
+            String turnoutUserName = "";
+            turnoutSystemName = locoNetTurnoutPrefix
+                    + SENSOR_ADR(l.getElement(1), l.getElement(2));
+            Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
+            if (turnout != null) {
+                String uname = turnout.getUserName();
+                if ((uname != null) && (!uname.isEmpty())) {
+                    turnoutUserName = uname;
+                }
+            }
+            String pointsDirection = ((sw2 & LnConstants.OPC_SW_ACK_CLOSED) != 0
+                    ? Bundle.getMessage("LN_MSG_SW_POS_CLOSED")
+                    : Bundle.getMessage("LN_MSG_SW_POS_THROWN"));
+            String outputState = ((sw2 & LnConstants.OPC_SW_ACK_OUTPUT) != 0
+                    ? Bundle.getMessage("LN_MSG_SW_OUTPUT_STATE_ON")
+                    : Bundle.getMessage("LN_MSG_SW_OUTPUT_STATE_OFF"));
+            if (turnoutUserName.length() == 0) {
+                return Bundle.getMessage("LN_MSG_OPC_SW_REQ_NORMAL_WITHOUT_USERNAME",
+                        turnoutSystemName,
+                        pointsDirection, outputState);
+            } else {
+                return Bundle.getMessage("LN_MSG_OPC_SW_REQ_NORMAL_WITH_USERNAME",
+                        turnoutSystemName, turnoutUserName,
+                        pointsDirection, outputState);
+            }
+        }
+        /*
+        Handle cases which are "stationary decoder interrogate" messages.
+        */
+
+        /*
+         * Decodes a/c/b bits to allow proper creation of a list of addresses
+         * which ought to reply to the "stationary decoder interrogate" message.
+         */
+        int a = (sw2 & 0x20) >> 5;
+        int c = (sw1 & 0x02) >> 1;
+        int b = (sw1 & 0x01);
+
+        /*
+         * All this blob does is loop through the ranges indicated by the
+         * a/c/b bits, they are mask bits in the midde of the range. The
+         * idea is to get 8 sensors at a time, since that is generally what
+         * units have, and to query units 1, 9, 17... then 2, 10, 18... and
+         * so on such that if they are all in a row they don't get hit at
+         * the same time.
+         */
+        int topbits = 0;
+        int midbits = (a << 2) + (c << 1) + b;
+        int count = 0;
+        StringBuilder addrListB = new StringBuilder();
+        for (topbits = 0; topbits < 32; topbits++) {
+            // The extra "+1" adjusts for the fact that we show 1-2048,
+            // rather than 0-2047 on the wire.
+            int lval = (topbits << 6) + (midbits << 3) + 1;
+            int hval = lval + 7;
+
+            if ((count % 8) != 0) {
+                addrListB.append(", "); // NOI18N
+            } else {
+                if (count == 0) {
+                    addrListB.append("\t"); // NOI18N
+                } else {
+                    addrListB.append(",\n\t");  // NOI18N
+                }
+            }
+            addrListB.append("").append(lval);  // NOI18N
+            addrListB.append("-").append(hval); // NOI18N
+            count++;
+        }
+        addrListB.append("\n"); // NOI18N
+
+        String addrList = addrListB.toString();
+
+        if (((sw2 & 0xCF) == 0x0F) && ((sw1 & 0xFC) == 0x78)) {
+            // broadcast address LPU V1.0 page 12
+            return Bundle.getMessage("LN_MSG_OPC_SW_REQ_INTERROGATE_TURNOUTS",
+                    a, c, b, addrList);
+        } else if (((sw2 & 0xCF) == 0x07) && ((sw1 & 0xFC) == 0x78)) {
+            // broadcast address LPU V1.0 page 13
+            return Bundle.getMessage("LN_MSG_OPC_SW_REQ_INTERROGATE_SENSORS_TURNOUTS",
+                    a, c, b, addrList);
+        }
+        // Odd case - should not get here!
+        return "";
+    }
+    
+    private String interpretFastClockSlot(LocoNetMessage l, String mode, int id1, int id2) {
+        /**
+        * FAST Clock: 
+        * The system FAST clock and parameters are implemented in Slot#123 <7B>. 
+        * Use <EF> to write new clock information, Slot read of 0x7B,<BB><7B>.., will 
+        * return current System clock information, and other throttles will update to this
+        * SYNC. Note that all attached display devices keep a current clock calculation 
+        * based on this SYNC read value, i.e. devices MUST not continuously poll the
+        * clock SLOT to generate time, but use this  merely to restore SYNC and follow 
+        * current RATE etc. This clock slot is typically "pinged" * or read SYNC'd 
+        * every 70 to 100 seconds, by a single user, so all attached devices can 
+        * synchronise any phase drifts. Upon seeing a SYNC read, all devices should 
+        * reset their local sub-minute phase counter and invalidate the SYNC update 
+        * ping generator. 
+        * 
+        * Clock Slot Format:
+        *
+        * <0xEF>,<0E>,<7B>,<CLK_RATE>,<FRAC_MINSL>,<FRAC_MINSH>,<256-MINS_60>,
+        * <TRK><256-HRS_24>,<DAYS>,<CLK_CNTRL>,<ID1>,<1D2>,<CHK>
+        * 
+        * where:
+        * 
+        * <CLK_RATE> 0=Freeze clock, * 1=normal 1:1 rate, 10=10:1 etc, max VALUE is 
+        *       7F/128 to 1
+        *
+        * <FRAC_MINSL> FRAC mins hi/lo are a sub-minute counter, depending on the 
+        *       CLOCK generator
+        *
+        * <FRAC_MINSH> Not for ext. usage. This counter is reset when valid <E6><7B> 
+        *       SYNC message is seen
+        *
+        * <256-MINS_60> This is FAST clock MINUTES subtracted from 256. Modulo 0-59
+        *
+        * <256-HRS_24> This is FAST clock HOURS subtracted from 256. Modulo 0-23
+        *
+        * <DAYS> number of 24 Hr clock rolls, positive count
+        *
+        * <CLK_CNTRL> Clock Control Byte
+        *   D6- 1=This is valid Clock information, 
+        *       0=ignore this <E6><7B>, SYNC reply
+        *
+        * <ID1>,<1D2> This is device ID last setting the clock.
+        *
+        *       <00><00> shows no set has happened
+        *
+        *       <7F><7x> are reserved for PC access *
+        */
+
+        int minutes; // temporary time values
+        int hours;
+        int clk_rate = l.getElement(3); // 0 = Freeze clock, 1 = normal,
+        // 10 = 10:1 etc. Max is 0x7f
+        int mins_60 = l.getElement(6); // 256 - minutes
+        int track_stat = l.getElement(7); // track status
+        int hours_24 = l.getElement(8); // 256 - hours
+        int days = l.getElement(9); // clock rollovers
+        int clk_cntrl = l.getElement(10); // bit 6 = 1; data is valid
+        // clock info
+        // "  " 0; ignore this reply
+        // id1/id2 is device id of last device to set the clock
+        // "   " = zero shows not set has happened
+
+        /* recover hours and minutes values */
+        minutes = ((255 - mins_60) & 0x7f) % 60;
+        hours = ((256 - hours_24) & 0x7f) % 24;
+        hours = (24 - hours) % 24;
+        minutes = (60 - minutes) % 60;
+
+        return Bundle.getMessage("LN_MSG_SLOT_ACCESS_FAST_CLOCK",
+               mode,
+               ((clk_cntrl & 0x20) != 0 ? "" : Bundle.getMessage("LN_MSG_SLOT_HELPER_FC_SYNC")),
+               (clk_rate != 0 ? Bundle.getMessage("LN_MSG_SLOT_HELPER_FC_RUNNING")
+                       : Bundle.getMessage("LN_MSG_SLOT_HELPER_FC_FROZEN")),
+               clk_rate,
+               days,
+               fcTimeToString(hours, minutes),
+               idString(id1, id2),
+               trackStatusByteToString(track_stat));
+    }
+    
+    private String interpretProgSlot(LocoNetMessage l, String mode, int id1, int id2, int command) {
                 /**
                  * ********************************************************************************************
                  * Programmer track: * ================= * The
@@ -3712,13 +4020,11 @@ public class Llnmon {
                                             StringUtil.to8Bits(cvData, true)));
                     }
                 }
-            case 0x79:
-            case 0x7a:
-            case 0x7D:
-            case 0x7E:
-                return "";
-                    // end programming track block
-            case LnConstants.CFG_SLOT:
+    }
+    
+    private String interpretCmdStnCfgSlotRdWr(LocoNetMessage l, int command) {
+        
+
                 /**
                  * ************************************************
                  * Configuration slot, holding op switches
@@ -3813,7 +4119,11 @@ public class Llnmon {
                         : "LN_MSG_SLOT_CMD_STN_CFG_READ_REPORT"),
                         opswGroup1, opswGroup2, opswGroup3, opswGroup4,
                         opswGroup5, opswGroup6, opswGroup7, opswGroup8);
-            default:
+
+    }
+    
+    private String interpretStandardSlotRdWr(LocoNetMessage l, int id1, int id2, int command, int slot) {
+                        
                 /**
                  * ************************************************
                  * normal slot read/write message - see info above *
@@ -3861,198 +4171,7 @@ public class Llnmon {
                         Bundle.getMessage("LN_MSG_SLOT_HELPER_ID1_ID2_AS_THROTTLE_ID",
                                 idString(id1, id2) ));
 
-            } // end switch (slot)
-        } // end if (l.getElement(1) == 0x0E
 
-        return "";
-
-    }
-    
-    private String interpretOpcInputRep(LocoNetMessage l) {
-        int in1 = l.getElement(1);
-        int in2 = l.getElement(2);
-        int contactNum = ((SENSOR_ADR(in1, in2) - 1) * 2 + ((in2 & LnConstants.OPC_INPUT_REP_SW) != 0 ? 2 : 1));
-        // get system and user names
-        String sensorSystemName = locoNetSensorPrefix + contactNum;
-        String sensorUserName = "";
-        Sensor sensor = sensorManager.getBySystemName(sensorSystemName);
-        sensorUserName = "";
-        if (sensor != null) {
-            String uname = sensor.getUserName();
-            if ((uname != null) && (!uname.isEmpty())) {
-                sensorUserName = uname;
-            }
-        }
-        int sensorid = (SENSOR_ADR(in1, in2) - 1) * 2
-                + ((in2 & LnConstants.OPC_INPUT_REP_SW) != 0 ? 2 : 1);
-
-        int bdlid = ((sensorid - 1) / 16) + 1;
-        int bdlin = ((sensorid - 1) % 16) + 1;
-        String bdl = Bundle.getMessage("LN_MSG_OPC_INPUT_REP_BDL_INFO",
-                bdlid, bdlin);
-
-        int boardid = ((sensorid - 1) / 8) + 1;
-        int boardindex = ((sensorid - 1) % 8);
-        String otherBoardsNames;
-        String otherBoardsInputs;
-        if (sensorid < 289) {
-            otherBoardsNames = Bundle.getMessage("LN_MSG_OPC_INPUT_REP_ALL_EQUIV_BOARDS", boardid);
-            otherBoardsInputs = Bundle.getMessage("LN_MSG_OPC_INPUT_REPORT_INPUT_NAMES_ALL_EQUIV_BOARDS",
-                    ds54sensors[boardindex], ds64sensors[boardindex],
-                    se8csensors[boardindex]);
-        } else {
-            otherBoardsNames = Bundle.getMessage("LN_MSG_OPC_INPUT_REP_NO_SE8C", boardid);
-            otherBoardsInputs = Bundle.getMessage("LN_MSG_OPC_INPUT_REPORT_INPUT_NAMES_NO_SE8C",
-                    ds54sensors[boardindex], ds64sensors[boardindex]);
-        }
-
-        // There is no way to tell what kind of a board sent the message.
-        // To be user friendly, we just print all the known combos.
-        return Bundle.getMessage("LN_MSG_OPC_INPUT_REP",
-                sensorSystemName, sensorUserName,
-                Bundle.getMessage((in2 & LnConstants.OPC_INPUT_REP_HI) != 0
-                        ? "LN_MSG_SENSOR_STATE_HIGH" : "LN_MSG_SENSOR_STATE_LOW"),
-                bdl,
-                otherBoardsNames, otherBoardsInputs);
-    }
-    
-    private String interpretOpcSwRep(LocoNetMessage l) {
-        int sn1 = l.getElement(1);
-        int sn2 = l.getElement(2);
-        // get system and user names
-        String turnoutSystemName;
-        String turnoutUserName = "";
-        turnoutSystemName = locoNetTurnoutPrefix
-                + SENSOR_ADR(sn1, sn2);
-        
-        Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
-        if (turnout != null) {
-            String uname = turnout.getUserName();
-            if ((uname != null) && (!uname.isEmpty())) {
-                turnoutUserName = uname;
-            } else {
-                turnoutUserName = "";
-            }
-        }
-
-        if ((sn2 & LnConstants.OPC_SW_REP_INPUTS) != 0) {
-            return Bundle.getMessage("LN_MSG_OPC_SW_REP_INPUTS_STATE",
-                    turnoutSystemName, turnoutUserName,
-                    Bundle.getMessage(((sn2 & LnConstants.OPC_SW_REP_SW) != 0
-                            ? "LN_MSG_SENSOR_SW_INPUT_TYPE_HI"
-                            : "LN_MSG_SENSOR_SW_INPUT_TYPE_LO")),
-                    Bundle.getMessage((((sn2 & LnConstants.OPC_SW_REP_HI) != 0)
-                            ? "LN_MSG_SENSOR_SW_INPUT_STATE_HI"
-                            : "LN_MSG_SENSOR_SW_INPUT_STATE_LO")));
-        }
-        return Bundle.getMessage("LN_MSG_OPC_SW_REP_OUTPUT_STATE",
-                turnoutSystemName, turnoutUserName,
-                Bundle.getMessage((((sn2 & LnConstants.OPC_SW_REP_CLOSED) != 0)
-                        ? "LN_MSG_SENSOR_SW_OUTPUT_STATE_ON"
-                        : "LN_MSG_SENSOR_SW_OUTPUT_STATE_OFF")),
-                Bundle.getMessage((((sn2 & LnConstants.OPC_SW_REP_THROWN) != 0)
-                        ? "LN_MSG_SENSOR_SW_OUTPUT_STATE_ON"
-                        : "LN_MSG_SENSOR_SW_OUTPUT_STATE_OFF")));
-    }
-    
-    private String interpretOpcSwReq(LocoNetMessage l) {
-        int sw1 = l.getElement(1);
-        int sw2 = l.getElement(2);
-        if ((sw2 & 0x40) == 0x40) {
-            return "";
-        }
-
-        if ((!(((sw2 & 0xCF) == 0x0F) && ((sw1 & 0xFC) == 0x78))) &&
-                (!(((sw2 & 0xCF) == 0x07) && ((sw1 & 0xFC) == 0x78)))) {
-            // ordinary form, LPU V1.0 page 9
-            // handle cases which are not "stationary decoder interrogate" messages
-            // get system and user names
-            String turnoutSystemName = "";
-            String turnoutUserName = "";
-            turnoutSystemName = locoNetTurnoutPrefix
-                    + SENSOR_ADR(l.getElement(1), l.getElement(2));
-            Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
-            if (turnout != null) {
-                String uname = turnout.getUserName();
-                if ((uname != null) && (!uname.isEmpty())) {
-                    turnoutUserName = uname;
-                }
-            }
-            String pointsDirection = ((sw2 & LnConstants.OPC_SW_ACK_CLOSED) != 0
-                    ? Bundle.getMessage("LN_MSG_SW_POS_CLOSED")
-                    : Bundle.getMessage("LN_MSG_SW_POS_THROWN"));
-            String outputState = ((sw2 & LnConstants.OPC_SW_ACK_OUTPUT) != 0
-                    ? Bundle.getMessage("LN_MSG_SW_OUTPUT_STATE_ON")
-                    : Bundle.getMessage("LN_MSG_SW_OUTPUT_STATE_OFF"));
-            if (turnoutUserName.length() == 0) {
-                return Bundle.getMessage("LN_MSG_OPC_SW_REQ_NORMAL_WITHOUT_USERNAME",
-                        turnoutSystemName,
-                        pointsDirection, outputState);
-            } else {
-                return Bundle.getMessage("LN_MSG_OPC_SW_REQ_NORMAL_WITH_USERNAME",
-                        turnoutSystemName, turnoutUserName,
-                        pointsDirection, outputState);
-            }
-        }
-
-        /*
-        Handle cases which are "stationary decoder interrogate" messages.
-        */
-
-        /*
-         * Decodes a/c/b bits to allow proper creation of a list of addresses
-         * which ought to reply to the "stationary decoder interrogate" message.
-         */
-        int a = (sw2 & 0x20) >> 5;
-        int c = (sw1 & 0x02) >> 1;
-        int b = (sw1 & 0x01);
-
-        /*
-         * All this blob does is loop through the ranges indicated by the
-         * a/c/b bits, they are mask bits in the midde of the range. The
-         * idea is to get 8 sensors at a time, since that is generally what
-         * units have, and to query units 1, 9, 17... then 2, 10, 18... and
-         * so on such that if they are all in a row they don't get hit at
-         * the same time.
-         */
-        int topbits = 0;
-        int midbits = (a << 2) + (c << 1) + b;
-        int count = 0;
-        StringBuilder addrListB = new StringBuilder();
-        for (topbits = 0; topbits < 32; topbits++) {
-            // The extra "+1" adjusts for the fact that we show 1-2048,
-            // rather than 0-2047 on the wire.
-            int lval = (topbits << 6) + (midbits << 3) + 1;
-            int hval = lval + 7;
-
-            if ((count % 8) != 0) {
-                addrListB.append(", "); // NOI18N
-            } else {
-                if (count == 0) {
-                    addrListB.append("\t"); // NOI18N
-                } else {
-                    addrListB.append(",\n\t");  // NOI18N
-                }
-            }
-            addrListB.append("").append(lval);  // NOI18N
-            addrListB.append("-").append(hval); // NOI18N
-            count++;
-        }
-        addrListB.append("\n"); // NOI18N
-
-        String addrList = addrListB.toString();
-
-        if (((sw2 & 0xCF) == 0x0F) && ((sw1 & 0xFC) == 0x78)) {
-            // broadcast address LPU V1.0 page 12
-            return Bundle.getMessage("LN_MSG_OPC_SW_REQ_INTERROGATE_TURNOUTS",
-                    a, c, b, addrList);
-        } else if (((sw2 & 0xCF) == 0x07) && ((sw1 & 0xFC) == 0x78)) {
-            // broadcast address LPU V1.0 page 13
-            return Bundle.getMessage("LN_MSG_OPC_SW_REQ_INTERROGATE_SENSORS_TURNOUTS",
-                    a, c, b, addrList);
-        }
-        // Odd case - should not get here!
-        return "";
     }
 
     private static String ds54sensors[] = {"AuxA", "SwiA", "AuxB", "SwiB", "AuxC", "SwiC", "AuxD", "SwiD"};    // NOI18N
