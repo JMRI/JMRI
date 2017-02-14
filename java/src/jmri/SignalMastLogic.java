@@ -8,6 +8,12 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 
 /**
+ * Generic interface for Signal Mast Logic.
+ * Signal Mast Logic allows to build up a set of criteria for a Signal Mast as
+ * to what Aspect it should be displaying for a specific route through to a
+ * destination Signal Mast.
+ *
+ *  * @see jmri.implementation.DefaultSignalMastLogic
  *
  * @author	Kevin Dickerson Copyright (C) 2011
  */
@@ -15,7 +21,7 @@ public interface SignalMastLogic {
 
     /**
      * Constant representing that all the user entered details relating to a
-     * signal logic are stored. Automatically generated details that have been
+     * signal mast logic are stored. Automatically generated details that have been
      * entered via the setAutoBean are not stored.
      */
     public int STOREALL = 0;
@@ -110,7 +116,6 @@ public interface SignalMastLogic {
      *
      * @param sec         The section
      * @param destination The destination Signal Mast
-     * @return The section object
      */
     public void setAssociatedSection(Section sec, SignalMast destination);
 
@@ -120,7 +125,7 @@ public interface SignalMastLogic {
      *
      * @param block       The Control Layout Block.
      * @param destination The destination Signal Mast
-     * @return The int value representing the occupancy state block should show
+     * @return The int value representing the occupancy state that the block should show
      */
     public int getAutoBlockState(Block block, SignalMast destination);
 
@@ -183,38 +188,136 @@ public interface SignalMastLogic {
      */
     public ArrayList<Turnout> getAutoTurnouts(SignalMast destination);
 
+    /**
+     * Return the Set To State of a control block as it is configured between
+     * the source and destination mast.
+     *
+     * @param block       The Control Layout Block
+     * @param destination The destination Signal Mast
+     * @return Integer representing the state the control block should be in
+     */
     public int getBlockState(Block block, SignalMast destination);
 
+    /**
+     * Return the Layout Blocks that have been defined by the user to
+     * control the SML to the destination mast.
+     *
+     * @param destination The destination Signal Mast
+     * @return A list of Block objects
+     */
     public ArrayList<Block> getBlocks(SignalMast destination);
 
+    /**
+     * Get the comment set on this SML.
+     *
+     * @return Text of the comment
+     */
     public String getComment(SignalMast dest);
 
+    /**
+     * Return a list of all Signal Masts that have been configured
+     * as Desitnation Masts on this SML.
+     *
+     * @return A list of Signal Mast objects
+     */
     public ArrayList<SignalMast> getDestinationList();
 
+    /**
+     * Get the Maximum Speed set for the destination Signal Mast
+     * in this SML.
+     *
+     * @return A number representing the speed
+     */
     public float getMaximumSpeed(SignalMast destination);
 
+     /**
+     * Return the number of current listeners defined on this SML.
+     *
+     * @return the number of listeners; -1 if the information is not
+      * available for some reason.
+     */
+    @CheckReturnValue
     public int getNumPropertyChangeListeners();
 
+    /**
+     * Return the Set To State of a control Sensor as it is configured between
+     * the source and destination mast.
+     *
+     * @param sensor      The Control Sensor
+     * @param destination The destination Signal Mast
+     * @return Integer representing the state the control Sensor should be in
+     */
     public int getSensorState(Sensor sensor, SignalMast destination);
 
+    /**
+     * Return the Sensors that have been defined by the user to
+     * control the SML to the destination mast.
+     *
+     * @param destination The destination Signal Mast
+     * @return A list of Sensor objects
+     */
     public ArrayList<Sensor> getSensors(SignalMast destination);
 
+    /**
+     * Return the Sensors that have been defined by the user to
+     * control the SML to the destination mast as NamedBeanHandles.
+     *
+     * @param destination The destination Signal Mast
+     * @return A list of Sensor NamedBeanHandles
+     */
     public ArrayList<NamedBeanHandle<Sensor>> getNamedSensors(SignalMast destination);
 
+    /**
+     * Return the Set To State (Aspect) of a control Signal Mast as it is
+     * configured between the source and destination mast.
+     *
+     * @param mast        The Control Signal Mast
+     * @param destination The destination Signal Mast
+     * @return Integer representing the state the control Signal Mast should be in
+     */
     public String getSignalMastState(SignalMast mast, SignalMast destination);
 
+    /**
+     * Return the Signal Masts that have been defined by the user to
+     * control the SML to the destination mast.
+     *
+     * @param destination The destination Signal Mast
+     * @return A list of Signal Mast objects
+     */
     public ArrayList<SignalMast> getSignalMasts(SignalMast destination);
 
     public SignalMast getSourceMast();
 
+    /**
+     * Return the Set State of a control Turnout as it is configured between
+     * the source and destination mast.
+     *
+     * @param turnout     The Control Turnout
+     * @param destination The destination Signal Mast
+     * @return Integer representing the state the control Sensor should be in
+     */
     public int getTurnoutState(Turnout turnout, SignalMast destination);
 
-    ArrayList<Turnout> getTurnouts(SignalMast destination);
+    /**
+     * Return the Turnouts that have been defined by the user to
+     * control the SML to the destination mast.
+     *
+     * @param destination The destination Signal Mast
+     * @return A list of Turnout objects
+     */
+    public ArrayList<Turnout> getTurnouts(SignalMast destination);
 
+    /**
+     * Return the Turnouts that have been defined by the user to
+     * control the SML to the destination mast as NamedBeanHandles.
+     *
+     * @param destination The destination Signal Mast
+     * @return A list of Turnout NamedBeanHandles
+     */
     public ArrayList<NamedBeanHandle<Turnout>> getNamedTurnouts(SignalMast destination);
 
     /**
-     * General method to initialise all SMLs using destList
+     * General method to initialise all SMLs on the source SIgnal Mast using destList
      */
     public void initialise();
 
@@ -238,22 +341,58 @@ public interface SignalMastLogic {
      */
     public SignalMast getActiveDestination();
 
+    /**
+     * Returns true if a given control Block is included in any of the Signal Mast
+     * Logics that set this source Signal Mast.
+     *
+     * @param block A Layout Block
+     * @return whether the Block is part of at least one of the logics
+     */
     public boolean isBlockIncluded(Block block, SignalMast destination);
 
+    /**
+     * Returns true if a given control Signal Mast is used as a destination mast
+     * in this Signal Mast Logic.
+     *
+     * @param dest The Signal Mast to be checked
+     * @return whether the mast is set up as a destination Signal Mast in one of the logics
+     */
     public boolean isDestinationValid(SignalMast dest);
 
     /**
      * Query if the Signal Mast Logic from the current source signal mast
-     * to the destination signal mast is enabled.
+     * to the specified destination signal mast is enabled.
      *
      * @param dest The destination Signal Mast
+     * @return true if enabled
      */
     public boolean isEnabled(SignalMast dest);
 
+    /**
+     * Returns true if a given control Sensor is included in any of the Signal Mast
+     * Logics that set this source Signal Mast.
+     *
+     * @param sensor A Sensor
+     * @return whether the Sensor is part of at least one of the logics
+     */
     public boolean isSensorIncluded(Sensor sensor, SignalMast destination);
 
+    /**
+     * Returns true if a given Signal Mast is included in any of the Signal Mast
+     * Logics that set this source Signal Mast.
+     *
+     * @param signal A Signal Mast
+     * @return whether the Signal Mast is part of at least one of the logics
+     */
     public boolean isSignalMastIncluded(SignalMast signal, SignalMast destination);
 
+    /**
+     * Returns true if a given control Turnout is included in any of the Signal Mast
+     * Logics that set this source Signal Mast.
+     *
+     * @param turnout A Turnout
+     * @return whether the Turnout is part of at least one of the logics
+     */
     public boolean isTurnoutIncluded(Turnout turnout, SignalMast destination);
 
     /**
@@ -265,6 +404,13 @@ public interface SignalMastLogic {
      */
     public boolean isTurnoutLockAllowed(SignalMast destination);
 
+    /**
+     * Remove control elements for a SML pair containing a destination signal
+     * mast that itself is incompatible with an SML around a level crossing.
+     *
+     * @param sm The destination Signal Mast
+     * @param lx The LevelXing Layout Editor element
+     */
     public void removeConflictingLogic(SignalMast sm, LevelXing lx);
 
     /**
@@ -279,7 +425,7 @@ public interface SignalMastLogic {
      * Set which blocks must be in a given state for the signal mast not to be
      * set to a Stop aspect. These blocks are not stored in the panel file.
      *
-     * @param blocks A hashlist of {@link Block}s and their respective set to state
+     * @param blocks A hashlist of {@link Block}s and their respective set to state to be checked
      */
     public void setAutoBlocks(LinkedHashMap<Block, Integer> blocks, SignalMast destination);
 
@@ -310,8 +456,22 @@ public interface SignalMastLogic {
      */
     public void setBlocks(Hashtable<Block, Integer> blocks, SignalMast destination);
 
+    /**
+     * Set the comment for this SML.
+     *
+     * @param comment Text to add as comment
+     * @param dest    The destination Signal Mast
+     */
     public void setComment(String comment, SignalMast dest);
 
+    /**
+     * Add control elements for a SML pair containing a destination signal
+     * mast that itself is skipped as it is incompatible with an SML around
+     * a level crossing.
+     *
+     * @param sm The destination Signal Mast
+     * @param lx The LevelXing Layout Editor element
+     */
     public void setConflictingLogic(SignalMast sm, LevelXing lx);
 
     /**
@@ -330,6 +490,8 @@ public interface SignalMastLogic {
 
     /**
      * Set the logic to the destination signal mast to Enabled.
+     *
+     * @param dest The destination Signal Mast
      */
     public void setEnabled(SignalMast dest);
 
@@ -363,12 +525,16 @@ public interface SignalMastLogic {
     public void setSensors(Hashtable<NamedBeanHandle<Sensor>, Integer> sensors, SignalMast destination);
 
     /**
-     * Add an individual control sensor and its state to the logic.
+     * Add an individual control Sensor and its set to state to the Signal Mast Logic.
+     *
+     * @param sensorName The sensor to be removed
+     * @param state Integer representing the state the control Sensor should be in
+     * @param destination The destination Signal Mast
      */
     public void addSensor(String sensorName, int state, SignalMast destination);
 
     /**
-     * Remove an individual control sensor from the logic.
+     * Remove an individual control Sensor from the Signal Mast Logic.
      *
      * @param sensorName The sensor to be removed
      * @param destination The destination Signal Mast
@@ -388,6 +554,7 @@ public interface SignalMastLogic {
     /**
      * Return where the signal mast logic should be stored, if so how much.
      *
+     * @param destination The destination Signal Mast
      * @return one of {@link #STOREALL}, {@link #STOREMASTSONLY} or
      *              {@link #STORENONE}
      */
@@ -397,11 +564,17 @@ public interface SignalMastLogic {
      * Set the states that each control turnout must be in for the source
      * signal mast not to be set to a Stop aspect.
      *
-     * @param turnouts A list of named turnouts and their respective set to
-     *                 Aspect to check
+     * @param turnouts    A list of named turnouts and their respective set to
+     *                    state to check
+     * @param destination The destination Signal Mast
      */
     public void setTurnouts(Hashtable<NamedBeanHandle<Turnout>, Integer> turnouts, SignalMast destination);
 
+    /**
+     * Set up a Signal Mast Logic from the Layout Editor panel where its source
+     * Signal Mast is present, when useLayoutEditor is set to true.
+     */
+    setupLayoutEditorDetails
     public void setupLayoutEditorDetails();
 
     /**
@@ -412,7 +585,6 @@ public interface SignalMastLogic {
      * @param boo         Use the Layout Editor details to determine logic
      *                    details.
      * @param destination the Destination Signal Mast
-     *
      */
     public void useLayoutEditor(boolean boo, SignalMast destination) throws JmriException;
 
