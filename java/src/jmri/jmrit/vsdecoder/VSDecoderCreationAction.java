@@ -48,7 +48,7 @@ public class VSDecoderCreationAction extends AbstractAction {
 
     public VSDecoderCreationAction() {
         //this(ThrottleBundle.bundle().getString("MenuItemNewThrottle"));
-        this("Virtual Sound Decoder", false);
+        this("Virtual Sound Decoder", true);
     }
 
     /**
