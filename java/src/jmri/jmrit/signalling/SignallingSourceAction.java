@@ -36,8 +36,8 @@ public class SignallingSourceAction extends AbstractAction {
     jmri.SignalMast source = null;
 
     /**
-     * Open a SignallingSourceFrame pane
-     * Displayed when user clicks Edit Logic button in the Signal Mast table
+     * Open a SignallingSourceFrame pane.
+     * Displayed when user clicks Edit Logic button in the Signal Mast table.
      */
     @Override
     public void actionPerformed(ActionEvent e) {

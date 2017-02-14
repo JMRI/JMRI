@@ -5,7 +5,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
 /**
- * Provide a JFrame to display a table of Signal Mast Logic
+ * Provide a JFrame to display a table of Signal Mast Logic.
  *
  * @author	Kevin Dickerson Copyright (C) 2011
  */
