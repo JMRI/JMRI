@@ -215,11 +215,11 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     @Override
     @CheckReturnValue
-    public String getStateString() {
-        switch (getState()) {
+    public String describeState(int state) {
+        switch (state) {
             case THROWN: return Bundle.getMessage("TurnoutStateThrown");
             case CLOSED: return Bundle.getMessage("TurnoutStateClosed");
-            default: return super.getStateString();
+            default: return super.describeState(state);
         }
     }
 

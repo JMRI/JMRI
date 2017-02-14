@@ -48,7 +48,6 @@ public abstract class AbstractTurnoutTestBase {
         // initial known state when created must be UNKNOWN
         Assert.assertEquals("initial known state", Turnout.UNKNOWN, t.getKnownState());
         Assert.assertEquals("initial commanded state 2", Turnout.UNKNOWN, t.getState());
-        Assert.assertEquals("initial commanded state 3", "Unknown", t.getStateString());
     }
 
     @Test
@@ -88,7 +87,7 @@ public abstract class AbstractTurnoutTestBase {
         Assert.assertEquals("commanded state 1", Turnout.CLOSED, t.getCommandedState());
         ((AbstractTurnout)t).setKnownStateToCommanded();
         Assert.assertEquals("commanded state 2", Turnout.CLOSED, t.getState());
-        Assert.assertEquals("commanded state 3", "Closed", t.getStateString());
+        Assert.assertEquals("commanded state 3", "Closed", t.describeState(t.getState()));
         checkClosedMsgSent();
     }
 
@@ -99,7 +98,7 @@ public abstract class AbstractTurnoutTestBase {
         Assert.assertEquals("commanded state 1", Turnout.THROWN, t.getCommandedState());
         ((AbstractTurnout)t).setKnownStateToCommanded();
         Assert.assertEquals("commanded state 2", Turnout.THROWN, t.getState());
-        Assert.assertEquals("commanded state 3", "Thrown", t.getStateString());
+        Assert.assertEquals("commanded state 3", "Thrown", t.describeState(t.getState()));
         checkThrownMsgSent();
     }
 
