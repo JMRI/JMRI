@@ -1111,6 +1111,808 @@ public class LlnmonTest extends TestCase {
                 f.displayMessage(l));
 
     }
+    
+    public void testCmdStationCfgSlot() {
+        LocoNetMessage l;
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x10, 0x40, 0x00, 0x08, 0x0D, 0x03, 0x08, 0x00, 0x78, 0x0F, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 01",
+                "Report of current Command Station OpSw values:\n\tOpSw1=Thrown, OpSw2=Thrown, OpSw3=Thrown, OpSw4=Thrown, OpSw5=Closed, OpSw6=Thrown, OpSw7=Thrown, OpSw8=Thrown,\n" +
+                "\tOpSw9=Thrown, OpSw10=Thrown, OpSw11=Thrown, OpSw12=Thrown, OpSw13=Thrown, OpSw14=Thrown, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Thrown, OpSw18=Thrown, OpSw19=Thrown, OpSw20=Thrown, OpSw21=Thrown, OpSw22=Thrown, OpSw23=Thrown, OpSw24=Thrown,\n" +
+                "\tOpSw25=Thrown, OpSw26=Thrown, OpSw27=Thrown, OpSw28=Closed, OpSw29=Thrown, OpSw30=Thrown, OpSw31=Thrown, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Thrown, OpSw36=Thrown, OpSw37=Thrown, OpSw38=Thrown, OpSw39=Thrown, OpSw40=Thrown,\n" +
+                "\tOpSw41=Thrown, OpSw42=Thrown, OpSw43=Thrown, OpSw44=Closed, OpSw45=Thrown, OpSw46=Thrown, OpSw47=Thrown, OpSw48=Thrown,\n" +
+                "\tOpSw49=Thrown, OpSw50=Thrown, OpSw51=Thrown, OpSw52=Thrown, OpSw53=Thrown, OpSw54=Thrown, OpSw55=Thrown, OpSw56=Thrown,\n" +
+                "\tOpSw57=Thrown, OpSw58=Thrown, OpSw59=Thrown, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x00, 0x00, 0x00, 0x00, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 02",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Thrown, OpSw2=Thrown, OpSw3=Thrown, OpSw4=Thrown, OpSw5=Thrown, OpSw6=Thrown, OpSw7=Thrown, OpSw8=Thrown,\n" +
+                "\tOpSw9=Thrown, OpSw10=Thrown, OpSw11=Thrown, OpSw12=Thrown, OpSw13=Thrown, OpSw14=Thrown, OpSw15=Thrown, OpSw16=Thrown,\n" +
+                "\tOpSw17=Thrown, OpSw18=Thrown, OpSw19=Thrown, OpSw20=Thrown, OpSw21=Thrown, OpSw22=Thrown, OpSw23=Thrown, OpSw24=Thrown,\n" +
+                "\tOpSw25=Thrown, OpSw26=Thrown, OpSw27=Thrown, OpSw28=Thrown, OpSw29=Thrown, OpSw30=Thrown, OpSw31=Thrown, OpSw32=Thrown,\n" +
+                "\tOpSw33=Thrown, OpSw34=Thrown, OpSw35=Thrown, OpSw36=Thrown, OpSw37=Thrown, OpSw38=Thrown, OpSw39=Thrown, OpSw40=Thrown,\n" +
+                "\tOpSw41=Thrown, OpSw42=Thrown, OpSw43=Thrown, OpSw44=Thrown, OpSw45=Thrown, OpSw46=Thrown, OpSw47=Thrown, OpSw48=Thrown,\n" +
+                "\tOpSw49=Thrown, OpSw50=Thrown, OpSw51=Thrown, OpSw52=Thrown, OpSw53=Thrown, OpSw54=Thrown, OpSw55=Thrown, OpSw56=Thrown,\n" +
+                "\tOpSw57=Thrown, OpSw58=Thrown, OpSw59=Thrown, OpSw60=Thrown, OpSw61=Thrown, OpSw62=Thrown, OpSw63=Thrown, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 03",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7E, 0x7F, 0x7F, 0x7F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 04",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Thrown, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7D, 0x7F, 0x7F, 0x7F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 05",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Thrown, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7B, 0x7F, 0x7F, 0x7F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 06",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Thrown, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x77, 0x7F, 0x7F, 0x7F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 07",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Thrown, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x6F, 0x7F, 0x7F, 0x7F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 08",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Thrown, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x5F, 0x7F, 0x7F, 0x7F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 09",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Thrown, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x3F, 0x7F, 0x7F, 0x7F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 09",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Thrown, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xEF, 0x0E, 0x7F, 0x3F, 0x7F, 0x7F, 0x7F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 10",
+                "Write Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Thrown, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7E, 0x7F, 0x7F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 11",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Thrown, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7D, 0x7F, 0x7F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 12",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Thrown, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7B, 0x7F, 0x7F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 13",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Thrown, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x77, 0x7F, 0x7F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 14",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Thrown, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x6F, 0x7F, 0x7F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 15",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Thrown, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x5F, 0x7F, 0x7F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 16",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Thrown, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x3F, 0x7F, 0x7F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 17",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Thrown, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7E, 0x7F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 18",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Thrown, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7f, 0x7D, 0x7F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 19",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Thrown, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7B, 0x7F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 20",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Thrown, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x77, 0x7F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 21",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Thrown, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x6F, 0x7F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 22",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Thrown, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x5F, 0x7F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 23",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Thrown, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x3F, 0x7F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 24",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Thrown, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7E, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 25",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Thrown, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7f, 0x7F, 0x7D, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 26",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Thrown, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7B, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 27",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Thrown, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x77, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 28",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Thrown, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x6F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 29",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Thrown, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x5F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 30",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Thrown, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x3F, 0x7f, 0x7F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 31",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Thrown, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+
+
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x7E, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 32",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Thrown, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7f, 0x7F, 0x7F, 0x07, 0x7D, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 33",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Thrown, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x7B, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 34",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Thrown, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x77, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 35",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Thrown, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x6F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 36",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Thrown, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x5F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 37",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Thrown, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x3F, 0x7F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 38",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Thrown, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+
+
+
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x7F, 0x7E, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 39",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Thrown, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7f, 0x7F, 0x7F, 0x07, 0x7F, 0x7D, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 40",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Thrown, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x7F, 0x7B, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 41",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Thrown, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x7F, 0x77, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 42",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Thrown, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x7F, 0x6F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 43",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Thrown, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x7F, 0x5F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 44",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Thrown, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x7F, 0x3F, 0x7F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 45",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Thrown, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+
+        
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x7F, 0x7F, 0x7E, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 46",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Thrown, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7f, 0x7F, 0x7F, 0x07, 0x7F, 0x7F, 0x7D, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 47",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Thrown, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x7F, 0x7F, 0x7B, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 48",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Thrown, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x7F, 0x7F, 0x77, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 49",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Thrown, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x7F, 0x7F, 0x6F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 50",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Thrown, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x7F, 0x7F, 0x5F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 51",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Thrown, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x7F, 0x7F, 0x3F, 0x7F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 52",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Thrown, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+
+
+
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x7F, 0x7F, 0x7F, 0x7E, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 53",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Thrown, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7f, 0x7F, 0x7F, 0x07, 0x7F, 0x7F, 0x7F, 0x7D, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 54",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Thrown, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x7F, 0x7F, 0x7F, 0x7B, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 55",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Thrown, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x7F, 0x7F, 0x7F, 0x77, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 56",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Thrown, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x7F, 0x7F, 0x7F, 0x6F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 57",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Thrown, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x7F, 0x7F, 0x7F, 0x5F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 58",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Thrown, OpSw63=Closed, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x07, 0x7F, 0x7F, 0x7F, 0x3F, 0x00, 0x40});
+        assertEquals("Cmd Stn Cfg Slot test 59",
+                "Report of current Command Station OpSw values:\n" +
+                "\tOpSw1=Closed, OpSw2=Closed, OpSw3=Closed, OpSw4=Closed, OpSw5=Closed, OpSw6=Closed, OpSw7=Closed, OpSw8=Thrown,\n" +
+                "\tOpSw9=Closed, OpSw10=Closed, OpSw11=Closed, OpSw12=Closed, OpSw13=Closed, OpSw14=Closed, OpSw15=Closed, OpSw16=Thrown,\n" +
+                "\tOpSw17=Closed, OpSw18=Closed, OpSw19=Closed, OpSw20=Closed, OpSw21=Closed, OpSw22=Closed, OpSw23=Closed, OpSw24=Thrown,\n" +
+                "\tOpSw25=Closed, OpSw26=Closed, OpSw27=Closed, OpSw28=Closed, OpSw29=Closed, OpSw30=Closed, OpSw31=Closed, OpSw32=Thrown,\n" +
+                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Closed, OpSw36=Closed, OpSw37=Closed, OpSw38=Closed, OpSw39=Closed, OpSw40=Thrown,\n" +
+                "\tOpSw41=Closed, OpSw42=Closed, OpSw43=Closed, OpSw44=Closed, OpSw45=Closed, OpSw46=Closed, OpSw47=Closed, OpSw48=Thrown,\n" +
+                "\tOpSw49=Closed, OpSw50=Closed, OpSw51=Closed, OpSw52=Closed, OpSw53=Closed, OpSw54=Closed, OpSw55=Closed, OpSw56=Thrown,\n" +
+                "\tOpSw57=Closed, OpSw58=Closed, OpSw59=Closed, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Thrown, OpSw64=Thrown.\n",
+                f.displayMessage(l));
+
+
+
+
+
+
+    }
 
     public void testDuplexRadioScan() {
         LocoNetMessage l;
@@ -1426,18 +2228,6 @@ public class LlnmonTest extends TestCase {
         l = new LocoNetMessage(new int[] {0xb6, 0x2F, 0x2D, 0x4A});
         assertEquals(" Slot test 49",
                 "Set consist in slot 47 direction Reverse F0=Off F1=On F2=Off F3=On F4=On.\n",
-                f.displayMessage(l));
-
-        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7F, 0x10, 0x40, 0x00, 0x08, 0x0D, 0x03, 0x08, 0x00, 0x78, 0x0F, 0x40});
-        assertEquals(" Slot test 50",
-                "Report of current Command Station OpSw values:\n\tOpSw1=Thrown, OpSw2=Thrown, OpSw3=Thrown, OpSw4=Thrown, OpSw5=Closed, OpSw6=Thrown, OpSw7=Thrown, OpSw8=Thrown,\n" +
-                "\tOpSw9=Thrown, OpSw10=Thrown, OpSw11=Thrown, OpSw12=Thrown, OpSw13=Thrown, OpSw14=Thrown, OpSw15=Closed, OpSw16=Thrown,\n" +
-                "\tOpSw17=Thrown, OpSw18=Thrown, OpSw19=Thrown, OpSw20=Thrown, OpSw21=Thrown, OpSw22=Thrown, OpSw23=Thrown, OpSw24=Thrown,\n" +
-                "\tOpSw25=Thrown, OpSw26=Thrown, OpSw27=Thrown, OpSw28=Closed, OpSw29=Thrown, OpSw30=Thrown, OpSw31=Thrown, OpSw32=Thrown,\n" +
-                "\tOpSw33=Closed, OpSw34=Closed, OpSw35=Thrown, OpSw36=Thrown, OpSw37=Thrown, OpSw38=Thrown, OpSw39=Thrown, OpSw40=Thrown,\n" +
-                "\tOpSw41=Thrown, OpSw42=Thrown, OpSw43=Thrown, OpSw44=Closed, OpSw45=Thrown, OpSw46=Thrown, OpSw47=Thrown, OpSw48=Thrown,\n" +
-                "\tOpSw49=Thrown, OpSw50=Thrown, OpSw51=Thrown, OpSw52=Thrown, OpSw53=Thrown, OpSw54=Thrown, OpSw55=Thrown, OpSw56=Thrown,\n" +
-                "\tOpSw57=Thrown, OpSw58=Thrown, OpSw59=Thrown, OpSw60=Closed, OpSw61=Closed, OpSw62=Closed, OpSw63=Closed, OpSw64=Thrown.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xA3, 0x02, 0x01, 0x5F});
