@@ -562,13 +562,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         // initialize preferences
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
-            Object sideProp = prefsMgr.getProperty(getWindowFrameRef(), "toolBarSide");
-            log.info("{} toolBarSide property is {}", getWindowFrameRef(), sideProp);
-            if (sideProp != null) {
-                eToolBarSide newToolBarSide = eToolBarSide.getName((String) sideProp);
+            Object prefsProp = prefsMgr.getProperty(getWindowFrameRef(), "toolBarSide");
+            log.info("{}.toolBarSide is {}", getWindowFrameRef(), prefsProp);
+            if (prefsProp != null) {
+                eToolBarSide newToolBarSide = eToolBarSide.getName((String) prefsProp);
                 setToolBarSide(newToolBarSide);
             }
-            log.info("{} toolBarSide is {}", getWindowFrameRef(), toolBarSide);
+
+            boolean prefsShowHelpBar = prefsMgr.getSimplePreferenceState(getWindowFrameRef() + ".showHelpBar");
+            log.info("{}.showHelpBar is {}", getWindowFrameRef(), prefsShowHelpBar);
+            setShowHelpBar(prefsShowHelpBar);
+
+            boolean prefsAntialiasingOn = prefsMgr.getSimplePreferenceState(getWindowFrameRef() + ".antialiasingOn");
+            log.info("{}.antialiasingOn is {}", getWindowFrameRef(), prefsAntialiasingOn);
+            setAntialiasingOn(prefsAntialiasingOn);
+
+            ////
         });
 
         // initialize menu bar
@@ -1820,14 +1829,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         });
         animationItem.setSelected(true);
+
         // show help item
         showHelpItem = new JCheckBoxMenuItem(rb.getString("ShowEditHelp"));
         optionMenu.add(showHelpItem);
         showHelpItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                showHelpBar = showHelpItem.isSelected();
-                helpBarPanel.setVisible(isEditable() && showHelpBar);
+                boolean newShowHelpBar = showHelpItem.isSelected();
+                setShowHelpBar(newShowHelpBar);
             }
         });
         showHelpItem.setSelected(showHelpBar);
@@ -7268,43 +7278,40 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * LayoutBlock, and a system name is automatically created by
      * LayoutBlockManager if needed.
      */
-    public LayoutBlock provideLayoutBlock(String s) {
-        LayoutBlock blk = null;
-        if (s.length() < 1) {
-            if (!autoAssignBlocks) {
-                // nothing entered
-                return null;
-            } else {
-                blk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock();
-                if (blk == null) {
-                    log.error("Unable to create a layout block");
-                    return null;
-                }
+    public LayoutBlock provideLayoutBlock(String blockName) {
+        LayoutBlock result = null, newBlk = null; // assume failure (pessimist!)
+        if (blockName.length() < 1) {
+            // nothing entered
+            if (autoAssignBlocks) {
+                newBlk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock();
             }
         } else {
             // check if this Layout Block already exists
-            blk = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(s);
-            if (blk == null) {
-                blk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(null, s);
-                if (blk == null) {
-                    log.error("Failure to create LayoutBlock '" + s + "'.");
-                    return null;
-                }
+            result = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(blockName);
+            if (result == null) {
+                newBlk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(null, blockName);
             }
         }
-        if (blk != null) {
-            // initialize the new block
-            blk.initializeLayoutBlock();
-            blk.initializeLayoutBlockRouting();
-            blk.setBlockTrackColor(defaultTrackColor);
-            blk.setBlockOccupiedColor(defaultOccupiedTrackColor);
-            blk.setBlockExtraColor(defaultAlternativeTrackColor);
-            // set both new and previously existing block
-            blk.addLayoutEditor(this);
-            setDirty(true);
-            blk.incrementUse();
+        // if we didn't find an existing block
+        if (result == null) {
+            // but we created a new one
+            if (newBlk != null) {
+                // initialize the new block
+                newBlk.initializeLayoutBlock();
+                newBlk.initializeLayoutBlockRouting();
+                newBlk.setBlockTrackColor(defaultTrackColor);
+                newBlk.setBlockOccupiedColor(defaultOccupiedTrackColor);
+                newBlk.setBlockExtraColor(defaultAlternativeTrackColor);
+                // set both new and previously existing block
+                newBlk.addLayoutEditor(this);
+                setDirty(true);
+                newBlk.incrementUse();
+                result = newBlk;
+            } else {
+                log.error("Failure to create LayoutBlock '{}'.", blockName);
+            }
         }
-        return blk;
+        return result;
     }
 
     /**
@@ -8537,8 +8544,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (animationItem.isSelected() != state) {
             animationItem.setSelected(state);
         }
-        animatingLayout = state;
-        repaint();
+        if (animatingLayout != state) {
+            animatingLayout = state;
+            repaint();
+        }
     }
 
     public boolean isAnimating() {
@@ -8759,11 +8768,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public void setShowHelpBar(boolean state) {
         if (showHelpBar != state) {
             showHelpBar = state;
-            showHelpItem.setSelected(showHelpBar);
+
             // these may not be setup yet…
+            if (showHelpItem != null) {
+                showHelpItem.setSelected(showHelpBar);
+            }
             if (helpBarPanel != null) {
                 helpBarPanel.setVisible(isEditable() && showHelpBar);
             }
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".showHelpBar", showHelpBar);
+            });
         }
     }
 
@@ -8791,7 +8806,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public void setAntialiasingOn(boolean state) {
         if (antialiasingOn != state) {
             antialiasingOn = state;
-            antialiasingOnItem.setSelected(antialiasingOn);
+            
+            // this may not be setup yet…
+            if (antialiasingOnItem != null) {
+                antialiasingOnItem.setSelected(antialiasingOn);
+            }
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".antialiasingOn", antialiasingOn);
+            });
         }
     }
 
