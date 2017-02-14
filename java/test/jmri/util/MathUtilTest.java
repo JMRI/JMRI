@@ -16,7 +16,6 @@ import org.junit.Test;
  */
 public class MathUtilTest {
 
-    // changed this comment so github commit would restart integration tests.
     static final double tolerance = 0.00001;
 
     @Test
