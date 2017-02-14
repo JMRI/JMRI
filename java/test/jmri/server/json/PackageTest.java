@@ -28,7 +28,9 @@ import org.junit.runners.Suite.SuiteClasses;
     jmri.server.json.signalHead.PackageTest.class,
     jmri.server.json.signalMast.PackageTest.class,
     jmri.server.json.consist.PackageTest.class,
-    JsonExceptionTest.class
+    jmri.server.json.operations.PackageTest.class,
+    JsonExceptionTest.class,
+    JsonWebSocketTest.class
 })
 public class PackageTest {
 }
