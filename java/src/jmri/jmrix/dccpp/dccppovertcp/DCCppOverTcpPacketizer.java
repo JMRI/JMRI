@@ -52,8 +52,8 @@ import org.slf4j.LoggerFactory;
 // 
 public class DCCppOverTcpPacketizer extends DCCppPacketizer {
 
-    static final String RECEIVE_PREFIX = "RECEIVE";
-    static final String SEND_PREFIX = "SEND";
+    static final String RECEIVE_PREFIX = "<";
+    static final String SEND_PREFIX = ""; // Making this an empty string on purpose.
 
     protected BufferedReader istreamReader = null;
 
@@ -229,8 +229,8 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     }
 
                     // Strip the prefix off.
-                    final int trim = RECEIVE_PREFIX.length();
-                    rxLine = rxLine.substring(trim);
+                    //final int trim = RECEIVE_PREFIX.length();
+                    //rxLine = rxLine.substring(trim);
 
                     int firstidx = rxLine.indexOf("<");
                     int lastidx = rxLine.lastIndexOf(">");

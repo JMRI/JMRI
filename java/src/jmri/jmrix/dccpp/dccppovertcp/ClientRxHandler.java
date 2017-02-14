@@ -31,7 +31,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
     String inString;
     String remoteAddress;
     DCCppMessage lastSentMessage;
-    final String sendPrefix = "SEND";
+    final String sendPrefix = "<";
 
     public ClientRxHandler(String newRemoteAddress, Socket newSocket) {
         clientSocket = newSocket;
@@ -73,8 +73,8 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
 			log.debug("Invalid packet format: {}", inString);
 			continue;
 		    }
-		    final int trim = sendPrefix.length();
-		    inString = inString.substring(trim);
+		    //final int trim = sendPrefix.length();
+		    //inString = inString.substring(trim);
 		    //  Note: the substring call below also strips off the "< >"
 		    DCCppMessage msg = DCCppMessage.parseDCCppMessage(inString.substring(inString.indexOf("<")+1,
 									   inString.lastIndexOf(">")));
@@ -156,7 +156,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
 
                     if (msg != null) {
                         outBuf.setLength(0);
-                        outBuf.append("RECEIVE ");
+                        //outBuf.append("RECEIVE ");
 			outBuf.append("<");
                         outBuf.append(msg.toString());
 			outBuf.append(">");
