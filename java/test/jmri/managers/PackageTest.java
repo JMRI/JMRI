@@ -28,12 +28,12 @@ import org.junit.runners.Suite;
 	    DefaultProgrammerManagerTest.class,
 	    DefaultRailComManagerTest.class,
 	    DefaultRouteManagerTest.class,
-	/*DefaultShutDownManagerTest.class,
-	DefaultSignalGroupManagerTest.class,
-	DefaultSignalMastLogicManagerTest.class,*/
-	DefaultSignalMastManagerTest.class,
-	DeferringProgrammerManagerTest.class,
-	InternalTurnoutManagerTest.class
+	    DefaultShutDownManagerTest.class,
+	    DefaultSignalGroupManagerTest.class,
+	    DefaultSignalMastLogicManagerTest.class,
+	    DefaultSignalMastManagerTest.class,
+	    DeferringProgrammerManagerTest.class,
+	    InternalTurnoutManagerTest.class
 })
 
 /**
