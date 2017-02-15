@@ -32,9 +32,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame for Signal Mast Add / Edit Panel
+ * Frame for Signal Mast Table - Edit Logic Pane
  *
  * @author	Kevin Dickerson Copyright (C) 2011
+ * @author	Egbert Broerse Copyright (C) 2017
  */
 public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements PropertyChangeListener {
 
@@ -49,6 +50,12 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
     SignalMastAppearanceModel _AppearanceModel;
     JScrollPane _SignalAppearanceScrollPane;
 
+    /**
+     * Create a Signalling Source configuration Pane showing a list of defined
+     * destination masts and allowing creation of new source-destination pairs
+     * as well as showing a button to start Autodetect configuration.
+     * @param sourceMast The source mast for this SML Source Pairs pane
+     */
     public SignallingSourcePanel(final SignalMast sourceMast) {
         super();
         sml = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sourceMast);
@@ -109,7 +116,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                         SignallingAction sigLog = new SignallingAction(); // opens a frame, opens a panel in that frame
                         sigLog.setMast(sourceMast, null);
                         sigLog.actionPerformed(null);
-                        // unable to receive changes in created panel, so listen to common parent object
+                        // unable to receive changes directly from created panel, so listen to common SML ancestor
                     }
                 }
                 WindowMaker t = new WindowMaker();
@@ -117,11 +124,13 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             }
         });
 
-        /*if(!jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled())
-         discoverPairs.setEnabled(false);*/
         add(footer, BorderLayout.SOUTH);
     }
 
+    /**
+     * Remove references to and from this object, so that it can eventually be
+     * garbage-collected.
+     */
     @Override
     public void dispose() {
         jmri.InstanceManager.getDefault(LayoutBlockManager.class).removePropertyChangeListener(this);
@@ -132,6 +141,13 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
     JmriJFrame signalMastLogicFrame = null;
     JLabel sourceLabel = new JLabel();
 
+    /**
+     * Respond to the Discover button being pressed.
+     * Checks whether AdvancedRouting is turned on and any Layout Editor Panels
+     * are present. For each LE Panel, calls discoverSignallingDest()
+     * {@link jmri.SignalMastLogicManager#discoverSignallingDest(SignalMast, LayoutEditor)}
+     * @param e The button event
+     */
     void discoverPressed(ActionEvent e) {
         if (!jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
             int response = JOptionPane.showConfirmDialog(null, rb.getString("EnableLayoutBlockRouting"));
@@ -157,11 +173,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             for (int i = 0; i < layout.size(); i++) {
                 try {
                     jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).discoverSignallingDest(sourceMast, layout.get(i));
-                    //String dots = "";
-                    //for (int j = 1; j == (i + 4) % 4; j++) { // skip 0
-                    //    dots = dots + "."; // animate the Discovering pane
-                    //}
-                    sourceLabel.setText(rb.getString("DiscoveringMasts")); // + dots); // LE not ready for testing
+                    sourceLabel.setText(rb.getString("DiscoveringMasts") + " (" + i + "/" + layout.size() + ")"); // indicate progress
                 } catch (jmri.JmriException ex) {
                     signalMastLogicFrame.setVisible(false);
                     JOptionPane.showMessageDialog(null, ex.toString());
@@ -174,6 +186,10 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         }
     }
 
+    /**
+     * Listen for property changes in the SML that's being configured.
+     * @param e The button event
+     */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("autoSignalMastGenerateComplete")) {
