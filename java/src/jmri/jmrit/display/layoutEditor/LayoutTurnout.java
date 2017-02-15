@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static jmri.util.MathUtil.*;
+
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
