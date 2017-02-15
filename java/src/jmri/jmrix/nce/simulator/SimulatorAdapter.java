@@ -335,7 +335,7 @@ public class SimulatorAdapter extends NcePortController implements
             case NceBinaryCommand.WRITE8_CMD:		// Write 8 bytes
                 writeMemory(m, reply, 8, false);
                 break;
-            case NceBinaryCommand.WRITEn_CMD:		// Write n bytes
+            case NceBinaryCommand.WRITEN_CMD:		// Write n bytes
                 writeMemory(m, reply, m.getElement(3), true);
                 break;
             case NceBinaryCommand.ACC_CMD:			// accessory command

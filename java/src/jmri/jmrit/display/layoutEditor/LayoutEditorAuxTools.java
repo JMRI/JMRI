@@ -581,7 +581,7 @@ public class LayoutEditorAuxTools {
                             // add to list
                             checkConnectivity(c, found);
                         }
-                    } else {
+                    } else if (ts.getType2() != LayoutTrack.POS_POINT) {
                         log.warn("Did not decode ts.getType2() of {} (A)", ts.getType2());
                     }
                 }

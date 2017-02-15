@@ -92,7 +92,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     //sessionList is used for messages to be suppressed for the current JMRI session only
     private ArrayList<String> sessionPreferenceList = new ArrayList<>();
     private ArrayList<ComboBoxLastSelection> _comboBoxLastSelection = new ArrayList<>();
-    private HashMap<String, WindowLocations> windowDetails = new HashMap<>();
+    private final HashMap<String, WindowLocations> windowDetails = new HashMap<>();
     private HashMap<String, ClassPreferences> classPreferenceList = new HashMap<>();
     private File file;
 
@@ -1151,6 +1151,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         if (element != null) {
             element.getChildren("window").stream().forEach((window) -> {
                 String reference = window.getAttributeValue("class");
+                log.debug("Reading window details for {}", reference);
                 try {
                     if (window.getAttribute("locX") != null && window.getAttribute("locX") != null) {
                         double x = window.getAttribute("locX").getDoubleValue();
@@ -1165,16 +1166,20 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 } catch (DataConversionException ex) {
                     log.error("Unable to read dimensions of window \"{}\"", reference);
                 }
-                if (element.getChild("properties") != null) {
-                    element.getChild("properties").getChildren().stream().forEach((property) -> {
+                if (window.getChild("properties") != null) {
+                    window.getChild("properties").getChildren().stream().forEach((property) -> {
                         String key = property.getChild("key").getText();
                         try {
                             Class<?> cl = Class.forName(property.getChild("value").getAttributeValue("class"));
                             Constructor<?> ctor = cl.getConstructor(new Class<?>[]{String.class});
                             Object value = ctor.newInstance(new Object[]{property.getChild("value").getText()});
+                            log.debug("Setting property {} for {} to {}", key, reference, value);
                             this.setProperty(reference, key, value);
                         } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                             log.error("Unable to retrieve property \"{}\" for window \"{}\"", key, reference);
+                        } catch (NullPointerException ex) {
+                            // null properties do not get set
+                            log.debug("Property \"{}\" for window \"{}\" is null", key, reference);
                         }
                     });
                 }

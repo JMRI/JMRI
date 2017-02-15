@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static jmri.util.MathUtil.*;
+
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -2656,7 +2658,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     void turnoutEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = (String) blockNameComboBox.getEditor().getItem();
+        String newName = blockNameComboBox.getEditor().getItem().toString();
         newName = (null != newName) ? newName.trim() : "";
         if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
@@ -2693,7 +2695,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     void turnoutEditBlockBPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = (String) blockBNameComboBox.getEditor().getItem();
+        String newName = blockBNameComboBox.getEditor().getItem().toString();
         newName = (null != newName) ? newName.trim() : "";
         if (!blockBName.equals(newName)) {
             // block has changed, if old block exists, decrement use
@@ -2730,7 +2732,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     void turnoutEditBlockCPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = (String) blockCNameComboBox.getEditor().getItem();
+        String newName = blockCNameComboBox.getEditor().getItem().toString();
         newName = (null != newName) ? newName.trim() : "";
         if (!blockCName.equals(newName)) {
             // block has changed, if old block exists, decrement use
@@ -2767,7 +2769,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     void turnoutEditBlockDPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = (String) blockDNameComboBox.getEditor().getItem();
+        String newName = blockDNameComboBox.getEditor().getItem().toString();
         newName = (null != newName) ? newName.trim() : "";
         if (!blockDName.equals(newName)) {
             // block has changed, if old block exists, decrement use
@@ -2804,8 +2806,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     void turnoutEditDonePressed(ActionEvent a) {
         // check if Turnout changed
-        String newName = (String) firstTurnoutComboBox.getEditor().getItem();
-        newName = (null != newName) ? newName.trim() : "";
+        String newName = firstTurnoutComboBox.getSelectedItem().toString();
         if (!turnoutName.equals(newName)) {
             // turnout has changed
             if (layoutEditor.validatePhysicalTurnout(newName, editLayoutTurnoutFrame)) {
@@ -2819,8 +2820,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
 
         if (additionalTurnout.isSelected()) {
-            newName = (String) secondTurnoutComboBox.getEditor().getItem();
-            newName = (null != newName) ? newName.trim() : "";
+            newName = secondTurnoutComboBox.getSelectedItem().toString();
             if (!secondTurnoutName.equals(newName)) {
                 if ((type == DOUBLE_XOVER)
                         || (type == RH_XOVER)
@@ -2851,7 +2851,7 @@ public class LayoutTurnout extends LayoutTrack {
             }
         }
         // check if Block changed
-        newName = (String) blockNameComboBox.getEditor().getItem();
+        newName = blockNameComboBox.getEditor().getItem().toString();
         newName = (null != newName) ? newName.trim() : "";
         if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
@@ -2875,7 +2875,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
         if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
             // check if Block 2 changed
-            newName = (String) blockBNameComboBox.getEditor().getItem();
+            newName = blockBNameComboBox.getEditor().getItem().toString();
             newName = (null != newName) ? newName.trim() : "";
             if (!blockBName.equals(newName)) {
                 // block has changed, if old block exists, decrement use
@@ -2899,7 +2899,7 @@ public class LayoutTurnout extends LayoutTrack {
                 needsBlockUpdate = true;
             }
             // check if Block 3 changed
-            newName = (String) blockCNameComboBox.getEditor().getItem();
+            newName = blockCNameComboBox.getEditor().getItem().toString();
             newName = (null != newName) ? newName.trim() : "";
             if (!blockCName.equals(newName)) {
                 // block has changed, if old block exists, decrement use
@@ -2924,7 +2924,7 @@ public class LayoutTurnout extends LayoutTrack {
                 needsBlockUpdate = true;
             }
             // check if Block 4 changed
-            newName = (String) blockDNameComboBox.getEditor().getItem();
+            newName = blockDNameComboBox.getEditor().getItem().toString();
             newName = (null != newName) ? newName.trim() : "";
             if (!blockDName.equals(newName)) {
                 // block has changed, if old block exists, decrement use

@@ -80,7 +80,7 @@ public class NceMonBinary {
                 return rb.getString("ENABLE_MAIN_CMD");
             case (NceMessage.KILL_MAIN_CMD):
                 return rb.getString("KILL_MAIN_CMD");
-            case (NceBinaryCommand.WRITEn_CMD): {
+            case (NceBinaryCommand.WRITEN_CMD): {
                 if (m.getNumDataElements() == 20) {
                     return MessageFormat.format(rb.getString("WRITEn_CMD"),
                             new Object[]{m.getElement(3), getAddress(m), getDataBytes(m, 4, 16)});

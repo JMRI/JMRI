@@ -53,7 +53,8 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
     // test creation - real work is in the setup() routine
     public void testCreate() {
         // initial state when created must be UNKNOWN
-        Assert.assertEquals("initial state", Sensor.UNKNOWN, t.getState());
+        Assert.assertEquals("initial state 1", Sensor.UNKNOWN, t.getState());
+        Assert.assertEquals("initial state 2", "Unknown", t.describeState(t.getState()));
     }
 
     public void testAddListener() throws JmriException {
@@ -85,14 +86,16 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
     public void testCommandInactive() throws JmriException {
         t.setState(Sensor.INACTIVE);
         // check
-        Assert.assertEquals("state", Sensor.INACTIVE, t.getState());
+        Assert.assertEquals("state 1", Sensor.INACTIVE, t.getState());
+        Assert.assertEquals("state 2", "Inactive", t.describeState(t.getState()));
         checkOffMsgSent();
     }
 
     public void testCommandActive() throws JmriException {
         t.setState(Sensor.ACTIVE);
         // check
-        Assert.assertEquals("commanded state", Sensor.ACTIVE, t.getState());
+        Assert.assertEquals("state 1", Sensor.ACTIVE, t.getState());
+        Assert.assertEquals("state 2", "Active", t.describeState(t.getState()));
         checkOnMsgSent();
     }
 
