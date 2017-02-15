@@ -75,6 +75,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(ProgReadExceptionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ProgWriteExceptionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TimebaseRateExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.spi.PackageTest.class));
         return suite;
     }
 
