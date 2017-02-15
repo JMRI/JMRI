@@ -1099,7 +1099,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
     }
 
-    // @deprecated 4.7.1
+    /**
+     * @deprecated 4.7.1
+     */
     @Deprecated
     void signalMastCombo(JComboBox<String> box, SignalMast select) {
         box.removeAllItems();
@@ -1211,6 +1213,10 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     private ArrayList<ManualSensorList> _includedManualSensorList;
     private ArrayList<ManualSignalMastList> _includedManualSignalMastList;
 
+
+    /**
+     * Abstract class implemented during edit of an SML.
+     */
     private abstract class SignalMastElement {
 
         String _sysName;
@@ -1270,6 +1276,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     /**
      * A series of Lists to store all SML properties during Edit.
      */
+
+    /**
+     * A paired list of manually configurable Layout Blocks and a corresponding
+     * Set To State used during edit of an SML.
+     */
     private class ManualBlockList extends SignalMastElement {
 
         ManualBlockList(Block block) {
@@ -1318,6 +1329,10 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
     }
 
+    /**
+     * A paired list of automatically configured Layout Blocks and a corresponding
+     * Set To State used during edit of an SML.
+     */
     private class AutoBlockList extends ManualBlockList {
 
         AutoBlockList(Block block) {
@@ -1329,6 +1344,10 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
     }
 
+    /**
+     * A paired list of manually configurable Turnouts and a corresponding
+     * Set To State used during edit of an SML.
+     */
     private class ManualTurnoutList extends SignalMastElement {
 
         ManualTurnoutList(String sysName, String userName) {
@@ -1358,6 +1377,10 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
     }
 
+    /**
+     * A paired list of automatically configured Turnouts and a corresponding
+     * Set To State used during edit of an SML.
+     */
     private class AutoTurnoutList extends ManualTurnoutList {
 
         AutoTurnoutList(String sysName, String userName) {
@@ -1369,6 +1392,10 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
     }
 
+    /**
+     * A paired list of manually configured Sensors and a corresponding
+     * Set To State used during edit of an SML.
+     */
     private class ManualSensorList extends SignalMastElement {
 
         ManualSensorList(String sysName, String userName) {
@@ -1396,6 +1423,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
     }
 
+    /**
+     * A paired list of manually configured Signal Masts and a corresponding Set To State used during edit of an SML.
+     */
     private class ManualSignalMastList extends SignalMastElement {
 
         ManualSignalMastList(SignalMast s) {
@@ -1431,6 +1461,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
     }
 
+    /**
+     * A paired list of automatically configured Signal Masts and a corresponding Set To State used during edit of an SML.
+     */
     private class AutoSignalMastList extends ManualSignalMastList {
 
         AutoSignalMastList(SignalMast s) {
@@ -1483,6 +1516,10 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
+        /**
+         * Remove references to and from this object, so that it can eventually be
+         * garbage-collected.
+         */
         public void dispose() {
             jmri.InstanceManager.turnoutManagerInstance().removePropertyChangeListener(this);
         }
@@ -1533,7 +1570,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
          * This is a lightweight version of the {@link jmri.jmrit.beantable.RowComboBoxPanel}
          * RowComboBox cell editor class, some of the hashtables not needed here since we only need
          * identical options for all rows in a colomn.
-         * {@see AspectComboBoxPanel} for a full application with row specific comboBox choices.
+         * @see SignalMastModel.AspectComboBoxPanel for a full application with row specific comboBox choices.
          */
         public class StateComboBoxPanel extends RowComboBoxPanel {
 
@@ -1557,7 +1594,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         }
 
-        // Methods to display STATE_COLUMN ComboBox in tables
+        // Methods to display STATE_COLUMN ComboBox in tables.
         // All row values are in terms of the Model, not the Table as displayed.
         // Hashtables for Editors; none used for Renderers
 
@@ -1988,7 +2025,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
          * <p>
          * This is a full version of the {@link jmri.jmrit.beantable.RowComboBoxPanel}
          * RowComboBox cell editor class, including all hashtables and row specific comboBox choices.
-         * {@see StateComboBoxPanel} for a light weight application with identical options for all rows in a colomn.
+         * @see StateComboBoxPanel for a lightweight application when all that's needed are identical
+         * options for all rows in a colomn.
          */
         public class AspectComboBoxPanel extends RowComboBoxPanel {
 
@@ -2169,6 +2207,10 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             return String.class;
         }
 
+        /**
+         * Remove references to and from this object, so that it can eventually be
+         * garbage-collected.
+         */
         public void dispose() {
             jmri.InstanceManager.turnoutManagerInstance().removePropertyChangeListener(this);
         }

@@ -119,7 +119,8 @@
       set to, select "Any State" from the drop down box.</p>
 
       <p>Clicking on the "Update Signal Mast Logic" button will add
-      or update this Signal Mast Logic to the system. Once added,
+      or update this Signal Mast Logic to the system. Apply will
+      do that too, and close the Edit pane. Once a new Logic is added,
       the tables holding the automatically generated data will be
       re-populated.</p>
 
