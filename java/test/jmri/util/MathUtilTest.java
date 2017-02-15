@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class MathUtilTest extends TestCase {
 
-    static final double tolerance = 0.00001;
+    static final double tolerance = 0.000001;
 
     @Test
     public void testDouble_lerp() {
@@ -29,7 +29,6 @@ public class MathUtilTest extends TestCase {
         for (double f = 0.0; f < 2.f; f += 0.15) {
             double c = lerp(theMin, theMax, f);
             double t = (c - theMin) / (theMax - theMin);
-            //log.info("testDouble_lerp({}, {}, {}): {}", theMin, theMax, f, c);
             Assert.assertEquals(t, f, tolerance);
             passed = (fabs(t - f) <= tolerance);
             if (!passed) {
@@ -84,7 +83,6 @@ public class MathUtilTest extends TestCase {
         Point2D pC = MathUtil.fourth(pA, pB);
         double distanceAC = pA.distance(pC);
         double t = distanceAC / distanceAB;
-        //log.info("distanceAC: {} / distanceAB: {} == {}", distanceAC, distanceAB, t);
         Assert.assertEquals(1.0 / 4.0, t, tolerance);
 
         passed = (fabs(t - (1.0/4.0)) <= tolerance);
