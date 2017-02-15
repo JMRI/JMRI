@@ -560,26 +560,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // initialise keycode map
         initStringsToVTCodes();
 
-        // initialize preferences
-        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
-            Object prefsProp = prefsMgr.getProperty(getWindowFrameRef(), "toolBarSide");
-            log.info("{}.toolBarSide is {}", getWindowFrameRef(), prefsProp);
-            if (prefsProp != null) {
-                eToolBarSide newToolBarSide = eToolBarSide.getName((String) prefsProp);
-                setToolBarSide(newToolBarSide);
-            }
-
-            boolean prefsShowHelpBar = prefsMgr.getSimplePreferenceState(getWindowFrameRef() + ".showHelpBar");
-            log.info("{}.showHelpBar is {}", getWindowFrameRef(), prefsShowHelpBar);
-            setShowHelpBar(prefsShowHelpBar);
-
-            boolean prefsAntialiasingOn = prefsMgr.getSimplePreferenceState(getWindowFrameRef() + ".antialiasingOn");
-            log.info("{}.antialiasingOn is {}", getWindowFrameRef(), prefsAntialiasingOn);
-            setAntialiasingOn(prefsAntialiasingOn);
-
-            ////
-        });
-
         // initialize menu bar
         JMenuBar menuBar = new JMenuBar();
         // set up File menu
@@ -904,7 +884,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         });
 
-
         // fourth row of edit tool bar items
 
         // multi sensor…
@@ -1133,6 +1112,30 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         resetDirty();
         // establish link to LayoutEditorAuxTools
         auxTools = new LayoutEditorAuxTools(thisPanel);
+
+        // Note: We have to invoke this later because everything's not really setup yet
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                // initialize preferences
+                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                    Object prefsProp = prefsMgr.getProperty(getWindowFrameRef(), "toolBarSide");
+                    log.info("{}.toolBarSide is {}", getWindowFrameRef(), prefsProp);
+                    if (prefsProp != null) {
+                        eToolBarSide newToolBarSide = eToolBarSide.getName((String) prefsProp);
+                        setToolBarSide(newToolBarSide);
+                    }
+
+                    boolean prefsShowHelpBar = prefsMgr.getSimplePreferenceState(getWindowFrameRef() + ".showHelpBar");
+                    log.info("{}.showHelpBar is {}", getWindowFrameRef(), prefsShowHelpBar);
+                    setShowHelpBar(prefsShowHelpBar);
+
+                    boolean prefsAntialiasingOn = prefsMgr.getSimplePreferenceState(getWindowFrameRef() + ".antialiasingOn");
+                    log.info("{}.antialiasingOn is {}", getWindowFrameRef(), prefsAntialiasingOn);
+                    setAntialiasingOn(prefsAntialiasingOn);
+                });
+            }
+        });
     }
 
     private void setupToolbar() {
