@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- UpDated by Herv&#233; Blorec 2013-10-10-->
+<!-- UpDated by Herv&#233; Blorec 2017-02-16-->
 <html lang="fr">
 <head>
  <TITLE>
@@ -134,9 +133,9 @@ ont &#233;t&#233; pr&#233;d&#233;finies dans le fichier signalSpeed.xml, en plus
 <a href="../../../../html/tools/tracker/index.shtml">Plus d'information sur les Cantons</a></p>
 <p>
 <a href="../display/LayoutEditor.shtml">Plus d'informations sur l'utilisation des Cantons avec l'&#233;diteur de R&#233;seau</a>
-<br>
-<li>
-<li>
+<p>Retour &#224;  la <a href="../../../../html/tools/Blocks.shtml">page d'Aide Cantons</a></p>
+
+
 Localis&#233; &#224; package/jmri/jmrt/beantable/BlockTable
 <Li>
 <!--#include virtual="/Footer" -->
