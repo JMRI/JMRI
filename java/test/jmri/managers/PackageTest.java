@@ -22,7 +22,7 @@ import org.junit.runners.Suite;
         ProxyReporterManagerTest.class,
         ManagerDefaultSelectorTest.class,
         AbstractSignalHeadManagerTest.class,
-	DefaultInstanceInitializerTest.class,
+	/* DefaultInstanceInitializerTest.class,
 	DefaultMemoryManagerTest.class,
 	DefaultPowerManagerTest.class,
 	DefaultProgrammerManagerTest.class,
@@ -33,7 +33,7 @@ import org.junit.runners.Suite;
 	DefaultSignalMastLogicManagerTest.class,
 	DefaultSignalMastManagerTest.class,
 	DeferringProgrammerManagerTest.class,
-	InternalTurnoutManagerTest.class
+	InternalTurnoutManagerTest.class*/
 })
 
 /**
