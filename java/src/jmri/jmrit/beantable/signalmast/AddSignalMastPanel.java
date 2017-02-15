@@ -283,7 +283,7 @@ public class AddSignalMastPanel extends JPanel {
 
     /**
      * Build a panel filled in for existing mast after pressing 'Edit' in the Signal Mast table
-     * @param mast NamedBeanHandle&lt;SignalMast&gt; for the signal mast to be retrieved
+     * @param mast {@code NamedBeanHandle<SignalMast> } for the signal mast to be retrieved
      * @see #AddSignalMastPanel()
     */
     public AddSignalMastPanel(SignalMast mast) {
@@ -666,7 +666,7 @@ public class AddSignalMastPanel extends JPanel {
                 for (File app : apps) {
                     if (app.getName().startsWith("appearance") && app.getName().endsWith(".xml")) {
                         log.debug("   found file: " + app.getName());
-                        // load it and get name 
+                        // load it and get name
                         // If the mast file name already exists no point in re-adding it
                         if (!mastNames.contains(app)) {
                             mastNames.add(app);
@@ -769,7 +769,7 @@ public class AddSignalMastPanel extends JPanel {
                 } catch (IllegalArgumentException ex) {
                     // user input no good
                     handleCreateException(name);
-                    return; // without creating       
+                    return; // without creating
                 }
                 if (!user.equals("")) {
                     m.setUserName(user);
@@ -2177,7 +2177,7 @@ public class AddSignalMastPanel extends JPanel {
          * @return A char[] of '1' and '0' elements with a length between 1 and 5
          * corresponding with the number of outputs for this mast
          * @see jmri.implementation.MatrixSignalMast
-         * @see #okPressed(java.awt.event.ActionEvent) 
+         * @see #okPressed(java.awt.event.ActionEvent)
          */
         char[] trimAspectBits() {
             try {
