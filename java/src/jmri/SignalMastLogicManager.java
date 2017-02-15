@@ -86,7 +86,7 @@ public interface SignalMastLogicManager extends Manager {
     /**
      * Create a new Signal Mast Logic for a source Signal Mast.
      *
-     * @param The source Signal Mast
+     * @param source The source Signal Mast
      * @return source The new SML instance
      */
     public SignalMastLogic newSignalMastLogic(SignalMast source);
