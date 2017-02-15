@@ -127,7 +127,7 @@ abstract public class AbstractDCCppInitializationManager {
         public void message(DCCppReply l) {
             // Check to see if this is a response with the Command Station 
             // Version Info
-	    if (l.getElement(0) == DCCppConstants.VERSION_REPLY) {
+	    if (l.getElement(0) == DCCppConstants.STATUS_REPLY) {
                 // This is the Command Station Software Version Response
 		log.debug("Version Info Received: {}", l.toString());
 		systemMemo.getDCCppTrafficController()

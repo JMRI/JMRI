@@ -83,13 +83,14 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     /**
      * Create a reply from a string of hex characters.
      *
-     * Not sure this one is needed.
      */
     @Deprecated
     public DCCppReply(String message) {
         super();
         setBinary(false);
         myReply = new StringBuilder(message);
+        opcode = message.charAt(0);
+        // BUG? myRegex is not set by this function yet...
         // gather bytes in result
         _nDataChars = myReply.length();
         _dataChars = new int[_nDataChars];
@@ -104,8 +105,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         _nDataChars = myReply.length();
         log.debug("DCCppReply() opcode = {} ({})", opcode, Character.toString(opcode));
     }
-
-
+    
     @Override
     public String toString() {
         log.debug("DCCppReply.toString(): char {} {} msg {}", opcode, Character.toString(opcode), myReply.toString());
@@ -142,7 +142,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         log.debug("Parse charAt(0): {} ({})", s.charAt(0), Character.toString(s.charAt(0)));
         DCCppReply r = new DCCppReply(s.charAt(0), null);
         switch(s.charAt(0)) {
-            case DCCppConstants.VERSION_REPLY:
+            case DCCppConstants.STATUS_REPLY:
                 if (s.matches(DCCppConstants.STATUS_REPLY_REGEX)) {
                     r.myReply = new StringBuilder(s);
                     log.debug("Status Reply: {}", r.toString());
@@ -905,7 +905,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isPowerReply() { return (this.getOpCodeChar() == DCCppConstants.POWER_REPLY); }
     public boolean isCurrentReply() { return (this.getOpCodeChar() == DCCppConstants.CURRENT_REPLY); }
     public boolean isMemoryReply() { return (this.getOpCodeChar() == DCCppConstants.MEMORY_REPLY); }
-    public boolean isVersionReply() { return (this.getOpCodeChar() == DCCppConstants.VERSION_REPLY); }
+    public boolean isVersionReply() { return (this.getOpCodeChar() == DCCppConstants.STATUS_REPLY); }
 //    public boolean isListPacketRegsReply() { return (this.getOpCodeChar() == DCCppConstants.LISTPACKET_REPLY); }
     public boolean isSensorReply() { return((this.getOpCodeChar() == DCCppConstants.SENSOR_REPLY) ||
 					    (this.getOpCodeChar() == DCCppConstants.SENSOR_REPLY_H) ||
@@ -914,7 +914,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isTurnoutDefReply() { return(this.matches(DCCppConstants.TURNOUT_DEF_REPLY_REGEX)); }
     public boolean isMADCFailReply() { return(this.getOpCodeChar() == DCCppConstants.MADC_FAIL_REPLY); }
     public boolean isMADCSuccessReply() { return(this.getOpCodeChar() == DCCppConstants.MADC_SUCCESS_REPLY); }
-    public boolean isStatusReply() { return(this.getOpCodeChar() == DCCppConstants.VERSION_REPLY); }
+    public boolean isStatusReply() { return(this.getOpCodeChar() == DCCppConstants.STATUS_REPLY); }
     public boolean isFreeMemoryReply() { return(this.matches(DCCppConstants.FREE_MEMORY_REPLY_REGEX)); }
     public boolean isOutputListReply() { return(this.matches(DCCppConstants.OUTPUT_LIST_REPLY_REGEX)); }
     public boolean isOutputCmdReply() { return(this.matches(DCCppConstants.OUTPUT_REPLY_REGEX)); }
