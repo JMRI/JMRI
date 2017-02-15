@@ -22,18 +22,18 @@ import org.junit.runners.Suite;
         ProxyReporterManagerTest.class,
         ManagerDefaultSelectorTest.class,
         AbstractSignalHeadManagerTest.class,
-	DefaultInstanceInitializerTest.class,
-	DefaultMemoryManagerTest.class,
-	DefaultPowerManagerTest.class,
-	DefaultProgrammerManagerTest.class,
-	DefaultRailComManagerTest.class,
-	DefaultRouteManagerTest.class,
+	    DefaultInstanceInitializerTest.class,
+	    DefaultMemoryManagerTest.class,
+	    DefaultPowerManagerTest.class,
+	    DefaultProgrammerManagerTest.class,
+	    DefaultRailComManagerTest.class,
+	    DefaultRouteManagerTest.class,
 	/*DefaultShutDownManagerTest.class,
 	DefaultSignalGroupManagerTest.class,
-	DefaultSignalMastLogicManagerTest.class,
+	DefaultSignalMastLogicManagerTest.class,*/
 	DefaultSignalMastManagerTest.class,
 	DeferringProgrammerManagerTest.class,
-	InternalTurnoutManagerTest.class*/
+	InternalTurnoutManagerTest.class
 })
 
 /**
