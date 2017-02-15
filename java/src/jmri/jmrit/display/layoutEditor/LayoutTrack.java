@@ -71,70 +71,6 @@ public abstract class LayoutTrack {
         defaultTrackColor = color;
     }
 
-    /**
-     * useful math methods (should be class extension for Double and Point2D)
-     */
-    //return a Double between a & b for t:0 ==> a and t:1 ==> b
-    public static Double lerp(Double a, Double b, Double t) {
-        return ((1.0 - t) * a) + (t * b);
-    }
-
-    //return a Point2D between a & b for t:0 ==> a and t:1 ==> b
-    public static Point2D lerp(Point2D p1, Point2D p2, Double interpolant) {
-        return new Point2D.Double(lerp(p1.getX(), p2.getX(), interpolant),
-                lerp(p1.getY(), p2.getY(), interpolant));
-    }
-
-    // return a Point2D at the mid point between p1 & p2
-    public static Point2D midpoint(Point2D p1, Point2D p2) {
-        return lerp(p1, p2, 0.5);
-    }
-
-    // return a Point2D one third of the way from p1 to p2
-    public static Point2D third(Point2D p1, Point2D p2) {
-        return lerp(p1, p2, 1.0 / 3.0);
-    }
-
-    // return a Point2D one forth of the way from p1 to p2
-    public static Point2D fourth(Point2D p1, Point2D p2) {
-        return lerp(p1, p2, 1.0 / 4.0);
-    }
-
-    //
-    // Wrap a double between two values (for example +/- 180 or 0-360 degrees)
-    // Note: THIS IS NOT A PIN OR TRUNCATE; VALUES WRAP AROUND BETWEEN MIN & MAX
-    // (And yes, this works correctly with negative numbers)
-    //
-    public Double wrap(Double inValue, Double inMin, Double inMax) {
-        Double valueRange = inMax - inMin;
-        return inMin + ((((inValue - inMin) % valueRange) + valueRange) % valueRange);
-    }	// wrap
-
-    // wrap an double between +/-180
-    public Double wrapPM180(Double inValue) {
-        return wrap(inValue, -180.0, +180.0);
-    }
-
-    // wrap an double between +/-360
-    public Double wrapPM360(Double inValue) {
-        return wrap(inValue, -360.0, +360.0);
-    }
-
-    // wrap an double between 0-360
-    public Double wrap360(Double inValue) {
-        return wrap(inValue, 0.0, +360.0);
-    }
-
-    // wrap an angle between 0-360
-    public double normalizeAngle(double a) {
-        return wrap360(a);
-    }
-
-    // return the absolute difference (0-180) between two angles
-    public double diffAngle(double a, double b) {
-        return Math.abs(wrapPM180(a - b));
-    }
-
     //NOTE: not public because "center" is a member variable
     protected Point2D rotatePoint(Point2D p, double sineRot, double cosineRot) {
         double cX = center.getX();
@@ -161,7 +97,7 @@ public abstract class LayoutTrack {
      * @return true if hidden; false otherwise
      * @deprecated since 4.7.2; use {@link #isHidden()} instead
      */
-    @Deprecated // Java standard pattern for boolean getters is "isHidden()"  
+    @Deprecated // Java standard pattern for boolean getters is "isHidden()"
     public boolean getHidden() {
         return hidden;
     }

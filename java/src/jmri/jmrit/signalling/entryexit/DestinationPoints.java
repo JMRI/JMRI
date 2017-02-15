@@ -305,8 +305,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         final ArrayList<Color> realColorXtra = new ArrayList<Color>();
         final ArrayList<LayoutBlock> routeBlocks = new ArrayList<LayoutBlock>();
         if (manager.useDifferentColorWhenSetting()) {
-            for (int i = 1; i < routeDetails.size(); i++) {
-                LayoutBlock lbk = routeDetails.get(i);
+            for (LayoutBlock lbk : routeDetails) {
                 routeBlocks.add(lbk);
                 realColorXtra.add(lbk.getBlockExtraColor());
                 realColorStd.add(lbk.getBlockTrackColor());
