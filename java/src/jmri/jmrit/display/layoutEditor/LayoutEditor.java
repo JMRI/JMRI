@@ -1120,18 +1120,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 // initialize preferences
                 InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                     Object prefsProp = prefsMgr.getProperty(getWindowFrameRef(), "toolBarSide");
-                    log.info("{}.toolBarSide is {}", getWindowFrameRef(), prefsProp);
+                    ///log.info("{}.toolBarSide is {}", getWindowFrameRef(), prefsProp);
                     if (prefsProp != null) {
                         eToolBarSide newToolBarSide = eToolBarSide.getName((String) prefsProp);
                         setToolBarSide(newToolBarSide);
                     }
 
                     boolean prefsShowHelpBar = prefsMgr.getSimplePreferenceState(getWindowFrameRef() + ".showHelpBar");
-                    log.info("{}.showHelpBar is {}", getWindowFrameRef(), prefsShowHelpBar);
+                    ///log.info("{}.showHelpBar is {}", getWindowFrameRef(), prefsShowHelpBar);
                     setShowHelpBar(prefsShowHelpBar);
 
                     boolean prefsAntialiasingOn = prefsMgr.getSimplePreferenceState(getWindowFrameRef() + ".antialiasingOn");
-                    log.info("{}.antialiasingOn is {}", getWindowFrameRef(), prefsAntialiasingOn);
+                    ///log.info("{}.antialiasingOn is {}", getWindowFrameRef(), prefsAntialiasingOn);
                     setAntialiasingOn(prefsAntialiasingOn);
                 });
             }
