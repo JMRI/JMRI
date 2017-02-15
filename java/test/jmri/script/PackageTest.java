@@ -29,6 +29,9 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.script");   // no tests in this class itself
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JmriScriptEngineManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ScriptFileChooserTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ScriptOutputTest.class));
 
         return suite;
     }

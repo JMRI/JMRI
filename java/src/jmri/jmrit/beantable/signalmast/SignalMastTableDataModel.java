@@ -440,13 +440,13 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         }
 
         /**
-         * Call method getApectEditorBox() in the surrounding method for the SignalMastTable.
+         * Call method getAspectEditorBox() in the surrounding method for the SignalMastTable.
          * @param row Index of the row clicked in the table
          * @return an appropriate combobox for this signal mast
          */
         @Override
         protected JComboBox getEditorBox(int row) {
-            return getApectEditorBox(row);
+            return getAspectEditorBox(row);
         }
 
     }
@@ -473,7 +473,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
      * @param row Index number (in TableDataModel)
      * @return A combobox containing the valid aspect names for this mast
      */
-    JComboBox getApectEditorBox(int row) {
+    JComboBox getAspectEditorBox(int row) {
         JComboBox editCombo = editorMap.get(this.getValueAt(row, SYSNAMECOL));
         if (editCombo == null) {
             // create a new one with correct aspects

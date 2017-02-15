@@ -1,6 +1,8 @@
 package jmri.implementation;
 
 import java.util.Arrays;
+import javax.annotation.CheckReturnValue;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBeanHandle;
@@ -209,6 +211,16 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     @Override
     public int getState() {
         return getKnownState();
+    }
+
+    @Override
+    @CheckReturnValue
+    public String describeState(int state) {
+        switch (state) {
+            case THROWN: return Bundle.getMessage("TurnoutStateThrown");
+            case CLOSED: return Bundle.getMessage("TurnoutStateClosed");
+            default: return super.describeState(state);
+        }
     }
 
     protected String[] _validFeedbackNames = {"DIRECT", "ONESENSOR",

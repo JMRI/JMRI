@@ -19,6 +19,8 @@ public class SignallingSourceFrame extends jmri.util.JmriJFrame {
 
     JButton sendButton;
     SignallingSourcePanel sigPanel;
+    // boolean inEditMode = false; // to warn and prevent opening more than 1 editing session
+    // cannot determine finishing of Edit session (cf. SignalGroupTableAction#addPressed(e)
 
     public void initComponents(jmri.SignalMast source) throws Exception {
         // the following code sets the frame's initial state

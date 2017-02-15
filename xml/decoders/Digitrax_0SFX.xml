@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="7.1" lastUpdated="20170214"/>
   <version author="Alain Le Marchand" version="7" lastUpdated="20140427"/>
   <version author="Steve Lowens" version="6" lastUpdated="20120515"/>
   <version author="Steve Lowens" version="5" lastUpdated="20110326"/>
@@ -44,6 +45,8 @@
   <!--    Added missing read-only variables CV121 to 128, CV160            -->
   <!--        and created a new pane "Digitrax Sound Info" to display them -->
   <!--    Added function labels + updated comments and sizes               -->
+  <!--    Version 7.1 (Alain Le Marchand) -                                -->
+  <!--    Size information for SDN144K1E                                   -->
   <!--                                             -->
   <decoder>
     <family name="SFX Sound Decoders" mfg="Digitrax">
@@ -73,7 +76,7 @@
         <output name="2" label="F0R Pad" connection="LED"/>
         <output name="3" label="F1 Pad" connection="solder"/>
         <output name="4" label="F2 Pad" connection="solder"/>
-        <size length="x.x" width="x.x" height="x.x" units="inches"/>
+        <size length="2.97" width="0.40" height="0.11" units="inches"/>
       </model>
       <model model="SDN144PS" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="NMRAmedium" productID="1441" comment="N-Scale, with medium plug, SoundFX">
         <output name="1" label="F0F Pad" connection="plug"/>

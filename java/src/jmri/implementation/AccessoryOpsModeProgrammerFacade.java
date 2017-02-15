@@ -101,13 +101,21 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
         _val = val;
         useProgrammer(p);
         state = ProgState.PROGRAMMING;
+        byte[] b;
 
-        // send DCC command to implement prog.writeCV(cv, val, this);
-        byte[] b = NmraPacket.accDecoderPktOpsMode(aprog.getAddressNumber(), Integer.parseInt(cv), val);
+        // Send DCC commands to implement prog.writeCV(cv, val, this);
+
+        // Send a legacy ops mode accessory CV programming packet for compatibility with older decoders
+        // (Sending both packet types was also observed to benefit timing considerations - spacing effect)
+        b = NmraPacket.accDecPktOpsModeLegacy(aprog.getAddressNumber(), Integer.parseInt(cv), val);
+        InstanceManager.getDefault(CommandStation.class).sendPacket(b, 1);
+
+        // Send a basic ops mode accessory CV programming packet for newer decoders
+        b = NmraPacket.accDecPktOpsMode(aprog.getAddressNumber(), Integer.parseInt(cv), val);
         InstanceManager.getDefault(CommandStation.class).sendPacket(b, 1);
 
         // and reply done
-        p.programmingOpReply(val, ProgListener.OK);
+        this.programmingOpReply(val, ProgListener.OK);
     }
 
     @Override
