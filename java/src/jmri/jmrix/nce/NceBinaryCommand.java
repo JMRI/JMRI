@@ -18,13 +18,13 @@ import org.slf4j.LoggerFactory;
  Ex: Accessory Address 513 = 0x02 0x01 (hi byte first)
  NOTE: accy/signal address 0 is not a valid address
  
- Op_1   Data_1        Operation description
- 01     0-255         NCE macro number 0-255
- 02     0-255         Duplicate of Op_1 command 01
- 03     0             Accessory Normal direction (ON)
- 04     0             Accessory Reverse direction (OFF)
- 05     0-1f          Signal Aspect 0-31
- 06-7f                reserved reserved
+ Op_1   Data_1       Operation description
+ 01     0-255        NCE macro number 0-255
+ 02     0-255        Duplicate of Op_1 command 01
+ 03     0            Accessory Normal direction (ON)
+ 04     0            Accessory Reverse direction (OFF)
+ 05     0-1f         Signal Aspect 0-31
+ 06-7f               reserved reserved
  
  Returns: ! = success
  1 = bad accy/signal address
@@ -37,31 +37,31 @@ import org.slf4j.LoggerFactory;
  Example: Long address 3 = 0xc0 0x03
  Short address 3 = 0x00 0x03
   
- op_1 data_1      Operation description
- 01  0-7f         Reverse 28 speed command
- 02  0-7f         Forward 28 speed command
- 03  0-7f         Reverse 128 speed command
- 04  0-7f         Forward 128 speed command
- 05  0            Estop reverse command
- 06  0            Estop forward command
- 07  0-1f         Function group 1 (same format as DCC packet for FG1
- 08  0-0f         Function group 2 (same format as DCC packet for FG2
- 09  0-0f         Function group 3 (same format as DCC packet for FG3
- 0a  0-7f         Set reverse consist address for lead loco
- 0b  0-7f         Set forward consist address for lead loco
- 0c  0-7f         Set reverse consist address for rear loco
- 0d  0-7f         Set forward consist address for rear loco
- 0e  0-7f         Set reverse consist address for additional loco
- 0f  0-7f         Set forward consist address for additional loco
- 10  0            Del loco from consist
- 11  0            Kill consist
- 12  0-9          Set momentum
- 13  0-7f         No action, always returns success
- 14  0-7f         No action, always returns success
- 15  0-ff         Functions 13-20 control (bit 0=F13, bit 7=F20)
- 16  0-ff         Functions 21-28 control (bit 0=F21, bit 7=F28)
- 17  0-3f         Assign this loco to cab number in data_1
- 18-7f            reserved reserved
+ Op_1   Data_1       Operation description
+ 01     0-7f         Reverse 28 speed command
+ 02     0-7f         Forward 28 speed command
+ 03     0-7f         Reverse 128 speed command
+ 04     0-7f         Forward 128 speed command
+ 05     0            Estop reverse command
+ 06     0            Estop forward command
+ 07     0-1f         Function group 1 (same format as DCC packet for FG1
+ 08     0-0f         Function group 2 (same format as DCC packet for FG2
+ 09     0-0f         Function group 3 (same format as DCC packet for FG3
+ 0a     0-7f         Set reverse consist address for lead loco
+ 0b     0-7f         Set forward consist address for lead loco
+ 0c     0-7f         Set reverse consist address for rear loco
+ 0d     0-7f         Set forward consist address for rear loco
+ 0e     0-7f         Set reverse consist address for additional loco
+ 0f     0-7f         Set forward consist address for additional loco
+ 10     0            Del loco from consist
+ 11     0            Kill consist
+ 12     0-9          Set momentum
+ 13     0-7f         No action, always returns success
+ 14     0-7f         No action, always returns success
+ 15     0-ff         Functions 13-20 control (bit 0=F13, bit 7=F20)
+ 16     0-ff         Functions 21-28 control (bit 0=F21, bit 7=F28)
+ 17     0-3f         Assign this loco to cab number in data_1
+ 18-7f               reserved reserved
   
  Returns: ! = success
  1 = bad loco address
