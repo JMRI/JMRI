@@ -574,7 +574,6 @@ public interface SignalMastLogic {
      * Set up a Signal Mast Logic from the Layout Editor panel where its source
      * Signal Mast is present, when useLayoutEditor is set to true.
      */
-    setupLayoutEditorDetails
     public void setupLayoutEditorDetails();
 
     /**
