@@ -97,7 +97,9 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         p.resetDirty();
         panel.setAttribute("openDispatcher", p.getOpenDispatcherOnLoad() ? "yes" : "no");
         panel.setAttribute("useDirectTurnoutControl", p.getDirectTurnoutControl() ? "yes" : "no");
-        panel.setAttribute("zoom", Double.toString(p.getZoom()));
+
+        // note: moving zoom attribute into per-window user preference
+        //panel.setAttribute("zoom", Double.toString(p.getZoom()));
 
         // include contents (Icons and Labels)
         List<Positionable> contents = p.getContents();
@@ -547,9 +549,10 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             }
         }
 
-        if (shared.getAttribute("zoom") != null) {
-            panel.setZoom(Double.valueOf(shared.getAttribute("zoom").getValue()));
-        }
+        // note: moving zoom attribute into per-window user preference
+        //if (shared.getAttribute("zoom") != null) {
+        //    panel.setZoom(Double.valueOf(shared.getAttribute("zoom").getValue()));
+        //}
 
         // Set editor's option flags, load content after
         // this so that individual item flags are set as saved
