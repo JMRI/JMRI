@@ -25,26 +25,6 @@ public interface Sensor extends NamedBean {
     // states are parameters; both closed and thrown is possible!
     public static final int ACTIVE = 0x02;
     public static final int INACTIVE = 0x04;
-
-    // this should only be used for debugging…
-    public String toString() {
-        String result = "Sensor " + getFullyFormattedDisplayName();
-        switch (getKnownState()) {
-            case ACTIVE: {
-                result += " ACTIVE";
-                break;
-            }
-            case INACTIVE: {
-                result += " INACTIVE";
-                break;
-            }
-            default: {
-                result += String.format(" unknown state: " + getKnownState());
-                break;
-            }
-        }
-        return result;
-    }
     
     /**
      * Known state on layout is a bound parameter

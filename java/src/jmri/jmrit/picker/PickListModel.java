@@ -538,6 +538,26 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             super();
         }
 
+        // this should only be used for debugging…
+        public String toString() {
+            String result = "Sensor " + getFullyFormattedDisplayName();
+            switch (getKnownState()) {
+                case ACTIVE: {
+                    result += " ACTIVE";
+                    break;
+                }
+                case INACTIVE: {
+                    result += " INACTIVE";
+                    break;
+                }
+                default: {
+                    result += String.format(" unknown state: " + getKnownState());
+                    break;
+                }
+            }
+            return result;
+        }
+
         @Override
         public Object getValueAt(int r, int c) {
             if (c == POSITION_COL) {
