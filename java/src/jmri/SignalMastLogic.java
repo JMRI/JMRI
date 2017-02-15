@@ -173,7 +173,7 @@ public interface SignalMastLogic {
      * Return the Set State of a control turnout as it is configured between
      * the source and destination mast.
      *
-     * @param mast        The Control Signal Mast
+     * @param turnout     The Control Turnout
      * @param destination The destination Signal Mast
      * @return The name of the Aspect the Control Mast should display
      */

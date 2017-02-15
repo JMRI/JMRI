@@ -30,7 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Default implementation of {@see jmri.SignalMastLogic}
+ * Default implementation of {@link jmri.SignalMastLogic}
  *
  * @author	Kevin Dickerson Copyright (C) 2011
  */

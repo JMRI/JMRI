@@ -54,7 +54,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
      * Create a Signalling Source configuration Pane showing a list of defined
      * destination masts and allowing creation of new source-destination pairs
      * as well as showing a button to start Autodetect configuration.
-     * @param The source mast for this SML Source Pairs pane
+     * @param sourceMast The source mast for this SML Source Pairs pane
      */
     public SignallingSourcePanel(final SignalMast sourceMast) {
         super();
@@ -146,7 +146,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
      * Checks whether AdvancedRouting is turned on and any Layout Editor Panels
      * are present. For each LE Panel, calls discoverSignallingDest()
      * {@link jmri.SignalMastLogicManager#discoverSignallingDest(SignalMast, LayoutEditor)}
-     * @param The button event
+     * @param e The button event
      */
     void discoverPressed(ActionEvent e) {
         if (!jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
@@ -188,7 +188,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
 
     /**
      * Listen for property changes in the SML that's being configured.
-     * @param The button event
+     * @param e The button event
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
