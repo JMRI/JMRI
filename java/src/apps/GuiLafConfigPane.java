@@ -78,8 +78,6 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         add(p);
         doClickSelection(p = new JPanel());
         add(p);
-        doVerticalToolBar(p = new JPanel());
-        add(p);
         doToolTipDismissDelay(p = new JPanel());
         add(p);
     }
