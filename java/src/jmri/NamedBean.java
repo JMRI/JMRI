@@ -212,15 +212,14 @@ public interface NamedBean {
     public int getState();
 
     /**
-     * Provide human-readable access to internal state.
+     * Provide human-readable, localized version of state value
      * <P>
-     * Prefer the int form when manipulating the state programmatically.
      * This method is only intended for use when presenting to a person.
      *
      * @return the state in localized form
      */
     @CheckReturnValue
-    public String getStateString();
+    public String describeState(int state);
 
     /**
      * Get associated comment text.
