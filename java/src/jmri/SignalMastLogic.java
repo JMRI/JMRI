@@ -236,7 +236,6 @@ public interface SignalMastLogic {
      * @return the number of listeners; -1 if the information is not
       * available for some reason.
      */
-    @CheckReturnValue
     public int getNumPropertyChangeListeners();
 
     /**
